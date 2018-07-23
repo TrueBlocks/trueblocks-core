@@ -77,9 +77,9 @@ void reportByToken(COptions& options) {
                     options.earliestBlock = blockNum;
                 SFUintBN bal = getTokenInfo("balance", token, holder, blockNum);
                 totalVal += bal;
-                string_q sBal = to_string(bal).c_str();
+                string_q sBal = bnu_2_Str(bal);
                 if (expContext().asEther) {
-                    sBal = wei2Ether(to_string(bal).c_str());
+                    sBal = wei_2_Ether(bnu_2_Str(bal));
                 } else if (expContext().asDollars) {
                     CBlock blk;
                     getBlock(blk, blockNum);
@@ -112,9 +112,9 @@ void reportByToken(COptions& options) {
     }
 
     if (needsTotal) {
-        string_q sBal = to_string(totalVal).c_str();
+        string_q sBal = bnu_2_Str(totalVal);
         if (expContext().asEther) {
-            sBal = wei2Ether(to_string(totalVal).c_str());
+            sBal = wei_2_Ether(bnu_2_Str(totalVal));
         } else if (expContext().asDollars) {
             CBlock blk;
             getBlock(blk, getLatestBlockFromClient());
@@ -157,9 +157,9 @@ void reportByAccount(COptions& options) {
                     options.earliestBlock = blockNum;
                 SFUintBN bal = getTokenInfo("balance", token, holder, blockNum);
                 totalVal += bal;
-                string_q sBal = to_string(bal).c_str();
+                string_q sBal = bnu_2_Str(bal);
                 if (expContext().asEther) {
-                    sBal = wei2Ether(to_string(bal).c_str());
+                    sBal = wei_2_Ether(bnu_2_Str(bal));
                 } else if (expContext().asDollars) {
                     CBlock blk;
                     getBlock(blk, blockNum);
@@ -192,9 +192,9 @@ void reportByAccount(COptions& options) {
     }
 
     if (needsTotal) {
-        string_q sBal = to_string(totalVal).c_str();
+        string_q sBal = bnu_2_Str(totalVal);
         if (expContext().asEther) {
-            sBal = wei2Ether(to_string(totalVal).c_str());
+            sBal = wei_2_Ether(bnu_2_Str(totalVal));
         } else if (expContext().asDollars) {
             CBlock blk;
             getBlock(blk, getLatestBlockFromClient());
@@ -224,6 +224,6 @@ SFUintBN getTokenInfo(const string_q& value, const SFAddress& token, const SFAdd
     replace(cmd, "[HOLDER]", h);
     replace(cmd, "[BLOCK]",  uint_2_Hex(blockNum));
 
-    return toWei(callRPC("eth_call", cmd, false));
+    return str_2_Wei(callRPC("eth_call", cmd, false));
 }
 

@@ -43,9 +43,9 @@ int main(int argc, const char *argv[]) {
         CFilename fn("accts.bin");
         bool exists = fileExists(fn.getFullPath());
         string_q msg = string_q(exists ? "Reading" : "Accumulating") + " accounts between blocks " +
-                            toStringU(options.startBlock) + " and " +
-                            toStringU(options.startBlock+options.nBlocks) + " (nBlocks: " +
-                            toStringU(options.nBlocks) + ")";
+                            uint_2_Str(options.startBlock) + " and " +
+                            uint_2_Str(options.startBlock+options.nBlocks) + " (nBlocks: " +
+                            uint_2_Str(options.nBlocks) + ")";
 
         CReporter reporter;
         reporter.tree = new CTreeRoot;
@@ -95,8 +95,8 @@ bool buildTree(CBlock& block, void *data) {
         if (string_q(tr->to).empty())
             tr->to = "0x0";
         r->nTransVisited++;
-        r->tree->insert(tr->from, toStringU(block.blockNumber));
-        r->tree->insert(tr->to, toStringU(block.blockNumber));
+        r->tree->insert(tr->from, uint_2_Str(block.blockNumber));
+        r->tree->insert(tr->to, uint_2_Str(block.blockNumber));
     }
     cerr << dateFromTimeStamp(block.timestamp) << " -- " << r->nBlocksVisited << ": " << r->nTransVisited << "\r";
     cerr.flush();

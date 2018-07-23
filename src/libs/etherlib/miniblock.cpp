@@ -68,7 +68,7 @@ namespace qblocks {
         gasPrice = t->gasPrice;
         isError  = t->isError;
         nTraces  = (uint32_t)getTraceCount(t->hash);
-        strncpy(value, fromWei(t->value), 40); value[40] = '\0';
+        strncpy(value, wei_2_Str(t->value).c_str(), 40); value[40] = '\0';
     }
 
     //--------------------------------------------------------------------------
@@ -77,7 +77,7 @@ namespace qblocks {
         trans.receipt.gasUsed  = gasUsed;
         trans.gasPrice         = gasPrice;
         trans.isError          = isError;
-        trans.value            = toWei(value);
+        trans.value            = str_2_Wei(value);
         return;
     }
 

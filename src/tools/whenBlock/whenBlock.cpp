@@ -45,7 +45,7 @@ int main(int argc, const char *argv[]) {
                     cout << "The block number you requested (";
                     cout << cTeal << special << ": " << value << cOff;
                     cout << ") is after the latest block (";
-                    cout << cTeal << (isTestMode() ? "TESTING" : toStringU(getLatestBlockFromClient())) << cOff;
+                    cout << cTeal << (isTestMode() ? "TESTING" : uint_2_Str(getLatestBlockFromClient())) << cOff;
                     cout << "). Quitting...\n";
                     return 0;
                 }
@@ -131,7 +131,7 @@ bool lookupDate(CBlock& block, const SFTime& date) {
         nBlocks = fileSize(miniBlockCache) / sizeof(CMiniBlock);
         blocks = new CMiniBlock[nBlocks];
         if (!blocks)
-            return usage("Could not allocate memory for the blocks (size needed: " + toStringU(nBlocks) + ").\n");
+            return usage("Could not allocate memory for the blocks (size needed: " + uint_2_Str(nBlocks) + ").\n");
         bzero(blocks, sizeof(CMiniBlock)*(nBlocks));
         if (verbose)
             cerr << "Allocated room for " << nBlocks << " miniBlocks.\n";
@@ -153,14 +153,14 @@ bool lookupDate(CBlock& block, const SFTime& date) {
     mini.timestamp = toTimestamp(date);
     CMiniBlock *found = reinterpret_cast<CMiniBlock*>(bsearch(&mini, blocks, nBlocks, sizeof(CMiniBlock), findFunc));
     if (found) {
-        queryBlock(block, toStringU(found->blockNumber), false, false);
+        queryBlock(block, uint_2_Str(found->blockNumber), false, false);
         return true;
     }
 
     //  cout << mini.timestamp << " is somewhere between " << below << " and " << above << "\n";
     CBlockFinder finder(mini.timestamp);
     forEveryBlockOnDisc(lookCloser, &finder, below, above-below);
-    queryBlock(block, toStringU(finder.found), false, false);
+    queryBlock(block, uint_2_Str(finder.found), false, false);
     return true;
 }
 

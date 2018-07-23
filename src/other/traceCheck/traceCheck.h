@@ -16,7 +16,7 @@
 #include "options.h"
 
 inline void queryBlock(CBlock& block, blknum_t bn) {
-    queryBlock(block, toStringU(bn), true, false);
+    queryBlock(block, uint_2_Str(bn), true, false);
     verbose = true;
 }
 

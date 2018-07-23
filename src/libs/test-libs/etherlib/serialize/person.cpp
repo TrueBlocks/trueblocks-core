@@ -227,7 +227,7 @@ string_q CPerson::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "age" ) return toStringU(age);
+            if ( fieldName % "age" ) return uint_2_Str(age);
             break;
         case 'n':
             if ( fieldName % "name" ) return name;

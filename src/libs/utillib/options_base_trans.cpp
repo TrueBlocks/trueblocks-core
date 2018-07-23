@@ -64,7 +64,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    string_q COptionsTransList::toString(void) const {
+    string_q COptionsTransList::int_2_Str(void) const {
         return queries;
     }
 

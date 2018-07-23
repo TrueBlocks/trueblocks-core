@@ -506,7 +506,7 @@ const char* STR_FACTORY1 =
 
 //-----------------------------------------------------------------------
 const char* STR_FACTORY2 =
-"\t\t} else if (fromTopic(p->topics[0]) % evt_[{LOWER}]{QB}) {\n"
+"\t\t} else if (topic_2_Str(p->topics[0]) % evt_[{LOWER}]{QB}) {\n"
 "\t\t\t// [{SIGNATURE}]\n"
 "\t\t\t// [{ENCODING}]\n"
 "\t\t\t[{CLASS}] *a = new [{CLASS}];\n"

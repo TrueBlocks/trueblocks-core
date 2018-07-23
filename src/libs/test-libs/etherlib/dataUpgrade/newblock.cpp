@@ -68,7 +68,7 @@ bool CNewBlock::setValueByName(const string_q& fieldName, const string_q& fieldV
             string_q str = fieldValue;
             while (!str.empty()) {
                 CTransaction trans;
-                trans.hash = toAddress(nextTokenClear(str, ','));
+                trans.hash = str_2_Addr(nextTokenClear(str, ','));
                 transactions.push_back(trans);
             }
             return true;
@@ -91,13 +91,13 @@ bool CNewBlock::setValueByName(const string_q& fieldName, const string_q& fieldV
             if ( fieldName % "gasUsed" ) { gasUsed = str_2_Gas(fieldValue); return true; }
             break;
         case 'h':
-            if ( fieldName % "hash" ) { hash = toHash(fieldValue); return true; }
+            if ( fieldName % "hash" ) { hash = str_2_Hash(fieldValue); return true; }
             break;
         case 'm':
-            if ( fieldName % "miner" ) { miner = toAddress(fieldValue); return true; }
+            if ( fieldName % "miner" ) { miner = str_2_Addr(fieldValue); return true; }
             break;
         case 'p':
-            if ( fieldName % "parentHash" ) { parentHash = toHash(fieldValue); return true; }
+            if ( fieldName % "parentHash" ) { parentHash = str_2_Hash(fieldValue); return true; }
             if ( fieldName % "price" ) { price = str_2_Double(fieldValue); return true; }
             break;
         case 't':
@@ -242,7 +242,7 @@ string_q nextNewblockChunk_custom(const string_q& fieldIn, const void *dataPtr) 
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'n':
-                if ( fieldIn % "number" ) return toStringU(newp->blockNumber);
+                if ( fieldIn % "number" ) return uint_2_Str(newp->blockNumber);
                 break;
             case 't':
                 if ( expContext().hashesOnly && fieldIn % "transactions" ) {
@@ -293,7 +293,7 @@ bool CNewBlock::readBackLevel(SFArchive& archive) {
         getCurlContext()->provider = "local";
         CBlock upgrade;
         size_t unused;
-        queryBlock(upgrade, toStringU(blockNumber), false, false, unused);
+        queryBlock(upgrade, uint_2_Str(blockNumber), false, false, unused);
         getCurlContext()->provider = save;
         miner = upgrade.miner;
         difficulty = upgrade.difficulty;
@@ -328,34 +328,34 @@ string_q CNewBlock::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "blockNumber" ) return toStringU(blockNumber);
+            if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
             break;
         case 'd':
-            if ( fieldName % "difficulty" ) return toStringU(difficulty);
+            if ( fieldName % "difficulty" ) return uint_2_Str(difficulty);
             break;
         case 'f':
-            if ( fieldName % "finalized" ) return toString(finalized);
+            if ( fieldName % "finalized" ) return int_2_Str(finalized);
             break;
         case 'g':
-            if ( fieldName % "gasLimit" ) return fromGas(gasLimit);
-            if ( fieldName % "gasUsed" ) return fromGas(gasUsed);
+            if ( fieldName % "gasLimit" ) return gas_2_Str(gasLimit);
+            if ( fieldName % "gasUsed" ) return gas_2_Str(gasUsed);
             break;
         case 'h':
-            if ( fieldName % "hash" ) return fromHash(hash);
+            if ( fieldName % "hash" ) return hash_2_Str(hash);
             break;
         case 'm':
-            if ( fieldName % "miner" ) return fromAddress(miner);
+            if ( fieldName % "miner" ) return addr_2_Str(miner);
             break;
         case 'p':
-            if ( fieldName % "parentHash" ) return fromHash(parentHash);
-            if ( fieldName % "price" ) return double2Str(price);
+            if ( fieldName % "parentHash" ) return hash_2_Str(parentHash);
+            if ( fieldName % "price" ) return double_2_Str(price);
             break;
         case 't':
             if ( fieldName % "timestamp" ) return fromTimestamp(timestamp);
             if ( fieldName % "transactions" || fieldName % "transactionsCnt" ) {
                 size_t cnt = transactions.size();
                 if (endsWith(fieldName, "Cnt"))
-                    return toStringU(cnt);
+                    return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {

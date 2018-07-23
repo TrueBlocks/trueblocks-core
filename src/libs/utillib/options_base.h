@@ -142,7 +142,7 @@ namespace qblocks {
         void Init(void);
         string_q parseTransList(const string_q& arg);
         COptionsTransList(void);
-        string_q toString(void) const;
+        string_q int_2_Str(void) const;
         bool hasTrans(void) const { return !queries.empty(); }
     };
 

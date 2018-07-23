@@ -64,7 +64,7 @@ bool QIsOwner::setValueByName(const string_q& fieldName, const string_q& fieldVa
 
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_addr" ) { _addr = toAddress(fieldValue); return true; }
+            if ( fieldName % "_addr" ) { _addr = str_2_Addr(fieldValue); return true; }
             break;
         default:
             break;
@@ -199,7 +199,7 @@ string_q QIsOwner::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_addr" ) return fromAddress(_addr);
+            if ( fieldName % "_addr" ) return addr_2_Str(_addr);
             break;
     }
 

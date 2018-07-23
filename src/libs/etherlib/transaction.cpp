@@ -68,12 +68,12 @@ bool CTransaction::setValueByName(const string_q& fieldName, const string_q& fie
         return true;
 
     } else if ( fieldName % "value" ) {
-        value = canonicalWei(fieldValue);
+        value = str_2_Wei(fieldValue);
         ether = str_2_Double(Format("[{ETHER}]"));
         return true;
 
     } else if ( fieldName % "contractAddress" ) {
-        receipt.contractAddress = toAddress(fieldValue);
+        receipt.contractAddress = str_2_Addr(fieldValue);
         return true;
 
     } else if ( fieldName % "gasUsed" ) {
@@ -92,18 +92,18 @@ bool CTransaction::setValueByName(const string_q& fieldName, const string_q& fie
 
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "blockHash" ) { blockHash = toHash(fieldValue); return true; }
+            if ( fieldName % "blockHash" ) { blockHash = str_2_Hash(fieldValue); return true; }
             if ( fieldName % "blockNumber" ) { blockNumber = str_2_Uint(fieldValue); return true; }
             break;
         case 'f':
-            if ( fieldName % "from" ) { from = toAddress(fieldValue); return true; }
+            if ( fieldName % "from" ) { from = str_2_Addr(fieldValue); return true; }
             break;
         case 'g':
             if ( fieldName % "gas" ) { gas = str_2_Gas(fieldValue); return true; }
             if ( fieldName % "gasPrice" ) { gasPrice = str_2_Gas(fieldValue); return true; }
             break;
         case 'h':
-            if ( fieldName % "hash" ) { hash = toHash(fieldValue); return true; }
+            if ( fieldName % "hash" ) { hash = str_2_Hash(fieldValue); return true; }
             break;
         case 'i':
             if ( fieldName % "input" ) { input = fieldValue; return true; }
@@ -119,10 +119,10 @@ bool CTransaction::setValueByName(const string_q& fieldName, const string_q& fie
         case 't':
             if ( fieldName % "transactionIndex" ) { transactionIndex = str_2_Uint(fieldValue); return true; }
             if ( fieldName % "timestamp" ) { timestamp = toTimestamp(fieldValue); return true; }
-            if ( fieldName % "to" ) { to = toAddress(fieldValue); return true; }
+            if ( fieldName % "to" ) { to = str_2_Addr(fieldValue); return true; }
             break;
         case 'v':
-            if ( fieldName % "value" ) { value = toWei(fieldValue); return true; }
+            if ( fieldName % "value" ) { value = str_2_Wei(fieldValue); return true; }
             break;
         default:
             break;
@@ -308,7 +308,7 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
                 }
                 break;
             case 'c':
-                if ( fieldIn % "contractAddress" ) return fromAddress(tra->receipt.contractAddress);
+                if ( fieldIn % "contractAddress" ) return addr_2_Str(tra->receipt.contractAddress);
                 break;
             case 'd':
                 if (fieldIn % "date" || fieldIn % "datesh") {
@@ -320,7 +320,7 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
                 }
                 break;
             case 'e':
-                if ( fieldIn % "ether" ) return wei2Ether(toStringBN(tra->value));
+                if ( fieldIn % "ether" ) return wei_2_Ether(bnu_2_Str(tra->value));
                 if ( fieldIn % "encoding" ) {
                     return extract(tra->input, 0, 10);
                 }
@@ -335,15 +335,15 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
                     return tra->inputToFunction();
                 break;
             case 'g':
-                if ( fieldIn % "gasUsed" ) return toStringU(tra->receipt.gasUsed);
+                if ( fieldIn % "gasUsed" ) return uint_2_Str(tra->receipt.gasUsed);
                 if ( fieldIn % "gasCost" ) {
                     SFUintBN used = tra->receipt.gasUsed;
                     SFUintBN price = tra->gasPrice;
-                    return to_string(used * price).c_str();
+                    return bnu_2_Str(used * price);
                 }
                 break;
             case 't':
-                if ( fieldIn % "timestamp" && tra->pBlock) return toString(tra->pBlock->timestamp);
+                if ( fieldIn % "timestamp" && tra->pBlock) return int_2_Str(tra->pBlock->timestamp);
                 if ( fieldIn % "time" ) {
                     timestamp_t ts = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
                     return extract(dateFromTimeStamp(ts).Format(FMT_JSON), 12);
@@ -421,37 +421,37 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "blockHash" ) return fromHash(blockHash);
-            if ( fieldName % "blockNumber" ) return toStringU(blockNumber);
+            if ( fieldName % "blockHash" ) return hash_2_Str(blockHash);
+            if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
             break;
         case 'f':
-            if ( fieldName % "from" ) return fromAddress(from);
+            if ( fieldName % "from" ) return addr_2_Str(from);
             break;
         case 'g':
-            if ( fieldName % "gas" ) return fromGas(gas);
-            if ( fieldName % "gasPrice" ) return fromGas(gasPrice);
+            if ( fieldName % "gas" ) return gas_2_Str(gas);
+            if ( fieldName % "gasPrice" ) return gas_2_Str(gasPrice);
             break;
         case 'h':
-            if ( fieldName % "hash" ) return fromHash(hash);
+            if ( fieldName % "hash" ) return hash_2_Str(hash);
             break;
         case 'i':
             if ( fieldName % "input" ) return input;
-            if ( fieldName % "isError" ) return toStringU(isError);
-            if ( fieldName % "isInternal" ) return toStringU(isInternal);
+            if ( fieldName % "isError" ) return uint_2_Str(isError);
+            if ( fieldName % "isInternal" ) return uint_2_Str(isInternal);
             break;
         case 'n':
-            if ( fieldName % "nonce" ) return toStringU(nonce);
+            if ( fieldName % "nonce" ) return uint_2_Str(nonce);
             break;
         case 'r':
             if ( fieldName % "receipt" ) { expContext().noFrst=true; return receipt.Format(); }
             break;
         case 't':
-            if ( fieldName % "transactionIndex" ) return toStringU(transactionIndex);
+            if ( fieldName % "transactionIndex" ) return uint_2_Str(transactionIndex);
             if ( fieldName % "timestamp" ) return fromTimestamp(timestamp);
-            if ( fieldName % "to" ) return fromAddress(to);
+            if ( fieldName % "to" ) return addr_2_Str(to);
             break;
         case 'v':
-            if ( fieldName % "value" ) return fromWei(value);
+            if ( fieldName % "value" ) return wei_2_Str(value);
             break;
     }
 
@@ -529,7 +529,7 @@ inline string_q hex2String(const string_q& inHex) {
 
 //------------------------------------------------------------------------------
 #define old_grabPart(a, b)       trimLeading(extract((a), 64*(b), 64), '0')
-#define old_toBigNum2(a, b)      string_q(to_string(canonicalWei("0x" + old_grabPart(a, b))).c_str())
+#define old_toBigNum2(a, b)      string_q(bnu_2_Str(str_2_Wei("0x" + old_grabPart(a, b))).c_str())
 #define old_grabBigNum(a, b)     strtoull(old_grabPart(a, b).c_str(), NULL, 16)
 #define old_toAddr(a, b)         "0x" + padLeft(old_grabPart(a, b), 40, '0')
 #define old_toBigNum3(a, b)      padNum3(old_grabBigNum(a, b))

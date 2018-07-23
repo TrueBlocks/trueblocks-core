@@ -54,7 +54,7 @@ public:
         double percent = 1.0;
         if (_whole > 0)
             percent = (_part / static_cast<double>(_whole));
-        return double2Str(100.*percent, 3);
+        return double_2_Str(100.*percent, 3);
     }
 
     void finalReport(void) {

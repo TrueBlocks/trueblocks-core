@@ -31,7 +31,7 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     string_q getVersionStr(const string_q& sep1, const string_q& sep2) {
-        return toStringU(MAJOR) + sep1 + toStringU(MINOR) + sep1 + toStringU(BUILD) + sep2 + SUBVERS;
+        return uint_2_Str(MAJOR) + sep1 + uint_2_Str(MINOR) + sep1 + uint_2_Str(BUILD) + sep2 + SUBVERS;
     }
 
 }  // namespace qblocks

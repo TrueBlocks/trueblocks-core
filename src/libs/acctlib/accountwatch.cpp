@@ -66,14 +66,14 @@ bool CAccountWatch::setValueByName(const string_q& fieldName, const string_q& fi
         return true;
     }
     if (fieldName % "balance") {
-        qbis.endBal = qbis.begBal = toWei(fieldValue);
+        qbis.endBal = qbis.begBal = str_2_Wei(fieldValue);
         return true;
     }
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "address" ) { address = toAddress(fieldValue); return true; }
+            if ( fieldName % "address" ) { address = str_2_Addr(fieldValue); return true; }
             break;
         case 'b':
             if ( fieldName % "balanceHistory" ) {
@@ -102,7 +102,7 @@ bool CAccountWatch::setValueByName(const string_q& fieldName, const string_q& fi
             break;
         case 'n':
             if ( fieldName % "name" ) { name = fieldValue; return true; }
-            if ( fieldName % "nodeBal" ) { nodeBal = toWei(fieldValue); return true; }
+            if ( fieldName % "nodeBal" ) { nodeBal = str_2_Wei(fieldValue); return true; }
             break;
         case 'q':
             if ( fieldName % "qbis" ) { /* qbis = fieldValue; */ return false; }
@@ -263,13 +263,13 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "address" ) return fromAddress(address);
+            if ( fieldName % "address" ) return addr_2_Str(address);
             break;
         case 'b':
             if ( fieldName % "balanceHistory" || fieldName % "balanceHistoryCnt" ) {
                 size_t cnt = balanceHistory.size();
                 if (endsWith(fieldName, "Cnt"))
-                    return toStringU(cnt);
+                    return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {
@@ -283,17 +283,17 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "color" ) return color;
             break;
         case 'd':
-            if ( fieldName % "deepScan" ) return toString(deepScan);
+            if ( fieldName % "deepScan" ) return int_2_Str(deepScan);
             break;
         case 'f':
-            if ( fieldName % "firstBlock" ) return toStringU(firstBlock);
+            if ( fieldName % "firstBlock" ) return uint_2_Str(firstBlock);
             break;
         case 'l':
-            if ( fieldName % "lastBlock" ) return toStringU(lastBlock);
+            if ( fieldName % "lastBlock" ) return uint_2_Str(lastBlock);
             break;
         case 'n':
             if ( fieldName % "name" ) return name;
-            if ( fieldName % "nodeBal" ) return fromWei(nodeBal);
+            if ( fieldName % "nodeBal" ) return wei_2_Str(nodeBal);
             break;
         case 'q':
             if ( fieldName % "qbis" ) { expContext().noFrst=true; return qbis.Format(); }
@@ -449,7 +449,7 @@ void loadWatchList(const CToml& toml, CAccountWatchArray& watches, const string_
         p = watch.parseJson(p, nFields);
         if (nFields) {
             // cleanup and add to list of watches
-            watch.address = toAddress(toLower(watch.address));
+            watch.address = str_2_Addr(toLower(watch.address));
             watch.color   = convertColor(watch.color);
             watches.push_back(watch);
         }

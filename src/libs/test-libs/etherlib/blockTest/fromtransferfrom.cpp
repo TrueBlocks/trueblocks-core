@@ -64,8 +64,8 @@ bool QFromTransferFrom::setValueByName(const string_q& fieldName, const string_q
 
     switch (tolower(fieldName[0])) {
         case 'w':
-            if ( fieldName % "whop" ) { whop = toAddress(fieldValue); return true; }
-            if ( fieldName % "werp" ) { werp = toAddress(fieldValue); return true; }
+            if ( fieldName % "whop" ) { whop = str_2_Addr(fieldValue); return true; }
+            if ( fieldName % "werp" ) { werp = str_2_Addr(fieldValue); return true; }
             break;
         default:
             break;
@@ -203,8 +203,8 @@ string_q QFromTransferFrom::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'w':
-            if ( fieldName % "whop" ) return fromAddress(whop);
-            if ( fieldName % "werp" ) return fromAddress(werp);
+            if ( fieldName % "whop" ) return addr_2_Str(whop);
+            if ( fieldName % "werp" ) return addr_2_Str(werp);
             break;
     }
 

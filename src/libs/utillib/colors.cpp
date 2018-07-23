@@ -93,7 +93,7 @@ namespace qblocks {
         cout << string_q(max((uint64_t)0, barLen() - len), ' ');
         cout << "] ";
         cout << cYellow << _part << cOff << " of " << cYellow << _whole << cOff;
-        cout << " (" << bBlue << double2Str(100. * percent, 1) << cOff << "%)";
+        cout << " (" << bBlue << double_2_Str(100. * percent, 1) << cOff << "%)";
         cout << (endMsg.empty() ? " " : "") << endMsg;
         cout << "\r";
         cout.flush();

@@ -225,7 +225,7 @@ namespace qblocks {
         // In some cases (for example when can't open event file because it has not yet
         // been created) this may not be an error -- Lock should set an error flag
         // which this guy should read and do right
-        return toStringU(m_error) + ": " + m_errorMsg;
+        return uint_2_Str(m_error) + ": " + m_errorMsg;
     }
 
     //----------------------------------------------------------------------

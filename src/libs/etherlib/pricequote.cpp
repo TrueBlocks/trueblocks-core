@@ -233,7 +233,7 @@ string_q CPriceQuote::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'c':
-            if ( fieldName % "close" ) return double2Str(close);
+            if ( fieldName % "close" ) return double_2_Str(close);
             break;
         case 't':
             if ( fieldName % "timestamp" ) return fromTimestamp(timestamp);
@@ -287,7 +287,7 @@ string_q asDollars(timestamp_t ts, SFUintBN weiIn) {
     uint64_t pInt = (uint64_t)price;
     weiIn *= pInt;
     weiIn /= 100;
-    return wei2Ether(to_string(weiIn).c_str());
+    return wei_2_Ether(bnu_2_Str(weiIn));
 }
 
 //-----------------------------------------------------------------------

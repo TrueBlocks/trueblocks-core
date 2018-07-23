@@ -72,7 +72,7 @@ string_q COptions::showMatches(void) {
     }
 
     if (count)
-        ret = toStringU(hits) + " match" + (hits == 1 ? "" : "es") + "\n" + (verbose ? ret : "");
+        ret = uint_2_Str(hits) + " match" + (hits == 1 ? "" : "es") + "\n" + (verbose ? ret : "");
 
     return ret;
 }

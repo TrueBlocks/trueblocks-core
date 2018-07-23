@@ -198,8 +198,8 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
         while (!done) {
             string_q url = string_q("https://api.etherscan.io/api?module=account&action=txlist&sort=asc") +
             "&address=" + theAccount.addr +
-            "&page="    + toStringU(page) +
-            "&offset="  + toStringU(options.pageSize) +
+            "&page="    + uint_2_Str(page) +
+            "&offset="  + uint_2_Str(options.pageSize) +
             "&apikey="  + api.getKey();
 
             // Grab a page of data from the web api
@@ -292,7 +292,7 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
 
     double stop = qbNow();
     double timeSpent = stop-start;
-    string_q timeRep = (isTestMode() ? "--time--" : double2Str(timeSpent));
+    string_q timeRep = (isTestMode() ? "--time--" : double_2_Str(timeSpent));
     cout << "\tLoaded " << theAccount.transactions.size() << " total records in "
             << timeRep << " seconds\n";
     fflush(stderr);
@@ -331,12 +331,12 @@ bool CSlurperApp::Filter(COptions& options, string_q& message) {
 
         // The -incomeOnly and -expensesOnly filters are also mutually exclusive
         ASSERT(!(options.incomeOnly && options.expenseOnly));  // can't be both
-        if (options.incomeOnly && fromAddress(trans->to) != theAccount.addr) {
+        if (options.incomeOnly && addr_2_Str(trans->to) != theAccount.addr) {
             if (verbose)
                 cerr << trans->Format("\tskipping expenditure [{HASH}]\n");
             trans->m_showing = false;
 
-        } else if (options.expenseOnly && fromAddress(trans->from) != theAccount.addr) {
+        } else if (options.expenseOnly && addr_2_Str(trans->from) != theAccount.addr) {
             if (verbose)
                 cerr << trans->Format("\tskipping inflow [{HASH}]\n");
             trans->m_showing = false;
@@ -368,7 +368,7 @@ extern bool isFunction(const CTransaction *trans, const string_q& func);
 
     double stop = qbNow();
     double timeSpent = stop-start;
-    string_q timeRep = (isTestMode() ? "--time--" : double2Str(timeSpent));
+    string_q timeRep = (isTestMode() ? "--time--" : double_2_Str(timeSpent));
     cerr << "\tFilter passed " << theAccount.nVisible << " visible records of "
             << theAccount.transactions.size() << " in " << timeRep << " seconds\n";
     cerr.flush();
@@ -388,7 +388,7 @@ bool CSlurperApp::Display(COptions& options, string_q& message) {
     if (options.cache) {
         for (size_t i = 0 ; i < theAccount.transactions.size() ; i++) {
             const CTransaction *t = &theAccount.transactions[i];
-            cout << t->Format("[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t" + toStringU(options.acct_id)) << "\n";
+            cout << t->Format("[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t" + uint_2_Str(options.acct_id)) << "\n";
         }
     } else {
 
@@ -397,7 +397,7 @@ bool CSlurperApp::Display(COptions& options, string_q& message) {
 
     double stop = qbNow();
     double timeSpent = stop-start;
-    string_q timeRep = (isTestMode() ? "--time--" : double2Str(timeSpent));
+    string_q timeRep = (isTestMode() ? "--time--" : double_2_Str(timeSpent));
     cerr << "\tExported " << theAccount.nVisible << " records in " << timeRep << " seconds             \n\n";
     cerr.flush();
 

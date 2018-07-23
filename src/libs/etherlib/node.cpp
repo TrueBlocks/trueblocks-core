@@ -81,7 +81,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     //-------------------------------------------------------------------------
     bool getBlock(CBlock& block, blknum_t blockNum) {
         getCurlContext()->provider = fileExists(getBinaryFilename(blockNum)) ? "binary" : "local";
-        bool ret = queryBlock(block, toStringU(blockNum), true, false);
+        bool ret = queryBlock(block, uint_2_Str(blockNum), true, false);
         getCurlContext()->provider = "binary";
         return ret;
     }
@@ -93,7 +93,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
     //-------------------------------------------------------------------------
     bool getTransaction(CTransaction& trans, const SFHash& txHash) {
-        getObjectViaRPC(trans, "eth_getTransactionByHash", "[\"" + toHash(txHash) +"\"]");
+        getObjectViaRPC(trans, "eth_getTransactionByHash", "[\"" + str_2_Hash(txHash) +"\"]");
         trans.finishParse();
         return true;
     }
@@ -101,7 +101,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     //-------------------------------------------------------------------------
     bool getTransaction(CTransaction& trans, const SFHash& blockHash, txnum_t txID) {
         getObjectViaRPC(trans, "eth_getTransactionByBlockHashAndIndex",
-                                    "[\"" + toHash(blockHash) +"\",\"" + uint_2_Hex(txID) + "\"]");
+                                    "[\"" + str_2_Hash(blockHash) +"\",\"" + uint_2_Hex(txID) + "\"]");
         trans.finishParse();
         return true;
     }
@@ -129,7 +129,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     //-------------------------------------------------------------------------
     bool getReceipt(CReceipt& receipt, const SFHash& txHash) {
         receipt = CReceipt();
-        getObjectViaRPC(receipt, "eth_getTransactionReceipt", "[\"" + toHash(txHash) + "\"]");
+        getObjectViaRPC(receipt, "eth_getTransactionReceipt", "[\"" + str_2_Hash(txHash) + "\"]");
         return true;
     }
 
@@ -163,7 +163,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     bool queryBlock(CBlock& block, const string_q& datIn, bool needTrace, bool byHash, size_t& nTraces) {
 
         if (datIn == "latest")
-            return queryBlock(block, toStringU(getLatestBlockFromClient()), needTrace, false);
+            return queryBlock(block, uint_2_Str(getLatestBlockFromClient()), needTrace, false);
 
         if (isHash(datIn)) {
             HIDE_FIELD(CTransaction, "receipt");
@@ -229,7 +229,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
     //-------------------------------------------------------------------------
     string_q getRawBlock(blknum_t bn) {
-        string_q numStr = toStringU(bn);
+        string_q numStr = uint_2_Str(bn);
         string_q results;
         queryRawBlock(results, numStr, true, false);
         CRPCResult generic;
@@ -241,7 +241,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     //-------------------------------------------------------------------------
     SFHash getRawBlockHash(blknum_t bn) {
         string_q blockStr;
-        queryRawBlock(blockStr, toStringU(bn), false, true);
+        queryRawBlock(blockStr, uint_2_Str(bn), false, true);
         blockStr = substitute(extract(blockStr, blockStr.find("\"hash\":"), blockStr.length()), "\"hash\":\"", "");
         blockStr = nextTokenClear(blockStr, '\"');
         return blockStr;
@@ -270,7 +270,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
     //-------------------------------------------------------------------------
     bool queryRawTrace(string_q& trace, const string_q& hashIn) {
-        trace = "[" + callRPC("trace_transaction", "[\"" + toHash(hashIn) +"\"]", true) + "]";
+        trace = "[" + callRPC("trace_transaction", "[\"" + str_2_Hash(hashIn) +"\"]", true) + "]";
         return true;
     }
 
@@ -279,7 +279,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         string_q data = "[{\"fromBlock\":\"[START]\",\"toBlock\":\"[STOP]\", \"address\": \"[ADDR]\"}]";
         replace(data, "[START]", uint_2_Hex(fromBlock));
         replace(data, "[STOP]",  uint_2_Hex(toBlock));
-        replace(data, "[ADDR]",  fromAddress(addr));
+        replace(data, "[ADDR]",  addr_2_Str(addr));
         results = callRPC("eth_getLogs", data, true);
         return true;
     }
@@ -352,7 +352,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         string_q a = extract(addr, 2);
         a = padLeft(a, 40, '0');
         string_q ret = callRPC("eth_getBalance", "[\"0x" + a + "\",\"" + uint_2_Hex(blockNum) + "\"]", false);
-        return toWei(ret);
+        return str_2_Wei(ret);
     }
 
     //-------------------------------------------------------------------------
@@ -362,7 +362,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         // TODO(tjayrush): Return the balance of the one of the original genesis accounts because this won't work
         // if the node is not yet synced to this block.
         return getBalance("0xbb9bc244d798123fde783fcc1c72d3bb8c189413", 1500001, false) ==
-                                canonicalWei("4423518369662462108465682");
+                                str_2_Wei("4423518369662462108465682");
     }
 
     //-------------------------------------------------------------------------
@@ -376,7 +376,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
     //-------------------------------------------------------------------------
     bool hasTraceAt(const string_q& hashIn, size_t where) {
-        string_q cmd = "[\"" + toHash(hashIn) +"\",[\"" + uint_2_Hex(where) + "\"]]";
+        string_q cmd = "[\"" + str_2_Hash(hashIn) +"\",[\"" + uint_2_Hex(where) + "\"]]";
         string_q ret = callRPC("trace_get", cmd.c_str(), true);
         return ret.find("blockNumber") != string::npos;
     }
@@ -541,7 +541,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         char ret[512];
         bzero(ret, sizeof(ret));
 
-        string_q num = padLeft(toStringU(numIn), 9, '0');
+        string_q num = padLeft(uint_2_Str(numIn), 9, '0');
         string_q fmt = (asPath ? "%s/%s/%s/" : "%s/%s/%s/%s");
         string_q fn  = (asPath ? "" : num + (asJson ? ".json" : ".bin"));
 

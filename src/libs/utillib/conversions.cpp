@@ -60,7 +60,7 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     string_q fromTimestamp(timestamp_t ts) {
-        return toString(ts);
+        return int_2_Str(ts);
     }
 
     //--------------------------------------------------------------------------------
@@ -80,25 +80,19 @@ namespace qblocks {
             return str;
         if (str.empty())
             return "0x0";
-        SFUintBN bn = canonicalWei(str);
+        SFUintBN bn = str_2_Wei(str);
         return toLower("0x" + bnu_2_Hex(bn));
     }
 
     //--------------------------------------------------------------------------------
     string_q chr_2_HexStr(const string_q& str) {
         if (startsWith(str, "0x"))
-            return str.c_str();
-
-        if (str.empty())
-            return "0x";
-
-        string_q ret;
-        for (size_t i = 0 ; i < str.length() ; i++) {
-            ostringstream os;
-            os << hex << (unsigned int)str[i];
-            ret = (ret + os.str().c_str());
-        }
-        return ("0x" + ret);
+            return str;
+        ostringstream os;
+        os << "0x";
+        for (auto elem : str)
+            os << hex << (unsigned int)elem;
+        return os.str();
     }
 
     //--------------------------------------------------------------------------------
@@ -117,19 +111,9 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    SFUintBN hex2BigUint(const string_q &s) {
-        return SFUintBN(BigUnsignedInABase(s, 16));
-    }
-
-    //--------------------------------------------------------------------------------
-    SFUintBN canonicalWei(uint64_t _value) {
-        return SFUintBN(_value);
-    }
-
-    //--------------------------------------------------------------------------------
-    SFUintBN canonicalWei(const string_q& str) {
+    SFUintBN str_2_Wei(const string_q& str) {
         if (contains(str, "0x"))
-            return hex2BigUint(extract(str, 2).c_str());
+            return SFUintBN(BigUnsignedInABase(extract(str, 2).c_str(), 16));
         if (contains(str, "e"))
             return exp2BigUint(str.c_str());
         return str_2_BigUint(str);
@@ -168,7 +152,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    string_q bloom2Bytes(const SFBloom& bl) {
+    string_q bloom_2_Bytes(const SFBloom& bl) {
         if (bl == 0)
             return "0x0";
         SFBloomHex b2(bl);
@@ -176,8 +160,8 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    string_q bloom2Bits(const SFBloom& b) {
-        string_q ret = substitute(bloom2Bytes(b), "0x", "");
+    string_q bloom_2_Bits(const SFBloom& b) {
+        string_q ret = substitute(bloom_2_Bytes(b), "0x", "");
         replaceAll(ret, "0", "0000");
         replaceAll(ret, "1", "0001");
         replaceAll(ret, "2", "0010");
@@ -198,21 +182,21 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    string_q toString(int64_t i) {
+    string_q int_2_Str(int64_t i) {
         ostringstream os;
         os << i;
-        return os.str().c_str();
+        return os.str();
     }
 
     //--------------------------------------------------------------------------------
-    string_q toStringU(uint64_t i) {
+    string_q uint_2_Str(uint64_t i) {
         ostringstream os;
         os << i;
-        return os.str().c_str();
+        return os.str();
     }
 
     //--------------------------------------------------------------------------------
-    string_q wei2Ether(const string_q& _value) {
+    string_q wei_2_Ether(const string_q& _value) {
         // Make sure the wei number is at least 18 characters long. Once it is,
         // reverse it, put a decimal at the 18th position, reverse it back,
         // trim leading '0's except the tens digit.
@@ -233,8 +217,8 @@ namespace qblocks {
     }
 
     //-----------------------------------------------------------------------
-    string_q wei2Ether(SFUintBN in) {
-        string_q ret = wei2Ether(toStringBN(in));
+    string_q wei_2_Ether(SFUintBN in) {
+        string_q ret = wei_2_Ether(bnu_2_Str(in));
         if (contains(ret, "."))
             ret = trimTrailing(ret,'0');
         return trimTrailing(ret,'.');
@@ -248,7 +232,7 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     SFUintBN str_2_BigUint(const string_q& str) {
         if (startsWith(str, "0x"))
-            return canonicalWei(str);
+            return str_2_Wei(str);
         return SFUintBN(BigUnsignedInABase(str, 10));
     }
 
@@ -260,36 +244,40 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    string_q toStringBN(const SFUintBN& bu) {
-        return to_string(bu).c_str();
+    string_q bnu_2_Str(const SFUintBN& num) {
+        return string(BigUnsignedInABase(num, 10));
     }
 
     //--------------------------------------------------------------------------------
-    string_q toStringBN(const SFIntBN& bn) {
-        return to_string2(bn).c_str();
+    string_q bni_2_Str(const SFIntBN& num) {
+        return (num.isNegative() ? string("-") : "") + bnu_2_Str(num.getMagnitude());
     }
 
     //--------------------------------------------------------------------------------
-    SFAddress toAddress(const string_q& str) {
+    SFAddress str_2_Addr(const string_q& str) {
+        if (isZeroAddr(str))
+            return "0x0";
 
-        string_q ret = startsWith(str, "0x") ? extract(str, 2) : str;
+        string_q ret = substitute(str, "0x", "");
+        if (ret.length() == 64) {
+            string_q leading('0', 64-40);
+            if (startsWith(ret, leading))
+                replace(ret, leading, "");
+        }
 
-        string_q leading('0', 64-40);
-        if (ret.length() == 64 && startsWith(ret, leading))
-            replace(ret, leading, "");
-
-        ret = "0x" + toLower(padLeft(ret, 20 * 2, '0'));
-        return (isZeroAddr(ret) ? "0x0" : ret);
+        return "0x" + toLower(padLeft(ret, 20 * 2, '0'));
     }
 
     //--------------------------------------------------------------------------------
-    SFHash toHash(const string_q& str) {
-        string_q ret = startsWith(str, "0x") ? extract(str, 2) : str;
+    SFHash str_2_Hash(const string_q& str) {
+        if (isZeroHash(str))
+            return "0x0";
+        string_q ret = substitute(str, "0x", "");
         return toLower("0x" + padLeft(ret, 32 * 2, '0'));
     }
 
     //--------------------------------------------------------------------------------
-    string_q double2Str(double f, size_t nDecimals) {
+    string_q double_2_Str(double f, size_t nDecimals) {
         char s[100], r[100];
         memset(s, '\0', 100);
         memset(r, '\0', 100);
@@ -302,10 +290,10 @@ namespace qblocks {
 
     // querying type
     //--------------------------------------------------------------------------------
-    bool isZeroAddr(const SFAddress& addr) {
-        if (!isNumeral(addr) && !isHexStr(addr))
+    bool isZeroHash(const SFHash& hash) {
+        if (!isNumeral(hash) && !isHexStr(hash))
             return false;
-        return (canonicalWei(addr) == 0);
+        return (str_2_Wei(hash) == 0);
     }
 
     //--------------------------------------------------------------------------------
@@ -348,16 +336,6 @@ namespace qblocks {
         if (startsWith(in, "0x") && in.length() > 2)
             return isxdigit(in.at(2));
         return true;
-    }
-
-    //--------------------------------------------------------------------------------
-    string to_string(const SFUintBN& i) {
-        return string(BigUnsignedInABase(i, 10));
-    }
-
-    //--------------------------------------------------------------------------------
-    string to_string2(const SFIntBN& i) {
-        return (i.isNegative() ? string("-") : "") + to_string(i.getMagnitude());
     }
 
 }  // namespace qblocks

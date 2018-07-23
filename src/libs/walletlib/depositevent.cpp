@@ -64,10 +64,10 @@ bool QDepositEvent::setValueByName(const string_q& fieldName, const string_q& fi
 
     switch (tolower(fieldName[0])) {
         case 'f':
-            if ( fieldName % "from" ) { from = toAddress(fieldValue); return true; }
+            if ( fieldName % "from" ) { from = str_2_Addr(fieldValue); return true; }
             break;
         case 'v':
-            if ( fieldName % "value" ) { value = toWei(fieldValue); return true; }
+            if ( fieldName % "value" ) { value = str_2_Wei(fieldValue); return true; }
             break;
         default:
             break;
@@ -205,10 +205,10 @@ string_q QDepositEvent::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'f':
-            if ( fieldName % "from" ) return fromAddress(from);
+            if ( fieldName % "from" ) return addr_2_Str(from);
             break;
         case 'v':
-            if ( fieldName % "value" ) return toStringBN(value);
+            if ( fieldName % "value" ) return bnu_2_Str(value);
             break;
     }
 
