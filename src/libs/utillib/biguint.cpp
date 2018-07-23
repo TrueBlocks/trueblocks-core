@@ -71,10 +71,8 @@ namespace qblocks {
     //----------------------------------------------------------------------
     uint64_t SFUintBN::to_ulong(void) const  { return convertToPrimitive<uint64_t> (); }
     uint32_t SFUintBN::to_uint(void) const   { return convertToPrimitive<uint32_t> (); }
-    uint16_t SFUintBN::to_ushort(void) const { return convertToPrimitive<uint16_t> (); }
     int64_t  SFUintBN::to_long(void) const   { return convertToSignedPrimitive<int64_t> (); }
     int32_t  SFUintBN::to_int(void) const    { return convertToSignedPrimitive<int32_t> (); }
-    int16_t  SFUintBN::to_short(void) const  { return convertToSignedPrimitive<int16_t> (); }
 
     //----------------------------------------------------------------------
     void SFUintBN::trimLeadingZeros(void) {

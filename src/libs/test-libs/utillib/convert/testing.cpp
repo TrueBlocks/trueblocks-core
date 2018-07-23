@@ -69,11 +69,11 @@ TEST_F(CThisTest, TestConverts_0) {
     ASSERT_EQ("str_2_Addr5",              str_2_Addr("0x12312abcde12"), "0x000000000000000000000000000012312abcde12");
     cout << "\n";
 
-    ASSERT_EQ("timestamp empty address", toTimestamp(array[0]), 0);
-    ASSERT_EQ("timestamp hex ony",       toTimestamp(array[1]), 0);
-    ASSERT_EQ("timestamp zero addr",     toTimestamp(array[2]), 0);
-    ASSERT_EQ("timestamp full zero",     toTimestamp(array[3]), 0);
-    ASSERT_EQ("timestamp overflow",      toTimestamp(array[4]), 0);
+    ASSERT_EQ("timestamp empty address", str_2_Ts(array[0]), 0);
+    ASSERT_EQ("timestamp hex ony",       str_2_Ts(array[1]), 0);
+    ASSERT_EQ("timestamp zero addr",     str_2_Ts(array[2]), 0);
+    ASSERT_EQ("timestamp full zero",     str_2_Ts(array[3]), 0);
+    ASSERT_EQ("timestamp overflow",      str_2_Ts(array[4]), 0);
     cout << "\n";
 
     ASSERT_EQ("bn empty address",        str_2_BigUint(array[0]), 0);
@@ -145,6 +145,16 @@ TEST_F(CThisTest, TestConverts_2) {
 //------------------------------------------------------------------------
 TEST_F(CThisTest, TestConverts_3) {
     cout << "Running " << testName << "\n";
+
+    // Block 5,000,000 timestamp: 1517319693 date: 2018-01-30 13:41:33 UTC
+    timestamp_t ts = 1517319693;
+    ASSERT_EQ("time1", ts, 1517319693);
+    ASSERT_EQ("time2", str_2_Ts("1517319693"), 1517319693);
+    ASSERT_EQ("time2", ts_2_Str(1517319693), "1517319693");
+    SFTime date = ts_2_Date(ts);
+    ASSERT_EQ("time3", date, SFTime(2018,01,30,13,41,33));
+    ASSERT_EQ("time4", date_2_Ts(date), ts);
+
     return subTestID==0;
 }}
 
@@ -173,71 +183,9 @@ int main(int argc, const char *argv[]) {
 }
 
 #if 0
-toAddr
-toAddrOld
-str_2_Addr
-toBigNum
-toBigNum2
-toBigNum3
-str_2_Bloom
-toBool
-toBool_in
-toBoolean
-toBytes
-toDouble
-toFloat
-str_2_Int
-str_2_Int32u
-str_2_Uint
-str_2_Topic
-str_2_Uint
-str_2_Wei
-toAscString
-toBlock
-toHex
-toDate
-toDayName
-toJson
-toJson1
-toJsonFldList
-toLower
-toMonthName
-toProper
-toRecordID
-toSpaces
-toSpaces2
-int_2_Str
 toTimeStamp
-toTrans
-toUpper
-bnu_2_Hex
 to_int
 to_long
-to_short
 to_uint
 to_ulong
-to_ushort
-
-
-addr_2_Str
-fromBloom
-hash_2_Str
-topic_2_Str
-fromUnsigned
-wei_2_Str
-
-asBitmap
-asDollars
-asEther
-asHex
-asPct
-int_2_Str
-bnu_2_Str
-uint_2_Str
-
-ASSERT_NOT_EQ("c-string non-equality",        foo,  bar      );
-ASSERT_EQ    ("string equality",              foo.c_str(), xfoo);
-ASSERT_TRUE  ("c-string less than",           (foo < bar)    );
-ASSERT_FALSE ("c-string greater than",        (foo > bar)    );
-cout << TESTID("base case", 15) << text1 << "\n";
 #endif

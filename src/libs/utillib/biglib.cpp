@@ -82,7 +82,7 @@ namespace qblocks {
             SFUintBN lastDigit(x2);
             lastDigit.divide(buBase, x2);
             // Save the digit.
-            blk[digitNum] = lastDigit.to_ushort();
+            blk[digitNum] = (uint16_t)lastDigit.to_uint();
             // Move on.  We can't run out of room: we figured it out above.
             digitNum++;
         }

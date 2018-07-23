@@ -69,7 +69,7 @@ bool CBalHistory::setValueByName(const string_q& fieldName, const string_q& fiel
             if ( fieldName % "recordID" ) { recordID = fieldValue; return true; }
             break;
         case 't':
-            if ( fieldName % "timestamp" ) { timestamp = toTimestamp(fieldValue); return true; }
+            if ( fieldName % "timestamp" ) { timestamp = str_2_Ts(fieldValue); return true; }
             break;
         default:
             break;
@@ -226,7 +226,7 @@ string_q CBalHistory::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "recordID" ) return recordID;
             break;
         case 't':
-            if ( fieldName % "timestamp" ) return fromTimestamp(timestamp);
+            if ( fieldName % "timestamp" ) return ts_2_Str(timestamp);
             break;
     }
 

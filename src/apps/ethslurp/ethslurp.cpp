@@ -320,7 +320,7 @@ bool CSlurperApp::Filter(COptions& options, string_q& message) {
 
         // The -blocks and -dates filters are mutually exclusive, -dates predominates.
         if (options.firstDate != earliestDate || options.lastDate != latestDate) {
-            SFTime date = dateFromTimeStamp((timestamp_t)trans->timestamp);
+            SFTime date = ts_2_Date((timestamp_t)trans->timestamp);
             bool isVisible = (date >= options.firstDate && date <= options.lastDate);
             trans->m_showing = isVisible;
 

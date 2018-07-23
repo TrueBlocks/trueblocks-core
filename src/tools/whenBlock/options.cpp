@@ -81,7 +81,7 @@ bool COptions::parseArguments(string_q& command) {
             }
 
             foundOne = true;
-            requests.push_back("date:" + int_2_Str(toTimestamp(date)));
+            requests.push_back("date:" + int_2_Str(date_2_Ts(date)));
 
         } else {
 

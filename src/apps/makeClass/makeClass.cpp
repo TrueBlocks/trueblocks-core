@@ -111,7 +111,6 @@ string_q convertTypes(const string_q& inStr) {
     replaceAll(outStr, "gas ",       "SFGas "      );
     replaceAll(outStr, "hash ",      "SFHash "     );
     replaceAll(outStr, "string ",    "string_q "   );
-    replaceAll(outStr, "time ",      "SFTime "     );
     replaceAll(outStr, "uint256 ",   "SFUintBN "   );
     replaceAll(outStr, "int256 ",    "SFIntBN "    );
     replaceAll(outStr, "blknum ",    "blknum_t "   );
@@ -255,7 +254,6 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
         } else if (fld.type == "bbool")     { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BOOL";
         } else if (fld.type == "bool")      { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BOOL";
         } else if (fld.type == "double")    { setFmt = "\t[{NAME}] = [{DEFF}];\n"; regType = "T_DOUBLE";
-        } else if (fld.type == "time")      { setFmt = "\t[{NAME}] = [{DEFT}];\n"; regType = "T_DATE";
         } else if (fld.isPointer)           { setFmt = "\t[{NAME}] = [{DEFP}];\n"; regType = "T_POINTER";
         } else if (fld.isObject)            { setFmt = "\t[{NAME}].initialize();\n";     regType = "T_OBJECT";
         } else                               { setFmt = badSet;                     regType = "T_TEXT"; }
@@ -480,9 +478,6 @@ string_q getCaseCode(const string_q& fieldCase, const string_q& ex) {
                         replaceAll(ptrCase, "[{TYPE}]", type);
                         caseCode += ptrCase;
 
-                    } else if (type == "time") {
-                        caseCode += " return [{PTR}]" + field + ".Format(FMT_JSON);";
-
                     } else if (type == "bbool" || type == "bool") {
                         caseCode += " return int_2_Str([{PTR}]" + field + ");";
 
@@ -496,7 +491,7 @@ string_q getCaseCode(const string_q& fieldCase, const string_q& ex) {
                         caseCode += " return gas_2_Str([{PTR}]" + field + ");";
 
                     } else if (type == "timestamp") {
-                        caseCode += " return fromTimestamp([{PTR}]" + field + ");";
+                        caseCode += " return ts_2_Str([{PTR}]" + field + ");";
 
                     } else if (type == "addr" || type == "address") {
                         caseCode += " return addr_2_Str([{PTR}]" + field + ");";
@@ -598,9 +593,6 @@ string_q getCaseSetCode(const string_q& fieldCase) {
                         replaceAll(ptrCase, "[{TYPE}]", type);
                         caseCode += ptrCase;
 
-                    } else if (type == "time") {
-                        caseCode += " { " + field + " = parseDate(fieldValue); return true; }";
-
                     } else if (type == "bbool" || type == "bool") {
                         caseCode +=  " { " + field + " = str_2_Bool(fieldValue); return true; }";
 
@@ -611,10 +603,10 @@ string_q getCaseSetCode(const string_q& fieldCase) {
                         caseCode +=  " { " + field + " = str_2_Wei(fieldValue); return true; }";
 
                     } else if (type == "gas") {
-                        caseCode +=  " { " + field + " = toGas(fieldValue); return true; }";
+                        caseCode +=  " { " + field + " = str_2_Gas(fieldValue); return true; }";
 
                     } else if (type == "timestamp") {
-                        caseCode +=  " { " + field + " = toTimestamp(fieldValue); return true; }";
+                        caseCode +=  " { " + field + " = str_2_Ts(fieldValue); return true; }";
 
                     } else if (type == "addr" || type == "address") {
                         caseCode += " { " + field + " = str_2_Addr(fieldValue); return true; }";
@@ -661,7 +653,7 @@ string_q getCaseSetCode(const string_q& fieldCase) {
                                contains(type, "SFTopicArray")) {
                         string_q str = strArraySet;
                         replaceAll(str, "[{NAME}]", field);
-                        replaceAll(str, "nextTokenClear(str, ',')", "to[{TYPE}](nextTokenClear(str, ','))");
+                        replaceAll(str, "nextTokenClear(str, ',')", "str_2_[{TYPE}](nextTokenClear(str, ','))");
                         replaceAll(str, "[{TYPE}]", substitute(extract(type, 2), "Array", ""));
                         caseCode += str;
 
@@ -865,10 +857,10 @@ string_q checkType(const string_q& typeIn) {
 
     string_q keywords[] = {
         "address", "bloom",  "bool",
-        "bytes",   "bytes4", "bytes8",  "bytes16",   "bytes32",
-        "double",  "gas",    "hash",    "int256",    "int32",
-        "int64",   "string", "time",    "timestamp", "uint256",
-        "uint32",  "uint64", "uint8",   "wei",       "blknum",
+        "bytes",   "bytes4", "bytes8",    "bytes16",   "bytes32",
+        "double",  "gas",    "hash",      "int256",    "int32",
+        "int64",   "string", "timestamp", "uint256",
+        "uint32",  "uint64", "uint8",     "wei",       "blknum",
     };
     size_t cnt = sizeof(keywords) / sizeof(string_q);
     for (size_t i = 0 ; i < cnt ; i++) {

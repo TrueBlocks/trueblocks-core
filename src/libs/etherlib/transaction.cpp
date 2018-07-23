@@ -118,7 +118,7 @@ bool CTransaction::setValueByName(const string_q& fieldName, const string_q& fie
             break;
         case 't':
             if ( fieldName % "transactionIndex" ) { transactionIndex = str_2_Uint(fieldValue); return true; }
-            if ( fieldName % "timestamp" ) { timestamp = toTimestamp(fieldValue); return true; }
+            if ( fieldName % "timestamp" ) { timestamp = str_2_Ts(fieldValue); return true; }
             if ( fieldName % "to" ) { to = str_2_Addr(fieldValue); return true; }
             break;
         case 'v':
@@ -313,7 +313,7 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
             case 'd':
                 if (fieldIn % "date" || fieldIn % "datesh") {
                     timestamp_t ts = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
-                    string_q ret = dateFromTimeStamp(ts).Format(FMT_JSON);
+                    string_q ret = ts_2_Date(ts).Format(FMT_JSON);
                     if (fieldIn % "datesh")  // short date
                         return extract(ret, 0, 10);
                     return ret;
@@ -346,7 +346,7 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
                 if ( fieldIn % "timestamp" && tra->pBlock) return int_2_Str(tra->pBlock->timestamp);
                 if ( fieldIn % "time" ) {
                     timestamp_t ts = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
-                    return extract(dateFromTimeStamp(ts).Format(FMT_JSON), 12);
+                    return extract(ts_2_Date(ts).Format(FMT_JSON), 12);
                 }
                 break;
             // EXISTING_CODE
@@ -447,7 +447,7 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
             break;
         case 't':
             if ( fieldName % "transactionIndex" ) return uint_2_Str(transactionIndex);
-            if ( fieldName % "timestamp" ) return fromTimestamp(timestamp);
+            if ( fieldName % "timestamp" ) return ts_2_Str(timestamp);
             if ( fieldName % "to" ) return addr_2_Str(to);
             break;
         case 'v':

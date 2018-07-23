@@ -62,7 +62,7 @@ bool CPriceQuote::setValueByName(const string_q& fieldName, const string_q& fiel
     // EXISTING_CODE
     if ( fieldName % "date" || fieldName % "timestamp" ) {
         timestamp = str_2_Int(fieldValue);
-        date = dateFromTimeStamp((timestamp_t)timestamp);
+        date = ts_2_Date((timestamp_t)timestamp);
         return true;
     }
     // EXISTING_CODE
@@ -72,7 +72,7 @@ bool CPriceQuote::setValueByName(const string_q& fieldName, const string_q& fiel
             if ( fieldName % "close" ) { close = str_2_Double(fieldValue); return true; }
             break;
         case 't':
-            if ( fieldName % "timestamp" ) { timestamp = toTimestamp(fieldValue); return true; }
+            if ( fieldName % "timestamp" ) { timestamp = str_2_Ts(fieldValue); return true; }
             break;
         default:
             break;
@@ -83,7 +83,7 @@ bool CPriceQuote::setValueByName(const string_q& fieldName, const string_q& fiel
 //---------------------------------------------------------------------------------------------------
 void CPriceQuote::finishParse() {
     // EXISTING_CODE
-    date = dateFromTimeStamp((timestamp_t)timestamp);
+    date = ts_2_Date((timestamp_t)timestamp);
     // EXISTING_CODE
 }
 
@@ -236,7 +236,7 @@ string_q CPriceQuote::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "close" ) return double_2_Str(close);
             break;
         case 't':
-            if ( fieldName % "timestamp" ) return fromTimestamp(timestamp);
+            if ( fieldName % "timestamp" ) return ts_2_Str(timestamp);
             break;
     }
 

@@ -36,6 +36,7 @@ static COption params[] = {
 };
 static size_t nParams = sizeof(params) / sizeof(COption);
 
+extern SFTime parseDate(const string_q& strIn);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
@@ -241,4 +242,26 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
         return ret;
     }
     return str;
+}
+
+//---------------------------------------------------------------------------------------
+#define str_2_Int32u(a) (uint32_t)str_2_Uint((a))
+SFTime parseDate(const string_q& strIn) {
+    if (strIn.empty())
+        return earliestDate;
+
+    string_q str = strIn;
+    replaceAll(str, ";", "");
+    if (str.length() != 14) {
+        str += "120000";
+    }
+
+    uint32_t y  = str_2_Int32u(extract(str,  0, 4));
+    uint32_t m  = str_2_Int32u(extract(str,  4, 2));
+    uint32_t d  = str_2_Int32u(extract(str,  6, 2));
+    uint32_t h  = str_2_Int32u(extract(str,  8, 2));
+    uint32_t mn = str_2_Int32u(extract(str, 10, 2));
+    uint32_t s  = str_2_Int32u(extract(str, 12, 2));
+
+    return SFTime(y, m, d, h, mn, s);
 }
