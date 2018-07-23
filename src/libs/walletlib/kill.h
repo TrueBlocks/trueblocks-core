@@ -25,7 +25,7 @@
 //--------------------------------------------------------------------------
 class QKill : public CTransaction {
 public:
-    SFAddress _to;
+    address_t _to;
 
 public:
     QKill(void);

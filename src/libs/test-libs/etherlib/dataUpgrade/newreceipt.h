@@ -26,7 +26,7 @@
 //--------------------------------------------------------------------------
 class CNewReceipt : public CBaseNode {
 public:
-    SFAddress contractAddress;
+    address_t contractAddress;
     SFGas gasUsed;
     CLogEntryArray logs;
     SFBloom logsBloom;

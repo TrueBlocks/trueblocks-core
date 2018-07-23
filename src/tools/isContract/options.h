@@ -17,7 +17,7 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    SFAddress addrs[MAX_ADDRS];
+    address_t addrs[MAX_ADDRS];
     uint64_t nAddrs;
     bool diff;
     bool asData;

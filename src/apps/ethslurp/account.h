@@ -28,7 +28,7 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CAccount : public CBaseNode {
 public:
-    SFAddress addr;
+    address_t addr;
     string_q header;
     string_q displayString;
     uint64_t pageSize;

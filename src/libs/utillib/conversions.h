@@ -24,7 +24,7 @@ namespace qblocks {
     using blknum_t    = uint64_t;
     using txnum_t     = uint64_t;
     using SFGas       = uint64_t;
-    using SFAddress   = string_q;
+    using address_t   = string_q;
     using SFHash      = string_q;
     using SFBloom     = SFUintBN;
     using SFWei       = SFUintBN;
@@ -36,7 +36,7 @@ namespace qblocks {
     using SFIntArray     = vector < int64_t   >;
     using SFBigUintArray = vector < SFUintBN  >;
     using SFBigIntArray  = vector < SFIntBN   >;
-    using SFAddressArray = vector < SFAddress >;
+    using CAddressArray = vector < address_t >;
     using SFBloomArray   = vector < SFBloom   >;
 
     //-------------------------------------------------------------------------
@@ -48,7 +48,7 @@ namespace qblocks {
     extern double      str_2_Double (const string_q& str);
     extern SFIntBN     str_2_BigInt (const string_q& str);
     extern SFUintBN    str_2_BigUint(const string_q& str);
-    extern SFAddress   str_2_Addr   (const string_q& str);
+    extern address_t   str_2_Addr   (const string_q& str);
     extern SFHash      str_2_Hash   (const string_q& str);
     extern SFUintBN    str_2_Wei    (const string_q& str);
     extern SFBloom     str_2_Bloom  (const string_q& str);
@@ -63,7 +63,7 @@ namespace qblocks {
     extern string_q    double_2_Str (double f, size_t nDecimals = 10);
     extern string_q    bni_2_Str    (const SFIntBN& bn);
     extern string_q    bnu_2_Str    (const SFUintBN& bu);
-    extern string_q    addr_2_Str   (const SFAddress& addr);
+    extern string_q    addr_2_Str   (const address_t& addr);
     extern string_q    hash_2_Str   (const SFHash& hash);
     extern string_q    wei_2_Str    (const SFWei& wei);
     extern string_q    bloom_2_Str  (const SFBloom& bloom);
@@ -86,10 +86,10 @@ namespace qblocks {
 
     //--------------------------------------------------------------------
     extern bool        isZeroHash   (const SFHash& hash);
-    extern bool        isZeroAddr   (const SFAddress& addr);
+    extern bool        isZeroAddr   (const address_t& addr);
     extern bool        isNumeral    (const string_q& test);
     extern bool        isHexStr     (const string_q& str);
-    extern bool        isAddress    (const SFAddress& addr);
+    extern bool        isAddress    (const address_t& addr);
     extern bool        isHash       (const SFHash& hashIn);
     extern bool        isUnsigned   (const string_q& in);
 

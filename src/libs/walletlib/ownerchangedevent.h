@@ -25,8 +25,8 @@
 //--------------------------------------------------------------------------
 class QOwnerChangedEvent : public CLogEntry {
 public:
-    SFAddress oldOwner;
-    SFAddress newOwner;
+    address_t oldOwner;
+    address_t newOwner;
 
 public:
     QOwnerChangedEvent(void);

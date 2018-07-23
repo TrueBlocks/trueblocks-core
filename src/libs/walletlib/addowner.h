@@ -25,7 +25,7 @@
 //--------------------------------------------------------------------------
 class QAddOwner : public CTransaction {
 public:
-    SFAddress _owner;
+    address_t _owner;
 
 public:
     QAddOwner(void);

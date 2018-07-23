@@ -363,7 +363,7 @@ string_q CAccountWatch::displayName(bool expand, bool useColor, bool terse, size
 }
 
 //-----------------------------------------------------------------------
-SFUintBN getNodeBal(CBalanceHistoryArray& history, const SFAddress& addr, blknum_t blockNum) {
+SFUintBN getNodeBal(CBalanceHistoryArray& history, const address_t& addr, blknum_t blockNum) {
 
     if (!startsWith(addr, "0x"))
         return 0;
@@ -380,10 +380,10 @@ SFUintBN getNodeBal(CBalanceHistoryArray& history, const SFAddress& addr, blknum
         SFArchive balCache(READING_ARCHIVE);
         if (balCache.Lock(binaryFilename, binaryReadOnly, LOCK_NOWAIT)) {
             blknum_t last = NOPOS;
-            SFAddress lastA;
+            address_t lastA;
             while (!balCache.Eof()) {
                 blknum_t bn;
-                SFAddress addr1;
+                address_t addr1;
                 SFUintBN bal;
                 balCache >> bn >> addr1 >> bal;
                 if (addr == addr1) {

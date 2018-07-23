@@ -25,7 +25,7 @@
 //--------------------------------------------------------------------------
 class QExecute : public CTransaction {
 public:
-    SFAddress _to;
+    address_t _to;
     SFUintBN _value;
     string_q _data;
 

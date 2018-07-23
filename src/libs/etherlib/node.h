@@ -51,7 +51,7 @@ namespace qblocks {
     extern bool     queryRawReceipt         (string_q& results,   const SFHash& txHash);
     extern bool     queryRawLog             (string_q& results,   const SFHash& hashIn);
     extern bool     queryRawTrace           (string_q& results,   const SFHash& hashIn);
-    extern bool     queryRawLogs            (string_q& results,   const SFAddress& addr,
+    extern bool     queryRawLogs            (string_q& results,   const address_t& addr,
                                                     uint64_t fromBlock, uint64_t toBlock);
 
     //-----------------------------------------------------------------------
@@ -71,16 +71,16 @@ namespace qblocks {
     extern string_q getVersionFromClient    (void);
     inline bool     isGeth                  (void) { return contains(toLower(getVersionFromClient()), "geth"); }  // NOLINT
     inline bool     isParity                (void) { return contains(toLower(getVersionFromClient()), "parity"); }  // NOLINT
-    extern bool     getAccounts             (SFAddressArray& addrs);
+    extern bool     getAccounts             (CAddressArray& addrs);
     extern uint64_t getLatestBlockFromClient(void);
     extern uint64_t getLatestBlockFromCache (void);
     extern bool     getLatestBlocks         (uint64_t& cache, uint64_t& client);
 
     //-------------------------------------------------------------------------
-    extern bool     getCode                 (const SFAddress& addr, string_q& theCode);
-    inline string_q getCode                 (const SFAddress& addr) { string_q ret; getCode(addr, ret); return ret; }  // NOLINT
-    inline bool     isContract              (const SFAddress& addr) { return !substitute(getCode(addr), "0x", "").empty(); }  // NOLINT
-    extern SFUintBN getBalance              (const SFAddress& addr, blknum_t blockNum, bool isDemo);
+    extern bool     getCode                 (const address_t& addr, string_q& theCode);
+    inline string_q getCode                 (const address_t& addr) { string_q ret; getCode(addr, ret); return ret; }  // NOLINT
+    inline bool     isContract              (const address_t& addr) { return !substitute(getCode(addr), "0x", "").empty(); }  // NOLINT
+    extern SFUintBN getBalance              (const address_t& addr, blknum_t blockNum, bool isDemo);
     extern bool     getSha3                 (const string_q& hexIn, string_q& shaOut);
     inline string_q getSha3                 (const string_q& hexIn) { string_q ret; getSha3(hexIn,ret); return ret; }  // NOLINT
 
