@@ -26,7 +26,7 @@
 class QApproveAndCall : public CTransaction {
 public:
     address_t _spender;
-    SFUintBN _value;
+    biguint_t _value;
     string_q _extraData;
 
 public:

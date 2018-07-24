@@ -111,8 +111,8 @@ string_q convertTypes(const string_q& inStr) {
     replaceAll(outStr, "gas ",       "gas_t "      );
     replaceAll(outStr, "hash ",      "hash_t "     );
     replaceAll(outStr, "string ",    "string_q "   );
-    replaceAll(outStr, "uint256 ",   "SFUintBN "   );
-    replaceAll(outStr, "int256 ",    "SFIntBN "    );
+    replaceAll(outStr, "uint256 ",   "biguint_t "   );
+    replaceAll(outStr, "int256 ",    "bigint_t "    );
     replaceAll(outStr, "blknum ",    "blknum_t "   );
     replaceAll(outStr, "timestamp ", "timestamp_t ");
     replaceAll(outStr, "bbool ",     "bool "       );

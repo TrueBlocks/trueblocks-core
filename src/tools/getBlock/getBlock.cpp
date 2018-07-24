@@ -118,7 +118,7 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
         if (!opt.silent) {
             string_q format = opt.format;
 //            if (false) { //opt.priceBlocks) {
-//                SFUintBN oneWei = str_2_Wei("1000000000000000000");
+//                biguint_t oneWei = str_2_Wei("1000000000000000000");
 //                string_q dollars = "$" + asDollars(gold.timestamp, oneWei);
 //                replace(format, "{PRICE:CLOSE}", dollars);
 //            }

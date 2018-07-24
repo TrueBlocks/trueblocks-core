@@ -80,7 +80,7 @@ namespace qblocks {
     extern bool     getCode                 (const address_t& addr, string_q& theCode);
     inline string_q getCode                 (const address_t& addr) { string_q ret; getCode(addr, ret); return ret; }  // NOLINT
     inline bool     isContract              (const address_t& addr) { return !substitute(getCode(addr), "0x", "").empty(); }  // NOLINT
-    extern SFUintBN getBalance              (const address_t& addr, blknum_t blockNum, bool isDemo);
+    extern biguint_t getBalance              (const address_t& addr, blknum_t blockNum, bool isDemo);
     extern bool     getSha3                 (const string_q& hexIn, string_q& shaOut);
     inline string_q getSha3                 (const string_q& hexIn) { string_q ret; getSha3(hexIn,ret); return ret; }  // NOLINT
 
@@ -128,7 +128,7 @@ namespace qblocks {
     #define miniTransCache (blockCachePath("miniTrans.bin"))
     #define blockFolder    (blockCachePath("blocks/"))
     #define bloomFolder    (blockCachePath("blooms/"))
-    extern SFUintBN weiPerEther;
+    extern biguint_t weiPerEther;
 
 }  // namespace qblocks
 

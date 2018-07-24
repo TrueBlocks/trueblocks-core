@@ -25,7 +25,7 @@
 //--------------------------------------------------------------------------
 class QRequirementChangedEvent : public CLogEntry {
 public:
-    SFUintBN newRequirement;
+    biguint_t newRequirement;
 
 public:
     QRequirementChangedEvent(void);

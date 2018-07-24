@@ -337,8 +337,8 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
             case 'g':
                 if ( fieldIn % "gasUsed" ) return uint_2_Str(tra->receipt.gasUsed);
                 if ( fieldIn % "gasCost" ) {
-                    SFUintBN used = tra->receipt.gasUsed;
-                    SFUintBN price = tra->gasPrice;
+                    biguint_t used = tra->receipt.gasUsed;
+                    biguint_t price = tra->gasPrice;
                     return bnu_2_Str(used * price);
                 }
                 break;

@@ -85,7 +85,7 @@ bool visitBlock(uint64_t blockNum, void *data) {
         return usage("Block " + uint_2_Str(blockNum) + " is later than the last valid block " + late + ". Quitting...");
     }
 
-    SFUintBN bal = getBalance(options->state.curAddr, blockNum, false);
+    biguint_t bal = getBalance(options->state.curAddr, blockNum, false);
     options->state.totalVal += bal;
     string_q sBal = bnu_2_Str(bal);
     if (expContext().asEther) {

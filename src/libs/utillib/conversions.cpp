@@ -19,7 +19,7 @@ namespace qblocks {
 
     extern uint64_t hex_2_Uint64(const string_q& str);
     extern int64_t  hex_2_Int64(const string_q& str) { return (int64_t)hex_2_Uint64(str); }
-    extern SFUintBN exp2BigUint (const string_q &str);
+    extern biguint_t exp2BigUint (const string_q &str);
 
     //--------------------------------------------------------------------------------
     string_q chr_2_HexStr(const string_q& str) {
@@ -33,13 +33,13 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    string_q bnu_2_Hex(const SFUintBN& i) {
+    string_q bnu_2_Hex(const biguint_t& i) {
         return string(BigUnsignedInABase(i, 16));
     }
 
     //--------------------------------------------------------------------------------
     string_q uint_2_Hex(uint64_t num) {
-        SFUintBN bn = num;
+        biguint_t bn = num;
         return toLower("0x" + bnu_2_Hex(bn));
     }
 
@@ -65,7 +65,7 @@ namespace qblocks {
     }
 
     //-----------------------------------------------------------------------
-    string_q wei_2_Ether(SFUintBN in) {
+    string_q wei_2_Ether(biguint_t in) {
         string_q ret = wei_2_Ether(bnu_2_Str(in));
         if (contains(ret, "."))
             ret = trimTrailing(ret,'0');
@@ -75,7 +75,7 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     class bloom_tHex : public BigNumStore<unsigned char> {
     public:
-        explicit bloom_tHex(const SFUintBN& numIn);
+        explicit bloom_tHex(const biguint_t& numIn);
         string_q str;
     };
 
@@ -130,7 +130,7 @@ namespace qblocks {
             return str;
         if (str.empty())
             return "0x0";
-        SFUintBN bn = str_2_Wei(str);
+        biguint_t bn = str_2_Wei(str);
         return toLower("0x" + bnu_2_Hex(bn));
     }
 
@@ -145,17 +145,17 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    SFIntBN str_2_BigInt(const string_q& s) {
-        return (s[0] == '-') ? SFIntBN(str_2_BigUint(extract(s, 1, s.length() - 1)), -1)
-        : (s[0] == '+') ? SFIntBN(str_2_BigUint(extract(s, 1, s.length() - 1)))
-        : SFIntBN(str_2_BigUint(s));
+    bigint_t str_2_BigInt(const string_q& s) {
+        return (s[0] == '-') ? bigint_t(str_2_BigUint(extract(s, 1, s.length() - 1)), -1)
+        : (s[0] == '+') ? bigint_t(str_2_BigUint(extract(s, 1, s.length() - 1)))
+        : bigint_t(str_2_BigUint(s));
     }
 
     //--------------------------------------------------------------------------------
-    SFUintBN str_2_BigUint(const string_q& str) {
+    biguint_t str_2_BigUint(const string_q& str) {
         if (startsWith(str, "0x"))
             return str_2_Wei(str);
-        return SFUintBN(BigUnsignedInABase(str, 10));
+        return biguint_t(BigUnsignedInABase(str, 10));
     }
 
     //--------------------------------------------------------------------------------
@@ -182,9 +182,9 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    SFUintBN str_2_Wei(const string_q& str) {
+    biguint_t str_2_Wei(const string_q& str) {
         if (contains(str, "0x"))
-            return SFUintBN(BigUnsignedInABase(extract(str, 2).c_str(), 16));
+            return biguint_t(BigUnsignedInABase(extract(str, 2).c_str(), 16));
         if (contains(str, "e"))
             return exp2BigUint(str.c_str());
         return str_2_BigUint(str);
@@ -237,12 +237,12 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    string_q bni_2_Str(const SFIntBN& num) {
+    string_q bni_2_Str(const bigint_t& num) {
         return (num.isNegative() ? string("-") : "") + bnu_2_Str(num.getMagnitude());
     }
 
     //--------------------------------------------------------------------------------
-    string_q bnu_2_Str(const SFUintBN& num) {
+    string_q bnu_2_Str(const biguint_t& num) {
         return string(BigUnsignedInABase(num, 10));
     }
 
@@ -389,13 +389,13 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    SFUintBN exp2BigUint(const string_q &s) {
+    biguint_t exp2BigUint(const string_q &s) {
         string_q exponent = s.c_str();
         string_q decimals = nextTokenClear(exponent, 'e');
         string_q num = nextTokenClear(decimals, '.');
         uint64_t nD = decimals.length();
         uint64_t e = str_2_Uint(exponent);
-        SFUintBN ee = 1;
+        biguint_t ee = 1;
         uint64_t power = e - nD;
         for (uint64_t i = 0 ; i < power ; i++)
             ee *= 10;
@@ -404,15 +404,15 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    bloom_tHex::bloom_tHex(const SFUintBN& numIn) {
+    bloom_tHex::bloom_tHex(const biguint_t& numIn) {
 
         len = 1024;
         allocate(1024);
 
-        SFUintBN x2(numIn);
+        biguint_t x2(numIn);
         unsigned int nDigits = 0;
         while (x2.len != 0) {
-            SFUintBN lastDigit(x2);
+            biguint_t lastDigit(x2);
             lastDigit.divide(16, x2);
             blk[nDigits] = (unsigned char)lastDigit.to_uint();
             nDigits++;

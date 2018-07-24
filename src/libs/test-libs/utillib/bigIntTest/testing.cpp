@@ -44,8 +44,8 @@
 } while (0)
 
 //----------------------------------------------------------------------
-extern const SFUintBN& check(const SFUintBN& x);
-extern const SFIntBN&  check(const SFIntBN& x);
+extern const biguint_t& check(const biguint_t& x);
+extern const bigint_t&  check(const bigint_t& x);
 
 //----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
@@ -59,50 +59,50 @@ int main(int argc, const char *argv[]) {
         uint64_t pathologicalLong  = (uint64_t)~((uint64_t)(~0) >> 1);
         uint64_t testID = 0;
 
-        SFIntBN a;
+        bigint_t a;
         int b = 535;
-        SFIntBN c(a);
-        SFIntBN d(-314159265);
-//        SFIntBN e(3141592653589793238462643383279); doesn't compile because there is no literal that big -- okay!
-        SFIntBN f;
-        SFIntBN g(314159), h(265);
-        SFUintBN i(0xFF0000FF), j(0x0000FFFF);
+        bigint_t c(a);
+        bigint_t d(-314159265);
+//        bigint_t e(3141592653589793238462643383279); doesn't compile because there is no literal that big -- okay!
+        bigint_t f;
+        bigint_t g(314159), h(265);
+        biguint_t i(0xFF0000FF), j(0x0000FFFF);
         string s("3141592653589793238462643383279"), s2;
         string results[] = {
             "1", "314", "98596", "30959144", "9721171216", "3052447761824", "958468597212736",
             "300959139524799104", "94501169810786918656", "29673367320587092457984", "9317437338664347031806976"
         };
-        SFUintBN x(1), big314(314);
+        biguint_t x(1), big314(314);
         int power = 0;
-        SFUintBN z(0), one(1), ten(10);
-        SFUintBN coreDump = SFUintBN(BigUnsignedInABase("de0b6b3a7640000", 16));
+        biguint_t z(0), one(1), ten(10);
+        biguint_t coreDump = biguint_t(BigUnsignedInABase("de0b6b3a7640000", 16));
 
         uint64_t myBlocks[3];
         myBlocks[0] = 3;
         myBlocks[1] = 4;
         myBlocks[2] = 0;
-        SFUintBN bu(myBlocks, 3);
+        biguint_t bu(myBlocks, 3);
 
         uint64_t myZeroBlocks[1];
         myZeroBlocks[0] = 0;
 
-        SFUintBN aa = check(SFUintBN(314159265) * 358979323);
-        SFUintBN bb;
-        SFUintBN bbb(314);
-        SFUintBN bbbb(25);
+        biguint_t aa = check(biguint_t(314159265) * 358979323);
+        biguint_t bb;
+        biguint_t bbb(314);
+        biguint_t bbbb(25);
 
-        SFUintBN ss1 = str_2_BigUint(string_q("314159265358979323"));
-        SFUintBN ss2 = str_2_BigUint(string_q("314159265358979324"));
-        SFUintBN ss3 = str_2_BigUint(string_q("4294967296"));
-        SFUintBN ss4 = str_2_BigUint(string_q("4294967298"));
+        biguint_t ss1 = str_2_BigUint(string_q("314159265358979323"));
+        biguint_t ss2 = str_2_BigUint(string_q("314159265358979324"));
+        biguint_t ss3 = str_2_BigUint(string_q("4294967296"));
+        biguint_t ss4 = str_2_BigUint(string_q("4294967298"));
 
-        SFUintBN p1 = SFUintBN(3) * 5;
-        SFIntBN p2 = SFIntBN(SFUintBN(3)) * -5;
-        SFIntBN num(3), denom(5), quotient;
-        SFIntBN zero(0), three(3), ans;
-        SFIntBN fff=4; fff *= 3;
-        SFUintBN aaaaa(0), bbbbb(3);
-        SFUintBN four(4), eight(8), sixteen(16);
+        biguint_t p1 = biguint_t(3) * 5;
+        bigint_t p2 = bigint_t(biguint_t(3)) * -5;
+        bigint_t num(3), denom(5), quotient;
+        bigint_t zero(0), three(3), ans;
+        bigint_t fff=4; fff *= 3;
+        biguint_t aaaaa(0), bbbbb(3);
+        biguint_t four(4), eight(8), sixteen(16);
 
         TEST2( a,                                                          "0"                 );
         a = b;
@@ -111,7 +111,7 @@ int main(int argc, const char *argv[]) {
         f = str_2_BigInt(s);
         s2 = bni_2_Str(f);
         TEST2( f,                                                          "3141592653589793238462643383279");
-        f = SFUintBN(BigUnsignedInABase("1142b0090b6460000", 16));
+        f = biguint_t(BigUnsignedInABase("1142b0090b6460000", 16));
         TEST2( f,                                                          "19900000000000000000");
         TEST2( g+h,                                                        "314424"            );
         TEST2( g-h,                                                        "313894"            );
@@ -139,98 +139,98 @@ int main(int argc, const char *argv[]) {
         TEST( x,                                   results[power]      ); x *= big314 ; power++;
         TEST( x,                                   results[power]      ); x *= big314 ; power++;
         TEST( x,                                   results[power]      ); x *= big314 ; power++;
-        TEST( gcd(SFUintBN(60), 72),                                      "12"                );
-        TEST( modinv(SFUintBN(7), 11),                                    "8"                 );
-        TEST( modexp(SFUintBN(314), 159, 2653),                           "1931"              );
+        TEST( gcd(biguint_t(60), 72),                                      "12"                );
+        TEST( modinv(biguint_t(7), 11),                                    "8"                 );
+        TEST( modexp(biguint_t(314), 159, 2653),                           "1931"              );
         TEST( z,                                                          "0"                 );
         TEST( one,                                                        "1"                 );
         TEST( ten,                                                        "10"                );
-        TEST( check( SFUintBN() ),                                        "0"                 );
-        TEST2( check( SFIntBN () ),                                        "0"                 );
+        TEST( check( biguint_t() ),                                        "0"                 );
+        TEST2( check( bigint_t () ),                                        "0"                 );
         TEST( check( bu ),                                                "17179869187"       );
-        TEST2( check( SFIntBN(myBlocks, 3) ),                              "-7179869187"       );
-        TEST2( check( SFIntBN(bu) ),                                       "error"             );
-        TEST2( check( SFIntBN(myBlocks, 3, 1) ),                           "17179869187"       );
-        TEST2( check( SFIntBN(myBlocks, 3, -1) ),                          "-17179869187"      );
-        TEST2( check( SFIntBN(myBlocks, 3, 0    ) ),                       "error"             );
-        TEST2( check( SFIntBN(bu, 1) ),                                    "17179869187"       );
-        TEST2( check( SFIntBN(bu, -1) ),                                   "-17179869187"      );
-        TEST2( check( SFIntBN(bu, 0    ) ),                                "error"             );
-        TEST2( check( SFIntBN(myZeroBlocks, 1, 1) ),                       "0"                 );
-        TEST2( check( SFIntBN(myZeroBlocks, 1, -1) ),                      "0"                 );
-        TEST2( check( SFIntBN(myZeroBlocks, 1, 0) ),                       "0"                 );
-        TEST( SFUintBN   (0).to_ulong(),                                  "0"                 );
-        TEST( SFUintBN   (4294967295U).to_ulong(),                        "4294967295"        );
+        TEST2( check( bigint_t(myBlocks, 3) ),                              "-7179869187"       );
+        TEST2( check( bigint_t(bu) ),                                       "error"             );
+        TEST2( check( bigint_t(myBlocks, 3, 1) ),                           "17179869187"       );
+        TEST2( check( bigint_t(myBlocks, 3, -1) ),                          "-17179869187"      );
+        TEST2( check( bigint_t(myBlocks, 3, 0    ) ),                       "error"             );
+        TEST2( check( bigint_t(bu, 1) ),                                    "17179869187"       );
+        TEST2( check( bigint_t(bu, -1) ),                                   "-17179869187"      );
+        TEST2( check( bigint_t(bu, 0    ) ),                                "error"             );
+        TEST2( check( bigint_t(myZeroBlocks, 1, 1) ),                       "0"                 );
+        TEST2( check( bigint_t(myZeroBlocks, 1, -1) ),                      "0"                 );
+        TEST2( check( bigint_t(myZeroBlocks, 1, 0) ),                       "0"                 );
+        TEST( biguint_t   (0).to_ulong(),                                  "0"                 );
+        TEST( biguint_t   (4294967295U).to_ulong(),                        "4294967295"        );
         TEST( str_2_BigUint (string_q("4294967296")).to_ulong(),            "error"             );
-        TEST( SFUintBN   (0).to_long(),                                   "0"                 );
-        TEST( SFUintBN   (2147483647).to_long(),                          "2147483647"        );
-        TEST( SFUintBN   (2147483648U).to_long(),                         "error"             );
-        TEST( SFUintBN   (0).to_uint(),                                   "0"                 );
-        TEST( SFUintBN   (4294967295U).to_uint(),                         "4294967295"        );
+        TEST( biguint_t   (0).to_long(),                                   "0"                 );
+        TEST( biguint_t   (2147483647).to_long(),                          "2147483647"        );
+        TEST( biguint_t   (2147483648U).to_long(),                         "error"             );
+        TEST( biguint_t   (0).to_uint(),                                   "0"                 );
+        TEST( biguint_t   (4294967295U).to_uint(),                         "4294967295"        );
         TEST( str_2_BigUint (string_q("4294967296")).to_uint(),             "error"             );
-        TEST( SFUintBN   (0).to_int(),                                    "0"                 );
-        TEST( SFUintBN   (2147483647).to_int(),                           "2147483647"        );
-        TEST( SFUintBN   (2147483648U).to_int(),                          "error"             );
-        TEST( SFUintBN   (0).to_uint(),                                 "0"                 );
-        TEST( SFUintBN   (65535).to_uint(),                             "65535"             );
-        TEST( SFUintBN   (65536).to_uint(),                             "error"             );
-        TEST( SFUintBN   (0).to_int(),                                  "0"                 );
-        TEST( SFUintBN   (32767).to_int(),                              "32767"             );
-        TEST( SFUintBN   (32768).to_int(),                              "error"             );
-        TEST2( SFIntBN    (-1).to_ulong(),                                 "error"             );
-        TEST2( SFIntBN    (0).to_ulong(),                                  "0"                 );
-        TEST2( SFIntBN    (4294967295U).to_ulong(),                        "4294967295"        );
+        TEST( biguint_t   (0).to_int(),                                    "0"                 );
+        TEST( biguint_t   (2147483647).to_int(),                           "2147483647"        );
+        TEST( biguint_t   (2147483648U).to_int(),                          "error"             );
+        TEST( biguint_t   (0).to_uint(),                                 "0"                 );
+        TEST( biguint_t   (65535).to_uint(),                             "65535"             );
+        TEST( biguint_t   (65536).to_uint(),                             "error"             );
+        TEST( biguint_t   (0).to_int(),                                  "0"                 );
+        TEST( biguint_t   (32767).to_int(),                              "32767"             );
+        TEST( biguint_t   (32768).to_int(),                              "error"             );
+        TEST2( bigint_t    (-1).to_ulong(),                                 "error"             );
+        TEST2( bigint_t    (0).to_ulong(),                                  "0"                 );
+        TEST2( bigint_t    (4294967295U).to_ulong(),                        "4294967295"        );
         TEST2( str_2_BigInt  ("4294967296").to_ulong(),                      "error"             );
         TEST2( str_2_BigInt  ("-2147483649").to_long(),                      "error"             );
         TEST2( str_2_BigInt  ("-2147483648").to_long(),                      "-2147483648"       );
-        TEST2( SFIntBN    (-2147483647).to_long(),                         "-2147483647"       );
-        TEST2( SFIntBN    (0).to_long(),                                   "0"                 );
-        TEST2( SFIntBN    (2147483647).to_long(),                          "2147483647"        );
-        TEST2( SFIntBN    (2147483648U).to_long(),                         "error"             );
-        TEST2( SFIntBN    (-1).to_uint(),                                  "error"             );
-        TEST2( SFIntBN    (0).to_uint(),                                   "0"                 );
-        TEST2( SFIntBN    (4294967295U).to_uint(),                         "4294967295"        );
+        TEST2( bigint_t    (-2147483647).to_long(),                         "-2147483647"       );
+        TEST2( bigint_t    (0).to_long(),                                   "0"                 );
+        TEST2( bigint_t    (2147483647).to_long(),                          "2147483647"        );
+        TEST2( bigint_t    (2147483648U).to_long(),                         "error"             );
+        TEST2( bigint_t    (-1).to_uint(),                                  "error"             );
+        TEST2( bigint_t    (0).to_uint(),                                   "0"                 );
+        TEST2( bigint_t    (4294967295U).to_uint(),                         "4294967295"        );
         TEST2( str_2_BigInt  ("4294967296").to_uint(),                       "error"             );
         TEST2( str_2_BigInt  ("-2147483649").to_int(),                       "error"             );
         TEST2( str_2_BigInt  ("-2147483645").to_int(),                       "-2147483645"       );
-        TEST2( SFIntBN    (-2147483647).to_int(),                          "-2147483647"       );
-        TEST2( SFIntBN    (0).to_int(),                                    "0"                 );
-        TEST2( SFIntBN    (2147483647).to_int(),                           "2147483647"        );
-        TEST2( SFIntBN    (2147483648U).to_int(),                          "error"             );
-        TEST2( SFIntBN    (-1).to_uint(),                                "error"             );
-        TEST2( SFIntBN    (0).to_uint(),                                 "0"                 );
-        TEST2( SFIntBN    (65535).to_uint(),                             "65535"             );
-        TEST2( SFIntBN    (65536).to_uint(),                             "error"             );
-        TEST2( SFIntBN    (-32769).to_int(),                             "error"             );
-        TEST2( SFIntBN    (-32768).to_int(),                             "-32768"            );
-        TEST2( SFIntBN    (-32767).to_int(),                             "-32767"            );
-        TEST2( SFIntBN    (0).to_int(),                                  "0"                 );
-        TEST2( SFIntBN    (32767).to_int(),                              "32767"             );
-        TEST2( SFIntBN    (32768).to_int(),                              "error"             );
-        TEST( SFUintBN   (int16_t(-1)),                                     "error"           );
-        TEST( SFUintBN   (pathologicalShort),                             "error"             );
-        TEST( SFUintBN   (-1),                                            "error"             );
-        TEST( SFUintBN   (pathologicalInt),                               "error"             );
-        TEST( SFUintBN   (uint64_t(-1)),                                  "18446744073709551615");
-        TEST( SFUintBN   (pathologicalLong),                              "9223372036854775808");
-        TEST( SFUintBN   (5) - SFUintBN(6),                               "error"             );
+        TEST2( bigint_t    (-2147483647).to_int(),                          "-2147483647"       );
+        TEST2( bigint_t    (0).to_int(),                                    "0"                 );
+        TEST2( bigint_t    (2147483647).to_int(),                           "2147483647"        );
+        TEST2( bigint_t    (2147483648U).to_int(),                          "error"             );
+        TEST2( bigint_t    (-1).to_uint(),                                "error"             );
+        TEST2( bigint_t    (0).to_uint(),                                 "0"                 );
+        TEST2( bigint_t    (65535).to_uint(),                             "65535"             );
+        TEST2( bigint_t    (65536).to_uint(),                             "error"             );
+        TEST2( bigint_t    (-32769).to_int(),                             "error"             );
+        TEST2( bigint_t    (-32768).to_int(),                             "-32768"            );
+        TEST2( bigint_t    (-32767).to_int(),                             "-32767"            );
+        TEST2( bigint_t    (0).to_int(),                                  "0"                 );
+        TEST2( bigint_t    (32767).to_int(),                              "32767"             );
+        TEST2( bigint_t    (32768).to_int(),                              "error"             );
+        TEST( biguint_t   (int16_t(-1)),                                     "error"           );
+        TEST( biguint_t   (pathologicalShort),                             "error"             );
+        TEST( biguint_t   (-1),                                            "error"             );
+        TEST( biguint_t   (pathologicalInt),                               "error"             );
+        TEST( biguint_t   (uint64_t(-1)),                                  "18446744073709551615");
+        TEST( biguint_t   (pathologicalLong),                              "9223372036854775808");
+        TEST( biguint_t   (5) - biguint_t(6),                               "error"             );
         TEST( ss1 - ss2,                                                  "error"             );
-        TEST( check( SFUintBN(5)-SFUintBN(5) ),                           "0"                 );
+        TEST( check( biguint_t(5)-biguint_t(5) ),                           "0"                 );
         TEST( check( ss1 - ss2 ),                                         "0"                 );
-        TEST( check( ss3 - SFUintBN(1) ),                                 "4294967295"        );
-        TEST( check( SFUintBN(0) + 0 ),                                   "0"                 );
-        TEST( check( SFUintBN(0) + 1 ),                                   "1"                 );
+        TEST( check( ss3 - biguint_t(1) ),                                 "4294967295"        );
+        TEST( check( biguint_t(0) + 0 ),                                   "0"                 );
+        TEST( check( biguint_t(0) + 1 ),                                   "1"                 );
         TEST( check( str_2_BigUint(string_q("8589934591")) + ss4 ),         "12884901889"       );
-        TEST( check( SFUintBN(0xFFFFFFFFU) + 1 ),                         "4294967296"        );
-        TEST( check( SFUintBN(1) - 0 ),                                   "1"                 );
-        TEST( check( SFUintBN(1) - 1 ),                                   "0"                 );
-        TEST( check( SFUintBN(2) - 1 ),                                   "1"                 );
+        TEST( check( biguint_t(0xFFFFFFFFU) + 1 ),                         "4294967296"        );
+        TEST( check( biguint_t(1) - 0 ),                                   "1"                 );
+        TEST( check( biguint_t(1) - 1 ),                                   "0"                 );
+        TEST( check( biguint_t(2) - 1 ),                                   "1"                 );
         TEST( check( str_2_BigUint(string_q("12884901889")) - ss4),         "8589934591"        );
         TEST( check( ss3 - 1 ),                                           "4294967295"        );
         TEST( aa,                                                         "112776680263877595");
         TEST( aa / 123,                                                   "916883579381118"   );
         TEST( aa % 123,                                                   "81"                );
-        TEST( SFUintBN(5) / 0,                                            "error"             );
+        TEST( biguint_t(5) / 0,                                            "error"             );
         TEST( bb,                                                         "0"                 );
         TEST( bb.getBlock(0),                                             "0"                 ); bb.setBlock(1, 314);
         TEST( check(bb),                                                  "1348619730944"     );
@@ -244,10 +244,10 @@ int main(int argc, const char *argv[]) {
         TEST( bbb.getBlock(1),                                            "0"                 );
         TEST( bbb.getBlock(2),                                            "0"                 );
         TEST( bbb.getBlock(314159),                                       "0"                 );
-        TEST( SFUintBN(0).bitLength(),                                    "0"                 );
-        TEST( SFUintBN(1).bitLength(),                                    "1"                 );
-        TEST( SFUintBN(4095).bitLength(),                                 "12"                );
-        TEST( SFUintBN(4096).bitLength(),                                 "13"                );
+        TEST( biguint_t(0).bitLength(),                                    "0"                 );
+        TEST( biguint_t(1).bitLength(),                                    "1"                 );
+        TEST( biguint_t(4095).bitLength(),                                 "12"                );
+        TEST( biguint_t(4096).bitLength(),                                 "13"                );
         TEST( str_2_BigUint(string_q("5000000000")).bitLength(),            "33"                );
         TEST( bbbb.getBit(4),                                             "1"                 );
         TEST( bbbb.getBit(3),                                             "1"                 );
@@ -265,7 +265,7 @@ int main(int argc, const char *argv[]) {
         TEST2( check(fff),                                                 "12"                ); ans = aaaaa ^ bbbbb;
         TEST2( ans,                                                        "3"                 ); num = 5; num *= num;
         TEST2( check(num),                                                 "25"                );
-        TEST( SFUintBN(0xf),                                              "15"                );
+        TEST( biguint_t(0xf),                                              "15"                );
         TEST( one << 2,                                                   "4"                 );
         TEST( (one << 2) >> 2,                                            "1"                 );
         TEST( (one<<255),                                                 "57896044618658097711785492504343953926634992332820282019728792003956564819968"     );  // NOLINT
@@ -275,7 +275,7 @@ int main(int argc, const char *argv[]) {
         TEST( four|eight,                                                 "12"                );
         TEST( four|sixteen|3,                                             "23"                );
         TEST( four&eight,                                                 "0"                 );
-        TEST2( SFIntBN(four)-sixteen,                                      "-12"               );
+        TEST2( bigint_t(four)-sixteen,                                      "-12"               );
         TEST( (four&sixteen)|four,                                        "4"                 );
         TEST( sixteen%9,                                                  "7"                 );
         TEST( coreDump,                                                   "1000000000000000000");
@@ -294,7 +294,7 @@ int main(int argc, const char *argv[]) {
     return 0;
 }
 
-const SFUintBN &check(const SFUintBN &x) {
+const biguint_t &check(const biguint_t &x) {
     try {
         unsigned int l = x.len;
         if (l != 0 && x.getBlock(l-1) == 0)
@@ -308,7 +308,7 @@ const SFUintBN &check(const SFUintBN &x) {
     return x;
 }
 
-const SFIntBN &check(const SFIntBN &x) {
+const bigint_t &check(const bigint_t &x) {
     try {
         if (x.sign == 0 && x.getMagnitude().len != 0)
             cout << "check: Sign should not be zero!" << endl;

@@ -49,7 +49,7 @@ int main(int argc, const char * argv[]) {
 }
 
 string_q asBar(const string_q& blIn) {
-    SFUintBN bloom = str_2_BigUint(blIn);
+    biguint_t bloom = str_2_BigUint(blIn);
     return substitute(substitute(substitute(extract("0x" + bloom_2_Bits(bloom), 2), "0", ""), "1", "-"), "---", "🁡");
 }
 
@@ -76,7 +76,7 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
         HIDE_FIELD(CBloomTrans, "hash");
 
         if (opt.asBits) {
-            SFUintBN bloom = str_2_BigUint(rawBlock.logsBloom);
+            biguint_t bloom = str_2_BigUint(rawBlock.logsBloom);
             rawBlock.logsBloom = bloom_2_Bits(bloom);
             for (size_t i = 0 ; i < rawBlock.transactions.size() ; i++) {
                 bloom = str_2_BigUint(rawBlock.transactions[i].receipt.logsBloom);  // .at cannot go past end of vector!

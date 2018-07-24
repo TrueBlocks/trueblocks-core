@@ -144,8 +144,8 @@ extern CArchive& operator<<(CArchive& archive, const CPriceQuoteArray& array);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 extern uint64_t indexFromTimeStamp(const CPriceQuoteArray& quotes, timestamp_t ts);
-extern string_q asDollars(timestamp_t ts, SFUintBN weiIn);
-extern string_q dispDollars(timestamp_t ts, SFUintBN weiIn);
+extern string_q asDollars(timestamp_t ts, biguint_t weiIn);
+extern string_q dispDollars(timestamp_t ts, biguint_t weiIn);
 // EXISTING_CODE
 }  // namespace qblocks
 

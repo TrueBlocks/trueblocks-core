@@ -25,7 +25,7 @@
 //--------------------------------------------------------------------------
 class QOwnerOf : public CTransaction {
 public:
-    SFUintBN _tokenId;
+    biguint_t _tokenId;
 
 public:
     QOwnerOf(void);

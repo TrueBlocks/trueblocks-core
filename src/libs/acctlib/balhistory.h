@@ -29,7 +29,7 @@ class CBalHistory : public CBaseNode {
 public:
     string_q recordID;
     timestamp_t timestamp;
-    SFIntBN balance;
+    bigint_t balance;
 
 public:
     CBalHistory(void);
@@ -40,7 +40,7 @@ public:
     DECLARE_NODE(CBalHistory);
 
     // EXISTING_CODE
-    CBalHistory(const string_q& _recID, SFIntBN bal) : recordID(_recID), balance(bal) { }
+    CBalHistory(const string_q& _recID, bigint_t bal) : recordID(_recID), balance(bal) { }
     // EXISTING_CODE
     bool operator==(const CBalHistory& item) const;
     bool operator!=(const CBalHistory& item) const { return !operator==(item); }
