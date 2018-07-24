@@ -356,10 +356,10 @@ int main(int argc, const char *argv[]) {
                         if (name != "logEntry" && !isConst) {
                             // hack warning
                             replaceAll(out, "bytes32[]", "CStringArray");
-                            replaceAll(out, "uint256[]", "SFBigUintArray");  // order matters
-                            replaceAll(out, "int256[]",  "SFBigIntArray");
-                            replaceAll(out, "uint32[]",  "SFUintArray");  // order matters
-                            replaceAll(out, "int32[]",   "SFIntArray");
+                            replaceAll(out, "uint256[]", "CBigUintArray");  // order matters
+                            replaceAll(out, "int256[]",  "CBigIntArray");
+                            replaceAll(out, "uint32[]",  "CUintArray");  // order matters
+                            replaceAll(out, "int32[]",   "CIntArray");
                             stringToAsciiFile(classDefs+fileName, out);
                             if (func->type == "event")
                                 cout << "Generating class for event type: '" << theClass << "'\n";
