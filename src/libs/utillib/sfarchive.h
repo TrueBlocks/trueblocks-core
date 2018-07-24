@@ -95,11 +95,11 @@ namespace qblocks {
     };
 
     extern SFArchive& operator<<(SFArchive& archive, const CStringArray& array);
-    extern SFArchive& operator<<(SFArchive& archive, const SFBigUintArray& array);
-    extern SFArchive& operator<<(SFArchive& archive, const SFUintArray& array);
+    extern SFArchive& operator<<(SFArchive& archive, const CBigUintArray& array);
+    extern SFArchive& operator<<(SFArchive& archive, const CUintArray& array);
 
     extern SFArchive& operator>>(SFArchive& archive, CStringArray& array);
-    extern SFArchive& operator>>(SFArchive& archive, SFBigUintArray& array);
-    extern SFArchive& operator>>(SFArchive& archive, SFUintArray& array);
+    extern SFArchive& operator>>(SFArchive& archive, CBigUintArray& array);
+    extern SFArchive& operator>>(SFArchive& archive, CUintArray& array);
 
 }  // namespace qblocks

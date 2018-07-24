@@ -33,10 +33,10 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     using CStringArray   = vector < string_q  >;
     using CBlockNumArray = vector < uint64_t  >;
-    using SFUintArray    = vector < uint64_t  >;
-    using SFIntArray     = vector < int64_t   >;
-    using SFBigUintArray = vector < SFUintBN  >;
-    using SFBigIntArray  = vector < SFIntBN   >;
+    using CUintArray     = vector < uint64_t  >;
+    using CIntArray      = vector < int64_t   >;
+    using CBigUintArray  = vector < SFUintBN  >;
+    using CBigIntArray   = vector < SFIntBN   >;
     using CAddressArray  = vector < address_t >;
     using CBloomArray    = vector < bloom_t   >;
     using CTopicArray    = vector < topic_t   >;
