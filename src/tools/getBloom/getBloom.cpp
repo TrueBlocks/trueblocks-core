@@ -49,7 +49,8 @@ int main(int argc, const char * argv[]) {
 }
 
 string_q asBar(const string_q& blIn) {
-    return substitute(substitute(substitute(extract("0x"+toBits(blIn), 2), "0", ""), "1", "-"), "---", "🁡");
+    SFUintBN bloom = str_2_BigUint(blIn);
+    return substitute(substitute(substitute(extract("0x" + bloom_2_Bits(bloom), 2), "0", ""), "1", "-"), "---", "🁡");
 }
 
 #include "bloom_blocks.h"
@@ -75,10 +76,13 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
         HIDE_FIELD(CBloomTrans, "hash");
 
         if (opt.asBits) {
-            rawBlock.logsBloom = toBits(rawBlock.logsBloom);
-            for (size_t i = 0 ; i < rawBlock.transactions.size() ; i++)
+            SFUintBN bloom = str_2_BigUint(rawBlock.logsBloom);
+            rawBlock.logsBloom = bloom_2_Bits(bloom);
+            for (size_t i = 0 ; i < rawBlock.transactions.size() ; i++) {
+                bloom = str_2_BigUint(rawBlock.transactions[i].receipt.logsBloom);  // .at cannot go past end of vector!
                 rawBlock.transactions.at(i).receipt.logsBloom =
-                    toBits(rawBlock.transactions[i].receipt.logsBloom);  // .at cannot go past end of vector!
+                    bloom_2_Bits(bloom);
+            }
         }
 
         if (opt.asBars) {

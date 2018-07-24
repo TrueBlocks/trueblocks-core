@@ -9,25 +9,25 @@
 namespace qblocks {
 
     //----------------------------------------------------------------------
-    SFUintBN::SFUintBN(void) : SFBigNumStore<uint64_t>() {
+    SFUintBN::SFUintBN(void) : BigNumStore<uint64_t>() {
     }
 
     //----------------------------------------------------------------------
-    SFUintBN::SFUintBN(const SFUintBN &x) : SFBigNumStore<uint64_t>(x) {
+    SFUintBN::SFUintBN(const SFUintBN &x) : BigNumStore<uint64_t>(x) {
     }
 
     //----------------------------------------------------------------------
     SFUintBN& SFUintBN::operator=(const SFUintBN &x) {
-        SFBigNumStore<uint64_t>::operator=(x);
+        BigNumStore<uint64_t>::operator=(x);
         return *this;
     }
 
     //----------------------------------------------------------------------
-    SFUintBN::SFUintBN(int unused, unsigned int c) : SFBigNumStore<uint64_t>(0, c) {
+    SFUintBN::SFUintBN(int unused, unsigned int c) : BigNumStore<uint64_t>(0, c) {
     }
 
     //----------------------------------------------------------------------
-    SFUintBN::SFUintBN(const uint64_t *b, unsigned int blen) : SFBigNumStore<uint64_t>(b, blen) {
+    SFUintBN::SFUintBN(const uint64_t *b, unsigned int blen) : BigNumStore<uint64_t>(b, blen) {
         trimLeadingZeros();
     }
 

@@ -73,7 +73,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    class bloom_tHex : public SFBigNumStore<unsigned char> {
+    class bloom_tHex : public BigNumStore<unsigned char> {
     public:
         explicit bloom_tHex(const SFUintBN& numIn);
         string_q str;
@@ -196,7 +196,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    SFUintBN str_2_Topic(const string_q& str) {
+    topic_t str_2_Topic(const string_q& str) {
         return str_2_Wei(str);
     }
 
@@ -267,7 +267,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    string_q topic_2_Str(const SFUintBN& topic) {
+    string_q topic_2_Str(const topic_t& topic) {
         return ("0x" + padLeft(toLower(bnu_2_Hex(topic)), 64, '0'));
     }
 

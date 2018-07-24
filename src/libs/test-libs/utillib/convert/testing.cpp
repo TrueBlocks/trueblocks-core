@@ -156,14 +156,14 @@ TEST_F(CThisTest, TestConverts_3) {
     ASSERT_EQ("time4", date_2_Ts(date), ts);
 
     ASSERT_EQ("time5", str_2_Bool("1"), true);
-    ASSERT_EQ("time6", str_2_Hex("1212"), "0x1212");
+    ASSERT_EQ("time6", str_2_Hex("1212"), "0x4bc");
     ASSERT_EQ("time7", str_2_Gas("4000000000"), 4000000000);
     uint64_t x = 4000000000;
     wei_t wei = x;
     wei *= x;
-    ASSERT_EQ("time8", str_2_Wei("40000000004000000000"), wei);
-    ASSERT_EQ("time9", str_2_Bloom("40000000004000000000"), wei);
-    ASSERT_EQ("timeA", str_2_Topic("40000000004000000000"), wei);
+    ASSERT_EQ("time8", str_2_Wei("16000000000000000000"), wei);
+    ASSERT_EQ("time9", str_2_Bloom("16000000000000000000"), wei);
+    ASSERT_EQ("timeA", str_2_Topic("16000000000000000000"), wei);
 
     return subTestID==0;
 }}
