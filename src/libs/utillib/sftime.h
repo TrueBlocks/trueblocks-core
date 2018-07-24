@@ -18,7 +18,7 @@ namespace qblocks {
 
     using timestamp_t = int64_t;
 
-    class SFTime;
+    class time_q;
     enum MONTH {
         JANUARY = 1, FEBRUARY, MARCH,
         APRIL, MAY, JUNE,
@@ -43,7 +43,7 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     // A Date class with a granularity of 1 second
     //-------------------------------------------------------------------------
-    class SFTime {
+    class time_q {
     private:
         class SFDate {
             // Count of days since 15 October 1582 (start of Gregorian Calendar)
@@ -75,13 +75,13 @@ namespace qblocks {
             SFDate& setValues(uint32_t y, uint32_t m, uint32_t d);
             SFDateStruct getDateStruct(void) const;
 
-            friend class SFTime;
+            friend class time_q;
             friend uint32_t getWeekOfMonth(const SFDate& date);
             friend uint32_t getDayOfWeek(const SFDate& date);
         };
 
         //----------------------------------------------------------------------------
-        // Used by SFTime to hold the time portion of the date
+        // Used by time_q to hold the time portion of the date
         //----------------------------------------------------------------------------
         class SFTimeOfDay {
 public:
@@ -102,34 +102,34 @@ public:
         };
 
     public:
-        SFTime(void);
-        SFTime(const SFTime& date);
+        time_q(void);
+        time_q(const time_q& date);
 
-        SFTime(uint32_t year, uint32_t month, uint32_t day, uint32_t hour, uint32_t minute, uint32_t sec);
-        SFTime(uint32_t year, uint32_t month, uint32_t weekInMonth, uint32_t dayOfWeek,
+        time_q(uint32_t year, uint32_t month, uint32_t day, uint32_t hour, uint32_t minute, uint32_t sec);
+        time_q(uint32_t year, uint32_t month, uint32_t weekInMonth, uint32_t dayOfWeek,
                             uint32_t hour, uint32_t minute, uint32_t sec);
-        SFTime(uint32_t days, uint32_t hour, uint32_t minute, uint32_t sec);
-        SFTime(const SFDate& date, const SFTimeOfDay& tod);
-        SFTime(const string_q& dateStr, const string_q& fmtStr);
+        time_q(uint32_t days, uint32_t hour, uint32_t minute, uint32_t sec);
+        time_q(const SFDate& date, const SFTimeOfDay& tod);
+        time_q(const string_q& dateStr, const string_q& fmtStr);
 
-        explicit SFTime(const tm& sysTime, bool useDayOfWeek = false);
+        explicit time_q(const tm& sysTime, bool useDayOfWeek = false);
 
-        SFTime& operator=(const SFTime& date);
+        time_q& operator=(const time_q& date);
 
         bool IsValid(void) const;
 
-        SFTime operator+(const uint32_t& ts) const;
-        SFTime operator-(const uint32_t& ts) const;
-        int64_t operator-(SFTime& date);
+        time_q operator+(const uint32_t& ts) const;
+        time_q operator-(const uint32_t& ts) const;
+        int64_t operator-(time_q& date);
 
-        bool operator==(const SFTime& date) const;
-        bool operator!=(const SFTime& date) const;
+        bool operator==(const time_q& date) const;
+        bool operator!=(const time_q& date) const;
 
-        bool operator>(const SFTime& date) const;
-        bool operator<(const SFTime& date) const;
+        bool operator>(const time_q& date) const;
+        bool operator<(const time_q& date) const;
 
-        bool operator>=(const SFTime& date) const;
-        bool operator<=(const SFTime& date) const;
+        bool operator>=(const time_q& date) const;
+        bool operator<=(const time_q& date) const;
 
         uint32_t GetDay(void) const;
         uint32_t GetMonth(void) const;
@@ -154,63 +154,63 @@ public:
     };
 
     //-----------------------------------------------------------------------------------
-    extern SFTime Now(void);
+    extern time_q Now(void);
 
     //---------------------------------------------------------------------------------------------
-    extern ostream &operator <<(ostream &os, const SFTime& x);
+    extern ostream &operator <<(ostream &os, const time_q& x);
 
     //---------------------------------------------------------------------------------------------
-    extern const SFTime latestDate;
-    extern const SFTime earliestDate;
+    extern const time_q latestDate;
+    extern const time_q earliestDate;
 
 #define FMT_JSON string_q("%Y-%m-%d %H:%M:%S UTC")
 
     //---------------------------------------------------------------------------------------------
     extern uint32_t DaysInMonth(uint32_t year, uint32_t month);
-    extern SFTime   AddOneDay(const SFTime& date);
-    extern SFTime   SubtractOneDay(const SFTime& date);
+    extern time_q   AddOneDay(const time_q& date);
+    extern time_q   SubtractOneDay(const time_q& date);
 
     //---------------------------------------------------------------------------------------------
-    inline SFTime BOH(const SFTime& date) {
+    inline time_q BOH(const time_q& date) {
         // H:00:00
-        return SFTime(date.GetYear(), date.GetMonth(), date.GetDay(), date.GetHour(), 0, 0);
+        return time_q(date.GetYear(), date.GetMonth(), date.GetDay(), date.GetHour(), 0, 0);
     }
 
     //---------------------------------------------------------------------------------------------
-    inline SFTime EOH(const SFTime& date) {
+    inline time_q EOH(const time_q& date) {
         // H:59:59
-        return SFTime(date.GetYear(), date.GetMonth(), date.GetDay(), date.GetHour(), 59, 59);
+        return time_q(date.GetYear(), date.GetMonth(), date.GetDay(), date.GetHour(), 59, 59);
     }
 
     //---------------------------------------------------------------------------------------------
-    inline SFTime BOD(const SFTime& date) {
+    inline time_q BOD(const time_q& date) {
         // 12:00:00 am
-        return SFTime(date.GetYear(), date.GetMonth(), date.GetDay(), 0, 0, 0);
+        return time_q(date.GetYear(), date.GetMonth(), date.GetDay(), 0, 0, 0);
     }
 
     //---------------------------------------------------------------------------------------------
-    inline SFTime EOD(const SFTime& date) {
+    inline time_q EOD(const time_q& date) {
         // 11:59:59 pm
-        return SFTime(date.GetYear(), date.GetMonth(), date.GetDay(), 23, 59, 59);
+        return time_q(date.GetYear(), date.GetMonth(), date.GetDay(), 23, 59, 59);
     }
 
     //---------------------------------------------------------------------------------------------
-    extern SFTime BOW(const SFTime& tm);
-    extern SFTime EOW(const SFTime& tm);
+    extern time_q BOW(const time_q& tm);
+    extern time_q EOW(const time_q& tm);
 
     //---------------------------------------------------------------------------------------------
-    inline SFTime MIDDAY(const SFTime& date) {
+    inline time_q MIDDAY(const time_q& date) {
         // 12:00 noon
-        return SFTime(date.GetYear(), date.GetMonth(), date.GetDay(), 12, 0, 0);
+        return time_q(date.GetYear(), date.GetMonth(), date.GetDay(), 12, 0, 0);
     }
 
     //---------------------------------------------------------------------------------------------
-    inline bool isInRange(const SFTime& ref, const SFTime& start, const SFTime& end) {
+    inline bool isInRange(const time_q& ref, const time_q& start, const time_q& end) {
         return (start <= ref && end >= ref);
     }
 
     //---------------------------------------------------------------------------------------------
-    inline SFTime earlierOf(const SFTime& one, const SFTime& two) {
+    inline time_q earlierOf(const time_q& one, const time_q& two) {
         if (one < two)
             return one;
         else if (two < one)
@@ -219,7 +219,7 @@ public:
     }
 
     //---------------------------------------------------------------------------------------------
-    inline SFTime laterOf(const SFTime& one, const SFTime& two) {
+    inline time_q laterOf(const time_q& one, const time_q& two) {
         if (one > two)
             return one;
         else if (two > one)
@@ -238,11 +238,11 @@ public:
     }
 
     //---------------------------------------------------------------------------------------------
-    inline SFTime BOND(const SFTime& date) {
+    inline time_q BOND(const time_q& date) {
         return BOD(earlierOf(latestDate, AddOneDay(date)));
     }
 
     //------------------------------------------------------------------
-    extern SFTime fileLastModifyDate(const string_q& filename);
+    extern time_q fileLastModifyDate(const string_q& filename);
 
 }  // namespace qblocks

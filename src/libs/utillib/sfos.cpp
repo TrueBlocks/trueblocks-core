@@ -151,7 +151,7 @@ namespace qblocks {
     //------------------------------------------------------------------------------------------
     string_q doCommand(const string_q& cmd) {
 
-        SFTime now = Now();
+        time_q now = Now();
         string_q tmpPath = "/tmp/";
         string_q filename = tmpPath + makeValidName("qb_" + now.Format("%Y%m%d%H%M%S"));
         string_q theCommand = (cmd + " >" + filename);

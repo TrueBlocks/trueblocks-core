@@ -80,9 +80,9 @@ namespace qblocks {
     extern string_q    bloom_2_Bits (const bloom_t& bl);
 
     //--------------------------------------------------------------------
-    class SFTime;
-    extern timestamp_t date_2_Ts(const SFTime&   timeIn);
-    extern SFTime      ts_2_Date(timestamp_t tsIn);
+    class time_q;
+    extern timestamp_t date_2_Ts(const time_q&   timeIn);
+    extern time_q      ts_2_Date(timestamp_t tsIn);
 
     //--------------------------------------------------------------------
     extern bool        isZeroHash   (const hash_t& hash);

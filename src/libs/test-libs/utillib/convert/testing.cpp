@@ -151,8 +151,8 @@ TEST_F(CThisTest, TestConverts_3) {
     ASSERT_EQ("time1", ts, 1517319693);
     ASSERT_EQ("time2", str_2_Ts("1517319693"), 1517319693);
     ASSERT_EQ("time2", ts_2_Str(1517319693), "1517319693");
-    SFTime date = ts_2_Date(ts);
-    ASSERT_EQ("time3", date, SFTime(2018,01,30,13,41,33));
+    time_q date = ts_2_Date(ts);
+    ASSERT_EQ("time3", date, time_q(2018,01,30,13,41,33));
     ASSERT_EQ("time4", date_2_Ts(date), ts);
 
     ASSERT_EQ("time5", str_2_Bool("1"), true);

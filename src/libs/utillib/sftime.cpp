@@ -24,65 +24,65 @@ namespace qblocks {
     #define SECS_PER_MIN        ((unsigned int)(60))
 
     //----------------------------------------------------------------------------------------------------
-    SFTime::SFTime() {
+    time_q::time_q() {
         m_nSeconds = 0xdeadbeef;
     }
 
     //----------------------------------------------------------------------------------------------------
-    SFTime::SFTime(const SFTime& date) {
+    time_q::time_q(const time_q& date) {
         m_nSeconds  = date.m_nSeconds;
     }
 
     //----------------------------------------------------------------------------------------------------
-    SFTime::SFTime(uint32_t year, uint32_t month, uint32_t day, uint32_t hour, uint32_t minute, uint32_t sec) {
-        *this = SFTime(SFDate(year, month, day), SFTimeOfDay(hour, minute, sec));
+    time_q::time_q(uint32_t year, uint32_t month, uint32_t day, uint32_t hour, uint32_t minute, uint32_t sec) {
+        *this = time_q(SFDate(year, month, day), SFTimeOfDay(hour, minute, sec));
     }
 
     //----------------------------------------------------------------------------------------------------
-    SFTime::SFTime(uint32_t year, uint32_t month, uint32_t weekInMonth, uint32_t dayOfWeek,
+    time_q::time_q(uint32_t year, uint32_t month, uint32_t weekInMonth, uint32_t dayOfWeek,
                    uint32_t hour, uint32_t minute, uint32_t sec) {
-        *this = SFTime(SFDate(year, month, weekInMonth, dayOfWeek), SFTimeOfDay(hour, minute, sec));
+        *this = time_q(SFDate(year, month, weekInMonth, dayOfWeek), SFTimeOfDay(hour, minute, sec));
     }
 
     //----------------------------------------------------------------------------------------------------
-    SFTime::SFTime(uint32_t days, uint32_t hour, uint32_t minute, uint32_t sec) {
-        *this = SFTime(SFDate(days), SFTimeOfDay(hour, minute, sec));
+    time_q::time_q(uint32_t days, uint32_t hour, uint32_t minute, uint32_t sec) {
+        *this = time_q(SFDate(days), SFTimeOfDay(hour, minute, sec));
     }
 
     //----------------------------------------------------------------------------------------------------
-    SFTime::SFTime(const SFDate& datePart, const SFTimeOfDay& timePart) {
+    time_q::time_q(const SFDate& datePart, const SFTimeOfDay& timePart) {
         m_nSeconds = (datePart.GetTotalDays() * SECS_PER_DAY) + timePart.GetTotalSeconds();
     }
 
     //----------------------------------------------------------------------------------------------------
-    SFTime::SFTime(const string_q& dateStr, const string_q& fmtStr) {
+    time_q::time_q(const string_q& dateStr, const string_q& fmtStr) {
         if (dateStr.empty() || fmtStr.empty())
             *this = earliestDate;
         else
-            *this = SFTime(SFDate(dateStr, fmtStr), SFTimeOfDay(dateStr, fmtStr));
+            *this = time_q(SFDate(dateStr, fmtStr), SFTimeOfDay(dateStr, fmtStr));
     }
 
     //----------------------------------------------------------------------------------------------------
-    SFTime::SFTime(const tm& st, bool useDayOfWeek) {
+    time_q::time_q(const tm& st, bool useDayOfWeek) {
         tm sysTime = st;
         if (!sysTime.tm_year)
             sysTime.tm_year = static_cast<int>(Now().GetYear());
         ASSERT(sysTime.tm_year);
 
         if (useDayOfWeek) {
-            *this = SFTime(SFDate(
+            *this = time_q(SFDate(
                                   (uint32_t)sysTime.tm_year,
                                   (uint32_t)sysTime.tm_mon,
                                   (uint32_t)sysTime.tm_mday,
                                   (uint32_t)(sysTime.tm_wday+1)),
                                   SFTimeOfDay(sysTime));
         } else {
-            *this = SFTime(SFDate(sysTime), SFTimeOfDay(sysTime));
+            *this = time_q(SFDate(sysTime), SFTimeOfDay(sysTime));
         }
     }
 
     //----------------------------------------------------------------------------------------------------
-    SFTime& SFTime::operator=(const SFTime& d) {
+    time_q& time_q::operator=(const time_q& d) {
         m_nSeconds  = d.m_nSeconds;
         return *this;
     }
@@ -128,7 +128,7 @@ namespace qblocks {
     //
     // %#d, %#j, %#m, %#U, %#w, %#y, %#H, %#h, %#M, %#S  Remove leading zeros (if any).
     //----------------------------------------------------------------------------------------------------
-    string_q SFTime::Format(const string_q& sFormat) const {
+    string_q time_q::Format(const string_q& sFormat) const {
         string_q ret;
         if (IsValid()) {
             char sBuffer[512];
@@ -277,26 +277,26 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------------------------------------
-    ostream &operator<<(ostream &os, const SFTime& x) {
+    ostream &operator<<(ostream &os, const time_q& x) {
         os << x.Format(FMT_JSON);
         return os;
     }
 
     //-------------------------------------------------------------------------
-    uint32_t SFTime::SFTimeOfDay::GetHour() const {
+    uint32_t time_q::SFTimeOfDay::GetHour() const {
         ASSERT(IsValid());
         return (uint32_t)(m_nSeconds / SECS_PER_HOUR);
     }
 
     //-------------------------------------------------------------------------
-    uint32_t SFTime::SFTimeOfDay::GetMinute() const {
+    uint32_t time_q::SFTimeOfDay::GetMinute() const {
         ASSERT(IsValid());
         uint32_t secsInHours = GetHour() * SECS_PER_HOUR;
         return (uint32_t)((m_nSeconds - secsInHours) / SECS_PER_MIN);
     }
 
     //-------------------------------------------------------------------------
-    uint32_t SFTime::SFTimeOfDay::GetSecond() const {
+    uint32_t time_q::SFTimeOfDay::GetSecond() const {
         ASSERT(IsValid());
         uint32_t secsInHours = GetHour()   * SECS_PER_HOUR;
         uint32_t secsInMins  = GetMinute() * SECS_PER_MIN;
@@ -304,114 +304,114 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    uint32_t SFTime::SFTimeOfDay::GetTotalSeconds() const {
+    uint32_t time_q::SFTimeOfDay::GetTotalSeconds() const {
         ASSERT(IsValid());
         return m_nSeconds;
     }
 
     //-------------------------------------------------------------------------
-    uint32_t SFTime::GetYear() const {
+    uint32_t time_q::GetYear() const {
         return getDatePart().GetYear();
     }
 
     //-------------------------------------------------------------------------
-    uint32_t SFTime::GetMonth() const {
+    uint32_t time_q::GetMonth() const {
         return getDatePart().GetMonth();
     }
 
     //-------------------------------------------------------------------------
-    uint32_t SFTime::GetDay() const {
+    uint32_t time_q::GetDay() const {
         return getDatePart().GetDay();
     }
 
     //-------------------------------------------------------------------------
-    uint32_t SFTime::GetHour() const {
+    uint32_t time_q::GetHour() const {
         return getTimePart().GetHour();
     }
 
     //-------------------------------------------------------------------------
-    uint32_t SFTime::GetMinute() const {
+    uint32_t time_q::GetMinute() const {
         return getTimePart().GetMinute();
     }
 
     //-------------------------------------------------------------------------
-    uint32_t SFTime::GetSecond() const {
+    uint32_t time_q::GetSecond() const {
         return getTimePart().GetSecond();
     }
 
     //-------------------------------------------------------------------------
-    timestamp_t SFTime::GetTotalSeconds(void) const {
+    timestamp_t time_q::GetTotalSeconds(void) const {
         return m_nSeconds;
     }
 
     //-------------------------------------------------------------------------
-    extern uint32_t getDayOfWeek(const SFTime::SFDate& date);
+    extern uint32_t getDayOfWeek(const time_q::SFDate& date);
 
     //-------------------------------------------------------------------------
     // We only do the test for equality and greater than. We then use these
     // to do all other tests
-    bool SFTime::operator==(const SFTime& date) const {
+    bool time_q::operator==(const time_q& date) const {
         ASSERT(IsValid());
         return (m_nSeconds == date.m_nSeconds);
     }
 
     //-------------------------------------------------------------------------
-    bool SFTime::operator!=(const SFTime& date) const {
+    bool time_q::operator!=(const time_q& date) const {
         return !operator==(date);
     }
 
     //-------------------------------------------------------------------------
-    bool SFTime::operator>(const SFTime& date) const {
+    bool time_q::operator>(const time_q& date) const {
         return (m_nSeconds > date.m_nSeconds);
     }
 
     //-------------------------------------------------------------------------
-    bool SFTime::operator>=(const SFTime& date) const {
+    bool time_q::operator>=(const time_q& date) const {
         return operator>(date) || operator==(date);
     }
 
     //-------------------------------------------------------------------------
-    bool SFTime::operator<(const SFTime& date) const {
+    bool time_q::operator<(const time_q& date) const {
         return (m_nSeconds < date.m_nSeconds);
     }
 
     //-------------------------------------------------------------------------
-    bool SFTime::operator<=(const SFTime& date) const {
+    bool time_q::operator<=(const time_q& date) const {
         return operator<(date) || operator==(date);
     }
 
     //-------------------------------------------------------------------------
-    SFTime SFTime::operator+(const uint32_t& ts) const {
-        SFTime ret;
+    time_q time_q::operator+(const uint32_t& ts) const {
+        time_q ret;
         ret.m_nSeconds = m_nSeconds + ts;
         return ret;
     }
 
     //-------------------------------------------------------------------------
-    SFTime SFTime::operator-(const uint32_t& ts) const {
-        SFTime ret;
+    time_q time_q::operator-(const uint32_t& ts) const {
+        time_q ret;
         ret.m_nSeconds = m_nSeconds - ts;
         return ret;
     }
 
     //-------------------------------------------------------------------------
-    int64_t SFTime::operator-(SFTime& date) {
+    int64_t time_q::operator-(time_q& date) {
         return m_nSeconds - date.m_nSeconds;
     }
 
     //-------------------------------------------------------------------------
-    bool SFTime::IsValid() const {
+    bool time_q::IsValid() const {
         return (m_nSeconds != (int64_t)0xdeadbeef);
     }
 
     //-------------------------------------------------------------------------
-    SFTime::SFDate SFTime::getDatePart() const {
+    time_q::SFDate time_q::getDatePart() const {
         ASSERT(IsValid());
         return SFDate((m_nSeconds / SECS_PER_DAY) - 2000000000L);
     }
 
     //-------------------------------------------------------------------------
-    SFTime::SFTimeOfDay SFTime::getTimePart() const {
+    time_q::SFTimeOfDay time_q::getTimePart() const {
         if (m_nSeconds == getDatePart().GetTotalDays())
             return SFTimeOfDay(0);  // midnight at start of day
 
@@ -424,35 +424,35 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    bool SFTime::onTheHour(void) const {
+    bool time_q::onTheHour(void) const {
         return (GetMinute() < 5 || GetMinute() > 55);
     }
 
     //-------------------------------------------------------------------------
-    SFTime::SFTimeOfDay::SFTimeOfDay() {
+    time_q::SFTimeOfDay::SFTimeOfDay() {
         // create an invalid value (would be the next day otherwise!)
         m_nSeconds = SECS_PER_DAY;
     }
 
     //-------------------------------------------------------------------------
-    SFTime::SFTimeOfDay::SFTimeOfDay(const SFTimeOfDay& tod) {
+    time_q::SFTimeOfDay::SFTimeOfDay(const SFTimeOfDay& tod) {
         m_nSeconds = tod.m_nSeconds;
     }
 
     //-------------------------------------------------------------------------
-    SFTime::SFTimeOfDay::SFTimeOfDay(uint32_t h, uint32_t m, uint32_t s) {
+    time_q::SFTimeOfDay::SFTimeOfDay(uint32_t h, uint32_t m, uint32_t s) {
         m_nSeconds = h * SECS_PER_HOUR + m * SECS_PER_MIN + s;
         m_nSeconds = min(SECS_PER_DAY, m_nSeconds);  // make it invalid of overrun
     }
 
     //-------------------------------------------------------------------------
-    SFTime::SFTimeOfDay::SFTimeOfDay(uint32_t secs) {
+    time_q::SFTimeOfDay::SFTimeOfDay(uint32_t secs) {
         m_nSeconds = secs;
         m_nSeconds = min(SECS_PER_DAY, m_nSeconds);  // make it invalid of overrun
     }
 
     //-------------------------------------------------------------------------
-    SFTime::SFTimeOfDay::SFTimeOfDay(const tm& sysTime) {
+    time_q::SFTimeOfDay::SFTimeOfDay(const tm& sysTime) {
         m_nSeconds =
                 ((uint32_t)sysTime.tm_hour) * SECS_PER_HOUR +
                 (uint32_t)(sysTime.tm_min) * SECS_PER_MIN +
@@ -480,7 +480,7 @@ namespace qblocks {
     // as entered in a masked edit field or from a parsed report.
     //
     //-------------------------------------------------------------------------
-    SFTime::SFTimeOfDay::SFTimeOfDay(const string_q& timeStr, const string_q& fmtStr) {
+    time_q::SFTimeOfDay::SFTimeOfDay(const string_q& timeStr, const string_q& fmtStr) {
         m_nSeconds = SECS_PER_DAY;
         if (fmtStr.length() != 4) {
             *this = SFTimeOfDay(12, 0, 0);
@@ -532,70 +532,70 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    uint32_t SFTime::SFDate::GetDay() const {
+    uint32_t time_q::SFDate::GetDay() const {
         ASSERT(IsValid());
         return getDateStruct().m_Day;
     }
 
     //-------------------------------------------------------------------------
-    uint32_t SFTime::SFDate::GetMonth() const {
+    uint32_t time_q::SFDate::GetMonth() const {
         ASSERT(IsValid());
         return getDateStruct().m_Month;
     }
 
     //-------------------------------------------------------------------------
-    uint32_t SFTime::SFDate::GetYear() const {
+    uint32_t time_q::SFDate::GetYear() const {
         ASSERT(IsValid());
         return getDateStruct().m_Year;
     }
 
     //-------------------------------------------------------------------------
-    int64_t SFTime::SFDate::GetTotalDays() const {
+    int64_t time_q::SFDate::GetTotalDays() const {
         ASSERT(IsValid());
         return (int64_t)m_nDays;
     }
 
     //-------------------------------------------------------------------------
-    SFTime::SFDate SFTime::SFDate::operator+(int32_t days) const {
+    time_q::SFDate time_q::SFDate::operator+(int32_t days) const {
         int64_t res = ((int64_t)m_nDays) - 2000000000L;
         res += days;
         return SFDate(res);
     }
 
     //-------------------------------------------------------------------------
-    SFTime::SFDate SFTime::SFDate::operator-(int32_t days) const {
+    time_q::SFDate time_q::SFDate::operator-(int32_t days) const {
         return SFDate(int64_t(m_nDays - 2000000000L) - days);
     }
 
     //-------------------------------------------------------------------------
-    SFTime::SFDate& SFTime::SFDate::operator+=(int32_t days) {
+    time_q::SFDate& time_q::SFDate::operator+=(int32_t days) {
         *this = *this + days;
         return *this;
     }
 
     //-------------------------------------------------------------------------
-    SFTime::SFDate& SFTime::SFDate::operator-=(int32_t days) {
+    time_q::SFDate& time_q::SFDate::operator-=(int32_t days) {
         *this = *this - days;
         return *this;
     }
 
     //-------------------------------------------------------------------------
-    SFTime::SFDate::SFDate(void) {
+    time_q::SFDate::SFDate(void) {
         m_nDays = (uint64_t)LONG_MIN;
     }
 
     //-------------------------------------------------------------------------
-    SFTime::SFDate::SFDate(const SFDate& date) {
+    time_q::SFDate::SFDate(const SFDate& date) {
         m_nDays = date.m_nDays;
     }
 
     //-------------------------------------------------------------------------
-    SFTime::SFDate::SFDate(uint32_t y, uint32_t m, uint32_t d) {
+    time_q::SFDate::SFDate(uint32_t y, uint32_t m, uint32_t d) {
         setValues(y, m, d);
     }
 
     //-------------------------------------------------------------------------
-    SFTime::SFDate::SFDate(uint32_t y, uint32_t m, uint32_t weekInMonth, uint32_t dayOfWeek) {
+    time_q::SFDate::SFDate(uint32_t y, uint32_t m, uint32_t weekInMonth, uint32_t dayOfWeek) {
         // assume it fails
         m_nDays = (uint64_t)LONG_MIN;
 
@@ -611,7 +611,7 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    SFTime::SFDate::SFDate(int64_t days) {
+    time_q::SFDate::SFDate(int64_t days) {
         if (days > 2146905911L)  // Largest valid GD N
             m_nDays = (uint64_t)LONG_MIN;
         else
@@ -619,7 +619,7 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    SFTime::SFDate::SFDate(const tm& sysTime) {
+    time_q::SFDate::SFDate(const tm& sysTime) {
         setValues(
                   (uint32_t)sysTime.tm_year,
                   (uint32_t)sysTime.tm_mon,
@@ -644,7 +644,7 @@ namespace qblocks {
     // This feature allows for the creation of SFDate's from a string
     // as entered in a masked edit field or from a parsed report.
     //-------------------------------------------------------------------------
-    SFTime::SFDate::SFDate(const string_q& dateStr, const string_q& fmtStr) {
+    time_q::SFDate::SFDate(const string_q& dateStr, const string_q& fmtStr) {
         m_nDays  = (uint64_t)LONG_MIN;
         if (fmtStr.length() != 5) {
             *this = SFDate(Now().GetYear(), Now().GetMonth(), Now().GetDay());
@@ -694,7 +694,7 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    SFTime::SFDate& SFTime::SFDate::operator=(const SFDate& date) {
+    time_q::SFDate& time_q::SFDate::operator=(const SFDate& date) {
         m_nDays = date.m_nDays;
         return *this;
     }
@@ -707,7 +707,7 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    SFTime::SFDate& SFTime::SFDate::setValues(uint32_t y, uint32_t m, uint32_t d) {
+    time_q::SFDate& time_q::SFDate::setValues(uint32_t y, uint32_t m, uint32_t d) {
         m_nDays = (uint64_t)LONG_MIN;
         if (m >= JANUARY && m <= DECEMBER && d <= DaysInMonth(y, m)) {
             // The following algorithm has been taken from from an article in
@@ -730,7 +730,7 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    SFDateStruct SFTime::SFDate::getDateStruct() const {
+    SFDateStruct time_q::SFDate::getDateStruct() const {
         // See the comment in SFDate::setValues(uint32_t Year, uint32_t Month, uint32_t Day)
         // for references to where the algorithm is taken from
         ASSERT(IsValid());
@@ -784,13 +784,13 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    uint32_t getDayOfWeek(const SFTime::SFDate& date) {
+    uint32_t getDayOfWeek(const time_q::SFDate& date) {
         ASSERT(date.IsValid());
         return (date.GetTotalDays() % 7) + 1;
     }
 
     //---------------------------------------------------------------------------------------
-    SFTime Now(void) {
+    time_q Now(void) {
         time_t loc;
         time(&loc);
 
@@ -800,14 +800,14 @@ namespace qblocks {
             tm sysTime = *ret;
             sysTime.tm_year += 1900;
             sysTime.tm_mon += 1;
-            return SFTime(sysTime, false);
+            return time_q(sysTime, false);
         }
         return earliestDate;
     }
 
     //---------------------------------------------------------------------------------------
-    const SFTime latestDate = SFTime(2200, 12, 31, 23, 59, 59);
-    const SFTime earliestDate = SFTime(1700,  1,  1,  0,  0,  1);
+    const time_q latestDate = time_q(2200, 12, 31, 23, 59, 59);
+    const time_q earliestDate = time_q(1700,  1,  1,  0,  0,  1);
 
     //---------------------------------------------------------------------------------------
     const uint32_t DaysPerMonth[] = {
@@ -838,12 +838,12 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------
-    uint32_t DaysInYear(const SFTime& date) {
+    uint32_t DaysInYear(const time_q& date) {
         return DaysInYear(date.GetYear());
     }
 
     //---------------------------------------------------------------------------------------
-    SFTime AddOneDay(const SFTime& date) {
+    time_q AddOneDay(const time_q& date) {
         if (date >= latestDate)
             return latestDate;
 
@@ -859,18 +859,18 @@ namespace qblocks {
             if (month == 12) {
                 month = 1;
                 year  += 1;
-                return SFTime(year, month, 1, hour, minute, sec);
+                return time_q(year, month, 1, hour, minute, sec);
             } else {
                 month += 1;
-                return SFTime(year, month, 1, hour, minute, sec);
+                return time_q(year, month, 1, hour, minute, sec);
             }
         }
 
-        return SFTime(year, month, day+1, hour, minute, sec);
+        return time_q(year, month, day+1, hour, minute, sec);
     }
 
     //---------------------------------------------------------------------------------------
-    SFTime SubtractOneDay(const SFTime& date) {
+    time_q SubtractOneDay(const time_q& date) {
         if (date <= earliestDate)
             return earliestDate;
 
@@ -885,34 +885,34 @@ namespace qblocks {
             if (month == 1) {
                 month = 12;
                 year  -= 1;
-                return SFTime(year, month, DaysInMonth(year, month), hour, minute, sec);
+                return time_q(year, month, DaysInMonth(year, month), hour, minute, sec);
             } else {
                 month -= 1;
-                return SFTime(year, month, DaysInMonth(year, month), hour, minute, sec);
+                return time_q(year, month, DaysInMonth(year, month), hour, minute, sec);
             }
         }
 
-        return SFTime(year, month, --day, hour, minute, sec);
+        return time_q(year, month, --day, hour, minute, sec);
     }
 
     //----------------------------------------------------------------------------------------------------
-    SFTime BOW(const SFTime& tm) {
-        SFTime ret = BOD(tm);
+    time_q BOW(const time_q& tm) {
+        time_q ret = BOD(tm);
         while (getDayOfWeek(ret.getDatePart()) > 1)  // if it equals '1', it's Sunday at 00:00:01
             ret = SubtractOneDay(ret);
         return ret;
     }
 
     //----------------------------------------------------------------------------------------------------
-    SFTime EOW(const SFTime& tm) {
-        SFTime ret = EOD(tm);
+    time_q EOW(const time_q& tm) {
+        time_q ret = EOD(tm);
         while (getDayOfWeek(tm.getDatePart()) < 7)  // if it equals '7', it's Saturday 12:59:59
             ret = AddOneDay(ret);
         return ret;
     }
 
     //----------------------------------------------------------------------------------------------------
-    SFTime fileLastModifyDate(const string_q& filename) {
+    time_q fileLastModifyDate(const string_q& filename) {
         if (!fileExists(filename))
             return earliestDate;
 
@@ -923,7 +923,7 @@ namespace qblocks {
         tm unused;
         tm *t = localtime_r(&statBuf.st_mtime, &unused);
         ASSERT(t);
-        return SFTime(  (uint32_t)t->tm_year + 1900,
+        return time_q(  (uint32_t)t->tm_year + 1900,
                         (uint32_t)t->tm_mon+1,
                         (uint32_t)t->tm_mday,
                         (uint32_t)t->tm_hour,
