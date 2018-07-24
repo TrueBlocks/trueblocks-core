@@ -25,7 +25,7 @@
 //--------------------------------------------------------------------------
 class QSetDailyLimit : public CTransaction {
 public:
-    SFUintBN _newLimit;
+    biguint_t _newLimit;
 
 public:
     QSetDailyLimit(void);

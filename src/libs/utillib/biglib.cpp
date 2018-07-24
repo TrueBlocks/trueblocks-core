@@ -16,13 +16,13 @@
  *
  * BigUnsignedInABase is intended as an intermediary class with little
  * functionality of its own.  BigUnsignedInABase objects can be constructed
- * from, and converted to, SFUintBNs (requiring multiplication, mods, etc.)
+ * from, and converted to, biguint_ts (requiring multiplication, mods, etc.)
  * and 'string's (by switching igit values for appropriate characters).
  *
- * BigUnsignedInABase is similar to SFUintBN.  Note the following:
+ * BigUnsignedInABase is similar to biguint_t.  Note the following:
  *
  * (1) They represent the number in exactly the same way, except that
- * BigUnsignedInABase uses ''igits'' (or igit) where SFUintBN uses
+ * BigUnsignedInABase uses ''igits'' (or igit) where biguint_t uses
  * ''blocks'' (or Blk).
  *
  * (2) Both use the management features of BigNumStore.  (In fact, my desire
@@ -30,7 +30,7 @@
  * introduce BigNumStore.)
  *
  * (3) The only arithmetic operation supported by BigUnsignedInABase is an
- * equality test.  Use SFUintBN for arithmetic.
+ * equality test.  Use biguint_t for arithmetic.
  */
 
 namespace qblocks {
@@ -61,25 +61,25 @@ namespace qblocks {
     }
 
     //------------------------------------------------------------------
-    BigUnsignedInABase::BigUnsignedInABase(const SFUintBN &x, unsigned short base) {  // NOLINT
+    BigUnsignedInABase::BigUnsignedInABase(const biguint_t &x, unsigned short base) {  // NOLINT
         if (base < 2)
-            throw "BigUnsignedInABase(SFUintBN, Base): The base must be at least 2";
+            throw "BigUnsignedInABase(biguint_t, Base): The base must be at least 2";
         this->base = base;
 
         // Get an upper bound on how much space we need
-        int maxBitLenOfX    = static_cast<int>(x.len * SFUintBN::N);  // NOLINT
+        int maxBitLenOfX    = static_cast<int>(x.len * biguint_t::N);  // NOLINT
         int minBitsPerDigit = static_cast<int>(bitLen(base) - 1);  // NOLINT
         int maxDigitLenOfX  = (maxBitLenOfX + minBitsPerDigit - 1) / minBitsPerDigit;  // NOLINT
 
         len = (unsigned int)maxDigitLenOfX;  // Another change to comply with 'staying in bounds'.
         allocate(len);  // Get the space
 
-        SFUintBN x2(x), buBase(base);
+        biguint_t x2(x), buBase(base);
         unsigned int digitNum = 0;
 
         while (x2.len != 0) {
             // Get last digit.  This is like 'lastDigit = x2 % buBase, x2 /= buBase'.
-            SFUintBN lastDigit(x2);
+            biguint_t lastDigit(x2);
             lastDigit.divide(buBase, x2);
             // Save the digit.
             blk[digitNum] = (uint16_t)lastDigit.to_uint();
@@ -132,13 +132,13 @@ namespace qblocks {
     }
 
     //------------------------------------------------------------------
-    BigUnsignedInABase::operator SFUintBN(void) const {
-        SFUintBN ans(0), buBase(base), temp;
+    BigUnsignedInABase::operator biguint_t(void) const {
+        biguint_t ans(0), buBase(base), temp;
         unsigned int digitNum = len;
         while (digitNum > 0) {
             digitNum--;
             temp.multiply(ans, buBase);
-            ans.add(temp, SFUintBN(blk[digitNum]));
+            ans.add(temp, biguint_t(blk[digitNum]));
         }
         return ans;
     }
@@ -160,8 +160,8 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    SFUintBN gcd(SFUintBN a, SFUintBN b) {
-        SFUintBN trash;
+    biguint_t gcd(biguint_t a, biguint_t b) {
+        biguint_t trash;
         for ( ; ; ) {
             if (b.len == 0)
                 return a;
@@ -173,8 +173,8 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    SFUintBN modexp(const SFIntBN &base, const SFUintBN& exponent, const SFUintBN& modulus) {
-        SFUintBN ans = 1, base2 = (base % modulus).getMagnitude();
+    biguint_t modexp(const bigint_t &base, const biguint_t& exponent, const biguint_t& modulus) {
+        biguint_t ans = 1, base2 = (base % modulus).getMagnitude();
         unsigned int i = exponent.bitLength();
         // For each bit of the exponent, most to least significant...
         while (i > 0) {
@@ -192,10 +192,10 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    static void exteuclidean(SFIntBN m, SFIntBN n, SFIntBN &g, SFIntBN &r, SFIntBN &s) {
+    static void exteuclidean(bigint_t m, bigint_t n, bigint_t &g, bigint_t &r, bigint_t &s) {
         if (&g == &r || &g == &s || &r == &s)
-            throw "SFIntBN exteuclidean: Outputs are aliased";
-        SFIntBN r1(1), s1(0), r2(0), s2(1), q;
+            throw "bigint_t exteuclidean: Outputs are aliased";
+        bigint_t r1(1), s1(0), r2(0), s2(1), q;
         /*
          * Invariants:
          * r1*m(orig) + s1*n(orig) == m(current)
@@ -221,18 +221,18 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    SFUintBN modinv(const SFIntBN &x, const SFUintBN& n) {
-        SFIntBN g, r, s;
+    biguint_t modinv(const bigint_t &x, const biguint_t& n) {
+        bigint_t g, r, s;
         exteuclidean(x, n, g, r, s);
         if (g == 1)
             // r*x + s*n == 1, so r*x === 1 (mod n), so r is the answer.
             return (r % n).getMagnitude();  // (r % n) will be nonnegative
         else
-            throw "SFIntBN modinv: x and n have a common factor";
+            throw "bigint_t modinv: x and n have a common factor";
     }
 
     //--------------------------------------------------------------------------------
-    ostream &operator <<(ostream &os, const SFUintBN& x) {
+    ostream &operator <<(ostream &os, const biguint_t& x) {
         unsigned short base;  // NOLINT
 
         long osFlags = os.flags();  // NOLINT
@@ -249,14 +249,14 @@ namespace qblocks {
             if (osFlags & os.showbase)
                 os << '0';
         } else {
-            throw "ostream << SFUintBN: Could not determine the desired base from output-stream flags";
+            throw "ostream << biguint_t: Could not determine the desired base from output-stream flags";
         }
         os << string(BigUnsignedInABase(x, base));
         return os;
     }
 
     //--------------------------------------------------------------------------------
-    ostream &operator <<(ostream &os, const SFIntBN &x) {
+    ostream &operator <<(ostream &os, const bigint_t &x) {
         if (x.isNegative())
             os << '-';
         os << x.getMagnitude();

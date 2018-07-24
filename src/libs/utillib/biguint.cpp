@@ -9,44 +9,44 @@
 namespace qblocks {
 
     //----------------------------------------------------------------------
-    SFUintBN::SFUintBN(void) : BigNumStore<uint64_t>() {
+    biguint_t::biguint_t(void) : BigNumStore<uint64_t>() {
     }
 
     //----------------------------------------------------------------------
-    SFUintBN::SFUintBN(const SFUintBN &x) : BigNumStore<uint64_t>(x) {
+    biguint_t::biguint_t(const biguint_t &x) : BigNumStore<uint64_t>(x) {
     }
 
     //----------------------------------------------------------------------
-    SFUintBN& SFUintBN::operator=(const SFUintBN &x) {
+    biguint_t& biguint_t::operator=(const biguint_t &x) {
         BigNumStore<uint64_t>::operator=(x);
         return *this;
     }
 
     //----------------------------------------------------------------------
-    SFUintBN::SFUintBN(int unused, unsigned int c) : BigNumStore<uint64_t>(0, c) {
+    biguint_t::biguint_t(int unused, unsigned int c) : BigNumStore<uint64_t>(0, c) {
     }
 
     //----------------------------------------------------------------------
-    SFUintBN::SFUintBN(const uint64_t *b, unsigned int blen) : BigNumStore<uint64_t>(b, blen) {
+    biguint_t::biguint_t(const uint64_t *b, unsigned int blen) : BigNumStore<uint64_t>(b, blen) {
         trimLeadingZeros();
     }
 
     //----------------------------------------------------------------------
-    SFUintBN::~SFUintBN() {
+    biguint_t::~biguint_t() {
     }
 
     //----------------------------------------------------------------------
     static const char *msg = "Cannot convert from negative number.";
-    SFUintBN::SFUintBN(uint64_t x) { if (x!=0) {capacity=0;allocate(1);if(blk){len=1;blk[0]=(uint64_t)(x);}}} // NOLINT
-    SFUintBN::SFUintBN(uint32_t x) { if (x!=0) {capacity=0;allocate(1);if(blk){len=1;blk[0]=(uint64_t)(x);}}} // NOLINT
-    SFUintBN::SFUintBN(uint16_t x) { if (x!=0) {capacity=0;allocate(1);if(blk){len=1;blk[0]=(uint64_t)(x);}}} // NOLINT
-    SFUintBN::SFUintBN(int64_t x) { if (x<0) throw msg; else if (x!=0) {capacity=0;allocate(1);if(blk){len=1;blk[0]=(uint64_t)(x);}}} // NOLINT
-    SFUintBN::SFUintBN(int32_t x) { if (x<0) throw msg; else if (x!=0) {capacity=0;allocate(1);if(blk){len=1;blk[0]=(uint64_t)(x);}}} // NOLINT
-    SFUintBN::SFUintBN(int16_t x) { if (x<0) throw msg; else if (x!=0) {capacity=0;allocate(1);if(blk){len=1;blk[0]=(uint64_t)(x);}}} // NOLINT
+    biguint_t::biguint_t(uint64_t x) { if (x!=0) {capacity=0;allocate(1);if(blk){len=1;blk[0]=(uint64_t)(x);}}} // NOLINT
+    biguint_t::biguint_t(uint32_t x) { if (x!=0) {capacity=0;allocate(1);if(blk){len=1;blk[0]=(uint64_t)(x);}}} // NOLINT
+    biguint_t::biguint_t(uint16_t x) { if (x!=0) {capacity=0;allocate(1);if(blk){len=1;blk[0]=(uint64_t)(x);}}} // NOLINT
+    biguint_t::biguint_t(int64_t x) { if (x<0) throw msg; else if (x!=0) {capacity=0;allocate(1);if(blk){len=1;blk[0]=(uint64_t)(x);}}} // NOLINT
+    biguint_t::biguint_t(int32_t x) { if (x<0) throw msg; else if (x!=0) {capacity=0;allocate(1);if(blk){len=1;blk[0]=(uint64_t)(x);}}} // NOLINT
+    biguint_t::biguint_t(int16_t x) { if (x<0) throw msg; else if (x!=0) {capacity=0;allocate(1);if(blk){len=1;blk[0]=(uint64_t)(x);}}} // NOLINT
 
     //----------------------------------------------------------------------
     template <class X>
-    X SFUintBN::convertToPrimitive() const {
+    X biguint_t::convertToPrimitive() const {
         if (len == 0) {
             return 0;
         } else if (len == 1) {
@@ -55,33 +55,33 @@ namespace qblocks {
                 return x;
             // fall through
         }
-        throw "SFUintBN::to<Primitive>: Value is too big to fit in the requested type";
+        throw "biguint_t::to<Primitive>: Value is too big to fit in the requested type";
     }
 
     //----------------------------------------------------------------------
     template <class X>
-    X SFUintBN::convertToSignedPrimitive() const {
+    X biguint_t::convertToSignedPrimitive() const {
         X x = convertToPrimitive<X>();
         if (x >= 0)
             return x;
         else
-            throw "SFUintBN::to(Primitive): Value is too big to fit in the requested type";
+            throw "biguint_t::to(Primitive): Value is too big to fit in the requested type";
     }
 
     //----------------------------------------------------------------------
-    uint64_t SFUintBN::to_ulong(void) const  { return convertToPrimitive<uint64_t> (); }
-    uint32_t SFUintBN::to_uint(void) const   { return convertToPrimitive<uint32_t> (); }
-    int64_t  SFUintBN::to_long(void) const   { return convertToSignedPrimitive<int64_t> (); }
-    int32_t  SFUintBN::to_int(void) const    { return convertToSignedPrimitive<int32_t> (); }
+    uint64_t biguint_t::to_ulong(void) const  { return convertToPrimitive<uint64_t> (); }
+    uint32_t biguint_t::to_uint(void) const   { return convertToPrimitive<uint32_t> (); }
+    int64_t  biguint_t::to_long(void) const   { return convertToSignedPrimitive<int64_t> (); }
+    int32_t  biguint_t::to_int(void) const    { return convertToSignedPrimitive<int32_t> (); }
 
     //----------------------------------------------------------------------
-    void SFUintBN::trimLeadingZeros(void) {
+    void biguint_t::trimLeadingZeros(void) {
         while (len > 0 && blk[len-1] == 0)
             len--;
     }
 
     //----------------------------------------------------------------------
-    void SFUintBN::setBlock(unsigned int i, uint64_t newBlock) {
+    void biguint_t::setBlock(unsigned int i, uint64_t newBlock) {
         if (newBlock == 0) {
             if (i < len) {
                 blk[i] = 0;
@@ -100,7 +100,7 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    unsigned int SFUintBN::bitLength() const {
+    unsigned int biguint_t::bitLength() const {
         if (len == 0) {
             return 0;
 
@@ -116,7 +116,7 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    void SFUintBN::setBit(unsigned int bi, bool newBit) {
+    void biguint_t::setBit(unsigned int bi, bool newBit) {
         unsigned int blockI = bi / N;
         uint64_t block = getBlock(blockI), mask = ((uint64_t)(1)) << (bi % N);
         block = newBit ? (block | mask) : (block & ~mask);
@@ -124,7 +124,7 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    int SFUintBN::compareTo(const SFUintBN &x) const {
+    int biguint_t::compareTo(const biguint_t &x) const {
         unsigned int i = len;
 
         if (i < x.len) return -1;
@@ -139,10 +139,10 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    void SFUintBN::add(const SFUintBN &a, const SFUintBN &b) {
+    void biguint_t::add(const biguint_t &a, const biguint_t &b) {
         if (thisIsMe(a) || thisIsMe(b)) {
             // don't operate on top of ourselves
-            SFUintBN tmp;
+            biguint_t tmp;
             tmp.add(a, b);
             *this = tmp;
             return;
@@ -161,7 +161,7 @@ namespace qblocks {
         uint64_t temp;
         unsigned int i;
 
-        const SFUintBN *a2, *b2;
+        const biguint_t *a2, *b2;
         if (a.len >= b.len) {
             a2 = &a;
             b2 = &b;
@@ -204,10 +204,10 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    void SFUintBN::subtract(const SFUintBN &a, const SFUintBN &b) {
+    void biguint_t::subtract(const biguint_t &a, const biguint_t &b) {
         if (thisIsMe(a) || thisIsMe(b)) {
             // don't operate on top of ourselves
-            SFUintBN tmp;
+            biguint_t tmp;
             tmp.subtract(a, b);
             *this = tmp;
             return;
@@ -218,7 +218,7 @@ namespace qblocks {
             return;
 
         } else if (a.len < b.len) {
-            throw "SFUintBN::subtract: Negative result in unsigned calculation";
+            throw "biguint_t::subtract: Negative result in unsigned calculation";
         }
 
         bool borrowIn, borrowOut;
@@ -250,7 +250,7 @@ namespace qblocks {
         // object so as to leave it in a predictable state.
         if (borrowIn) {
             len = 0;
-            throw "SFUintBN::subtract: Negative result in unsigned calculation";
+            throw "biguint_t::subtract: Negative result in unsigned calculation";
         } else {
             for (; i < a.len; i++)
                 blk[i] = a.blk[i];
@@ -297,17 +297,17 @@ namespace qblocks {
      * the test 'y == 0' handles this case specially.
      */
     //----------------------------------------------------------------------
-    uint64_t getShiftedBlock(const SFUintBN &num, unsigned int x, unsigned int y) {
-        uint64_t part1 = (x == 0 || y == 0) ? 0 : (num.blk[x - 1] >> (SFUintBN::N - y));
+    uint64_t getShiftedBlock(const biguint_t &num, unsigned int x, unsigned int y) {
+        uint64_t part1 = (x == 0 || y == 0) ? 0 : (num.blk[x - 1] >> (biguint_t::N - y));
         uint64_t part2 = (x == num.len) ? 0 : (num.blk[x] << y);
         return part1 | part2;
     }
 
     //----------------------------------------------------------------------
-    void SFUintBN::multiply(const SFUintBN &a, const SFUintBN &b) {
+    void biguint_t::multiply(const biguint_t &a, const biguint_t &b) {
         if (thisIsMe(a) || thisIsMe(b)) {
             // don't operate on top of ourselves
-            SFUintBN tmp;
+            biguint_t tmp;
             tmp.multiply(a, b);
             *this = tmp;
             return;
@@ -397,32 +397,32 @@ namespace qblocks {
      * 'a.divide(b, q)' is like 'q = a / b, a %= b'.
      * / and % use semantics similar to Knuth's, which differ from the
      * primitive integer semantics under division by zero.  See the
-     * implementation in SFUintBN.cc for details.
+     * implementation in biguint_t.cc for details.
      * 'a.divide(b, a)' throws an exception: it doesn't make
      * sense to write quotient and remainder into the same variable.
      */
 
     //----------------------------------------------------------------------
-    void SFUintBN::divide(const SFUintBN &b, SFUintBN &q) {
+    void biguint_t::divide(const biguint_t &b, biguint_t &q) {
         /* Defending against aliased calls is more complex than usual because we
          * are writing to both *this and q.
          *
          * It would be silly to try to write quotient and remainder to the
          * same variable.  Rule that out right away. */
         if (this == &q)
-            throw "SFUintBN::divide: Cannot write quotient and remainder into the same variable";
+            throw "biguint_t::divide: Cannot write quotient and remainder into the same variable";
 
         /* At this point *this and q are separate, so the only concern is that b might be
          * aliased to one of them.  If so, use a temporary copy of b. */
         if (thisIsMe(b) || &q == &b) {
             // don't operate on top of ourselves
-            SFUintBN tmpB(b);
+            biguint_t tmpB(b);
             divide(tmpB, q);
             return;
         }
 
         if (this == &b || &q == &b) {
-            SFUintBN tmpB(b);
+            biguint_t tmpB(b);
             divide(tmpB, q);
             return;
         }
@@ -571,10 +571,10 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    void SFUintBN::bitwiseAnd(const SFUintBN &a, const SFUintBN &b) {
+    void biguint_t::bitwiseAnd(const biguint_t &a, const biguint_t &b) {
         if (thisIsMe(a) || thisIsMe(b)) {
             // don't operate on top of ourselves
-            SFUintBN tmp;
+            biguint_t tmp;
             tmp.bitwiseAnd(a, b);
             *this = tmp;
             return;
@@ -589,17 +589,17 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    void SFUintBN::bitwiseOr(const SFUintBN &a, const SFUintBN &b) {
+    void biguint_t::bitwiseOr(const biguint_t &a, const biguint_t &b) {
         if (thisIsMe(a) || thisIsMe(b)) {
             // don't operate on top of ourselves
-            SFUintBN tmp;
+            biguint_t tmp;
             tmp.bitwiseOr(a, b);
             *this = tmp;
             return;
         }
 
         unsigned int i;
-        const SFUintBN *a2, *b2;
+        const biguint_t *a2, *b2;
 
         if (a.len >= b.len) {
             a2 = &a;
@@ -619,17 +619,17 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    void SFUintBN::bitwiseXor(const SFUintBN &a, const SFUintBN &b) {
+    void biguint_t::bitwiseXor(const biguint_t &a, const biguint_t &b) {
         if (thisIsMe(a) || thisIsMe(b)) {
             // don't operate on top of ourselves
-            SFUintBN tmp;
+            biguint_t tmp;
             tmp.bitwiseXor(a, b);
             *this = tmp;
             return;
         }
 
         unsigned int i;
-        const SFUintBN *a2, *b2;
+        const biguint_t *a2, *b2;
         if (a.len >= b.len) {
             a2 = &a;
             b2 = &b;
@@ -651,10 +651,10 @@ namespace qblocks {
     // Negative shift amounts translate to opposite-direction shifts, except for -2^(8*sizeof(int)-1)
     // which is unimplemented.
     //----------------------------------------------------------------------
-    void SFUintBN::shiftLeft(const SFUintBN &a, int b) {
+    void biguint_t::shiftLeft(const biguint_t &a, int b) {
         if (thisIsMe(a)) {
             // don't operate on top of ourselves
-            SFUintBN tmp;
+            biguint_t tmp;
             tmp.shiftLeft(a, b);
             *this = tmp;
             return;
@@ -662,7 +662,7 @@ namespace qblocks {
 
         if (b < 0) {
             if (b << 1 == 0) {
-                throw "SFUintBN::shiftLeft: Pathological shift amount not implemented";
+                throw "biguint_t::shiftLeft: Pathological shift amount not implemented";
             } else {
                 shiftRight(a, -b);
                 return;
@@ -687,10 +687,10 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    void SFUintBN::shiftRight(const SFUintBN &a, int b) {
+    void biguint_t::shiftRight(const biguint_t &a, int b) {
         if (thisIsMe(a)) {
             // don't operate on top of ourselves
-            SFUintBN tmp;
+            biguint_t tmp;
             tmp.shiftRight(a, b);
             *this = tmp;
             return;
@@ -698,7 +698,7 @@ namespace qblocks {
 
         if (b < 0) {
             if (b << 1 == 0) {
-                throw "SFUintBN::shiftRight: Pathological shift amount not implemented";
+                throw "biguint_t::shiftRight: Pathological shift amount not implemented";
             } else {
                 shiftLeft(a, -b);
                 return;

@@ -68,7 +68,7 @@ namespace qblocks {
         return *this;
     }
 
-    CArchive& CArchive::operator<<(const SFUintBN& bn) {
+    CArchive& CArchive::operator<<(const biguint_t& bn) {
         *this << bn.capacity;
         *this << bn.len;
         for (size_t i=0 ; i < bn.len ; i++)
@@ -76,7 +76,7 @@ namespace qblocks {
         return *this;
     }
 
-    CArchive& CArchive::operator<<(const SFIntBN& bn) {
+    CArchive& CArchive::operator<<(const bigint_t& bn) {
         *this << (const unsigned int)bn.sign;
         *this << bn.mag;
         return *this;
@@ -152,7 +152,7 @@ namespace qblocks {
         return *this;
     }
 
-    CArchive& CArchive::operator>>(SFUintBN& bn) {
+    CArchive& CArchive::operator>>(biguint_t& bn) {
         // Note: I experimented with writing out
         // the blk in one Read/Write but it was
         // always slower on my machine
@@ -166,7 +166,7 @@ namespace qblocks {
         return *this;
     }
 
-    CArchive& CArchive::operator>>(SFIntBN& bn) {
+    CArchive& CArchive::operator>>(bigint_t& bn) {
         *this >> bn.sign;
         *this >> bn.mag;
         return *this;
@@ -187,7 +187,7 @@ namespace qblocks {
         uint64_t count;
         archive >> count;
         for (size_t i = 0 ; i < count ; i++) {
-            SFUintBN num;
+            biguint_t num;
             archive >> num;
             array.push_back(num);
         }

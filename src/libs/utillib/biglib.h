@@ -11,11 +11,11 @@
 
 namespace qblocks {
 
-    extern ostream& operator<<(ostream& os, const SFUintBN& x);
-    extern ostream& operator<<(ostream& os, const SFIntBN& x);
+    extern ostream& operator<<(ostream& os, const biguint_t& x);
+    extern ostream& operator<<(ostream& os, const bigint_t& x);
 
-    extern SFUintBN gcd(SFUintBN a, SFUintBN b);
-    extern SFUintBN modinv(const SFIntBN& x, const SFUintBN& n);
-    extern SFUintBN modexp(const SFIntBN& base, const SFUintBN& exponent, const SFUintBN& modulus);
+    extern biguint_t gcd(biguint_t a, biguint_t b);
+    extern biguint_t modinv(const bigint_t& x, const biguint_t& n);
+    extern biguint_t modexp(const bigint_t& base, const biguint_t& exponent, const biguint_t& modulus);
 
 }  // namespace qblocks

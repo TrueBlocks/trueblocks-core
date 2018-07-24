@@ -363,7 +363,7 @@ string_q CAccountWatch::displayName(bool expand, bool useColor, bool terse, size
 }
 
 //-----------------------------------------------------------------------
-SFUintBN getNodeBal(CBalanceHistoryArray& history, const address_t& addr, blknum_t blockNum) {
+biguint_t getNodeBal(CBalanceHistoryArray& history, const address_t& addr, blknum_t blockNum) {
 
     if (!startsWith(addr, "0x"))
         return 0;
@@ -384,7 +384,7 @@ SFUintBN getNodeBal(CBalanceHistoryArray& history, const address_t& addr, blknum
             while (!balCache.Eof()) {
                 blknum_t bn;
                 address_t addr1;
-                SFUintBN bal;
+                biguint_t bal;
                 balCache >> bn >> addr1 >> bal;
                 if (addr == addr1) {
                     if (last != bn || bal != 0) {
@@ -413,7 +413,7 @@ SFUintBN getNodeBal(CBalanceHistoryArray& history, const address_t& addr, blknum
         return it->balance;
 
     // ...if it doesn't hit, we need to find the most recent balance
-    SFUintBN ret = 0;
+    biguint_t ret = 0;
     for (size_t i = 0 ; i < history.size() ; i++) {
         // TODO(tjayrush): THIS IS A BUG HACK FIX - SEE ABOVE
         // We should be able to do >= just below, but if we do, we pick up a zero

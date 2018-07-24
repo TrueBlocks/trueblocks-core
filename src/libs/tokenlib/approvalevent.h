@@ -27,7 +27,7 @@ class QApprovalEvent : public CLogEntry {
 public:
     address_t _owner;
     address_t _spender;
-    SFUintBN _value;
+    biguint_t _value;
 
 public:
     QApprovalEvent(void);

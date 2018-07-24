@@ -28,7 +28,7 @@ namespace qblocks {
 class CBalanceHistory : public CBaseNode {
 public:
     blknum_t bn;
-    SFUintBN balance;
+    biguint_t balance;
 
 public:
     CBalanceHistory(void);

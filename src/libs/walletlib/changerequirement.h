@@ -25,7 +25,7 @@
 //--------------------------------------------------------------------------
 class QChangeRequirement : public CTransaction {
 public:
-    SFUintBN _newRequired;
+    biguint_t _newRequired;
 
 public:
     QChangeRequirement(void);

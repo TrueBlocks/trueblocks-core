@@ -44,12 +44,12 @@ bool accumulateAddresses(const CAddressAppearance& item, void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool isPotentialAddr(SFUintBN test, address_t& addrOut) {
+bool isPotentialAddr(biguint_t test, address_t& addrOut) {
 
     addrOut = "";
 
-    static const SFUintBN small = str_2_Wei(  "0x00000000000000ffffffffffffffffffffffffff");  // smallest address we find
-    static const SFUintBN large = str_2_Wei("0x010000000000000000000000000000000000000000");  // largest address we find
+    static const biguint_t small = str_2_Wei(  "0x00000000000000ffffffffffffffffffffffffff");  // smallest address we find
+    static const biguint_t large = str_2_Wei("0x010000000000000000000000000000000000000000");  // largest address we find
     if (test <= small || test >= large)
         return false;
 
@@ -75,7 +75,7 @@ void potentialAddr(ADDRESSFUNC func, void *data, const CAddressAppearance& item,
     // Pull out 32-byte chunks and check to see if they are addresses
     address_t addr;
     for (size_t s = 0 ; s < potList.length() / 64 ; s++) {
-        SFUintBN test = str_2_Wei("0x" + extract(potList, s*64, 64));
+        biguint_t test = str_2_Wei("0x" + extract(potList, s*64, 64));
         if (isPotentialAddr(test, addr)) {
             CAddressAppearance it(item);
             it.addr = addr;

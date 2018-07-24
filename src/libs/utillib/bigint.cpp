@@ -9,15 +9,15 @@
 namespace qblocks {
 
     //------------------------------------------------------------
-    SFIntBN::SFIntBN(void) : sign(0), mag() {
+    bigint_t::bigint_t(void) : sign(0), mag() {
     }
 
     //------------------------------------------------------------
-    SFIntBN::SFIntBN(const SFIntBN &x) : sign(x.sign), mag(x.mag) {
+    bigint_t::bigint_t(const bigint_t &x) : sign(x.sign), mag(x.mag) {
     }
 
     //------------------------------------------------------------
-    SFIntBN& SFIntBN::operator=(const SFIntBN& x) {
+    bigint_t& bigint_t::operator=(const bigint_t& x) {
         if (thisIsMe(x))
             return *this;
         sign = x.sign;
@@ -26,21 +26,21 @@ namespace qblocks {
     }
 
     //------------------------------------------------------------
-    SFIntBN::SFIntBN(const SFUintBN &x) : mag(x) {
+    bigint_t::bigint_t(const biguint_t &x) : mag(x) {
         sign = (mag.len == 0) ? 0 : 1;
     }
 
     //------------------------------------------------------------
-    SFIntBN::SFIntBN(const uint64_t *b, unsigned int len) : mag(b, len) {
+    bigint_t::bigint_t(const uint64_t *b, unsigned int len) : mag(b, len) {
         sign = (mag.len == 0) ? 0 : 1;
     }
 
     //------------------------------------------------------------
-    SFIntBN::SFIntBN(const uint64_t *b, unsigned int blen, int sgn) : mag(b, blen) {
+    bigint_t::bigint_t(const uint64_t *b, unsigned int blen, int sgn) : mag(b, blen) {
         switch (sgn) {
             case 0:
                 if (mag.len != 0)
-                    throw "SFIntBN::SFIntBN(const uint64_t *, unsigned int, int): "
+                    throw "bigint_t::bigint_t(const uint64_t *, unsigned int, int): "
                         "Cannot use a sign of zero with a nonzero magnitude";
                 sign = 0;
                 break;
@@ -57,11 +57,11 @@ namespace qblocks {
     }
 
     //------------------------------------------------------------
-    SFIntBN::SFIntBN(const SFUintBN &x, int sgn) : mag(x) {
+    bigint_t::bigint_t(const biguint_t &x, int sgn) : mag(x) {
         switch (sgn) {
             case 0:
                 if (mag.len != 0)
-                    throw "SFIntBN::SFIntBN(const SFUintBN &, int): "
+                    throw "bigint_t::bigint_t(const biguint_t &, int): "
                         "Cannot use a sign of zero with a nonzero magnitude";
                 sign = 0;
                 break;
@@ -79,17 +79,17 @@ namespace qblocks {
     }
 
     //------------------------------------------------------------
-    SFIntBN::SFIntBN(uint64_t x) : mag(x) {
+    bigint_t::bigint_t(uint64_t x) : mag(x) {
         sign = ((mag.len == 0) ? 0 : 1);
     }
 
     //------------------------------------------------------------
-    SFIntBN::SFIntBN(uint32_t x) : mag(x) {
+    bigint_t::bigint_t(uint32_t x) : mag(x) {
         sign = ((mag.len == 0) ? 0 : 1);
     }
 
     //------------------------------------------------------------
-    SFIntBN::SFIntBN(uint16_t x) : mag(x) {
+    bigint_t::bigint_t(uint16_t x) : mag(x) {
         sign = ((mag.len == 0) ? 0 : 1);
     }
 
@@ -111,28 +111,28 @@ namespace qblocks {
     }
 
     //------------------------------------------------------------
-    SFIntBN::SFIntBN(int64_t x) : sign(signOf(x)), mag(magOf<int64_t, uint64_t>(x)) {}
-    SFIntBN::SFIntBN(int32_t x) : sign(signOf(x)), mag(magOf<int32_t, uint32_t>(x)) {}
-    SFIntBN::SFIntBN(int16_t x) : sign(signOf(x)), mag(magOf<int16_t, uint16_t>(x)) {}
+    bigint_t::bigint_t(int64_t x) : sign(signOf(x)), mag(magOf<int64_t, uint64_t>(x)) {}
+    bigint_t::bigint_t(int32_t x) : sign(signOf(x)), mag(magOf<int32_t, uint32_t>(x)) {}
+    bigint_t::bigint_t(int16_t x) : sign(signOf(x)), mag(magOf<int16_t, uint16_t>(x)) {}
 
     //------------------------------------------------------------
     template <class X>
-    X convertBigUnsignedToPrimitiveAccess(const SFUintBN &a) {
+    X convertBigUnsignedToPrimitiveAccess(const biguint_t &a) {
         return a.convertToPrimitive<X>();
     }
 
     //------------------------------------------------------------
     template <class X>
-    X SFIntBN::convertToUnsignedPrimitive() const {
+    X bigint_t::convertToUnsignedPrimitive() const {
         if (sign == -1)
-            throw "SFIntBN::to<Primitive>: Cannot convert a negative integer to an unsigned type";
+            throw "bigint_t::to<Primitive>: Cannot convert a negative integer to an unsigned type";
         else
             return convertBigUnsignedToPrimitiveAccess<X>(mag);
     }
 
     //------------------------------------------------------------
     template <class X, class UX>
-    X SFIntBN::convertToSignedPrimitive() const {
+    X bigint_t::convertToSignedPrimitive() const {
         if (sign == 0) {
             return 0;
 
@@ -152,12 +152,12 @@ namespace qblocks {
             }
             // fall through
         }
-        throw "SFIntBN::to<Primitive>: Value is too big to fit in the requested type";
+        throw "bigint_t::to<Primitive>: Value is too big to fit in the requested type";
     }
 
     //------------------------------------------------------------
     template <class X>
-    X SFUintBN::convertToPrimitive() const {
+    X biguint_t::convertToPrimitive() const {
         if (len == 0) {
             return 0;
         } else if (len == 1) {
@@ -166,27 +166,27 @@ namespace qblocks {
                 return x;
             // fall through
         }
-        throw "SFUintBN::to<Primitive>: Value is too big to fit in the requested type";
+        throw "biguint_t::to<Primitive>: Value is too big to fit in the requested type";
     }
 
     //------------------------------------------------------------
     template <class X>
-    X SFUintBN::convertToSignedPrimitive() const {
+    X biguint_t::convertToSignedPrimitive() const {
         X x = convertToPrimitive<X>();
         if (x >= 0)
             return x;
         else
-            throw "SFUintBN::to(Primitive): Value is too big to fit in the requested type";
+            throw "biguint_t::to(Primitive): Value is too big to fit in the requested type";
     }
 
     //------------------------------------------------------------
-    int64_t  SFIntBN::to_long(void) const   { return convertToSignedPrimitive<int64_t, uint64_t>(); }
-    int32_t  SFIntBN::to_int(void) const    { return convertToSignedPrimitive<int32_t, uint32_t>(); }
-    uint64_t SFIntBN::to_ulong(void) const  { return convertToUnsignedPrimitive<uint64_t>(); }
-    uint32_t SFIntBN::to_uint(void) const   { return convertToUnsignedPrimitive<uint32_t>(); }
+    int64_t  bigint_t::to_long(void) const   { return convertToSignedPrimitive<int64_t, uint64_t>(); }
+    int32_t  bigint_t::to_int(void) const    { return convertToSignedPrimitive<int32_t, uint32_t>(); }
+    uint64_t bigint_t::to_ulong(void) const  { return convertToUnsignedPrimitive<uint64_t>(); }
+    uint32_t bigint_t::to_uint(void) const   { return convertToUnsignedPrimitive<uint32_t>(); }
 
     //------------------------------------------------------------
-    int SFIntBN::compareTo(const SFIntBN &x) const {
+    int bigint_t::compareTo(const bigint_t &x) const {
         if (sign < x.sign) {
             return -1;
 
@@ -209,14 +209,14 @@ namespace qblocks {
     //------------------------------------------------------------
     #define DTRT_ALIASED(cond, op) \
         if (cond) { \
-            SFIntBN tmpThis; \
+            bigint_t tmpThis; \
         tmpThis.op; \
         *this = tmpThis; \
         return; \
     }
 
     //------------------------------------------------------------
-    void SFIntBN::add(const SFIntBN &a, const SFIntBN &b) {
+    void bigint_t::add(const bigint_t &a, const bigint_t &b) {
         DTRT_ALIASED(this == &a || this == &b, add(a, b));
 
         // If one argument is zero, copy the other.
@@ -252,8 +252,8 @@ namespace qblocks {
     }
 
     //------------------------------------------------------------
-    void SFIntBN::subtract(const SFIntBN &a, const SFIntBN &b) {
-        // Notice that this routine is identical to SFIntBN::add,
+    void bigint_t::subtract(const bigint_t &a, const bigint_t &b) {
+        // Notice that this routine is identical to bigint_t::add,
         // if one replaces b.sign by its opposite.
         DTRT_ALIASED(this == &a || this == &b, subtract(a, b));
         // If a is zero, copy b and flip its sign.  If b is zero, copy a.
@@ -293,7 +293,7 @@ namespace qblocks {
     }
 
     //------------------------------------------------------------
-    void SFIntBN::multiply(const SFIntBN &a, const SFIntBN &b) {
+    void bigint_t::multiply(const bigint_t &a, const bigint_t &b) {
         DTRT_ALIASED(this == &a || this == &b, multiply(a, b));
 
         // If one object is zero, copy zero and return.
@@ -311,12 +311,12 @@ namespace qblocks {
     }
 
     //------------------------------------------------------------
-    void SFIntBN::divide(const SFIntBN &b, SFIntBN &q) {
+    void bigint_t::divide(const bigint_t &b, bigint_t &q) {
         if (this == &q)
-            throw "SFIntBN::divide: Cannot write quotient and remainder into the same variable";
+            throw "bigint_t::divide: Cannot write quotient and remainder into the same variable";
 
         if (this == &b || &q == &b) {
-            SFIntBN tmpB(b);
+            bigint_t tmpB(b);
             divide(tmpB, q);
             return;
         }
@@ -350,7 +350,7 @@ namespace qblocks {
              * quotient and remainder after so that the result
              * comes out right.  To see why it works, consider the following
              * list of examples, where A is the magnitude-decreased
-             * a, Q and R are the results of SFUintBN division
+             * a, Q and R are the results of biguint_t division
              * with remainder on A and |b|, and q and r are the
              * final results we want:
              *
@@ -392,24 +392,24 @@ namespace qblocks {
     }
 
     //------------------------------------------------------------
-    void SFIntBN::negate(const SFIntBN &a) {
+    void bigint_t::negate(const bigint_t &a) {
         DTRT_ALIASED(this == &a, negate(a));
         mag  =  a.mag;
         sign = -a.sign;
     }
 
     //------------------------------------------------------------
-    bool SFIntBN::isNegative(void) const {
+    bool bigint_t::isNegative(void) const {
         return operator<(0);
     }
 
     //------------------------------------------------------------
-    const SFUintBN& SFIntBN::getMagnitude(void) const {
+    const biguint_t& bigint_t::getMagnitude(void) const {
         return mag;
     }
 
     //------------------------------------------------------------
-    uint64_t SFIntBN::getBlock(unsigned int i) const {
+    uint64_t bigint_t::getBlock(unsigned int i) const {
         return mag.getBlock(i);
     }
 }  // namespace qblocks

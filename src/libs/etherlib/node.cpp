@@ -348,7 +348,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-------------------------------------------------------------------------
-    SFUintBN getBalance(const string_q& addr, blknum_t blockNum, bool isDemo) {
+    biguint_t getBalance(const string_q& addr, blknum_t blockNum, bool isDemo) {
         string_q a = extract(addr, 2);
         a = padLeft(a, 40, '0');
         string_q ret = callRPC("eth_getBalance", "[\"0x" + a + "\",\"" + uint_2_Hex(blockNum) + "\"]", false);
@@ -869,6 +869,6 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //--------------------------------------------------------------------------
-    SFUintBN weiPerEther = (modexp(10, 9, uint64_t(10000000000)) * modexp(10, 9, uint64_t(10000000000)));
+    biguint_t weiPerEther = (modexp(10, 9, uint64_t(10000000000)) * modexp(10, 9, uint64_t(10000000000)));
 
 }  // namespace qblocks

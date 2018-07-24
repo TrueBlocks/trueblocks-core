@@ -27,11 +27,11 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CIncomeStatement : public CBaseNode {
 public:
-    SFIntBN begBal;
-    SFIntBN inflow;
-    SFIntBN outflow;
-    SFIntBN gasCostInWei;
-    SFIntBN endBal;
+    bigint_t begBal;
+    bigint_t inflow;
+    bigint_t outflow;
+    bigint_t gasCostInWei;
+    bigint_t endBal;
     blknum_t blockNum;
 
 public:
@@ -43,10 +43,10 @@ public:
     DECLARE_NODE(CIncomeStatement);
 
     // EXISTING_CODE
-    SFIntBN nodeBal;
+    bigint_t nodeBal;
     void operator+=(const CIncomeStatement &x);
     bool balanced(void) const { return ((nodeBal - endBal) == 0); }
-    SFIntBN difference(void) const { return (nodeBal - endBal); }
+    bigint_t difference(void) const { return (nodeBal - endBal); }
     void correct(void) { endBal = nodeBal; }
     friend class CAccountWatch;
     // EXISTING_CODE

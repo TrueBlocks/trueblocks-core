@@ -27,7 +27,7 @@ class QMultiTransactEvent : public CLogEntry {
 public:
     address_t owner;
     string_q operation;
-    SFUintBN value;
+    biguint_t value;
     address_t to;
     string_q data;
 
