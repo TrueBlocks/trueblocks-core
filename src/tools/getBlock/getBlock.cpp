@@ -119,7 +119,7 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
             string_q format = opt.format;
 //            if (false) { //opt.priceBlocks) {
 //                biguint_t oneWei = str_2_Wei("1000000000000000000");
-//                string_q dollars = "$" + asDollars(gold.timestamp, oneWei);
+ //                string_q dollars = "$" + asDollars(gold.timestamp, oneWei);
 //                replace(format, "{PRICE:CLOSE}", dollars);
 //            }
             result = gold.Format(format);
