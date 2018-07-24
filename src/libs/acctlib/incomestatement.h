@@ -59,7 +59,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CIncomeStatement& in);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -153,12 +153,12 @@ inline bool operator<(const CIncomeStatement& v1, const CIncomeStatement& v2) {
 
 //---------------------------------------------------------------------------
 typedef vector<CIncomeStatement> CIncomeStatementArray;
-extern SFArchive& operator>>(SFArchive& archive, CIncomeStatementArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const CIncomeStatementArray& array);
+extern CArchive& operator>>(CArchive& archive, CIncomeStatementArray& array);
+extern CArchive& operator<<(CArchive& archive, const CIncomeStatementArray& array);
 
 //---------------------------------------------------------------------------
-extern SFArchive& operator<<(SFArchive& archive, const CIncomeStatement& inc);
-extern SFArchive& operator>>(SFArchive& archive, CIncomeStatement& inc);
+extern CArchive& operator<<(CArchive& archive, const CIncomeStatement& inc);
+extern CArchive& operator>>(CArchive& archive, CIncomeStatement& inc);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

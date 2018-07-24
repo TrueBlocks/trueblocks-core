@@ -771,7 +771,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             cout << "txtDate: " << txtDate << " binDate: " << binDate << "\n";
 
         if (binDate > txtDate) {
-            SFArchive nameCache(READING_ARCHIVE);
+            CArchive nameCache(READING_ARCHIVE);
             if (nameCache.Lock(binFile, binaryReadOnly, LOCK_NOWAIT)) {
                 if (verbose && !isTestMode())
                     cout << "Reading from binary cache\n";
@@ -804,7 +804,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             }
         }
 
-        SFArchive nameCache(WRITING_ARCHIVE);
+        CArchive nameCache(WRITING_ARCHIVE);
         if (nameCache.Lock(binFile, binaryWriteCreate, LOCK_CREATE)) {
             if (verbose && !isTestMode())
                 cout << "Writing binary cache\n";

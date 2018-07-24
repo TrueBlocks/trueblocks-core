@@ -37,7 +37,7 @@ bool visitBloom(const string_q& path, void *data) {
 extern bool displayBloom(blknum_t bn, const bloom_t& bloom, void *data);
         if (endsWith(path, ".bin")) {
             bloom_t bloom;
-            SFArchive archive(READING_ARCHIVE);
+            CArchive archive(READING_ARCHIVE);
             if (archive.Lock(path, binaryReadOnly, LOCK_NOWAIT)) {
                 CBloomArray blooms;
                 archive >> blooms;

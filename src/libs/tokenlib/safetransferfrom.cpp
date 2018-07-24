@@ -81,7 +81,7 @@ void QSafeTransferFrom::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QSafeTransferFrom::Serialize(SFArchive& archive) {
+bool QSafeTransferFrom::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -102,7 +102,7 @@ bool QSafeTransferFrom::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QSafeTransferFrom::SerializeC(SFArchive& archive) const {
+bool QSafeTransferFrom::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
@@ -117,7 +117,7 @@ bool QSafeTransferFrom::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, QSafeTransferFromArray& array) {
+CArchive& operator>>(CArchive& archive, QSafeTransferFromArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -129,7 +129,7 @@ SFArchive& operator>>(SFArchive& archive, QSafeTransferFromArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const QSafeTransferFromArray& array) {
+CArchive& operator<<(CArchive& archive, const QSafeTransferFromArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -188,7 +188,7 @@ string_q nextSafetransferfromChunk_custom(const string_q& fieldIn, const void *d
 }
 
 //---------------------------------------------------------------------------
-bool QSafeTransferFrom::readBackLevel(SFArchive& archive) {
+bool QSafeTransferFrom::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE

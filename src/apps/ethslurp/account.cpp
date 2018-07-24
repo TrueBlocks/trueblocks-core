@@ -115,7 +115,7 @@ extern const CFunction *findFunctionByEncoding(const CFunctionArray& array, cons
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAccount::Serialize(SFArchive& archive) {
+bool CAccount::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -141,7 +141,7 @@ bool CAccount::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAccount::SerializeC(SFArchive& archive) const {
+bool CAccount::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -161,7 +161,7 @@ bool CAccount::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CAccountArray& array) {
+CArchive& operator>>(CArchive& archive, CAccountArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -173,7 +173,7 @@ SFArchive& operator>>(SFArchive& archive, CAccountArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CAccountArray& array) {
+CArchive& operator<<(CArchive& archive, const CAccountArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -241,7 +241,7 @@ string_q nextAccountChunk_custom(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-bool CAccount::readBackLevel(SFArchive& archive) {
+bool CAccount::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE

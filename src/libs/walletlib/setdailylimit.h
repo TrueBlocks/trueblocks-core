@@ -46,7 +46,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const QSetDailyLimit& se);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -130,8 +130,8 @@ inline bool operator<(const QSetDailyLimit& v1, const QSetDailyLimit& v2) {
 
 //---------------------------------------------------------------------------
 typedef vector<QSetDailyLimit> QSetDailyLimitArray;
-extern SFArchive& operator>>(SFArchive& archive, QSetDailyLimitArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const QSetDailyLimitArray& array);
+extern CArchive& operator>>(CArchive& archive, QSetDailyLimitArray& array);
+extern CArchive& operator<<(CArchive& archive, const QSetDailyLimitArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

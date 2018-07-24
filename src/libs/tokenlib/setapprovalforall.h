@@ -47,7 +47,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const QSetApprovalForAll& se);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -133,8 +133,8 @@ inline bool operator<(const QSetApprovalForAll& v1, const QSetApprovalForAll& v2
 
 //---------------------------------------------------------------------------
 typedef vector<QSetApprovalForAll> QSetApprovalForAllArray;
-extern SFArchive& operator>>(SFArchive& archive, QSetApprovalForAllArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const QSetApprovalForAllArray& array);
+extern CArchive& operator>>(CArchive& archive, QSetApprovalForAllArray& array);
+extern CArchive& operator<<(CArchive& archive, const QSetApprovalForAllArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

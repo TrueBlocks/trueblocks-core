@@ -50,7 +50,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const QMultiTransactEvent& mu);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -142,8 +142,8 @@ inline bool operator<(const QMultiTransactEvent& v1, const QMultiTransactEvent& 
 
 //---------------------------------------------------------------------------
 typedef vector<QMultiTransactEvent> QMultiTransactEventArray;
-extern SFArchive& operator>>(SFArchive& archive, QMultiTransactEventArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const QMultiTransactEventArray& array);
+extern CArchive& operator>>(CArchive& archive, QMultiTransactEventArray& array);
+extern CArchive& operator<<(CArchive& archive, const QMultiTransactEventArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

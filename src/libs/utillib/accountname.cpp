@@ -87,7 +87,7 @@ void CAccountName::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAccountName::Serialize(SFArchive& archive) {
+bool CAccountName::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -110,7 +110,7 @@ bool CAccountName::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAccountName::SerializeC(SFArchive& archive) const {
+bool CAccountName::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -127,7 +127,7 @@ bool CAccountName::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CAccountNameArray& array) {
+CArchive& operator>>(CArchive& archive, CAccountNameArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -139,7 +139,7 @@ SFArchive& operator>>(SFArchive& archive, CAccountNameArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CAccountNameArray& array) {
+CArchive& operator<<(CArchive& archive, const CAccountNameArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -198,7 +198,7 @@ string_q nextAccountnameChunk_custom(const string_q& fieldIn, const void *dataPt
 }
 
 //---------------------------------------------------------------------------
-bool CAccountName::readBackLevel(SFArchive& archive) {
+bool CAccountName::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE

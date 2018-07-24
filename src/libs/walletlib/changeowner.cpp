@@ -80,7 +80,7 @@ void QChangeOwner::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QChangeOwner::Serialize(SFArchive& archive) {
+bool QChangeOwner::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -100,7 +100,7 @@ bool QChangeOwner::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QChangeOwner::SerializeC(SFArchive& archive) const {
+bool QChangeOwner::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
@@ -114,7 +114,7 @@ bool QChangeOwner::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, QChangeOwnerArray& array) {
+CArchive& operator>>(CArchive& archive, QChangeOwnerArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -126,7 +126,7 @@ SFArchive& operator>>(SFArchive& archive, QChangeOwnerArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const QChangeOwnerArray& array) {
+CArchive& operator<<(CArchive& archive, const QChangeOwnerArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -184,7 +184,7 @@ string_q nextChangeownerChunk_custom(const string_q& fieldIn, const void *dataPt
 }
 
 //---------------------------------------------------------------------------
-bool QChangeOwner::readBackLevel(SFArchive& archive) {
+bool QChangeOwner::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE

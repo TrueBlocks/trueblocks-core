@@ -87,7 +87,7 @@ void CTraceResult::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTraceResult::Serialize(SFArchive& archive) {
+bool CTraceResult::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -109,7 +109,7 @@ bool CTraceResult::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTraceResult::SerializeC(SFArchive& archive) const {
+bool CTraceResult::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -125,7 +125,7 @@ bool CTraceResult::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CTraceResultArray& array) {
+CArchive& operator>>(CArchive& archive, CTraceResultArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -137,7 +137,7 @@ SFArchive& operator>>(SFArchive& archive, CTraceResultArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CTraceResultArray& array) {
+CArchive& operator<<(CArchive& archive, const CTraceResultArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -195,7 +195,7 @@ string_q nextTraceresultChunk_custom(const string_q& fieldIn, const void *dataPt
 }
 
 //---------------------------------------------------------------------------
-bool CTraceResult::readBackLevel(SFArchive& archive) {
+bool CTraceResult::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE
@@ -204,13 +204,13 @@ bool CTraceResult::readBackLevel(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CTraceResult& tra) {
+CArchive& operator<<(CArchive& archive, const CTraceResult& tra) {
     tra.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CTraceResult& tra) {
+CArchive& operator>>(CArchive& archive, CTraceResult& tra) {
     tra.Serialize(archive);
     return archive;
 }

@@ -58,7 +58,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CReceipt& re);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -170,12 +170,12 @@ inline bool operator<(const CReceipt& v1, const CReceipt& v2) {
 
 //---------------------------------------------------------------------------
 typedef vector<CReceipt> CReceiptArray;
-extern SFArchive& operator>>(SFArchive& archive, CReceiptArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const CReceiptArray& array);
+extern CArchive& operator>>(CArchive& archive, CReceiptArray& array);
+extern CArchive& operator<<(CArchive& archive, const CReceiptArray& array);
 
 //---------------------------------------------------------------------------
-extern SFArchive& operator<<(SFArchive& archive, const CReceipt& rec);
-extern SFArchive& operator>>(SFArchive& archive, CReceipt& rec);
+extern CArchive& operator<<(CArchive& archive, const CReceipt& rec);
+extern CArchive& operator>>(CArchive& archive, CReceipt& rec);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

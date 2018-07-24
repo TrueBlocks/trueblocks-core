@@ -317,7 +317,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     //--------------------------------------------------------------------------
     uint64_t getLatestBlockFromCache(void) {
 
-        SFArchive fullBlockCache(READING_ARCHIVE);
+        CArchive fullBlockCache(READING_ARCHIVE);
         if (!fullBlockCache.Lock(fullBlockIndex, binaryReadOnly, LOCK_NOWAIT)) {
             if (!isTestMode())
                 cerr << "getLatestBlockFromCache failed: " << fullBlockCache.LockFailure() << "\n";
@@ -470,7 +470,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         if (establishFolder(fileName, created)) {
             if (!created.empty() && !isTestMode())
                 cerr << "mkdir(" << created << ")" << string_q(75, ' ') << "\n";
-            SFArchive nodeCache(WRITING_ARCHIVE);
+            CArchive nodeCache(WRITING_ARCHIVE);
             if (nodeCache.Lock(fileName, binaryWriteCreate, LOCK_CREATE)) {
                 node.SerializeC(nodeCache);
                 nodeCache.Close();
@@ -483,7 +483,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     //-----------------------------------------------------------------------
     bool readNodeFromBinary(CBaseNode& item, const string_q& fileName) {
         // Assumes that the item is clear, so no Init
-        SFArchive nodeCache(READING_ARCHIVE);
+        CArchive nodeCache(READING_ARCHIVE);
         if (nodeCache.Lock(fileName, binaryReadOnly, LOCK_NOWAIT)) {
             item.Serialize(nodeCache);
             nodeCache.Close();
@@ -494,20 +494,20 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
     //-----------------------------------------------------------------------
     bool writeBlockToBinary(const CBlock& block, const string_q& fileName) {
-        // SFArchive blockCache(READING_ARCHIVE);  -- so search hits
+        // CArchive blockCache(READING_ARCHIVE);  -- so search hits
         return writeNodeToBinary(block, fileName);
     }
 
     //-----------------------------------------------------------------------
     bool readBlockFromBinary(CBlock& block, const string_q& fileName) {
-        // SFArchive blockCache(READING_ARCHIVE);  -- so search hits
+        // CArchive blockCache(READING_ARCHIVE);  -- so search hits
         return readNodeFromBinary(block, fileName);
     }
 
     //----------------------------------------------------------------------------------
     bool readBloomArray(CBloomArray& blooms, const string_q& fileName) {
         blooms.clear();
-        SFArchive bloomCache(READING_ARCHIVE);
+        CArchive bloomCache(READING_ARCHIVE);
         if (bloomCache.Lock(fileName, binaryReadOnly, LOCK_NOWAIT)) {
             bloomCache >> blooms;
             bloomCache.Close();
@@ -525,7 +525,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         if (establishFolder(fileName, created)) {
             if (!created.empty() && !isTestMode())
                 cerr << "mkdir(" << created << ")" << string_q(75, ' ') << "\n";
-            SFArchive bloomCache(WRITING_ARCHIVE);
+            CArchive bloomCache(WRITING_ARCHIVE);
             if (bloomCache.Lock(fileName, binaryWriteCreate, LOCK_CREATE)) {
                 bloomCache << blooms;
                 bloomCache.Close();
@@ -622,7 +622,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         if (!func)
             return false;
 
-        SFArchive fullBlockCache(READING_ARCHIVE);
+        CArchive fullBlockCache(READING_ARCHIVE);
         if (!fullBlockCache.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT)) {
             cerr << "forEveryNonEmptyBlockOnDisc failed: " << fullBlockCache.LockFailure() << "\n";
             return false;
@@ -666,7 +666,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         getCurlContext()->provider = "local";   // the empty blocks are not on disk, so we have to
                                                 // ask parity. Don't write them, though
 
-        SFArchive fullBlockCache(READING_ARCHIVE);
+        CArchive fullBlockCache(READING_ARCHIVE);
         if (!fullBlockCache.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT)) {
             cerr << "forEveryEmptyBlockOnDisc failed: " << fullBlockCache.LockFailure() << "\n";
             return false;

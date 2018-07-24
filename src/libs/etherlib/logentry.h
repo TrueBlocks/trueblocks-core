@@ -55,7 +55,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CLogEntry& lo);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -160,12 +160,12 @@ inline bool operator<(const CLogEntry& v1, const CLogEntry& v2) {
 
 //---------------------------------------------------------------------------
 typedef vector<CLogEntry> CLogEntryArray;
-extern SFArchive& operator>>(SFArchive& archive, CLogEntryArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const CLogEntryArray& array);
+extern CArchive& operator>>(CArchive& archive, CLogEntryArray& array);
+extern CArchive& operator<<(CArchive& archive, const CLogEntryArray& array);
 
 //---------------------------------------------------------------------------
-extern SFArchive& operator<<(SFArchive& archive, const CLogEntry& log);
-extern SFArchive& operator>>(SFArchive& archive, CLogEntry& log);
+extern CArchive& operator<<(CArchive& archive, const CLogEntry& log);
+extern CArchive& operator>>(CArchive& archive, CLogEntry& log);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

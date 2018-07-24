@@ -79,7 +79,7 @@ void QOwnerRemovedEvent::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QOwnerRemovedEvent::Serialize(SFArchive& archive) {
+bool QOwnerRemovedEvent::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -98,7 +98,7 @@ bool QOwnerRemovedEvent::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QOwnerRemovedEvent::SerializeC(SFArchive& archive) const {
+bool QOwnerRemovedEvent::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CLogEntry::SerializeC(archive);
@@ -111,7 +111,7 @@ bool QOwnerRemovedEvent::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, QOwnerRemovedEventArray& array) {
+CArchive& operator>>(CArchive& archive, QOwnerRemovedEventArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -123,7 +123,7 @@ SFArchive& operator>>(SFArchive& archive, QOwnerRemovedEventArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const QOwnerRemovedEventArray& array) {
+CArchive& operator<<(CArchive& archive, const QOwnerRemovedEventArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -180,7 +180,7 @@ string_q nextOwnerremovedeventChunk_custom(const string_q& fieldIn, const void *
 }
 
 //---------------------------------------------------------------------------
-bool QOwnerRemovedEvent::readBackLevel(SFArchive& archive) {
+bool QOwnerRemovedEvent::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE

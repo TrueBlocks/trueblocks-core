@@ -49,7 +49,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CBalanceHistory& ba);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -135,8 +135,8 @@ inline bool operator<(const CBalanceHistory& v1, const CBalanceHistory& v2) {
 
 //---------------------------------------------------------------------------
 typedef vector<CBalanceHistory> CBalanceHistoryArray;
-extern SFArchive& operator>>(SFArchive& archive, CBalanceHistoryArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const CBalanceHistoryArray& array);
+extern CArchive& operator>>(CArchive& archive, CBalanceHistoryArray& array);
+extern CArchive& operator<<(CArchive& archive, const CBalanceHistoryArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

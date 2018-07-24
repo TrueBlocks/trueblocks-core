@@ -88,7 +88,7 @@ void CPriceQuote::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPriceQuote::Serialize(SFArchive& archive) {
+bool CPriceQuote::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -108,7 +108,7 @@ bool CPriceQuote::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPriceQuote::SerializeC(SFArchive& archive) const {
+bool CPriceQuote::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     ((CPriceQuote*)this)->m_schema = getVersionNum();  // NOLINT
@@ -123,7 +123,7 @@ bool CPriceQuote::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CPriceQuoteArray& array) {
+CArchive& operator>>(CArchive& archive, CPriceQuoteArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -135,7 +135,7 @@ SFArchive& operator>>(SFArchive& archive, CPriceQuoteArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CPriceQuoteArray& array) {
+CArchive& operator<<(CArchive& archive, const CPriceQuoteArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -195,7 +195,7 @@ string_q nextPricequoteChunk_custom(const string_q& fieldIn, const void *dataPtr
 }
 
 //---------------------------------------------------------------------------
-bool CPriceQuote::readBackLevel(SFArchive& archive) {
+bool CPriceQuote::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE

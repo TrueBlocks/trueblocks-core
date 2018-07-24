@@ -76,7 +76,7 @@ void QResetSpentToday::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QResetSpentToday::Serialize(SFArchive& archive) {
+bool QResetSpentToday::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -94,7 +94,7 @@ bool QResetSpentToday::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QResetSpentToday::SerializeC(SFArchive& archive) const {
+bool QResetSpentToday::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
@@ -106,7 +106,7 @@ bool QResetSpentToday::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, QResetSpentTodayArray& array) {
+CArchive& operator>>(CArchive& archive, QResetSpentTodayArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -118,7 +118,7 @@ SFArchive& operator>>(SFArchive& archive, QResetSpentTodayArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const QResetSpentTodayArray& array) {
+CArchive& operator<<(CArchive& archive, const QResetSpentTodayArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -174,7 +174,7 @@ string_q nextResetspenttodayChunk_custom(const string_q& fieldIn, const void *da
 }
 
 //---------------------------------------------------------------------------
-bool QResetSpentToday::readBackLevel(SFArchive& archive) {
+bool QResetSpentToday::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE

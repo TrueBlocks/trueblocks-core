@@ -197,7 +197,7 @@ void rebuildFourByteDB(void) {
         }
     }
     sort(funcArray.begin(), funcArray.end());
-    SFArchive funcCache(WRITING_ARCHIVE);
+    CArchive funcCache(WRITING_ARCHIVE);
     if (funcCache.Lock(abiPath+"abis.bin", binaryWriteCreate, LOCK_CREATE)) {
         funcCache << funcArray;
         funcCache.Release();

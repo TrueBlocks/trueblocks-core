@@ -79,7 +79,7 @@ void QRequirementChangedEvent::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QRequirementChangedEvent::Serialize(SFArchive& archive) {
+bool QRequirementChangedEvent::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -98,7 +98,7 @@ bool QRequirementChangedEvent::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QRequirementChangedEvent::SerializeC(SFArchive& archive) const {
+bool QRequirementChangedEvent::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CLogEntry::SerializeC(archive);
@@ -111,7 +111,7 @@ bool QRequirementChangedEvent::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, QRequirementChangedEventArray& array) {
+CArchive& operator>>(CArchive& archive, QRequirementChangedEventArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -123,7 +123,7 @@ SFArchive& operator>>(SFArchive& archive, QRequirementChangedEventArray& array) 
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const QRequirementChangedEventArray& array) {
+CArchive& operator<<(CArchive& archive, const QRequirementChangedEventArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -180,7 +180,7 @@ string_q nextRequirementchangedeventChunk_custom(const string_q& fieldIn, const 
 }
 
 //---------------------------------------------------------------------------
-bool QRequirementChangedEvent::readBackLevel(SFArchive& archive) {
+bool QRequirementChangedEvent::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE

@@ -60,7 +60,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CLeaf& le);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -146,8 +146,8 @@ inline bool operator<(const CLeaf& v1, const CLeaf& v2) {
 
 //---------------------------------------------------------------------------
 typedef vector<CLeaf> CLeafArray;
-extern SFArchive& operator>>(SFArchive& archive, CLeafArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const CLeafArray& array);
+extern CArchive& operator>>(CArchive& archive, CLeafArray& array);
+extern CArchive& operator<<(CArchive& archive, const CLeafArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

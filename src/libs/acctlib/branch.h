@@ -61,7 +61,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CBranch& br);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -153,8 +153,8 @@ inline bool operator<(const CBranch& v1, const CBranch& v2) {
 
 //---------------------------------------------------------------------------
 typedef vector<CBranch> CBranchArray;
-extern SFArchive& operator>>(SFArchive& archive, CBranchArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const CBranchArray& array);
+extern CArchive& operator>>(CArchive& archive, CBranchArray& array);
+extern CArchive& operator<<(CArchive& archive, const CBranchArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

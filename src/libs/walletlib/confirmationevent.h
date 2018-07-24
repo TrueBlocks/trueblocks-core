@@ -47,7 +47,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const QConfirmationEvent& co);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -133,8 +133,8 @@ inline bool operator<(const QConfirmationEvent& v1, const QConfirmationEvent& v2
 
 //---------------------------------------------------------------------------
 typedef vector<QConfirmationEvent> QConfirmationEventArray;
-extern SFArchive& operator>>(SFArchive& archive, QConfirmationEventArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const QConfirmationEventArray& array);
+extern CArchive& operator>>(CArchive& archive, QConfirmationEventArray& array);
+extern CArchive& operator<<(CArchive& archive, const QConfirmationEventArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

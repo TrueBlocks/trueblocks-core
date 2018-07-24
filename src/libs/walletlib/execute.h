@@ -48,7 +48,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const QExecute& ex);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -136,8 +136,8 @@ inline bool operator<(const QExecute& v1, const QExecute& v2) {
 
 //---------------------------------------------------------------------------
 typedef vector<QExecute> QExecuteArray;
-extern SFArchive& operator>>(SFArchive& archive, QExecuteArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const QExecuteArray& array);
+extern CArchive& operator>>(CArchive& archive, QExecuteArray& array);
+extern CArchive& operator<<(CArchive& archive, const QExecuteArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

@@ -72,7 +72,7 @@ void [{CLASS_NAME}]::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool [{CLASS_NAME}]::Serialize(SFArchive& archive) {
+bool [{CLASS_NAME}]::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -90,7 +90,7 @@ bool [{CLASS_NAME}]::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool [{CLASS_NAME}]::SerializeC(SFArchive& archive) const {
+bool [{CLASS_NAME}]::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
 [{PARENT_SER2}]
@@ -101,7 +101,7 @@ bool [{CLASS_NAME}]::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, [{CLASS_NAME}]Array& array) {
+CArchive& operator>>(CArchive& archive, [{CLASS_NAME}]Array& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -113,7 +113,7 @@ SFArchive& operator>>(SFArchive& archive, [{CLASS_NAME}]Array& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const [{CLASS_NAME}]Array& array) {
+CArchive& operator<<(CArchive& archive, const [{CLASS_NAME}]Array& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -168,7 +168,7 @@ string_q next[{PROPER}]Chunk_custom(const string_q& fieldIn, const void *dataPtr
 }
 
 //---------------------------------------------------------------------------
-bool [{CLASS_NAME}]::readBackLevel(SFArchive& archive) {
+bool [{CLASS_NAME}]::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE

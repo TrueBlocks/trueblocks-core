@@ -737,20 +737,20 @@ const char* STR_COMMENT_LINE =
 //------------------------------------------------------------------------------------------------------------
 const char* STR_OPERATOR_H =
 "[{COMMENT_LINE}]"
-"extern SFArchive& operator<<(SFArchive& archive, const [{CLASS_NAME}]& [{SHORT3}]);\n"
-"extern SFArchive& operator>>(SFArchive& archive, [{CLASS_NAME}]& [{SHORT3}]);\n"
+"extern CArchive& operator<<(CArchive& archive, const [{CLASS_NAME}]& [{SHORT3}]);\n"
+"extern CArchive& operator>>(CArchive& archive, [{CLASS_NAME}]& [{SHORT3}]);\n"
 "\n";
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_OPERATOR_C =
 "[{COMMENT_LINE}]"
-"SFArchive& operator<<(SFArchive& archive, const [{CLASS_NAME}]& [{SHORT3}]) {\n"
+"CArchive& operator<<(CArchive& archive, const [{CLASS_NAME}]& [{SHORT3}]) {\n"
 "\t[{SHORT3}].SerializeC(archive);\n"
 "\treturn archive;\n"
 "}\n"
 "\n"
 "[{COMMENT_LINE}]"
-"SFArchive& operator>>(SFArchive& archive, [{CLASS_NAME}]& [{SHORT3}]) {\n"
+"CArchive& operator>>(CArchive& archive, [{CLASS_NAME}]& [{SHORT3}]) {\n"
 "\t[{SHORT3}].Serialize(archive);\n"
 "\treturn archive;\n"
 "}\n"

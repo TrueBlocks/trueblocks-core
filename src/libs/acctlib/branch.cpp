@@ -81,7 +81,7 @@ void CBranch::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CBranch::Serialize(SFArchive& archive) {
+bool CBranch::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -117,7 +117,7 @@ bool CBranch::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CBranch::SerializeC(SFArchive& archive) const {
+bool CBranch::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CTreeNode::SerializeC(archive);
@@ -138,7 +138,7 @@ bool CBranch::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CBranchArray& array) {
+CArchive& operator>>(CArchive& archive, CBranchArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -150,7 +150,7 @@ SFArchive& operator>>(SFArchive& archive, CBranchArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CBranchArray& array) {
+CArchive& operator<<(CArchive& archive, const CBranchArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -218,7 +218,7 @@ string_q nextBranchChunk_custom(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-bool CBranch::readBackLevel(SFArchive& archive) {
+bool CBranch::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE

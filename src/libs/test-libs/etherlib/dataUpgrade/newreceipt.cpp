@@ -96,7 +96,7 @@ void CNewReceipt::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CNewReceipt::Serialize(SFArchive& archive) {
+bool CNewReceipt::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -119,7 +119,7 @@ bool CNewReceipt::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CNewReceipt::SerializeC(SFArchive& archive) const {
+bool CNewReceipt::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     ((CNewReceipt*)this)->m_schema = getVersionNum();  // NOLINT
@@ -137,7 +137,7 @@ bool CNewReceipt::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CNewReceiptArray& array) {
+CArchive& operator>>(CArchive& archive, CNewReceiptArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -149,7 +149,7 @@ SFArchive& operator>>(SFArchive& archive, CNewReceiptArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CNewReceiptArray& array) {
+CArchive& operator<<(CArchive& archive, const CNewReceiptArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -208,7 +208,7 @@ string_q nextNewreceiptChunk_custom(const string_q& fieldIn, const void *dataPtr
 }
 
 //---------------------------------------------------------------------------
-bool CNewReceipt::readBackLevel(SFArchive& archive) {
+bool CNewReceipt::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE
@@ -217,13 +217,13 @@ bool CNewReceipt::readBackLevel(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CNewReceipt& newp) {
+CArchive& operator<<(CArchive& archive, const CNewReceipt& newp) {
     newp.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CNewReceipt& newp) {
+CArchive& operator>>(CArchive& archive, CNewReceipt& newp) {
     newp.Serialize(archive);
     return archive;
 }

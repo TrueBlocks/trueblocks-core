@@ -17,7 +17,7 @@
 namespace qblocks {
 
     //----------------------------------------------------------------------------
-    class SFArchive;
+    class CArchive;
 
     //----------------------------------------------------------------------------
     class CBaseNode {
@@ -49,9 +49,9 @@ namespace qblocks {
         virtual CRuntimeClass *getRuntimeClass(void) const;
         virtual string_q getValueByName(const string_q& fieldName) const;
         virtual bool setValueByName(const string_q& fieldName, const string_q& fieldValue) { return false; }
-        virtual bool Serialize(SFArchive& archive);
-        virtual bool SerializeC(SFArchive& archive) const;
-        virtual bool readBackLevel(SFArchive& archive);
+        virtual bool Serialize(CArchive& archive);
+        virtual bool SerializeC(CArchive& archive) const;
+        virtual bool readBackLevel(CArchive& archive);
         virtual void finishParse(void) { }
         virtual void Format(ostream& ctx, const string_q& fmtIn, void *data = NULL) const { }
         virtual string_q Format(const string_q& fmtIn = "") const { return ""; }
