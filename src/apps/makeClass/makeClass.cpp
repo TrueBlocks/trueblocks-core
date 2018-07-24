@@ -280,8 +280,8 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
             if (contains(fld.type, "CStringArray")  ||
                 contains(fld.type, "CBlockNumArray")   ||
                 contains(fld.type, "CAddressArray") ||
-                contains(fld.type, "SFBigUintArray") ||
-                contains(fld.type, "SFTopicArray")) {
+                contains(fld.type, "CBigUintArray") ||
+                contains(fld.type, "CTopicArray")) {
 
                 fieldGetStr += STR_GETSTR_CODE_FIELD;
                 replaceAll(fieldGetStr, "[{FIELD}]", fld.name);
@@ -289,7 +289,7 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
                     replaceAll(fieldGetStr, "THING", "topic_2_Str");
                 } else if (contains(fld.type, "CBlockNumArray")) {
                     replaceAll(fieldGetStr, "THING", "uint_2_Str");
-                } else if (contains(fld.type, "SFBigUintArray")) {
+                } else if (contains(fld.type, "CBigUintArray")) {
                     replaceAll(fieldGetStr, "THING", "bnu_2_Str");
                 } else {
                     replaceAll(fieldGetStr, "THING", "");
@@ -525,7 +525,7 @@ string_q getCaseCode(const string_q& fieldCase, const string_q& ex) {
                         replaceAll(str, "[{FIELD}]", field);
                         caseCode += str;
 
-                    } else if (contains(type, "SFBigUintArray") || contains(type, "SFTopicArray")) {
+                    } else if (contains(type, "CBigUintArray") || contains(type, "CTopicArray")) {
                         string_q str = STR_CASE_CODE_STRINGARRAY;
                         // hack for size clause
                         replace(str, "[{FIELD}]", field);
@@ -535,7 +535,7 @@ string_q getCaseCode(const string_q& fieldCase, const string_q& ex) {
 
                     } else if (contains(type, "Array")) {
                         string_q str = STR_CASE_CODE_ARRAY;
-                        if (contains(type, "SFUint") || contains(type, "SFBlock"))
+                        if (contains(type, "SFUint") || contains(type, "CBlock"))
                             replaceAll(str, "[{PTR}][{FIELD}][i].Format()", "uint_2_Str([{PTR}][{FIELD}][i])");
                         replaceAll(str, "[{FIELD}]", field);
                         caseCode += str;
@@ -649,8 +649,8 @@ string_q getCaseSetCode(const string_q& fieldCase) {
                         caseCode += str;
 
                     } else if (contains(type, "CAddressArray") ||
-                               contains(type, "SFBigUintArray") ||
-                               contains(type, "SFTopicArray")) {
+                               contains(type, "CBigUintArray") ||
+                               contains(type, "CTopicArray")) {
                         string_q str = strArraySet;
                         replaceAll(str, "[{NAME}]", field);
                         replaceAll(str, "nextTokenClear(str, ',')", "str_2_[{TYPE}](nextTokenClear(str, ','))");

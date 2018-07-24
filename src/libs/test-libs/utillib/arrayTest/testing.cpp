@@ -34,7 +34,7 @@ TEST_F(CThisTest, TestInsertion) {
     for (auto elem : strArray)
         cout << TESTID("array ", 20) << elem << "\n";
 
-    SFUintArray myvector;
+    CUintArray myvector;
     for (size_t i = 0; i < 10; i++)
         myvector.push_back(i);
     cout << TESTID("int array", 20);
