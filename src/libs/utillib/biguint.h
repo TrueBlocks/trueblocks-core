@@ -11,47 +11,47 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------------
     template <class BaseType>
-    class SFBigNumStore {
+    class BigNumStore {
     public:
         static const unsigned int N;
         unsigned int capacity;
         unsigned int len;
         BaseType *blk;
 
-        SFBigNumStore(void);
-        SFBigNumStore(const SFBigNumStore<BaseType>& x);
-        SFBigNumStore<BaseType>& operator=(const SFBigNumStore<BaseType>& x);
+        BigNumStore(void);
+        BigNumStore(const BigNumStore<BaseType>& x);
+        BigNumStore<BaseType>& operator=(const BigNumStore<BaseType>& x);
 
-        explicit SFBigNumStore(unsigned int size);
-        SFBigNumStore(const BaseType *b, unsigned int len);
-        ~SFBigNumStore();
+        explicit BigNumStore(unsigned int size);
+        BigNumStore(const BaseType *b, unsigned int len);
+        ~BigNumStore();
 
         void allocate(unsigned int size);
         void allocateAndCopy(unsigned int size);
 
-        bool operator==(const SFBigNumStore<BaseType>& x) const;
-        bool operator!=(const SFBigNumStore<BaseType>& x) const { return !operator==(x); }
+        bool operator==(const BigNumStore<BaseType>& x) const;
+        bool operator!=(const BigNumStore<BaseType>& x) const { return !operator==(x); }
     };
 
     //-------------------------------------------------------------------------------
     template <class BaseType>
-    const unsigned int SFBigNumStore<BaseType>::N = 8 * sizeof(BaseType);
+    const unsigned int BigNumStore<BaseType>::N = 8 * sizeof(BaseType);
 
     //-------------------------------------------------------------------------------
     template <class BaseType>
-    inline SFBigNumStore<BaseType>::SFBigNumStore(void) : capacity(0), len(0) {
+    inline BigNumStore<BaseType>::BigNumStore(void) : capacity(0), len(0) {
         blk = 0;
     }
 
     //-------------------------------------------------------------------------------
     template <class BaseType>
-    inline SFBigNumStore<BaseType>::SFBigNumStore(unsigned int c) : capacity(c), len(0) {
+    inline BigNumStore<BaseType>::BigNumStore(unsigned int c) : capacity(c), len(0) {
         blk = (capacity > 0) ? (new BaseType[capacity]) : 0;
     }
 
     //-------------------------------------------------------------------------------
     template <class BaseType>
-    SFBigNumStore<BaseType>& SFBigNumStore<BaseType>::operator=(const SFBigNumStore<BaseType> &x) {
+    BigNumStore<BaseType>& BigNumStore<BaseType>::operator=(const BigNumStore<BaseType> &x) {
         if (this == &x)
             return *this;
 
@@ -64,7 +64,7 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------------
     template <class BaseType>
-    SFBigNumStore<BaseType>::SFBigNumStore(const SFBigNumStore<BaseType> &x) : len(x.len) {
+    BigNumStore<BaseType>::BigNumStore(const BigNumStore<BaseType> &x) : len(x.len) {
         capacity = len;
         blk = new BaseType[capacity];
         for (unsigned int i = 0; i < len; i++)
@@ -73,7 +73,7 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------------
     template <class BaseType>
-    SFBigNumStore<BaseType>::SFBigNumStore(const BaseType *b, unsigned int len) : capacity(len), len(len) {
+    BigNumStore<BaseType>::BigNumStore(const BaseType *b, unsigned int len) : capacity(len), len(len) {
         blk = new BaseType[capacity];
         for (unsigned int i = 0; i < len; i++)
             blk[i] = b[i];
@@ -81,14 +81,14 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------------
     template <class BaseType>
-    inline SFBigNumStore<BaseType>::~SFBigNumStore() {
+    inline BigNumStore<BaseType>::~BigNumStore() {
         if (blk)
             delete [] blk;
     }
 
     //-------------------------------------------------------------------------------
     template <class BaseType>
-    void SFBigNumStore<BaseType>::allocate(unsigned int size) {
+    void BigNumStore<BaseType>::allocate(unsigned int size) {
         if (size > capacity) {
             if (blk)
                 delete [] blk;
@@ -99,7 +99,7 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------------
     template <class BaseType>
-    void SFBigNumStore<BaseType>::allocateAndCopy(unsigned int size) {
+    void BigNumStore<BaseType>::allocateAndCopy(unsigned int size) {
         if (size > capacity) {
             BaseType *oldBlk = blk;
             capacity = size;
@@ -112,7 +112,7 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------------
     template <class BaseType>
-    bool SFBigNumStore<BaseType>::operator==(const SFBigNumStore<BaseType> &x) const {
+    bool BigNumStore<BaseType>::operator==(const BigNumStore<BaseType> &x) const {
         if (len != x.len)
             return false;
 
@@ -126,7 +126,7 @@ namespace qblocks {
 #define thisIsMe(a) (this == &a)
 
     //----------------------------------------------------------------------
-    class SFUintBN : public SFBigNumStore<uint64_t> {
+    class SFUintBN : public BigNumStore<uint64_t> {
     public:
         SFUintBN(void);
         SFUintBN(const SFUintBN &x);
@@ -221,12 +221,12 @@ namespace qblocks {
 
     //----------------------------------------------------------------------
     inline bool SFUintBN::operator==(const SFUintBN &x) const {
-        return SFBigNumStore<uint64_t>::operator==(x);
+        return BigNumStore<uint64_t>::operator==(x);
     }
 
     //----------------------------------------------------------------------
     inline bool SFUintBN::operator!=(const SFUintBN &x) const {
-        return SFBigNumStore<uint64_t>::operator!=(x);
+        return BigNumStore<uint64_t>::operator!=(x);
     }
 
     //----------------------------------------------------------------------
@@ -424,12 +424,12 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    class BigUnsignedInABase : public SFBigNumStore<unsigned short> {  // NOLINT
+    class BigUnsignedInABase : public BigNumStore<unsigned short> {  // NOLINT
     public:
         unsigned short base;  // NOLINT
 
         // Creates a BigUnsignedInABase with a capacity; for internal use.
-        BigUnsignedInABase(int, unsigned int c) : SFBigNumStore<unsigned short>(0, c) {}  // NOLINT
+        BigUnsignedInABase(int, unsigned int c) : BigNumStore<unsigned short>(0, c) {}  // NOLINT
 
         // Decreases len to eliminate any leading zero igits.
         void trimLeadingZeros(void) {
@@ -438,21 +438,21 @@ namespace qblocks {
         }
 
         // Constructs zero in base 2.
-        BigUnsignedInABase() : SFBigNumStore<unsigned short>(), base(2) {}  // NOLINT
+        BigUnsignedInABase() : BigNumStore<unsigned short>(), base(2) {}  // NOLINT
 
         // Copy constructor
-        BigUnsignedInABase(const BigUnsignedInABase &x) : SFBigNumStore<unsigned short>(x), base(x.base) {}  // NOLINT
+        BigUnsignedInABase(const BigUnsignedInABase &x) : BigNumStore<unsigned short>(x), base(x.base) {}  // NOLINT
 
         // Assignment operator
         void operator =(const BigUnsignedInABase &x) {
-            SFBigNumStore<unsigned short>::operator =(x);  // NOLINT
+            BigNumStore<unsigned short>::operator =(x);  // NOLINT
             base = x.base;
         }
 
         // Constructor that copies from a given array of igits.
         BigUnsignedInABase(const unsigned short *d, unsigned int l, unsigned short base);  // NOLINT
 
-        // Destructor.  SFBigNumStore does the delete for us.
+        // Destructor.  BigNumStore does the delete for us.
         ~BigUnsignedInABase() {}
 
         // LINKS TO BIGUNSIGNED
@@ -467,7 +467,7 @@ namespace qblocks {
          * values must have the same base to be equal.
          */
         bool operator ==(const BigUnsignedInABase &x) const {
-            return base == x.base && SFBigNumStore<unsigned short>::operator==(x);  // NOLINT
+            return base == x.base && BigNumStore<unsigned short>::operator==(x);  // NOLINT
         }
         bool operator !=(const BigUnsignedInABase &x) const { return !operator==(x); }
 
