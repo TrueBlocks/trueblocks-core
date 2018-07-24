@@ -25,9 +25,9 @@
  * BigUnsignedInABase uses ''igits'' (or igit) where SFUintBN uses
  * ''blocks'' (or Blk).
  *
- * (2) Both use the management features of SFBigNumStore.  (In fact, my desire
+ * (2) Both use the management features of BigNumStore.  (In fact, my desire
  * to add a BigUnsignedInABase class without duplicating a lot of code led me to
- * introduce SFBigNumStore.)
+ * introduce BigNumStore.)
  *
  * (3) The only arithmetic operation supported by BigUnsignedInABase is an
  * equality test.  Use SFUintBN for arithmetic.
@@ -37,7 +37,7 @@ namespace qblocks {
 
     inline BigUnsignedInABase::BigUnsignedInABase(const unsigned short *d,  // NOLINT
                                                     unsigned int l, unsigned short base)  // NOLINT
-        : SFBigNumStore<unsigned short>(d, l), base(base) {  // NOLINT
+        : BigNumStore<unsigned short>(d, l), base(base) {  // NOLINT
         if (base < 2)
             throw "BigUnsignedInABase::BigUnsignedInABase(const unsigned short *, unsigned int, unsigned short): "
                     "The base must be at least 2";

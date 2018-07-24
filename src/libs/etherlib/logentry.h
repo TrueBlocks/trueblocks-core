@@ -23,7 +23,6 @@ namespace qblocks {
 
 // EXISTING_CODE
 class CReceipt;
-#define SFTopicArray SFBigUintArray
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -32,7 +31,7 @@ public:
     address_t address;
     string_q data;
     uint64_t logIndex;
-    SFTopicArray topics;
+    CTopicArray topics;
 
 public:
     CLogEntry(void);
