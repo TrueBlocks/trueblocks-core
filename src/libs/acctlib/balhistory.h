@@ -51,7 +51,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CBalHistory& ba);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -139,12 +139,12 @@ inline bool operator<(const CBalHistory& v1, const CBalHistory& v2) {
 
 //---------------------------------------------------------------------------
 typedef vector<CBalHistory> CBalHistoryArray;
-extern SFArchive& operator>>(SFArchive& archive, CBalHistoryArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const CBalHistoryArray& array);
+extern CArchive& operator>>(CArchive& archive, CBalHistoryArray& array);
+extern CArchive& operator<<(CArchive& archive, const CBalHistoryArray& array);
 
 //---------------------------------------------------------------------------
-extern SFArchive& operator<<(SFArchive& archive, const CBalHistory& bal);
-extern SFArchive& operator>>(SFArchive& archive, CBalHistory& bal);
+extern CArchive& operator<<(CArchive& archive, const CBalHistory& bal);
+extern CArchive& operator>>(CArchive& archive, CBalHistory& bal);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

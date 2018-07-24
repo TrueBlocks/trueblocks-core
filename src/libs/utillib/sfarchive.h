@@ -26,9 +26,9 @@ namespace qblocks {
     typedef bool (*VISITARCHIVEFUNC)(CBaseNode& node, void *data);
 
     //-----------------------------------------------------------------------------------------
-    class SFArchive : public CSharedResource {
+    class CArchive : public CSharedResource {
     private:
-        class SFArchiveHeader {
+        class CArchiveHeader {
         public:
             // This data structure is sometimes written at the head of a
             // file. Don't remove it or change its size;
@@ -37,19 +37,19 @@ namespace qblocks {
         };
 
     public:
-        SFArchiveHeader  m_header;
+        CArchiveHeader  m_header;
         bool             m_isReading;
         // VISITARCHIVEFUNC writeMsgFunc;
         // VISITARCHIVEFUNC readMsgFunc;
 
-        explicit SFArchive(bool isReading) : CSharedResource() {
+        explicit CArchive(bool isReading) : CSharedResource() {
             m_isReading        = isReading;
             m_header.m_version = getVersionNum();
             // writeMsgFunc     = NULL;
             // readMsgFunc      = NULL;
         }
 
-        string_q getType(void) const override { return "SFArchive"; }
+        string_q getType(void) const override { return "CArchive"; }
 
         bool isWriting(void) const {
             return !m_isReading;
@@ -68,38 +68,38 @@ namespace qblocks {
             operator>>(unused);
         }
 
-        SFArchive& operator<<(bool b);
-        SFArchive& operator<<(char c);
-        SFArchive& operator<<(int d);
-        SFArchive& operator<<(unsigned int d);
-        SFArchive& operator<<(int64_t dw);
-        SFArchive& operator<<(uint64_t dw);
-        SFArchive& operator<<(float f);
-        SFArchive& operator<<(double f);
-        SFArchive& operator<<(const string_q& str);
-        SFArchive& operator<<(const SFUintBN& bn);
-        SFArchive& operator<<(const SFIntBN& bn);
-        SFArchive& operator<<(const char *str);
+        CArchive& operator<<(bool b);
+        CArchive& operator<<(char c);
+        CArchive& operator<<(int d);
+        CArchive& operator<<(unsigned int d);
+        CArchive& operator<<(int64_t dw);
+        CArchive& operator<<(uint64_t dw);
+        CArchive& operator<<(float f);
+        CArchive& operator<<(double f);
+        CArchive& operator<<(const string_q& str);
+        CArchive& operator<<(const SFUintBN& bn);
+        CArchive& operator<<(const SFIntBN& bn);
+        CArchive& operator<<(const char *str);
 
-        SFArchive& operator>>(bool& b);
-        SFArchive& operator>>(char& c);
-        SFArchive& operator>>(int& d);
-        SFArchive& operator>>(unsigned int& d);
-        SFArchive& operator>>(int64_t& dw);
-        SFArchive& operator>>(uint64_t& dw);
-        SFArchive& operator>>(float& f);
-        SFArchive& operator>>(double& f);
-        SFArchive& operator>>(string_q& str);
-        SFArchive& operator>>(SFUintBN& bn);
-        SFArchive& operator>>(SFIntBN& bn);
+        CArchive& operator>>(bool& b);
+        CArchive& operator>>(char& c);
+        CArchive& operator>>(int& d);
+        CArchive& operator>>(unsigned int& d);
+        CArchive& operator>>(int64_t& dw);
+        CArchive& operator>>(uint64_t& dw);
+        CArchive& operator>>(float& f);
+        CArchive& operator>>(double& f);
+        CArchive& operator>>(string_q& str);
+        CArchive& operator>>(SFUintBN& bn);
+        CArchive& operator>>(SFIntBN& bn);
     };
 
-    extern SFArchive& operator<<(SFArchive& archive, const CStringArray& array);
-    extern SFArchive& operator<<(SFArchive& archive, const CBigUintArray& array);
-    extern SFArchive& operator<<(SFArchive& archive, const CUintArray& array);
+    extern CArchive& operator<<(CArchive& archive, const CStringArray& array);
+    extern CArchive& operator<<(CArchive& archive, const CBigUintArray& array);
+    extern CArchive& operator<<(CArchive& archive, const CUintArray& array);
 
-    extern SFArchive& operator>>(SFArchive& archive, CStringArray& array);
-    extern SFArchive& operator>>(SFArchive& archive, CBigUintArray& array);
-    extern SFArchive& operator>>(SFArchive& archive, CUintArray& array);
+    extern CArchive& operator>>(CArchive& archive, CStringArray& array);
+    extern CArchive& operator>>(CArchive& archive, CBigUintArray& array);
+    extern CArchive& operator>>(CArchive& archive, CUintArray& array);
 
 }  // namespace qblocks

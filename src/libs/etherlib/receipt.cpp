@@ -109,7 +109,7 @@ void CReceipt::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CReceipt::Serialize(SFArchive& archive) {
+bool CReceipt::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -131,7 +131,7 @@ bool CReceipt::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CReceipt::SerializeC(SFArchive& archive) const {
+bool CReceipt::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -147,7 +147,7 @@ bool CReceipt::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CReceiptArray& array) {
+CArchive& operator>>(CArchive& archive, CReceiptArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -159,7 +159,7 @@ SFArchive& operator>>(SFArchive& archive, CReceiptArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CReceiptArray& array) {
+CArchive& operator<<(CArchive& archive, const CReceiptArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -228,7 +228,7 @@ string_q nextReceiptChunk_custom(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-bool CReceipt::readBackLevel(SFArchive& archive) {
+bool CReceipt::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE
@@ -260,13 +260,13 @@ bool CReceipt::readBackLevel(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CReceipt& rec) {
+CArchive& operator<<(CArchive& archive, const CReceipt& rec) {
     rec.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CReceipt& rec) {
+CArchive& operator>>(CArchive& archive, CReceipt& rec) {
     rec.Serialize(archive);
     return archive;
 }

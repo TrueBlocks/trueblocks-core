@@ -84,7 +84,7 @@ void CBalHistory::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CBalHistory::Serialize(SFArchive& archive) {
+bool CBalHistory::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -105,7 +105,7 @@ bool CBalHistory::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CBalHistory::SerializeC(SFArchive& archive) const {
+bool CBalHistory::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -120,7 +120,7 @@ bool CBalHistory::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CBalHistoryArray& array) {
+CArchive& operator>>(CArchive& archive, CBalHistoryArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -132,7 +132,7 @@ SFArchive& operator>>(SFArchive& archive, CBalHistoryArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CBalHistoryArray& array) {
+CArchive& operator<<(CArchive& archive, const CBalHistoryArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -189,7 +189,7 @@ string_q nextBalhistoryChunk_custom(const string_q& fieldIn, const void *dataPtr
 }
 
 //---------------------------------------------------------------------------
-bool CBalHistory::readBackLevel(SFArchive& archive) {
+bool CBalHistory::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE
@@ -198,13 +198,13 @@ bool CBalHistory::readBackLevel(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CBalHistory& bal) {
+CArchive& operator<<(CArchive& archive, const CBalHistory& bal) {
     bal.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CBalHistory& bal) {
+CArchive& operator>>(CArchive& archive, CBalHistory& bal) {
     bal.Serialize(archive);
     return archive;
 }

@@ -129,7 +129,7 @@ void CNewBlock::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CNewBlock::Serialize(SFArchive& archive) {
+bool CNewBlock::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -158,7 +158,7 @@ bool CNewBlock::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CNewBlock::SerializeC(SFArchive& archive) const {
+bool CNewBlock::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     ((CNewBlock*)this)->m_schema = getVersionNum();  // NOLINT
@@ -182,7 +182,7 @@ bool CNewBlock::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CNewBlockArray& array) {
+CArchive& operator>>(CArchive& archive, CNewBlockArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -194,7 +194,7 @@ SFArchive& operator>>(SFArchive& archive, CNewBlockArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CNewBlockArray& array) {
+CArchive& operator<<(CArchive& archive, const CNewBlockArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -274,7 +274,7 @@ string_q nextNewblockChunk_custom(const string_q& fieldIn, const void *dataPtr) 
 }
 
 //---------------------------------------------------------------------------
-bool CNewBlock::readBackLevel(SFArchive& archive) {
+bool CNewBlock::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE
@@ -306,13 +306,13 @@ bool CNewBlock::readBackLevel(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CNewBlock& newp) {
+CArchive& operator<<(CArchive& archive, const CNewBlock& newp) {
     newp.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CNewBlock& newp) {
+CArchive& operator>>(CArchive& archive, CNewBlock& newp) {
     newp.Serialize(archive);
     return archive;
 }
@@ -409,7 +409,7 @@ CNewBlock::CNewBlock(const CBlock& block) {
 //-----------------------------------------------------------------------
 bool readOneNewBlock_fromBinary(CNewBlock& block, const string_q& fileName) {
     block = CNewBlock();  // reset
-    SFArchive archive(READING_ARCHIVE);
+    CArchive archive(READING_ARCHIVE);
     if (archive.Lock(fileName, binaryReadOnly, LOCK_NOWAIT)) {
         block.Serialize(archive);
         archive.Close();

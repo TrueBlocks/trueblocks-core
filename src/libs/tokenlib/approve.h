@@ -47,7 +47,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const QApprove& ap);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -133,8 +133,8 @@ inline bool operator<(const QApprove& v1, const QApprove& v2) {
 
 //---------------------------------------------------------------------------
 typedef vector<QApprove> QApproveArray;
-extern SFArchive& operator>>(SFArchive& archive, QApproveArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const QApproveArray& array);
+extern CArchive& operator>>(CArchive& archive, QApproveArray& array);
+extern CArchive& operator<<(CArchive& archive, const QApproveArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

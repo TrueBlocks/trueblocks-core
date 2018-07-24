@@ -138,7 +138,7 @@ void CFunction::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CFunction::Serialize(SFArchive& archive) {
+bool CFunction::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -165,7 +165,7 @@ bool CFunction::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CFunction::SerializeC(SFArchive& archive) const {
+bool CFunction::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -186,7 +186,7 @@ bool CFunction::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CFunctionArray& array) {
+CArchive& operator>>(CArchive& archive, CFunctionArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -198,7 +198,7 @@ SFArchive& operator>>(SFArchive& archive, CFunctionArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CFunctionArray& array) {
+CArchive& operator<<(CArchive& archive, const CFunctionArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -290,7 +290,7 @@ string_q nextFunctionChunk_custom(const string_q& fieldIn, const void *dataPtr) 
 }
 
 //---------------------------------------------------------------------------
-bool CFunction::readBackLevel(SFArchive& archive) {
+bool CFunction::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE

@@ -51,7 +51,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CAcctCacheItem& ac);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -137,8 +137,8 @@ inline bool operator<(const CAcctCacheItem& v1, const CAcctCacheItem& v2) {
 
 //---------------------------------------------------------------------------
 typedef vector<CAcctCacheItem> CAcctCacheItemArray;
-extern SFArchive& operator>>(SFArchive& archive, CAcctCacheItemArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const CAcctCacheItemArray& array);
+extern CArchive& operator>>(CArchive& archive, CAcctCacheItemArray& array);
+extern CArchive& operator<<(CArchive& archive, const CAcctCacheItemArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

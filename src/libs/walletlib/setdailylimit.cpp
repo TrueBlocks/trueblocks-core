@@ -79,7 +79,7 @@ void QSetDailyLimit::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QSetDailyLimit::Serialize(SFArchive& archive) {
+bool QSetDailyLimit::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -98,7 +98,7 @@ bool QSetDailyLimit::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QSetDailyLimit::SerializeC(SFArchive& archive) const {
+bool QSetDailyLimit::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
@@ -111,7 +111,7 @@ bool QSetDailyLimit::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, QSetDailyLimitArray& array) {
+CArchive& operator>>(CArchive& archive, QSetDailyLimitArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -123,7 +123,7 @@ SFArchive& operator>>(SFArchive& archive, QSetDailyLimitArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const QSetDailyLimitArray& array) {
+CArchive& operator<<(CArchive& archive, const QSetDailyLimitArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -180,7 +180,7 @@ string_q nextSetdailylimitChunk_custom(const string_q& fieldIn, const void *data
 }
 
 //---------------------------------------------------------------------------
-bool QSetDailyLimit::readBackLevel(SFArchive& archive) {
+bool QSetDailyLimit::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE

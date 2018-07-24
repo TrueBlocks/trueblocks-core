@@ -58,7 +58,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CTraceAction& tr);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -160,12 +160,12 @@ inline bool operator<(const CTraceAction& v1, const CTraceAction& v2) {
 
 //---------------------------------------------------------------------------
 typedef vector<CTraceAction> CTraceActionArray;
-extern SFArchive& operator>>(SFArchive& archive, CTraceActionArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const CTraceActionArray& array);
+extern CArchive& operator>>(CArchive& archive, CTraceActionArray& array);
+extern CArchive& operator<<(CArchive& archive, const CTraceActionArray& array);
 
 //---------------------------------------------------------------------------
-extern SFArchive& operator<<(SFArchive& archive, const CTraceAction& tra);
-extern SFArchive& operator>>(SFArchive& archive, CTraceAction& tra);
+extern CArchive& operator<<(CArchive& archive, const CTraceAction& tra);
+extern CArchive& operator>>(CArchive& archive, CTraceAction& tra);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

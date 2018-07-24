@@ -79,7 +79,7 @@ void QConfirm::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QConfirm::Serialize(SFArchive& archive) {
+bool QConfirm::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -98,7 +98,7 @@ bool QConfirm::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QConfirm::SerializeC(SFArchive& archive) const {
+bool QConfirm::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
@@ -111,7 +111,7 @@ bool QConfirm::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, QConfirmArray& array) {
+CArchive& operator>>(CArchive& archive, QConfirmArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -123,7 +123,7 @@ SFArchive& operator>>(SFArchive& archive, QConfirmArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const QConfirmArray& array) {
+CArchive& operator<<(CArchive& archive, const QConfirmArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -180,7 +180,7 @@ string_q nextConfirmChunk_custom(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-bool QConfirm::readBackLevel(SFArchive& archive) {
+bool QConfirm::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE

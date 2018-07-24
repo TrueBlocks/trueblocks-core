@@ -81,7 +81,7 @@ void QApproveAndCall::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QApproveAndCall::Serialize(SFArchive& archive) {
+bool QApproveAndCall::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -102,7 +102,7 @@ bool QApproveAndCall::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QApproveAndCall::SerializeC(SFArchive& archive) const {
+bool QApproveAndCall::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
@@ -117,7 +117,7 @@ bool QApproveAndCall::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, QApproveAndCallArray& array) {
+CArchive& operator>>(CArchive& archive, QApproveAndCallArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -129,7 +129,7 @@ SFArchive& operator>>(SFArchive& archive, QApproveAndCallArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const QApproveAndCallArray& array) {
+CArchive& operator<<(CArchive& archive, const QApproveAndCallArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -188,7 +188,7 @@ string_q nextApproveandcallChunk_custom(const string_q& fieldIn, const void *dat
 }
 
 //---------------------------------------------------------------------------
-bool QApproveAndCall::readBackLevel(SFArchive& archive) {
+bool QApproveAndCall::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE

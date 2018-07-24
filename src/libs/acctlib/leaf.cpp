@@ -90,7 +90,7 @@ void CLeaf::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CLeaf::Serialize(SFArchive& archive) {
+bool CLeaf::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -110,7 +110,7 @@ bool CLeaf::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CLeaf::SerializeC(SFArchive& archive) const {
+bool CLeaf::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CTreeNode::SerializeC(archive);
@@ -124,7 +124,7 @@ bool CLeaf::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CLeafArray& array) {
+CArchive& operator>>(CArchive& archive, CLeafArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -136,7 +136,7 @@ SFArchive& operator>>(SFArchive& archive, CLeafArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CLeafArray& array) {
+CArchive& operator<<(CArchive& archive, const CLeafArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -194,7 +194,7 @@ string_q nextLeafChunk_custom(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-bool CLeaf::readBackLevel(SFArchive& archive) {
+bool CLeaf::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE

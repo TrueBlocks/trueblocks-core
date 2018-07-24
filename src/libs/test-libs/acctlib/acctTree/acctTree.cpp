@@ -52,7 +52,7 @@ int main(int argc, const char *argv[]) {
         if (reporter.tree) {
             reporter.startTimer(msg);
             if (exists) {
-                SFArchive archive(READING_ARCHIVE);
+                CArchive archive(READING_ARCHIVE);
                 if (archive.Lock(fn.getFullPath(), binaryReadOnly, LOCK_WAIT)) {
                     reporter.tree->Serialize(archive);
                     archive >> reporter.nBlocksVisited;
@@ -63,7 +63,7 @@ int main(int argc, const char *argv[]) {
                 }
             } else {
                 forEveryBlockOnDisc(buildTree, &reporter, options.startBlock, options.nBlocks);
-                SFArchive archive(WRITING_ARCHIVE);
+                CArchive archive(WRITING_ARCHIVE);
                 if (archive.Lock(fn.getFullPath(), binaryWriteCreate, LOCK_WAIT)) {
                     reporter.tree->Serialize(archive);
                     archive << reporter.nBlocksVisited;

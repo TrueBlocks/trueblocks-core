@@ -80,7 +80,7 @@ void QRevokeEvent::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QRevokeEvent::Serialize(SFArchive& archive) {
+bool QRevokeEvent::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -100,7 +100,7 @@ bool QRevokeEvent::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QRevokeEvent::SerializeC(SFArchive& archive) const {
+bool QRevokeEvent::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CLogEntry::SerializeC(archive);
@@ -114,7 +114,7 @@ bool QRevokeEvent::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, QRevokeEventArray& array) {
+CArchive& operator>>(CArchive& archive, QRevokeEventArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -126,7 +126,7 @@ SFArchive& operator>>(SFArchive& archive, QRevokeEventArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const QRevokeEventArray& array) {
+CArchive& operator<<(CArchive& archive, const QRevokeEventArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -184,7 +184,7 @@ string_q nextRevokeeventChunk_custom(const string_q& fieldIn, const void *dataPt
 }
 
 //---------------------------------------------------------------------------
-bool QRevokeEvent::readBackLevel(SFArchive& archive) {
+bool QRevokeEvent::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE

@@ -56,7 +56,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CTreeNode& tr);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -142,8 +142,8 @@ inline bool operator<(const CTreeNode& v1, const CTreeNode& v2) {
 
 //---------------------------------------------------------------------------
 typedef vector<CTreeNode> CTreeNodeArray;
-extern SFArchive& operator>>(SFArchive& archive, CTreeNodeArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const CTreeNodeArray& array);
+extern CArchive& operator>>(CArchive& archive, CTreeNodeArray& array);
+extern CArchive& operator<<(CArchive& archive, const CTreeNodeArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

@@ -46,7 +46,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const QOwnerOf& ow);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -130,8 +130,8 @@ inline bool operator<(const QOwnerOf& v1, const QOwnerOf& v2) {
 
 //---------------------------------------------------------------------------
 typedef vector<QOwnerOf> QOwnerOfArray;
-extern SFArchive& operator>>(SFArchive& archive, QOwnerOfArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const QOwnerOfArray& array);
+extern CArchive& operator>>(CArchive& archive, QOwnerOfArray& array);
+extern CArchive& operator<<(CArchive& archive, const QOwnerOfArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

@@ -114,7 +114,7 @@ void CTrace::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTrace::Serialize(SFArchive& archive) {
+bool CTrace::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -142,7 +142,7 @@ bool CTrace::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTrace::SerializeC(SFArchive& archive) const {
+bool CTrace::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -164,7 +164,7 @@ bool CTrace::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CTraceArray& array) {
+CArchive& operator>>(CArchive& archive, CTraceArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -176,7 +176,7 @@ SFArchive& operator>>(SFArchive& archive, CTraceArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CTraceArray& array) {
+CArchive& operator<<(CArchive& archive, const CTraceArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -240,7 +240,7 @@ string_q nextTraceChunk_custom(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-bool CTrace::readBackLevel(SFArchive& archive) {
+bool CTrace::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE

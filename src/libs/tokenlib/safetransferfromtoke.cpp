@@ -82,7 +82,7 @@ void QSafeTransferFromToke::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QSafeTransferFromToke::Serialize(SFArchive& archive) {
+bool QSafeTransferFromToke::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -104,7 +104,7 @@ bool QSafeTransferFromToke::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QSafeTransferFromToke::SerializeC(SFArchive& archive) const {
+bool QSafeTransferFromToke::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
@@ -120,7 +120,7 @@ bool QSafeTransferFromToke::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, QSafeTransferFromTokeArray& array) {
+CArchive& operator>>(CArchive& archive, QSafeTransferFromTokeArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -132,7 +132,7 @@ SFArchive& operator>>(SFArchive& archive, QSafeTransferFromTokeArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const QSafeTransferFromTokeArray& array) {
+CArchive& operator<<(CArchive& archive, const QSafeTransferFromTokeArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -192,7 +192,7 @@ string_q nextSafetransferfromtokeChunk_custom(const string_q& fieldIn, const voi
 }
 
 //---------------------------------------------------------------------------
-bool QSafeTransferFromToke::readBackLevel(SFArchive& archive) {
+bool QSafeTransferFromToke::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE

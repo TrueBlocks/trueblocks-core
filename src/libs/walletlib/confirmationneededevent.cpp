@@ -91,7 +91,7 @@ void QConfirmationNeededEvent::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QConfirmationNeededEvent::Serialize(SFArchive& archive) {
+bool QConfirmationNeededEvent::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -114,7 +114,7 @@ bool QConfirmationNeededEvent::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QConfirmationNeededEvent::SerializeC(SFArchive& archive) const {
+bool QConfirmationNeededEvent::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CLogEntry::SerializeC(archive);
@@ -131,7 +131,7 @@ bool QConfirmationNeededEvent::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, QConfirmationNeededEventArray& array) {
+CArchive& operator>>(CArchive& archive, QConfirmationNeededEventArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -143,7 +143,7 @@ SFArchive& operator>>(SFArchive& archive, QConfirmationNeededEventArray& array) 
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const QConfirmationNeededEventArray& array) {
+CArchive& operator<<(CArchive& archive, const QConfirmationNeededEventArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -204,7 +204,7 @@ string_q nextConfirmationneededeventChunk_custom(const string_q& fieldIn, const 
 }
 
 //---------------------------------------------------------------------------
-bool QConfirmationNeededEvent::readBackLevel(SFArchive& archive) {
+bool QConfirmationNeededEvent::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE

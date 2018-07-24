@@ -89,7 +89,7 @@ void CParameter::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CParameter::Serialize(SFArchive& archive) {
+bool CParameter::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -114,7 +114,7 @@ bool CParameter::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CParameter::SerializeC(SFArchive& archive) const {
+bool CParameter::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -133,7 +133,7 @@ bool CParameter::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CParameterArray& array) {
+CArchive& operator>>(CArchive& archive, CParameterArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -145,7 +145,7 @@ SFArchive& operator>>(SFArchive& archive, CParameterArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CParameterArray& array) {
+CArchive& operator<<(CArchive& archive, const CParameterArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -206,7 +206,7 @@ string_q nextParameterChunk_custom(const string_q& fieldIn, const void *dataPtr)
 }
 
 //---------------------------------------------------------------------------
-bool CParameter::readBackLevel(SFArchive& archive) {
+bool CParameter::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE

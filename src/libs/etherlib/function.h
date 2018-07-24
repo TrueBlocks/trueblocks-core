@@ -64,7 +64,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CFunction& fu);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -170,8 +170,8 @@ inline bool operator<(const CFunction& v1, const CFunction& v2) {
 
 //---------------------------------------------------------------------------
 typedef vector<CFunction> CFunctionArray;
-extern SFArchive& operator>>(SFArchive& archive, CFunctionArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const CFunctionArray& array);
+extern CArchive& operator>>(CArchive& archive, CFunctionArray& array);
+extern CArchive& operator<<(CArchive& archive, const CFunctionArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

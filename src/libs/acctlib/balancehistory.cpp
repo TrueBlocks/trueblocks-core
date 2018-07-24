@@ -79,7 +79,7 @@ void CBalanceHistory::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CBalanceHistory::Serialize(SFArchive& archive) {
+bool CBalanceHistory::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -99,7 +99,7 @@ bool CBalanceHistory::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CBalanceHistory::SerializeC(SFArchive& archive) const {
+bool CBalanceHistory::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -113,7 +113,7 @@ bool CBalanceHistory::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CBalanceHistoryArray& array) {
+CArchive& operator>>(CArchive& archive, CBalanceHistoryArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -125,7 +125,7 @@ SFArchive& operator>>(SFArchive& archive, CBalanceHistoryArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CBalanceHistoryArray& array) {
+CArchive& operator<<(CArchive& archive, const CBalanceHistoryArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -181,7 +181,7 @@ string_q nextBalancehistoryChunk_custom(const string_q& fieldIn, const void *dat
 }
 
 //---------------------------------------------------------------------------
-bool CBalanceHistory::readBackLevel(SFArchive& archive) {
+bool CBalanceHistory::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE

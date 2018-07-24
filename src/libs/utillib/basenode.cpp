@@ -300,7 +300,7 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------
-    bool CBaseNode::readBackLevel(SFArchive& archive) {
+    bool CBaseNode::readBackLevel(CArchive& archive) {
 
         // The following code assumes we do not change the format of the header
         archive >> m_deleted;
@@ -314,7 +314,7 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------
-    bool CBaseNode::Serialize(SFArchive& archive) {
+    bool CBaseNode::Serialize(CArchive& archive) {
         archive >> m_deleted;
         archive >> m_schema;
         archive >> m_showing;
@@ -325,7 +325,7 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------
-    bool CBaseNode::SerializeC(SFArchive& archive) const {
+    bool CBaseNode::SerializeC(CArchive& archive) const {
 
         // Not happy with this, but we must set the schema to the latest before we write data
         // since we always write the latest version to the hard drive.

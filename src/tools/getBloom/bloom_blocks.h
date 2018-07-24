@@ -15,8 +15,8 @@
 
 #define IMPLEMENT_UNUSED(CLASS_NAME) \
 inline void CLASS_NAME::finishParse(void) {} \
-inline bool CLASS_NAME::Serialize(SFArchive& archive) {return true;} \
-inline bool CLASS_NAME::SerializeC(SFArchive& archive) const {return true;} \
+inline bool CLASS_NAME::Serialize(CArchive& archive) {return true;} \
+inline bool CLASS_NAME::SerializeC(CArchive& archive) const {return true;} \
 
 //-----------------------------------------------------------------------------
 class CBloomReceipt : public CBaseNode {

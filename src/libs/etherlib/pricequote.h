@@ -50,7 +50,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CPriceQuote& pr);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -138,8 +138,8 @@ inline bool operator<(const CPriceQuote& v1, const CPriceQuote& v2) {
 
 //---------------------------------------------------------------------------
 typedef vector<CPriceQuote> CPriceQuoteArray;
-extern SFArchive& operator>>(SFArchive& archive, CPriceQuoteArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const CPriceQuoteArray& array);
+extern CArchive& operator>>(CArchive& archive, CPriceQuoteArray& array);
+extern CArchive& operator<<(CArchive& archive, const CPriceQuoteArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
