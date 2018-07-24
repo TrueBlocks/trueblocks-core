@@ -91,17 +91,17 @@ void CCounter::countOne(const CBlock &block) {
     static blknum_t last = startBlock;
     blknum_t thisOne = (block.blockNumber / 10000) * 10000;
 #else
-    static SFTime last = earliestDate;
+    static time_q last = earliestDate;
 #ifdef SUBTOTAL_BY_FIVE_MINS
-    SFTime thisOne = ts_2_Date(block.timestamp);
-    thisOne = SFTime(thisOne.GetYear(),
+    time_q thisOne = ts_2_Date(block.timestamp);
+    thisOne = time_q(thisOne.GetYear(),
                         thisOne.GetMonth(),
                         thisOne.GetDay(),
                         thisOne.GetHour(),
                         thisOne.GetMinute()/5,
                         0);
 #else
-    SFTime thisOne = SubtractOneDay(SubtractOneDay(BOW(ts_2_Date(block.timestamp))));
+    time_q thisOne = SubtractOneDay(SubtractOneDay(BOW(ts_2_Date(block.timestamp))));
 #endif
 #endif
 

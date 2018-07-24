@@ -39,7 +39,7 @@ public:
     DECLARE_NODE(CPriceQuote);
 
     // EXISTING_CODE
-    SFTime date;
+    time_q date;
     // EXISTING_CODE
     bool operator==(const CPriceQuote& item) const;
     bool operator!=(const CPriceQuote& item) const { return !operator==(item); }
