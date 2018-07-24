@@ -77,8 +77,8 @@ namespace qblocks {
         CArchive& operator<<(float f);
         CArchive& operator<<(double f);
         CArchive& operator<<(const string_q& str);
-        CArchive& operator<<(const SFUintBN& bn);
-        CArchive& operator<<(const SFIntBN& bn);
+        CArchive& operator<<(const biguint_t& bn);
+        CArchive& operator<<(const bigint_t& bn);
         CArchive& operator<<(const char *str);
 
         CArchive& operator>>(bool& b);
@@ -90,8 +90,8 @@ namespace qblocks {
         CArchive& operator>>(float& f);
         CArchive& operator>>(double& f);
         CArchive& operator>>(string_q& str);
-        CArchive& operator>>(SFUintBN& bn);
-        CArchive& operator>>(SFIntBN& bn);
+        CArchive& operator>>(biguint_t& bn);
+        CArchive& operator>>(bigint_t& bn);
     };
 
     extern CArchive& operator<<(CArchive& archive, const CStringArray& array);

@@ -113,9 +113,9 @@ TEST_F(CThisTest, TestConverts_1) {
     ASSERT_EQ("convert11", str_2_Bool("true"), 1);
 
     ASSERT_EQ("bigint1", str_2_BigUint("40000000000000000000"), str_2_Wei("40000000000000000000"));
-    ASSERT_EQ("bigint2", str_2_BigInt ("-40000000000000000000"), SFIntBN(str_2_BigUint("40000000000000000000"), -1));
+    ASSERT_EQ("bigint2", str_2_BigInt ("-40000000000000000000"), bigint_t(str_2_BigUint("40000000000000000000"), -1));
     ASSERT_EQ("bigint2", str_2_BigInt ("+3"), 3);
-    SFUintBN bn = 300000000; bn *= 100000000; bn *= 100;
+    biguint_t bn = 300000000; bn *= 100000000; bn *= 100;
     ASSERT_EQ("bigint2", str_2_BigInt ("+3000000000000000000"), bn);
 
     return true;

@@ -27,7 +27,7 @@ class QTransferFrom : public CTransaction {
 public:
     address_t _from;
     address_t _to;
-    SFUintBN _value;
+    biguint_t _value;
 
 public:
     QTransferFrom(void);

@@ -163,7 +163,7 @@ extern string_q collapseArrays(const string_q& inStr);
     }
 
     //---------------------------------------------------------------------------------------
-    SFUintBN CToml::getConfigBigInt(const string_q& group, const string_q& key, SFUintBN def) const {
+    biguint_t CToml::getConfigBigInt(const string_q& group, const string_q& key, biguint_t def) const {
         string_q ret = getConfigStr(group, key, bnu_2_Str(def));
         string_q check = ret;
         replaceAny(check, "0123456789abcdefABCDEF", "");

@@ -27,7 +27,7 @@ class QTransferEvent : public CLogEntry {
 public:
     address_t _from;
     address_t _to;
-    SFUintBN _value;
+    biguint_t _value;
 
 public:
     QTransferEvent(void);

@@ -16,7 +16,7 @@
 
 void reportByToken(COptions& options);
 void reportByAccount(COptions& options);
-extern SFUintBN getTokenInfo(const string_q& value, const address_t& token, const address_t& holder, blknum_t blockNum);
+extern biguint_t getTokenInfo(const string_q& value, const address_t& token, const address_t& holder, blknum_t blockNum);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
@@ -52,7 +52,7 @@ int main(int argc, const char *argv[]) {
 //--------------------------------------------------------------
 void reportByToken(COptions& options) {
 
-    SFUintBN totalVal = 0;
+    biguint_t totalVal = 0;
     uint64_t nAccts = countOf(options.holders, '|') + 1;
     bool needsTotal = (nAccts > 1 && options.total);
 
@@ -75,7 +75,7 @@ void reportByToken(COptions& options) {
                 blknum_t blockNum = str_2_Uint(nextTokenClear(blocks, '|'));
                 if (blockNum < options.earliestBlock)
                     options.earliestBlock = blockNum;
-                SFUintBN bal = getTokenInfo("balance", token, holder, blockNum);
+                biguint_t bal = getTokenInfo("balance", token, holder, blockNum);
                 totalVal += bal;
                 string_q sBal = bnu_2_Str(bal);
                 if (expContext().asEther) {
@@ -132,7 +132,7 @@ void reportByToken(COptions& options) {
 //--------------------------------------------------------------
 void reportByAccount(COptions& options) {
 
-    SFUintBN totalVal = 0;
+    biguint_t totalVal = 0;
     uint64_t nAccts = countOf(options.holders, '|') + 1;
     bool needsTotal = (nAccts > 1 && options.total);
 
@@ -155,7 +155,7 @@ void reportByAccount(COptions& options) {
                 blknum_t blockNum = str_2_Uint(nextTokenClear(blocks, '|'));
                 if (blockNum < options.earliestBlock)
                     options.earliestBlock = blockNum;
-                SFUintBN bal = getTokenInfo("balance", token, holder, blockNum);
+                biguint_t bal = getTokenInfo("balance", token, holder, blockNum);
                 totalVal += bal;
                 string_q sBal = bnu_2_Str(bal);
                 if (expContext().asEther) {
@@ -210,7 +210,7 @@ void reportByAccount(COptions& options) {
 }
 
 //-------------------------------------------------------------------------
-SFUintBN getTokenInfo(const string_q& value, const address_t& token, const address_t& holder, blknum_t blockNum) {
+biguint_t getTokenInfo(const string_q& value, const address_t& token, const address_t& holder, blknum_t blockNum) {
 
     ASSERT(isAddress(token));
     ASSERT(isAddress(holder));

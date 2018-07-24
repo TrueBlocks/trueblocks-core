@@ -19,8 +19,8 @@ public:
     bool needsNewline;
     blknum_t latestBlock;
     blknum_t earliestBlock;
-    SFUintBN totalVal;
-    SFUintBN lastBal;
+    biguint_t totalVal;
+    biguint_t lastBal;
     address_t curAddr;
     CState(void) { needsNewline = true; latestBlock = getLatestBlockFromClient(); totalVal = 0; lastBal = 0; }
 };

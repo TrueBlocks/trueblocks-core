@@ -26,7 +26,7 @@
 class QDepositEvent : public CLogEntry {
 public:
     address_t from;
-    SFUintBN value;
+    biguint_t value;
 
 public:
     QDepositEvent(void);

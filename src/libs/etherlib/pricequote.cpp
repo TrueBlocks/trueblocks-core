@@ -269,7 +269,7 @@ uint64_t indexFromTimeStamp(const CPriceQuoteArray& quotes, timestamp_t ts) {
 }
 
 //-----------------------------------------------------------------------
-string_q asDollars(timestamp_t ts, SFUintBN weiIn) {
+string_q asDollars(timestamp_t ts, biguint_t weiIn) {
     if (weiIn == 0)
         return "";
     static CPriceQuoteArray quotes;
@@ -305,7 +305,7 @@ string_q insertCommas(const string_q& dIn) {
 }
 
 //-----------------------------------------------------------------------
-string_q dispDollars(timestamp_t ts, SFUintBN weiIn) {
+string_q dispDollars(timestamp_t ts, biguint_t weiIn) {
     string_q sBal = asDollars(ts, weiIn);
     string_q d = nextTokenClear(sBal, '.');
     d = insertCommas(d);

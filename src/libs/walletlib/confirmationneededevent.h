@@ -27,7 +27,7 @@ class QConfirmationNeededEvent : public CLogEntry {
 public:
     string_q operation;
     address_t initiator;
-    SFUintBN value;
+    biguint_t value;
     address_t to;
     string_q data;
 
