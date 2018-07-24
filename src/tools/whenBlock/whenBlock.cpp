@@ -14,7 +14,7 @@
 #include "options.h"
 
 //---------------------------------------------------------------
-extern bool lookupDate(CBlock& block, const SFTime& date);
+extern bool lookupDate(CBlock& block, const time_q& date);
 extern void unloadCache(void);
 
 //---------------------------------------------------------------
@@ -61,7 +61,7 @@ int main(int argc, const char *argv[]) {
                     cout << "database, which is an advanced feature.\n";
 
                 } else {
-                    SFTime date = ts_2_Date((timestamp_t)str_2_Uint(value));
+                    time_q date = ts_2_Date((timestamp_t)str_2_Uint(value));
                     bool found = lookupDate(block, date);
                     if (!found) {
                         unloadCache();
@@ -125,7 +125,7 @@ bool lookCloser(CBlock& block, void *data) {
 }
 
 //---------------------------------------------------------------
-bool lookupDate(CBlock& block, const SFTime& date) {
+bool lookupDate(CBlock& block, const time_q& date) {
     if (!blocks) {
         nBlocks = fileSize(miniBlockCache) / sizeof(CMiniBlock);
         blocks = new CMiniBlock[nBlocks];

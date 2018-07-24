@@ -764,8 +764,8 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         string_q textFile = namesFile.getFullPath();
         string_q binFile  = substitute(textFile, ".txt", ".bin");
 
-        SFTime txtDate = fileLastModifyDate(textFile);
-        SFTime binDate = fileLastModifyDate(binFile);
+        time_q txtDate = fileLastModifyDate(textFile);
+        time_q binDate = fileLastModifyDate(binFile);
 
         if (verbose && !isTestMode())
             cout << "txtDate: " << txtDate << " binDate: " << binDate << "\n";

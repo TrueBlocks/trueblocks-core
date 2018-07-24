@@ -169,8 +169,8 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
         archive.Close();
     }
 
-    SFTime now = Now();
-    SFTime fileTime = fileLastModifyDate(cacheFilename);
+    time_q now = Now();
+    time_q fileTime = fileLastModifyDate(cacheFilename);
 
     // If the user tells us he/she wants to update the cache, or the cache
     // hasn't been updated in five minutes, then update it
@@ -320,7 +320,7 @@ bool CSlurperApp::Filter(COptions& options, string_q& message) {
 
         // The -blocks and -dates filters are mutually exclusive, -dates predominates.
         if (options.firstDate != earliestDate || options.lastDate != latestDate) {
-            SFTime date = ts_2_Date((timestamp_t)trans->timestamp);
+            time_q date = ts_2_Date((timestamp_t)trans->timestamp);
             bool isVisible = (date >= options.firstDate && date <= options.lastDate);
             trans->m_showing = isVisible;
 

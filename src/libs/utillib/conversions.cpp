@@ -331,8 +331,8 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------------------------------------
-    timestamp_t date_2_Ts(const SFTime& timeIn) {
-        SFTime  jan1970(1970, 1, 1, 0, 0, 0);
+    timestamp_t date_2_Ts(const time_q& timeIn) {
+        time_q  jan1970(1970, 1, 1, 0, 0, 0);
         if (timeIn < jan1970)
             return 0;
 
@@ -347,7 +347,7 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------------------------------------
-    SFTime ts_2_Date(timestamp_t tsIn) {
+    time_q ts_2_Date(timestamp_t tsIn) {
         time_t utc = tsIn;
         tm unused;
         struct tm *ret = gmtime_r(&utc, &unused);
@@ -362,7 +362,7 @@ namespace qblocks {
         uint32_t h = (uint32_t)str_2_Uint(nextTokenClear(str, ':'));
         uint32_t mn = (uint32_t)str_2_Uint(nextTokenClear(str, ':'));
         uint32_t s = (uint32_t)str_2_Uint(nextTokenClear(str, ' '));
-        return SFTime(y, m, d, h, mn, s);
+        return time_q(y, m, d, h, mn, s);
     }
 
     //

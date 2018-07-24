@@ -41,9 +41,9 @@ namespace qblocks {
         string_q cacheFile = source.getDatabasePath();
 
         // Load and possibly refresh the price database
-        SFTime lastRead = SFTime(2015, 1, 1, 0, 0, 0);
+        time_q lastRead = time_q(2015, 1, 1, 0, 0, 0);
         if (contains(source.pair, "BTC"))
-            lastRead = SFTime(2009, 1, 1, 0, 0, 0);
+            lastRead = time_q(2009, 1, 1, 0, 0, 0);
         if (fileExists(cacheFile)) {
             if (!isTestMode())
                 cerr << "Updating prices...\r";
@@ -75,9 +75,9 @@ namespace qblocks {
         }
 
         string_q msg;
-        SFTime firstDate = SFTime(2015, 6, 1, 0, 0, 0);
-        SFTime now       = Now();
-        SFTime nextRead  = (lastRead == SFTime(2015, 1, 1, 0, 0, 0) ? firstDate : lastRead + 5*60);  // 5 minutes
+        time_q firstDate = time_q(2015, 6, 1, 0, 0, 0);
+        time_q now       = Now();
+        time_q nextRead  = (lastRead == time_q(2015, 1, 1, 0, 0, 0) ? firstDate : lastRead + 5*60);  // 5 minutes
 
 // #define DEBUGGING
 #ifdef DEBUGGING
@@ -95,7 +95,7 @@ namespace qblocks {
         } else {
             if (!isTestMode())
                 msg = "Price database has been updated to ";
-            SFTime prevLast = lastRead;
+            time_q prevLast = lastRead;
             if (freshen) {
                 if (verbose < 2) {
                     if (!isTestMode())
@@ -141,7 +141,7 @@ namespace qblocks {
                 char *p = cleanUpJson((char *)response.c_str());  // NOLINT
                 while (p && *p) {
                     CPriceQuote quote;
-                    quote.timestamp = date_2_Ts(SFTime(2015, 1, 1, 0, 0, 0));  // Ensures we get a good parse
+                    quote.timestamp = date_2_Ts(time_q(2015, 1, 1, 0, 0, 0));  // Ensures we get a good parse
                     p = (*source.func)(quote, p);
 
                     bool addToArray = (timestamp_t)quote.timestamp > date_2_Ts(lastRead);

@@ -24,7 +24,7 @@ static COption params[] = {
 };
 static size_t nParams = sizeof(params) / sizeof(COption);
 
-extern SFTime grabDate(const string_q& strIn);
+extern time_q grabDate(const string_q& strIn);
 extern bool containsAny(const string_q& haystack, const string_q& needle);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -62,7 +62,7 @@ bool COptions::parseArguments(string_q& command) {
             if (isList)
                 return usage("The --list option must appear alone on the line. Quitting...");
 
-            SFTime date = grabDate(arg);
+            time_q date = grabDate(arg);
             if (date == earliestDate) {
                 return usage("Invalid date: '" + orig + "'. Quitting...");
 
@@ -72,7 +72,7 @@ bool COptions::parseArguments(string_q& command) {
                 cout << ") is in the future. No such block. Quitting...\n";
                 return false;
 
-            } else if (date < SFTime(2015, 7, 30, 15, 25, 00)) {
+            } else if (date < time_q(2015, 7, 30, 15, 25, 00)) {
                 // first block was at 15:26:00
                 cout << "The date you specified (";
                 cout << cTeal << orig << cOff;
@@ -174,7 +174,7 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
 }
 
 //--------------------------------------------------------------------------------
-SFTime grabDate(const string_q& strIn) {
+time_q grabDate(const string_q& strIn) {
 
     if (strIn.empty()) {
         return earliestDate;
@@ -220,7 +220,7 @@ SFTime grabDate(const string_q& strIn) {
     if (mn > 59) return earliestDate;
     if (s > 59) return earliestDate;
 
-    return SFTime(y, m, d, h, mn, s);
+    return time_q(y, m, d, h, mn, s);
 }
 
 //--------------------------------------------------------------------------------

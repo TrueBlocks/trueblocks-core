@@ -21,11 +21,11 @@ public:
     bool incomeOnly;
     bool expenseOnly;
     COptionsBlockList blocks;
-    SFTime firstDate;
+    time_q firstDate;
     string_q funcFilter;
     int errFilt;
     bool reverseSort;
-    SFTime lastDate;
+    time_q lastDate;
     bool openFile;
     string_q addr;
     size_t maxTransactions;
