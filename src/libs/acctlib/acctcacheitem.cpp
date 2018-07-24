@@ -80,7 +80,7 @@ void CAcctCacheItem::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAcctCacheItem::Serialize(SFArchive& archive) {
+bool CAcctCacheItem::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -100,7 +100,7 @@ bool CAcctCacheItem::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAcctCacheItem::SerializeC(SFArchive& archive) const {
+bool CAcctCacheItem::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -114,7 +114,7 @@ bool CAcctCacheItem::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CAcctCacheItemArray& array) {
+CArchive& operator>>(CArchive& archive, CAcctCacheItemArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -126,7 +126,7 @@ SFArchive& operator>>(SFArchive& archive, CAcctCacheItemArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CAcctCacheItemArray& array) {
+CArchive& operator<<(CArchive& archive, const CAcctCacheItemArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -182,7 +182,7 @@ string_q nextAcctcacheitemChunk_custom(const string_q& fieldIn, const void *data
 }
 
 //---------------------------------------------------------------------------
-bool CAcctCacheItem::readBackLevel(SFArchive& archive) {
+bool CAcctCacheItem::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE

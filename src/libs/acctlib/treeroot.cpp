@@ -87,7 +87,7 @@ void CTreeRoot::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTreeRoot::Serialize(SFArchive& archive) {
+bool CTreeRoot::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -116,7 +116,7 @@ bool CTreeRoot::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTreeRoot::SerializeC(SFArchive& archive) const {
+bool CTreeRoot::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -133,7 +133,7 @@ bool CTreeRoot::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CTreeRootArray& array) {
+CArchive& operator>>(CArchive& archive, CTreeRootArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -145,7 +145,7 @@ SFArchive& operator>>(SFArchive& archive, CTreeRootArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CTreeRootArray& array) {
+CArchive& operator<<(CArchive& archive, const CTreeRootArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -200,7 +200,7 @@ string_q nextTreerootChunk_custom(const string_q& fieldIn, const void *dataPtr) 
 }
 
 //---------------------------------------------------------------------------
-bool CTreeRoot::readBackLevel(SFArchive& archive) {
+bool CTreeRoot::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE

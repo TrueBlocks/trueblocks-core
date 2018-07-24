@@ -46,7 +46,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const QKill& ki);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -130,8 +130,8 @@ inline bool operator<(const QKill& v1, const QKill& v2) {
 
 //---------------------------------------------------------------------------
 typedef vector<QKill> QKillArray;
-extern SFArchive& operator>>(SFArchive& archive, QKillArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const QKillArray& array);
+extern CArchive& operator>>(CArchive& archive, QKillArray& array);
+extern CArchive& operator<<(CArchive& archive, const QKillArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

@@ -82,7 +82,7 @@ void QDepositEvent::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QDepositEvent::Serialize(SFArchive& archive) {
+bool QDepositEvent::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -102,7 +102,7 @@ bool QDepositEvent::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QDepositEvent::SerializeC(SFArchive& archive) const {
+bool QDepositEvent::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CLogEntry::SerializeC(archive);
@@ -116,7 +116,7 @@ bool QDepositEvent::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, QDepositEventArray& array) {
+CArchive& operator>>(CArchive& archive, QDepositEventArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -128,7 +128,7 @@ SFArchive& operator>>(SFArchive& archive, QDepositEventArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const QDepositEventArray& array) {
+CArchive& operator<<(CArchive& archive, const QDepositEventArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -186,7 +186,7 @@ string_q nextDepositeventChunk_custom(const string_q& fieldIn, const void *dataP
 }
 
 //---------------------------------------------------------------------------
-bool QDepositEvent::readBackLevel(SFArchive& archive) {
+bool QDepositEvent::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE

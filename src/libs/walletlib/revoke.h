@@ -46,7 +46,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const QRevoke& re);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -130,8 +130,8 @@ inline bool operator<(const QRevoke& v1, const QRevoke& v2) {
 
 //---------------------------------------------------------------------------
 typedef vector<QRevoke> QRevokeArray;
-extern SFArchive& operator>>(SFArchive& archive, QRevokeArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const QRevokeArray& array);
+extern CArchive& operator>>(CArchive& archive, QRevokeArray& array);
+extern CArchive& operator<<(CArchive& archive, const QRevokeArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

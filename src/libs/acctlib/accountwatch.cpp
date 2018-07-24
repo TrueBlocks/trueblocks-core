@@ -121,7 +121,7 @@ void CAccountWatch::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAccountWatch::Serialize(SFArchive& archive) {
+bool CAccountWatch::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -148,7 +148,7 @@ bool CAccountWatch::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAccountWatch::SerializeC(SFArchive& archive) const {
+bool CAccountWatch::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -169,7 +169,7 @@ bool CAccountWatch::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CAccountWatchArray& array) {
+CArchive& operator>>(CArchive& archive, CAccountWatchArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -181,7 +181,7 @@ SFArchive& operator>>(SFArchive& archive, CAccountWatchArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CAccountWatchArray& array) {
+CArchive& operator<<(CArchive& archive, const CAccountWatchArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -244,7 +244,7 @@ string_q nextAccountwatchChunk_custom(const string_q& fieldIn, const void *dataP
 }
 
 //---------------------------------------------------------------------------
-bool CAccountWatch::readBackLevel(SFArchive& archive) {
+bool CAccountWatch::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE
@@ -377,7 +377,7 @@ SFUintBN getNodeBal(CBalanceHistoryArray& history, const address_t& addr, blknum
     string_q binaryFilename = "./balances/" + addr + ".bals.bin";
     if (history.size() == 0 && fileExists(binaryFilename) && fileSize(binaryFilename) > 0) {
 
-        SFArchive balCache(READING_ARCHIVE);
+        CArchive balCache(READING_ARCHIVE);
         if (balCache.Lock(binaryFilename, binaryReadOnly, LOCK_NOWAIT)) {
             blknum_t last = NOPOS;
             address_t lastA;

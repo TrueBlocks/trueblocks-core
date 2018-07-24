@@ -46,7 +46,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const [{CLASS_NAME}]& [{SHORT}]);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -128,8 +128,8 @@ inline bool operator<(const [{CLASS_NAME}]& v1, const [{CLASS_NAME}]& v2) {
 
 //---------------------------------------------------------------------------
 typedef vector<[{CLASS_NAME}]> [{CLASS_NAME}]Array;
-extern SFArchive& operator>>(SFArchive& archive, [{CLASS_NAME}]Array& array);
-extern SFArchive& operator<<(SFArchive& archive, const [{CLASS_NAME}]Array& array);
+extern CArchive& operator>>(CArchive& archive, [{CLASS_NAME}]Array& array);
+extern CArchive& operator<<(CArchive& archive, const [{CLASS_NAME}]Array& array);
 
 [{OPERATORS}]//---------------------------------------------------------------------------
 // EXISTING_CODE

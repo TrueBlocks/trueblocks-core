@@ -52,7 +52,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CRPCResult& rp);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -140,8 +140,8 @@ inline bool operator<(const CRPCResult& v1, const CRPCResult& v2) {
 
 //---------------------------------------------------------------------------
 typedef vector<CRPCResult> CRPCResultArray;
-extern SFArchive& operator>>(SFArchive& archive, CRPCResultArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const CRPCResultArray& array);
+extern CArchive& operator>>(CArchive& archive, CRPCResultArray& array);
+extern CArchive& operator<<(CArchive& archive, const CRPCResultArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

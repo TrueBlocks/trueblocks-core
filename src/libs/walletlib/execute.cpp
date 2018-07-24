@@ -81,7 +81,7 @@ void QExecute::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QExecute::Serialize(SFArchive& archive) {
+bool QExecute::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -102,7 +102,7 @@ bool QExecute::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QExecute::SerializeC(SFArchive& archive) const {
+bool QExecute::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
@@ -117,7 +117,7 @@ bool QExecute::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, QExecuteArray& array) {
+CArchive& operator>>(CArchive& archive, QExecuteArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -129,7 +129,7 @@ SFArchive& operator>>(SFArchive& archive, QExecuteArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const QExecuteArray& array) {
+CArchive& operator<<(CArchive& archive, const QExecuteArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -188,7 +188,7 @@ string_q nextExecuteChunk_custom(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-bool QExecute::readBackLevel(SFArchive& archive) {
+bool QExecute::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE

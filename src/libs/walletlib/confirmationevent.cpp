@@ -80,7 +80,7 @@ void QConfirmationEvent::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QConfirmationEvent::Serialize(SFArchive& archive) {
+bool QConfirmationEvent::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -100,7 +100,7 @@ bool QConfirmationEvent::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QConfirmationEvent::SerializeC(SFArchive& archive) const {
+bool QConfirmationEvent::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CLogEntry::SerializeC(archive);
@@ -114,7 +114,7 @@ bool QConfirmationEvent::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, QConfirmationEventArray& array) {
+CArchive& operator>>(CArchive& archive, QConfirmationEventArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -126,7 +126,7 @@ SFArchive& operator>>(SFArchive& archive, QConfirmationEventArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const QConfirmationEventArray& array) {
+CArchive& operator<<(CArchive& archive, const QConfirmationEventArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -184,7 +184,7 @@ string_q nextConfirmationeventChunk_custom(const string_q& fieldIn, const void *
 }
 
 //---------------------------------------------------------------------------
-bool QConfirmationEvent::readBackLevel(SFArchive& archive) {
+bool QConfirmationEvent::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE

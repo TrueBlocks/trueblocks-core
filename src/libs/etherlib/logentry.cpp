@@ -96,7 +96,7 @@ void CLogEntry::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CLogEntry::Serialize(SFArchive& archive) {
+bool CLogEntry::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -118,7 +118,7 @@ bool CLogEntry::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CLogEntry::SerializeC(SFArchive& archive) const {
+bool CLogEntry::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -134,7 +134,7 @@ bool CLogEntry::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CLogEntryArray& array) {
+CArchive& operator>>(CArchive& archive, CLogEntryArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -146,7 +146,7 @@ SFArchive& operator>>(SFArchive& archive, CLogEntryArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CLogEntryArray& array) {
+CArchive& operator<<(CArchive& archive, const CLogEntryArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -204,7 +204,7 @@ string_q nextLogentryChunk_custom(const string_q& fieldIn, const void *dataPtr) 
 }
 
 //---------------------------------------------------------------------------
-bool CLogEntry::readBackLevel(SFArchive& archive) {
+bool CLogEntry::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE
@@ -213,13 +213,13 @@ bool CLogEntry::readBackLevel(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CLogEntry& log) {
+CArchive& operator<<(CArchive& archive, const CLogEntry& log) {
     log.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CLogEntry& log) {
+CArchive& operator>>(CArchive& archive, CLogEntry& log) {
     log.Serialize(archive);
     return archive;
 }

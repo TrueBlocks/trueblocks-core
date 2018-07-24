@@ -140,7 +140,7 @@ void CTransaction::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTransaction::Serialize(SFArchive& archive) {
+bool CTransaction::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -173,7 +173,7 @@ bool CTransaction::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTransaction::SerializeC(SFArchive& archive) const {
+bool CTransaction::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -200,7 +200,7 @@ bool CTransaction::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CTransactionArray& array) {
+CArchive& operator>>(CArchive& archive, CTransactionArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -212,7 +212,7 @@ SFArchive& operator>>(SFArchive& archive, CTransactionArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CTransactionArray& array) {
+CArchive& operator<<(CArchive& archive, const CTransactionArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -369,7 +369,7 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
 }
 
 //---------------------------------------------------------------------------
-bool CTransaction::readBackLevel(SFArchive& archive) {
+bool CTransaction::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE
@@ -399,13 +399,13 @@ bool CTransaction::readBackLevel(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CTransaction& tra) {
+CArchive& operator<<(CArchive& archive, const CTransaction& tra) {
     tra.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CTransaction& tra) {
+CArchive& operator>>(CArchive& archive, CTransaction& tra) {
     tra.Serialize(archive);
     return archive;
 }

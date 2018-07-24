@@ -80,7 +80,7 @@ void QApprove::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QApprove::Serialize(SFArchive& archive) {
+bool QApprove::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -100,7 +100,7 @@ bool QApprove::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QApprove::SerializeC(SFArchive& archive) const {
+bool QApprove::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
@@ -114,7 +114,7 @@ bool QApprove::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, QApproveArray& array) {
+CArchive& operator>>(CArchive& archive, QApproveArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -126,7 +126,7 @@ SFArchive& operator>>(SFArchive& archive, QApproveArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const QApproveArray& array) {
+CArchive& operator<<(CArchive& archive, const QApproveArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -184,7 +184,7 @@ string_q nextApproveChunk_custom(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-bool QApprove::readBackLevel(SFArchive& archive) {
+bool QApprove::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE

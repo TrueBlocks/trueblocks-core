@@ -79,7 +79,7 @@ void QIsOwner::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QIsOwner::Serialize(SFArchive& archive) {
+bool QIsOwner::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -98,7 +98,7 @@ bool QIsOwner::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QIsOwner::SerializeC(SFArchive& archive) const {
+bool QIsOwner::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
@@ -111,7 +111,7 @@ bool QIsOwner::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, QIsOwnerArray& array) {
+CArchive& operator>>(CArchive& archive, QIsOwnerArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -123,7 +123,7 @@ SFArchive& operator>>(SFArchive& archive, QIsOwnerArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const QIsOwnerArray& array) {
+CArchive& operator<<(CArchive& archive, const QIsOwnerArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -180,7 +180,7 @@ string_q nextIsownerChunk_custom(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-bool QIsOwner::readBackLevel(SFArchive& archive) {
+bool QIsOwner::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE

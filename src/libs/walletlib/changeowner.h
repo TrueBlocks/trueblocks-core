@@ -47,7 +47,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const QChangeOwner& ch);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -133,8 +133,8 @@ inline bool operator<(const QChangeOwner& v1, const QChangeOwner& v2) {
 
 //---------------------------------------------------------------------------
 typedef vector<QChangeOwner> QChangeOwnerArray;
-extern SFArchive& operator>>(SFArchive& archive, QChangeOwnerArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const QChangeOwnerArray& array);
+extern CArchive& operator>>(CArchive& archive, QChangeOwnerArray& array);
+extern CArchive& operator<<(CArchive& archive, const QChangeOwnerArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

@@ -64,7 +64,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CBlock& bl);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -168,12 +168,12 @@ inline bool operator<(const CBlock& v1, const CBlock& v2) {
 
 //---------------------------------------------------------------------------
 typedef vector<CBlock> CBlockArray;
-extern SFArchive& operator>>(SFArchive& archive, CBlockArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const CBlockArray& array);
+extern CArchive& operator>>(CArchive& archive, CBlockArray& array);
+extern CArchive& operator<<(CArchive& archive, const CBlockArray& array);
 
 //---------------------------------------------------------------------------
-extern SFArchive& operator<<(SFArchive& archive, const CBlock& blo);
-extern SFArchive& operator>>(SFArchive& archive, CBlock& blo);
+extern CArchive& operator<<(CArchive& archive, const CBlock& blo);
+extern CArchive& operator>>(CArchive& archive, CBlock& blo);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

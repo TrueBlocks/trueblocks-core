@@ -57,7 +57,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CInfix& in);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -147,8 +147,8 @@ inline bool operator<(const CInfix& v1, const CInfix& v2) {
 
 //---------------------------------------------------------------------------
 typedef vector<CInfix> CInfixArray;
-extern SFArchive& operator>>(SFArchive& archive, CInfixArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const CInfixArray& array);
+extern CArchive& operator>>(CArchive& archive, CInfixArray& array);
+extern CArchive& operator<<(CArchive& archive, const CInfixArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

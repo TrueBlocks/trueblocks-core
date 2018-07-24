@@ -89,7 +89,7 @@ void QMultiTransactEvent::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QMultiTransactEvent::Serialize(SFArchive& archive) {
+bool QMultiTransactEvent::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -112,7 +112,7 @@ bool QMultiTransactEvent::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QMultiTransactEvent::SerializeC(SFArchive& archive) const {
+bool QMultiTransactEvent::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CLogEntry::SerializeC(archive);
@@ -129,7 +129,7 @@ bool QMultiTransactEvent::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, QMultiTransactEventArray& array) {
+CArchive& operator>>(CArchive& archive, QMultiTransactEventArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -141,7 +141,7 @@ SFArchive& operator>>(SFArchive& archive, QMultiTransactEventArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const QMultiTransactEventArray& array) {
+CArchive& operator<<(CArchive& archive, const QMultiTransactEventArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -202,7 +202,7 @@ string_q nextMultitransacteventChunk_custom(const string_q& fieldIn, const void 
 }
 
 //---------------------------------------------------------------------------
-bool QMultiTransactEvent::readBackLevel(SFArchive& archive) {
+bool QMultiTransactEvent::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE

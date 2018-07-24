@@ -79,7 +79,7 @@ void QKill::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QKill::Serialize(SFArchive& archive) {
+bool QKill::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -98,7 +98,7 @@ bool QKill::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QKill::SerializeC(SFArchive& archive) const {
+bool QKill::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
@@ -111,7 +111,7 @@ bool QKill::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, QKillArray& array) {
+CArchive& operator>>(CArchive& archive, QKillArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -123,7 +123,7 @@ SFArchive& operator>>(SFArchive& archive, QKillArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const QKillArray& array) {
+CArchive& operator<<(CArchive& archive, const QKillArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -180,7 +180,7 @@ string_q nextKillChunk_custom(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-bool QKill::readBackLevel(SFArchive& archive) {
+bool QKill::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE

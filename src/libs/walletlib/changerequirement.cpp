@@ -79,7 +79,7 @@ void QChangeRequirement::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QChangeRequirement::Serialize(SFArchive& archive) {
+bool QChangeRequirement::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -98,7 +98,7 @@ bool QChangeRequirement::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QChangeRequirement::SerializeC(SFArchive& archive) const {
+bool QChangeRequirement::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
@@ -111,7 +111,7 @@ bool QChangeRequirement::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, QChangeRequirementArray& array) {
+CArchive& operator>>(CArchive& archive, QChangeRequirementArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -123,7 +123,7 @@ SFArchive& operator>>(SFArchive& archive, QChangeRequirementArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const QChangeRequirementArray& array) {
+CArchive& operator<<(CArchive& archive, const QChangeRequirementArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -180,7 +180,7 @@ string_q nextChangerequirementChunk_custom(const string_q& fieldIn, const void *
 }
 
 //---------------------------------------------------------------------------
-bool QChangeRequirement::readBackLevel(SFArchive& archive) {
+bool QChangeRequirement::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE

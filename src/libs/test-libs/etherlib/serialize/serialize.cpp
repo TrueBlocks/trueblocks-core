@@ -52,7 +52,7 @@ int main(int argc, const char *argv[]) {
         }
         cout.flush();
 
-        SFArchive out(WRITING_ARCHIVE);
+        CArchive out(WRITING_ARCHIVE);
         if (out.Lock("./file.bin", binaryWriteCreate, LOCK_WAIT)) {
             leader.Serialize(out);
             out.Release();
@@ -67,7 +67,7 @@ int main(int argc, const char *argv[]) {
         }
         cout.flush();
 
-        SFArchive in(READING_ARCHIVE);
+        CArchive in(READING_ARCHIVE);
         if (in.Lock("./file.bin", binaryReadOnly, LOCK_WAIT)) {
             leader.Serialize(in);
             in.Release();

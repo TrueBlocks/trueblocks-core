@@ -89,7 +89,7 @@ void CPerson::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPerson::Serialize(SFArchive& archive) {
+bool CPerson::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -120,7 +120,7 @@ bool CPerson::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPerson::SerializeC(SFArchive& archive) const {
+bool CPerson::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -139,7 +139,7 @@ bool CPerson::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CPersonArray& array) {
+CArchive& operator>>(CArchive& archive, CPersonArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -151,7 +151,7 @@ SFArchive& operator>>(SFArchive& archive, CPersonArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CPersonArray& array) {
+CArchive& operator<<(CArchive& archive, const CPersonArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -208,7 +208,7 @@ string_q nextPersonChunk_custom(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-bool CPerson::readBackLevel(SFArchive& archive) {
+bool CPerson::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE

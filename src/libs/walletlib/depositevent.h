@@ -47,7 +47,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const QDepositEvent& de);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -133,8 +133,8 @@ inline bool operator<(const QDepositEvent& v1, const QDepositEvent& v2) {
 
 //---------------------------------------------------------------------------
 typedef vector<QDepositEvent> QDepositEventArray;
-extern SFArchive& operator>>(SFArchive& archive, QDepositEventArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const QDepositEventArray& array);
+extern CArchive& operator>>(CArchive& archive, QDepositEventArray& array);
+extern CArchive& operator<<(CArchive& archive, const QDepositEventArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

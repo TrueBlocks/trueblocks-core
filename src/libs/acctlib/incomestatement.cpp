@@ -91,7 +91,7 @@ void CIncomeStatement::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CIncomeStatement::Serialize(SFArchive& archive) {
+bool CIncomeStatement::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -115,7 +115,7 @@ bool CIncomeStatement::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CIncomeStatement::SerializeC(SFArchive& archive) const {
+bool CIncomeStatement::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -133,7 +133,7 @@ bool CIncomeStatement::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CIncomeStatementArray& array) {
+CArchive& operator>>(CArchive& archive, CIncomeStatementArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -145,7 +145,7 @@ SFArchive& operator>>(SFArchive& archive, CIncomeStatementArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CIncomeStatementArray& array) {
+CArchive& operator<<(CArchive& archive, const CIncomeStatementArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -205,7 +205,7 @@ string_q nextIncomestatementChunk_custom(const string_q& fieldIn, const void *da
 }
 
 //---------------------------------------------------------------------------
-bool CIncomeStatement::readBackLevel(SFArchive& archive) {
+bool CIncomeStatement::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE
@@ -214,13 +214,13 @@ bool CIncomeStatement::readBackLevel(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CIncomeStatement& inc) {
+CArchive& operator<<(CArchive& archive, const CIncomeStatement& inc) {
     inc.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CIncomeStatement& inc) {
+CArchive& operator>>(CArchive& archive, CIncomeStatement& inc) {
     inc.Serialize(archive);
     return archive;
 }

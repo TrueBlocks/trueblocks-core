@@ -79,7 +79,7 @@ void QRemoveOwner::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QRemoveOwner::Serialize(SFArchive& archive) {
+bool QRemoveOwner::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -98,7 +98,7 @@ bool QRemoveOwner::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QRemoveOwner::SerializeC(SFArchive& archive) const {
+bool QRemoveOwner::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
@@ -111,7 +111,7 @@ bool QRemoveOwner::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, QRemoveOwnerArray& array) {
+CArchive& operator>>(CArchive& archive, QRemoveOwnerArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -123,7 +123,7 @@ SFArchive& operator>>(SFArchive& archive, QRemoveOwnerArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const QRemoveOwnerArray& array) {
+CArchive& operator<<(CArchive& archive, const QRemoveOwnerArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -180,7 +180,7 @@ string_q nextRemoveownerChunk_custom(const string_q& fieldIn, const void *dataPt
 }
 
 //---------------------------------------------------------------------------
-bool QRemoveOwner::readBackLevel(SFArchive& archive) {
+bool QRemoveOwner::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE

@@ -45,7 +45,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const QResetSpentToday& re);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -125,8 +125,8 @@ inline bool operator<(const QResetSpentToday& v1, const QResetSpentToday& v2) {
 
 //---------------------------------------------------------------------------
 typedef vector<QResetSpentToday> QResetSpentTodayArray;
-extern SFArchive& operator>>(SFArchive& archive, QResetSpentTodayArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const QResetSpentTodayArray& array);
+extern CArchive& operator>>(CArchive& archive, QResetSpentTodayArray& array);
+extern CArchive& operator<<(CArchive& archive, const QResetSpentTodayArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

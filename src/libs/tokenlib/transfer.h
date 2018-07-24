@@ -47,7 +47,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const QTransfer& tr);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -133,8 +133,8 @@ inline bool operator<(const QTransfer& v1, const QTransfer& v2) {
 
 //---------------------------------------------------------------------------
 typedef vector<QTransfer> QTransferArray;
-extern SFArchive& operator>>(SFArchive& archive, QTransferArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const QTransferArray& array);
+extern CArchive& operator>>(CArchive& archive, QTransferArray& array);
+extern CArchive& operator<<(CArchive& archive, const QTransferArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

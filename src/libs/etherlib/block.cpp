@@ -144,7 +144,7 @@ void CBlock::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CBlock::Serialize(SFArchive& archive) {
+bool CBlock::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -173,7 +173,7 @@ bool CBlock::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CBlock::SerializeC(SFArchive& archive) const {
+bool CBlock::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -196,7 +196,7 @@ bool CBlock::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CBlockArray& array) {
+CArchive& operator>>(CArchive& archive, CBlockArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -208,7 +208,7 @@ SFArchive& operator>>(SFArchive& archive, CBlockArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CBlockArray& array) {
+CArchive& operator<<(CArchive& archive, const CBlockArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -296,7 +296,7 @@ string_q nextBlockChunk_custom(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-bool CBlock::readBackLevel(SFArchive& archive) {
+bool CBlock::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE
@@ -343,13 +343,13 @@ bool CBlock::readBackLevel(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CBlock& blo) {
+CArchive& operator<<(CArchive& archive, const CBlock& blo) {
     blo.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CBlock& blo) {
+CArchive& operator>>(CArchive& archive, CBlock& blo) {
     blo.Serialize(archive);
     return archive;
 }

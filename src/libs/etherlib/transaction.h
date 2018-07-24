@@ -74,7 +74,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CTransaction& tr);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -194,12 +194,12 @@ inline bool operator<(const CTransaction& v1, const CTransaction& v2) {
 
 //---------------------------------------------------------------------------
 typedef vector<CTransaction> CTransactionArray;
-extern SFArchive& operator>>(SFArchive& archive, CTransactionArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const CTransactionArray& array);
+extern CArchive& operator>>(CArchive& archive, CTransactionArray& array);
+extern CArchive& operator<<(CArchive& archive, const CTransactionArray& array);
 
 //---------------------------------------------------------------------------
-extern SFArchive& operator<<(SFArchive& archive, const CTransaction& tra);
-extern SFArchive& operator>>(SFArchive& archive, CTransaction& tra);
+extern CArchive& operator<<(CArchive& archive, const CTransaction& tra);
+extern CArchive& operator>>(CArchive& archive, CTransaction& tra);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

@@ -46,7 +46,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const QRequirementChangedEvent& re);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -130,8 +130,8 @@ inline bool operator<(const QRequirementChangedEvent& v1, const QRequirementChan
 
 //---------------------------------------------------------------------------
 typedef vector<QRequirementChangedEvent> QRequirementChangedEventArray;
-extern SFArchive& operator>>(SFArchive& archive, QRequirementChangedEventArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const QRequirementChangedEventArray& array);
+extern CArchive& operator>>(CArchive& archive, QRequirementChangedEventArray& array);
+extern CArchive& operator<<(CArchive& archive, const QRequirementChangedEventArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
