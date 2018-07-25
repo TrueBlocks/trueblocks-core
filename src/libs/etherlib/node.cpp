@@ -136,20 +136,16 @@ extern void registerQuitHandler(QUITHANDLER qh);
     //--------------------------------------------------------------
     void getTraces(CTraceArray& traces, const hash_t& hash) {
 
-        string_q trace;
-        queryRawTrace(trace, hash);
+        string_q str;
+        queryRawTrace(str, hash);
 
         CRPCResult generic;
-        char *p = cleanUpJson((char*)trace.c_str());  // NOLINT
-        generic.parseJson(p);
+        generic.parseJson3(str);  // pull out the result
 
-        p = cleanUpJson((char *)(generic.result.c_str()));  // NOLINT
-        while (p && *p) {
-            CTrace tr;
-            size_t nFields = 0;
-            p = tr.parseJson(p, nFields);
-            if (nFields)
-                traces.push_back(tr);
+        CTrace trace;
+        while (trace.parseJson3(generic.result)) {
+            traces.push_back(trace);
+            trace = CTrace();  // reset
         }
     }
 
@@ -230,11 +226,13 @@ extern void registerQuitHandler(QUITHANDLER qh);
     //-------------------------------------------------------------------------
     string_q getRawBlock(blknum_t bn) {
         string_q numStr = uint_2_Str(bn);
-        string_q results;
-        queryRawBlock(results, numStr, true, false);
+
+        string_q str;
+        queryRawBlock(str, numStr, true, false);
+
         CRPCResult generic;
-        char *p = cleanUpJson((char*)results.c_str());  // NOLINT
-        generic.parseJson(p);
+        generic.parseJson3(str);
+
         return generic.result;
     }
 
@@ -460,7 +458,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         }
         char *p = cleanUpJson((char *)contents.c_str());  // NOLINT
         size_t nFields = 0;
-        node.parseJson(p, nFields);
+        node.parseJson1(p, nFields);
         return nFields;
     }
 

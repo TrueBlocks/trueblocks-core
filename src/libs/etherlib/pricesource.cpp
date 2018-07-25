@@ -21,7 +21,7 @@ namespace qblocks {
     //---------------------------------------------------------------------------
     char *parsePoloniex(CPriceQuote& quote, char *p) {
         size_t nFields = 0;
-        return quote.parseJson(p, nFields);
+        return quote.parseJson1(p, nFields);
     }
 
     //---------------------------------------------------------------------------

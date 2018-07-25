@@ -33,9 +33,12 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
         } else {
-            if (!fileExists(arg))
-                return usage("File : " + arg + " does not exists. Quitting...");
-            fileName += (arg + "|");
+            string_q fn = "tests/" + arg + ".json";
+            if (!fileExists(fn))
+                return usage("File : " + fn + " does not exists. Quitting...");
+            if (!fileName.empty())
+                return usage("Only specify one file name per command. Quitting...");
+            fileName = arg;
         }
     }
 

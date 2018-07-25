@@ -156,9 +156,14 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    char *CBaseNode::parseJson(char *s) {
+    bool CBaseNode::parseJson3(string_q& str) {
+        char *s = (char *)str.c_str();
+        char *p = cleanUpJson(s);
         size_t nFields = 0;
-        return parseJson(s, nFields);
+        p = parseJson1(p, nFields);
+        if (p)
+            str = p;
+        return (nFields);
     }
 
 // #define DEBUG_PARSER
@@ -167,7 +172,7 @@ namespace qblocks {
 #endif
 
     //--------------------------------------------------------------------------------
-    char *CBaseNode::parseJson(char *s, size_t& nFields) {
+    char *CBaseNode::parseJson1(char *s, size_t& nFields) {
 #ifdef DEBUG_PARSER
         string_q ss = s;
         string_q tt(25, '-');

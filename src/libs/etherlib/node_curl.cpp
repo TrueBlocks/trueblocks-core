@@ -201,17 +201,17 @@ namespace qblocks {
 
         if (raw)
             return getCurlContext()->result;
+
         CRPCResult generic;
-        char *p = cleanUpJson((char*)getCurlContext()->result.c_str());  // NOLINT
-        generic.parseJson(p);
+        generic.parseJson3(getCurlContext()->result);
+
         return generic.result;
     }
 
     //-------------------------------------------------------------------------
     bool getObjectViaRPC(CBaseNode &node, const string_q& method, const string_q& params) {
-        string_q ret = callRPC(method, params, false);
-        node.parseJson((char *)ret.c_str());  // NOLINT
-        return true;
+        string_q str = callRPC(method, params, false);
+        return node.parseJson3(str);
     }
 
     //-------------------------------------------------------------------------

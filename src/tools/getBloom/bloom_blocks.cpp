@@ -86,14 +86,13 @@ bool CBloomBlock::setValueByName(const string_q& fieldName, const string_q& fiel
         while (p && *p) {
             CBloomTrans item;
             size_t nFields = 0;
-            p = item.parseJson(p, nFields);
+            p = item.parseJson1(p, nFields);
             if (nFields) {
                 string_q result;
                 queryRawReceipt(result, item.hash);
                 CRPCResult generic;
-                char *r = cleanUpJson((char*)result.c_str());  // NOLINT
-                generic.parseJson(r);
-                item.receipt.parseJson(cleanUpJson((char*)generic.result.c_str()));  // NOLINT
+                generic.parseJson3(result);
+                item.receipt.parseJson3(generic.result);
                 transactions.push_back(item);
             }
         }
