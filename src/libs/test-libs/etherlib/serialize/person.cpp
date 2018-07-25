@@ -45,7 +45,7 @@ void CPerson::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
 //---------------------------------------------------------------------------
 string_q nextPersonChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CPerson *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CPerson *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -186,7 +186,7 @@ void CPerson::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextPersonChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CPerson *per = (const CPerson *)dataPtr;  // NOLINT
+    const CPerson *per = reinterpret_cast<const CPerson *>(dataPtr);
     if (per) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

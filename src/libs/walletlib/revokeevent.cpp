@@ -46,7 +46,7 @@ void QRevokeEvent::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) co
 //---------------------------------------------------------------------------
 string_q nextRevokeeventChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QRevokeEvent *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QRevokeEvent *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -162,7 +162,7 @@ void QRevokeEvent::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextRevokeeventChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QRevokeEvent *rev = (const QRevokeEvent *)dataPtr;  // NOLINT
+    const QRevokeEvent *rev = reinterpret_cast<const QRevokeEvent *>(dataPtr);
     if (rev) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

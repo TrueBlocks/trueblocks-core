@@ -48,7 +48,7 @@ void CAccountWatch::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) c
 //---------------------------------------------------------------------------
 string_q nextAccountwatchChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CAccountWatch *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CAccountWatch *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -222,7 +222,7 @@ void CAccountWatch::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextAccountwatchChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CAccountWatch *acc = (const CAccountWatch *)dataPtr;  // NOLINT
+    const CAccountWatch *acc = reinterpret_cast<const CAccountWatch *>(dataPtr);
     if (acc) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

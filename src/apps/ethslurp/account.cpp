@@ -50,7 +50,7 @@ void CAccount::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const 
 //---------------------------------------------------------------------------
 string_q nextAccountChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CAccount *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CAccount *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -213,7 +213,7 @@ void CAccount::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextAccountChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CAccount *acc = (const CAccount *)dataPtr;  // NOLINT
+    const CAccount *acc = reinterpret_cast<const CAccount *>(dataPtr);
     if (acc) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

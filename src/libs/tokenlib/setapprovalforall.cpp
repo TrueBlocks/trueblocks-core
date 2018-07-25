@@ -46,7 +46,7 @@ void QSetApprovalForAll::Format(ostream& ctx, const string_q& fmtIn, void *dataP
 //---------------------------------------------------------------------------
 string_q nextSetapprovalforallChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QSetApprovalForAll *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QSetApprovalForAll *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -162,7 +162,7 @@ void QSetApprovalForAll::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextSetapprovalforallChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QSetApprovalForAll *set = (const QSetApprovalForAll *)dataPtr;  // NOLINT
+    const QSetApprovalForAll *set = reinterpret_cast<const QSetApprovalForAll *>(dataPtr);
     if (set) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

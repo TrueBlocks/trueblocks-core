@@ -48,7 +48,7 @@ void CIncomeStatement::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr
 //---------------------------------------------------------------------------
 string_q nextIncomestatementChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CIncomeStatement *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CIncomeStatement *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -183,7 +183,7 @@ void CIncomeStatement::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextIncomestatementChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CIncomeStatement *inc = (const CIncomeStatement *)dataPtr;  // NOLINT
+    const CIncomeStatement *inc = reinterpret_cast<const CIncomeStatement *>(dataPtr);
     if (inc) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

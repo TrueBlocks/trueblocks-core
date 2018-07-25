@@ -46,7 +46,7 @@ void QRemoveOwner::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) co
 //---------------------------------------------------------------------------
 string_q nextRemoveownerChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QRemoveOwner *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QRemoveOwner *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -158,7 +158,7 @@ void QRemoveOwner::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextRemoveownerChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QRemoveOwner *rem = (const QRemoveOwner *)dataPtr;  // NOLINT
+    const QRemoveOwner *rem = reinterpret_cast<const QRemoveOwner *>(dataPtr);
     if (rem) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

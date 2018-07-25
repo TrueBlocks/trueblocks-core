@@ -46,7 +46,7 @@ void QResetSpentToday::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr
 //---------------------------------------------------------------------------
 string_q nextResetspenttodayChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QResetSpentToday *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QResetSpentToday *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -152,7 +152,7 @@ void QResetSpentToday::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextResetspenttodayChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QResetSpentToday *res = (const QResetSpentToday *)dataPtr;  // NOLINT
+    const QResetSpentToday *res = reinterpret_cast<const QResetSpentToday *>(dataPtr);
     if (res) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

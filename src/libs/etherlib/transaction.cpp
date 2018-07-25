@@ -48,7 +48,7 @@ void CTransaction::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) co
 //---------------------------------------------------------------------------
 string_q nextTransactionChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CTransaction *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CTransaction *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -296,7 +296,7 @@ void CTransaction::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CTransaction *tra = (const CTransaction *)dataPtr;  // NOLINT
+    const CTransaction *tra = reinterpret_cast<const CTransaction *>(dataPtr);
     if (tra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

@@ -48,7 +48,7 @@ void CLeaf::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
 //---------------------------------------------------------------------------
 string_q nextLeafChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CLeaf *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CLeaf *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -172,7 +172,7 @@ void CLeaf::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextLeafChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CLeaf *lea = (const CLeaf *)dataPtr;  // NOLINT
+    const CLeaf *lea = reinterpret_cast<const CLeaf *>(dataPtr);
     if (lea) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

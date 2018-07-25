@@ -49,7 +49,7 @@ void CPriceQuote::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) con
 //---------------------------------------------------------------------------
 string_q nextPricequoteChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CPriceQuote *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CPriceQuote *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -170,7 +170,7 @@ void CPriceQuote::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextPricequoteChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CPriceQuote *pri = (const CPriceQuote *)dataPtr;  // NOLINT
+    const CPriceQuote *pri = reinterpret_cast<const CPriceQuote *>(dataPtr);
     if (pri) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

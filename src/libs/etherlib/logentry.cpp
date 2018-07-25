@@ -48,7 +48,7 @@ void CLogEntry::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const
 //---------------------------------------------------------------------------
 string_q nextLogentryChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CLogEntry *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CLogEntry *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -182,7 +182,7 @@ void CLogEntry::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextLogentryChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CLogEntry *log = (const CLogEntry *)dataPtr;  // NOLINT
+    const CLogEntry *log = reinterpret_cast<const CLogEntry *>(dataPtr);
     if (log) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

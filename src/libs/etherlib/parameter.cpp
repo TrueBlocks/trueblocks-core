@@ -47,7 +47,7 @@ void CParameter::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) cons
 //---------------------------------------------------------------------------
 string_q nextParameterChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CParameter *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CParameter *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -184,7 +184,7 @@ void CParameter::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextParameterChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CParameter *par = (const CParameter *)dataPtr;  // NOLINT
+    const CParameter *par = reinterpret_cast<const CParameter *>(dataPtr);
     if (par) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

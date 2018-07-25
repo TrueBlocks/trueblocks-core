@@ -46,7 +46,7 @@ void QConfirmationNeededEvent::Format(ostream& ctx, const string_q& fmtIn, void 
 //---------------------------------------------------------------------------
 string_q nextConfirmationneededeventChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QConfirmationNeededEvent *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QConfirmationNeededEvent *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -182,7 +182,7 @@ void QConfirmationNeededEvent::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextConfirmationneededeventChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QConfirmationNeededEvent *con = (const QConfirmationNeededEvent *)dataPtr;  // NOLINT
+    const QConfirmationNeededEvent *con = reinterpret_cast<const QConfirmationNeededEvent *>(dataPtr);
     if (con) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

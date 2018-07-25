@@ -46,7 +46,7 @@ void QRequirementChangedEvent::Format(ostream& ctx, const string_q& fmtIn, void 
 //---------------------------------------------------------------------------
 string_q nextRequirementchangedeventChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QRequirementChangedEvent *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QRequirementChangedEvent *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -158,7 +158,7 @@ void QRequirementChangedEvent::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextRequirementchangedeventChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QRequirementChangedEvent *req = (const QRequirementChangedEvent *)dataPtr;  // NOLINT
+    const QRequirementChangedEvent *req = reinterpret_cast<const QRequirementChangedEvent *>(dataPtr);
     if (req) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

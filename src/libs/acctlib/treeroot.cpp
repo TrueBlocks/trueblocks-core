@@ -47,7 +47,7 @@ void CTreeRoot::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const
 //---------------------------------------------------------------------------
 string_q nextTreerootChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CTreeRoot *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CTreeRoot *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -178,7 +178,7 @@ void CTreeRoot::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextTreerootChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CTreeRoot *tre = (const CTreeRoot *)dataPtr;  // NOLINT
+    const CTreeRoot *tre = reinterpret_cast<const CTreeRoot *>(dataPtr);
     if (tre) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

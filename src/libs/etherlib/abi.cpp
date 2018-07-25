@@ -48,7 +48,7 @@ void CAbi::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
 //---------------------------------------------------------------------------
 string_q nextAbiChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CAbi *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CAbi *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -179,7 +179,7 @@ void CAbi::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextAbiChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CAbi *abi = (const CAbi *)dataPtr;  // NOLINT
+    const CAbi *abi = reinterpret_cast<const CAbi *>(dataPtr);
     if (abi) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

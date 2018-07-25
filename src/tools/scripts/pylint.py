@@ -583,6 +583,8 @@ def ParseNolintSuppressions(filename, raw_line, linenum, error):
     error: function, an error handler.
   """
   matched = Search(r'\bNOLINT(NEXTLINE)?\b(\([^)]+\))?', raw_line)
+  if not matched:
+    matched = Search(r'\bNOLINT1(NEXTLINE)?\b(\([^)]+\))?', raw_line)
   if matched:
     if matched.group(1):
       suppressed_line = linenum + 1

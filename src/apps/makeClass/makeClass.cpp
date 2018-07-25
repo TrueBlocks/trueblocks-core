@@ -369,38 +369,40 @@ string_q ptrWriteFmt =
     //------------------------------------------------------------------------------------------------
     string_q headerFile = substitute(substitute(dataFile, ".txt", ".h"), "./classDefinitions/", "./");
     string_q headSource = asciiFileToString(configPath("makeClass/blank.h"));
-    replaceAll(headSource, "[{GET_OBJ}]",      (hasObjGetter ? string_q(STR_GETOBJ_HEAD)+(hasStrGetter?"":"\n") : ""));
-    replaceAll(headSource, "[{GET_STR}]",      (hasStrGetter ? string_q(STR_GETSTR_HEAD)+"\n" : ""));
-    replaceAll(headSource, "[FIELD_COPY]",     fieldCopy);
-    replaceAll(headSource, "[FIELD_DEC]",      fieldDec);
-    replaceAll(headSource, "[FIELD_SET]",      fieldSet);
-    replaceAll(headSource, "[FIELD_CLEAR]",    fieldClear);
-    replaceAll(headSource, "[H_INCLUDES]",     headerIncs);
-    replaceAll(headSource, "[{OPERATORS}]",    operatorH);
-    replaceAll(headSource, "[{BASE_CLASS}]",   baseClass);
-    replaceAll(headSource, "[{BASE_BASE}]",    baseBase);
-    replaceAll(headSource, "[{BASE}]",         baseUpper);
-    replaceAll(headSource, "[{CLASS_NAME}]",   className);
-    replaceAll(headSource, "[{COMMENT_LINE}]", STR_COMMENT_LINE);
-    replaceAll(headSource, "[{LONG}]",         baseLower);
-    replaceAll(headSource, "[{PROPER}]",       baseProper);
-    replaceAll(headSource, "[{SHORT}]",        extract(baseLower, 0, 2));
-    replaceAll(headSource, "[{BASE_CLASS}]",   baseClass);
-    replaceAll(headSource, "[{BASE_BASE}]",    baseBase);
-    replaceAll(headSource, "[{BASE}]",         baseUpper);
-    replaceAll(headSource, "[{CLASS_NAME}]",   className);
-    replaceAll(headSource, "[{COMMENT_LINE}]", STR_COMMENT_LINE);
-    replaceAll(headSource, "[{LONG}]",         baseLower);
-    replaceAll(headSource, "[{PROPER}]",       baseProper);
-    replaceAll(headSource, "[{SHORT3}]",       short3(baseLower));
-    replaceAll(headSource, "[{SHORT}]",        extract(baseLower, 0, 2));
-    replaceAll(headSource, "[{SCOPE}]",        scope);
-    replaceAll(headSource, "[{SORT_COMMENT}]", (sortStr.length() ? STR_SORT_COMMENT_1 : STR_SORT_COMMENT_2));
-    replaceAll(headSource, "[{SORT_CODE}]",    (sortStr.length() ? sortStr : "true"));
-    replaceAll(headSource, "[{EQUAL_COMMENT}]",(eqStr.length() ? STR_EQUAL_COMMENT_1 : STR_EQUAL_COMMENT_2));  // NOLINT
-    replaceAll(headSource, "[{EQUAL_CODE}]",   (eqStr.length() ? eqStr : "false"));
-    replaceAll(headSource, "[{NAMESPACE1}]",   (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
-    replaceAll(headSource, "[{NAMESPACE2}]",   (ns.empty() ? "" : "}  // namespace qblocks\n"));
+    replaceAll(headSource, "[{GET_OBJ}]",        (hasObjGetter ? string_q(STR_GETOBJ_HEAD)+(hasStrGetter?"":"\n") : ""));
+    replaceAll(headSource, "[{GET_STR}]",        (hasStrGetter ? string_q(STR_GETSTR_HEAD)+"\n" : ""));
+    replaceAll(headSource, "[FIELD_COPY]",       fieldCopy);
+    replaceAll(headSource, "[FIELD_DEC]",        fieldDec);
+    replaceAll(headSource, "[FIELD_SET]",        fieldSet);
+    replaceAll(headSource, "[FIELD_CLEAR]",      fieldClear);
+    replaceAll(headSource, "[H_INCLUDES]",       headerIncs);
+    replaceAll(headSource, "[{OPERATORS}]",      operatorH);
+    replaceAll(headSource, "[{BASE_CLASS}]",     baseClass);
+    replaceAll(headSource, "[{BASE_BASE}]",      baseBase);
+    replaceAll(headSource, "[{BASE}]",           baseUpper);
+    replaceAll(headSource, "[{CLASS_NAME}]",     className);
+    replaceAll(headSource, "[{COMMENT_LINE}]",   STR_COMMENT_LINE);
+    replaceAll(headSource, "[{LONG}]",           baseLower);
+    replaceAll(headSource, "[{PROPER}]",         baseProper);
+    replaceAll(headSource, "[{SHORT}]",          extract(baseLower, 0, 2));
+    replaceAll(headSource, "[{BASE_CLASS}]",     baseClass);
+    replaceAll(headSource, "[{BASE_BASE}]",      baseBase);
+    replaceAll(headSource, "[{BASE}]",           baseUpper);
+    replaceAll(headSource, "[{CLASS_NAME}]",     className);
+    replaceAll(headSource, "[{COMMENT_LINE}]",   STR_COMMENT_LINE);
+    replaceAll(headSource, "[{LONG}]",           baseLower);
+    replaceAll(headSource, "[{PROPER}]",         baseProper);
+    replaceAll(headSource, "[{SHORT3}]",         short3(baseLower));
+    replaceAll(headSource, "[{SHORT}]",          extract(baseLower, 0, 2));
+    replaceAll(headSource, "[{SCOPE}]",          scope);
+    replaceAll(headSource, "[{SORT_COMMENT}]",   (sortStr.length() ? STR_SORT_COMMENT_1 : STR_SORT_COMMENT_2));
+    replaceAll(headSource, "[{SORT_CODE}]",      (sortStr.length() ? sortStr : "true"));
+    replaceAll(headSource, "[{EQUAL_COMMENT}]",  (eqStr.length() ? STR_EQUAL_COMMENT_1 : STR_EQUAL_COMMENT_2));  // NOLINT
+    replaceAll(headSource, "[{EQUAL_CODE}]",     (eqStr.length() ? eqStr : "false"));
+    replaceAll(headSource, "[{NAMESPACE1}]",     (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
+    replaceAll(headSource, "[{NAMESPACE2}]",     (ns.empty() ? "" : "}  /""/ namespace qblocks\n"));
+    replaceAll(headSource, "public:\n\npublic:", "public:\n\t/""/ NOLINT\n\npublic:");
+
     if (options.writeHeader)
         writeTheCode(headerFile, headSource, ns);
 
@@ -654,7 +656,7 @@ string_q getCaseSetCode(const string_q& fieldCase) {
                         string_q str = strArraySet;
                         replaceAll(str, "[{NAME}]", field);
                         replaceAll(str, "nextTokenClear(str, ',')", "str_2_[{TYPE}](nextTokenClear(str, ','))");
-                        replaceAll(str, "[{TYPE}]", substitute(extract(type, 2), "Array", ""));
+                        replaceAll(str, "[{TYPE}]", substitute(extract(type, 1), "Array", ""));
                         caseCode += str;
 
                     } else if (contains(type, "Array")) {
