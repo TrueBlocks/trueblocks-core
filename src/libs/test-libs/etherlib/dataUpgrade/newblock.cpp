@@ -288,7 +288,7 @@ bool CNewBlock::readBackLevel(CArchive& archive) {
         archive >> parentHash;
         archive >> timestamp;
         archive >> transactions;
-        // TODO(tjayrush) -- technically we should re-read these values from the node
+        // NOTE: See the real code in CBlock file for note about upgrading
         string_q save = getCurlContext()->provider;
         getCurlContext()->provider = "local";
         CBlock upgrade;
