@@ -357,12 +357,12 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
     //-------------------------------------------------------------------------
     bool nodeHasBalances(void) {
-        // The known balance of the DAO smart contract at block 1,500,001 was 4423518369662462108465682, if the
-        // node reports this correctly, it has historical balances
-        // TODO(tjayrush): Return the balance of the one of the original genesis accounts because this won't work
-        // if the node is not yet synced to this block.
-        return getBalance("0xbb9bc244d798123fde783fcc1c72d3bb8c189413", 1500001, false) ==
-                                str_2_Wei("4423518369662462108465682");
+        // Account 0xa1e4380a3b1f749673e270229993ee55f35663b4 owned 2000000000000000000000 (2000 ether)
+        // at block zero. If the node is holding balances (i.e. its an archive node), then it will
+        // return that value for block 1 as well. Otherwise, it will return a zero balance.
+        // NOTE: Account 0xa1e4380a3b1f749673e270229993ee55f35663b4 transacted in the first ever transaction.
+        return getBalance("0xa1e4380a3b1f749673e270229993ee55f35663b4", 1, false) ==
+                            str_2_Wei("2000000000000000000000");
     }
 
     //-------------------------------------------------------------------------
@@ -422,7 +422,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
             if (verbose > 2) cerr << "medium trace" << ret << "\n";
             return ret;
         } else {
-            ret = getTraceCount_binarySearch(hashIn, 0, (1 << 30));  // TODO(tjayrush): is this big enough?
+            ret = getTraceCount_binarySearch(hashIn, 0, (1 << 30));
             if (verbose > 2) cerr << "large trace" << ret << "\n";
         }
         return ret;
