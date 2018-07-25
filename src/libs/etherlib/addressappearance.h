@@ -28,6 +28,7 @@ class CAddressAppearance {
     blknum_t bn;
     blknum_t tx;
     blknum_t tc;
+
 public:
     address_t addr;
     string_q reason;

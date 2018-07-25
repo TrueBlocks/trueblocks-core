@@ -53,9 +53,12 @@ int main(int argc, const char *argv[]) {
                     options.timestampMap[options.state.latestBlock] = blk.timestamp;
                 }
                 if (options.asData)
-                    sBal = substitute(dispDollars(options.timestampMap[options.state.latestBlock], options.state.totalVal), ",", "");
+                    sBal = substitute(
+                            dispDollars(options.timestampMap[options.state.latestBlock], options.state.totalVal),
+                            ",", "");
                 else
-                    sBal = padLeft("$" + dispDollars(options.timestampMap[options.state.latestBlock], options.state.totalVal), 14);
+                    sBal = padLeft("$" +
+                            dispDollars(options.timestampMap[options.state.latestBlock], options.state.totalVal), 14);
             }
             cout << "        Total for " << cGreen << nAccts << cOff;
             cout << " accounts at " << cTeal << "latest" << cOff << " block";
