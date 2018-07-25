@@ -278,8 +278,8 @@ namespace qblocks {
 
     //--------------------------------------------------------------------
     inline bool isWhiteSpace(char c) {
-        // TODO(tjayrush): this is unsafe if the JSON contains preservable spaces. Since that is not
-        // the case with Ethereum data, it's okay
+        // NOTE: A generic JSON parser won't do this, but since the Ethereum data contains no
+        // preservable white space, it's okay here.
         return (c == '\0' || c == ' ' || c == '\n' || c == '\r' || c == '\t');
     }
 

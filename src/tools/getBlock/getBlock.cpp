@@ -242,7 +242,6 @@ bool visitAddrs(const CAddressAppearance& item, void *data) {
 //----------------------------------------------------------------
 // Return 'true' if we want the caller NOT to visit the traces of this transaction
 bool transFilter(const CTransaction *trans, void *data) {
-    // TODO(tjayrush): Use an option here for deep trace
     if (!ddosRange(trans->blockNumber))
         return false;
     return (getTraceCount(trans->hash) > 250);
