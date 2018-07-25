@@ -14,7 +14,7 @@
 #include <vector>
 #define NOWALLETLIB
 #include "acctlib.h"
-//#include "fromtransferfrom.h"
+// #include "fromtransferfrom.h"
 #include "options.h"
 
 //--------------------------------------------------------------

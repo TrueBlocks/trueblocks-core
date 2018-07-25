@@ -46,7 +46,7 @@ void QSetDailyLimit::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) 
 //---------------------------------------------------------------------------
 string_q nextSetdailylimitChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QSetDailyLimit *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QSetDailyLimit *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -158,7 +158,7 @@ void QSetDailyLimit::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextSetdailylimitChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QSetDailyLimit *set = (const QSetDailyLimit *)dataPtr;  // NOLINT
+    const QSetDailyLimit *set = reinterpret_cast<const QSetDailyLimit *>(dataPtr);
     if (set) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

@@ -46,7 +46,7 @@ void QSafeTransferFrom::Format(ostream& ctx, const string_q& fmtIn, void *dataPt
 //---------------------------------------------------------------------------
 string_q nextSafetransferfromChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QSafeTransferFrom *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QSafeTransferFrom *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -166,7 +166,7 @@ void QSafeTransferFrom::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextSafetransferfromChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QSafeTransferFrom *saf = (const QSafeTransferFrom *)dataPtr;  // NOLINT
+    const QSafeTransferFrom *saf = reinterpret_cast<const QSafeTransferFrom *>(dataPtr);
     if (saf) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

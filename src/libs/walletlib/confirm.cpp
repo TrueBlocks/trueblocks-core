@@ -46,7 +46,7 @@ void QConfirm::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const 
 //---------------------------------------------------------------------------
 string_q nextConfirmChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QConfirm *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QConfirm *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -158,7 +158,7 @@ void QConfirm::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextConfirmChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QConfirm *con = (const QConfirm *)dataPtr;  // NOLINT
+    const QConfirm *con = reinterpret_cast<const QConfirm *>(dataPtr);
     if (con) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

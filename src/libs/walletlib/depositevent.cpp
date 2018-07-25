@@ -46,7 +46,7 @@ void QDepositEvent::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) c
 //---------------------------------------------------------------------------
 string_q nextDepositeventChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QDepositEvent *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QDepositEvent *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -164,7 +164,7 @@ void QDepositEvent::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextDepositeventChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QDepositEvent *dep = (const QDepositEvent *)dataPtr;  // NOLINT
+    const QDepositEvent *dep = reinterpret_cast<const QDepositEvent *>(dataPtr);
     if (dep) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

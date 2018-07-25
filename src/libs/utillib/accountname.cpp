@@ -47,7 +47,7 @@ void CAccountName::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) co
 //---------------------------------------------------------------------------
 string_q nextAccountnameChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CAccountName *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CAccountName *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -176,7 +176,7 @@ void CAccountName::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextAccountnameChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CAccountName *acc = (const CAccountName *)dataPtr;  // NOLINT
+    const CAccountName *acc = reinterpret_cast<const CAccountName *>(dataPtr);
     if (acc) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

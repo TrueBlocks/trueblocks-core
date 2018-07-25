@@ -48,7 +48,7 @@ void CBranch::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
 //---------------------------------------------------------------------------
 string_q nextBranchChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CBranch *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CBranch *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -185,7 +185,7 @@ void CBranch::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextBranchChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CBranch *bra = (const CBranch *)dataPtr;  // NOLINT
+    const CBranch *bra = reinterpret_cast<const CBranch *>(dataPtr);
     if (bra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

@@ -46,7 +46,7 @@ void QOwnerChangedEvent::Format(ostream& ctx, const string_q& fmtIn, void *dataP
 //---------------------------------------------------------------------------
 string_q nextOwnerchangedeventChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QOwnerChangedEvent *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QOwnerChangedEvent *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -164,7 +164,7 @@ void QOwnerChangedEvent::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextOwnerchangedeventChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QOwnerChangedEvent *own = (const QOwnerChangedEvent *)dataPtr;  // NOLINT
+    const QOwnerChangedEvent *own = reinterpret_cast<const QOwnerChangedEvent *>(dataPtr);
     if (own) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

@@ -46,7 +46,7 @@ void [{CLASS_NAME}]::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) 
 //---------------------------------------------------------------------------
 string_q next[{PROPER}]Chunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const [{CLASS_NAME}] *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const [{CLASS_NAME}] *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -146,7 +146,7 @@ void [{CLASS_NAME}]::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q next[{PROPER}]Chunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const [{CLASS_NAME}] *[{SHORT3}] = (const [{CLASS_NAME}] *)dataPtr;  // NOLINT
+    const [{CLASS_NAME}] *[{SHORT3}] = reinterpret_cast<const [{CLASS_NAME}] *>(dataPtr);
     if ([{SHORT3}]) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

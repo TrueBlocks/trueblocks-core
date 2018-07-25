@@ -48,7 +48,7 @@ void CBalHistory::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) con
 //---------------------------------------------------------------------------
 string_q nextBalhistoryChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CBalHistory *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CBalHistory *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -167,7 +167,7 @@ void CBalHistory::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextBalhistoryChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CBalHistory *bal = (const CBalHistory *)dataPtr;  // NOLINT
+    const CBalHistory *bal = reinterpret_cast<const CBalHistory *>(dataPtr);
     if (bal) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

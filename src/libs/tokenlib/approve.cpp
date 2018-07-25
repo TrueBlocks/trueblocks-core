@@ -46,7 +46,7 @@ void QApprove::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const 
 //---------------------------------------------------------------------------
 string_q nextApproveChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QApprove *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QApprove *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -162,7 +162,7 @@ void QApprove::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextApproveChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QApprove *app = (const QApprove *)dataPtr;  // NOLINT
+    const QApprove *app = reinterpret_cast<const QApprove *>(dataPtr);
     if (app) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

@@ -1,6 +1,6 @@
 [settings]
 class     = CLogEntry
-fields    = address address|string data|uint64 logIndex|SFTopicArray topics
+fields    = address address|string data|uint64 logIndex|CTopicArray topics
 includes  = abilib.h
 cIncs     = #include "etherlib.h"
 scope     = extern

@@ -47,7 +47,7 @@ void CAcctCacheItem::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) 
 //---------------------------------------------------------------------------
 string_q nextAcctcacheitemChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CAcctCacheItem *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CAcctCacheItem *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -160,7 +160,7 @@ void CAcctCacheItem::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextAcctcacheitemChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CAcctCacheItem *acc = (const CAcctCacheItem *)dataPtr;  // NOLINT
+    const CAcctCacheItem *acc = reinterpret_cast<const CAcctCacheItem *>(dataPtr);
     if (acc) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

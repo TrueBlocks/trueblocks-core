@@ -46,7 +46,7 @@ void QApprovalForAllEvent::Format(ostream& ctx, const string_q& fmtIn, void *dat
 //---------------------------------------------------------------------------
 string_q nextApprovalforalleventChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QApprovalForAllEvent *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QApprovalForAllEvent *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -166,7 +166,7 @@ void QApprovalForAllEvent::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextApprovalforalleventChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QApprovalForAllEvent *app = (const QApprovalForAllEvent *)dataPtr;  // NOLINT
+    const QApprovalForAllEvent *app = reinterpret_cast<const QApprovalForAllEvent *>(dataPtr);
     if (app) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

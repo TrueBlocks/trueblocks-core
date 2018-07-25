@@ -47,7 +47,7 @@ void CRPCResult::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) cons
 //---------------------------------------------------------------------------
 string_q nextRpcresultChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CRPCResult *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CRPCResult *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -171,7 +171,7 @@ void CRPCResult::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextRpcresultChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CRPCResult *rpc = (const CRPCResult *)dataPtr;  // NOLINT
+    const CRPCResult *rpc = reinterpret_cast<const CRPCResult *>(dataPtr);
     if (rpc) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

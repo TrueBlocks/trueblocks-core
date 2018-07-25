@@ -48,7 +48,7 @@ void CBalanceHistory::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr)
 //---------------------------------------------------------------------------
 string_q nextBalancehistoryChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CBalanceHistory *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CBalanceHistory *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -159,7 +159,7 @@ void CBalanceHistory::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextBalancehistoryChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CBalanceHistory *bal = (const CBalanceHistory *)dataPtr;  // NOLINT
+    const CBalanceHistory *bal = reinterpret_cast<const CBalanceHistory *>(dataPtr);
     if (bal) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

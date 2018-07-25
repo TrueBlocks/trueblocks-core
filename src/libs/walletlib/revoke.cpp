@@ -46,7 +46,7 @@ void QRevoke::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
 //---------------------------------------------------------------------------
 string_q nextRevokeChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QRevoke *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QRevoke *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -158,7 +158,7 @@ void QRevoke::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextRevokeChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QRevoke *rev = (const QRevoke *)dataPtr;  // NOLINT
+    const QRevoke *rev = reinterpret_cast<const QRevoke *>(dataPtr);
     if (rev) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

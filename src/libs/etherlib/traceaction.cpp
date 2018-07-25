@@ -48,7 +48,7 @@ void CTraceAction::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) co
 //---------------------------------------------------------------------------
 string_q nextTraceactionChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CTraceAction *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CTraceAction *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -207,7 +207,7 @@ void CTraceAction::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextTraceactionChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CTraceAction *tra = (const CTraceAction *)dataPtr;  // NOLINT
+    const CTraceAction *tra = reinterpret_cast<const CTraceAction *>(dataPtr);
     if (tra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

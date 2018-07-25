@@ -46,7 +46,7 @@ void QChangeOwner::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) co
 //---------------------------------------------------------------------------
 string_q nextChangeownerChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QChangeOwner *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QChangeOwner *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -162,7 +162,7 @@ void QChangeOwner::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextChangeownerChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QChangeOwner *cha = (const QChangeOwner *)dataPtr;  // NOLINT
+    const QChangeOwner *cha = reinterpret_cast<const QChangeOwner *>(dataPtr);
     if (cha) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

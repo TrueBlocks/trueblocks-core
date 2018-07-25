@@ -46,7 +46,7 @@ void QSafeTransferFromToke::Format(ostream& ctx, const string_q& fmtIn, void *da
 //---------------------------------------------------------------------------
 string_q nextSafetransferfromtokeChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QSafeTransferFromToke *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QSafeTransferFromToke *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -170,7 +170,7 @@ void QSafeTransferFromToke::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextSafetransferfromtokeChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QSafeTransferFromToke *saf = (const QSafeTransferFromToke *)dataPtr;  // NOLINT
+    const QSafeTransferFromToke *saf = reinterpret_cast<const QSafeTransferFromToke *>(dataPtr);
     if (saf) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
