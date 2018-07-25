@@ -9498,5 +9498,4 @@ const char* STR_WHATEVER =
 "This is the thing that matters "
 "This is the thing that matters "
 "This is the thing that matters "
-"This is the thing that matters "
-;
+"This is the thing that matters ";

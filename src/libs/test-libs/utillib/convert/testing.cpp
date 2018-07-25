@@ -55,11 +55,11 @@ TEST_F(CThisTest, TestConverts_0) {
     ASSERT_EQ("ulong overflow",          str_2_Uint(array[4]), 0);
     cout << "\n";
 
-    ASSERT_EQ("str_2_Hash1",             str_2_Hash("12312ABcdE12"),   "0x000000000000000000000000000000000000000000000000000012312abcde12");
-    ASSERT_EQ("str_2_Hash2",             str_2_Hash("a"),              "0x000000000000000000000000000000000000000000000000000000000000000a");
+    ASSERT_EQ("str_2_Hash1",             str_2_Hash("12312ABcdE12"),   "0x000000000000000000000000000000000000000000000000000012312abcde12");  // NOLINT
+    ASSERT_EQ("str_2_Hash2",             str_2_Hash("a"),              "0x000000000000000000000000000000000000000000000000000000000000000a");  // NOLINT
     ASSERT_EQ("str_2_Hash3",             str_2_Hash("0x"),             "0x0");
     ASSERT_EQ("str_2_Hash4",             str_2_Hash(""),               "0x0");
-    ASSERT_EQ("str_2_Hash5",             str_2_Hash("0x12312abcde12"), "0x000000000000000000000000000000000000000000000000000012312abcde12");
+    ASSERT_EQ("str_2_Hash5",             str_2_Hash("0x12312abcde12"), "0x000000000000000000000000000000000000000000000000000012312abcde12");  // NOLINT
     cout << "\n";
 
     ASSERT_EQ("str_2_Addr1",             str_2_Addr("12312ABcdE12"),   "0x000000000000000000000000000012312abcde12");
@@ -80,8 +80,7 @@ TEST_F(CThisTest, TestConverts_0) {
     ASSERT_EQ("bn hex ony",              str_2_BigUint(array[1]), 0);
     ASSERT_EQ("bn zero addr",            str_2_BigUint(array[2]), 0);
     ASSERT_EQ("bn full zero",            str_2_BigUint(array[3]), 0);
-    ASSERT_EQ("bn overflow",             str_2_BigUint(array[4]), str_2_Wei("91343852333181432387730302044767688728495783936"));
-
+    ASSERT_EQ("bn overflow",             str_2_BigUint(array[4]), str_2_Wei("91343852333181432387730302044767688728495783936"));  // NOLINT
     return true;
 }}
 
@@ -139,7 +138,7 @@ TEST_F(CThisTest, TestConverts_2) {
     ASSERT_EQ("eth2", wei_2_Ether(bnu_2_Str(val)), "1240944001.236000000000000001");
     ASSERT_EQ("eth2", wei_2_Ether(bnu_2_Str(val/1000000)), "1240.944001236000000000");
 
-    return subTestID==0;
+    return true;
 }}
 
 //------------------------------------------------------------------------
@@ -152,7 +151,7 @@ TEST_F(CThisTest, TestConverts_3) {
     ASSERT_EQ("time2", str_2_Ts("1517319693"), 1517319693);
     ASSERT_EQ("time2", ts_2_Str(1517319693), "1517319693");
     time_q date = ts_2_Date(ts);
-    ASSERT_EQ("time3", date, time_q(2018,01,30,13,41,33));
+    ASSERT_EQ("time3", date, time_q(2018, 01, 30, 13, 41, 33));
     ASSERT_EQ("time4", date_2_Ts(date), ts);
 
     ASSERT_EQ("time5", str_2_Bool("1"), true);
@@ -165,7 +164,7 @@ TEST_F(CThisTest, TestConverts_3) {
     ASSERT_EQ("time9", str_2_Bloom("16000000000000000000"), wei);
     ASSERT_EQ("timeA", str_2_Topic("16000000000000000000"), wei);
 
-    return subTestID==0;
+    return true;
 }}
 
 #include "options.h"

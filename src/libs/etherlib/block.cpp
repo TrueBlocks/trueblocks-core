@@ -434,8 +434,8 @@ const CBaseNode *CBlock::getObjectAt(const string_q& fieldName, size_t index) co
 // EXISTING_CODE
 //---------------------------------------------------------------------------
 extern bool accumulateAddresses(const CAddressAppearance& item, void *data);
-extern void foundOne(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const address_t& addr, const string_q& reason);
-extern void foundPot(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList, const string_q& reason);
+extern void foundOne(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const address_t& addr, const string_q& reason); // NOLINT
+extern void foundPot(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList, const string_q& reason); // NOLINT
 
 //---------------------------------------------------------------------------
 bool CBlock::forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data) {

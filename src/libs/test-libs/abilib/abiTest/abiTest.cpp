@@ -24,7 +24,7 @@ extern bool test_evt_assign (void);
 int main(int argc, const char *argv[]) {
 
     CParameter::registerClass();
-    
+
     COptions options;
     if (!options.prepareArguments(argc, argv))
         return 0;
@@ -162,10 +162,11 @@ bool test_old_bug(void) {
 }
 
 string_q data =
-"CBalanceHistoryArray|CBlockNumArray|CFunctionArray|CIncomeStatement|CLogEntryArray|CParameterArray|CPerson|CReceipt|"
-"CNewReceipt|CNewTransactionArray|CBigUintArray|CTopicArray|address[]|bytes4|time|uint8|"
-"CStringArray|CTraceAction|CTraceResult|CTransactionArray|CTreeNode *|CTopicArray|address|blknum|bloom|bool|bytes|bytes32|"
-"double|gas|hash|int256|int64|string|timestamp|uint256|uint32|uint64|wei";
+"CBalanceHistoryArray|CBlockNumArray|CFunctionArray|CIncomeStatement|CLogEntryArray|CParameterArray|"
+"CPerson|CReceipt|CNewReceipt|CNewTransactionArray|CBigUintArray|CTopicArray|address[]|bytes4|time|"
+"uint8|CStringArray|CTraceAction|CTraceResult|CTransactionArray|CTreeNode *|CTopicArray|address|"
+"blknum|bloom|bool|bytes|bytes32|double|gas|hash|int256|int64|string|timestamp|uint256|uint32|"
+"uint64|wei";
 //--------------------------------------------------------------
 bool test_func_assign(void) {
 
