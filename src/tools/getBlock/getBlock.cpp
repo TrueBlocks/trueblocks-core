@@ -88,12 +88,13 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
         } else {
             if (opt.force) {  // turn this on to force a write of the block to the disc
                 CRPCResult generic;
-                generic.parseJson(cleanUpJson((char*)result.c_str()));  // NOLINT
+                generic.parseJson3(result);
                 result = generic.result;
-                gold.parseJson((char*)result.c_str());  // NOLINT
-                string_q fileName = getBinaryFilename(num);
-                gold.finalized = isBlockFinal(gold.timestamp, latest.timestamp);
-                writeBlockToBinary(gold, fileName);
+                if (gold.parseJson3(result)) {
+                    string_q fileName = getBinaryFilename(num);
+                    gold.finalized = isBlockFinal(gold.timestamp, latest.timestamp);
+                    writeBlockToBinary(gold, fileName);
+                }
             }
         }
 

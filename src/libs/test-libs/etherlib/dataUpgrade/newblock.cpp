@@ -107,7 +107,7 @@ bool CNewBlock::setValueByName(const string_q& fieldName, const string_q& fieldV
                 while (p && *p) {
                     CTransaction item;
                     size_t nFields = 0;
-                    p = item.parseJson(p, nFields);
+                    p = item.parseJson1(p, nFields);
                     if (nFields)
                         transactions.push_back(item);
                 }
@@ -426,15 +426,10 @@ bool readOneNewBlock_fromJson(CNewBlock& block, const string_q& fileName) {
         replaceAll(contents, "null", "\"0x\"");
         stringToAsciiFile(fileName, contents);
     }
-
-    if (!endsWith(contents, '\n')) {
+    if (!endsWith(contents, '\n'))
         stringToAsciiFile(fileName, contents + "\n");
-    }
 
-    char *p = cleanUpJson((char *)contents.c_str());  // NOLINT
-    size_t nFields = 0;
-    block.parseJson(p, nFields);
-    return nFields;
+    return block.parseJson3(contents);
 }
 // EXISTING_CODE
 

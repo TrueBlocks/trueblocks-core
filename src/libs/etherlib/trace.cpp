@@ -61,13 +61,13 @@ bool CTrace::setValueByName(const string_q& fieldName, const string_q& fieldValu
     if (fieldName % "action") {
         char *p = (char *)fieldValue.c_str();  // NOLINT
         size_t nFields = 0;
-        action.parseJson(p, nFields);
+        action.parseJson1(p, nFields);
         return true;
 
     } else if (fieldName % "result") {
         char *p = (char *)fieldValue.c_str();  // NOLINT
         size_t nFields = 0;
-        result.parseJson(p, nFields);
+        result.parseJson1(p, nFields);
         return true;
     }
     // EXISTING_CODE

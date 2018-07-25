@@ -62,7 +62,7 @@ bool CAccountWatch::setValueByName(const string_q& fieldName, const string_q& fi
     if (fieldName % "qbis") {
         char *p = (char *)fieldValue.c_str();  // NOLINT
         size_t nFields = 0;
-        qbis.parseJson(p, nFields);
+        qbis.parseJson1(p, nFields);
         return true;
     }
     if (fieldName % "balance") {
@@ -81,7 +81,7 @@ bool CAccountWatch::setValueByName(const string_q& fieldName, const string_q& fi
                 while (p && *p) {
                     CBalanceHistory item;
                     size_t nFields = 0;
-                    p = item.parseJson(p, nFields);
+                    p = item.parseJson1(p, nFields);
                     if (nFields)
                         balanceHistory.push_back(item);
                 }
@@ -446,7 +446,7 @@ void loadWatchList(const CToml& toml, CAccountWatchArray& watches, const string_
     while (p && *p) {
         CAccountWatch watch;
         size_t nFields = 0;
-        p = watch.parseJson(p, nFields);
+        p = watch.parseJson1(p, nFields);
         if (nFields) {
             // cleanup and add to list of watches
             watch.address = str_2_Addr(toLower(watch.address));

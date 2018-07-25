@@ -147,7 +147,7 @@ string_q acquireABI(CFunctionArray& functions, const address_t& addr, const COpt
     while (p && *p) {
         CFunction func;
         size_t nFields = 0;
-        p = func.parseJson(p, nFields);
+        p = func.parseJson1(p, nFields);
         func.isBuiltin = builtIn;
         addIfUnique(addr, functions, func, opt.decNames);
     }

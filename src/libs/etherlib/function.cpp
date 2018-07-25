@@ -83,7 +83,7 @@ bool CFunction::setValueByName(const string_q& fieldName, const string_q& fieldV
                 while (p && *p) {
                     CParameter item;
                     size_t nFields = 0;
-                    p = item.parseJson(p, nFields);
+                    p = item.parseJson1(p, nFields);
                     if (nFields)
                         inputs.push_back(item);
                 }
@@ -99,7 +99,7 @@ bool CFunction::setValueByName(const string_q& fieldName, const string_q& fieldV
                 while (p && *p) {
                     CParameter item;
                     size_t nFields = 0;
-                    p = item.parseJson(p, nFields);
+                    p = item.parseJson1(p, nFields);
                     if (nFields)
                         outputs.push_back(item);
                 }

@@ -68,7 +68,7 @@ bool CAbi::setValueByName(const string_q& fieldName, const string_q& fieldValue)
                 while (p && *p) {
                     CFunction item;
                     size_t nFields = 0;
-                    p = item.parseJson(p, nFields);
+                    p = item.parseJson1(p, nFields);
                     if (nFields)
                         abiByName.push_back(item);
                 }
@@ -79,7 +79,7 @@ bool CAbi::setValueByName(const string_q& fieldName, const string_q& fieldValue)
                 while (p && *p) {
                     CFunction item;
                     size_t nFields = 0;
-                    p = item.parseJson(p, nFields);
+                    p = item.parseJson1(p, nFields);
                     if (nFields)
                         abiByEncoding.push_back(item);
                 }
@@ -293,7 +293,7 @@ bool CAbi::loadABIFromFile(const string_q& fileName) {
     while (p && *p) {
         CFunction func;
         size_t nFields = 0;
-        p = func.parseJson(p, nFields);
+        p = func.parseJson1(p, nFields);
         if (nFields) {
             abiByName.push_back(func);
             abiByEncoding.push_back(func);

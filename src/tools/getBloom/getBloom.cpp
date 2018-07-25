@@ -72,7 +72,7 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
 
         string_q r = getRawBlock(num);
         CBloomBlock rawBlock;
-        rawBlock.parseJson(cleanUpJson((char*)r.c_str()));  // NOLINT
+        rawBlock.parseJson3(r);
         HIDE_FIELD(CBloomTrans, "hash");
 
         if (opt.asBits) {

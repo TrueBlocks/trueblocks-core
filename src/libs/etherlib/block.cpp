@@ -114,7 +114,7 @@ bool CBlock::setValueByName(const string_q& fieldName, const string_q& fieldValu
                 while (p && *p) {
                     CTransaction item;
                     size_t nFields = 0;
-                    p = item.parseJson(p, nFields);
+                    p = item.parseJson1(p, nFields);
                     if (nFields)
                         transactions.push_back(item);
                 }

@@ -254,7 +254,7 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
         while (p && *p) {
             CTransaction trans;
             size_t nFields = 0;
-            p = trans.parseJson(p, nFields);
+            p = trans.parseJson1(p, nFields);
             if (nFields) {
                 int64_t transBlock = (int64_t)trans.blockNumber;  // NOLINT
                 if (transBlock > theAccount.lastBlock) {  // add the new transaction if it's in a new block

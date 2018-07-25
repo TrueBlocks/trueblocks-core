@@ -704,7 +704,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         while (p && *p) {
             CKeyValuePair keyVal;
             size_t nFields = 0;
-            p = keyVal.parseJson(p, nFields);
+            p = keyVal.parseJson1(p, nFields);
             if (nFields) {
                 CNameValue pair = make_pair(keyVal.jsonrpc, keyVal.result);
                 specials.push_back(pair);
