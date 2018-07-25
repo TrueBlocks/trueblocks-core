@@ -46,7 +46,7 @@ void QIsOwner::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const 
 //---------------------------------------------------------------------------
 string_q nextIsownerChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QIsOwner *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QIsOwner *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -158,7 +158,7 @@ void QIsOwner::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextIsownerChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QIsOwner *iso = (const QIsOwner *)dataPtr;  // NOLINT
+    const QIsOwner *iso = reinterpret_cast<const QIsOwner *>(dataPtr);
     if (iso) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

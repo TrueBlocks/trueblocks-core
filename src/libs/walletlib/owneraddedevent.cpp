@@ -46,7 +46,7 @@ void QOwnerAddedEvent::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr
 //---------------------------------------------------------------------------
 string_q nextOwneraddedeventChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QOwnerAddedEvent *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QOwnerAddedEvent *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -158,7 +158,7 @@ void QOwnerAddedEvent::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextOwneraddedeventChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QOwnerAddedEvent *own = (const QOwnerAddedEvent *)dataPtr;  // NOLINT
+    const QOwnerAddedEvent *own = reinterpret_cast<const QOwnerAddedEvent *>(dataPtr);
     if (own) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

@@ -46,7 +46,7 @@ void CNewBlock::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const
 //---------------------------------------------------------------------------
 string_q nextNewblockChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CNewBlock *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CNewBlock *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -237,7 +237,7 @@ void CNewBlock::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextNewblockChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CNewBlock *newp = (const CNewBlock *)dataPtr;  // NOLINT
+    const CNewBlock *newp = reinterpret_cast<const CNewBlock *>(dataPtr);
     if (newp) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

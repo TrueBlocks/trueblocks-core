@@ -48,7 +48,7 @@ void CTreeNode::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const
 //---------------------------------------------------------------------------
 string_q nextTreenodeChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CTreeNode *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CTreeNode *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -161,7 +161,7 @@ void CTreeNode::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextTreenodeChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CTreeNode *tre = (const CTreeNode *)dataPtr;  // NOLINT
+    const CTreeNode *tre = reinterpret_cast<const CTreeNode *>(dataPtr);
     if (tre) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

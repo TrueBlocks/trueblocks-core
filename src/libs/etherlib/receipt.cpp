@@ -48,7 +48,7 @@ void CReceipt::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const 
 //---------------------------------------------------------------------------
 string_q nextReceiptChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CReceipt *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CReceipt *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -195,7 +195,7 @@ void CReceipt::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextReceiptChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CReceipt *rec = (const CReceipt *)dataPtr;  // NOLINT
+    const CReceipt *rec = reinterpret_cast<const CReceipt *>(dataPtr);
     if (rec) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

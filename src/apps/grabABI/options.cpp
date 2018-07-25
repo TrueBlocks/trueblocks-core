@@ -20,7 +20,7 @@ static COption params[] = {
     COption("-generate",  "generate C++ code into the current folder for all functions and events found in the ABI"),
     COption("-data",      "export the display as data"),
     COption("-encode",    "generate the encodings for the functions / events in the ABI"),
-    COption("-noconst",   "generate encodings for non-constant functions and events only (always true when generating)"), // NOLINT
+    COption("-noconst",   "generate encodings for non-constant functions and events only (always true when generating)"), // NOLINT1
     COption("-open",      "open the ABI file for editing, download if not already present"),
     COption("-raw",       "force retrieval of ABI from etherscan (ignoring cache)"),
     COption("@json",      "print the ABI to the screen as json"),

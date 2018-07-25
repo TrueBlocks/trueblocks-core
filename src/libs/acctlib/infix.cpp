@@ -48,7 +48,7 @@ void CInfix::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
 //---------------------------------------------------------------------------
 string_q nextInfixChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CInfix *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CInfix *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -184,7 +184,7 @@ void CInfix::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextInfixChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CInfix *inf = (const CInfix *)dataPtr;  // NOLINT
+    const CInfix *inf = reinterpret_cast<const CInfix *>(dataPtr);
     if (inf) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

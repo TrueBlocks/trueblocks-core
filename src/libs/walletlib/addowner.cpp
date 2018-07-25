@@ -46,7 +46,7 @@ void QAddOwner::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const
 //---------------------------------------------------------------------------
 string_q nextAddownerChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QAddOwner *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QAddOwner *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -158,7 +158,7 @@ void QAddOwner::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextAddownerChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QAddOwner *add = (const QAddOwner *)dataPtr;  // NOLINT
+    const QAddOwner *add = reinterpret_cast<const QAddOwner *>(dataPtr);
     if (add) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

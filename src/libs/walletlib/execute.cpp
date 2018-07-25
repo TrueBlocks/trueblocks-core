@@ -46,7 +46,7 @@ void QExecute::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const 
 //---------------------------------------------------------------------------
 string_q nextExecuteChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QExecute *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QExecute *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -166,7 +166,7 @@ void QExecute::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextExecuteChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QExecute *exe = (const QExecute *)dataPtr;  // NOLINT
+    const QExecute *exe = reinterpret_cast<const QExecute *>(dataPtr);
     if (exe) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

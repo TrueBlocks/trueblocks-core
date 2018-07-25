@@ -46,7 +46,7 @@ void QChangeRequirement::Format(ostream& ctx, const string_q& fmtIn, void *dataP
 //---------------------------------------------------------------------------
 string_q nextChangerequirementChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QChangeRequirement *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QChangeRequirement *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -158,7 +158,7 @@ void QChangeRequirement::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextChangerequirementChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QChangeRequirement *cha = (const QChangeRequirement *)dataPtr;  // NOLINT
+    const QChangeRequirement *cha = reinterpret_cast<const QChangeRequirement *>(dataPtr);
     if (cha) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

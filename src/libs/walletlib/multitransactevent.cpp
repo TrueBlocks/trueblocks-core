@@ -46,7 +46,7 @@ void QMultiTransactEvent::Format(ostream& ctx, const string_q& fmtIn, void *data
 //---------------------------------------------------------------------------
 string_q nextMultitransacteventChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QMultiTransactEvent *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QMultiTransactEvent *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -180,7 +180,7 @@ void QMultiTransactEvent::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextMultitransacteventChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QMultiTransactEvent *mul = (const QMultiTransactEvent *)dataPtr;  // NOLINT
+    const QMultiTransactEvent *mul = reinterpret_cast<const QMultiTransactEvent *>(dataPtr);
     if (mul) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

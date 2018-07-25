@@ -46,7 +46,7 @@ void QSingleTransactEvent::Format(ostream& ctx, const string_q& fmtIn, void *dat
 //---------------------------------------------------------------------------
 string_q nextSingletransacteventChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QSingleTransactEvent *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QSingleTransactEvent *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -176,7 +176,7 @@ void QSingleTransactEvent::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextSingletransacteventChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QSingleTransactEvent *sin = (const QSingleTransactEvent *)dataPtr;  // NOLINT
+    const QSingleTransactEvent *sin = reinterpret_cast<const QSingleTransactEvent *>(dataPtr);
     if (sin) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

@@ -46,7 +46,7 @@ void QTransfer::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const
 //---------------------------------------------------------------------------
 string_q nextTransferChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QTransfer *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QTransfer *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -162,7 +162,7 @@ void QTransfer::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextTransferChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QTransfer *tra = (const QTransfer *)dataPtr;  // NOLINT
+    const QTransfer *tra = reinterpret_cast<const QTransfer *>(dataPtr);
     if (tra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

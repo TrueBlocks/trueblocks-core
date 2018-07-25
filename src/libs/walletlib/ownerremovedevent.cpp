@@ -46,7 +46,7 @@ void QOwnerRemovedEvent::Format(ostream& ctx, const string_q& fmtIn, void *dataP
 //---------------------------------------------------------------------------
 string_q nextOwnerremovedeventChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QOwnerRemovedEvent *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QOwnerRemovedEvent *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -158,7 +158,7 @@ void QOwnerRemovedEvent::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextOwnerremovedeventChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QOwnerRemovedEvent *own = (const QOwnerRemovedEvent *)dataPtr;  // NOLINT
+    const QOwnerRemovedEvent *own = reinterpret_cast<const QOwnerRemovedEvent *>(dataPtr);
     if (own) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

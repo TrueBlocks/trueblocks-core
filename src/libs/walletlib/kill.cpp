@@ -46,7 +46,7 @@ void QKill::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
 //---------------------------------------------------------------------------
 string_q nextKillChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QKill *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QKill *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -158,7 +158,7 @@ void QKill::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextKillChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QKill *kil = (const QKill *)dataPtr;  // NOLINT
+    const QKill *kil = reinterpret_cast<const QKill *>(dataPtr);
     if (kil) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE

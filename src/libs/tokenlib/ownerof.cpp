@@ -46,7 +46,7 @@ void QOwnerOf::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const 
 //---------------------------------------------------------------------------
 string_q nextOwnerofChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QOwnerOf *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QOwnerOf *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -158,7 +158,7 @@ void QOwnerOf::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextOwnerofChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QOwnerOf *own = (const QOwnerOf *)dataPtr;  // NOLINT
+    const QOwnerOf *own = reinterpret_cast<const QOwnerOf *>(dataPtr);
     if (own) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
