@@ -72,7 +72,7 @@ bool CInfix::setValueByName(const string_q& fieldName, const string_q& fieldValu
                 if (next) {
                     char *p = cleanUpJson((char *)fieldValue.c_str());  // NOLINT
                     size_t nFields = 0;
-                    next->parseJson(p, nFields);
+                    next->parseJson1(p, nFields);
                     return true;
                 }
                 return false;

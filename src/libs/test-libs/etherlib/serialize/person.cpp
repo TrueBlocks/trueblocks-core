@@ -68,10 +68,8 @@ bool CPerson::setValueByName(const string_q& fieldName, const string_q& fieldVal
                 clear();
                 next = new CPerson;
                 if (next) {
-                    char *p = cleanUpJson((char *)fieldValue.c_str());  // NOLINT
-                    size_t nFields = 0;
-                    next->parseJson(p, nFields);
-                    return true;
+                    string_q str = fieldValue;
+                    return next->parseJson3(str);
                 }
                 return false;
             }

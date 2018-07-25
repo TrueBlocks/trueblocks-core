@@ -82,7 +82,7 @@ bool CTransaction::setValueByName(const string_q& fieldName, const string_q& fie
     } else if ( fieldName % "receipt" ) {
         char *p = (char *)fieldValue.c_str();  // NOLINT
         size_t nFields = 0;
-        receipt.parseJson(p, nFields);
+        receipt.parseJson1(p, nFields);
         return true;
     }
     if (pBlock)

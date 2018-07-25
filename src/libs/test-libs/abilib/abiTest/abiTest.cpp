@@ -102,17 +102,12 @@ bool sortByFunctionName(const CFunction& f1, const CFunction& f2) { return f1.na
 bool loadABIFromString(CJunk& abi, const string_q& in) {
 
     string_q contents = in;
-    ASSERT(!contents.empty());
-    char *p = cleanUpJson((char *)contents.c_str());  // NOLINT
-    while (p && *p) {
-        CFunction func;
-        size_t nFields = 0;
-        p = func.parseJson(p, nFields);
-        if (nFields) {
-            abi.array1.push_back(func);
-        }
+    CFunction func;
+    while (func.parseJson3(contents)) {
+        abi.array1.push_back(func);
+        func = CFunction();  // reset
     }
-    return true;  // abiByName.size();
+    return true;
 }
 
 //--------------------------------------------------------------

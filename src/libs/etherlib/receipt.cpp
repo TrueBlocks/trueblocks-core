@@ -83,7 +83,7 @@ bool CReceipt::setValueByName(const string_q& fieldName, const string_q& fieldVa
                 while (p && *p) {
                     CLogEntry item;
                     size_t nFields = 0;
-                    p = item.parseJson(p, nFields);
+                    p = item.parseJson1(p, nFields);
                     if (nFields)
                         logs.push_back(item);
                 }
