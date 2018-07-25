@@ -60,9 +60,9 @@ bool CRPCResult::setValueByName(const string_q& fieldName, const string_q& field
     // EXISTING_CODE
     // Note: This class doubles as a name/value pair for json parsing
     if (fieldName == "name")
-        *(string_q*)&fieldName = "jsonrpc";
+        *(string_q*)&fieldName = "jsonrpc";  // NOLINT
     else if (fieldName == "value")
-        *(string_q*)&fieldName = "result";
+        *(string_q*)&fieldName = "result";  // NOLINT
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {

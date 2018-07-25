@@ -16,7 +16,7 @@
 
 void reportByToken(COptions& options);
 void reportByAccount(COptions& options);
-extern biguint_t getTokenInfo(const string_q& value, const address_t& token, const address_t& holder, blknum_t blockNum);
+extern biguint_t getTokenInfo(const string_q& v, const address_t& t, const address_t& h, blknum_t b);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 

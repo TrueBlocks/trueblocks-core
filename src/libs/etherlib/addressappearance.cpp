@@ -48,8 +48,10 @@ bool isPotentialAddr(biguint_t test, address_t& addrOut) {
 
     addrOut = "";
 
-    static const biguint_t small = str_2_Wei(  "0x00000000000000ffffffffffffffffffffffffff");  // smallest address we find
-    static const biguint_t large = str_2_Wei("0x010000000000000000000000000000000000000000");  // largest address we find
+    // smallest address we find
+    static const biguint_t small = str_2_Wei(  "0x00000000000000ffffffffffffffffffffffffff");
+    // largest address we find
+    static const biguint_t large = str_2_Wei("0x010000000000000000000000000000000000000000");
     if (test <= small || test >= large)
         return false;
 

@@ -68,8 +68,8 @@ namespace qblocks {
     string_q wei_2_Ether(biguint_t in) {
         string_q ret = wei_2_Ether(bnu_2_Str(in));
         if (contains(ret, "."))
-            ret = trimTrailing(ret,'0');
-        return trimTrailing(ret,'.');
+            ret = trimTrailing(ret, '0');
+        return trimTrailing(ret, '.');
     }
 
     //--------------------------------------------------------------------------------
