@@ -463,6 +463,7 @@ int main(int argc, const char *argv[]) {
                 makeTheCode("options.cpp",    options.primaryAddr);
                 makeTheCode("options.h",      options.primaryAddr);
                 makeTheCode("main.cpp",       options.primaryAddr);
+                makeTheCode("main.h",         options.primaryAddr);
                 makeTheCode("visitor.cpp",    options.primaryAddr);
                 makeTheCode("visitor.h",      options.primaryAddr);
                 makeTheCode("accounting.cpp", options.primaryAddr);
