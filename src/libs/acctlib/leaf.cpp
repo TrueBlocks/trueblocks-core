@@ -259,17 +259,7 @@ const string_q CLeaf::getStringAt(const string_q& name, size_t i) const {
 // EXISTING_CODE
     //-----------------------------------------------------------------------------
     CLeaf::CLeaf(const string_q& _key, const string_q& _value) {
-#ifdef OLD_CODE_Y
-        string_q last = _value;
-        string_q first = nextTokenClear(last, '|');
-        if (!first.empty()) {
-            blocks.push_back(str_2_Uint(first));
-            if (!last.empty())
-                blocks.push_back(str_2_Uint(last));
-        }
-#else
         counter = 1;
-#endif
         prefixS = _key;
         if (verbose == 2) cerr << "\t\tCreating leaf " << _key << " at " << _value << endl;
     }
@@ -280,15 +270,7 @@ const string_q CLeaf::getStringAt(const string_q& name, size_t i) const {
             return "";
 
         string_q ret;
-#ifdef OLD_CODE_Y
-        for (int i = 0 ; i < blocks.size() ; i++) {
-            ret += int_2_Str(blocks[i]);
-            if (i < blocks.size()-1)
-                ret += ",";
-        }
-#else
         ret = uint_2_Str(counter);
-#endif
         return ret;
     }
 
@@ -319,11 +301,7 @@ const string_q CLeaf::getStringAt(const string_q& name, size_t i) const {
                 if (verbose) cerr << "\t\tReplacing leaf contents " << _key << " at " << _value
 //                    << " (" << first << ")"
                     << "\n";
-#ifdef OLD_CODE_Y
-                blocks.push_back(str_2_Uint(_value));
-#else
                 counter++;
-#endif
             }
             return this;
 
@@ -334,15 +312,7 @@ const string_q CLeaf::getStringAt(const string_q& name, size_t i) const {
             if (!contains(_key) || blocks.size() == 0) {
                 curVal = "";
             } else {
-#ifdef OLD_CODE_Y
-                for (int i = 0 ; i < blocks.size() ; i++) {
-                    curVal += int_2_Str(blocks[i]);
-                    if (i < blocks.size()-1)
-                        curVal += ",";
-                }
-#else
                 curVal = uint_2_Str(counter);
-#endif
             }
             CTreeNode *n = CTreeNode::newBranch(_key, _value, prefixS, curVal);
             delete this;
