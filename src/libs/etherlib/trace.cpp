@@ -59,16 +59,12 @@ string_q nextTraceChunk(const string_q& fieldIn, const void *dataPtr) {
 bool CTrace::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     if (fieldName % "action") {
-        char *p = (char *)fieldValue.c_str();  // NOLINT
-        size_t nFields = 0;
-        action.parseJson1(p, nFields);
-        return true;
+        string_q str = fieldValue;
+        return action.parseJson3(str);
 
     } else if (fieldName % "result") {
-        char *p = (char *)fieldValue.c_str();  // NOLINT
-        size_t nFields = 0;
-        result.parseJson1(p, nFields);
-        return true;
+        string_q str = fieldValue;
+        return result.parseJson3(str);
     }
     // EXISTING_CODE
 

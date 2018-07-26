@@ -79,13 +79,11 @@ bool CFunction::setValueByName(const string_q& fieldName, const string_q& fieldV
             break;
         case 'i':
             if ( fieldName % "inputs" ) {
-                char *p = (char *)fieldValue.c_str();  // NOLINT
-                while (p && *p) {
-                    CParameter item;
-                    size_t nFields = 0;
-                    p = item.parseJson1(p, nFields);
-                    if (nFields)
-                        inputs.push_back(item);
+                string_q str = fieldValue;
+                CParameter item;
+                while (item.parseJson3(str)) {
+                    inputs.push_back(item);
+                    item = CParameter();  // reset
                 }
                 return true;
             }
@@ -95,13 +93,11 @@ bool CFunction::setValueByName(const string_q& fieldName, const string_q& fieldV
             break;
         case 'o':
             if ( fieldName % "outputs" ) {
-                char *p = (char *)fieldValue.c_str();  // NOLINT
-                while (p && *p) {
-                    CParameter item;
-                    size_t nFields = 0;
-                    p = item.parseJson1(p, nFields);
-                    if (nFields)
-                        outputs.push_back(item);
+                string_q str = fieldValue;
+                CParameter item;
+                while (item.parseJson3(str)) {
+                    outputs.push_back(item);
+                    item = CParameter();  // reset
                 }
                 return true;
             }

@@ -700,15 +700,11 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
         specials.clear();
         string_q specialsStr = toml->getConfigStr("specials", "list", "");
-        char *p = cleanUpJson((char *)specialsStr.c_str());  // NOLINT
-        while (p && *p) {
-            CKeyValuePair keyVal;
-            size_t nFields = 0;
-            p = keyVal.parseJson1(p, nFields);
-            if (nFields) {
-                CNameValue pair = make_pair(keyVal.jsonrpc, keyVal.result);
-                specials.push_back(pair);
-            }
+        CKeyValuePair keyVal;
+        while (keyVal.parseJson3(specialsStr)) {
+            CNameValue pair = make_pair(keyVal.jsonrpc, keyVal.result);
+            specials.push_back(pair);
+            keyVal = CKeyValuePair();  // reset
         }
         return;
     }

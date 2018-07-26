@@ -250,22 +250,18 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
         theAccount.transactions.reserve(nRead);
 
         int64_t lastBlock = 0;  // DO NOT CHANGE! MAKES A BUG IF YOU MAKE IT UNSIGNED NOLINT
-        char *p = cleanUpJson((char *)(contents.c_str()));  // NOLINT
-        while (p && *p) {
-            CTransaction trans;
-            size_t nFields = 0;
-            p = trans.parseJson1(p, nFields);
-            if (nFields) {
-                int64_t transBlock = (int64_t)trans.blockNumber;  // NOLINT
-                if (transBlock > theAccount.lastBlock) {  // add the new transaction if it's in a new block
-                    theAccount.transactions.push_back(trans);
-                    lastBlock = transBlock;
-                    if (!(++nNewBlocks % REP_FREQ) && !isTestMode()) {
-                        cerr << "\tFound new transaction at block " << transBlock << ". Importing...\r";
-                        cerr.flush();
-                    }
+        CTransaction trans;
+        while (trans.parseJson3(contents)) {
+            int64_t transBlock = (int64_t)trans.blockNumber;  // NOLINT
+            if (transBlock > theAccount.lastBlock) {  // add the new transaction if it's in a new block
+                theAccount.transactions.push_back(trans);
+                lastBlock = transBlock;
+                if (!(++nNewBlocks % REP_FREQ) && !isTestMode()) {
+                    cerr << "\tFound new transaction at block " << transBlock << ". Importing...\r";
+                    cerr.flush();
                 }
             }
+            trans = CTransaction();  // reset
         }
         if (!isTestMode() && nNewBlocks) {
             cerr << "\tFound new transaction at block " << lastBlock << ". Importing...\n";
