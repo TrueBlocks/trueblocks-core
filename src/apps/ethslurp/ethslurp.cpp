@@ -252,7 +252,7 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
         int64_t lastBlock = 0;  // DO NOT CHANGE! MAKES A BUG IF YOU MAKE IT UNSIGNED
         CTransaction trans;
         while (trans.parseJson3(contents)) {
-            int64_t transBlock = reinterpret_cast<int64_t>(trans.blockNumber);
+            int64_t transBlock = static_cast<int64_t>(trans.blockNumber);
             if (transBlock > theAccount.lastBlock) {  // add the new transaction if it's in a new block
                 theAccount.transactions.push_back(trans);
                 lastBlock = transBlock;
@@ -355,7 +355,7 @@ extern bool isFunction(const CTransaction *trans, const string_q& func);
         }
 
         theAccount.nVisible += trans->m_showing;
-        int64_t nFiltered = reinterpret_cast<int64_t>(theAccount.nVisible + 1);
+        int64_t nFiltered = static_cast<int64_t>(theAccount.nVisible + 1);
         if (!(nFiltered % REP_INFREQ) && !isTestMode()) {
             cerr << "\t" << "Filtering..." << nFiltered << " records passed.\r";
             cerr.flush();
