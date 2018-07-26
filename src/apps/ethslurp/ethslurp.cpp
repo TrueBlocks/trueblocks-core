@@ -249,10 +249,10 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
         // pre allocate the array (probably wrong input here--reserve takes max needed size, not addition size needed)
         theAccount.transactions.reserve(nRead);
 
-        int64_t lastBlock = 0;  // DO NOT CHANGE! MAKES A BUG IF YOU MAKE IT UNSIGNED NOLINT
+        int64_t lastBlock = 0;  // DO NOT CHANGE! MAKES A BUG IF YOU MAKE IT UNSIGNED
         CTransaction trans;
         while (trans.parseJson3(contents)) {
-            int64_t transBlock = (int64_t)trans.blockNumber;  // NOLINT
+            int64_t transBlock = reinterpret_cast<int64_t>(trans.blockNumber);
             if (transBlock > theAccount.lastBlock) {  // add the new transaction if it's in a new block
                 theAccount.transactions.push_back(trans);
                 lastBlock = transBlock;
@@ -355,7 +355,7 @@ extern bool isFunction(const CTransaction *trans, const string_q& func);
         }
 
         theAccount.nVisible += trans->m_showing;
-        int64_t nFiltered = int64_t(theAccount.nVisible + 1);  // NOLINT
+        int64_t nFiltered = reinterpret_cast<int64_t>(theAccount.nVisible + 1);
         if (!(nFiltered % REP_INFREQ) && !isTestMode()) {
             cerr << "\t" << "Filtering..." << nFiltered << " records passed.\r";
             cerr.flush();
@@ -447,7 +447,7 @@ const char *ERR_NO_DISPLAY_STR =
 
 //---------------------------------------------------------------------------------------------------
 bool buildFieldList(const CFieldData& fld, void *data) {
-    string_q *s = (string_q*)data;  // NOLINT
+    string_q *s = reinterpret_cast<string_q *>(data);
     *s += (fld.getName() + "|");
     return true;
 }
@@ -486,7 +486,8 @@ void CSlurperApp::buildDisplayStrings(COptions& options) {
             cerr << "Field '" << fieldName << "' not found in fieldList '" << origList << "'. Quitting...\n";
             exit(0);
         }
-        if (field->isHidden() && force) ((CFieldData*)field)->setHidden(false);  // NOLINT
+        if (field->isHidden() && force)
+            ((CFieldData*)field)->setHidden(false);  // NOLINT
         if (!field->isHidden()) {
             string_q resolved = fieldName;
             if (options.exportFormat != "json")

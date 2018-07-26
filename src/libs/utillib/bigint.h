@@ -80,7 +80,11 @@ namespace qblocks {
     };
 
     //------------------------------------------------------------
-    inline void bigint_t::operator++(int) { operator++(); }  // NOLINT
+    inline void bigint_t::operator++(int) {
+        operator++();
+    }
+
+    //------------------------------------------------------------
     inline void bigint_t::operator++(void) {
         if (sign == -1) {
             mag--;
@@ -93,7 +97,11 @@ namespace qblocks {
     }
 
     //------------------------------------------------------------
-    inline void bigint_t::operator--(int) { operator--(); }  // NOLINT
+    inline void bigint_t::operator--(int) {
+        operator--();
+    }
+
+    //------------------------------------------------------------
     inline void bigint_t::operator--(void) {
         if (sign == 1) {
             mag--;
