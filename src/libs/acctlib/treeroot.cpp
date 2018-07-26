@@ -104,7 +104,7 @@ bool CTreeRoot::Serialize(CArchive& archive) {
     if (has_root) {
         string_q className;
         archive >> className;
-        root = (CTreeNode *)createObjectOfType(className);  // NOLINT
+        root = reinterpret_cast<CTreeNode *>(createObjectOfType(className));
         if (!root)
             return false;
         root->Serialize(archive);

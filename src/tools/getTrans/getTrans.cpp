@@ -42,7 +42,7 @@ int main(int argc, const char *argv[]) {
 
 //--------------------------------------------------------------
 bool visitTransaction(CTransaction& trans, void *data) {
-    COptions *opt = (COptions*)data;  // NOLINT
+    COptions *opt = reinterpret_cast<COptions *>(data);
     opt->nVisited++;
 
     bool badHash = !isHash(trans.hash);

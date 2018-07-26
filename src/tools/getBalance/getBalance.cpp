@@ -79,7 +79,7 @@ int main(int argc, const char *argv[]) {
 //--------------------------------------------------------------
 bool visitBlock(uint64_t blockNum, void *data) {
 
-    COptions *options = (COptions*)data;  // NOLINT
+    COptions *options = reinterpret_cast<COptions *>(data);
     if (blockNum < options->state.earliestBlock)
         options->state.earliestBlock = blockNum;
 

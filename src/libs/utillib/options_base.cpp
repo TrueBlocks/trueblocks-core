@@ -649,8 +649,8 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
     //--------------------------------------------------------------------------------
     int sortByBlockNum(const void *v1, const void *v2) {
-        CNameValue *b1 = (CNameValue *)v1;  // NOLINT
-        CNameValue *b2 = (CNameValue *)v2;  // NOLINT
+        const CNameValue *b1 = reinterpret_cast<const CNameValue *>(v1);
+        const CNameValue *b2 = reinterpret_cast<const CNameValue *>(v2);
         if (b1->first == "latest")
             return 1;
         if (b2->first == "latest")

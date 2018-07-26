@@ -108,7 +108,7 @@ bool CInfix::Serialize(CArchive& archive) {
     if (has_next) {
         string_q className;
         archive >> className;
-        next = (CTreeNode *)createObjectOfType(className);  // NOLINT
+        next = reinterpret_cast<CTreeNode *>(createObjectOfType(className));
         if (!next)
             return false;
         next->Serialize(archive);

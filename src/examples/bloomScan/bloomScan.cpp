@@ -46,7 +46,7 @@ extern bool displayBloom(blknum_t bn, const bloom_t& bloom, void *data);
                     bloom |= blooms[i];
                 }
             }
-            COptions *options = (COptions*)data;  // NOLINT
+            COptions *options = reinterpret_cast<COptions *>(data);
             if (options->asData)
                 cout << bnFromPath(path) << "," << fileSize(path) << "," << bitsTwiddled(bloom) << "\n";
             else
@@ -59,7 +59,7 @@ extern bool displayBloom(blknum_t bn, const bloom_t& bloom, void *data);
 //-------------------------------------------------------------
 bool displayBloom(blknum_t bn, const bloom_t& bloom, void *data) {
     string_q s = bloom_2_Bytes(bloom);
-    COptions *opt = (COptions*)data;  // NOLINT
+    COptions *opt = reinterpret_cast<COptions *>(data);
     if (opt->mode == "short") {
         size_t len = s.length();
         replace(s,    "0x",     "");
