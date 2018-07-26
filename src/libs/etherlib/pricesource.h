@@ -15,8 +15,8 @@
 
 namespace qblocks {
 
-    typedef char* (*PRICEPARSEFUNC)(CPriceQuote& quote, char *p);
-    extern char *parsePoloniex(CPriceQuote& quote, char *p);
+    typedef bool (*PRICEPARSEFUNC)(CPriceQuote& quote, string_q& str);
+    extern bool parsePoloniex(CPriceQuote& quote, string_q& str);
     extern const char* STR_PRICE_URL;
 
     class CPriceSource {

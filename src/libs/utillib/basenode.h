@@ -21,6 +21,9 @@ namespace qblocks {
 
     //----------------------------------------------------------------------------
     class CBaseNode {
+    private:
+        virtual char *parseJson1(char *s, size_t& nFields);
+
     public:
         uint64_t m_deleted;
         uint64_t m_schema;
@@ -34,7 +37,6 @@ namespace qblocks {
         void setDeleted(bool val);
 
         virtual bool isKindOf(const CRuntimeClass* pClass) const;
-        virtual char *parseJson1(char *s, size_t& nFields);
         virtual bool  parseJson3(string_q& str);
         virtual char *parseCSV(char *s, size_t& nFields, const string_q *fields);
         virtual char *parseText(char *s, size_t& nFields, const string_q *fields);

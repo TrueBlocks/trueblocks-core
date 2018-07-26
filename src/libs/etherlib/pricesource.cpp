@@ -19,9 +19,8 @@
 namespace qblocks {
 
     //---------------------------------------------------------------------------
-    char *parsePoloniex(CPriceQuote& quote, char *p) {
-        size_t nFields = 0;
-        return quote.parseJson1(p, nFields);
+    bool parsePoloniex(CPriceQuote& quote, string_q& str) {
+        return quote.parseJson3(str);
     }
 
     //---------------------------------------------------------------------------
@@ -138,12 +137,8 @@ namespace qblocks {
                 quotes.reserve(nRecords+10);
 
                 // Parse the response and populate the array
-                char *p = cleanUpJson((char *)response.c_str());  // NOLINT
-                while (p && *p) {
-                    CPriceQuote quote;
-                    quote.timestamp = date_2_Ts(time_q(2015, 1, 1, 0, 0, 0));  // Ensures we get a good parse
-                    p = (*source.func)(quote, p);
-
+                CPriceQuote quote;
+                while ((*source.func)(quote, response)) {
                     bool addToArray = (timestamp_t)quote.timestamp > date_2_Ts(lastRead);
                     if (verbose > 1) {
                         cerr << "addToArray: " << addToArray
@@ -166,6 +161,7 @@ namespace qblocks {
                             lastRead = ts_2_Date((timestamp_t)quote.timestamp);
                         }
                     }
+                    quote = CPriceQuote();  // reset
                 }
             }
 

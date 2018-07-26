@@ -79,11 +79,10 @@ bool CTransaction::setValueByName(const string_q& fieldName, const string_q& fie
     } else if ( fieldName % "gasUsed" ) {
         receipt.gasUsed = str_2_Uint(fieldValue);
         return true;
+
     } else if ( fieldName % "receipt" ) {
-        char *p = (char *)fieldValue.c_str();  // NOLINT
-        size_t nFields = 0;
-        receipt.parseJson1(p, nFields);
-        return true;
+        string_q str = fieldValue;
+        return receipt.parseJson3(str);
     }
     if (pBlock)
         if (((CBlock*)pBlock)->setValueByName(fieldName, fieldValue))  // NOLINT

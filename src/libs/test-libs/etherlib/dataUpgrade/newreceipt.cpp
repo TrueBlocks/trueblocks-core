@@ -71,13 +71,11 @@ bool CNewReceipt::setValueByName(const string_q& fieldName, const string_q& fiel
             break;
         case 'l':
             if ( fieldName % "logs" ) {
-                char *p = (char *)fieldValue.c_str();  // NOLINT
-                while (p && *p) {
-                    CLogEntry item;
-                    size_t nFields = 0;
-                    p = item.parseJson1(p, nFields);
-                    if (nFields)
-                        logs.push_back(item);
+                string_q str = fieldValue;
+                CLogEntry item;
+                while (item.parseJson3(str)) {
+                    logs.push_back(item);
+                    item = CLogEntry();  // reset
                 }
                 return true;
             }

@@ -82,19 +82,16 @@ bool CBloomBlock::setValueByName(const string_q& fieldName, const string_q& fiel
     if (fieldName == "logsBloom"   ) { logsBloom    = fieldValue; return true; }
     if (fieldName == "number"      ) { number       = str_2_Uint(fieldValue); return true; }
     if (fieldName == "transactions") {
-        char *p = cleanUpJson((char*)fieldValue.c_str());  // NOLINT
-        while (p && *p) {
-            CBloomTrans item;
-            size_t nFields = 0;
-            p = item.parseJson1(p, nFields);
-            if (nFields) {
-                string_q result;
-                queryRawReceipt(result, item.hash);
-                CRPCResult generic;
-                generic.parseJson3(result);
-                item.receipt.parseJson3(generic.result);
-                transactions.push_back(item);
-            }
+        string_q str = fieldValue;
+        CBloomTrans item;
+        while (item.parseJson3(str)) {
+            string_q result;
+            queryRawReceipt(result, item.hash);
+            CRPCResult generic;
+            generic.parseJson3(result);
+            item.receipt.parseJson3(generic.result);
+            transactions.push_back(item);
+            item = CBloomTrans();  // reset
         }
         return true;
     }
