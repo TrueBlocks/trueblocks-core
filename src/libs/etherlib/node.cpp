@@ -456,10 +456,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         if (!endsWith(contents, '\n')) {
             stringToAsciiFile(fileName, contents + "\n");
         }
-        char *p = cleanUpJson((char *)contents.c_str());  // NOLINT
-        size_t nFields = 0;
-        node.parseJson1(p, nFields);
-        return nFields;
+        return node.parseJson3(contents);
     }
 
     //-----------------------------------------------------------------------

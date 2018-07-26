@@ -85,13 +85,11 @@ bool CAccount::setValueByName(const string_q& fieldName, const string_q& fieldVa
             break;
         case 't':
             if ( fieldName % "transactions" ) {
-                char *p = (char *)fieldValue.c_str();  // NOLINT
-                while (p && *p) {
-                    CTransaction item;
-                    size_t nFields = 0;
-                    p = item.parseJson1(p, nFields);
-                    if (nFields)
-                        transactions.push_back(item);
+                string_q str = fieldValue;
+                CTransaction item;
+                while (item.parseJson3(str)) {
+                    transactions.push_back(item);
+                    item = CTransaction();  // reset
                 }
                 return true;
             }

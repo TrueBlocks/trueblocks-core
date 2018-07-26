@@ -691,13 +691,11 @@ const char* STR_CLASSFILE =
 //------------------------------------------------------------------------------------------------------------
 const char* STR_CASE_SET_CODE_ARRAY =
 " {\n"
-"\t\t\t\tchar *p = (char *)fieldValue.c_str();  // NOLINT\n"
-"\t\t\t\twhile (p && *p) {\n"
-"\t\t\t\t\t[{TYPE}] item;\n"
-"\t\t\t\t\tsize_t nFields = 0;\n"
-"\t\t\t\t\tp = item.parseJson1(p, nFields);\n"
-"\t\t\t\t\tif (nFields)\n"
-"\t\t\t\t\t\t[{NAME}].push_back(item);\n"
+"\t\t\t\t[{TYPE}] item;\n"
+"\t\t\t\tstring_q str = fieldValue;\n"
+"\t\t\t\twhile (item.parseJson3(str)) {\n"
+"\t\t\t\t\t[{NAME}].push_back(item);\n"
+"\t\t\t\t\titem = [{TYPE}]();  /""/ reset\n"
 "\t\t\t\t}\n"
 "\t\t\t\treturn true;\n"
 "\t\t\t}";
@@ -782,10 +780,8 @@ const char* PTR_SET_CASE =
 "\t\t\t\tclear();\n"
 "\t\t\t\t[{NAME}] = new [{TYPE}];\n"
 "\t\t\t\tif ([{NAME}]) {\n"
-"\t\t\t\t\tchar *p = cleanUpJson((char *)fieldValue.c_str());  // NOLINT\n"
-"\t\t\t\t\tsize_t nFields = 0;\n"
-"\t\t\t\t\t[{NAME}]->parseJson1(p, nFields);\n"
-"\t\t\t\t\treturn true;\n"
+"\t\t\t\t\tstring_q str = fieldValue;\n"
+"\t\t\t\t\treturn [{NAME}]->parseJson3(str);\n"
 "\t\t\t\t}\n"
 "\t\t\t\treturn false;\n"
 "\t\t\t}";

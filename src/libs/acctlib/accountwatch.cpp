@@ -60,10 +60,8 @@ string_q nextAccountwatchChunk(const string_q& fieldIn, const void *dataPtr) {
 bool CAccountWatch::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     if (fieldName % "qbis") {
-        char *p = (char *)fieldValue.c_str();  // NOLINT
-        size_t nFields = 0;
-        qbis.parseJson1(p, nFields);
-        return true;
+        string_q str = fieldValue;
+        return qbis.parseJson3(str);
     }
     if (fieldName % "balance") {
         qbis.endBal = qbis.begBal = str_2_Wei(fieldValue);
@@ -77,13 +75,11 @@ bool CAccountWatch::setValueByName(const string_q& fieldName, const string_q& fi
             break;
         case 'b':
             if ( fieldName % "balanceHistory" ) {
-                char *p = (char *)fieldValue.c_str();  // NOLINT
-                while (p && *p) {
-                    CBalanceHistory item;
-                    size_t nFields = 0;
-                    p = item.parseJson1(p, nFields);
-                    if (nFields)
-                        balanceHistory.push_back(item);
+                string_q str = fieldValue;
+                CBalanceHistory item;
+                while (item.parseJson3(str)) {
+                    balanceHistory.push_back(item);
+                    item = CBalanceHistory();  // reset
                 }
                 return true;
             }
@@ -442,17 +438,14 @@ biguint_t getNodeBal(CBalanceHistoryArray& history, const address_t& addr, blknu
 void loadWatchList(const CToml& toml, CAccountWatchArray& watches, const string_q& key) {
 
     string_q watchStr = toml.getConfigStr("watches", key, "");
-    char *p = cleanUpJson((char *)watchStr.c_str());  // NOLINT
-    while (p && *p) {
-        CAccountWatch watch;
-        size_t nFields = 0;
-        p = watch.parseJson1(p, nFields);
-        if (nFields) {
-            // cleanup and add to list of watches
-            watch.address = str_2_Addr(toLower(watch.address));
-            watch.color   = convertColor(watch.color);
-            watches.push_back(watch);
-        }
+
+    CAccountWatch watch;
+    while (watch.parseJson3(watchStr)) {
+        // cleanup and add to list of watches
+        watch.address = str_2_Addr(toLower(watch.address));
+        watch.color   = convertColor(watch.color);
+        watches.push_back(watch);
+        watch = CAccountWatch();  // reset
     }
     return;
 }

@@ -142,14 +142,12 @@ string_q acquireABI(CFunctionArray& functions, const address_t& addr, const COpt
     }
 
     ret = substitute(substitute(substitute(results, "\n", ""), "\t", ""), " ", "");
-    char *s = (char *)(results.c_str()); // NOLINT
-    char *p = cleanUpJson(s);
-    while (p && *p) {
-        CFunction func;
-        size_t nFields = 0;
-        p = func.parseJson1(p, nFields);
+
+    CFunction func;
+    while (func.parseJson3(results)) {
         func.isBuiltin = builtIn;
         addIfUnique(addr, functions, func, opt.decNames);
+        func = CFunction();  // reset
     }
 
     return ret;

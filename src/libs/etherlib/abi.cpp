@@ -64,24 +64,20 @@ bool CAbi::setValueByName(const string_q& fieldName, const string_q& fieldValue)
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "abiByName" ) {
-                char *p = (char *)fieldValue.c_str();  // NOLINT
-                while (p && *p) {
-                    CFunction item;
-                    size_t nFields = 0;
-                    p = item.parseJson1(p, nFields);
-                    if (nFields)
-                        abiByName.push_back(item);
+                string_q str = fieldValue;
+                CFunction item;
+                while (item.parseJson3(str)) {
+                    abiByName.push_back(item);
+                    item = CFunction();  // reset
                 }
                 return true;
             }
             if ( fieldName % "abiByEncoding" ) {
-                char *p = (char *)fieldValue.c_str();  // NOLINT
-                while (p && *p) {
-                    CFunction item;
-                    size_t nFields = 0;
-                    p = item.parseJson1(p, nFields);
-                    if (nFields)
-                        abiByEncoding.push_back(item);
+                string_q str = fieldValue;
+                CFunction item;
+                while (item.parseJson3(str)) {
+                    abiByEncoding.push_back(item);
+                    item = CFunction();  // reset
                 }
                 return true;
             }
@@ -288,16 +284,11 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
 bool CAbi::loadABIFromFile(const string_q& fileName) {
 
     string_q contents = asciiFileToString(fileName);
-    ASSERT(!contents.empty());
-    char *p = cleanUpJson((char *)contents.c_str());  // NOLINT
-    while (p && *p) {
-        CFunction func;
-        size_t nFields = 0;
-        p = func.parseJson1(p, nFields);
-        if (nFields) {
-            abiByName.push_back(func);
-            abiByEncoding.push_back(func);
-        }
+    CFunction func;
+    while (func.parseJson3(contents)) {
+        abiByName.push_back(func);
+        abiByEncoding.push_back(func);
+        func = CFunction();  // reset
     }
     sort(abiByName.begin(), abiByName.end(), sortByFuncName);
     sort(abiByEncoding.begin(), abiByEncoding.end());  // encoding is default sort

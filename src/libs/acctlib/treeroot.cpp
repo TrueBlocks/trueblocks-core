@@ -66,10 +66,8 @@ bool CTreeRoot::setValueByName(const string_q& fieldName, const string_q& fieldV
                 clear();
                 root = new CTreeNode;
                 if (root) {
-                    char *p = cleanUpJson((char *)fieldValue.c_str());  // NOLINT
-                    size_t nFields = 0;
-                    root->parseJson1(p, nFields);
-                    return true;
+                    string_q str = fieldValue;
+                    return root->parseJson3(str);
                 }
                 return false;
             }
