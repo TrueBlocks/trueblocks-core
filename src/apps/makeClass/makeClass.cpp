@@ -329,7 +329,7 @@ string_q ptrReadFmt =
 "    if (has_[{NAME}]) {\n"
 "        string_q className;\n"
 "        archive >> className;\n"
-"        [{NAME}] = ([{TYPE}] *)createObjectOfType(className);  // NOLINT\n"
+"        [{NAME}] = reinterpret_cast<[{TYPE}] *>(createObjectOfType(className));\n"
 "        if (![{NAME}])\n"
 "            return false;\n"
 "        [{NAME}]->Serialize(archive);\n"
@@ -397,7 +397,7 @@ string_q ptrWriteFmt =
     replaceAll(headSource, "[{SCOPE}]",          scope);
     replaceAll(headSource, "[{SORT_COMMENT}]",   (sortStr.length() ? STR_SORT_COMMENT_1 : STR_SORT_COMMENT_2));
     replaceAll(headSource, "[{SORT_CODE}]",      (sortStr.length() ? sortStr : "true"));
-    replaceAll(headSource, "[{EQUAL_COMMENT}]",  (eqStr.length() ? STR_EQUAL_COMMENT_1 : STR_EQUAL_COMMENT_2));  // NOLINT
+    replaceAll(headSource, "[{EQUAL_COMMENT}]",  (eqStr.length() ? STR_EQUAL_COMMENT_1 : STR_EQUAL_COMMENT_2));
     replaceAll(headSource, "[{EQUAL_CODE}]",     (eqStr.length() ? eqStr : "false"));
     replaceAll(headSource, "[{NAMESPACE1}]",     (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
     replaceAll(headSource, "[{NAMESPACE2}]",     (ns.empty() ? "" : "}  /""/ namespace qblocks\n"));
@@ -820,7 +820,7 @@ const char *STR_GETSTR_CODE =
 
 //------------------------------------------------------------------------------------------------------------
 const char *STR_UPGRADE_CODE =
-"version of the data\n\t(([{CLASS_NAME}]*)this)->m_schema = getVersionNum();  // NOLINT\n";
+"version of the data\n\t(([{CLASS_NAME}]*)this)->m_schema = getVersionNum();  /""/ NOLINT\n";
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_SORT_COMMENT_1 =

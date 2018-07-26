@@ -226,7 +226,7 @@ time_q grabDate(const string_q& strIn) {
 //--------------------------------------------------------------------------------
 string_q COptions::listSpecials(bool terse) const {
     if (specials.size() == 0)
-        ((COptionsBase*)this)->loadSpecials();  // NOLINT
+        reinterpret_cast<COptionsBase *>(this)->loadSpecials();
 
     ostringstream os;
     if (!alone) {

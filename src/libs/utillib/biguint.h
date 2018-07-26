@@ -382,7 +382,11 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    inline void biguint_t::operator++(int) { operator++(); }  // NOLINT
+    inline void biguint_t::operator++(int) {
+        operator++();
+    }
+
+    //----------------------------------------------------------------------
     inline void biguint_t::operator++(void) {
         unsigned int i;
         bool carry = true;
@@ -400,7 +404,11 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    inline void biguint_t::operator--(int) { operator--(); }  // NOLINT
+    inline void biguint_t::operator--(int) {
+        operator--();
+    }
+
+    //----------------------------------------------------------------------
     inline void biguint_t::operator--(void) {
         if (len == 0)
             throw "biguint_t::operator--(): Cannot decrement an unsigned zero";

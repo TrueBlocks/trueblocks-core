@@ -108,7 +108,7 @@ bool CPerson::Serialize(CArchive& archive) {
     if (has_next) {
         string_q className;
         archive >> className;
-        next = (CPerson *)createObjectOfType(className);  // NOLINT
+        next = reinterpret_cast<CPerson *>(createObjectOfType(className));
         if (!next)
             return false;
         next->Serialize(archive);

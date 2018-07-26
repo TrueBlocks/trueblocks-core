@@ -24,9 +24,7 @@
 #include "sfarchive.h"
 #include "fielddata.h"
 #include "curl_code.h"
-#include "fielddata.h"  // NOLINT
 #include "colors.h"
-#include "sfarchive.h"  // NOLINT
 #include "performance.h"
 #include "options_base.h"
 #include "filenames.h"
