@@ -136,7 +136,7 @@ string_q convertTypes(const string_q& inStr) {
 
 //------------------------------------------------------------------------------------------------------------
 extern const char* STR_COMMENT_LINE;
-extern const char* STR_CLASSFILE;
+extern const char* STR_CLASS_FILE;
 extern const char* STR_CASE_CODE_ARRAY;
 extern const char* STR_CASE_SET_CODE_ARRAY;
 extern const char* STR_CASE_CODE_STRINGARRAY;
@@ -422,7 +422,7 @@ string_q ptrWriteFmt =
     replaceAll(srcSource, "[{FIELD_CASE}]",      fieldStr);
     replaceAll(srcSource, "[OTHER_INCS]",        otherIncs);
     replaceAll(srcSource, "[FIELD_SETCASE]",     caseSetCodeStr);
-    replaceAll(srcSource, "[{SUBCLASSFLDS}]",    subClsCodeStr);
+    replaceAll(srcSource, "[{SUBCLASS_FLDS}]",   subClsCodeStr);
     replaceAll(srcSource, "[{PARENT_SER2}]",     parSer2);
     replaceAll(srcSource, "[{PARENT_REG}]",      parReg);
     replaceAll(srcSource, "[{PARENT_CHNK}]\n",   parCnk);
@@ -537,7 +537,7 @@ string_q getCaseCode(const string_q& fieldCase, const string_q& ex) {
 
                     } else if (contains(type, "Array")) {
                         string_q str = STR_CASE_CODE_ARRAY;
-                        if (contains(type, "SFUint") || contains(type, "CBlock"))
+                        if (contains(type, "CBlockNum"))
                             replaceAll(str, "[{PTR}][{FIELD}][i].Format()", "uint_2_Str([{PTR}][{FIELD}][i])");
                         replaceAll(str, "[{FIELD}]", field);
                         caseCode += str;
@@ -683,7 +683,7 @@ string_q getCaseSetCode(const string_q& fieldCase) {
 }
 
 //------------------------------------------------------------------------------------------------------------
-const char* STR_CLASSFILE =
+const char* STR_CLASS_FILE =
 "class:\t\t[CLASS_NAME]\n"
 "fields:\t\tbool dataField1|int dataField2|string dataField3|Array dataField4\n"
 "includes:\tnone\n";

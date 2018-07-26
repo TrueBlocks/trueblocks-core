@@ -86,4 +86,7 @@ namespace qblocks {
     extern void progressBar(uint64_t _part, uint64_t _whole, double _tim, const string_q& msgs);
     extern uint64_t barLen(uint64_t newLen = 0);
     extern double getProgBarVal(void);
+
+#define BG (colorsDisabled() ? "" : cBlack + italic + "\e[48;5;245m")
+
 }  // namespace qblocks

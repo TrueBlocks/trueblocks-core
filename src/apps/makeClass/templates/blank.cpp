@@ -190,7 +190,7 @@ string_q [{CLASS_NAME}]::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
 
-[{SUBCLASSFLDS}]    // Finally, give the parent class a chance
+[{SUBCLASS_FLDS}]    // Finally, give the parent class a chance
     return [{BASE_CLASS}]::getValueByName(fieldName);
 }
 
