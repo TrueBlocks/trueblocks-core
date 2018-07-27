@@ -28,7 +28,7 @@ static COption params[] = {
     COption("@errFilt:<val>",   "display only non-error transactions or only errors with :errsOnly"),
     COption("@reverse",         "display results sorted in reverse chronological order (chronological by default)"),
     COption("@acct_id:<val>",   "for 'cache' mode, use this as the :acct_id for the cache (0 otherwise)"),
-    COption("@cache",           "write the data to a local QuickBlocks cache"),
+    COption("@cache",           "write the data to a local QBlocks cache"),
     COption("@name:<str>",      "name this address"),
     COption("",                 "Fetches data off the Ethereum blockchain for an arbitrary account or smart "
                                 "contract. Optionally formats the output to your specification. Note: --income "

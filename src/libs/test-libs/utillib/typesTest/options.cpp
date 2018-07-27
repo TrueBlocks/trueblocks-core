@@ -15,7 +15,7 @@
 //---------------------------------------------------------------------------------------------------
 static COption params[] = {
     COption("~mode", "a number between 0 and 2 inclusive"),
-    COption("",      "Test 'c' library strings against quickBlocks strings.\n"),
+    COption("",      "Test 'c' library strings against QBlocks strings.\n"),
 };
 static size_t nParams = sizeof(params) / sizeof(COption);
 

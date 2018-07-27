@@ -346,7 +346,7 @@ namespace qblocks {
         os << descriptions() << "\n";
         os << notes();
         if (!COptionsBase::isReadme) {
-            os << bBlue << "  Powered by QuickBlocks";
+            os << bBlue << "  Powered by QBlocks";
             os << (isTestMode() ? "" : " (" + getVersionStr() + ")") << "\n" << cOff;
         }
         string_q ret = os.str().c_str();

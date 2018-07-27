@@ -15,7 +15,7 @@
 //---------------------------------------------------------------------------------------------------
 static COption params[] = {
     COption("~file(s)", "One or more files to parse"),
-    COption("",         "Test the json parsing facility in quickBlocks.\n"),
+    COption("",         "Test the json parsing facility in QBlocks.\n"),
 };
 static size_t nParams = sizeof(params) / sizeof(COption);
 

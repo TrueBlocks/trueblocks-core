@@ -14,7 +14,7 @@
 
 //---------------------------------------------------------------------------------------------------
 static COption params[] = {
-    COption("",        "Test harness for quickBlocks.\n"),
+    COption("",        "Test harness for QBlocks.\n"),
 };
 static size_t nParams = sizeof(params) / sizeof(COption);
 

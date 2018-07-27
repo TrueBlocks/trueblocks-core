@@ -16,10 +16,10 @@ The two built-in functions, promote_to_transaction(CTransaction *t), and promote
 In each of these two functions, the parsed data is retrieved and then split to reveal the function or event name and its parameters. Given this information the appropriate class is 
 created dynamically and the particular fields of the class are assigned from the parsed parameters.
 
-As difficult as this is to explain, this is one of the fundamental capabilities provided by QuickBlocks™. By being able to promote generic CTransaction instances to richer, more 
-informative classes particular to a smart contract, QuickBlocks™ is able to regurgitate or re-deliver richer data than it was given.
+As difficult as this is to explain, this is one of the fundamental capabilities provided by QBlocks™. By being able to promote generic CTransaction instances to richer, more 
+informative classes particular to a smart contract, QBlocks™ is able to regurgitate or re-deliver richer data than it was given.
 
-Instead of simply delivering the from, to, amount, and timestamp from a transaction along with an unparsed input data field (as is available, at best, from the RPC), QuickBlocks™ 
+Instead of simply delivering the from, to, amount, and timestamp from a transaction along with an unparsed input data field (as is available, at best, from the RPC), QBlocks™ 
 delivers fully articulated, parsed JSON, tab-delimited, comma-separated or any other format data to a smart contract’s front end or desktop application.
 
 Furthermore, by virtue of being derived ultimately from the CBaseNode, each of these “promoted” classes inherit the ability to create itself dynamically and serialize itself. It 
