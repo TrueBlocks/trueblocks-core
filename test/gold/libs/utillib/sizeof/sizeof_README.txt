@@ -3,7 +3,7 @@ sizeof -th
 #### Usage
 
 `Usage:`    sizeof [-v|-h] mode  
-`Purpose:`  Test 'c' library strings against quickBlocks strings.
+`Purpose:`  Test 'c' library strings against QBlocks strings.
              
 `Where:`  
 

@@ -29,4 +29,4 @@ ethName -v
 	- The --addrOnly option modifies the display output and therefore works with any other options.
 	- Name file: ~/.quickBlocks/names/names.txt (7840)
 
-  Powered by QuickBlocks
+  Powered by QBlocks

@@ -30,7 +30,7 @@ from Node:
 "value":"0xe1d6516ed44e000"
 
 --------------------------------------------------------------------------------
-from Quickblocks:
+from QBlocks:
 "blockHash":"0x55d9959f2d782dceb3986fcfd0a695007e4f4df3cd3aade5fef2049c21d93d88"
 "blockNumber":"0x2a3fa1"
 "difficulty":"0x450cc7c5b8b2"
