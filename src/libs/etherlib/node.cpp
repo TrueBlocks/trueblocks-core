@@ -22,7 +22,7 @@ namespace qblocks {
         string_q fallBack = getEnvStr("FALLBACK");
         if (!isNodeRunning() && fallBack.empty() && getCurlContext()->provider != "None") {
             cerr << "\n\t";
-            cerr << cTeal << "Warning: " << cOff << "QuickBlocks requires a running Ethereum\n";
+            cerr << cTeal << "Warning: " << cOff << "QBlocks requires a running Ethereum\n";
             cerr << "\tnode to operate properly. Please start your node.\n";
             cerr << "\tAlternatively, export FALLBACK=infura in your\n";
             cerr << "\tenvironment before running this command. Quitting...\n\n";

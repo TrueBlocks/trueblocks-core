@@ -145,7 +145,7 @@ namespace qblocks {
                     cerr << cYellow;
                     cerr << "\n";
                     cerr << "\tWarning: " << cOff << "Only the 'infura' fallback is supported.\n";
-                    cerr << "\tIt is impossible for QuickBlocks to proceed. Quitting...\n";
+                    cerr << "\tIt is impossible for QBlocks to proceed. Quitting...\n";
                     cerr << "\n";
                     exit(0);
                 }
@@ -155,7 +155,7 @@ namespace qblocks {
                     cerr << "\n";
                     cerr << "\tWarning: " << cOff << "A trace request was made to the fallback\n";
                     cerr << "\tnode. " << fallBack << " does not support tracing. It ";
-                    cerr << "is impossible\n\tfor QuickBlocks to proceed. Quitting...\n";
+                    cerr << "is impossible\n\tfor QBlocks to proceed. Quitting...\n";
                     cerr << "\n";
                     exit(0);
                 }
@@ -172,7 +172,7 @@ namespace qblocks {
             cerr << "\tWarning: " << cOff << "The request to the Ethereum node ";
             cerr << "resulted in\n\tfollowing error message: ";
             cerr << bTeal << curl_easy_strerror(res) << cOff << ".\n";
-            cerr << "\tIt is impossible for QuickBlocks to proceed. Quitting...\n";
+            cerr << "\tIt is impossible for QBlocks to proceed. Quitting...\n";
             cerr << "\n";
             exit(0);
         }
@@ -181,7 +181,7 @@ namespace qblocks {
             cerr << cYellow;
             cerr << "\n";
             cerr << "\tWarning:" << cOff << "The Ethereum node  resulted in an empty\n";
-            cerr << "\tresponse. It is impossible forQuickBlocks to proceed. Quitting...\n";
+            cerr << "\tresponse. It is impossible for QBlocks to proceed. Quitting...\n";
             cerr << "\n";
             exit(0);
         } else if (contains(getCurlContext()->result, "error")) {

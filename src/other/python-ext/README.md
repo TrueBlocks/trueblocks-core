@@ -1,6 +1,6 @@
 ### Install
 
-QuickBlocks must be built with -fPIC 
+QBlocks must be built with -fPIC 
 Change the src/CMakeLists.txt
 starting line 46:
 

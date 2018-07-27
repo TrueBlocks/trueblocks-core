@@ -28,7 +28,7 @@ While `ethslurp` does have its shortcomings, it also provides some nice features
 
 #### Other Options
 
-All **quickBlocks** command-line tools support the following commands (although in some case, they have no meaning):
+All **QBlocks** command-line tools support the following commands (although in some case, they have no meaning):
 
     Command     |     Description
     -----------------------------------------------------------------------------
