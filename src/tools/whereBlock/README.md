@@ -4,7 +4,7 @@
 
 If `whereBlock` finds the block in the QBlocks cache, it reports the path to that block's file. If the block is not in the cache, but there is a locally running node, `whereBlock` returns `node` plus the name and version info from the running node. Otherwise, `whereBlock` returns the setting of the `${FALLBACK}` environment variable (if it's set), or `none` otherwise. The `${FALLBACK}` environment variable currently only accepts a value of `infura`.
 
-This tool is intended mostly as an aid in developing and debugging  QBlocks tools.
+This tool is intended mostly as an aid in developing and debugging QBlocks tools.
 
 #### Usage
 
