@@ -21,6 +21,7 @@ static COption params[] = {
     COption("-latest",             "display the latest blocks at both the node and the cache"),
     COption("-addrs",              "display all addresses included in the block"),
     COption("-uniq",               "display only uniq addresses found in the block"),
+    COption("-fi(l)ter:<addr>",    "useful only for --addr or --uniq, only display this address in results"),
 //    COption("-trac(e)s",         "include transaction traces in the export"),
 //    COption("-addresses:<val>",  "display addresses included in block as one of: [ all | to | from |\n\t\t\t\t"
 //            "self-destruct | create | log-topic | log-data | input-data |\n\t\t\t\t"
@@ -67,6 +68,15 @@ bool COptions::parseArguments(string_q& command) {
             GETRUNTIME_CLASS(CBlock)->sortFieldList();
             GETRUNTIME_CLASS(CTransaction)->sortFieldList();
             GETRUNTIME_CLASS(CReceipt)->sortFieldList();
+
+        } else if (startsWith(arg, "-l:") || startsWith(arg, "--filter:")) {
+            string_q orig = arg;
+            arg = substitute(substitute(arg, "-l:", ""), "--filter", "");
+            if (!filter.empty())
+                return usage("Please specify only a single filter. Quitting...");
+            if (!isAddress(arg))
+                return usage(arg + " does not appear to be a valid Ethereum address.\n");
+            filter = str_2_Addr(toLower(arg));
 
         } else if (arg == "-o" || arg == "--force") {
             etherlib_init("binary");

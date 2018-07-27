@@ -228,7 +228,8 @@ string_q getAddresses(uint64_t num, const COptions& opt) {
     sort(array.begin(), array.end(), sortByBlocknumTxId);
     ostringstream os;
     for (auto elem : array)
-        os << elem << "\n";
+        if (opt.filter.empty() || opt.filter == elem.addr)
+            os << elem << "\n";
     return os.str().c_str();
 }
 
