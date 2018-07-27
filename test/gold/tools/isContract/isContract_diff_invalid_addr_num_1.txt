@@ -15,4 +15,4 @@ isContract 0x3003208e77edf3b088b122b5de3a6fc8c8ef679d 0xab7c74abc0c4d48d1bdad5dc
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 
-  Powered by QuickBlocks
+  Powered by QBlocks
