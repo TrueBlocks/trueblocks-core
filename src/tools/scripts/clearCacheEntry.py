@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #########################################################################################################################################
-# This script receives as input the name of an Ethereum address and deletes its information from quickblocks cache
+# This script receives as input the name of an Ethereum address and deletes its information from QBlocks cache
 #########################################################################################################################################
 
 from __future__ import print_function
@@ -47,22 +47,22 @@ if len(sys.argv) != 2:
 # Keep track of the input address
 addr = sys.argv[1]
 
-# Define the path where we expect the quickblocks cache files
+# Define the path where we expect the QBlocks cache files
 #
 # NOTE: THIS IS BROKEN SINCE WE MOVED ./slurps AND ./abis INTO
 #       THE BINARY CACHES. FOR THIS TO WORK IT WOULD HAVE TO READ
 #       THE TOML FILE AND USE BINARY CACHE PATH TO FIND THESE FOLDERS
 #
-QUICKBLOCKS_DIR_NAME = '.quickBlocks'
+QBLOCKS_DIR_NAME = '.quickBlocks'
 SLURP_DIR_NAME = 'slurps'
 ABIS_DIR_NAME = 'abis'
 
 home = os.environ['HOME']
 
 # Build cache files path for input address
-slurp_cache = home + '/' + QUICKBLOCKS_DIR_NAME + '/' + SLURP_DIR_NAME + '/' + addr + '.bin' 
-abi_cache = home + '/' + QUICKBLOCKS_DIR_NAME + '/' + ABIS_DIR_NAME + '/' + addr + '.abi'
-json_cache = home + '/' + QUICKBLOCKS_DIR_NAME + '/' + ABIS_DIR_NAME + '/' + addr + '.json'
+slurp_cache = home + '/' + QBLOCKS_DIR_NAME + '/' + SLURP_DIR_NAME + '/' + addr + '.bin' 
+abi_cache = home + '/' + QBLOCKS_DIR_NAME + '/' + ABIS_DIR_NAME + '/' + addr + '.abi'
+json_cache = home + '/' + QBLOCKS_DIR_NAME + '/' + ABIS_DIR_NAME + '/' + addr + '.json'
 
 # Delete them
 delete_file(slurp_cache)

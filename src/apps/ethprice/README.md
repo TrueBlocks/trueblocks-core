@@ -1,6 +1,6 @@
 ## ethprice
 
-The `ethprice` tool provides Ethereum price data to various **quickBlocks** tools or for other purposes. Currently, `ethprice` retrieves data using the Poloniex API. In future versions, we intend to add other sources of pricing data and provide a mechanism to specify an averaging calculate given multiple price sources. Ultimately, we hope Ethereum/fiat price data appears under consensus, but until that time, **quickBlocks** uses `ethprice`. Powered, in part, by Poloniex<sup>&reg;<sup>
+The `ethprice` tool provides Ethereum price data to various **QBlocks** tools or for other purposes. Currently, `ethprice` retrieves data using the Poloniex API. In future versions, we intend to add other sources of pricing data and provide a mechanism to specify an averaging calculate given multiple price sources. Ultimately, we hope Ethereum/fiat price data appears under consensus, but until that time, **QBlocks** uses `ethprice`. Powered, in part, by Poloniex<sup>&reg;<sup>
 #### Usage
 
 `Usage:`    ethprice -a|-c|-f|-p|-p|-v|-h  
@@ -20,7 +20,7 @@ The `ethprice` tool provides Ethereum price data to various **quickBlocks** tool
 
 #### Other Options
 
-All **quickBlocks** command-line tools support the following commands (although in some case, they have no meaning):
+All **QBlocks** command-line tools support the following commands (although in some case, they have no meaning):
 
     Command     |     Description
     -----------------------------------------------------------------------------

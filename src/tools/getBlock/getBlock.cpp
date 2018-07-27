@@ -152,12 +152,12 @@ string_q checkOneBlock(uint64_t num, const COptions& opt) {
         cout << num << "\n";
     fromNode = normalizeBlock(fromNode, true, num >= byzantiumBlock);
 
-    // Now get the same block from quickBlocks
+    // Now get the same block from QBlocks
     string_q fromQblocks;
     CBlock qBlocks;
     queryBlock(qBlocks, numStr, true, false);
     for (size_t i = 0 ; i < qBlocks.transactions.size() ; i++) {
-        // quickBlocks pulls the receipt for each transaction, but the RPC does
+        // QBlocks pulls the receipt for each transaction, but the RPC does
         // not. Therefore, we must set the transactions' gasUsed and logsBloom
         // to be the same as the block's (even though they are not) so they
         // are removed as duplicates. Otherwise, the blocks won't match
@@ -188,7 +188,7 @@ extern string_q hiddenFields(void);
     }
 
     return head + "from Node:\n" + fromNode +
-            head + "from Quickblocks:\n" + fromQblocks +
+            head + "from QBlocks:\n" + fromQblocks +
             head + result +
             head + diffA +
             head + diffB;

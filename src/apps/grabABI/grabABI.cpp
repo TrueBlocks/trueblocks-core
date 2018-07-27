@@ -123,7 +123,7 @@ string_q acquireABI(CFunctionArray& functions, const address_t& addr, const COpt
                 cerr << cRed << "Warning: " << cOff;
                 cerr << "Failed to grab the ABI. Etherscan returned:\n\n\t";
                 cerr << cTeal << results << cOff << "\n\n";
-                cerr << "However, the ABI may actually be present on EtherScan. Quickblocks will use it if\n";
+                cerr << "However, the ABI may actually be present on EtherScan. QBlocks will use it if\n";
                 cerr << "you copy and paste the ABI json to this file:\n\n\t";
                 cerr << cTeal << localFile << cOff << "\n\n";
                 exit(0);
