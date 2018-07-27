@@ -465,7 +465,7 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data)
         foundPot(func, data, blockNumber, tr, 0, extract(trans->input, 10), "input");
         for (size_t l = 0 ; l < receipt->logs.size() ; l++) {
             const CLogEntry *log = &receipt->logs[l];
-            string_q logId = "log" + uint_2_Str(l) + "_";
+            string_q logId = "log_" + uint_2_Str(l) + "_";
             foundOne(func, data, blockNumber, tr, 0, log->address, logId +  "generator");
             for (size_t t = 0 ; t < log->topics.size() ; t++) {
                 address_t addr;
@@ -484,7 +484,7 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data)
             getTraces(traces, trans->hash);
             for (size_t t = 0 ; t < traces.size() ; t++) {
                 const CTrace *trace = &traces[t];  // taking a non-const reference
-                string_q trID = "trace" + uint_2_Str(t) + "_";
+                string_q trID = "trace_" + uint_2_Str(t) + "_";
                 foundOne(func, data, blockNumber, tr, t+10, trace->action.from,          trID + "from");
                 foundOne(func, data, blockNumber, tr, t+10, trace->action.to,            trID + "to");
                 foundOne(func, data, blockNumber, tr, t+10, trace->action.refundAddress, trID + "refundAddr");
