@@ -22,11 +22,11 @@ Processing: -h
 	-e  (--errFilt val)   display only non-error transactions or only errors with :errsOnly
 	-r  (--reverse)       display results sorted in reverse chronological order (chronological by default)
 	-a  (--acct_id val)   for 'cache' mode, use this as the :acct_id for the cache (0 otherwise)
-	-c  (--cache)         write the data to a local QuickBlocks cache
+	-c  (--cache)         write the data to a local QBlocks cache
 	-n  (--name val)      name this address
 #### Hidden options (shown during testing only)
 
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 
-  Powered by QuickBlocks
+  Powered by QBlocks

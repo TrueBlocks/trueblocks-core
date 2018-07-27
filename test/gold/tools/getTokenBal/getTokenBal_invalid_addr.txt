@@ -18,4 +18,4 @@ getTokenBal 0xd26114cd6EE289AccF82350c8d8487fedB8A0C07 0x5e44c3e467a49c9ca0296a9
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 
-  Powered by QuickBlocks
+  Powered by QBlocks
