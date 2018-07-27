@@ -1,6 +1,6 @@
 """
-QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
-Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+copyright (c) 2018 Great Hill Corporation (http://greathill.com)
 This program is free software: you may redistribute it and/or modify it under the terms
 of the GNU General Public License as published by the Free Software Foundation, either
 version 3 of the License, or (at your option) any later version. This program is
