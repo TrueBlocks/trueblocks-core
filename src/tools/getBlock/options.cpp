@@ -71,7 +71,7 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (startsWith(arg, "-l:") || startsWith(arg, "--filter:")) {
             string_q orig = arg;
-            arg = substitute(substitute(arg, "-l:", ""), "--filter", "");
+            arg = substitute(substitute(arg, "-l:", ""), "--filter:", "");
             if (!filter.empty())
                 return usage("Please specify only a single filter. Quitting...");
             if (!isAddress(arg))
@@ -266,6 +266,7 @@ void COptions::Init(void) {
     quiet       = 0;  // quiet has levels
     format      = "";
     priceBlocks = false;
+    filter      = "";
     blocks.Init();
 }
 

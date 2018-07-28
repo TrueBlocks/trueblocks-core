@@ -450,6 +450,18 @@ bool CBlock::forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void 
 }
 
 //---------------------------------------------------------------------------
+string_q stringy(const CStringArray& array) {
+    bool first = true;
+    string_q ret;
+    for (auto elem : array) {
+        if (!first)
+            ret += (elem + "_");
+        first = false;
+    }
+    return "[" + trim(ret, '_') + "]";
+}
+
+//---------------------------------------------------------------------------
 bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data) {
 
     if (!func)
@@ -484,7 +496,7 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data)
             getTraces(traces, trans->hash);
             for (size_t t = 0 ; t < traces.size() ; t++) {
                 const CTrace *trace = &traces[t];  // taking a non-const reference
-                string_q trID = "trace_" + uint_2_Str(t) + "_";
+                string_q trID = "trace_" + uint_2_Str(t) + "_" + stringy(trace->traceAddress) + "_";
                 foundOne(func, data, blockNumber, tr, t+10, trace->action.from,          trID + "from");
                 foundOne(func, data, blockNumber, tr, t+10, trace->action.to,            trID + "to");
                 foundOne(func, data, blockNumber, tr, t+10, trace->action.refundAddress, trID + "refundAddr");
