@@ -2,7 +2,7 @@ getBlock argc: 2 [1:-th]
 getBlock -th 
 #### Usage
 
-`Usage:`    getBlock [-r|-n|-c|-l|-a|-u|-v|-h] &lt;block&gt; [block...]  
+`Usage:`    getBlock [-r|-n|-c|-l|-a|-u|-l|-v|-h] &lt;block&gt; [block...]  
 `Purpose:`  Returns block(s) from local cache or directly from a running node.
              
 `Where:`  
@@ -16,6 +16,7 @@ getBlock -th
 | -l | --latest | display the latest blocks at both the node and the cache |
 | -a | --addrs | display all addresses included in the block |
 | -u | --uniq | display only uniq addresses found in the block |
+| -l | --filter val | useful only for --addr or --uniq, only display this address in results |
 
 #### Hidden options (shown during testing only)
 | -o | --force | force a re-write of the block to the cache |
