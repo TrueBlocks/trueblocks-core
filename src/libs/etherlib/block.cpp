@@ -458,7 +458,9 @@ string_q stringy(const CStringArray& array) {
             ret += (elem + "_");
         first = false;
     }
-    return "[" + trim(ret, '_') + "]";
+    ret = "[" + trim(ret, '_') + "]";
+    ret = substitute(ret, "[]", "");
+    return ret.empty() ? "" : ret + "_";
 }
 
 //---------------------------------------------------------------------------
@@ -496,7 +498,7 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data)
             getTraces(traces, trans->hash);
             for (size_t t = 0 ; t < traces.size() ; t++) {
                 const CTrace *trace = &traces[t];  // taking a non-const reference
-                string_q trID = "trace_" + uint_2_Str(t) + "_" + stringy(trace->traceAddress) + "_";
+                string_q trID = "trace_" + uint_2_Str(t) + "_" + stringy(trace->traceAddress);
                 foundOne(func, data, blockNumber, tr, t+10, trace->action.from,          trID + "from");
                 foundOne(func, data, blockNumber, tr, t+10, trace->action.to,            trID + "to");
                 foundOne(func, data, blockNumber, tr, t+10, trace->action.refundAddress, trID + "refundAddr");
