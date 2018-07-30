@@ -29,7 +29,7 @@ public:
     int quiet;
     string_q format;
     bool priceBlocks;
-    address_t filter;
+    CAddressArray filters;
 
     COptions(void);
     ~COptions(void);
