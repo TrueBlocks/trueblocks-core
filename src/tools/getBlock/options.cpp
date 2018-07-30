@@ -72,11 +72,9 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-l:") || startsWith(arg, "--filter:")) {
             string_q orig = arg;
             arg = substitute(substitute(arg, "-l:", ""), "--filter:", "");
-            if (!filter.empty())
-                return usage("Please specify only a single filter. Quitting...");
             if (!isAddress(arg))
                 return usage(arg + " does not appear to be a valid Ethereum address.\n");
-            filter = str_2_Addr(toLower(arg));
+            filters.push_back(str_2_Addr(toLower(arg)));
 
         } else if (arg == "-o" || arg == "--force") {
             etherlib_init("binary");
@@ -266,7 +264,7 @@ void COptions::Init(void) {
     quiet       = 0;  // quiet has levels
     format      = "";
     priceBlocks = false;
-    filter      = "";
+    filters.clear();
     blocks.Init();
 }
 

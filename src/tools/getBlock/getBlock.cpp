@@ -215,6 +215,15 @@ bool sortByBlocknumTxId(const CAddressAppearance& v1, const CAddressAppearance& 
 
 extern bool visitAddrs(const CAddressAppearance& item, void *data);
 extern bool transFilter(const CTransaction *trans, void *data);
+
+//------------------------------------------------------------
+bool passesFilter(const CAddressArray& array, const address_t& in) {
+    for (auto elem : array)
+        if (elem % in)
+            return true;
+    return false;
+}
+
 //------------------------------------------------------------
 string_q getAddresses(uint64_t num, const COptions& opt) {
 
@@ -226,10 +235,12 @@ string_q getAddresses(uint64_t num, const COptions& opt) {
     else
         block.forEveryAddress(visitAddrs, transFilter, &array);
     sort(array.begin(), array.end(), sortByBlocknumTxId);
+
     ostringstream os;
     for (auto elem : array)
-        if (opt.filter.empty() || opt.filter == elem.addr)
+        if (opt.filters.size() == 0 || passesFilter(opt.filters, elem.addr))
             os << elem << "\n";
+
     return os.str().c_str();
 }
 
