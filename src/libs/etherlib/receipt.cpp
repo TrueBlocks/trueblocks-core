@@ -79,8 +79,8 @@ bool CReceipt::setValueByName(const string_q& fieldName, const string_q& fieldVa
             break;
         case 'l':
             if ( fieldName % "logs" ) {
-                string_q str = fieldValue;
                 CLogEntry item;
+                string_q str = fieldValue;
                 while (item.parseJson3(str)) {
                     logs.push_back(item);
                     item = CLogEntry();  // reset
