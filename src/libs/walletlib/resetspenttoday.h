@@ -25,9 +25,6 @@
 //--------------------------------------------------------------------------
 class QResetSpentToday : public CTransaction {
 public:
-    // NOLINT
-
-public:
     QResetSpentToday(void);
     QResetSpentToday(const QResetSpentToday& re);
     virtual ~QResetSpentToday(void);
