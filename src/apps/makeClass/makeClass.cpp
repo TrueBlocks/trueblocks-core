@@ -401,7 +401,7 @@ string_q ptrWriteFmt =
     replaceAll(headSource, "[{EQUAL_CODE}]",     (eqStr.length() ? eqStr : "false"));
     replaceAll(headSource, "[{NAMESPACE1}]",     (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
     replaceAll(headSource, "[{NAMESPACE2}]",     (ns.empty() ? "" : "}  /""/ namespace qblocks\n"));
-    replaceAll(headSource, "public:\n\npublic:", "public:\n\t/""/ NOLINT\n\npublic:");
+    replaceAll(headSource, "public:\n\npublic:", "public:");
 
     if (options.writeHeader)
         writeTheCode(headerFile, headSource, ns);
@@ -656,7 +656,7 @@ string_q getCaseSetCode(const string_q& fieldCase) {
                         string_q str = strArraySet;
                         replaceAll(str, "[{NAME}]", field);
                         replaceAll(str, "nextTokenClear(str, ',')", "str_2_[{TYPE}](nextTokenClear(str, ','))");
-                        replaceAll(str, "[{TYPE}]", substitute(extract(type, 1), "Array", ""));
+                        replaceAll(str, "[{TYPE}]", substitute(substitute(extract(type, 1), "Array", ""), "Address", "Addr"));
                         caseCode += str;
 
                     } else if (contains(type, "Array")) {
