@@ -1,0 +1,15 @@
+curl -o ev/internal-tx.json 'http://api.etherscan.io/api?module=account&action=txlistinternal&address=0xfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359&startblock=0&endblock=6000000&sort=asc'
+curl -o ev/normal-tx.json 'http://api.etherscan.io/api?module=account&action=txlistinternal&address=0xfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359&startblock=0&endblock=6000000&sort=asc'
+
+jq -r '.result[] | .blockNumber' ev/internal-tx.json >ev/internal-tx-blocks.txt
+jq -r '.result[] | .blockNumber' ev/normal-tx.json   >ev/normal-tx-blocks.txt
+
+sort -u ev/internal-tx-blocks.txt ev/normal-tx-blocks.txt >ev/tx-blocks-etherscan-unique.txt
+
+curl -O https://raw.githubusercontent.com/Great-Hill-Corporation/quickBlocks/develop/docs/OSBEN/etherTip/txs.csv
+
+cat txs.csv | cut -d, -f1 >ev/tx-blocks-challenge.txt
+
+sort -u ev/tx-blocks-challenge.txt >ev/tx-blocks-challenge-unique.txt
+
+comm -23 ev/tx-blocks-etherscan-unique.txt ev/tx-blocks-challenge-unique.txt >ev/lost-blocks.txt
