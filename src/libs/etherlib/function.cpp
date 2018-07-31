@@ -79,8 +79,8 @@ bool CFunction::setValueByName(const string_q& fieldName, const string_q& fieldV
             break;
         case 'i':
             if ( fieldName % "inputs" ) {
-                string_q str = fieldValue;
                 CParameter item;
+                string_q str = fieldValue;
                 while (item.parseJson3(str)) {
                     inputs.push_back(item);
                     item = CParameter();  // reset
@@ -93,8 +93,8 @@ bool CFunction::setValueByName(const string_q& fieldName, const string_q& fieldV
             break;
         case 'o':
             if ( fieldName % "outputs" ) {
-                string_q str = fieldValue;
                 CParameter item;
+                string_q str = fieldValue;
                 while (item.parseJson3(str)) {
                     outputs.push_back(item);
                     item = CParameter();  // reset

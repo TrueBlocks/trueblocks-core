@@ -64,8 +64,8 @@ bool CAbi::setValueByName(const string_q& fieldName, const string_q& fieldValue)
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "abiByName" ) {
-                string_q str = fieldValue;
                 CFunction item;
+                string_q str = fieldValue;
                 while (item.parseJson3(str)) {
                     abiByName.push_back(item);
                     item = CFunction();  // reset
@@ -73,8 +73,8 @@ bool CAbi::setValueByName(const string_q& fieldName, const string_q& fieldValue)
                 return true;
             }
             if ( fieldName % "abiByEncoding" ) {
-                string_q str = fieldValue;
                 CFunction item;
+                string_q str = fieldValue;
                 while (item.parseJson3(str)) {
                     abiByEncoding.push_back(item);
                     item = CFunction();  // reset
