@@ -75,8 +75,8 @@ bool CAccountWatch::setValueByName(const string_q& fieldName, const string_q& fi
             break;
         case 'b':
             if ( fieldName % "balanceHistory" ) {
-                string_q str = fieldValue;
                 CBalanceHistory item;
+                string_q str = fieldValue;
                 while (item.parseJson3(str)) {
                     balanceHistory.push_back(item);
                     item = CBalanceHistory();  // reset

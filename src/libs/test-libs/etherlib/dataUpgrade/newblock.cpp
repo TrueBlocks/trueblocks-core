@@ -103,8 +103,8 @@ bool CNewBlock::setValueByName(const string_q& fieldName, const string_q& fieldV
         case 't':
             if ( fieldName % "timestamp" ) { timestamp = str_2_Ts(fieldValue); return true; }
             if ( fieldName % "transactions" ) {
-                string_q str = fieldValue;
                 CTransaction item;
+                string_q str = fieldValue;
                 while (item.parseJson3(str)) {
                     transactions.push_back(item);
                     item = CTransaction();  // reset
