@@ -496,7 +496,7 @@ const char* STR_FACTORY1 =
 "\t\t\t// [{SIGNATURE}]\n"
 "\t\t\t// [{ENCODING}]\n"
 "\t\t\t[{CLASS}] *a = new [{CLASS}];\n"
-"\t\t\ta->C[{BASE}]::operator==(*p);\n"
+"\t\t\ta->C[{BASE}]::operator=(*p);\n"
 "[{ASSIGNS1}]"
 "[{ITEMS1}]"
 "\t\t\ta->function = [{PARSEIT}];\n"
@@ -509,7 +509,7 @@ const char* STR_FACTORY2 =
 "\t\t\t// [{SIGNATURE}]\n"
 "\t\t\t// [{ENCODING}]\n"
 "\t\t\t[{CLASS}] *a = new [{CLASS}];\n"
-"\t\t\ta->C[{BASE}]::operator==(*p);\n"
+"\t\t\ta->C[{BASE}]::operator=(*p);\n"
 "[{ASSIGNS2}]"
 "\t\t\treturn a;\n"
 "\n";
