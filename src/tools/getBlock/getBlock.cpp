@@ -83,9 +83,12 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
     string_q numStr = uint_2_Str(num);
     if (opt.isRaw) {
 
+//        double start = qbNow();
         if (!queryRawBlock(result, numStr, true, opt.hashes)) {
             result = "Could not query raw block " + numStr + ". Is an Ethereum node running?";
         } else {
+//            double end = qbNow();
+//            cerr << numStr << "\t" << (end - start) << "\n";
             if (opt.force) {  // turn this on to force a write of the block to the disc
                 CRPCResult generic;
                 generic.parseJson3(result);
