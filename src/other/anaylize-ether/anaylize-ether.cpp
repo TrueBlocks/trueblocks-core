@@ -17,9 +17,12 @@ int main(int argc, char *argv[])
     etherlib_init();
 
     string_q contents = asciiFileToString("genesis.txt");
+    uint64_t cnt = 0;
     while (!contents.empty()) {
         string_q line = nextTokenClear(contents, '\n');
         addrs.push_back(nextTokenClear(line, ','));
+        if (cnt++ > 100)
+            break;
     }
 
 //    for (auto addr : addrs)
