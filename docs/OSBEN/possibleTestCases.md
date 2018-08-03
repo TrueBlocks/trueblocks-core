@@ -1,3 +1,22 @@
+Some ideas from Emiel in OSBEN telegram group
+
+- Selfdestruct/suicide of a (token) contract should burn account token balances.
+      No log/event will likely ever fire.
+- Selfdestruct/suicide of a parent contract containing the transfer function should burn
+    or at least Mark token balances as unavailable (Parity2 wallet hack).
+    
+Other brain dumps
+
+- An air drop that does fires mint events but not token transfer events
+- An air drop that fires both mint events and transfer events
+- An air drop that only fires transfer events
+- A foriegn contract call that fails and then the caller reverts
+- A foriegn contract call that fails but the caller doesn't revert
+- Failed (thrown) Pre-byzantium transactions (note, because the receipt did not have an error code, one would have to --trace to determine error status). Tests run on non-tracing nodes will fail this test.
+
+
+
+
 ## Possible Test Cases
 
 This is beginning list of possible test cases for open source blockchain explorers and/or address explorers. The goal of the following division is to keep make it clear what data come directly from the node without any manipulation, what data comes from manipulation by removing items from the raw data (very easy to verify), data easily derived from the raw data (including traces), and data that spans multiple blocks (or time series data). The reason for this last distinction is because dealing with individual blocks is easy to parallize. Providing test cases that are easily paralizable seems prudent.
