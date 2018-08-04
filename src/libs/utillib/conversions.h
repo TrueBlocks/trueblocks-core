@@ -80,6 +80,7 @@ namespace qblocks {
     extern string_q    wei_2_Ether  (biguint_t val);
     extern string_q    bloom_2_Bytes(const bloom_t& bl);
     extern string_q    bloom_2_Bits (const bloom_t& bl);
+    extern string_q    bloom_2_Bar  (const bloom_t& bl);
 
     //--------------------------------------------------------------------
     class time_q;

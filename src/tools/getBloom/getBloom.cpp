@@ -15,7 +15,7 @@
 
 extern const char *STR_FMT_BLOOMS_OUT;
 extern string_q doOneBloom(uint64_t num, const COptions& opt);
-//------------------------------------------------------------
+//-------------------------------------------------------------------------------------
 int main(int argc, const char * argv[]) {
 
     etherlib_init(quickQuitHandler);
@@ -30,7 +30,7 @@ int main(int argc, const char * argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        cout << (options.isMulti() || !options.isRaw ? "[" : "");
+        cout << (options.isMulti() ? "[\n" : "");
         string_q list = options.getBlockNumList();
         while (!list.empty()) {
             blknum_t bn = str_2_Uint(nextTokenClear(list, '|'));
@@ -42,18 +42,14 @@ int main(int argc, const char * argv[]) {
                 cout << "\n";
             }
         }
-        cout << (options.isMulti() || !options.isRaw ? "]" : "");
+        cout << (options.isMulti() ? "]" : "");
     }
 
     return 0;
 }
 
-string_q asBar(const string_q& blIn) {
-    biguint_t bloom = str_2_BigUint(blIn);
-    return substitute(substitute(substitute(extract("0x" + bloom_2_Bits(bloom), 2), "0", ""), "1", "-"), "---", "🁡");
-}
-
 #include "bloom_blocks.h"
+//-------------------------------------------------------------------------------------
 string_q doOneBloom(uint64_t num, const COptions& opt) {
 
     CBlock gold;
@@ -63,38 +59,42 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
 
     if (opt.isRaw) {
 
-        if (!opt.receipt) {
-            HIDE_FIELD(CBloomBlock, "transactions");
-        } else {
-            HIDE_FIELD(CBloomBlock, "number");
-            HIDE_FIELD(CBloomBlock, "logsBloom");
-        }
-
         string_q r = getRawBlock(num);
         CBloomBlock rawBlock;
         rawBlock.parseJson3(r);
         HIDE_FIELD(CBloomTrans, "hash");
 
+        if (opt.blockOnly) {
+            rawBlock.transactions.clear();
+            HIDE_FIELD(CBloomBlock, "transactions");
+        }
+
+        if (opt.receiptsOnly) {
+            HIDE_FIELD(CBloomBlock, "number");
+            HIDE_FIELD(CBloomBlock, "logsBloom");
+        }
+
         if (opt.asBits) {
-            biguint_t bloom = str_2_BigUint(rawBlock.logsBloom);
+            bloom_t bloom = str_2_BigUint(rawBlock.logsBloom);
             rawBlock.logsBloom = bloom_2_Bits(bloom);
             for (size_t i = 0 ; i < rawBlock.transactions.size() ; i++) {
                 bloom = str_2_BigUint(rawBlock.transactions[i].receipt.logsBloom);  // .at cannot go past end of vector!
-                rawBlock.transactions.at(i).receipt.logsBloom =
-                    bloom_2_Bits(bloom);
+                rawBlock.transactions.at(i).receipt.logsBloom = bloom_2_Bits(bloom);
             }
         }
 
         if (opt.asBars) {
             ostringstream os;
-            if (opt.receipt)
+            if (opt.receiptsOnly)
                 os << "\n" << string_q(90, '-') << " " << rawBlock.number << string_q(90, '-') << "\n";
             else
                 os << num << ": ";
-            os << asBar(rawBlock.logsBloom) << "\n";
+            bloom_t bloom = str_2_BigUint(rawBlock.logsBloom);
+            os << bloom_2_Bar(bloom) << "\n";
             for (size_t i = 0 ; i < rawBlock.transactions.size() ; i++) {
-                if (opt.receipt) {
-                    string_q x = asBar(rawBlock.transactions[i].receipt.logsBloom);
+                if (opt.receiptsOnly) {
+                    bloom = str_2_BigUint(rawBlock.transactions[i].receipt.logsBloom);
+                    string_q x = bloom_2_Bar(bloom);
                     if (!x.empty())
                         os << x << "\n";
                 }
@@ -103,19 +103,47 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
         }
 
         ostringstream os;
-        rawBlock.doExport(os);
+        if (opt.blockOnly)
+            os << rawBlock.Format() << "\n";
+        else
+            rawBlock.doExport(os);
         return os.str().c_str();
 
     } else {
 
         CBloomArray blooms;
         readBloomArray(blooms, substitute(getBinaryFilename(num), "/blocks/", "/blooms/"));
-        ostringstream os;
-        os << "\n\t\"blockNumber\": \"" << num << "\"\n";
-        for (size_t i = 0 ; i < blooms.size(); i++) {
-            //            os << asBar(bloom_2_Bits(blooms[i])) << "\n";
-            os << "0x" << blooms[i] << "\n";
+
+        if (opt.asBars) {
+            ostringstream os;
+            for (size_t i = 0 ; i < blooms.size() ; i++) {
+                string_q head = (i == 0 ? uint_2_Str(num) + ": " : "");
+                os << padLeft(head, 9) << bloom_2_Bar(blooms[i]) << "\n";
+            }
+            return os.str().c_str();
         }
+
+        ostringstream os;
+        os << "{\n";
+        os << "\t\"blockNumber\": \"" << num << "\",\n";
+        os << "\t\"eab\": [\n";
+        for (size_t i = 0 ; i < blooms.size() ; i++) {
+            bloom_t bloom = blooms[i];
+            if (opt.asBits) {
+                os << "\t\t\"0x" << bloom_2_Bits(bloom) << "\"";
+
+            } else if (opt.asBars) {
+                os << "\t\t\"0x" << "X" << "\"";
+
+            } else {
+                os << "\t\t\"0x" << bloom_2_Bytes(bloom) << "\"";
+
+            }
+            if (i < blooms.size() - 1)
+                os << ",";
+            os << "\n";
+        }
+        os << "\t]\n}";
         result = os.str().c_str();
     }
     return result;
