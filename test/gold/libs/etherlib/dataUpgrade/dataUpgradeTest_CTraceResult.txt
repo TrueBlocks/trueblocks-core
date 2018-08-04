@@ -39,7 +39,7 @@ code                	1005	0	131122	T_TEXT TS_STRING
 gasUsed             	1006	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 output              	1007	0	131122	T_TEXT TS_STRING
 {
-  "schema": 5002,
+  "schema": 5005,
   "deleted": 0,
   "showing": 1,
   "address": "0x0",

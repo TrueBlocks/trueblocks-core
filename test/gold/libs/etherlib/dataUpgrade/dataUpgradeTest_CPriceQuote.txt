@@ -37,7 +37,7 @@ timestamp           	1004	0	65551	T_TIMESPAN TS_NUMERAL
 close               	1005	0	65566	T_DOUBLE TS_NUMERAL
 date                	1006	0	262149	T_DATE TS_DATE
 {
-  "schema": 5002,
+  "schema": 5005,
   "deleted": 0,
   "showing": 1,
   "timestamp": 0,
