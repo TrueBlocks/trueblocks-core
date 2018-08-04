@@ -12,13 +12,14 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
-
+#include "bloom_blocks.h"
 //-----------------------------------------------------------------------------
 class COptions : public CBlockOptions {
 public:
-    bool isRaw;
-    bool receipt;
     bool force;
+    bool isRaw;
+    bool blockOnly;
+    bool receiptsOnly;
     bool asBits;
     bool asBars;
 

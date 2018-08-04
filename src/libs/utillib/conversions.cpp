@@ -88,8 +88,10 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    string_q bloom_2_Bits(const bloom_t& b) {
-        string_q ret = substitute(bloom_2_Bytes(b), "0x", "");
+    string_q bloom_2_Bits(const bloom_t& bl) {
+        if (bl == 0)
+            return "0x0";
+        string_q ret = substitute(bloom_2_Bytes(bl), "0x", "");
         replaceAll(ret, "0", "0000");
         replaceAll(ret, "1", "0001");
         replaceAll(ret, "2", "0010");
@@ -106,6 +108,28 @@ namespace qblocks {
         replaceAll(ret, "d", "1101");
         replaceAll(ret, "e", "1110");
         replaceAll(ret, "f", "1111");
+        return ret;
+    }
+
+    //-------------------------------------------------------------------------------------
+    string_q bloom_2_Bar(const bloom_t& bl) {
+        string_q ret = substitute(bloom_2_Bytes(bl), "0x", "");
+        replaceAll(ret, "0", "");
+        replaceAll(ret, "1", ".");
+        replaceAll(ret, "2", ".");
+        replaceAll(ret, "3", "-");
+        replaceAll(ret, "4", ".");
+        replaceAll(ret, "5", "-");
+        replaceAll(ret, "6", "-");
+        replaceAll(ret, "7", "+");
+        replaceAll(ret, "8", ".");
+        replaceAll(ret, "9", "-");
+        replaceAll(ret, "a", "-");
+        replaceAll(ret, "b", "+");
+        replaceAll(ret, "c", "-");
+        replaceAll(ret, "d", "+");
+        replaceAll(ret, "e", "+");
+        replaceAll(ret, "f", "o");
         return ret;
     }
 
