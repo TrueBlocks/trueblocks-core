@@ -4,8 +4,8 @@
 
 #### Usage
 
-`Usage:`    getBloom [-r|-e|-a|-s|-p|-v|-h] &lt;block&gt; [block...]  
-`Purpose:`  Returns bloom filter(s) from running node (the default) or as EAB from local cache.
+`Usage:`    getBloom [-r|-e|-b|-c|-a|-i|-v|-h] &lt;block&gt; [block...]  
+`Purpose:`  Returns bloom filter(s) from running node (the default) or as EAB from QBlocks.
              
 `Where:`  
 
@@ -13,10 +13,11 @@
 | -------: | :------- | :------- |
 |  | block_list | a space-separated list of one or more blocks for which to retrieve blooms |
 | -r | --raw | pull the bloom filter directly from the running node (the default) |
-| -e | --eab | pull the enhanced adaptive bloom filters (EAB) from the local cache |
-| -a | --asbits | display the bloom filter as bits instead of hex |
-| -s | --asbars | display the bloom filter as bar charts instead of hex |
-| -p | --receipt | display blooms from the transaction receipts as opposed to block (--raw only) |
+| -e | --eab | pull the enhanced adaptive blooms from QBlocks cache |
+| -b | --block | show only the block-level bloom (--raw only) |
+| -c | --receipts | show only the receipt-level blooms (--raw only) |
+| -a | --bars | display blooms as bar chart instead of hex |
+| -i | --bits | display blooms as bits instead of hex |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

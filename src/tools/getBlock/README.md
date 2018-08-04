@@ -6,7 +6,7 @@ The tool may also be used to double check that the results produced from the QBl
 
 #### Usage
 
-`Usage:`    getBlock [-r|-n|-c|-l|-a|-u|-v|-h] &lt;block&gt; [block...]  
+`Usage:`    getBlock [-r|-n|-c|-l|-a|-u|-l|-v|-h] &lt;block&gt; [block...]  
 `Purpose:`  Returns block(s) from local cache or directly from a running node.
              
 `Where:`  
@@ -20,6 +20,7 @@ The tool may also be used to double check that the results produced from the QBl
 | -l | --latest | display the latest blocks at both the node and the cache |
 | -a | --addrs | display all addresses included in the block |
 | -u | --uniq | display only uniq addresses found in the block |
+| -l | --filter val | useful only for --addr or --uniq, only display this address in results |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

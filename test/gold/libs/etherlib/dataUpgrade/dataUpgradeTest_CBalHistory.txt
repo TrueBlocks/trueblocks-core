@@ -36,7 +36,7 @@ recordID            	1004	0	131122	T_TEXT TS_STRING
 timestamp           	1005	0	65551	T_TIMESPAN TS_NUMERAL
 balance             	1006	0	65561	T_NUMBER TS_NUMERAL
 {
-  "schema": 5002,
+  "schema": 5005,
   "deleted": 0,
   "showing": 1,
   "timestamp": 0,
