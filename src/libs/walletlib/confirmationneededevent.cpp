@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "confirmationneededevent.h"
 #include "etherlib.h"
 
@@ -25,7 +26,7 @@ static string_q nextConfirmationneededeventChunk(const string_q& fieldIn, const 
 static string_q nextConfirmationneededeventChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QConfirmationNeededEvent::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QConfirmationNeededEvent::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -45,7 +46,7 @@ void QConfirmationNeededEvent::Format(CExportContext& ctx, const string_q& fmtIn
 //---------------------------------------------------------------------------
 string_q nextConfirmationneededeventChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QConfirmationNeededEvent *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QConfirmationNeededEvent *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -66,16 +67,16 @@ bool QConfirmationNeededEvent::setValueByName(const string_q& fieldName, const s
             if ( fieldName % "data" ) { data = toLower(fieldValue); return true; }
             break;
         case 'i':
-            if ( fieldName % "initiator" ) { initiator = toAddress(fieldValue); return true; }
+            if ( fieldName % "initiator" ) { initiator = str_2_Addr(fieldValue); return true; }
             break;
         case 'o':
             if ( fieldName % "operation" ) { operation = toLower(fieldValue); return true; }
             break;
         case 't':
-            if ( fieldName % "to" ) { to = toAddress(fieldValue); return true; }
+            if ( fieldName % "to" ) { to = str_2_Addr(fieldValue); return true; }
             break;
         case 'v':
-            if ( fieldName % "value" ) { value = toWei(fieldValue); return true; }
+            if ( fieldName % "value" ) { value = str_2_Wei(fieldValue); return true; }
             break;
         default:
             break;
@@ -90,12 +91,14 @@ void QConfirmationNeededEvent::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QConfirmationNeededEvent::Serialize(SFArchive& archive) {
+bool QConfirmationNeededEvent::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
-        return ((const QConfirmationNeededEvent*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
-    // If we're reading a back level, read the whole thing and we're done.
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
+    CLogEntry::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -111,7 +114,7 @@ bool QConfirmationNeededEvent::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QConfirmationNeededEvent::SerializeC(SFArchive& archive) const {
+bool QConfirmationNeededEvent::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CLogEntry::SerializeC(archive);
@@ -128,7 +131,7 @@ bool QConfirmationNeededEvent::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, QConfirmationNeededEventArray& array) {
+CArchive& operator>>(CArchive& archive, QConfirmationNeededEventArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -140,7 +143,7 @@ SFArchive& operator>>(SFArchive& archive, QConfirmationNeededEventArray& array) 
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const QConfirmationNeededEventArray& array) {
+CArchive& operator<<(CArchive& archive, const QConfirmationNeededEventArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -171,13 +174,15 @@ void QConfirmationNeededEvent::registerClass(void) {
     HIDE_FIELD(QConfirmationNeededEvent, "deleted");
     HIDE_FIELD(QConfirmationNeededEvent, "showing");
 
+    builtIns.push_back(_biQConfirmationNeededEvent);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
 string_q nextConfirmationneededeventChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QConfirmationNeededEvent *con = (const QConfirmationNeededEvent *)dataPtr;
+    const QConfirmationNeededEvent *con = reinterpret_cast<const QConfirmationNeededEvent *>(dataPtr);
     if (con) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -199,9 +204,8 @@ string_q nextConfirmationneededeventChunk_custom(const string_q& fieldIn, const 
 }
 
 //---------------------------------------------------------------------------
-bool QConfirmationNeededEvent::readBackLevel(SFArchive& archive) {
+bool QConfirmationNeededEvent::readBackLevel(CArchive& archive) {
 
-    CLogEntry::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -222,16 +226,16 @@ string_q QConfirmationNeededEvent::getValueByName(const string_q& fieldName) con
             if ( fieldName % "data" ) return data;
             break;
         case 'i':
-            if ( fieldName % "initiator" ) return fromAddress(initiator);
+            if ( fieldName % "initiator" ) return addr_2_Str(initiator);
             break;
         case 'o':
             if ( fieldName % "operation" ) return operation;
             break;
         case 't':
-            if ( fieldName % "to" ) return fromAddress(to);
+            if ( fieldName % "to" ) return addr_2_Str(to);
             break;
         case 'v':
-            if ( fieldName % "value" ) return asStringBN(value);
+            if ( fieldName % "value" ) return bnu_2_Str(value);
             break;
     }
 
@@ -247,7 +251,8 @@ ostream& operator<<(ostream& os, const QConfirmationNeededEvent& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -13,7 +13,7 @@
 #include "etherlib.h"
 #include "blockoptions.h"
 
-static uint64_t findBlockNumByHash(const SFHash& hash, void *data);
+static uint64_t findBlockNumByHash(const hash_t& hash, void *data);
 //--------------------------------------------------------------------------------
 CBlockOptions::CBlockOptions(void) {
     Init();
@@ -25,7 +25,7 @@ void CBlockOptions::Init(void) {
 }
 
 //--------------------------------------------------------------------------------
-uint64_t findBlockNumByHash(const SFHash& hash, void *data) {
+uint64_t findBlockNumByHash(const hash_t& hash, void *data) {
     ASSERT(isHash(hash));
     CBlock block;
     if (!getBlock(block, hash)) {
@@ -39,7 +39,7 @@ uint64_t findBlockNumByHash(const SFHash& hash, void *data) {
 bool blockNumToString(uint64_t num, void *data) {
     if (num != NOPOS) {
         string_q *str = (string_q*)data;  // NOLINT
-        *str += (asStringU(num) + "|");
+        *str += (uint_2_Str(num) + "|");
     }
     return true;
 }

@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -16,8 +16,6 @@
 
 //-----------------------------------------------------------------------
 extern void addDefaultFuncs(CFunctionArray& funcs);
-extern string_q getAssign(const CParameter *p, uint64_t which);
-extern string_q getEventAssign(const CParameter *p, uint64_t which, uint64_t prevIdxs);
 
 //-----------------------------------------------------------------------
 extern const char* STR_FACTORY1;
@@ -73,7 +71,7 @@ void addIfUnique(const string_q& addr, CFunctionArray& functions, CFunction& fun
 }
 
 //-----------------------------------------------------------------------
-string_q acquireABI(CFunctionArray& functions, const SFAddress& addr, const COptions& opt, bool builtIn) {
+string_q acquireABI(CFunctionArray& functions, const address_t& addr, const COptions& opt, bool builtIn) {
 
     string_q results, ret;
     string_q fileName = blockCachePath("abis/" + addr + ".json");
@@ -125,7 +123,7 @@ string_q acquireABI(CFunctionArray& functions, const SFAddress& addr, const COpt
                 cerr << cRed << "Warning: " << cOff;
                 cerr << "Failed to grab the ABI. Etherscan returned:\n\n\t";
                 cerr << cTeal << results << cOff << "\n\n";
-                cerr << "However, the ABI may actually be present on EtherScan. Quickblocks will use it if\n";
+                cerr << "However, the ABI may actually be present on EtherScan. QBlocks will use it if\n";
                 cerr << "you copy and paste the ABI json to this file:\n\n\t";
                 cerr << cTeal << localFile << cOff << "\n\n";
                 exit(0);
@@ -144,14 +142,12 @@ string_q acquireABI(CFunctionArray& functions, const SFAddress& addr, const COpt
     }
 
     ret = substitute(substitute(substitute(results, "\n", ""), "\t", ""), " ", "");
-    char *s = (char *)(results.c_str()); // NOLINT
-    char *p = cleanUpJson(s);
-    while (p && *p) {
-        CFunction func;
-        size_t nFields = 0;
-        p = func.parseJson(p, nFields);
+
+    CFunction func;
+    while (func.parseJson3(results)) {
         func.isBuiltin = builtIn;
         addIfUnique(addr, functions, func, opt.decNames);
+        func = CFunction();  // reset
     }
 
     return ret;
@@ -287,10 +283,10 @@ int main(int argc, const char *argv[]) {
                         uint64_t nIndexed = 0;
                         for (size_t j = 0 ; j < func->inputs.size() ; j++) {
                             fields   += func->inputs[j].Format("[{TYPE}][ {NAME}]|");
-                            assigns1 += func->inputs[j].Format(getAssign(&func->inputs[j], j));
+                            assigns1 += func->inputs[j].Format(func->inputs[j].getFunctionAssign(j));
                             items1   += "\t\t\titems[nItems++] = \"" + func->inputs[j].type + "\";\n";
                             nIndexed += func->inputs[j].indexed;
-                            string_q res = func->inputs[j].Format(getEventAssign(&func->inputs[j], j+1, nIndexed));
+                            string_q res = func->inputs[j].Format(func->inputs[j].getEventAssign(j+1, nIndexed));
                             replace(res, "++", "[");
                             replace(res, "++", "]");
                             assigns2 += res;
@@ -358,10 +354,10 @@ int main(int argc, const char *argv[]) {
                         if (name != "logEntry" && !isConst) {
                             // hack warning
                             replaceAll(out, "bytes32[]", "CStringArray");
-                            replaceAll(out, "uint256[]", "SFBigUintArray");  // order matters
-                            replaceAll(out, "int256[]",  "SFBigIntArray");
-                            replaceAll(out, "uint32[]",  "SFUintArray");  // order matters
-                            replaceAll(out, "int32[]",   "SFIntArray");
+                            replaceAll(out, "uint256[]", "CBigUintArray");  // order matters
+                            replaceAll(out, "int256[]",  "CBigIntArray");
+                            replaceAll(out, "uint32[]",  "CUintArray");  // order matters
+                            replaceAll(out, "int32[]",   "CIntArray");
                             stringToAsciiFile(classDefs+fileName, out);
                             if (func->type == "event")
                                 cout << "Generating class for event type: '" << theClass << "'\n";
@@ -454,10 +450,7 @@ int main(int argc, const char *argv[]) {
             replaceAll(sourceCode, "[{EVENT_DECLS}]", evtDecls.empty() ? "// No events" : evtDecls);
             replaceAll(sourceCode, "[{EVTS}]", evts.empty() ? "\t// No events\n" : evts);
             sourceCode = substitute(sourceCode, "{QB}", (options.isBuiltin() ? "_qb" : ""));
-            writeTheCode(classDir + options.prefix + ".cpp",
-                         substitute(
-                         substitute(sourceCode, "XXXX", "["),
-                                    "YYYY", "]"));
+            writeTheCode(classDir + options.prefix + ".cpp", sourceCode);
 
             // The code
             if (!options.isBuiltin()) {
@@ -468,6 +461,7 @@ int main(int argc, const char *argv[]) {
                 makeTheCode("options.cpp",    options.primaryAddr);
                 makeTheCode("options.h",      options.primaryAddr);
                 makeTheCode("main.cpp",       options.primaryAddr);
+                makeTheCode("main.h",         options.primaryAddr);
                 makeTheCode("visitor.cpp",    options.primaryAddr);
                 makeTheCode("visitor.h",      options.primaryAddr);
                 makeTheCode("accounting.cpp", options.primaryAddr);
@@ -479,64 +473,6 @@ int main(int argc, const char *argv[]) {
         }
     }
     return 0;
-}
-
-//-----------------------------------------------------------------------
-string_q getAssign(const CParameter *p, uint64_t which) {
-
-    string_q ass;
-    string_q type = p->Format("[{TYPE}]");
-
-    if (contains(type, "[") && contains(type, "]")) {
-        const char* STR_ASSIGNARRAY =
-        "\t\t\twhile (!params.empty()) {\n"
-        "\t\t\t\tstring_q val = extract(params, 0, 64);\n"
-        "\t\t\t\tparams = extract(params, 64);\n"
-        "\t\t\t\ta->[{NAME}]XXXXa->[{NAME}].size()YYYY = val;\n"
-        "\t\t\t}\n";
-        return p->Format(STR_ASSIGNARRAY);
-    }
-
-    if (type == "uint" || type == "uint256") { ass = "toWei(\"0x\"+[{VAL}]);";
-    } else if (contains(type, "gas")) { ass = "toGas([{VAL}]);";
-    } else if (contains(type, "uint64")) { ass = "toLongU([{VAL}]);";
-    } else if (contains(type, "uint")) { ass = "(uint32_t)toLongU([{VAL}]);";
-    } else if (contains(type, "int") || contains(type, "bool")) { ass = "toLong([{VAL}]);";
-    } else if (contains(type, "address")) { ass = "toAddress([{VAL}]);";
-    } else { ass = "[{VAL}];";
-    }
-
-    replace(ass, "[{VAL}]", "extract(params, " + asStringU(which) + "*64" + (type == "bytes" ? "" : ", 64") + ")");
-    return p->Format("\t\t\ta->[{NAME}] = " + ass + "\n");
-}
-
-//-----------------------------------------------------------------------
-string_q getEventAssign(const CParameter *p, uint64_t which, uint64_t nIndexed) {
-    string_q type = p->Format("[{TYPE}]"), ass;
-    if (type == "uint" || type == "uint256") { ass = "toWei([{VAL}]);";
-    } else if (contains(type, "gas")) { ass = "toGas([{VAL}]);";
-    } else if (contains(type, "uint64")) { ass = "toLongU([{VAL}]);";
-    } else if (contains(type, "uint")) { ass = "(uint32_t)toLongU([{VAL}]);";
-    } else if (contains(type, "int") || contains(type, "bool")) { ass = "toLong([{VAL}]);";
-    } else if (contains(type, "address")) { ass = "toAddress([{VAL}]);";
-    } else { ass = "[{VAL}];";
-    }
-
-    if (p->indexed) {
-        replace(ass, "[{VAL}]", "nTops > [{WHICH}] ? fromTopic(p->topics[{IDX}]) : \"\"");
-
-    } else if (type == "bytes") {
-        replace(ass, "[{VAL}]", "\"0x\" + extract(data, [{WHICH}]*64)");
-        which -= (nIndexed+1);
-
-    } else {
-        replace(ass, "[{VAL}]", string_q(type == "address" ? "" : "\"0x\" + ") + "extract(data, [{WHICH}]*64, 64)");
-        which -= (nIndexed+1);
-    }
-    replace(ass, "[{IDX}]", "++" + asStringU(which)+"++");
-    replace(ass, "[{WHICH}]", asStringU(which));
-    string_q fmt = "\t\t\ta->[{NAME}] = " + ass + "\n";
-    return p->Format(fmt);
 }
 
 //-----------------------------------------------------------------------
@@ -560,7 +496,7 @@ const char* STR_FACTORY1 =
 "\t\t\t// [{SIGNATURE}]\n"
 "\t\t\t// [{ENCODING}]\n"
 "\t\t\t[{CLASS}] *a = new [{CLASS}];\n"
-"\t\t\t*(C[{BASE}]*)a = *p;  // NOLINT\n"
+"\t\t\ta->C[{BASE}]::operator=(*p);\n"
 "[{ASSIGNS1}]"
 "[{ITEMS1}]"
 "\t\t\ta->function = [{PARSEIT}];\n"
@@ -569,11 +505,11 @@ const char* STR_FACTORY1 =
 
 //-----------------------------------------------------------------------
 const char* STR_FACTORY2 =
-"\t\t} else if (fromTopic(p->topics[0]) % evt_[{LOWER}]{QB}) {\n"
+"\t\t} else if (topic_2_Str(p->topics[0]) % evt_[{LOWER}]{QB}) {\n"
 "\t\t\t// [{SIGNATURE}]\n"
 "\t\t\t// [{ENCODING}]\n"
 "\t\t\t[{CLASS}] *a = new [{CLASS}];\n"
-"\t\t\t*(C[{BASE}]*)a = *p;  // NOLINT\n"
+"\t\t\ta->C[{BASE}]::operator=(*p);\n"
 "[{ASSIGNS2}]"
 "\t\t\treturn a;\n"
 "\n";
@@ -668,7 +604,7 @@ const char* STR_CODE_SIGS =
 "\n";
 
 //-----------------------------------------------------------------------
-const char* STR_BLOCK_PATH = "etherlib_init(qh);\n\n";
+const char* STR_BLOCK_PATH = "\n\tetherlib_init(qh);";
 
 //-----------------------------------------------------------------------
 const char* STR_ITEMS =

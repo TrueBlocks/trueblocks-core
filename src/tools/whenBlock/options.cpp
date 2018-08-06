@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,17 +14,17 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-CParams params[] = {
-    CParams("~!block", "one or more block numbers (or a 'special' block), or..."),
-    CParams("~!date",  "one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]"),
-    CParams("-data",   "display the result as data (tab delimited; useful for scripting)"),
-    CParams("-list",   "list names and block numbers for special blocks"),
-    CParams("",        "Finds the nearest block prior to a date, or the nearest date prior to a block.\n"
+static COption params[] = {
+    COption("~!block", "one or more block numbers (or a 'special' block), or..."),
+    COption("~!date",  "one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]"),
+    COption("-data",   "display the result as data (tab delimited; useful for scripting)"),
+    COption("-list",   "list names and block numbers for special blocks"),
+    COption("",        "Finds the nearest block prior to a date, or the nearest date prior to a block.\n"
                        " Alternatively, search for one of special 'named' blocks.\n"),
 };
-size_t nParams = sizeof(params) / sizeof(CParams);
+static size_t nParams = sizeof(params) / sizeof(COption);
 
-extern SFTime grabDate(const string_q& strIn);
+extern time_q grabDate(const string_q& strIn);
 extern bool containsAny(const string_q& haystack, const string_q& needle);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -62,7 +62,7 @@ bool COptions::parseArguments(string_q& command) {
             if (isList)
                 return usage("The --list option must appear alone on the line. Quitting...");
 
-            SFTime date = grabDate(arg);
+            time_q date = grabDate(arg);
             if (date == earliestDate) {
                 return usage("Invalid date: '" + orig + "'. Quitting...");
 
@@ -72,7 +72,7 @@ bool COptions::parseArguments(string_q& command) {
                 cout << ") is in the future. No such block. Quitting...\n";
                 return false;
 
-            } else if (date < SFTime(2015, 7, 30, 15, 25, 00)) {
+            } else if (date < time_q(2015, 7, 30, 15, 25, 00)) {
                 // first block was at 15:26:00
                 cout << "The date you specified (";
                 cout << cTeal << orig << cOff;
@@ -81,7 +81,7 @@ bool COptions::parseArguments(string_q& command) {
             }
 
             foundOne = true;
-            requests.push_back("date:" + asString(toTimestamp(date)));
+            requests.push_back("date:" + int_2_Str(date_2_Ts(date)));
 
         } else {
 
@@ -91,10 +91,10 @@ bool COptions::parseArguments(string_q& command) {
             // if we're here, we better have a good block, assume we don't
             CNameValue spec;
             if (findSpecial(spec, arg)) {
-                string_q val = spec.getValue();
-                if (spec.getName() == "latest")
-                    val = asStringU(getLatestBlockFromClient());
-                requests.push_back("special:" + spec.getName() + "|" + val);
+                string_q val = spec.second;
+                if (spec.first == "latest")
+                    val = uint_2_Str(getLatestBlockFromClient());
+                requests.push_back("special:" + spec.first + "|" + val);
                 foundOne = true;
 
             } else  {
@@ -106,12 +106,14 @@ bool COptions::parseArguments(string_q& command) {
                 } else if (!ret.empty()) {
                     return usage(ret);
                 }
+
+                // Now we transfer the list of blocks to the requests array
                 string_q blockList = getBlockNumList();
                 blocks.Init();
                 while (!blockList.empty()) {
                     requests.push_back("block:" + nextTokenClear(blockList, '|'));
+                    foundOne = true;
                 }
-                foundOne = true;
             }
         }
     }
@@ -172,7 +174,7 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
 }
 
 //--------------------------------------------------------------------------------
-SFTime grabDate(const string_q& strIn) {
+time_q grabDate(const string_q& strIn) {
 
     if (strIn.empty()) {
         return earliestDate;
@@ -198,15 +200,15 @@ SFTime grabDate(const string_q& strIn) {
     }
 
 #define NP ((uint32_t)-1)
-#define toLong32u(a) (uint32_t)toLongU((a))
+#define str_2_Int32u(a) (uint32_t)str_2_Uint((a))
     uint32_t y, m, d, h, mn, s;
     y = m = d = h = mn = s = NP;
-    if (isUnsigned(extract(str,  0, 4))) { y  = toLong32u(extract(str,  0, 4)); }
-    if (isUnsigned(extract(str,  4, 2))) { m  = toLong32u(extract(str,  4, 2)); }
-    if (isUnsigned(extract(str,  6, 2))) { d  = toLong32u(extract(str,  6, 2)); }
-    if (isUnsigned(extract(str,  8, 2))) { h  = toLong32u(extract(str,  8, 2)); }
-    if (isUnsigned(extract(str, 10, 2))) { mn = toLong32u(extract(str, 10, 2)); }
-    if (isUnsigned(extract(str, 12, 2))) { s  = toLong32u(extract(str, 12, 2)); }
+    if (isUnsigned(extract(str,  0, 4))) { y  = str_2_Int32u(extract(str,  0, 4)); }
+    if (isUnsigned(extract(str,  4, 2))) { m  = str_2_Int32u(extract(str,  4, 2)); }
+    if (isUnsigned(extract(str,  6, 2))) { d  = str_2_Int32u(extract(str,  6, 2)); }
+    if (isUnsigned(extract(str,  8, 2))) { h  = str_2_Int32u(extract(str,  8, 2)); }
+    if (isUnsigned(extract(str, 10, 2))) { mn = str_2_Int32u(extract(str, 10, 2)); }
+    if (isUnsigned(extract(str, 12, 2))) { s  = str_2_Int32u(extract(str, 12, 2)); }
 
     // If any of them was not an unsigned int, it's a fail
     if (y == NP || m == NP || d == NP || h == NP || mn == NP || s == NP)
@@ -218,13 +220,13 @@ SFTime grabDate(const string_q& strIn) {
     if (mn > 59) return earliestDate;
     if (s > 59) return earliestDate;
 
-    return SFTime(y, m, d, h, mn, s);
+    return time_q(y, m, d, h, mn, s);
 }
 
 //--------------------------------------------------------------------------------
 string_q COptions::listSpecials(bool terse) const {
     if (specials.size() == 0)
-        ((COptionsBase*)this)->loadSpecials();  // NOLINT
+        ((COptionsBase *)this)->loadSpecials();  // NOLINT
 
     ostringstream os;
     if (!alone) {
@@ -238,15 +240,15 @@ string_q COptions::listSpecials(bool terse) const {
     string_q extra;
     for (size_t i = 0 ; i < specials.size(); i++) {
 
-        string_q name = specials[i].getName();
-        string_q bn = specials[i].getValue();
+        string_q name = specials[i].first;
+        string_q bn = specials[i].second;
         if (name == "latest") {
-            bn = asStringU(getLatestBlockFromClient());
+            bn = uint_2_Str(getLatestBlockFromClient());
             if (isTestMode()) {
                 bn = "";
             } else if (COptionsBase::isReadme) {
                 bn = "--";
-            } else if (i > 0 && specials[i-1].getValueU() >= getLatestBlockFromClient()) {
+            } else if (i > 0 && str_2_Uint(specials[i-1].second) >= getLatestBlockFromClient()) {
                 extra = iWhite + " (syncing)" + cOff;
             }
         }

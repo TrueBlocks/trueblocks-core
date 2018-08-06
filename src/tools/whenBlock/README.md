@@ -37,7 +37,7 @@ You may name your own blocks (for example, to denote the start of an ICO perhaps
 
 #### Other Options
 
-All **quickBlocks** command-line tools support the following commands (although in some case, they have no meaning):
+All **QBlocks** command-line tools support the following commands (although in some case, they have no meaning):
 
     Command     |     Description
     -----------------------------------------------------------------------------
@@ -50,6 +50,6 @@ All **quickBlocks** command-line tools support the following commands (although 
 
 <small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
 
-**Powered by QuickBlocks<sup>&reg;</sup>**
+**Powered by Qblocks<sup>&trade;</sup>**
 
 

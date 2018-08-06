@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "abilib.h"
 
 namespace qblocks {
@@ -38,8 +39,10 @@ public:
     DECLARE_NODE(CPriceQuote);
 
     // EXISTING_CODE
-    SFTime date;
+    time_q date;
     // EXISTING_CODE
+    bool operator==(const CPriceQuote& item) const;
+    bool operator!=(const CPriceQuote& item) const { return !operator==(item); }
     friend bool operator<(const CPriceQuote& v1, const CPriceQuote& v2);
     friend ostream& operator<<(ostream& os, const CPriceQuote& item);
 
@@ -47,7 +50,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CPriceQuote& pr);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -118,23 +121,31 @@ inline CPriceQuote& CPriceQuote::operator=(const CPriceQuote& pr) {
 }
 
 //-------------------------------------------------------------------------
+inline bool CPriceQuote::operator==(const CPriceQuote& item) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const CPriceQuote& v1, const CPriceQuote& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted
+    // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
 }
 
 //---------------------------------------------------------------------------
 typedef vector<CPriceQuote> CPriceQuoteArray;
-extern SFArchive& operator>>(SFArchive& archive, CPriceQuoteArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const CPriceQuoteArray& array);
+extern CArchive& operator>>(CArchive& archive, CPriceQuoteArray& array);
+extern CArchive& operator<<(CArchive& archive, const CPriceQuoteArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 extern uint64_t indexFromTimeStamp(const CPriceQuoteArray& quotes, timestamp_t ts);
-extern string_q asDollars(timestamp_t ts, SFUintBN weiIn);
-extern string_q dispDollars(timestamp_t ts, SFUintBN weiIn);
+extern string_q asDollars(timestamp_t ts, biguint_t weiIn);
+extern string_q dispDollars(timestamp_t ts, biguint_t weiIn);
 // EXISTING_CODE
 }  // namespace qblocks
 

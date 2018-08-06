@@ -1,3 +1,4 @@
+web3scan
 dao_accounting
 single-simple
 contracts
@@ -23,7 +24,6 @@ esc_key
 format
 gas_analyzer
 gasHole
-genesis
 hatch.mak
 inerror
 infura

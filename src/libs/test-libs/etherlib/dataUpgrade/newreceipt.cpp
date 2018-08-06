@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "newreceipt.h"
 #include "etherlib.h"
 
@@ -25,7 +26,7 @@ extern string_q nextNewreceiptChunk(const string_q& fieldIn, const void *dataPtr
 static string_q nextNewreceiptChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CNewReceipt::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CNewReceipt::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -45,7 +46,7 @@ void CNewReceipt::Format(CExportContext& ctx, const string_q& fmtIn, void *dataP
 //---------------------------------------------------------------------------
 string_q nextNewreceiptChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CNewReceipt *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CNewReceipt *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -60,27 +61,25 @@ bool CNewReceipt::setValueByName(const string_q& fieldName, const string_q& fiel
 
     switch (tolower(fieldName[0])) {
         case 'c':
-            if ( fieldName % "contractAddress" ) { contractAddress = toAddress(fieldValue); return true; }
+            if ( fieldName % "contractAddress" ) { contractAddress = str_2_Addr(fieldValue); return true; }
             break;
         case 'g':
-            if ( fieldName % "gasUsed" ) { gasUsed = toGas(fieldValue); return true; }
+            if ( fieldName % "gasUsed" ) { gasUsed = str_2_Gas(fieldValue); return true; }
             break;
         case 'i':
-            if ( fieldName % "isError" ) { isError = str2Bool(fieldValue); return true; }
+            if ( fieldName % "isError" ) { isError = str_2_Bool(fieldValue); return true; }
             break;
         case 'l':
             if ( fieldName % "logs" ) {
-                char *p = (char *)fieldValue.c_str();  // NOLINT
-                while (p && *p) {
-                    CLogEntry item;
-                    size_t nFields = 0;
-                    p = item.parseJson(p, nFields);
-                    if (nFields)
-                        logs.push_back(item);
+                CLogEntry item;
+                string_q str = fieldValue;
+                while (item.parseJson3(str)) {
+                    logs.push_back(item);
+                    item = CLogEntry();  // reset
                 }
                 return true;
             }
-            if ( fieldName % "logsBloom" ) { logsBloom = toBloom(fieldValue); return true; }
+            if ( fieldName % "logsBloom" ) { logsBloom = str_2_Bloom(fieldValue); return true; }
             break;
         default:
             break;
@@ -95,12 +94,14 @@ void CNewReceipt::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CNewReceipt::Serialize(SFArchive& archive) {
+bool CNewReceipt::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CNewReceipt*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
-    // If we're reading a back level, read the whole thing and we're done.
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
+    CBaseNode::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -116,7 +117,7 @@ bool CNewReceipt::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CNewReceipt::SerializeC(SFArchive& archive) const {
+bool CNewReceipt::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     ((CNewReceipt*)this)->m_schema = getVersionNum();  // NOLINT
@@ -134,7 +135,7 @@ bool CNewReceipt::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CNewReceiptArray& array) {
+CArchive& operator>>(CArchive& archive, CNewReceiptArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -146,7 +147,7 @@ SFArchive& operator>>(SFArchive& archive, CNewReceiptArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CNewReceiptArray& array) {
+CArchive& operator<<(CArchive& archive, const CNewReceiptArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -175,13 +176,15 @@ void CNewReceipt::registerClass(void) {
     HIDE_FIELD(CNewReceipt, "deleted");
     HIDE_FIELD(CNewReceipt, "showing");
 
+    builtIns.push_back(_biCNewReceipt);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
 string_q nextNewreceiptChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CNewReceipt *newp = (const CNewReceipt *)dataPtr;  // NOLINT
+    const CNewReceipt *newp = reinterpret_cast<const CNewReceipt *>(dataPtr);
     if (newp) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -203,9 +206,8 @@ string_q nextNewreceiptChunk_custom(const string_q& fieldIn, const void *dataPtr
 }
 
 //---------------------------------------------------------------------------
-bool CNewReceipt::readBackLevel(SFArchive& archive) {
+bool CNewReceipt::readBackLevel(CArchive& archive) {
 
-    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -213,13 +215,13 @@ bool CNewReceipt::readBackLevel(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CNewReceipt& newp) {
+CArchive& operator<<(CArchive& archive, const CNewReceipt& newp) {
     newp.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CNewReceipt& newp) {
+CArchive& operator>>(CArchive& archive, CNewReceipt& newp) {
     newp.Serialize(archive);
     return archive;
 }
@@ -235,19 +237,19 @@ string_q CNewReceipt::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'c':
-            if ( fieldName % "contractAddress" ) return fromAddress(contractAddress);
+            if ( fieldName % "contractAddress" ) return addr_2_Str(contractAddress);
             break;
         case 'g':
-            if ( fieldName % "gasUsed" ) return fromGas(gasUsed);
+            if ( fieldName % "gasUsed" ) return gas_2_Str(gasUsed);
             break;
         case 'i':
-            if ( fieldName % "isError" ) return asString(isError);
+            if ( fieldName % "isError" ) return int_2_Str(isError);
             break;
         case 'l':
             if ( fieldName % "logs" || fieldName % "logsCnt" ) {
                 size_t cnt = logs.size();
                 if (endsWith(fieldName, "Cnt"))
-                    return asStringU(cnt);
+                    return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {
@@ -256,7 +258,7 @@ string_q CNewReceipt::getValueByName(const string_q& fieldName) const {
                 }
                 return retS;
             }
-            if ( fieldName % "logsBloom" ) return bloom2Bytes(logsBloom);
+            if ( fieldName % "logsBloom" ) return bloom_2_Bytes(logsBloom);
             break;
     }
 
@@ -272,7 +274,8 @@ ostream& operator<<(ostream& os, const CNewReceipt& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

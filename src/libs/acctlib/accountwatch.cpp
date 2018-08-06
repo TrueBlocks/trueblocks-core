@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "accountwatch.h"
 #include "etherlib.h"
 
@@ -27,7 +28,7 @@ static string_q nextAccountwatchChunk(const string_q& fieldIn, const void *dataP
 static string_q nextAccountwatchChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CAccountWatch::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CAccountWatch::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -47,7 +48,7 @@ void CAccountWatch::Format(CExportContext& ctx, const string_q& fmtIn, void *dat
 //---------------------------------------------------------------------------
 string_q nextAccountwatchChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CAccountWatch *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CAccountWatch *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -59,30 +60,26 @@ string_q nextAccountwatchChunk(const string_q& fieldIn, const void *dataPtr) {
 bool CAccountWatch::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     if (fieldName % "qbis") {
-        char *p = (char *)fieldValue.c_str();  // NOLINT
-        size_t nFields = 0;
-        qbis.parseJson(p, nFields);
-        return true;
+        string_q str = fieldValue;
+        return qbis.parseJson3(str);
     }
     if (fieldName % "balance") {
-        qbis.endBal = qbis.begBal = toWei(fieldValue);
+        qbis.endBal = qbis.begBal = str_2_Wei(fieldValue);
         return true;
     }
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "address" ) { address = toAddress(fieldValue); return true; }
+            if ( fieldName % "address" ) { address = str_2_Addr(fieldValue); return true; }
             break;
         case 'b':
             if ( fieldName % "balanceHistory" ) {
-                char *p = (char *)fieldValue.c_str();  // NOLINT
-                while (p && *p) {
-                    CBalanceHistory item;
-                    size_t nFields = 0;
-                    p = item.parseJson(p, nFields);
-                    if (nFields)
-                        balanceHistory.push_back(item);
+                CBalanceHistory item;
+                string_q str = fieldValue;
+                while (item.parseJson3(str)) {
+                    balanceHistory.push_back(item);
+                    item = CBalanceHistory();  // reset
                 }
                 return true;
             }
@@ -91,17 +88,17 @@ bool CAccountWatch::setValueByName(const string_q& fieldName, const string_q& fi
             if ( fieldName % "color" ) { color = fieldValue; return true; }
             break;
         case 'd':
-            if ( fieldName % "deepScan" ) { deepScan = str2Bool(fieldValue); return true; }
+            if ( fieldName % "deepScan" ) { deepScan = str_2_Bool(fieldValue); return true; }
             break;
         case 'f':
-            if ( fieldName % "firstBlock" ) { firstBlock = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "firstBlock" ) { firstBlock = str_2_Uint(fieldValue); return true; }
             break;
         case 'l':
-            if ( fieldName % "lastBlock" ) { lastBlock = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "lastBlock" ) { lastBlock = str_2_Uint(fieldValue); return true; }
             break;
         case 'n':
             if ( fieldName % "name" ) { name = fieldValue; return true; }
-            if ( fieldName % "nodeBal" ) { nodeBal = toWei(fieldValue); return true; }
+            if ( fieldName % "nodeBal" ) { nodeBal = str_2_Wei(fieldValue); return true; }
             break;
         case 'q':
             if ( fieldName % "qbis" ) { /* qbis = fieldValue; */ return false; }
@@ -120,12 +117,14 @@ void CAccountWatch::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAccountWatch::Serialize(SFArchive& archive) {
+bool CAccountWatch::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CAccountWatch*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
-    // If we're reading a back level, read the whole thing and we're done.
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
+    CBaseNode::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -138,15 +137,14 @@ bool CAccountWatch::Serialize(SFArchive& archive) {
     archive >> lastBlock;
     archive >> deepScan;
     archive >> qbis;
-// need to be able to not write fields that are otherwise part of the class
-//    archive >> balanceHistory;
+    archive >> balanceHistory;
     archive >> nodeBal;
     finishParse();
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAccountWatch::SerializeC(SFArchive& archive) const {
+bool CAccountWatch::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -160,14 +158,14 @@ bool CAccountWatch::SerializeC(SFArchive& archive) const {
     archive << lastBlock;
     archive << deepScan;
     archive << qbis;
-//    archive << balanceHistory;
+    archive << balanceHistory;
     archive << nodeBal;
 
     return true;
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CAccountWatchArray& array) {
+CArchive& operator>>(CArchive& archive, CAccountWatchArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -179,7 +177,7 @@ SFArchive& operator>>(SFArchive& archive, CAccountWatchArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CAccountWatchArray& array) {
+CArchive& operator<<(CArchive& archive, const CAccountWatchArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -212,13 +210,15 @@ void CAccountWatch::registerClass(void) {
     HIDE_FIELD(CAccountWatch, "deleted");
     HIDE_FIELD(CAccountWatch, "showing");
 
+    builtIns.push_back(_biCAccountWatch);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
 string_q nextAccountwatchChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CAccountWatch *acc = (const CAccountWatch *)dataPtr;
+    const CAccountWatch *acc = reinterpret_cast<const CAccountWatch *>(dataPtr);
     if (acc) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -240,9 +240,8 @@ string_q nextAccountwatchChunk_custom(const string_q& fieldIn, const void *dataP
 }
 
 //---------------------------------------------------------------------------
-bool CAccountWatch::readBackLevel(SFArchive& archive) {
+bool CAccountWatch::readBackLevel(CArchive& archive) {
 
-    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -260,13 +259,13 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "address" ) return fromAddress(address);
+            if ( fieldName % "address" ) return addr_2_Str(address);
             break;
         case 'b':
             if ( fieldName % "balanceHistory" || fieldName % "balanceHistoryCnt" ) {
                 size_t cnt = balanceHistory.size();
                 if (endsWith(fieldName, "Cnt"))
-                    return asStringU(cnt);
+                    return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {
@@ -280,17 +279,17 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "color" ) return color;
             break;
         case 'd':
-            if ( fieldName % "deepScan" ) return asString(deepScan);
+            if ( fieldName % "deepScan" ) return int_2_Str(deepScan);
             break;
         case 'f':
-            if ( fieldName % "firstBlock" ) return asStringU(firstBlock);
+            if ( fieldName % "firstBlock" ) return uint_2_Str(firstBlock);
             break;
         case 'l':
-            if ( fieldName % "lastBlock" ) return asStringU(lastBlock);
+            if ( fieldName % "lastBlock" ) return uint_2_Str(lastBlock);
             break;
         case 'n':
             if ( fieldName % "name" ) return name;
-            if ( fieldName % "nodeBal" ) return fromWei(nodeBal);
+            if ( fieldName % "nodeBal" ) return wei_2_Str(nodeBal);
             break;
         case 'q':
             if ( fieldName % "qbis" ) { expContext().noFrst=true; return qbis.Format(); }
@@ -318,7 +317,8 @@ ostream& operator<<(ostream& os, const CAccountWatch& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 
@@ -359,7 +359,7 @@ string_q CAccountWatch::displayName(bool expand, bool useColor, bool terse, size
 }
 
 //-----------------------------------------------------------------------
-SFUintBN getNodeBal(CBalanceHistoryArray& history, const SFAddress& addr, blknum_t blockNum) {
+biguint_t getNodeBal(CBalanceHistoryArray& history, const address_t& addr, blknum_t blockNum) {
 
     if (!startsWith(addr, "0x"))
         return 0;
@@ -373,14 +373,14 @@ SFUintBN getNodeBal(CBalanceHistoryArray& history, const SFAddress& addr, blknum
     string_q binaryFilename = "./balances/" + addr + ".bals.bin";
     if (history.size() == 0 && fileExists(binaryFilename) && fileSize(binaryFilename) > 0) {
 
-        SFArchive balCache(READING_ARCHIVE);
+        CArchive balCache(READING_ARCHIVE);
         if (balCache.Lock(binaryFilename, binaryReadOnly, LOCK_NOWAIT)) {
             blknum_t last = NOPOS;
-            SFAddress lastA;
+            address_t lastA;
             while (!balCache.Eof()) {
                 blknum_t bn;
-                SFAddress addr1;
-                SFUintBN bal;
+                address_t addr1;
+                biguint_t bal;
                 balCache >> bn >> addr1 >> bal;
                 if (addr == addr1) {
                     if (last != bn || bal != 0) {
@@ -409,7 +409,7 @@ SFUintBN getNodeBal(CBalanceHistoryArray& history, const SFAddress& addr, blknum
         return it->balance;
 
     // ...if it doesn't hit, we need to find the most recent balance
-    SFUintBN ret = 0;
+    biguint_t ret = 0;
     for (size_t i = 0 ; i < history.size() ; i++) {
         // TODO(tjayrush): THIS IS A BUG HACK FIX - SEE ABOVE
         // We should be able to do >= just below, but if we do, we pick up a zero
@@ -438,17 +438,14 @@ SFUintBN getNodeBal(CBalanceHistoryArray& history, const SFAddress& addr, blknum
 void loadWatchList(const CToml& toml, CAccountWatchArray& watches, const string_q& key) {
 
     string_q watchStr = toml.getConfigStr("watches", key, "");
-    char *p = cleanUpJson((char *)watchStr.c_str());  // NOLINT
-    while (p && *p) {
-        CAccountWatch watch;
-        size_t nFields = 0;
-        p = watch.parseJson(p, nFields);
-        if (nFields) {
-            // cleanup and add to list of watches
-            watch.address = fixAddress(toLower(watch.address));
-            watch.color   = convertColor(watch.color);
-            watches.push_back(watch);
-        }
+
+    CAccountWatch watch;
+    while (watch.parseJson3(watchStr)) {
+        // cleanup and add to list of watches
+        watch.address = str_2_Addr(toLower(watch.address));
+        watch.color   = convertColor(watch.color);
+        watches.push_back(watch);
+        watch = CAccountWatch();  // reset
     }
     return;
 }

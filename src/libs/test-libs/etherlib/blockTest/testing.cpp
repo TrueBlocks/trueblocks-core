@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -52,18 +52,18 @@ int main(int argc, const char *argv[]) {
 }
 
 //----------------------------------------------------------------
-bool visitAddrs(const CAddressItem& item, void *data) {
-    if (zeroAddr(item.addr))
+bool visitAddrs(const CAddressAppearance& item, void *data) {
+    if (isZeroAddr(item.addr))
         return true;
     cout << item << "\n";
     return true;
 }
 
 //----------------------------------------------------------------
-bool accumAddrs(const CAddressItem& item, void *data) {
-    if (zeroAddr(item.addr))
+bool accumAddrs(const CAddressAppearance& item, void *data) {
+    if (isZeroAddr(item.addr))
         return true;
-    vector<CAddressItem> *array = (vector<CAddressItem> *)data;
+    vector<CAddressAppearance> *array = (vector<CAddressAppearance> *)data;
     array->push_back(item);
     return true;
 }
@@ -75,15 +75,15 @@ bool transFilter(const CTransaction *trans, void *data) {
 }
 
 //----------------------------------------------------------------
-bool sortAddressArray(const CAddressItem& v1, const CAddressItem& v2) {
-    if (v1.bn != v2.bn)
-        return v1.bn < v2.bn;
-    int64_t vv1 = (int64_t)v1.tx;
-    int64_t vv2 = (int64_t)v2.tx;
+bool sortAddressArray(const CAddressAppearance& v1, const CAddressAppearance& v2) {
+    if (v1.getBn() != v2.getBn())
+        return v1.getBn() < v2.getBn();
+    int64_t vv1 = (int64_t)v1.getTx();
+    int64_t vv2 = (int64_t)v2.getTx();
     if (vv1 != vv2)
         return vv1 < vv2;
-    if (v1.tc != v2.tc)
-        return v1.tc < v2.tc;
+    if (v1.getTc() != v2.getTc())
+        return v1.getTc() < v2.getTc();
     return v1.addr < v2.addr;
 }
 
@@ -102,7 +102,7 @@ void everyUniqueAddress(CBlock& block) {
 //--------------------------------------------------------------
 void everySortedUniqueAddress(CBlock& block) {
     cout << "Every unique addresses in block 4312145 (sorted)\n";
-    vector<CAddressItem> array;
+    vector<CAddressAppearance> array;
     block.forEveryUniqueAddress(accumAddrs, transFilter, &array);
     sort(array.begin(), array.end(), sortAddressArray);
     for (auto elem : array)
@@ -127,7 +127,7 @@ void testFormatting(CBlock& block) {
     cout << block1.Format() << "\n";
 
     verbose = 5;
-    cout << sep << "\nUsing Format(fmt) - TODO: should report missing field, does not.\n" << sep << "\n";
+    cout << sep << "\nUsing Format(fmt) - TODO(tjayrush): should report missing field, does not.\n" << sep << "\n";
     cout << block1.Format("[{PARSED}]\t[{BLOCKNUMBER}]\t[{HASH}]\t[{MINER}]\t[{NOT_A_FIELD}]") << "\n";
 
     QTransferFrom tf;

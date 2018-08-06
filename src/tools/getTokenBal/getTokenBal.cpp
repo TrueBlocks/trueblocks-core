@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -16,11 +16,11 @@
 
 void reportByToken(COptions& options);
 void reportByAccount(COptions& options);
-extern SFUintBN getTokenInfo(const string_q& value, const SFAddress& token, const SFAddress& holder, blknum_t blockNum);
+extern biguint_t getTokenInfo(const string_q& v, const address_t& t, const address_t& h, blknum_t b);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    etherlib_init(quickQuitHander);
+    etherlib_init(quickQuitHandler);
 
     // Parse command line, allowing for command files
     COptions options;
@@ -52,7 +52,7 @@ int main(int argc, const char *argv[]) {
 //--------------------------------------------------------------
 void reportByToken(COptions& options) {
 
-    SFUintBN totalVal = 0;
+    biguint_t totalVal = 0;
     uint64_t nAccts = countOf(options.holders, '|') + 1;
     bool needsTotal = (nAccts > 1 && options.total);
 
@@ -60,26 +60,26 @@ void reportByToken(COptions& options) {
     // For each token contract
     string_q tokens = options.tokens;
     while (!tokens.empty()) {
-        SFAddress token = nextTokenClear(tokens, '|');
+        address_t token = nextTokenClear(tokens, '|');
         if (!options.asData)
             cout << "\n  For token contract: " << bBlue << token << cOff << "\n";
 
         // For each holder
         string_q holders = options.holders;
         while (!holders.empty()) {
-            SFAddress holder = nextTokenClear(holders, '|');
+            address_t holder = nextTokenClear(holders, '|');
 
             // For each block
             string_q blocks = options.getBlockNumList();
             while (!blocks.empty()) {
-                blknum_t blockNum = toLongU(nextTokenClear(blocks, '|'));
+                blknum_t blockNum = str_2_Uint(nextTokenClear(blocks, '|'));
                 if (blockNum < options.earliestBlock)
                     options.earliestBlock = blockNum;
-                SFUintBN bal = getTokenInfo("balance", token, holder, blockNum);
+                biguint_t bal = getTokenInfo("balance", token, holder, blockNum);
                 totalVal += bal;
-                string_q sBal = to_string(bal).c_str();
+                string_q sBal = bnu_2_Str(bal);
                 if (expContext().asEther) {
-                    sBal = wei2Ether(to_string(bal).c_str());
+                    sBal = wei_2_Ether(bnu_2_Str(bal));
                 } else if (expContext().asDollars) {
                     CBlock blk;
                     getBlock(blk, blockNum);
@@ -112,9 +112,9 @@ void reportByToken(COptions& options) {
     }
 
     if (needsTotal) {
-        string_q sBal = to_string(totalVal).c_str();
+        string_q sBal = bnu_2_Str(totalVal);
         if (expContext().asEther) {
-            sBal = wei2Ether(to_string(totalVal).c_str());
+            sBal = wei_2_Ether(bnu_2_Str(totalVal));
         } else if (expContext().asDollars) {
             CBlock blk;
             getBlock(blk, getLatestBlockFromClient());
@@ -132,7 +132,7 @@ void reportByToken(COptions& options) {
 //--------------------------------------------------------------
 void reportByAccount(COptions& options) {
 
-    SFUintBN totalVal = 0;
+    biguint_t totalVal = 0;
     uint64_t nAccts = countOf(options.holders, '|') + 1;
     bool needsTotal = (nAccts > 1 && options.total);
 
@@ -140,26 +140,26 @@ void reportByAccount(COptions& options) {
     // For each holder
     string_q holders = options.holders;
     while (!holders.empty()) {
-        SFAddress holder = nextTokenClear(holders, '|');
+        address_t holder = nextTokenClear(holders, '|');
         if (!options.asData)
             cout << "\n  For account: " << bBlue << holder << cOff << "\n";
 
         // For each token contract
         string_q tokens = options.tokens;
         while (!tokens.empty()) {
-            SFAddress token = nextTokenClear(tokens, '|');
+            address_t token = nextTokenClear(tokens, '|');
 
             // For each block
             string_q blocks = options.getBlockNumList();
             while (!blocks.empty()) {
-                blknum_t blockNum = toLongU(nextTokenClear(blocks, '|'));
+                blknum_t blockNum = str_2_Uint(nextTokenClear(blocks, '|'));
                 if (blockNum < options.earliestBlock)
                     options.earliestBlock = blockNum;
-                SFUintBN bal = getTokenInfo("balance", token, holder, blockNum);
+                biguint_t bal = getTokenInfo("balance", token, holder, blockNum);
                 totalVal += bal;
-                string_q sBal = to_string(bal).c_str();
+                string_q sBal = bnu_2_Str(bal);
                 if (expContext().asEther) {
-                    sBal = wei2Ether(to_string(bal).c_str());
+                    sBal = wei_2_Ether(bnu_2_Str(bal));
                 } else if (expContext().asDollars) {
                     CBlock blk;
                     getBlock(blk, blockNum);
@@ -192,9 +192,9 @@ void reportByAccount(COptions& options) {
     }
 
     if (needsTotal) {
-        string_q sBal = to_string(totalVal).c_str();
+        string_q sBal = bnu_2_Str(totalVal);
         if (expContext().asEther) {
-            sBal = wei2Ether(to_string(totalVal).c_str());
+            sBal = wei_2_Ether(bnu_2_Str(totalVal));
         } else if (expContext().asDollars) {
             CBlock blk;
             getBlock(blk, getLatestBlockFromClient());
@@ -210,7 +210,7 @@ void reportByAccount(COptions& options) {
 }
 
 //-------------------------------------------------------------------------
-SFUintBN getTokenInfo(const string_q& value, const SFAddress& token, const SFAddress& holder, blknum_t blockNum) {
+biguint_t getTokenInfo(const string_q& value, const address_t& token, const address_t& holder, blknum_t blockNum) {
 
     ASSERT(isAddress(token));
     ASSERT(isAddress(holder));
@@ -222,8 +222,8 @@ SFUintBN getTokenInfo(const string_q& value, const SFAddress& token, const SFAdd
     //        string_q cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"0x18160ddd\"}, \"[BLOCK]\"]";
     replace(cmd, "[TOKEN]",  t);
     replace(cmd, "[HOLDER]", h);
-    replace(cmd, "[BLOCK]",  toHex(blockNum));
+    replace(cmd, "[BLOCK]",  uint_2_Hex(blockNum));
 
-    return toWei(callRPC("eth_call", cmd, false));
+    return str_2_Wei(callRPC("eth_call", cmd, false));
 }
 

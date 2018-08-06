@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -33,7 +33,7 @@ int main(int argc, const char *argv[]) {
                 return 0;
             string_q in = argv[1];
             cout << "in: " << in << "\n";
-            string_q hex = string2Hex(in);
+            string_q hex = chr_2_HexStr(in);
             cout << "hex: " << hex << "\n";
             string_q out = getSha3(hex);
             cout << "out: " << out << "\n";
@@ -57,7 +57,7 @@ void doTests(void) {
                 in = line;
                 hasIn = true;
             } else {
-                string_q hex = string2Hex(in);
+                string_q hex = chr_2_HexStr(in);
                 string_q out = getSha3(hex);
                 cout << string_q(80, '-') << "\n"
                     << comment << "\n"

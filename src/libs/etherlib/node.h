@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -27,16 +27,16 @@ namespace qblocks {
     // fastest methods to access data
     extern bool     getBlock                (CBlock& block,       blknum_t blockNum);
     extern bool     getTransaction          (CTransaction& trans, blknum_t blockNum, txnum_t txID);
-    extern bool     getReceipt              (CReceipt& receipt,   const SFHash& txHash);
-    extern bool     getLogEntry             (CLogEntry& log,      const SFHash& txHash);
-    extern void     getTraces               (CTraceArray& traces, const SFHash& txHash);
-    extern size_t   getTraceCount           (const SFHash& hashIn);
+    extern bool     getReceipt              (CReceipt& receipt,   const hash_t& txHash);
+    extern bool     getLogEntry             (CLogEntry& log,      const hash_t& txHash);
+    extern void     getTraces               (CTraceArray& traces, const hash_t& txHash);
+    extern size_t   getTraceCount           (const hash_t& hashIn);
 
     //-------------------------------------------------------------------------
     // other methods to access data
-    extern bool     getBlock                (CBlock& block,       const SFHash& blockHash);
-    extern bool     getTransaction          (CTransaction& trans, const SFHash& txHash);
-    extern bool     getTransaction          (CTransaction& trans, const SFHash& blockHash, txnum_t txID);
+    extern bool     getBlock                (CBlock& block,       const hash_t& blockHash);
+    extern bool     getTransaction          (CTransaction& trans, const hash_t& txHash);
+    extern bool     getTransaction          (CTransaction& trans, const hash_t& blockHash, txnum_t txID);
 
     //-------------------------------------------------------------------------
     extern bool     queryBlock              (CBlock& block,       const string_q& num, bool needTrace, bool byHash,
@@ -47,17 +47,17 @@ namespace qblocks {
     // lower level access to the node's responses
     extern bool     queryRawBlock           (string_q& results,   const string_q& blockNum,
                                                     bool needTrace, bool hashesOnly);
-    extern bool     queryRawTransaction     (string_q& results,   const SFHash& txHash);
-    extern bool     queryRawReceipt         (string_q& results,   const SFHash& txHash);
-    extern bool     queryRawLog             (string_q& results,   const SFHash& hashIn);
-    extern bool     queryRawTrace           (string_q& results,   const SFHash& hashIn);
-    extern bool     queryRawLogs            (string_q& results,   const SFAddress& addr,
+    extern bool     queryRawTransaction     (string_q& results,   const hash_t& txHash);
+    extern bool     queryRawReceipt         (string_q& results,   const hash_t& txHash);
+    extern bool     queryRawLog             (string_q& results,   const hash_t& hashIn);
+    extern bool     queryRawTrace           (string_q& results,   const hash_t& hashIn);
+    extern bool     queryRawLogs            (string_q& results,   const address_t& addr,
                                                     uint64_t fromBlock, uint64_t toBlock);
 
     //-----------------------------------------------------------------------
-    extern SFHash   getRawBlock             (blknum_t bn);
-    extern SFHash   getRawBlockHash         (blknum_t bn);
-    extern SFHash   getRawTransactionHash   (blknum_t bn, txnum_t tx);
+    extern hash_t   getRawBlock             (blknum_t bn);
+    extern hash_t   getRawBlockHash         (blknum_t bn);
+    extern hash_t   getRawTransactionHash   (blknum_t bn, txnum_t tx);
 
     //-----------------------------------------------------------------------
     extern void     writeToJson             (const CBaseNode& node, const string_q& fileName);
@@ -71,16 +71,16 @@ namespace qblocks {
     extern string_q getVersionFromClient    (void);
     inline bool     isGeth                  (void) { return contains(toLower(getVersionFromClient()), "geth"); }  // NOLINT
     inline bool     isParity                (void) { return contains(toLower(getVersionFromClient()), "parity"); }  // NOLINT
-    extern bool     getAccounts             (SFAddressArray& addrs);
+    extern bool     getAccounts             (CAddressArray& addrs);
     extern uint64_t getLatestBlockFromClient(void);
     extern uint64_t getLatestBlockFromCache (void);
     extern bool     getLatestBlocks         (uint64_t& cache, uint64_t& client);
 
     //-------------------------------------------------------------------------
-    extern bool     getCode                 (const SFAddress& addr, string_q& theCode);
-    inline string_q getCode                 (const SFAddress& addr) { string_q ret; getCode(addr, ret); return ret; }  // NOLINT
-    inline bool     isContract              (const SFAddress& addr) { return !substitute(getCode(addr), "0x", "").empty(); }  // NOLINT
-    extern SFUintBN getBalance              (const SFAddress& addr, blknum_t blockNum, bool isDemo);
+    extern bool     getCode                 (const address_t& addr, string_q& theCode);
+    inline string_q getCode                 (const address_t& addr) { string_q ret; getCode(addr, ret); return ret; }  // NOLINT
+    inline bool     isContract              (const address_t& addr) { return !substitute(getCode(addr), "0x", "").empty(); }  // NOLINT
+    extern biguint_t getBalance              (const address_t& addr, blknum_t blockNum, bool isDemo);
     extern bool     getSha3                 (const string_q& hexIn, string_q& shaOut);
     inline string_q getSha3                 (const string_q& hexIn) { string_q ret; getSha3(hexIn,ret); return ret; }  // NOLINT
 
@@ -128,7 +128,7 @@ namespace qblocks {
     #define miniTransCache (blockCachePath("miniTrans.bin"))
     #define blockFolder    (blockCachePath("blocks/"))
     #define bloomFolder    (blockCachePath("blooms/"))
-    extern SFUintBN weiPerEther;
+    extern biguint_t weiPerEther;
 
 }  // namespace qblocks
 

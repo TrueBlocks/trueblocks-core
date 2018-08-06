@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -93,12 +93,7 @@ namespace qblocks {
 
                     if (!keepPaths) {
                         // trim path to last directory / file
-#ifdef MAC
-                        char res[kMaxPathSize];
-                        path = basename_r(path.c_str(), res);  // NOLINT
-#else
-                        path = basename((char *)path.c_str());  // NOLINT
-#endif
+                        path = basename((char*)path.c_str());  // NOLINT
                         if (startsWith(path, '/'))
                             path = extract(path, 1);
                         // The path we return is always just the name of the folder or file
@@ -151,7 +146,7 @@ namespace qblocks {
     //------------------------------------------------------------------------------------------
     string_q doCommand(const string_q& cmd) {
 
-        SFTime now = Now();
+        time_q now = Now();
         string_q tmpPath = "/tmp/";
         string_q filename = tmpPath + makeValidName("qb_" + now.Format("%Y%m%d%H%M%S"));
         string_q theCommand = (cmd + " >" + filename);

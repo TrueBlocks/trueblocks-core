@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -13,18 +13,18 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-CParams params[] = {
-    CParams("~block_list",       "a space-separated list of one or more blocks for which to retrieve blooms"),
-    CParams("-raw",              "pull the bloom filter directly from the running node (the default)"),
-    CParams("-eab",              "pull the enhanced adaptive bloom filters (EAB) from the local cache"),
-    CParams("-asbits",           "display the bloom filter as bits instead of hex"),
-    CParams("-a(s)bars",         "display the bloom filter as bar charts instead of hex"),
-    CParams("-recei(p)t",        "display blooms from the transaction receipts as opposed to block (--raw only)"),
-    CParams("@force",            "force a re-write of the bloom to the cache"),
-    CParams("",                  "Returns bloom filter(s) from running node (the default) or as EAB "
-                                    "from local cache.\n"),
+static COption params[] = {
+    COption("~block_list", "a space-separated list of one or more blocks for which to retrieve blooms"),
+    COption("-raw",        "pull the bloom filter directly from the running node (the default)"),
+    COption("-eab",        "pull the enhanced adaptive blooms from QBlocks cache"),
+    COption("-block",      "show only the block-level bloom (--raw only)"),
+    COption("-re(c)eipts", "show only the receipt-level blooms (--raw only)"),
+    COption("-b(a)rs",     "display blooms as bar chart instead of hex"),
+    COption("-b(i)ts",     "display blooms as bits instead of hex"),
+    COption("@force",      "force a re-write of the bloom to the cache"),
+    COption("",            "Returns bloom filter(s) from running node (the default) or as EAB from QBlocks.\n"),
 };
-size_t nParams = sizeof(params) / sizeof(CParams);
+static size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -43,30 +43,36 @@ bool COptions::parseArguments(string_q& command) {
             force = true;
 
         } else if (arg == "-r" || arg == "--raw") {
-            isRaw = true;
+            isRaw = true;  // last in wins
 
         } else if (arg == "-e" || arg == "--eab") {
-            isRaw = false;
+            isRaw = false;  // last in wins
 
-        } else if (arg == "-a" || arg == "--asbits") {
-            asBits = true;
+        } else if (arg == "-b" || arg == "--block") {
+            blockOnly = true;
+            if (receiptsOnly)
+                return usage("Please choose either --block or --receipt, not both. Quitting...");
 
-        } else if (arg == "-s" || arg == "--asbars") {
+        } else if (arg == "-c" || arg == "--receipts") {
+            receiptsOnly = true;
+            if (blockOnly)
+                return usage("Please choose either --block or --receipt, not both. Quitting...");
+
+        } else if (arg == "-a" || arg == "--bars") {
             asBars = true;
+            if (asBits)
+                return usage("Please choose either --bits or --bars, not both. Quitting...");
 
-        } else if (arg == "-p" || arg == "--receipt") {
-            UNHIDE_FIELD(CBlock,       "transactions");
-            UNHIDE_FIELD(CTransaction, "receipt");
-            UNHIDE_FIELD(CTransaction, "transactionIndex");
-            UNHIDE_FIELD(CReceipt,     "logsBloom");
-            receipt = true;
+        } else if (arg == "-i" || arg == "--bits") {
+            asBits = true;
+            if (asBars)
+                return usage("Please choose either --bits or --bars, not both. Quitting...");
 
         } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg))
                 return usage("Invalid option: " + arg);
 
         } else {
-
             string_q ret = blocks.parseBlockList(arg, latestBlock);
             if (endsWith(ret, "\n")) {
                 cerr << "\n  " << ret << "\n";
@@ -80,8 +86,11 @@ bool COptions::parseArguments(string_q& command) {
     if (!blocks.hasBlocks())
         return usage("You must specify at least one block number or block hash. Quitting...");
 
-    if (asBits && asBars)
-        return usage("Please pick on of --asbits and --asbars. Quitting...");
+    if (blockOnly && !isRaw)
+        return usage("--eab and --block options are not allowed together. Choose one. Quitting...");
+
+    if (receiptsOnly && !isRaw)
+        return usage("--eab and --receipts options are not allowed together. Choose one. Quitting...");
 
     return true;
 }
@@ -92,11 +101,12 @@ void COptions::Init(void) {
     nParamsRef = nParams;
     pOptions = this;
 
-    isRaw      = true;
-    asBits     = false;
-    asBars     = false;
-    force      = false;
-    receipt    = false;
+    isRaw        = true;
+    asBits       = false;
+    asBars       = false;
+    force        = false;
+    receiptsOnly = false;
+    blockOnly    = false;
     blocks.Init();
 }
 

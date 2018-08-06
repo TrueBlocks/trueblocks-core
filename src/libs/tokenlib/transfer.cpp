@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "transfer.h"
 #include "etherlib.h"
 
@@ -25,7 +26,7 @@ static string_q nextTransferChunk(const string_q& fieldIn, const void *dataPtr);
 static string_q nextTransferChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QTransfer::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QTransfer::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -45,7 +46,7 @@ void QTransfer::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr
 //---------------------------------------------------------------------------
 string_q nextTransferChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QTransfer *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QTransfer *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -63,8 +64,8 @@ bool QTransfer::setValueByName(const string_q& fieldName, const string_q& fieldV
 
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_to" ) { _to = toAddress(fieldValue); return true; }
-            if ( fieldName % "_value" ) { _value = toWei(fieldValue); return true; }
+            if ( fieldName % "_to" ) { _to = str_2_Addr(fieldValue); return true; }
+            if ( fieldName % "_value" ) { _value = str_2_Wei(fieldValue); return true; }
             break;
         default:
             break;
@@ -79,12 +80,14 @@ void QTransfer::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QTransfer::Serialize(SFArchive& archive) {
+bool QTransfer::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
-        return ((const QTransfer*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
-    // If we're reading a back level, read the whole thing and we're done.
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
+    CTransaction::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -97,7 +100,7 @@ bool QTransfer::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QTransfer::SerializeC(SFArchive& archive) const {
+bool QTransfer::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
@@ -111,7 +114,7 @@ bool QTransfer::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, QTransferArray& array) {
+CArchive& operator>>(CArchive& archive, QTransferArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -123,7 +126,7 @@ SFArchive& operator>>(SFArchive& archive, QTransferArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const QTransferArray& array) {
+CArchive& operator<<(CArchive& archive, const QTransferArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -151,13 +154,15 @@ void QTransfer::registerClass(void) {
     HIDE_FIELD(QTransfer, "deleted");
     HIDE_FIELD(QTransfer, "showing");
 
+    builtIns.push_back(_biQTransfer);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
 string_q nextTransferChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QTransfer *tra = (const QTransfer *)dataPtr;
+    const QTransfer *tra = reinterpret_cast<const QTransfer *>(dataPtr);
     if (tra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -179,9 +184,8 @@ string_q nextTransferChunk_custom(const string_q& fieldIn, const void *dataPtr) 
 }
 
 //---------------------------------------------------------------------------
-bool QTransfer::readBackLevel(SFArchive& archive) {
+bool QTransfer::readBackLevel(CArchive& archive) {
 
-    CTransaction::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -199,8 +203,8 @@ string_q QTransfer::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_to" ) return fromAddress(_to);
-            if ( fieldName % "_value" ) return asStringBN(_value);
+            if ( fieldName % "_to" ) return addr_2_Str(_to);
+            if ( fieldName % "_value" ) return bnu_2_Str(_value);
             break;
     }
 
@@ -216,7 +220,8 @@ ostream& operator<<(ostream& os, const QTransfer& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

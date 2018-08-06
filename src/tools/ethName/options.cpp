@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,18 +14,18 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-CParams params[] = {
-    CParams("~terms",       "a space separated list of one or more search terms"),
-    CParams("-addr",        "export only the associated address (may be used in scripting)"),
-    CParams("-count",       "print only the count of the number of matches"),
-    CParams("-data",        "export results as tab separated data"),
-    CParams("-open",        "open the name database for editing"),
-    CParams("-list",        "list all names in the database"),
-    CParams("-matchCase",   "matches must agree in case (the default is to ignore case)"),
-    CParams("-source",      "search 'source' field as well name and address (the default)"),
-    CParams("",             "Query Ethereum addresses and/or names making it easy to remember accounts.\n"),
+static COption params[] = {
+    COption("~terms",       "a space separated list of one or more search terms"),
+    COption("-addr",        "export only the associated address (may be used in scripting)"),
+    COption("-count",       "print only the count of the number of matches"),
+    COption("-data",        "export results as tab separated data"),
+    COption("-open",        "open the name database for editing"),
+    COption("-list",        "list all names in the database"),
+    COption("-matchCase",   "matches must agree in case (the default is to ignore case)"),
+    COption("-source",      "search 'source' field as well name and address (the default)"),
+    COption("",             "Query Ethereum addresses and/or names making it easy to remember accounts.\n"),
 };
-size_t nParams = sizeof(params) / sizeof(CParams);
+static size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -139,7 +139,7 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
         ret += "The [{--addrOnly}] option modifies the display output and therefore works with any other options.\n";
         ret += "Name file: [{" +
                 substitute(namesFile.getFullPath(), getHomeFolder(), "~/") +
-                    "}] (" + asStringU(fileSize(namesFile.getFullPath())) + ")\n";
+                    "}] (" + uint_2_Str(fileSize(namesFile.getFullPath())) + ")\n";
         return ret;
     }
     return str;

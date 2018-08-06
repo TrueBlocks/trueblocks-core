@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -29,7 +29,7 @@ string_q CJunk::getValueByName(const string_q& fieldName) const {
     if (fieldName == "array1") {
         size_t cnt = array1.size();
         if (endsWith(fieldName, "Cnt"))
-            return asStringU(cnt);
+            return uint_2_Str(cnt);
         if (!cnt) return "";
         string_q retS;
         for (size_t i = 0 ; i < cnt ; i++) {
@@ -40,7 +40,7 @@ string_q CJunk::getValueByName(const string_q& fieldName) const {
     }
     return "";
 }
-void CJunk::Format(CExportContext& ctx, const string_q& fmtIn, void* dataPtr) const {
+void CJunk::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     ctx << toJson();
     return;
 }

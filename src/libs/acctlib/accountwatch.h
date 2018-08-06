@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "abilib.h"
 #include "transaction.h"
 #include "incomestatement.h"
@@ -29,7 +30,7 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CAccountWatch : public CBaseNode {
 public:
-    SFAddress address;
+    address_t address;
     string_q name;
     string_q color;
     blknum_t firstBlock;
@@ -37,7 +38,7 @@ public:
     bool deepScan;
     CIncomeStatement qbis;
     CBalanceHistoryArray balanceHistory;
-    SFWei nodeBal;
+    wei_t nodeBal;
 
 public:
     CAccountWatch(void);
@@ -55,9 +56,11 @@ public:
     string_q displayName(bool expand, bool terse, size_t w1 = 20, size_t w2 = 8) const
         { return displayName(expand, true, terse, w1, w2); }
     string_q displayName(bool expand, bool useColor, bool terse, size_t w1 = 20, size_t w2 = 8) const;
-    SFBloom bloom;
+    bloom_t bloom;
     bool inBlock;
     // EXISTING_CODE
+    bool operator==(const CAccountWatch& item) const;
+    bool operator!=(const CAccountWatch& item) const { return !operator==(item); }
     friend bool operator<(const CAccountWatch& v1, const CAccountWatch& v2);
     friend ostream& operator<<(ostream& os, const CAccountWatch& item);
 
@@ -65,7 +68,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CAccountWatch& ac);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -154,21 +157,29 @@ inline CAccountWatch& CAccountWatch::operator=(const CAccountWatch& ac) {
 }
 
 //-------------------------------------------------------------------------
+inline bool CAccountWatch::operator==(const CAccountWatch& item) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const CAccountWatch& v1, const CAccountWatch& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted
+    // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
 }
 
 //---------------------------------------------------------------------------
 typedef vector<CAccountWatch> CAccountWatchArray;
-extern SFArchive& operator>>(SFArchive& archive, CAccountWatchArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const CAccountWatchArray& array);
+extern CArchive& operator>>(CArchive& archive, CAccountWatchArray& array);
+extern CArchive& operator<<(CArchive& archive, const CAccountWatchArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern SFUintBN getNodeBal(CBalanceHistoryArray& history, const SFAddress& addr, blknum_t blockNum);
+extern biguint_t getNodeBal(CBalanceHistoryArray& history, const address_t& addr, blknum_t blockNum);
 extern void loadWatchList(const CToml& toml, CAccountWatchArray& watches, const string_q& key);
 // EXISTING_CODE
 }  // namespace qblocks

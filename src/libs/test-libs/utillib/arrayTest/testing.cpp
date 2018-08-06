@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -34,7 +34,7 @@ TEST_F(CThisTest, TestInsertion) {
     for (auto elem : strArray)
         cout << TESTID("array ", 20) << elem << "\n";
 
-    SFUintArray myvector;
+    CUintArray myvector;
     for (size_t i = 0; i < 10; i++)
         myvector.push_back(i);
     cout << TESTID("int array", 20);

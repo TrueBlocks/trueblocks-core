@@ -203,7 +203,7 @@ _ERROR_CATEGORIES = [
     'build/include',
     'build/include_alpha',
     'build/include_order',
-    'build/include_what_you_use',
+#    'build/include_what_you_use',
     'build/namespaces',
     'build/printf_format',
     'build/storage_class',
@@ -542,7 +542,7 @@ _root = None
 
 # The allowed line length of files.
 # This is set by --linelength flag.
-#QuickBlocks
+# QBlocks
 _line_length = 120
 
 # The allowed extensions for file names
@@ -583,6 +583,8 @@ def ParseNolintSuppressions(filename, raw_line, linenum, error):
     error: function, an error handler.
   """
   matched = Search(r'\bNOLINT(NEXTLINE)?\b(\([^)]+\))?', raw_line)
+  if not matched:
+    matched = Search(r'\bNOLINT1(NEXTLINE)?\b(\([^)]+\))?', raw_line)
   if matched:
     if matched.group(1):
       suppressed_line = linenum + 1
@@ -1809,7 +1811,7 @@ def CheckForHeaderGuard(filename, clean_lines, error):
   for i in raw_lines:
     if Search(r'//\s*NOLINT\(build/header_guard\)', i):
       return
-    #QuickBlocks
+    # QBlocks
     if Search(r'pragma once', i):
       return
 
@@ -1908,7 +1910,7 @@ def CheckHeaderFileIncluded(filename, include_state, error):
       if not first_include:
         first_include = f[1]
 
-  #QuickBlocks
+  # QBlocks
   #error(filename, first_include, 'build/include', 5,
   #      '%s should include its header file %s' % (fileinfo.RepositoryName(),
   #                                                headername))
@@ -2591,7 +2593,7 @@ class NestingState(object):
     if self.stack and isinstance(self.stack[-1], _ClassInfo):
       classinfo = self.stack[-1]
       access_match = Match(
-          #QuickBlocks r'^(.*)\b(public|private|protected|signals)(\s+(?:slots\s*)?)?'
+          # QBlocks r'^(.*)\b(public|private|protected|signals)(\s+(?:slots\s*)?)?'
           r'^(.*)\b(signals)(\s+(?:slots\s*)?)?'
           r':(?:[^:]|$)',
           line)
@@ -2947,7 +2949,7 @@ def CheckForNamespaceIndentation(filename, nesting_state, clean_lines, line,
       isinstance(nesting_state.previous_stack_top, _NamespaceInfo) and
       nesting_state.previous_stack_top == nesting_state.stack[-2])
 
-#QuickBlocks
+# QBlocks
 #  if ShouldCheckNamespaceIndentation(nesting_state, is_namespace_indent_item,
 #                                     clean_lines.elided, line):
 #    CheckItemIndentationInNamespace(filename, clean_lines.elided,
@@ -3186,7 +3188,7 @@ def CheckSpacing(filename, clean_lines, linenum, nesting_state, error):
                            prev_line)
                      or Match(r' {4}:', prev_line))
 
-      #QuickBlocks
+      # QBlocks
       #if not exception:
       #  error(filename, linenum, 'whitespace/blank_line', 2,
       #        'Redundant blank line at the start of a code block '
@@ -4481,7 +4483,7 @@ def CheckIncludeLine(filename, clean_lines, linenum, include_state, error):
   #
   # We also make an exception for Lua headers, which follow google
   # naming convention but not the include convention.
-  match = False #QuickBlocks Match(r'#include\s*"([^/]+\.h)"', line)
+  match = False # QBlocks Match(r'#include\s*"([^/]+\.h)"', line)
   if match and not _THIRD_PARTY_HEADERS_PATTERN.match(match.group(1)):
     error(filename, linenum, 'build/include', 4,
           'Include the directory when naming .h files')
@@ -5073,7 +5075,7 @@ def CheckForNonConstReference(filename, clean_lines, linenum,
           Search(whitelisted_functions, clean_lines.elided[linenum - i - 1])):
         return
 
-  #QuickBlocks
+  # QBlocks
   #decls = ReplaceAll(r'{[^}]*}', ' ', line)  # exclude function body
   #for parameter in re.findall(_RE_PATTERN_REF_PARAM, decls):
   #  if (not Match(_RE_PATTERN_CONST_REF_PARAM, parameter) and
@@ -5866,7 +5868,7 @@ def ProcessFileData(filename, file_extension, lines, error,
     FlagCxx11Features(filename, clean_lines, line, error)
   nesting_state.CheckCompletedBlocks(filename, error)
 
-  CheckForIncludeWhatYouUse(filename, clean_lines, include_state, error)
+#  CheckForIncludeWhatYouUse(filename, clean_lines, include_state, error)
 
   # Check that the .cc file has included its header if it exists.
   if _IsSourceExtension(file_extension):

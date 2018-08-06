@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -13,11 +13,11 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-CParams params[] = {
-    CParams("~file(s)", "One or more files to parse"),
-    CParams("",         "Test the json parsing facility in quickBlocks.\n"),
+static COption params[] = {
+    COption("~file(s)", "One or more files to parse"),
+    COption("",         "Test the json parsing facility in QBlocks.\n"),
 };
-size_t nParams = sizeof(params) / sizeof(CParams);
+static size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -33,9 +33,12 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
         } else {
-            if (!fileExists(arg))
-                return usage("File : " + arg + " does not exists. Quitting...");
-            fileName += (arg + "|");
+            string_q fn = "tests/" + arg + ".json";
+            if (!fileExists(fn))
+                return usage("File : " + fn + " does not exists. Quitting...");
+            if (!fileName.empty())
+                return usage("Only specify one file name per command. Quitting...");
+            fileName = arg;
         }
     }
 

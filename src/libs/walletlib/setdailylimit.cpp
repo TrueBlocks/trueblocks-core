@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "setdailylimit.h"
 #include "etherlib.h"
 
@@ -25,7 +26,7 @@ static string_q nextSetdailylimitChunk(const string_q& fieldIn, const void *data
 static string_q nextSetdailylimitChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QSetDailyLimit::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QSetDailyLimit::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -45,7 +46,7 @@ void QSetDailyLimit::Format(CExportContext& ctx, const string_q& fmtIn, void *da
 //---------------------------------------------------------------------------
 string_q nextSetdailylimitChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QSetDailyLimit *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QSetDailyLimit *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -63,7 +64,7 @@ bool QSetDailyLimit::setValueByName(const string_q& fieldName, const string_q& f
 
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_newLimit" ) { _newLimit = toWei(fieldValue); return true; }
+            if ( fieldName % "_newLimit" ) { _newLimit = str_2_Wei(fieldValue); return true; }
             break;
         default:
             break;
@@ -78,12 +79,14 @@ void QSetDailyLimit::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QSetDailyLimit::Serialize(SFArchive& archive) {
+bool QSetDailyLimit::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
-        return ((const QSetDailyLimit*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
-    // If we're reading a back level, read the whole thing and we're done.
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
+    CTransaction::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -95,7 +98,7 @@ bool QSetDailyLimit::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QSetDailyLimit::SerializeC(SFArchive& archive) const {
+bool QSetDailyLimit::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
@@ -108,7 +111,7 @@ bool QSetDailyLimit::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, QSetDailyLimitArray& array) {
+CArchive& operator>>(CArchive& archive, QSetDailyLimitArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -120,7 +123,7 @@ SFArchive& operator>>(SFArchive& archive, QSetDailyLimitArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const QSetDailyLimitArray& array) {
+CArchive& operator<<(CArchive& archive, const QSetDailyLimitArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -147,13 +150,15 @@ void QSetDailyLimit::registerClass(void) {
     HIDE_FIELD(QSetDailyLimit, "deleted");
     HIDE_FIELD(QSetDailyLimit, "showing");
 
+    builtIns.push_back(_biQSetDailyLimit);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
 string_q nextSetdailylimitChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QSetDailyLimit *set = (const QSetDailyLimit *)dataPtr;
+    const QSetDailyLimit *set = reinterpret_cast<const QSetDailyLimit *>(dataPtr);
     if (set) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -175,9 +180,8 @@ string_q nextSetdailylimitChunk_custom(const string_q& fieldIn, const void *data
 }
 
 //---------------------------------------------------------------------------
-bool QSetDailyLimit::readBackLevel(SFArchive& archive) {
+bool QSetDailyLimit::readBackLevel(CArchive& archive) {
 
-    CTransaction::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -195,7 +199,7 @@ string_q QSetDailyLimit::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_newLimit" ) return asStringBN(_newLimit);
+            if ( fieldName % "_newLimit" ) return bnu_2_Str(_newLimit);
             break;
     }
 
@@ -211,7 +215,8 @@ ostream& operator<<(ostream& os, const QSetDailyLimit& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

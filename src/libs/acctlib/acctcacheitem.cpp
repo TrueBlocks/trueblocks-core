@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "acctcacheitem.h"
 
 namespace qblocks {
@@ -26,7 +27,7 @@ static string_q nextAcctcacheitemChunk(const string_q& fieldIn, const void *data
 static string_q nextAcctcacheitemChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CAcctCacheItem::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CAcctCacheItem::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -46,7 +47,7 @@ void CAcctCacheItem::Format(CExportContext& ctx, const string_q& fmtIn, void *da
 //---------------------------------------------------------------------------
 string_q nextAcctcacheitemChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CAcctCacheItem *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CAcctCacheItem *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -61,10 +62,10 @@ bool CAcctCacheItem::setValueByName(const string_q& fieldName, const string_q& f
 
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "blockNum" ) { blockNum = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "blockNum" ) { blockNum = str_2_Uint(fieldValue); return true; }
             break;
         case 't':
-            if ( fieldName % "transIndex" ) { transIndex = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "transIndex" ) { transIndex = str_2_Uint(fieldValue); return true; }
             break;
         default:
             break;
@@ -79,12 +80,14 @@ void CAcctCacheItem::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAcctCacheItem::Serialize(SFArchive& archive) {
+bool CAcctCacheItem::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CAcctCacheItem*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
-    // If we're reading a back level, read the whole thing and we're done.
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
+    CBaseNode::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -97,7 +100,7 @@ bool CAcctCacheItem::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAcctCacheItem::SerializeC(SFArchive& archive) const {
+bool CAcctCacheItem::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -111,7 +114,7 @@ bool CAcctCacheItem::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CAcctCacheItemArray& array) {
+CArchive& operator>>(CArchive& archive, CAcctCacheItemArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -123,7 +126,7 @@ SFArchive& operator>>(SFArchive& archive, CAcctCacheItemArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CAcctCacheItemArray& array) {
+CArchive& operator<<(CArchive& archive, const CAcctCacheItemArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -149,13 +152,15 @@ void CAcctCacheItem::registerClass(void) {
     HIDE_FIELD(CAcctCacheItem, "deleted");
     HIDE_FIELD(CAcctCacheItem, "showing");
 
+    builtIns.push_back(_biCAcctCacheItem);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
 string_q nextAcctcacheitemChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CAcctCacheItem *acc = (const CAcctCacheItem *)dataPtr;
+    const CAcctCacheItem *acc = reinterpret_cast<const CAcctCacheItem *>(dataPtr);
     if (acc) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -177,9 +182,8 @@ string_q nextAcctcacheitemChunk_custom(const string_q& fieldIn, const void *data
 }
 
 //---------------------------------------------------------------------------
-bool CAcctCacheItem::readBackLevel(SFArchive& archive) {
+bool CAcctCacheItem::readBackLevel(CArchive& archive) {
 
-    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -197,10 +201,10 @@ string_q CAcctCacheItem::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "blockNum" ) return asStringU(blockNum);
+            if ( fieldName % "blockNum" ) return uint_2_Str(blockNum);
             break;
         case 't':
-            if ( fieldName % "transIndex" ) return asStringU(transIndex);
+            if ( fieldName % "transIndex" ) return uint_2_Str(transIndex);
             break;
     }
 
@@ -220,7 +224,8 @@ ostream& operator<<(ostream& os, const CAcctCacheItem& item) {
     }
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 
@@ -231,10 +236,10 @@ CAcctCacheItem::CAcctCacheItem(string_q& line) {
     replaceAll(line, ".", "\t");
 
     string_q val = nextTokenClear(line, '\t');
-    blockNum = toUnsigned(val);
+    blockNum = str_2_Uint(val);
 
     val = nextTokenClear(line, '\t');
-    transIndex = toUnsigned(val);
+    transIndex = str_2_Uint(val);
 }
 // EXISTING_CODE
 }  // namespace qblocks

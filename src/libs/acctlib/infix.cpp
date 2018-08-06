@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "infix.h"
 #include "treeroot.h"
 
@@ -27,7 +28,7 @@ static string_q nextInfixChunk(const string_q& fieldIn, const void *dataPtr);
 static string_q nextInfixChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CInfix::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CInfix::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -47,7 +48,7 @@ void CInfix::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) c
 //---------------------------------------------------------------------------
 string_q nextInfixChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CInfix *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CInfix *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -69,10 +70,8 @@ bool CInfix::setValueByName(const string_q& fieldName, const string_q& fieldValu
                 clear();
                 next = new CTreeNode;
                 if (next) {
-                    char *p = cleanUpJson((char *)fieldValue.c_str());  // NOLINT
-                    size_t nFields = 0;
-                    next->parseJson(p, nFields);
-                    return true;
+                    string_q str = fieldValue;
+                    return next->parseJson3(str);
                 }
                 return false;
             }
@@ -90,14 +89,18 @@ void CInfix::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CInfix::Serialize(SFArchive& archive) {
+bool CInfix::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CInfix*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
-    // If we're reading a back level, read the whole thing and we're done.
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
     CTreeNode::Serialize(archive);
+    if (readBackLevel(archive))
+        return true;
 
+    // EXISTING_CODE
     // EXISTING_CODE
     next = NULL;
     bool has_next = false;
@@ -105,18 +108,17 @@ bool CInfix::Serialize(SFArchive& archive) {
     if (has_next) {
         string_q className;
         archive >> className;
-        next = createTreeNode(className);
+        next = reinterpret_cast<CTreeNode *>(createObjectOfType(className));
         if (!next)
             return false;
         next->Serialize(archive);
     }
-    // EXISTING_CODE
     finishParse();
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CInfix::SerializeC(SFArchive& archive) const {
+bool CInfix::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CTreeNode::SerializeC(archive);
@@ -125,8 +127,7 @@ bool CInfix::SerializeC(SFArchive& archive) const {
     // EXISTING_CODE
     archive << (next != NULL);
     if (next) {
-        string_q className = next->getRuntimeClass()->getClassNamePtr();
-        archive << className;
+        archive << next->getRuntimeClass()->getClassNamePtr();
         next->SerializeC(archive);
     }
 
@@ -134,7 +135,7 @@ bool CInfix::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CInfixArray& array) {
+CArchive& operator>>(CArchive& archive, CInfixArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -146,7 +147,7 @@ SFArchive& operator>>(SFArchive& archive, CInfixArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CInfixArray& array) {
+CArchive& operator<<(CArchive& archive, const CInfixArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -173,13 +174,15 @@ void CInfix::registerClass(void) {
     HIDE_FIELD(CInfix, "deleted");
     HIDE_FIELD(CInfix, "showing");
 
+    builtIns.push_back(_biCInfix);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
 string_q nextInfixChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CInfix *inf = (const CInfix *)dataPtr;
+    const CInfix *inf = reinterpret_cast<const CInfix *>(dataPtr);
     if (inf) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -201,9 +204,8 @@ string_q nextInfixChunk_custom(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-bool CInfix::readBackLevel(SFArchive& archive) {
+bool CInfix::readBackLevel(CArchive& archive) {
 
-    CTreeNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -241,7 +243,8 @@ ostream& operator<<(ostream& os, const CInfix& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

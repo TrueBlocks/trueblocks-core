@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -41,8 +41,8 @@ namespace qblocks {
     public:
         uint32_t index;
         bool     isError;
-        SFGas    gasUsed;
-        SFGas    gasPrice;
+        gas_t    gasUsed;
+        gas_t    gasPrice;
         uint32_t nTraces;
         char     value[41];
 

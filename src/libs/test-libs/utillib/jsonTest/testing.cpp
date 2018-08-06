@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -12,6 +12,19 @@
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
 #include "options.h"
+
+//-------------------------------------------------------------------------
+ostream& operator<<(ostream& os, const CTraceArray& array) {
+    cout << "[\n";
+    for (size_t i = 0 ; i < array.size() ; i++) {
+        array[i].Format(os, "", nullptr);
+        if (i < array.size() - 1)
+            cout << ",";
+        cout << "\n";
+    }
+    cout << "]\n";
+    return os;
+}
 
 //--------------------------------------------------------------
 int main(int argc, const char * argv[]) {
@@ -29,14 +42,30 @@ int main(int argc, const char * argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        while (!options.fileName.empty()) {
-            string_q fileName = nextTokenClear(options.fileName, '|');
-            cout << fileName << "\n";
-            string_q contents = asciiFileToString(fileName);
-            while (!contents.empty()) {
-                string_q line = nextTokenClear(contents, '\n');
-                cout << line << "\n";
+        string_q fn = "tests/" + options.fileName + ".json";
+        cout << fn << "\n";
+        string_q contents = asciiFileToString(fn);
+        if (options.fileName == "blocks") {
+
+            CBlock block;
+            while (block.parseJson3(contents))  // returns 'true' if anyting was parsed
+                cout << block << "\n";
+
+        } else if (options.fileName == "traces") {
+
+            CTrace trace;
+            while (trace.parseJson3(contents))
+                cout << trace << "\n";
+
+        } else {
+            GETRUNTIME_CLASS(CTrace)->sortFieldList();
+            CTraceArray array;
+            CTrace trace;
+            while (trace.parseJson3(contents)) {
+                array.push_back(trace);
+                trace = CTrace();  // reset
             }
+            cout << array << "\n";
         }
     }
 

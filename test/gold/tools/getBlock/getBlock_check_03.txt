@@ -28,7 +28,7 @@ from Node:
 "value":"0xde13a4c97368064"
 
 --------------------------------------------------------------------------------
-from Quickblocks:
+from QBlocks:
 "blockHash":"0x93ef1e0e47b32163d9cf9bd2e0a5f52b05e04f77fc99c7750b551553eb0c94c3"
 "blockNumber":"0x1de081"
 "difficulty":"0x2fb8651f992b"

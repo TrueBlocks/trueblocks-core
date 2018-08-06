@@ -74,7 +74,7 @@ error               	1011	0	131122	T_TEXT TS_STRING
 action              	1012	0	1048651	T_OBJECT TS_OBJECT
 result              	1013	0	1048651	T_OBJECT TS_OBJECT
 {
-  "schema": 5002,
+  "schema": 5005,
   "deleted": 0,
   "showing": 1,
   "blockHash": "0x0",

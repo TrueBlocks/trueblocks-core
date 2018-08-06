@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,23 +14,23 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-CParams params[] = {
-    CParams("~addr",      "the address(es) of the smart contract(s) to grab"),
-    CParams("-canonical", "convert all types to their canonical represenation and remove all spaces from display"),
-    CParams("-generate",  "generate C++ code into the current folder for all functions and events found in the ABI"),
-    CParams("-data",      "export the display as data"),
-    CParams("-encode",    "generate the encodings for the functions / events in the ABI"),
-    CParams("-noconst",   "generate encodings for non-constant functions and events only (always true when generating)"), // NOLINT
-    CParams("-open",      "open the ABI file for editing, download if not already present"),
-    CParams("-raw",       "force retrieval of ABI from etherscan (ignoring cache)"),
-    CParams("@-json",     "print the ABI to the screen as json"),
-    CParams("@-silent",   "if ABI cannot be acquired, fail silently (useful for scripting)"),
-    CParams("@-nodec",    "do not decorate duplicate names"),
-    CParams("@-freshen",  "regenerate the binary database version of all ABIs in the abi cache"),
-    CParams("",           "Fetches the ABI for a smart contract. Optionally generates C++ source code "
+static COption params[] = {
+    COption("~addr",      "the address(es) of the smart contract(s) to grab"),
+    COption("-canonical", "convert all types to their canonical represenation and remove all spaces from display"),
+    COption("-generate",  "generate C++ code into the current folder for all functions and events found in the ABI"),
+    COption("-data",      "export the display as data"),
+    COption("-encode",    "generate the encodings for the functions / events in the ABI"),
+    COption("-noconst",   "generate encodings for non-constant functions and events only (always true when generating)"), // NOLINT
+    COption("-open",      "open the ABI file for editing, download if not already present"),
+    COption("-raw",       "force retrieval of ABI from etherscan (ignoring cache)"),
+    COption("@json",      "print the ABI to the screen as json"),
+    COption("@silent",    "if ABI cannot be acquired, fail silently (useful for scripting)"),
+    COption("@nodec",     "do not decorate duplicate names"),
+    COption("@freshen",   "regenerate the binary database version of all ABIs in the abi cache"),
+    COption("",           "Fetches the ABI for a smart contract. Optionally generates C++ source code "
                           "representing that ABI.\n"),
 };
-size_t nParams = sizeof(params) / sizeof(CParams);
+static size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -90,11 +90,11 @@ extern void rebuildFourByteDB(void);
         } else {
             if (primaryAddr.empty())
                 primaryAddr = arg;
-            SFAddress addr = fixAddress(toLower(arg));
+            if (!isAddress(arg) && arg != "0xTokenLib" && arg != "0xWalletLib")
+                return usage("Invalid address '" + arg + "'. Length is not equal to 40 characters (20 bytes).\n");
+            address_t addr = str_2_Addr(arg);
             if (arg == "0xTokenLib" || arg == "0xWalletLib")
                 addr = arg;
-            if (!isAddress(addr) && addr != "0xTokenLib" && addr != "0xWalletLib")
-                return usage("Invalid address '" + addr + "'. Length is not equal to 40 characters (20 bytes).\n");
             addrs.push_back(addr);
         }
     }
@@ -170,7 +170,7 @@ string_q getPrefix(const string_q& inIn) {
 bool visitABIs(const string_q& path, void *dataPtr) {
 
     if (endsWith(path, ".json")) {
-        string_q *str = (string_q*)dataPtr;  // NOLINT
+        string_q *str = reinterpret_cast<string_q *>(dataPtr);
         *str += (path+"\n");
     }
     return true;
@@ -197,7 +197,7 @@ void rebuildFourByteDB(void) {
         }
     }
     sort(funcArray.begin(), funcArray.end());
-    SFArchive funcCache(WRITING_ARCHIVE);
+    CArchive funcCache(WRITING_ARCHIVE);
     if (funcCache.Lock(abiPath+"abis.bin", binaryWriteCreate, LOCK_CREATE)) {
         funcCache << funcArray;
         funcCache.Release();

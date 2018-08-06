@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -12,9 +12,11 @@
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
 
+extern void readCustomAddrs(CAddressArray& array);
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
+    getCurlContext()->provider = "None";  // --named option runs without a node
     etherlib_init();
 
     COptions options;
@@ -27,13 +29,14 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        SFAddressArray addrs;
+        CAddressArray addrs;
         if (options.named) {
             for (size_t i = 0 ; i < options.namedAccounts.size() ; i++)
                 addrs.push_back(options.namedAccounts[i].addr);
 
         } else {
             getAccounts(addrs);
+            readCustomAddrs(addrs);
             if (isTestMode()) {
                addrs.clear();
                addrs.push_back("0x0000000000000000000000000000000000000000");
@@ -52,3 +55,12 @@ int main(int argc, const char *argv[]) {
     return 0;
 }
 
+//-----------------------------------------------------------------------
+void readCustomAddrs(CAddressArray& array) {
+    size_t n = getGlobalConfig()->getConfigInt("extra_accounts", "n", 0);
+    for (size_t i = 0 ; i < n ; i++) {
+        string_q addr = getGlobalConfig()->getConfigStr("extra_accounts", "ea_" + uint_2_Str(i), "");
+        if (!isZeroAddr(addr))
+            array.push_back(addr);
+    }
+}

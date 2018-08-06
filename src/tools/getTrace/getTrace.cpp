@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -62,15 +62,20 @@ bool visitTransaction(CTransaction& trans, void *data) {
         return true;
     }
 
-    CTraceArray traces;
-    getTraces(traces, trans.getValueByName("hash"));
+    if (opt->countOnly) {
+        cout << trans.hash << "\t" << getTraceCount(trans.hash) << "\n";
 
-    cout << "[";
-    for (size_t i = 0 ; i < traces.size() ; i++) {
-        traces[i].doExport(cout);
-        cout << (i < traces.size()-1 ? ",\n" : "\n");
+    } else {
+        CTraceArray traces;
+        getTraces(traces, trans.getValueByName("hash"));
+
+        cout << "[";
+        for (size_t i = 0 ; i < traces.size() ; i++) {
+            traces[i].doExport(cout);
+            cout << (i < traces.size()-1 ? ",\n" : "\n");
+        }
+        cout << "]\n";
     }
-    cout << "]\n";
 
     return true;
 }

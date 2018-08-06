@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "abilib.h"
 
 namespace qblocks {
@@ -28,7 +29,7 @@ class CBalHistory : public CBaseNode {
 public:
     string_q recordID;
     timestamp_t timestamp;
-    SFIntBN balance;
+    bigint_t balance;
 
 public:
     CBalHistory(void);
@@ -39,8 +40,10 @@ public:
     DECLARE_NODE(CBalHistory);
 
     // EXISTING_CODE
-    CBalHistory(const string_q& _recID, SFIntBN bal) : recordID(_recID), balance(bal) { }
+    CBalHistory(const string_q& _recID, bigint_t bal) : recordID(_recID), balance(bal) { }
     // EXISTING_CODE
+    bool operator==(const CBalHistory& item) const;
+    bool operator!=(const CBalHistory& item) const { return !operator==(item); }
     friend bool operator<(const CBalHistory& v1, const CBalHistory& v2);
     friend ostream& operator<<(ostream& os, const CBalHistory& item);
 
@@ -48,7 +51,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CBalHistory& ba);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -119,21 +122,29 @@ inline CBalHistory& CBalHistory::operator=(const CBalHistory& ba) {
 }
 
 //-------------------------------------------------------------------------
+inline bool CBalHistory::operator==(const CBalHistory& item) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const CBalHistory& v1, const CBalHistory& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted
+    // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
 }
 
 //---------------------------------------------------------------------------
 typedef vector<CBalHistory> CBalHistoryArray;
-extern SFArchive& operator>>(SFArchive& archive, CBalHistoryArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const CBalHistoryArray& array);
+extern CArchive& operator>>(CArchive& archive, CBalHistoryArray& array);
+extern CArchive& operator<<(CArchive& archive, const CBalHistoryArray& array);
 
 //---------------------------------------------------------------------------
-extern SFArchive& operator<<(SFArchive& archive, const CBalHistory& bal);
-extern SFArchive& operator>>(SFArchive& archive, CBalHistory& bal);
+extern CArchive& operator<<(CArchive& archive, const CBalHistory& bal);
+extern CArchive& operator>>(CArchive& archive, CBalHistory& bal);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

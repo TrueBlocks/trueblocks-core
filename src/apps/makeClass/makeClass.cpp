@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -100,20 +100,19 @@ string_q convertTypes(const string_q& inStr) {
     // Note: Watch out for trailing spaces. They are here to make sure it
     // matches only the types and not the field names.
     string_q outStr = inStr;
-    replaceAll(outStr, "address ",   "SFAddress "  );
+    replaceAll(outStr, "address ",   "address_t "  );
     replaceAll(outStr, "bytes32 ",   "string_q "   );
     replaceAll(outStr, "bytes16 ",   "string_q "   );
     replaceAll(outStr, "bytes8 ",    "string_q "   );
     replaceAll(outStr, "bytes4 ",    "string_q "   );
     replaceAll(outStr, "bytes ",     "string_q "   );
-    replaceAll(outStr, "bloom ",     "SFBloom "    );
-    replaceAll(outStr, "wei ",       "SFWei "      );
-    replaceAll(outStr, "gas ",       "SFGas "      );
-    replaceAll(outStr, "hash ",      "SFHash "     );
+    replaceAll(outStr, "bloom ",     "bloom_t "    );
+    replaceAll(outStr, "wei ",       "wei_t "      );
+    replaceAll(outStr, "gas ",       "gas_t "      );
+    replaceAll(outStr, "hash ",      "hash_t "     );
     replaceAll(outStr, "string ",    "string_q "   );
-    replaceAll(outStr, "time ",      "SFTime "     );
-    replaceAll(outStr, "uint256 ",   "SFUintBN "   );
-    replaceAll(outStr, "int256 ",    "SFIntBN "    );
+    replaceAll(outStr, "uint256 ",   "biguint_t "   );
+    replaceAll(outStr, "int256 ",    "bigint_t "    );
     replaceAll(outStr, "blknum ",    "blknum_t "   );
     replaceAll(outStr, "timestamp ", "timestamp_t ");
     replaceAll(outStr, "bbool ",     "bool "       );
@@ -137,7 +136,7 @@ string_q convertTypes(const string_q& inStr) {
 
 //------------------------------------------------------------------------------------------------------------
 extern const char* STR_COMMENT_LINE;
-extern const char* STR_CLASSFILE;
+extern const char* STR_CLASS_FILE;
 extern const char* STR_CASE_CODE_ARRAY;
 extern const char* STR_CASE_SET_CODE_ARRAY;
 extern const char* STR_CASE_CODE_STRINGARRAY;
@@ -157,7 +156,8 @@ extern const char* STR_GETSTR_HEAD;
 extern const char* STR_UPGRADE_CODE;
 extern const char* STR_SORT_COMMENT_1;
 extern const char* STR_SORT_COMMENT_2;
-
+extern const char* STR_EQUAL_COMMENT_1;
+extern const char* STR_EQUAL_COMMENT_2;
 string_q tab = string_q("\t");
 
 //------------------------------------------------------------------------------------------------------------
@@ -191,12 +191,9 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
 
     //------------------------------------------------------------------------------------------------
     bool isBase = (baseClass == "CBaseNode");
-    string_q parFnc = isBase ?
-                        "readBackLevel" :
-                        "readBackLevel";
-    string_q parSer = isBase ?
-                        "\t[{BASE_CLASS}]::Serialize(archive);\n" :
-                        "\t[{BASE_CLASS}]::Serialize(archive);\n\n";
+    string_q parSer2 = isBase ?
+                        "\t[{BASE_CLASS}]::SerializeC(archive);\n" :
+                        "\t[{BASE_CLASS}]::SerializeC(archive);\n\n";
     string_q parReg = isBase ?
                         "" :
                         "[{BASE_CLASS}]::registerClass();\n\n\t";
@@ -209,7 +206,7 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
 
     //------------------------------------------------------------------------------------------------
     // build the field list from the config file string
-    string_q fields = substitute(toml.getConfigStr("settings", "fields", ""), "address[]", "SFAddressArray");
+    string_q fields = substitute(toml.getConfigStr("settings", "fields", ""), "address[]", "CAddressArray");
     CParameterArray fieldList;
     while (!fields.empty()) {
         string_q fieldDef = nextTokenClear(fields, '|');
@@ -257,7 +254,6 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
         } else if (fld.type == "bbool")     { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BOOL";
         } else if (fld.type == "bool")      { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BOOL";
         } else if (fld.type == "double")    { setFmt = "\t[{NAME}] = [{DEFF}];\n"; regType = "T_DOUBLE";
-        } else if (fld.type == "time")      { setFmt = "\t[{NAME}] = [{DEFT}];\n"; regType = "T_DATE";
         } else if (fld.isPointer)           { setFmt = "\t[{NAME}] = [{DEFP}];\n"; regType = "T_POINTER";
         } else if (fld.isObject)            { setFmt = "\t[{NAME}].initialize();\n";     regType = "T_OBJECT";
         } else                               { setFmt = badSet;                     regType = "T_TEXT"; }
@@ -283,16 +279,18 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
 
             if (contains(fld.type, "CStringArray")  ||
                 contains(fld.type, "CBlockNumArray")   ||
-                contains(fld.type, "SFAddressArray") ||
-                contains(fld.type, "SFBigUintArray") ||
-                contains(fld.type, "SFTopicArray")) {
+                contains(fld.type, "CAddressArray") ||
+                contains(fld.type, "CBigUintArray") ||
+                contains(fld.type, "CTopicArray")) {
 
                 fieldGetStr += STR_GETSTR_CODE_FIELD;
                 replaceAll(fieldGetStr, "[{FIELD}]", fld.name);
                 if (fld.name == "topics") {
-                    replaceAll(fieldGetStr, "THING", "fromTopic");
+                    replaceAll(fieldGetStr, "THING", "topic_2_Str");
                 } else if (contains(fld.type, "CBlockNumArray")) {
-                    replaceAll(fieldGetStr, "THING", "asStringU");
+                    replaceAll(fieldGetStr, "THING", "uint_2_Str");
+                } else if (contains(fld.type, "CBigUintArray")) {
+                    replaceAll(fieldGetStr, "THING", "bnu_2_Str");
                 } else {
                     replaceAll(fieldGetStr, "THING", "");
                 }
@@ -329,7 +327,9 @@ string_q ptrReadFmt =
 "    bool has_[{NAME}] = false;\n"
 "    archive >> has_[{NAME}];\n"
 "    if (has_[{NAME}]) {\n"
-"        [{NAME}] = new [{TYPE}];\n"
+"        string_q className;\n"
+"        archive >> className;\n"
+"        [{NAME}] = reinterpret_cast<[{TYPE}] *>(createObjectOfType(className));\n"
 "        if (![{NAME}])\n"
 "            return false;\n"
 "        [{NAME}]->Serialize(archive);\n"
@@ -337,8 +337,10 @@ string_q ptrReadFmt =
 
 string_q ptrWriteFmt =
 "    archive << ([{NAME}] != NULL);\n"
-"    if ([{NAME}])\n"
-"        [{NAME}]->SerializeC(archive);\n";
+"    if ([{NAME}]) {\n"
+"        archive << [{NAME}]->getRuntimeClass()->getClassNamePtr();\n"
+"        [{NAME}]->SerializeC(archive);\n"
+"    }\n";
 
         fieldArchiveRead  += fld.Format(fld.isPointer ? ptrReadFmt  : "\tarchive >> [{NAME}];\n");
         fieldArchiveWrite += fld.Format(fld.isPointer ? ptrWriteFmt : "\tarchive << [{NAME}];\n");
@@ -362,43 +364,45 @@ string_q ptrWriteFmt =
 
     //------------------------------------------------------------------------------------------------
     string_q sortStr = toml.getConfigStr("settings", "sort", "");
-    CStringArray sorts;
-    while (!sortStr.empty())
-        sorts.push_back(nextTokenClear(sortStr, '|'));
+    string_q eqStr   = toml.getConfigStr("settings", "equals", "");
 
     //------------------------------------------------------------------------------------------------
     string_q headerFile = substitute(substitute(dataFile, ".txt", ".h"), "./classDefinitions/", "./");
     string_q headSource = asciiFileToString(configPath("makeClass/blank.h"));
-    replaceAll(headSource, "[{GET_OBJ}]",      (hasObjGetter ? string_q(STR_GETOBJ_HEAD)+(hasStrGetter?"":"\n") : ""));
-    replaceAll(headSource, "[{GET_STR}]",      (hasStrGetter ? string_q(STR_GETSTR_HEAD)+"\n" : ""));
-    replaceAll(headSource, "[FIELD_COPY]",     fieldCopy);
-    replaceAll(headSource, "[FIELD_DEC]",      fieldDec);
-    replaceAll(headSource, "[FIELD_SET]",      fieldSet);
-    replaceAll(headSource, "[FIELD_CLEAR]",    fieldClear);
-    replaceAll(headSource, "[H_INCLUDES]",     headerIncs);
-    replaceAll(headSource, "[{OPERATORS}]",    operatorH);
-    replaceAll(headSource, "[{BASE_CLASS}]",   baseClass);
-    replaceAll(headSource, "[{BASE_BASE}]",    baseBase);
-    replaceAll(headSource, "[{BASE}]",         baseUpper);
-    replaceAll(headSource, "[{CLASS_NAME}]",   className);
-    replaceAll(headSource, "[{COMMENT_LINE}]", STR_COMMENT_LINE);
-    replaceAll(headSource, "[{LONG}]",         baseLower);
-    replaceAll(headSource, "[{PROPER}]",       baseProper);
-    replaceAll(headSource, "[{SHORT}]",        extract(baseLower, 0, 2));
-    replaceAll(headSource, "[{BASE_CLASS}]",   baseClass);
-    replaceAll(headSource, "[{BASE_BASE}]",    baseBase);
-    replaceAll(headSource, "[{BASE}]",         baseUpper);
-    replaceAll(headSource, "[{CLASS_NAME}]",   className);
-    replaceAll(headSource, "[{COMMENT_LINE}]", STR_COMMENT_LINE);
-    replaceAll(headSource, "[{LONG}]",         baseLower);
-    replaceAll(headSource, "[{PROPER}]",       baseProper);
-    replaceAll(headSource, "[{SHORT3}]",       short3(baseLower));
-    replaceAll(headSource, "[{SHORT}]",        extract(baseLower, 0, 2));
-    replaceAll(headSource, "[{SCOPE}]",        scope);
-    replaceAll(headSource, "[{SORT_COMMENT}]", (sorts.size() ? STR_SORT_COMMENT_1 : STR_SORT_COMMENT_2));
-    replaceAll(headSource, "[{SORTCODE}]",     (sorts.size() ? "XXX" : "true"));
-    replaceAll(headSource, "[{NAMESPACE1}]",   (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
-    replaceAll(headSource, "[{NAMESPACE2}]",   (ns.empty() ? "" : "}  // namespace qblocks\n"));
+    replaceAll(headSource, "[{GET_OBJ}]",        (hasObjGetter ? string_q(STR_GETOBJ_HEAD)+(hasStrGetter?"":"\n") : ""));
+    replaceAll(headSource, "[{GET_STR}]",        (hasStrGetter ? string_q(STR_GETSTR_HEAD)+"\n" : ""));
+    replaceAll(headSource, "[FIELD_COPY]",       fieldCopy);
+    replaceAll(headSource, "[FIELD_DEC]",        fieldDec);
+    replaceAll(headSource, "[FIELD_SET]",        fieldSet);
+    replaceAll(headSource, "[FIELD_CLEAR]",      fieldClear);
+    replaceAll(headSource, "[H_INCLUDES]",       headerIncs);
+    replaceAll(headSource, "[{OPERATORS}]",      operatorH);
+    replaceAll(headSource, "[{BASE_CLASS}]",     baseClass);
+    replaceAll(headSource, "[{BASE_BASE}]",      baseBase);
+    replaceAll(headSource, "[{BASE}]",           baseUpper);
+    replaceAll(headSource, "[{CLASS_NAME}]",     className);
+    replaceAll(headSource, "[{COMMENT_LINE}]",   STR_COMMENT_LINE);
+    replaceAll(headSource, "[{LONG}]",           baseLower);
+    replaceAll(headSource, "[{PROPER}]",         baseProper);
+    replaceAll(headSource, "[{SHORT}]",          extract(baseLower, 0, 2));
+    replaceAll(headSource, "[{BASE_CLASS}]",     baseClass);
+    replaceAll(headSource, "[{BASE_BASE}]",      baseBase);
+    replaceAll(headSource, "[{BASE}]",           baseUpper);
+    replaceAll(headSource, "[{CLASS_NAME}]",     className);
+    replaceAll(headSource, "[{COMMENT_LINE}]",   STR_COMMENT_LINE);
+    replaceAll(headSource, "[{LONG}]",           baseLower);
+    replaceAll(headSource, "[{PROPER}]",         baseProper);
+    replaceAll(headSource, "[{SHORT3}]",         short3(baseLower));
+    replaceAll(headSource, "[{SHORT}]",          extract(baseLower, 0, 2));
+    replaceAll(headSource, "[{SCOPE}]",          scope);
+    replaceAll(headSource, "[{SORT_COMMENT}]",   (sortStr.length() ? STR_SORT_COMMENT_1 : STR_SORT_COMMENT_2));
+    replaceAll(headSource, "[{SORT_CODE}]",      (sortStr.length() ? sortStr : "true"));
+    replaceAll(headSource, "[{EQUAL_COMMENT}]",  (eqStr.length() ? STR_EQUAL_COMMENT_1 : STR_EQUAL_COMMENT_2));
+    replaceAll(headSource, "[{EQUAL_CODE}]",     (eqStr.length() ? eqStr : "false"));
+    replaceAll(headSource, "[{NAMESPACE1}]",     (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
+    replaceAll(headSource, "[{NAMESPACE2}]",     (ns.empty() ? "" : "}  /""/ namespace qblocks\n"));
+    replaceAll(headSource, "public:\n\npublic:", "public:");
+
     if (options.writeHeader)
         writeTheCode(headerFile, headSource, ns);
 
@@ -418,13 +422,11 @@ string_q ptrWriteFmt =
     replaceAll(srcSource, "[{FIELD_CASE}]",      fieldStr);
     replaceAll(srcSource, "[OTHER_INCS]",        otherIncs);
     replaceAll(srcSource, "[FIELD_SETCASE]",     caseSetCodeStr);
-    replaceAll(srcSource, "[{SUBCLASSFLDS}]",    subClsCodeStr);
-    replaceAll(srcSource, "[{PARENT_SER1}]",     parSer);
-    replaceAll(srcSource, "[{PARENT_SER2}]",     substitute(parSer, "Serialize", "SerializeC"));
+    replaceAll(srcSource, "[{SUBCLASS_FLDS}]",   subClsCodeStr);
+    replaceAll(srcSource, "[{PARENT_SER2}]",     parSer2);
     replaceAll(srcSource, "[{PARENT_REG}]",      parReg);
     replaceAll(srcSource, "[{PARENT_CHNK}]\n",   parCnk);
     replaceAll(srcSource, "[{PARENT_SET}]\n",    parSet);
-    replaceAll(srcSource, "[{PAR_READ_HEAD}]",   parFnc);
     replaceAll(srcSource, "[{BASE_CLASS}]",      baseClass);
     replaceAll(srcSource, "[{BASE_BASE}]",       baseBase);
     replaceAll(srcSource, "[{BASE}]",            baseUpper);
@@ -464,8 +466,8 @@ string_q getCaseCode(const string_q& fieldCase, const string_q& ex) {
                 string_q type  = nextTokenClear(isObj, '+');
                 string_q field = nextTokenClear(isObj, '-');
                 string_q isPtr = nextTokenClear(isObj, '~');
-                bool     isPointer = str2Bool(isPtr);
-                bool     isObject  = str2Bool(isObj);
+                bool     isPointer = str_2_Bool(isPtr);
+                bool     isObject  = str_2_Bool(isObj);
 
                 if (tolower(field[0]) == ch) {
                     caseCode += baseTab + tab + "if ( fieldName % \"" + field + "\"";
@@ -478,68 +480,65 @@ string_q getCaseCode(const string_q& fieldCase, const string_q& ex) {
                         replaceAll(ptrCase, "[{TYPE}]", type);
                         caseCode += ptrCase;
 
-                    } else if (type == "time") {
-                        caseCode += " return [{PTR}]" + field + ".Format(FMT_JSON);";
-
                     } else if (type == "bbool" || type == "bool") {
-                        caseCode += " return asString([{PTR}]" + field + ");";
+                        caseCode += " return int_2_Str([{PTR}]" + field + ");";
 
                     } else if (type == "bloom") {
-                        caseCode += " return bloom2Bytes([{PTR}]" + field + ");";
+                        caseCode += " return bloom_2_Bytes([{PTR}]" + field + ");";
 
                     } else if (type == "wei") {
-                        caseCode += " return fromWei([{PTR}]" + field + ");";
+                        caseCode += " return wei_2_Str([{PTR}]" + field + ");";
 
                     } else if (type == "gas") {
-                        caseCode += " return fromGas([{PTR}]" + field + ");";
+                        caseCode += " return gas_2_Str([{PTR}]" + field + ");";
 
                     } else if (type == "timestamp") {
-                        caseCode += " return fromTimestamp([{PTR}]" + field + ");";
+                        caseCode += " return ts_2_Str([{PTR}]" + field + ");";
 
                     } else if (type == "addr" || type == "address") {
-                        caseCode += " return fromAddress([{PTR}]" + field + ");";
+                        caseCode += " return addr_2_Str([{PTR}]" + field + ");";
 
                     } else if (type == "hash") {
-                        caseCode += " return fromHash([{PTR}]" + field + ");";
+                        caseCode += " return hash_2_Str([{PTR}]" + field + ");";
 
                     } else if (startsWith(type, "bytes")) {
                         caseCode += " return [{PTR}]" + field + ";";
 
                     } else if (type == "uint8" || type == "uint16" || type == "uint32" || type == "uint64") {
-                        caseCode += " return asStringU([{PTR}]" + field + ");";
+                        caseCode += " return uint_2_Str([{PTR}]" + field + ");";
 
                     } else if (type == "blknum") {
-                        caseCode += " return asStringU([{PTR}]" + field + ");";
+                        caseCode += " return uint_2_Str([{PTR}]" + field + ");";
 
                     } else if (type == "uint256") {
-                        caseCode += " return asStringBN([{PTR}]" + field + ");";
+                        caseCode += " return bnu_2_Str([{PTR}]" + field + ");";
 
                     } else if (type == "int8" || type == "int16" || type == "int32" || type == "int64") {
-                        caseCode += " return asString([{PTR}]" + field + ");";
+                        caseCode += " return int_2_Str([{PTR}]" + field + ");";
 
                     } else if (type == "int256") {
-                        caseCode += " return asStringBN([{PTR}]" + field + ");";
+                        caseCode += " return bni_2_Str([{PTR}]" + field + ");";
 
                     } else if (type == "double") {
-                        caseCode += " return double2Str([{PTR}]" + field + ");";
+                        caseCode += " return double_2_Str([{PTR}]" + field + ");";
 
-                    } else if (contains(type, "CStringArray") || contains(type, "SFAddressArray")) {
+                    } else if (contains(type, "CStringArray") || contains(type, "CAddressArray")) {
                         string_q str = STR_CASE_CODE_STRINGARRAY;
                         replaceAll(str, "[{FIELD}]", field);
                         caseCode += str;
 
-                    } else if (contains(type, "SFBigUintArray") || contains(type, "SFTopicArray")) {
+                    } else if (contains(type, "CBigUintArray") || contains(type, "CTopicArray")) {
                         string_q str = STR_CASE_CODE_STRINGARRAY;
                         // hack for size clause
                         replace(str, "[{FIELD}]", field);
                         // hack for the array access
-                        replace(str, "[{FIELD}][i]", "fromTopic("+field+"[i])");
+                        replace(str, "[{FIELD}][i]", "topic_2_Str("+field+"[i])");
                         caseCode += str;
 
                     } else if (contains(type, "Array")) {
                         string_q str = STR_CASE_CODE_ARRAY;
-                        if (contains(type, "SFUint") || contains(type, "SFBlock"))
-                            replaceAll(str, "[{PTR}][{FIELD}][i].Format()", "asStringU([{PTR}][{FIELD}][i])");
+                        if (contains(type, "CBlockNum"))
+                            replaceAll(str, "[{PTR}][{FIELD}][i].Format()", "uint_2_Str([{PTR}][{FIELD}][i])");
                         replaceAll(str, "[{FIELD}]", field);
                         caseCode += str;
 
@@ -565,7 +564,7 @@ string_q strArraySet =
 " {\n"
 "\t\t\t\tstring_q str = fieldValue;\n"
 "\t\t\t\twhile (!str.empty()) {\n"
-"\t\t\t\t\t[{NAME}].push_back(nextTokenClear(str,','));\n"
+"\t\t\t\t\t[{NAME}].push_back(nextTokenClear(str, ','));\n"
 "\t\t\t\t}\n"
 "\t\t\t\treturn true;\n"
 "\t\t\t}";
@@ -585,8 +584,8 @@ string_q getCaseSetCode(const string_q& fieldCase) {
                 string_q type  = nextTokenClear(isObj, '+');
                 string_q field = nextTokenClear(isObj, '-');
                 string_q isPtr = nextTokenClear(isObj, '~');
-                bool     isPointer = str2Bool(isPtr);
-                bool     isObject  = str2Bool(isObj);
+                bool     isPointer = str_2_Bool(isPtr);
+                bool     isObject  = str_2_Bool(isObj);
 
                 if (tolower(field[0]) == ch) {
                     caseCode += baseTab + tab + "if ( fieldName % \"" + field + "\" )";
@@ -596,71 +595,68 @@ string_q getCaseSetCode(const string_q& fieldCase) {
                         replaceAll(ptrCase, "[{TYPE}]", type);
                         caseCode += ptrCase;
 
-                    } else if (type == "time") {
-                        caseCode += " { " + field + " = parseDate(fieldValue); return true; }";
-
                     } else if (type == "bbool" || type == "bool") {
-                        caseCode +=  " { " + field + " = str2Bool(fieldValue); return true; }";
+                        caseCode +=  " { " + field + " = str_2_Bool(fieldValue); return true; }";
 
                     } else if (type == "bloom") {
-                        caseCode +=  " { " + field + " = toBloom(fieldValue); return true; }";
+                        caseCode +=  " { " + field + " = str_2_Bloom(fieldValue); return true; }";
 
                     } else if (type == "wei") {
-                        caseCode +=  " { " + field + " = toWei(fieldValue); return true; }";
+                        caseCode +=  " { " + field + " = str_2_Wei(fieldValue); return true; }";
 
                     } else if (type == "gas") {
-                        caseCode +=  " { " + field + " = toGas(fieldValue); return true; }";
+                        caseCode +=  " { " + field + " = str_2_Gas(fieldValue); return true; }";
 
                     } else if (type == "timestamp") {
-                        caseCode +=  " { " + field + " = toTimestamp(fieldValue); return true; }";
+                        caseCode +=  " { " + field + " = str_2_Ts(fieldValue); return true; }";
 
                     } else if (type == "addr" || type == "address") {
-                        caseCode += " { " + field + " = toAddress(fieldValue); return true; }";
+                        caseCode += " { " + field + " = str_2_Addr(fieldValue); return true; }";
 
                     } else if (type == "hash") {
-                        caseCode += " { " + field + " = toHash(fieldValue); return true; }";
+                        caseCode += " { " + field + " = str_2_Hash(fieldValue); return true; }";
 
                     } else if (startsWith(type, "bytes")) {
                         caseCode += " { " + field + " = toLower(fieldValue); return true; }";
 
                     } else if (type == "int8" || type == "int16" || type == "int32") {
-                        caseCode +=  " { " + field + " = (int32_t)toLongU(fieldValue); return true; }";
+                        caseCode +=  " { " + field + " = (int32_t)str_2_Uint(fieldValue); return true; }";
 
                     } else if (type == "int64") {
-                        caseCode +=  " { " + field + " = toLong(fieldValue); return true; }";
+                        caseCode +=  " { " + field + " = str_2_Int(fieldValue); return true; }";
 
                     } else if (type == "int256") {
-                        caseCode +=  " { " + field + " = toWei(fieldValue); return true; }";
+                        caseCode +=  " { " + field + " = str_2_Wei(fieldValue); return true; }";
 
                     } else if (type == "uint8" || type == "uint16" || type == "uint32") {
-                        caseCode +=  " { " + field + " = (uint32_t)toLongU(fieldValue); return true; }";
+                        caseCode +=  " { " + field + " = (uint32_t)str_2_Uint(fieldValue); return true; }";
 
                     } else if (type == "uint64") {
-                        caseCode +=  " { " + field + " = toUnsigned(fieldValue); return true; }";
+                        caseCode +=  " { " + field + " = str_2_Uint(fieldValue); return true; }";
 
                     } else if (type == "uint256") {
-                        caseCode +=  " { " + field + " = toWei(fieldValue); return true; }";
+                        caseCode +=  " { " + field + " = str_2_Wei(fieldValue); return true; }";
 
                     } else if (type == "blknum") {
-                        caseCode +=  " { " + field + " = toUnsigned(fieldValue); return true; }";
+                        caseCode +=  " { " + field + " = str_2_Uint(fieldValue); return true; }";
 
                     } else if (type == "double") {
-                        caseCode +=  " { " + field + " = str2Double(fieldValue); return true; }";
+                        caseCode +=  " { " + field + " = str_2_Double(fieldValue); return true; }";
 
                     } else if (contains(type, "CStringArray") || contains(type, "CBlockNumArray")) {
                         string_q str = strArraySet;
                         replaceAll(str, "[{NAME}]", field);
                         if (contains(type, "CBlockNumArray"))
-                            replaceAll(str, "nextTokenClear(str,',')", "toUnsigned(nextTokenClear(str,','))");
+                            replaceAll(str, "nextTokenClear(str, ',')", "str_2_Uint(nextTokenClear(str, ','))");
                         caseCode += str;
 
-                    } else if (contains(type, "SFAddressArray") ||
-                               contains(type, "SFBigUintArray") ||
-                               contains(type, "SFTopicArray")) {
+                    } else if (contains(type, "CAddressArray") ||
+                               contains(type, "CBigUintArray") ||
+                               contains(type, "CTopicArray")) {
                         string_q str = strArraySet;
                         replaceAll(str, "[{NAME}]", field);
-                        replaceAll(str, "nextTokenClear(str,',')", "to[{TYPE}](nextTokenClear(str,','))");
-                        replaceAll(str, "[{TYPE}]", substitute(extract(type, 2), "Array", ""));
+                        replaceAll(str, "nextTokenClear(str, ',')", "str_2_[{TYPE}](nextTokenClear(str, ','))");
+                        replaceAll(str, "[{TYPE}]", substitute(substitute(extract(type, 1), "Array", ""), "Address", "Addr"));
                         caseCode += str;
 
                     } else if (contains(type, "Array")) {
@@ -687,7 +683,7 @@ string_q getCaseSetCode(const string_q& fieldCase) {
 }
 
 //------------------------------------------------------------------------------------------------------------
-const char* STR_CLASSFILE =
+const char* STR_CLASS_FILE =
 "class:\t\t[CLASS_NAME]\n"
 "fields:\t\tbool dataField1|int dataField2|string dataField3|Array dataField4\n"
 "includes:\tnone\n";
@@ -695,13 +691,11 @@ const char* STR_CLASSFILE =
 //------------------------------------------------------------------------------------------------------------
 const char* STR_CASE_SET_CODE_ARRAY =
 " {\n"
-"\t\t\t\tchar *p = (char *)fieldValue.c_str();\n"
-"\t\t\t\twhile (p && *p) {\n"
-"\t\t\t\t\t[{TYPE}] item;\n"
-"\t\t\t\t\tsize_t nFields = 0;\n"
-"\t\t\t\t\tp = item.parseJson(p, nFields);\n"
-"\t\t\t\t\tif (nFields)\n"
-"\t\t\t\t\t\t[{NAME}].push_back(item);\n"
+"\t\t\t\t[{TYPE}] item;\n"
+"\t\t\t\tstring_q str = fieldValue;\n"
+"\t\t\t\twhile (item.parseJson3(str)) {\n"
+"\t\t\t\t\t[{NAME}].push_back(item);\n"
+"\t\t\t\t\titem = [{TYPE}]();  /""/ reset\n"
 "\t\t\t\t}\n"
 "\t\t\t\treturn true;\n"
 "\t\t\t}";
@@ -711,7 +705,7 @@ const char* STR_CASE_CODE_ARRAY =
 " {\n"
 "[BTAB]\t\tsize_t cnt = [{PTR}][{FIELD}].size();\n"
 "[BTAB]\t\tif (endsWith(fieldName, \"Cnt\"))\n"
-"[BTAB]\t\t\treturn asStringU(cnt);\n"
+"[BTAB]\t\t\treturn uint_2_Str(cnt);\n"
 "[BTAB]\t\tif (!cnt) return \"\";\n"
 "[BTAB]\t\tstring_q retS;\n"
 "[BTAB]\t\tfor (size_t i = 0 ; i < cnt ; i++) {\n"
@@ -726,7 +720,7 @@ const char* STR_CASE_CODE_STRINGARRAY =
 " {\n"
 "[BTAB]\t\tsize_t cnt = [{PTR}][{FIELD}].size();\n"
 "[BTAB]\t\tif (endsWith(fieldName, \"Cnt\"))\n"
-"[BTAB]\t\t\treturn asStringU(cnt);\n"
+"[BTAB]\t\t\treturn uint_2_Str(cnt);\n"
 "[BTAB]\t\tif (!cnt) return \"\";\n"
 "[BTAB]\t\tstring_q retS;\n"
 "[BTAB]\t\tfor (size_t i = 0 ; i < cnt ; i++) {\n"
@@ -743,20 +737,20 @@ const char* STR_COMMENT_LINE =
 //------------------------------------------------------------------------------------------------------------
 const char* STR_OPERATOR_H =
 "[{COMMENT_LINE}]"
-"extern SFArchive& operator<<(SFArchive& archive, const [{CLASS_NAME}]& [{SHORT3}]);\n"
-"extern SFArchive& operator>>(SFArchive& archive, [{CLASS_NAME}]& [{SHORT3}]);\n"
+"extern CArchive& operator<<(CArchive& archive, const [{CLASS_NAME}]& [{SHORT3}]);\n"
+"extern CArchive& operator>>(CArchive& archive, [{CLASS_NAME}]& [{SHORT3}]);\n"
 "\n";
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_OPERATOR_C =
 "[{COMMENT_LINE}]"
-"SFArchive& operator<<(SFArchive& archive, const [{CLASS_NAME}]& [{SHORT3}]) {\n"
+"CArchive& operator<<(CArchive& archive, const [{CLASS_NAME}]& [{SHORT3}]) {\n"
 "\t[{SHORT3}].SerializeC(archive);\n"
 "\treturn archive;\n"
 "}\n"
 "\n"
 "[{COMMENT_LINE}]"
-"SFArchive& operator>>(SFArchive& archive, [{CLASS_NAME}]& [{SHORT3}]) {\n"
+"CArchive& operator>>(CArchive& archive, [{CLASS_NAME}]& [{SHORT3}]) {\n"
 "\t[{SHORT3}].Serialize(archive);\n"
 "\treturn archive;\n"
 "}\n"
@@ -786,10 +780,8 @@ const char* PTR_SET_CASE =
 "\t\t\t\tclear();\n"
 "\t\t\t\t[{NAME}] = new [{TYPE}];\n"
 "\t\t\t\tif ([{NAME}]) {\n"
-"\t\t\t\t\tchar *p = cleanUpJson((char *)fieldValue.c_str());\n"
-"\t\t\t\t\tsize_t nFields = 0;\n"
-"\t\t\t\t\t[{NAME}]->parseJson(p, nFields);\n"
-"\t\t\t\t\treturn true;\n"
+"\t\t\t\t\tstring_q str = fieldValue;\n"
+"\t\t\t\t\treturn [{NAME}]->parseJson3(str);\n"
 "\t\t\t\t}\n"
 "\t\t\t\treturn false;\n"
 "\t\t\t}";
@@ -828,7 +820,7 @@ const char *STR_GETSTR_CODE =
 
 //------------------------------------------------------------------------------------------------------------
 const char *STR_UPGRADE_CODE =
-"version of the data\n\t(([{CLASS_NAME}]*)this)->m_schema = getVersionNum();\n";
+"version of the data\n\t(([{CLASS_NAME}]*)this)->m_schema = getVersionNum();  /""/ NOLINT\n";
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_SORT_COMMENT_1 =
@@ -836,7 +828,15 @@ const char* STR_SORT_COMMENT_1 =
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_SORT_COMMENT_2 =
-"No default sort defined in class definition, assume already sorted";
+"No default sort defined in class definition, assume already sorted, preserve ordering";
+
+//------------------------------------------------------------------------------------------------------------
+const char* STR_EQUAL_COMMENT_1 =
+"Default equality operator as defined in class definition";
+
+//------------------------------------------------------------------------------------------------------------
+const char* STR_EQUAL_COMMENT_2 =
+"No default equal operator in class definition, assume none are equal (so find fails)";
 
 //------------------------------------------------------------------------------------------------------------
 string_q short3(const string_q& str) {
@@ -855,10 +855,10 @@ string_q checkType(const string_q& typeIn) {
 
     string_q keywords[] = {
         "address", "bloom",  "bool",
-        "bytes",   "bytes4", "bytes8",  "bytes16",   "bytes32",
-        "double",  "gas",    "hash",    "int256",    "int32",
-        "int64",   "string", "time",    "timestamp", "uint256",
-        "uint32",  "uint64", "uint8",   "wei",       "blknum",
+        "bytes",   "bytes4", "bytes8",    "bytes16",   "bytes32",
+        "double",  "gas",    "hash",      "int256",    "int32",
+        "int64",   "string", "timestamp", "uint256",
+        "uint32",  "uint64", "uint8",     "wei",       "blknum",
     };
     size_t cnt = sizeof(keywords) / sizeof(string_q);
     for (size_t i = 0 ; i < cnt ; i++) {

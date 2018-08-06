@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -19,9 +19,8 @@
 namespace qblocks {
 
     //---------------------------------------------------------------------------
-    char *parsePoloniex(CPriceQuote& quote, char *p) {
-        size_t nFields = 0;
-        return quote.parseJson(p, nFields);
+    bool parsePoloniex(CPriceQuote& quote, string_q& str) {
+        return quote.parseJson3(str);
     }
 
     //---------------------------------------------------------------------------
@@ -33,6 +32,7 @@ namespace qblocks {
         return ret;
     }
 
+    extern size_t dotDot(char *ptr, size_t size, size_t nmemb, void *userdata);
     //---------------------------------------------------------------------------
     bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool freshen,
                             string_q& message, uint64_t step) {
@@ -40,11 +40,13 @@ namespace qblocks {
         string_q cacheFile = source.getDatabasePath();
 
         // Load and possibly refresh the price database
-        SFTime lastRead = SFTime(2015, 1, 1, 0, 0, 0);
+        time_q lastRead = time_q(2015, 1, 1, 0, 0, 0);
         if (contains(source.pair, "BTC"))
-            lastRead = SFTime(2009, 1, 1, 0, 0, 0);
+            lastRead = time_q(2009, 1, 1, 0, 0, 0);
         if (fileExists(cacheFile)) {
-            SFArchive priceCache(READING_ARCHIVE);
+            if (!isTestMode())
+                cerr << "Updating prices...\r";
+            CArchive priceCache(READING_ARCHIVE);
             if (priceCache.Lock(cacheFile, binaryReadOnly, LOCK_NOWAIT)) {
                 priceCache.readHeader();  // we read the header even though it may not be the current version...
                 priceCache >> lastRead.m_nSeconds;
@@ -52,7 +54,7 @@ namespace qblocks {
                 priceCache.Close();
                 if (verbose) {
                     string_q date = lastRead.Format(FMT_JSON);
-                    string_q count = asStringU(quotes.size());
+                    string_q count = uint_2_Str(quotes.size());
                     if (isTestMode()) {
                         date = "Now";
                         count = "cnt";
@@ -72,9 +74,9 @@ namespace qblocks {
         }
 
         string_q msg;
-        SFTime firstDate = SFTime(2015, 6, 1, 0, 0, 0);
-        SFTime now       = Now();
-        SFTime nextRead  = (lastRead == SFTime(2015, 1, 1, 0, 0, 0) ? firstDate : lastRead + 5*60);  // 5 minutes
+        time_q firstDate = time_q(2015, 6, 1, 0, 0, 0);
+        time_q now       = Now();
+        time_q nextRead  = (lastRead == time_q(2015, 1, 1, 0, 0, 0) ? firstDate : lastRead + 5*60);  // 5 minutes
 
 // #define DEBUGGING
 #ifdef DEBUGGING
@@ -92,33 +94,36 @@ namespace qblocks {
         } else {
             if (!isTestMode())
                 msg = "Price database has been updated to ";
-            SFTime prevLast = lastRead;
+            time_q prevLast = lastRead;
             if (freshen) {
                 if (verbose < 2) {
                     if (!isTestMode())
-                        cerr << "Retrieving price history data...\r";
+                        cerr << "Retrieving price history data...";
                     cerr.flush();
                 }
-                timestamp_t start = toTimestamp(nextRead);
+                timestamp_t start = date_2_Ts(nextRead);
                 // Polinex will give us as much as it has on the following day. Do this to account for time zones
-                timestamp_t end   = toTimestamp(EOD(BOND(now)));
+                timestamp_t end   = date_2_Ts(EOD(BOND(now)));
 
                 if (verbose > 1) {
-                    cerr << "start: " << dateFromTimeStamp(start) << "\n";
-                    cerr << "end: " << dateFromTimeStamp(end) << "\n";
+                    cerr << "start: " << ts_2_Date(start) << "\n";
+                    cerr << "end: " << ts_2_Date(end) << "\n";
                 }
 
                 // we need to read some data
                 string_q url = source.url;
                 replace(url, "[{PAIR}]",   source.pair);
-                replace(url, "[{START}]",  asString(start));
-                replace(url, "[{END}]",    asString(end));
-                replace(url, "[{PERIOD}]", asString(5*60));
+                replace(url, "[{START}]",  int_2_Str(start));
+                replace(url, "[{END}]",    int_2_Str(end));
+                replace(url, "[{PERIOD}]", int_2_Str(5*60));
                 if (verbose)
                     cerr << "Fetching: " << url << "\n";
 
                 // Ask Poloniex for the latest data
+                setCurlNoteFunc(dotDot);
                 string_q response = urlToString(url);
+                setCurlNoteFunc(NULL);
+                cerr << "\r";
 
                 // Figure out how many new records there are
                 size_t nRecords = countOf(response, '}');
@@ -132,21 +137,17 @@ namespace qblocks {
                 quotes.reserve(nRecords+10);
 
                 // Parse the response and populate the array
-                char *p = cleanUpJson((char *)response.c_str());  // NOLINT
-                while (p && *p) {
-                    CPriceQuote quote;
-                    quote.timestamp = toTimestamp(SFTime(2015, 1, 1, 0, 0, 0));  // Ensures we get a good parse
-                    p = (*source.func)(quote, p);
-
-                    bool addToArray = (timestamp_t)quote.timestamp > toTimestamp(lastRead);
+                CPriceQuote quote;
+                while ((*source.func)(quote, response)) {
+                    bool addToArray = (timestamp_t)quote.timestamp > date_2_Ts(lastRead);
                     if (verbose > 1) {
                         cerr << "addToArray: " << addToArray
-                        << " quote: " << dateFromTimeStamp((timestamp_t)quote.timestamp)
+                        << " quote: " << ts_2_Date((timestamp_t)quote.timestamp)
                         << " lastRead: " << lastRead
-                        << " lastRead(ts): " << dateFromTimeStamp(toTimestamp(lastRead)) << "\n";
+                        << " lastRead(ts): " << ts_2_Date(date_2_Ts(lastRead)) << "\n";
                     } else {
                         if (!isTestMode())
-                            cerr << dateFromTimeStamp((timestamp_t)quote.timestamp) << "\r";
+                            cerr << ts_2_Date(quote.timestamp) << "                    \r";
                     }
 
                     // So as to not inadvertantly add records we already have
@@ -157,15 +158,16 @@ namespace qblocks {
 #ifdef DEBUGGING
                             cerr << quote.Format() << "\n";
 #endif
-                            lastRead = dateFromTimeStamp((timestamp_t)quote.timestamp);
+                            lastRead = ts_2_Date((timestamp_t)quote.timestamp);
                         }
                     }
+                    quote = CPriceQuote();  // reset
                 }
             }
 
             // Write the database to the cache
             if (prevLast != lastRead && freshen) {
-                SFArchive priceCache(WRITING_ARCHIVE);
+                CArchive priceCache(WRITING_ARCHIVE);
                 if (!priceCache.Lock(cacheFile, binaryWriteCreate, LOCK_WAIT)) {
                     message = "Could not open cache file for writing: '" + cacheFile + "'";
                     return false;
@@ -186,7 +188,7 @@ namespace qblocks {
 
         if (!reportAtEnd) {
             string_q date = lastRead.Format(FMT_JSON);
-            string_q count = asStringU(quotes.size());
+            string_q count = uint_2_Str(quotes.size());
             if (isTestMode()) {
                 date = "Now";
                 count = "cnt";
@@ -213,5 +215,16 @@ namespace qblocks {
         "&end=[{END}]"
         "&period=[{PERIOD}]";
 
-}  // namespace qblocks
+    //---------------------------------------------------------------------------
+    size_t dotDot(char *ptr, size_t size, size_t nmemb, void *userdata) {
+        if (!isTestMode()) {
+            static int cnt = 0;
+            if (!(++cnt % 25)) {
+                cerr << ".";
+                cerr.flush();
+            }
+        }
+        return size * nmemb;
+    }
 
+}  // namespace qblocks

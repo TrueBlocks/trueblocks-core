@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "revoke.h"
 #include "etherlib.h"
 
@@ -25,7 +26,7 @@ static string_q nextRevokeChunk(const string_q& fieldIn, const void *dataPtr);
 static string_q nextRevokeChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QRevoke::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QRevoke::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -45,7 +46,7 @@ void QRevoke::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) 
 //---------------------------------------------------------------------------
 string_q nextRevokeChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QRevoke *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QRevoke *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -78,12 +79,14 @@ void QRevoke::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QRevoke::Serialize(SFArchive& archive) {
+bool QRevoke::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
-        return ((const QRevoke*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
-    // If we're reading a back level, read the whole thing and we're done.
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
+    CTransaction::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -95,7 +98,7 @@ bool QRevoke::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QRevoke::SerializeC(SFArchive& archive) const {
+bool QRevoke::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
@@ -108,7 +111,7 @@ bool QRevoke::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, QRevokeArray& array) {
+CArchive& operator>>(CArchive& archive, QRevokeArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -120,7 +123,7 @@ SFArchive& operator>>(SFArchive& archive, QRevokeArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const QRevokeArray& array) {
+CArchive& operator<<(CArchive& archive, const QRevokeArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -147,13 +150,15 @@ void QRevoke::registerClass(void) {
     HIDE_FIELD(QRevoke, "deleted");
     HIDE_FIELD(QRevoke, "showing");
 
+    builtIns.push_back(_biQRevoke);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
 string_q nextRevokeChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QRevoke *rev = (const QRevoke *)dataPtr;
+    const QRevoke *rev = reinterpret_cast<const QRevoke *>(dataPtr);
     if (rev) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -175,9 +180,8 @@ string_q nextRevokeChunk_custom(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-bool QRevoke::readBackLevel(SFArchive& archive) {
+bool QRevoke::readBackLevel(CArchive& archive) {
 
-    CTransaction::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -211,7 +215,8 @@ ostream& operator<<(ostream& os, const QRevoke& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

@@ -9,8 +9,8 @@ project (test-etherlib)
 
 # Compile the libraries in this order
 add_subdirectory(sha3)
-add_subdirectory(convert)
 add_subdirectory(printFloat)
 add_subdirectory(dataUpgrade)
 add_subdirectory(serialize)
 add_subdirectory(blockTest)
+add_subdirectory(forEvery)

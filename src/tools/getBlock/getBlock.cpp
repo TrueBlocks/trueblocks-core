@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -34,7 +34,7 @@ int main(int argc, const char * argv[]) {
 
         string_q list = options.getBlockNumList();
         while (!list.empty() && !shouldQuit()) {
-            blknum_t bn = toLongU(nextTokenClear(list, '|'));
+            blknum_t bn = str_2_Uint(nextTokenClear(list, '|'));
             if (options.showAddrs || options.uniqAddrs) {
                 string_q checkResults = getAddresses(bn, options);
                 cout << checkResults;
@@ -80,20 +80,24 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
     CBlock gold;
     gold.blockNumber = num;
     string_q result;
-    string_q numStr = asStringU(num);
+    string_q numStr = uint_2_Str(num);
     if (opt.isRaw) {
 
+//        double start = qbNow();
         if (!queryRawBlock(result, numStr, true, opt.hashes)) {
             result = "Could not query raw block " + numStr + ". Is an Ethereum node running?";
         } else {
+//            double end = qbNow();
+//            cerr << numStr << "\t" << (end - start) << "\n";
             if (opt.force) {  // turn this on to force a write of the block to the disc
                 CRPCResult generic;
-                generic.parseJson(cleanUpJson((char*)result.c_str()));  // NOLINT
+                generic.parseJson3(result);
                 result = generic.result;
-                gold.parseJson((char*)result.c_str());  // NOLINT
-                string_q fileName = getBinaryFilename(num);
-                gold.finalized = isBlockFinal(gold.timestamp, latest.timestamp);
-                writeBlockToBinary(gold, fileName);
+                if (gold.parseJson3(result)) {
+                    string_q fileName = getBinaryFilename(num);
+                    gold.finalized = isBlockFinal(gold.timestamp, latest.timestamp);
+                    writeBlockToBinary(gold, fileName);
+                }
             }
         }
 
@@ -118,7 +122,7 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
         if (!opt.silent) {
             string_q format = opt.format;
 //            if (false) { //opt.priceBlocks) {
-//                SFUintBN oneWei = canonicalWei("1000000000000000000");
+//                biguint_t oneWei = str_2_Wei("1000000000000000000");
 //                string_q dollars = "$" + asDollars(gold.timestamp, oneWei);
 //                replace(format, "{PRICE:CLOSE}", dollars);
 //            }
@@ -138,10 +142,10 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
 string_q checkOneBlock(uint64_t num, const COptions& opt) {
 
     if (opt.quiet == 2) {
-        cout << "Checking block " << cYellow << asStringU(num) << cOff << "...       \r";
+        cout << "Checking block " << cYellow << uint_2_Str(num) << cOff << "...       \r";
         cout.flush();
     }
-    string_q numStr = asStringU(num);
+    string_q numStr = uint_2_Str(num);
 
     // Get the block raw from the node...
     string_q fromNode;
@@ -151,12 +155,12 @@ string_q checkOneBlock(uint64_t num, const COptions& opt) {
         cout << num << "\n";
     fromNode = normalizeBlock(fromNode, true, num >= byzantiumBlock);
 
-    // Now get the same block from quickBlocks
+    // Now get the same block from QBlocks
     string_q fromQblocks;
     CBlock qBlocks;
     queryBlock(qBlocks, numStr, true, false);
     for (size_t i = 0 ; i < qBlocks.transactions.size() ; i++) {
-        // quickBlocks pulls the receipt for each transaction, but the RPC does
+        // QBlocks pulls the receipt for each transaction, but the RPC does
         // not. Therefore, we must set the transactions' gasUsed and logsBloom
         // to be the same as the block's (even though they are not) so they
         // are removed as duplicates. Otherwise, the blocks won't match
@@ -178,16 +182,16 @@ extern string_q hiddenFields(void);
     if (opt.quiet == 2) {
         // only report results if we're being very quiet
         if (fromNode != fromQblocks)
-            return "Difference at block " + cYellow + asStringU(num) + cOff + ".\n" +
+            return "Difference at block " + cYellow + uint_2_Str(num) + cOff + ".\n" +
             "\t" + diffStr(fromNode, fromQblocks) + "\t" + diffStr(fromQblocks, fromNode);
-        cout << "Checking block " + cYellow + asStringU(num) + cOff + "...";
+        cout << "Checking block " + cYellow + uint_2_Str(num) + cOff + "...";
         cout << greenCheck << "         \r";
         cout.flush();
         return "";
     }
 
     return head + "from Node:\n" + fromNode +
-            head + "from Quickblocks:\n" + fromQblocks +
+            head + "from QBlocks:\n" + fromQblocks +
             head + result +
             head + diffA +
             head + diffB;
@@ -200,24 +204,33 @@ void interumReport(ostream& os, blknum_t i) {
 }
 
 //------------------------------------------------------------
-bool sortByBlocknumTxId(const CAddressItem& v1, const CAddressItem& v2) {
-    if (v1.bn != v2.bn)
-        return v1.bn < v2.bn;
-    else if (v1.tx != v2.tx)
-        return v1.tx < v2.tx;
-    else if (v1.tc != v2.tc)
-        return v1.tc < v2.tc;
+bool sortByBlocknumTxId(const CAddressAppearance& v1, const CAddressAppearance& v2) {
+    if (v1.getBn() != v2.getBn())
+        return v1.getBn() < v2.getBn();
+    else if (v1.getTx() != v2.getTx())
+        return v1.getTx() < v2.getTx();
+    else if (v1.getTc() != v2.getTc())
+        return v1.getTc() < v2.getTc();
     else if (v1.reason != v2.reason)
         return v1.reason < v2.reason;
     return v1.addr < v2.addr;
 }
 
-extern bool visitAddrs(const CAddressItem& item, void *data);
+extern bool visitAddrs(const CAddressAppearance& item, void *data);
 extern bool transFilter(const CTransaction *trans, void *data);
+
+//------------------------------------------------------------
+bool passesFilter(const CAddressArray& array, const address_t& in) {
+    for (auto elem : array)
+        if (elem % in)
+            return true;
+    return false;
+}
+
 //------------------------------------------------------------
 string_q getAddresses(uint64_t num, const COptions& opt) {
 
-    CAddressItemArray array;
+    CAddressAppearanceArray array;
     CBlock block;
     getBlock(block, num);
     if (opt.uniqAddrs)
@@ -225,16 +238,19 @@ string_q getAddresses(uint64_t num, const COptions& opt) {
     else
         block.forEveryAddress(visitAddrs, transFilter, &array);
     sort(array.begin(), array.end(), sortByBlocknumTxId);
+
     ostringstream os;
     for (auto elem : array)
-        os << elem << "\n";
+        if (opt.filters.size() == 0 || passesFilter(opt.filters, elem.addr))
+            os << elem << "\n";
+
     return os.str().c_str();
 }
 
 //----------------------------------------------------------------
-bool visitAddrs(const CAddressItem& item, void *data) {
-    CAddressItemArray *array = (CAddressItemArray*)data;  // NOLINT
-    if (!zeroAddr(item.addr))
+bool visitAddrs(const CAddressAppearance& item, void *data) {
+    CAddressAppearanceArray *array = reinterpret_cast<CAddressAppearanceArray*>(data);
+    if (!isZeroAddr(item.addr))
         array->push_back(item);
     return true;
 }
@@ -242,7 +258,6 @@ bool visitAddrs(const CAddressItem& item, void *data) {
 //----------------------------------------------------------------
 // Return 'true' if we want the caller NOT to visit the traces of this transaction
 bool transFilter(const CTransaction *trans, void *data) {
-    // TODO(tjayrush): Use an option here for deep trace
     if (!ddosRange(trans->blockNumber))
         return false;
     return (getTraceCount(trans->hash) > 250);

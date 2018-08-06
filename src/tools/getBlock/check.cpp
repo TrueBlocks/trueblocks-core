@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -62,12 +62,12 @@ string_q removeField(const string_q& strIn, const string_q& field) {
 
 //------------------------------------------------------------
 const string_q removes[] = {
-    // fields in RPC but not in QuickBlocks
+    // fields in RPC but not in QBlocks
     "author", "condition", "creates", "extraData", "mixHash", "networkId", "chainId",
     "nonce", "nonce",  // NOT A DUP--IT NEEDS TO BE HERE BECAUSE THERE ARE TWO DIFFERENT NONCES
     "publicKey", "r", "raw", "receiptsRoot", "s", "sealFields", "sha3Uncles", "size", "standardV", "stateRoot",
     "totalDifficulty", "transactionsRoot", "uncles", "v", "logsBloom",
-    // fields in QuickBlocks but not in RPC
+    // fields in QBlocks but not in RPC
     "contractAddress", "cumulativeGasUsed", "receipt", "address", "data", "logIndex", "topics",
     "price", "finalized", "isError",
 

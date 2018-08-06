@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "depositevent.h"
 #include "etherlib.h"
 
@@ -25,7 +26,7 @@ static string_q nextDepositeventChunk(const string_q& fieldIn, const void *dataP
 static string_q nextDepositeventChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QDepositEvent::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QDepositEvent::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -45,7 +46,7 @@ void QDepositEvent::Format(CExportContext& ctx, const string_q& fmtIn, void *dat
 //---------------------------------------------------------------------------
 string_q nextDepositeventChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QDepositEvent *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QDepositEvent *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -63,10 +64,10 @@ bool QDepositEvent::setValueByName(const string_q& fieldName, const string_q& fi
 
     switch (tolower(fieldName[0])) {
         case 'f':
-            if ( fieldName % "from" ) { from = toAddress(fieldValue); return true; }
+            if ( fieldName % "from" ) { from = str_2_Addr(fieldValue); return true; }
             break;
         case 'v':
-            if ( fieldName % "value" ) { value = toWei(fieldValue); return true; }
+            if ( fieldName % "value" ) { value = str_2_Wei(fieldValue); return true; }
             break;
         default:
             break;
@@ -81,12 +82,14 @@ void QDepositEvent::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QDepositEvent::Serialize(SFArchive& archive) {
+bool QDepositEvent::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
-        return ((const QDepositEvent*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
-    // If we're reading a back level, read the whole thing and we're done.
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
+    CLogEntry::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -99,7 +102,7 @@ bool QDepositEvent::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QDepositEvent::SerializeC(SFArchive& archive) const {
+bool QDepositEvent::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CLogEntry::SerializeC(archive);
@@ -113,7 +116,7 @@ bool QDepositEvent::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, QDepositEventArray& array) {
+CArchive& operator>>(CArchive& archive, QDepositEventArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -125,7 +128,7 @@ SFArchive& operator>>(SFArchive& archive, QDepositEventArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const QDepositEventArray& array) {
+CArchive& operator<<(CArchive& archive, const QDepositEventArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -153,13 +156,15 @@ void QDepositEvent::registerClass(void) {
     HIDE_FIELD(QDepositEvent, "deleted");
     HIDE_FIELD(QDepositEvent, "showing");
 
+    builtIns.push_back(_biQDepositEvent);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
 string_q nextDepositeventChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QDepositEvent *dep = (const QDepositEvent *)dataPtr;
+    const QDepositEvent *dep = reinterpret_cast<const QDepositEvent *>(dataPtr);
     if (dep) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -181,9 +186,8 @@ string_q nextDepositeventChunk_custom(const string_q& fieldIn, const void *dataP
 }
 
 //---------------------------------------------------------------------------
-bool QDepositEvent::readBackLevel(SFArchive& archive) {
+bool QDepositEvent::readBackLevel(CArchive& archive) {
 
-    CLogEntry::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -201,10 +205,10 @@ string_q QDepositEvent::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'f':
-            if ( fieldName % "from" ) return fromAddress(from);
+            if ( fieldName % "from" ) return addr_2_Str(from);
             break;
         case 'v':
-            if ( fieldName % "value" ) return asStringBN(value);
+            if ( fieldName % "value" ) return bnu_2_Str(value);
             break;
     }
 
@@ -220,7 +224,8 @@ ostream& operator<<(ostream& os, const QDepositEvent& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -12,13 +12,14 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
-
+#include "bloom_blocks.h"
 //-----------------------------------------------------------------------------
 class COptions : public CBlockOptions {
 public:
-    bool isRaw;
-    bool receipt;
     bool force;
+    bool isRaw;
+    bool blockOnly;
+    bool receiptsOnly;
     bool asBits;
     bool asBars;
 

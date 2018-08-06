@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -17,58 +17,58 @@
 namespace qblocks {
 
     ///////////////////////////////////////////////////////////////////
-    SFArchive& SFArchive::operator<<(bool b) {
+    CArchive& CArchive::operator<<(bool b) {
         Write(b);
         return *this;
     }
 
-    SFArchive& SFArchive::operator<<(char c) {
+    CArchive& CArchive::operator<<(char c) {
         Write(c);
         return *this;
     }
 
-    SFArchive& SFArchive::operator<<(int dw) {
+    CArchive& CArchive::operator<<(int dw) {
         Write(dw);
         return *this;
     }
 
-    SFArchive& SFArchive::operator<<(unsigned int dw) {
+    CArchive& CArchive::operator<<(unsigned int dw) {
         Write(dw);
         return *this;
     }
 
-    SFArchive& SFArchive::operator<<(int64_t dw) {
+    CArchive& CArchive::operator<<(int64_t dw) {
         Write(dw);
         return *this;
     }
 
-    SFArchive& SFArchive::operator<<(uint64_t dw) {
+    CArchive& CArchive::operator<<(uint64_t dw) {
         Write(dw);
         return *this;
     }
 
-    SFArchive& SFArchive::operator<<(float f) {
+    CArchive& CArchive::operator<<(float f) {
         Write(f);
         return *this;
     }
 
-    SFArchive& SFArchive::operator<<(double f) {
+    CArchive& CArchive::operator<<(double f) {
         Write(f);
         return *this;
     }
 
-    SFArchive& SFArchive::operator<<(const char *str) {
+    CArchive& CArchive::operator<<(const char *str) {
         string_q s = str;
         Write(s);
         return *this;
     }
 
-    SFArchive& SFArchive::operator<<(const string_q& str) {
+    CArchive& CArchive::operator<<(const string_q& str) {
         Write(str);
         return *this;
     }
 
-    SFArchive& SFArchive::operator<<(const SFUintBN& bn) {
+    CArchive& CArchive::operator<<(const biguint_t& bn) {
         *this << bn.capacity;
         *this << bn.len;
         for (size_t i=0 ; i < bn.len ; i++)
@@ -76,13 +76,13 @@ namespace qblocks {
         return *this;
     }
 
-    SFArchive& SFArchive::operator<<(const SFIntBN& bn) {
+    CArchive& CArchive::operator<<(const bigint_t& bn) {
         *this << (const unsigned int)bn.sign;
         *this << bn.mag;
         return *this;
     }
 
-    SFArchive& operator<<(SFArchive& archive, const CStringArray& array) {
+    CArchive& operator<<(CArchive& archive, const CStringArray& array) {
         uint64_t count = array.size();
         archive << count;
         for (size_t i = 0 ; i < array.size() ; i++)
@@ -90,7 +90,7 @@ namespace qblocks {
         return archive;
     }
 
-    SFArchive& operator<<(SFArchive& archive, const SFBigUintArray& array) {
+    CArchive& operator<<(CArchive& archive, const CBigUintArray& array) {
         uint64_t count = array.size();
         archive << count;
         for (size_t i = 0 ; i < array.size() ; i++)
@@ -98,7 +98,7 @@ namespace qblocks {
         return archive;
     }
 
-    SFArchive& operator<<(SFArchive& archive, const SFUintArray& array) {
+    CArchive& operator<<(CArchive& archive, const CUintArray& array) {
         uint64_t count = array.size();
         archive << count;
         for (size_t i = 0 ; i < array.size() ; i++)
@@ -107,52 +107,52 @@ namespace qblocks {
     }
 
     ///////////////////////////////////////////////////////////////////
-    SFArchive& SFArchive::operator>>(bool& b) {
+    CArchive& CArchive::operator>>(bool& b) {
         Read(b);
         return *this;
     }
 
-    SFArchive& SFArchive::operator>>(char& c) {
+    CArchive& CArchive::operator>>(char& c) {
         Read(c);
         return *this;
     }
 
-    SFArchive& SFArchive::operator>>(int& dw) {
+    CArchive& CArchive::operator>>(int& dw) {
         Read(dw);
         return *this;
     }
 
-    SFArchive& SFArchive::operator>>(unsigned int& dw) {
+    CArchive& CArchive::operator>>(unsigned int& dw) {
         Read(dw);
         return *this;
     }
 
-    SFArchive& SFArchive::operator>>(int64_t& dw) {
+    CArchive& CArchive::operator>>(int64_t& dw) {
         Read(dw);
         return *this;
     }
 
-    SFArchive& SFArchive::operator>>(uint64_t& dw) {
+    CArchive& CArchive::operator>>(uint64_t& dw) {
         Read(dw);
         return *this;
     }
 
-    SFArchive& SFArchive::operator>>(float& f) {
+    CArchive& CArchive::operator>>(float& f) {
         Read(f);
         return *this;
     }
 
-    SFArchive& SFArchive::operator>>(double& f) {
+    CArchive& CArchive::operator>>(double& f) {
         Read(f);
         return *this;
     }
 
-    SFArchive& SFArchive::operator>>(string_q& str) {
+    CArchive& CArchive::operator>>(string_q& str) {
         Read(str);
         return *this;
     }
 
-    SFArchive& SFArchive::operator>>(SFUintBN& bn) {
+    CArchive& CArchive::operator>>(biguint_t& bn) {
         // Note: I experimented with writing out
         // the blk in one Read/Write but it was
         // always slower on my machine
@@ -166,13 +166,13 @@ namespace qblocks {
         return *this;
     }
 
-    SFArchive& SFArchive::operator>>(SFIntBN& bn) {
+    CArchive& CArchive::operator>>(bigint_t& bn) {
         *this >> bn.sign;
         *this >> bn.mag;
         return *this;
     }
 
-    SFArchive& operator>>(SFArchive& archive, CStringArray& array) {
+    CArchive& operator>>(CArchive& archive, CStringArray& array) {
         uint64_t count;
         archive >> count;
         for (size_t i = 0 ; i < count ; i++) {
@@ -183,18 +183,18 @@ namespace qblocks {
         return archive;
     }
 
-    SFArchive& operator>>(SFArchive& archive, SFBigUintArray& array) {
+    CArchive& operator>>(CArchive& archive, CBigUintArray& array) {
         uint64_t count;
         archive >> count;
         for (size_t i = 0 ; i < count ; i++) {
-            SFUintBN num;
+            biguint_t num;
             archive >> num;
             array.push_back(num);
         }
         return archive;
     }
 
-    SFArchive& operator>>(SFArchive& archive, SFUintArray& array) {
+    CArchive& operator>>(CArchive& archive, CUintArray& array) {
         uint64_t count;
         archive >> count;
         for (size_t i = 0 ; i < count ; i++) {
@@ -207,12 +207,21 @@ namespace qblocks {
 
     //----------------------------------------------------------------------
     uint64_t appendToAsciiFile(const string_q& fileName, const string_q& addContents) {
-        SFArchive asciiCache(WRITING_ARCHIVE);
+        CArchive asciiCache(WRITING_ARCHIVE);
         if (asciiCache.Lock(fileName, asciiWriteAppend, LOCK_NOWAIT)) {
             asciiCache.WriteLine(addContents.c_str());
             asciiCache.Release();
         }
         return fileSize(fileName);
+    }
+
+    void CArchive::writeHeader(void) {
+        Seek(0, SEEK_SET);
+        m_header.m_lastWritten = date_2_Ts(Now());
+        operator<<(m_header.m_version);
+        operator<<(m_header.m_lastWritten);
+        bool unused = false;
+        operator<<(unused);
     }
 
 }  // namespace qblocks

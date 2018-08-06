@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "singletransactevent.h"
 #include "etherlib.h"
 
@@ -25,7 +26,7 @@ static string_q nextSingletransacteventChunk(const string_q& fieldIn, const void
 static string_q nextSingletransacteventChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QSingleTransactEvent::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QSingleTransactEvent::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -45,7 +46,7 @@ void QSingleTransactEvent::Format(CExportContext& ctx, const string_q& fmtIn, vo
 //---------------------------------------------------------------------------
 string_q nextSingletransacteventChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QSingleTransactEvent *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QSingleTransactEvent *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -66,13 +67,13 @@ bool QSingleTransactEvent::setValueByName(const string_q& fieldName, const strin
             if ( fieldName % "data" ) { data = toLower(fieldValue); return true; }
             break;
         case 'o':
-            if ( fieldName % "owner" ) { owner = toAddress(fieldValue); return true; }
+            if ( fieldName % "owner" ) { owner = str_2_Addr(fieldValue); return true; }
             break;
         case 't':
-            if ( fieldName % "to" ) { to = toAddress(fieldValue); return true; }
+            if ( fieldName % "to" ) { to = str_2_Addr(fieldValue); return true; }
             break;
         case 'v':
-            if ( fieldName % "value" ) { value = toWei(fieldValue); return true; }
+            if ( fieldName % "value" ) { value = str_2_Wei(fieldValue); return true; }
             break;
         default:
             break;
@@ -87,12 +88,14 @@ void QSingleTransactEvent::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QSingleTransactEvent::Serialize(SFArchive& archive) {
+bool QSingleTransactEvent::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
-        return ((const QSingleTransactEvent*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
-    // If we're reading a back level, read the whole thing and we're done.
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
+    CLogEntry::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -107,7 +110,7 @@ bool QSingleTransactEvent::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QSingleTransactEvent::SerializeC(SFArchive& archive) const {
+bool QSingleTransactEvent::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CLogEntry::SerializeC(archive);
@@ -123,7 +126,7 @@ bool QSingleTransactEvent::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, QSingleTransactEventArray& array) {
+CArchive& operator>>(CArchive& archive, QSingleTransactEventArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -135,7 +138,7 @@ SFArchive& operator>>(SFArchive& archive, QSingleTransactEventArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const QSingleTransactEventArray& array) {
+CArchive& operator<<(CArchive& archive, const QSingleTransactEventArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -165,13 +168,15 @@ void QSingleTransactEvent::registerClass(void) {
     HIDE_FIELD(QSingleTransactEvent, "deleted");
     HIDE_FIELD(QSingleTransactEvent, "showing");
 
+    builtIns.push_back(_biQSingleTransactEvent);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
 string_q nextSingletransacteventChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QSingleTransactEvent *sin = (const QSingleTransactEvent *)dataPtr;
+    const QSingleTransactEvent *sin = reinterpret_cast<const QSingleTransactEvent *>(dataPtr);
     if (sin) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -193,9 +198,8 @@ string_q nextSingletransacteventChunk_custom(const string_q& fieldIn, const void
 }
 
 //---------------------------------------------------------------------------
-bool QSingleTransactEvent::readBackLevel(SFArchive& archive) {
+bool QSingleTransactEvent::readBackLevel(CArchive& archive) {
 
-    CLogEntry::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -216,13 +220,13 @@ string_q QSingleTransactEvent::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "data" ) return data;
             break;
         case 'o':
-            if ( fieldName % "owner" ) return fromAddress(owner);
+            if ( fieldName % "owner" ) return addr_2_Str(owner);
             break;
         case 't':
-            if ( fieldName % "to" ) return fromAddress(to);
+            if ( fieldName % "to" ) return addr_2_Str(to);
             break;
         case 'v':
-            if ( fieldName % "value" ) return asStringBN(value);
+            if ( fieldName % "value" ) return bnu_2_Str(value);
             break;
     }
 
@@ -238,7 +242,8 @@ ostream& operator<<(ostream& os, const QSingleTransactEvent& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

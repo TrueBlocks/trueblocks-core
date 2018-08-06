@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -13,15 +13,15 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-CParams params[] = {
-    CParams("-all",            "process all transactions from start of chain to latest block"),
-    CParams("-start:<uint>",   "the first block to process"),
-    CParams("-end:<uint>",     "the last block (less one) to process"),
-    CParams("-nblocks:<uint>", "the number of blocks to visit (ignored for -a)"),
-    CParams("",                "Build an account tree listing first transaction, latest transaction, and "
+static COption params[] = {
+    COption("-all",            "process all transactions from start of chain to latest block"),
+    COption("-start:<uint>",   "the first block to process"),
+    COption("-end:<uint>",     "the last block (less one) to process"),
+    COption("-nblocks:<uint>", "the number of blocks to visit (ignored for -a)"),
+    COption("",                "Build an account tree listing first transaction, latest transaction, and "
                                "node balance for each account.\n"),
 };
-size_t nParams = sizeof(params) / sizeof(CParams);
+static size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -39,12 +39,12 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (startsWith(arg, "-n:") || startsWith(arg, "--nblocks:")) {
             arg = substitute(substitute(orig, "-n:", ""), "--nblocks:", "");
-            nBlocks = toLongU(arg);
+            nBlocks = str_2_Uint(arg);
             hasN = true;
 
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--start:")) {
             arg = substitute(substitute(orig, "-s:", ""), "--start:", "");
-            startBlock = toLongU(arg);
+            startBlock = str_2_Uint(arg);
             if (!isUnsigned(arg))
                 return usage("Positive start block number expected: " + orig);
 
@@ -53,7 +53,7 @@ bool COptions::parseArguments(string_q& command) {
             if (arg == "latest") {
                 endBlock = getLatestBlockFromClient();
             } else {
-                endBlock = toLongU(arg);
+                endBlock = str_2_Uint(arg);
                 if (!isUnsigned(arg))
                     return usage("Positive end block number expected: " + orig);
             }

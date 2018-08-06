@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "abilib.h"
 
 namespace qblocks {
@@ -26,9 +27,9 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CTraceResult : public CBaseNode {
 public:
-    SFAddress address;
+    address_t address;
     string_q code;
-    SFGas gasUsed;
+    gas_t gasUsed;
     string_q output;
 
 public:
@@ -42,6 +43,8 @@ public:
     // EXISTING_CODE
     friend class CTrace;
     // EXISTING_CODE
+    bool operator==(const CTraceResult& item) const;
+    bool operator!=(const CTraceResult& item) const { return !operator==(item); }
     friend bool operator<(const CTraceResult& v1, const CTraceResult& v2);
     friend ostream& operator<<(ostream& os, const CTraceResult& item);
 
@@ -49,7 +52,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CTraceResult& tr);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -122,21 +125,29 @@ inline CTraceResult& CTraceResult::operator=(const CTraceResult& tr) {
 }
 
 //-------------------------------------------------------------------------
+inline bool CTraceResult::operator==(const CTraceResult& item) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const CTraceResult& v1, const CTraceResult& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted
+    // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
 }
 
 //---------------------------------------------------------------------------
 typedef vector<CTraceResult> CTraceResultArray;
-extern SFArchive& operator>>(SFArchive& archive, CTraceResultArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const CTraceResultArray& array);
+extern CArchive& operator>>(CArchive& archive, CTraceResultArray& array);
+extern CArchive& operator<<(CArchive& archive, const CTraceResultArray& array);
 
 //---------------------------------------------------------------------------
-extern SFArchive& operator<<(SFArchive& archive, const CTraceResult& tra);
-extern SFArchive& operator>>(SFArchive& archive, CTraceResult& tra);
+extern CArchive& operator<<(CArchive& archive, const CTraceResult& tra);
+extern CArchive& operator>>(CArchive& archive, CTraceResult& tra);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

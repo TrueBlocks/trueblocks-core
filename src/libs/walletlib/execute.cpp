@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "execute.h"
 #include "etherlib.h"
 
@@ -25,7 +26,7 @@ static string_q nextExecuteChunk(const string_q& fieldIn, const void *dataPtr);
 static string_q nextExecuteChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QExecute::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QExecute::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -45,7 +46,7 @@ void QExecute::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr)
 //---------------------------------------------------------------------------
 string_q nextExecuteChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QExecute *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QExecute *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -63,8 +64,8 @@ bool QExecute::setValueByName(const string_q& fieldName, const string_q& fieldVa
 
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_to" ) { _to = toAddress(fieldValue); return true; }
-            if ( fieldName % "_value" ) { _value = toWei(fieldValue); return true; }
+            if ( fieldName % "_to" ) { _to = str_2_Addr(fieldValue); return true; }
+            if ( fieldName % "_value" ) { _value = str_2_Wei(fieldValue); return true; }
             if ( fieldName % "_data" ) { _data = toLower(fieldValue); return true; }
             break;
         default:
@@ -80,12 +81,14 @@ void QExecute::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QExecute::Serialize(SFArchive& archive) {
+bool QExecute::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
-        return ((const QExecute*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
-    // If we're reading a back level, read the whole thing and we're done.
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
+    CTransaction::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -99,7 +102,7 @@ bool QExecute::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QExecute::SerializeC(SFArchive& archive) const {
+bool QExecute::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
@@ -114,7 +117,7 @@ bool QExecute::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, QExecuteArray& array) {
+CArchive& operator>>(CArchive& archive, QExecuteArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -126,7 +129,7 @@ SFArchive& operator>>(SFArchive& archive, QExecuteArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const QExecuteArray& array) {
+CArchive& operator<<(CArchive& archive, const QExecuteArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -155,13 +158,15 @@ void QExecute::registerClass(void) {
     HIDE_FIELD(QExecute, "deleted");
     HIDE_FIELD(QExecute, "showing");
 
+    builtIns.push_back(_biQExecute);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
 string_q nextExecuteChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QExecute *exe = (const QExecute *)dataPtr;
+    const QExecute *exe = reinterpret_cast<const QExecute *>(dataPtr);
     if (exe) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -183,9 +188,8 @@ string_q nextExecuteChunk_custom(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-bool QExecute::readBackLevel(SFArchive& archive) {
+bool QExecute::readBackLevel(CArchive& archive) {
 
-    CTransaction::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -203,8 +207,8 @@ string_q QExecute::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_to" ) return fromAddress(_to);
-            if ( fieldName % "_value" ) return asStringBN(_value);
+            if ( fieldName % "_to" ) return addr_2_Str(_to);
+            if ( fieldName % "_value" ) return bnu_2_Str(_value);
             if ( fieldName % "_data" ) return _data;
             break;
     }
@@ -221,7 +225,8 @@ ostream& operator<<(ostream& os, const QExecute& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

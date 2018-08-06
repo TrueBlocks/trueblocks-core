@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -36,7 +36,7 @@ double testBuild(void) {
     double start = qbNow();
     establishFolder("./cache/");
     for (blknum_t b = FIRST ; b < FIRST+NBLKS ; b++) {
-        string_q fileName = "./cache/" + asStringU(b) + ".bin";
+        string_q fileName = "./cache/" + uint_2_Str(b) + ".bin";
         CBlock block;
         getBlock(block, b);
         if (!fileExists(fileName)) {
@@ -54,7 +54,7 @@ double testBuild(void) {
 double testRetrieve(void) {
     double start = qbNow();
     for (blknum_t b = FIRST ; b < FIRST+NBLKS ; b++) {
-        string_q fileName = "./cache/" + asStringU(b) + ".bin";
+        string_q fileName = "./cache/" + uint_2_Str(b) + ".bin";
         CBlock block;
         readFromBinary(block, fileName);
         cerr << "Reading " << block.blockNumber << "\r";

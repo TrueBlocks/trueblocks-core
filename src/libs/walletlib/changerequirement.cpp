@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "changerequirement.h"
 #include "etherlib.h"
 
@@ -25,7 +26,7 @@ static string_q nextChangerequirementChunk(const string_q& fieldIn, const void *
 static string_q nextChangerequirementChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QChangeRequirement::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QChangeRequirement::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -45,7 +46,7 @@ void QChangeRequirement::Format(CExportContext& ctx, const string_q& fmtIn, void
 //---------------------------------------------------------------------------
 string_q nextChangerequirementChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QChangeRequirement *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QChangeRequirement *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -63,7 +64,7 @@ bool QChangeRequirement::setValueByName(const string_q& fieldName, const string_
 
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_newRequired" ) { _newRequired = toWei(fieldValue); return true; }
+            if ( fieldName % "_newRequired" ) { _newRequired = str_2_Wei(fieldValue); return true; }
             break;
         default:
             break;
@@ -78,12 +79,14 @@ void QChangeRequirement::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QChangeRequirement::Serialize(SFArchive& archive) {
+bool QChangeRequirement::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
-        return ((const QChangeRequirement*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
-    // If we're reading a back level, read the whole thing and we're done.
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
+    CTransaction::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -95,7 +98,7 @@ bool QChangeRequirement::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QChangeRequirement::SerializeC(SFArchive& archive) const {
+bool QChangeRequirement::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
@@ -108,7 +111,7 @@ bool QChangeRequirement::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, QChangeRequirementArray& array) {
+CArchive& operator>>(CArchive& archive, QChangeRequirementArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -120,7 +123,7 @@ SFArchive& operator>>(SFArchive& archive, QChangeRequirementArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const QChangeRequirementArray& array) {
+CArchive& operator<<(CArchive& archive, const QChangeRequirementArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -147,13 +150,15 @@ void QChangeRequirement::registerClass(void) {
     HIDE_FIELD(QChangeRequirement, "deleted");
     HIDE_FIELD(QChangeRequirement, "showing");
 
+    builtIns.push_back(_biQChangeRequirement);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
 string_q nextChangerequirementChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QChangeRequirement *cha = (const QChangeRequirement *)dataPtr;
+    const QChangeRequirement *cha = reinterpret_cast<const QChangeRequirement *>(dataPtr);
     if (cha) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -175,9 +180,8 @@ string_q nextChangerequirementChunk_custom(const string_q& fieldIn, const void *
 }
 
 //---------------------------------------------------------------------------
-bool QChangeRequirement::readBackLevel(SFArchive& archive) {
+bool QChangeRequirement::readBackLevel(CArchive& archive) {
 
-    CTransaction::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -195,7 +199,7 @@ string_q QChangeRequirement::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_newRequired" ) return asStringBN(_newRequired);
+            if ( fieldName % "_newRequired" ) return bnu_2_Str(_newRequired);
             break;
     }
 
@@ -211,7 +215,8 @@ ostream& operator<<(ostream& os, const QChangeRequirement& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

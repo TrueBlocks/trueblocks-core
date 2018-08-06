@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -23,6 +23,8 @@ CPerson *lastAdded = &leader;
 
 int main(int argc, const char *argv[]) {
 
+    CPerson::registerClass();
+
     etherlib_init();
 
     // Parse command line, allowing for command files
@@ -37,7 +39,7 @@ int main(int argc, const char *argv[]) {
             return 0;
 
         for (size_t i = 0 ; i < 10 ; i++) {
-            CPerson *newPerson = new CPerson("Person " + asStringU(i), i * 2);
+            CPerson *newPerson = new CPerson("Person " + uint_2_Str(i), i * 2);
             lastAdded->next = newPerson;
             lastAdded = newPerson;
         }
@@ -50,7 +52,7 @@ int main(int argc, const char *argv[]) {
         }
         cout.flush();
 
-        SFArchive out(WRITING_ARCHIVE);
+        CArchive out(WRITING_ARCHIVE);
         if (out.Lock("./file.bin", binaryWriteCreate, LOCK_WAIT)) {
             leader.Serialize(out);
             out.Release();
@@ -65,7 +67,7 @@ int main(int argc, const char *argv[]) {
         }
         cout.flush();
 
-        SFArchive in(READING_ARCHIVE);
+        CArchive in(READING_ARCHIVE);
         if (in.Lock("./file.bin", binaryReadOnly, LOCK_WAIT)) {
             leader.Serialize(in);
             in.Release();

@@ -4,7 +4,7 @@
 
 #### Usage
 
-`Usage:`    getTrace [-r|-v|-h] &lt;transID&gt; [transID...]  
+`Usage:`    getTrace [-r|-c|-v|-h] &lt;transID&gt; [transID...]  
 `Purpose:`  Retrieve a transaction's traces from the local cache or a running node.  
 `Where:`  
 
@@ -12,6 +12,7 @@
 | -------: | :------- | :------- |
 |  | trans_list | a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) |
 | -r | --raw | retrieve raw transaction directly from the running node |
+| -c | --countOnly | show the number of traces for the transaction only |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
@@ -25,7 +26,7 @@
 
 #### Other Options
 
-All **quickBlocks** command-line tools support the following commands (although in some case, they have no meaning):
+All **QBlocks** command-line tools support the following commands (although in some case, they have no meaning):
 
     Command     |     Description
     -----------------------------------------------------------------------------
@@ -38,6 +39,6 @@ All **quickBlocks** command-line tools support the following commands (although 
 
 <small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
 
-**Powered by QuickBlocks<sup>&reg;</sup>**
+**Powered by Qblocks<sup>&trade;</sup>**
 
 

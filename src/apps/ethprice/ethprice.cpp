@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -12,6 +12,7 @@
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
 #include "options.h"
+#include "sftime.h"
 
 //-----------------------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
@@ -47,7 +48,7 @@ int main(int argc, const char* argv[]) {
                 size_t step = (options.freq / 5);
                 bool done = false;
                 for (size_t i = 0 ; i < quotes.size() && !done ; i = i + step) {
-                    timestamp_t ts = toTimestamp(quotes[i].Format("[{TIMESTAMP}]"));
+                    timestamp_t ts = str_2_Ts(quotes[i].Format("[{TIMESTAMP}]"));
                     if (i > 0) {
                         if (isJson)
                             cout << ",";
@@ -60,7 +61,7 @@ int main(int argc, const char* argv[]) {
 //                        return 0;
 //                    }
                     cout << quotes[i].Format(fmtStr);
-                    if (isTestMode() && dateFromTimeStamp(ts) >= SFTime(2017, 8, 15, 0, 0, 0))
+                    if (isTestMode() && ts_2_Date(ts) >= time_q(2017, 8, 15, 0, 0, 0))
                         done = true;
                 }
                 if (isJson)

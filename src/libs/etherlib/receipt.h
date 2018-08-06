@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "abilib.h"
 #include "logentry.h"
 
@@ -29,8 +30,8 @@ class CTransaction;
 //--------------------------------------------------------------------------
 class CReceipt : public CBaseNode {
 public:
-    SFAddress contractAddress;
-    SFGas gasUsed;
+    address_t contractAddress;
+    gas_t gasUsed;
     CLogEntryArray logs;
     uint32_t status;
 
@@ -48,6 +49,8 @@ public:
     const CTransaction *pTrans;
     friend class CTransaction;
     // EXISTING_CODE
+    bool operator==(const CReceipt& item) const;
+    bool operator!=(const CReceipt& item) const { return !operator==(item); }
     friend bool operator<(const CReceipt& v1, const CReceipt& v2);
     friend ostream& operator<<(ostream& os, const CReceipt& item);
 
@@ -55,7 +58,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CReceipt& re);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -150,21 +153,29 @@ inline CReceipt& CReceipt::operator=(const CReceipt& re) {
 }
 
 //-------------------------------------------------------------------------
+inline bool CReceipt::operator==(const CReceipt& item) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const CReceipt& v1, const CReceipt& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted
+    // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
 }
 
 //---------------------------------------------------------------------------
 typedef vector<CReceipt> CReceiptArray;
-extern SFArchive& operator>>(SFArchive& archive, CReceiptArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const CReceiptArray& array);
+extern CArchive& operator>>(CArchive& archive, CReceiptArray& array);
+extern CArchive& operator<<(CArchive& archive, const CReceiptArray& array);
 
 //---------------------------------------------------------------------------
-extern SFArchive& operator<<(SFArchive& archive, const CReceipt& rec);
-extern SFArchive& operator>>(SFArchive& archive, CReceipt& rec);
+extern CArchive& operator<<(CArchive& archive, const CReceipt& rec);
+extern CArchive& operator>>(CArchive& archive, CReceipt& rec);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

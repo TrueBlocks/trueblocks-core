@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -17,7 +17,7 @@ bool visitBlock(uint64_t num, void *data);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    etherlib_init(quickQuitHander);
+    etherlib_init(quickQuitHandler);
 
     // Parse command line, allowing for command files
     COptions options;
@@ -33,26 +33,32 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        uint64_t nAccts = countOf(options.addrs, '|') + 1;
+        size_t nAccts = options.addrs.size();
         bool needsTotal = (nAccts > 1 && options.total);
 
         // For each address
-        while (!options.addrs.empty()) {
-            options.state.curAddr = nextTokenClear(options.addrs, '|');
+        for (auto addr : options.addrs) {
+            options.state.curAddr = addr;
             options.blocks.forEveryBlockNumber(visitBlock, &options);
         }
 
         if (needsTotal) {
-            string_q sBal = to_string(options.state.totalVal).c_str();
+            string_q sBal = bnu_2_Str(options.state.totalVal);
             if (expContext().asEther) {
-                sBal = wei2Ether(to_string(options.state.totalVal).c_str());
+                sBal = wei_2_Ether(bnu_2_Str(options.state.totalVal));
             } else if (expContext().asDollars) {
-                CBlock blk;
-                getBlock(blk, getLatestBlockFromClient());
+                if (options.timestampMap[options.state.latestBlock] == (timestamp_t)0) {
+                    CBlock blk;
+                    getBlock(blk, options.state.latestBlock);
+                    options.timestampMap[options.state.latestBlock] = blk.timestamp;
+                }
                 if (options.asData)
-                    sBal = substitute(dispDollars(blk.timestamp, options.state.totalVal), ",", "");
+                    sBal = substitute(
+                            dispDollars(options.timestampMap[options.state.latestBlock], options.state.totalVal),
+                            ",", "");
                 else
-                    sBal = padLeft("$" + dispDollars(blk.timestamp, options.state.totalVal), 14);
+                    sBal = padLeft("$" +
+                            dispDollars(options.timestampMap[options.state.latestBlock], options.state.totalVal), 14);
             }
             cout << "        Total for " << cGreen << nAccts << cOff;
             cout << " accounts at " << cTeal << "latest" << cOff << " block";
@@ -73,27 +79,30 @@ int main(int argc, const char *argv[]) {
 //--------------------------------------------------------------
 bool visitBlock(uint64_t blockNum, void *data) {
 
-    COptions *options = (COptions*)data;  // NOLINT
+    COptions *options = reinterpret_cast<COptions *>(data);
     if (blockNum < options->state.earliestBlock)
         options->state.earliestBlock = blockNum;
 
     if (blockNum > options->state.latestBlock) {
-        string_q late = (isTestMode() ? "--" : asStringU(options->state.latestBlock));
-        return usage("Block " + asStringU(blockNum) + " is later than the last valid block " + late + ". Quitting...");
+        string_q late = (isTestMode() ? "--" : uint_2_Str(options->state.latestBlock));
+        return usage("Block " + uint_2_Str(blockNum) + " is later than the last valid block " + late + ". Quitting...");
     }
 
-    SFUintBN bal = getBalance(options->state.curAddr, blockNum, false);
+    biguint_t bal = getBalance(options->state.curAddr, blockNum, false);
     options->state.totalVal += bal;
-    string_q sBal = to_string(bal).c_str();
+    string_q sBal = bnu_2_Str(bal);
     if (expContext().asEther) {
-        sBal = wei2Ether(to_string(bal).c_str());
+        sBal = wei_2_Ether(bnu_2_Str(bal));
     } else if (expContext().asDollars) {
-        CBlock blk;
-        getBlock(blk, blockNum);
+        if (options->timestampMap[blockNum] == (timestamp_t)0) {
+            CBlock blk;
+            getBlock(blk, blockNum);
+            options->timestampMap[blockNum] = blk.timestamp;
+        }
         if (options->asData)
-            sBal = substitute(dispDollars(blk.timestamp, bal), ",", "");
+            sBal = substitute(dispDollars(options->timestampMap[blockNum], bal), ",", "");
         else
-            sBal = padLeft("$" + dispDollars(blk.timestamp, bal), 14);
+            sBal = padLeft("$" + dispDollars(options->timestampMap[blockNum], bal), 14);
     }
 
     options->state.needsNewline = true;

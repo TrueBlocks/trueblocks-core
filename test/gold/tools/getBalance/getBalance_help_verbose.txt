@@ -23,4 +23,4 @@ running command: --help -v
 	- If the queried node does not store historical state, the results are undefined.
 	- special blocks are detailed under whenBlock --list.
 
-  Powered by QuickBlocks
+  Powered by QBlocks

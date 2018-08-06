@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "traceresult.h"
 #include "trace.h"
 
@@ -27,7 +28,7 @@ static string_q nextTraceresultChunk(const string_q& fieldIn, const void *dataPt
 static string_q nextTraceresultChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CTraceResult::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CTraceResult::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -47,7 +48,7 @@ void CTraceResult::Format(CExportContext& ctx, const string_q& fmtIn, void *data
 //---------------------------------------------------------------------------
 string_q nextTraceresultChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CTraceResult *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CTraceResult *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -62,13 +63,13 @@ bool CTraceResult::setValueByName(const string_q& fieldName, const string_q& fie
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "address" ) { address = toAddress(fieldValue); return true; }
+            if ( fieldName % "address" ) { address = str_2_Addr(fieldValue); return true; }
             break;
         case 'c':
             if ( fieldName % "code" ) { code = fieldValue; return true; }
             break;
         case 'g':
-            if ( fieldName % "gasUsed" ) { gasUsed = toGas(fieldValue); return true; }
+            if ( fieldName % "gasUsed" ) { gasUsed = str_2_Gas(fieldValue); return true; }
             break;
         case 'o':
             if ( fieldName % "output" ) { output = fieldValue; return true; }
@@ -86,12 +87,14 @@ void CTraceResult::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTraceResult::Serialize(SFArchive& archive) {
+bool CTraceResult::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CTraceResult*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
-    // If we're reading a back level, read the whole thing and we're done.
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
+    CBaseNode::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -106,7 +109,7 @@ bool CTraceResult::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTraceResult::SerializeC(SFArchive& archive) const {
+bool CTraceResult::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -122,7 +125,7 @@ bool CTraceResult::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CTraceResultArray& array) {
+CArchive& operator>>(CArchive& archive, CTraceResultArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -134,7 +137,7 @@ SFArchive& operator>>(SFArchive& archive, CTraceResultArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CTraceResultArray& array) {
+CArchive& operator<<(CArchive& archive, const CTraceResultArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -162,13 +165,15 @@ void CTraceResult::registerClass(void) {
     HIDE_FIELD(CTraceResult, "deleted");
     HIDE_FIELD(CTraceResult, "showing");
 
+    builtIns.push_back(_biCTraceResult);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
 string_q nextTraceresultChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CTraceResult *tra = (const CTraceResult *)dataPtr;
+    const CTraceResult *tra = reinterpret_cast<const CTraceResult *>(dataPtr);
     if (tra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -190,9 +195,8 @@ string_q nextTraceresultChunk_custom(const string_q& fieldIn, const void *dataPt
 }
 
 //---------------------------------------------------------------------------
-bool CTraceResult::readBackLevel(SFArchive& archive) {
+bool CTraceResult::readBackLevel(CArchive& archive) {
 
-    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -200,13 +204,13 @@ bool CTraceResult::readBackLevel(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CTraceResult& tra) {
+CArchive& operator<<(CArchive& archive, const CTraceResult& tra) {
     tra.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CTraceResult& tra) {
+CArchive& operator>>(CArchive& archive, CTraceResult& tra) {
     tra.Serialize(archive);
     return archive;
 }
@@ -222,13 +226,13 @@ string_q CTraceResult::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "address" ) return fromAddress(address);
+            if ( fieldName % "address" ) return addr_2_Str(address);
             break;
         case 'c':
             if ( fieldName % "code" ) return code;
             break;
         case 'g':
-            if ( fieldName % "gasUsed" ) return fromGas(gasUsed);
+            if ( fieldName % "gasUsed" ) return gas_2_Str(gasUsed);
             break;
         case 'o':
             if ( fieldName % "output" ) return output;
@@ -247,7 +251,8 @@ ostream& operator<<(ostream& os, const CTraceResult& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

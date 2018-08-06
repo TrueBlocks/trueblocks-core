@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "leaf.h"
 #include "treeroot.h"
 
@@ -27,7 +28,7 @@ static string_q nextLeafChunk(const string_q& fieldIn, const void *dataPtr);
 static string_q nextLeafChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CLeaf::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CLeaf::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -47,7 +48,7 @@ void CLeaf::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) co
 //---------------------------------------------------------------------------
 string_q nextLeafChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CLeaf *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CLeaf *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -68,13 +69,13 @@ bool CLeaf::setValueByName(const string_q& fieldName, const string_q& fieldValue
             if ( fieldName % "blocks" ) {
                 string_q str = fieldValue;
                 while (!str.empty()) {
-                    blocks.push_back(toUnsigned(nextTokenClear(str, ',')));
+                    blocks.push_back(str_2_Uint(nextTokenClear(str, ',')));
                 }
                 return true;
             }
             break;
         case 'c':
-            if ( fieldName % "counter" ) { counter = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "counter" ) { counter = str_2_Uint(fieldValue); return true; }
             break;
         default:
             break;
@@ -89,13 +90,16 @@ void CLeaf::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CLeaf::Serialize(SFArchive& archive) {
+bool CLeaf::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CLeaf*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
-    // If we're reading a back level, read the whole thing and we're done.
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
     CTreeNode::Serialize(archive);
+    if (readBackLevel(archive))
+        return true;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -106,7 +110,7 @@ bool CLeaf::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CLeaf::SerializeC(SFArchive& archive) const {
+bool CLeaf::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CTreeNode::SerializeC(archive);
@@ -120,7 +124,7 @@ bool CLeaf::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CLeafArray& array) {
+CArchive& operator>>(CArchive& archive, CLeafArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -132,7 +136,7 @@ SFArchive& operator>>(SFArchive& archive, CLeafArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CLeafArray& array) {
+CArchive& operator<<(CArchive& archive, const CLeafArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -160,13 +164,15 @@ void CLeaf::registerClass(void) {
     HIDE_FIELD(CLeaf, "deleted");
     HIDE_FIELD(CLeaf, "showing");
 
+    builtIns.push_back(_biCLeaf);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
 string_q nextLeafChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CLeaf *lea = (const CLeaf *)dataPtr;
+    const CLeaf *lea = reinterpret_cast<const CLeaf *>(dataPtr);
     if (lea) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -188,9 +194,8 @@ string_q nextLeafChunk_custom(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-bool CLeaf::readBackLevel(SFArchive& archive) {
+bool CLeaf::readBackLevel(CArchive& archive) {
 
-    CTreeNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -211,18 +216,18 @@ string_q CLeaf::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "blocks" || fieldName % "blocksCnt" ) {
                 size_t cnt = blocks.size();
                 if (endsWith(fieldName, "Cnt"))
-                    return asStringU(cnt);
+                    return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {
-                    retS += asStringU(blocks[i]);
+                    retS += uint_2_Str(blocks[i]);
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
                 }
                 return retS;
             }
             break;
         case 'c':
-            if ( fieldName % "counter" ) return asStringU(counter);
+            if ( fieldName % "counter" ) return uint_2_Str(counter);
             break;
     }
 
@@ -238,14 +243,15 @@ ostream& operator<<(ostream& os, const CLeaf& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 
 //---------------------------------------------------------------------------
 const string_q CLeaf::getStringAt(const string_q& name, size_t i) const {
     if ( name % "blocks" && i < blocks.size() )
-        return asStringU(blocks[i]);
+        return uint_2_Str(blocks[i]);
     return "";
 }
 
@@ -253,17 +259,7 @@ const string_q CLeaf::getStringAt(const string_q& name, size_t i) const {
 // EXISTING_CODE
     //-----------------------------------------------------------------------------
     CLeaf::CLeaf(const string_q& _key, const string_q& _value) {
-#ifdef OLD_CODE_Y
-        string_q last = _value;
-        string_q first = nextTokenClear(last, '|');
-        if (!first.empty()) {
-            blocks.push_back(toUnsigned(first));
-            if (!last.empty())
-                blocks.push_back(toUnsigned(last));
-        }
-#else
         counter = 1;
-#endif
         prefixS = _key;
         if (verbose == 2) cerr << "\t\tCreating leaf " << _key << " at " << _value << endl;
     }
@@ -274,15 +270,7 @@ const string_q CLeaf::getStringAt(const string_q& name, size_t i) const {
             return "";
 
         string_q ret;
-#ifdef OLD_CODE_Y
-        for (int i = 0 ; i < blocks.size() ; i++) {
-            ret += asString(blocks[i]);
-            if (i < blocks.size()-1)
-                ret += ",";
-        }
-#else
-        ret = asStringU(counter);
-#endif
+        ret = uint_2_Str(counter);
         return ret;
     }
 
@@ -305,7 +293,7 @@ const string_q CLeaf::getStringAt(const string_q& name, size_t i) const {
 //            if (first == 0) {
 //                // store the first encountered block
 //                if (verbose) cerr << "\t\tStoring first contents " << _key << " at " << _value << "\n";
-//                first = toUnsigned(_value);
+//                first = str_2_Uint(_value);
 //
 //            } else
             {
@@ -313,11 +301,7 @@ const string_q CLeaf::getStringAt(const string_q& name, size_t i) const {
                 if (verbose) cerr << "\t\tReplacing leaf contents " << _key << " at " << _value
 //                    << " (" << first << ")"
                     << "\n";
-#ifdef OLD_CODE_Y
-                blocks.push_back(toUnsigned(_value));
-#else
                 counter++;
-#endif
             }
             return this;
 
@@ -328,15 +312,7 @@ const string_q CLeaf::getStringAt(const string_q& name, size_t i) const {
             if (!contains(_key) || blocks.size() == 0) {
                 curVal = "";
             } else {
-#ifdef OLD_CODE_Y
-                for (int i = 0 ; i < blocks.size() ; i++) {
-                    curVal += asString(blocks[i]);
-                    if (i < blocks.size()-1)
-                        curVal += ",";
-                }
-#else
-                curVal = asStringU(counter);
-#endif
+                curVal = uint_2_Str(counter);
             }
             CTreeNode *n = CTreeNode::newBranch(_key, _value, prefixS, curVal);
             delete this;

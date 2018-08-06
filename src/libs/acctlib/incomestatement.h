@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "abilib.h"
 
 namespace qblocks {
@@ -26,11 +27,11 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CIncomeStatement : public CBaseNode {
 public:
-    SFIntBN begBal;
-    SFIntBN inflow;
-    SFIntBN outflow;
-    SFIntBN gasCostInWei;
-    SFIntBN endBal;
+    bigint_t begBal;
+    bigint_t inflow;
+    bigint_t outflow;
+    bigint_t gasCostInWei;
+    bigint_t endBal;
     blknum_t blockNum;
 
 public:
@@ -42,13 +43,15 @@ public:
     DECLARE_NODE(CIncomeStatement);
 
     // EXISTING_CODE
-    SFIntBN nodeBal;
+    bigint_t nodeBal;
     void operator+=(const CIncomeStatement &x);
     bool balanced(void) const { return ((nodeBal - endBal) == 0); }
-    SFIntBN difference(void) const { return (nodeBal - endBal); }
+    bigint_t difference(void) const { return (nodeBal - endBal); }
     void correct(void) { endBal = nodeBal; }
     friend class CAccountWatch;
     // EXISTING_CODE
+    bool operator==(const CIncomeStatement& item) const;
+    bool operator!=(const CIncomeStatement& item) const { return !operator==(item); }
     friend bool operator<(const CIncomeStatement& v1, const CIncomeStatement& v2);
     friend ostream& operator<<(ostream& os, const CIncomeStatement& item);
 
@@ -56,7 +59,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CIncomeStatement& in);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -133,21 +136,29 @@ inline CIncomeStatement& CIncomeStatement::operator=(const CIncomeStatement& in)
 }
 
 //-------------------------------------------------------------------------
+inline bool CIncomeStatement::operator==(const CIncomeStatement& item) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const CIncomeStatement& v1, const CIncomeStatement& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted
+    // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
 }
 
 //---------------------------------------------------------------------------
 typedef vector<CIncomeStatement> CIncomeStatementArray;
-extern SFArchive& operator>>(SFArchive& archive, CIncomeStatementArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const CIncomeStatementArray& array);
+extern CArchive& operator>>(CArchive& archive, CIncomeStatementArray& array);
+extern CArchive& operator<<(CArchive& archive, const CIncomeStatementArray& array);
 
 //---------------------------------------------------------------------------
-extern SFArchive& operator<<(SFArchive& archive, const CIncomeStatement& inc);
-extern SFArchive& operator>>(SFArchive& archive, CIncomeStatement& inc);
+extern CArchive& operator<<(CArchive& archive, const CIncomeStatement& inc);
+extern CArchive& operator>>(CArchive& archive, CIncomeStatement& inc);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

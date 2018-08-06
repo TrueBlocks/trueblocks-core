@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "addowner.h"
 #include "etherlib.h"
 
@@ -25,7 +26,7 @@ static string_q nextAddownerChunk(const string_q& fieldIn, const void *dataPtr);
 static string_q nextAddownerChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QAddOwner::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QAddOwner::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -45,7 +46,7 @@ void QAddOwner::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr
 //---------------------------------------------------------------------------
 string_q nextAddownerChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QAddOwner *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QAddOwner *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -63,7 +64,7 @@ bool QAddOwner::setValueByName(const string_q& fieldName, const string_q& fieldV
 
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_owner" ) { _owner = toAddress(fieldValue); return true; }
+            if ( fieldName % "_owner" ) { _owner = str_2_Addr(fieldValue); return true; }
             break;
         default:
             break;
@@ -78,12 +79,14 @@ void QAddOwner::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QAddOwner::Serialize(SFArchive& archive) {
+bool QAddOwner::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
-        return ((const QAddOwner*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
-    // If we're reading a back level, read the whole thing and we're done.
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
+    CTransaction::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -95,7 +98,7 @@ bool QAddOwner::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QAddOwner::SerializeC(SFArchive& archive) const {
+bool QAddOwner::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
@@ -108,7 +111,7 @@ bool QAddOwner::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, QAddOwnerArray& array) {
+CArchive& operator>>(CArchive& archive, QAddOwnerArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -120,7 +123,7 @@ SFArchive& operator>>(SFArchive& archive, QAddOwnerArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const QAddOwnerArray& array) {
+CArchive& operator<<(CArchive& archive, const QAddOwnerArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -147,13 +150,15 @@ void QAddOwner::registerClass(void) {
     HIDE_FIELD(QAddOwner, "deleted");
     HIDE_FIELD(QAddOwner, "showing");
 
+    builtIns.push_back(_biQAddOwner);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
 string_q nextAddownerChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QAddOwner *add = (const QAddOwner *)dataPtr;
+    const QAddOwner *add = reinterpret_cast<const QAddOwner *>(dataPtr);
     if (add) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -175,9 +180,8 @@ string_q nextAddownerChunk_custom(const string_q& fieldIn, const void *dataPtr) 
 }
 
 //---------------------------------------------------------------------------
-bool QAddOwner::readBackLevel(SFArchive& archive) {
+bool QAddOwner::readBackLevel(CArchive& archive) {
 
-    CTransaction::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -195,7 +199,7 @@ string_q QAddOwner::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_owner" ) return fromAddress(_owner);
+            if ( fieldName % "_owner" ) return addr_2_Str(_owner);
             break;
     }
 
@@ -211,7 +215,8 @@ ostream& operator<<(ostream& os, const QAddOwner& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

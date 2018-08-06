@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "etherlib.h"
 
 namespace qblocks {
@@ -27,7 +28,7 @@ namespace qblocks {
 class CBalanceHistory : public CBaseNode {
 public:
     blknum_t bn;
-    SFUintBN balance;
+    biguint_t balance;
 
 public:
     CBalanceHistory(void);
@@ -39,8 +40,8 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CBalanceHistory& item);
-    bool operator!=(const CBalanceHistory& item) { return !operator==(item); }
+    bool operator==(const CBalanceHistory& item) const;
+    bool operator!=(const CBalanceHistory& item) const { return !operator==(item); }
     friend bool operator<(const CBalanceHistory& v1, const CBalanceHistory& v2);
     friend ostream& operator<<(ostream& os, const CBalanceHistory& item);
 
@@ -48,7 +49,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CBalanceHistory& ba);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -117,9 +118,10 @@ inline CBalanceHistory& CBalanceHistory::operator=(const CBalanceHistory& ba) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CBalanceHistory::operator==(const CBalanceHistory& item) {
+inline bool CBalanceHistory::operator==(const CBalanceHistory& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
+    // Default equality operator as defined in class definition
     return bn == item.bn;
 }
 
@@ -127,14 +129,14 @@ inline bool CBalanceHistory::operator==(const CBalanceHistory& item) {
 inline bool operator<(const CBalanceHistory& v1, const CBalanceHistory& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // Default sort as defined in class definition, assume already sorted
+    // Default sort as defined in class definition
     return v1.bn < v2.bn;
 }
 
 //---------------------------------------------------------------------------
 typedef vector<CBalanceHistory> CBalanceHistoryArray;
-extern SFArchive& operator>>(SFArchive& archive, CBalanceHistoryArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const CBalanceHistoryArray& array);
+extern CArchive& operator>>(CArchive& archive, CBalanceHistoryArray& array);
+extern CArchive& operator<<(CArchive& archive, const CBalanceHistoryArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

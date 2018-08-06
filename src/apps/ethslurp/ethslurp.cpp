@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -108,22 +108,6 @@ bool CSlurperApp::Initialize(COptions& options, string_q& message) {
     // string is not in the config file. Don't remove it.
     getFormatString(options, "file", false);
 
-    if (options.wantsArchive) {
-        if (options.archiveFile.empty() && options.name.empty())
-            return usage("-a and -n may not both be empty. Specify either an archive file or a name. Quitting...");
-
-        string_q fn = (contains(options.name, "/") ? options.name : options.exportFormat + "/" + options.name) +
-                        (contains(options.name, ".") ? "" : "." + options.exportFormat);
-        CFilename filename(fn);
-        if (options.archiveFile.empty())
-            options.archiveFile = filename.getFullPath();
-        ASSERT(options.output == NULL);
-        options.output = fopen(options.archiveFile.c_str(), asciiWriteCreate);
-        if (!options.output)
-            return usage("file '" + options.archiveFile + "' could not be opened. Quitting.");
-        outScreen.setOutput(options.output);
-    }
-
     // Save the address and name for later
     CToml toml(configPath("ethslurp.toml"));
     toml.setConfigStr("settings", "rerun", addr);
@@ -176,7 +160,7 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
         // Once a transaction is on the blockchain, it will never change
         // therefore, we can store them in a binary cache. Here we read
         // from a previously stored cache.
-        SFArchive archive(READING_ARCHIVE);
+        CArchive archive(READING_ARCHIVE);
         if (!archive.Lock(cacheFilename, binaryReadOnly, LOCK_NOWAIT)) {
             message = "Could not open file: '" + cacheFilename + "'\n";
             return options.fromFile;
@@ -185,8 +169,8 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
         archive.Close();
     }
 
-    SFTime now = Now();
-    SFTime fileTime = fileLastModifyDate(cacheFilename);
+    time_q now = Now();
+    time_q fileTime = fileLastModifyDate(cacheFilename);
 
     // If the user tells us he/she wants to update the cache, or the cache
     // hasn't been updated in five minutes, then update it
@@ -214,8 +198,8 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
         while (!done) {
             string_q url = string_q("https://api.etherscan.io/api?module=account&action=txlist&sort=asc") +
             "&address=" + theAccount.addr +
-            "&page="    + asStringU(page) +
-            "&offset="  + asStringU(options.pageSize) +
+            "&page="    + uint_2_Str(page) +
+            "&offset="  + uint_2_Str(options.pageSize) +
             "&apikey="  + api.getKey();
 
             // Grab a page of data from the web api
@@ -265,23 +249,19 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
         // pre allocate the array (probably wrong input here--reserve takes max needed size, not addition size needed)
         theAccount.transactions.reserve(nRead);
 
-        int64_t lastBlock = 0;  // DO NOT CHANGE! MAKES A BUG IF YOU MAKE IT UNSIGNED NOLINT
-        char *p = cleanUpJson((char *)(contents.c_str()));  // NOLINT
-        while (p && *p) {
-            CTransaction trans;
-            size_t nFields = 0;
-            p = trans.parseJson(p, nFields);
-            if (nFields) {
-                int64_t transBlock = (int64_t)trans.blockNumber;  // NOLINT
-                if (transBlock > theAccount.lastBlock) {  // add the new transaction if it's in a new block
-                    theAccount.transactions.push_back(trans);
-                    lastBlock = transBlock;
-                    if (!(++nNewBlocks % REP_FREQ) && !isTestMode()) {
-                        cerr << "\tFound new transaction at block " << transBlock << ". Importing...\r";
-                        cerr.flush();
-                    }
+        int64_t lastBlock = 0;  // DO NOT CHANGE! MAKES A BUG IF YOU MAKE IT UNSIGNED
+        CTransaction trans;
+        while (trans.parseJson3(contents)) {
+            int64_t transBlock = static_cast<int64_t>(trans.blockNumber);
+            if (transBlock > theAccount.lastBlock) {  // add the new transaction if it's in a new block
+                theAccount.transactions.push_back(trans);
+                lastBlock = transBlock;
+                if (!(++nNewBlocks % REP_FREQ) && !isTestMode()) {
+                    cerr << "\tFound new transaction at block " << transBlock << ". Importing...\r";
+                    cerr.flush();
                 }
             }
+            trans = CTransaction();  // reset
         }
         if (!isTestMode() && nNewBlocks) {
             cerr << "\tFound new transaction at block " << lastBlock << ". Importing...\n";
@@ -294,7 +274,7 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
         if (newRecords) {
             if (!isTestMode())
                 cerr << "\tWriting " << newRecords << " new records to cache\n";
-            SFArchive archive(WRITING_ARCHIVE);
+            CArchive archive(WRITING_ARCHIVE);
             if (archive.Lock(cacheFilename, binaryWriteCreate, LOCK_CREATE)) {
                 theAccount.Serialize(archive);
                 archive.Close();
@@ -306,12 +286,12 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
         }
     }
 
-    if (!isTestMode()) {
-        double stop = qbNow();
-        double timeSpent = stop-start;
-        fprintf(stderr, "\tLoaded %ld total records in %f seconds\n", theAccount.transactions.size(), timeSpent);
-        fflush(stderr);
-    }
+    double stop = qbNow();
+    double timeSpent = stop-start;
+    string_q timeRep = (isTestMode() ? "--time--" : double_2_Str(timeSpent));
+    cout << "\tLoaded " << theAccount.transactions.size() << " total records in "
+            << timeRep << " seconds\n";
+    fflush(stderr);
 
     return (options.fromFile || theAccount.transactions.size() > 0);
 }
@@ -336,7 +316,7 @@ bool CSlurperApp::Filter(COptions& options, string_q& message) {
 
         // The -blocks and -dates filters are mutually exclusive, -dates predominates.
         if (options.firstDate != earliestDate || options.lastDate != latestDate) {
-            SFTime date = dateFromTimeStamp((timestamp_t)trans->timestamp);
+            time_q date = ts_2_Date((timestamp_t)trans->timestamp);
             bool isVisible = (date >= options.firstDate && date <= options.lastDate);
             trans->m_showing = isVisible;
 
@@ -347,12 +327,12 @@ bool CSlurperApp::Filter(COptions& options, string_q& message) {
 
         // The -incomeOnly and -expensesOnly filters are also mutually exclusive
         ASSERT(!(options.incomeOnly && options.expenseOnly));  // can't be both
-        if (options.incomeOnly && fromAddress(trans->to) != theAccount.addr) {
+        if (options.incomeOnly && addr_2_Str(trans->to) != theAccount.addr) {
             if (verbose)
                 cerr << trans->Format("\tskipping expenditure [{HASH}]\n");
             trans->m_showing = false;
 
-        } else if (options.expenseOnly && fromAddress(trans->from) != theAccount.addr) {
+        } else if (options.expenseOnly && addr_2_Str(trans->from) != theAccount.addr) {
             if (verbose)
                 cerr << trans->Format("\tskipping inflow [{HASH}]\n");
             trans->m_showing = false;
@@ -370,26 +350,24 @@ extern bool isFunction(const CTransaction *trans, const string_q& func);
         if (trans->m_showing && options.errFilt) {
             // The filter is either equal to '2' (errOnly) in which case
             // we show only errors. Otherwise, show only non-errors.
-            bool isError = toLong(trans->Format("[{ISERROR}]"));
+            bool isError = str_2_Int(trans->Format("[{ISERROR}]"));
             trans->m_showing = (options.errFilt == 2 ? isError : !isError);
         }
 
         theAccount.nVisible += trans->m_showing;
-        int64_t nFiltered = int64_t(theAccount.nVisible + 1);  // NOLINT
+        int64_t nFiltered = static_cast<int64_t>(theAccount.nVisible + 1);
         if (!(nFiltered % REP_INFREQ) && !isTestMode()) {
             cerr << "\t" << "Filtering..." << nFiltered << " records passed.\r";
             cerr.flush();
         }
     }
 
-    if (!isTestMode()) {
-        double stop = qbNow();
-        double timeSpent = stop-start;
-        cerr << "\tFilter passed " << theAccount.nVisible
-                << " visible records of " << theAccount.transactions.size()
-                << " in " << timeSpent << " seconds\n";
-        cerr.flush();
-    }
+    double stop = qbNow();
+    double timeSpent = stop-start;
+    string_q timeRep = (isTestMode() ? "--time--" : double_2_Str(timeSpent));
+    cerr << "\tFilter passed " << theAccount.nVisible << " visible records of "
+            << theAccount.transactions.size() << " in " << timeRep << " seconds\n";
+    cerr.flush();
 
     return true;
 }
@@ -406,20 +384,19 @@ bool CSlurperApp::Display(COptions& options, string_q& message) {
     if (options.cache) {
         for (size_t i = 0 ; i < theAccount.transactions.size() ; i++) {
             const CTransaction *t = &theAccount.transactions[i];
-            outScreen << t->Format("[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t" + asStringU(options.acct_id)) << "\n";
+            cout << t->Format("[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t" + uint_2_Str(options.acct_id)) << "\n";
         }
     } else {
 
-        theAccount.Format(outScreen, getFormatString(options, "file", false));
+        theAccount.Format(cout, getFormatString(options, "file", false));
     }
 
-    if (!isTestMode()) {
-        double stop = qbNow();
-        double timeSpent = stop-start;
-        cerr << "\tExported " << theAccount.nVisible
-                << " records in " << timeSpent << " seconds             \n\n";
-        cerr.flush();
-    }
+    double stop = qbNow();
+    double timeSpent = stop-start;
+    string_q timeRep = (isTestMode() ? "--time--" : double_2_Str(timeSpent));
+    cerr << "\tExported " << theAccount.nVisible << " records in " << timeRep << " seconds             \n\n";
+    cerr.flush();
+
     return true;
 }
 
@@ -470,7 +447,7 @@ const char *ERR_NO_DISPLAY_STR =
 
 //---------------------------------------------------------------------------------------------------
 bool buildFieldList(const CFieldData& fld, void *data) {
-    string_q *s = (string_q*)data;  // NOLINT
+    string_q *s = reinterpret_cast<string_q *>(data);
     *s += (fld.getName() + "|");
     return true;
 }
@@ -491,7 +468,7 @@ void CSlurperApp::buildDisplayStrings(COptions& options) {
 
     string_q defList = getGlobalConfig("ethslurp")->getConfigStr("display", "fmt_fieldList", "");
     string_q fieldList = getGlobalConfig("ethslurp")->getConfigStr("display",
-                                                                   "fmt_" + options.exportFormat + "_fieldList", defList);
+                                                   "fmt_" + options.exportFormat + "_fieldList", defList);
     if (fieldList.empty())
         GETRUNTIME_CLASS(CTransaction)->forEveryField(buildFieldList, &fieldList);
 
@@ -509,7 +486,8 @@ void CSlurperApp::buildDisplayStrings(COptions& options) {
             cerr << "Field '" << fieldName << "' not found in fieldList '" << origList << "'. Quitting...\n";
             exit(0);
         }
-        if (field->isHidden() && force) ((CFieldData*)field)->setHidden(false);  // NOLINT
+        if (field->isHidden() && force)
+            ((CFieldData*)field)->setHidden(false);  // NOLINT
         if (!field->isHidden()) {
             string_q resolved = fieldName;
             if (options.exportFormat != "json")
@@ -528,7 +506,6 @@ void CSlurperApp::buildDisplayStrings(COptions& options) {
     theAccount.header        = trimWhitespace(theAccount.header);
 
     theAccount.displayString = trim(substitute(fmtForRecords, "[{FIELDS}]", theAccount.displayString), '\t');
-    replaceAll(theAccount.displayString, "[{NAME}]", options.archiveFile);
     if (options.exportFormat == "json") {
         // One little hack to make raw json more readable
         replaceReverse(theAccount.displayString, "}]\",", "}]\"\n");
@@ -549,14 +526,14 @@ void findBlockRange(const string_q& json, size_t& minBlock, size_t& maxBlock) {
     size_t first = json.find(search);
     if (first != string::npos) {
         string_q str = extract(json, first + len);
-        minBlock = toLongU(str);
+        minBlock = str_2_Uint(str);
     }
 
     string_q end = extract(json, json.rfind('{'));  // pull off the last transaction
     size_t last = end.find(search);
     if (last != string::npos) {
         string_q str = extract(end, last + len);
-        maxBlock = toLongU(str);
+        maxBlock = str_2_Uint(str);
     }
 }
 
@@ -645,7 +622,7 @@ bool loadABI(CAbi& abi, const string_q& addr) {
 
 //---------------------------------------------------------------------------
 bool isFunction(const CTransaction *trans, const string_q& func) {
-    if (func=="none")
+    if (func == "none")
         return (trans->inputToFunction() == " ");
     return (trans->funcPtr ? trans->funcPtr->name == func : false);
 }

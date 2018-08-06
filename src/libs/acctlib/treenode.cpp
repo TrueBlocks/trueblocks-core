@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "treenode.h"
 #include "treeroot.h"
 
@@ -27,7 +28,7 @@ extern string_q nextTreenodeChunk(const string_q& fieldIn, const void *dataPtr);
 static string_q nextTreenodeChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CTreeNode::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CTreeNode::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -47,7 +48,7 @@ void CTreeNode::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr
 //---------------------------------------------------------------------------
 string_q nextTreenodeChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CTreeNode *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CTreeNode *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -62,7 +63,7 @@ bool CTreeNode::setValueByName(const string_q& fieldName, const string_q& fieldV
 
     switch (tolower(fieldName[0])) {
         case 'i':
-            if ( fieldName % "index" ) { index = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "index" ) { index = str_2_Uint(fieldValue); return true; }
             break;
         case 'p':
             if ( fieldName % "prefixS" ) { prefixS = fieldValue; return true; }
@@ -80,12 +81,14 @@ void CTreeNode::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTreeNode::Serialize(SFArchive& archive) {
+bool CTreeNode::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CTreeNode*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
-    // If we're reading a back level, read the whole thing and we're done.
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
+    CBaseNode::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -98,7 +101,7 @@ bool CTreeNode::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTreeNode::SerializeC(SFArchive& archive) const {
+bool CTreeNode::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -112,7 +115,7 @@ bool CTreeNode::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CTreeNodeArray& array) {
+CArchive& operator>>(CArchive& archive, CTreeNodeArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -124,7 +127,7 @@ SFArchive& operator>>(SFArchive& archive, CTreeNodeArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CTreeNodeArray& array) {
+CArchive& operator<<(CArchive& archive, const CTreeNodeArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -150,13 +153,15 @@ void CTreeNode::registerClass(void) {
     HIDE_FIELD(CTreeNode, "deleted");
     HIDE_FIELD(CTreeNode, "showing");
 
+    builtIns.push_back(_biCTreeNode);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
 string_q nextTreenodeChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CTreeNode *tre = (const CTreeNode *)dataPtr;
+    const CTreeNode *tre = reinterpret_cast<const CTreeNode *>(dataPtr);
     if (tre) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -178,9 +183,8 @@ string_q nextTreenodeChunk_custom(const string_q& fieldIn, const void *dataPtr) 
 }
 
 //---------------------------------------------------------------------------
-bool CTreeNode::readBackLevel(SFArchive& archive) {
+bool CTreeNode::readBackLevel(CArchive& archive) {
 
-    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -198,7 +202,7 @@ string_q CTreeNode::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'i':
-            if ( fieldName % "index" ) return asStringU(index);
+            if ( fieldName % "index" ) return uint_2_Str(index);
             break;
         case 'p':
             if ( fieldName % "prefixS" ) return prefixS;
@@ -217,7 +221,8 @@ ostream& operator<<(ostream& os, const CTreeNode& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

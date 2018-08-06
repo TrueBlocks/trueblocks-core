@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -24,6 +24,7 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     CRuntimeClass CBaseNode::classCBaseNode;
     static CBuiltIn _biBaseNode(&CBaseNode::classCBaseNode, "CBaseNode", sizeof(CBaseNode), NULL, NULL);
+    vector<CBuiltIn> builtIns;  // Keeps track of all the classes that have beebn registered
 
     //--------------------------------------------------------------------------------
     CBaseNode::CBaseNode(void) {
@@ -74,11 +75,11 @@ namespace qblocks {
 
         switch (tolower(fieldName[0])) {
             case 'd':
-                if ( fieldName % "deleted" ) return asStringU(m_deleted);
+                if ( fieldName % "deleted" ) return uint_2_Str(m_deleted);
                 break;
             case 's':
-                if ( fieldName % "schema" ) return asStringU(m_schema);
-                if ( fieldName % "showing" ) return asStringU(m_showing);
+                if ( fieldName % "schema" ) return uint_2_Str(m_schema);
+                if ( fieldName % "showing" ) return uint_2_Str(m_showing);
                 break;
         }
 
@@ -155,9 +156,14 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    char *CBaseNode::parseJson(char *s) {
+    bool CBaseNode::parseJson3(string_q& str) {
+        char *s = (char *)str.c_str();  // NOLINT
+        char *p = cleanUpJson(s);
         size_t nFields = 0;
-        return parseJson(s, nFields);
+        p = parseJson1(p, nFields);
+        if (p)
+            str = p;
+        return (nFields);
     }
 
 // #define DEBUG_PARSER
@@ -166,7 +172,7 @@ namespace qblocks {
 #endif
 
     //--------------------------------------------------------------------------------
-    char *CBaseNode::parseJson(char *s, size_t& nFields) {
+    char *CBaseNode::parseJson1(char *s, size_t& nFields) {
 #ifdef DEBUG_PARSER
         string_q ss = s;
         string_q tt(25, '-');
@@ -277,8 +283,8 @@ namespace qblocks {
 
     //--------------------------------------------------------------------
     inline bool isWhiteSpace(char c) {
-        // TODO(tjayrush): this is unsafe if the JSON contains preservable spaces. Since that is not
-        // the case with Ethereum data, it's okay
+        // NOTE: A generic JSON parser won't do this, but since the Ethereum data contains no
+        // preservable white space, it's okay here.
         return (c == '\0' || c == ' ' || c == '\n' || c == '\r' || c == '\t');
     }
 
@@ -299,7 +305,7 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------
-    bool CBaseNode::readBackLevel(SFArchive& archive) {
+    bool CBaseNode::readBackLevel(CArchive& archive) {
 
         // The following code assumes we do not change the format of the header
         archive >> m_deleted;
@@ -308,13 +314,12 @@ namespace qblocks {
         string_q str;
         archive >> str;
         ASSERT(str == string_q(getRuntimeClass()->getClassNamePtr()));
-
-        // Return true if this is a back level version
-        return true;
+        // We can never upgrade the base node data, so we always return false here (true means we've upgraded)
+        return false;
     }
 
     //---------------------------------------------------------------------------
-    bool CBaseNode::Serialize(SFArchive& archive) {
+    bool CBaseNode::Serialize(CArchive& archive) {
         archive >> m_deleted;
         archive >> m_schema;
         archive >> m_showing;
@@ -325,7 +330,7 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------
-    bool CBaseNode::SerializeC(SFArchive& archive) const {
+    bool CBaseNode::SerializeC(CArchive& archive) const {
 
         // Not happy with this, but we must set the schema to the latest before we write data
         // since we always write the latest version to the hard drive.
@@ -359,7 +364,6 @@ namespace qblocks {
         return string_q(expC.spcs*expC.lev, expC.tab);
     }
 
-    extern string_q decBigNum(const string_q& str);
     //--------------------------------------------------------------------------------
     string_q CBaseNode::toJson1(void) const {
         return substitute(substitute(substitute(toJson(), "\t", " "), "\n", ""), "  ", " ");
@@ -461,9 +465,11 @@ namespace qblocks {
 
 
                 } else if (field.m_fieldType & TS_NUMERAL) {
-                    if (expContext().quoteNums) ret += "\"";
-                    ret += (expContext().hexNums) ? toHex(val) : decBigNum(val);
-                    if (expContext().quoteNums) ret += "\"";
+                    if (expContext().quoteNums)
+                        ret += "\"";
+                    ret += (expContext().hexNums) ? str_2_Hex(val) : val;
+                    if (expContext().quoteNums)
+                        ret += "\"";
 
                 } else if (val == "null") {
                     ret += val;
@@ -499,7 +505,7 @@ namespace qblocks {
                 string_q name = field.getName();
                 os << indent() << "\"" << name << "\": ";
                 if (field.isArray()) {
-                    uint64_t cnt = toLongU(getValueByName(name+"Cnt"));
+                    uint64_t cnt = str_2_Uint(getValueByName(name+"Cnt"));
                     os << "[";
                     if (cnt) {
                         incIndent();
@@ -531,7 +537,7 @@ namespace qblocks {
                     string_q val = getValueByName(name);
                     bool isNum = field.m_fieldType & TS_NUMERAL;
                     if (isNum && expContext().hexNums && !startsWith(val, "0x"))
-                        val = toHex(val);
+                        val = str_2_Hex(val);
                     bool quote = (!isNum || expContext().quoteNums) && val != "null";
                     if (quote)
                         os << "\"";
@@ -555,7 +561,7 @@ namespace qblocks {
             string_q className = node->getRuntimeClass()->getClassNamePtr();
             switch (tolower(fieldIn[0])) {
                 case 'd':
-                    if ( fieldIn % "deleted" ) return asString(node->isDeleted());
+                    if ( fieldIn % "deleted" ) return int_2_Str(node->isDeleted());
                     break;
                 case 'n':
                     if ( fieldIn % "null" ) return "<x>";
@@ -572,8 +578,8 @@ namespace qblocks {
                     }
                     break;
                 case 's':
-                    if ( fieldIn % "schema" ) return asStringU(node->m_schema);
-                    if ( fieldIn % "showing" ) return asStringU(node->m_showing);
+                    if ( fieldIn % "schema" ) return uint_2_Str(node->m_schema);
+                    if ( fieldIn % "showing" ) return uint_2_Str(node->m_showing);
                     break;
                 default:
                     break;
@@ -581,23 +587,6 @@ namespace qblocks {
         }
 
         return "";
-    }
-
-    //--------------------------------------------------------------------------------
-    string_q decBigNum(const string_q& str) {
-        string_q ret = str;
-        size_t len = ret.length();
-             if (len > 29) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+29";  // NOLINT
-        else if (len > 28) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+28";
-        else if (len > 27) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+27";
-        else if (len > 26) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+26";
-        else if (len > 25) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+25";
-        else if (len > 24) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+24";
-        else if (len > 23) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+23";
-        else if (len > 22) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+22";
-        else if (len > 21) ret = extract(ret, 0, 1) + "." + trimTrailing(extract(ret, 1), '0') + "e+21";
-        replace(ret, ".e+", "e+");
-        return ret;
     }
 
     //---------------------------------------------------------------------------------------------
@@ -669,18 +658,18 @@ namespace qblocks {
         if (contains(fieldName, "w:")) {
             ASSERT(extract(fieldName, 0, 2) % "w:");  // must be first modifier in the string
             replace(fieldName, "w:", "");   // get rid of the 'w:'
-            maxWidth = toLongU(fieldName);   // grab the width
+            maxWidth = str_2_Uint(fieldName);   // grab the width
             nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
         } else if (contains(fieldName, "r:")) {
             ASSERT(extract(fieldName, 0, 2) % "r:");  // must be first modifier in the string
             replace(fieldName, "r:", "");   // get rid of the 'w:'
-            maxWidth = toLongU(fieldName);   // grab the width
+            maxWidth = str_2_Uint(fieldName);   // grab the width
             nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
             rightJust = true;
         } else if (contains(fieldName, "l:")) {
             ASSERT(extract(fieldName, 0, 2) % "l:");  // must be first modifier in the string
             replace(fieldName, "l:", "");   // get rid of the 'w:'
-            lineWidth = toLongU(fieldName);   // grab the width
+            lineWidth = str_2_Uint(fieldName);   // grab the width
             nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
             lineJust = true;
         }
@@ -722,6 +711,22 @@ extern string_q reformat1(const string_q& in, size_t len);
         return pre + prompt + post;
     }
 
+    //---------------------------------------------------------------------------------------------------
+    CBaseNode *createObjectOfType(const string_q& className) {
+        static bool isSorted = false;
+        if (!isSorted) {
+            sort(builtIns.begin(), builtIns.end());
+            isSorted = true;
+        }
+
+        CRuntimeClass *pClass = &CBaseNode::classCBaseNode;
+        CBuiltIn search(pClass, className, sizeof(CBaseNode), NULL, NULL);
+        const vector<CBuiltIn>::iterator it = find(builtIns.begin(), builtIns.end(), search);
+        if (it != builtIns.end() && it->m_pClass && it->m_pClass->m_CreateFunc)
+            return (*it->m_pClass->m_CreateFunc)();
+        return NULL;
+    }
+
     //--------------------------------------------------------------------------------
     string_q fldNotFound(const string_q& str) {
         return "Field not found: " + str + "\n";
@@ -751,4 +756,3 @@ extern string_q reformat1(const string_q& in, size_t len);
 
 uint64_t testing::Test::nFuncs;
 testing::PF testing::Test::funcs[];
-

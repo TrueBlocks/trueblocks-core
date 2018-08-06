@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -29,7 +29,7 @@ static string_q nextPricequoteChunk(const string_q& fieldIn, const void *dataPtr
 static string_q nextPricequoteChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CPriceQuote::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CPriceQuote::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -49,7 +49,7 @@ void CPriceQuote::Format(CExportContext& ctx, const string_q& fmtIn, void *dataP
 //---------------------------------------------------------------------------
 string_q nextPricequoteChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CPriceQuote *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CPriceQuote *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -61,18 +61,18 @@ string_q nextPricequoteChunk(const string_q& fieldIn, const void *dataPtr) {
 bool CPriceQuote::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     if ( fieldName % "date" || fieldName % "timestamp" ) {
-        timestamp = toLong(fieldValue);
-        date = dateFromTimeStamp((timestamp_t)timestamp);
+        timestamp = str_2_Int(fieldValue);
+        date = ts_2_Date((timestamp_t)timestamp);
         return true;
     }
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
         case 'c':
-            if ( fieldName % "close" ) { close = str2Double(fieldValue); return true; }
+            if ( fieldName % "close" ) { close = str_2_Double(fieldValue); return true; }
             break;
         case 't':
-            if ( fieldName % "timestamp" ) { timestamp = toTimestamp(fieldValue); return true; }
+            if ( fieldName % "timestamp" ) { timestamp = str_2_Ts(fieldValue); return true; }
             break;
         default:
             break;
@@ -83,17 +83,19 @@ bool CPriceQuote::setValueByName(const string_q& fieldName, const string_q& fiel
 //---------------------------------------------------------------------------------------------------
 void CPriceQuote::finishParse() {
     // EXISTING_CODE
-    date = dateFromTimeStamp((timestamp_t)timestamp);
+    date = ts_2_Date((timestamp_t)timestamp);
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPriceQuote::Serialize(SFArchive& archive) {
+bool CPriceQuote::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CPriceQuote*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
-    // If we're reading a back level, read the whole thing and we're done.
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
+    CBaseNode::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -106,7 +108,7 @@ bool CPriceQuote::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPriceQuote::SerializeC(SFArchive& archive) const {
+bool CPriceQuote::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     ((CPriceQuote*)this)->m_schema = getVersionNum();  // NOLINT
@@ -121,7 +123,7 @@ bool CPriceQuote::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CPriceQuoteArray& array) {
+CArchive& operator>>(CArchive& archive, CPriceQuoteArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -133,7 +135,7 @@ SFArchive& operator>>(SFArchive& archive, CPriceQuoteArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CPriceQuoteArray& array) {
+CArchive& operator<<(CArchive& archive, const CPriceQuoteArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -159,6 +161,8 @@ void CPriceQuote::registerClass(void) {
     HIDE_FIELD(CPriceQuote, "deleted");
     HIDE_FIELD(CPriceQuote, "showing");
 
+    builtIns.push_back(_biCPriceQuote);
+
     // EXISTING_CODE
     ADD_FIELD(CPriceQuote, "date", T_DATE, ++fieldNum);
     // EXISTING_CODE
@@ -166,7 +170,7 @@ void CPriceQuote::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextPricequoteChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CPriceQuote *pri = (const CPriceQuote *)dataPtr;
+    const CPriceQuote *pri = reinterpret_cast<const CPriceQuote *>(dataPtr);
     if (pri) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -191,9 +195,8 @@ string_q nextPricequoteChunk_custom(const string_q& fieldIn, const void *dataPtr
 }
 
 //---------------------------------------------------------------------------
-bool CPriceQuote::readBackLevel(SFArchive& archive) {
+bool CPriceQuote::readBackLevel(CArchive& archive) {
 
-    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     if (m_schema < 2000) {
@@ -230,10 +233,10 @@ string_q CPriceQuote::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'c':
-            if ( fieldName % "close" ) return double2Str(close);
+            if ( fieldName % "close" ) return double_2_Str(close);
             break;
         case 't':
-            if ( fieldName % "timestamp" ) return fromTimestamp(timestamp);
+            if ( fieldName % "timestamp" ) return ts_2_Str(timestamp);
             break;
     }
 
@@ -249,7 +252,8 @@ ostream& operator<<(ostream& os, const CPriceQuote& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 
@@ -265,7 +269,7 @@ uint64_t indexFromTimeStamp(const CPriceQuoteArray& quotes, timestamp_t ts) {
 }
 
 //-----------------------------------------------------------------------
-string_q asDollars(timestamp_t ts, SFUintBN weiIn) {
+string_q asDollars(timestamp_t ts, biguint_t weiIn) {
     if (weiIn == 0)
         return "";
     static CPriceQuoteArray quotes;
@@ -283,7 +287,7 @@ string_q asDollars(timestamp_t ts, SFUintBN weiIn) {
     uint64_t pInt = (uint64_t)price;
     weiIn *= pInt;
     weiIn /= 100;
-    return wei2Ether(to_string(weiIn).c_str());
+    return wei_2_Ether(bnu_2_Str(weiIn));
 }
 
 //-----------------------------------------------------------------------
@@ -301,7 +305,7 @@ string_q insertCommas(const string_q& dIn) {
 }
 
 //-----------------------------------------------------------------------
-string_q dispDollars(timestamp_t ts, SFUintBN weiIn) {
+string_q dispDollars(timestamp_t ts, biguint_t weiIn) {
     string_q sBal = asDollars(ts, weiIn);
     string_q d = nextTokenClear(sBal, '.');
     d = insertCommas(d);

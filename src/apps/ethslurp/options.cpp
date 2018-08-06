@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -13,33 +13,30 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-CFileExportContext outScreen;
-
-//---------------------------------------------------------------------------------------------------
-CParams params[] = {
-    CParams("~addr",            "the address of the account or contract to slurp"),
-    CParams("-archive:<str>",   "filename of output (stdout otherwise)"),
-    CParams("-blocks:<range>",  "export records in block range (:0[:max])"),
-    CParams("-dates:<date>",    "export records in date range (:yyyymmdd[hhmmss][:yyyymmdd[hhmmss]])"),
-    CParams("-fmt:<str>",       "pretty print, optionally add ':txt,' ':csv,' or ':html'"),
-    CParams("-income",          "include income transactions only"),
-    CParams("-expense",         "include expenditures only"),
-    CParams("@--rerun",         "re-run the most recent slurp"),
-    CParams("@--open",          "open the configuration file for editing"),
-    CParams("@--max:<val>",     "maximum transactions to slurp (:250000)"),
-    CParams("@--sleep:<val>",   "sleep for :x seconds"),
-    CParams("@--func:<str>",    "display only --func:functionName records"),
-    CParams("@--errFilt:<val>", "display only non-error transactions or only errors with :errsOnly"),
-    CParams("@--reverse",       "display results sorted in reverse chronological order (chronological by default)"),
-    CParams("@--acct_id:<val>", "for 'cache' mode, use this as the :acct_id for the cache (0 otherwise)"),
-    CParams("@--cache",         "write the data to a local QuickBlocks cache"),
-    CParams("@--name:<str>",    "name this address"),
-    CParams("",                 "Fetches data off the Ethereum blockchain for an arbitrary account or smart "
+static COption params[] = {
+    COption("~addr",            "the address of the account or contract to slurp"),
+    COption("-blocks:<range>",  "export records in block range (:0[:max])"),
+    COption("-dates:<date>",    "export records in date range (:yyyymmdd[hhmmss][:yyyymmdd[hhmmss]])"),
+    COption("-fmt:<str>",       "pretty print, optionally add ':txt,' ':csv,' or ':html'"),
+    COption("-income",          "include income transactions only"),
+    COption("-expense",         "include expenditures only"),
+    COption("@rerun",           "re-run the most recent slurp"),
+    COption("@open",            "open the configuration file for editing"),
+    COption("@max:<val>",       "maximum transactions to slurp (:250000)"),
+    COption("@sleep:<val>",     "sleep for :x seconds"),
+    COption("@func:<str>",      "display only --func:functionName records"),
+    COption("@errFilt:<val>",   "display only non-error transactions or only errors with :errsOnly"),
+    COption("@reverse",         "display results sorted in reverse chronological order (chronological by default)"),
+    COption("@acct_id:<val>",   "for 'cache' mode, use this as the :acct_id for the cache (0 otherwise)"),
+    COption("@cache",           "write the data to a local QBlocks cache"),
+    COption("@name:<str>",      "name this address"),
+    COption("",                 "Fetches data off the Ethereum blockchain for an arbitrary account or smart "
                                 "contract. Optionally formats the output to your specification. Note: --income "
                                 "and --expense are mutually exclusive as are --blocks and --dates.\n"),
 };
-size_t nParams = sizeof(params) / sizeof(CParams);
+static size_t nParams = sizeof(params) / sizeof(COption);
 
+extern time_q parseDate(const string_q& strIn);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
@@ -86,7 +83,7 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (startsWith(arg, "--acct_id:")) {
             arg = substitute(arg, "--acct_id:", "");
-            acct_id = toLongU(arg);
+            acct_id = str_2_Uint(arg);
 
         } else if (startsWith(arg, "--cache")) {
             cache = true;
@@ -153,7 +150,7 @@ bool COptions::parseArguments(string_q& command) {
             arg = substitute(arg, "--sleep:", "");
             if (arg.empty() || !isdigit(arg[0]))
                 return usage("Sleep amount must be a numeral. Quitting...");
-            useconds_t wait = (useconds_t)toLongU(arg);
+            useconds_t wait = (useconds_t)str_2_Uint(arg);
             if (wait) {
                 cerr << "Sleeping " << wait << " seconds\n";
                 usleep(wait * 1000000);
@@ -163,7 +160,7 @@ bool COptions::parseArguments(string_q& command) {
             string_q val = substitute(substitute(arg, "-m:", ""), "--max:", "");
             if (val.empty() || !isdigit(val[0]))
                 return usage("Please supply a value with the --max: option. Quitting...");
-            maxTransactions = toLongU(val);
+            maxTransactions = str_2_Uint(val);
 
         } else if (startsWith(arg, "-n:") || startsWith(arg, "--name:")) {
             string_q val = substitute(substitute(arg, "-n:", ""), "--name:", "");
@@ -171,25 +168,10 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("You must supply a name with the --name option. Quitting...");
             name = val;
 
-        } else if (arg == "-a") {
-            // -a is acceptable but only if we get a -name (or we have only already)
-            // checked during slurp since we don't have an address yet
-            wantsArchive = true;
-            archiveFile = "";
-
-        } else if (startsWith(arg, "-a:") || startsWith(arg, "--archive:")) {
-            string_q fileName = substitute(substitute(arg, "-a:", ""), "--archive:", "");
-
-            CFilename filename(fileName);
-            if (!startsWith(filename.getPath(), '/'))
-                return usage("Archive file '" + arg + "' does not resolve to a full path. "
-                             "Use ./path/filename, ~/path/filename, or a fully qualified path.");
-            archiveFile = filename.getFullPath();
-            wantsArchive = true;
-
         } else if (arg == "-o" || arg == "--open") {
 
             editFile(configPath("quickBlocks.toml"));
+            editFile(configPath("ethslurp.toml"));
             exit(0);
 
         } else if (startsWith(arg, '-')) {  // do not collapse
@@ -199,15 +181,12 @@ bool COptions::parseArguments(string_q& command) {
 
         } else {
 
-            addr = fixAddress(arg);
-            if (!isAddress(addr))
-                 return usage(addr + " appears to be an invalid address. Valid addresses start with '0x' "
+            if (!isAddress(arg))
+                 return usage(arg + " appears to be an invalid address. Valid addresses start with '0x' "
                               "and are 20 bytes (40 chars) long. Quitting...");
+            addr = str_2_Addr(arg);
         }
     }
-
-    if (wantsArchive && archiveFile.empty() && name.empty())
-        return usage("If -a is provided without an archive name, -n must be provided. Quitting...");
 
     return true;
 }
@@ -232,14 +211,9 @@ void COptions::Init(void) {
     maxTransactions = 250000;
     pageSize = 5000;
     exportFormat = "json";
-    archiveFile = "";
-    wantsArchive = false;
     cache = false;
     acct_id = 0;
     addr = "";
-
-    outScreen.setOutput(stdout);  // so we know where it is at the start of each run
-    output = NULL;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -253,8 +227,6 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-    outScreen.setOutput(stdout);  // flushes and clears archive file if any
-    output = NULL;
 }
 
 //--------------------------------------------------------------------------------
@@ -272,14 +244,24 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
     return str;
 }
 
-//--------------------------------------------------------------------------------
-void CFileExportContext::setOutput(void *output) {
-    Close();  // just in case
-    m_output = output == NULL ? stdout : reinterpret_cast<FILE*>(output);
-}
+//---------------------------------------------------------------------------------------
+#define str_2_Int32u(a) (uint32_t)str_2_Uint((a))
+time_q parseDate(const string_q& strIn) {
+    if (strIn.empty())
+        return earliestDate;
 
-//--------------------------------------------------------------------------------
-void CFileExportContext::Output(const string_q& sss) {
-    ASSERT(m_output);
-    fprintf(m_output, "%s", sss.c_str());
+    string_q str = strIn;
+    replaceAll(str, ";", "");
+    if (str.length() != 14) {
+        str += "120000";
+    }
+
+    uint32_t y  = str_2_Int32u(extract(str,  0, 4));
+    uint32_t m  = str_2_Int32u(extract(str,  4, 2));
+    uint32_t d  = str_2_Int32u(extract(str,  6, 2));
+    uint32_t h  = str_2_Int32u(extract(str,  8, 2));
+    uint32_t mn = str_2_Int32u(extract(str, 10, 2));
+    uint32_t s  = str_2_Int32u(extract(str, 12, 2));
+
+    return time_q(y, m, d, h, mn, s);
 }

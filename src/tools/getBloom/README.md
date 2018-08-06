@@ -1,11 +1,11 @@
 ## getBloom
 
-`getBloom` retreives the bloom filter from the given block or blocks. Alternatively, you may also retrieve the bloom filters from the underlying transaction receipts that make up the block-level bloom. This tool is useful to debug QuickBlocks [monitors](../../monitors) among other things.
+`getBloom` retreives the bloom filter from the given block or blocks. Alternatively, you may also retrieve the bloom filters from the underlying transaction receipts that make up the block-level bloom. This tool is useful to debug QBlocks [monitors](../../monitors) among other things.
 
 #### Usage
 
-`Usage:`    getBloom [-r|-e|-a|-s|-p|-v|-h] &lt;block&gt; [block...]  
-`Purpose:`  Returns bloom filter(s) from running node (the default) or as EAB from local cache.
+`Usage:`    getBloom [-r|-e|-b|-c|-a|-i|-v|-h] &lt;block&gt; [block...]  
+`Purpose:`  Returns bloom filter(s) from running node (the default) or as EAB from QBlocks.
              
 `Where:`  
 
@@ -13,10 +13,11 @@
 | -------: | :------- | :------- |
 |  | block_list | a space-separated list of one or more blocks for which to retrieve blooms |
 | -r | --raw | pull the bloom filter directly from the running node (the default) |
-| -e | --eab | pull the enhanced adaptive bloom filters (EAB) from the local cache |
-| -a | --asbits | display the bloom filter as bits instead of hex |
-| -s | --asbars | display the bloom filter as bar charts instead of hex |
-| -p | --receipt | display blooms from the transaction receipts as opposed to block (--raw only) |
+| -e | --eab | pull the enhanced adaptive blooms from QBlocks cache |
+| -b | --block | show only the block-level bloom (--raw only) |
+| -c | --receipts | show only the receipt-level blooms (--raw only) |
+| -a | --bars | display blooms as bar chart instead of hex |
+| -i | --bits | display blooms as bits instead of hex |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
@@ -28,7 +29,7 @@
 
 #### Other Options
 
-All **quickBlocks** command-line tools support the following commands (although in some case, they have no meaning):
+All **QBlocks** command-line tools support the following commands (although in some case, they have no meaning):
 
     Command     |     Description
     -----------------------------------------------------------------------------
@@ -41,6 +42,6 @@ All **quickBlocks** command-line tools support the following commands (although 
 
 <small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
 
-**Powered by QuickBlocks<sup>&reg;</sup>**
+**Powered by Qblocks<sup>&trade;</sup>**
 
 

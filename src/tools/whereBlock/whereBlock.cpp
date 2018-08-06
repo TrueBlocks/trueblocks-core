@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -37,7 +37,7 @@ int main(int argc, const char *argv[]) {
 
         string_q list = options.getBlockNumList();
         while (!list.empty()) {
-            blknum_t bn = toLongU(nextTokenClear(list, '|'));
+            blknum_t bn = str_2_Uint(nextTokenClear(list, '|'));
             CFilename fileName(substitute(getBinaryFilename(bn), "/blocks/", "/"+options.mode+"s/"));
             bool exists = fileExists(fileName.getFullPath());
 
@@ -52,7 +52,7 @@ int main(int argc, const char *argv[]) {
             string_q fallback = getEnvStr("FALLBACK");
             bool running_node = isNodeRunning();
 
-            cout << "\t" << options.mode << " " << cTeal << padLeft(asStringU(bn), 9) << cOff << " ";
+            cout << "\t" << options.mode << " " << cTeal << padLeft(uint_2_Str(bn), 9) << cOff << " ";
             if (exists)            cout << "found at cache:  " << cTeal << path << cOff << "\n";
             else if (running_node)      cout << "found at node:   " << vers << "\n";
             else if (!fallback.empty()) cout << "found at remote: " << fallback << "\n";

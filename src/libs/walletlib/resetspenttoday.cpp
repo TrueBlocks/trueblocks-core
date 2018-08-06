@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "resetspenttoday.h"
 #include "etherlib.h"
 
@@ -25,7 +26,7 @@ static string_q nextResetspenttodayChunk(const string_q& fieldIn, const void *da
 static string_q nextResetspenttodayChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QResetSpentToday::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QResetSpentToday::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -45,7 +46,7 @@ void QResetSpentToday::Format(CExportContext& ctx, const string_q& fmtIn, void *
 //---------------------------------------------------------------------------
 string_q nextResetspenttodayChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QResetSpentToday *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QResetSpentToday *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -75,12 +76,14 @@ void QResetSpentToday::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QResetSpentToday::Serialize(SFArchive& archive) {
+bool QResetSpentToday::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
-        return ((const QResetSpentToday*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
-    // If we're reading a back level, read the whole thing and we're done.
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
+    CTransaction::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -91,7 +94,7 @@ bool QResetSpentToday::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QResetSpentToday::SerializeC(SFArchive& archive) const {
+bool QResetSpentToday::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
@@ -103,7 +106,7 @@ bool QResetSpentToday::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, QResetSpentTodayArray& array) {
+CArchive& operator>>(CArchive& archive, QResetSpentTodayArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -115,7 +118,7 @@ SFArchive& operator>>(SFArchive& archive, QResetSpentTodayArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const QResetSpentTodayArray& array) {
+CArchive& operator<<(CArchive& archive, const QResetSpentTodayArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -141,13 +144,15 @@ void QResetSpentToday::registerClass(void) {
     HIDE_FIELD(QResetSpentToday, "deleted");
     HIDE_FIELD(QResetSpentToday, "showing");
 
+    builtIns.push_back(_biQResetSpentToday);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
 string_q nextResetspenttodayChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QResetSpentToday *res = (const QResetSpentToday *)dataPtr;
+    const QResetSpentToday *res = reinterpret_cast<const QResetSpentToday *>(dataPtr);
     if (res) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -169,9 +174,8 @@ string_q nextResetspenttodayChunk_custom(const string_q& fieldIn, const void *da
 }
 
 //---------------------------------------------------------------------------
-bool QResetSpentToday::readBackLevel(SFArchive& archive) {
+bool QResetSpentToday::readBackLevel(CArchive& archive) {
 
-    CTransaction::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -200,7 +204,8 @@ ostream& operator<<(ostream& os, const QResetSpentToday& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

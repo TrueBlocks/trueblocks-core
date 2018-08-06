@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -19,11 +19,11 @@
 namespace qblocks {
 
     //-------------------------------------------------------------------------
-    bool compareBlooms(const SFBloom& b1, const SFBloom& b2, string_q& str) {
+    bool compareBlooms(const bloom_t& b1, const bloom_t& b2, string_q& str) {
         if (verbose > 2) {
-            str = "\n\tbits1: " + asStringU(bitsTwiddled(b1)) + " bits2: " + asStringU(bitsTwiddled(b2));
-            string_q s1 = substitute(bloom2Bits(b1), "0", ".");
-            string_q s2 = substitute(bloom2Bits(b2), "0", ".");
+            str = "\n\tbits1: " + uint_2_Str(bitsTwiddled(b1)) + " bits2: " + uint_2_Str(bitsTwiddled(b2));
+            string_q s1 = substitute(bloom_2_Bits(b1), "0", ".");
+            string_q s2 = substitute(bloom_2_Bits(b2), "0", ".");
             for (size_t i = 0 ; i < 16 ; i++) {
                 string_q m1, m2;
                 for (size_t j = 0 ; j < 128 ; j = j + 10) {
@@ -33,9 +33,9 @@ namespace qblocks {
                 str += ("\n\t" + cRed + m1 + cOff + "\n\t" + m2);
             }
         } else if (verbose > 1) {
-            str = "\n\tbits: " + asStringU(bitsTwiddled(b1)) + " " + asStringU(bitsTwiddled(b2));
-            string_q s1 = substitute(substitute(bloom2Bytes(b1), "0x", ""), "0", ".");
-            string_q s2 = substitute(substitute(bloom2Bytes(b2), "0x", ""), "0", ".");
+            str = "\n\tbits: " + uint_2_Str(bitsTwiddled(b1)) + " " + uint_2_Str(bitsTwiddled(b2));
+            string_q s1 = substitute(substitute(bloom_2_Bytes(b1), "0x", ""), "0", ".");
+            string_q s2 = substitute(substitute(bloom_2_Bytes(b2), "0x", ""), "0", ".");
             for (size_t i = 0 ; i < 4 ; i++) {
                 string_q m1, m2;
                 for (size_t j = 0 ; j < 128 ; j = j + 10) {
@@ -49,7 +49,7 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------------------
-    bool addAddrToBloom(const SFAddress& addr, SFBloomArray& blooms, size_t maxBits) {
+    bool addAddrToBloom(const address_t& addr, CBloomArray& blooms, size_t maxBits) {
         // Initialize if not already
         if (blooms.size() == 0)
             blooms.push_back(0);
@@ -63,12 +63,12 @@ namespace qblocks {
     }
 
     //-----------------------------------------------------------------------
-    string_q reportBloom(const SFBloomArray& blooms) {
+    string_q reportBloom(const CBloomArray& blooms) {
         string_q ret;
         for (size_t i = 0; i < blooms.size(); i++) {
             uint64_t bits = bitsTwiddled(blooms[i]);
             if (bits) {
-                ret += asStringU(bits);
+                ret += uint_2_Str(bits);
                 if (i < blooms.size()-1)
                     ret += ",";
             }
