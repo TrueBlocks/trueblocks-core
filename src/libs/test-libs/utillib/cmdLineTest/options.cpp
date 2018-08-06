@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -13,17 +13,19 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-CParams params[] = {
-    CParams("~testNum",         "the number of the test to run"),
-    CParams("-bool:<bool>",     "enter a boolean value (either '0', '1', 'false', or 'true')"),
-    CParams("-int:<int>",       "enter any numeric value"),
-    CParams("-uint:<uint>",     "enter any numeric value greater than or equal to zero"),
-    CParams("-string:<string>", "enter any value"),
-    CParams("-range:<range>",   "enter a range of numeric values"),
-    CParams("-list:<list>",     "enter a list of value separated by commas (no spaces or quoted)"),
-    CParams("",                 "Tests various command line behavior.\n"),
+static COption params[] = {
+    COption("~testNum",         "the number of the test to run"),
+    COption("~!optionalMode",   "an optional mode with ~! start"),
+    COption("-bool:<bool>",     "enter a boolean value (either '0', '1', 'false', or 'true')"),
+    COption("-int:<int>",       "enter any numeric value"),
+    COption("-uint:<uint>",     "enter any numeric value greater than or equal to zero"),
+    COption("-string:<string>", "enter any value"),
+    COption("-range:<range>",   "enter a range of numeric values"),
+    COption("-list:<list>",     "enter a list of value separated by commas (no spaces or quoted)"),
+    COption("@hid(d)enOption",  "a hidden option with an alternative hot key"),
+    COption("",                 "Tests various command line behavior.\n"),
 };
-size_t nParams = sizeof(params) / sizeof(CParams);
+static size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -51,15 +53,19 @@ bool COptions::parseArguments(string_q& command) {
             arg = substitute(substitute(arg, "-i:", ""), "--int:", "");
             if (arg.empty() || (arg[0] != '-' && arg[0] != '+' && !isdigit(arg[0])))
                 return usage("--int requires a number. Quitting");
-            numOption = toLong(arg);
+            numOption = str_2_Int(arg);
 
         } else if (startsWith(arg, "-u:") || startsWith(arg, "--uint:")) {
             arg = substitute(substitute(arg, "-u:", ""), "--uint:", "");
             if (arg.empty() || (arg[0] != '+' && !isdigit(arg[0]))) {
                 // return usage("--uint requires a non-negative number. Quitting");
             } else {
-                numOption = toLong(arg);
+                numOption = str_2_Int(arg);
             }
+
+        } else if (startsWith(arg, "-d") || startsWith(arg, "--hiddenOption")) {
+            boolOption = !boolOption;
+            stringOption = "Flipped by hidden option";
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -68,7 +74,7 @@ bool COptions::parseArguments(string_q& command) {
             }
 
         } else {
-            testNum = (int32_t)toLong(arg);
+            testNum = (int32_t)str_2_Int(arg);
         }
     }
     return true;

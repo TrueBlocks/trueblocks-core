@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,7 +14,7 @@
 #include "options.h"
 
 //---------------------------------------------------------------
-extern bool lookupDate(CBlock& block, const SFTime& date);
+extern bool lookupDate(CBlock& block, const time_q& date);
 extern void unloadCache(void);
 
 //---------------------------------------------------------------
@@ -41,11 +41,11 @@ int main(int argc, const char *argv[]) {
             if (mode == "special") {
                 mode = "block";
                 special = nextTokenClear(value, '|');
-                if (toUnsigned(value) > getLatestBlockFromClient()) {
+                if (str_2_Uint(value) > getLatestBlockFromClient()) {
                     cout << "The block number you requested (";
                     cout << cTeal << special << ": " << value << cOff;
                     cout << ") is after the latest block (";
-                    cout << cTeal << (isTestMode() ? "TESTING" : asStringU(getLatestBlockFromClient())) << cOff;
+                    cout << cTeal << (isTestMode() ? "TESTING" : uint_2_Str(getLatestBlockFromClient())) << cOff;
                     cout << "). Quitting...\n";
                     return 0;
                 }
@@ -61,7 +61,7 @@ int main(int argc, const char *argv[]) {
                     cout << "database, which is an advanced feature.\n";
 
                 } else {
-                    SFTime date = dateFromTimeStamp((timestamp_t)toUnsigned(value));
+                    time_q date = ts_2_Date((timestamp_t)str_2_Uint(value));
                     bool found = lookupDate(block, date);
                     if (!found) {
                         unloadCache();
@@ -95,7 +95,6 @@ static CMiniBlock *blocks = NULL;
 static uint64_t nBlocks = 0;
 static uint64_t below = ULONG_MAX;
 static uint64_t above = 0;
-#define tD(a) dateFromTimeStamp(a)
 
 //---------------------------------------------------------------
 int findFunc(const void *v1, const void *v2) {
@@ -126,12 +125,12 @@ bool lookCloser(CBlock& block, void *data) {
 }
 
 //---------------------------------------------------------------
-bool lookupDate(CBlock& block, const SFTime& date) {
+bool lookupDate(CBlock& block, const time_q& date) {
     if (!blocks) {
         nBlocks = fileSize(miniBlockCache) / sizeof(CMiniBlock);
         blocks = new CMiniBlock[nBlocks];
         if (!blocks)
-            return usage("Could not allocate memory for the blocks (size needed: " + asStringU(nBlocks) + ").\n");
+            return usage("Could not allocate memory for the blocks (size needed: " + uint_2_Str(nBlocks) + ").\n");
         bzero(blocks, sizeof(CMiniBlock)*(nBlocks));
         if (verbose)
             cerr << "Allocated room for " << nBlocks << " miniBlocks.\n";
@@ -150,17 +149,17 @@ bool lookupDate(CBlock& block, const SFTime& date) {
     }
 
     CMiniBlock mini;
-    mini.timestamp = toTimestamp(date);
+    mini.timestamp = date_2_Ts(date);
     CMiniBlock *found = reinterpret_cast<CMiniBlock*>(bsearch(&mini, blocks, nBlocks, sizeof(CMiniBlock), findFunc));
     if (found) {
-        queryBlock(block, asStringU(found->blockNumber), false, false);
+        queryBlock(block, uint_2_Str(found->blockNumber), false, false);
         return true;
     }
 
     //  cout << mini.timestamp << " is somewhere between " << below << " and " << above << "\n";
     CBlockFinder finder(mini.timestamp);
     forEveryBlockOnDisc(lookCloser, &finder, below, above-below);
-    queryBlock(block, asStringU(finder.found), false, false);
+    queryBlock(block, uint_2_Str(finder.found), false, false);
     return true;
 }
 

@@ -9,7 +9,7 @@ project (test-utillib)
 
 # Compile the libraries in this order
 add_subdirectory(colorTest)
-add_subdirectory(exportContext)
+add_subdirectory(convert)
 add_subdirectory(jsonTest)
 add_subdirectory(stringTest)
 add_subdirectory(tomlTest)
@@ -20,3 +20,4 @@ add_subdirectory(typesTest)
 add_subdirectory(curlTest)
 add_subdirectory(sizeof)
 add_subdirectory(arrayTest)
+add_subdirectory(parsingTest)

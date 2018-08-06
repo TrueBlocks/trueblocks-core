@@ -58,7 +58,7 @@ def copy_file(srcfile, destfile):
     shutil.copyfile(srcfile, destfile)
 
 #------------------------------------------------------------------
-# If we find a customization file, copy it into quickBlocks folder
+# If we find a customization file, copy it into QBlocks folder
 #------------------------------------------------------------------
 def set_custom_config(goldPath):
     test_name = os.path.splitext(os.path.basename(goldPath))[0]
@@ -70,7 +70,7 @@ def set_custom_config(goldPath):
         for file in CUSTOM_FILES:
             # Build customized file path
             srcConfig = srcPath + file
-            qbConfig  = QUICKBLOCKS_PATH + file
+            qbConfig  = QBLOCKS_PATH + file
 
             if os.path.isfile(srcConfig) and os.path.isfile(qbConfig):
                 # source exists and destination exists, save destination
@@ -90,7 +90,7 @@ def set_custom_config(goldPath):
 #-------------------------------------------------------
 def restore_qblocks_config():
     for file in CUSTOM_FILES:
-        qbConfig = QUICKBLOCKS_PATH + file
+        qbConfig = QBLOCKS_PATH + file
         # If the temp file exists, copy if back to the original and remove the temp file
         if os.path.isfile(qbConfig + '.tmp'):
             copy_file(qbConfig + '.tmp', qbConfig)
@@ -107,16 +107,16 @@ def restore_qblocks_config():
 # Delete any cache files for input addr
 #-------------------------------------------------------
 def clear_cache(addr):
-    # Define the path where we expect the quickblocks cache files
+    # Define the path where we expect the QBlocks cache files
     SLURP_DIR_NAME = 'slurps'
     ABIS_DIR_NAME = 'abis'
 
     home = os.environ['HOME']
 
     # Build cache files path for input address
-    slurp_cache = QUICKBLOCKS_PATH + SLURP_DIR_NAME + '/' + addr + '.bin'
-    abi_cache = QUICKBLOCKS_PATH + ABIS_DIR_NAME + '/' + addr + '.abi'
-    json_cache = QUICKBLOCKS_PATH + ABIS_DIR_NAME + '/' + addr + '.json'
+    slurp_cache = QBLOCKS_PATH + SLURP_DIR_NAME + '/' + addr + '.bin'
+    abi_cache = QBLOCKS_PATH + ABIS_DIR_NAME + '/' + addr + '.abi'
+    json_cache = QBLOCKS_PATH + ABIS_DIR_NAME + '/' + addr + '.json'
 
     # Delete them
     delete_file(slurp_cache)
@@ -134,7 +134,7 @@ def clear_cache(addr):
 CUSTOM_FILES = [ 'whenBlock.toml', 'ethprice.toml' ]
 
 # Cache path
-QUICKBLOCKS_PATH = os.environ['HOME'] + '/.quickBlocks/'
+QBLOCKS_PATH = os.environ['HOME'] + '/.quickBlocks/'
 
 # When at environment we have defined an address, we clear its cache before running the test
 cache_addr = os.getenv('CACHE_ADDR')

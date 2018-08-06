@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -16,13 +16,12 @@
 namespace qblocks {
 
     //-------------------------------------------------------------------------
-    typedef size_t (*CURLCALLBACKFUNC)(char *ptr, size_t size, size_t nmemb, void *userdata);
-
     class CCurlContext {
     public:
         string_q         headers;
         string_q         baseURL;
         CURLCALLBACKFUNC callBackFunc;
+        CURLCALLBACKFUNC curlNoteFunc;
         bool             earlyAbort;
         string_q         postData;
         string_q         result;
@@ -40,6 +39,7 @@ namespace qblocks {
     extern CURL         *getCurl         (bool cleanup = false);
     extern bool          isNodeRunning   (void);
     extern bool          nodeHasBalances (void);
+    extern bool          nodeHasTraces   (void);
     extern bool          getObjectViaRPC (CBaseNode &node, const string_q& method, const string_q& params);
     extern string_q      callRPC         (const string_q& method, const string_q& params, bool raw);
     extern CCurlContext *getCurlContext  (void);

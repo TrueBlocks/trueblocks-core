@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "ownerchangedevent.h"
 #include "etherlib.h"
 
@@ -25,7 +26,7 @@ static string_q nextOwnerchangedeventChunk(const string_q& fieldIn, const void *
 static string_q nextOwnerchangedeventChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QOwnerChangedEvent::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QOwnerChangedEvent::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -45,7 +46,7 @@ void QOwnerChangedEvent::Format(CExportContext& ctx, const string_q& fmtIn, void
 //---------------------------------------------------------------------------
 string_q nextOwnerchangedeventChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QOwnerChangedEvent *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QOwnerChangedEvent *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -63,10 +64,10 @@ bool QOwnerChangedEvent::setValueByName(const string_q& fieldName, const string_
 
     switch (tolower(fieldName[0])) {
         case 'n':
-            if ( fieldName % "newOwner" ) { newOwner = toAddress(fieldValue); return true; }
+            if ( fieldName % "newOwner" ) { newOwner = str_2_Addr(fieldValue); return true; }
             break;
         case 'o':
-            if ( fieldName % "oldOwner" ) { oldOwner = toAddress(fieldValue); return true; }
+            if ( fieldName % "oldOwner" ) { oldOwner = str_2_Addr(fieldValue); return true; }
             break;
         default:
             break;
@@ -81,12 +82,14 @@ void QOwnerChangedEvent::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QOwnerChangedEvent::Serialize(SFArchive& archive) {
+bool QOwnerChangedEvent::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
-        return ((const QOwnerChangedEvent*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
-    // If we're reading a back level, read the whole thing and we're done.
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
+    CLogEntry::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -99,7 +102,7 @@ bool QOwnerChangedEvent::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QOwnerChangedEvent::SerializeC(SFArchive& archive) const {
+bool QOwnerChangedEvent::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CLogEntry::SerializeC(archive);
@@ -113,7 +116,7 @@ bool QOwnerChangedEvent::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, QOwnerChangedEventArray& array) {
+CArchive& operator>>(CArchive& archive, QOwnerChangedEventArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -125,7 +128,7 @@ SFArchive& operator>>(SFArchive& archive, QOwnerChangedEventArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const QOwnerChangedEventArray& array) {
+CArchive& operator<<(CArchive& archive, const QOwnerChangedEventArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -153,13 +156,15 @@ void QOwnerChangedEvent::registerClass(void) {
     HIDE_FIELD(QOwnerChangedEvent, "deleted");
     HIDE_FIELD(QOwnerChangedEvent, "showing");
 
+    builtIns.push_back(_biQOwnerChangedEvent);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
 string_q nextOwnerchangedeventChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QOwnerChangedEvent *own = (const QOwnerChangedEvent *)dataPtr;
+    const QOwnerChangedEvent *own = reinterpret_cast<const QOwnerChangedEvent *>(dataPtr);
     if (own) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -181,9 +186,8 @@ string_q nextOwnerchangedeventChunk_custom(const string_q& fieldIn, const void *
 }
 
 //---------------------------------------------------------------------------
-bool QOwnerChangedEvent::readBackLevel(SFArchive& archive) {
+bool QOwnerChangedEvent::readBackLevel(CArchive& archive) {
 
-    CLogEntry::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -201,10 +205,10 @@ string_q QOwnerChangedEvent::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'n':
-            if ( fieldName % "newOwner" ) return fromAddress(newOwner);
+            if ( fieldName % "newOwner" ) return addr_2_Str(newOwner);
             break;
         case 'o':
-            if ( fieldName % "oldOwner" ) return fromAddress(oldOwner);
+            if ( fieldName % "oldOwner" ) return addr_2_Str(oldOwner);
             break;
     }
 
@@ -220,7 +224,8 @@ ostream& operator<<(ostream& os, const QOwnerChangedEvent& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "fromtransferfrom.h"
 #include "etherlib.h"
 
@@ -25,7 +26,7 @@ static string_q nextFromtransferfromChunk(const string_q& fieldIn, const void *d
 static string_q nextFromtransferfromChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QFromTransferFrom::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QFromTransferFrom::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -45,7 +46,7 @@ void QFromTransferFrom::Format(CExportContext& ctx, const string_q& fmtIn, void 
 //---------------------------------------------------------------------------
 string_q nextFromtransferfromChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QFromTransferFrom *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QFromTransferFrom *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -63,8 +64,8 @@ bool QFromTransferFrom::setValueByName(const string_q& fieldName, const string_q
 
     switch (tolower(fieldName[0])) {
         case 'w':
-            if ( fieldName % "whop" ) { whop = toAddress(fieldValue); return true; }
-            if ( fieldName % "werp" ) { werp = toAddress(fieldValue); return true; }
+            if ( fieldName % "whop" ) { whop = str_2_Addr(fieldValue); return true; }
+            if ( fieldName % "werp" ) { werp = str_2_Addr(fieldValue); return true; }
             break;
         default:
             break;
@@ -79,12 +80,14 @@ void QFromTransferFrom::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QFromTransferFrom::Serialize(SFArchive& archive) {
+bool QFromTransferFrom::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
-        return ((const QFromTransferFrom*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
-    // If we're reading a back level, read the whole thing and we're done.
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
+    QTransferFrom::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -97,7 +100,7 @@ bool QFromTransferFrom::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QFromTransferFrom::SerializeC(SFArchive& archive) const {
+bool QFromTransferFrom::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     QTransferFrom::SerializeC(archive);
@@ -111,7 +114,7 @@ bool QFromTransferFrom::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, QFromTransferFromArray& array) {
+CArchive& operator>>(CArchive& archive, QFromTransferFromArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -123,7 +126,7 @@ SFArchive& operator>>(SFArchive& archive, QFromTransferFromArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const QFromTransferFromArray& array) {
+CArchive& operator<<(CArchive& archive, const QFromTransferFromArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -151,13 +154,15 @@ void QFromTransferFrom::registerClass(void) {
     HIDE_FIELD(QFromTransferFrom, "deleted");
     HIDE_FIELD(QFromTransferFrom, "showing");
 
+    builtIns.push_back(_biQFromTransferFrom);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
 string_q nextFromtransferfromChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QFromTransferFrom *fro = (const QFromTransferFrom *)dataPtr;
+    const QFromTransferFrom *fro = reinterpret_cast<const QFromTransferFrom *>(dataPtr);
     if (fro) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -179,9 +184,8 @@ string_q nextFromtransferfromChunk_custom(const string_q& fieldIn, const void *d
 }
 
 //---------------------------------------------------------------------------
-bool QFromTransferFrom::readBackLevel(SFArchive& archive) {
+bool QFromTransferFrom::readBackLevel(CArchive& archive) {
 
-    QTransferFrom::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -199,8 +203,8 @@ string_q QFromTransferFrom::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'w':
-            if ( fieldName % "whop" ) return fromAddress(whop);
-            if ( fieldName % "werp" ) return fromAddress(werp);
+            if ( fieldName % "whop" ) return addr_2_Str(whop);
+            if ( fieldName % "werp" ) return addr_2_Str(werp);
             break;
     }
 
@@ -216,7 +220,8 @@ ostream& operator<<(ostream& os, const QFromTransferFrom& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

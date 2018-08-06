@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -37,6 +37,12 @@ namespace qblocks {
         return curl;
     }
 
+    //---------------------------------------------------------------------------------------------------
+    static CURLCALLBACKFUNC curlNoteFunc = NULL;
+    void setCurlNoteFunc(CURLCALLBACKFUNC func) {
+        curlNoteFunc = func;
+    }
+
     //-------------------------------------------------------------------------
     size_t internalCallback(char *ptr, size_t size, size_t nmemb, void *userdata) {
 
@@ -56,6 +62,9 @@ namespace qblocks {
         string *str = reinterpret_cast<string*>(userdata);
         ASSERT(str);
         *str += result;
+
+        if (curlNoteFunc)
+            (*curlNoteFunc)(ptr, size, nmemb, userdata);
 
         // We've handeled everything, tell curl to keep going
         return size * nmemb;

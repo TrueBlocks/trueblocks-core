@@ -11,47 +11,47 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------------
     template <class BaseType>
-    class SFBigNumStore {
+    class BigNumStore {
     public:
         static const unsigned int N;
         unsigned int capacity;
         unsigned int len;
         BaseType *blk;
 
-        SFBigNumStore(void);
-        SFBigNumStore(const SFBigNumStore<BaseType>& x);
-        SFBigNumStore<BaseType>& operator=(const SFBigNumStore<BaseType>& x);
+        BigNumStore(void);
+        BigNumStore(const BigNumStore<BaseType>& x);
+        BigNumStore<BaseType>& operator=(const BigNumStore<BaseType>& x);
 
-        explicit SFBigNumStore(unsigned int size);
-        SFBigNumStore(const BaseType *b, unsigned int len);
-        ~SFBigNumStore();
+        explicit BigNumStore(unsigned int size);
+        BigNumStore(const BaseType *b, unsigned int len);
+        ~BigNumStore();
 
         void allocate(unsigned int size);
         void allocateAndCopy(unsigned int size);
 
-        bool operator==(const SFBigNumStore<BaseType>& x) const;
-        bool operator!=(const SFBigNumStore<BaseType>& x) const { return !operator==(x); }
+        bool operator==(const BigNumStore<BaseType>& x) const;
+        bool operator!=(const BigNumStore<BaseType>& x) const { return !operator==(x); }
     };
 
     //-------------------------------------------------------------------------------
     template <class BaseType>
-    const unsigned int SFBigNumStore<BaseType>::N = 8 * sizeof(BaseType);
+    const unsigned int BigNumStore<BaseType>::N = 8 * sizeof(BaseType);
 
     //-------------------------------------------------------------------------------
     template <class BaseType>
-    inline SFBigNumStore<BaseType>::SFBigNumStore(void) : capacity(0), len(0) {
+    inline BigNumStore<BaseType>::BigNumStore(void) : capacity(0), len(0) {
         blk = 0;
     }
 
     //-------------------------------------------------------------------------------
     template <class BaseType>
-    inline SFBigNumStore<BaseType>::SFBigNumStore(unsigned int c) : capacity(c), len(0) {
+    inline BigNumStore<BaseType>::BigNumStore(unsigned int c) : capacity(c), len(0) {
         blk = (capacity > 0) ? (new BaseType[capacity]) : 0;
     }
 
     //-------------------------------------------------------------------------------
     template <class BaseType>
-    SFBigNumStore<BaseType>& SFBigNumStore<BaseType>::operator=(const SFBigNumStore<BaseType> &x) {
+    BigNumStore<BaseType>& BigNumStore<BaseType>::operator=(const BigNumStore<BaseType> &x) {
         if (this == &x)
             return *this;
 
@@ -64,7 +64,7 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------------
     template <class BaseType>
-    SFBigNumStore<BaseType>::SFBigNumStore(const SFBigNumStore<BaseType> &x) : len(x.len) {
+    BigNumStore<BaseType>::BigNumStore(const BigNumStore<BaseType> &x) : len(x.len) {
         capacity = len;
         blk = new BaseType[capacity];
         for (unsigned int i = 0; i < len; i++)
@@ -73,7 +73,7 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------------
     template <class BaseType>
-    SFBigNumStore<BaseType>::SFBigNumStore(const BaseType *b, unsigned int len) : capacity(len), len(len) {
+    BigNumStore<BaseType>::BigNumStore(const BaseType *b, unsigned int len) : capacity(len), len(len) {
         blk = new BaseType[capacity];
         for (unsigned int i = 0; i < len; i++)
             blk[i] = b[i];
@@ -81,14 +81,14 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------------
     template <class BaseType>
-    inline SFBigNumStore<BaseType>::~SFBigNumStore() {
+    inline BigNumStore<BaseType>::~BigNumStore() {
         if (blk)
             delete [] blk;
     }
 
     //-------------------------------------------------------------------------------
     template <class BaseType>
-    void SFBigNumStore<BaseType>::allocate(unsigned int size) {
+    void BigNumStore<BaseType>::allocate(unsigned int size) {
         if (size > capacity) {
             if (blk)
                 delete [] blk;
@@ -99,7 +99,7 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------------
     template <class BaseType>
-    void SFBigNumStore<BaseType>::allocateAndCopy(unsigned int size) {
+    void BigNumStore<BaseType>::allocateAndCopy(unsigned int size) {
         if (size > capacity) {
             BaseType *oldBlk = blk;
             capacity = size;
@@ -112,7 +112,7 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------------
     template <class BaseType>
-    bool SFBigNumStore<BaseType>::operator==(const SFBigNumStore<BaseType> &x) const {
+    bool BigNumStore<BaseType>::operator==(const BigNumStore<BaseType> &x) const {
         if (len != x.len)
             return false;
 
@@ -126,60 +126,58 @@ namespace qblocks {
 #define thisIsMe(a) (this == &a)
 
     //----------------------------------------------------------------------
-    class SFUintBN : public SFBigNumStore<uint64_t> {
+    class biguint_t : public BigNumStore<uint64_t> {
     public:
-        SFUintBN(void);
-        SFUintBN(const SFUintBN &x);
-        SFUintBN& operator=(const SFUintBN &x);
+        biguint_t(void);
+        biguint_t(const biguint_t &x);
+        biguint_t& operator=(const biguint_t &x);
 
-        SFUintBN(int, unsigned int c);
-        SFUintBN(const uint64_t *b, unsigned int blen);
+        biguint_t(int, unsigned int c);
+        biguint_t(const uint64_t *b, unsigned int blen);
 
-        SFUintBN(int64_t x);  // NOLINT
-        SFUintBN(int32_t x);  // NOLINT
-        SFUintBN(int16_t x);  // NOLINT
+        biguint_t(int64_t x);  // NOLINT
+        biguint_t(int32_t x);  // NOLINT
+        biguint_t(int16_t x);  // NOLINT
 
-        SFUintBN(uint64_t x);  // NOLINT
-        SFUintBN(uint32_t x);  // NOLINT
-        SFUintBN(uint16_t x);  // NOLINT
+        biguint_t(uint64_t x);  // NOLINT
+        biguint_t(uint32_t x);  // NOLINT
+        biguint_t(uint16_t x);  // NOLINT
 
-        ~SFUintBN();
+        ~biguint_t();
 
         int64_t to_long(void) const;
         int32_t to_int(void) const;
-        int16_t to_short(void) const;
 
         uint64_t to_ulong(void) const;
         uint32_t to_uint(void) const;
-        uint16_t to_ushort(void) const;
 
-        int compareTo(const SFUintBN &x) const;
-        bool operator==(const SFUintBN &x) const;
-        bool operator!=(const SFUintBN &x) const;
-        bool operator<(const SFUintBN &x) const;
-        bool operator<=(const SFUintBN &x) const;
-        bool operator>=(const SFUintBN &x) const;
-        bool operator>(const SFUintBN &x) const;
+        int compareTo(const biguint_t &x) const;
+        bool operator==(const biguint_t &x) const;
+        bool operator!=(const biguint_t &x) const;
+        bool operator<(const biguint_t &x) const;
+        bool operator<=(const biguint_t &x) const;
+        bool operator>=(const biguint_t &x) const;
+        bool operator>(const biguint_t &x) const;
 
-        SFUintBN operator+(const SFUintBN &x) const;
-        SFUintBN operator-(const SFUintBN &x) const;
-        SFUintBN operator*(const SFUintBN &x) const;
-        SFUintBN operator/(const SFUintBN &x) const;
-        SFUintBN operator%(const SFUintBN &x) const;
-        SFUintBN operator&(const SFUintBN &x) const;
-        SFUintBN operator|(const SFUintBN &x) const;
-        SFUintBN operator^(const SFUintBN &x) const;
-        SFUintBN operator<<(int b) const;
-        SFUintBN operator>>(int b) const;
+        biguint_t operator+(const biguint_t &x) const;
+        biguint_t operator-(const biguint_t &x) const;
+        biguint_t operator*(const biguint_t &x) const;
+        biguint_t operator/(const biguint_t &x) const;
+        biguint_t operator%(const biguint_t &x) const;
+        biguint_t operator&(const biguint_t &x) const;
+        biguint_t operator|(const biguint_t &x) const;
+        biguint_t operator^(const biguint_t &x) const;
+        biguint_t operator<<(int b) const;
+        biguint_t operator>>(int b) const;
 
-        void operator+=(const SFUintBN &x);
-        void operator-=(const SFUintBN &x);
-        void operator*=(const SFUintBN &x);
-        void operator/=(const SFUintBN &x);
-        void operator%=(const SFUintBN &x);
-        void operator&=(const SFUintBN &x);
-        void operator|=(const SFUintBN &x);
-        void operator^=(const SFUintBN &x);
+        void operator+=(const biguint_t &x);
+        void operator-=(const biguint_t &x);
+        void operator*=(const biguint_t &x);
+        void operator/=(const biguint_t &x);
+        void operator%=(const biguint_t &x);
+        void operator&=(const biguint_t &x);
+        void operator|=(const biguint_t &x);
+        void operator^=(const biguint_t &x);
         void operator<<=(int b);
         void operator>>=(int b);
 
@@ -189,10 +187,10 @@ namespace qblocks {
         void operator++(int);  // postfix
         void operator--(int);
 
-        void add(const SFUintBN &a, const SFUintBN &b);
-        void subtract(const SFUintBN &a, const SFUintBN &b);
-        void multiply(const SFUintBN &a, const SFUintBN &b);
-        void divide(const SFUintBN &b, SFUintBN &q);
+        void add(const biguint_t &a, const biguint_t &b);
+        void subtract(const biguint_t &a, const biguint_t &b);
+        void multiply(const biguint_t &a, const biguint_t &b);
+        void divide(const biguint_t &b, biguint_t &q);
 
         unsigned int bitLength(void) const;
         uint64_t getBlock(unsigned int i) const;
@@ -202,17 +200,17 @@ namespace qblocks {
         void trimLeadingZeros(void);
 
 // protected:
-        void bitwiseAnd(const SFUintBN &a, const SFUintBN &b);
-        void bitwiseOr(const SFUintBN &a, const SFUintBN &b);
-        void bitwiseXor(const SFUintBN &a, const SFUintBN &b);
+        void bitwiseAnd(const biguint_t &a, const biguint_t &b);
+        void bitwiseOr(const biguint_t &a, const biguint_t &b);
+        void bitwiseXor(const biguint_t &a, const biguint_t &b);
 
-        void shiftLeft(const SFUintBN &a, int b);
-        void shiftRight(const SFUintBN &a, int b);
+        void shiftLeft(const biguint_t &a, int b);
+        void shiftRight(const biguint_t &a, int b);
 
-        friend uint64_t getShiftedBlock(const SFUintBN &num, unsigned int x, unsigned int y);
+        friend uint64_t getShiftedBlock(const biguint_t &num, unsigned int x, unsigned int y);
 
         // template <class X>
-        // friend X convertBigUnsignedToPrimitiveAccess(const SFUintBN &a);
+        // friend X convertBigUnsignedToPrimitiveAccess(const biguint_t &a);
 
         template <class X>
         X convertToSignedPrimitive(void) const;
@@ -222,170 +220,174 @@ namespace qblocks {
     };
 
     //----------------------------------------------------------------------
-    inline bool SFUintBN::operator==(const SFUintBN &x) const {
-        return SFBigNumStore<uint64_t>::operator==(x);
+    inline bool biguint_t::operator==(const biguint_t &x) const {
+        return BigNumStore<uint64_t>::operator==(x);
     }
 
     //----------------------------------------------------------------------
-    inline bool SFUintBN::operator!=(const SFUintBN &x) const {
-        return SFBigNumStore<uint64_t>::operator!=(x);
+    inline bool biguint_t::operator!=(const biguint_t &x) const {
+        return BigNumStore<uint64_t>::operator!=(x);
     }
 
     //----------------------------------------------------------------------
-    inline bool SFUintBN::operator<(const SFUintBN &x) const {
+    inline bool biguint_t::operator<(const biguint_t &x) const {
         return compareTo(x) < 0;
     }
 
     //----------------------------------------------------------------------
-    inline bool SFUintBN::operator<=(const SFUintBN &x) const {
+    inline bool biguint_t::operator<=(const biguint_t &x) const {
         return compareTo(x) <= 0;
     }
 
     //----------------------------------------------------------------------
-    inline bool SFUintBN::operator>=(const SFUintBN &x) const {
+    inline bool biguint_t::operator>=(const biguint_t &x) const {
         return compareTo(x) >= 0;
     }
 
     //----------------------------------------------------------------------
-    inline bool SFUintBN::operator>(const SFUintBN &x) const {
+    inline bool biguint_t::operator>(const biguint_t &x) const {
         return compareTo(x) > 0;
     }
 
     //----------------------------------------------------------------------
-    inline void SFUintBN::operator+=(const SFUintBN &x) {
+    inline void biguint_t::operator+=(const biguint_t &x) {
         add(*this, x);
     }
 
     //----------------------------------------------------------------------
-    inline void SFUintBN::operator-=(const SFUintBN &x) {
+    inline void biguint_t::operator-=(const biguint_t &x) {
         subtract(*this, x);
     }
 
     //----------------------------------------------------------------------
-    inline void SFUintBN::operator*=(const SFUintBN &x) {
+    inline void biguint_t::operator*=(const biguint_t &x) {
         multiply(*this, x);
     }
 
     //----------------------------------------------------------------------
-    inline void SFUintBN::operator/=(const SFUintBN &x) {
-        if (x.len == 0) throw "SFUintBN::operator /=: division by zero";
-        SFUintBN q;
+    inline void biguint_t::operator/=(const biguint_t &x) {
+        if (x.len == 0) throw "biguint_t::operator /=: division by zero";
+        biguint_t q;
         divide(x, q);
         *this = q;
     }
 
     //----------------------------------------------------------------------
-    inline void SFUintBN::operator%=(const SFUintBN &x) {
+    inline void biguint_t::operator%=(const biguint_t &x) {
         if (x.len == 0)
-            throw "SFUintBN::operator %=: division by zero";
-        SFUintBN q;
+            throw "biguint_t::operator %=: division by zero";
+        biguint_t q;
         divide(x, q);
     }
 
     //----------------------------------------------------------------------
-    inline void SFUintBN::operator&=(const SFUintBN &x) {
+    inline void biguint_t::operator&=(const biguint_t &x) {
         bitwiseAnd(*this, x);
     }
 
     //----------------------------------------------------------------------
-    inline void SFUintBN::operator|=(const SFUintBN &x) {
+    inline void biguint_t::operator|=(const biguint_t &x) {
         bitwiseOr(*this, x);
     }
 
     //----------------------------------------------------------------------
-    inline void SFUintBN::operator^=(const SFUintBN &x) {
+    inline void biguint_t::operator^=(const biguint_t &x) {
         bitwiseXor(*this, x);
     }
 
     //----------------------------------------------------------------------
-    inline void SFUintBN::operator<<=(int b) {
+    inline void biguint_t::operator<<=(int b) {
         shiftLeft(*this, b);
     }
 
     //----------------------------------------------------------------------
-    inline void SFUintBN::operator>>=(int b) {
+    inline void biguint_t::operator>>=(int b) {
         shiftRight(*this, b);
     }
 
     //----------------------------------------------------------------------
-    inline SFUintBN SFUintBN::operator+(const SFUintBN &x) const {
-        SFUintBN ans;
+    inline biguint_t biguint_t::operator+(const biguint_t &x) const {
+        biguint_t ans;
         ans.add(*this, x);
         return ans;
     }
 
     //----------------------------------------------------------------------
-    inline SFUintBN SFUintBN::operator-(const SFUintBN &x) const {
-        SFUintBN ans;
+    inline biguint_t biguint_t::operator-(const biguint_t &x) const {
+        biguint_t ans;
         ans.subtract(*this, x);
         return ans;
     }
 
     //----------------------------------------------------------------------
-    inline SFUintBN SFUintBN::operator*(const SFUintBN &x) const {
-        SFUintBN ans;
+    inline biguint_t biguint_t::operator*(const biguint_t &x) const {
+        biguint_t ans;
         ans.multiply(*this, x);
         return ans;
     }
 
     //----------------------------------------------------------------------
-    inline SFUintBN SFUintBN::operator/(const SFUintBN &x) const {
+    inline biguint_t biguint_t::operator/(const biguint_t &x) const {
         if (x.len == 0)
-            throw "SFUintBN::operator /: division by zero";
-        SFUintBN q;
-        SFUintBN r = *this;
+            throw "biguint_t::operator /: division by zero";
+        biguint_t q;
+        biguint_t r = *this;
         r.divide(x, q);
         return q;
     }
 
     //----------------------------------------------------------------------
-    inline SFUintBN SFUintBN::operator%(const SFUintBN &x) const {
+    inline biguint_t biguint_t::operator%(const biguint_t &x) const {
         if (x.len == 0)
-            throw "SFUintBN::operator %: division by zero";
-        SFUintBN q, r;
+            throw "biguint_t::operator %: division by zero";
+        biguint_t q, r;
         r = *this;
         r.divide(x, q);
         return r;
     }
 
     //----------------------------------------------------------------------
-    inline SFUintBN SFUintBN::operator&(const SFUintBN &x) const {
-        SFUintBN ans;
+    inline biguint_t biguint_t::operator&(const biguint_t &x) const {
+        biguint_t ans;
         ans.bitwiseAnd(*this, x);
         return ans;
     }
 
     //----------------------------------------------------------------------
-    inline SFUintBN SFUintBN::operator|(const SFUintBN &x) const {
-        SFUintBN ans;
+    inline biguint_t biguint_t::operator|(const biguint_t &x) const {
+        biguint_t ans;
         ans.bitwiseOr(*this, x);
         return ans;
     }
 
     //----------------------------------------------------------------------
-    inline SFUintBN SFUintBN::operator^(const SFUintBN &x) const {
-        SFUintBN ans;
+    inline biguint_t biguint_t::operator^(const biguint_t &x) const {
+        biguint_t ans;
         ans.bitwiseXor(*this, x);
         return ans;
     }
 
     //----------------------------------------------------------------------
-    inline SFUintBN SFUintBN::operator<<(int b) const {
-        SFUintBN ans;
+    inline biguint_t biguint_t::operator<<(int b) const {
+        biguint_t ans;
         ans.shiftLeft(*this, b);
         return ans;
     }
 
     //----------------------------------------------------------------------
-    inline SFUintBN SFUintBN::operator>>(int b) const {
-        SFUintBN ans;
+    inline biguint_t biguint_t::operator>>(int b) const {
+        biguint_t ans;
         ans.shiftRight(*this, b);
         return ans;
     }
 
     //----------------------------------------------------------------------
-    inline void SFUintBN::operator++(int) { operator++(); }  // NOLINT
-    inline void SFUintBN::operator++(void) {
+    inline void biguint_t::operator++(int) {
+        operator++();
+    }
+
+    //----------------------------------------------------------------------
+    inline void biguint_t::operator++(void) {
         unsigned int i;
         bool carry = true;
         for (i = 0 ; i < len&&carry ; i++) {
@@ -402,10 +404,14 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    inline void SFUintBN::operator--(int) { operator--(); }  // NOLINT
-    inline void SFUintBN::operator--(void) {
+    inline void biguint_t::operator--(int) {
+        operator--();
+    }
+
+    //----------------------------------------------------------------------
+    inline void biguint_t::operator--(void) {
         if (len == 0)
-            throw "SFUintBN::operator--(): Cannot decrement an unsigned zero";
+            throw "biguint_t::operator--(): Cannot decrement an unsigned zero";
         unsigned int i;
         bool borrow = true;
         for (i = 0; borrow; i++) {
@@ -416,12 +422,63 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    inline uint64_t SFUintBN::getBlock(unsigned int i) const {
+    inline uint64_t biguint_t::getBlock(unsigned int i) const {
         return i >= len ? 0 : blk[i];
     }
 
     //----------------------------------------------------------------------
-    inline bool SFUintBN::getBit(unsigned int bi) const {
+    inline bool biguint_t::getBit(unsigned int bi) const {
         return (getBlock(bi / N) & (((uint64_t)(1)) << (bi % N))) != 0;
     }
+
+    //----------------------------------------------------------------------
+    class BigUnsignedInABase : public BigNumStore<unsigned short> {  // NOLINT
+    public:
+        unsigned short base;  // NOLINT
+
+        // Creates a BigUnsignedInABase with a capacity; for internal use.
+        BigUnsignedInABase(int, unsigned int c) : BigNumStore<unsigned short>(0, c) {}  // NOLINT
+
+        // Decreases len to eliminate any leading zero igits.
+        void trimLeadingZeros(void) {
+            while (len > 0 && blk[len - 1] == 0)
+                len--;
+        }
+
+        // Constructs zero in base 2.
+        BigUnsignedInABase() : BigNumStore<unsigned short>(), base(2) {}  // NOLINT
+
+        // Copy constructor
+        BigUnsignedInABase(const BigUnsignedInABase &x) : BigNumStore<unsigned short>(x), base(x.base) {}  // NOLINT
+
+        // Assignment operator
+        void operator =(const BigUnsignedInABase &x) {
+            BigNumStore<unsigned short>::operator =(x);  // NOLINT
+            base = x.base;
+        }
+
+        // Constructor that copies from a given array of igits.
+        BigUnsignedInABase(const unsigned short *d, unsigned int l, unsigned short base);  // NOLINT
+
+        // Destructor.  BigNumStore does the delete for us.
+        ~BigUnsignedInABase() {}
+
+        // LINKS TO BIGUNSIGNED
+        BigUnsignedInABase(const biguint_t &x, unsigned short base);  // NOLINT
+        operator biguint_t() const;
+
+        operator string() const;
+        BigUnsignedInABase(const string &s, unsigned short base);  // NOLINT
+
+        /*
+         * Equality test.  For the purposes of this test, two BigUnsignedInABase
+         * values must have the same base to be equal.
+         */
+        bool operator ==(const BigUnsignedInABase &x) const {
+            return base == x.base && BigNumStore<unsigned short>::operator==(x);  // NOLINT
+        }
+        bool operator !=(const BigUnsignedInABase &x) const { return !operator==(x); }
+
+    };
+
 }  // namespace qblocks

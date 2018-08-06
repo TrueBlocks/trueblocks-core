@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -17,7 +17,7 @@ extern bool visitBloom(const string_q& path, void *data);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    etherlib_init(quickQuitHander);
+    etherlib_init(quickQuitHandler);
 
     COptions opt;
     if (opt.parseArguments(argc, argv)) {
@@ -34,19 +34,19 @@ bool visitBloom(const string_q& path, void *data) {
         forAllFiles(path + "*", visitBloom, data);
 
     } else {
-extern bool displayBloom(blknum_t bn, const SFBloom& bloom, void *data);
+extern bool displayBloom(blknum_t bn, const bloom_t& bloom, void *data);
         if (endsWith(path, ".bin")) {
-            SFBloom bloom;
-            SFArchive archive(READING_ARCHIVE);
+            bloom_t bloom;
+            CArchive archive(READING_ARCHIVE);
             if (archive.Lock(path, binaryReadOnly, LOCK_NOWAIT)) {
-                SFBloomArray blooms;
+                CBloomArray blooms;
                 archive >> blooms;
                 archive.Release();
                 for (size_t i = 0 ; i < blooms.size() ; i++) {
                     bloom |= blooms[i];
                 }
             }
-            COptions *options = (COptions*)data;  // NOLINT
+            COptions *options = reinterpret_cast<COptions *>(data);
             if (options->asData)
                 cout << bnFromPath(path) << "," << fileSize(path) << "," << bitsTwiddled(bloom) << "\n";
             else
@@ -57,9 +57,9 @@ extern bool displayBloom(blknum_t bn, const SFBloom& bloom, void *data);
 }
 
 //-------------------------------------------------------------
-bool displayBloom(blknum_t bn, const SFBloom& bloom, void *data) {
-    string_q s = bloom2Bytes(bloom);
-    COptions *opt = (COptions*)data;  // NOLINT
+bool displayBloom(blknum_t bn, const bloom_t& bloom, void *data) {
+    string_q s = bloom_2_Bytes(bloom);
+    COptions *opt = reinterpret_cast<COptions *>(data);
     if (opt->mode == "short") {
         size_t len = s.length();
         replace(s,    "0x",     "");

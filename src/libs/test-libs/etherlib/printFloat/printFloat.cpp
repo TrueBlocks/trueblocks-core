@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -43,7 +43,7 @@ int main(int argc, const char *argv[]) {
             cout << "Test " << options.testNum << "\n";
 
         } else {
-            return usage("Unknown test: " + asString(options.testNum) + "\n");
+            return usage("Unknown test: " + int_2_Str(options.testNum) + "\n");
 
         }
     }

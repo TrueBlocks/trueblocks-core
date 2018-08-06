@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,15 +14,15 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-CParams params[] = {
-    CParams("-at:<timestamp>",                 "Report the price since nearest five minutes to the given timestamp"),
-    CParams("-current",                        "Report on the current price (i.e. -at:now)"),
-    CParams("-freshen",                        "Freshen database (append new data)"),
-    CParams("-period:<5|15|30|*120|240|1440>", "Display prices in this increment. One of [5|15|30|120*|240|1440]"),
-    CParams("-pair:<val>",                     "Which price pair to freshen or list (see Poloniex)"),
-    CParams("",                                "Freshen and/or display Ethereum price data and other purposes.\n"),
+static COption params[] = {
+    COption("-at:<timestamp>",                 "Report the price since nearest five minutes to the given timestamp"),
+    COption("-current",                        "Report on the current price (i.e. -at:now)"),
+    COption("-freshen",                        "Freshen database (append new data)"),
+    COption("-period:<5|15|30|*120|240|1440>", "Display prices in this increment. One of [5|15|30|120*|240|1440]"),
+    COption("-pair:<val>",                     "Which price pair to freshen or list (see Poloniex)"),
+    COption("",                                "Freshen and/or display Ethereum price data and other purposes.\n"),
 };
-size_t nParams = sizeof(params) / sizeof(CParams);
+static size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -45,16 +45,16 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-a:") || startsWith(arg, "--at:")) {
             arg = substitute(substitute(orig, "-a:", ""), "--at:", "");
             if (arg == "now") {
-                at = toTimestamp(Now());
+                at = date_2_Ts(Now());
             } else {
-                at = toTimestamp(arg);
+                at = str_2_Ts(arg);
                 if (!isUnsigned(arg))
                     return usage("Timestamp expected: " + orig);
             }
 
         } else if (startsWith(arg, "-p:") || startsWith(arg, "--period:")) {
             arg = substitute(substitute(orig, "-p:", ""), "--period:", "");
-            freq = toLongU(arg);
+            freq = str_2_Uint(arg);
             if (!isUnsigned(arg) || freq % 5)
                 return usage("Positive multiple of 5 expected: " + orig);
 

@@ -17,7 +17,12 @@ makeClass -c -r -e
 	-n  (--namespace val) surround the code with a --namespace:ns
 	-s  (--silent)        on error (no classDefinition file) exit silently
 	-a  (--all)           clear, edit, list, or run all class definitions found in the local folder
+
+#### Hidden options (shown during testing only)
+	-e  (--edit)          edit <className(s)> definition file in local folder
+#### Hidden options (shown during testing only)
+
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 
-  Powered by QuickBlocks
+  Powered by QBlocks

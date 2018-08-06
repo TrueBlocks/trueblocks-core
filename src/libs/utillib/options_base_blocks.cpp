@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -26,16 +26,16 @@ namespace qblocks {
 
         // if it's a number, return it
         if (isNumeral(arg) || isHexStr(arg)) {
-            ret = toUnsigned(arg);
+            ret = str_2_Uint(arg);
 
         } else {
             // if it's not a number, it better be a special value, and we better be able to find it
             CNameValue spec;
             if (pOptions && pOptions->findSpecial(spec, arg)) {
-                if (spec.getName() == "latest") {
+                if (spec.first == "latest") {
                     ret = lastBlock;
                 } else {
-                    ret = toUnsigned(spec.getValue());
+                    ret = str_2_Uint(spec.second);
                 }
             } else {
                 msg = "The given value '" + arg + "' is not a numeral or a special named block. Quitting...\n";
@@ -44,7 +44,7 @@ namespace qblocks {
         }
 
         if (ret > lastBlock) {
-            string_q lateStr = (isTestMode() ? "--" : asStringU(lastBlock));
+            string_q lateStr = (isTestMode() ? "--" : uint_2_Str(lastBlock));
             msg = "Block " + arg + " is later than the last valid block " + lateStr + ". Quitting...\n";
             return NOPOS;
         }

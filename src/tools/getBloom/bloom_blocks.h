@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -15,8 +15,8 @@
 
 #define IMPLEMENT_UNUSED(CLASS_NAME) \
 inline void CLASS_NAME::finishParse(void) {} \
-inline bool CLASS_NAME::Serialize(SFArchive& archive) {return true;} \
-inline bool CLASS_NAME::SerializeC(SFArchive& archive) const {return true;} \
+inline bool CLASS_NAME::Serialize(CArchive& archive) {return true;} \
+inline bool CLASS_NAME::SerializeC(CArchive& archive) const {return true;} \
 
 //-----------------------------------------------------------------------------
 class CBloomReceipt : public CBaseNode {

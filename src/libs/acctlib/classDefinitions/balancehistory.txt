@@ -3,4 +3,5 @@ class     = CBalanceHistory
 fields    = blknum bn|uint256 balance
 includes  = etherlib.h
 cIncs     = #include "etherlib.h"
-sort      = bn
+sort      = v1.bn < v2.bn
+equals    = bn == item.bn

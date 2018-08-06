@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -15,11 +15,15 @@
 #include "options.h"
 #include "junk.h"
 
-extern bool test_encodings (void);
-extern bool test_generation(void);
-extern bool test_old_bug   (void);
+extern bool test_encodings  (void);
+extern bool test_generation (void);
+extern bool test_old_bug    (void);
+extern bool test_func_assign(void);
+extern bool test_evt_assign (void);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
+
+    CParameter::registerClass();
 
     COptions options;
     if (!options.prepareArguments(argc, argv))
@@ -46,6 +50,16 @@ int main(int argc, const char *argv[]) {
                 cout << "Old bug test...\n";
                 cout << (test_old_bug() ? "...passed" : "...failed") << "\n";
                 cout << "\n";
+
+            } else if (mode == "func_assign") {
+                cout << "function assignment test...\n";
+                cout << (test_func_assign() ? "...passed" : "...failed") << "\n";
+                cout << "\n";
+
+            } else if (mode == "evt_assign") {
+                cout << "event assignment test...\n";
+                cout << (test_evt_assign() ? "...passed" : "...failed") << "\n";
+                cout << "\n";
             }
         }
     }
@@ -67,7 +81,7 @@ bool test_encodings(void) {
         if (!startsWith(expected, ';')) {
             string_q type  = nextTokenClear(expected, ' ');
             string_q text  = nextTokenClear(expected, ' ');
-            string_q myHex = string2Hex(text);
+            string_q myHex = chr_2_HexStr(text);
             string_q mySha = getSha3(myHex);
             if (type == "function")
                 mySha = extract(mySha, 0, 10);
@@ -88,17 +102,12 @@ bool sortByFunctionName(const CFunction& f1, const CFunction& f2) { return f1.na
 bool loadABIFromString(CJunk& abi, const string_q& in) {
 
     string_q contents = in;
-    ASSERT(!contents.empty());
-    char *p = cleanUpJson((char *)contents.c_str());  // NOLINT
-    while (p && *p) {
-        CFunction func;
-        size_t nFields = 0;
-        p = func.parseJson(p, nFields);
-        if (nFields) {
-            abi.array1.push_back(func);
-        }
+    CFunction func;
+    while (func.parseJson3(contents)) {
+        abi.array1.push_back(func);
+        func = CFunction();  // reset
     }
-    return true;  // abiByName.size();
+    return true;
 }
 
 //--------------------------------------------------------------
@@ -144,6 +153,40 @@ bool test_old_bug(void) {
     cout << string_q(120, '-') << "\nABI of test2.json\n" << string_q(120, '-') << "\n";
     abi.loadABIFromFile("./test2.json");
     cout << abi << "\n";
+    return true;
+}
+
+string_q data =
+"CBalanceHistoryArray|CBlockNumArray|CFunctionArray|CIncomeStatement|CLogEntryArray|CParameterArray|"
+"CPerson|CReceipt|CNewReceipt|CNewTransactionArray|CBigUintArray|CTopicArray|address[]|bytes4|time|"
+"uint8|CStringArray|CTraceAction|CTraceResult|CTransactionArray|CTreeNode *|CTopicArray|address|"
+"blknum|bloom|bool|bytes|bytes32|double|gas|hash|int256|int64|string|timestamp|uint256|uint32|"
+"uint64|wei";
+//--------------------------------------------------------------
+bool test_func_assign(void) {
+
+    string_q types = data;
+    while (!types.empty()) {
+        string_q type = nextTokenClear(types, '|');
+        type += ((contains(type, "*") ? "" : " ") + string_q("_val"));
+        CParameter param(type);
+        cout << param.type << "\t" << param.getFunctionAssign(0);
+    }
+
+    return true;
+}
+
+//--------------------------------------------------------------
+bool test_evt_assign(void) {
+
+    string_q types = data;
+    while (!types.empty()) {
+        string_q type = nextTokenClear(types, '|');
+        type += ((contains(type, "*") ? "" : " ") + string_q("_val"));
+        CParameter param(type);
+        cout << param.type << "\t" << param.getEventAssign(0);
+    }
+
     return true;
 }
 

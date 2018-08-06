@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "treeroot.h"
 
 namespace qblocks {
@@ -26,7 +27,7 @@ static string_q nextTreerootChunk(const string_q& fieldIn, const void *dataPtr);
 static string_q nextTreerootChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CTreeRoot::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CTreeRoot::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -46,7 +47,7 @@ void CTreeRoot::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr
 //---------------------------------------------------------------------------
 string_q nextTreerootChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CTreeRoot *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CTreeRoot *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -65,10 +66,8 @@ bool CTreeRoot::setValueByName(const string_q& fieldName, const string_q& fieldV
                 clear();
                 root = new CTreeNode;
                 if (root) {
-                    char *p = cleanUpJson((char *)fieldValue.c_str());  // NOLINT
-                    size_t nFields = 0;
-                    root->parseJson(p, nFields);
-                    return true;
+                    string_q str = fieldValue;
+                    return root->parseJson3(str);
                 }
                 return false;
             }
@@ -86,15 +85,18 @@ void CTreeRoot::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTreeRoot::Serialize(SFArchive& archive) {
+bool CTreeRoot::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CTreeRoot*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
-    // If we're reading a back level, read the whole thing and we're done.
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
+    CBaseNode::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
+    // EXISTING_CODE
     // EXISTING_CODE
     root = NULL;
     bool has_root = false;
@@ -102,36 +104,34 @@ bool CTreeRoot::Serialize(SFArchive& archive) {
     if (has_root) {
         string_q className;
         archive >> className;
-        root = createTreeNode(className);
+        root = reinterpret_cast<CTreeNode *>(createObjectOfType(className));
         if (!root)
             return false;
         root->Serialize(archive);
     }
-    // EXISTING_CODE
     finishParse();
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTreeRoot::SerializeC(SFArchive& archive) const {
+bool CTreeRoot::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
     // EXISTING_CODE
+    // EXISTING_CODE
     archive << (root != NULL);
     if (root) {
-        string_q className = root->getRuntimeClass()->getClassNamePtr();
-        archive << className;
+        archive << root->getRuntimeClass()->getClassNamePtr();
         root->SerializeC(archive);
     }
-    // EXISTING_CODE
 
     return true;
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CTreeRootArray& array) {
+CArchive& operator>>(CArchive& archive, CTreeRootArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -143,7 +143,7 @@ SFArchive& operator>>(SFArchive& archive, CTreeRootArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CTreeRootArray& array) {
+CArchive& operator<<(CArchive& archive, const CTreeRootArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -168,13 +168,15 @@ void CTreeRoot::registerClass(void) {
     HIDE_FIELD(CTreeRoot, "deleted");
     HIDE_FIELD(CTreeRoot, "showing");
 
+    builtIns.push_back(_biCTreeRoot);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
 string_q nextTreerootChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CTreeRoot *tre = (const CTreeRoot *)dataPtr;
+    const CTreeRoot *tre = reinterpret_cast<const CTreeRoot *>(dataPtr);
     if (tre) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -196,9 +198,8 @@ string_q nextTreerootChunk_custom(const string_q& fieldIn, const void *dataPtr) 
 }
 
 //---------------------------------------------------------------------------
-bool CTreeRoot::readBackLevel(SFArchive& archive) {
+bool CTreeRoot::readBackLevel(CArchive& archive) {
 
-    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -236,7 +237,8 @@ ostream& operator<<(ostream& os, const CTreeRoot& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

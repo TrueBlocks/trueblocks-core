@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -84,7 +84,7 @@ namespace qblocks {
 
         string_q getConfigStr   (const string_q& group, const string_q& key, const string_q& def) const;
         uint64_t getConfigInt   (const string_q& group, const string_q& key, uint64_t def) const;
-        SFUintBN getConfigBigInt(const string_q& group, const string_q& key, SFUintBN def) const;
+        biguint_t getConfigBigInt(const string_q& group, const string_q& key, biguint_t def) const;
         bool     getConfigBool  (const string_q& group, const string_q& key, bool def) const;
         string_q getDisplayStr  (bool terse, const string_q& def, const string_q& color = cTeal) const;
 

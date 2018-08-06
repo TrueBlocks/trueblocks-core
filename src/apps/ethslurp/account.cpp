@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,8 +14,9 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "etherlib.h"
+#include <algorithm>
 #include "account.h"
+#include "etherlib.h"
 
 namespace qblocks {
 
@@ -27,7 +28,7 @@ static string_q nextAccountChunk(const string_q& fieldIn, const void *dataPtr);
 static string_q nextAccountChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CAccount::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CAccount::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -49,7 +50,7 @@ void CAccount::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr)
 //---------------------------------------------------------------------------
 string_q nextAccountChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CAccount *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CAccount *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -64,7 +65,7 @@ bool CAccount::setValueByName(const string_q& fieldName, const string_q& fieldVa
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "addr" ) { addr = toAddress(fieldValue); return true; }
+            if ( fieldName % "addr" ) { addr = str_2_Addr(fieldValue); return true; }
             break;
         case 'd':
             if ( fieldName % "displayString" ) { displayString = fieldValue; return true; }
@@ -73,24 +74,22 @@ bool CAccount::setValueByName(const string_q& fieldName, const string_q& fieldVa
             if ( fieldName % "header" ) { header = fieldValue; return true; }
             break;
         case 'l':
-            if ( fieldName % "lastPage" ) { lastPage = toUnsigned(fieldValue); return true; }
-            if ( fieldName % "lastBlock" ) { lastBlock = toLong(fieldValue); return true; }
+            if ( fieldName % "lastPage" ) { lastPage = str_2_Uint(fieldValue); return true; }
+            if ( fieldName % "lastBlock" ) { lastBlock = str_2_Int(fieldValue); return true; }
             break;
         case 'n':
-            if ( fieldName % "nVisible" ) { nVisible = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "nVisible" ) { nVisible = str_2_Uint(fieldValue); return true; }
             break;
         case 'p':
-            if ( fieldName % "pageSize" ) { pageSize = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "pageSize" ) { pageSize = str_2_Uint(fieldValue); return true; }
             break;
         case 't':
             if ( fieldName % "transactions" ) {
-                char *p = (char *)fieldValue.c_str();  // NOLINT
-                while (p && *p) {
-                    CTransaction item;
-                    size_t nFields = 0;
-                    p = item.parseJson(p, nFields);
-                    if (nFields)
-                        transactions.push_back(item);
+                CTransaction item;
+                string_q str = fieldValue;
+                while (item.parseJson3(str)) {
+                    transactions.push_back(item);
+                    item = CTransaction();  // reset
                 }
                 return true;
             }
@@ -114,12 +113,14 @@ extern const CFunction *findFunctionByEncoding(const CFunctionArray& array, cons
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAccount::Serialize(SFArchive& archive) {
+bool CAccount::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CAccount*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
-    // If we're reading a back level, read the whole thing and we're done.
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
+    CBaseNode::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -138,7 +139,7 @@ bool CAccount::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAccount::SerializeC(SFArchive& archive) const {
+bool CAccount::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -158,7 +159,7 @@ bool CAccount::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CAccountArray& array) {
+CArchive& operator>>(CArchive& archive, CAccountArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -170,7 +171,7 @@ SFArchive& operator>>(SFArchive& archive, CAccountArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CAccountArray& array) {
+CArchive& operator<<(CArchive& archive, const CAccountArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -202,13 +203,15 @@ void CAccount::registerClass(void) {
     HIDE_FIELD(CAccount, "deleted");
     HIDE_FIELD(CAccount, "showing");
 
+    builtIns.push_back(_biCAccount);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
 string_q nextAccountChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CAccount *acc = (const CAccount *)dataPtr;
+    const CAccount *acc = reinterpret_cast<const CAccount *>(dataPtr);
     if (acc) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -236,9 +239,8 @@ string_q nextAccountChunk_custom(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-bool CAccount::readBackLevel(SFArchive& archive) {
+bool CAccount::readBackLevel(CArchive& archive) {
 
-    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -256,7 +258,7 @@ string_q CAccount::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "addr" ) return fromAddress(addr);
+            if ( fieldName % "addr" ) return addr_2_Str(addr);
             break;
         case 'd':
             if ( fieldName % "displayString" ) return displayString;
@@ -265,20 +267,20 @@ string_q CAccount::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "header" ) return header;
             break;
         case 'l':
-            if ( fieldName % "lastPage" ) return asStringU(lastPage);
-            if ( fieldName % "lastBlock" ) return asString(lastBlock);
+            if ( fieldName % "lastPage" ) return uint_2_Str(lastPage);
+            if ( fieldName % "lastBlock" ) return int_2_Str(lastBlock);
             break;
         case 'n':
-            if ( fieldName % "nVisible" ) return asStringU(nVisible);
+            if ( fieldName % "nVisible" ) return uint_2_Str(nVisible);
             break;
         case 'p':
-            if ( fieldName % "pageSize" ) return asStringU(pageSize);
+            if ( fieldName % "pageSize" ) return uint_2_Str(pageSize);
             break;
         case 't':
             if ( fieldName % "transactions" || fieldName % "transactionsCnt" ) {
                 size_t cnt = transactions.size();
                 if (endsWith(fieldName, "Cnt"))
-                    return asStringU(cnt);
+                    return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {
@@ -302,7 +304,8 @@ ostream& operator<<(ostream& os, const CAccount& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 
@@ -328,7 +331,7 @@ size_t CAccount::deleteNotShowing(void) {
 }
 
 //---------------------------------------------------------------------------
-bool CAccount::handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+bool CAccount::handleCustomFormat(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     // Split the format string into three parts: pre, post and records.
     // If no records, just process as normal. We do this because it's so slow
     // copying the records into a string, so we write it directly to the
@@ -383,7 +386,7 @@ const CFunction *findFunctionByEncoding(const CFunctionArray& array, const strin
     auto i1 = array.cbegin();
     auto i2 = array.cend();
     for ( ; i1 != i2 ; ++i1) {
-        if (search == *i1){
+        if (search == *i1) {
             return &*i1;
         }
     }
@@ -391,3 +394,4 @@ const CFunction *findFunctionByEncoding(const CFunctionArray& array, const strin
 }
 // EXISTING_CODE
 }  // namespace qblocks
+

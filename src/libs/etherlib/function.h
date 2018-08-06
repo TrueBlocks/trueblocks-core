@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "utillib.h"
 #include "parameter.h"
 
@@ -55,6 +56,7 @@ public:
     string_q origName;
     // EXISTING_CODE
     bool operator==(const CFunction& item) const;
+    bool operator!=(const CFunction& item) const { return !operator==(item); }
     friend bool operator<(const CFunction& v1, const CFunction& v2);
     friend ostream& operator<<(ostream& os, const CFunction& item);
 
@@ -62,7 +64,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CFunction& fu);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -154,6 +156,7 @@ inline CFunction& CFunction::operator=(const CFunction& fu) {
 inline bool CFunction::operator==(const CFunction& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
+    // Default equality operator as defined in class definition
     return encoding % item.encoding;
 }
 
@@ -167,8 +170,8 @@ inline bool operator<(const CFunction& v1, const CFunction& v2) {
 
 //---------------------------------------------------------------------------
 typedef vector<CFunction> CFunctionArray;
-extern SFArchive& operator>>(SFArchive& archive, CFunctionArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const CFunctionArray& array);
+extern CArchive& operator>>(CArchive& archive, CFunctionArray& array);
+extern CArchive& operator<<(CArchive& archive, const CFunctionArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "traceaction.h"
 #include "trace.h"
 
@@ -27,7 +28,7 @@ static string_q nextTraceactionChunk(const string_q& fieldIn, const void *dataPt
 static string_q nextTraceactionChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CTraceAction::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CTraceAction::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -47,7 +48,7 @@ void CTraceAction::Format(CExportContext& ctx, const string_q& fmtIn, void *data
 //---------------------------------------------------------------------------
 string_q nextTraceactionChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CTraceAction *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CTraceAction *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -62,32 +63,32 @@ bool CTraceAction::setValueByName(const string_q& fieldName, const string_q& fie
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "address" ) { address = toAddress(fieldValue); return true; }
+            if ( fieldName % "address" ) { address = str_2_Addr(fieldValue); return true; }
             break;
         case 'b':
-            if ( fieldName % "balance" ) { balance = toWei(fieldValue); return true; }
+            if ( fieldName % "balance" ) { balance = str_2_Wei(fieldValue); return true; }
             break;
         case 'c':
             if ( fieldName % "callType" ) { callType = fieldValue; return true; }
             break;
         case 'f':
-            if ( fieldName % "from" ) { from = toAddress(fieldValue); return true; }
+            if ( fieldName % "from" ) { from = str_2_Addr(fieldValue); return true; }
             break;
         case 'g':
-            if ( fieldName % "gas" ) { gas = toGas(fieldValue); return true; }
+            if ( fieldName % "gas" ) { gas = str_2_Gas(fieldValue); return true; }
             break;
         case 'i':
             if ( fieldName % "init" ) { init = fieldValue; return true; }
             if ( fieldName % "input" ) { input = fieldValue; return true; }
             break;
         case 'r':
-            if ( fieldName % "refundAddress" ) { refundAddress = toAddress(fieldValue); return true; }
+            if ( fieldName % "refundAddress" ) { refundAddress = str_2_Addr(fieldValue); return true; }
             break;
         case 't':
-            if ( fieldName % "to" ) { to = toAddress(fieldValue); return true; }
+            if ( fieldName % "to" ) { to = str_2_Addr(fieldValue); return true; }
             break;
         case 'v':
-            if ( fieldName % "value" ) { value = toWei(fieldValue); return true; }
+            if ( fieldName % "value" ) { value = str_2_Wei(fieldValue); return true; }
             break;
         default:
             break;
@@ -102,12 +103,14 @@ void CTraceAction::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTraceAction::Serialize(SFArchive& archive) {
+bool CTraceAction::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CTraceAction*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
-    // If we're reading a back level, read the whole thing and we're done.
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
+    CBaseNode::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -128,7 +131,7 @@ bool CTraceAction::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTraceAction::SerializeC(SFArchive& archive) const {
+bool CTraceAction::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -150,7 +153,7 @@ bool CTraceAction::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CTraceActionArray& array) {
+CArchive& operator>>(CArchive& archive, CTraceActionArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -162,7 +165,7 @@ SFArchive& operator>>(SFArchive& archive, CTraceActionArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CTraceActionArray& array) {
+CArchive& operator<<(CArchive& archive, const CTraceActionArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -196,13 +199,15 @@ void CTraceAction::registerClass(void) {
     HIDE_FIELD(CTraceAction, "deleted");
     HIDE_FIELD(CTraceAction, "showing");
 
+    builtIns.push_back(_biCTraceAction);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
 string_q nextTraceactionChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CTraceAction *tra = (const CTraceAction *)dataPtr;
+    const CTraceAction *tra = reinterpret_cast<const CTraceAction *>(dataPtr);
     if (tra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -224,9 +229,8 @@ string_q nextTraceactionChunk_custom(const string_q& fieldIn, const void *dataPt
 }
 
 //---------------------------------------------------------------------------
-bool CTraceAction::readBackLevel(SFArchive& archive) {
+bool CTraceAction::readBackLevel(CArchive& archive) {
 
-    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -234,13 +238,13 @@ bool CTraceAction::readBackLevel(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CTraceAction& tra) {
+CArchive& operator<<(CArchive& archive, const CTraceAction& tra) {
     tra.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CTraceAction& tra) {
+CArchive& operator>>(CArchive& archive, CTraceAction& tra) {
     tra.Serialize(archive);
     return archive;
 }
@@ -256,32 +260,32 @@ string_q CTraceAction::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "address" ) return fromAddress(address);
+            if ( fieldName % "address" ) return addr_2_Str(address);
             break;
         case 'b':
-            if ( fieldName % "balance" ) return fromWei(balance);
+            if ( fieldName % "balance" ) return wei_2_Str(balance);
             break;
         case 'c':
             if ( fieldName % "callType" ) return callType;
             break;
         case 'f':
-            if ( fieldName % "from" ) return fromAddress(from);
+            if ( fieldName % "from" ) return addr_2_Str(from);
             break;
         case 'g':
-            if ( fieldName % "gas" ) return fromGas(gas);
+            if ( fieldName % "gas" ) return gas_2_Str(gas);
             break;
         case 'i':
             if ( fieldName % "init" ) return init;
             if ( fieldName % "input" ) return input;
             break;
         case 'r':
-            if ( fieldName % "refundAddress" ) return fromAddress(refundAddress);
+            if ( fieldName % "refundAddress" ) return addr_2_Str(refundAddress);
             break;
         case 't':
-            if ( fieldName % "to" ) return fromAddress(to);
+            if ( fieldName % "to" ) return addr_2_Str(to);
             break;
         case 'v':
-            if ( fieldName % "value" ) return fromWei(value);
+            if ( fieldName % "value" ) return wei_2_Str(value);
             break;
     }
 
@@ -297,7 +301,8 @@ ostream& operator<<(ostream& os, const CTraceAction& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -105,5 +105,43 @@ namespace qblocks {
         char *sss = getenv(name);
         return ( sss ? string_q(sss) : string_q(""));
     }
+
+    // formatting only
+    extern string_q uint_2_Str(uint64_t i);
+    extern string_q int_2_Str (int64_t  i);
+    //--------------------------------------------------------------------
+    inline string_q padNum2(uint64_t n) { return padLeft(uint_2_Str((n)), 2, '0'); }
+    inline string_q padNum3(uint64_t n) { return padLeft(uint_2_Str((n)), 3, '0'); }
+    inline string_q padNum4(uint64_t n) { return padLeft(uint_2_Str((n)), 4, '0'); }
+    inline string_q padNum5(uint64_t n) { return padLeft(uint_2_Str((n)), 5, '0'); }
+    inline string_q padNum6(uint64_t n) { return padLeft(uint_2_Str((n)), 6, '0'); }
+    inline string_q padNum7(uint64_t n) { return padLeft(uint_2_Str((n)), 7, '0'); }
+    inline string_q padNum8(uint64_t n) { return padLeft(uint_2_Str((n)), 8, '0'); }
+    inline string_q padNum9(uint64_t n) { return padLeft(uint_2_Str((n)), 9, '0'); }
+
+    //--------------------------------------------------------------------
+    inline string_q padNum3T(uint64_t n) { return padLeft(uint_2_Str((n)), 3); }
+    inline string_q padNum4T(uint64_t n) { return padLeft(uint_2_Str((n)), 4); }
+    inline string_q padNum5T(uint64_t n) { return padLeft(uint_2_Str((n)), 5); }
+    inline string_q padNum6T(uint64_t n) { return padLeft(uint_2_Str((n)), 6); }
+    inline string_q padNum7T(uint64_t n) { return padLeft(uint_2_Str((n)), 7); }
+    inline string_q padNum8T(uint64_t n) { return padLeft(uint_2_Str((n)), 8); }
+    inline string_q padNum9T(uint64_t n) { return padLeft(uint_2_Str((n)), 9); }
+
+    //--------------------------------------------------------------------
+    inline string_q padNum2 (int64_t n) { return padLeft(int_2_Str((n)), 2, '0'); }
+    inline string_q padNum3i(int64_t n) { return padLeft(int_2_Str((n)), 3, '0'); }
+    inline string_q padNum4 (int64_t n) { return padLeft(int_2_Str((n)), 4, '0'); }
+    inline string_q padNum5 (int64_t n) { return padLeft(int_2_Str((n)), 5, '0'); }
+    inline string_q padNum6 (int64_t n) { return padLeft(int_2_Str((n)), 6, '0'); }
+    inline string_q padNum7 (int64_t n) { return padLeft(int_2_Str((n)), 7, '0'); }
+    inline string_q padNum8 (int64_t n) { return padLeft(int_2_Str((n)), 8, '0'); }
+    inline string_q padNum9 (int64_t n) { return padLeft(int_2_Str((n)), 9, '0'); }
+
+    //--------------------------------------------------------------------
+    inline string_q padNum3T(int64_t n) { return padLeft(int_2_Str((n)), 3); }
+    inline string_q padNum5T(int64_t n) { return padLeft(int_2_Str((n)), 5); }
+    inline string_q padNum7T(int64_t n) { return padLeft(int_2_Str((n)), 7); }
+    inline string_q padNum8T(int64_t n) { return padLeft(int_2_Str((n)), 8); }
 
 }  // namespace qblocks

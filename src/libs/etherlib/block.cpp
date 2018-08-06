@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,7 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include <utility>
+#include <algorithm>
 #include "block.h"
 #include "etherlib.h"
 
@@ -28,7 +28,7 @@ extern string_q nextBlockChunk(const string_q& fieldIn, const void *dataPtr);
 static string_q nextBlockChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CBlock::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CBlock::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -48,7 +48,7 @@ void CBlock::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) c
 //---------------------------------------------------------------------------
 string_q nextBlockChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CBlock *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CBlock *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -75,7 +75,7 @@ bool CBlock::setValueByName(const string_q& fieldName, const string_q& fieldValu
             string_q str = fieldValue;
             while (!str.empty()) {
                 CTransaction trans;
-                trans.hash = toAddress(nextTokenClear(str, ','));
+                trans.hash = str_2_Addr(nextTokenClear(str, ','));
                 transactions.push_back(trans);
             }
             return true;
@@ -85,38 +85,36 @@ bool CBlock::setValueByName(const string_q& fieldName, const string_q& fieldValu
 
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "blockNumber" ) { blockNumber = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "blockNumber" ) { blockNumber = str_2_Uint(fieldValue); return true; }
             break;
         case 'd':
-            if ( fieldName % "difficulty" ) { difficulty = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "difficulty" ) { difficulty = str_2_Uint(fieldValue); return true; }
             break;
         case 'f':
-            if ( fieldName % "finalized" ) { finalized = str2Bool(fieldValue); return true; }
+            if ( fieldName % "finalized" ) { finalized = str_2_Bool(fieldValue); return true; }
             break;
         case 'g':
-            if ( fieldName % "gasLimit" ) { gasLimit = toGas(fieldValue); return true; }
-            if ( fieldName % "gasUsed" ) { gasUsed = toGas(fieldValue); return true; }
+            if ( fieldName % "gasLimit" ) { gasLimit = str_2_Gas(fieldValue); return true; }
+            if ( fieldName % "gasUsed" ) { gasUsed = str_2_Gas(fieldValue); return true; }
             break;
         case 'h':
-            if ( fieldName % "hash" ) { hash = toHash(fieldValue); return true; }
+            if ( fieldName % "hash" ) { hash = str_2_Hash(fieldValue); return true; }
             break;
         case 'm':
-            if ( fieldName % "miner" ) { miner = toAddress(fieldValue); return true; }
+            if ( fieldName % "miner" ) { miner = str_2_Addr(fieldValue); return true; }
             break;
         case 'p':
-            if ( fieldName % "parentHash" ) { parentHash = toHash(fieldValue); return true; }
-            if ( fieldName % "price" ) { price = str2Double(fieldValue); return true; }
+            if ( fieldName % "parentHash" ) { parentHash = str_2_Hash(fieldValue); return true; }
+            if ( fieldName % "price" ) { price = str_2_Double(fieldValue); return true; }
             break;
         case 't':
-            if ( fieldName % "timestamp" ) { timestamp = toTimestamp(fieldValue); return true; }
+            if ( fieldName % "timestamp" ) { timestamp = str_2_Ts(fieldValue); return true; }
             if ( fieldName % "transactions" ) {
-                char *p = (char *)fieldValue.c_str();  // NOLINT
-                while (p && *p) {
-                    CTransaction item;
-                    size_t nFields = 0;
-                    p = item.parseJson(p, nFields);
-                    if (nFields)
-                        transactions.push_back(item);
+                CTransaction item;
+                string_q str = fieldValue;
+                while (item.parseJson3(str)) {
+                    transactions.push_back(item);
+                    item = CTransaction();  // reset
                 }
                 return true;
             }
@@ -144,12 +142,14 @@ void CBlock::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CBlock::Serialize(SFArchive& archive) {
+bool CBlock::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CBlock*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
-    // If we're reading a back level, read the whole thing and we're done.
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
+    CBaseNode::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -171,7 +171,7 @@ bool CBlock::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CBlock::SerializeC(SFArchive& archive) const {
+bool CBlock::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -194,7 +194,7 @@ bool CBlock::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CBlockArray& array) {
+CArchive& operator>>(CArchive& archive, CBlockArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -206,7 +206,7 @@ SFArchive& operator>>(SFArchive& archive, CBlockArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CBlockArray& array) {
+CArchive& operator<<(CArchive& archive, const CBlockArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -241,6 +241,8 @@ void CBlock::registerClass(void) {
     HIDE_FIELD(CBlock, "deleted");
     HIDE_FIELD(CBlock, "showing");
 
+    builtIns.push_back(_biCBlock);
+
     // EXISTING_CODE
     ADD_FIELD(CBlock, "date", T_DATE, ++fieldNum);
     HIDE_FIELD(CBlock, "date");
@@ -249,18 +251,18 @@ void CBlock::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextBlockChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CBlock *blo = (const CBlock *)dataPtr;
+    const CBlock *blo = reinterpret_cast<const CBlock *>(dataPtr);
     if (blo) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'd':
                 if (fieldIn % "date") {
                     timestamp_t ts = (timestamp_t)blo->timestamp;
-                    return dateFromTimeStamp(ts).Format(FMT_JSON);
+                    return ts_2_Date(ts).Format(FMT_JSON);
                 }
                 break;
             case 'n':
-                if ( fieldIn % "number" ) return asStringU(blo->blockNumber);
+                if ( fieldIn % "number" ) return uint_2_Str(blo->blockNumber);
                 break;
             case 't':
                 if ( expContext().hashesOnly && fieldIn % "transactions" ) {
@@ -292,12 +294,11 @@ string_q nextBlockChunk_custom(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-bool CBlock::readBackLevel(SFArchive& archive) {
+bool CBlock::readBackLevel(CArchive& archive) {
 
-    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
-    SFBloom removed;
+    bloom_t removed;
     if (m_schema <= getVersionNum(0, 3, 0)) {
         archive >> gasLimit;
         archive >> gasUsed;
@@ -307,12 +308,12 @@ bool CBlock::readBackLevel(SFArchive& archive) {
         archive >> parentHash;
         archive >> timestamp;
         archive >> transactions;
-        // TODO(tjayrush) -- technically we should re-read these values from the node
+        // TODO(tjayrush): technically we should re-read these values from the node
         string_q save = getCurlContext()->provider;
         getCurlContext()->provider = "local";
         CBlock upgrade;
         size_t unused;
-        queryBlock(upgrade, asStringU(blockNumber), false, false, unused);
+        queryBlock(upgrade, uint_2_Str(blockNumber), false, false, unused);
         getCurlContext()->provider = save;
         miner = upgrade.miner;
         difficulty = upgrade.difficulty;
@@ -340,13 +341,13 @@ bool CBlock::readBackLevel(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CBlock& blo) {
+CArchive& operator<<(CArchive& archive, const CBlock& blo) {
     blo.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CBlock& blo) {
+CArchive& operator>>(CArchive& archive, CBlock& blo) {
     blo.Serialize(archive);
     return archive;
 }
@@ -362,34 +363,34 @@ string_q CBlock::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "blockNumber" ) return asStringU(blockNumber);
+            if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
             break;
         case 'd':
-            if ( fieldName % "difficulty" ) return asStringU(difficulty);
+            if ( fieldName % "difficulty" ) return uint_2_Str(difficulty);
             break;
         case 'f':
-            if ( fieldName % "finalized" ) return asString(finalized);
+            if ( fieldName % "finalized" ) return int_2_Str(finalized);
             break;
         case 'g':
-            if ( fieldName % "gasLimit" ) return fromGas(gasLimit);
-            if ( fieldName % "gasUsed" ) return fromGas(gasUsed);
+            if ( fieldName % "gasLimit" ) return gas_2_Str(gasLimit);
+            if ( fieldName % "gasUsed" ) return gas_2_Str(gasUsed);
             break;
         case 'h':
-            if ( fieldName % "hash" ) return fromHash(hash);
+            if ( fieldName % "hash" ) return hash_2_Str(hash);
             break;
         case 'm':
-            if ( fieldName % "miner" ) return fromAddress(miner);
+            if ( fieldName % "miner" ) return addr_2_Str(miner);
             break;
         case 'p':
-            if ( fieldName % "parentHash" ) return fromHash(parentHash);
-            if ( fieldName % "price" ) return double2Str(price);
+            if ( fieldName % "parentHash" ) return hash_2_Str(parentHash);
+            if ( fieldName % "price" ) return double_2_Str(price);
             break;
         case 't':
-            if ( fieldName % "timestamp" ) return fromTimestamp(timestamp);
+            if ( fieldName % "timestamp" ) return ts_2_Str(timestamp);
             if ( fieldName % "transactions" || fieldName % "transactionsCnt" ) {
                 size_t cnt = transactions.size();
                 if (endsWith(fieldName, "Cnt"))
-                    return asStringU(cnt);
+                    return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {
@@ -403,7 +404,7 @@ string_q CBlock::getValueByName(const string_q& fieldName) const {
 
     // EXISTING_CODE
     if ( isTestMode() && fieldName % "blockHash" )
-        return fromHash(hash);
+        return hash_2_Str(hash);
     // EXISTING_CODE
 
     // Finally, give the parent class a chance
@@ -415,7 +416,8 @@ ostream& operator<<(ostream& os, const CBlock& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 
@@ -429,96 +431,36 @@ const CBaseNode *CBlock::getObjectAt(const string_q& fieldName, size_t index) co
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CAddressItem& item) {
-    os << item.bn << "\t";
-    os << (item.tx == NOPOS ? "" : asStringU(item.tx)) << "\t";
-    os << (item.tc < 10 ? "" : asStringU(item.tc - 10)) << "\t";
-    os << item.addr << "\t";
-    os << item.reason;
-    return os;
-}
-
-//---------------------------------------------------------------------------
-uint64_t insertUnique(CAddressItemMap *addrMap, const CAddressItem& _value) {
-    CAddressItemMap::iterator it = addrMap->find(_value);
-    if (it == addrMap->end())  // not found
-        it = addrMap->insert(make_pair(_value, true)).first;
-    return it->second;
-}
-
-//---------------------------------------------------------------------------
-bool accumulateAddresses(const CAddressItem& item, void *data) {
-    if (zeroAddr(item.addr))
-        return true;
-    CAddressItem search(item.bn, item.tx, item.tc, item.addr, item.reason);
-    insertUnique((CAddressItemMap*)data, search);  // NOLINT
-    return true;
-}
+extern bool accumulateAddresses(const CAddressAppearance& item, void *data);
+extern void foundOne(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const address_t& addr, const string_q& reason); // NOLINT
+extern void foundPot(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList, const string_q& reason); // NOLINT
 
 //---------------------------------------------------------------------------
 bool CBlock::forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data) {
+
     if (!func)
         return false;
 
-    CAddressItemMap addrMap;
+    CAddressAppearanceMap addrMap;
     forEveryAddress(accumulateAddresses, filterFunc, &addrMap);
-    for (CAddressItemMap::iterator it = addrMap.begin(); it != addrMap.end(); ++it)
+    for (CAddressAppearanceMap::iterator it = addrMap.begin(); it != addrMap.end(); ++it)
         (*func)(it->first, data);
 
     return true;
 }
 
 //---------------------------------------------------------------------------
-bool isPotentialAddr(SFUintBN test, SFAddress& addrOut) {
-
-    addrOut = "";
-
-    static const SFUintBN small = hex2BN(  "0x00000000000000ffffffffffffffffffffffffff");  // smallest address we find
-    static const SFUintBN large = hex2BN("0x010000000000000000000000000000000000000000");  // largest address we find
-    if (test <= small || test >= large)
-        return false;
-
-    addrOut = to_hex(test).c_str();
-    // Totally a heuristic that can't really be supported, but a good probability that this isn't an address
-    if (endsWith(addrOut, "00000000"))
-        return false;
-
-    if (addrOut.length() < 40)
-        addrOut = padLeft(addrOut, 40, '0');
-    addrOut = extract(addrOut, addrOut.length() - 40, 40);
-    addrOut = toLower("0x" + addrOut);
-
-    return true;
-}
-
-//---------------------------------------------------------------------------
-void potentialAddr(ADDRESSFUNC func, void *data, const CAddressItem& item, const string_q& potList) {
-
-    if (!func)
-        return;
-
-    // Pull out 32-byte chunks and check to see if they are addresses
-    SFAddress addr;
-    for (size_t s = 0 ; s < potList.length() / 64 ; s++) {
-        SFUintBN test = hex2BN("0x" + extract(potList, s*64, 64));
-        if (isPotentialAddr(test, addr)) {
-            CAddressItem it(item);
-            it.addr = addr;
-            (*func)(it, data);
-        }
+string_q stringy(const CStringArray& array) {
+    bool first = true;
+    string_q ret;
+    for (auto elem : array) {
+        if (!first)
+            ret += (elem + "_");
+        first = false;
     }
-}
-
-//---------------------------------------------------------------------------
-void foundOne(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const SFAddress& addr, const string_q& reason) {
-    CAddressItem item(bn, tx, tc, addr, reason);
-    (*func)(item, data);
-}
-
-//---------------------------------------------------------------------------
-void foundPot(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList, const string_q& reason) {
-    CAddressItem item(bn, tx, tc, "", reason);
-    potentialAddr(func, data, item, potList);
+    ret = "[" + trim(ret, '_') + "]";
+    ret = substitute(ret, "[]", "");
+    return ret.empty() ? "" : ret + "_";
 }
 
 //---------------------------------------------------------------------------
@@ -531,19 +473,19 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data)
     for (size_t tr = 0 ; tr < transactions.size() ; tr++) {
         const CTransaction *trans   = &transactions[tr];
         const CReceipt     *receipt = &trans->receipt;
-        foundOne(func, data, blockNumber, tr, 0, trans->from, "from");
-        foundOne(func, data, blockNumber, tr, 0, trans->to, "to");
-        foundOne(func, data, blockNumber, tr, 0, receipt->contractAddress, "creation");
+        foundOne(func, data, blockNumber, tr, 0, trans->from,               "from");
+        foundOne(func, data, blockNumber, tr, 0, trans->to,                 "to");
+        foundOne(func, data, blockNumber, tr, 0, receipt->contractAddress,  "creation");
         foundPot(func, data, blockNumber, tr, 0, extract(trans->input, 10), "input");
         for (size_t l = 0 ; l < receipt->logs.size() ; l++) {
             const CLogEntry *log = &receipt->logs[l];
-            string_q logId = "log" + asStringU(l) + "_";
-            foundOne(func, data, blockNumber, tr, 0, log->address, logId + "generator");
+            string_q logId = "log_" + uint_2_Str(l) + "_";
+            foundOne(func, data, blockNumber, tr, 0, log->address, logId +  "generator");
             for (size_t t = 0 ; t < log->topics.size() ; t++) {
-                SFAddress addr;
-                string_q topId = asStringU(t);
+                address_t addr;
+                string_q topId = uint_2_Str(t);
                 if (isPotentialAddr(log->topics[t], addr)) {
-                    foundOne(func, data, blockNumber, tr, 0, addr, logId + "topic_" + topId);
+                    foundOne(func, data, blockNumber, tr, 0, addr, logId +  "topic_" + topId);
                 }
             }
             foundPot(func, data, blockNumber, tr, 0, extract(log->data, 2), logId + "data");
@@ -556,12 +498,12 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data)
             getTraces(traces, trans->hash);
             for (size_t t = 0 ; t < traces.size() ; t++) {
                 const CTrace *trace = &traces[t];  // taking a non-const reference
-                string_q trID = "trace" + asStringU(t) + "_";
-                foundOne(func, data, blockNumber, tr, t+10, trace->action.from, trID + "from");
-                foundOne(func, data, blockNumber, tr, t+10, trace->action.to, trID + "to");
+                string_q trID = "trace_" + uint_2_Str(t) + "_" + stringy(trace->traceAddress);
+                foundOne(func, data, blockNumber, tr, t+10, trace->action.from,          trID + "from");
+                foundOne(func, data, blockNumber, tr, t+10, trace->action.to,            trID + "to");
                 foundOne(func, data, blockNumber, tr, t+10, trace->action.refundAddress, trID + "refundAddr");
-                foundOne(func, data, blockNumber, tr, t+10, trace->action.address, trID + "creation");
-                foundOne(func, data, blockNumber, tr, t+10, trace->result.address, trID + "self-destruct");
+                foundOne(func, data, blockNumber, tr, t+10, trace->action.address,       trID + "creation");
+                foundOne(func, data, blockNumber, tr, t+10, trace->result.address,       trID + "self-destruct");
                 string_q input = extract(trace->action.input, 10);
                 if (!input.empty())
                     foundPot(func, data, blockNumber, tr, t+10, input, trID + "input");

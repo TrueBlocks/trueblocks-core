@@ -21,5 +21,5 @@ This folder contains various tools and python scripts that provide simple, helpf
 `Notes:` Three scripts found in this folder (`clearCacheEntry.py`, `replaceTag.py`, and `testCheck.py`) support the build process and should not be modified.
 
 
-**Powered by QuickBlocks<sup>&reg;</sup>**
+**Powered by Qblocks<sup>&trade;</sup>**
 

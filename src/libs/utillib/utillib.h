@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -24,14 +24,12 @@
 #include "sfarchive.h"
 #include "fielddata.h"
 #include "curl_code.h"
-#include "fielddata.h"  // NOLINT
 #include "colors.h"
-#include "sfarchive.h"  // NOLINT
 #include "performance.h"
 #include "options_base.h"
 #include "filenames.h"
-#include "namevalue.h"
 #include "accountname.h"
 #include "memmap.h"
+#include "rpcresult.h"
 
 using namespace qblocks;  // NOLINT

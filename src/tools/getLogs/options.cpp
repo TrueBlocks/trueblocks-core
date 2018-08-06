@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -13,14 +13,14 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-CParams params[] = {
-    CParams("~!trans_list",    "a space-separated list of one or more transaction identifiers "
+static COption params[] = {
+    COption("~!trans_list",    "a space-separated list of one or more transaction identifiers "
                                     "(tx_hash, bn.txID, blk_hash.txID)"),
-//    CParams("-address:<addr>", "retrieve raw transaction for a given Ethereum address"),
-    CParams("-raw",            "retrieve raw transaction directly from the running node"),
-    CParams("",                "Retrieve a transaction's logs from the local cache or a running node."),
+//    COption("-address:<addr>", "retrieve raw transaction for a given Ethereum address"),
+    COption("-raw",            "retrieve raw transaction directly from the running node"),
+    COption("",                "Retrieve a transaction's logs from the local cache or a running node."),
 };
-size_t nParams = sizeof(params) / sizeof(CParams);
+static size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

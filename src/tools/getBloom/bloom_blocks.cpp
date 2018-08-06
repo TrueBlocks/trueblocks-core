@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -30,7 +30,7 @@ string_q CBloomReceipt::getValueByName(const string_q& fieldName) const {
     if (fieldName == "logsBloom"   ) return logsBloom;
     return "";
 }
-void CBloomReceipt::Format(CExportContext& ctx, const string_q& fmtIn, void* dataPtr) const {
+void CBloomReceipt::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     ctx << toJson();
     return;
 }
@@ -47,17 +47,17 @@ CBloomTrans::CBloomTrans(void) {
     }
 }
 bool CBloomTrans::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
-    if (fieldName == "transactionIndex"   ) { transactionIndex = toUnsigned(fieldValue); return true; }
+    if (fieldName == "transactionIndex"   ) { transactionIndex = str_2_Uint(fieldValue); return true; }
     if (fieldName == "hash"   ) { hash = fieldValue; return true; }
     return true;
 }
 string_q CBloomTrans::getValueByName(const string_q& fieldName) const {
     if (fieldName == "hash"   ) return hash;
     if (fieldName == "receipt") return receipt.Format();
-    if (fieldName == "transactionIndex"   ) return asStringU(transactionIndex);
+    if (fieldName == "transactionIndex"   ) return uint_2_Str(transactionIndex);
     return "";
 }
-void CBloomTrans::Format(CExportContext& ctx, const string_q& fmtIn, void* dataPtr) const {
+void CBloomTrans::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     ctx << toJson();
     return;
 }
@@ -80,22 +80,18 @@ CBloomBlock::CBloomBlock(void) {
 }
 bool CBloomBlock::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     if (fieldName == "logsBloom"   ) { logsBloom    = fieldValue; return true; }
-    if (fieldName == "number"      ) { number       = toUnsigned(fieldValue); return true; }
+    if (fieldName == "number"      ) { number       = str_2_Uint(fieldValue); return true; }
     if (fieldName == "transactions") {
-        char *p = cleanUpJson((char*)fieldValue.c_str());  // NOLINT
-        while (p && *p) {
-            CBloomTrans item;
-            size_t nFields = 0;
-            p = item.parseJson(p, nFields);
-            if (nFields) {
-                string_q result;
-                queryRawReceipt(result, item.hash);
-                CRPCResult generic;
-                char *r = cleanUpJson((char*)result.c_str());  // NOLINT
-                generic.parseJson(r);
-                item.receipt.parseJson(cleanUpJson((char*)generic.result.c_str()));  // NOLINT
-                transactions.push_back(item);
-            }
+        string_q str = fieldValue;
+        CBloomTrans item;
+        while (item.parseJson3(str)) {
+            string_q result;
+            queryRawReceipt(result, item.hash);
+            CRPCResult generic;
+            generic.parseJson3(result);
+            item.receipt.parseJson3(generic.result);
+            transactions.push_back(item);
+            item = CBloomTrans();  // reset
         }
         return true;
     }
@@ -103,8 +99,8 @@ bool CBloomBlock::setValueByName(const string_q& fieldName, const string_q& fiel
 }
 string_q CBloomBlock::getValueByName(const string_q& fieldName) const {
     if (fieldName == "logsBloom"   ) return logsBloom;
-    if (fieldName == "number"      ) return asStringU(number);
-    if (fieldName == "transactionsCnt") return asStringU(transactions.size());
+    if (fieldName == "number"      ) return uint_2_Str(number);
+    if (fieldName == "transactionsCnt") return uint_2_Str(transactions.size());
     if (fieldName == "transactions") {
         if (GETRUNTIME_CLASS(CBloomBlock)->isFieldHidden("transactions"))
             return "";
@@ -115,7 +111,7 @@ string_q CBloomBlock::getValueByName(const string_q& fieldName) const {
     }
     return "";
 }
-void CBloomBlock::Format(CExportContext& ctx, const string_q& fmtIn, void* dataPtr) const {
+void CBloomBlock::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     ctx << toJson();
     return;
 }

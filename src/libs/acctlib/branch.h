@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "etherlib.h"
 #include "treenode.h"
 
@@ -51,6 +52,8 @@ private:
     char activeBranch() const;
     CTreeNode *rejig();
     // EXISTING_CODE
+    bool operator==(const CBranch& item) const;
+    bool operator!=(const CBranch& item) const { return !operator==(item); }
     friend bool operator<(const CBranch& v1, const CBranch& v2);
     friend ostream& operator<<(ostream& os, const CBranch& item);
 
@@ -58,7 +61,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CBranch& br);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -133,17 +136,25 @@ inline CBranch& CBranch::operator=(const CBranch& br) {
 }
 
 //-------------------------------------------------------------------------
+inline bool CBranch::operator==(const CBranch& item) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const CBranch& v1, const CBranch& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted
+    // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
 }
 
 //---------------------------------------------------------------------------
 typedef vector<CBranch> CBranchArray;
-extern SFArchive& operator>>(SFArchive& archive, CBranchArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const CBranchArray& array);
+extern CArchive& operator>>(CArchive& archive, CBranchArray& array);
+extern CArchive& operator<<(CArchive& archive, const CBranchArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "abilib.h"
 #include "receipt.h"
 #include "trace.h"
@@ -29,17 +30,17 @@ class CBlock;
 //--------------------------------------------------------------------------
 class CTransaction : public CBaseNode {
 public:
-    SFHash hash;
-    SFHash blockHash;
+    hash_t hash;
+    hash_t blockHash;
     blknum_t blockNumber;
     uint64_t transactionIndex;
     uint64_t nonce;
     timestamp_t timestamp;
-    SFAddress from;
-    SFAddress to;
-    SFWei value;
-    SFGas gas;
-    SFGas gasPrice;
+    address_t from;
+    address_t to;
+    wei_t value;
+    gas_t gas;
+    gas_t gasPrice;
     string_q input;
     uint64_t isError;
     uint64_t isInternal;
@@ -64,6 +65,8 @@ public:
 
     string_q inputToFunction(void) const;
     // EXISTING_CODE
+    bool operator==(const CTransaction& item) const;
+    bool operator!=(const CTransaction& item) const { return !operator==(item); }
     friend bool operator<(const CTransaction& v1, const CTransaction& v2);
     friend ostream& operator<<(ostream& os, const CTransaction& item);
 
@@ -71,7 +74,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CTransaction& tr);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -174,21 +177,29 @@ inline CTransaction& CTransaction::operator=(const CTransaction& tr) {
 }
 
 //-------------------------------------------------------------------------
+inline bool CTransaction::operator==(const CTransaction& item) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const CTransaction& v1, const CTransaction& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted
+    // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
 }
 
 //---------------------------------------------------------------------------
 typedef vector<CTransaction> CTransactionArray;
-extern SFArchive& operator>>(SFArchive& archive, CTransactionArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const CTransactionArray& array);
+extern CArchive& operator>>(CArchive& archive, CTransactionArray& array);
+extern CArchive& operator<<(CArchive& archive, const CTransactionArray& array);
 
 //---------------------------------------------------------------------------
-extern SFArchive& operator<<(SFArchive& archive, const CTransaction& tra);
-extern SFArchive& operator>>(SFArchive& archive, CTransaction& tra);
+extern CArchive& operator<<(CArchive& archive, const CTransaction& tra);
+extern CArchive& operator>>(CArchive& archive, CTransaction& tra);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
@@ -198,3 +209,4 @@ extern string_q toFunction(const string_q& name, const string_q& input, size_t n
 extern string_q nextBlockChunk(const string_q& fieldIn, const void *data);
 // EXISTING_CODE
 }  // namespace qblocks
+

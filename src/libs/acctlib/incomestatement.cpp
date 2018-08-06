@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "incomestatement.h"
 #include "etherlib.h"
 
@@ -27,7 +28,7 @@ static string_q nextIncomestatementChunk(const string_q& fieldIn, const void *da
 static string_q nextIncomestatementChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CIncomeStatement::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CIncomeStatement::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -47,7 +48,7 @@ void CIncomeStatement::Format(CExportContext& ctx, const string_q& fmtIn, void *
 //---------------------------------------------------------------------------
 string_q nextIncomestatementChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CIncomeStatement *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CIncomeStatement *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -62,20 +63,20 @@ bool CIncomeStatement::setValueByName(const string_q& fieldName, const string_q&
 
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "begBal" ) { begBal = toWei(fieldValue); return true; }
-            if ( fieldName % "blockNum" ) { blockNum = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "begBal" ) { begBal = str_2_Wei(fieldValue); return true; }
+            if ( fieldName % "blockNum" ) { blockNum = str_2_Uint(fieldValue); return true; }
             break;
         case 'e':
-            if ( fieldName % "endBal" ) { endBal = toWei(fieldValue); return true; }
+            if ( fieldName % "endBal" ) { endBal = str_2_Wei(fieldValue); return true; }
             break;
         case 'g':
-            if ( fieldName % "gasCostInWei" ) { gasCostInWei = toWei(fieldValue); return true; }
+            if ( fieldName % "gasCostInWei" ) { gasCostInWei = str_2_Wei(fieldValue); return true; }
             break;
         case 'i':
-            if ( fieldName % "inflow" ) { inflow = toWei(fieldValue); return true; }
+            if ( fieldName % "inflow" ) { inflow = str_2_Wei(fieldValue); return true; }
             break;
         case 'o':
-            if ( fieldName % "outflow" ) { outflow = toWei(fieldValue); return true; }
+            if ( fieldName % "outflow" ) { outflow = str_2_Wei(fieldValue); return true; }
             break;
         default:
             break;
@@ -90,12 +91,14 @@ void CIncomeStatement::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CIncomeStatement::Serialize(SFArchive& archive) {
+bool CIncomeStatement::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CIncomeStatement*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
-    // If we're reading a back level, read the whole thing and we're done.
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
+    CBaseNode::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -112,7 +115,7 @@ bool CIncomeStatement::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CIncomeStatement::SerializeC(SFArchive& archive) const {
+bool CIncomeStatement::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -130,7 +133,7 @@ bool CIncomeStatement::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CIncomeStatementArray& array) {
+CArchive& operator>>(CArchive& archive, CIncomeStatementArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -142,7 +145,7 @@ SFArchive& operator>>(SFArchive& archive, CIncomeStatementArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CIncomeStatementArray& array) {
+CArchive& operator<<(CArchive& archive, const CIncomeStatementArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -172,13 +175,15 @@ void CIncomeStatement::registerClass(void) {
     HIDE_FIELD(CIncomeStatement, "deleted");
     HIDE_FIELD(CIncomeStatement, "showing");
 
+    builtIns.push_back(_biCIncomeStatement);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
 string_q nextIncomestatementChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CIncomeStatement *inc = (const CIncomeStatement *)dataPtr;
+    const CIncomeStatement *inc = reinterpret_cast<const CIncomeStatement *>(dataPtr);
     if (inc) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -200,9 +205,8 @@ string_q nextIncomestatementChunk_custom(const string_q& fieldIn, const void *da
 }
 
 //---------------------------------------------------------------------------
-bool CIncomeStatement::readBackLevel(SFArchive& archive) {
+bool CIncomeStatement::readBackLevel(CArchive& archive) {
 
-    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -210,13 +214,13 @@ bool CIncomeStatement::readBackLevel(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CIncomeStatement& inc) {
+CArchive& operator<<(CArchive& archive, const CIncomeStatement& inc) {
     inc.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CIncomeStatement& inc) {
+CArchive& operator>>(CArchive& archive, CIncomeStatement& inc) {
     inc.Serialize(archive);
     return archive;
 }
@@ -232,20 +236,20 @@ string_q CIncomeStatement::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "begBal" ) return asStringBN(begBal);
-            if ( fieldName % "blockNum" ) return asStringU(blockNum);
+            if ( fieldName % "begBal" ) return bni_2_Str(begBal);
+            if ( fieldName % "blockNum" ) return uint_2_Str(blockNum);
             break;
         case 'e':
-            if ( fieldName % "endBal" ) return asStringBN(endBal);
+            if ( fieldName % "endBal" ) return bni_2_Str(endBal);
             break;
         case 'g':
-            if ( fieldName % "gasCostInWei" ) return asStringBN(gasCostInWei);
+            if ( fieldName % "gasCostInWei" ) return bni_2_Str(gasCostInWei);
             break;
         case 'i':
-            if ( fieldName % "inflow" ) return asStringBN(inflow);
+            if ( fieldName % "inflow" ) return bni_2_Str(inflow);
             break;
         case 'o':
-            if ( fieldName % "outflow" ) return asStringBN(outflow);
+            if ( fieldName % "outflow" ) return bni_2_Str(outflow);
             break;
     }
 
@@ -268,17 +272,18 @@ ostream& operator<<(ostream& os, const CIncomeStatement& item) {
                 << padCenter("gasCost", width) << "   "
                 << padCenter("endBal", width);
         } else {
-            os << (item.begBal>0?cGreen:bBlack) << padLeft(wei2Ether(to_string(item.begBal).c_str()),width) << bBlack << "   ";  // NOLINT
-            os << (item.inflow>0?cYellow:"") << padLeft(wei2Ether(to_string(item.inflow).c_str()),width) << bBlack << "   ";  // NOLINT
-            os << (item.outflow>0?cYellow:"") << padLeft(wei2Ether(to_string(item.outflow).c_str()),width) << bBlack << "   ";  // NOLINT
-            os << (item.gasCostInWei>0?cYellow:"") << padLeft(wei2Ether(to_string(item.gasCostInWei).c_str()),width) << cOff << "   ";  // NOLINT
-            os << (item.endBal>0?cGreen:bBlack) << padLeft(wei2Ether(to_string(item.endBal).c_str()),width);  // NOLINT
+            os << (item.begBal       > 0 ? cGreen  : bBlack) << padLeft( wei_2_Ether(bni_2_Str( item.begBal       )), width) << bBlack << "   ";  // NOLINT
+            os << (item.inflow       > 0 ? cYellow : ""    ) << padLeft( wei_2_Ether(bni_2_Str( item.inflow       )), width) << bBlack << "   ";  // NOLINT
+            os << (item.outflow      > 0 ? cYellow : ""    ) << padLeft( wei_2_Ether(bni_2_Str( item.outflow      )), width) << bBlack << "   ";  // NOLINT
+            os << (item.gasCostInWei > 0 ? cYellow : ""    ) << padLeft( wei_2_Ether(bni_2_Str( item.gasCostInWei )), width) << cOff   << "   ";  // NOLINT
+            os << (item.endBal       > 0 ? cGreen  : bBlack) << padLeft( wei_2_Ether(bni_2_Str( item.endBal       )), width);  // NOLINT
         }
         { return os; }
     }
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

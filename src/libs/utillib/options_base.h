@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -12,7 +12,6 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "version.h"
-#include "namevalue.h"
 #include "accountname.h"
 #include "filenames.h"
 #include "toml.h"
@@ -75,14 +74,16 @@ namespace qblocks {
     };
 
     //--------------------------------------------------------------------------------
-    class CParams {
+    class COption {
     public:
         string_q  shortName;
         string_q  longName;
-        string_q  hotKey;
         string_q  description;
         string_q  permitted;
-        CParams(const string_q& name, const string_q& descr);
+        bool      hidden;
+        bool      mode;
+        bool      optional;
+        COption(const string_q& name, const string_q& descr);
     };
 
     //--------------------------------------------------------------------------------
@@ -105,7 +106,7 @@ namespace qblocks {
     extern string_q configPath(const string_q& part);
 
     //--------------------------------------------------------------------------------
-    extern CParams *paramsPtr;
+    extern COption *paramsPtr;
     extern size_t& nParamsRef;
     extern COptionsBase *pOptions;
 
@@ -117,7 +118,7 @@ namespace qblocks {
     extern const CToml *getGlobalConfig(const string_q& name = "");
 
     typedef bool (*UINT64VISITFUNC)(uint64_t num, void *data);
-    typedef uint64_t (*HASHFINDFUNC)(const SFHash& hash, void *data);
+    typedef uint64_t (*HASHFINDFUNC)(const hash_t& hash, void *data);
     class COptionsBlockList {
     public:
         CBlockNumArray numList;
@@ -141,7 +142,7 @@ namespace qblocks {
         void Init(void);
         string_q parseTransList(const string_q& arg);
         COptionsTransList(void);
-        string_q toString(void) const;
+        string_q int_2_Str(void) const;
         bool hasTrans(void) const { return !queries.empty(); }
     };
 

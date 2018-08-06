@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -16,6 +16,7 @@ extern const char* STR_NAME_DATA;
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
+    getCurlContext()->provider = "None";  // This will run without a node
     etherlib_init();
 
     COptions options;
@@ -71,7 +72,7 @@ string_q COptions::showMatches(void) {
     }
 
     if (count)
-        ret = asStringU(hits) + " match" + (hits == 1 ? "" : "es") + "\n" + (verbose ? ret : "");
+        ret = uint_2_Str(hits) + " match" + (hits == 1 ? "" : "es") + "\n" + (verbose ? ret : "");
 
     return ret;
 }

@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -40,7 +40,7 @@ static PyObject* get_block(PyObject* self, PyObject *args) {
     getBlock(block, i);
     block.finalized = true;
     if (cache) {
-	writeBlockToBinary(block, getBinaryFilename(i));
+        writeBlockToBinary(block, getBinaryFilename(i));
     }
     return Py_BuildValue("s", block.Format().c_str());
 }
@@ -52,8 +52,7 @@ static PyMethodDef _quickblocks_methods[] = {
     {NULL, NULL, 0, NULL}
 };
 
-static struct PyModuleDef cModPyDem =
-{
+static struct PyModuleDef cModPyDem = {
     PyModuleDef_HEAD_INIT,
     "_quickblocks",
     "",

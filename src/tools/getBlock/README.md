@@ -1,12 +1,12 @@
 ## getBlock
 
-The `getBlock` tool retrieves Ethereum block data from a running node or, if previously retrieved, the QuickBlocks cache. It optionally retrieves the hashes that denote the transactions in the block or the full transactional data as a default.
+The `getBlock` tool retrieves Ethereum block data from a running node or, if previously retrieved, the QBlocks cache. It optionally retrieves the hashes that denote the transactions in the block or the full transactional data as a default.
 
-The tool may also be used to double check that the results produced from the QuickBlocks cache and the results as retrieved directly from the running node are identical (modulo the fact that QuickBlocks does not store every data field from the node). You may accomplish this `check` with the --check option.
+The tool may also be used to double check that the results produced from the QBlocks cache and the results as retrieved directly from the running node are identical (modulo the fact that QBlocks does not store every data field from the node). You may accomplish this `check` with the --check option.
 
 #### Usage
 
-`Usage:`    getBlock [-r|-n|-c|-l|-a|-v|-h] &lt;block&gt; [block...]  
+`Usage:`    getBlock [-r|-n|-c|-l|-a|-u|-l|-v|-h] &lt;block&gt; [block...]  
 `Purpose:`  Returns block(s) from local cache or directly from a running node.
              
 `Where:`  
@@ -18,7 +18,9 @@ The tool may also be used to double check that the results produced from the Qui
 | -n | --hash_only | display only transaction hashes, default is to display full transaction detail |
 | -c | --check | compare results between qblocks and Ethereum node, report differences, if any |
 | -l | --latest | display the latest blocks at both the node and the cache |
-| -a | --addresses | display addresses included in the block |
+| -a | --addrs | display all addresses included in the block |
+| -u | --uniq | display only uniq addresses found in the block |
+| -l | --filter val | useful only for --addr or --uniq, only display this address in results |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
@@ -30,7 +32,7 @@ The tool may also be used to double check that the results produced from the Qui
 
 #### Other Options
 
-All **quickBlocks** command-line tools support the following commands (although in some case, they have no meaning):
+All **QBlocks** command-line tools support the following commands (although in some case, they have no meaning):
 
     Command     |     Description
     -----------------------------------------------------------------------------
@@ -43,6 +45,6 @@ All **quickBlocks** command-line tools support the following commands (although 
 
 <small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
 
-**Powered by QuickBlocks<sup>&reg;</sup>**
+**Powered by Qblocks<sup>&trade;</sup>**
 
 

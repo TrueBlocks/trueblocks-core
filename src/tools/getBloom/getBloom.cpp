@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -15,10 +15,10 @@
 
 extern const char *STR_FMT_BLOOMS_OUT;
 extern string_q doOneBloom(uint64_t num, const COptions& opt);
-//------------------------------------------------------------
+//-------------------------------------------------------------------------------------
 int main(int argc, const char * argv[]) {
 
-    etherlib_init(quickQuitHander);
+    etherlib_init(quickQuitHandler);
 
     // Parse command line, allowing for command files
     COptions options;
@@ -30,10 +30,10 @@ int main(int argc, const char * argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        cout << (options.isMulti() ? "[" : "");
+        cout << (options.isMulti() ? "[\n" : "");
         string_q list = options.getBlockNumList();
         while (!list.empty()) {
-            blknum_t bn = toLongU(nextTokenClear(list, '|'));
+            blknum_t bn = str_2_Uint(nextTokenClear(list, '|'));
             string_q result = doOneBloom(bn, options);
             cout << result;
             if (!options.asBars) {
@@ -48,69 +48,53 @@ int main(int argc, const char * argv[]) {
     return 0;
 }
 
-string_q toBits(const string_q& blIn) {
-    string_q ret = extract(toLower(blIn), 2);
-    replaceAll(ret, "0", "0000");
-    replaceAll(ret, "1", "0001");
-    replaceAll(ret, "2", "0010");
-    replaceAll(ret, "3", "0011");
-    replaceAll(ret, "4", "0100");
-    replaceAll(ret, "5", "0101");
-    replaceAll(ret, "6", "0110");
-    replaceAll(ret, "7", "0111");
-    replaceAll(ret, "8", "1000");
-    replaceAll(ret, "9", "1001");
-    replaceAll(ret, "a", "1010");
-    replaceAll(ret, "b", "1011");
-    replaceAll(ret, "c", "1100");
-    replaceAll(ret, "d", "1101");
-    replaceAll(ret, "e", "1110");
-    replaceAll(ret, "f", "1111");
-    return "0x"+ret;
-}
-string_q asBar(const string_q& blIn) {
-    return substitute(substitute(substitute(extract(toBits(blIn), 2), "0", ""), "1", "-"), "---", "🁡");
-}
-
 #include "bloom_blocks.h"
+//-------------------------------------------------------------------------------------
 string_q doOneBloom(uint64_t num, const COptions& opt) {
 
     CBlock gold;
     gold.blockNumber = num;
     string_q result;
-    string_q numStr = asStringU(num);
+    string_q numStr = uint_2_Str(num);
 
     if (opt.isRaw) {
 
-        if (!opt.receipt) {
+        string_q r = getRawBlock(num);
+        CBloomBlock rawBlock;
+        rawBlock.parseJson3(r);
+        HIDE_FIELD(CBloomTrans, "hash");
+
+        if (opt.blockOnly) {
+            rawBlock.transactions.clear();
             HIDE_FIELD(CBloomBlock, "transactions");
-        } else {
+        }
+
+        if (opt.receiptsOnly) {
             HIDE_FIELD(CBloomBlock, "number");
             HIDE_FIELD(CBloomBlock, "logsBloom");
         }
 
-        string_q r = getRawBlock(num);
-        CBloomBlock rawBlock;
-        rawBlock.parseJson(cleanUpJson((char*)r.c_str()));  // NOLINT
-        HIDE_FIELD(CBloomTrans, "hash");
-
         if (opt.asBits) {
-            rawBlock.logsBloom = toBits(rawBlock.logsBloom);
-            for (size_t i = 0 ; i < rawBlock.transactions.size() ; i++)
-                rawBlock.transactions.at(i).receipt.logsBloom =
-                    toBits(rawBlock.transactions[i].receipt.logsBloom);  // .at cannot go past end of vector!
+            bloom_t bloom = str_2_BigUint(rawBlock.logsBloom);
+            rawBlock.logsBloom = bloom_2_Bits(bloom);
+            for (size_t i = 0 ; i < rawBlock.transactions.size() ; i++) {
+                bloom = str_2_BigUint(rawBlock.transactions[i].receipt.logsBloom);  // .at cannot go past end of vector!
+                rawBlock.transactions.at(i).receipt.logsBloom = bloom_2_Bits(bloom);
+            }
         }
 
         if (opt.asBars) {
             ostringstream os;
-            if (opt.receipt)
+            if (opt.receiptsOnly)
                 os << "\n" << string_q(90, '-') << " " << rawBlock.number << string_q(90, '-') << "\n";
             else
                 os << num << ": ";
-            os << asBar(rawBlock.logsBloom) << "\n";
+            bloom_t bloom = str_2_BigUint(rawBlock.logsBloom);
+            os << bloom_2_Bar(bloom) << "\n";
             for (size_t i = 0 ; i < rawBlock.transactions.size() ; i++) {
-                if (opt.receipt) {
-                    string_q x = asBar(rawBlock.transactions[i].receipt.logsBloom);
+                if (opt.receiptsOnly) {
+                    bloom = str_2_BigUint(rawBlock.transactions[i].receipt.logsBloom);
+                    string_q x = bloom_2_Bar(bloom);
                     if (!x.empty())
                         os << x << "\n";
                 }
@@ -119,19 +103,47 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
         }
 
         ostringstream os;
-        rawBlock.doExport(os);
+        if (opt.blockOnly)
+            os << rawBlock.Format() << "\n";
+        else
+            rawBlock.doExport(os);
         return os.str().c_str();
 
     } else {
 
-        SFBloomArray blooms;
+        CBloomArray blooms;
         readBloomArray(blooms, substitute(getBinaryFilename(num), "/blocks/", "/blooms/"));
-        ostringstream os;
-        os << "\n" << string_q(90, '-') << " " << num << string_q(90, '-') << "\n";
-        for (size_t i = 0 ; i < blooms.size(); i++) {
-            //            os << asBar(bloom2Bits(blooms[i])) << "\n";
-            os << "0x" << blooms[i] << "\n";
+
+        if (opt.asBars) {
+            ostringstream os;
+            for (size_t i = 0 ; i < blooms.size() ; i++) {
+                string_q head = (i == 0 ? uint_2_Str(num) + ": " : "");
+                os << padLeft(head, 9) << bloom_2_Bar(blooms[i]) << "\n";
+            }
+            return os.str().c_str();
         }
+
+        ostringstream os;
+        os << "{\n";
+        os << "\t\"blockNumber\": \"" << num << "\",\n";
+        os << "\t\"eab\": [\n";
+        for (size_t i = 0 ; i < blooms.size() ; i++) {
+            bloom_t bloom = blooms[i];
+            if (opt.asBits) {
+                os << "\t\t\"0x" << bloom_2_Bits(bloom) << "\"";
+
+            } else if (opt.asBars) {
+                os << "\t\t\"0x" << "X" << "\"";
+
+            } else {
+                os << "\t\t\"0x" << bloom_2_Bytes(bloom) << "\"";
+
+            }
+            if (i < blooms.size() - 1)
+                os << ",";
+            os << "\n";
+        }
+        os << "\t]\n}";
         result = os.str().c_str();
     }
     return result;

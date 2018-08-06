@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -39,15 +39,15 @@ public:
         }
 // 4305968 2017-09-24 00:00:17 UTC 1398084 2907884 0.675315    60868104    20.9321 14.1358 0
         string_q str;
-        str = nextTokenClear(last, sep); startBlock = toUnsigned(str);
+        str = nextTokenClear(last, sep); startBlock = str_2_Uint(str);
               nextTokenClear(last, sep);
-        str = nextTokenClear(last, sep); nEmpty     = toUnsigned(str);
-        str = nextTokenClear(last, sep); nFull      = toUnsigned(str);
+        str = nextTokenClear(last, sep); nEmpty     = str_2_Uint(str);
+        str = nextTokenClear(last, sep); nFull      = str_2_Uint(str);
         str = nextTokenClear(last, sep);
-        str = nextTokenClear(last, sep); nTrans     = toUnsigned(str);
+        str = nextTokenClear(last, sep); nTrans     = str_2_Uint(str);
         str = nextTokenClear(last, sep);
         str = nextTokenClear(last, sep);
-        str = nextTokenClear(last, sep); nTraces    = toUnsigned(str);
+        str = nextTokenClear(last, sep); nTraces    = str_2_Uint(str);
     }
 };
 
@@ -91,17 +91,17 @@ void CCounter::countOne(const CBlock &block) {
     static blknum_t last = startBlock;
     blknum_t thisOne = (block.blockNumber / 10000) * 10000;
 #else
-    static SFTime last = earliestDate;
+    static time_q last = earliestDate;
 #ifdef SUBTOTAL_BY_FIVE_MINS
-    SFTime thisOne = dateFromTimeStamp(block.timestamp);
-    thisOne = SFTime(thisOne.GetYear(),
+    time_q thisOne = ts_2_Date(block.timestamp);
+    thisOne = time_q(thisOne.GetYear(),
                         thisOne.GetMonth(),
                         thisOne.GetDay(),
                         thisOne.GetHour(),
                         thisOne.GetMinute()/5,
                         0);
 #else
-    SFTime thisOne = SubtractOneDay(SubtractOneDay(BOW(dateFromTimeStamp(block.timestamp))));
+    time_q thisOne = SubtractOneDay(SubtractOneDay(BOW(ts_2_Date(block.timestamp))));
 #endif
 #endif
 
@@ -118,7 +118,7 @@ void CCounter::countOne(const CBlock &block) {
         cerr << string_q(120, ' ') << "\r";
     }
     *os << block.blockNumber << sep
-        << dateFromTimeStamp(block.timestamp) << sep
+        << ts_2_Date(block.timestamp) << sep
         << nEmpty << sep
         << nFull << sep
         << ((double)nFull/(double)(block.blockNumber)) << sep  // NOLINT

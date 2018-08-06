@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -17,7 +17,7 @@ namespace qblocks {
 
 #define MAJOR 0
 #define MINOR 5
-#define BUILD 2
+#define BUILD 5
 #define SUBVERS "alpha"
     //--------------------------------------------------------------------------------
     uint32_t getVersionNum(void) {
@@ -31,7 +31,7 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     string_q getVersionStr(const string_q& sep1, const string_q& sep2) {
-        return asStringU(MAJOR) + sep1 + asStringU(MINOR) + sep1 + asStringU(BUILD) + sep2 + SUBVERS;
+        return uint_2_Str(MAJOR) + sep1 + uint_2_Str(MINOR) + sep1 + uint_2_Str(BUILD) + sep2 + SUBVERS;
     }
 
 }  // namespace qblocks

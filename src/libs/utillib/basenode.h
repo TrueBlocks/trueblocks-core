@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -17,11 +17,13 @@
 namespace qblocks {
 
     //----------------------------------------------------------------------------
-    class CExportContext;
-    class SFArchive;
+    class CArchive;
 
     //----------------------------------------------------------------------------
     class CBaseNode {
+    private:
+        virtual char *parseJson1(char *s, size_t& nFields);
+
     public:
         uint64_t m_deleted;
         uint64_t m_schema;
@@ -35,8 +37,7 @@ namespace qblocks {
         void setDeleted(bool val);
 
         virtual bool isKindOf(const CRuntimeClass* pClass) const;
-        virtual char *parseJson(char *s, size_t& nFields);
-        virtual char *parseJson(char *s);
+        virtual bool  parseJson3(string_q& str);
         virtual char *parseCSV(char *s, size_t& nFields, const string_q *fields);
         virtual char *parseText(char *s, size_t& nFields, const string_q *fields);
         virtual string_q toJson1(void) const;
@@ -50,11 +51,11 @@ namespace qblocks {
         virtual CRuntimeClass *getRuntimeClass(void) const;
         virtual string_q getValueByName(const string_q& fieldName) const;
         virtual bool setValueByName(const string_q& fieldName, const string_q& fieldValue) { return false; }
-        virtual bool Serialize(SFArchive& archive);
-        virtual bool SerializeC(SFArchive& archive) const;
-        virtual bool readBackLevel(SFArchive& archive);
+        virtual bool Serialize(CArchive& archive);
+        virtual bool SerializeC(CArchive& archive) const;
+        virtual bool readBackLevel(CArchive& archive);
         virtual void finishParse(void) { }
-        virtual void Format(CExportContext& ctx, const string_q& fmtIn, void *data = NULL) const { }
+        virtual void Format(ostream& ctx, const string_q& fmtIn, void *data = NULL) const { }
         virtual string_q Format(const string_q& fmtIn = "") const { return ""; }
         virtual const CBaseNode *getObjectAt(const string_q& name, size_t i) const { return NULL; }
         virtual const string_q   getStringAt(const string_q& name, size_t i) const { return ""; }

@@ -3,7 +3,7 @@ stringTest -th
 #### Usage
 
 `Usage:`    stringTest [-v|-h] mode  
-`Purpose:`  Test 'c' library strings against quickBlocks strings.
+`Purpose:`  Test 'c' library strings against QBlocks strings.
              
 `Where:`  
 

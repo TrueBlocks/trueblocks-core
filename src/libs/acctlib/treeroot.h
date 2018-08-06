@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "etherlib.h"
 #include "treenode.h"
 #include "leaf.h"
@@ -61,6 +62,8 @@ public:
     void remove(const string_q& _key);
     bool visitItems(ACCTVISITOR func, void *data) const;
     // EXISTING_CODE
+    bool operator==(const CTreeRoot& item) const;
+    bool operator!=(const CTreeRoot& item) const { return !operator==(item); }
     friend bool operator<(const CTreeRoot& v1, const CTreeRoot& v2);
     friend ostream& operator<<(ostream& os, const CTreeRoot& item);
 
@@ -68,7 +71,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CTreeRoot& tr);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -141,17 +144,25 @@ inline CTreeRoot& CTreeRoot::operator=(const CTreeRoot& tr) {
 }
 
 //-------------------------------------------------------------------------
+inline bool CTreeRoot::operator==(const CTreeRoot& item) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const CTreeRoot& v1, const CTreeRoot& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted
+    // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
 }
 
 //---------------------------------------------------------------------------
 typedef vector<CTreeRoot> CTreeRootArray;
-extern SFArchive& operator>>(SFArchive& archive, CTreeRootArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const CTreeRootArray& array);
+extern CArchive& operator>>(CArchive& archive, CTreeRootArray& array);
+extern CArchive& operator<<(CArchive& archive, const CTreeRootArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "logentry.h"
 
 // EXISTING_CODE
@@ -24,7 +25,7 @@
 //--------------------------------------------------------------------------
 class QOwnerAddedEvent : public CLogEntry {
 public:
-    SFAddress newOwner;
+    address_t newOwner;
 
 public:
     QOwnerAddedEvent(void);
@@ -36,6 +37,8 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    bool operator==(const QOwnerAddedEvent& item) const;
+    bool operator!=(const QOwnerAddedEvent& item) const { return !operator==(item); }
     friend bool operator<(const QOwnerAddedEvent& v1, const QOwnerAddedEvent& v2);
     friend ostream& operator<<(ostream& os, const QOwnerAddedEvent& item);
 
@@ -43,7 +46,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const QOwnerAddedEvent& ow);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -110,17 +113,25 @@ inline QOwnerAddedEvent& QOwnerAddedEvent::operator=(const QOwnerAddedEvent& ow)
 }
 
 //-------------------------------------------------------------------------
+inline bool QOwnerAddedEvent::operator==(const QOwnerAddedEvent& item) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const QOwnerAddedEvent& v1, const QOwnerAddedEvent& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted
+    // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
 }
 
 //---------------------------------------------------------------------------
 typedef vector<QOwnerAddedEvent> QOwnerAddedEventArray;
-extern SFArchive& operator>>(SFArchive& archive, QOwnerAddedEventArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const QOwnerAddedEventArray& array);
+extern CArchive& operator>>(CArchive& archive, QOwnerAddedEventArray& array);
+extern CArchive& operator<<(CArchive& archive, const QOwnerAddedEventArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

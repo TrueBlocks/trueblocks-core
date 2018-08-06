@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -68,7 +68,7 @@ namespace qblocks {
         gasPrice = t->gasPrice;
         isError  = t->isError;
         nTraces  = (uint32_t)getTraceCount(t->hash);
-        strncpy(value, fromWei(t->value), 40); value[40] = '\0';
+        strncpy(value, wei_2_Str(t->value).c_str(), 40); value[40] = '\0';
     }
 
     //--------------------------------------------------------------------------
@@ -77,7 +77,7 @@ namespace qblocks {
         trans.receipt.gasUsed  = gasUsed;
         trans.gasPrice         = gasPrice;
         trans.isError          = isError;
-        trans.value            = toWei(value);
+        trans.value            = str_2_Wei(value);
         return;
     }
 
@@ -262,7 +262,7 @@ namespace qblocks {
 
                 CBlock block;
                 cache->blocks[i].toBlock(block);
-                SFGas gasUsed = 0;
+                gas_t gasUsed = 0;
                 for (txnum_t tr = cache->blocks[i].firstTrans ;
                         tr < cache->blocks[i].firstTrans + cache->blocks[i].nTrans;
                         tr++) {

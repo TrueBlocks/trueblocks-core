@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 [H_INCLUDES]
 [{NAMESPACE1}]
 
@@ -36,6 +37,8 @@ public:
 
 [{GET_OBJ}][{GET_STR}]    // EXISTING_CODE
     // EXISTING_CODE
+    bool operator==(const [{CLASS_NAME}]& item) const;
+    bool operator!=(const [{CLASS_NAME}]& item) const { return !operator==(item); }
     friend bool operator<(const [{CLASS_NAME}]& v1, const [{CLASS_NAME}]& v2);
     friend ostream& operator<<(ostream& os, const [{CLASS_NAME}]& item);
 
@@ -43,7 +46,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const [{CLASS_NAME}]& [{SHORT}]);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -108,17 +111,25 @@ inline [{CLASS_NAME}]& [{CLASS_NAME}]::operator=(const [{CLASS_NAME}]& [{SHORT}]
 }
 
 //-------------------------------------------------------------------------
+inline bool [{CLASS_NAME}]::operator==(const [{CLASS_NAME}]& item) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // [{EQUAL_COMMENT}]
+    return [{EQUAL_CODE}];
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const [{CLASS_NAME}]& v1, const [{CLASS_NAME}]& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // [{SORT_COMMENT}]
-    return [{SORTCODE}];
+    return [{SORT_CODE}];
 }
 
 //---------------------------------------------------------------------------
 typedef vector<[{CLASS_NAME}]> [{CLASS_NAME}]Array;
-extern SFArchive& operator>>(SFArchive& archive, [{CLASS_NAME}]Array& array);
-extern SFArchive& operator<<(SFArchive& archive, const [{CLASS_NAME}]Array& array);
+extern CArchive& operator>>(CArchive& archive, [{CLASS_NAME}]Array& array);
+extern CArchive& operator<<(CArchive& archive, const [{CLASS_NAME}]Array& array);
 
 [{OPERATORS}]//---------------------------------------------------------------------------
 // EXISTING_CODE

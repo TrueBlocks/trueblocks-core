@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "transaction.h"
 
 // EXISTING_CODE
@@ -24,7 +25,7 @@
 //--------------------------------------------------------------------------
 class QRemoveOwner : public CTransaction {
 public:
-    SFAddress _owner;
+    address_t _owner;
 
 public:
     QRemoveOwner(void);
@@ -36,6 +37,8 @@ public:
 
     // EXISTING_CODE
     // EXISTING_CODE
+    bool operator==(const QRemoveOwner& item) const;
+    bool operator!=(const QRemoveOwner& item) const { return !operator==(item); }
     friend bool operator<(const QRemoveOwner& v1, const QRemoveOwner& v2);
     friend ostream& operator<<(ostream& os, const QRemoveOwner& item);
 
@@ -43,7 +46,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const QRemoveOwner& re);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -110,17 +113,25 @@ inline QRemoveOwner& QRemoveOwner::operator=(const QRemoveOwner& re) {
 }
 
 //-------------------------------------------------------------------------
+inline bool QRemoveOwner::operator==(const QRemoveOwner& item) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const QRemoveOwner& v1, const QRemoveOwner& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted
+    // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
 }
 
 //---------------------------------------------------------------------------
 typedef vector<QRemoveOwner> QRemoveOwnerArray;
-extern SFArchive& operator>>(SFArchive& archive, QRemoveOwnerArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const QRemoveOwnerArray& array);
+extern CArchive& operator>>(CArchive& archive, QRemoveOwnerArray& array);
+extern CArchive& operator<<(CArchive& archive, const QRemoveOwnerArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

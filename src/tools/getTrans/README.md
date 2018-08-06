@@ -1,6 +1,6 @@
 ## getTrans
 
-The `getTrans` tool retrieves transactions from the running Ethereum node (using the `--raw` option) or from QuickBlocks (the default). You may provide a transaction `hash`, a `blockNumber.transactionID` pair, or a `blockHash.transactionID` pair (or any combination) to specify the transaction(s).
+The `getTrans` tool retrieves transactions from the running Ethereum node (using the `--raw` option) or from QBlocks (the default). You may provide a transaction `hash`, a `blockNumber.transactionID` pair, or a `blockHash.transactionID` pair (or any combination) to specify the transaction(s).
 
 #### Usage
 
@@ -31,7 +31,7 @@ The `getTrans` tool retrieves transactions from the running Ethereum node (using
 
 #### Other Options
 
-All **quickBlocks** command-line tools support the following commands (although in some case, they have no meaning):
+All **QBlocks** command-line tools support the following commands (although in some case, they have no meaning):
 
     Command     |     Description
     -----------------------------------------------------------------------------
@@ -44,6 +44,6 @@ All **quickBlocks** command-line tools support the following commands (although 
 
 <small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
 
-**Powered by QuickBlocks<sup>&reg;</sup>**
+**Powered by Qblocks<sup>&trade;</sup>**
 
 

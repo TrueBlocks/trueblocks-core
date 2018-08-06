@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "approveandcall.h"
 #include "etherlib.h"
 
@@ -25,7 +26,7 @@ static string_q nextApproveandcallChunk(const string_q& fieldIn, const void *dat
 static string_q nextApproveandcallChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QApproveAndCall::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QApproveAndCall::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -45,7 +46,7 @@ void QApproveAndCall::Format(CExportContext& ctx, const string_q& fmtIn, void *d
 //---------------------------------------------------------------------------
 string_q nextApproveandcallChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QApproveAndCall *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QApproveAndCall *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -63,8 +64,8 @@ bool QApproveAndCall::setValueByName(const string_q& fieldName, const string_q& 
 
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_spender" ) { _spender = toAddress(fieldValue); return true; }
-            if ( fieldName % "_value" ) { _value = toWei(fieldValue); return true; }
+            if ( fieldName % "_spender" ) { _spender = str_2_Addr(fieldValue); return true; }
+            if ( fieldName % "_value" ) { _value = str_2_Wei(fieldValue); return true; }
             if ( fieldName % "_extraData" ) { _extraData = toLower(fieldValue); return true; }
             break;
         default:
@@ -80,12 +81,14 @@ void QApproveAndCall::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QApproveAndCall::Serialize(SFArchive& archive) {
+bool QApproveAndCall::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
-        return ((const QApproveAndCall*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
-    // If we're reading a back level, read the whole thing and we're done.
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
+    CTransaction::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -99,7 +102,7 @@ bool QApproveAndCall::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QApproveAndCall::SerializeC(SFArchive& archive) const {
+bool QApproveAndCall::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
@@ -114,7 +117,7 @@ bool QApproveAndCall::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, QApproveAndCallArray& array) {
+CArchive& operator>>(CArchive& archive, QApproveAndCallArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -126,7 +129,7 @@ SFArchive& operator>>(SFArchive& archive, QApproveAndCallArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const QApproveAndCallArray& array) {
+CArchive& operator<<(CArchive& archive, const QApproveAndCallArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -155,13 +158,15 @@ void QApproveAndCall::registerClass(void) {
     HIDE_FIELD(QApproveAndCall, "deleted");
     HIDE_FIELD(QApproveAndCall, "showing");
 
+    builtIns.push_back(_biQApproveAndCall);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
 string_q nextApproveandcallChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QApproveAndCall *app = (const QApproveAndCall *)dataPtr;
+    const QApproveAndCall *app = reinterpret_cast<const QApproveAndCall *>(dataPtr);
     if (app) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -183,9 +188,8 @@ string_q nextApproveandcallChunk_custom(const string_q& fieldIn, const void *dat
 }
 
 //---------------------------------------------------------------------------
-bool QApproveAndCall::readBackLevel(SFArchive& archive) {
+bool QApproveAndCall::readBackLevel(CArchive& archive) {
 
-    CTransaction::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -203,8 +207,8 @@ string_q QApproveAndCall::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_spender" ) return fromAddress(_spender);
-            if ( fieldName % "_value" ) return asStringBN(_value);
+            if ( fieldName % "_spender" ) return addr_2_Str(_spender);
+            if ( fieldName % "_value" ) return bnu_2_Str(_value);
             if ( fieldName % "_extraData" ) return _extraData;
             break;
     }
@@ -221,7 +225,8 @@ ostream& operator<<(ostream& os, const QApproveAndCall& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

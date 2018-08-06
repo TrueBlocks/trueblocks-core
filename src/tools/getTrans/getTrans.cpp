@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -42,7 +42,7 @@ int main(int argc, const char *argv[]) {
 
 //--------------------------------------------------------------
 bool visitTransaction(CTransaction& trans, void *data) {
-    COptions *opt = (COptions*)data;  // NOLINT
+    COptions *opt = reinterpret_cast<COptions *>(data);
     opt->nVisited++;
 
     bool badHash = !isHash(trans.hash);
@@ -97,9 +97,9 @@ bool visitTransaction(CTransaction& trans, void *data) {
                 cout << substitute(
                         substitute(
                         substitute(fmt,
-                                   "[N]", asStringU(nTr)),
-                                   "[NN]", asStringU(traces.size())),
-                                   "[D]", asStringU(dTs));
+                                   "[N]", uint_2_Str(nTr)),
+                                   "[NN]", uint_2_Str(traces.size())),
+                                   "[D]", uint_2_Str(dTs));
             }
         }
     }

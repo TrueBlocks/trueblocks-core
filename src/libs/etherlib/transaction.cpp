@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "transaction.h"
 #include "etherlib.h"
 
@@ -27,7 +28,7 @@ extern string_q nextTransactionChunk(const string_q& fieldIn, const void *dataPt
 static string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CTransaction::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CTransaction::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -47,7 +48,7 @@ void CTransaction::Format(CExportContext& ctx, const string_q& fmtIn, void *data
 //---------------------------------------------------------------------------
 string_q nextTransactionChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CTransaction *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CTransaction *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -67,22 +68,21 @@ bool CTransaction::setValueByName(const string_q& fieldName, const string_q& fie
         return true;
 
     } else if ( fieldName % "value" ) {
-        value = canonicalWei(fieldValue);
-        ether = str2Double(Format("[{ETHER}]"));
+        value = str_2_Wei(fieldValue);
+        ether = str_2_Double(Format("[{ETHER}]"));
         return true;
 
     } else if ( fieldName % "contractAddress" ) {
-        receipt.contractAddress = toAddress(fieldValue);
+        receipt.contractAddress = str_2_Addr(fieldValue);
         return true;
 
     } else if ( fieldName % "gasUsed" ) {
-        receipt.gasUsed = toUnsigned(fieldValue);
+        receipt.gasUsed = str_2_Uint(fieldValue);
         return true;
+
     } else if ( fieldName % "receipt" ) {
-        char *p = (char *)fieldValue.c_str();  // NOLINT
-        size_t nFields = 0;
-        receipt.parseJson(p, nFields);
-        return true;
+        string_q str = fieldValue;
+        return receipt.parseJson3(str);
     }
     if (pBlock)
         if (((CBlock*)pBlock)->setValueByName(fieldName, fieldValue))  // NOLINT
@@ -91,37 +91,37 @@ bool CTransaction::setValueByName(const string_q& fieldName, const string_q& fie
 
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "blockHash" ) { blockHash = toHash(fieldValue); return true; }
-            if ( fieldName % "blockNumber" ) { blockNumber = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "blockHash" ) { blockHash = str_2_Hash(fieldValue); return true; }
+            if ( fieldName % "blockNumber" ) { blockNumber = str_2_Uint(fieldValue); return true; }
             break;
         case 'f':
-            if ( fieldName % "from" ) { from = toAddress(fieldValue); return true; }
+            if ( fieldName % "from" ) { from = str_2_Addr(fieldValue); return true; }
             break;
         case 'g':
-            if ( fieldName % "gas" ) { gas = toGas(fieldValue); return true; }
-            if ( fieldName % "gasPrice" ) { gasPrice = toGas(fieldValue); return true; }
+            if ( fieldName % "gas" ) { gas = str_2_Gas(fieldValue); return true; }
+            if ( fieldName % "gasPrice" ) { gasPrice = str_2_Gas(fieldValue); return true; }
             break;
         case 'h':
-            if ( fieldName % "hash" ) { hash = toHash(fieldValue); return true; }
+            if ( fieldName % "hash" ) { hash = str_2_Hash(fieldValue); return true; }
             break;
         case 'i':
             if ( fieldName % "input" ) { input = fieldValue; return true; }
-            if ( fieldName % "isError" ) { isError = toUnsigned(fieldValue); return true; }
-            if ( fieldName % "isInternal" ) { isInternal = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "isError" ) { isError = str_2_Uint(fieldValue); return true; }
+            if ( fieldName % "isInternal" ) { isInternal = str_2_Uint(fieldValue); return true; }
             break;
         case 'n':
-            if ( fieldName % "nonce" ) { nonce = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "nonce" ) { nonce = str_2_Uint(fieldValue); return true; }
             break;
         case 'r':
             if ( fieldName % "receipt" ) { /* receipt = fieldValue; */ return false; }
             break;
         case 't':
-            if ( fieldName % "transactionIndex" ) { transactionIndex = toUnsigned(fieldValue); return true; }
-            if ( fieldName % "timestamp" ) { timestamp = toTimestamp(fieldValue); return true; }
-            if ( fieldName % "to" ) { to = toAddress(fieldValue); return true; }
+            if ( fieldName % "transactionIndex" ) { transactionIndex = str_2_Uint(fieldValue); return true; }
+            if ( fieldName % "timestamp" ) { timestamp = str_2_Ts(fieldValue); return true; }
+            if ( fieldName % "to" ) { to = str_2_Addr(fieldValue); return true; }
             break;
         case 'v':
-            if ( fieldName % "value" ) { value = toWei(fieldValue); return true; }
+            if ( fieldName % "value" ) { value = str_2_Wei(fieldValue); return true; }
             break;
         default:
             break;
@@ -133,18 +133,20 @@ bool CTransaction::setValueByName(const string_q& fieldName, const string_q& fie
 void CTransaction::finishParse() {
     // EXISTING_CODE
     function = Format("[{FUNCTION}]");
-    ether = str2Double(Format("[{ETHER}]"));
+    ether = str_2_Double(Format("[{ETHER}]"));
     receipt.pTrans = this;
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTransaction::Serialize(SFArchive& archive) {
+bool CTransaction::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CTransaction*)this)->SerializeC(archive);  // NOLINT
+        return SerializeC(archive);
 
-    // If we're reading a back level, read the whole thing and we're done.
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
+    CBaseNode::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -170,7 +172,7 @@ bool CTransaction::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTransaction::SerializeC(SFArchive& archive) const {
+bool CTransaction::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -197,7 +199,7 @@ bool CTransaction::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CTransactionArray& array) {
+CArchive& operator>>(CArchive& archive, CTransactionArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -209,7 +211,7 @@ SFArchive& operator>>(SFArchive& archive, CTransactionArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CTransactionArray& array) {
+CArchive& operator<<(CArchive& archive, const CTransactionArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -247,6 +249,8 @@ void CTransaction::registerClass(void) {
     HIDE_FIELD(CTransaction, "schema");
     HIDE_FIELD(CTransaction, "deleted");
     HIDE_FIELD(CTransaction, "showing");
+
+    builtIns.push_back(_biCTransaction);
 
     // EXISTING_CODE
     // These are 'phony' fields needed because etherscan.io sends them
@@ -291,7 +295,7 @@ void CTransaction::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CTransaction *tra = (const CTransaction *)dataPtr;
+    const CTransaction *tra = reinterpret_cast<const CTransaction *>(dataPtr);
     if (tra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -303,19 +307,19 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
                 }
                 break;
             case 'c':
-                if ( fieldIn % "contractAddress" ) return fromAddress(tra->receipt.contractAddress);
+                if ( fieldIn % "contractAddress" ) return addr_2_Str(tra->receipt.contractAddress);
                 break;
             case 'd':
                 if (fieldIn % "date" || fieldIn % "datesh") {
                     timestamp_t ts = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
-                    string_q ret = dateFromTimeStamp(ts).Format(FMT_JSON);
+                    string_q ret = ts_2_Date(ts).Format(FMT_JSON);
                     if (fieldIn % "datesh")  // short date
                         return extract(ret, 0, 10);
                     return ret;
                 }
                 break;
             case 'e':
-                if ( fieldIn % "ether" ) return wei2Ether(asStringBN(tra->value));
+                if ( fieldIn % "ether" ) return wei_2_Ether(bnu_2_Str(tra->value));
                 if ( fieldIn % "encoding" ) {
                     return extract(tra->input, 0, 10);
                 }
@@ -330,18 +334,18 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
                     return tra->inputToFunction();
                 break;
             case 'g':
-                if ( fieldIn % "gasUsed" ) return asStringU(tra->receipt.gasUsed);
+                if ( fieldIn % "gasUsed" ) return uint_2_Str(tra->receipt.gasUsed);
                 if ( fieldIn % "gasCost" ) {
-                    SFUintBN used = tra->receipt.gasUsed;
-                    SFUintBN price = tra->gasPrice;
-                    return to_string(used * price).c_str();
+                    biguint_t used = tra->receipt.gasUsed;
+                    biguint_t price = tra->gasPrice;
+                    return bnu_2_Str(used * price);
                 }
                 break;
             case 't':
-                if ( fieldIn % "timestamp" && tra->pBlock) return asString(tra->pBlock->timestamp);
+                if ( fieldIn % "timestamp" && tra->pBlock) return int_2_Str(tra->pBlock->timestamp);
                 if ( fieldIn % "time" ) {
                     timestamp_t ts = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
-                    return extract(dateFromTimeStamp(ts).Format(FMT_JSON), 12);
+                    return extract(ts_2_Date(ts).Format(FMT_JSON), 12);
                 }
                 break;
             // EXISTING_CODE
@@ -364,13 +368,12 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
 }
 
 //---------------------------------------------------------------------------
-bool CTransaction::readBackLevel(SFArchive& archive) {
+bool CTransaction::readBackLevel(CArchive& archive) {
 
-    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     if (m_schema <= getVersionNum(0, 4, 0)) {
-        SFWei removed;  // used to be cumulativeGasUsed
+        wei_t removed;  // used to be cumulativeGasUsed
         archive >> hash;
         archive >> blockHash;
         archive >> blockNumber;
@@ -395,13 +398,13 @@ bool CTransaction::readBackLevel(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CTransaction& tra) {
+CArchive& operator<<(CArchive& archive, const CTransaction& tra) {
     tra.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CTransaction& tra) {
+CArchive& operator>>(CArchive& archive, CTransaction& tra) {
     tra.Serialize(archive);
     return archive;
 }
@@ -417,37 +420,37 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "blockHash" ) return fromHash(blockHash);
-            if ( fieldName % "blockNumber" ) return asStringU(blockNumber);
+            if ( fieldName % "blockHash" ) return hash_2_Str(blockHash);
+            if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
             break;
         case 'f':
-            if ( fieldName % "from" ) return fromAddress(from);
+            if ( fieldName % "from" ) return addr_2_Str(from);
             break;
         case 'g':
-            if ( fieldName % "gas" ) return fromGas(gas);
-            if ( fieldName % "gasPrice" ) return fromGas(gasPrice);
+            if ( fieldName % "gas" ) return gas_2_Str(gas);
+            if ( fieldName % "gasPrice" ) return gas_2_Str(gasPrice);
             break;
         case 'h':
-            if ( fieldName % "hash" ) return fromHash(hash);
+            if ( fieldName % "hash" ) return hash_2_Str(hash);
             break;
         case 'i':
             if ( fieldName % "input" ) return input;
-            if ( fieldName % "isError" ) return asStringU(isError);
-            if ( fieldName % "isInternal" ) return asStringU(isInternal);
+            if ( fieldName % "isError" ) return uint_2_Str(isError);
+            if ( fieldName % "isInternal" ) return uint_2_Str(isInternal);
             break;
         case 'n':
-            if ( fieldName % "nonce" ) return asStringU(nonce);
+            if ( fieldName % "nonce" ) return uint_2_Str(nonce);
             break;
         case 'r':
             if ( fieldName % "receipt" ) { expContext().noFrst=true; return receipt.Format(); }
             break;
         case 't':
-            if ( fieldName % "transactionIndex" ) return asStringU(transactionIndex);
-            if ( fieldName % "timestamp" ) return fromTimestamp(timestamp);
-            if ( fieldName % "to" ) return fromAddress(to);
+            if ( fieldName % "transactionIndex" ) return uint_2_Str(transactionIndex);
+            if ( fieldName % "timestamp" ) return ts_2_Str(timestamp);
+            if ( fieldName % "to" ) return addr_2_Str(to);
             break;
         case 'v':
-            if ( fieldName % "value" ) return fromWei(value);
+            if ( fieldName % "value" ) return wei_2_Str(value);
             break;
     }
 
@@ -478,7 +481,8 @@ ostream& operator<<(ostream& os, const CTransaction& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 
@@ -502,13 +506,6 @@ bool sortTransactionsForWrite(const CTransaction& t1, const CTransaction& t2) {
     return t1.hash < t2.hash;
 }
 
-//--------------------------------------------------------------------
-inline string_q asStringULL(uint64_t i) {
-    ostringstream os;
-    os << i;
-    return os.str().c_str();
-}
-
 //----------------------------------------------------------------------------
 inline unsigned char hex2Ascii(char *str) {
     unsigned char c;
@@ -530,18 +527,13 @@ inline string_q hex2String(const string_q& inHex) {
 }
 
 //------------------------------------------------------------------------------
-#define toBigNum2(a, b)      string_q(to_string(canonicalWei("0x" + grabPart(a, b))).c_str())
-#define grabPart(a, b)       trimLeading(extract((a), 64*(b), 64), '0')
-#define grabBigNum(a, b)     strtoull(grabPart(a, b).c_str(), NULL, 16)
-#define toAddr(a, b)         "0x" + padLeft(grabPart(a, b), 40, '0')
-#define toAddrOld(a, b)      "0x" + grabPart(a, b)
-#define toAscString(a, b)    hex2String("0x" + grabPart(a, b))
-#define toBigNum(a, b)       asStringULL(grabBigNum(a, b))
-#define toBigNum3(a, b)      padNum3(grabBigNum(a, b))
-#define theRest(a, b)        extract((a), 64*(b), (a).length())
-#define toVote(a, b)         (grabBigNum(a, b) ? "Yea" : "Nay")
-#define toBoolean(a, b)      (grabBigNum(a, b) ? "true" : "false")
-#define toBytes(a, b)        extract((a), 64*(b), 64)
+#define old_grabPart(a, b)       trimLeading(extract((a), 64*(b), 64), '0')
+#define old_toBigNum2(a, b)      string_q(bnu_2_Str(str_2_Wei("0x" + old_grabPart(a, b))).c_str())
+#define old_grabBigNum(a, b)     strtoull(old_grabPart(a, b).c_str(), NULL, 16)
+#define old_toAddr(a, b)         "0x" + padLeft(old_grabPart(a, b), 40, '0')
+#define old_toBigNum3(a, b)      padNum3(old_grabBigNum(a, b))
+#define old_toBoolean(a, b)      (old_grabBigNum(a, b) ? "true" : "false")
+#define old_toBytes(a, b)        extract((a), 64*(b), 64)
 string_q parse(const string_q& params, size_t nItems, string_q *types) {
 
     string_q ret;
@@ -550,19 +542,17 @@ string_q parse(const string_q& params, size_t nItems, string_q *types) {
         bool isDynamic = (t == "string" || t == "bytes" || contains(t, "[]"));
         string_q val;
 
-             if ( t == "address"                    )   val =          toAddr      (params, item);  // NOLINT
-        else if ( t == "bool"                       )   val =          toBoolean   (params, item);
-        else if ( t == "vote"                       )   val =          toVote      (params, item);
-        else if ( t == "uint3"                      )   val =          toBigNum3   (params, item);
-        else if ( t == "bytes256"                   )   val =          toAscString (params, item);
-        else if ( contains(t, "int") &&   !isDynamic)   val =          toBigNum2   (params, item);
-        else if ( contains(t, "bytes") && !isDynamic)   val =          toBytes     (params, item);
-        else if ( isDynamic                         )   val = "off:" + toBigNum2   (params, item);
+             if ( t == "address"                    )   val =          old_toAddr     (params, item);  // NOLINT
+        else if ( t == "bool"                       )   val =          old_toBoolean  (params, item);
+        else if ( t == "uint3"                      )   val =          old_toBigNum3  (params, item);
+        else if ( contains(t, "int") &&   !isDynamic)   val =          old_toBigNum2  (params, item);
+        else if ( contains(t, "bytes") && !isDynamic)   val =          old_toBytes    (params, item);
+        else if ( isDynamic                         )   val = "off:" + old_toBigNum2  (params, item);
         else                                            val = "unknown type: " + t;
 
         if (contains(val, "off:")) {
-            size_t start = toLongU(substitute(val, "off:", "")) / (size_t)32;
-            size_t len   = grabBigNum(params, start);
+            size_t start = str_2_Uint(substitute(val, "off:", "")) / (size_t)32;
+            size_t len   = old_grabBigNum(params, start);
             if (len == NOPOS)
                 len = params.length()-start;
             if (t == "string") {

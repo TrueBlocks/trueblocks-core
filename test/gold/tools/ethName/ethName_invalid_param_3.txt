@@ -18,4 +18,4 @@ ethName -x 0xbf4ed7b27f1d666546e30d74d50d173d20bca754
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 
-  Powered by QuickBlocks
+  Powered by QBlocks

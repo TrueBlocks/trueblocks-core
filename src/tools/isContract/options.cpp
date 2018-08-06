@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -13,15 +13,15 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-CParams params[] = {
-    CParams("~address_list", "a space-separated list of one or more Ethereum addresses"),
-    CParams("-data",         "display results as data (addr <tab> is_contract)"),
-    CParams("-bytes",        "display the byte code at the address(es)"),
-    CParams("-nodiff",       "return 'true' if (exactly) two Ethereum addresses have identical code"),
-    CParams("",              "Returns 'true' or 'false' if the given address(es) holds byte code "
+static COption params[] = {
+    COption("~address_list", "a space-separated list of one or more Ethereum addresses"),
+    COption("-data",         "display results as data (addr <tab> is_contract)"),
+    COption("-bytes",        "display the byte code at the address(es)"),
+    COption("-nodiff",       "return 'true' if (exactly) two Ethereum addresses have identical code"),
+    COption("",              "Returns 'true' or 'false' if the given address(es) holds byte code "
                              "(optionally displays the code).\n"),
 };
-size_t nParams = sizeof(params) / sizeof(CParams);
+static size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -51,11 +51,10 @@ bool COptions::parseArguments(string_q& command) {
          } else {
 
              if (nAddrs >= MAX_ADDRS)
-                 return usage("You may query at most " + asString(MAX_ADDRS) + " addresses. Quitting...");
-            string_q addr = fixAddress(toLower(arg));
-            if (!isAddress(addr))
-                return usage(arg + " does not appear to be a valid Ethereum address.\n");
-            addrs[nAddrs++] = addr;
+                 return usage("You may query at most " + int_2_Str(MAX_ADDRS) + " addresses. Quitting...");
+             if (!isAddress(arg))
+                 return usage(arg + " does not appear to be a valid Ethereum address.\n");
+            addrs[nAddrs++] = str_2_Addr(toLower(arg));
 
         }
     }

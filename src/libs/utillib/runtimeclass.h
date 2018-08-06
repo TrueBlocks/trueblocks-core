@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -24,7 +24,12 @@ namespace qblocks {
     public:
         const CRuntimeClass *m_pClass;
         CBuiltIn(CRuntimeClass *pClass, const string_q& className, size_t size, PFNV createFunc, CRuntimeClass *pBase);
+        friend bool operator<(const CBuiltIn& v1, const CBuiltIn& v2);
+        bool operator==(const CBuiltIn& item) const;
+        bool operator!=(const CBuiltIn& item) const { return !operator==(item); }
     };
+    CBaseNode *createObjectOfType(const string_q& className);
+    extern vector<CBuiltIn> builtIns;
 
     //----------------------------------------------------------------------------
     typedef bool (*FIELDVISITFUNC) (const CFieldData& fld, void *data);
@@ -74,12 +79,12 @@ public: \
            string_q       getValueByName  (const string_q& fieldName) const override; \
            bool           setValueByName  (const string_q& fieldName, const string_q& fieldValue) override; \
            void           finishParse     (void) override; \
-           bool           Serialize       (SFArchive& archive) override; \
-           bool           SerializeC      (SFArchive& archive) const override; \
-           void           Format          (CExportContext& ctx, const string_q& fmtIn, void *data = NULL) \
+           bool           Serialize       (CArchive& archive) override; \
+           bool           SerializeC      (CArchive& archive) const override; \
+           void           Format          (ostream& ctx, const string_q& fmtIn, void *data = NULL) \
                                                      const override; \
            string_q       Format          (const string_q& fmtIn = "") const override \
-                            { CStringExportContext ctx; Format(ctx, fmtIn, NULL); return ctx.str; } \
+                            { stringstream ctx; Format(ctx, fmtIn, NULL); return ctx.str(); } \
            string_q       getClassName    (void) const;
 
 //------------------------------------------------------------

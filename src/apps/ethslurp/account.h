@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "abilib.h"
 #include "transaction.h"
 
@@ -27,7 +28,7 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CAccount : public CBaseNode {
 public:
-    SFAddress addr;
+    address_t addr;
     string_q header;
     string_q displayString;
     uint64_t pageSize;
@@ -49,8 +50,10 @@ public:
     // EXISTING_CODE
     CAbi abi;
     size_t deleteNotShowing(void);
-    bool handleCustomFormat(CExportContext& ctx, const string_q& fmtIn, void *data = NULL) const;
+    bool handleCustomFormat(ostream& ctx, const string_q& fmtIn, void *data = NULL) const;
     // EXISTING_CODE
+    bool operator==(const CAccount& item) const;
+    bool operator!=(const CAccount& item) const { return !operator==(item); }
     friend bool operator<(const CAccount& v1, const CAccount& v2);
     friend ostream& operator<<(ostream& os, const CAccount& item);
 
@@ -58,7 +61,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CAccount& ac);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -145,17 +148,25 @@ inline CAccount& CAccount::operator=(const CAccount& ac) {
 }
 
 //-------------------------------------------------------------------------
+inline bool CAccount::operator==(const CAccount& item) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const CAccount& v1, const CAccount& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted
+    // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
 }
 
 //---------------------------------------------------------------------------
 typedef vector<CAccount> CAccountArray;
-extern SFArchive& operator>>(SFArchive& archive, CAccountArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const CAccountArray& array);
+extern CArchive& operator>>(CArchive& archive, CAccountArray& array);
+extern CArchive& operator<<(CArchive& archive, const CAccountArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

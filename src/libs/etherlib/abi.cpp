@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -28,7 +28,7 @@ static string_q nextAbiChunk(const string_q& fieldIn, const void *dataPtr);
 static string_q nextAbiChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CAbi::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CAbi::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -48,7 +48,7 @@ void CAbi::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) con
 //---------------------------------------------------------------------------
 string_q nextAbiChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CAbi *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CAbi *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -64,24 +64,20 @@ bool CAbi::setValueByName(const string_q& fieldName, const string_q& fieldValue)
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "abiByName" ) {
-                char *p = (char *)fieldValue.c_str();  // NOLINT
-                while (p && *p) {
-                    CFunction item;
-                    size_t nFields = 0;
-                    p = item.parseJson(p, nFields);
-                    if (nFields)
-                        abiByName.push_back(item);
+                CFunction item;
+                string_q str = fieldValue;
+                while (item.parseJson3(str)) {
+                    abiByName.push_back(item);
+                    item = CFunction();  // reset
                 }
                 return true;
             }
             if ( fieldName % "abiByEncoding" ) {
-                char *p = (char *)fieldValue.c_str();  // NOLINT
-                while (p && *p) {
-                    CFunction item;
-                    size_t nFields = 0;
-                    p = item.parseJson(p, nFields);
-                    if (nFields)
-                        abiByEncoding.push_back(item);
+                CFunction item;
+                string_q str = fieldValue;
+                while (item.parseJson3(str)) {
+                    abiByEncoding.push_back(item);
+                    item = CFunction();  // reset
                 }
                 return true;
             }
@@ -99,12 +95,14 @@ void CAbi::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAbi::Serialize(SFArchive& archive) {
+bool CAbi::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CAbi*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
-    // If we're reading a back level, read the whole thing and we're done.
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
+    CBaseNode::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -117,7 +115,7 @@ bool CAbi::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAbi::SerializeC(SFArchive& archive) const {
+bool CAbi::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -131,7 +129,7 @@ bool CAbi::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CAbiArray& array) {
+CArchive& operator>>(CArchive& archive, CAbiArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -143,7 +141,7 @@ SFArchive& operator>>(SFArchive& archive, CAbiArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CAbiArray& array) {
+CArchive& operator<<(CArchive& archive, const CAbiArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -169,13 +167,15 @@ void CAbi::registerClass(void) {
     HIDE_FIELD(CAbi, "deleted");
     HIDE_FIELD(CAbi, "showing");
 
+    builtIns.push_back(_biCAbi);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
 string_q nextAbiChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CAbi *abi = (const CAbi *)dataPtr;
+    const CAbi *abi = reinterpret_cast<const CAbi *>(dataPtr);
     if (abi) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -197,9 +197,8 @@ string_q nextAbiChunk_custom(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-bool CAbi::readBackLevel(SFArchive& archive) {
+bool CAbi::readBackLevel(CArchive& archive) {
 
-    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -220,7 +219,7 @@ string_q CAbi::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "abiByName" || fieldName % "abiByNameCnt" ) {
                 size_t cnt = abiByName.size();
                 if (endsWith(fieldName, "Cnt"))
-                    return asStringU(cnt);
+                    return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {
@@ -232,7 +231,7 @@ string_q CAbi::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "abiByEncoding" || fieldName % "abiByEncodingCnt" ) {
                 size_t cnt = abiByEncoding.size();
                 if (endsWith(fieldName, "Cnt"))
-                    return asStringU(cnt);
+                    return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {
@@ -265,7 +264,8 @@ ostream& operator<<(ostream& os, const CAbi& item) {
     }
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 
@@ -284,16 +284,11 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
 bool CAbi::loadABIFromFile(const string_q& fileName) {
 
     string_q contents = asciiFileToString(fileName);
-    ASSERT(!contents.empty());
-    char *p = cleanUpJson((char *)contents.c_str());  // NOLINT
-    while (p && *p) {
-        CFunction func;
-        size_t nFields = 0;
-        p = func.parseJson(p, nFields);
-        if (nFields) {
-            abiByName.push_back(func);
-            abiByEncoding.push_back(func);
-        }
+    CFunction func;
+    while (func.parseJson3(contents)) {
+        abiByName.push_back(func);
+        abiByEncoding.push_back(func);
+        func = CFunction();  // reset
     }
     sort(abiByName.begin(), abiByName.end(), sortByFuncName);
     sort(abiByEncoding.begin(), abiByEncoding.end());  // encoding is default sort

@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -115,5 +115,18 @@ namespace qblocks {
         pClass->m_ObjectSize = size;
         pClass->m_BaseClass  = pBase;
         pClass->m_CreateFunc = createFunc;
+    }
+
+    bool operator<(const CBuiltIn& v1, const CBuiltIn& v2) {
+        if (!v1.m_pClass || v2.m_pClass)
+            return false;
+        return v1.m_pClass->m_ClassName < v2.m_pClass->m_ClassName;
+    }
+
+    bool CBuiltIn::operator==(const CBuiltIn& item) const {
+        if (!m_pClass || !item.m_pClass)
+            return false;
+        bool ret = string_q(m_pClass->m_ClassName) == string_q(item.m_pClass->m_ClassName);
+        return ret;
     }
 }  // namespace qblocks

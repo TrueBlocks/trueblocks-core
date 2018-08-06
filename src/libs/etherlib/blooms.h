@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -18,14 +18,14 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     // Helps debug a bloom filter
-#define dbgBloom(a) substitute(bloom2Bytes(a), "0", " ")
+#define dbgBloom(a) substitute(bloom_2_Bytes(a), "0", " ")
 
     //-------------------------------------------------------------------------
-    inline size_t bitsTwiddled(SFBloom n) {
+    inline size_t bitsTwiddled(bloom_t n) {
         size_t count = 0;
         while (n != 0) {
-            SFUintBN x = n - 1;
-            SFUintBN y = n & x;
+            biguint_t x = n - 1;
+            biguint_t y = n & x;
             n = y;
             count++;
         }
@@ -33,42 +33,42 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    inline SFUintBN makeBloom(const string_q& hexIn) {
+    inline biguint_t makeBloom(const string_q& hexIn) {
         if (hexIn.empty() || !startsWith(hexIn, "0x"))
             return 0;
 
 extern string_q getSha3 (const string_q& hexIn);
         string_q sha = getSha3(hexIn);
-        SFUintBN bloom;
+        biguint_t bloom;
         for (size_t i = 0 ; i < 3 ; i++)
-            bloom |= (SFUintBN(1) << (strtoul(("0x" +
+            bloom |= (biguint_t(1) << (strtoul(("0x" +
                             extract(sha, 2 + (i * 4), 4)).c_str(), NULL, 16)) % 2048);
         return bloom;
     }
 
     //-------------------------------------------------------------------------
-    inline SFBloom joinBloom(const SFBloom& b1, const SFBloom& b2) {
+    inline bloom_t joinBloom(const bloom_t& b1, const bloom_t& b2) {
         return (b1 | b2);
     }
 
     //-------------------------------------------------------------------------
-    inline bool isBloomHit(const SFUintBN& test, const SFUintBN filter) {
+    inline bool isBloomHit(const biguint_t& test, const biguint_t filter) {
         return ((test & filter) == test);
     }
 
     //-------------------------------------------------------------------------
-    inline bool isBloomHit(const string_q& hexIn, const SFUintBN filter) {
+    inline bool isBloomHit(const string_q& hexIn, const biguint_t filter) {
         return isBloomHit(makeBloom(hexIn), filter);
     }
 
     //----------------------------------------------------------------------------------
-    extern bool compareBlooms(const SFBloom& b1, const SFBloom& b2, string_q& str);
-    extern bool addAddrToBloom(const SFAddress& addr, SFBloomArray& blooms, size_t maxBits);
+    extern bool compareBlooms(const bloom_t& b1, const bloom_t& b2, string_q& str);
+    extern bool addAddrToBloom(const address_t& addr, CBloomArray& blooms, size_t maxBits);
 
     //----------------------------------------------------------------------------------
-    extern bool readBloomArray (      SFBloomArray& blooms, const string_q& fileName);
-    extern bool writeBloomArray(const SFBloomArray& blooms, const string_q& fileName);
-    extern string_q reportBloom(const SFBloomArray& blooms);
+    extern bool readBloomArray (      CBloomArray& blooms, const string_q& fileName);
+    extern bool writeBloomArray(const CBloomArray& blooms, const string_q& fileName);
+    extern string_q reportBloom(const CBloomArray& blooms);
 
 }  // namespace qblocks
 

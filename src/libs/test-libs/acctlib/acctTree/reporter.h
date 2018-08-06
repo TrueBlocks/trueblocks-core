@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -54,7 +54,7 @@ public:
         double percent = 1.0;
         if (_whole > 0)
             percent = (_part / static_cast<double>(_whole));
-        return double2Str(100.*percent, 3);
+        return double_2_Str(100.*percent, 3);
     }
 
     void finalReport(void) {

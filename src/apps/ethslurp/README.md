@@ -6,7 +6,7 @@ While `ethslurp` does have its shortcomings, it also provides some nice features
 
 #### Usage
 
-`Usage:`    ethslurp [-a|-b|-d|-f|-i|-e|-v|-h] addr  
+`Usage:`    ethslurp [-b|-d|-f|-i|-e|-v|-h] addr  
 `Purpose:`  Fetches data off the Ethereum blockchain for an arbitrary account or smart contract. Optionally formats the output to your specification. Note: --income and --expense are mutually exclusive as are --blocks and --dates.
              
 `Where:`  
@@ -14,7 +14,6 @@ While `ethslurp` does have its shortcomings, it also provides some nice features
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | addr | the address of the account or contract to slurp |
-| -a | --archive val | filename of output (stdout otherwise) |
 | -b | --blocks range | export records in block range (:0[:max]) |
 | -d | --dates val | export records in date range (:yyyymmdd[hhmmss][:yyyymmdd[hhmmss]]) |
 | -f | --fmt val | pretty print, optionally add ':txt,' ':csv,' or ':html' |
@@ -29,7 +28,7 @@ While `ethslurp` does have its shortcomings, it also provides some nice features
 
 #### Other Options
 
-All **quickBlocks** command-line tools support the following commands (although in some case, they have no meaning):
+All **QBlocks** command-line tools support the following commands (although in some case, they have no meaning):
 
     Command     |     Description
     -----------------------------------------------------------------------------
@@ -42,6 +41,6 @@ All **quickBlocks** command-line tools support the following commands (although 
 
 <small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
 
-**Powered by QuickBlocks<sup>&reg;</sup>**
+**Powered by Qblocks<sup>&trade;</sup>**
 
 

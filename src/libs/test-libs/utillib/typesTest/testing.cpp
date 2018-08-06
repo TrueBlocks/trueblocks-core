@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -31,17 +31,17 @@ TEST_F(CThisTest, Test01) {
     cerr << "Running " << testName << "\n";
 
     uint64_t val64u = uint64_t(-1);
-    string_q sValu = asStringU(val64u);
+    string_q sValu = uint_2_Str(val64u);
     int64_t val64 = -1;
-    string_q sVal = asString(val64);
+    string_q sVal = int_2_Str(val64);
 
     cout << "val64u: " << val64u << "\n";
     cout << "sValu: "  << sValu  << "\n";
     cout << "val64: "  << val64  << "\n";
     cout << "sVal: "   << sVal   << "\n";
 
-    ASSERT_EQ("Testing 1",          val64u, toLongU(sValu));
-    ASSERT_EQ("Testing 2",          val64,  toLong(sVal));
+    ASSERT_EQ("Testing 1",          val64u, str_2_Uint(sValu));
+    ASSERT_EQ("Testing 2",          val64,  str_2_Int(sVal));
     ASSERT_EQ("Testing 3", (int64_t)val64u, -1);
     ASSERT_EQ("Testing 4",          val64,  -1);
 

@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "revokeevent.h"
 #include "etherlib.h"
 
@@ -25,7 +26,7 @@ static string_q nextRevokeeventChunk(const string_q& fieldIn, const void *dataPt
 static string_q nextRevokeeventChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QRevokeEvent::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QRevokeEvent::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -45,7 +46,7 @@ void QRevokeEvent::Format(CExportContext& ctx, const string_q& fmtIn, void *data
 //---------------------------------------------------------------------------
 string_q nextRevokeeventChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QRevokeEvent *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QRevokeEvent *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -63,7 +64,7 @@ bool QRevokeEvent::setValueByName(const string_q& fieldName, const string_q& fie
 
     switch (tolower(fieldName[0])) {
         case 'o':
-            if ( fieldName % "owner" ) { owner = toAddress(fieldValue); return true; }
+            if ( fieldName % "owner" ) { owner = str_2_Addr(fieldValue); return true; }
             if ( fieldName % "operation" ) { operation = toLower(fieldValue); return true; }
             break;
         default:
@@ -79,12 +80,14 @@ void QRevokeEvent::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QRevokeEvent::Serialize(SFArchive& archive) {
+bool QRevokeEvent::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
-        return ((const QRevokeEvent*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
-    // If we're reading a back level, read the whole thing and we're done.
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
+    CLogEntry::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -97,7 +100,7 @@ bool QRevokeEvent::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QRevokeEvent::SerializeC(SFArchive& archive) const {
+bool QRevokeEvent::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CLogEntry::SerializeC(archive);
@@ -111,7 +114,7 @@ bool QRevokeEvent::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, QRevokeEventArray& array) {
+CArchive& operator>>(CArchive& archive, QRevokeEventArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -123,7 +126,7 @@ SFArchive& operator>>(SFArchive& archive, QRevokeEventArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const QRevokeEventArray& array) {
+CArchive& operator<<(CArchive& archive, const QRevokeEventArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -151,13 +154,15 @@ void QRevokeEvent::registerClass(void) {
     HIDE_FIELD(QRevokeEvent, "deleted");
     HIDE_FIELD(QRevokeEvent, "showing");
 
+    builtIns.push_back(_biQRevokeEvent);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
 string_q nextRevokeeventChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QRevokeEvent *rev = (const QRevokeEvent *)dataPtr;
+    const QRevokeEvent *rev = reinterpret_cast<const QRevokeEvent *>(dataPtr);
     if (rev) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -179,9 +184,8 @@ string_q nextRevokeeventChunk_custom(const string_q& fieldIn, const void *dataPt
 }
 
 //---------------------------------------------------------------------------
-bool QRevokeEvent::readBackLevel(SFArchive& archive) {
+bool QRevokeEvent::readBackLevel(CArchive& archive) {
 
-    CLogEntry::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -199,7 +203,7 @@ string_q QRevokeEvent::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'o':
-            if ( fieldName % "owner" ) return fromAddress(owner);
+            if ( fieldName % "owner" ) return addr_2_Str(owner);
             if ( fieldName % "operation" ) return operation;
             break;
     }
@@ -216,7 +220,8 @@ ostream& operator<<(ostream& os, const QRevokeEvent& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

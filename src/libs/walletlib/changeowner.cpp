@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "changeowner.h"
 #include "etherlib.h"
 
@@ -25,7 +26,7 @@ static string_q nextChangeownerChunk(const string_q& fieldIn, const void *dataPt
 static string_q nextChangeownerChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QChangeOwner::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QChangeOwner::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -45,7 +46,7 @@ void QChangeOwner::Format(CExportContext& ctx, const string_q& fmtIn, void *data
 //---------------------------------------------------------------------------
 string_q nextChangeownerChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QChangeOwner *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QChangeOwner *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -63,8 +64,8 @@ bool QChangeOwner::setValueByName(const string_q& fieldName, const string_q& fie
 
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_from" ) { _from = toAddress(fieldValue); return true; }
-            if ( fieldName % "_to" ) { _to = toAddress(fieldValue); return true; }
+            if ( fieldName % "_from" ) { _from = str_2_Addr(fieldValue); return true; }
+            if ( fieldName % "_to" ) { _to = str_2_Addr(fieldValue); return true; }
             break;
         default:
             break;
@@ -79,12 +80,14 @@ void QChangeOwner::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QChangeOwner::Serialize(SFArchive& archive) {
+bool QChangeOwner::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
-        return ((const QChangeOwner*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
-    // If we're reading a back level, read the whole thing and we're done.
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
+    CTransaction::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -97,7 +100,7 @@ bool QChangeOwner::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QChangeOwner::SerializeC(SFArchive& archive) const {
+bool QChangeOwner::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
@@ -111,7 +114,7 @@ bool QChangeOwner::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, QChangeOwnerArray& array) {
+CArchive& operator>>(CArchive& archive, QChangeOwnerArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -123,7 +126,7 @@ SFArchive& operator>>(SFArchive& archive, QChangeOwnerArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const QChangeOwnerArray& array) {
+CArchive& operator<<(CArchive& archive, const QChangeOwnerArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -151,13 +154,15 @@ void QChangeOwner::registerClass(void) {
     HIDE_FIELD(QChangeOwner, "deleted");
     HIDE_FIELD(QChangeOwner, "showing");
 
+    builtIns.push_back(_biQChangeOwner);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
 string_q nextChangeownerChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QChangeOwner *cha = (const QChangeOwner *)dataPtr;
+    const QChangeOwner *cha = reinterpret_cast<const QChangeOwner *>(dataPtr);
     if (cha) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -179,9 +184,8 @@ string_q nextChangeownerChunk_custom(const string_q& fieldIn, const void *dataPt
 }
 
 //---------------------------------------------------------------------------
-bool QChangeOwner::readBackLevel(SFArchive& archive) {
+bool QChangeOwner::readBackLevel(CArchive& archive) {
 
-    CTransaction::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -199,8 +203,8 @@ string_q QChangeOwner::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_from" ) return fromAddress(_from);
-            if ( fieldName % "_to" ) return fromAddress(_to);
+            if ( fieldName % "_from" ) return addr_2_Str(_from);
+            if ( fieldName % "_to" ) return addr_2_Str(_to);
             break;
     }
 
@@ -216,7 +220,8 @@ ostream& operator<<(ostream& os, const QChangeOwner& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

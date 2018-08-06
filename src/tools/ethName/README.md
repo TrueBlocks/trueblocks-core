@@ -36,11 +36,11 @@ You may feed the output of this tool into another tool's input. For example, the
 - The `--count` option works with any other option and will simply display the number of matches.
 - The `--matchCase` option requires case sensitive matching. It works with all other options.
 - The `--addrOnly` option modifies the display output and therefore works with any other options.
-- Name file: `~/.quickBlocks/names/names.txt` (7736)
+- Name file: `~/.quickBlocks/names/names.txt` (7840)
 
 #### Other Options
 
-All **quickBlocks** command-line tools support the following commands (although in some case, they have no meaning):
+All **QBlocks** command-line tools support the following commands (although in some case, they have no meaning):
 
     Command     |     Description
     -----------------------------------------------------------------------------
@@ -53,6 +53,6 @@ All **quickBlocks** command-line tools support the following commands (although 
 
 <small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
 
-**Powered by QuickBlocks<sup>&reg;</sup>**
+**Powered by Qblocks<sup>&trade;</sup>**
 
 

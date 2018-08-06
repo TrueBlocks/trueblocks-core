@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -13,11 +13,11 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-CParams params[] = {
-    CParams("~mode", "Mode of operation. One or more of 'encoding' or 'generation'.\n"),
-    CParams("",      "Simple program to illustrate how to encode function and event signatures.\n"),
+static COption params[] = {
+    COption("~mode", "Mode of operation. One or more of 'encoding' or 'generation'.\n"),
+    COption("",      "Simple program to illustrate how to encode function and event signatures.\n"),
 };
-size_t nParams = sizeof(params) / sizeof(CParams);
+static size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -28,7 +28,11 @@ bool COptions::parseArguments(string_q& command) {
     Init();
     while (!command.empty()) {
         string_q arg = nextTokenClear(command, ' ');
-        if (arg == "encoding" || arg == "generation" || arg == "old_bug") {
+        if (arg == "encoding" ||
+            arg == "generation" ||
+            arg == "old_bug" ||
+            arg == "func_assign" ||
+            arg == "evt_assign") {
             mode += (arg + "|");
         } else {
             return usage("Invalid argument " + arg + ". Please enter either 'encoding' or 'generation'. Quitting...");

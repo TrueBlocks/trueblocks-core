@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "owneraddedevent.h"
 #include "etherlib.h"
 
@@ -25,7 +26,7 @@ static string_q nextOwneraddedeventChunk(const string_q& fieldIn, const void *da
 static string_q nextOwneraddedeventChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QOwnerAddedEvent::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QOwnerAddedEvent::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -45,7 +46,7 @@ void QOwnerAddedEvent::Format(CExportContext& ctx, const string_q& fmtIn, void *
 //---------------------------------------------------------------------------
 string_q nextOwneraddedeventChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const QOwnerAddedEvent *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QOwnerAddedEvent *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -63,7 +64,7 @@ bool QOwnerAddedEvent::setValueByName(const string_q& fieldName, const string_q&
 
     switch (tolower(fieldName[0])) {
         case 'n':
-            if ( fieldName % "newOwner" ) { newOwner = toAddress(fieldValue); return true; }
+            if ( fieldName % "newOwner" ) { newOwner = str_2_Addr(fieldValue); return true; }
             break;
         default:
             break;
@@ -78,12 +79,14 @@ void QOwnerAddedEvent::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QOwnerAddedEvent::Serialize(SFArchive& archive) {
+bool QOwnerAddedEvent::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
-        return ((const QOwnerAddedEvent*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
-    // If we're reading a back level, read the whole thing and we're done.
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
+    CLogEntry::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -95,7 +98,7 @@ bool QOwnerAddedEvent::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QOwnerAddedEvent::SerializeC(SFArchive& archive) const {
+bool QOwnerAddedEvent::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CLogEntry::SerializeC(archive);
@@ -108,7 +111,7 @@ bool QOwnerAddedEvent::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, QOwnerAddedEventArray& array) {
+CArchive& operator>>(CArchive& archive, QOwnerAddedEventArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -120,7 +123,7 @@ SFArchive& operator>>(SFArchive& archive, QOwnerAddedEventArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const QOwnerAddedEventArray& array) {
+CArchive& operator<<(CArchive& archive, const QOwnerAddedEventArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -147,13 +150,15 @@ void QOwnerAddedEvent::registerClass(void) {
     HIDE_FIELD(QOwnerAddedEvent, "deleted");
     HIDE_FIELD(QOwnerAddedEvent, "showing");
 
+    builtIns.push_back(_biQOwnerAddedEvent);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
 string_q nextOwneraddedeventChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QOwnerAddedEvent *own = (const QOwnerAddedEvent *)dataPtr;
+    const QOwnerAddedEvent *own = reinterpret_cast<const QOwnerAddedEvent *>(dataPtr);
     if (own) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -175,9 +180,8 @@ string_q nextOwneraddedeventChunk_custom(const string_q& fieldIn, const void *da
 }
 
 //---------------------------------------------------------------------------
-bool QOwnerAddedEvent::readBackLevel(SFArchive& archive) {
+bool QOwnerAddedEvent::readBackLevel(CArchive& archive) {
 
-    CLogEntry::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -195,7 +199,7 @@ string_q QOwnerAddedEvent::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'n':
-            if ( fieldName % "newOwner" ) return fromAddress(newOwner);
+            if ( fieldName % "newOwner" ) return addr_2_Str(newOwner);
             break;
     }
 
@@ -211,7 +215,8 @@ ostream& operator<<(ostream& os, const QOwnerAddedEvent& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

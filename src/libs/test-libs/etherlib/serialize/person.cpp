@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "person.h"
 
 //---------------------------------------------------------------------------
@@ -24,7 +25,7 @@ static string_q nextPersonChunk(const string_q& fieldIn, const void *dataPtr);
 static string_q nextPersonChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CPerson::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CPerson::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -44,7 +45,7 @@ void CPerson::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) 
 //---------------------------------------------------------------------------
 string_q nextPersonChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CPerson *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CPerson *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -59,7 +60,7 @@ bool CPerson::setValueByName(const string_q& fieldName, const string_q& fieldVal
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "age" ) { age = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "age" ) { age = str_2_Uint(fieldValue); return true; }
             break;
         case 'n':
             if ( fieldName % "name" ) { name = fieldValue; return true; }
@@ -67,10 +68,8 @@ bool CPerson::setValueByName(const string_q& fieldName, const string_q& fieldVal
                 clear();
                 next = new CPerson;
                 if (next) {
-                    char *p = cleanUpJson((char *)fieldValue.c_str());  // NOLINT
-                    size_t nFields = 0;
-                    next->parseJson(p, nFields);
-                    return true;
+                    string_q str = fieldValue;
+                    return next->parseJson3(str);
                 }
                 return false;
             }
@@ -88,12 +87,14 @@ void CPerson::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPerson::Serialize(SFArchive& archive) {
+bool CPerson::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CPerson*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
-    // If we're reading a back level, read the whole thing and we're done.
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
+    CBaseNode::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -105,7 +106,9 @@ bool CPerson::Serialize(SFArchive& archive) {
     bool has_next = false;
     archive >> has_next;
     if (has_next) {
-        next = new CPerson;
+        string_q className;
+        archive >> className;
+        next = reinterpret_cast<CPerson *>(createObjectOfType(className));
         if (!next)
             return false;
         next->Serialize(archive);
@@ -115,7 +118,7 @@ bool CPerson::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPerson::SerializeC(SFArchive& archive) const {
+bool CPerson::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -125,14 +128,16 @@ bool CPerson::SerializeC(SFArchive& archive) const {
     archive << name;
     archive << age;
     archive << (next != NULL);
-    if (next)
+    if (next) {
+        archive << next->getRuntimeClass()->getClassNamePtr();
         next->SerializeC(archive);
+    }
 
     return true;
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CPersonArray& array) {
+CArchive& operator>>(CArchive& archive, CPersonArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -144,7 +149,7 @@ SFArchive& operator>>(SFArchive& archive, CPersonArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CPersonArray& array) {
+CArchive& operator<<(CArchive& archive, const CPersonArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -171,13 +176,15 @@ void CPerson::registerClass(void) {
     HIDE_FIELD(CPerson, "deleted");
     HIDE_FIELD(CPerson, "showing");
 
+    builtIns.push_back(_biCPerson);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
 string_q nextPersonChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CPerson *per = (const CPerson *)dataPtr;
+    const CPerson *per = reinterpret_cast<const CPerson *>(dataPtr);
     if (per) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -199,9 +206,8 @@ string_q nextPersonChunk_custom(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-bool CPerson::readBackLevel(SFArchive& archive) {
+bool CPerson::readBackLevel(CArchive& archive) {
 
-    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -219,7 +225,7 @@ string_q CPerson::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "age" ) return asStringU(age);
+            if ( fieldName % "age" ) return uint_2_Str(age);
             break;
         case 'n':
             if ( fieldName % "name" ) return name;
@@ -243,7 +249,8 @@ ostream& operator<<(ostream& os, const CPerson& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

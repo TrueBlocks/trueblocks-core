@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -20,9 +20,9 @@ namespace qblocks {
     void etherlib_init(const string_q& sourceIn, QUITHANDLER qh) {
 
         string_q fallBack = getEnvStr("FALLBACK");
-        if (!isNodeRunning() && fallBack.empty()) {
+        if (!isNodeRunning() && fallBack.empty() && getCurlContext()->provider != "None") {
             cerr << "\n\t";
-            cerr << cTeal << "Warning: " << cOff << "QuickBlocks requires a running Ethereum\n";
+            cerr << cTeal << "Warning: " << cOff << "QBlocks requires a running Ethereum\n";
             cerr << "\tnode to operate properly. Please start your node.\n";
             cerr << "\tAlternatively, export FALLBACK=infura in your\n";
             cerr << "\tenvironment before running this command. Quitting...\n\n";
@@ -53,7 +53,6 @@ extern void registerQuitHandler(QUITHANDLER qh);
         CFunction::registerClass();
         CParameter::registerClass();
         CRPCResult::registerClass();
-        CNameValue::registerClass();
         CAccountName::registerClass();
 
         if (sourceIn != "remote" && sourceIn != "local" && sourceIn != "ropsten")
@@ -82,27 +81,27 @@ extern void registerQuitHandler(QUITHANDLER qh);
     //-------------------------------------------------------------------------
     bool getBlock(CBlock& block, blknum_t blockNum) {
         getCurlContext()->provider = fileExists(getBinaryFilename(blockNum)) ? "binary" : "local";
-        bool ret = queryBlock(block, asStringU(blockNum), true, false);
+        bool ret = queryBlock(block, uint_2_Str(blockNum), true, false);
         getCurlContext()->provider = "binary";
         return ret;
     }
 
     //-------------------------------------------------------------------------
-    bool getBlock(CBlock& block, const SFHash& blockHash) {
+    bool getBlock(CBlock& block, const hash_t& blockHash) {
         return queryBlock(block, blockHash, true, true);
     }
 
     //-------------------------------------------------------------------------
-    bool getTransaction(CTransaction& trans, const SFHash& txHash) {
-        getObjectViaRPC(trans, "eth_getTransactionByHash", "[\"" + fixHash(txHash) +"\"]");
+    bool getTransaction(CTransaction& trans, const hash_t& txHash) {
+        getObjectViaRPC(trans, "eth_getTransactionByHash", "[\"" + str_2_Hash(txHash) +"\"]");
         trans.finishParse();
         return true;
     }
 
     //-------------------------------------------------------------------------
-    bool getTransaction(CTransaction& trans, const SFHash& blockHash, txnum_t txID) {
+    bool getTransaction(CTransaction& trans, const hash_t& blockHash, txnum_t txID) {
         getObjectViaRPC(trans, "eth_getTransactionByBlockHashAndIndex",
-                                    "[\"" + fixHash(blockHash) +"\",\"" + toHex(txID) + "\"]");
+                                    "[\"" + str_2_Hash(blockHash) +"\",\"" + uint_2_Hex(txID) + "\"]");
         trans.finishParse();
         return true;
     }
@@ -122,35 +121,31 @@ extern void registerQuitHandler(QUITHANDLER qh);
         }
 
         getObjectViaRPC(trans, "eth_getTransactionByBlockNumberAndIndex",
-                                    "[\"" + toHex(blockNum) +"\",\"" + toHex(txID) + "\"]");
+                                    "[\"" + uint_2_Hex(blockNum) +"\",\"" + uint_2_Hex(txID) + "\"]");
         trans.finishParse();
         return true;
     }
 
     //-------------------------------------------------------------------------
-    bool getReceipt(CReceipt& receipt, const SFHash& txHash) {
+    bool getReceipt(CReceipt& receipt, const hash_t& txHash) {
         receipt = CReceipt();
-        getObjectViaRPC(receipt, "eth_getTransactionReceipt", "[\"" + fixHash(txHash) + "\"]");
+        getObjectViaRPC(receipt, "eth_getTransactionReceipt", "[\"" + str_2_Hash(txHash) + "\"]");
         return true;
     }
 
     //--------------------------------------------------------------
-    void getTraces(CTraceArray& traces, const SFHash& hash) {
+    void getTraces(CTraceArray& traces, const hash_t& hash) {
 
-        string_q trace;
-        queryRawTrace(trace, hash);
+        string_q str;
+        queryRawTrace(str, hash);
 
         CRPCResult generic;
-        char *p = cleanUpJson((char*)trace.c_str());  // NOLINT
-        generic.parseJson(p);
+        generic.parseJson3(str);  // pull out the result
 
-        p = cleanUpJson((char *)(generic.result.c_str()));  // NOLINT
-        while (p && *p) {
-            CTrace tr;
-            size_t nFields = 0;
-            p = tr.parseJson(p, nFields);
-            if (nFields)
-                traces.push_back(tr);
+        CTrace trace;
+        while (trace.parseJson3(generic.result)) {
+            traces.push_back(trace);
+            trace = CTrace();  // reset
         }
     }
 
@@ -164,14 +159,14 @@ extern void registerQuitHandler(QUITHANDLER qh);
     bool queryBlock(CBlock& block, const string_q& datIn, bool needTrace, bool byHash, size_t& nTraces) {
 
         if (datIn == "latest")
-            return queryBlock(block, asStringU(getLatestBlockFromClient()), needTrace, false);
+            return queryBlock(block, uint_2_Str(getLatestBlockFromClient()), needTrace, false);
 
         if (isHash(datIn)) {
             HIDE_FIELD(CTransaction, "receipt");
             getObjectViaRPC(block, "eth_getBlockByHash", "["+quote(datIn)+",true]");
 
         } else {
-            uint64_t num = toLongU(datIn);
+            uint64_t num = str_2_Uint(datIn);
             if (getCurlContext()->provider == "binary" && fileSize(getBinaryFilename(num)) > 0) {
                 UNHIDE_FIELD(CTransaction, "receipt");
                 block = CBlock();
@@ -180,7 +175,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
             }
 
             HIDE_FIELD(CTransaction, "receipt");
-            getObjectViaRPC(block, "eth_getBlockByNumber", "["+quote(toHex(num))+",true]");
+            getObjectViaRPC(block, "eth_getBlockByNumber", "["+quote(uint_2_Hex(num))+",true]");
         }
 
         // If there are no transactions, we do not have to trace and we want to tell the caller that
@@ -223,38 +218,40 @@ extern void registerQuitHandler(QUITHANDLER qh);
                                 "[" + quote(datIn) + "," + (hashesOnly ? "false" : "true") + "]", true);
         } else {
             blockStr = callRPC("eth_getBlockByNumber",
-                                "[" + quote(toHex(datIn)) + "," + (hashesOnly ? "false" : "true") + "]", true);
+                                "[" + quote(str_2_Hex(datIn)) + "," + (hashesOnly ? "false" : "true") + "]", true);
         }
         return true;
     }
 
     //-------------------------------------------------------------------------
     string_q getRawBlock(blknum_t bn) {
-        string_q numStr = asStringU(bn);
-        string_q results;
-        queryRawBlock(results, numStr, true, false);
+        string_q numStr = uint_2_Str(bn);
+
+        string_q str;
+        queryRawBlock(str, numStr, true, false);
+
         CRPCResult generic;
-        char *p = cleanUpJson((char*)results.c_str());  // NOLINT
-        generic.parseJson(p);
+        generic.parseJson3(str);
+
         return generic.result;
     }
 
     //-------------------------------------------------------------------------
-    SFHash getRawBlockHash(blknum_t bn) {
+    hash_t getRawBlockHash(blknum_t bn) {
         string_q blockStr;
-        queryRawBlock(blockStr, asStringU(bn), false, true);
+        queryRawBlock(blockStr, uint_2_Str(bn), false, true);
         blockStr = substitute(extract(blockStr, blockStr.find("\"hash\":"), blockStr.length()), "\"hash\":\"", "");
         blockStr = nextTokenClear(blockStr, '\"');
         return blockStr;
     }
 
     //-------------------------------------------------------------------------
-    SFHash getRawTransactionHash(blknum_t bn, txnum_t tx) {
+    hash_t getRawTransactionHash(blknum_t bn, txnum_t tx) {
         return "Not implemented";
     }
 
     //-------------------------------------------------------------------------
-    bool queryRawTransaction(string_q& results, const SFHash& txHash) {
+    bool queryRawTransaction(string_q& results, const hash_t& txHash) {
         string_q data = "[\"[HASH]\"]";
         replace(data, "[HASH]", txHash);
         results = callRPC("eth_getTransactionByHash", data, true);
@@ -262,7 +259,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-------------------------------------------------------------------------
-    bool queryRawReceipt(string_q& results, const SFHash& txHash) {
+    bool queryRawReceipt(string_q& results, const hash_t& txHash) {
         string_q data = "[\"[HASH]\"]";
         replace(data, "[HASH]", txHash);
         results = callRPC("eth_getTransactionReceipt", data, true);
@@ -271,16 +268,16 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
     //-------------------------------------------------------------------------
     bool queryRawTrace(string_q& trace, const string_q& hashIn) {
-        trace = "[" + callRPC("trace_transaction", "[\"" + fixHash(hashIn) +"\"]", true) + "]";
+        trace = "[" + callRPC("trace_transaction", "[\"" + str_2_Hash(hashIn) +"\"]", true) + "]";
         return true;
     }
 
     //-------------------------------------------------------------------------
-    bool queryRawLogs(string_q& results, const SFAddress& addr, uint64_t fromBlock, uint64_t toBlock) {
+    bool queryRawLogs(string_q& results, const address_t& addr, uint64_t fromBlock, uint64_t toBlock) {
         string_q data = "[{\"fromBlock\":\"[START]\",\"toBlock\":\"[STOP]\", \"address\": \"[ADDR]\"}]";
-        replace(data, "[START]", toHex(fromBlock));
-        replace(data, "[STOP]",  toHex(toBlock));
-        replace(data, "[ADDR]",  fromAddress(addr));
+        replace(data, "[START]", uint_2_Hex(fromBlock));
+        replace(data, "[STOP]",  uint_2_Hex(toBlock));
+        replace(data, "[ADDR]",  addr_2_Str(addr));
         results = callRPC("eth_getLogs", data, true);
         return true;
     }
@@ -291,7 +288,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-------------------------------------------------------------------------
-    bool getAccounts(SFAddressArray& addrs) {
+    bool getAccounts(CAddressArray& addrs) {
         string_q results = callRPC("eth_accounts", "[]", false);
         while (!results.empty())
             addrs.push_back(nextTokenClear(results, ','));
@@ -301,7 +298,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     //-------------------------------------------------------------------------
     uint64_t getLatestBlockFromClient(void) {
         string_q ret = callRPC("eth_blockNumber", "[]", false);
-        uint64_t retN = toUnsigned(ret);
+        uint64_t retN = str_2_Uint(ret);
         if (retN == 0) {
             // Try a different way just in case. Geth, for example, doesn't
             // return blockNumber until the chain is synced (Parity may--don't know
@@ -310,7 +307,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
             replace(str, "currentBlock:", "|");
             nextTokenClear(str, '|');
             str = nextTokenClear(str, ',');
-            retN = toUnsigned(str);
+            retN = str_2_Uint(str);
         }
         return retN;
     }
@@ -318,7 +315,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     //--------------------------------------------------------------------------
     uint64_t getLatestBlockFromCache(void) {
 
-        SFArchive fullBlockCache(READING_ARCHIVE);
+        CArchive fullBlockCache(READING_ARCHIVE);
         if (!fullBlockCache.Lock(fullBlockIndex, binaryReadOnly, LOCK_NOWAIT)) {
             if (!isTestMode())
                 cerr << "getLatestBlockFromCache failed: " << fullBlockCache.LockFailure() << "\n";
@@ -349,30 +346,41 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-------------------------------------------------------------------------
-    SFUintBN getBalance(const string_q& addr, blknum_t blockNum, bool isDemo) {
+    biguint_t getBalance(const string_q& addr, blknum_t blockNum, bool isDemo) {
         string_q a = extract(addr, 2);
         a = padLeft(a, 40, '0');
-        string_q ret = callRPC("eth_getBalance", "[\"0x" + a + "\",\"" + toHex(blockNum) + "\"]", false);
-        return toWei(ret);
+        string_q ret = callRPC("eth_getBalance", "[\"0x" + a + "\",\"" + uint_2_Hex(blockNum) + "\"]", false);
+        return str_2_Wei(ret);
     }
 
     //-------------------------------------------------------------------------
     bool nodeHasBalances(void) {
-        // The known balance of the DAO smart contract at block 1,500,001 was 4423518369662462108465682, if the
-        // node reports this correctly, it has historical balances
-        return getBalance("0xbb9bc244d798123fde783fcc1c72d3bb8c189413", 1500001, false) ==
-                                canonicalWei("4423518369662462108465682");
+        // Account 0xa1e4380a3b1f749673e270229993ee55f35663b4 owned 2000000000000000000000 (2000 ether)
+        // at block zero. If the node is holding balances (i.e. its an archive node), then it will
+        // return that value for block 1 as well. Otherwise, it will return a zero balance.
+        // NOTE: Account 0xa1e4380a3b1f749673e270229993ee55f35663b4 transacted in the first ever transaction.
+        return getBalance("0xa1e4380a3b1f749673e270229993ee55f35663b4", 1, false) ==
+                            str_2_Wei("2000000000000000000000");
+    }
+
+    //-------------------------------------------------------------------------
+    bool nodeHasTraces(void) {
+        // At block 50871 transaction 0, (hash: 0x6df0b4a0d15ae3b925b9819646a0cff4d1bc0a53b294c0d84d884865302d13a5)
+        // we know there were exactly 23 traces as per Parity. We check that here to see if the node is
+        // running with --tracing enabled. Not sure how this works with Geth
+        size_t count = getTraceCount("0x6df0b4a0d15ae3b925b9819646a0cff4d1bc0a53b294c0d84d884865302d13a5");
+        return (count == 23);
     }
 
     //-------------------------------------------------------------------------
     bool hasTraceAt(const string_q& hashIn, size_t where) {
-        string_q cmd = "[\"" + fixHash(hashIn) +"\",[\"" + toHex(where) + "\"]]";
+        string_q cmd = "[\"" + str_2_Hash(hashIn) +"\",[\"" + uint_2_Hex(where) + "\"]]";
         string_q ret = callRPC("trace_get", cmd.c_str(), true);
         return ret.find("blockNumber") != string::npos;
     }
 
     //--------------------------------------------------------------
-    size_t getTraceCount_binarySearch(const SFHash& hashIn, size_t first, size_t last) {
+    size_t getTraceCount_binarySearch(const hash_t& hashIn, size_t first, size_t last) {
         if (last > first) {
             size_t mid = first + ((last - first) / 2);
             bool atMid  = hasTraceAt(hashIn, mid);
@@ -392,7 +400,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     // https://ethereum.stackexchange.com/questions/9883/why-is-my-node-synchronization-stuck
     // -extremely-slow-at-block-2-306-843/10453
     //--------------------------------------------------------------
-    size_t getTraceCount(const SFHash& hashIn) {
+    size_t getTraceCount(const hash_t& hashIn) {
         // handle most likely cases linearly
         for (size_t n = 2 ; n < 8 ; n++) {
             if (!hasTraceAt(hashIn, n)) {
@@ -412,7 +420,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
             if (verbose > 2) cerr << "medium trace" << ret << "\n";
             return ret;
         } else {
-            ret = getTraceCount_binarySearch(hashIn, 0, (1 << 30));  // TODO(tjayrush): is this big enough?
+            ret = getTraceCount_binarySearch(hashIn, 0, (1 << 30));
             if (verbose > 2) cerr << "large trace" << ret << "\n";
         }
         return ret;
@@ -448,10 +456,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         if (!endsWith(contents, '\n')) {
             stringToAsciiFile(fileName, contents + "\n");
         }
-        char *p = cleanUpJson((char *)contents.c_str());  // NOLINT
-        size_t nFields = 0;
-        node.parseJson(p, nFields);
-        return nFields;
+        return node.parseJson3(contents);
     }
 
     //-----------------------------------------------------------------------
@@ -460,7 +465,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         if (establishFolder(fileName, created)) {
             if (!created.empty() && !isTestMode())
                 cerr << "mkdir(" << created << ")" << string_q(75, ' ') << "\n";
-            SFArchive nodeCache(WRITING_ARCHIVE);
+            CArchive nodeCache(WRITING_ARCHIVE);
             if (nodeCache.Lock(fileName, binaryWriteCreate, LOCK_CREATE)) {
                 node.SerializeC(nodeCache);
                 nodeCache.Close();
@@ -473,7 +478,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     //-----------------------------------------------------------------------
     bool readNodeFromBinary(CBaseNode& item, const string_q& fileName) {
         // Assumes that the item is clear, so no Init
-        SFArchive nodeCache(READING_ARCHIVE);
+        CArchive nodeCache(READING_ARCHIVE);
         if (nodeCache.Lock(fileName, binaryReadOnly, LOCK_NOWAIT)) {
             item.Serialize(nodeCache);
             nodeCache.Close();
@@ -484,20 +489,20 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
     //-----------------------------------------------------------------------
     bool writeBlockToBinary(const CBlock& block, const string_q& fileName) {
-        // SFArchive blockCache(READING_ARCHIVE);  -- so search hits
+        // CArchive blockCache(READING_ARCHIVE);  -- so search hits
         return writeNodeToBinary(block, fileName);
     }
 
     //-----------------------------------------------------------------------
     bool readBlockFromBinary(CBlock& block, const string_q& fileName) {
-        // SFArchive blockCache(READING_ARCHIVE);  -- so search hits
+        // CArchive blockCache(READING_ARCHIVE);  -- so search hits
         return readNodeFromBinary(block, fileName);
     }
 
     //----------------------------------------------------------------------------------
-    bool readBloomArray(SFBloomArray& blooms, const string_q& fileName) {
+    bool readBloomArray(CBloomArray& blooms, const string_q& fileName) {
         blooms.clear();
-        SFArchive bloomCache(READING_ARCHIVE);
+        CArchive bloomCache(READING_ARCHIVE);
         if (bloomCache.Lock(fileName, binaryReadOnly, LOCK_NOWAIT)) {
             bloomCache >> blooms;
             bloomCache.Close();
@@ -507,7 +512,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-----------------------------------------------------------------------
-    bool writeBloomArray(const SFBloomArray& blooms, const string_q& fileName) {
+    bool writeBloomArray(const CBloomArray& blooms, const string_q& fileName) {
         if (blooms.size() == 0 || (blooms.size() == 1 && blooms[0] == 0))
             return false;
 
@@ -515,7 +520,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         if (establishFolder(fileName, created)) {
             if (!created.empty() && !isTestMode())
                 cerr << "mkdir(" << created << ")" << string_q(75, ' ') << "\n";
-            SFArchive bloomCache(WRITING_ARCHIVE);
+            CArchive bloomCache(WRITING_ARCHIVE);
             if (bloomCache.Lock(fileName, binaryWriteCreate, LOCK_CREATE)) {
                 bloomCache << blooms;
                 bloomCache.Close();
@@ -531,7 +536,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         char ret[512];
         bzero(ret, sizeof(ret));
 
-        string_q num = padLeft(asStringU(numIn), 9, '0');
+        string_q num = padLeft(uint_2_Str(numIn), 9, '0');
         string_q fmt = (asPath ? "%s/%s/%s/" : "%s/%s/%s/%s");
         string_q fn  = (asPath ? "" : num + (asJson ? ".json" : ".bin"));
 
@@ -612,7 +617,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         if (!func)
             return false;
 
-        SFArchive fullBlockCache(READING_ARCHIVE);
+        CArchive fullBlockCache(READING_ARCHIVE);
         if (!fullBlockCache.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT)) {
             cerr << "forEveryNonEmptyBlockOnDisc failed: " << fullBlockCache.LockFailure() << "\n";
             return false;
@@ -656,7 +661,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         getCurlContext()->provider = "local";   // the empty blocks are not on disk, so we have to
                                                 // ask parity. Don't write them, though
 
-        SFArchive fullBlockCache(READING_ARCHIVE);
+        CArchive fullBlockCache(READING_ARCHIVE);
         if (!fullBlockCache.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT)) {
             cerr << "forEveryEmptyBlockOnDisc failed: " << fullBlockCache.LockFailure() << "\n";
             return false;
@@ -795,7 +800,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
             bool hasHex = startsWith(item, "0x");
 
             string_q hash = nextTokenClear(item, '.');
-            uint64_t txID = toLongU(item);
+            uint64_t txID = str_2_Uint(item);
 
             CTransaction trans;
             if (hasHex) {
@@ -807,7 +812,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
                     getTransaction(trans, hash);  // transHash
                 }
             } else {
-                getTransaction(trans, toLongU(hash), txID);  // blockNum.txID
+                getTransaction(trans, str_2_Uint(hash), txID);  // blockNum.txID
             }
 
             CBlock block;
@@ -859,6 +864,6 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //--------------------------------------------------------------------------
-    SFUintBN weiPerEther = (modexp(10, 9, uint64_t(10000000000)) * modexp(10, 9, uint64_t(10000000000)));
+    biguint_t weiPerEther = (modexp(10, 9, uint64_t(10000000000)) * modexp(10, 9, uint64_t(10000000000)));
 
 }  // namespace qblocks

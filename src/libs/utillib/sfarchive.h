@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -26,9 +26,9 @@ namespace qblocks {
     typedef bool (*VISITARCHIVEFUNC)(CBaseNode& node, void *data);
 
     //-----------------------------------------------------------------------------------------
-    class SFArchive : public CSharedResource {
+    class CArchive : public CSharedResource {
     private:
-        class SFArchiveHeader {
+        class CArchiveHeader {
         public:
             // This data structure is sometimes written at the head of a
             // file. Don't remove it or change its size;
@@ -37,19 +37,19 @@ namespace qblocks {
         };
 
     public:
-        SFArchiveHeader  m_header;
+        CArchiveHeader  m_header;
         bool             m_isReading;
         // VISITARCHIVEFUNC writeMsgFunc;
         // VISITARCHIVEFUNC readMsgFunc;
 
-        explicit SFArchive(bool isReading) : CSharedResource() {
+        explicit CArchive(bool isReading) : CSharedResource() {
             m_isReading        = isReading;
             m_header.m_version = getVersionNum();
             // writeMsgFunc     = NULL;
             // readMsgFunc      = NULL;
         }
 
-        string_q getType(void) const override { return "SFArchive"; }
+        string_q getType(void) const override { return "CArchive"; }
 
         bool isWriting(void) const {
             return !m_isReading;
@@ -59,15 +59,7 @@ namespace qblocks {
             return m_isReading;
         }
 
-        void writeHeader(void) {
-            Seek(0, SEEK_SET);
-            m_header.m_lastWritten = toTimestamp(Now());
-            operator<<(m_header.m_version);
-            operator<<(m_header.m_lastWritten);
-            bool unused = false;
-            operator<<(unused);
-        }
-
+        void writeHeader(void);
         void readHeader(void) {
             Seek(0, SEEK_SET);
             operator>>(m_header.m_version);
@@ -76,38 +68,38 @@ namespace qblocks {
             operator>>(unused);
         }
 
-        SFArchive& operator<<(bool b);
-        SFArchive& operator<<(char c);
-        SFArchive& operator<<(int d);
-        SFArchive& operator<<(unsigned int d);
-        SFArchive& operator<<(int64_t dw);
-        SFArchive& operator<<(uint64_t dw);
-        SFArchive& operator<<(float f);
-        SFArchive& operator<<(double f);
-        SFArchive& operator<<(const string_q& str);
-        SFArchive& operator<<(const SFUintBN& bn);
-        SFArchive& operator<<(const SFIntBN& bn);
-        SFArchive& operator<<(const char *str);
+        CArchive& operator<<(bool b);
+        CArchive& operator<<(char c);
+        CArchive& operator<<(int d);
+        CArchive& operator<<(unsigned int d);
+        CArchive& operator<<(int64_t dw);
+        CArchive& operator<<(uint64_t dw);
+        CArchive& operator<<(float f);
+        CArchive& operator<<(double f);
+        CArchive& operator<<(const string_q& str);
+        CArchive& operator<<(const biguint_t& bn);
+        CArchive& operator<<(const bigint_t& bn);
+        CArchive& operator<<(const char *str);
 
-        SFArchive& operator>>(bool& b);
-        SFArchive& operator>>(char& c);
-        SFArchive& operator>>(int& d);
-        SFArchive& operator>>(unsigned int& d);
-        SFArchive& operator>>(int64_t& dw);
-        SFArchive& operator>>(uint64_t& dw);
-        SFArchive& operator>>(float& f);
-        SFArchive& operator>>(double& f);
-        SFArchive& operator>>(string_q& str);
-        SFArchive& operator>>(SFUintBN& bn);
-        SFArchive& operator>>(SFIntBN& bn);
+        CArchive& operator>>(bool& b);
+        CArchive& operator>>(char& c);
+        CArchive& operator>>(int& d);
+        CArchive& operator>>(unsigned int& d);
+        CArchive& operator>>(int64_t& dw);
+        CArchive& operator>>(uint64_t& dw);
+        CArchive& operator>>(float& f);
+        CArchive& operator>>(double& f);
+        CArchive& operator>>(string_q& str);
+        CArchive& operator>>(biguint_t& bn);
+        CArchive& operator>>(bigint_t& bn);
     };
 
-    extern SFArchive& operator<<(SFArchive& archive, const CStringArray& array);
-    extern SFArchive& operator<<(SFArchive& archive, const SFBigUintArray& array);
-    extern SFArchive& operator<<(SFArchive& archive, const SFUintArray& array);
+    extern CArchive& operator<<(CArchive& archive, const CStringArray& array);
+    extern CArchive& operator<<(CArchive& archive, const CBigUintArray& array);
+    extern CArchive& operator<<(CArchive& archive, const CUintArray& array);
 
-    extern SFArchive& operator>>(SFArchive& archive, CStringArray& array);
-    extern SFArchive& operator>>(SFArchive& archive, SFBigUintArray& array);
-    extern SFArchive& operator>>(SFArchive& archive, SFUintArray& array);
+    extern CArchive& operator>>(CArchive& archive, CStringArray& array);
+    extern CArchive& operator>>(CArchive& archive, CBigUintArray& array);
+    extern CArchive& operator>>(CArchive& archive, CUintArray& array);
 
 }  // namespace qblocks

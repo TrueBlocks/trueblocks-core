@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <vector>
+#include <map>
 #include "abilib.h"
 #include "logentry.h"
 
@@ -25,10 +26,10 @@
 //--------------------------------------------------------------------------
 class CNewReceipt : public CBaseNode {
 public:
-    SFAddress contractAddress;
-    SFGas gasUsed;
+    address_t contractAddress;
+    gas_t gasUsed;
     CLogEntryArray logs;
-    SFBloom logsBloom;
+    bloom_t logsBloom;
     bool isError;
 
 public:
@@ -44,6 +45,8 @@ public:
     // EXISTING_CODE
     friend class CTransaction;
     // EXISTING_CODE
+    bool operator==(const CNewReceipt& item) const;
+    bool operator!=(const CNewReceipt& item) const { return !operator==(item); }
     friend bool operator<(const CNewReceipt& v1, const CNewReceipt& v2);
     friend ostream& operator<<(ostream& os, const CNewReceipt& item);
 
@@ -51,7 +54,7 @@ protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CNewReceipt& ne);
-    bool readBackLevel(SFArchive& archive) override;
+    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -126,21 +129,29 @@ inline CNewReceipt& CNewReceipt::operator=(const CNewReceipt& ne) {
 }
 
 //-------------------------------------------------------------------------
+inline bool CNewReceipt::operator==(const CNewReceipt& item) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
 inline bool operator<(const CNewReceipt& v1, const CNewReceipt& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted
+    // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
 }
 
 //---------------------------------------------------------------------------
 typedef vector<CNewReceipt> CNewReceiptArray;
-extern SFArchive& operator>>(SFArchive& archive, CNewReceiptArray& array);
-extern SFArchive& operator<<(SFArchive& archive, const CNewReceiptArray& array);
+extern CArchive& operator>>(CArchive& archive, CNewReceiptArray& array);
+extern CArchive& operator<<(CArchive& archive, const CNewReceiptArray& array);
 
 //---------------------------------------------------------------------------
-extern SFArchive& operator<<(SFArchive& archive, const CNewReceipt& newp);
-extern SFArchive& operator>>(SFArchive& archive, CNewReceipt& newp);
+extern CArchive& operator<<(CArchive& archive, const CNewReceipt& newp);
+extern CArchive& operator>>(CArchive& archive, CNewReceipt& newp);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

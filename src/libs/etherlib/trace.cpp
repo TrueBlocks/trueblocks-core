@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "trace.h"
 
 namespace qblocks {
@@ -26,7 +27,7 @@ static string_q nextTraceChunk(const string_q& fieldIn, const void *dataPtr);
 static string_q nextTraceChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CTrace::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CTrace::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -46,7 +47,7 @@ void CTrace::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) c
 //---------------------------------------------------------------------------
 string_q nextTraceChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CTrace *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CTrace *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -58,16 +59,12 @@ string_q nextTraceChunk(const string_q& fieldIn, const void *dataPtr) {
 bool CTrace::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     if (fieldName % "action") {
-        char *p = (char *)fieldValue.c_str();  // NOLINT
-        size_t nFields = 0;
-        action.parseJson(p, nFields);
-        return true;
+        string_q str = fieldValue;
+        return action.parseJson3(str);
 
     } else if (fieldName % "result") {
-        char *p = (char *)fieldValue.c_str();  // NOLINT
-        size_t nFields = 0;
-        result.parseJson(p, nFields);
-        return true;
+        string_q str = fieldValue;
+        return result.parseJson3(str);
     }
     // EXISTING_CODE
 
@@ -76,8 +73,8 @@ bool CTrace::setValueByName(const string_q& fieldName, const string_q& fieldValu
             if ( fieldName % "action" ) { /* action = fieldValue; */ return false; }
             break;
         case 'b':
-            if ( fieldName % "blockHash" ) { blockHash = toHash(fieldValue); return true; }
-            if ( fieldName % "blockNumber" ) { blockNumber = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "blockHash" ) { blockHash = str_2_Hash(fieldValue); return true; }
+            if ( fieldName % "blockNumber" ) { blockNumber = str_2_Uint(fieldValue); return true; }
             break;
         case 'e':
             if ( fieldName % "error" ) { error = fieldValue; return true; }
@@ -86,7 +83,7 @@ bool CTrace::setValueByName(const string_q& fieldName, const string_q& fieldValu
             if ( fieldName % "result" ) { /* result = fieldValue; */ return false; }
             break;
         case 's':
-            if ( fieldName % "subtraces" ) { subtraces = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "subtraces" ) { subtraces = str_2_Uint(fieldValue); return true; }
             break;
         case 't':
             if ( fieldName % "traceAddress" ) {
@@ -96,8 +93,8 @@ bool CTrace::setValueByName(const string_q& fieldName, const string_q& fieldValu
                 }
                 return true;
             }
-            if ( fieldName % "transactionHash" ) { transactionHash = toHash(fieldValue); return true; }
-            if ( fieldName % "transactionPosition" ) { transactionPosition = toUnsigned(fieldValue); return true; }
+            if ( fieldName % "transactionHash" ) { transactionHash = str_2_Hash(fieldValue); return true; }
+            if ( fieldName % "transactionPosition" ) { transactionPosition = str_2_Uint(fieldValue); return true; }
             if ( fieldName % "type" ) { type = fieldValue; return true; }
             break;
         default:
@@ -113,12 +110,14 @@ void CTrace::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTrace::Serialize(SFArchive& archive) {
+bool CTrace::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CTrace*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
-    // If we're reading a back level, read the whole thing and we're done.
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
+    CBaseNode::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -139,7 +138,7 @@ bool CTrace::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTrace::SerializeC(SFArchive& archive) const {
+bool CTrace::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -161,7 +160,7 @@ bool CTrace::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CTraceArray& array) {
+CArchive& operator>>(CArchive& archive, CTraceArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -173,7 +172,7 @@ SFArchive& operator>>(SFArchive& archive, CTraceArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CTraceArray& array) {
+CArchive& operator<<(CArchive& archive, const CTraceArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -207,13 +206,15 @@ void CTrace::registerClass(void) {
     HIDE_FIELD(CTrace, "deleted");
     HIDE_FIELD(CTrace, "showing");
 
+    builtIns.push_back(_biCTrace);
+
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
 string_q nextTraceChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CTrace *tra = (const CTrace *)dataPtr;
+    const CTrace *tra = reinterpret_cast<const CTrace *>(dataPtr);
     if (tra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -235,9 +236,8 @@ string_q nextTraceChunk_custom(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-bool CTrace::readBackLevel(SFArchive& archive) {
+bool CTrace::readBackLevel(CArchive& archive) {
 
-    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -258,8 +258,8 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "action" ) { expContext().noFrst=true; return action.Format(); }
             break;
         case 'b':
-            if ( fieldName % "blockHash" ) return fromHash(blockHash);
-            if ( fieldName % "blockNumber" ) return asStringU(blockNumber);
+            if ( fieldName % "blockHash" ) return hash_2_Str(blockHash);
+            if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
             break;
         case 'e':
             if ( fieldName % "error" ) return error;
@@ -268,13 +268,13 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "result" ) { expContext().noFrst=true; return result.Format(); }
             break;
         case 's':
-            if ( fieldName % "subtraces" ) return asStringU(subtraces);
+            if ( fieldName % "subtraces" ) return uint_2_Str(subtraces);
             break;
         case 't':
             if ( fieldName % "traceAddress" || fieldName % "traceAddressCnt" ) {
                 size_t cnt = traceAddress.size();
                 if (endsWith(fieldName, "Cnt"))
-                    return asStringU(cnt);
+                    return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {
@@ -283,8 +283,8 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
                 }
                 return retS;
             }
-            if ( fieldName % "transactionHash" ) return fromHash(transactionHash);
-            if ( fieldName % "transactionPosition" ) return asStringU(transactionPosition);
+            if ( fieldName % "transactionHash" ) return hash_2_Str(transactionHash);
+            if ( fieldName % "transactionPosition" ) return uint_2_Str(transactionPosition);
             if ( fieldName % "type" ) return type;
             break;
     }
@@ -318,7 +318,8 @@ ostream& operator<<(ostream& os, const CTrace& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

@@ -34,7 +34,7 @@ from Node:
 "value":"0xe10b0466bd1d398"
 
 --------------------------------------------------------------------------------
-from Quickblocks:
+from QBlocks:
 "blockHash":"0x0a283943a9a99fe706de36a2ac34465f4924cf09e7d917db3b1b6677b3f7cc01"
 "blockNumber":"0x1e7232"
 "difficulty":"0x301f53282378"

@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,16 +14,16 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-CParams params[] = {
-    CParams( "~source",      "source for the data (either 'remote', 'pairty', 'binary')"),
-    CParams( "~begin",       "block to start with"),
-    CParams( "~end",         "block to end on"),
-    CParams( "-mode:<mode>", "if not present, display in 'short' mode, otherwise 'full' mode"),
-    CParams( "-data",        "show results as data instead of displaying bloom filters"),
-    CParams( "~@skip",       "optional skip step (default 100)"),
-    CParams( "",             "Scans blocks looking for saturated bloomFilters.\n"),
+static COption params[] = {
+    COption("~source",      "source for the data (either 'remote', 'pairty', 'binary')"),
+    COption("~begin",       "block to start with"),
+    COption("~end",         "block to end on"),
+    COption("~!skip",       "optional skip step (default 100)"),
+    COption("-mode:<mode>", "if not present, display in 'short' mode, otherwise 'full' mode"),
+    COption("-data",        "show results as data instead of displaying bloom filters"),
+    COption("",             "Scans blocks looking for saturated bloomFilters.\n"),
 };
-size_t nParams = sizeof(params) / sizeof(CParams);
+static size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -58,11 +58,11 @@ bool COptions::parseArguments(string_q& command) {
                 source = arg;
             } else {
                 if (start == NOPOS)
-                    start = toUnsigned(arg);
+                    start = str_2_Uint(arg);
                 else if (stop == NOPOS)
-                    stop = toUnsigned(arg);
+                    stop = str_2_Uint(arg);
                 else if (skip == NOPOS)
-                    skip = toUnsigned(arg);
+                    skip = str_2_Uint(arg);
                 else
                     return usage("Too many parameters");
             }

@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -225,7 +225,7 @@ namespace qblocks {
         // In some cases (for example when can't open event file because it has not yet
         // been created) this may not be an error -- Lock should set an error flag
         // which this guy should read and do right
-        return asStringU(m_error) + ": " + m_errorMsg;
+        return uint_2_Str(m_error) + ": " + m_errorMsg;
     }
 
     //----------------------------------------------------------------------
@@ -570,7 +570,7 @@ namespace qblocks {
     }
 
     //-----------------------------------------------------------------------
-    void quickQuitHander(int signum) {
+    void quickQuitHandler(int signum) {
         cleanFileLocks();
         if (signum != -1)
             exit(1);

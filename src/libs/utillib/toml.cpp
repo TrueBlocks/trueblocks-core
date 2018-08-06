@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -72,25 +72,25 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     uint64_t CToml::getConfigInt(const string_q& group, const string_q& key, uint64_t def) const {
-        string_q ret = getConfigStr(group, key, asStringU(def));
-        return toLongU(ret);
+        string_q ret = getConfigStr(group, key, uint_2_Str(def));
+        return str_2_Uint(ret);
     }
 
     //-------------------------------------------------------------------------
     bool CToml::getConfigBool(const string_q& group, const string_q& key, bool def) const {
-        string_q ret = getConfigStr(group, key, asString(def?1:0));
+        string_q ret = getConfigStr(group, key, int_2_Str(def?1:0));
         replaceAny(ret, ";\t\n\r ", "");
         return ((ret == "true" || ret == "1") ? true : false);
     }
 
     //-------------------------------------------------------------------------
     void CToml::setConfigInt(const string_q& group, const string_q& key, uint64_t value) {
-        setConfigStr(group, key, asString((int64_t)value));
+        setConfigStr(group, key, int_2_Str((int64_t)value));
     }
 
     //-------------------------------------------------------------------------
     void CToml::setConfigBool(const string_q& group, const string_q& key, bool value) {
-        setConfigStr(group, key, asString(value));
+        setConfigStr(group, key, int_2_Str(value));
     }
 
     //---------------------------------------------------------------------------------------
@@ -163,15 +163,15 @@ extern string_q collapseArrays(const string_q& inStr);
     }
 
     //---------------------------------------------------------------------------------------
-    SFUintBN CToml::getConfigBigInt(const string_q& group, const string_q& key, SFUintBN def) const {
-        string_q ret = getConfigStr(group, key, to_string(def).c_str());
+    biguint_t CToml::getConfigBigInt(const string_q& group, const string_q& key, biguint_t def) const {
+        string_q ret = getConfigStr(group, key, bnu_2_Str(def));
         string_q check = ret;
         replaceAny(check, "0123456789abcdefABCDEF", "");
         if (!check.empty()) {
             cerr << "Big int config item " << group << "::" << key << " is not an integer...returning zero.";
             return 0;
         }
-        return str2BigUint(ret);
+        return str_2_BigUint(ret);
     }
 
     //---------------------------------------------------------------------------------------

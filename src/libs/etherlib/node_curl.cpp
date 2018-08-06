@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -25,13 +25,14 @@ namespace qblocks {
         headers      = "Content-Type: application/json\n";
         baseURL      = "http://localhost:8545";
         callBackFunc = writeCallback;
+        curlNoteFunc = NULL;
         theID        = 1;
         Clear();
     }
 
     //-------------------------------------------------------------------------
     string_q CCurlContext::getCurlID(void) {
-        return asStringU(isTestMode() ? 1 : theID++);
+        return uint_2_Str(isTestMode() ? 1 : theID++);
     }
 
     //-------------------------------------------------------------------------
@@ -144,7 +145,7 @@ namespace qblocks {
                     cerr << cYellow;
                     cerr << "\n";
                     cerr << "\tWarning: " << cOff << "Only the 'infura' fallback is supported.\n";
-                    cerr << "\tIt is impossible for QuickBlocks to proceed. Quitting...\n";
+                    cerr << "\tIt is impossible for QBlocks to proceed. Quitting...\n";
                     cerr << "\n";
                     exit(0);
                 }
@@ -154,7 +155,7 @@ namespace qblocks {
                     cerr << "\n";
                     cerr << "\tWarning: " << cOff << "A trace request was made to the fallback\n";
                     cerr << "\tnode. " << fallBack << " does not support tracing. It ";
-                    cerr << "is impossible\n\tfor QuickBlocks to proceed. Quitting...\n";
+                    cerr << "is impossible\n\tfor QBlocks to proceed. Quitting...\n";
                     cerr << "\n";
                     exit(0);
                 }
@@ -171,7 +172,7 @@ namespace qblocks {
             cerr << "\tWarning: " << cOff << "The request to the Ethereum node ";
             cerr << "resulted in\n\tfollowing error message: ";
             cerr << bTeal << curl_easy_strerror(res) << cOff << ".\n";
-            cerr << "\tIt is impossible for QuickBlocks to proceed. Quitting...\n";
+            cerr << "\tIt is impossible for QBlocks to proceed. Quitting...\n";
             cerr << "\n";
             exit(0);
         }
@@ -180,7 +181,7 @@ namespace qblocks {
             cerr << cYellow;
             cerr << "\n";
             cerr << "\tWarning:" << cOff << "The Ethereum node  resulted in an empty\n";
-            cerr << "\tresponse. It is impossible forQuickBlocks to proceed. Quitting...\n";
+            cerr << "\tresponse. It is impossible for QBlocks to proceed. Quitting...\n";
             cerr << "\n";
             exit(0);
         } else if (contains(getCurlContext()->result, "error")) {
@@ -200,17 +201,17 @@ namespace qblocks {
 
         if (raw)
             return getCurlContext()->result;
+
         CRPCResult generic;
-        char *p = cleanUpJson((char*)getCurlContext()->result.c_str());  // NOLINT
-        generic.parseJson(p);
+        generic.parseJson3(getCurlContext()->result);
+
         return generic.result;
     }
 
     //-------------------------------------------------------------------------
     bool getObjectViaRPC(CBaseNode &node, const string_q& method, const string_q& params) {
-        string_q ret = callRPC(method, params, false);
-        node.parseJson((char *)ret.c_str());  // NOLINT
-        return true;
+        string_q str = callRPC(method, params, false);
+        return node.parseJson3(str);
     }
 
     //-------------------------------------------------------------------------
@@ -223,21 +224,10 @@ namespace qblocks {
         ASSERT(userdata);
         CCurlContext *data = (CCurlContext*)userdata;  // NOLINT
         data->result += s;
-        // Starting around block 3804005, there was a hack wherein the byte code 5b5b5b5b5b5b5b5b5b5b5b5b
-        // repeated thousands of times, doing nothing. If we don't handle this, it dominates the scanning
-        // for no reason
-        if (strstr(s, "5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b") != NULL) {
-            // This is the hack trace (there are many), so skip it
-            cerr << "Curl response contains '5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b'. Aborting.\n";
-            cerr.flush();
-            getCurlContext()->earlyAbort = true;
-            return 0;
-        }
 
-//        if (shouldQuit()) {
-//            getCurlContext()->earlyAbort = true;
-//            return 0;
-//        }
+        if (data && data->curlNoteFunc)
+            if (!(*data->curlNoteFunc)(ptr, size, nmemb, userdata))  // returns zero if it wants us to stop
+                return 0;
 
         return size * nmemb;
     }
@@ -254,11 +244,6 @@ namespace qblocks {
             getCurlContext()->earlyAbort = true;
             return 0;
         }
-
-//        if (shouldQuit()) {
-//            getCurlContext()->earlyAbort = true;
-//            return 0;
-//        }
 
         return size * nmemb;
     }

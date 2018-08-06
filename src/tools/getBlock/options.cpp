@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -13,29 +13,30 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-CParams params[] = {
-    CParams("~block_list",       "a space-separated list of one or more blocks to retrieve"),
-    CParams("-raw",              "pull the block data from the running Ethereum node (no cache)"),
-    CParams("-hash_o(n)ly",      "display only transaction hashes, default is to display full transaction detail"),
-    CParams("-check",            "compare results between qblocks and Ethereum node, report differences, if any"),
-    CParams("-latest",           "display the latest blocks at both the node and the cache"),
-    CParams("-addrs",            "display all addresses included in the block"),
-    CParams("-uniq",             "display only uniq addresses found in the block"),
-//  CParams("-trac(e)s",         "include transaction traces in the export"),
-//    CParams("-addresses:<val>",  "display addresses included in block as one of: [ all | to | from |\n\t\t\t\t"
+static COption params[] = {
+    COption("~block_list",         "a space-separated list of one or more blocks to retrieve"),
+    COption("-raw",                "pull the block data from the running Ethereum node (no cache)"),
+    COption("-hash_o(n)ly",        "display only transaction hashes, default is to display full transaction detail"),
+    COption("-check",              "compare results between qblocks and Ethereum node, report differences, if any"),
+    COption("-latest",             "display the latest blocks at both the node and the cache"),
+    COption("-addrs",              "display all addresses included in the block"),
+    COption("-uniq",               "display only uniq addresses found in the block"),
+    COption("-fi(l)ter:<addr>",    "useful only for --addr or --uniq, only display this address in results"),
+//    COption("-trac(e)s",         "include transaction traces in the export"),
+//    COption("-addresses:<val>",  "display addresses included in block as one of: [ all | to | from |\n\t\t\t\t"
 //            "self-destruct | create | log-topic | log-data | input-data |\n\t\t\t\t"
 //            "trace-to | trace-from | trace-data | trace-call ]"),
-    CParams("@f(o)rce",          "force a re-write of the block to the cache"),
-    CParams("@quiet",            "do not print results to screen, used for speed testing and data checking"),
-    CParams("@source:[c|r]",     "either :c(a)che or :(r)aw, source for data retrival. (shortcuts "
+    COption("@f(o)rce",            "force a re-write of the block to the cache"),
+    COption("@quiet",              "do not print results to screen, used for speed testing and data checking"),
+    COption("@source:[c|r]",       "either :c(a)che or :(r)aw, source for data retrival. (shortcuts "
                                     "-c = qblocks, -r = node)"),
-    CParams("@fields:[a|m|c|r]", "either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output "
+    COption("@fields:[a|m|c|r]",   "either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output "
                                     "(all is default)"),
-    CParams("@normalize",        "normalize (remove un-common fields and sort) for comparison with other "
+    COption("@normalize",          "normalize (remove un-common fields and sort) for comparison with other "
                                     "results (testing)"),
-    CParams("",                  "Returns block(s) from local cache or directly from a running node.\n"),
+    COption("",                    "Returns block(s) from local cache or directly from a running node.\n"),
 };
-size_t nParams = sizeof(params) / sizeof(CParams);
+static size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -68,6 +69,13 @@ bool COptions::parseArguments(string_q& command) {
             GETRUNTIME_CLASS(CTransaction)->sortFieldList();
             GETRUNTIME_CLASS(CReceipt)->sortFieldList();
 
+        } else if (startsWith(arg, "-l:") || startsWith(arg, "--filter:")) {
+            string_q orig = arg;
+            arg = substitute(substitute(arg, "-l:", ""), "--filter:", "");
+            if (!isAddress(arg))
+                return usage(arg + " does not appear to be a valid Ethereum address.\n");
+            filters.push_back(str_2_Addr(toLower(arg)));
+
         } else if (arg == "-o" || arg == "--force") {
             etherlib_init("binary");
             latestBlock = getLatestBlockFromClient();
@@ -77,11 +85,11 @@ bool COptions::parseArguments(string_q& command) {
             normalize = true;
 
         } else if (arg == "-l" || arg == "--latest") {
-            uint64_t lastUpdate = toUnsigned(asciiFileToString("/tmp/getBlock_junk.txt"));
+            uint64_t lastUpdate = str_2_Uint(asciiFileToString("/tmp/getBlock_junk.txt"));
             uint64_t cache = NOPOS, client = NOPOS;
             getLatestBlocks(cache, client);
             uint64_t diff = cache > client ? 0 : client - cache;
-            stringToAsciiFile("/tmp/getBlock_junk.txt", asStringU(diff));  // for next time
+            stringToAsciiFile("/tmp/getBlock_junk.txt", uint_2_Str(diff));  // for next time
 
             cout << "Latest block in cache:  " << cYellow;
             cout << (isTestMode() ? "--cache--"  : padNum8T(cache))  << cOff << "\n";
@@ -256,6 +264,7 @@ void COptions::Init(void) {
     quiet       = 0;  // quiet has levels
     format      = "";
     priceBlocks = false;
+    filters.clear();
     blocks.Init();
 }
 

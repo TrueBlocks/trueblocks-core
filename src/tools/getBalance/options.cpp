@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -13,20 +13,20 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-CParams params[] = {
-    CParams("~address_list", "one or more addresses (0x...) from which to retrieve balances"),
-    CParams("~!block_list",  "an optional list of one or more blocks at which to report balances, "
+static COption params[] = {
+    COption("~address_list", "one or more addresses (0x...) from which to retrieve balances"),
+    COption("~!block_list",  "an optional list of one or more blocks at which to report balances, "
                                     "defaults to 'latest'"),
-    CParams("-data",         "render results as tab delimited data"),
-    CParams("-list:<fn>",    "an alternative way to specify an address_list; place one address per "
+    COption("-data",         "render results as tab delimited data"),
+    COption("-list:<fn>",    "an alternative way to specify an address_list; place one address per "
                                     "line in the file 'fn'"),
-    CParams("-noZero",       "suppress the display of zero balance accounts"),
-    CParams("-total",        "if more than one balance is requested, display a total as well."),
-    CParams("-changes",      "only report a balance when it changes from one block to the next"),
-    CParams("",              "Retrieve the balance (in wei) for one or more addresses at the given "
+    COption("-noZero",       "suppress the display of zero balance accounts"),
+    COption("-total",        "if more than one balance is requested, display a total as well."),
+    COption("-changes",      "only report a balance when it changes from one block to the next"),
+    COption("",              "Retrieve the balance (in wei) for one or more addresses at the given "
                                     "block(s).\n"),
 };
-size_t nParams = sizeof(params) / sizeof(CParams);
+static size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -37,7 +37,6 @@ bool COptions::parseArguments(string_q& command) {
     Init();
     blknum_t latestBlock = getLatestBlockFromClient();
     state.earliestBlock = latestBlock;
-    string_q address_list;
     while (!command.empty()) {
         string_q arg = nextTokenClear(command, ' ');
         string_q orig = arg;
@@ -69,7 +68,7 @@ bool COptions::parseArguments(string_q& command) {
                 if (!isAddress(line))
                     return usage(line + " does not appear to be a valid "
                                         "Ethereum address. Quitting...");
-                address_list += line + "|";
+                addrs.push_back(line);
             }
 
         } else if (startsWith(arg, '-')) {  // do not collapse
@@ -91,7 +90,7 @@ bool COptions::parseArguments(string_q& command) {
 
             if (!isAddress(arg))
                 return usage(arg + " does not appear to be a valid Ethereum address. Quitting...");
-            address_list += arg + "|";
+            addrs.push_back(arg);
 
         } else {
 
@@ -108,14 +107,11 @@ bool COptions::parseArguments(string_q& command) {
     if (asData && total)
         return usage("Totalling is not available when exporting data.");
 
-    if (address_list.empty())
+    if (!addrs.size())
         return usage("You must provide at least one Ethereum address.");
-    addrs = address_list;
 
-    if (!blocks.hasBlocks()) {
-        // use 'latest'
-        blocks.numList.push_back(latestBlock);
-    }
+    if (!blocks.hasBlocks())
+        blocks.numList.push_back(latestBlock);  // use 'latest'
 
     return true;
 }
@@ -126,7 +122,7 @@ void COptions::Init(void) {
     nParamsRef = nParams;
     pOptions = this;
 
-    addrs = "";
+    addrs.clear();
     asData = false;
     noZero = false;
     total = false;

@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -24,8 +24,8 @@ public:
 
 //------------------------------------------------------------------------
 TEST_F(CThisTest, TestTime) {
-    SFTime time1(2016, 10, 1, 12, 0, 0);
-    SFTime time2(2018, 6, 2, 12, 0, 0);
+    time_q time1(2016, 10, 1, 12, 0, 0);
+    time_q time2(2018, 6, 2, 12, 0, 0);
 
     cerr << "Running " << testName << "\n";
     cerr << "\ttime1:  " << time1 << "\n";

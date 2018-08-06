@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
- * QuickBlocks - Decentralized, useful, and detailed data from Ethereum blockchains
- * Copyright (c) 2018 Great Hill Corporation (http://quickblocks.io)
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include <algorithm>
 #include "function.h"
 
 namespace qblocks {
@@ -26,7 +27,7 @@ static string_q nextFunctionChunk(const string_q& fieldIn, const void *dataPtr);
 static string_q nextFunctionChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CFunction::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CFunction::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -46,7 +47,7 @@ void CFunction::Format(CExportContext& ctx, const string_q& fmtIn, void *dataPtr
 //---------------------------------------------------------------------------
 string_q nextFunctionChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return ((const CFunction *)dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CFunction *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -68,23 +69,21 @@ bool CFunction::setValueByName(const string_q& fieldName, const string_q& fieldV
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "anonymous" ) { anonymous = str2Bool(fieldValue); return true; }
+            if ( fieldName % "anonymous" ) { anonymous = str_2_Bool(fieldValue); return true; }
             break;
         case 'c':
-            if ( fieldName % "constant" ) { constant = str2Bool(fieldValue); return true; }
+            if ( fieldName % "constant" ) { constant = str_2_Bool(fieldValue); return true; }
             break;
         case 'e':
             if ( fieldName % "encoding" ) { encoding = fieldValue; return true; }
             break;
         case 'i':
             if ( fieldName % "inputs" ) {
-                char *p = (char *)fieldValue.c_str();  // NOLINT
-                while (p && *p) {
-                    CParameter item;
-                    size_t nFields = 0;
-                    p = item.parseJson(p, nFields);
-                    if (nFields)
-                        inputs.push_back(item);
+                CParameter item;
+                string_q str = fieldValue;
+                while (item.parseJson3(str)) {
+                    inputs.push_back(item);
+                    item = CParameter();  // reset
                 }
                 return true;
             }
@@ -94,19 +93,17 @@ bool CFunction::setValueByName(const string_q& fieldName, const string_q& fieldV
             break;
         case 'o':
             if ( fieldName % "outputs" ) {
-                char *p = (char *)fieldValue.c_str();  // NOLINT
-                while (p && *p) {
-                    CParameter item;
-                    size_t nFields = 0;
-                    p = item.parseJson(p, nFields);
-                    if (nFields)
-                        outputs.push_back(item);
+                CParameter item;
+                string_q str = fieldValue;
+                while (item.parseJson3(str)) {
+                    outputs.push_back(item);
+                    item = CParameter();  // reset
                 }
                 return true;
             }
             break;
         case 'p':
-            if ( fieldName % "payable" ) { payable = str2Bool(fieldValue); return true; }
+            if ( fieldName % "payable" ) { payable = str_2_Bool(fieldValue); return true; }
             break;
         case 's':
             if ( fieldName % "signature" ) { signature = fieldValue; return true; }
@@ -131,18 +128,20 @@ void CFunction::finishParse() {
     int cnt = 0;
     for (size_t i = 0 ; i < inputs.size() ; i++) {
         if (inputs[i].name.empty())
-            inputs.at(i).name = "param_" + asString(cnt++);  // the non-const reference already exists
+            inputs.at(i).name = "param_" + int_2_Str(cnt++);  // the non-const reference already exists
     }
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CFunction::Serialize(SFArchive& archive) {
+bool CFunction::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
-        return ((const CFunction*)this)->SerializeC(archive);
+        return SerializeC(archive);
 
-    // If we're reading a back level, read the whole thing and we're done.
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
+    CBaseNode::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -162,7 +161,7 @@ bool CFunction::Serialize(SFArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CFunction::SerializeC(SFArchive& archive) const {
+bool CFunction::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -183,7 +182,7 @@ bool CFunction::SerializeC(SFArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator>>(SFArchive& archive, CFunctionArray& array) {
+CArchive& operator>>(CArchive& archive, CFunctionArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -195,7 +194,7 @@ SFArchive& operator>>(SFArchive& archive, CFunctionArray& array) {
 }
 
 //---------------------------------------------------------------------------
-SFArchive& operator<<(SFArchive& archive, const CFunctionArray& array) {
+CArchive& operator<<(CArchive& archive, const CFunctionArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -228,6 +227,8 @@ void CFunction::registerClass(void) {
     HIDE_FIELD(CFunction, "deleted");
     HIDE_FIELD(CFunction, "showing");
 
+    builtIns.push_back(_biCFunction);
+
     // EXISTING_CODE
     HIDE_FIELD(CFunction, "indexed");
     HIDE_FIELD(CFunction, "anonymous");
@@ -236,7 +237,7 @@ void CFunction::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextFunctionChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CFunction *fun = (const CFunction *)dataPtr;
+    const CFunction *fun = reinterpret_cast<const CFunction *>(dataPtr);
     if (fun) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -250,16 +251,16 @@ string_q nextFunctionChunk_custom(const string_q& fieldIn, const void *dataPtr) 
                     }
                     ret += ")";
                     replace(ret, ",)", ")");
-                    return (ret + "\t" + string2Hex(ret));
+                    return (ret + "\t" + chr_2_HexStr(ret));
 
                 } else if ( fieldIn % "hasAddrs" ) {
-                    return asString(fun->hasAddrs);
+                    return int_2_Str(fun->hasAddrs);
 
                 }
                 break;
             case 'i':
                 if ( fieldIn % "isBuiltin" ) {
-                    return asString(fun->isBuiltin);
+                    return int_2_Str(fun->isBuiltin);
                 }
                 break;
             case 'o':
@@ -285,9 +286,8 @@ string_q nextFunctionChunk_custom(const string_q& fieldIn, const void *dataPtr) 
 }
 
 //---------------------------------------------------------------------------
-bool CFunction::readBackLevel(SFArchive& archive) {
+bool CFunction::readBackLevel(CArchive& archive) {
 
-    CBaseNode::readBackLevel(archive);
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -305,10 +305,10 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "anonymous" ) return asString(anonymous);
+            if ( fieldName % "anonymous" ) return int_2_Str(anonymous);
             break;
         case 'c':
-            if ( fieldName % "constant" ) return asString(constant);
+            if ( fieldName % "constant" ) return int_2_Str(constant);
             break;
         case 'e':
             if ( fieldName % "encoding" ) return encoding;
@@ -317,7 +317,7 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "inputs" || fieldName % "inputsCnt" ) {
                 size_t cnt = inputs.size();
                 if (endsWith(fieldName, "Cnt"))
-                    return asStringU(cnt);
+                    return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {
@@ -334,7 +334,7 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "outputs" || fieldName % "outputsCnt" ) {
                 size_t cnt = outputs.size();
                 if (endsWith(fieldName, "Cnt"))
-                    return asStringU(cnt);
+                    return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {
@@ -345,7 +345,7 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'p':
-            if ( fieldName % "payable" ) return asString(payable);
+            if ( fieldName % "payable" ) return int_2_Str(payable);
             break;
         case 's':
             if ( fieldName % "signature" ) return signature;
@@ -367,7 +367,8 @@ ostream& operator<<(ostream& os, const CFunction& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    os << item.Format() << "\n";
+    item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 
@@ -422,7 +423,7 @@ string_q CFunction::getSignature(uint64_t parts) const {
 
 //-----------------------------------------------------------------------
 string_q CFunction::encodeItem(void) const {
-    string_q hex = string2Hex(signature);
+    string_q hex = chr_2_HexStr(signature);
     string_q ret;
 extern bool getSha3(const string_q& hexIn, string_q& shaOut);
     getSha3(hex, ret);
