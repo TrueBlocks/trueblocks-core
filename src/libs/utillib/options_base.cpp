@@ -185,8 +185,9 @@ namespace qblocks {
                 nextTokenClear(commandList, '\n');
                 commandList += toAll;
             } else {
-                while (!contents.empty()) {
-                    string_q command = trimWhitespace(nextTokenClear(contents, '\n'));
+                CStringArray lines;
+                explode(lines, contents, '\n');
+                for (auto command : lines) {
                     if (!command.empty() && !startsWith(command, ";")) {  // ignore comments
                         commandList += (command + toAll + "\n");
                     }
