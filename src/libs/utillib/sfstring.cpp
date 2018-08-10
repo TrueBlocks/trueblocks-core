@@ -32,6 +32,26 @@ namespace qblocks {
         return ret;
     }
 
+    //--------------------------------------------------------------------------------
+    size_t explode(CStringArray& result, const string& input, char ch) {
+        string_q buffer {""};
+
+        size_t nVals = countOf(input, ch);
+        result.reserve(nVals+1);
+
+        for (auto c : input) {
+            if (c != ch) {
+                buffer += c;
+            } else if (c == ch && buffer != "") {
+                result.push_back(trimWhitespace(buffer));
+                buffer = "";
+            }
+        }
+        if (buffer != "")
+            result.push_back(buffer);
+        return result.size();
+    }
+
     //---------------------------------------------------------------------------------------
     bool contains(const string_q& haystack, const string_q& needle) {
         return (haystack.find(needle) != string::npos);
