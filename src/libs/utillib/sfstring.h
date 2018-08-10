@@ -17,7 +17,8 @@
 namespace qblocks {
 
     //--------------------------------------------------------------------
-    typedef std::string string_q;
+    using string_q     = std::string;
+    using CStringArray = vector<string_q>;
 
     //---------------------------------------------------------------------------------------
     // We use 'extract' instead of the string class's substr to protect against throws
@@ -99,6 +100,7 @@ namespace qblocks {
     extern string_q nextTokenClearReverse(string_q& str, char token);
     extern string_q nextTokenClear       (string_q& str, char delim, bool doClear = true);
     extern string_q snagFieldClear       (string_q& str, const string_q& tagName, const string_q& defVal = "");
+    extern size_t   explode              (CStringArray& result, const string& input, char ch);
 
     //---------------------------------------------------------------------------------------
     inline string_q getEnvStr(const char* name) {
