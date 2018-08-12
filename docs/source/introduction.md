@@ -6,10 +6,10 @@ Introduction
    :height: 140px
    :width: 120px
    :scale: 50%
-   :alt: QuickBlocks logo
+   :alt: QBlocks logo
    :align: right
 
-QuickBlocks is a collection of software libraries, applications, and command-line tools designed to give you quick access to the data provided by an Ethereum node.
+QBlocks is a collection of software libraries, applications, and command-line tools designed to give you quick access to the data provided by an Ethereum node.
 
 Overview
 ========
@@ -21,18 +21,18 @@ Architecture
 
 .. index:: utillib, etherlib
 
-In a manner very similar to the way web3.js works, QuickBlocks sits between a locally running Ethereum node (or any node, local or remote, for that matter), and delivers the Ethereum data to your application. There are two significant improvements to the web3.js path however. First, QuickBlocks caches the data locally which means that the 20 hours mentioned above is reduced to mere minutes. Secondly, if you provide QuickBlocks with the ABI to your smart contract, it can deliver what we call articulated data. By this we mean that instead of returning data in the language of the Ethereum node (blocks and transactions and receipts and logs), we return data in the language of your smart contract (transfers and votes and proposals and expenditures). This eases the burden on your dApp developers.
+In a manner very similar to the way web3.js works, QBlocks sits between a locally running Ethereum node (or any node, local or remote, for that matter), and delivers the Ethereum data to your application. There are two significant improvements to the web3.js path however. First, QBlocks caches the data locally which means that the 20 hours mentioned above is reduced to mere minutes. Secondly, if you provide QBlocks with the ABI to your smart contract, it can deliver what we call articulated data. By this we mean that instead of returning data in the language of the Ethereum node (blocks and transactions and receipts and logs), we return data in the language of your smart contract (transfers and votes and proposals and expenditures). This eases the burden on your dApp developers.
 
 ..  image:: img/architecture.png
-   :alt: QuickBlocks logo
+   :alt: QBlocks logo
 
-Whereas the web3.js library delivers nearly identical data as is retrieved from the RPC interface, making it difficult for any but the most well versed in the data to easily use it, QuickBlocks stands between the node and your application improving the data significantly in two ways: (1) it's way faster, and (2) it's translated into the language of the smart contract. See `this FAQ item <http://quickblocks.io/docs/faq.html#can-i-trust-the-data-quickblocks-produces>`_, in response the nagging question in your head about the quality and accuracy of the data.
+Whereas the web3.js library delivers nearly identical data as is retrieved from the RPC interface, making it difficult for any but the most well versed in the data to easily use it, QBlocks stands between the node and your application improving the data significantly in two ways: (1) it's way faster, and (2) it's translated into the language of the smart contract. See `this FAQ item <http://quickblocks.io/docs/faq.html#can-i-trust-the-data-quickblocks-produces>`_, in response the nagging question in your head about the quality and accuracy of the data.
 
 Terminology
 -----------
 
- - **cache** - This refers to QuickBlocks' database cache which you may store on any hard drive (an SSD drive is much preferred). The QuickBlocks cache allows us to return data between 50 and 100 times faster than one can retrieve the same data through web3.js and the RPC alone.
- - **articulated data** - QuickBlocks is able to parse and "articulate" the data returned by the RPC, so that you get votes and proposals and onTokenPurchase events rather than the current hexadecimal mess returned by web3.js and the RPC (oh, and did we mention, it's a lot faster!)
+ - **cache** - This refers to QBlocks' database cache which you may store on any hard drive (an SSD drive is much preferred). The QBlocks cache allows us to return data between 50 and 100 times faster than one can retrieve the same data through web3.js and the RPC alone.
+ - **articulated data** - QBlocks is able to parse and "articulate" the data returned by the RPC, so that you get votes and proposals and onTokenPurchase events rather than the current hexadecimal mess returned by web3.js and the RPC (oh, and did we mention, it's a lot faster!)
  - **block_list** - Many of our tools take a *block_list* as a command line parameter. A block_list may be one or more valid block numbers (hex or integer), a range of valid block lists, one of a list of customizable *special* blocks such as 'byzantium' or 'doafork', or any combination of the above.
  - **trans_list** - a *trans_list*, like a block_list, comes in many forms and is used by various of our command line tools. A trans_list may be one or more transaction hashes, block numbers followed by a transaction index in the block (blockNum.transID), a block hash followed by a transaction ID (blockHash.transID), or any combination. *trans_list* is used in many tools.
  - **address_list** - *address_list* items are lists of one or more Ethereum addresses which are 42 character hexadecimal strings starting with '0x'. In the near future, we hope to add 'named accounts' which will be Ethereum addresses as picked up from the ENS smart contract; however, this feature is still in the works. Stay tuned.
@@ -40,13 +40,13 @@ Terminology
 Methodology
 -----------
 
-QuickBlocks is old school. We abhor JSON data, which in our estimation, is literally the worst way to deliver data imaginable (although one could add random strings of arbitrary meaningless data just to make it more terrible--why does every record carry every field name--JSON data--the format endorsed by the Department of Redundancy Department!). JSON is wonderful and useful *if you're transferring data across a wire and if the receiver of the data doesn't know the data's format and if the each record may follow a different format*, but none of these things is true for the Ethereum data. In the case where the data is remote (for example if you're using Infura), then you have to receive the data in a wire-neutral format, but there's no reason to keep it that way (thus QuickBlocks caching mechanism). Here's some example code for visiting every block on the chain and printing its hash:
+QBlocks is old school. We abhor JSON data, which in our estimation, is literally the worst way to deliver data imaginable (although one could add random strings of arbitrary meaningless data just to make it more terrible--why does every record carry every field name--JSON data--the format endorsed by the Department of Redundancy Department!). JSON is wonderful and useful *if you're transferring data across a wire and if the receiver of the data doesn't know the data's format and if the each record may follow a different format*, but none of these things is true for the Ethereum data. In the case where the data is remote (for example if you're using Infura), then you have to receive the data in a wire-neutral format, but there's no reason to keep it that way (thus QBlocks caching mechanism). Here's some example code for visiting every block on the chain and printing its hash:
 
 ::
 
     /*-------------------------------------------------------------------------
      * Name:    Simple
-     * Purpose: To provide the easiest introduction to the QuickBlocks library.
+     * Purpose: To provide the easiest introduction to the QBlocks library.
      *          Simply request a block from Infura and print it to the screen.
      *------------------------------------------------------------------------*/
     #include "etherlib.h"
