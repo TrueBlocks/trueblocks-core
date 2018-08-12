@@ -2,7 +2,7 @@
 
 #### Stringing and Piping
 
-QuickBlocks are linux command-line tools. That means you can compose the tools into each other via pipes and re-directs. In this tutorial, we will show you a little bit about that.
+QBlocks are linux command-line tools. That means you can compose the tools into each other via pipes and re-directs. In this tutorial, we will show you a little bit about that.
 
 We'll start with `getBlock` on block 4,240,000
 
@@ -38,12 +38,12 @@ One more step. Let's show only the non-zero token balances and let's show the va
 
     getTokenBal `ethName omis -a` `getBlock 4240000 -u | cut -f4 | xargs` -n --ether
 
-There's about a billion other things you can do with the tools and applications of QuickBlocks. If you write code, you can do even more.
+There's about a billion other things you can do with the tools and applications of QBlocks. If you write code, you can do even more.
 
 One more weird command. The ether balances of all the addresses that were involved in the latest block with no zero balances and showing in US dollars
 
     getBalance `getBlock -u latest | cut -f4 | xargs` -n --ether
     
-In future tutorials, we will discuss how to write programming code to use the QuickBlocks libraries.
+In future tutorials, we will discuss how to write programming code to use the QBlocks libraries.
 
 **Tutorials:** [1](README.md) [2](tutorial2.md) [3](tutorial3.md)
