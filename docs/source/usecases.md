@@ -2,7 +2,7 @@
 Use Cases
 *************
 
-Access to faster, more informative data ("articulated data") from the Ethereum blockchain opens up the possibility of a richer collection of applications than has been previously possible. Here we provide a list of potential applications that may be built on top of the QuickBlocks libraries.
+Access to faster, more informative data ("articulated data") from the Ethereum blockchain opens up the possibility of a richer collection of applications than has been previously possible. Here we provide a list of potential applications that may be built on top of the QBlocks libraries.
 
 Accounting / Auditing Functions
 --------------------------------
@@ -47,7 +47,7 @@ Developer Ecosystem
 
 **Testing / Debugging Aids:**
 
-- Record and play back "real world" interactions with a already deployed smart contracts. Being programmable, test engineers may use QuickBlocks to build test cases ad-hoc (fuzzing) or modify previously recorded live playbacks.
+- Record and play back "real world" interactions with a already deployed smart contracts. Being programmable, test engineers may use QBlocks to build test cases ad-hoc (fuzzing) or modify previously recorded live playbacks.
 
 :End Users: Smart contract testing engineers, smart contract developers
 :Notes: Could be used against proposed new versions of the smart contract (with programmatic modification of the data to meet the new contract's interface); could be used to aid in gas optimization
@@ -64,7 +64,7 @@ Consulting Opportunities
 
 **Gas Optimization**
 
-- As Ethereum progresses and it becomes possible for smart contracts to pay for their end users' gas usage, it will become increasingly important to optimize for gas usage in a smart contract. Existing tools report only on expected gas usage based on estimated behavior. QuickBlocks can report on actually "live" data captured in the wild. A consulting service or product ideas could be built on top of this capability.
+- As Ethereum progresses and it becomes possible for smart contracts to pay for their end users' gas usage, it will become increasingly important to optimize for gas usage in a smart contract. Existing tools report only on expected gas usage based on estimated behavior. QBlocks can report on actually "live" data captured in the wild. A consulting service or product ideas could be built on top of this capability.
 
 **Smart Contract Auditing**
 

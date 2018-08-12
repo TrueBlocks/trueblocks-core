@@ -1,9 +1,9 @@
-## How to contribute to QuickBlocks
+## How to contribute to QBlocks
 
 #### **Did you find a bug?**
 
 * **Do not open up a GitHub issue if the bug is a security vulnerability
-  in QuickBlocks**, contact us through our website instead.
+  in QBlocks**, contact us through our website instead.
 
 * **Ensure the bug was not already reported** by searching on GitHub under [Issues](https://github.com/Great-Hill-Corporation/quickBlocks/issues).
 
@@ -19,7 +19,7 @@
 
 #### **Did you fix whitespace, format code, or make a purely cosmetic patch?**
 
-Changes that are cosmetic in nature and do not add anything substantial to the stability, functionality, or testability of Rails will generally not be accepted.
+Changes that are cosmetic in nature and do not add anything substantial to the stability, functionality, or testability of QBlocks will generally not be accepted.
 
 #### **Do you intend to add a new feature or change an existing one?**
 
@@ -29,12 +29,12 @@ Changes that are cosmetic in nature and do not add anything substantial to the s
 
 #### **Do you have questions about the source code?**
 
-* Ask any question about how to use QuickBlocks in the [slack channel](http://quickblocks.slack.com).
+* Ask any question about how to use QBlocks in the [slack channel](http://quickblocks.slack.com).
 
-#### **Do you want to contribute to the Rails documentation?**
+#### **Do you want to contribute to the documentation?**
 
-Ruby on Rails is a volunteer effort. We encourage you to pitch in and [slack channel](http://quickblocks.slack.com)!
+We encourage you to pitch in and [slack channel](http://quickblocks.slack.com)!
 
 Thanks! :heart: :heart: :heart:
 
-QuickBlocks Team
+QBlocks Team

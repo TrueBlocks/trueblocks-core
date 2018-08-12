@@ -1,8 +1,8 @@
 ### Basics - Tutorial #1
 
-If you haven't already done so, please [intall and build the QuickBlocks code](../../src/other/install/INSTALL.md).
+If you haven't already done so, please [intall and build the QBlocks code](../../src/other/install/INSTALL.md).
 
-QuickBlocks is a collection of C++ libraries, tools, and applications. In this document, we present a few tutorials to get you acquainted with how QuickBlocks works. Of course, you will build your own tools use QuickBlocks, so it works however you want it to work. See our CONTRIBUTORS documentation to get started.
+QBlocks is a collection of C++ libraries, tools, and applications. In this document, we present a few tutorials to get you acquainted with how QBlocks works. Of course, you will build your own tools use QBlocks, so it works however you want it to work. See our CONTRIBUTORS documentation to get started.
 
 #### Using getBlock
 
@@ -20,7 +20,7 @@ returns 100 blocks worth of JSON data for the block range 3,001,001 and 3,001,10
 
 return JSON data for block 999,999 which happens to have the above hash.
 
-As with all QuickBlocks tools, you can get a full listing of the command options by entering the `--help` option
+As with all QBlocks tools, you can get a full listing of the command options by entering the `--help` option
 
     getBlock --help
     
