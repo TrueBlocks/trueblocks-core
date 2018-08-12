@@ -33,20 +33,20 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    size_t explode(CStringArray& result, const string& input, char ch) {
-        string_q buffer {""};
+    size_t explode(CStringArray& result, const string& input, char needle) {
 
-        size_t nVals = countOf(input, ch);
-        result.reserve(nVals+1);
+        string_q buffer{""};
+        result.reserve(countOf(input, needle)+1);
 
-        for (auto c : input) {
-            if (c != ch) {
-                buffer += c;
-            } else if (c == ch && buffer != "") {
+        for (auto ch : input) {
+            if (ch != needle) {
+                buffer += ch;
+            } else if (ch == needle && buffer != "") {
                 result.push_back(trimWhitespace(buffer));
                 buffer = "";
             }
         }
+
         if (buffer != "")
             result.push_back(buffer);
         return result.size();
