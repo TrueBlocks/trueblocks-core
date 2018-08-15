@@ -156,5 +156,7 @@ namespace qblocks {
         bool hasTrans(void) const { return !queries.empty(); }
     };
 
-    extern const char *STR_DEFAULT_DATA;
+    extern const char *STR_DEFAULT_NAMEDATA;
+    extern const char *STR_DEFAULT_TOOLNAMES;
+
 }  // namespace qblocks

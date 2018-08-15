@@ -22,8 +22,6 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     class CToml : public CSharedResource {
     private:
-        void clear(void);
-
         // no default construction or copies
         CToml(void) {}
         CToml(const CToml& toml);
@@ -79,6 +77,8 @@ namespace qblocks {
 
         explicit CToml(const string_q& fileName);
         ~CToml(void);
+
+        void clear(void);
 
         string_q getType(void) const override { return "CToml"; }
 

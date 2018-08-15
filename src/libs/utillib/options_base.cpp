@@ -683,9 +683,21 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     const CToml *getGlobalConfig(const string_q& name) {
         static CToml *toml = NULL;
         static string_q components = "quickBlocks|";
+
+        if (name == "reload" && toml) {
+            toml->clear();
+            toml = NULL;
+        }
+
         if (!toml) {
-            static CToml theToml(configPath("quickBlocks.toml"));
+            static CToml theToml("");
+
+            // Forces a reload
+            theToml.clear();
+            theToml.setFilename(configPath("quickBlocks.toml"));
+            theToml.readFile(configPath("quickBlocks.toml"));
             toml = &theToml;
+
             // Always load the program's custom config if it exists
             string_q fileName = configPath(programName+".toml");
             if (fileExists(fileName) && !contains(components, programName+"|")) {
@@ -696,7 +708,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         }
 
         // If we're told explicitly to load another config, do that here
-        if (!name.empty()) {
+        if (!name.empty() && name != "reload") {
             string_q fileName = configPath(name+".toml");
             if (fileExists(fileName) && !contains(components, name+"|")) {
                 components += name+"|";
@@ -712,7 +724,14 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     void COptionsBase::loadToolNames(void) {
         const CToml *toml = getGlobalConfig();
         tools.clear();
-        string_q toolStr = toml->getConfigStr("tools", "list", "");
+
+        string_q toolStr = toml->getConfigStr("tools", "list", "<not_set>");
+        if (toolStr == "<not_set>") {
+            string_q fileName = configPath("quickBlocks.toml");
+            stringToAsciiFile(fileName, asciiFileToString(fileName) + "\n" + STR_DEFAULT_TOOLNAMES);
+            toml = getGlobalConfig("reload");
+            toolStr = toml->getConfigStr("tools", "list", "");
+        }
         CKeyValuePair keyVal;
         while (keyVal.parseJson3(toolStr)) {
             CNameValue pair = make_pair(keyVal.jsonrpc, keyVal.result);
@@ -875,7 +894,8 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         return true;
     }
 
-    const char *STR_DEFAULT_DATA =
+    //-----------------------------------------------------------------------
+    const char *STR_DEFAULT_NAMEDATA =
     "#---------------------------------------------------------------------------------------------------\n"
     "#  This is the ethName database. Format records as tab separated lines with the following format:\n"
     "#\n"
@@ -886,5 +906,24 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     "#---------------------------------------------------------------------------------------------------------------\n"
     "#\n"
     "#Add your names here or remove this file and run \"ethName --list\"\n";
+
+    //-----------------------------------------------------------------------
+    const char *STR_DEFAULT_TOOLNAMES =
+    "[[tools]]\n"
+    "list = [\n"
+    "    { name = \"getBlock\",    value = \"block\"    },\n"
+    "    { name = \"getTrans\",    value = \"trans\"    },\n"
+    "    { name = \"getReceipt\",  value = \"receipt\"  },\n"
+    "    { name = \"getLogs\",     value = \"logs\"     },\n"
+    "    { name = \"getTrace\",    value = \"trace\"    },\n"
+    "    { name = \"getBloom\",    value = \"bloom\"    },\n"
+    "    { name = \"getAccounts\", value = \"accounts\" },\n"
+    "    { name = \"getBalance\",  value = \"balance\"  },\n"
+    "    { name = \"getTokenBal\", value = \"tokenbal\" },\n"
+    "    { name = \"isContract\",  value = \"contract\" },\n"
+    "    { name = \"ethName\",     value = \"name\"     },\n"
+    "    { name = \"whenBlock\",   value = \"when\"     },\n"
+    "    { name = \"whereBlock\",  value = \"where\"    },\n"
+    "]";
 
 }  // namespace qblocks

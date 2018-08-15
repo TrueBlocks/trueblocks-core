@@ -114,7 +114,7 @@ COptions::COptions(void) {
     if (!fileExists(namesFile.getFullPath()))
         stringToAsciiFile(namesFile.getFullPath(),
                           substitute(
-                          substitute(string_q(STR_DEFAULT_DATA), " |", "|"), "|", "\t"));
+                          substitute(string_q(STR_DEFAULT_NAMEDATA), " |", "|"), "|", "\t"));
     loadNames();
     Init();
 }
