@@ -1,12 +1,9 @@
-qblocks argc: 3 [1:blocks] [2:-h] 
-qblocks blocks -h 
-calling: getBlock -h  --redir_stderr
-qblocks blocks argc: 3 [1:-h] [2:--redir_stderr] 
-getBlock -h --redir_stderr 
+getBlock argc: 3 [1:-h] [2:--qblocks] 
+getBlock -h --qblocks 
 
   You must specify at least one block.
 
-  Usage:    getBlock [-r|-n|-c|-l|-a|-u|-l|-v|-h] <block> [block...]  
+  Usage:    qblocks block [-r|-n|-c|-l|-a|-u|-l|-v|-h] <block> [block...]  
   Purpose:  Returns block(s) from local cache or directly from a running node.
              
   Where:    
@@ -31,3 +28,7 @@ getBlock -h --redir_stderr
 	-h  (--help)          display this help screen
 
   Powered by QBlocks
+qblocks argc: 3 [1:block] [2:-h] 
+qblocks block -h 
+calling: getBlock -h  --qblocks
+

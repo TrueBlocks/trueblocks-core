@@ -1,0 +1,13 @@
+qblocks argc: 2 [1:--invalid] 
+qblocks --invalid 
+
+  Sub-command must be one of [block|trans|receipt|logs|trace|bloom|accounts|balance|tokenbal|contract|name|when|where|]. Quitting...
+
+  Usage:    qblocks [] <cmd> <sub_cmds>  
+  Purpose:  Overarching command for all QBlocks tools.
+             
+  Where:    
+	cmd                   one of [ block | trans | receipt | logs | trace | bloom | accounts | balance | tokenbal | contract | name | when | where |  ] (required)
+	sub_cmds              sub-command[s] for <cmd>. Use qblock cmd --help for help on the cmd (required)
+
+  Powered by QBlocks
