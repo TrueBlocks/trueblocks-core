@@ -1,0 +1,24 @@
+qblocks argc: 3 [1:names] [2:-h] 
+qblocks names -h 
+calling: ethName -h  --redir_stderr
+qblocks names argc: 3 [1:-h] [2:--redir_stderr] 
+ethName -h --redir_stderr 
+
+  You must supply at least one of 'addr,' or 'name.' Quitting...
+
+  Usage:    ethName [-a|-c|-d|-o|-l|-m|-s|-v|-h] <term> [term...]  
+  Purpose:  Query Ethereum addresses and/or names making it easy to remember accounts.
+             
+  Where:    
+	terms                 a space separated list of one or more search terms (required)
+	-a  (--addr)          export only the associated address (may be used in scripting)
+	-c  (--count)         print only the count of the number of matches
+	-d  (--data)          export results as tab separated data
+	-o  (--open)          open the name database for editing
+	-l  (--list)          list all names in the database
+	-m  (--matchCase)     matches must agree in case (the default is to ignore case)
+	-s  (--source)        search 'source' field as well name and address (the default)
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Powered by QBlocks

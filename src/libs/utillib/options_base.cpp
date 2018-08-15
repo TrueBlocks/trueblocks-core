@@ -35,6 +35,11 @@ namespace qblocks {
     static string_q programName = "quickBlocks";
 
     //--------------------------------------------------------------------------------
+    void COptionsBase::setProgramName(const string_q& name) {
+        programName = name;
+    }
+
+    //--------------------------------------------------------------------------------
     bool COptionsBase::prepareArguments(int argc, const char *argv[]) {
 
         string_q env = getEnvStr("NO_COLOR");
@@ -209,13 +214,16 @@ namespace qblocks {
             cerr << programName << " (quickBlocks) " << getVersionStr() << "\n";
             exit(0);
 
-        } else if (contains(cmdLine, "-h ") || contains(cmdLine, "--help ")) {
-            usage();
-            exit(0);
-
         } else if (contains(cmdLine, "--nocolor ")) {
             replaceAll(cmdLine, "--nocolor ", "");
             colorsOff();
+
+        } else if (contains(cmdLine, "--redir_stderr")) {
+            dup2(1, 2);
+
+        } else if (isEnabled(OPT_HELP) && (contains(cmdLine, "-h ") || contains(cmdLine, "--help "))) {
+            usage();
+            exit(0);
 
         } else if (isEnabled(OPT_ETHER) && contains(cmdLine, "--ether " )) {
             replaceAll(cmdLine, "--ether ", "");
@@ -251,6 +259,8 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     bool COptionsBase::builtInCmd(const string_q& arg) {
+        if (isEnabled(OPT_HELP) && (arg == "-h" || arg == "--help"))
+            return true;
         if (isEnabled(OPT_VERBOSE) && (arg == "-v" || startsWith(arg, "-v:") || startsWith(arg, "--verbose")))
             return true;
         if (isEnabled(OPT_ETHER) && arg == "--ether")
@@ -261,9 +271,9 @@ namespace qblocks {
             return true;
         if (isEnabled(OPT_PARITY) && (arg == "--parity"))
             return true;
-        if (arg == "-h" || arg == "--help")
-            return true;
         if (arg == "--version")
+            return true;
+        if (arg == "--redir_stderr")
             return true;
         if (arg == "--nocolor")
             return true;
@@ -378,7 +388,8 @@ namespace qblocks {
         }
         if (isEnabled(OPT_VERBOSE))
             os << "-v|";
-        os << "-h";
+        if (isEnabled(OPT_HELP))
+            os << "-h";
         if (!COptionsBase::needsOption)
             os << "]";
         os << required;
@@ -527,7 +538,8 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         if (isEnabled(OPT_VERBOSE))
             os << oneDescription("-v", "--verbose",
                     "set verbose level. Either -v, --verbose or -v:n where 'n' is level", false, false);
-        os << oneDescription("-h", "--help", "display this help screen", false, false);
+        if (isEnabled(OPT_HELP))
+            os << oneDescription("-h", "--help", "display this help screen", false, false);
         ASSERT(pOptions);
         return pOptions->postProcess("description", os.str().c_str());
     }
