@@ -1,0 +1,19 @@
+qblocks argc: 3 [1:where] [2:-h] 
+qblocks where -h 
+calling: whereBlock -h  --redir_stderr
+qblocks where argc: 3 [1:-h] [2:--redir_stderr] 
+whereBlock -h --redir_stderr 
+
+  You must enter a valid block number. Quitting...
+
+  Usage:    whereBlock [-a|-b|-v|-h] <block> [block...]  
+  Purpose:  Reports if a block was found in the cache, at a local, or at a remote node.
+             
+  Where:    
+	block_list            a space-separated list of one or more blocks to search for (required)
+	-a  (--account)       find an account file, not the block file
+	-b  (--bloom)         find a bloom file, not the block file
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Powered by QBlocks
