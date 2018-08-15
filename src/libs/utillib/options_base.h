@@ -17,6 +17,7 @@
 #include "toml.h"
 
 // Bit flags to enable / disable various options
+#define OPT_HELP    (1<<1)
 #define OPT_VERBOSE (1<<2)
 #define OPT_DOLLARS (1<<3)
 #define OPT_WEI     (1<<4)
@@ -26,7 +27,7 @@
 #define OPT_BLOCKS  (1<<8)
 #define OPT_TRANS   (1<<10)
 #define OPT_ADDRS   (1<<12)
-#define OPT_DEFAULT (OPT_VERBOSE|OPT_DENOM|OPT_BLOCKS|OPT_ADDRS|OPT_PARITY)
+#define OPT_DEFAULT (OPT_HELP|OPT_VERBOSE|OPT_DENOM|OPT_BLOCKS|OPT_ADDRS|OPT_PARITY)
 
 namespace qblocks {
 
@@ -44,6 +45,8 @@ namespace qblocks {
         COptionsBase(void);
         virtual ~COptionsBase(void) { }
 
+        //--------------------------------------------------------------------------------
+        void setProgramName(const string_q& name);
         bool prepareArguments(int argc, const char *argv[]);
         virtual bool parseArguments(string_q& command) = 0;
         bool builtInCmd(const string_q& arg);
