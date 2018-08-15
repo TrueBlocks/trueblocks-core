@@ -53,13 +53,6 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
-//    namesFile = CFilename(configPath("names/names.txt"));
-//    establishFolder(namesFile.getPath());
-//    if (!fileExists(namesFile.getFullPath()))
-//        stringToAsciiFile(namesFile.getFullPath(),
-//                          substitute(
-//                          substitute(string_q(STR_DEFAULT_DATA), " |", "|"), "|", "\t"));
-//    loadNames();
     Init();
 }
 
