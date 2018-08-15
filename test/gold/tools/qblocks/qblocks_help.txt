@@ -1,0 +1,10 @@
+
+  Usage:    qblocks [-h] <cmd> <sub_cmds>  
+  Purpose:  Overarching command for all QBlocks tools.
+             
+  Where:    
+	cmd                   one of [ block | trans | receipt | logs | trace | bloom | accounts | balance | tokenbal | contract | name | when | where |  ] (required)
+	sub_cmds              sub-command[s] for <cmd>. Use qblock cmd --help for help on the cmd (required)
+	-h  (--help)          display this help screen
+
+  Powered by QBlocks

@@ -3,3 +3,27 @@ current=0.2.0
 
 [settings]
 blockCachePath=<NOT_SET>
+
+[mysql]
+host=localhost
+user=
+pw=
+migration=
+path-monitors=
+
+[[tools]]
+list = [
+    { name = "getBlock",    value = "block"    },
+    { name = "getTrans",    value = "trans"    },
+    { name = "getReceipt",  value = "receipt"  },
+    { name = "getLogs",     value = "logs"     },
+    { name = "getTrace",    value = "trace"    },
+    { name = "getBloom",    value = "bloom"    },
+    { name = "getAccounts", value = "accounts" },
+    { name = "getBalance",  value = "balance"  },
+    { name = "getTokenBal", value = "tokenbal" },
+    { name = "isContract",  value = "contract" },
+    { name = "ethName",     value = "name"     },
+    { name = "whenBlock",   value = "when"     },
+    { name = "whereBlock",  value = "where"    },
+]

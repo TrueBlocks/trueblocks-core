@@ -1,12 +1,9 @@
-qblocks argc: 3 [1:where] [2:-h] 
-qblocks where -h 
-calling: whereBlock -h  --redir_stderr
-qblocks where argc: 3 [1:-h] [2:--redir_stderr] 
-whereBlock -h --redir_stderr 
+whereBlock argc: 3 [1:-h] [2:--qblocks] 
+whereBlock -h --qblocks 
 
   You must enter a valid block number. Quitting...
 
-  Usage:    whereBlock [-a|-b|-v|-h] <block> [block...]  
+  Usage:    qblocks where [-a|-b|-v|-h] <block> [block...]  
   Purpose:  Reports if a block was found in the cache, at a local, or at a remote node.
              
   Where:    
@@ -17,3 +14,7 @@ whereBlock -h --redir_stderr
 	-h  (--help)          display this help screen
 
   Powered by QBlocks
+qblocks argc: 3 [1:where] [2:-h] 
+qblocks where -h 
+calling: whereBlock -h  --qblocks
+

@@ -24,8 +24,8 @@ static size_t nParams = sizeof(params) / sizeof(COption);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
-//    if (!standardOptions(command))
-//        return false;
+    if (!standardOptions(command))
+        return false;
 
     Init();
     while (!command.empty()) {
@@ -36,15 +36,9 @@ bool COptions::parseArguments(string_q& command) {
             args += (arg + " ");
     }
 
-    CStringArray allowed;
-    explode(allowed, substitute(allowable, " ", ""), '|');
-    for (auto allow : allowed) {
-        if (allow == cmd) {
-            cmd = convert(cmd);
-            return true;
-        }
-    }
-    return usage("Sub-command must be one of [" + trim(allowable,'|') + "]. Quitting...");
+    if (!findToolName(toolName, cmd))
+        return usage("Sub-command must be one of [" + toolNicknames() + "]. Quitting...");
+    return true;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -54,9 +48,7 @@ void COptions::Init(void) {
     pOptions = this;
 
     minArgs = 0;
-    optionOff(OPT_VERBOSE);
-    allowable  = "blocks|txs|receipts|logs|traces|names|when|where|";
-    allowable += getGlobalConfig()->getConfigStr("settings", "add_cmds", "");
+    optionOff(OPT_VERBOSE|OPT_HELP);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -76,9 +68,9 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
     if (which == "options") {
         return substitute(str, "cmd sub_cmds", "<cmd> <sub_cmds>");
     } else if (which == "oneDescription") {
-        return substitute(str, "{cmds}", "[ " + substitute(allowable, "|", " | ") + " ]");
+        return substitute(str, "{cmds}", "[ " + substitute(toolNicknames(), "|", " | ") + " ]");
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
-        return "You may add you own commands by entering a value of [{add_cmds}] to the config file.";
+        return "You may add you own commands by entering a value in the config file.";
     }
     return str;
 }

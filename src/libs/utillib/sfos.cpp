@@ -142,7 +142,6 @@ namespace qblocks {
         return ret;
     }
 
-
     //------------------------------------------------------------------------------------------
     string_q doCommand(const string_q& cmd) {
 
