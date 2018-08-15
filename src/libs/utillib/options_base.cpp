@@ -218,8 +218,10 @@ namespace qblocks {
             replaceAll(cmdLine, "--nocolor ", "");
             colorsOff();
 
-        } else if (contains(cmdLine, "--redir_stderr")) {
-            dup2(1, 2);
+        } else if (contains(cmdLine, "--qblocks")) {
+            CNameValue toolName;
+            findToolNickname(toolName, programName);
+            programName = "qblocks " + toolName.second;
 
         } else if (isEnabled(OPT_HELP) && (contains(cmdLine, "-h ") || contains(cmdLine, "--help "))) {
             usage();
@@ -273,7 +275,7 @@ namespace qblocks {
             return true;
         if (arg == "--version")
             return true;
-        if (arg == "--redir_stderr")
+        if (arg == "--qblocks")
             return true;
         if (arg == "--nocolor")
             return true;
@@ -707,10 +709,59 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     }
 
     //-----------------------------------------------------------------------
+    void COptionsBase::loadToolNames(void) {
+        const CToml *toml = getGlobalConfig();
+        tools.clear();
+        string_q toolStr = toml->getConfigStr("tools", "list", "");
+        CKeyValuePair keyVal;
+        while (keyVal.parseJson3(toolStr)) {
+            CNameValue pair = make_pair(keyVal.jsonrpc, keyVal.result);
+            tools.push_back(pair);
+            keyVal = CKeyValuePair();  // reset
+        }
+        return;
+    }
+
+    //--------------------------------------------------------------------------------
+    bool COptionsBase::findToolName(CNameValue& pair, const string_q& nickname) const {
+        if (tools.size() == 0)
+            ((COptionsBase*)this)->loadToolNames();  // NOLINT
+        for (auto tool : tools) {
+            if (nickname == tool.second) {
+                pair = tool;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //--------------------------------------------------------------------------------
+    bool COptionsBase::findToolNickname(CNameValue& pair, const string_q& name) const {
+        if (tools.size() == 0)
+            ((COptionsBase*)this)->loadToolNames();  // NOLINT
+        for (auto tool : tools) {
+            if (name == tool.first) {
+                pair = tool;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //--------------------------------------------------------------------------------
+    string_q COptionsBase::toolNicknames(void) const {
+        if (tools.size() == 0)
+            ((COptionsBase*)this)->loadToolNames();  // NOLINT
+        string_q ret;
+        for (auto tool : tools)
+            ret += tool.second + "|";
+        return ret;
+    }
+
+    //-----------------------------------------------------------------------
     void COptionsBase::loadSpecials(void) {
 
         const CToml *toml = getGlobalConfig("whenBlock");
-
         specials.clear();
         string_q specialsStr = toml->getConfigStr("specials", "list", "");
         CKeyValuePair keyVal;
@@ -726,9 +777,9 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     bool COptionsBase::findSpecial(CNameValue& pair, const string_q& arg) const {
         if (specials.size() == 0)
             ((COptionsBase*)this)->loadSpecials();  // NOLINT
-        for (size_t i = 0 ; i < specials.size() ; i++) {
-            if (arg == specials[i].first) {
-                pair = specials[i];
+        for (auto special : specials) {
+            if (arg == special.first) {
+                pair = special;
                 return true;
             }
         }

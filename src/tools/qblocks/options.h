@@ -18,6 +18,7 @@ public:
     string_q cmd;
     string_q args;
     string_q allowable;
+    CNameValue toolName;
 
     COptions(void);
     ~COptions(void) {}
@@ -26,5 +27,3 @@ public:
     void Init(void) override;
     string_q postProcess(const string_q& which, const string_q& str) const override;
 };
-extern string_q unconvert(const string_q& str);
-extern string_q convert  (const string_q& str);

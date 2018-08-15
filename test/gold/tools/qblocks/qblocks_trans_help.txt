@@ -1,12 +1,9 @@
-qblocks argc: 3 [1:txs] [2:-h] 
-qblocks txs -h 
-calling: getTrans -h  --redir_stderr
-qblocks txs argc: 3 [1:-h] [2:--redir_stderr] 
-getTrans -h --redir_stderr 
+getTrans argc: 3 [1:-h] [2:--qblocks] 
+getTrans -h --qblocks 
 
   Please specify at least one transaction identifier.
 
-  Usage:    getTrans [-r|-n|-v|-h] <transID> [transID...]  
+  Usage:    qblocks trans [-r|-n|-v|-h] <transID> [transID...]  
   Purpose:  Retrieve an Ethereum transaction from the local cache or a running node.  
   Where:    
 	trans_list            a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)
@@ -21,3 +18,7 @@ getTrans -h --redir_stderr
 	-h  (--help)          display this help screen
 
   Powered by QBlocks
+qblocks argc: 3 [1:trans] [2:-h] 
+qblocks trans -h 
+calling: getTrans -h  --qblocks
+

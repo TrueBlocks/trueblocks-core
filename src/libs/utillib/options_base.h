@@ -58,6 +58,13 @@ namespace qblocks {
         void     loadSpecials(void);
         bool     findSpecial(CNameValue& pair, const string_q& arg) const;
 
+        // supporting tools
+        CNameValueArray tools;
+        void     loadToolNames(void);
+        bool     findToolNickname(CNameValue& pair, const string_q& name) const;
+        bool     findToolName(CNameValue& pair, const string_q& nickname) const;
+        string_q toolNicknames(void) const;
+
         // supporting named accounts
         CAccountNameArray namedAccounts;
         CFilename namesFile;
