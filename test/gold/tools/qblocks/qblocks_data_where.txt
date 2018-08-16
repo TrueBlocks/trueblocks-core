@@ -1,0 +1,10 @@
+qblocks argc: 3 [1:where] [2:2001001] 
+qblocks where 2001001 
+calling: whereBlock 2001001  --qblocks
+
+whereBlock argc: 3 [1:2001001] [2:--qblocks] 
+whereBlock 2001001 --qblocks 
+
+Report on block locations:
+  (cache folder: --)
+	block   2001001 found at node:   --

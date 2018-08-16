@@ -1,7 +1,9 @@
+qblocks argc: 3 [1:bloom] [2:-h] 
+qblocks bloom -h 
+calling: getBloom -h  --qblocks
+
 getBloom argc: 3 [1:-h] [2:--qblocks] 
 getBloom -h --qblocks 
-
-  You must specify at least one block number or block hash. Quitting...
 
   Usage:    qblocks bloom [-r|-e|-b|-c|-a|-i|-v|-h] <block> [block...]  
   Purpose:  Returns bloom filter(s) from running node (the default) or as EAB from QBlocks.
@@ -23,7 +25,3 @@ getBloom -h --qblocks
 	-h  (--help)          display this help screen
 
   Powered by QBlocks
-qblocks argc: 3 [1:bloom] [2:-h] 
-qblocks bloom -h 
-calling: getBloom -h  --qblocks
-

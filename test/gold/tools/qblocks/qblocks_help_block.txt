@@ -1,7 +1,9 @@
+qblocks argc: 3 [1:block] [2:-h] 
+qblocks block -h 
+calling: getBlock -h  --qblocks
+
 getBlock argc: 3 [1:-h] [2:--qblocks] 
 getBlock -h --qblocks 
-
-  You must specify at least one block.
 
   Usage:    qblocks block [-r|-n|-c|-l|-a|-u|-l|-v|-h] <block> [block...]  
   Purpose:  Returns block(s) from local cache or directly from a running node.
@@ -28,7 +30,3 @@ getBlock -h --qblocks
 	-h  (--help)          display this help screen
 
   Powered by QBlocks
-qblocks argc: 3 [1:block] [2:-h] 
-qblocks block -h 
-calling: getBlock -h  --qblocks
-

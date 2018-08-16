@@ -209,43 +209,61 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     bool COptionsBase::standardOptions(string_q& cmdLine) {
+
         cmdLine += " ";
+
+        // Note: check each item individual in case more than one appears on the command line
         if (contains(cmdLine, "--version ")) {
             cerr << programName << " (quickBlocks) " << getVersionStr() << "\n";
             exit(0);
 
-        } else if (contains(cmdLine, "--nocolor ")) {
+        }
+
+        if (contains(cmdLine, "--nocolor ")) {
             replaceAll(cmdLine, "--nocolor ", "");
             colorsOff();
 
-        } else if (contains(cmdLine, "--qblocks")) {
+        }
+
+        if (contains(cmdLine, "--qblocks ")) {
+            replaceAll(cmdLine, "--qblocks ", "");
             CNameValue toolName;
             findToolNickname(toolName, programName);
             programName = "qblocks " + toolName.second;
 
-        } else if (isEnabled(OPT_HELP) && (contains(cmdLine, "-h ") || contains(cmdLine, "--help "))) {
+        }
+
+        if (isEnabled(OPT_HELP) && (contains(cmdLine, "-h ") || contains(cmdLine, "--help "))) {
             usage();
             exit(0);
 
-        } else if (isEnabled(OPT_ETHER) && contains(cmdLine, "--ether " )) {
+        }
+
+        if (isEnabled(OPT_ETHER) && contains(cmdLine, "--ether " )) {
             replaceAll(cmdLine, "--ether ", "");
             expContext().asEther = true;
             expContext().asDollars = false;
             expContext().asWei = false;
 
-        } else if (isEnabled(OPT_WEI) && contains(cmdLine, "--wei ")) {
+        }
+
+        if (isEnabled(OPT_WEI) && contains(cmdLine, "--wei ")) {
             replaceAll(cmdLine, "--wei ", "");
             expContext().asEther = false;
             expContext().asDollars = false;
             expContext().asWei = true;
 
-        } else if (isEnabled(OPT_DOLLARS) && contains(cmdLine, "--dollars ")) {
+        }
+
+        if (isEnabled(OPT_DOLLARS) && contains(cmdLine, "--dollars ")) {
             replaceAll(cmdLine, "--dollars ", "");
             expContext().asEther = false;
             expContext().asDollars = true;
             expContext().asWei = false;
 
-        } else if (isEnabled(OPT_PARITY) && contains(cmdLine, "--parity ")) {
+        }
+
+        if (isEnabled(OPT_PARITY) && contains(cmdLine, "--parity ")) {
             replaceAll(cmdLine, "--parity ", "");
             expContext().spcs = 4;
             expContext().hexNums = true;
@@ -255,6 +273,7 @@ namespace qblocks {
                 if (sorts[i])
                     sorts[i]->sortFieldList();
         }
+
         cmdLine = trim(cmdLine);
         return true;
     }

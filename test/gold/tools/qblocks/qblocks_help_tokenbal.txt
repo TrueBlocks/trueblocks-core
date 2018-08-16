@@ -1,7 +1,9 @@
+qblocks argc: 3 [1:tokenbal] [2:-h] 
+qblocks tokenbal -h 
+calling: getTokenBal -h  --qblocks
+
 getTokenBal argc: 3 [1:-h] [2:--qblocks] 
 getTokenBal -h --qblocks 
-
-  You must provide both a token contract and an account. Quitting...
 
   Usage:    qblocks tokenbal [-b|-d|-l fn|-n|-t|-i|-v|-h] <address> <address> [address...] [block...]  
   Purpose:  Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).
@@ -19,7 +21,3 @@ getTokenBal -h --qblocks
 	-h  (--help)          display this help screen
 
   Powered by QBlocks
-qblocks argc: 3 [1:tokenbal] [2:-h] 
-qblocks tokenbal -h 
-calling: getTokenBal -h  --qblocks
-
