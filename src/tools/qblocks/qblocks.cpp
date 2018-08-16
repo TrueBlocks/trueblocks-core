@@ -49,9 +49,8 @@ int main(int argc, const char *argv[]) {
             return 0;
         string_q cmd = options.toolName.first + " " + options.args + " --qblocks";
         if (isTestMode())
-            cout << "calling: " << cmd << "\n";
+            cerr << "calling: " << cmd << "\n\n";
         if (system(cmd.c_str())) { }  // Don't remove. Silences compiler warnings
-        cout << "\n";
     }
     return 0;
 }

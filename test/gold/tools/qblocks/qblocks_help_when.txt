@@ -1,7 +1,9 @@
+qblocks argc: 3 [1:when] [2:-h] 
+qblocks when -h 
+calling: whenBlock -h  --qblocks
+
 whenBlock argc: 3 [1:-h] [2:--qblocks] 
 whenBlock -h --qblocks 
-
-  Please supply either a JSON formatted date or a blockNumber. Quitting...
 
   Usage:    qblocks when [-d|-l|-v|-h] < block | date > [ block... | date... ]  
   Purpose:  Finds the nearest block prior to a date, or the nearest date prior to a block.
@@ -24,7 +26,3 @@ whenBlock -h --qblocks
 	  - parityhack2 (4501969), constantinople (tbd), latest ()
 
   Powered by QBlocks
-qblocks argc: 3 [1:when] [2:-h] 
-qblocks when -h 
-calling: whenBlock -h  --qblocks
-

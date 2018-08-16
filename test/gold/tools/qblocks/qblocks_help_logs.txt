@@ -1,10 +1,12 @@
-getReceipt argc: 3 [1:-h] [2:--qblocks] 
-getReceipt -h --qblocks 
+qblocks argc: 3 [1:logs] [2:-h] 
+qblocks logs -h 
+calling: getLogs -h  --qblocks
 
-  Please specify at least one transaction identifier.
+getLogs argc: 3 [1:-h] [2:--qblocks] 
+getLogs -h --qblocks 
 
-  Usage:    qblocks receipt [-r|-v|-h] <transID> [transID...]  
-  Purpose:  Retrieve a transaction's receipt from the local cache or a running node.  
+  Usage:    qblocks logs [-r|-v|-h] <transID> [transID...]  
+  Purpose:  Retrieve a transaction's logs from the local cache or a running node.  
   Where:    
 	trans_list            a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)
 	-r  (--raw)           retrieve raw transaction directly from the running node
@@ -12,7 +14,3 @@ getReceipt -h --qblocks
 	-h  (--help)          display this help screen
 
   Powered by QBlocks
-qblocks argc: 3 [1:receipt] [2:-h] 
-qblocks receipt -h 
-calling: getReceipt -h  --qblocks
-
