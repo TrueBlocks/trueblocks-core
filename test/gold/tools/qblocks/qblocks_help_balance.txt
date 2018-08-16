@@ -1,7 +1,9 @@
+qblocks argc: 3 [1:balance] [2:-h] 
+qblocks balance -h 
+calling: getBalance -h  --qblocks
+
 getBalance argc: 3 [1:-h] [2:--qblocks] 
 getBalance -h --qblocks 
-
-  You must provide at least one Ethereum address.
 
   Usage:    qblocks balance [-d|-l fn|-n|-t|-c|-v|-h] <address> [address...] [block...]  
   Purpose:  Retrieve the balance (in wei) for one or more addresses at the given block(s).
@@ -18,7 +20,3 @@ getBalance -h --qblocks
 	-h  (--help)          display this help screen
 
   Powered by QBlocks
-qblocks argc: 3 [1:balance] [2:-h] 
-qblocks balance -h 
-calling: getBalance -h  --qblocks
-

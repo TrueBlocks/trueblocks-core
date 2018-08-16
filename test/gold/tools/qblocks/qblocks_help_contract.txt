@@ -1,8 +1,9 @@
+qblocks argc: 3 [1:contract] [2:-h] 
+qblocks contract -h 
+calling: isContract -h  --qblocks
+
 isContract argc: 3 [1:-h] [2:--qblocks] 
 isContract -h --qblocks 
-
-  Please supply valid Ethereum addresses.
-
 
   Usage:    qblocks contract [-d|-b|-n|-v|-h] <address> [address...]  
   Purpose:  Returns 'true' or 'false' if the given address(es) holds byte code (optionally displays the code).
@@ -16,7 +17,3 @@ isContract -h --qblocks
 	-h  (--help)          display this help screen
 
   Powered by QBlocks
-qblocks argc: 3 [1:contract] [2:-h] 
-qblocks contract -h 
-calling: isContract -h  --qblocks
-
