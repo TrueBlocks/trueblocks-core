@@ -1,7 +1,9 @@
+qblocks argc: 3 [1:where] [2:-h] 
+qblocks where -h 
+calling: whereBlock -h  --qblocks
+
 whereBlock argc: 3 [1:-h] [2:--qblocks] 
 whereBlock -h --qblocks 
-
-  You must enter a valid block number. Quitting...
 
   Usage:    qblocks where [-a|-b|-v|-h] <block> [block...]  
   Purpose:  Reports if a block was found in the cache, at a local, or at a remote node.
@@ -14,7 +16,3 @@ whereBlock -h --qblocks
 	-h  (--help)          display this help screen
 
   Powered by QBlocks
-qblocks argc: 3 [1:where] [2:-h] 
-qblocks where -h 
-calling: whereBlock -h  --qblocks
-
