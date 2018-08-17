@@ -91,11 +91,11 @@ bool COptions::parseArguments(string_q& command) {
             uint64_t diff = cache > client ? 0 : client - cache;
             stringToAsciiFile("/tmp/getBlock_junk.txt", uint_2_Str(diff));  // for next time
 
-            cout << "Latest block in cache:  " << cYellow;
+            cout << cGreen << "Latest block in cache:  " << cYellow;
             cout << (isTestMode() ? "--cache--"  : padNum8T(cache))  << cOff << "\n";
-            cout << "Latest block at client: " << cYellow;
+            cout << cGreen << "Latest block at client: " << cYellow;
             cout << (isTestMode() ? "--client--" : padNum8T(client)) << cOff << "\n";
-            cout << "Difference:             " << cYellow;
+            cout << cGreen << "Difference:             " << cYellow;
             cout << (isTestMode() ? "--diff--"   : padNum8T(diff));
             if (!isTestMode() && lastUpdate) {
                 uint64_t diffDiff = lastUpdate - diff;
