@@ -79,6 +79,9 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     extern bool     getCode                 (const address_t& addr, string_q& theCode);
     inline string_q getCode                 (const address_t& addr) { string_q ret; getCode(addr, ret); return ret; }  // NOLINT
+    extern bool     getStorageAt            (const address_t& addr, uint64_t pos, string_q&storage);
+    inline string_q getStorageAt            (const address_t& addr, uint64_t pos) { string_q ret; getStorageAt(addr, pos, ret); return ret; }  // NOLINT
+    uint64_t        addFilter               (address_t addr, const CTopicArray& topics, blknum_t block);
     inline bool     isContract              (const address_t& addr) { return !substitute(getCode(addr), "0x", "").empty(); }  // NOLINT
     extern biguint_t getBalance              (const address_t& addr, blknum_t blockNum, bool isDemo);
     extern bool     getSha3                 (const string_q& hexIn, string_q& shaOut);

@@ -346,6 +346,91 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-------------------------------------------------------------------------
+    bool getStorageAt(const string_q& addr, uint64_t pos, string_q& theStorage) {
+        // Calculating the correct position depends on the storage to retrieve. Consider the following
+        // contract deployed at 0x295a70b2de5e3953354a6a8344e616ed314d7251 by address
+        // 0x391694e7e0b0cce554cb130d723a9d27458f9298.
+        //
+        // contract Storage {
+        //     uint pos0;
+        //     mapping(address => uint) pos1;
+        //
+        //     function Storage() {
+        //         pos0 = 1234;
+        //         pos1[msg.sender] = 5678;
+        //     }
+        // }
+        //
+        // Retrieving the value of pos0 is straight forward:
+        //
+        // curl -X POST --data '{"jsonrpc":"2.0", "method": "eth_getStorageAt", "params": ["0x295a70b2de5e3953354a6a8344e616ed314d7251", "0x0", "latest"],
+        //      "id": 1}' localhost:8545
+        //
+        // returns {"jsonrpc":"2.0","id":1,"result":"0x00000000000000000000000000000000000000000000000000000000000004d2"}
+        //
+        // Retrieving an element of the map is harder. The position of an element in the map is calculated with:
+        //
+        //      keccack(LeftPad32(key, 0), LeftPad32(map_position, 0))
+        //
+        // This means to retrieve the storage on pos1["0x391694e7e0b0cce554cb130d723a9d27458f9298"] we need to calculate
+        // the position with:
+        //
+        //      keccak(decodeHex("000000000000000000000000391694e7e0b0cce554cb130d723a9d27458f9298" + 
+        //                       "0000000000000000000000000000000000000000000000000000000000000001"))
+        //
+        // The geth console which comes with the web3 library can be used to make the calculation:
+        //
+        //      > var key = "000000000000000000000000391694e7e0b0cce554cb130d723a9d27458f9298" + "0000000000000000000000000000000000000000000000000000000000000001"
+        //      undefined
+        //      > web3.sha3(key, {"encoding": "hex"})
+        //      "0x6661e9d6d8b923d5bbaab1b96e1dd51ff6ea2a93520fdc9eb75d059238b8c5e9"
+        //
+        // Now to fetch the storage:
+        //
+        //      curl -X POST --data '{"jsonrpc":"2.0", "method": "eth_getStorageAt", "params": ["0x295a70b2de5e3953354a6a8344e616ed314d7251",
+        //                  "0x6661e9d6d8b923d5bbaab1b96e1dd51ff6ea2a93520fdc9eb75d059238b8c5e9", "latest"], "id": 1}' localhost:8545
+        //
+        // returns: {"jsonrpc":"2.0","id":1,"result":"0x000000000000000000000000000000000000000000000000000000000000162e"}
+        //
+        return false;
+    }
+
+    //-------------------------------------------------------------------------
+    uint64_t addFilter(address_t addr, const CTopicArray& topics, blknum_t block) {
+        // Creates a filter object, based on filter options, to notify when the state changes (logs). To check if the state has
+        // changed, call eth_getFilterChanges.
+        //
+        // A note on specifying topic filters:
+        // Topics are order-dependent. A transaction with a log with topics [A, B] will be matched by the following topic filters:
+        //
+        // [] "anything"
+        // [A] "A in first position (and anything after)"
+        // [null, B] "anything in first position AND B in second position (and anything after)"
+        // [A, B] "A in first position AND B in second position (and anything after)"
+        // [[A, B], [A, B]] "(A OR B) in first position AND (A OR B) in second position (and anything after)"
+        //
+        // Parameters
+        //  Object - The filter options:
+        //  fromBlock:  QUANTITY|TAG - (optional, default: "latest") Integer block number, or "latest" for the last mined block or "pending",
+        //                  "earliest" for not yet mined transactions.
+        //  toBlock:    QUANTITY|TAG - (optional, default: "latest") Integer block number, or "latest" for the last mined block or "pending",
+        //                  "earliest" for not yet mined transactions.
+        //  address:    DATA|Array, 20 Bytes - (optional) Contract address or a list of addresses from which logs should originate.
+        //  topics:     Array of DATA, - (optional) Array of 32 Bytes DATA topics. Topics are order-dependent. Each topic can also be an
+        //                  array of DATA with "or" options.
+        //  params: [{
+        //      "fromBlock": "0x1",
+        //      "toBlock": "0x2",
+        //      "address": "0x8888f1f195afa192cfee860698584c030f4c9db1",
+        //      "topics": ["0x000000000000000000000000a94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+        //                  null,
+        //                  [ "0x000000000000000000000000a94f5374fce5edbc8e2a8697c15331677e6ebf0b", "0x0000000000000000000000000aff3454fce5edbc8cca8697c15331677e6ebccc"]]
+        //      }]
+        //  Returns QUANTITY - A filter id.
+        return 0;
+    }
+
+    //-------------------------------------------------------------------------
     biguint_t getBalance(const string_q& addr, blknum_t blockNum, bool isDemo) {
         string_q a = extract(addr, 2);
         a = padLeft(a, 40, '0');
@@ -358,7 +443,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         // Account 0xa1e4380a3b1f749673e270229993ee55f35663b4 owned 2000000000000000000000 (2000 ether)
         // at block zero. If the node is holding balances (i.e. its an archive node), then it will
         // return that value for block 1 as well. Otherwise, it will return a zero balance.
-        // NOTE: Account 0xa1e4380a3b1f749673e270229993ee55f35663b4 transacted in the first ever transaction.
+        // NOTE: Unimportantly, account 0xa1e4380a3b1f749673e270229993ee55f35663b4 transacted in the first ever transaction.
         return getBalance("0xa1e4380a3b1f749673e270229993ee55f35663b4", 1, false) ==
                             str_2_Wei("2000000000000000000000");
     }
