@@ -146,6 +146,7 @@ void QChangeOwner::registerClass(void) {
     ADD_FIELD(QChangeOwner, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QChangeOwner, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QChangeOwner, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QChangeOwner, "cname", TS_STRING,  ++fieldNum);
     ADD_FIELD(QChangeOwner, "_from", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QChangeOwner, "_to", T_ADDRESS, ++fieldNum);
 
@@ -153,6 +154,7 @@ void QChangeOwner::registerClass(void) {
     HIDE_FIELD(QChangeOwner, "schema");
     HIDE_FIELD(QChangeOwner, "deleted");
     HIDE_FIELD(QChangeOwner, "showing");
+    HIDE_FIELD(QChangeOwner, "cname");
 
     builtIns.push_back(_biQChangeOwner);
 

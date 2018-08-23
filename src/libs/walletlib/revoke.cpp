@@ -143,12 +143,14 @@ void QRevoke::registerClass(void) {
     ADD_FIELD(QRevoke, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QRevoke, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QRevoke, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QRevoke, "cname", TS_STRING,  ++fieldNum);
     ADD_FIELD(QRevoke, "_operation", T_TEXT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(QRevoke, "schema");
     HIDE_FIELD(QRevoke, "deleted");
     HIDE_FIELD(QRevoke, "showing");
+    HIDE_FIELD(QRevoke, "cname");
 
     builtIns.push_back(_biQRevoke);
 

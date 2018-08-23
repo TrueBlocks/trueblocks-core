@@ -229,6 +229,7 @@ void CTransaction::registerClass(void) {
     ADD_FIELD(CTransaction, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CTransaction, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CTransaction, "cname", TS_STRING,  ++fieldNum);
     ADD_FIELD(CTransaction, "hash", T_HASH, ++fieldNum);
     ADD_FIELD(CTransaction, "blockHash", T_HASH, ++fieldNum);
     ADD_FIELD(CTransaction, "blockNumber", T_NUMBER, ++fieldNum);
@@ -249,6 +250,7 @@ void CTransaction::registerClass(void) {
     HIDE_FIELD(CTransaction, "schema");
     HIDE_FIELD(CTransaction, "deleted");
     HIDE_FIELD(CTransaction, "showing");
+    HIDE_FIELD(CTransaction, "cname");
 
     builtIns.push_back(_biCTransaction);
 

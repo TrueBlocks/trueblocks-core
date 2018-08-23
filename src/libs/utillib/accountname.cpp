@@ -157,6 +157,7 @@ void CAccountName::registerClass(void) {
     ADD_FIELD(CAccountName, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CAccountName, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CAccountName, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CAccountName, "cname", TS_STRING,  ++fieldNum);
     ADD_FIELD(CAccountName, "symbol", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "name", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "addr", T_TEXT, ++fieldNum);
@@ -167,6 +168,7 @@ void CAccountName::registerClass(void) {
     HIDE_FIELD(CAccountName, "schema");
     HIDE_FIELD(CAccountName, "deleted");
     HIDE_FIELD(CAccountName, "showing");
+    HIDE_FIELD(CAccountName, "cname");
 
     builtIns.push_back(_biCAccountName);
 

@@ -143,6 +143,7 @@ void CBalanceHistory::registerClass(void) {
     ADD_FIELD(CBalanceHistory, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CBalanceHistory, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CBalanceHistory, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CBalanceHistory, "cname", TS_STRING,  ++fieldNum);
     ADD_FIELD(CBalanceHistory, "bn", T_NUMBER, ++fieldNum);
     ADD_FIELD(CBalanceHistory, "balance", T_NUMBER, ++fieldNum);
 
@@ -150,6 +151,7 @@ void CBalanceHistory::registerClass(void) {
     HIDE_FIELD(CBalanceHistory, "schema");
     HIDE_FIELD(CBalanceHistory, "deleted");
     HIDE_FIELD(CBalanceHistory, "showing");
+    HIDE_FIELD(CBalanceHistory, "cname");
 
     builtIns.push_back(_biCBalanceHistory);
 

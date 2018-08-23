@@ -161,6 +161,7 @@ void QMultiTransactEvent::registerClass(void) {
     ADD_FIELD(QMultiTransactEvent, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QMultiTransactEvent, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QMultiTransactEvent, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QMultiTransactEvent, "cname", TS_STRING,  ++fieldNum);
     ADD_FIELD(QMultiTransactEvent, "owner", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QMultiTransactEvent, "operation", T_TEXT, ++fieldNum);
     ADD_FIELD(QMultiTransactEvent, "value", T_NUMBER, ++fieldNum);
@@ -171,6 +172,7 @@ void QMultiTransactEvent::registerClass(void) {
     HIDE_FIELD(QMultiTransactEvent, "schema");
     HIDE_FIELD(QMultiTransactEvent, "deleted");
     HIDE_FIELD(QMultiTransactEvent, "showing");
+    HIDE_FIELD(QMultiTransactEvent, "cname");
 
     builtIns.push_back(_biQMultiTransactEvent);
 

@@ -143,12 +143,14 @@ void QAddOwner::registerClass(void) {
     ADD_FIELD(QAddOwner, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QAddOwner, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QAddOwner, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QAddOwner, "cname", TS_STRING,  ++fieldNum);
     ADD_FIELD(QAddOwner, "_owner", T_ADDRESS, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(QAddOwner, "schema");
     HIDE_FIELD(QAddOwner, "deleted");
     HIDE_FIELD(QAddOwner, "showing");
+    HIDE_FIELD(QAddOwner, "cname");
 
     builtIns.push_back(_biQAddOwner);
 

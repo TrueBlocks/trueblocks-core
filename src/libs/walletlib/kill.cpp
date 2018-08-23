@@ -143,12 +143,14 @@ void QKill::registerClass(void) {
     ADD_FIELD(QKill, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QKill, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QKill, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QKill, "cname", TS_STRING,  ++fieldNum);
     ADD_FIELD(QKill, "_to", T_ADDRESS, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(QKill, "schema");
     HIDE_FIELD(QKill, "deleted");
     HIDE_FIELD(QKill, "showing");
+    HIDE_FIELD(QKill, "cname");
 
     builtIns.push_back(_biQKill);
 

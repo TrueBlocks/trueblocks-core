@@ -146,6 +146,7 @@ void QConfirmationEvent::registerClass(void) {
     ADD_FIELD(QConfirmationEvent, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QConfirmationEvent, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QConfirmationEvent, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QConfirmationEvent, "cname", TS_STRING,  ++fieldNum);
     ADD_FIELD(QConfirmationEvent, "owner", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QConfirmationEvent, "operation", T_TEXT, ++fieldNum);
 
@@ -153,6 +154,7 @@ void QConfirmationEvent::registerClass(void) {
     HIDE_FIELD(QConfirmationEvent, "schema");
     HIDE_FIELD(QConfirmationEvent, "deleted");
     HIDE_FIELD(QConfirmationEvent, "showing");
+    HIDE_FIELD(QConfirmationEvent, "cname");
 
     builtIns.push_back(_biQConfirmationEvent);
 

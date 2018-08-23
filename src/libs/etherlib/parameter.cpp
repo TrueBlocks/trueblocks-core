@@ -163,6 +163,7 @@ void CParameter::registerClass(void) {
     ADD_FIELD(CParameter, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CParameter, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CParameter, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CParameter, "cname", TS_STRING,  ++fieldNum);
     ADD_FIELD(CParameter, "indexed", T_BOOL, ++fieldNum);
     ADD_FIELD(CParameter, "name", T_TEXT, ++fieldNum);
     ADD_FIELD(CParameter, "type", T_TEXT, ++fieldNum);
@@ -175,6 +176,7 @@ void CParameter::registerClass(void) {
     HIDE_FIELD(CParameter, "schema");
     HIDE_FIELD(CParameter, "deleted");
     HIDE_FIELD(CParameter, "showing");
+    HIDE_FIELD(CParameter, "cname");
 
     builtIns.push_back(_biCParameter);
 
