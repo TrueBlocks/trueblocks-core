@@ -1,6 +1,6 @@
 [settings]
 class     = QOwnerOf
-baseClass = CTransaction
+baseClass = CTransaction_Ex
 fields    = uint256 _tokenId|
-includes  = transaction.h
+includes  = transaction_ex.h
 cIncs     = #include "etherlib.h"

@@ -19,7 +19,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QSafeTransferFrom, CTransaction);
+IMPLEMENT_NODE(QSafeTransferFrom, CTransaction_Ex);
 
 //---------------------------------------------------------------------------
 static string_q nextSafetransferfromChunk(const string_q& fieldIn, const void *dataPtr);
@@ -59,7 +59,7 @@ bool QSafeTransferFrom::setValueByName(const string_q& fieldName, const string_q
     // EXISTING_CODE
     // EXISTING_CODE
 
-    if (CTransaction::setValueByName(fieldName, fieldValue))
+    if (CTransaction_Ex::setValueByName(fieldName, fieldValue))
         return true;
 
     switch (tolower(fieldName[0])) {
@@ -88,7 +88,7 @@ bool QSafeTransferFrom::Serialize(CArchive& archive) {
 
     // Always read the base class (it will handle its own backLevels if any, then
     // read this object's back level (if any) or the current version.
-    CTransaction::Serialize(archive);
+    CTransaction_Ex::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -105,7 +105,7 @@ bool QSafeTransferFrom::Serialize(CArchive& archive) {
 bool QSafeTransferFrom::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
-    CTransaction::SerializeC(archive);
+    CTransaction_Ex::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -143,12 +143,13 @@ void QSafeTransferFrom::registerClass(void) {
     if (been_here) return;
     been_here = true;
 
-    CTransaction::registerClass();
+    CTransaction_Ex::registerClass();
 
     size_t fieldNum = 1000;
     ADD_FIELD(QSafeTransferFrom, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QSafeTransferFrom, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QSafeTransferFrom, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QSafeTransferFrom, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(QSafeTransferFrom, "_from", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QSafeTransferFrom, "_to", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QSafeTransferFrom, "_tokenId", T_NUMBER, ++fieldNum);
@@ -157,6 +158,7 @@ void QSafeTransferFrom::registerClass(void) {
     HIDE_FIELD(QSafeTransferFrom, "schema");
     HIDE_FIELD(QSafeTransferFrom, "deleted");
     HIDE_FIELD(QSafeTransferFrom, "showing");
+    HIDE_FIELD(QSafeTransferFrom, "cname");
 
     builtIns.push_back(_biQSafeTransferFrom);
 
@@ -217,7 +219,7 @@ string_q QSafeTransferFrom::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
 
     // Finally, give the parent class a chance
-    return CTransaction::getValueByName(fieldName);
+    return CTransaction_Ex::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

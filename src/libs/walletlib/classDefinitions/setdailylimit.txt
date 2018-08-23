@@ -1,6 +1,6 @@
 [settings]
 class     = QSetDailyLimit
-baseClass = CTransaction
+baseClass = CTransaction_Ex
 fields    = uint256 _newLimit|
-includes  = transaction.h
+includes  = transaction_ex.h
 cIncs     = #include "etherlib.h"

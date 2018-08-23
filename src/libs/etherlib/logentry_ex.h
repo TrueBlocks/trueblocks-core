@@ -17,39 +17,38 @@
  */
 #include <vector>
 #include <map>
-#include "logentry_ex.h"
+#include "logentry.h"
+
+namespace qblocks {
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QConfirmationNeededEvent : public CLogEntry_Ex {
+class CLogEntry_Ex : public CLogEntry {
 public:
-    string_q operation;
-    address_t initiator;
-    biguint_t value;
-    address_t to;
-    string_q data;
+    string_q name;
 
 public:
-    QConfirmationNeededEvent(void);
-    QConfirmationNeededEvent(const QConfirmationNeededEvent& co);
-    virtual ~QConfirmationNeededEvent(void);
-    QConfirmationNeededEvent& operator=(const QConfirmationNeededEvent& co);
+    CLogEntry_Ex(void);
+    CLogEntry_Ex(const CLogEntry_Ex& lo);
+    virtual ~CLogEntry_Ex(void);
+    CLogEntry_Ex& operator=(const CLogEntry_Ex& lo);
 
-    DECLARE_NODE(QConfirmationNeededEvent);
+    DECLARE_NODE(CLogEntry_Ex);
 
     // EXISTING_CODE
+    CLogEntry_Ex(const CLogEntry *p);
     // EXISTING_CODE
-    bool operator==(const QConfirmationNeededEvent& item) const;
-    bool operator!=(const QConfirmationNeededEvent& item) const { return !operator==(item); }
-    friend bool operator<(const QConfirmationNeededEvent& v1, const QConfirmationNeededEvent& v2);
-    friend ostream& operator<<(ostream& os, const QConfirmationNeededEvent& item);
+    bool operator==(const CLogEntry_Ex& item) const;
+    bool operator!=(const CLogEntry_Ex& item) const { return !operator==(item); }
+    friend bool operator<(const CLogEntry_Ex& v1, const CLogEntry_Ex& v2);
+    friend ostream& operator<<(ostream& os, const CLogEntry_Ex& item);
 
 protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const QConfirmationNeededEvent& co);
+    void duplicate(const CLogEntry_Ex& lo);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -57,59 +56,51 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline QConfirmationNeededEvent::QConfirmationNeededEvent(void) {
+inline CLogEntry_Ex::CLogEntry_Ex(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline QConfirmationNeededEvent::QConfirmationNeededEvent(const QConfirmationNeededEvent& co) {
+inline CLogEntry_Ex::CLogEntry_Ex(const CLogEntry_Ex& lo) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(co);
+    duplicate(lo);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline QConfirmationNeededEvent::~QConfirmationNeededEvent(void) {
+inline CLogEntry_Ex::~CLogEntry_Ex(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QConfirmationNeededEvent::clear(void) {
+inline void CLogEntry_Ex::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QConfirmationNeededEvent::initialize(void) {
-    CLogEntry_Ex::initialize();
+inline void CLogEntry_Ex::initialize(void) {
+    CLogEntry::initialize();
 
-    operation = "";
-    initiator = "";
-    value = 0;
-    to = "";
-    data = "";
+    name = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QConfirmationNeededEvent::duplicate(const QConfirmationNeededEvent& co) {
+inline void CLogEntry_Ex::duplicate(const CLogEntry_Ex& lo) {
     clear();
-    CLogEntry_Ex::duplicate(co);
+    CLogEntry::duplicate(lo);
 
-    operation = co.operation;
-    initiator = co.initiator;
-    value = co.value;
-    to = co.to;
-    data = co.data;
+    name = lo.name;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -117,15 +108,15 @@ inline void QConfirmationNeededEvent::duplicate(const QConfirmationNeededEvent& 
 }
 
 //--------------------------------------------------------------------------
-inline QConfirmationNeededEvent& QConfirmationNeededEvent::operator=(const QConfirmationNeededEvent& co) {
-    duplicate(co);
+inline CLogEntry_Ex& CLogEntry_Ex::operator=(const CLogEntry_Ex& lo) {
+    duplicate(lo);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool QConfirmationNeededEvent::operator==(const QConfirmationNeededEvent& item) const {
+inline bool CLogEntry_Ex::operator==(const CLogEntry_Ex& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -133,7 +124,7 @@ inline bool QConfirmationNeededEvent::operator==(const QConfirmationNeededEvent&
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const QConfirmationNeededEvent& v1, const QConfirmationNeededEvent& v2) {
+inline bool operator<(const CLogEntry_Ex& v1, const CLogEntry_Ex& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -141,11 +132,12 @@ inline bool operator<(const QConfirmationNeededEvent& v1, const QConfirmationNee
 }
 
 //---------------------------------------------------------------------------
-typedef vector<QConfirmationNeededEvent> QConfirmationNeededEventArray;
-extern CArchive& operator>>(CArchive& archive, QConfirmationNeededEventArray& array);
-extern CArchive& operator<<(CArchive& archive, const QConfirmationNeededEventArray& array);
+typedef vector<CLogEntry_Ex> CLogEntry_ExArray;
+extern CArchive& operator>>(CArchive& archive, CLogEntry_ExArray& array);
+extern CArchive& operator<<(CArchive& archive, const CLogEntry_ExArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+}  // namespace qblocks
 

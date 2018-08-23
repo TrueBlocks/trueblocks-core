@@ -26,5 +26,7 @@
 #include "node.h"
 #include "blooms.h"
 #include "blockoptions.h"
+#include "transaction_ex.h"
+#include "logentry_ex.h"
 
 using namespace qblocks;  // NOLINT

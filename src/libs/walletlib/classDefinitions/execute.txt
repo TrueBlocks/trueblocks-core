@@ -1,6 +1,6 @@
 [settings]
 class     = QExecute
-baseClass = CTransaction
+baseClass = CTransaction_Ex
 fields    = address _to|uint256 _value|bytes _data|
-includes  = transaction.h
+includes  = transaction_ex.h
 cIncs     = #include "etherlib.h"

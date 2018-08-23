@@ -19,7 +19,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QApprovalEvent, CLogEntry);
+IMPLEMENT_NODE(QApprovalEvent, CLogEntry_Ex);
 
 //---------------------------------------------------------------------------
 static string_q nextApprovaleventChunk(const string_q& fieldIn, const void *dataPtr);
@@ -59,7 +59,7 @@ bool QApprovalEvent::setValueByName(const string_q& fieldName, const string_q& f
     // EXISTING_CODE
     // EXISTING_CODE
 
-    if (CLogEntry::setValueByName(fieldName, fieldValue))
+    if (CLogEntry_Ex::setValueByName(fieldName, fieldValue))
         return true;
 
     switch (tolower(fieldName[0])) {
@@ -88,7 +88,7 @@ bool QApprovalEvent::Serialize(CArchive& archive) {
 
     // Always read the base class (it will handle its own backLevels if any, then
     // read this object's back level (if any) or the current version.
-    CLogEntry::Serialize(archive);
+    CLogEntry_Ex::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -105,7 +105,7 @@ bool QApprovalEvent::Serialize(CArchive& archive) {
 bool QApprovalEvent::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
-    CLogEntry::SerializeC(archive);
+    CLogEntry_Ex::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -143,12 +143,13 @@ void QApprovalEvent::registerClass(void) {
     if (been_here) return;
     been_here = true;
 
-    CLogEntry::registerClass();
+    CLogEntry_Ex::registerClass();
 
     size_t fieldNum = 1000;
     ADD_FIELD(QApprovalEvent, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QApprovalEvent, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QApprovalEvent, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QApprovalEvent, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(QApprovalEvent, "_owner", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QApprovalEvent, "_spender", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QApprovalEvent, "_value", T_NUMBER, ++fieldNum);
@@ -157,6 +158,7 @@ void QApprovalEvent::registerClass(void) {
     HIDE_FIELD(QApprovalEvent, "schema");
     HIDE_FIELD(QApprovalEvent, "deleted");
     HIDE_FIELD(QApprovalEvent, "showing");
+    HIDE_FIELD(QApprovalEvent, "cname");
 
     builtIns.push_back(_biQApprovalEvent);
 
@@ -217,7 +219,7 @@ string_q QApprovalEvent::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
 
     // Finally, give the parent class a chance
-    return CLogEntry::getValueByName(fieldName);
+    return CLogEntry_Ex::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------
