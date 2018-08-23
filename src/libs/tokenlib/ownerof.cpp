@@ -19,7 +19,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QOwnerOf, CTransaction);
+IMPLEMENT_NODE(QOwnerOf, CTransaction_Ex);
 
 //---------------------------------------------------------------------------
 static string_q nextOwnerofChunk(const string_q& fieldIn, const void *dataPtr);
@@ -59,7 +59,7 @@ bool QOwnerOf::setValueByName(const string_q& fieldName, const string_q& fieldVa
     // EXISTING_CODE
     // EXISTING_CODE
 
-    if (CTransaction::setValueByName(fieldName, fieldValue))
+    if (CTransaction_Ex::setValueByName(fieldName, fieldValue))
         return true;
 
     switch (tolower(fieldName[0])) {
@@ -86,7 +86,7 @@ bool QOwnerOf::Serialize(CArchive& archive) {
 
     // Always read the base class (it will handle its own backLevels if any, then
     // read this object's back level (if any) or the current version.
-    CTransaction::Serialize(archive);
+    CTransaction_Ex::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -101,7 +101,7 @@ bool QOwnerOf::Serialize(CArchive& archive) {
 bool QOwnerOf::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
-    CTransaction::SerializeC(archive);
+    CTransaction_Ex::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -137,18 +137,20 @@ void QOwnerOf::registerClass(void) {
     if (been_here) return;
     been_here = true;
 
-    CTransaction::registerClass();
+    CTransaction_Ex::registerClass();
 
     size_t fieldNum = 1000;
     ADD_FIELD(QOwnerOf, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QOwnerOf, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QOwnerOf, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QOwnerOf, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(QOwnerOf, "_tokenId", T_NUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(QOwnerOf, "schema");
     HIDE_FIELD(QOwnerOf, "deleted");
     HIDE_FIELD(QOwnerOf, "showing");
+    HIDE_FIELD(QOwnerOf, "cname");
 
     builtIns.push_back(_biQOwnerOf);
 
@@ -207,7 +209,7 @@ string_q QOwnerOf::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
 
     // Finally, give the parent class a chance
-    return CTransaction::getValueByName(fieldName);
+    return CTransaction_Ex::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

@@ -19,7 +19,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QMultiTransactEvent, CLogEntry);
+IMPLEMENT_NODE(QMultiTransactEvent, CLogEntry_Ex);
 
 //---------------------------------------------------------------------------
 static string_q nextMultitransacteventChunk(const string_q& fieldIn, const void *dataPtr);
@@ -59,7 +59,7 @@ bool QMultiTransactEvent::setValueByName(const string_q& fieldName, const string
     // EXISTING_CODE
     // EXISTING_CODE
 
-    if (CLogEntry::setValueByName(fieldName, fieldValue))
+    if (CLogEntry_Ex::setValueByName(fieldName, fieldValue))
         return true;
 
     switch (tolower(fieldName[0])) {
@@ -96,7 +96,7 @@ bool QMultiTransactEvent::Serialize(CArchive& archive) {
 
     // Always read the base class (it will handle its own backLevels if any, then
     // read this object's back level (if any) or the current version.
-    CLogEntry::Serialize(archive);
+    CLogEntry_Ex::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -115,7 +115,7 @@ bool QMultiTransactEvent::Serialize(CArchive& archive) {
 bool QMultiTransactEvent::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
-    CLogEntry::SerializeC(archive);
+    CLogEntry_Ex::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -155,7 +155,7 @@ void QMultiTransactEvent::registerClass(void) {
     if (been_here) return;
     been_here = true;
 
-    CLogEntry::registerClass();
+    CLogEntry_Ex::registerClass();
 
     size_t fieldNum = 1000;
     ADD_FIELD(QMultiTransactEvent, "schema",  T_NUMBER, ++fieldNum);
@@ -241,7 +241,7 @@ string_q QMultiTransactEvent::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
 
     // Finally, give the parent class a chance
-    return CLogEntry::getValueByName(fieldName);
+    return CLogEntry_Ex::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

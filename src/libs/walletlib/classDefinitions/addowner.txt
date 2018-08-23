@@ -1,6 +1,6 @@
 [settings]
 class     = QAddOwner
-baseClass = CTransaction
+baseClass = CTransaction_Ex
 fields    = address _owner|
-includes  = transaction.h
+includes  = transaction_ex.h
 cIncs     = #include "etherlib.h"

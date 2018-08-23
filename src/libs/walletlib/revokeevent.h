@@ -17,13 +17,13 @@
  */
 #include <vector>
 #include <map>
-#include "logentry.h"
+#include "logentry_ex.h"
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QRevokeEvent : public CLogEntry {
+class QRevokeEvent : public CLogEntry_Ex {
 public:
     address_t owner;
     string_q operation;
@@ -85,7 +85,7 @@ inline void QRevokeEvent::clear(void) {
 
 //--------------------------------------------------------------------------
 inline void QRevokeEvent::initialize(void) {
-    CLogEntry::initialize();
+    CLogEntry_Ex::initialize();
 
     owner = "";
     operation = "";
@@ -97,7 +97,7 @@ inline void QRevokeEvent::initialize(void) {
 //--------------------------------------------------------------------------
 inline void QRevokeEvent::duplicate(const QRevokeEvent& re) {
     clear();
-    CLogEntry::duplicate(re);
+    CLogEntry_Ex::duplicate(re);
 
     owner = re.owner;
     operation = re.operation;

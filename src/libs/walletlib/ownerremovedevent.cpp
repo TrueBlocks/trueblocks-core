@@ -19,7 +19,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QOwnerRemovedEvent, CLogEntry);
+IMPLEMENT_NODE(QOwnerRemovedEvent, CLogEntry_Ex);
 
 //---------------------------------------------------------------------------
 static string_q nextOwnerremovedeventChunk(const string_q& fieldIn, const void *dataPtr);
@@ -59,7 +59,7 @@ bool QOwnerRemovedEvent::setValueByName(const string_q& fieldName, const string_
     // EXISTING_CODE
     // EXISTING_CODE
 
-    if (CLogEntry::setValueByName(fieldName, fieldValue))
+    if (CLogEntry_Ex::setValueByName(fieldName, fieldValue))
         return true;
 
     switch (tolower(fieldName[0])) {
@@ -86,7 +86,7 @@ bool QOwnerRemovedEvent::Serialize(CArchive& archive) {
 
     // Always read the base class (it will handle its own backLevels if any, then
     // read this object's back level (if any) or the current version.
-    CLogEntry::Serialize(archive);
+    CLogEntry_Ex::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -101,7 +101,7 @@ bool QOwnerRemovedEvent::Serialize(CArchive& archive) {
 bool QOwnerRemovedEvent::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
-    CLogEntry::SerializeC(archive);
+    CLogEntry_Ex::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -137,7 +137,7 @@ void QOwnerRemovedEvent::registerClass(void) {
     if (been_here) return;
     been_here = true;
 
-    CLogEntry::registerClass();
+    CLogEntry_Ex::registerClass();
 
     size_t fieldNum = 1000;
     ADD_FIELD(QOwnerRemovedEvent, "schema",  T_NUMBER, ++fieldNum);
@@ -209,7 +209,7 @@ string_q QOwnerRemovedEvent::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
 
     // Finally, give the parent class a chance
-    return CLogEntry::getValueByName(fieldName);
+    return CLogEntry_Ex::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

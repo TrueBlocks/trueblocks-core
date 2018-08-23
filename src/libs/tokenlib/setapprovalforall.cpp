@@ -19,7 +19,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QSetApprovalForAll, CTransaction);
+IMPLEMENT_NODE(QSetApprovalForAll, CTransaction_Ex);
 
 //---------------------------------------------------------------------------
 static string_q nextSetapprovalforallChunk(const string_q& fieldIn, const void *dataPtr);
@@ -59,7 +59,7 @@ bool QSetApprovalForAll::setValueByName(const string_q& fieldName, const string_
     // EXISTING_CODE
     // EXISTING_CODE
 
-    if (CTransaction::setValueByName(fieldName, fieldValue))
+    if (CTransaction_Ex::setValueByName(fieldName, fieldValue))
         return true;
 
     switch (tolower(fieldName[0])) {
@@ -87,7 +87,7 @@ bool QSetApprovalForAll::Serialize(CArchive& archive) {
 
     // Always read the base class (it will handle its own backLevels if any, then
     // read this object's back level (if any) or the current version.
-    CTransaction::Serialize(archive);
+    CTransaction_Ex::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -103,7 +103,7 @@ bool QSetApprovalForAll::Serialize(CArchive& archive) {
 bool QSetApprovalForAll::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
-    CTransaction::SerializeC(archive);
+    CTransaction_Ex::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -140,12 +140,13 @@ void QSetApprovalForAll::registerClass(void) {
     if (been_here) return;
     been_here = true;
 
-    CTransaction::registerClass();
+    CTransaction_Ex::registerClass();
 
     size_t fieldNum = 1000;
     ADD_FIELD(QSetApprovalForAll, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QSetApprovalForAll, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QSetApprovalForAll, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QSetApprovalForAll, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(QSetApprovalForAll, "_operator", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QSetApprovalForAll, "_approved", T_BOOL, ++fieldNum);
 
@@ -153,6 +154,7 @@ void QSetApprovalForAll::registerClass(void) {
     HIDE_FIELD(QSetApprovalForAll, "schema");
     HIDE_FIELD(QSetApprovalForAll, "deleted");
     HIDE_FIELD(QSetApprovalForAll, "showing");
+    HIDE_FIELD(QSetApprovalForAll, "cname");
 
     builtIns.push_back(_biQSetApprovalForAll);
 
@@ -212,7 +214,7 @@ string_q QSetApprovalForAll::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
 
     // Finally, give the parent class a chance
-    return CTransaction::getValueByName(fieldName);
+    return CTransaction_Ex::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

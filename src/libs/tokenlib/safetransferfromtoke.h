@@ -17,13 +17,13 @@
  */
 #include <vector>
 #include <map>
-#include "transaction.h"
+#include "transaction_ex.h"
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QSafeTransferFromToke : public CTransaction {
+class QSafeTransferFromToke : public CTransaction_Ex {
 public:
     address_t _from;
     address_t _to;
@@ -87,7 +87,7 @@ inline void QSafeTransferFromToke::clear(void) {
 
 //--------------------------------------------------------------------------
 inline void QSafeTransferFromToke::initialize(void) {
-    CTransaction::initialize();
+    CTransaction_Ex::initialize();
 
     _from = "";
     _to = "";
@@ -101,7 +101,7 @@ inline void QSafeTransferFromToke::initialize(void) {
 //--------------------------------------------------------------------------
 inline void QSafeTransferFromToke::duplicate(const QSafeTransferFromToke& sa) {
     clear();
-    CTransaction::duplicate(sa);
+    CTransaction_Ex::duplicate(sa);
 
     _from = sa._from;
     _to = sa._to;

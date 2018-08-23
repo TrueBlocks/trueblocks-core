@@ -19,7 +19,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QIsOwner, CTransaction);
+IMPLEMENT_NODE(QIsOwner, CTransaction_Ex);
 
 //---------------------------------------------------------------------------
 static string_q nextIsownerChunk(const string_q& fieldIn, const void *dataPtr);
@@ -59,7 +59,7 @@ bool QIsOwner::setValueByName(const string_q& fieldName, const string_q& fieldVa
     // EXISTING_CODE
     // EXISTING_CODE
 
-    if (CTransaction::setValueByName(fieldName, fieldValue))
+    if (CTransaction_Ex::setValueByName(fieldName, fieldValue))
         return true;
 
     switch (tolower(fieldName[0])) {
@@ -86,7 +86,7 @@ bool QIsOwner::Serialize(CArchive& archive) {
 
     // Always read the base class (it will handle its own backLevels if any, then
     // read this object's back level (if any) or the current version.
-    CTransaction::Serialize(archive);
+    CTransaction_Ex::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -101,7 +101,7 @@ bool QIsOwner::Serialize(CArchive& archive) {
 bool QIsOwner::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
-    CTransaction::SerializeC(archive);
+    CTransaction_Ex::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -137,7 +137,7 @@ void QIsOwner::registerClass(void) {
     if (been_here) return;
     been_here = true;
 
-    CTransaction::registerClass();
+    CTransaction_Ex::registerClass();
 
     size_t fieldNum = 1000;
     ADD_FIELD(QIsOwner, "schema",  T_NUMBER, ++fieldNum);
@@ -209,7 +209,7 @@ string_q QIsOwner::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
 
     // Finally, give the parent class a chance
-    return CTransaction::getValueByName(fieldName);
+    return CTransaction_Ex::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

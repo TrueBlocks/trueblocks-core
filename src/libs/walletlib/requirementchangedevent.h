@@ -17,13 +17,13 @@
  */
 #include <vector>
 #include <map>
-#include "logentry.h"
+#include "logentry_ex.h"
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QRequirementChangedEvent : public CLogEntry {
+class QRequirementChangedEvent : public CLogEntry_Ex {
 public:
     biguint_t newRequirement;
 
@@ -84,7 +84,7 @@ inline void QRequirementChangedEvent::clear(void) {
 
 //--------------------------------------------------------------------------
 inline void QRequirementChangedEvent::initialize(void) {
-    CLogEntry::initialize();
+    CLogEntry_Ex::initialize();
 
     newRequirement = 0;
 
@@ -95,7 +95,7 @@ inline void QRequirementChangedEvent::initialize(void) {
 //--------------------------------------------------------------------------
 inline void QRequirementChangedEvent::duplicate(const QRequirementChangedEvent& re) {
     clear();
-    CLogEntry::duplicate(re);
+    CLogEntry_Ex::duplicate(re);
 
     newRequirement = re.newRequirement;
 

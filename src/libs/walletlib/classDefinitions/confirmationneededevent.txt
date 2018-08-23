@@ -1,6 +1,6 @@
 [settings]
 class     = QConfirmationNeededEvent
-baseClass = CLogEntry
+baseClass = CLogEntry_Ex
 fields    = bytes32 operation|address initiator|uint256 value|address to|bytes data|
-includes  = logentry.h
+includes  = logentry_ex.h
 cIncs     = #include "etherlib.h"
