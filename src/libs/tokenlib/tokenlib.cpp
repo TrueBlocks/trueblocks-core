@@ -49,7 +49,9 @@ const string_q func_transferFrom_qb = "0x23b872dd";
 const string_q func_version_qb = "0x54fd4d50";
 
 //-----------------------------------------------------------------------
-const CTransaction *promoteToToken(const CTransaction *p) {
+const CTransaction_Ex *promoteToToken(const CTransaction *p) {
+
+    CTransaction_Ex item(p);
     if (p && (p->input.length() >= 10 || p->input == "0x")) {
         string_q items[256];
         size_t nItems = 0;
@@ -63,7 +65,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             // function approve(address _spender, uint256 _value)
             // 0x095ea7b3
             QApprove *a = new QApprove;
-            a->CTransaction::operator=(*p);
+            a->CTransaction_Ex::operator=(item);
             a->_spender = str_2_Addr(extract(params, 0*64, 64));
             a->_value = str_2_Wei("0x" + extract(params, 1*64, 64));
             items[nItems++] = "address";
@@ -75,7 +77,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             // function approveAndCall(address _spender, uint256 _value, bytes _extraData)
             // 0xcae9ca51
             QApproveAndCall *a = new QApproveAndCall;
-            a->CTransaction::operator=(*p);
+            a->CTransaction_Ex::operator=(item);
             a->_spender = str_2_Addr(extract(params, 0*64, 64));
             a->_value = str_2_Wei("0x" + extract(params, 1*64, 64));
             a->_extraData = extract(params, 2*64);
@@ -89,7 +91,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             // function ownerOf(uint256 _tokenId)
             // 0x6352211e
             QOwnerOf *a = new QOwnerOf;
-            a->CTransaction::operator=(*p);
+            a->CTransaction_Ex::operator=(item);
             a->_tokenId = str_2_Wei("0x" + extract(params, 0*64, 64));
             items[nItems++] = "uint256";
             a->function = toFunction("ownerOf", params, nItems, items);
@@ -99,7 +101,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             // function safeTransferFrom(address _from, address _to, uint256 _tokenId)
             // 0x42842e0e
             QSafeTransferFrom *a = new QSafeTransferFrom;
-            a->CTransaction::operator=(*p);
+            a->CTransaction_Ex::operator=(item);
             a->_from = str_2_Addr(extract(params, 0*64, 64));
             a->_to = str_2_Addr(extract(params, 1*64, 64));
             a->_tokenId = str_2_Wei("0x" + extract(params, 2*64, 64));
@@ -113,7 +115,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             // function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes _data)
             // 0xb88d4fde
             QSafeTransferFromToke *a = new QSafeTransferFromToke;
-            a->CTransaction::operator=(*p);
+            a->CTransaction_Ex::operator=(item);
             a->_from = str_2_Addr(extract(params, 0*64, 64));
             a->_to = str_2_Addr(extract(params, 1*64, 64));
             a->_tokenId = str_2_Wei("0x" + extract(params, 2*64, 64));
@@ -129,7 +131,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             // function setApprovalForAll(address _operator, bool _approved)
             // 0xa22cb465
             QSetApprovalForAll *a = new QSetApprovalForAll;
-            a->CTransaction::operator=(*p);
+            a->CTransaction_Ex::operator=(item);
             a->_operator = str_2_Addr(extract(params, 0*64, 64));
             a->_approved = str_2_Int(extract(params, 1*64, 64));
             items[nItems++] = "address";
@@ -141,7 +143,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             // function transfer(address _to, uint256 _value)
             // 0xa9059cbb
             QTransfer *a = new QTransfer;
-            a->CTransaction::operator=(*p);
+            a->CTransaction_Ex::operator=(item);
             a->_to = str_2_Addr(extract(params, 0*64, 64));
             a->_value = str_2_Wei("0x" + extract(params, 1*64, 64));
             items[nItems++] = "address";
@@ -153,7 +155,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             // function transferFrom(address _from, address _to, uint256 _value)
             // 0x23b872dd
             QTransferFrom *a = new QTransferFrom;
-            a->CTransaction::operator=(*p);
+            a->CTransaction_Ex::operator=(item);
             a->_from = str_2_Addr(extract(params, 0*64, 64));
             a->_to = str_2_Addr(extract(params, 1*64, 64));
             a->_value = str_2_Wei("0x" + extract(params, 2*64, 64));
@@ -170,7 +172,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    // returns NULL if not promoted
+    // never returns NULL
     return promoteToWallet(p);
 }
 
@@ -180,10 +182,9 @@ const string_q evt_ApprovalForAll_qb = "0x17307eab39ab6107e8899845ad3d59bd9653f2
 const string_q evt_Transfer_qb = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
 
 //-----------------------------------------------------------------------
-const CLogEntry *promoteToTokenEvent(const CLogEntry *p) {
-    if (!p)
-        return NULL;
+const CLogEntry_Ex *promoteToTokenEvent(const CLogEntry *p) {
 
+    CLogEntry_Ex item(p);
     size_t nTops = p->topics.size();
     if (nTops > 0) {  // the '0'th topic is the event signature
         string_q data = extract(p->data, 2);
@@ -194,7 +195,7 @@ const CLogEntry *promoteToTokenEvent(const CLogEntry *p) {
             // event Approval(address indexed _owner, address indexed _spender, uint256 _value)
             // 0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925
             QApprovalEvent *a = new QApprovalEvent;
-            a->CLogEntry::operator=(*p);
+            a->CLogEntry_Ex::operator=(item);
             a->_owner = str_2_Addr(nTops > 1 ? topic_2_Str(p->topics[1]) : "");
             a->_spender = str_2_Addr(nTops > 2 ? topic_2_Str(p->topics[2]) : "");
             a->_value = str_2_Wei("0x" + extract(data, 0*64, 64));
@@ -204,7 +205,7 @@ const CLogEntry *promoteToTokenEvent(const CLogEntry *p) {
             // event ApprovalForAll(address indexed _owner, address indexed _operator, bool _approved)
             // 0x17307eab39ab6107e8899845ad3d59bd9653f200f220920489ca2b5937696c31
             QApprovalForAllEvent *a = new QApprovalForAllEvent;
-            a->CLogEntry::operator=(*p);
+            a->CLogEntry_Ex::operator=(item);
             a->_owner = str_2_Addr(nTops > 1 ? topic_2_Str(p->topics[1]) : "");
             a->_operator = str_2_Addr(nTops > 2 ? topic_2_Str(p->topics[2]) : "");
             a->_approved = str_2_Int("0x" + extract(data, 0*64, 64));
@@ -214,7 +215,7 @@ const CLogEntry *promoteToTokenEvent(const CLogEntry *p) {
             // event Transfer(address indexed _from, address indexed _to, uint256 _value)
             // 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef
             QTransferEvent *a = new QTransferEvent;
-            a->CLogEntry::operator=(*p);
+            a->CLogEntry_Ex::operator=(item);
             a->_from = str_2_Addr(nTops > 1 ? topic_2_Str(p->topics[1]) : "");
             a->_to = str_2_Addr(nTops > 2 ? topic_2_Str(p->topics[2]) : "");
             a->_value = str_2_Wei("0x" + extract(data, 0*64, 64));
@@ -227,7 +228,7 @@ const CLogEntry *promoteToTokenEvent(const CLogEntry *p) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    // returns NULL if not promoted
+    // never returns NULL
     return promoteToWalletEvent(p);
 }
 

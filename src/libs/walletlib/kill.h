@@ -17,13 +17,13 @@
  */
 #include <vector>
 #include <map>
-#include "transaction.h"
+#include "transaction_ex.h"
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QKill : public CTransaction {
+class QKill : public CTransaction_Ex {
 public:
     address_t _to;
 
@@ -84,7 +84,7 @@ inline void QKill::clear(void) {
 
 //--------------------------------------------------------------------------
 inline void QKill::initialize(void) {
-    CTransaction::initialize();
+    CTransaction_Ex::initialize();
 
     _to = "";
 
@@ -95,7 +95,7 @@ inline void QKill::initialize(void) {
 //--------------------------------------------------------------------------
 inline void QKill::duplicate(const QKill& ki) {
     clear();
-    CTransaction::duplicate(ki);
+    CTransaction_Ex::duplicate(ki);
 
     _to = ki._to;
 

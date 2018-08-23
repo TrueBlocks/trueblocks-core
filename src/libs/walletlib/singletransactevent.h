@@ -17,13 +17,13 @@
  */
 #include <vector>
 #include <map>
-#include "logentry.h"
+#include "logentry_ex.h"
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QSingleTransactEvent : public CLogEntry {
+class QSingleTransactEvent : public CLogEntry_Ex {
 public:
     address_t owner;
     biguint_t value;
@@ -87,7 +87,7 @@ inline void QSingleTransactEvent::clear(void) {
 
 //--------------------------------------------------------------------------
 inline void QSingleTransactEvent::initialize(void) {
-    CLogEntry::initialize();
+    CLogEntry_Ex::initialize();
 
     owner = "";
     value = 0;
@@ -101,7 +101,7 @@ inline void QSingleTransactEvent::initialize(void) {
 //--------------------------------------------------------------------------
 inline void QSingleTransactEvent::duplicate(const QSingleTransactEvent& si) {
     clear();
-    CLogEntry::duplicate(si);
+    CLogEntry_Ex::duplicate(si);
 
     owner = si.owner;
     value = si.value;

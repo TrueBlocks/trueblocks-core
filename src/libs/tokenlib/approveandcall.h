@@ -17,13 +17,13 @@
  */
 #include <vector>
 #include <map>
-#include "transaction.h"
+#include "transaction_ex.h"
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QApproveAndCall : public CTransaction {
+class QApproveAndCall : public CTransaction_Ex {
 public:
     address_t _spender;
     biguint_t _value;
@@ -86,7 +86,7 @@ inline void QApproveAndCall::clear(void) {
 
 //--------------------------------------------------------------------------
 inline void QApproveAndCall::initialize(void) {
-    CTransaction::initialize();
+    CTransaction_Ex::initialize();
 
     _spender = "";
     _value = 0;
@@ -99,7 +99,7 @@ inline void QApproveAndCall::initialize(void) {
 //--------------------------------------------------------------------------
 inline void QApproveAndCall::duplicate(const QApproveAndCall& ap) {
     clear();
-    CTransaction::duplicate(ap);
+    CTransaction_Ex::duplicate(ap);
 
     _spender = ap._spender;
     _value = ap._value;

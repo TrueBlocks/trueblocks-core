@@ -17,13 +17,13 @@
  */
 #include <vector>
 #include <map>
-#include "logentry.h"
+#include "logentry_ex.h"
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QDepositEvent : public CLogEntry {
+class QDepositEvent : public CLogEntry_Ex {
 public:
     address_t from;
     biguint_t value;
@@ -85,7 +85,7 @@ inline void QDepositEvent::clear(void) {
 
 //--------------------------------------------------------------------------
 inline void QDepositEvent::initialize(void) {
-    CLogEntry::initialize();
+    CLogEntry_Ex::initialize();
 
     from = "";
     value = 0;
@@ -97,7 +97,7 @@ inline void QDepositEvent::initialize(void) {
 //--------------------------------------------------------------------------
 inline void QDepositEvent::duplicate(const QDepositEvent& de) {
     clear();
-    CLogEntry::duplicate(de);
+    CLogEntry_Ex::duplicate(de);
 
     from = de.from;
     value = de.value;

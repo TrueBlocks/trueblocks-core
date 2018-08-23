@@ -15,18 +15,20 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <algorithm>
-#include "setdailylimit.h"
+#include "logentry_ex.h"
 #include "etherlib.h"
 
-//---------------------------------------------------------------------------
-IMPLEMENT_NODE(QSetDailyLimit, CTransaction_Ex);
+namespace qblocks {
 
 //---------------------------------------------------------------------------
-static string_q nextSetdailylimitChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextSetdailylimitChunk_custom(const string_q& fieldIn, const void *dataPtr);
+IMPLEMENT_NODE(CLogEntry_Ex, CLogEntry);
 
 //---------------------------------------------------------------------------
-void QSetDailyLimit::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+static string_q nextLogentry_ExChunk(const string_q& fieldIn, const void *dataPtr);
+static string_q nextLogentry_ExChunk_custom(const string_q& fieldIn, const void *dataPtr);
+
+//---------------------------------------------------------------------------
+void CLogEntry_Ex::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -40,13 +42,13 @@ void QSetDailyLimit::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) 
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextSetdailylimitChunk, this);
+        ctx << getNextChunk(fmt, nextLogentry_ExChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextSetdailylimitChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextLogentry_ExChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const QSetDailyLimit *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CLogEntry_Ex *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -55,16 +57,16 @@ string_q nextSetdailylimitChunk(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QSetDailyLimit::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
+bool CLogEntry_Ex::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    if (CTransaction_Ex::setValueByName(fieldName, fieldValue))
+    if (CLogEntry::setValueByName(fieldName, fieldValue))
         return true;
 
     switch (tolower(fieldName[0])) {
-        case '_':
-            if ( fieldName % "_newLimit" ) { _newLimit = str_2_Wei(fieldValue); return true; }
+        case 'n':
+            if ( fieldName % "name" ) { name = fieldValue; return true; }
             break;
         default:
             break;
@@ -73,45 +75,45 @@ bool QSetDailyLimit::setValueByName(const string_q& fieldName, const string_q& f
 }
 
 //---------------------------------------------------------------------------------------------------
-void QSetDailyLimit::finishParse() {
+void CLogEntry_Ex::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QSetDailyLimit::Serialize(CArchive& archive) {
+bool CLogEntry_Ex::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
 
     // Always read the base class (it will handle its own backLevels if any, then
     // read this object's back level (if any) or the current version.
-    CTransaction_Ex::Serialize(archive);
+    CLogEntry::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> _newLimit;
+    archive >> name;
     finishParse();
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QSetDailyLimit::SerializeC(CArchive& archive) const {
+bool CLogEntry_Ex::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
-    CTransaction_Ex::SerializeC(archive);
+    CLogEntry::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << _newLimit;
+    archive << name;
 
     return true;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, QSetDailyLimitArray& array) {
+CArchive& operator>>(CArchive& archive, CLogEntry_ExArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -123,7 +125,7 @@ CArchive& operator>>(CArchive& archive, QSetDailyLimitArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const QSetDailyLimitArray& array) {
+CArchive& operator<<(CArchive& archive, const CLogEntry_ExArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -132,43 +134,43 @@ CArchive& operator<<(CArchive& archive, const QSetDailyLimitArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void QSetDailyLimit::registerClass(void) {
+void CLogEntry_Ex::registerClass(void) {
     static bool been_here = false;
     if (been_here) return;
     been_here = true;
 
-    CTransaction_Ex::registerClass();
+    CLogEntry::registerClass();
 
     size_t fieldNum = 1000;
-    ADD_FIELD(QSetDailyLimit, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(QSetDailyLimit, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(QSetDailyLimit, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(QSetDailyLimit, "cname", T_TEXT,  ++fieldNum);
-    ADD_FIELD(QSetDailyLimit, "_newLimit", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CLogEntry_Ex, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CLogEntry_Ex, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CLogEntry_Ex, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CLogEntry_Ex, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CLogEntry_Ex, "name", T_TEXT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(QSetDailyLimit, "schema");
-    HIDE_FIELD(QSetDailyLimit, "deleted");
-    HIDE_FIELD(QSetDailyLimit, "showing");
-    HIDE_FIELD(QSetDailyLimit, "cname");
+    HIDE_FIELD(CLogEntry_Ex, "schema");
+    HIDE_FIELD(CLogEntry_Ex, "deleted");
+    HIDE_FIELD(CLogEntry_Ex, "showing");
+    HIDE_FIELD(CLogEntry_Ex, "cname");
 
-    builtIns.push_back(_biQSetDailyLimit);
+    builtIns.push_back(_biCLogEntry_Ex);
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextSetdailylimitChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QSetDailyLimit *set = reinterpret_cast<const QSetDailyLimit *>(dataPtr);
-    if (set) {
+string_q nextLogentry_ExChunk_custom(const string_q& fieldIn, const void *dataPtr) {
+    const CLogEntry_Ex *log = reinterpret_cast<const CLogEntry_Ex *>(dataPtr);
+    if (log) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, set);
+                    return nextBasenodeChunk(fieldIn, log);
                 // EXISTING_CODE
                 // EXISTING_CODE
                 break;
@@ -182,7 +184,7 @@ string_q nextSetdailylimitChunk_custom(const string_q& fieldIn, const void *data
 }
 
 //---------------------------------------------------------------------------
-bool QSetDailyLimit::readBackLevel(CArchive& archive) {
+bool CLogEntry_Ex::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE
@@ -191,17 +193,17 @@ bool QSetDailyLimit::readBackLevel(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-string_q QSetDailyLimit::getValueByName(const string_q& fieldName) const {
+string_q CLogEntry_Ex::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
-    string_q ret = nextSetdailylimitChunk_custom(fieldName, this);
+    string_q ret = nextLogentry_ExChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
     // Return field values
     switch (tolower(fieldName[0])) {
-        case '_':
-            if ( fieldName % "_newLimit" ) return bnu_2_Str(_newLimit);
+        case 'n':
+            if ( fieldName % "name" ) return name;
             break;
     }
 
@@ -209,11 +211,11 @@ string_q QSetDailyLimit::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
 
     // Finally, give the parent class a chance
-    return CTransaction_Ex::getValueByName(fieldName);
+    return CLogEntry::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const QSetDailyLimit& item) {
+ostream& operator<<(ostream& os, const CLogEntry_Ex& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -224,5 +226,11 @@ ostream& operator<<(ostream& os, const QSetDailyLimit& item) {
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+CLogEntry_Ex::CLogEntry_Ex(const CLogEntry *log) {
+    initialize();
+    if (log)
+        CLogEntry::duplicate(*log);
+}
 // EXISTING_CODE
+}  // namespace qblocks
 

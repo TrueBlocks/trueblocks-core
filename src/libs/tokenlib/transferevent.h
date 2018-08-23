@@ -17,13 +17,13 @@
  */
 #include <vector>
 #include <map>
-#include "logentry.h"
+#include "logentry_ex.h"
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QTransferEvent : public CLogEntry {
+class QTransferEvent : public CLogEntry_Ex {
 public:
     address_t _from;
     address_t _to;
@@ -86,7 +86,7 @@ inline void QTransferEvent::clear(void) {
 
 //--------------------------------------------------------------------------
 inline void QTransferEvent::initialize(void) {
-    CLogEntry::initialize();
+    CLogEntry_Ex::initialize();
 
     _from = "";
     _to = "";
@@ -99,7 +99,7 @@ inline void QTransferEvent::initialize(void) {
 //--------------------------------------------------------------------------
 inline void QTransferEvent::duplicate(const QTransferEvent& tr) {
     clear();
-    CLogEntry::duplicate(tr);
+    CLogEntry_Ex::duplicate(tr);
 
     _from = tr._from;
     _to = tr._to;

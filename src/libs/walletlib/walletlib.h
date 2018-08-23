@@ -38,8 +38,8 @@
 
 //------------------------------------------------------------------------
 extern void walletlib_init(void);
-extern const CTransaction *promoteToWallet(const CTransaction *p);
-extern const CLogEntry *promoteToWalletEvent(const CLogEntry *p);
+extern const CTransaction_Ex *promoteToWallet(const CTransaction *p);
+extern const CLogEntry_Ex *promoteToWalletEvent(const CLogEntry *p);
 
 //------------------------------------------------------------------------
 extern const string_q func_addOwner_qb;

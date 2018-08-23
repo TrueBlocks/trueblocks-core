@@ -19,7 +19,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QApprove, CTransaction);
+IMPLEMENT_NODE(QApprove, CTransaction_Ex);
 
 //---------------------------------------------------------------------------
 static string_q nextApproveChunk(const string_q& fieldIn, const void *dataPtr);
@@ -59,7 +59,7 @@ bool QApprove::setValueByName(const string_q& fieldName, const string_q& fieldVa
     // EXISTING_CODE
     // EXISTING_CODE
 
-    if (CTransaction::setValueByName(fieldName, fieldValue))
+    if (CTransaction_Ex::setValueByName(fieldName, fieldValue))
         return true;
 
     switch (tolower(fieldName[0])) {
@@ -87,7 +87,7 @@ bool QApprove::Serialize(CArchive& archive) {
 
     // Always read the base class (it will handle its own backLevels if any, then
     // read this object's back level (if any) or the current version.
-    CTransaction::Serialize(archive);
+    CTransaction_Ex::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -103,7 +103,7 @@ bool QApprove::Serialize(CArchive& archive) {
 bool QApprove::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
-    CTransaction::SerializeC(archive);
+    CTransaction_Ex::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -140,12 +140,13 @@ void QApprove::registerClass(void) {
     if (been_here) return;
     been_here = true;
 
-    CTransaction::registerClass();
+    CTransaction_Ex::registerClass();
 
     size_t fieldNum = 1000;
     ADD_FIELD(QApprove, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QApprove, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QApprove, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QApprove, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(QApprove, "_spender", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QApprove, "_value", T_NUMBER, ++fieldNum);
 
@@ -153,6 +154,7 @@ void QApprove::registerClass(void) {
     HIDE_FIELD(QApprove, "schema");
     HIDE_FIELD(QApprove, "deleted");
     HIDE_FIELD(QApprove, "showing");
+    HIDE_FIELD(QApprove, "cname");
 
     builtIns.push_back(_biQApprove);
 
@@ -212,7 +214,7 @@ string_q QApprove::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
 
     // Finally, give the parent class a chance
-    return CTransaction::getValueByName(fieldName);
+    return CTransaction_Ex::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

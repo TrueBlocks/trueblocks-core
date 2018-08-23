@@ -17,13 +17,13 @@
  */
 #include <vector>
 #include <map>
-#include "transaction.h"
+#include "transaction_ex.h"
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QChangeRequirement : public CTransaction {
+class QChangeRequirement : public CTransaction_Ex {
 public:
     biguint_t _newRequired;
 
@@ -84,7 +84,7 @@ inline void QChangeRequirement::clear(void) {
 
 //--------------------------------------------------------------------------
 inline void QChangeRequirement::initialize(void) {
-    CTransaction::initialize();
+    CTransaction_Ex::initialize();
 
     _newRequired = 0;
 
@@ -95,7 +95,7 @@ inline void QChangeRequirement::initialize(void) {
 //--------------------------------------------------------------------------
 inline void QChangeRequirement::duplicate(const QChangeRequirement& ch) {
     clear();
-    CTransaction::duplicate(ch);
+    CTransaction_Ex::duplicate(ch);
 
     _newRequired = ch._newRequired;
 

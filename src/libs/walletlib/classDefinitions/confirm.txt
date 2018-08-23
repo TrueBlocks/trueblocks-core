@@ -1,6 +1,6 @@
 [settings]
 class     = QConfirm
-baseClass = CTransaction
+baseClass = CTransaction_Ex
 fields    = bytes32 _h|
-includes  = transaction.h
+includes  = transaction_ex.h
 cIncs     = #include "etherlib.h"

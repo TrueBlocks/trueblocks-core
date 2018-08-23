@@ -1,6 +1,6 @@
 [settings]
 class     = QApproveAndCall
-baseClass = CTransaction
+baseClass = CTransaction_Ex
 fields    = address _spender|uint256 _value|bytes _extraData|
-includes  = transaction.h
+includes  = transaction_ex.h
 cIncs     = #include "etherlib.h"

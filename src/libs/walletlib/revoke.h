@@ -17,13 +17,13 @@
  */
 #include <vector>
 #include <map>
-#include "transaction.h"
+#include "transaction_ex.h"
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QRevoke : public CTransaction {
+class QRevoke : public CTransaction_Ex {
 public:
     string_q _operation;
 
@@ -84,7 +84,7 @@ inline void QRevoke::clear(void) {
 
 //--------------------------------------------------------------------------
 inline void QRevoke::initialize(void) {
-    CTransaction::initialize();
+    CTransaction_Ex::initialize();
 
     _operation = "";
 
@@ -95,7 +95,7 @@ inline void QRevoke::initialize(void) {
 //--------------------------------------------------------------------------
 inline void QRevoke::duplicate(const QRevoke& re) {
     clear();
-    CTransaction::duplicate(re);
+    CTransaction_Ex::duplicate(re);
 
     _operation = re._operation;
 

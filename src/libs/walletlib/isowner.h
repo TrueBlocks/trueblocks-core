@@ -17,13 +17,13 @@
  */
 #include <vector>
 #include <map>
-#include "transaction.h"
+#include "transaction_ex.h"
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QIsOwner : public CTransaction {
+class QIsOwner : public CTransaction_Ex {
 public:
     address_t _addr;
 
@@ -84,7 +84,7 @@ inline void QIsOwner::clear(void) {
 
 //--------------------------------------------------------------------------
 inline void QIsOwner::initialize(void) {
-    CTransaction::initialize();
+    CTransaction_Ex::initialize();
 
     _addr = "";
 
@@ -95,7 +95,7 @@ inline void QIsOwner::initialize(void) {
 //--------------------------------------------------------------------------
 inline void QIsOwner::duplicate(const QIsOwner& is) {
     clear();
-    CTransaction::duplicate(is);
+    CTransaction_Ex::duplicate(is);
 
     _addr = is._addr;
 

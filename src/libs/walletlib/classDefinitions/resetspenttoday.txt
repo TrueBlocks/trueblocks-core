@@ -1,6 +1,6 @@
 [settings]
 class     = QResetSpentToday
-baseClass = CTransaction
+baseClass = CTransaction_Ex
 fields    = 
-includes  = transaction.h
+includes  = transaction_ex.h
 cIncs     = #include "etherlib.h"

@@ -19,7 +19,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QTransferFrom, CTransaction);
+IMPLEMENT_NODE(QTransferFrom, CTransaction_Ex);
 
 //---------------------------------------------------------------------------
 static string_q nextTransferfromChunk(const string_q& fieldIn, const void *dataPtr);
@@ -59,7 +59,7 @@ bool QTransferFrom::setValueByName(const string_q& fieldName, const string_q& fi
     // EXISTING_CODE
     // EXISTING_CODE
 
-    if (CTransaction::setValueByName(fieldName, fieldValue))
+    if (CTransaction_Ex::setValueByName(fieldName, fieldValue))
         return true;
 
     switch (tolower(fieldName[0])) {
@@ -88,7 +88,7 @@ bool QTransferFrom::Serialize(CArchive& archive) {
 
     // Always read the base class (it will handle its own backLevels if any, then
     // read this object's back level (if any) or the current version.
-    CTransaction::Serialize(archive);
+    CTransaction_Ex::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -105,7 +105,7 @@ bool QTransferFrom::Serialize(CArchive& archive) {
 bool QTransferFrom::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
-    CTransaction::SerializeC(archive);
+    CTransaction_Ex::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -143,12 +143,13 @@ void QTransferFrom::registerClass(void) {
     if (been_here) return;
     been_here = true;
 
-    CTransaction::registerClass();
+    CTransaction_Ex::registerClass();
 
     size_t fieldNum = 1000;
     ADD_FIELD(QTransferFrom, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QTransferFrom, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QTransferFrom, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QTransferFrom, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(QTransferFrom, "_from", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QTransferFrom, "_to", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QTransferFrom, "_value", T_NUMBER, ++fieldNum);
@@ -157,6 +158,7 @@ void QTransferFrom::registerClass(void) {
     HIDE_FIELD(QTransferFrom, "schema");
     HIDE_FIELD(QTransferFrom, "deleted");
     HIDE_FIELD(QTransferFrom, "showing");
+    HIDE_FIELD(QTransferFrom, "cname");
 
     builtIns.push_back(_biQTransferFrom);
 
@@ -217,7 +219,7 @@ string_q QTransferFrom::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
 
     // Finally, give the parent class a chance
-    return CTransaction::getValueByName(fieldName);
+    return CTransaction_Ex::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

@@ -17,13 +17,13 @@
  */
 #include <vector>
 #include <map>
-#include "transaction.h"
+#include "transaction_ex.h"
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QChangeOwner : public CTransaction {
+class QChangeOwner : public CTransaction_Ex {
 public:
     address_t _from;
     address_t _to;
@@ -85,7 +85,7 @@ inline void QChangeOwner::clear(void) {
 
 //--------------------------------------------------------------------------
 inline void QChangeOwner::initialize(void) {
-    CTransaction::initialize();
+    CTransaction_Ex::initialize();
 
     _from = "";
     _to = "";
@@ -97,7 +97,7 @@ inline void QChangeOwner::initialize(void) {
 //--------------------------------------------------------------------------
 inline void QChangeOwner::duplicate(const QChangeOwner& ch) {
     clear();
-    CTransaction::duplicate(ch);
+    CTransaction_Ex::duplicate(ch);
 
     _from = ch._from;
     _to = ch._to;

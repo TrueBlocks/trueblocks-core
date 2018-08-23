@@ -19,7 +19,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QTransferEvent, CLogEntry);
+IMPLEMENT_NODE(QTransferEvent, CLogEntry_Ex);
 
 //---------------------------------------------------------------------------
 static string_q nextTransfereventChunk(const string_q& fieldIn, const void *dataPtr);
@@ -59,7 +59,7 @@ bool QTransferEvent::setValueByName(const string_q& fieldName, const string_q& f
     // EXISTING_CODE
     // EXISTING_CODE
 
-    if (CLogEntry::setValueByName(fieldName, fieldValue))
+    if (CLogEntry_Ex::setValueByName(fieldName, fieldValue))
         return true;
 
     switch (tolower(fieldName[0])) {
@@ -88,7 +88,7 @@ bool QTransferEvent::Serialize(CArchive& archive) {
 
     // Always read the base class (it will handle its own backLevels if any, then
     // read this object's back level (if any) or the current version.
-    CLogEntry::Serialize(archive);
+    CLogEntry_Ex::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -105,7 +105,7 @@ bool QTransferEvent::Serialize(CArchive& archive) {
 bool QTransferEvent::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
-    CLogEntry::SerializeC(archive);
+    CLogEntry_Ex::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -143,12 +143,13 @@ void QTransferEvent::registerClass(void) {
     if (been_here) return;
     been_here = true;
 
-    CLogEntry::registerClass();
+    CLogEntry_Ex::registerClass();
 
     size_t fieldNum = 1000;
     ADD_FIELD(QTransferEvent, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QTransferEvent, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QTransferEvent, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QTransferEvent, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(QTransferEvent, "_from", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QTransferEvent, "_to", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QTransferEvent, "_value", T_NUMBER, ++fieldNum);
@@ -157,6 +158,7 @@ void QTransferEvent::registerClass(void) {
     HIDE_FIELD(QTransferEvent, "schema");
     HIDE_FIELD(QTransferEvent, "deleted");
     HIDE_FIELD(QTransferEvent, "showing");
+    HIDE_FIELD(QTransferEvent, "cname");
 
     builtIns.push_back(_biQTransferEvent);
 
@@ -217,7 +219,7 @@ string_q QTransferEvent::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
 
     // Finally, give the parent class a chance
-    return CLogEntry::getValueByName(fieldName);
+    return CLogEntry_Ex::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

@@ -74,6 +74,9 @@ namespace qblocks {
     string_q CBaseNode::getValueByName(const string_q& fieldName) const {
 
         switch (tolower(fieldName[0])) {
+            case 'c':
+                if ( fieldName % "cname" ) return extract(string_q(getRuntimeClass()->m_ClassName), 1);
+                break;
             case 'd':
                 if ( fieldName % "deleted" ) return uint_2_Str(m_deleted);
                 break;

@@ -17,39 +17,39 @@
  */
 #include <vector>
 #include <map>
-#include "logentry_ex.h"
+#include "transaction.h"
+
+namespace qblocks {
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QConfirmationNeededEvent : public CLogEntry_Ex {
+class CTransaction_Ex : public CTransaction {
 public:
-    string_q operation;
-    address_t initiator;
-    biguint_t value;
-    address_t to;
-    string_q data;
+    string_q name;
+    uint64_t traceId;
 
 public:
-    QConfirmationNeededEvent(void);
-    QConfirmationNeededEvent(const QConfirmationNeededEvent& co);
-    virtual ~QConfirmationNeededEvent(void);
-    QConfirmationNeededEvent& operator=(const QConfirmationNeededEvent& co);
+    CTransaction_Ex(void);
+    CTransaction_Ex(const CTransaction_Ex& tr);
+    virtual ~CTransaction_Ex(void);
+    CTransaction_Ex& operator=(const CTransaction_Ex& tr);
 
-    DECLARE_NODE(QConfirmationNeededEvent);
+    DECLARE_NODE(CTransaction_Ex);
 
     // EXISTING_CODE
+    CTransaction_Ex(const CTransaction *p);
     // EXISTING_CODE
-    bool operator==(const QConfirmationNeededEvent& item) const;
-    bool operator!=(const QConfirmationNeededEvent& item) const { return !operator==(item); }
-    friend bool operator<(const QConfirmationNeededEvent& v1, const QConfirmationNeededEvent& v2);
-    friend ostream& operator<<(ostream& os, const QConfirmationNeededEvent& item);
+    bool operator==(const CTransaction_Ex& item) const;
+    bool operator!=(const CTransaction_Ex& item) const { return !operator==(item); }
+    friend bool operator<(const CTransaction_Ex& v1, const CTransaction_Ex& v2);
+    friend ostream& operator<<(ostream& os, const CTransaction_Ex& item);
 
 protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const QConfirmationNeededEvent& co);
+    void duplicate(const CTransaction_Ex& tr);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -57,59 +57,53 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline QConfirmationNeededEvent::QConfirmationNeededEvent(void) {
+inline CTransaction_Ex::CTransaction_Ex(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline QConfirmationNeededEvent::QConfirmationNeededEvent(const QConfirmationNeededEvent& co) {
+inline CTransaction_Ex::CTransaction_Ex(const CTransaction_Ex& tr) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(co);
+    duplicate(tr);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline QConfirmationNeededEvent::~QConfirmationNeededEvent(void) {
+inline CTransaction_Ex::~CTransaction_Ex(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QConfirmationNeededEvent::clear(void) {
+inline void CTransaction_Ex::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QConfirmationNeededEvent::initialize(void) {
-    CLogEntry_Ex::initialize();
+inline void CTransaction_Ex::initialize(void) {
+    CTransaction::initialize();
 
-    operation = "";
-    initiator = "";
-    value = 0;
-    to = "";
-    data = "";
+    name = "";
+    traceId = 0;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QConfirmationNeededEvent::duplicate(const QConfirmationNeededEvent& co) {
+inline void CTransaction_Ex::duplicate(const CTransaction_Ex& tr) {
     clear();
-    CLogEntry_Ex::duplicate(co);
+    CTransaction::duplicate(tr);
 
-    operation = co.operation;
-    initiator = co.initiator;
-    value = co.value;
-    to = co.to;
-    data = co.data;
+    name = tr.name;
+    traceId = tr.traceId;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -117,15 +111,15 @@ inline void QConfirmationNeededEvent::duplicate(const QConfirmationNeededEvent& 
 }
 
 //--------------------------------------------------------------------------
-inline QConfirmationNeededEvent& QConfirmationNeededEvent::operator=(const QConfirmationNeededEvent& co) {
-    duplicate(co);
+inline CTransaction_Ex& CTransaction_Ex::operator=(const CTransaction_Ex& tr) {
+    duplicate(tr);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool QConfirmationNeededEvent::operator==(const QConfirmationNeededEvent& item) const {
+inline bool CTransaction_Ex::operator==(const CTransaction_Ex& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -133,7 +127,7 @@ inline bool QConfirmationNeededEvent::operator==(const QConfirmationNeededEvent&
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const QConfirmationNeededEvent& v1, const QConfirmationNeededEvent& v2) {
+inline bool operator<(const CTransaction_Ex& v1, const CTransaction_Ex& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -141,11 +135,12 @@ inline bool operator<(const QConfirmationNeededEvent& v1, const QConfirmationNee
 }
 
 //---------------------------------------------------------------------------
-typedef vector<QConfirmationNeededEvent> QConfirmationNeededEventArray;
-extern CArchive& operator>>(CArchive& archive, QConfirmationNeededEventArray& array);
-extern CArchive& operator<<(CArchive& archive, const QConfirmationNeededEventArray& array);
+typedef vector<CTransaction_Ex> CTransaction_ExArray;
+extern CArchive& operator>>(CArchive& archive, CTransaction_ExArray& array);
+extern CArchive& operator<<(CArchive& archive, const CTransaction_ExArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+}  // namespace qblocks
 
