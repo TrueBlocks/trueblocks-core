@@ -420,8 +420,10 @@ int main(int argc, const char *argv[]) {
                 replace(sourceCode, "return promoteToToken(p);", "return promoteToWallet(p);");
                 replace(sourceCode, "return promoteToTokenEvent(p);", "return promoteToWalletEvent(p);");
             } else if (options.isWallet()) {
-                replace(sourceCode, "return promoteToToken(p);", "return NULL;");
-                replace(sourceCode, "return promoteToTokenEvent(p);", "return NULL;");
+                replace(sourceCode, "return promoteToToken(p);", "return new CTransaction_Ex(p);");
+                replace(sourceCode, "return promoteToTokenEvent(p);", "return new CLogEntry_Ex(p);");
+                replaceAll(sourceCode, "never returns NULL",
+                           "If we haven't found the thing, we can send back an extended thing");
             }
             replace(sourceCode, "[{BLKPATH}]", options.isBuiltin() ? "" : STR_BLOCK_PATH);
             replaceAll(sourceCode, "[{CODE_SIGS}]", (options.isBuiltin() ? "" : STR_CODE_SIGS));
@@ -496,7 +498,7 @@ const char* STR_FACTORY1 =
 "\t\t\t// [{SIGNATURE}]\n"
 "\t\t\t// [{ENCODING}]\n"
 "\t\t\t[{CLASS}] *a = new [{CLASS}];\n"
-"\t\t\ta->C[{BASE}]::operator=(*p);\n"
+"\t\t\ta->C[{BASE}]::operator=(item);\n"
 "[{ASSIGNS1}]"
 "[{ITEMS1}]"
 "\t\t\ta->function = [{PARSEIT}];\n"
@@ -509,7 +511,7 @@ const char* STR_FACTORY2 =
 "\t\t\t// [{SIGNATURE}]\n"
 "\t\t\t// [{ENCODING}]\n"
 "\t\t\t[{CLASS}] *a = new [{CLASS}];\n"
-"\t\t\ta->C[{BASE}]::operator=(*p);\n"
+"\t\t\ta->C[{BASE}]::operator=(item);\n"
 "[{ASSIGNS2}]"
 "\t\t\treturn a;\n"
 "\n";

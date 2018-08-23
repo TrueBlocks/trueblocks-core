@@ -188,7 +188,7 @@ const CTransaction_Ex *promoteToWallet(const CTransaction *p) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    // If we haven't found the thing, we can send back an extended transaction
+    // If we haven't found the thing, we can send back an extended thing
     return new CTransaction_Ex(p);
 }
 
@@ -316,7 +316,7 @@ const CLogEntry_Ex *promoteToWalletEvent(const CLogEntry *p) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    // If we haven't found the thing, we can send back an extended event
+    // If we haven't found the thing, we can send back an extended thing
     return new CLogEntry_Ex(p);
 }
 
