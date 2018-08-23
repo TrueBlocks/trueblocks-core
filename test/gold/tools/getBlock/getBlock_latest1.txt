@@ -1,6 +1,6 @@
 getBlock argc: 2 [1:--latest] 
 getBlock --latest 
-Hostname:                linux
+Hostname:               --hostname--
 Latest block in cache:  --cache--
 Latest block at client: --client--
 Difference:             --diff--
