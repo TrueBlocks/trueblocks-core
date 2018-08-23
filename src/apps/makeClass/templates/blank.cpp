@@ -131,12 +131,14 @@ void [{CLASS_NAME}]::registerClass(void) {
     ADD_FIELD([{CLASS_NAME}], "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD([{CLASS_NAME}], "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD([{CLASS_NAME}], "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD([{CLASS_NAME}], "cname", TS_STRING,  ++fieldNum);
 [REGISTER_FIELDS]
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD([{CLASS_NAME}], "schema");
     HIDE_FIELD([{CLASS_NAME}], "deleted");
     HIDE_FIELD([{CLASS_NAME}], "showing");
+    HIDE_FIELD([{CLASS_NAME}], "cname");
 
     builtIns.push_back(_bi[{CLASS_NAME}]);
 
