@@ -163,7 +163,7 @@ void QConfirmationNeededEvent::registerClass(void) {
     ADD_FIELD(QConfirmationNeededEvent, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QConfirmationNeededEvent, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QConfirmationNeededEvent, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(QConfirmationNeededEvent, "cname", TS_STRING,  ++fieldNum);
+    ADD_FIELD(QConfirmationNeededEvent, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(QConfirmationNeededEvent, "operation", T_TEXT, ++fieldNum);
     ADD_FIELD(QConfirmationNeededEvent, "initiator", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QConfirmationNeededEvent, "value", T_NUMBER, ++fieldNum);

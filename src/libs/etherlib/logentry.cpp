@@ -164,7 +164,7 @@ void CLogEntry::registerClass(void) {
     ADD_FIELD(CLogEntry, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CLogEntry, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CLogEntry, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CLogEntry, "cname", TS_STRING,  ++fieldNum);
+    ADD_FIELD(CLogEntry, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CLogEntry, "address", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CLogEntry, "data", T_TEXT, ++fieldNum);
     ADD_FIELD(CLogEntry, "logIndex", T_NUMBER, ++fieldNum);

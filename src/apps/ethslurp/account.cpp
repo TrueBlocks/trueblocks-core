@@ -189,7 +189,7 @@ void CAccount::registerClass(void) {
     ADD_FIELD(CAccount, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CAccount, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CAccount, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CAccount, "cname", TS_STRING,  ++fieldNum);
+    ADD_FIELD(CAccount, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CAccount, "addr", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CAccount, "header", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccount, "displayString", T_TEXT, ++fieldNum);

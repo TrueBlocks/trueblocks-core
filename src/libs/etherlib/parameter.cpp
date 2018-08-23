@@ -163,7 +163,7 @@ void CParameter::registerClass(void) {
     ADD_FIELD(CParameter, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CParameter, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CParameter, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CParameter, "cname", TS_STRING,  ++fieldNum);
+    ADD_FIELD(CParameter, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CParameter, "indexed", T_BOOL, ++fieldNum);
     ADD_FIELD(CParameter, "name", T_TEXT, ++fieldNum);
     ADD_FIELD(CParameter, "type", T_TEXT, ++fieldNum);

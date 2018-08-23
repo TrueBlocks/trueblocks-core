@@ -18,7 +18,7 @@ IMPLEMENT_NODE(CBloomReceipt, CBaseNode);
 CBloomReceipt::CBloomReceipt(void) {
     static bool been_here = false;
     if (!been_here) {
-        ADD_FIELD(CBloomReceipt, "logsBloom", TS_STRING, 1);
+        ADD_FIELD(CBloomReceipt, "logsBloom", T_TEXT, 1);
         been_here = true;
     }
 }
@@ -40,9 +40,9 @@ IMPLEMENT_NODE(CBloomTrans, CBaseNode);
 CBloomTrans::CBloomTrans(void) {
     static bool been_here = false;
     if (!been_here) {
-        ADD_FIELD(CBloomTrans, "hash", TS_STRING, 1);
+        ADD_FIELD(CBloomTrans, "hash", T_TEXT, 1);
         ADD_FIELD(CBloomTrans, "receipt", T_OBJECT, 2);
-        ADD_FIELD(CBloomTrans, "transactionIndex", TS_STRING, 3);
+        ADD_FIELD(CBloomTrans, "transactionIndex", T_TEXT, 3);
         been_here = true;
     }
 }
@@ -72,8 +72,8 @@ IMPLEMENT_NODE(CBloomBlock, CBaseNode);
 CBloomBlock::CBloomBlock(void) {
     static bool been_here = false;
     if (!been_here) {
-        ADD_FIELD(CBloomBlock, "logsBloom", TS_STRING, 1);
-        ADD_FIELD(CBloomBlock, "number", TS_STRING, 2);
+        ADD_FIELD(CBloomBlock, "logsBloom", T_TEXT, 1);
+        ADD_FIELD(CBloomBlock, "number", T_TEXT, 2);
         ADD_FIELD(CBloomBlock, "transactions", T_OBJECT|TS_ARRAY, 3);
         been_here = true;
     }

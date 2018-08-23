@@ -190,7 +190,7 @@ void CTrace::registerClass(void) {
     ADD_FIELD(CTrace, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CTrace, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CTrace, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CTrace, "cname", TS_STRING,  ++fieldNum);
+    ADD_FIELD(CTrace, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CTrace, "blockHash", T_HASH, ++fieldNum);
     ADD_FIELD(CTrace, "blockNumber", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTrace, "subtraces", T_NUMBER, ++fieldNum);
