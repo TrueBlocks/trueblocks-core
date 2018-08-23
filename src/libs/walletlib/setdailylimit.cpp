@@ -143,12 +143,14 @@ void QSetDailyLimit::registerClass(void) {
     ADD_FIELD(QSetDailyLimit, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QSetDailyLimit, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QSetDailyLimit, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QSetDailyLimit, "cname", TS_STRING,  ++fieldNum);
     ADD_FIELD(QSetDailyLimit, "_newLimit", T_NUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(QSetDailyLimit, "schema");
     HIDE_FIELD(QSetDailyLimit, "deleted");
     HIDE_FIELD(QSetDailyLimit, "showing");
+    HIDE_FIELD(QSetDailyLimit, "cname");
 
     builtIns.push_back(_biQSetDailyLimit);
 

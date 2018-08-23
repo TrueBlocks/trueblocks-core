@@ -149,6 +149,7 @@ void QTransferFrom::registerClass(void) {
     ADD_FIELD(QTransferFrom, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QTransferFrom, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QTransferFrom, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QTransferFrom, "cname", TS_STRING,  ++fieldNum);
     ADD_FIELD(QTransferFrom, "_from", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QTransferFrom, "_to", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QTransferFrom, "_value", T_NUMBER, ++fieldNum);
@@ -157,6 +158,7 @@ void QTransferFrom::registerClass(void) {
     HIDE_FIELD(QTransferFrom, "schema");
     HIDE_FIELD(QTransferFrom, "deleted");
     HIDE_FIELD(QTransferFrom, "showing");
+    HIDE_FIELD(QTransferFrom, "cname");
 
     builtIns.push_back(_biQTransferFrom);
 

@@ -195,6 +195,7 @@ void CAccountWatch::registerClass(void) {
     ADD_FIELD(CAccountWatch, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CAccountWatch, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CAccountWatch, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CAccountWatch, "cname", TS_STRING,  ++fieldNum);
     ADD_FIELD(CAccountWatch, "address", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CAccountWatch, "name", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountWatch, "color", T_TEXT, ++fieldNum);
@@ -209,6 +210,7 @@ void CAccountWatch::registerClass(void) {
     HIDE_FIELD(CAccountWatch, "schema");
     HIDE_FIELD(CAccountWatch, "deleted");
     HIDE_FIELD(CAccountWatch, "showing");
+    HIDE_FIELD(CAccountWatch, "cname");
 
     builtIns.push_back(_biCAccountWatch);
 

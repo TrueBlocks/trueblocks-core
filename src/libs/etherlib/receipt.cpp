@@ -175,6 +175,7 @@ void CReceipt::registerClass(void) {
     ADD_FIELD(CReceipt, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CReceipt, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CReceipt, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CReceipt, "cname", TS_STRING,  ++fieldNum);
     ADD_FIELD(CReceipt, "contractAddress", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CReceipt, "gasUsed", T_GAS, ++fieldNum);
     ADD_FIELD(CReceipt, "logs", T_OBJECT|TS_ARRAY, ++fieldNum);
@@ -184,6 +185,7 @@ void CReceipt::registerClass(void) {
     HIDE_FIELD(CReceipt, "schema");
     HIDE_FIELD(CReceipt, "deleted");
     HIDE_FIELD(CReceipt, "showing");
+    HIDE_FIELD(CReceipt, "cname");
 
     builtIns.push_back(_biCReceipt);
 

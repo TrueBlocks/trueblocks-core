@@ -153,6 +153,7 @@ void CPriceQuote::registerClass(void) {
     ADD_FIELD(CPriceQuote, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CPriceQuote, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CPriceQuote, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CPriceQuote, "cname", TS_STRING,  ++fieldNum);
     ADD_FIELD(CPriceQuote, "timestamp", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CPriceQuote, "close", T_DOUBLE, ++fieldNum);
 
@@ -160,6 +161,7 @@ void CPriceQuote::registerClass(void) {
     HIDE_FIELD(CPriceQuote, "schema");
     HIDE_FIELD(CPriceQuote, "deleted");
     HIDE_FIELD(CPriceQuote, "showing");
+    HIDE_FIELD(CPriceQuote, "cname");
 
     builtIns.push_back(_biCPriceQuote);
 

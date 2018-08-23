@@ -210,6 +210,7 @@ void CNewBlock::registerClass(void) {
     ADD_FIELD(CNewBlock, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CNewBlock, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CNewBlock, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CNewBlock, "cname", TS_STRING,  ++fieldNum);
     ADD_FIELD(CNewBlock, "gasLimit", T_GAS, ++fieldNum);
     ADD_FIELD(CNewBlock, "gasUsed", T_GAS, ++fieldNum);
     ADD_FIELD(CNewBlock, "hash", T_HASH, ++fieldNum);
@@ -226,6 +227,7 @@ void CNewBlock::registerClass(void) {
     HIDE_FIELD(CNewBlock, "schema");
     HIDE_FIELD(CNewBlock, "deleted");
     HIDE_FIELD(CNewBlock, "showing");
+    HIDE_FIELD(CNewBlock, "cname");
 
     builtIns.push_back(_biCNewBlock);
 

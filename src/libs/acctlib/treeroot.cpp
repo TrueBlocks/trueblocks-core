@@ -161,12 +161,14 @@ void CTreeRoot::registerClass(void) {
     ADD_FIELD(CTreeRoot, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CTreeRoot, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CTreeRoot, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CTreeRoot, "cname", TS_STRING,  ++fieldNum);
     ADD_FIELD(CTreeRoot, "root", T_POINTER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTreeRoot, "schema");
     HIDE_FIELD(CTreeRoot, "deleted");
     HIDE_FIELD(CTreeRoot, "showing");
+    HIDE_FIELD(CTreeRoot, "cname");
 
     builtIns.push_back(_biCTreeRoot);
 
