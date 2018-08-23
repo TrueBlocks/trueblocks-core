@@ -190,6 +190,7 @@ void CTrace::registerClass(void) {
     ADD_FIELD(CTrace, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CTrace, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CTrace, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CTrace, "cname", TS_STRING,  ++fieldNum);
     ADD_FIELD(CTrace, "blockHash", T_HASH, ++fieldNum);
     ADD_FIELD(CTrace, "blockNumber", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTrace, "subtraces", T_NUMBER, ++fieldNum);
@@ -205,6 +206,7 @@ void CTrace::registerClass(void) {
     HIDE_FIELD(CTrace, "schema");
     HIDE_FIELD(CTrace, "deleted");
     HIDE_FIELD(CTrace, "showing");
+    HIDE_FIELD(CTrace, "cname");
 
     builtIns.push_back(_biCTrace);
 

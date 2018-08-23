@@ -183,6 +183,7 @@ void CTraceAction::registerClass(void) {
     ADD_FIELD(CTraceAction, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CTraceAction, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CTraceAction, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CTraceAction, "cname", TS_STRING,  ++fieldNum);
     ADD_FIELD(CTraceAction, "address", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CTraceAction, "balance", T_WEI, ++fieldNum);
     ADD_FIELD(CTraceAction, "callType", T_TEXT, ++fieldNum);
@@ -198,6 +199,7 @@ void CTraceAction::registerClass(void) {
     HIDE_FIELD(CTraceAction, "schema");
     HIDE_FIELD(CTraceAction, "deleted");
     HIDE_FIELD(CTraceAction, "showing");
+    HIDE_FIELD(CTraceAction, "cname");
 
     builtIns.push_back(_biCTraceAction);
 

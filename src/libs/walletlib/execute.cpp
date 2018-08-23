@@ -149,6 +149,7 @@ void QExecute::registerClass(void) {
     ADD_FIELD(QExecute, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QExecute, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QExecute, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QExecute, "cname", TS_STRING,  ++fieldNum);
     ADD_FIELD(QExecute, "_to", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QExecute, "_value", T_NUMBER, ++fieldNum);
     ADD_FIELD(QExecute, "_data", T_TEXT, ++fieldNum);
@@ -157,6 +158,7 @@ void QExecute::registerClass(void) {
     HIDE_FIELD(QExecute, "schema");
     HIDE_FIELD(QExecute, "deleted");
     HIDE_FIELD(QExecute, "showing");
+    HIDE_FIELD(QExecute, "cname");
 
     builtIns.push_back(_biQExecute);
 

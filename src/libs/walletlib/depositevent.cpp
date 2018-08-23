@@ -148,6 +148,7 @@ void QDepositEvent::registerClass(void) {
     ADD_FIELD(QDepositEvent, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QDepositEvent, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QDepositEvent, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QDepositEvent, "cname", TS_STRING,  ++fieldNum);
     ADD_FIELD(QDepositEvent, "from", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QDepositEvent, "value", T_NUMBER, ++fieldNum);
 
@@ -155,6 +156,7 @@ void QDepositEvent::registerClass(void) {
     HIDE_FIELD(QDepositEvent, "schema");
     HIDE_FIELD(QDepositEvent, "deleted");
     HIDE_FIELD(QDepositEvent, "showing");
+    HIDE_FIELD(QDepositEvent, "cname");
 
     builtIns.push_back(_biQDepositEvent);
 

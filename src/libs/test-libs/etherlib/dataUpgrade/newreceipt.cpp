@@ -165,6 +165,7 @@ void CNewReceipt::registerClass(void) {
     ADD_FIELD(CNewReceipt, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CNewReceipt, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CNewReceipt, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CNewReceipt, "cname", TS_STRING,  ++fieldNum);
     ADD_FIELD(CNewReceipt, "contractAddress", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CNewReceipt, "gasUsed", T_GAS, ++fieldNum);
     ADD_FIELD(CNewReceipt, "logs", T_OBJECT|TS_ARRAY, ++fieldNum);
@@ -175,6 +176,7 @@ void CNewReceipt::registerClass(void) {
     HIDE_FIELD(CNewReceipt, "schema");
     HIDE_FIELD(CNewReceipt, "deleted");
     HIDE_FIELD(CNewReceipt, "showing");
+    HIDE_FIELD(CNewReceipt, "cname");
 
     builtIns.push_back(_biCNewReceipt);
 

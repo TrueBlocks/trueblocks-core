@@ -148,6 +148,7 @@ void QOwnerChangedEvent::registerClass(void) {
     ADD_FIELD(QOwnerChangedEvent, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QOwnerChangedEvent, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QOwnerChangedEvent, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QOwnerChangedEvent, "cname", TS_STRING,  ++fieldNum);
     ADD_FIELD(QOwnerChangedEvent, "oldOwner", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QOwnerChangedEvent, "newOwner", T_ADDRESS, ++fieldNum);
 
@@ -155,6 +156,7 @@ void QOwnerChangedEvent::registerClass(void) {
     HIDE_FIELD(QOwnerChangedEvent, "schema");
     HIDE_FIELD(QOwnerChangedEvent, "deleted");
     HIDE_FIELD(QOwnerChangedEvent, "showing");
+    HIDE_FIELD(QOwnerChangedEvent, "cname");
 
     builtIns.push_back(_biQOwnerChangedEvent);
 

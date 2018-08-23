@@ -158,6 +158,7 @@ void QSingleTransactEvent::registerClass(void) {
     ADD_FIELD(QSingleTransactEvent, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QSingleTransactEvent, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QSingleTransactEvent, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QSingleTransactEvent, "cname", TS_STRING,  ++fieldNum);
     ADD_FIELD(QSingleTransactEvent, "owner", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QSingleTransactEvent, "value", T_NUMBER, ++fieldNum);
     ADD_FIELD(QSingleTransactEvent, "to", T_ADDRESS, ++fieldNum);
@@ -167,6 +168,7 @@ void QSingleTransactEvent::registerClass(void) {
     HIDE_FIELD(QSingleTransactEvent, "schema");
     HIDE_FIELD(QSingleTransactEvent, "deleted");
     HIDE_FIELD(QSingleTransactEvent, "showing");
+    HIDE_FIELD(QSingleTransactEvent, "cname");
 
     builtIns.push_back(_biQSingleTransactEvent);
 

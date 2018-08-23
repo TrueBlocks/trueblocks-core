@@ -143,12 +143,14 @@ void QRemoveOwner::registerClass(void) {
     ADD_FIELD(QRemoveOwner, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QRemoveOwner, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QRemoveOwner, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QRemoveOwner, "cname", TS_STRING,  ++fieldNum);
     ADD_FIELD(QRemoveOwner, "_owner", T_ADDRESS, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(QRemoveOwner, "schema");
     HIDE_FIELD(QRemoveOwner, "deleted");
     HIDE_FIELD(QRemoveOwner, "showing");
+    HIDE_FIELD(QRemoveOwner, "cname");
 
     builtIns.push_back(_biQRemoveOwner);
 

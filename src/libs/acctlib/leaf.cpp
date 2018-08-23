@@ -156,6 +156,7 @@ void CLeaf::registerClass(void) {
     ADD_FIELD(CLeaf, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CLeaf, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CLeaf, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CLeaf, "cname", TS_STRING,  ++fieldNum);
     ADD_FIELD(CLeaf, "blocks", T_OBJECT|TS_ARRAY, ++fieldNum);
     ADD_FIELD(CLeaf, "counter", T_NUMBER, ++fieldNum);
 
@@ -163,6 +164,7 @@ void CLeaf::registerClass(void) {
     HIDE_FIELD(CLeaf, "schema");
     HIDE_FIELD(CLeaf, "deleted");
     HIDE_FIELD(CLeaf, "showing");
+    HIDE_FIELD(CLeaf, "cname");
 
     builtIns.push_back(_biCLeaf);
 

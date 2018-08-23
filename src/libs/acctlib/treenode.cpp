@@ -145,6 +145,7 @@ void CTreeNode::registerClass(void) {
     ADD_FIELD(CTreeNode, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CTreeNode, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CTreeNode, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CTreeNode, "cname", TS_STRING,  ++fieldNum);
     ADD_FIELD(CTreeNode, "index", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTreeNode, "prefixS", T_TEXT, ++fieldNum);
 
@@ -152,6 +153,7 @@ void CTreeNode::registerClass(void) {
     HIDE_FIELD(CTreeNode, "schema");
     HIDE_FIELD(CTreeNode, "deleted");
     HIDE_FIELD(CTreeNode, "showing");
+    HIDE_FIELD(CTreeNode, "cname");
 
     builtIns.push_back(_biCTreeNode);
 

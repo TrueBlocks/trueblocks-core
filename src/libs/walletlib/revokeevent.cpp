@@ -146,6 +146,7 @@ void QRevokeEvent::registerClass(void) {
     ADD_FIELD(QRevokeEvent, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QRevokeEvent, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QRevokeEvent, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QRevokeEvent, "cname", TS_STRING,  ++fieldNum);
     ADD_FIELD(QRevokeEvent, "owner", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QRevokeEvent, "operation", T_TEXT, ++fieldNum);
 
@@ -153,6 +154,7 @@ void QRevokeEvent::registerClass(void) {
     HIDE_FIELD(QRevokeEvent, "schema");
     HIDE_FIELD(QRevokeEvent, "deleted");
     HIDE_FIELD(QRevokeEvent, "showing");
+    HIDE_FIELD(QRevokeEvent, "cname");
 
     builtIns.push_back(_biQRevokeEvent);
 

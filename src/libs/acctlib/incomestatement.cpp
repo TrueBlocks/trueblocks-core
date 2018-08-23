@@ -163,6 +163,7 @@ void CIncomeStatement::registerClass(void) {
     ADD_FIELD(CIncomeStatement, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CIncomeStatement, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CIncomeStatement, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CIncomeStatement, "cname", TS_STRING,  ++fieldNum);
     ADD_FIELD(CIncomeStatement, "begBal", T_NUMBER, ++fieldNum);
     ADD_FIELD(CIncomeStatement, "inflow", T_NUMBER, ++fieldNum);
     ADD_FIELD(CIncomeStatement, "outflow", T_NUMBER, ++fieldNum);
@@ -174,6 +175,7 @@ void CIncomeStatement::registerClass(void) {
     HIDE_FIELD(CIncomeStatement, "schema");
     HIDE_FIELD(CIncomeStatement, "deleted");
     HIDE_FIELD(CIncomeStatement, "showing");
+    HIDE_FIELD(CIncomeStatement, "cname");
 
     builtIns.push_back(_biCIncomeStatement);
 
