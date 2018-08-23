@@ -18,6 +18,7 @@ extern void     generateCode  (const COptions& options, CToml& toml, const strin
 extern string_q getCaseCode   (const string_q& fieldCase, const string_q& ex);
 extern string_q getCaseSetCode(const string_q& fieldCase);
 extern string_q short3        (const string_q& in);
+extern string_q short2        (const string_q& in);
 extern string_q checkType     (const string_q& typeIn);
 extern string_q convertTypes  (const string_q& inStr);
 
@@ -215,7 +216,7 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
     }
 
     //------------------------------------------------------------------------------------------------
-    for (const auto fld : fieldList) {
+    for (auto fld : fieldList) {
 
         string_q decFmt  = "\t[{TYPE}] *[{NAME}];";
         if (!fld.isPointer) {
@@ -384,7 +385,7 @@ string_q ptrWriteFmt =
     replaceAll(headSource, "[{COMMENT_LINE}]",   STR_COMMENT_LINE);
     replaceAll(headSource, "[{LONG}]",           baseLower);
     replaceAll(headSource, "[{PROPER}]",         baseProper);
-    replaceAll(headSource, "[{SHORT}]",          extract(baseLower, 0, 2));
+    replaceAll(headSource, "[{SHORT}]",          short2(baseLower));
     replaceAll(headSource, "[{BASE_CLASS}]",     baseClass);
     replaceAll(headSource, "[{BASE_BASE}]",      baseBase);
     replaceAll(headSource, "[{BASE}]",           baseUpper);
@@ -393,7 +394,7 @@ string_q ptrWriteFmt =
     replaceAll(headSource, "[{LONG}]",           baseLower);
     replaceAll(headSource, "[{PROPER}]",         baseProper);
     replaceAll(headSource, "[{SHORT3}]",         short3(baseLower));
-    replaceAll(headSource, "[{SHORT}]",          extract(baseLower, 0, 2));
+    replaceAll(headSource, "[{SHORT}]",          short2(baseLower));
     replaceAll(headSource, "[{SCOPE}]",          scope);
     replaceAll(headSource, "[{SORT_COMMENT}]",   (sortStr.length() ? STR_SORT_COMMENT_1 : STR_SORT_COMMENT_2));
     replaceAll(headSource, "[{SORT_CODE}]",      (sortStr.length() ? sortStr : "true"));
@@ -434,7 +435,7 @@ string_q ptrWriteFmt =
     replaceAll(srcSource, "[{COMMENT_LINE}]",    STR_COMMENT_LINE);
     replaceAll(srcSource, "[{LONG}]",            baseLower);
     replaceAll(srcSource, "[{PROPER}]",          baseProper);
-    replaceAll(srcSource, "[{SHORT}]",           extract(baseLower, 0, 2));
+    replaceAll(srcSource, "[{SHORT}]",           short2(baseLower));
     replaceAll(srcSource, "[{BASE_CLASS}]",      baseClass);
     replaceAll(srcSource, "[{BASE_BASE}]",       baseBase);
     replaceAll(srcSource, "[{BASE}]",            baseUpper);
@@ -443,7 +444,7 @@ string_q ptrWriteFmt =
     replaceAll(srcSource, "[{LONG}]",            baseLower);
     replaceAll(srcSource, "[{PROPER}]",          baseProper);
     replaceAll(srcSource, "[{SHORT3}]",          short3(baseLower));
-    replaceAll(srcSource, "[{SHORT}]",           extract(baseLower, 0, 2));
+    replaceAll(srcSource, "[{SHORT}]",           short2(baseLower));
     replaceAll(srcSource, "[{SCOPE}]",           scope);
     replaceAll(srcSource, "[{NAMESPACE1}]",      (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
     replaceAll(srcSource, "[{NAMESPACE2}]",      (ns.empty() ? "" : "}  // namespace qblocks\n"));
@@ -837,6 +838,14 @@ const char* STR_EQUAL_COMMENT_1 =
 //------------------------------------------------------------------------------------------------------------
 const char* STR_EQUAL_COMMENT_2 =
 "No default equal operator in class definition, assume none are equal (so find fails)";
+
+//------------------------------------------------------------------------------------------------------------
+string_q short2(const string_q& str) {
+    string_q ret = extract(str, 0, 2);
+    if (ret == "or")
+        ret = "ord";
+    return ret;
+}
 
 //------------------------------------------------------------------------------------------------------------
 string_q short3(const string_q& str) {

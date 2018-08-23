@@ -292,9 +292,9 @@ int main(int argc, const char *argv[]) {
                             assigns2 += res;
                         }
 
-                        string_q base = (func->type == "event" ? "LogEntry" : "Transaction");
+                        string_q base = (func->type == "event" ? "LogEntry_Ex" : "Transaction_Ex");
                         if (name == "LogEntry")
-                            base = "LogEntry";
+                            base = "LogEntry_Ex";
 
                         string_q out = STR_CLASSDEF;
                         replace(out, "[{DIR}]", substitute(options.classDir, getHomeFolder(), "~/"));
@@ -309,7 +309,7 @@ int main(int argc, const char *argv[]) {
                             registers += "\t" + theClass + "::registerClass();\n";
                         }
                         sources += substitute(fileName, ".txt", ".cpp") + " \\\n";
-                        if (base == "Transaction") {
+                        if (base == "Transaction_Ex") {
                             string_q f1, fName = func->Format("[{NAME}]");
                             f1 = string_q(STR_FACTORY1);
                             replaceAll(f1, "[{CLASS}]", theClass);
@@ -334,7 +334,7 @@ int main(int argc, const char *argv[]) {
                             if (!isConst)
                                 factory1 += f1;
 
-                        } else if (name != "LogEntry") {
+                        } else if (name != "LogEntry_Ex") {
                             string_q f2, fName = func->Format("[{NAME}]");
                             f2 = substitute(
                                 substitute(string_q(STR_FACTORY2), "[{CLASS}]", theClass), "[{LOWER}]", fName);
@@ -543,8 +543,8 @@ const char* STR_HEADERFILE =
 "[{HEADERS}]\n"
 "//------------------------------------------------------------------------\n"
 "extern void [{PREFIX}]_init(void);\n"
-"extern const CTransaction *promoteTo[{PPREFIX}](const CTransaction *p);\n"
-"extern const CLogEntry *promoteTo[{PPREFIX}]Event(const CLogEntry *p);\n"
+"extern const CTransaction_Ex *promoteTo[{PPREFIX}](const CTransaction *p);\n"
+"extern const CLogEntry_Ex *promoteTo[{PPREFIX}]Event(const CLogEntry *p);\n"
 "\n[{EXTERNS}][{HEADER_SIGS}]\n\n// EXISTING_CODE\n// EXISTING_CODE\n";
 
 //-----------------------------------------------------------------------
