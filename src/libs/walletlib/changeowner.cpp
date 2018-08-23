@@ -146,7 +146,7 @@ void QChangeOwner::registerClass(void) {
     ADD_FIELD(QChangeOwner, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QChangeOwner, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QChangeOwner, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(QChangeOwner, "cname", TS_STRING,  ++fieldNum);
+    ADD_FIELD(QChangeOwner, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(QChangeOwner, "_from", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QChangeOwner, "_to", T_ADDRESS, ++fieldNum);
 

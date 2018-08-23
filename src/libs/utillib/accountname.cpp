@@ -157,7 +157,7 @@ void CAccountName::registerClass(void) {
     ADD_FIELD(CAccountName, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CAccountName, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CAccountName, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CAccountName, "cname", TS_STRING,  ++fieldNum);
+    ADD_FIELD(CAccountName, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CAccountName, "symbol", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "name", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "addr", T_TEXT, ++fieldNum);

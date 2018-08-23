@@ -143,7 +143,7 @@ void CBalanceHistory::registerClass(void) {
     ADD_FIELD(CBalanceHistory, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CBalanceHistory, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CBalanceHistory, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CBalanceHistory, "cname", TS_STRING,  ++fieldNum);
+    ADD_FIELD(CBalanceHistory, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CBalanceHistory, "bn", T_NUMBER, ++fieldNum);
     ADD_FIELD(CBalanceHistory, "balance", T_NUMBER, ++fieldNum);
 

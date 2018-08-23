@@ -143,7 +143,7 @@ void QConfirm::registerClass(void) {
     ADD_FIELD(QConfirm, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QConfirm, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QConfirm, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(QConfirm, "cname", TS_STRING,  ++fieldNum);
+    ADD_FIELD(QConfirm, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(QConfirm, "_h", T_TEXT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

@@ -149,7 +149,7 @@ void QExecute::registerClass(void) {
     ADD_FIELD(QExecute, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QExecute, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QExecute, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(QExecute, "cname", TS_STRING,  ++fieldNum);
+    ADD_FIELD(QExecute, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(QExecute, "_to", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QExecute, "_value", T_NUMBER, ++fieldNum);
     ADD_FIELD(QExecute, "_data", T_TEXT, ++fieldNum);

@@ -144,7 +144,7 @@ void CAcctCacheItem::registerClass(void) {
     ADD_FIELD(CAcctCacheItem, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CAcctCacheItem, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CAcctCacheItem, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CAcctCacheItem, "cname", TS_STRING,  ++fieldNum);
+    ADD_FIELD(CAcctCacheItem, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CAcctCacheItem, "blockNum", T_NUMBER, ++fieldNum);
     ADD_FIELD(CAcctCacheItem, "transIndex", T_NUMBER, ++fieldNum);
 

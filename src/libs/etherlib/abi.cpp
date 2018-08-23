@@ -159,7 +159,7 @@ void CAbi::registerClass(void) {
     ADD_FIELD(CAbi, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CAbi, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CAbi, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CAbi, "cname", TS_STRING,  ++fieldNum);
+    ADD_FIELD(CAbi, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CAbi, "abiByName", T_OBJECT|TS_ARRAY, ++fieldNum);
     ADD_FIELD(CAbi, "abiByEncoding", T_OBJECT|TS_ARRAY, ++fieldNum);
 

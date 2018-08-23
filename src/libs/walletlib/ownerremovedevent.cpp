@@ -143,7 +143,7 @@ void QOwnerRemovedEvent::registerClass(void) {
     ADD_FIELD(QOwnerRemovedEvent, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QOwnerRemovedEvent, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QOwnerRemovedEvent, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(QOwnerRemovedEvent, "cname", TS_STRING,  ++fieldNum);
+    ADD_FIELD(QOwnerRemovedEvent, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(QOwnerRemovedEvent, "oldOwner", T_ADDRESS, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

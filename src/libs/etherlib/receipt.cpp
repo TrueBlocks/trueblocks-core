@@ -175,7 +175,7 @@ void CReceipt::registerClass(void) {
     ADD_FIELD(CReceipt, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CReceipt, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CReceipt, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CReceipt, "cname", TS_STRING,  ++fieldNum);
+    ADD_FIELD(CReceipt, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CReceipt, "contractAddress", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CReceipt, "gasUsed", T_GAS, ++fieldNum);
     ADD_FIELD(CReceipt, "logs", T_OBJECT|TS_ARRAY, ++fieldNum);

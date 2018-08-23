@@ -143,7 +143,7 @@ void QIsOwner::registerClass(void) {
     ADD_FIELD(QIsOwner, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QIsOwner, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QIsOwner, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(QIsOwner, "cname", TS_STRING,  ++fieldNum);
+    ADD_FIELD(QIsOwner, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(QIsOwner, "_addr", T_ADDRESS, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

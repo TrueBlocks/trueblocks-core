@@ -155,7 +155,7 @@ void CTraceResult::registerClass(void) {
     ADD_FIELD(CTraceResult, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CTraceResult, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CTraceResult, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CTraceResult, "cname", TS_STRING,  ++fieldNum);
+    ADD_FIELD(CTraceResult, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CTraceResult, "address", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CTraceResult, "code", T_TEXT, ++fieldNum);
     ADD_FIELD(CTraceResult, "gasUsed", T_GAS, ++fieldNum);
