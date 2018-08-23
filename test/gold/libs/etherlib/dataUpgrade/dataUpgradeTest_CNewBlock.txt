@@ -75,6 +75,7 @@ transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
   "schema": 5005,
   "deleted": 0,
   "showing": 1,
+  "cname": "NewBlock",
   "gasLimit": 0,
   "gasUsed": 0,
   "hash": "0x0",

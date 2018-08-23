@@ -39,6 +39,7 @@ id                  	1007	0	131122	T_TEXT TS_STRING
 {
   "schema": 5005,
   "deleted": 0,
-  "showing": 1
+  "showing": 1,
+  "cname": "RPCResult"
 }
 

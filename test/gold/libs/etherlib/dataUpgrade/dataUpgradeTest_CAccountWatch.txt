@@ -72,6 +72,7 @@ nodeBal             	1013	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
   "schema": 5005,
   "deleted": 0,
   "showing": 1,
+  "cname": "AccountWatch",
   "address": "0x0",
   "firstBlock": 0,
   "lastBlock": 4294967295,

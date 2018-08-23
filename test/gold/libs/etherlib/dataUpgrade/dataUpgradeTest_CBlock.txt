@@ -78,6 +78,7 @@ date                	1016	0	262149	T_DATE TS_DATE
   "schema": 5005,
   "deleted": 0,
   "showing": 1,
+  "cname": "Block",
   "gasLimit": 0,
   "gasUsed": 0,
   "hash": "0x0",
