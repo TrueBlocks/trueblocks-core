@@ -45,6 +45,7 @@ output              	1008	0	131122	T_TEXT TS_STRING
   "schema": 5005,
   "deleted": 0,
   "showing": 1,
+  "cname": "TraceResult",
   "address": "0x0",
   "gasUsed": 0
 }

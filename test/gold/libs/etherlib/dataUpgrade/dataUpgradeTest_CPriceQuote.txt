@@ -43,6 +43,7 @@ date                	1007	0	262149	T_DATE TS_DATE
   "schema": 5005,
   "deleted": 0,
   "showing": 1,
+  "cname": "PriceQuote",
   "timestamp": 0,
   "close": 0,
   "date": "1700-01-01 00:00:01 UTC"

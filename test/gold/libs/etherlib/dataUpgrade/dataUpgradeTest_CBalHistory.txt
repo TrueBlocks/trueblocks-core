@@ -42,6 +42,7 @@ balance             	1007	0	65561	T_NUMBER TS_NUMERAL
   "schema": 5005,
   "deleted": 0,
   "showing": 1,
+  "cname": "BalHistory",
   "timestamp": 0,
   "balance": 0
 }

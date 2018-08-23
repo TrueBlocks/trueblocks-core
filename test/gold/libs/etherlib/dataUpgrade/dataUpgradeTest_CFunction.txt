@@ -62,6 +62,7 @@ outputs             	1013	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
   "schema": 5005,
   "deleted": 0,
   "showing": 1,
+  "cname": "Function",
   "anonymous": 0,
   "constant": 0,
   "payable": 0,

@@ -39,6 +39,7 @@ abiByEncoding       	1006	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
   "schema": 5005,
   "deleted": 0,
   "showing": 1,
+  "cname": "Abi",
   "abiByName": [],
   "abiByEncoding": []
 }
@@ -105,6 +106,7 @@ outputs             	1013	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
   "schema": 5005,
   "deleted": 0,
   "showing": 1,
+  "cname": "Function",
   "anonymous": 0,
   "constant": 0,
   "payable": 0,
@@ -168,6 +170,7 @@ strDefault          	1011	0	131122	T_TEXT TS_STRING
   "schema": 5005,
   "deleted": 0,
   "showing": 1,
+  "cname": "Parameter",
   "indexed": 0,
   "isPointer": 0,
   "isArray": 0,
@@ -247,6 +250,7 @@ nodeBal             	1013	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
   "schema": 5005,
   "deleted": 0,
   "showing": 1,
+  "cname": "AccountWatch",
   "address": "0x0",
   "firstBlock": 0,
   "lastBlock": 4294967295,
@@ -305,6 +309,7 @@ balance             	1007	0	65561	T_NUMBER TS_NUMERAL
   "schema": 5005,
   "deleted": 0,
   "showing": 1,
+  "cname": "BalHistory",
   "timestamp": 0,
   "balance": 0
 }
@@ -387,6 +392,7 @@ date                	1016	0	262149	T_DATE TS_DATE
   "schema": 5005,
   "deleted": 0,
   "showing": 1,
+  "cname": "Block",
   "gasLimit": 0,
   "gasUsed": 0,
   "hash": "0x0",
@@ -456,6 +462,7 @@ blockNum            	1010	0	65561	T_NUMBER TS_NUMERAL
   "schema": 5005,
   "deleted": 0,
   "showing": 1,
+  "cname": "IncomeStatement",
   "begBal": 0,
   "inflow": 0,
   "outflow": 0,
@@ -510,6 +517,7 @@ topics              	1008	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
   "schema": 5005,
   "deleted": 0,
   "showing": 1,
+  "cname": "LogEntry",
   "address": "0x0",
   "logIndex": 0,
   "topics": []
@@ -558,6 +566,7 @@ date                	1007	0	262149	T_DATE TS_DATE
   "schema": 5005,
   "deleted": 0,
   "showing": 1,
+  "cname": "PriceQuote",
   "timestamp": 0,
   "close": 0,
   "date": "1700-01-01 00:00:01 UTC"
@@ -610,6 +619,7 @@ status              	1008	0	65561	T_NUMBER TS_NUMERAL
   "schema": 5005,
   "deleted": 0,
   "showing": 1,
+  "cname": "Receipt",
   "contractAddress": "0x0",
   "gasUsed": 0,
   "logs": [],
@@ -655,7 +665,8 @@ id                  	1007	0	131122	T_TEXT TS_STRING
 {
   "schema": 5005,
   "deleted": 0,
-  "showing": 1
+  "showing": 1,
+  "cname": "RPCResult"
 }
 
 --------------------------------------------------------------------------------
@@ -738,6 +749,7 @@ result              	1014	0	1048651	T_OBJECT TS_OBJECT
   "schema": 5005,
   "deleted": 0,
   "showing": 1,
+  "cname": "Trace",
   "blockHash": "0x0",
   "blockNumber": 0,
   "subtraces": 0,
@@ -827,6 +839,7 @@ value               	1014	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
   "schema": 5005,
   "deleted": 0,
   "showing": 1,
+  "cname": "TraceAction",
   "address": "0x0",
   "balance": 0,
   "from": "0x0",
@@ -881,6 +894,7 @@ output              	1008	0	131122	T_TEXT TS_STRING
   "schema": 5005,
   "deleted": 0,
   "showing": 1,
+  "cname": "TraceResult",
   "address": "0x0",
   "gasUsed": 0
 }
@@ -936,6 +950,7 @@ encoding            	1031	1	131122	T_TEXT TS_STRING
     "schema": 5005,
     "deleted": 0,
     "showing": 1,
+    "cname": "Receipt",
     "contractAddress": "0x0",
     "gasUsed": 0,
     "logs": [],
@@ -1019,6 +1034,7 @@ encoding            	1031	0	131122	T_TEXT TS_STRING
   "schema": 5005,
   "deleted": 0,
   "showing": 1,
+  "cname": "Transaction",
   "hash": "0x0",
   "blockHash": "0x0",
   "blockNumber": 0,
@@ -1036,6 +1052,7 @@ encoding            	1031	0	131122	T_TEXT TS_STRING
     "schema": 5005,
     "deleted": 0,
     "showing": 1,
+    "cname": "Receipt",
     "contractAddress": "0x0",
     "gasUsed": 0,
     "logs": [],
@@ -1127,6 +1144,7 @@ transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
   "schema": 5005,
   "deleted": 0,
   "showing": 1,
+  "cname": "NewBlock",
   "gasLimit": 0,
   "gasUsed": 0,
   "hash": "0x0",
@@ -1191,6 +1209,7 @@ isError             	1009	0	65556	T_BOOL TS_NUMERAL
   "schema": 5005,
   "deleted": 0,
   "showing": 1,
+  "cname": "NewReceipt",
   "contractAddress": "0x0",
   "gasUsed": 0,
   "logs": [],

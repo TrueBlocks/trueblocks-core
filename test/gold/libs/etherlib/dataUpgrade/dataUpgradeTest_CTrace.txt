@@ -80,6 +80,7 @@ result              	1014	0	1048651	T_OBJECT TS_OBJECT
   "schema": 5005,
   "deleted": 0,
   "showing": 1,
+  "cname": "Trace",
   "blockHash": "0x0",
   "blockNumber": 0,
   "subtraces": 0,
