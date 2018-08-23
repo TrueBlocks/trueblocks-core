@@ -167,7 +167,7 @@ void CPerson::registerClass(void) {
     ADD_FIELD(CPerson, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CPerson, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CPerson, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CPerson, "cname", TS_STRING,  ++fieldNum);
+    ADD_FIELD(CPerson, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CPerson, "name", T_TEXT, ++fieldNum);
     ADD_FIELD(CPerson, "age", T_NUMBER, ++fieldNum);
     ADD_FIELD(CPerson, "next", T_POINTER, ++fieldNum);

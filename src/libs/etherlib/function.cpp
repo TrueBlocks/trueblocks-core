@@ -212,7 +212,7 @@ void CFunction::registerClass(void) {
     ADD_FIELD(CFunction, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CFunction, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CFunction, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CFunction, "cname", TS_STRING,  ++fieldNum);
+    ADD_FIELD(CFunction, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CFunction, "name", T_TEXT, ++fieldNum);
     ADD_FIELD(CFunction, "type", T_TEXT, ++fieldNum);
     ADD_FIELD(CFunction, "anonymous", T_BOOL, ++fieldNum);

@@ -6,15 +6,16 @@ baseClass: CBaseNode
 schema              	1001	1	65561	T_NUMBER TS_NUMERAL
 deleted             	1002	1	65556	T_BOOL TS_NUMERAL
 showing             	1003	1	65556	T_BOOL TS_NUMERAL
-address             	1004	0	131127	T_ADDRESS TS_STRING
-name                	1005	0	131122	T_TEXT TS_STRING
-color               	1006	0	131122	T_TEXT TS_STRING
-firstBlock          	1007	0	65561	T_NUMBER TS_NUMERAL
-lastBlock           	1008	0	65561	T_NUMBER TS_NUMERAL
-deepScan            	1009	0	65556	T_BOOL TS_NUMERAL
-qbis                	1010	0	1048651	T_OBJECT TS_OBJECT
-balanceHistory      	1011	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-nodeBal             	1012	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+cname               	1004	1	131122	T_TEXT TS_STRING
+address             	1005	0	131127	T_ADDRESS TS_STRING
+name                	1006	0	131122	T_TEXT TS_STRING
+color               	1007	0	131122	T_TEXT TS_STRING
+firstBlock          	1008	0	65561	T_NUMBER TS_NUMERAL
+lastBlock           	1009	0	65561	T_NUMBER TS_NUMERAL
+deepScan            	1010	0	65556	T_BOOL TS_NUMERAL
+qbis                	1011	0	1048651	T_OBJECT TS_OBJECT
+balanceHistory      	1012	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+nodeBal             	1013	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 {
   "address": "0x0",
   "firstBlock": 0,
@@ -38,15 +39,16 @@ baseClass: CBaseNode
 schema              	1001	1	65561	T_NUMBER TS_NUMERAL
 deleted             	1002	1	65556	T_BOOL TS_NUMERAL
 showing             	1003	1	65556	T_BOOL TS_NUMERAL
-address             	1004	1	131127	T_ADDRESS TS_STRING
-name                	1005	1	131122	T_TEXT TS_STRING
-color               	1006	1	131122	T_TEXT TS_STRING
-firstBlock          	1007	1	65561	T_NUMBER TS_NUMERAL
-lastBlock           	1008	1	65561	T_NUMBER TS_NUMERAL
-deepScan            	1009	1	65556	T_BOOL TS_NUMERAL
-qbis                	1010	1	1048651	T_OBJECT TS_OBJECT
-balanceHistory      	1011	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-nodeBal             	1012	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+cname               	1004	1	131122	T_TEXT TS_STRING
+address             	1005	1	131127	T_ADDRESS TS_STRING
+name                	1006	1	131122	T_TEXT TS_STRING
+color               	1007	1	131122	T_TEXT TS_STRING
+firstBlock          	1008	1	65561	T_NUMBER TS_NUMERAL
+lastBlock           	1009	1	65561	T_NUMBER TS_NUMERAL
+deepScan            	1010	1	65556	T_BOOL TS_NUMERAL
+qbis                	1011	1	1048651	T_OBJECT TS_OBJECT
+balanceHistory      	1012	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+nodeBal             	1013	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 {
 }
 
@@ -56,15 +58,16 @@ baseClass: CBaseNode
 schema              	1001	0	65561	T_NUMBER TS_NUMERAL
 deleted             	1002	0	65556	T_BOOL TS_NUMERAL
 showing             	1003	0	65556	T_BOOL TS_NUMERAL
-address             	1004	0	131127	T_ADDRESS TS_STRING
-name                	1005	0	131122	T_TEXT TS_STRING
-color               	1006	0	131122	T_TEXT TS_STRING
-firstBlock          	1007	0	65561	T_NUMBER TS_NUMERAL
-lastBlock           	1008	0	65561	T_NUMBER TS_NUMERAL
-deepScan            	1009	0	65556	T_BOOL TS_NUMERAL
-qbis                	1010	0	1048651	T_OBJECT TS_OBJECT
-balanceHistory      	1011	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-nodeBal             	1012	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+cname               	1004	0	131122	T_TEXT TS_STRING
+address             	1005	0	131127	T_ADDRESS TS_STRING
+name                	1006	0	131122	T_TEXT TS_STRING
+color               	1007	0	131122	T_TEXT TS_STRING
+firstBlock          	1008	0	65561	T_NUMBER TS_NUMERAL
+lastBlock           	1009	0	65561	T_NUMBER TS_NUMERAL
+deepScan            	1010	0	65556	T_BOOL TS_NUMERAL
+qbis                	1011	0	1048651	T_OBJECT TS_OBJECT
+balanceHistory      	1012	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+nodeBal             	1013	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 {
   "schema": 5005,
   "deleted": 0,

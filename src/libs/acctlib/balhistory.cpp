@@ -150,7 +150,7 @@ void CBalHistory::registerClass(void) {
     ADD_FIELD(CBalHistory, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CBalHistory, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CBalHistory, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CBalHistory, "cname", TS_STRING,  ++fieldNum);
+    ADD_FIELD(CBalHistory, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CBalHistory, "recordID", T_TEXT, ++fieldNum);
     ADD_FIELD(CBalHistory, "timestamp", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CBalHistory, "balance", T_NUMBER, ++fieldNum);

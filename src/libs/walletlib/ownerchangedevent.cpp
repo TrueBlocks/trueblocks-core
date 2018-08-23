@@ -148,7 +148,7 @@ void QOwnerChangedEvent::registerClass(void) {
     ADD_FIELD(QOwnerChangedEvent, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QOwnerChangedEvent, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QOwnerChangedEvent, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(QOwnerChangedEvent, "cname", TS_STRING,  ++fieldNum);
+    ADD_FIELD(QOwnerChangedEvent, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(QOwnerChangedEvent, "oldOwner", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QOwnerChangedEvent, "newOwner", T_ADDRESS, ++fieldNum);
 

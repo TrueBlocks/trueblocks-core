@@ -131,7 +131,7 @@ void [{CLASS_NAME}]::registerClass(void) {
     ADD_FIELD([{CLASS_NAME}], "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD([{CLASS_NAME}], "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD([{CLASS_NAME}], "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD([{CLASS_NAME}], "cname", TS_STRING,  ++fieldNum);
+    ADD_FIELD([{CLASS_NAME}], "cname", T_TEXT,  ++fieldNum);
 [REGISTER_FIELDS]
 
     // Hide our internal fields, user can turn them on if they like

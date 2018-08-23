@@ -146,7 +146,7 @@ void QRevokeEvent::registerClass(void) {
     ADD_FIELD(QRevokeEvent, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QRevokeEvent, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QRevokeEvent, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(QRevokeEvent, "cname", TS_STRING,  ++fieldNum);
+    ADD_FIELD(QRevokeEvent, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(QRevokeEvent, "owner", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QRevokeEvent, "operation", T_TEXT, ++fieldNum);
 

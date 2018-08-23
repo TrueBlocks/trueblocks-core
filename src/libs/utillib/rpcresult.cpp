@@ -154,7 +154,7 @@ void CRPCResult::registerClass(void) {
     ADD_FIELD(CRPCResult, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CRPCResult, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CRPCResult, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CRPCResult, "cname", TS_STRING,  ++fieldNum);
+    ADD_FIELD(CRPCResult, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CRPCResult, "jsonrpc", T_TEXT, ++fieldNum);
     ADD_FIELD(CRPCResult, "result", T_TEXT, ++fieldNum);
     ADD_FIELD(CRPCResult, "id", T_TEXT, ++fieldNum);

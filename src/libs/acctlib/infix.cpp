@@ -167,7 +167,7 @@ void CInfix::registerClass(void) {
     ADD_FIELD(CInfix, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CInfix, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CInfix, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CInfix, "cname", TS_STRING,  ++fieldNum);
+    ADD_FIELD(CInfix, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CInfix, "next", T_POINTER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

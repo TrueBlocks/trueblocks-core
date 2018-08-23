@@ -224,7 +224,7 @@ void CBlock::registerClass(void) {
     ADD_FIELD(CBlock, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CBlock, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CBlock, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CBlock, "cname", TS_STRING,  ++fieldNum);
+    ADD_FIELD(CBlock, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CBlock, "gasLimit", T_GAS, ++fieldNum);
     ADD_FIELD(CBlock, "gasUsed", T_GAS, ++fieldNum);
     ADD_FIELD(CBlock, "hash", T_HASH, ++fieldNum);

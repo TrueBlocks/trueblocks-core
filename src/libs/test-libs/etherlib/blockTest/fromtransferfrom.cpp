@@ -146,7 +146,7 @@ void QFromTransferFrom::registerClass(void) {
     ADD_FIELD(QFromTransferFrom, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QFromTransferFrom, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QFromTransferFrom, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(QFromTransferFrom, "cname", TS_STRING,  ++fieldNum);
+    ADD_FIELD(QFromTransferFrom, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(QFromTransferFrom, "whop", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QFromTransferFrom, "werp", T_ADDRESS, ++fieldNum);
 

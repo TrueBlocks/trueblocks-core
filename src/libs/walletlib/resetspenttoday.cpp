@@ -138,7 +138,7 @@ void QResetSpentToday::registerClass(void) {
     ADD_FIELD(QResetSpentToday, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(QResetSpentToday, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(QResetSpentToday, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(QResetSpentToday, "cname", TS_STRING,  ++fieldNum);
+    ADD_FIELD(QResetSpentToday, "cname", T_TEXT,  ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(QResetSpentToday, "schema");
