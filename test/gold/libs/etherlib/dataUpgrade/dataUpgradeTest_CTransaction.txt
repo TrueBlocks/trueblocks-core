@@ -131,6 +131,7 @@ encoding            	1031	0	131122	T_TEXT TS_STRING
   "schema": 5005,
   "deleted": 0,
   "showing": 1,
+  "cname": "Transaction",
   "hash": "0x0",
   "blockHash": "0x0",
   "blockNumber": 0,

@@ -46,6 +46,7 @@ topics              	1008	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
   "schema": 5005,
   "deleted": 0,
   "showing": 1,
+  "cname": "LogEntry",
   "address": "0x0",
   "logIndex": 0,
   "topics": []
