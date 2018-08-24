@@ -924,7 +924,7 @@ receipt             	1019	0	1048651	T_OBJECT TS_OBJECT
 confirmations       	1020	1	65561	T_NUMBER TS_NUMERAL
 gasCost             	1021	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 function            	1022	1	131122	T_TEXT TS_STRING
-articulated         	1023	1	131122	T_TEXT TS_STRING
+articulated         	1023	1	655410	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY
 events              	1024	1	131122	T_TEXT TS_STRING
 price               	1025	1	131122	T_TEXT TS_STRING
 gasUsed             	1026	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
@@ -933,6 +933,7 @@ datesh              	1028	1	262149	T_DATE TS_DATE
 time                	1029	1	262149	T_DATE TS_DATE
 ether               	1030	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
 encoding            	1031	1	131122	T_TEXT TS_STRING
+traces              	1032	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -984,7 +985,7 @@ receipt             	1019	1	1048651	T_OBJECT TS_OBJECT
 confirmations       	1020	1	65561	T_NUMBER TS_NUMERAL
 gasCost             	1021	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 function            	1022	1	131122	T_TEXT TS_STRING
-articulated         	1023	1	131122	T_TEXT TS_STRING
+articulated         	1023	1	655410	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY
 events              	1024	1	131122	T_TEXT TS_STRING
 price               	1025	1	131122	T_TEXT TS_STRING
 gasUsed             	1026	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
@@ -993,6 +994,7 @@ datesh              	1028	1	262149	T_DATE TS_DATE
 time                	1029	1	262149	T_DATE TS_DATE
 ether               	1030	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
 encoding            	1031	1	131122	T_TEXT TS_STRING
+traces              	1032	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 {
 }
 
@@ -1021,7 +1023,7 @@ receipt             	1019	0	1048651	T_OBJECT TS_OBJECT
 confirmations       	1020	0	65561	T_NUMBER TS_NUMERAL
 gasCost             	1021	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 function            	1022	0	131122	T_TEXT TS_STRING
-articulated         	1023	0	131122	T_TEXT TS_STRING
+articulated         	1023	0	655410	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY
 events              	1024	0	131122	T_TEXT TS_STRING
 price               	1025	0	131122	T_TEXT TS_STRING
 gasUsed             	1026	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
@@ -1030,6 +1032,7 @@ datesh              	1028	0	262149	T_DATE TS_DATE
 time                	1029	0	262149	T_DATE TS_DATE
 ether               	1030	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
 encoding            	1031	0	131122	T_TEXT TS_STRING
+traces              	1032	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 {
   "schema": 5005,
   "deleted": 0,
@@ -1060,13 +1063,14 @@ encoding            	1031	0	131122	T_TEXT TS_STRING
   },
   "gasCost": 0,
   "function": " ",
-  "articulated": "[ "" ]",
+  "articulated": [],
   "price": "++PRICE++",
   "gasUsed": 0,
   "date": "1970-01-01 00:00:00 UTC",
   "datesh": "1970-01-01",
   "time": "0:00:00 UTC",
-  "ether": 0.000000000000000000
+  "ether": 0.000000000000000000,
+  "traces": []
 }
 
 --------------------------------------------------------------------------------
