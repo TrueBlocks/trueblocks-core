@@ -307,12 +307,14 @@ string_q CReceipt::getValueByName(const string_q& fieldName) const {
     }
 
     // EXISTING_CODE
-    // See if this field belongs to the item's container
-    ret = nextTransactionChunk(fieldName, pTrans);
-    if (contains(ret, "Field not found"))
-        ret = "";
-    if (!ret.empty())
-        return ret;
+    if (fieldName != "cname") {
+        // See if this field belongs to the item's container
+        ret = nextTransactionChunk(fieldName, pTrans);
+        if (contains(ret, "Field not found"))
+            ret = "";
+        if (!ret.empty())
+            return ret;
+    }
     // EXISTING_CODE
 
     // Finally, give the parent class a chance

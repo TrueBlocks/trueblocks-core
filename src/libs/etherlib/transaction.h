@@ -135,6 +135,7 @@ inline void CTransaction::initialize(void) {
     function = "";
     funcPtr = NULL;
     ether = 0.;
+    traces.clear();
     // EXISTING_CODE
 }
 
@@ -164,6 +165,7 @@ inline void CTransaction::duplicate(const CTransaction& tr) {
     funcPtr = tr.funcPtr;
     function = tr.function;
     ether = tr.ether;
+    traces = tr.traces;
     // EXISTING_CODE
     finishParse();
 }

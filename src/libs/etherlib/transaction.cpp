@@ -265,7 +265,7 @@ void CTransaction::registerClass(void) {
     // Add custom fields
     ADD_FIELD(CTransaction, "gasCost", T_WEI, ++fieldNum);
     ADD_FIELD(CTransaction, "function", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTransaction, "articulated", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTransaction, "articulated", T_TEXT|TS_ARRAY, ++fieldNum);
     ADD_FIELD(CTransaction, "events", T_TEXT, ++fieldNum);
     ADD_FIELD(CTransaction, "price", T_TEXT, ++fieldNum);
     ADD_FIELD(CTransaction, "gasUsed", T_GAS, ++fieldNum);
@@ -274,6 +274,7 @@ void CTransaction::registerClass(void) {
     ADD_FIELD(CTransaction, "time", T_DATE, ++fieldNum);
     ADD_FIELD(CTransaction, "ether", T_ETHER, ++fieldNum);
     ADD_FIELD(CTransaction, "encoding", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTransaction, "traces", T_OBJECT|TS_ARRAY, ++fieldNum);
 
     // Hide fields we don't want to show by default
     HIDE_FIELD(CTransaction, "function");
@@ -303,8 +304,9 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
             // EXISTING_CODE
             case 'a':
                 if ( fieldIn % "articulated" ) {
+//#error
                     if (tra->function.empty() || tra->function == " ")
-                        return "[ \"" + tra->input + "\" ]";
+                        return ""; //\"" + tra->input + "\"";
                     return tra->function;
                 }
                 break;
@@ -458,11 +460,13 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
 
     // EXISTING_CODE
     // See if this field belongs to the item's container
-    ret = nextBlockChunk(fieldName, pBlock);
-    if (contains(ret, "Field not found"))
-        ret = "";
-    if (!ret.empty())
-        return ret;
+    if (fieldName != "cname") {
+        ret = nextBlockChunk(fieldName, pBlock);
+        if (contains(ret, "Field not found"))
+            ret = "";
+        if (!ret.empty())
+            return ret;
+    }
     // EXISTING_CODE
 
     string_q s;

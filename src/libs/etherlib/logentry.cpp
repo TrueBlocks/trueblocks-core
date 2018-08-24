@@ -263,11 +263,13 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
 
     // EXISTING_CODE
     // See if this field belongs to the item's container
-    ret = nextReceiptChunk(fieldName, pReceipt);
-    if (contains(ret, "Field not found"))
-        ret = "";
-    if (!ret.empty())
-        return ret;
+    if (fieldName != "cname") {
+        ret = nextReceiptChunk(fieldName, pReceipt);
+        if (contains(ret, "Field not found"))
+            ret = "";
+        if (!ret.empty())
+            return ret;
+    }
     // EXISTING_CODE
 
     // Finally, give the parent class a chance
