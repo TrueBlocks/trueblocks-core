@@ -289,6 +289,7 @@ void CTransaction::registerClass(void) {
     HIDE_FIELD(CTransaction, "datesh");
     HIDE_FIELD(CTransaction, "time");
     HIDE_FIELD(CTransaction, "ether");
+    HIDE_FIELD(CTransaction, "traces");
     if (isTestMode()) {
         UNHIDE_FIELD(CTransaction, "isError");
     }
