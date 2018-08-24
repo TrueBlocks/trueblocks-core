@@ -305,7 +305,6 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
             // EXISTING_CODE
             case 'a':
                 if ( fieldIn % "articulated" ) {
-//#error
                     if (tra->function.empty() || tra->function == " ")
                         return ""; //\"" + tra->input + "\"";
                     return tra->function;
@@ -460,8 +459,8 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
     }
 
     // EXISTING_CODE
-    // See if this field belongs to the item's container
     if (fieldName != "cname") {
+        // See if this field belongs to the item's container
         ret = nextBlockChunk(fieldName, pBlock);
         if (contains(ret, "Field not found"))
             ret = "";
@@ -584,7 +583,7 @@ string_q parse(const string_q& params, size_t nItems, string_q *types) {
 
 //---------------------------------------------------------------------------
 string_q toFunction(const string_q& name, const string_q& input, size_t nItems, string_q *items) {
-    return "[ \"" + name + "\", " + substitute(parse(extract(input, 10), nItems, items), "|", "\", \"") + " ]";
+    return "\"" + name + "\", " + substitute(parse(extract(input, 10), nItems, items), "|", "\", \"");
 }
 
 //---------------------------------------------------------------------------
