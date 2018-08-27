@@ -17,13 +17,13 @@
  */
 #include <vector>
 #include <map>
-#include "transaction_ex.h"
+#include "transaction.h"
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QSetApprovalForAll : public CTransaction_Ex {
+class QSetApprovalForAll : public CTransaction {
 public:
     address_t _operator;
     bool _approved;
@@ -85,7 +85,7 @@ inline void QSetApprovalForAll::clear(void) {
 
 //--------------------------------------------------------------------------
 inline void QSetApprovalForAll::initialize(void) {
-    CTransaction_Ex::initialize();
+    CTransaction::initialize();
 
     _operator = "";
     _approved = 0;
@@ -97,7 +97,7 @@ inline void QSetApprovalForAll::initialize(void) {
 //--------------------------------------------------------------------------
 inline void QSetApprovalForAll::duplicate(const QSetApprovalForAll& se) {
     clear();
-    CTransaction_Ex::duplicate(se);
+    CTransaction::duplicate(se);
 
     _operator = se._operator;
     _approved = se._approved;

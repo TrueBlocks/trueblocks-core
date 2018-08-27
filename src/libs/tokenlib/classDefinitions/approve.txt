@@ -1,6 +1,6 @@
 [settings]
 class     = QApprove
-baseClass = CTransaction_Ex
+baseClass = CTransaction
 fields    = address _spender|uint256 _value|
-includes  = transaction_ex.h
+includes  = transaction.h
 cIncs     = #include "etherlib.h"

@@ -1,6 +1,6 @@
 [settings]
 class     = QTransferFrom
-baseClass = CTransaction_Ex
+baseClass = CTransaction
 fields    = address _from|address _to|uint256 _value|
-includes  = transaction_ex.h
+includes  = transaction.h
 cIncs     = #include "etherlib.h"

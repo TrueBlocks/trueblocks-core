@@ -19,7 +19,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QTransferEvent, CLogEntry_Ex);
+IMPLEMENT_NODE(QTransferEvent, CLogEntry);
 
 //---------------------------------------------------------------------------
 static string_q nextTransfereventChunk(const string_q& fieldIn, const void *dataPtr);
@@ -59,7 +59,7 @@ bool QTransferEvent::setValueByName(const string_q& fieldName, const string_q& f
     // EXISTING_CODE
     // EXISTING_CODE
 
-    if (CLogEntry_Ex::setValueByName(fieldName, fieldValue))
+    if (CLogEntry::setValueByName(fieldName, fieldValue))
         return true;
 
     switch (tolower(fieldName[0])) {
@@ -88,7 +88,7 @@ bool QTransferEvent::Serialize(CArchive& archive) {
 
     // Always read the base class (it will handle its own backLevels if any, then
     // read this object's back level (if any) or the current version.
-    CLogEntry_Ex::Serialize(archive);
+    CLogEntry::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -105,7 +105,7 @@ bool QTransferEvent::Serialize(CArchive& archive) {
 bool QTransferEvent::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
-    CLogEntry_Ex::SerializeC(archive);
+    CLogEntry::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -143,7 +143,7 @@ void QTransferEvent::registerClass(void) {
     if (been_here) return;
     been_here = true;
 
-    CLogEntry_Ex::registerClass();
+    CLogEntry::registerClass();
 
     size_t fieldNum = 1000;
     ADD_FIELD(QTransferEvent, "schema",  T_NUMBER, ++fieldNum);
@@ -219,7 +219,7 @@ string_q QTransferEvent::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
 
     // Finally, give the parent class a chance
-    return CLogEntry_Ex::getValueByName(fieldName);
+    return CLogEntry::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

@@ -17,13 +17,13 @@
  */
 #include <vector>
 #include <map>
-#include "transaction_ex.h"
+#include "transaction.h"
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QOwnerOf : public CTransaction_Ex {
+class QOwnerOf : public CTransaction {
 public:
     biguint_t _tokenId;
 
@@ -84,7 +84,7 @@ inline void QOwnerOf::clear(void) {
 
 //--------------------------------------------------------------------------
 inline void QOwnerOf::initialize(void) {
-    CTransaction_Ex::initialize();
+    CTransaction::initialize();
 
     _tokenId = 0;
 
@@ -95,7 +95,7 @@ inline void QOwnerOf::initialize(void) {
 //--------------------------------------------------------------------------
 inline void QOwnerOf::duplicate(const QOwnerOf& ow) {
     clear();
-    CTransaction_Ex::duplicate(ow);
+    CTransaction::duplicate(ow);
 
     _tokenId = ow._tokenId;
 

@@ -16,7 +16,7 @@
 
 void reportByToken(COptions& options);
 void reportByAccount(COptions& options);
-extern biguint_t getTokenInfo(const string_q& v, const address_t& t, const address_t& h, blknum_t b);
+extern string_q getTokenInfo(const string_q& which, const address_t& t, const address_t& h, blknum_t b);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
@@ -33,13 +33,17 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        if (options.asData)
-            cout << "block\ttoken\tholder\ttoken balance\n";
-        if (options.byAccount)
-            reportByAccount(options);
-        else
-            reportByToken(options);
+        if (!options.tokenInfo.empty()) {
+            cout << getTokenInfo(options.tokenInfo, options.tokens, "", getLatestBlockFromClient()) << "\n";
 
+        } else {
+            if (options.asData)
+                cout << "block\ttoken\tholder\ttoken balance\n";
+            if (options.byAccount)
+                reportByAccount(options);
+            else
+                reportByToken(options);
+        }
     }
 
     if ((options.latestBlock - options.earliestBlock) > 250 && !nodeHasBalances() && !isTestMode())
@@ -75,7 +79,7 @@ void reportByToken(COptions& options) {
                 blknum_t blockNum = str_2_Uint(nextTokenClear(blocks, '|'));
                 if (blockNum < options.earliestBlock)
                     options.earliestBlock = blockNum;
-                biguint_t bal = getTokenInfo("balance", token, holder, blockNum);
+                biguint_t bal = str_2_Wei(getTokenInfo("balanceOf", token, holder, blockNum));
                 totalVal += bal;
                 string_q sBal = bnu_2_Str(bal);
                 if (expContext().asEther) {
@@ -155,7 +159,7 @@ void reportByAccount(COptions& options) {
                 blknum_t blockNum = str_2_Uint(nextTokenClear(blocks, '|'));
                 if (blockNum < options.earliestBlock)
                     options.earliestBlock = blockNum;
-                biguint_t bal = getTokenInfo("balance", token, holder, blockNum);
+                biguint_t bal = str_2_Wei(getTokenInfo("balanceOf", token, holder, blockNum));
                 totalVal += bal;
                 string_q sBal = bnu_2_Str(bal);
                 if (expContext().asEther) {
@@ -210,20 +214,42 @@ void reportByAccount(COptions& options) {
 }
 
 //-------------------------------------------------------------------------
-biguint_t getTokenInfo(const string_q& value, const address_t& token, const address_t& holder, blknum_t blockNum) {
+string_q getTokenInfo(const string_q& which, const address_t& token, const address_t& holder, blknum_t blockNum) {
 
-    ASSERT(isAddress(token));
-    ASSERT(isAddress(holder));
+    if (!isAddress(token))
+        return "";
+    ASSERT(holder.empty() || isAddress(holder));
 
-    string_q t = "0x" + padLeft(extract(token, 2), 40, '0');  // address to send the command to
-    string_q h =        padLeft(extract(holder, 2), 64, '0');  // encoded data for the transaction
+    string_q cmd;
+    if (which % "balanceOf") {
+        cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"0x70a08231[HOLDER]\"}, \"[BLOCK]\"]";
+        replace(cmd, "[TOKEN]",  token);
+        replace(cmd, "[HOLDER]", padLeft(extract(holder, 2), 64, '0'));  // encoded data for the transaction
+        replace(cmd, "[BLOCK]",  uint_2_Hex(blockNum));
+    } else {
+        string_q encoding;
+        if (isValidInfo(which, encoding)) {
+            cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"[CMD]\"}, \"[BLOCK]\"]";
+            replace(cmd, "[TOKEN]",  token);
+            replace(cmd, "[CMD]",    encoding);  // encoded data for the transaction
+            replace(cmd, "[BLOCK]",  uint_2_Hex(blockNum));
+        }
+    }
 
-    string_q cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"0x70a08231[HOLDER]\"}, \"[BLOCK]\"]";
-    //        string_q cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"0x18160ddd\"}, \"[BLOCK]\"]";
-    replace(cmd, "[TOKEN]",  t);
-    replace(cmd, "[HOLDER]", h);
-    replace(cmd, "[BLOCK]",  uint_2_Hex(blockNum));
-
-    return str_2_Wei(callRPC("eth_call", cmd, false));
+    return cmd.empty() ? "" : callRPC("eth_call", cmd, false);
 }
 
+//-------------------------------------------------------------------------
+bool isValidInfo(const string_q which, string_q& encoding) {
+    for (auto item : infoOptions) {
+        if (contains(item, which+"|")) {
+            encoding = item;
+            nextTokenClear(encoding, '|');
+            return true;
+        }
+    }
+    return false;
+}
+
+//-------------------------------------------------------------------------
+CStringArray infoOptions = { "name|0x06fdde03", "totalSupply|0x18160ddd", "decimals|0x313ce567", "version|0x54fd4d50", "symbol|0x95d89b41", "all" };

@@ -292,9 +292,9 @@ int main(int argc, const char *argv[]) {
                             assigns2 += res;
                         }
 
-                        string_q base = (func->type == "event" ? "LogEntry_Ex" : "Transaction_Ex");
+                        string_q base = (func->type == "event" ? "LogEntry" : "Transaction");
                         if (name == "LogEntry")
-                            base = "LogEntry_Ex";
+                            base = "LogEntry";
 
                         string_q out = STR_CLASSDEF;
                         replace(out, "[{DIR}]", substitute(options.classDir, getHomeFolder(), "~/"));
@@ -309,7 +309,7 @@ int main(int argc, const char *argv[]) {
                             registers += "\t" + theClass + "::registerClass();\n";
                         }
                         sources += substitute(fileName, ".txt", ".cpp") + " \\\n";
-                        if (base == "Transaction_Ex") {
+                        if (base == "Transaction") {
                             string_q f1, fName = func->Format("[{NAME}]");
                             f1 = string_q(STR_FACTORY1);
                             replaceAll(f1, "[{CLASS}]", theClass);
@@ -334,7 +334,7 @@ int main(int argc, const char *argv[]) {
                             if (!isConst)
                                 factory1 += f1;
 
-                        } else if (name != "LogEntry_Ex") {
+                        } else if (name != "LogEntry") {
                             string_q f2, fName = func->Format("[{NAME}]");
                             f2 = substitute(
                                 substitute(string_q(STR_FACTORY2), "[{CLASS}]", theClass), "[{LOWER}]", fName);
@@ -420,8 +420,8 @@ int main(int argc, const char *argv[]) {
                 replace(sourceCode, "return promoteToToken(p);", "return promoteToWallet(p);");
                 replace(sourceCode, "return promoteToTokenEvent(p);", "return promoteToWalletEvent(p);");
             } else if (options.isWallet()) {
-                replace(sourceCode, "return promoteToToken(p);", "return new CTransaction_Ex(p);");
-                replace(sourceCode, "return promoteToTokenEvent(p);", "return new CLogEntry_Ex(p);");
+                replace(sourceCode, "return promoteToToken(p);", "return new CTransaction(*p);");
+                replace(sourceCode, "return promoteToTokenEvent(p);", "return new CLogEntry(*p);");
                 replaceAll(sourceCode, "never returns NULL",
                            "If we haven't found the thing, we can send back an extended thing");
             }
@@ -498,7 +498,7 @@ const char* STR_FACTORY1 =
 "\t\t\t// [{SIGNATURE}]\n"
 "\t\t\t// [{ENCODING}]\n"
 "\t\t\t[{CLASS}] *a = new [{CLASS}];\n"
-"\t\t\ta->C[{BASE}]::operator=(item);\n"
+"\t\t\ta->C[{BASE}]::operator=(*p);\n"
 "[{ASSIGNS1}]"
 "[{ITEMS1}]"
 "\t\t\ta->function = [{PARSEIT}];\n"
@@ -511,7 +511,7 @@ const char* STR_FACTORY2 =
 "\t\t\t// [{SIGNATURE}]\n"
 "\t\t\t// [{ENCODING}]\n"
 "\t\t\t[{CLASS}] *a = new [{CLASS}];\n"
-"\t\t\ta->C[{BASE}]::operator=(item);\n"
+"\t\t\ta->C[{BASE}]::operator=(*p);\n"
 "[{ASSIGNS2}]"
 "\t\t\treturn a;\n"
 "\n";
@@ -545,8 +545,8 @@ const char* STR_HEADERFILE =
 "[{HEADERS}]\n"
 "//------------------------------------------------------------------------\n"
 "extern void [{PREFIX}]_init(void);\n"
-"extern const CTransaction_Ex *promoteTo[{PPREFIX}](const CTransaction *p);\n"
-"extern const CLogEntry_Ex *promoteTo[{PPREFIX}]Event(const CLogEntry *p);\n"
+"extern const CTransaction *promoteTo[{PPREFIX}](const CTransaction *p);\n"
+"extern const CLogEntry *promoteTo[{PPREFIX}]Event(const CLogEntry *p);\n"
 "\n[{EXTERNS}][{HEADER_SIGS}]\n\n// EXISTING_CODE\n// EXISTING_CODE\n";
 
 //-----------------------------------------------------------------------
