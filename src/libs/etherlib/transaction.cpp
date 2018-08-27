@@ -305,6 +305,7 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
             // EXISTING_CODE
             case 'a':
                 if ( fieldIn % "articulated" ) {
+//#error
                     if (tra->function.empty() || tra->function == " ")
                         return ""; //\"" + tra->input + "\"";
                     return tra->function;

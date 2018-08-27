@@ -1,6 +1,0 @@
-[settings]
-class     = CTransaction_Ex
-baseClass = CTransaction
-fields    = string name|uint64 traceId
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

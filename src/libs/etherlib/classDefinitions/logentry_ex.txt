@@ -1,6 +1,0 @@
-[settings]
-class     = CLogEntry_Ex
-baseClass = CLogEntry
-fields    = string name
-includes  = logentry.h
-cIncs     = #include "etherlib.h"

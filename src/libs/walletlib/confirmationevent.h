@@ -17,13 +17,13 @@
  */
 #include <vector>
 #include <map>
-#include "logentry_ex.h"
+#include "logentry.h"
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QConfirmationEvent : public CLogEntry_Ex {
+class QConfirmationEvent : public CLogEntry {
 public:
     address_t owner;
     string_q operation;
@@ -85,7 +85,7 @@ inline void QConfirmationEvent::clear(void) {
 
 //--------------------------------------------------------------------------
 inline void QConfirmationEvent::initialize(void) {
-    CLogEntry_Ex::initialize();
+    CLogEntry::initialize();
 
     owner = "";
     operation = "";
@@ -97,7 +97,7 @@ inline void QConfirmationEvent::initialize(void) {
 //--------------------------------------------------------------------------
 inline void QConfirmationEvent::duplicate(const QConfirmationEvent& co) {
     clear();
-    CLogEntry_Ex::duplicate(co);
+    CLogEntry::duplicate(co);
 
     owner = co.owner;
     operation = co.operation;

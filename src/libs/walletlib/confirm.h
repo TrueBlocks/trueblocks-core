@@ -17,13 +17,13 @@
  */
 #include <vector>
 #include <map>
-#include "transaction_ex.h"
+#include "transaction.h"
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QConfirm : public CTransaction_Ex {
+class QConfirm : public CTransaction {
 public:
     string_q _h;
 
@@ -84,7 +84,7 @@ inline void QConfirm::clear(void) {
 
 //--------------------------------------------------------------------------
 inline void QConfirm::initialize(void) {
-    CTransaction_Ex::initialize();
+    CTransaction::initialize();
 
     _h = "";
 
@@ -95,7 +95,7 @@ inline void QConfirm::initialize(void) {
 //--------------------------------------------------------------------------
 inline void QConfirm::duplicate(const QConfirm& co) {
     clear();
-    CTransaction_Ex::duplicate(co);
+    CTransaction::duplicate(co);
 
     _h = co._h;
 

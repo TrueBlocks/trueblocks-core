@@ -14,18 +14,14 @@
 
 //---------------------------------------------------------------------------------------------------
 static COption params[] = {
-    COption("~address_list", "two or more addresses (0x...), the first is an ERC20 token, balances for the "
-                                "rest are reported"),
-    COption("~!block_list",  "an optional list of one or more blocks at which to report balances, defaults "
-                                "to 'latest'"),
-    COption("-byAcct",       "consider each address an ERC20 token except the last, whose balance is reported "
-                                "for each token"),
+    COption("~address_list", "two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported"),
+    COption("~!block_list",  "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
+    COption("-byAcct",       "consider each address an ERC20 token except the last, whose balance is reported for each token"),
     COption("-data",         "render results as tab delimited data (for example, to build a cap table)"),
-    COption("-list:<fn>",    "an alternative way to specify an address_list, place one address per line in "
-                                "the file 'fn'"),
+    COption("-list:<fn>",    "an alternative way to specify an address_list, place one address per line in the file 'fn'"),
     COption("-noZero",       "suppress the display of zero balance accounts"),
     COption("-total",        "if more than one balance is requested, display a total as well"),
-    COption("-info",         "retreive standarized information (name, decimals, totalSupply, etc.) about the token"),
+    COption("@info:<val>",   "retreive information [name|decimals|totalSupply|version|symbol|all] about the token"),
     COption("",              "Retrieve the token balance(s) for one or more addresses at the given (or "
                                 "latest) block(s).\n"),
 };
@@ -53,8 +49,12 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-t" || arg == "--total") {
             total = true;
 
-        } else if (arg == "-i" || arg == "--info") {
-            tokenInfo = true;
+        } else if (startsWith(arg, "-i:") || startsWith(arg, "--info:")) {
+            arg = substitute(substitute(arg, "-i:", ""), "--info:", "");
+            string_q unused;
+            if (!isValidInfo(arg, unused))
+                return usage(arg + " does not appear to be a valid tokenInfo option.\n");
+            tokenInfo = arg;
 
         } else if (arg == "-b" || arg == "--byAcct") {
             byAccount = true;
@@ -113,7 +113,7 @@ bool COptions::parseArguments(string_q& command) {
         return usage("Totalling is not available when exporting data.");
 
     address_list = trim(address_list, '|');
-    if (countOf(address_list, '|') < 1)
+    if (tokenInfo.empty() && countOf(address_list, '|') < 1)
         return usage("You must provide both a token contract and an account. Quitting...");
 
     if (!byAccount) {
@@ -151,7 +151,7 @@ void COptions::Init(void) {
     noZero = false;
     byAccount = false;
     total = false;
-    tokenInfo = false;
+    tokenInfo = "";
     blocks.Init();
     optionOff(OPT_DOLLARS);
 }

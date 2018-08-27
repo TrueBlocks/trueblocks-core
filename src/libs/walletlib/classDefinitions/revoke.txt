@@ -1,6 +1,6 @@
 [settings]
 class     = QRevoke
-baseClass = CTransaction_Ex
+baseClass = CTransaction
 fields    = bytes32 _operation|
-includes  = transaction_ex.h
+includes  = transaction.h
 cIncs     = #include "etherlib.h"

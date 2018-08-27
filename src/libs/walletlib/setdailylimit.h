@@ -17,13 +17,13 @@
  */
 #include <vector>
 #include <map>
-#include "transaction_ex.h"
+#include "transaction.h"
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QSetDailyLimit : public CTransaction_Ex {
+class QSetDailyLimit : public CTransaction {
 public:
     biguint_t _newLimit;
 
@@ -84,7 +84,7 @@ inline void QSetDailyLimit::clear(void) {
 
 //--------------------------------------------------------------------------
 inline void QSetDailyLimit::initialize(void) {
-    CTransaction_Ex::initialize();
+    CTransaction::initialize();
 
     _newLimit = 0;
 
@@ -95,7 +95,7 @@ inline void QSetDailyLimit::initialize(void) {
 //--------------------------------------------------------------------------
 inline void QSetDailyLimit::duplicate(const QSetDailyLimit& se) {
     clear();
-    CTransaction_Ex::duplicate(se);
+    CTransaction::duplicate(se);
 
     _newLimit = se._newLimit;
 
