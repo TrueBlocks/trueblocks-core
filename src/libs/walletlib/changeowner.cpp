@@ -19,7 +19,7 @@
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QChangeOwner, CTransaction_Ex);
+IMPLEMENT_NODE(QChangeOwner, CTransaction);
 
 //---------------------------------------------------------------------------
 static string_q nextChangeownerChunk(const string_q& fieldIn, const void *dataPtr);
@@ -59,7 +59,7 @@ bool QChangeOwner::setValueByName(const string_q& fieldName, const string_q& fie
     // EXISTING_CODE
     // EXISTING_CODE
 
-    if (CTransaction_Ex::setValueByName(fieldName, fieldValue))
+    if (CTransaction::setValueByName(fieldName, fieldValue))
         return true;
 
     switch (tolower(fieldName[0])) {
@@ -87,7 +87,7 @@ bool QChangeOwner::Serialize(CArchive& archive) {
 
     // Always read the base class (it will handle its own backLevels if any, then
     // read this object's back level (if any) or the current version.
-    CTransaction_Ex::Serialize(archive);
+    CTransaction::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -103,7 +103,7 @@ bool QChangeOwner::Serialize(CArchive& archive) {
 bool QChangeOwner::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
-    CTransaction_Ex::SerializeC(archive);
+    CTransaction::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -140,7 +140,7 @@ void QChangeOwner::registerClass(void) {
     if (been_here) return;
     been_here = true;
 
-    CTransaction_Ex::registerClass();
+    CTransaction::registerClass();
 
     size_t fieldNum = 1000;
     ADD_FIELD(QChangeOwner, "schema",  T_NUMBER, ++fieldNum);
@@ -214,7 +214,7 @@ string_q QChangeOwner::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
 
     // Finally, give the parent class a chance
-    return CTransaction_Ex::getValueByName(fieldName);
+    return CTransaction::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

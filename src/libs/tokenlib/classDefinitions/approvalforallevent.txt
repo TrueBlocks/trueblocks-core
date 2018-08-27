@@ -1,6 +1,6 @@
 [settings]
 class     = QApprovalForAllEvent
-baseClass = CLogEntry_Ex
+baseClass = CLogEntry
 fields    = address _owner|address _operator|bool _approved|
-includes  = logentry_ex.h
+includes  = logentry.h
 cIncs     = #include "etherlib.h"

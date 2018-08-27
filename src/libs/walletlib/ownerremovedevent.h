@@ -17,13 +17,13 @@
  */
 #include <vector>
 #include <map>
-#include "logentry_ex.h"
+#include "logentry.h"
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QOwnerRemovedEvent : public CLogEntry_Ex {
+class QOwnerRemovedEvent : public CLogEntry {
 public:
     address_t oldOwner;
 
@@ -84,7 +84,7 @@ inline void QOwnerRemovedEvent::clear(void) {
 
 //--------------------------------------------------------------------------
 inline void QOwnerRemovedEvent::initialize(void) {
-    CLogEntry_Ex::initialize();
+    CLogEntry::initialize();
 
     oldOwner = "";
 
@@ -95,7 +95,7 @@ inline void QOwnerRemovedEvent::initialize(void) {
 //--------------------------------------------------------------------------
 inline void QOwnerRemovedEvent::duplicate(const QOwnerRemovedEvent& ow) {
     clear();
-    CLogEntry_Ex::duplicate(ow);
+    CLogEntry::duplicate(ow);
 
     oldOwner = ow.oldOwner;
 

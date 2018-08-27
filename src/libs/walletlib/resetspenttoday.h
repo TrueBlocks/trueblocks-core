@@ -17,13 +17,13 @@
  */
 #include <vector>
 #include <map>
-#include "transaction_ex.h"
+#include "transaction.h"
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QResetSpentToday : public CTransaction_Ex {
+class QResetSpentToday : public CTransaction {
 public:
     QResetSpentToday(void);
     QResetSpentToday(const QResetSpentToday& re);
@@ -81,7 +81,7 @@ inline void QResetSpentToday::clear(void) {
 
 //--------------------------------------------------------------------------
 inline void QResetSpentToday::initialize(void) {
-    CTransaction_Ex::initialize();
+    CTransaction::initialize();
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -90,7 +90,7 @@ inline void QResetSpentToday::initialize(void) {
 //--------------------------------------------------------------------------
 inline void QResetSpentToday::duplicate(const QResetSpentToday& re) {
     clear();
-    CTransaction_Ex::duplicate(re);
+    CTransaction::duplicate(re);
 
     // EXISTING_CODE
     // EXISTING_CODE

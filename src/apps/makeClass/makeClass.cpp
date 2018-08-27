@@ -102,35 +102,39 @@ string_q convertTypes(const string_q& inStr) {
     // matches only the types and not the field names.
     string_q outStr = inStr;
     replaceAll(outStr, "address ",   "address_t "  );
-    replaceAll(outStr, "bytes32 ",   "string_q "   );
-    replaceAll(outStr, "bytes16 ",   "string_q "   );
-    replaceAll(outStr, "bytes8 ",    "string_q "   );
-    replaceAll(outStr, "bytes4 ",    "string_q "   );
+
     replaceAll(outStr, "bytes ",     "string_q "   );
-    replaceAll(outStr, "bloom ",     "bloom_t "    );
-    replaceAll(outStr, "wei ",       "wei_t "      );
-    replaceAll(outStr, "gas ",       "gas_t "      );
-    replaceAll(outStr, "hash ",      "hash_t "     );
+    replaceAll(outStr, "bytes4 ",    "string_q "   );
+    replaceAll(outStr, "bytes8 ",    "string_q "   );
+    replaceAll(outStr, "bytes16 ",   "string_q "   );
+    replaceAll(outStr, "bytes32 ",   "string_q "   );
     replaceAll(outStr, "string ",    "string_q "   );
-    replaceAll(outStr, "uint256 ",   "biguint_t "   );
-    replaceAll(outStr, "int256 ",    "bigint_t "    );
     replaceAll(outStr, "blknum ",    "blknum_t "   );
     replaceAll(outStr, "timestamp ", "timestamp_t ");
-    replaceAll(outStr, "bbool ",     "bool "       );
     replaceAll(outStr, "bool ",      "bool "       );
-    replaceAll(outStr, "uint8 ",     "32uint "     );
-    replaceAll(outStr, "uint16 ",    "32uint "     );
-    replaceAll(outStr, "uint32 ",    "32uint "     );
-    replaceAll(outStr, "uint64 ",    "64uint "     );
+
+    replaceAll(outStr, "hash ",      "hash_t "     );
+    replaceAll(outStr, "bloom ",     "bloom_t "    );
+    replaceAll(outStr, "gas ",       "gas_t "      );
+    replaceAll(outStr, "wei ",       "wei_t "      );
+
+//    replaceAll(outStr, "uint8 ",     "32uint "     );
+//    replaceAll(outStr, "uint16 ",    "32uint "     );
+//    replaceAll(outStr, "uint32 ",    "32uint "     );
+//    replaceAll(outStr, "uint64 ",    "64uint "     );
+//    replaceAll(outStr, "uint256 ",   "biguint_t "   );
+
     replaceAll(outStr, "int8 ",      "int32_t "    );
     replaceAll(outStr, "int16 ",     "int32_t "    );
     replaceAll(outStr, "int32 ",     "int32_t "    );
     replaceAll(outStr, "int64 ",     "int64_t "    );
-    replaceAll(outStr, "32uint ",    "uint32_t "   );
-    replaceAll(outStr, "64uint ",    "uint64_t "   );
+    replaceAll(outStr, "int256 ",    "bigint_t "   );
 
-    if (getEnvStr("TRACING") == "true")
-        cerr << "\tconvert: " << padRight(inStr, 30) << " ==> " << outStr << "\n";
+    replaceAll(outStr, "ubigint_t",  "biguint_t"   );
+//    replaceAll(outStr, "32uint ",    "uint32_t "   );
+//    replaceAll(outStr, "64uint ",    "uint64_t "   );
+//    if (getEnvStr("TRACING") == "true")
+//        cerr << "\tconvert: " << padRight(inStr, 30) << " ==> " << outStr << "\n";
 
     return outStr;
 }
@@ -252,7 +256,6 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
         } else if (fld.type == "uint32")    { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
         } else if (fld.type == "uint64")    { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
         } else if (fld.type == "uint256")   { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
-        } else if (fld.type == "bbool")     { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BOOL";
         } else if (fld.type == "bool")      { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BOOL";
         } else if (fld.type == "double")    { setFmt = "\t[{NAME}] = [{DEFF}];\n"; regType = "T_DOUBLE";
         } else if (fld.isPointer)           { setFmt = "\t[{NAME}] = [{DEFP}];\n"; regType = "T_POINTER";
@@ -481,7 +484,7 @@ string_q getCaseCode(const string_q& fieldCase, const string_q& ex) {
                         replaceAll(ptrCase, "[{TYPE}]", type);
                         caseCode += ptrCase;
 
-                    } else if (type == "bbool" || type == "bool") {
+                    } else if (type == "bool") {
                         caseCode += " return int_2_Str([{PTR}]" + field + ");";
 
                     } else if (type == "bloom") {
@@ -596,7 +599,7 @@ string_q getCaseSetCode(const string_q& fieldCase) {
                         replaceAll(ptrCase, "[{TYPE}]", type);
                         caseCode += ptrCase;
 
-                    } else if (type == "bbool" || type == "bool") {
+                    } else if (type == "bool") {
                         caseCode +=  " { " + field + " = str_2_Bool(fieldValue); return true; }";
 
                     } else if (type == "bloom") {

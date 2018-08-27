@@ -17,13 +17,13 @@
  */
 #include <vector>
 #include <map>
-#include "transaction_ex.h"
+#include "transaction.h"
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QExecute : public CTransaction_Ex {
+class QExecute : public CTransaction {
 public:
     address_t _to;
     biguint_t _value;
@@ -86,7 +86,7 @@ inline void QExecute::clear(void) {
 
 //--------------------------------------------------------------------------
 inline void QExecute::initialize(void) {
-    CTransaction_Ex::initialize();
+    CTransaction::initialize();
 
     _to = "";
     _value = 0;
@@ -99,7 +99,7 @@ inline void QExecute::initialize(void) {
 //--------------------------------------------------------------------------
 inline void QExecute::duplicate(const QExecute& ex) {
     clear();
-    CTransaction_Ex::duplicate(ex);
+    CTransaction::duplicate(ex);
 
     _to = ex._to;
     _value = ex._value;

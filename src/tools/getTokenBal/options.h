@@ -24,7 +24,7 @@ public:
     bool byAccount;
     bool noZero;
     bool total;
-    bool tokenInfo;
+    string_q tokenInfo;
 
     COptions(void);
     ~COptions(void);
@@ -33,3 +33,6 @@ public:
     void Init(void) override;
     string_q postProcess(const string_q& which, const string_q& str) const override;
 };
+
+extern CStringArray infoOptions;
+extern bool isValidInfo(const string_q which, string_q& result);

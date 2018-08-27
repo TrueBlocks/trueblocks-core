@@ -75,7 +75,10 @@ namespace qblocks {
 
         switch (tolower(fieldName[0])) {
             case 'c':
-                if ( fieldName % "cname" ) return extract(string_q(getRuntimeClass()->m_ClassName), 1);
+                if ( fieldName % "cname" ) {
+                    CRuntimeClass *pClass = getRuntimeClass();
+                    return extract(string_q(pClass->m_ClassName), 1);
+                }
                 break;
             case 'd':
                 if ( fieldName % "deleted" ) return uint_2_Str(m_deleted);

@@ -17,13 +17,13 @@
  */
 #include <vector>
 #include <map>
-#include "logentry_ex.h"
+#include "logentry.h"
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QApprovalForAllEvent : public CLogEntry_Ex {
+class QApprovalForAllEvent : public CLogEntry {
 public:
     address_t _owner;
     address_t _operator;
@@ -86,7 +86,7 @@ inline void QApprovalForAllEvent::clear(void) {
 
 //--------------------------------------------------------------------------
 inline void QApprovalForAllEvent::initialize(void) {
-    CLogEntry_Ex::initialize();
+    CLogEntry::initialize();
 
     _owner = "";
     _operator = "";
@@ -99,7 +99,7 @@ inline void QApprovalForAllEvent::initialize(void) {
 //--------------------------------------------------------------------------
 inline void QApprovalForAllEvent::duplicate(const QApprovalForAllEvent& ap) {
     clear();
-    CLogEntry_Ex::duplicate(ap);
+    CLogEntry::duplicate(ap);
 
     _owner = ap._owner;
     _operator = ap._operator;
