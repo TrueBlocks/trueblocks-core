@@ -136,6 +136,7 @@ namespace qblocks {
         HASHFINDFUNC hashFind;
         blknum_t start;
         blknum_t stop;
+        blknum_t skip;
         blknum_t latest;
         void Init(void);
         string_q parseBlockList(const string_q& arg, blknum_t latest);

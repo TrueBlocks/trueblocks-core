@@ -22,6 +22,7 @@ public:
     bool hashes;
     bool showAddrs;
     bool uniqAddrs;
+    bool number;
     bool traces;
     bool force;
     bool normalize;
