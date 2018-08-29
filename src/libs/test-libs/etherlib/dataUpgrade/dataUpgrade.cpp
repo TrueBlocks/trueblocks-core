@@ -34,6 +34,7 @@ int main(int argc, const char *argv[]) {
     CAcctCacheItem::registerClass();
     CBalHistory::registerClass();
     CIncomeStatement::registerClass();
+    UNHIDE_FIELD(CBaseNode, "cname");
 
     COptions options;
     if (!options.prepareArguments(argc, argv))

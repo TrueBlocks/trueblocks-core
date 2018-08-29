@@ -69,7 +69,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             a->_value = str_2_Wei("0x" + extract(params, 1*64, 64));
             items[nItems++] = "address";
             items[nItems++] = "uint256";
-            a->function = toFunction("approve", params, nItems, items);
+            a->function = decodeRLP("approve", params, nItems, items);
             return a;
 
         } else if (encoding == func_approveAndCall_qb) {
@@ -83,7 +83,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             items[nItems++] = "address";
             items[nItems++] = "uint256";
             items[nItems++] = "bytes";
-            a->function = toFunction("approveAndCall", params, nItems, items);
+            a->function = decodeRLP("approveAndCall", params, nItems, items);
             return a;
 
         } else if (encoding == func_ownerOf_qb) {
@@ -93,7 +93,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             a->CTransaction::operator=(*p);
             a->_tokenId = str_2_Wei("0x" + extract(params, 0*64, 64));
             items[nItems++] = "uint256";
-            a->function = toFunction("ownerOf", params, nItems, items);
+            a->function = decodeRLP("ownerOf", params, nItems, items);
             return a;
 
         } else if (encoding == func_safeTransferFrom_qb) {
@@ -107,7 +107,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             items[nItems++] = "address";
             items[nItems++] = "address";
             items[nItems++] = "uint256";
-            a->function = toFunction("safeTransferFrom", params, nItems, items);
+            a->function = decodeRLP("safeTransferFrom", params, nItems, items);
             return a;
 
         } else if (encoding == func_safeTransferFromToke_qb) {
@@ -123,7 +123,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             items[nItems++] = "address";
             items[nItems++] = "uint256";
             items[nItems++] = "bytes";
-            a->function = toFunction("safeTransferFromToke", params, nItems, items);
+            a->function = decodeRLP("safeTransferFromToke", params, nItems, items);
             return a;
 
         } else if (encoding == func_setApprovalForAll_qb) {
@@ -135,7 +135,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             a->_approved = str_2_Int(extract(params, 1*64, 64));
             items[nItems++] = "address";
             items[nItems++] = "bool";
-            a->function = toFunction("setApprovalForAll", params, nItems, items);
+            a->function = decodeRLP("setApprovalForAll", params, nItems, items);
             return a;
 
         } else if (encoding == func_transfer_qb) {
@@ -147,7 +147,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             a->_value = str_2_Wei("0x" + extract(params, 1*64, 64));
             items[nItems++] = "address";
             items[nItems++] = "uint256";
-            a->function = toFunction("transfer", params, nItems, items);
+            a->function = decodeRLP("transfer", params, nItems, items);
             return a;
 
         } else if (encoding == func_transferFrom_qb) {
@@ -161,7 +161,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             items[nItems++] = "address";
             items[nItems++] = "address";
             items[nItems++] = "uint256";
-            a->function = toFunction("transferFrom", params, nItems, items);
+            a->function = decodeRLP("transferFrom", params, nItems, items);
             return a;
 
         }
