@@ -47,8 +47,8 @@ bool COptions::parseArguments(string_q& command) {
             isList = true;
 
         } else if (arg == "-d" || arg == "--data") {
-
             alone = true;
+            colorsOff();
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 

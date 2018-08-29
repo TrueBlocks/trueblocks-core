@@ -57,6 +57,13 @@ namespace qblocks {
         string_q arg = argIn;
         if (contains(arg, "-")) {
 
+            // scrape off the skip marker if any
+            if (contains(arg, ":")) {
+                string_q s = arg;
+                arg = nextTokenClear(s, ':');
+                skip = max(blknum_t(1), str_2_Uint(s));
+            }
+
             // If we already have a range, bail
             if (start != stop)
                 return "Specify only a single block range at a time.";
@@ -101,6 +108,7 @@ namespace qblocks {
         numList.clear();
         hashList.clear();
         start = stop = 0;
+        skip = 1;
         hashFind = NULL;
     }
 
@@ -114,7 +122,7 @@ namespace qblocks {
         if (!func)
             return false;
 
-        for (uint64_t i = start ; i < stop ; i++) {
+        for (uint64_t i = start ; i < stop ; i = i + skip) {
             if (!(*func)(i, data))
                 return false;
         }
