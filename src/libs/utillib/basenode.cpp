@@ -289,8 +289,6 @@ namespace qblocks {
 
     //--------------------------------------------------------------------
     inline bool isWhiteSpace(char c) {
-        // NOTE: A generic JSON parser won't do this, but since the Ethereum data contains no
-        // preservable white space, it's okay here.
         return (c == '\0' || c == ' ' || c == '\n' || c == '\r' || c == '\t');
     }
 
@@ -300,6 +298,8 @@ namespace qblocks {
             return s;
         char *l = s, *start = s;
         while (*s) {
+            // NOTE: A generic JSON parser won't do this, but since the Ethereum data
+            // contains no preservable white space, it's okay here.
             if (!isWhiteSpace(*s) && *s != '\"') {  // zap all the white space and quotes
                 *l = *s;
                 l++;
