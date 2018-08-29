@@ -1,0 +1,3 @@
+getBlock argc: 3 [1:245001] [2:--uniq --number] 
+getBlock 245001 --uniq --number 
+3 uniq addresses in block 245001
