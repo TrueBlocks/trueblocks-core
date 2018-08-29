@@ -67,6 +67,7 @@ TEST_F(CThisTest, TestConverts_0) {
     ASSERT_EQ("str_2_Addr3",             str_2_Addr("0x"),             "0x0");
     ASSERT_EQ("str_2_Addr4",             str_2_Addr(""),               "0x0");
     ASSERT_EQ("str_2_Addr5",             str_2_Addr("0x12312abcde12"), "0x000000000000000000000000000012312abcde12");
+    ASSERT_EQ("str_2_Addr6",             str_2_Addr("000000000000000000000000de12121212312abcde12121212312abcde121212"),"0xde12121212312abcde12121212312abcde121212");
     cout << "\n";
 
     ASSERT_EQ("timestamp empty address", str_2_Ts(array[0]), 0);
