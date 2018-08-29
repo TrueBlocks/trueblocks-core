@@ -58,12 +58,9 @@ public:
 
     // EXISTING_CODE
     const CBlock *pBlock;
-    const CFunction *funcPtr;
     string_q function;
     double ether;
     CTraceArray traces;
-
-    string_q inputToFunction(void) const;
     // EXISTING_CODE
     bool operator==(const CTransaction& item) const;
     bool operator!=(const CTransaction& item) const { return !operator==(item); }
@@ -133,7 +130,6 @@ inline void CTransaction::initialize(void) {
     // EXISTING_CODE
     pBlock = NULL;
     function = "";
-    funcPtr = NULL;
     ether = 0.;
     traces.clear();
     // EXISTING_CODE
@@ -162,7 +158,6 @@ inline void CTransaction::duplicate(const CTransaction& tr) {
 
     // EXISTING_CODE
     pBlock = tr.pBlock;  // no deep copy, we don't own it
-    funcPtr = tr.funcPtr;
     function = tr.function;
     ether = tr.ether;
     traces = tr.traces;
@@ -206,8 +201,7 @@ extern CArchive& operator>>(CArchive& archive, CTransaction& tra);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 extern bool sortTransactionsForWrite(const CTransaction& t1, const CTransaction& t2);
-extern string_q parse(const string_q& params, size_t nItems, string_q *types);
-extern string_q toFunction(const string_q& name, const string_q& input, size_t nItems, string_q *items);
+extern string_q decodeRLP(const string_q& name, const string_q& input, size_t nItems, string_q *items);
 extern string_q nextBlockChunk(const string_q& fieldIn, const void *data);
 // EXISTING_CODE
 }  // namespace qblocks

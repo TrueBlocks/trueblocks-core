@@ -16,7 +16,7 @@ CTopicArray				a->_val = extract(params, 0*64, 64);
 address[]				while (!params.empty()) {
 				string_q val = extract(params, 0, 64);
 				params = extract(params, 64);
-			if (contains(type,"int")))
+			if (contains(type,"int"))
 					a->_val.push_back(str_2_BigUint(val));
 				a->_val.push_back(val);
 					a->_val.push_back(val);

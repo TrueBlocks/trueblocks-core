@@ -83,7 +83,17 @@ bool CTransaction::setValueByName(const string_q& fieldName, const string_q& fie
     } else if ( fieldName % "receipt" ) {
         string_q str = fieldValue;
         return receipt.parseJson3(str);
+
+    } else if ( fieldName % "traces" ) {
+        CTrace item;
+        string_q str = fieldValue;
+        while (item.parseJson3(str)) {
+            traces.push_back(item);
+            item = CTrace();  // reset
+        }
+        return true;
     }
+
     if (pBlock)
         if (((CBlock*)pBlock)->setValueByName(fieldName, fieldValue))  // NOLINT
             return true;
@@ -335,8 +345,10 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
                 }
                 break;
             case 'f':
-                if ( fieldIn % "function" )
-                    return tra->inputToFunction();
+                if ( fieldIn % "function" ) {
+                    string_q ret = substitute(tra->function, "\"","");
+                    return nextTokenClear(ret, ',');
+                }
                 break;
             case 'g':
                 if ( fieldIn % "gasUsed" ) return uint_2_Str(tra->receipt.gasUsed);
@@ -467,6 +479,17 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
             ret = "";
         if (!ret.empty())
             return ret;
+    } else if ( fieldName % "traces" || fieldName % "traceCnt" ) {
+        size_t cnt = traces.size();
+        if (endsWith(fieldName, "Cnt"))
+            return uint_2_Str(cnt);
+        if (!cnt) return "";
+        string_q retS;
+        for (size_t i = 0 ; i < cnt ; i++) {
+            retS += traces[i].Format();
+            retS += ((i < cnt - 1) ? ",\n" : "\n");
+        }
+        return retS;
     }
     // EXISTING_CODE
 
@@ -497,6 +520,8 @@ ostream& operator<<(ostream& os, const CTransaction& item) {
 const CBaseNode *CTransaction::getObjectAt(const string_q& fieldName, size_t index) const {
     if ( fieldName % "receipt" )
         return &receipt;
+    else if ( fieldName % "traces" && index < traces.size() )
+        return &traces[index];
     return NULL;
 }
 
@@ -541,7 +566,7 @@ inline string_q hex2String(const string_q& inHex) {
 #define old_toBigNum3(a, b)      padNum3(old_grabBigNum(a, b))
 #define old_toBoolean(a, b)      (old_grabBigNum(a, b) ? "true" : "false")
 #define old_toBytes(a, b)        extract((a), 64*(b), 64)
-string_q parse(const string_q& params, size_t nItems, string_q *types) {
+string_q parseTheInput(const string_q& params, size_t nItems, string_q *types) {
 
     string_q ret;
     for (size_t item = 0 ; item < (size_t)nItems ; item++) {
@@ -583,25 +608,12 @@ string_q parse(const string_q& params, size_t nItems, string_q *types) {
 }
 
 //---------------------------------------------------------------------------
-string_q toFunction(const string_q& name, const string_q& input, size_t nItems, string_q *items) {
-    return "\"" + name + "\", " + substitute(parse(extract(input, 10), nItems, items), "|", "\", \"");
+string_q decodeRLP(const string_q& name, const string_q& input, size_t nItems, string_q *items) {
+    string_q quote = "\"";
+    string_q params = input;
+    string_q result = parseTheInput(params, nItems, items);
+    result = substitute(result, "|", "\", \"");
+    return quote + name + quote + ", " + result;
 }
 
-//---------------------------------------------------------------------------
-string_q CTransaction::inputToFunction(void) const {
-    if (input.length() < 10)
-        return " ";
-
-    if (funcPtr) {
-        string_q items[256];
-        size_t nItems = 0;
-        for (size_t i = 0 ; i < funcPtr->inputs.size() ; i++)
-            items[nItems++] = funcPtr->inputs[i].type;
-        return toFunction(funcPtr->name, input, nItems, items);
-    }
-
-    return " ";
-}
-// EXISTING_CODE
 }  // namespace qblocks
-
