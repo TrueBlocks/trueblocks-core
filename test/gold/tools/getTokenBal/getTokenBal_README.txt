@@ -2,7 +2,7 @@ getTokenBal argc: 2 [1:-th]
 getTokenBal -th 
 #### Usage
 
-`Usage:`    getTokenBal [-b|-d|-l fn|-n|-t|-i|-v|-h] &lt;address&gt; &lt;address&gt; [address...] [block...]  
+`Usage:`    getTokenBal [-b|-d|-l fn|-n|-t|-v|-h] &lt;address&gt; &lt;address&gt; [address...] [block...]  
 `Purpose:`  Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).
              
 `Where:`  
@@ -16,7 +16,11 @@ getTokenBal -th
 | -l | --list fn | an alternative way to specify an address_list, place one address per line in the file 'fn' |
 | -n | --noZero | suppress the display of zero balance accounts |
 | -t | --total | if more than one balance is requested, display a total as well |
-| -i | --info | retreive standarized information (name, decimals, totalSupply, etc.) about the token |
+
+#### Hidden options (shown during testing only)
+| -i | --info val | retreive information [name&#124;decimals&#124;totalSupply&#124;version&#124;symbol&#124;all] about the token |
+#### Hidden options (shown during testing only)
+
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
