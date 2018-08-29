@@ -189,7 +189,7 @@ namespace qblocks {
 
         string_q ret = substitute(str, "0x", "");
         if (ret.length() == 64) {
-            string_q leading('0', 64-40);
+            string_q leading(64-40, '0');
             if (startsWith(ret, leading))
                 replace(ret, leading, "");
         }
