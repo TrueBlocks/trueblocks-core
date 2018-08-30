@@ -279,7 +279,7 @@ int main(int argc, const char *argv[]) {
                                     sigs += func->Format("\tfunc_[{NAME}],\n");
                             }
                         }
-                        string_q fields, assigns1, assigns2, items1;
+                        string_q fields, assigns1, assigns2, items1, items2;
                         uint64_t nIndexed = 0;
                         for (size_t j = 0 ; j < func->inputs.size() ; j++) {
                             fields   += func->inputs[j].Format("[{TYPE}][ {NAME}]|");
@@ -290,6 +290,7 @@ int main(int argc, const char *argv[]) {
                             replace(res, "++", "[");
                             replace(res, "++", "]");
                             assigns2 += res;
+                            items2   += "\t\t\titems[nItems++] = \"" + func->inputs[j].type + "\";\n";
                         }
 
                         string_q base = (func->type == "event" ? "LogEntry" : "Transaction");
@@ -320,7 +321,7 @@ int main(int argc, const char *argv[]) {
                                 replaceAll(f1, "[{LOWER}]", fName);
                             replaceAll(f1, "[{ASSIGNS1}]", assigns1);
                             replaceAll(f1, "[{ITEMS1}]", items1);
-                            string_q parseIt = "toFunction(\"" + fName + "\", params, nItems, items)";
+                            string_q parseIt = "decodeRLP(\"" + fName + "\", params, nItems, items)";
                             replaceAll(f1, "[{PARSEIT}]", parseIt);
                             replaceAll(f1, "[{BASE}]", base);
                             replaceAll(f1, "[{SIGNATURE}]",
@@ -339,6 +340,9 @@ int main(int argc, const char *argv[]) {
                             f2 = substitute(
                                 substitute(string_q(STR_FACTORY2), "[{CLASS}]", theClass), "[{LOWER}]", fName);
                             replace(f2, "[{ASSIGNS2}]", assigns2);
+                            replace(f2, "[{ITEMS2}]", items2);
+                            string_q parseIt = "decodeRLP(\"" + fName + "\", params, nItems, items)";
+                            replace(f2, "[{PARSEIT}]", parseIt);
                             replace(f2, "[{BASE}]", base);
                             replace(f2, "[{SIGNATURE}]",
                                     substitute(
@@ -501,7 +505,7 @@ const char* STR_FACTORY1 =
 "\t\t\ta->C[{BASE}]::operator=(*p);\n"
 "[{ASSIGNS1}]"
 "[{ITEMS1}]"
-"\t\t\ta->function = [{PARSEIT}];\n"
+"\t\t\ta->articulated = [{PARSEIT}];\n"
 "\t\t\treturn a;\n"
 "\n";
 
@@ -513,6 +517,8 @@ const char* STR_FACTORY2 =
 "\t\t\t[{CLASS}] *a = new [{CLASS}];\n"
 "\t\t\ta->C[{BASE}]::operator=(*p);\n"
 "[{ASSIGNS2}]"
+"[{ITEMS2}]"
+"\t\t\ta->articulated = [{PARSEIT}];\n"
 "\t\t\treturn a;\n"
 "\n";
 
