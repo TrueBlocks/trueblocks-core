@@ -285,10 +285,11 @@ string_q CParameter::getFunctionAssign(uint64_t which) const {
             "\t\t\twhile (!params.empty()) {\n"
             "\t\t\t\tstring_q val = extract(params, 0, 64);\n"
             "\t\t\t\tparams = extract(params, 64);\n"
-            "\t\t\tif (contains(type,\"int\"))\n"
-            "\t\t\t\t\ta->[{NAME}].push_back(str_2_BigUint(val));\n"
+//            "\t\t\t\tif (contains(type,\"int\"))\n"
+//            "\t\t\t\t\ta->[{NAME}].push_back(str_2_BigUint(val));\n"
+//            "\t\t\t\telse\n"
+//            "\t\t\t\t\ta->[{NAME}].push_back(val);\n"
             "\t\t\t\ta->[{NAME}].push_back(val);\n"
-            "\t\t\t\t\ta->[{NAME}].push_back(val);\n"
             "\t\t\t}\n";
         return Format(STR_ASSIGNARRAY);
     }

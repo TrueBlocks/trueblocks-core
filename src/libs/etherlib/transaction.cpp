@@ -69,7 +69,6 @@ bool CTransaction::setValueByName(const string_q& fieldName, const string_q& fie
 
     } else if ( fieldName % "value" ) {
         value = str_2_Wei(fieldValue);
-        ether = str_2_Double(Format("[{ETHER}]"));
         return true;
 
     } else if ( fieldName % "contractAddress" ) {
@@ -142,8 +141,6 @@ bool CTransaction::setValueByName(const string_q& fieldName, const string_q& fie
 //---------------------------------------------------------------------------------------------------
 void CTransaction::finishParse() {
     // EXISTING_CODE
-    function = Format("[{FUNCTION}]");
-    ether = str_2_Double(Format("[{ETHER}]"));
     receipt.pTrans = this;
     // EXISTING_CODE
 }
@@ -334,10 +331,10 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
                 }
                 break;
             case 'e':
-                if ( fieldIn % "ether" ) return wei_2_Ether(bnu_2_Str(tra->value));
-                if ( fieldIn % "encoding" ) {
+                if ( fieldIn % "ether" )
+                    return wei_2_Ether(bnu_2_Str(tra->value));
+                if ( fieldIn % "encoding" )
                     return extract(tra->input, 0, 10);
-                }
                 if ( fieldIn % "events" ) {
                     if (tra->receipt.logs.size())
                         return "++EVENT_LIST++";

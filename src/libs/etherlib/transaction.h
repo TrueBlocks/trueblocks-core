@@ -59,7 +59,6 @@ public:
     // EXISTING_CODE
     const CBlock *pBlock;
     string_q function;
-    double ether;
     CTraceArray traces;
     // EXISTING_CODE
     bool operator==(const CTransaction& item) const;
@@ -130,7 +129,6 @@ inline void CTransaction::initialize(void) {
     // EXISTING_CODE
     pBlock = NULL;
     function = "";
-    ether = 0.;
     traces.clear();
     // EXISTING_CODE
 }
@@ -159,7 +157,6 @@ inline void CTransaction::duplicate(const CTransaction& tr) {
     // EXISTING_CODE
     pBlock = tr.pBlock;  // no deep copy, we don't own it
     function = tr.function;
-    ether = tr.ether;
     traces = tr.traces;
     // EXISTING_CODE
     finishParse();
