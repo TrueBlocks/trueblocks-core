@@ -73,7 +73,7 @@ const CTransaction *promoteToWallet(const CTransaction *p) {
             a->CTransaction::operator=(*p);
             a->_owner = str_2_Addr(extract(params, 0*64, 64));
             items[nItems++] = "address";
-            a->function = decodeRLP("addOwner", params, nItems, items);
+            a->articulated = decodeRLP("addOwner", params, nItems, items);
             return a;
 
         } else if (encoding == func_changeOwner_qb) {
@@ -85,7 +85,7 @@ const CTransaction *promoteToWallet(const CTransaction *p) {
             a->_to = str_2_Addr(extract(params, 1*64, 64));
             items[nItems++] = "address";
             items[nItems++] = "address";
-            a->function = decodeRLP("changeOwner", params, nItems, items);
+            a->articulated = decodeRLP("changeOwner", params, nItems, items);
             return a;
 
         } else if (encoding == func_changeRequirement_qb) {
@@ -95,7 +95,7 @@ const CTransaction *promoteToWallet(const CTransaction *p) {
             a->CTransaction::operator=(*p);
             a->_newRequired = str_2_Wei("0x" + extract(params, 0*64, 64));
             items[nItems++] = "uint256";
-            a->function = decodeRLP("changeRequirement", params, nItems, items);
+            a->articulated = decodeRLP("changeRequirement", params, nItems, items);
             return a;
 
         } else if (encoding == func_confirm_qb) {
@@ -105,7 +105,7 @@ const CTransaction *promoteToWallet(const CTransaction *p) {
             a->CTransaction::operator=(*p);
             a->_h = extract(params, 0*64, 64);
             items[nItems++] = "bytes32";
-            a->function = decodeRLP("confirm", params, nItems, items);
+            a->articulated = decodeRLP("confirm", params, nItems, items);
             return a;
 
         } else if (encoding == func_execute_qb) {
@@ -119,7 +119,7 @@ const CTransaction *promoteToWallet(const CTransaction *p) {
             items[nItems++] = "address";
             items[nItems++] = "uint256";
             items[nItems++] = "bytes";
-            a->function = decodeRLP("execute", params, nItems, items);
+            a->articulated = decodeRLP("execute", params, nItems, items);
             return a;
 
         } else if (encoding == func_isOwner_qb) {
@@ -129,7 +129,7 @@ const CTransaction *promoteToWallet(const CTransaction *p) {
             a->CTransaction::operator=(*p);
             a->_addr = str_2_Addr(extract(params, 0*64, 64));
             items[nItems++] = "address";
-            a->function = decodeRLP("isOwner", params, nItems, items);
+            a->articulated = decodeRLP("isOwner", params, nItems, items);
             return a;
 
         } else if (encoding == func_kill_qb) {
@@ -139,7 +139,7 @@ const CTransaction *promoteToWallet(const CTransaction *p) {
             a->CTransaction::operator=(*p);
             a->_to = str_2_Addr(extract(params, 0*64, 64));
             items[nItems++] = "address";
-            a->function = decodeRLP("kill", params, nItems, items);
+            a->articulated = decodeRLP("kill", params, nItems, items);
             return a;
 
         } else if (encoding == func_removeOwner_qb) {
@@ -149,7 +149,7 @@ const CTransaction *promoteToWallet(const CTransaction *p) {
             a->CTransaction::operator=(*p);
             a->_owner = str_2_Addr(extract(params, 0*64, 64));
             items[nItems++] = "address";
-            a->function = decodeRLP("removeOwner", params, nItems, items);
+            a->articulated = decodeRLP("removeOwner", params, nItems, items);
             return a;
 
         } else if (encoding == func_resetSpentToday_qb) {
@@ -157,7 +157,7 @@ const CTransaction *promoteToWallet(const CTransaction *p) {
             // 0x5c52c2f5
             QResetSpentToday *a = new QResetSpentToday;
             a->CTransaction::operator=(*p);
-            a->function = decodeRLP("resetSpentToday", params, nItems, items);
+            a->articulated = decodeRLP("resetSpentToday", params, nItems, items);
             return a;
 
         } else if (encoding == func_revoke_qb) {
@@ -167,7 +167,7 @@ const CTransaction *promoteToWallet(const CTransaction *p) {
             a->CTransaction::operator=(*p);
             a->_operation = extract(params, 0*64, 64);
             items[nItems++] = "bytes32";
-            a->function = decodeRLP("revoke", params, nItems, items);
+            a->articulated = decodeRLP("revoke", params, nItems, items);
             return a;
 
         } else if (encoding == func_setDailyLimit_qb) {
@@ -177,7 +177,7 @@ const CTransaction *promoteToWallet(const CTransaction *p) {
             a->CTransaction::operator=(*p);
             a->_newLimit = str_2_Wei("0x" + extract(params, 0*64, 64));
             items[nItems++] = "uint256";
-            a->function = decodeRLP("setDailyLimit", params, nItems, items);
+            a->articulated = decodeRLP("setDailyLimit", params, nItems, items);
             return a;
 
         }
@@ -208,7 +208,17 @@ const CLogEntry *promoteToWalletEvent(const CLogEntry *p) {
 
     size_t nTops = p->topics.size();
     if (nTops > 0) {  // the '0'th topic is the event signature
+        string_q items[256];
+        size_t nItems = 0;
         string_q data = extract(p->data, 2);
+        string_q params;
+        bool first = true;
+        for (auto t : p->topics) {
+            if (!first)
+                params += extract(topic_2_Str(t),2);
+            first = false;
+        }
+        params += data;
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -219,6 +229,9 @@ const CLogEntry *promoteToWalletEvent(const CLogEntry *p) {
             a->CLogEntry::operator=(*p);
             a->owner = str_2_Addr(extract(data, 0*64, 64));
             a->operation = "0x" + extract(data, 1*64, 64);
+            items[nItems++] = "address";
+            items[nItems++] = "bytes32";
+            a->articulated = decodeRLP("Confirmation", params, nItems, items);
             return a;
 
         } else if (topic_2_Str(p->topics[0]) % evt_ConfirmationNeeded_qb) {
@@ -231,6 +244,12 @@ const CLogEntry *promoteToWalletEvent(const CLogEntry *p) {
             a->value = str_2_Wei("0x" + extract(data, 2*64, 64));
             a->to = str_2_Addr(extract(data, 3*64, 64));
             a->data = "0x" + extract(data, 4*64);
+            items[nItems++] = "bytes32";
+            items[nItems++] = "address";
+            items[nItems++] = "uint256";
+            items[nItems++] = "address";
+            items[nItems++] = "bytes";
+            a->articulated = decodeRLP("ConfirmationNeeded", params, nItems, items);
             return a;
 
         } else if (topic_2_Str(p->topics[0]) % evt_Deposit_qb) {
@@ -240,6 +259,9 @@ const CLogEntry *promoteToWalletEvent(const CLogEntry *p) {
             a->CLogEntry::operator=(*p);
             a->from = str_2_Addr(extract(data, 0*64, 64));
             a->value = str_2_Wei("0x" + extract(data, 1*64, 64));
+            items[nItems++] = "address";
+            items[nItems++] = "uint256";
+            a->articulated = decodeRLP("Deposit", params, nItems, items);
             return a;
 
         } else if (topic_2_Str(p->topics[0]) % evt_MultiTransact_qb) {
@@ -252,6 +274,12 @@ const CLogEntry *promoteToWalletEvent(const CLogEntry *p) {
             a->value = str_2_Wei("0x" + extract(data, 2*64, 64));
             a->to = str_2_Addr(extract(data, 3*64, 64));
             a->data = "0x" + extract(data, 4*64);
+            items[nItems++] = "address";
+            items[nItems++] = "bytes32";
+            items[nItems++] = "uint256";
+            items[nItems++] = "address";
+            items[nItems++] = "bytes";
+            a->articulated = decodeRLP("MultiTransact", params, nItems, items);
             return a;
 
         } else if (topic_2_Str(p->topics[0]) % evt_OwnerAdded_qb) {
@@ -260,6 +288,8 @@ const CLogEntry *promoteToWalletEvent(const CLogEntry *p) {
             QOwnerAddedEvent *a = new QOwnerAddedEvent;
             a->CLogEntry::operator=(*p);
             a->newOwner = str_2_Addr(extract(data, 0*64, 64));
+            items[nItems++] = "address";
+            a->articulated = decodeRLP("OwnerAdded", params, nItems, items);
             return a;
 
         } else if (topic_2_Str(p->topics[0]) % evt_OwnerChanged_qb) {
@@ -269,6 +299,9 @@ const CLogEntry *promoteToWalletEvent(const CLogEntry *p) {
             a->CLogEntry::operator=(*p);
             a->oldOwner = str_2_Addr(extract(data, 0*64, 64));
             a->newOwner = str_2_Addr(extract(data, 1*64, 64));
+            items[nItems++] = "address";
+            items[nItems++] = "address";
+            a->articulated = decodeRLP("OwnerChanged", params, nItems, items);
             return a;
 
         } else if (topic_2_Str(p->topics[0]) % evt_OwnerRemoved_qb) {
@@ -277,6 +310,8 @@ const CLogEntry *promoteToWalletEvent(const CLogEntry *p) {
             QOwnerRemovedEvent *a = new QOwnerRemovedEvent;
             a->CLogEntry::operator=(*p);
             a->oldOwner = str_2_Addr(extract(data, 0*64, 64));
+            items[nItems++] = "address";
+            a->articulated = decodeRLP("OwnerRemoved", params, nItems, items);
             return a;
 
         } else if (topic_2_Str(p->topics[0]) % evt_RequirementChanged_qb) {
@@ -285,6 +320,8 @@ const CLogEntry *promoteToWalletEvent(const CLogEntry *p) {
             QRequirementChangedEvent *a = new QRequirementChangedEvent;
             a->CLogEntry::operator=(*p);
             a->newRequirement = str_2_Wei("0x" + extract(data, 0*64, 64));
+            items[nItems++] = "uint256";
+            a->articulated = decodeRLP("RequirementChanged", params, nItems, items);
             return a;
 
         } else if (topic_2_Str(p->topics[0]) % evt_Revoke_qb) {
@@ -294,6 +331,9 @@ const CLogEntry *promoteToWalletEvent(const CLogEntry *p) {
             a->CLogEntry::operator=(*p);
             a->owner = str_2_Addr(extract(data, 0*64, 64));
             a->operation = "0x" + extract(data, 1*64, 64);
+            items[nItems++] = "address";
+            items[nItems++] = "bytes32";
+            a->articulated = decodeRLP("Revoke", params, nItems, items);
             return a;
 
         } else if (topic_2_Str(p->topics[0]) % evt_SingleTransact_qb) {
@@ -305,6 +345,11 @@ const CLogEntry *promoteToWalletEvent(const CLogEntry *p) {
             a->value = str_2_Wei("0x" + extract(data, 1*64, 64));
             a->to = str_2_Addr(extract(data, 2*64, 64));
             a->data = "0x" + extract(data, 3*64);
+            items[nItems++] = "address";
+            items[nItems++] = "uint256";
+            items[nItems++] = "address";
+            items[nItems++] = "bytes";
+            a->articulated = decodeRLP("SingleTransact", params, nItems, items);
             return a;
 
         }

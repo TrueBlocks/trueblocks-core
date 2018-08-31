@@ -45,6 +45,7 @@ public:
 
     // EXISTING_CODE
     const CReceipt *pReceipt;
+    string_q articulated;
     // EXISTING_CODE
     bool operator==(const CLogEntry& item) const;
     bool operator!=(const CLogEntry& item) const { return !operator==(item); }
@@ -101,13 +102,8 @@ inline void CLogEntry::initialize(void) {
     topics.clear();
 
     // EXISTING_CODE
-#if 0
-    blockHash = "";
-    blockNumber = 0;
-    transactionHash = "";
-    transactionIndex = 0;
-#endif
     pReceipt = NULL;
+    articulated = "";
     // EXISTING_CODE
 }
 
@@ -122,12 +118,7 @@ inline void CLogEntry::duplicate(const CLogEntry& lo) {
     topics = lo.topics;
 
     // EXISTING_CODE
-#if 0
-    blockHash = lo.blockHash;
-    blockNumber = lo.blockNumber;
-    transactionHash = lo.transactionHash;
-    transactionIndex = lo.transactionIndex;
-#endif
+    articulated = lo.articulated;
     // no deep copy because it's const
     pReceipt = lo.pReceipt;
     // EXISTING_CODE
