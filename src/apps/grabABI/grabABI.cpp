@@ -26,6 +26,7 @@ extern const char* STR_HEADER_SIGS;
 extern const char* STR_CODE_SIGS;
 extern const char* STR_BLOCK_PATH;
 extern const char* STR_ITEMS;
+extern const char* STR_ITEMS2;
 extern const char* STR_FORMAT_FUNCDATA;
 
 //-----------------------------------------------------------------------
@@ -54,14 +55,14 @@ void addIfUnique(const string_q& addr, CFunctionArray& functions, CFunction& fun
     if (func.name.empty())  // && func.type != "constructor")
         return;
 
-    for (size_t i = 0 ; i < functions.size() ; i++) {
-        if (functions[i].encoding == func.encoding)
+    for (auto f : functions) {
+        if (f.encoding == func.encoding)
             return;
 
         // different encoding same name means a duplicate function name in the code. We won't build with
         // duplicate function names, so we need to modify the incoming function. We do this by appending
         // the first four characters of the contract's address.
-        if (decorateNames && functions[i].name == func.name) {
+        if (decorateNames && f.name == func.name && !f.isBuiltin) {
             func.origName = func.name;
             func.name += (startsWith(addr, "0x") ? extract(addr, 2, 4) : extract(addr, 0, 4));
         }
@@ -437,10 +438,11 @@ int main(int argc, const char *argv[]) {
             string_q chainInit = (options.isToken() ?
                                   "\twalletlib_init();\n" :
                                   (options.isWallet() ? "" : "\ttokenlib_init();\n"));
-            replaceAll(sourceCode, "[{CHAINLIB}]",  chainInit);
-            replaceAll(sourceCode, "[{FACTORY1}]",  factory1.empty() ? "\t\t{\n\t\t\t// No functions\n" : factory1);
-            replaceAll(sourceCode, "[{INIT_CODE}]", factory1.empty() ? "" : STR_ITEMS);
-            replaceAll(sourceCode, "[{FACTORY2}]",  factory2.empty() ? "\t\t{\n\t\t\t// No events\n" : factory2);
+            replaceAll(sourceCode, "[{CHAINLIB}]",   chainInit);
+            replaceAll(sourceCode, "[{FACTORY1}]",   factory1.empty() ? "\t\t{\n\t\t\t// No functions\n" : factory1);
+            replaceAll(sourceCode, "[{INIT_CODE}]",  factory1.empty() ? "" : STR_ITEMS);
+            replaceAll(sourceCode, "[{FACTORY2}]",   factory2.empty() ? "\t\t{\n\t\t\t// No events\n" : factory2);
+            replaceAll(sourceCode, "[{INIT_CODE2}]", factory2.empty() ? "" : STR_ITEMS2);
 
             headers = ("#include \"tokenlib.h\"\n");
             headers += ("#include \"walletlib.h\"\n");
@@ -621,6 +623,20 @@ const char* STR_ITEMS =
 "\n"
 "\t\tstring_q encoding = extract(p->input, 0, 10);\n"
 "\t\tstring_q params   = extract(p->input, 10);\n";
+
+//-----------------------------------------------------------------------
+const char* STR_ITEMS2 =
+"\t\tstring_q items[256];\n"
+"\t\tsize_t nItems = 0;\n"
+"\t\tstring_q data = extract(p->data, 2);\n"
+"\t\tstring_q params;\n"
+"\t\tbool first = true;\n"
+"\t\tfor (auto t : p->topics) {\n"
+"\t\t    if (!first)\n"
+"\t\t        params += extract(topic_2_Str(t),2);\n"
+"\t\t    first = false;\n"
+"\t\t}\n"
+"\t\tparams += data;\n";
 
 //-----------------------------------------------------------------------
 const char* STR_FORMAT_FUNCDATA =
