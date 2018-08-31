@@ -103,12 +103,12 @@ bool CAccount::setValueByName(const string_q& fieldName, const string_q& fieldVa
 //---------------------------------------------------------------------------------------------------
 void CAccount::finishParse() {
     // EXISTING_CODE
-    for (size_t i = 0 ; i < transactions.size() ; i++) {
-        CTransaction *t = &transactions.at(i);
-        string_q encoding = extract(t->input, 0, 10);
-extern const CFunction *findFunctionByEncoding(const CFunctionArray& array, const string_q& search);
-        t->funcPtr = findFunctionByEncoding(abi.abiByEncoding, encoding);
-    }
+//    for (size_t i = 0 ; i < transactions.size() ; i++) {
+//        CTransaction *t = &transactions.at(i);
+//        string_q encoding = extract(t->input, 0, 10);
+//extern const CFunction *findFunctionByEncoding(const CFunctionArray& array, const string_q& search);
+//        t->funcPtr = findFunctionByEncoding(abi.abiByEncoding, encoding);
+//    }
     // EXISTING_CODE
 }
 
