@@ -190,6 +190,8 @@ void CReceipt::registerClass(void) {
     builtIns.push_back(_biCReceipt);
 
     // EXISTING_CODE
+    ADD_FIELD(CReceipt, "events", T_OBJECT|TS_ARRAY, ++fieldNum);
+    HIDE_FIELD(CReceipt, "events");
     // EXISTING_CODE
 }
 
@@ -199,6 +201,20 @@ string_q nextReceiptChunk_custom(const string_q& fieldIn, const void *dataPtr) {
     if (rec) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'e':
+                if ( fieldIn % "events" || fieldIn % "eventsCnt" ) {
+                    size_t cnt = rec->events.size();
+                    if (endsWith(fieldIn, "Cnt"))
+                        return uint_2_Str(cnt);
+                    if (!cnt) return "";
+                    string_q retS;
+                    for (size_t i = 0 ; i < cnt ; i++) {
+                        retS += rec->events[i]->Format();
+                        retS += ((i < cnt - 1) ? ",\n" : "\n");
+                    }
+                    return retS;
+                }
+                break;
             case 's':
                 if ( fieldIn % "status" ) {
                     if (rec->status == NO_STATUS) {
