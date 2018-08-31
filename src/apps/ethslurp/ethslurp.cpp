@@ -622,7 +622,8 @@ bool loadABI(CAbi& abi, const string_q& addr) {
 
 //---------------------------------------------------------------------------
 bool isFunction(const CTransaction *trans, const string_q& func) {
-    if (func == "none")
-        return (trans->inputToFunction() == " ");
-    return (trans->funcPtr ? trans->funcPtr->name == func : false);
+//    if (func == "none")
+//        return (trans->inputToFunction() == " ");
+//    return (trans->funcPtr ? trans->funcPtr->name == func : false);
+    return false;
 }
