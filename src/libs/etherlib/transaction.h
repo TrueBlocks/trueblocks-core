@@ -58,8 +58,8 @@ public:
 
     // EXISTING_CODE
     const CBlock *pBlock;
-    string_q function;
     CTraceArray traces;
+    string_q articulated;
     // EXISTING_CODE
     bool operator==(const CTransaction& item) const;
     bool operator!=(const CTransaction& item) const { return !operator==(item); }
@@ -128,7 +128,7 @@ inline void CTransaction::initialize(void) {
 
     // EXISTING_CODE
     pBlock = NULL;
-    function = "";
+    articulated = "";
     traces.clear();
     // EXISTING_CODE
 }
@@ -156,7 +156,7 @@ inline void CTransaction::duplicate(const CTransaction& tr) {
 
     // EXISTING_CODE
     pBlock = tr.pBlock;  // no deep copy, we don't own it
-    function = tr.function;
+    articulated = tr.articulated;
     traces = tr.traces;
     // EXISTING_CODE
     finishParse();

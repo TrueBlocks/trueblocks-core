@@ -69,7 +69,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             a->_value = str_2_Wei("0x" + extract(params, 1*64, 64));
             items[nItems++] = "address";
             items[nItems++] = "uint256";
-            a->function = decodeRLP("approve", params, nItems, items);
+            a->articulated = decodeRLP("approve", params, nItems, items);
             return a;
 
         } else if (encoding == func_approveAndCall_qb) {
@@ -83,7 +83,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             items[nItems++] = "address";
             items[nItems++] = "uint256";
             items[nItems++] = "bytes";
-            a->function = decodeRLP("approveAndCall", params, nItems, items);
+            a->articulated = decodeRLP("approveAndCall", params, nItems, items);
             return a;
 
         } else if (encoding == func_ownerOf_qb) {
@@ -93,7 +93,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             a->CTransaction::operator=(*p);
             a->_tokenId = str_2_Wei("0x" + extract(params, 0*64, 64));
             items[nItems++] = "uint256";
-            a->function = decodeRLP("ownerOf", params, nItems, items);
+            a->articulated = decodeRLP("ownerOf", params, nItems, items);
             return a;
 
         } else if (encoding == func_safeTransferFrom_qb) {
@@ -107,7 +107,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             items[nItems++] = "address";
             items[nItems++] = "address";
             items[nItems++] = "uint256";
-            a->function = decodeRLP("safeTransferFrom", params, nItems, items);
+            a->articulated = decodeRLP("safeTransferFrom", params, nItems, items);
             return a;
 
         } else if (encoding == func_safeTransferFromToke_qb) {
@@ -123,7 +123,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             items[nItems++] = "address";
             items[nItems++] = "uint256";
             items[nItems++] = "bytes";
-            a->function = decodeRLP("safeTransferFromToke", params, nItems, items);
+            a->articulated = decodeRLP("safeTransferFromToke", params, nItems, items);
             return a;
 
         } else if (encoding == func_setApprovalForAll_qb) {
@@ -135,7 +135,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             a->_approved = str_2_Int(extract(params, 1*64, 64));
             items[nItems++] = "address";
             items[nItems++] = "bool";
-            a->function = decodeRLP("setApprovalForAll", params, nItems, items);
+            a->articulated = decodeRLP("setApprovalForAll", params, nItems, items);
             return a;
 
         } else if (encoding == func_transfer_qb) {
@@ -147,7 +147,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             a->_value = str_2_Wei("0x" + extract(params, 1*64, 64));
             items[nItems++] = "address";
             items[nItems++] = "uint256";
-            a->function = decodeRLP("transfer", params, nItems, items);
+            a->articulated = decodeRLP("transfer", params, nItems, items);
             return a;
 
         } else if (encoding == func_transferFrom_qb) {
@@ -161,7 +161,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             items[nItems++] = "address";
             items[nItems++] = "address";
             items[nItems++] = "uint256";
-            a->function = decodeRLP("transferFrom", params, nItems, items);
+            a->articulated = decodeRLP("transferFrom", params, nItems, items);
             return a;
 
         }
@@ -185,7 +185,17 @@ const CLogEntry *promoteToTokenEvent(const CLogEntry *p) {
 
     size_t nTops = p->topics.size();
     if (nTops > 0) {  // the '0'th topic is the event signature
+        string_q items[256];
+        size_t nItems = 0;
         string_q data = extract(p->data, 2);
+        string_q params;
+        bool first = true;
+        for (auto t : p->topics) {
+            if (!first)
+                params += extract(topic_2_Str(t),2);
+            first = false;
+        }
+        params += data;
         // EXISTING_CODE
         // EXISTING_CODE
 
@@ -197,6 +207,10 @@ const CLogEntry *promoteToTokenEvent(const CLogEntry *p) {
             a->_owner = str_2_Addr(nTops > 1 ? topic_2_Str(p->topics[1]) : "");
             a->_spender = str_2_Addr(nTops > 2 ? topic_2_Str(p->topics[2]) : "");
             a->_value = str_2_Wei("0x" + extract(data, 0*64, 64));
+            items[nItems++] = "address";
+            items[nItems++] = "address";
+            items[nItems++] = "uint256";
+            a->articulated = decodeRLP("Approval", params, nItems, items);
             return a;
 
         } else if (topic_2_Str(p->topics[0]) % evt_ApprovalForAll_qb) {
@@ -207,6 +221,10 @@ const CLogEntry *promoteToTokenEvent(const CLogEntry *p) {
             a->_owner = str_2_Addr(nTops > 1 ? topic_2_Str(p->topics[1]) : "");
             a->_operator = str_2_Addr(nTops > 2 ? topic_2_Str(p->topics[2]) : "");
             a->_approved = str_2_Int("0x" + extract(data, 0*64, 64));
+            items[nItems++] = "address";
+            items[nItems++] = "address";
+            items[nItems++] = "bool";
+            a->articulated = decodeRLP("ApprovalForAll", params, nItems, items);
             return a;
 
         } else if (topic_2_Str(p->topics[0]) % evt_Transfer_qb) {
@@ -217,6 +235,10 @@ const CLogEntry *promoteToTokenEvent(const CLogEntry *p) {
             a->_from = str_2_Addr(nTops > 1 ? topic_2_Str(p->topics[1]) : "");
             a->_to = str_2_Addr(nTops > 2 ? topic_2_Str(p->topics[2]) : "");
             a->_value = str_2_Wei("0x" + extract(data, 0*64, 64));
+            items[nItems++] = "address";
+            items[nItems++] = "address";
+            items[nItems++] = "uint256";
+            a->articulated = decodeRLP("Transfer", params, nItems, items);
             return a;
 
         }

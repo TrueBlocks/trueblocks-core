@@ -64,7 +64,6 @@ bool CTransaction::setValueByName(const string_q& fieldName, const string_q& fie
 
     if ( fieldName % "input" ) {
         input = fieldValue;
-        function = Format("[{FUNCTION}]");
         return true;
 
     } else if ( fieldName % "value" ) {
@@ -311,12 +310,7 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'a':
-                if ( fieldIn % "articulated" ) {
-//#error
-                    if (tra->function.empty() || tra->function == " ")
-                        return ""; //\"" + tra->input + "\"";
-                    return tra->function;
-                }
+                if ( fieldIn % "articulated" ) return tra->articulated;
                 break;
             case 'c':
                 if ( fieldIn % "contractAddress" ) return addr_2_Str(tra->receipt.contractAddress);
@@ -343,7 +337,7 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
                 break;
             case 'f':
                 if ( fieldIn % "function" ) {
-                    string_q ret = substitute(tra->function, "\"","");
+                    string_q ret = substitute(tra->articulated, "\"","");
                     return nextTokenClear(ret, ',');
                 }
                 break;
@@ -469,14 +463,7 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
     }
 
     // EXISTING_CODE
-    if (fieldName != "cname") {
-        // See if this field belongs to the item's container
-        ret = nextBlockChunk(fieldName, pBlock);
-        if (contains(ret, "Field not found"))
-            ret = "";
-        if (!ret.empty())
-            return ret;
-    } else if ( fieldName % "traces" || fieldName % "traceCnt" ) {
+    if ( fieldName % "traces" || fieldName % "traceCnt" ) {
         size_t cnt = traces.size();
         if (endsWith(fieldName, "Cnt"))
             return uint_2_Str(cnt);
@@ -487,6 +474,14 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
             retS += ((i < cnt - 1) ? ",\n" : "\n");
         }
         return retS;
+
+    } else if (fieldName != "cname") {
+        // See if this field belongs to the item's container
+        ret = nextBlockChunk(fieldName, pBlock);
+        if (contains(ret, "Field not found"))
+            ret = "";
+        if (!ret.empty())
+            return ret;
     }
     // EXISTING_CODE
 
@@ -585,7 +580,6 @@ string_q parseTheInput(const string_q& params, size_t nItems, string_q *types) {
             if (len == NOPOS)
                 len = params.length()-start;
             if (t == "string") {
-                val = "\"";
                 val += substitute(
                             substitute(
                                 substitute(
@@ -593,7 +587,6 @@ string_q parseTheInput(const string_q& params, size_t nItems, string_q *types) {
                                 "\n", "\\n"),
                             "\r", ""),
                         "\"", "\\\"");
-                val += "\"";
             } else {
                 val = "0x" + extract(params, (start+1) * 64, len * 2);
             }
@@ -612,5 +605,6 @@ string_q decodeRLP(const string_q& name, const string_q& input, size_t nItems, s
     result = substitute(result, "|", "\", \"");
     return quote + name + quote + ", " + result;
 }
-
+// EXISTING_CODE
 }  // namespace qblocks
+
