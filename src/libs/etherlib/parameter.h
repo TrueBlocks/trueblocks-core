@@ -48,6 +48,7 @@ public:
     bool isArray;
     bool isObject;
     string_q strDefault;
+    string_q value;
 
 public:
     CParameter(void);
@@ -118,6 +119,7 @@ inline void CParameter::initialize(void) {
     isArray = 0;
     isObject = 0;
     strDefault = "";
+    value = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -135,6 +137,7 @@ inline void CParameter::duplicate(const CParameter& pa) {
     isArray = pa.isArray;
     isObject = pa.isObject;
     strDefault = pa.strDefault;
+    value = pa.value;
 
     // EXISTING_CODE
     // EXISTING_CODE
