@@ -11,6 +11,7 @@ address             	1005	0	131127	T_ADDRESS TS_STRING
 data                	1006	0	131122	T_TEXT TS_STRING
 logIndex            	1007	0	65561	T_NUMBER TS_NUMERAL
 topics              	1008	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+articulated         	1009	1	655410	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY
 {
   "address": "0x0",
   "logIndex": 0,
@@ -28,6 +29,7 @@ address             	1005	1	131127	T_ADDRESS TS_STRING
 data                	1006	1	131122	T_TEXT TS_STRING
 logIndex            	1007	1	65561	T_NUMBER TS_NUMERAL
 topics              	1008	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+articulated         	1009	1	655410	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY
 {
 }
 
@@ -42,6 +44,7 @@ address             	1005	0	131127	T_ADDRESS TS_STRING
 data                	1006	0	131122	T_TEXT TS_STRING
 logIndex            	1007	0	65561	T_NUMBER TS_NUMERAL
 topics              	1008	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+articulated         	1009	0	655410	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY
 {
   "schema": 5005,
   "deleted": 0,
@@ -49,6 +52,7 @@ topics              	1008	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
   "cname": "LogEntry",
   "address": "0x0",
   "logIndex": 0,
-  "topics": []
+  "topics": [],
+  "articulated": []
 }
 

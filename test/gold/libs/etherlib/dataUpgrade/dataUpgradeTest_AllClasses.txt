@@ -128,6 +128,7 @@ isPointer           	1008	0	65556	T_BOOL TS_NUMERAL
 isArray             	1009	0	65556	T_BOOL TS_NUMERAL
 isObject            	1010	0	65556	T_BOOL TS_NUMERAL
 strDefault          	1011	0	131122	T_TEXT TS_STRING
+value               	1012	0	131122	T_TEXT TS_STRING
 {
   "indexed": 0,
   "isPointer": 0,
@@ -149,6 +150,7 @@ isPointer           	1008	1	65556	T_BOOL TS_NUMERAL
 isArray             	1009	1	65556	T_BOOL TS_NUMERAL
 isObject            	1010	1	65556	T_BOOL TS_NUMERAL
 strDefault          	1011	1	131122	T_TEXT TS_STRING
+value               	1012	1	131122	T_TEXT TS_STRING
 {
 }
 
@@ -166,6 +168,7 @@ isPointer           	1008	0	65556	T_BOOL TS_NUMERAL
 isArray             	1009	0	65556	T_BOOL TS_NUMERAL
 isObject            	1010	0	65556	T_BOOL TS_NUMERAL
 strDefault          	1011	0	131122	T_TEXT TS_STRING
+value               	1012	0	131122	T_TEXT TS_STRING
 {
   "schema": 5005,
   "deleted": 0,
@@ -482,6 +485,7 @@ address             	1005	0	131127	T_ADDRESS TS_STRING
 data                	1006	0	131122	T_TEXT TS_STRING
 logIndex            	1007	0	65561	T_NUMBER TS_NUMERAL
 topics              	1008	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+articulated         	1009	1	655410	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY
 {
   "address": "0x0",
   "logIndex": 0,
@@ -499,6 +503,7 @@ address             	1005	1	131127	T_ADDRESS TS_STRING
 data                	1006	1	131122	T_TEXT TS_STRING
 logIndex            	1007	1	65561	T_NUMBER TS_NUMERAL
 topics              	1008	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+articulated         	1009	1	655410	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY
 {
 }
 
@@ -513,6 +518,7 @@ address             	1005	0	131127	T_ADDRESS TS_STRING
 data                	1006	0	131122	T_TEXT TS_STRING
 logIndex            	1007	0	65561	T_NUMBER TS_NUMERAL
 topics              	1008	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+articulated         	1009	0	655410	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY
 {
   "schema": 5005,
   "deleted": 0,
@@ -520,7 +526,8 @@ topics              	1008	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
   "cname": "LogEntry",
   "address": "0x0",
   "logIndex": 0,
-  "topics": []
+  "topics": [],
+  "articulated": []
 }
 
 --------------------------------------------------------------------------------
@@ -583,6 +590,7 @@ contractAddress     	1005	0	131127	T_ADDRESS TS_STRING
 gasUsed             	1006	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 logs                	1007	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 status              	1008	0	65561	T_NUMBER TS_NUMERAL
+events              	1009	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 {
   "contractAddress": "0x0",
   "gasUsed": 0,
@@ -601,6 +609,7 @@ contractAddress     	1005	1	131127	T_ADDRESS TS_STRING
 gasUsed             	1006	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 logs                	1007	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 status              	1008	1	65561	T_NUMBER TS_NUMERAL
+events              	1009	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 {
 }
 
@@ -615,6 +624,7 @@ contractAddress     	1005	0	131127	T_ADDRESS TS_STRING
 gasUsed             	1006	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 logs                	1007	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 status              	1008	0	65561	T_NUMBER TS_NUMERAL
+events              	1009	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 {
   "schema": 5005,
   "deleted": 0,
@@ -623,7 +633,8 @@ status              	1008	0	65561	T_NUMBER TS_NUMERAL
   "contractAddress": "0x0",
   "gasUsed": 0,
   "logs": [],
-  "status": null
+  "status": null,
+  "events": []
 }
 
 --------------------------------------------------------------------------------
@@ -955,7 +966,8 @@ traces              	1032	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
     "contractAddress": "0x0",
     "gasUsed": 0,
     "logs": [],
-    "status": null
+    "status": null,
+    "events": []
   },
   "gasUsed": 0
 }
@@ -1059,7 +1071,8 @@ traces              	1032	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
     "contractAddress": "0x0",
     "gasUsed": 0,
     "logs": [],
-    "status": null
+    "status": null,
+    "events": []
   },
   "gasCost": 0,
   "articulated": [],
