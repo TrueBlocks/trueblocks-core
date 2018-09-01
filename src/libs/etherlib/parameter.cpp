@@ -76,6 +76,9 @@ bool CParameter::setValueByName(const string_q& fieldName, const string_q& field
         case 't':
             if ( fieldName % "type" ) { type = fieldValue; return true; }
             break;
+        case 'v':
+            if ( fieldName % "value" ) { value = fieldValue; return true; }
+            break;
         default:
             break;
     }
@@ -109,6 +112,7 @@ bool CParameter::Serialize(CArchive& archive) {
     archive >> isArray;
     archive >> isObject;
     archive >> strDefault;
+    archive >> value;
     finishParse();
     return true;
 }
@@ -128,6 +132,7 @@ bool CParameter::SerializeC(CArchive& archive) const {
     archive << isArray;
     archive << isObject;
     archive << strDefault;
+    archive << value;
 
     return true;
 }
@@ -171,6 +176,7 @@ void CParameter::registerClass(void) {
     ADD_FIELD(CParameter, "isArray", T_BOOL, ++fieldNum);
     ADD_FIELD(CParameter, "isObject", T_BOOL, ++fieldNum);
     ADD_FIELD(CParameter, "strDefault", T_TEXT, ++fieldNum);
+    ADD_FIELD(CParameter, "value", T_TEXT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CParameter, "schema");
@@ -240,6 +246,9 @@ string_q CParameter::getValueByName(const string_q& fieldName) const {
             break;
         case 't':
             if ( fieldName % "type" ) return type;
+            break;
+        case 'v':
+            if ( fieldName % "value" ) return value;
             break;
     }
 

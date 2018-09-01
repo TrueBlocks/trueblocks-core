@@ -11,6 +11,7 @@ contractAddress     	1005	0	131127	T_ADDRESS TS_STRING
 gasUsed             	1006	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 logs                	1007	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 status              	1008	0	65561	T_NUMBER TS_NUMERAL
+events              	1009	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 {
   "contractAddress": "0x0",
   "gasUsed": 0,
@@ -29,6 +30,7 @@ contractAddress     	1005	1	131127	T_ADDRESS TS_STRING
 gasUsed             	1006	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 logs                	1007	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 status              	1008	1	65561	T_NUMBER TS_NUMERAL
+events              	1009	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 {
 }
 
@@ -43,6 +45,7 @@ contractAddress     	1005	0	131127	T_ADDRESS TS_STRING
 gasUsed             	1006	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 logs                	1007	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 status              	1008	0	65561	T_NUMBER TS_NUMERAL
+events              	1009	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 {
   "schema": 5005,
   "deleted": 0,
@@ -51,6 +54,7 @@ status              	1008	0	65561	T_NUMBER TS_NUMERAL
   "contractAddress": "0x0",
   "gasUsed": 0,
   "logs": [],
-  "status": null
+  "status": null,
+  "events": []
 }
 
