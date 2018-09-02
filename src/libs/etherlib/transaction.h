@@ -59,7 +59,8 @@ public:
     // EXISTING_CODE
     const CBlock *pBlock;
     CTraceArray traces;
-    string_q articulated;
+    string_q articulatedTx;
+    CFunction *func;
     // EXISTING_CODE
     bool operator==(const CTransaction& item) const;
     bool operator!=(const CTransaction& item) const { return !operator==(item); }
@@ -86,6 +87,7 @@ inline CTransaction::CTransaction(void) {
 //--------------------------------------------------------------------------
 inline CTransaction::CTransaction(const CTransaction& tr) {
     // EXISTING_CODE
+    func = NULL;
     // EXISTING_CODE
     duplicate(tr);
 }
@@ -103,6 +105,9 @@ inline CTransaction::~CTransaction(void) {
 //--------------------------------------------------------------------------
 inline void CTransaction::clear(void) {
     // EXISTING_CODE
+    if (func)
+        delete func;
+    func = NULL;
     // EXISTING_CODE
 }
 
@@ -128,7 +133,8 @@ inline void CTransaction::initialize(void) {
 
     // EXISTING_CODE
     pBlock = NULL;
-    articulated = "";
+    articulatedTx = "";
+    func = NULL;
     traces.clear();
     // EXISTING_CODE
 }
@@ -156,7 +162,8 @@ inline void CTransaction::duplicate(const CTransaction& tr) {
 
     // EXISTING_CODE
     pBlock = tr.pBlock;  // no deep copy, we don't own it
-    articulated = tr.articulated;
+    articulatedTx = tr.articulatedTx;
+    func = (tr.func ? new CFunction(*tr.func) : NULL);
     traces = tr.traces;
     // EXISTING_CODE
     finishParse();

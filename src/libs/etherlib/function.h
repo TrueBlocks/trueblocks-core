@@ -49,6 +49,7 @@ public:
     const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
+    explicit CFunction(const string_q& n) : name(n) { }
     bool hasAddrs;
     string_q getSignature(uint64_t parts) const;
     string_q encodeItem(void) const;

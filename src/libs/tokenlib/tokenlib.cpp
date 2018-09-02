@@ -69,7 +69,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             a->_value = str_2_Wei("0x" + extract(params, 1*64, 64));
             items[nItems++] = "address";
             items[nItems++] = "uint256";
-            a->articulated = decodeRLP("approve", params, nItems, items);
+            a->articulatedTx = decodeRLP("approve", params, nItems, items);
             return a;
 
         } else if (encoding == func_approveAndCall_qb) {
@@ -83,7 +83,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             items[nItems++] = "address";
             items[nItems++] = "uint256";
             items[nItems++] = "bytes";
-            a->articulated = decodeRLP("approveAndCall", params, nItems, items);
+            a->articulatedTx = decodeRLP("approveAndCall", params, nItems, items);
             return a;
 
         } else if (encoding == func_ownerOf_qb) {
@@ -93,7 +93,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             a->CTransaction::operator=(*p);
             a->_tokenId = str_2_Wei("0x" + extract(params, 0*64, 64));
             items[nItems++] = "uint256";
-            a->articulated = decodeRLP("ownerOf", params, nItems, items);
+            a->articulatedTx = decodeRLP("ownerOf", params, nItems, items);
             return a;
 
         } else if (encoding == func_safeTransferFrom_qb) {
@@ -107,7 +107,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             items[nItems++] = "address";
             items[nItems++] = "address";
             items[nItems++] = "uint256";
-            a->articulated = decodeRLP("safeTransferFrom", params, nItems, items);
+            a->articulatedTx = decodeRLP("safeTransferFrom", params, nItems, items);
             return a;
 
         } else if (encoding == func_safeTransferFromToke_qb) {
@@ -123,7 +123,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             items[nItems++] = "address";
             items[nItems++] = "uint256";
             items[nItems++] = "bytes";
-            a->articulated = decodeRLP("safeTransferFromToke", params, nItems, items);
+            a->articulatedTx = decodeRLP("safeTransferFromToke", params, nItems, items);
             return a;
 
         } else if (encoding == func_setApprovalForAll_qb) {
@@ -135,7 +135,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             a->_approved = str_2_Int(extract(params, 1*64, 64));
             items[nItems++] = "address";
             items[nItems++] = "bool";
-            a->articulated = decodeRLP("setApprovalForAll", params, nItems, items);
+            a->articulatedTx = decodeRLP("setApprovalForAll", params, nItems, items);
             return a;
 
         } else if (encoding == func_transfer_qb) {
@@ -147,7 +147,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             a->_value = str_2_Wei("0x" + extract(params, 1*64, 64));
             items[nItems++] = "address";
             items[nItems++] = "uint256";
-            a->articulated = decodeRLP("transfer", params, nItems, items);
+            a->articulatedTx = decodeRLP("transfer", params, nItems, items);
             return a;
 
         } else if (encoding == func_transferFrom_qb) {
@@ -161,7 +161,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             items[nItems++] = "address";
             items[nItems++] = "address";
             items[nItems++] = "uint256";
-            a->articulated = decodeRLP("transferFrom", params, nItems, items);
+            a->articulatedTx = decodeRLP("transferFrom", params, nItems, items);
             return a;
 
         }
@@ -173,6 +173,94 @@ const CTransaction *promoteToToken(const CTransaction *p) {
 
     // never returns NULL
     return promoteToWallet(p);
+}
+
+//-----------------------------------------------------------------------
+bool articulateToken(CTransaction *p) {
+
+    if (p && (p->input.length() >= 10 || p->input == "0x")) {
+        string_q encoding = extract(p->input, 0, 10);
+        string_q params   = extract(p->input, 10);
+        // EXISTING_CODE
+        // EXISTING_CODE
+
+        if (encoding == func_approve_qb) {
+            // function approve(address _spender, uint256 _value)
+            // 0x095ea7b3
+            p->func = new CFunction("approve");
+            p->func->inputs.push_back(CParameter("_spender", "address", str_2_Addr(extract(params, 0*64, 64))));
+            p->func->inputs.push_back(CParameter("_value", "", str_2_Wei("0x" + extract(params, 1*64, 64))));
+            return true;
+
+        } else if (encoding == func_approveAndCall_qb) {
+            // function approveAndCall(address _spender, uint256 _value, bytes _extraData)
+            // 0xcae9ca51
+            p->func = new CFunction("approveAndCall");
+            p->func->inputs.push_back(CParameter("_spender", "", str_2_Addr(extract(params, 0*64, 64))));
+            p->func->inputs.push_back(CParameter("_value", "", str_2_Wei("0x" + extract(params, 1*64, 64))));
+            p->func->inputs.push_back(CParameter("_extraData", "", extract(params, 2*64)));
+            return true;
+
+        } else if (encoding == func_ownerOf_qb) {
+            // function ownerOf(uint256 _tokenId)
+            // 0x6352211e
+            p->func = new CFunction("ownerOf");
+            p->func->inputs.push_back(CParameter("_tokenId", "", str_2_Wei("0x" + extract(params, 0*64, 64))));
+            return true;
+
+        } else if (encoding == func_safeTransferFrom_qb) {
+            // function safeTransferFrom(address _from, address _to, uint256 _tokenId)
+            // 0x42842e0e
+            p->func = new CFunction("safeTransferFrom");
+            p->func->inputs.push_back(CParameter("_from", "", str_2_Addr(extract(params, 0*64, 64))));
+            p->func->inputs.push_back(CParameter("_to", "", str_2_Addr(extract(params, 1*64, 64))));
+            p->func->inputs.push_back(CParameter("_tokenId", "", str_2_Wei("0x" + extract(params, 2*64, 64))));
+            return true;
+
+        } else if (encoding == func_safeTransferFromToke_qb) {
+            // function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes _data)
+            // 0xb88d4fde
+            p->func = new CFunction("safeTransferFromToke");
+            p->func->inputs.push_back(CParameter("_from", "", str_2_Addr(extract(params, 0*64, 64))));
+            p->func->inputs.push_back(CParameter("_to", "", str_2_Addr(extract(params, 1*64, 64))));
+            p->func->inputs.push_back(CParameter("_tokenId", "", str_2_Wei("0x" + extract(params, 2*64, 64))));
+            p->func->inputs.push_back(CParameter("_data", "", extract(params, 3*64)));
+            return true;
+
+        } else if (encoding == func_setApprovalForAll_qb) {
+            // function setApprovalForAll(address _operator, bool _approved)
+            // 0xa22cb465
+            p->func = new CFunction("setApprovalForAll");
+            p->func->inputs.push_back(CParameter("_operator", "", str_2_Addr(extract(params, 0*64, 64))));
+            p->func->inputs.push_back(CParameter("_approved", "", str_2_Bool(extract(params, 1*64, 64))));
+            return true;
+
+        } else if (encoding == func_transfer_qb) {
+            // function transfer(address _to, uint256 _value)
+            // 0xa9059cbb
+            p->func = new CFunction("transfer");
+            p->func->inputs.push_back(CParameter("_to", "", str_2_Addr(extract(params, 0*64, 64))));
+            p->func->inputs.push_back(CParameter("_value", "", str_2_Wei("0x" + extract(params, 1*64, 64))));
+            return true;
+
+        } else if (encoding == func_transferFrom_qb) {
+            // function transferFrom(address _from, address _to, uint256 _value)
+            // 0x23b872dd
+            p->func = new CFunction("transferFrom");
+            p->func->inputs.push_back(CParameter("_from", "", str_2_Addr(extract(params, 0*64, 64))));
+            p->func->inputs.push_back(CParameter("_to", "", str_2_Addr(extract(params, 1*64, 64))));
+            p->func->inputs.push_back(CParameter("_value", "", str_2_Wei("0x" + extract(params, 2*64, 64))));
+            return true;
+
+        }
+        // falls through
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // never returns NULL
+    return articulateWallet(p);
 }
 
 //-----------------------------------------------------------------------
@@ -210,7 +298,7 @@ const CLogEntry *promoteToTokenEvent(const CLogEntry *p) {
             items[nItems++] = "address";
             items[nItems++] = "address";
             items[nItems++] = "uint256";
-            a->articulated = decodeRLP("Approval", params, nItems, items);
+            a->articulatedLog = decodeRLP("Approval", params, nItems, items);
             return a;
 
         } else if (topic_2_Str(p->topics[0]) % evt_ApprovalForAll_qb) {
@@ -224,7 +312,7 @@ const CLogEntry *promoteToTokenEvent(const CLogEntry *p) {
             items[nItems++] = "address";
             items[nItems++] = "address";
             items[nItems++] = "bool";
-            a->articulated = decodeRLP("ApprovalForAll", params, nItems, items);
+            a->articulatedLog = decodeRLP("ApprovalForAll", params, nItems, items);
             return a;
 
         } else if (topic_2_Str(p->topics[0]) % evt_Transfer_qb) {
@@ -238,7 +326,7 @@ const CLogEntry *promoteToTokenEvent(const CLogEntry *p) {
             items[nItems++] = "address";
             items[nItems++] = "address";
             items[nItems++] = "uint256";
-            a->articulated = decodeRLP("Transfer", params, nItems, items);
+            a->articulatedLog = decodeRLP("Transfer", params, nItems, items);
             return a;
 
         }
@@ -250,6 +338,53 @@ const CLogEntry *promoteToTokenEvent(const CLogEntry *p) {
 
     // never returns NULL
     return promoteToWalletEvent(p);
+}
+
+//-----------------------------------------------------------------------
+bool articulateTokenEvent(CLogEntry *p) {
+
+    size_t nTops = p->topics.size();
+    if (nTops > 0) {  // the '0'th topic is the event signature
+        string_q data = extract(p->data, 2);
+        // EXISTING_CODE
+        // EXISTING_CODE
+
+        if (topic_2_Str(p->topics[0]) % evt_Approval_qb) {
+            // event Approval(address indexed _owner, address indexed _spender, uint256 _value)
+            // 0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925
+            p->func = new CFunction("ApprovalEvent");
+            p->func->inputs.push_back(CParameter("_owner", "", str_2_Addr(nTops > 1 ? topic_2_Str(p->topics[1]) : "")));
+            p->func->inputs.push_back(CParameter("_spender", "", str_2_Addr(nTops > 2 ? topic_2_Str(p->topics[2]) : "")));
+            p->func->inputs.push_back(CParameter("_value", "", str_2_Wei("0x" + extract(data, 0*64, 64))));
+            return true;
+
+        } else if (topic_2_Str(p->topics[0]) % evt_ApprovalForAll_qb) {
+            // event ApprovalForAll(address indexed _owner, address indexed _operator, bool _approved)
+            // 0x17307eab39ab6107e8899845ad3d59bd9653f200f220920489ca2b5937696c31
+            p->func = new CFunction("ApprovalForAllEvent");
+            p->func->inputs.push_back(CParameter("_owner", "", str_2_Addr(nTops > 1 ? topic_2_Str(p->topics[1]) : "")));
+            p->func->inputs.push_back(CParameter("_operator", "", str_2_Addr(nTops > 2 ? topic_2_Str(p->topics[2]) : "")));
+            p->func->inputs.push_back(CParameter("_approved", "", str_2_Int("0x" + extract(data, 0*64, 64))));
+            return true;
+
+        } else if (topic_2_Str(p->topics[0]) % evt_Transfer_qb) {
+            // event Transfer(address indexed _from, address indexed _to, uint256 _value)
+            // 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef
+            p->func = new CFunction("TransferEvent");
+            p->func->inputs.push_back(CParameter("_from", "", str_2_Addr(nTops > 1 ? topic_2_Str(p->topics[1]) : "")));
+            p->func->inputs.push_back(CParameter("_to", "", str_2_Addr(nTops > 2 ? topic_2_Str(p->topics[2]) : "")));
+            p->func->inputs.push_back(CParameter("_value", "", str_2_Wei("0x" + extract(data, 0*64, 64))));
+            return true;
+
+        }
+        // fall through
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // never returns NULL
+    return articulateWalletEvent(p);
 }
 
 /*

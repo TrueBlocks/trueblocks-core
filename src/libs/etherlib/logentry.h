@@ -45,7 +45,8 @@ public:
 
     // EXISTING_CODE
     const CReceipt *pReceipt;
-    string_q articulated;
+    string_q articulatedLog;
+    CFunction *func;
     // EXISTING_CODE
     bool operator==(const CLogEntry& item) const;
     bool operator!=(const CLogEntry& item) const { return !operator==(item); }
@@ -72,6 +73,7 @@ inline CLogEntry::CLogEntry(void) {
 //--------------------------------------------------------------------------
 inline CLogEntry::CLogEntry(const CLogEntry& lo) {
     // EXISTING_CODE
+    func = NULL;
     // EXISTING_CODE
     duplicate(lo);
 }
@@ -89,6 +91,9 @@ inline CLogEntry::~CLogEntry(void) {
 //--------------------------------------------------------------------------
 inline void CLogEntry::clear(void) {
     // EXISTING_CODE
+    if (func)
+        delete func;
+    func = NULL;
     // EXISTING_CODE
 }
 
@@ -103,7 +108,8 @@ inline void CLogEntry::initialize(void) {
 
     // EXISTING_CODE
     pReceipt = NULL;
-    articulated = "";
+    articulatedLog = "";
+    func = NULL;
     // EXISTING_CODE
 }
 
@@ -118,9 +124,10 @@ inline void CLogEntry::duplicate(const CLogEntry& lo) {
     topics = lo.topics;
 
     // EXISTING_CODE
-    articulated = lo.articulated;
+    articulatedLog = lo.articulatedLog;
     // no deep copy because it's const
     pReceipt = lo.pReceipt;
+    func = (lo.func ? new CFunction(*lo.func) : NULL);
     // EXISTING_CODE
     finishParse();
 }

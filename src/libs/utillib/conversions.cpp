@@ -140,12 +140,12 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     int64_t str_2_Int(const string_q& str) {
-        return (int64_t)(startsWith(str, "0x") ? hex_2_Int64(str) : strtol(str.c_str(), NULL, 10));
+        return (int64_t)(isHexStr(str) ? hex_2_Int64(str) : strtol(str.c_str(), NULL, 10));
     }
 
     //--------------------------------------------------------------------------------
     uint64_t str_2_Uint(const string_q& str) {
-        return (uint64_t)(startsWith(str, "0x") ? hex_2_Uint64(str) : strtoul(str.c_str(), NULL, 10));
+        return (uint64_t)(isHexStr(str) ? hex_2_Uint64(str) : strtoul(str.c_str(), NULL, 10));
     }
 
     //--------------------------------------------------------------------------------
@@ -177,7 +177,7 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     biguint_t str_2_BigUint(const string_q& str) {
-        if (startsWith(str, "0x"))
+        if (isHexStr(str))
             return str_2_Wei(str);
         return biguint_t(BigUnsignedInABase(str, 10));
     }
@@ -317,10 +317,10 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     bool isHexStr(const string_q& str) {
-        if (!startsWith(str, "0x"))
+        if (!startsWith(str, "0x") || str.size() < 2)
             return false;
-        for (size_t i = 2 ; i < str.length() ; i++)
-            if (!isxdigit(str[i]))
+        for (auto ch : extract(str,2))
+            if (!isxdigit(ch))
                 return false;
         return true;
     }

@@ -286,6 +286,49 @@ CParameter::CParameter(string_q& textIn) {
 }
 
 //-----------------------------------------------------------------------
+CParameter::CParameter(const string_q& n, const string_q& t, const string_q& v) {
+    name = n;
+    type = t;
+    value = v;
+}
+
+//-----------------------------------------------------------------------
+CParameter::CParameter(const string_q& n, const string_q& t, uint64_t v) {
+    name = n;
+    type = t;
+    value = uint_2_Str(v);
+}
+
+//-----------------------------------------------------------------------
+CParameter::CParameter(const string_q& n, const string_q& t, int64_t v) {
+    name = n;
+    type = t;
+    value = int_2_Str(v);
+}
+
+//-----------------------------------------------------------------------
+CParameter::CParameter(const string_q& n, const string_q& t, bool v) {
+    name = n;
+    type = t;
+    value = bool_2_Str(v);
+}
+
+//-----------------------------------------------------------------------
+CParameter::CParameter(const string_q& n, const string_q& t, biguint_t v) {
+    name = n;
+    type = t;
+    value = bnu_2_Str(v);
+}
+
+//-----------------------------------------------------------------------
+CParameter::CParameter(const string_q& n, const string_q& t, const CStringArray& array) {
+    name = n;
+    type = t;
+    for (auto s : array)
+        value += (s + "|");
+}
+
+//-----------------------------------------------------------------------
 string_q CParameter::getFunctionAssign(uint64_t which) const {
 
     string_q ass;

@@ -40,6 +40,8 @@
 extern void walletlib_init(void);
 extern const CTransaction *promoteToWallet(const CTransaction *p);
 extern const CLogEntry *promoteToWalletEvent(const CLogEntry *p);
+extern bool articulateWallet(CTransaction *p);
+extern bool articulateWalletEvent(CLogEntry *p);
 
 //------------------------------------------------------------------------
 extern const string_q func_addOwner_qb;
