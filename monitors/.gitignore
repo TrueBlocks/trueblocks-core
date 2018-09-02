@@ -1,0 +1,5 @@
+*/bin/*
+*.lck
+*.bak
+*.gz
+*.json
