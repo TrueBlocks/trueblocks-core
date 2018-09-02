@@ -32,6 +32,8 @@
 extern void tokenlib_init(void);
 extern const CTransaction *promoteToToken(const CTransaction *p);
 extern const CLogEntry *promoteToTokenEvent(const CLogEntry *p);
+extern bool articulateToken(CTransaction *p);
+extern bool articulateTokenEvent(CLogEntry *p);
 
 //------------------------------------------------------------------------
 extern const string_q func_allowance_qb;

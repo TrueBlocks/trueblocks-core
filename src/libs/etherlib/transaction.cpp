@@ -271,7 +271,7 @@ void CTransaction::registerClass(void) {
     // Add custom fields
     ADD_FIELD(CTransaction, "gasCost", T_WEI, ++fieldNum);
     ADD_FIELD(CTransaction, "function", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTransaction, "articulated", T_TEXT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CTransaction, "articulatedTx", T_TEXT|TS_ARRAY, ++fieldNum);
     ADD_FIELD(CTransaction, "events", T_TEXT, ++fieldNum);
     ADD_FIELD(CTransaction, "price", T_TEXT, ++fieldNum);
     ADD_FIELD(CTransaction, "gasUsed", T_GAS, ++fieldNum);
@@ -284,7 +284,7 @@ void CTransaction::registerClass(void) {
 
     // Hide fields we don't want to show by default
     HIDE_FIELD(CTransaction, "function");
-    HIDE_FIELD(CTransaction, "articulated");
+    HIDE_FIELD(CTransaction, "articulatedTx");
     HIDE_FIELD(CTransaction, "events");
     HIDE_FIELD(CTransaction, "price");
     HIDE_FIELD(CTransaction, "encoding");
@@ -310,7 +310,16 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'a':
-                if ( fieldIn % "articulated" ) return tra->articulated;
+                if ( fieldIn % "articulatedTx" ) {
+                    if (!tra->articulatedTx.empty())
+                        return tra->articulatedTx;
+                    if (tra->func) {
+                        ostringstream os;
+                        os << *tra->func;
+                        return os.str();
+                    }
+                    return "";
+                }
                 break;
             case 'c':
                 if ( fieldIn % "contractAddress" ) return addr_2_Str(tra->receipt.contractAddress);
@@ -329,15 +338,10 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
                     return wei_2_Ether(bnu_2_Str(tra->value));
                 if ( fieldIn % "encoding" )
                     return extract(tra->input, 0, 10);
-                if ( fieldIn % "events" ) {
-                    if (tra->receipt.logs.size())
-                        return "++EVENT_LIST++";
-                    return "";
-                }
                 break;
             case 'f':
                 if ( fieldIn % "function" ) {
-                    string_q ret = substitute(tra->articulated, "\"","");
+                    string_q ret = substitute(tra->articulatedTx, "\"","");
                     return nextTokenClear(ret, ',');
                 }
                 break;

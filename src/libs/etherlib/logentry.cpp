@@ -179,8 +179,8 @@ void CLogEntry::registerClass(void) {
     builtIns.push_back(_biCLogEntry);
 
     // EXISTING_CODE
-    ADD_FIELD(CLogEntry, "articulated", T_TEXT|TS_ARRAY, ++fieldNum);
-    HIDE_FIELD(CLogEntry, "articulated");
+    ADD_FIELD(CLogEntry, "articulatedLog", T_TEXT|TS_ARRAY, ++fieldNum);
+    HIDE_FIELD(CLogEntry, "articulatedLog");
     // EXISTING_CODE
 }
 
@@ -191,7 +191,16 @@ string_q nextLogentryChunk_custom(const string_q& fieldIn, const void *dataPtr) 
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'a':
-                if ( fieldIn % "articulated" ) return log->articulated;
+                if ( fieldIn % "articulatedLog" ) {
+                    if (!log->articulatedLog.empty())
+                        return log->articulatedLog;
+                    if (log->func) {
+                        ostringstream os;
+                        os << *log->func;
+                        return os.str();
+                    }
+                    return "";
+                }
                 break;
             // EXISTING_CODE
             case 'p':

@@ -1,3 +1,13 @@
+cacheBalances
+checkMonitors.py
+exportJson
+exportMonitors.py
+exportTxs
+extractAddrs
+fixMonitors.py
+getBals.py
+scraper.py
+testMonitors.py
 qblocks
 refreshBlock
 4byte
