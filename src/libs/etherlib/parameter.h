@@ -60,6 +60,12 @@ public:
 
     // EXISTING_CODE
     explicit CParameter(string_q& txtIn);
+    explicit CParameter(const string_q& n, const string_q& type, const string_q& val);
+    explicit CParameter(const string_q& n, const string_q& type, uint64_t val);
+    explicit CParameter(const string_q& n, const string_q& type, int64_t val);
+    explicit CParameter(const string_q& n, const string_q& type, bool val);
+    explicit CParameter(const string_q& n, const string_q& type, biguint_t val);
+    explicit CParameter(const string_q& n, const string_q& type, const CStringArray& array);
     string_q getFunctionAssign(uint64_t which) const;
     string_q getEventAssign(uint64_t which, uint64_t nIndexed = NOPOS) const;
     // EXISTING_CODE

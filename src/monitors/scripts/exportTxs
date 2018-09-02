@@ -1,0 +1,1 @@
+cd ../monitors/$1 ; bin/$1 2>/dev/null | tee ../../../tokenomics/monitors/$1_data.txt ; cd -

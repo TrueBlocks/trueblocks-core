@@ -12,6 +12,8 @@ include_directories(${BASE_INCLUDE})
 
 # Compilation order of the src subdirectories
 
+add_subdirectory(scripts)
+
 #add_subdirectory(beltran/parselib)
 #add_subdirectory(beltran)
 

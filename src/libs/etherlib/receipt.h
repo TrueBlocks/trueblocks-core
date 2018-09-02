@@ -48,7 +48,6 @@ public:
     // EXISTING_CODE
     const CTransaction *pTrans;
     friend class CTransaction;
-    vector<CLogEntry *> events;
     // EXISTING_CODE
     bool operator==(const CReceipt& item) const;
     bool operator!=(const CReceipt& item) const { return !operator==(item); }
@@ -92,8 +91,6 @@ inline CReceipt::~CReceipt(void) {
 //--------------------------------------------------------------------------
 inline void CReceipt::clear(void) {
     // EXISTING_CODE
-    for (auto e : events)
-        delete e;
     // EXISTING_CODE
 }
 
@@ -108,7 +105,6 @@ inline void CReceipt::initialize(void) {
 
     // EXISTING_CODE
     pTrans = NULL;
-    events.clear();
     // EXISTING_CODE
 }
 
@@ -124,7 +120,6 @@ inline void CReceipt::duplicate(const CReceipt& re) {
 
     // EXISTING_CODE
     pTrans = re.pTrans;  // no deep copy becuase it's const
-    events = re.events;
     // EXISTING_CODE
     finishParse();
 }
