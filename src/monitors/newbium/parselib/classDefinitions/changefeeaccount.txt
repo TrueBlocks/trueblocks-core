@@ -1,0 +1,6 @@
+[settings]
+class     = CChangeFeeAccount
+baseClass = CTransaction
+fields    = address feeAccount_|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

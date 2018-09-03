@@ -1,0 +1,6 @@
+[settings]
+class     = CChangeAdmin
+baseClass = CTransaction
+fields    = address admin_|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"
