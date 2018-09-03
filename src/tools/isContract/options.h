@@ -13,15 +13,14 @@
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
 
-#define MAX_ADDRS 1000
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    address_t addrs[MAX_ADDRS];
-    uint64_t nAddrs;
+    CAddressArray addrs;
     bool diff;
     bool asData;
     bool showBytes;
+    bool when;
 
     COptions(void);
     ~COptions(void);
