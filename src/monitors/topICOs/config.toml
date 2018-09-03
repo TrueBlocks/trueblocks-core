@@ -19,17 +19,52 @@ show_example_logs = \
 	CLogEntry: none, articulatedLog \
 	CTrace: none
 	
-
 [formats]
 trans_fmt = [{TIMESTAMP}]\t[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{TRACEID}]\t[{FROM}]\t[{TO}]\t[{ETHER}]\t[{GAS}]\t[{GASPRICE}]\t[{GASUSED}]\t[TRUE{b:ISERROR}]\t[{ENCODING}]\t[{ARTICULATED}]
 
 [[watches]]
 list = [
-    { address = "0x1d40c444ad973d9ddc7c14989d96b5a01ed0afda", name = "ENS User", firstBlock = 3729660, color = "green_c" }
-]
-named = [
-    { address = "0x314159265dd8dbb310642f98f50c066173c1259b", name = "ENS",              color = "magenta_b" },
-    { address = "0x6090A6e47849629b7245Dfa1Ca21D94cd15878Ef", name = "ENS Registrar",    color = "green_b"   },
-    { address = "0x012233b3c8177f0778d910ed88170b82de3bfe57", name = "Old Registrar",    color = "teal_b"    },
-    { address = "0x1122B6a0E00DCe0563082b6e2953f3A943855c1F", name = "Centrality Token", color = "white_b"   }
-]
+    { address = "0xdac17f958d2ee523a2206206994597c13d831ec7", name = "USDT", firstBlock = 4634748, color = "green_c" },
+    { address = "0xb8c77482e45f1f44de1745f52c74426c631bdd52", name = "BNB", firstBlock = 3978343, color = "green_c" },
+    { address = "0xd26114cd6ee289accf82350c8d8487fedb8a0c07", name = "OMG", firstBlock = 3978297, color = "green_c" },
+    { address = "0xe41d2489571d322189246dafa5ebde1f4699f498", name = "ZRX", firstBlock = 4145415, color = "green_c" },
+    { address = "0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27", name = "ZIL", firstBlock = 4895439, color = "green_c" },
+    { address = "0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27", name = "MKR", firstBlock = 4895439, color = "green_c" },
+    { address = "0x0D8775F648430679A709E98d2b0Cb6250d2887EF", name = "BAT", firstBlock = 3788558, color = "green_c" },
+    { address = "0x1985365e9f78359a9b6ad760e32412f4a445e862", name = "REP", firstBlock = 5926311, color = "green_c" },
+    { address = "0xcb97e65f07da24d46bcdd078ebebd7c6e6e3d750", name = "BTM", firstBlock = 4015876, color = "green_c" },
+    { address = "0xb7cb1c96db6b22b0d3d9536e0108d062bd488f74", name = "WTC", firstBlock = 4038913, color = "green_c" },
+    { address = "0xa15c7ebe1f07caf6bff097d8a589fb8ac49ae5b3", name = "NPXS", firstBlock = 5217268, color = "green_c" },
+    { address = "0xa74476443119a942de498590fe1f2454d7d4ac0d", name = "GNT", firstBlock = 2603185, color = "green_c" },
+    { address = "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a", name = "PPT", firstBlock = 4000506, color = "green_c" },
+    { address = "0x744d70fdbe2ba4cf95131626614a1763df805b9e", name = "SNT", firstBlock = 3898960, color = "green_c" },
+    { address = "0x168296bb09e24a88805cb9c33356536b980d3fc5", name = "RHOC", firstBlock = 3383352, color = "green_c" },
+    { address = "0xfa1a856cfa3409cfa145fa4e20eb270df3eb21ab", name = "IOST", firstBlock = 4888399, color = "green_c" },
+    { address = "0x4ceda7906a5ed2179785cd3a40a69ee8bc99c466", name = "AION", firstBlock = 4319739, color = "green_c" },
+    { address = "0x039b5649a59967e3e936d7471f9c3700100ee1ab", name = "KCS", firstBlock = 4189196, color = "green_c" },
+    { address = "0x3893b9422cd5d70a81edeffe3d5a1c6a978310bb", name = "MITH", firstBlock = 5039624, color = "green_c" },
+    { address = "0x514910771af9ca656af840dff83e8264ecf986ca", name = "LINK", firstBlock = 4281611, color = "green_c" },
+    { address = "0x6c6ee5e31d828de241282b9606c8e98ea48526e2", name = "HOT", firstBlock = 5008746, color = "green_c" },
+    { address = "0xe0b7927c4af23765cb51314a0e0521a9645f0e2a", name = "DGD", firstBlock = 1409121, color = "green_c" },
+    { address = "0xbf2179859fc6d5bee9bf9158632dc51678a4100e", name = "ELF", firstBlock = 4753621, color = "green_c" },
+    { address = "0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c", name = "BNT", firstBlock = 3851136, color = "green_c" },
+    { address = "0x35a9b440da4410dd63df8c54672b728970560328", name = "MANA", firstBlock = 3946450, color = "green_c" },
+    { address = "0x9cda8a60dd5afa156c95bd974428d91a0812e054", name = "TTU", firstBlock = 5398292, color = "green_c" },
+    { address = "0x618e75ac90b12c6049ba3b27f5d5f8651b0037f6", name = "QASH", firstBlock = 4352962, color = "green_c" },
+    { address = "0x595832f8fc6bf59c85c527fec3740a1b7a361269", name = "POWR", firstBlock = 3811884, color = "green_c" },
+    { address = "0x9ab165d795019b6d8b3e971dda91071421305e5a", name = "AOA", firstBlock = 5634490, color = "green_c" },
+    { address = "0xA4e8C3Ec456107eA67d3075bF9e3DF3A75823DB0", name = "LOOM", firstBlock = 5188927, color = "green_c" },
+    { address = "0xdd974d5c2e2928dea5f71b9825b8b646686bd200", name = "KNC", firstBlock = 4264898, color = "green_c" },
+    { address = "0x8dd5fbce2f6a956c3022ba3663759011dd51e73e", name = "TUSD", firstBlock = 5197514, color = "green_c" },
+    { address = "0x39bb259f66e1c59d5abef88375979b4d20d98022", name = "WAX", firstBlock = 4761555, color = "green_c" },
+    { address = "0xb91318f35bdb262e9423bc7c7c2a3a93dd93c92c", name = "NULS", firstBlock = 4315904, color = "green_c" },
+    { address = "0x58a4884182d9e835597f405e5f258290e46ae7c2", name = "NOAH", firstBlock = 4395472, color = "green_c" },
+    { address = "0xef68e7c694f40c8202821edf525de3782458639f", name = "LRC", firstBlock = 4043368, color = "green_c" },
+    { address = "0xf85feea2fdd81d51177f6b8f35f0e6734ce45f5f", name = "CMT", firstBlock = 4654938, color = "green_c" },
+    { address = "0x3883f5e181fccaf8410fa61e12b59bad963fb645", name = "THETA", firstBlock = 4728491, color = "green_c" },
+    { address = "0xf0ee6b27b759c9893ce4f094b49ad28fd15a23e4", name = "ENG", firstBlock = 4358024, color = "green_c" },
+    { address = "0x12480e24eb5bec1a9d4369cab6a80cad3c0a377a", name = "SUB", firstBlock = 4070607, color = "green_c" },
+    { address = "0x9992ec3cf6a55b00978cddf2b27bc6882d88d1ec", name = "POLY", firstBlock = 4994844, color = "green_c" },
+    { address = "0x4672bad527107471cb5067a887f4656d585a8a31", name = "DROP", firstBlock = 4935794, color = "green_c" },
+    { address = "0xea11755ae41d889ceec39a63e6ff75a02bc1c00d", name = "CTXC", firstBlock = 5229336, color = "green_c" },
+    { address = "0xb3104b4b9da82025e8b9f8fb28b3553ce2f67069", name = "BIX", firstBlock = 4319840, color = "green_c" },
