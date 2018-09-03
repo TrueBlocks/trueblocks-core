@@ -18,7 +18,8 @@ static COption params[] = {
     COption("-data",         "display results as data (addr <tab> is_contract)"),
     COption("-bytes",        "display the byte code at the address(es)"),
     COption("-nodiff",       "return 'true' if (exactly) two Ethereum addresses have identical code"),
-    COption("",              "Returns 'true' or 'false' if the given address(es) holds byte code "
+    COption("-whenDep",      "for smart contracts only, return the first block when the address had code"),
+        COption("",              "Returns 'true' or 'false' if the given address(es) holds byte code "
                              "(optionally displays the code).\n"),
 };
 static size_t nParams = sizeof(params) / sizeof(COption);
@@ -42,6 +43,9 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-d" || arg == "--data") {
             asData = true;
 
+        } else if (arg == "-w" || arg == "--whenDep") {
+            when = true;
+
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -50,23 +54,31 @@ bool COptions::parseArguments(string_q& command) {
 
          } else {
 
-             if (nAddrs >= MAX_ADDRS)
-                 return usage("You may query at most " + int_2_Str(MAX_ADDRS) + " addresses. Quitting...");
              if (!isAddress(arg))
                  return usage(arg + " does not appear to be a valid Ethereum address.\n");
-            addrs[nAddrs++] = str_2_Addr(toLower(arg));
+            addrs.push_back(str_2_Addr(toLower(arg)));
 
         }
     }
 
-    if (nAddrs == 0)
+    if (addrs.size() == 0)
         return usage("Please supply valid Ethereum addresses.\n");
 
-    if (diff && nAddrs != 2)
+    if (diff && (addrs.size() != 2))
         return usage("--nodiff command requires exactly two addresses.\n");
 
     if (diff && showBytes)
         return usage("Choose only one of --nodiff and --display.\n");
+
+    if (when) {
+        if (!nodeHasBalances())
+            return usage("--whenDep option requires a full archive node. Quitting...");
+        // check to make sure all the addresses have code first
+        for (auto addr : addrs) {
+            if (!isContract(addr))
+                return usage("Address " + addr + " is not a smart contract, you may not use --whenDep. Quitting...");
+        }
+    }
 
     return true;
 }
@@ -77,10 +89,7 @@ void COptions::Init(void) {
     nParamsRef = nParams;
     pOptions = this;
 
-    for (size_t i = 0 ; i < MAX_ADDRS ; i++) {
-        addrs[i] = "";
-    }
-    nAddrs = 0;
+    addrs.clear();
     diff = false;
     asData = false;
     showBytes = false;
