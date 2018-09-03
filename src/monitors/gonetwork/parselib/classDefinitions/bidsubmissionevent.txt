@@ -1,0 +1,6 @@
+[settings]
+class     = CBidSubmissionEvent
+baseClass = CLogEntry
+fields    = address _sender|uint256 _amount|uint256 _amount_with_bonus|uint256 _remaining_funds_to_end_auction|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"

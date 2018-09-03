@@ -1,0 +1,6 @@
+[settings]
+class     = CDeployedEvent
+baseClass = CLogEntry
+fields    = uint256 _total_supply|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"

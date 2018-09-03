@@ -1,0 +1,6 @@
+[settings]
+class     = CAuctionStartedEvent
+baseClass = CLogEntry
+fields    = uint256 _auction_start_time|uint256 _block_number|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"

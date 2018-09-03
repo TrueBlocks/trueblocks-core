@@ -14,17 +14,17 @@ include_directories(${BASE_INCLUDE})
 
 add_subdirectory(scripts)
 
-add_subdirectory(beltran/parselib)
+#add_subdirectory(beltran/parselib)
 add_subdirectory(beltran)
 
-add_subdirectory(etherTip/parselib)
+#add_subdirectory(etherTip/parselib)
 add_subdirectory(etherTip)
 
 #add_subdirectory(gonetwork/parselib)
-#add_subdirectory(gonetwork)
+add_subdirectory(gonetwork)
 
-add_subdirectory(newbium/parselib)
+#add_subdirectory(newbium/parselib)
 add_subdirectory(newbium)
 
 #add_subdirectory(status/parselib)
-#add_subdirectory(status)
+add_subdirectory(status)

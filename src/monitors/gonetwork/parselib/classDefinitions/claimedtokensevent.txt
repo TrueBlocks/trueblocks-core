@@ -1,0 +1,6 @@
+[settings]
+class     = CClaimedTokensEvent
+baseClass = CLogEntry
+fields    = address _recipient|uint256 _sent_amount|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"

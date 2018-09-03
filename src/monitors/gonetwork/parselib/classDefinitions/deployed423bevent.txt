@@ -1,0 +1,6 @@
+[settings]
+class     = CDeployed423bEvent
+baseClass = CLogEntry
+fields    = uint256 _price_start|uint256 _price_constant1|uint256 _price_exponent1|uint256 _price_constant2|uint256 _price_exponent2|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"

@@ -1,0 +1,6 @@
+[settings]
+class     = CRemoveFromPrivateSaleWhitelist
+baseClass = CTransaction
+fields    = address[] _bidder_addresses|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"
