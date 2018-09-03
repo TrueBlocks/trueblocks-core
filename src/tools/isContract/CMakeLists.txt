@@ -98,5 +98,14 @@ run_test("isContract_long_display_code_2" " 0x3003208e77edf3b088b122b5de3a6fc8c8
 run_test("isContract_diff_2"              "0x3003208e77edf3b088b122b5de3a6fc8c8ef679d" " 0x3003208e77edf3b088b122b5de3a6fc8c8ef6794" " -n")
 run_test("isContract_from_file"           "--file:cmd_file")
 
+run_test("isContract_when_fail"            "0x1234567890123456789012345678901234567890" " -w")
+run_test("isContract_when_unicorn_988949"  "0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7" " -w")
+run_test("isContract_when_go_5449023"      "0x423b5F62b328D0D6D44870F4Eee316befA0b2dF5" " -w")
+run_test("isContract_when_newbium_3989717" "0x814964b1bceAf24e26296D031EaDf134a2Ca4105" " -w")
+run_test("isContract_when_status_3898960"  "0x744d70FDBE2Ba4CF95131626614a1763DF805B9E" " -w")
+run_test("isContract_when_check"           "0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7" " 0x423b5F62b328D0D6D44870F4Eee316befA0b2dF5" "0x814964b1bceAf24e26296D031EaDf134a2Ca4105" " 0x744d70FDBE2Ba4CF95131626614a1763DF805B9E" "0x1234567890123456789012345678901234567890")
+run_test("isContract_when_all_fail"        "0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7" " 0x423b5F62b328D0D6D44870F4Eee316befA0b2dF5" "0x814964b1bceAf24e26296D031EaDf134a2Ca4105" " 0x744d70FDBE2Ba4CF95131626614a1763DF805B9E" "0x1234567890123456789012345678901234567890" "-w")
+run_test("isContract_when_all_ok"          "0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7" " 0x423b5F62b328D0D6D44870F4Eee316befA0b2dF5" "0x814964b1bceAf24e26296D031EaDf134a2Ca4105" " 0x744d70FDBE2Ba4CF95131626614a1763DF805B9E" "-w")
+
 # Installation steps
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

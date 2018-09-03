@@ -1,8 +1,7 @@
-isContract argc: 3 [1:0x05f65ab88dc474a83a98994291c7a0abd13c9ae1] [2:-n] 
-isContract 0x05f65ab88dc474a83a98994291c7a0abd13c9ae1 -n 
+isContract argc: 7 [1:0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7] [2:0x423b5F62b328D0D6D44870F4Eee316befA0b2dF5] [3:0x814964b1bceAf24e26296D031EaDf134a2Ca4105] [4:0x744d70FDBE2Ba4CF95131626614a1763DF805B9E] [5:0x1234567890123456789012345678901234567890] [6:-w] 
+isContract 0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7 0x423b5F62b328D0D6D44870F4Eee316befA0b2dF5 0x814964b1bceAf24e26296D031EaDf134a2Ca4105 0x744d70FDBE2Ba4CF95131626614a1763DF805B9E 0x1234567890123456789012345678901234567890 -w 
 
-  --nodiff command requires exactly two addresses.
-
+  --whenDep option requires a full archive node. Quitting...
 
   Usage:    isContract [-d|-b|-n|-w|-v|-h] <address> [address...]  
   Purpose:  Returns 'true' or 'false' if the given address(es) holds byte code (optionally displays the code).

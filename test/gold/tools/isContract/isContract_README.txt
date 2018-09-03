@@ -2,7 +2,7 @@ isContract argc: 2 [1:-th]
 isContract -th 
 #### Usage
 
-`Usage:`    isContract [-d|-b|-n|-v|-h] &lt;address&gt; [address...]  
+`Usage:`    isContract [-d|-b|-n|-w|-v|-h] &lt;address&gt; [address...]  
 `Purpose:`  Returns 'true' or 'false' if the given address(es) holds byte code (optionally displays the code).
              
 `Where:`  
@@ -13,6 +13,7 @@ isContract -th
 | -d | --data | display results as data (addr <tab> is_contract) |
 | -b | --bytes | display the byte code at the address(es) |
 | -n | --nodiff | return 'true' if (exactly) two Ethereum addresses have identical code |
+| -w | --whenDep | for smart contracts only, return the first block when the address had code |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
