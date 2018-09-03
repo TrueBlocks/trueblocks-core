@@ -20,7 +20,6 @@
 #include "processing.h"
 
 //------------------------------------------------------------------------
-extern void parselib_init(QUITHANDLER qh=defaultQuitHandler);
 extern bool articulateTransaction(CTransaction *p);
 extern bool articulateEvent(CLogEntry *p);
 

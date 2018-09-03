@@ -17,6 +17,7 @@
 #ifndef NOWALLETLIB
 #include "walletlib.h"
 #endif
+
 #include "cancelevent.h"
 #include "depositevent.h"
 #include "orderevent.h"

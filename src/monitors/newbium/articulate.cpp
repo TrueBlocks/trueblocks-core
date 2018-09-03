@@ -16,12 +16,6 @@
 #include "articulate.h"
 
 //-----------------------------------------------------------------------
-void parselib_init(QUITHANDLER qh) {
-    etherlib_init(qh);
-    tokenlib_init();
-}
-
-//-----------------------------------------------------------------------
 static const string_q func_accountLevelsAddr = "0xf3412942";
 static const string_q func_admin = "0xf851a440";
 static const string_q func_amountFilled = "0x46be96c3";
@@ -192,11 +186,11 @@ bool articulateTransaction(CTransaction *p) {
 }
 
 //-----------------------------------------------------------------------
-const string_q evt_Cancel = "0x1e0b760c386003e9cb9bcf4fcf3997886042859d9b6ed6320e804597fcdb28b0";
-const string_q evt_Deposit = "0xdcbc1c05240f31ff3ad067ef1ee35ce4997762752e3a095284754544f4c709d7";
-const string_q evt_Order = "0x3f7f2eda73683c21a15f9435af1028c93185b5f1fa38270762dc32be606b3e85";
-const string_q evt_Trade = "0x6effdda786735d5033bfad5f53e5131abcced9e52be6c507b62d639685fbed6d";
-const string_q evt_Withdraw = "0xf341246adaac6f497bc2a656f546ab9e182111d630394f0c57c710a59a2cb567";
+static const string_q evt_Cancel = "0x1e0b760c386003e9cb9bcf4fcf3997886042859d9b6ed6320e804597fcdb28b0";
+static const string_q evt_Deposit = "0xdcbc1c05240f31ff3ad067ef1ee35ce4997762752e3a095284754544f4c709d7";
+static const string_q evt_Order = "0x3f7f2eda73683c21a15f9435af1028c93185b5f1fa38270762dc32be606b3e85";
+static const string_q evt_Trade = "0x6effdda786735d5033bfad5f53e5131abcced9e52be6c507b62d639685fbed6d";
+static const string_q evt_Withdraw = "0xf341246adaac6f497bc2a656f546ab9e182111d630394f0c57c710a59a2cb567";
 
 //-----------------------------------------------------------------------
 bool articulateEvent(CLogEntry *p) {

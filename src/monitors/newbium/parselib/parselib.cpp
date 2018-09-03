@@ -18,6 +18,7 @@
 //-----------------------------------------------------------------------
 void parselib_init(QUITHANDLER qh) {
     etherlib_init(qh);
+
     CCancelEvent::registerClass();
     CDepositEvent::registerClass();
     COrderEvent::registerClass();
@@ -36,36 +37,37 @@ void parselib_init(QUITHANDLER qh) {
     CTrade::registerClass();
     CWithdraw::registerClass();
     CWithdrawToken::registerClass();
+
     tokenlib_init();
 }
 
 //-----------------------------------------------------------------------
-const string_q func_accountLevelsAddr = "0xf3412942";
-const string_q func_admin = "0xf851a440";
-const string_q func_amountFilled = "0x46be96c3";
-const string_q func_availableVolume = "0xfb6e155f";
-const string_q func_balanceOf = "0xf7888aec";
-const string_q func_cancelOrder = "0x278b8c0e";
-const string_q func_changeAccountLevelsAddr = "0xe8f6bc2e";
-const string_q func_changeAdmin = "0x8f283970";
-const string_q func_changeFeeAccount = "0x71ffcb16";
-const string_q func_changeFeeMake = "0x54d03b5c";
-const string_q func_changeFeeRebate = "0x5e1d7ae4";
-const string_q func_changeFeeTake = "0x8823a9c0";
-const string_q func_deposit = "0xd0e30db0";
-const string_q func_depositToken = "0x338b5dea";
-const string_q func_feeAccount = "0x65e17c9d";
-const string_q func_feeMake = "0x57786394";
-const string_q func_feeRebate = "0x731c2f81";
-const string_q func_feeTake = "0xc281309e";
-const string_q func_order = "0x0b927666";
-const string_q func_orderFills = "0x19774d43";
-const string_q func_orders = "0xbb5f4629";
-const string_q func_testTrade = "0x6c86888b";
-const string_q func_tokens = "0x508493bc";
-const string_q func_trade = "0x0a19b14a";
-const string_q func_withdraw = "0x2e1a7d4d";
-const string_q func_withdrawToken = "0x9e281a98";
+static const string_q func_accountLevelsAddr = "0xf3412942";
+static const string_q func_admin = "0xf851a440";
+static const string_q func_amountFilled = "0x46be96c3";
+static const string_q func_availableVolume = "0xfb6e155f";
+static const string_q func_balanceOf = "0xf7888aec";
+static const string_q func_cancelOrder = "0x278b8c0e";
+static const string_q func_changeAccountLevelsAddr = "0xe8f6bc2e";
+static const string_q func_changeAdmin = "0x8f283970";
+static const string_q func_changeFeeAccount = "0x71ffcb16";
+static const string_q func_changeFeeMake = "0x54d03b5c";
+static const string_q func_changeFeeRebate = "0x5e1d7ae4";
+static const string_q func_changeFeeTake = "0x8823a9c0";
+static const string_q func_deposit = "0xd0e30db0";
+static const string_q func_depositToken = "0x338b5dea";
+static const string_q func_feeAccount = "0x65e17c9d";
+static const string_q func_feeMake = "0x57786394";
+static const string_q func_feeRebate = "0x731c2f81";
+static const string_q func_feeTake = "0xc281309e";
+static const string_q func_order = "0x0b927666";
+static const string_q func_orderFills = "0x19774d43";
+static const string_q func_orders = "0xbb5f4629";
+static const string_q func_testTrade = "0x6c86888b";
+static const string_q func_tokens = "0x508493bc";
+static const string_q func_trade = "0x0a19b14a";
+static const string_q func_withdraw = "0x2e1a7d4d";
+static const string_q func_withdrawToken = "0x9e281a98";
 
 //-----------------------------------------------------------------------
 const CTransaction *promoteToFunc(const CTransaction *p) {
@@ -269,11 +271,11 @@ const CTransaction *promoteToFunc(const CTransaction *p) {
 }
 
 //-----------------------------------------------------------------------
-const string_q evt_Cancel = "0x1e0b760c386003e9cb9bcf4fcf3997886042859d9b6ed6320e804597fcdb28b0";
-const string_q evt_Deposit = "0xdcbc1c05240f31ff3ad067ef1ee35ce4997762752e3a095284754544f4c709d7";
-const string_q evt_Order = "0x3f7f2eda73683c21a15f9435af1028c93185b5f1fa38270762dc32be606b3e85";
-const string_q evt_Trade = "0x6effdda786735d5033bfad5f53e5131abcced9e52be6c507b62d639685fbed6d";
-const string_q evt_Withdraw = "0xf341246adaac6f497bc2a656f546ab9e182111d630394f0c57c710a59a2cb567";
+static const string_q evt_Cancel = "0x1e0b760c386003e9cb9bcf4fcf3997886042859d9b6ed6320e804597fcdb28b0";
+static const string_q evt_Deposit = "0xdcbc1c05240f31ff3ad067ef1ee35ce4997762752e3a095284754544f4c709d7";
+static const string_q evt_Order = "0x3f7f2eda73683c21a15f9435af1028c93185b5f1fa38270762dc32be606b3e85";
+static const string_q evt_Trade = "0x6effdda786735d5033bfad5f53e5131abcced9e52be6c507b62d639685fbed6d";
+static const string_q evt_Withdraw = "0xf341246adaac6f497bc2a656f546ab9e182111d630394f0c57c710a59a2cb567";
 
 //-----------------------------------------------------------------------
 const CLogEntry *promoteToEvent(const CLogEntry *p) {
