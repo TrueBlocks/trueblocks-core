@@ -120,6 +120,17 @@ public: \
 }
 
 //------------------------------------------------------------
+#define SHOW_FIELD(CLASS_NAME, FIELD_NAME) { \
+    CFieldData *f = GETRUNTIME_CLASS(CLASS_NAME)->findField(FIELD_NAME); \
+    if (f) \
+        f->setHidden(false); \
+}
+
+//------------------------------------------------------------
+#define HIDE_ALL_FIELDS(CLASS_NAME) { GETRUNTIME_CLASS(CLASS_NAME)->hideAllFields(); }
+#define SHOW_ALL_FIELDS(CLASS_NAME) { GETRUNTIME_CLASS(CLASS_NAME)->showAllFields(); }
+
+//------------------------------------------------------------
 #define RENAME_FIELD(CLASS_NAME, OLD_NAME, NEW_NAME) { \
     CFieldData *f = GETRUNTIME_CLASS(CLASS_NAME)->findField(OLD_NAME); \
     if (f) \
