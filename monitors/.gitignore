@@ -1,3 +1,5 @@
+*/cache/*.acct.bin
+*/cache/lastBlock.txt
 */bin/*
 *.lck
 *.bak
