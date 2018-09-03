@@ -1,0 +1,35 @@
+[settings]
+name = beltran
+
+[display]
+accounting = false
+logs = false
+trace = false
+single = false
+parse = false
+json = true
+
+[fields]
+hide=
+show=
+show_example_all = CTransaction:all|CReceipt:all|CLogEntry:all|CTrace:all|CTraceResult:all|CTraceAction:all|CParameter:all
+show_example_logs = \
+	CTransaction: none| \
+	CReceipt: none, logs \
+	CLogEntry: none, articulatedLog \
+	CTrace: none
+	
+
+[formats]
+trans_fmt = [{TIMESTAMP}]\t[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{TRACEID}]\t[{FROM}]\t[{TO}]\t[{ETHER}]\t[{GAS}]\t[{GASPRICE}]\t[{GASUSED}]\t[TRUE{b:ISERROR}]\t[{ENCODING}]\t[{ARTICULATED}]
+
+[[watches]]
+list = [
+    { address = "0x1d40c444ad973d9ddc7c14989d96b5a01ed0afda", name = "ENS User", firstBlock = 3729660, color = "green_c" }
+]
+named = [
+    { address = "0x314159265dd8dbb310642f98f50c066173c1259b", name = "ENS",              color = "magenta_b" },
+    { address = "0x6090A6e47849629b7245Dfa1Ca21D94cd15878Ef", name = "ENS Registrar",    color = "green_b"   },
+    { address = "0x012233b3c8177f0778d910ed88170b82de3bfe57", name = "Old Registrar",    color = "teal_b"    },
+    { address = "0x1122B6a0E00DCe0563082b6e2953f3A943855c1F", name = "Centrality Token", color = "white_b"   }
+]

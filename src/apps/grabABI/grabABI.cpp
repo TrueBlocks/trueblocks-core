@@ -507,7 +507,7 @@ const char* STR_FACTORY1 =
 "\t\t\ta->C[{BASE}]::operator=(*p);\n"
 "[{ASSIGNS1}]"
 "[{ITEMS1}]"
-"\t\t\ta->articulated = [{PARSEIT}];\n"
+"\t\t\ta->articulatedTx = [{PARSEIT}];\n"
 "\t\t\treturn a;\n"
 "\n";
 
@@ -520,7 +520,7 @@ const char* STR_FACTORY2 =
 "\t\t\ta->C[{BASE}]::operator=(*p);\n"
 "[{ASSIGNS2}]"
 "[{ITEMS2}]"
-"\t\t\ta->articulated = [{PARSEIT}];\n"
+"\t\t\ta->articulatedLog = [{PARSEIT}];\n"
 "\t\t\treturn a;\n"
 "\n";
 

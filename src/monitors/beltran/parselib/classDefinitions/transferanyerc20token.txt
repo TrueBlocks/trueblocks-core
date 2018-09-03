@@ -1,0 +1,6 @@
+[settings]
+class     = CTransferAnyERC20Token
+baseClass = CTransaction
+fields    = address tokenAddress|uint256 amount|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

@@ -1,0 +1,6 @@
+[settings]
+class     = CStartAuctionsAndBid
+baseClass = CTransaction
+fields    = CStringArray hashes|bytes32 sealedBid|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

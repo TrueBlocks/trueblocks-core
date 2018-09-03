@@ -1,0 +1,6 @@
+[settings]
+class     = CNewBid
+baseClass = CTransaction
+fields    = bytes32 sealedBid|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"
