@@ -1,0 +1,6 @@
+[settings]
+class     = CControllerChangedEvent
+baseClass = CLogEntry
+fields    = address _newController|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"

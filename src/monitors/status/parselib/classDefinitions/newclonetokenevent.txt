@@ -1,0 +1,6 @@
+[settings]
+class     = CNewCloneTokenEvent
+baseClass = CLogEntry
+fields    = address _cloneToken|uint256 _snapshotBlock|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"

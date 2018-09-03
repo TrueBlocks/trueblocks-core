@@ -1,0 +1,6 @@
+[settings]
+class     = CCreateCloneToken
+baseClass = CTransaction
+fields    = string _cloneTokenName|uint8 _cloneDecimalUnits|string _cloneTokenSymbol|uint256 _snapshotBlock|bool _transfersEnabled|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"
