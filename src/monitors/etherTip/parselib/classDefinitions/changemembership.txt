@@ -1,0 +1,6 @@
+[settings]
+class     = CChangeMembership
+baseClass = CTransaction
+fields    = address targetMember|uint256 voteWeight|bool canAddProposals|string memberName|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

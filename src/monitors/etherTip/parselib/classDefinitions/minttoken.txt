@@ -1,0 +1,6 @@
+[settings]
+class     = CMintToken
+baseClass = CTransaction
+fields    = address target|uint256 mintedAmount|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

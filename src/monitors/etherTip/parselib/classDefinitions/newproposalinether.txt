@@ -1,0 +1,6 @@
+[settings]
+class     = CNewProposalInEther
+baseClass = CTransaction
+fields    = address beneficiary|uint256 etherAmount|string JobDescription|bytes transactionBytecode|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

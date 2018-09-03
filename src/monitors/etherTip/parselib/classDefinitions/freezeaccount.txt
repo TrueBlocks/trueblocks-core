@@ -1,0 +1,6 @@
+[settings]
+class     = CFreezeAccount
+baseClass = CTransaction
+fields    = address target|bool freeze|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

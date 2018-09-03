@@ -1,0 +1,6 @@
+[settings]
+class     = CExecuteProposal
+baseClass = CTransaction
+fields    = uint256 proposalNumber|bytes transactionBytecode|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

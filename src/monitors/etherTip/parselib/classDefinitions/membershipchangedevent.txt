@@ -1,0 +1,6 @@
+[settings]
+class     = CMembershipChangedEvent
+baseClass = CLogEntry
+fields    = address member|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"
