@@ -70,14 +70,17 @@ bool getCodeAt(const string_q& addr, blknum_t num, string_q& theCode) {
     string_q params = "[\"[{ADDR}]\", \"[{NUM}]\"]";
     replace(params, "[{ADDR}]", a);
     replace(params, "[{NUM}]", uint_2_Hex(num));
-    theCode = callRPC("eth_getCode", params, false);
+    theCode = substitute(callRPC("eth_getCode", params, false), "0x", "");
     return theCode.length() != 0;
 }
 
 //-------------------------------------------------------------------------
 bool hasCodeAt(const address_t& addr, blknum_t num) {
     string_q unused;
-    return getCodeAt(addr, num, unused);
+    bool res = getCodeAt(addr, num, unused);
+    if (verbose)
+        cerr << "getCodeAt(" << addr << ", " << num << "): " << res << "\n";
+    return res;
 }
 
 //--------------------------------------------------------------
@@ -86,9 +89,9 @@ blknum_t findCodeAt_binarySearch(const address_t& addr, blknum_t first, blknum_t
         size_t mid = first + ((last - first) / 2);
         bool atMid  = hasCodeAt(addr, mid);
         bool atMid1 = hasCodeAt(addr, mid + 1);
-        if (atMid && !atMid1)
+        if (!atMid && atMid1)
             return mid;  // found it
-        if (!atMid) {
+        if (atMid) {
             // we're too high, so search below
             return findCodeAt_binarySearch(addr, first, mid-1);
         }
@@ -102,5 +105,6 @@ blknum_t findCodeAt_binarySearch(const address_t& addr, blknum_t first, blknum_t
 blknum_t whenDeployed(const address_t& addr) {
     if (!isContract(addr))
         return NOPOS;
-    return findCodeAt_binarySearch(addr, 0, getLatestBlockFromCache());
+    blknum_t num = findCodeAt_binarySearch(addr, 0, getLatestBlockFromClient() - (5 * (60/14)));  // five minutes ago
+    return (num ? num+1 : NOPOS);
 }
