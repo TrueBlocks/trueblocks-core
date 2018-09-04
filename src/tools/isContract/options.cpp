@@ -92,6 +92,7 @@ void COptions::Init(void) {
     addrs.clear();
     diff = false;
     asData = false;
+    when = false;
     showBytes = false;
 }
 
