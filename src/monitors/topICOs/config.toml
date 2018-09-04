@@ -30,7 +30,7 @@ list = [
     { address = "0xe41d2489571d322189246dafa5ebde1f4699f498", name = "ZRX", firstBlock = 4145415, color = "green_c" },
     { address = "0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27", name = "ZIL", firstBlock = 4895439, color = "green_c" },
     { address = "0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27", name = "MKR", firstBlock = 4895439, color = "green_c" },
-    { address = "0x0D8775F648430679A709E98d2b0Cb6250d2887EF", name = "BAT", firstBlock = 3788558, color = "green_c" },
+    { address = "0x0d8775f648430679a709e98d2b0cb6250d2887ef", name = "BAT", firstBlock = 3788558, color = "green_c" },
     { address = "0x1985365e9f78359a9b6ad760e32412f4a445e862", name = "REP", firstBlock = 5926311, color = "green_c" },
     { address = "0xcb97e65f07da24d46bcdd078ebebd7c6e6e3d750", name = "BTM", firstBlock = 4015876, color = "green_c" },
     { address = "0xb7cb1c96db6b22b0d3d9536e0108d062bd488f74", name = "WTC", firstBlock = 4038913, color = "green_c" },
@@ -53,7 +53,7 @@ list = [
     { address = "0x618e75ac90b12c6049ba3b27f5d5f8651b0037f6", name = "QASH", firstBlock = 4352962, color = "green_c" },
     { address = "0x595832f8fc6bf59c85c527fec3740a1b7a361269", name = "POWR", firstBlock = 3811884, color = "green_c" },
     { address = "0x9ab165d795019b6d8b3e971dda91071421305e5a", name = "AOA", firstBlock = 5634490, color = "green_c" },
-    { address = "0xA4e8C3Ec456107eA67d3075bF9e3DF3A75823DB0", name = "LOOM", firstBlock = 5188927, color = "green_c" },
+    { address = "0xa4e8c3ec456107ea67d3075bf9e3df3a75823db0", name = "LOOM", firstBlock = 5188927, color = "green_c" },
     { address = "0xdd974d5c2e2928dea5f71b9825b8b646686bd200", name = "KNC", firstBlock = 4264898, color = "green_c" },
     { address = "0x8dd5fbce2f6a956c3022ba3663759011dd51e73e", name = "TUSD", firstBlock = 5197514, color = "green_c" },
     { address = "0x39bb259f66e1c59d5abef88375979b4d20d98022", name = "WAX", firstBlock = 4761555, color = "green_c" },
@@ -68,3 +68,4 @@ list = [
     { address = "0x4672bad527107471cb5067a887f4656d585a8a31", name = "DROP", firstBlock = 4935794, color = "green_c" },
     { address = "0xea11755ae41d889ceec39a63e6ff75a02bc1c00d", name = "CTXC", firstBlock = 5229336, color = "green_c" },
     { address = "0xb3104b4b9da82025e8b9f8fb28b3553ce2f67069", name = "BIX", firstBlock = 4319840, color = "green_c" },
+]
