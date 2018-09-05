@@ -15,7 +15,8 @@
 
 class COptions : public COptionsBase {
 public:
-    bool named;
+    bool fromNamed;
+    bool fromScraper;
 
     COptions(void);
     ~COptions(void) {}

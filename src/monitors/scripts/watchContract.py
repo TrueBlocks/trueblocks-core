@@ -31,7 +31,7 @@ while True:
         for contract in contracts:
             command = 'cd ' + contract + ' ; '
             command = command + 'acctScrape -m 50000 ' + option + ' ; '
-            command = command + 'cd - >/dev/null'
+            command = command + 'cd .. >/dev/null'
             os.system(command)
 #            print(command)
         f.close()

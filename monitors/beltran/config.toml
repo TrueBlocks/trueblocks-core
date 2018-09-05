@@ -11,9 +11,9 @@ json = true
 
 [fields]
 hide=
-show=
+sxhow=
 show_example_all = CTransaction:all|CReceipt:all|CLogEntry:all|CTrace:all|CTraceResult:all|CTraceAction:all|CParameter:all
-show_example_logs = \
+show = \
 	CTransaction: none| \
 	CReceipt: none, logs \
 	CLogEntry: none, articulatedLog \
