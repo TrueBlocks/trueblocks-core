@@ -15,19 +15,8 @@ set(TOOL_NAME "acctExport")
 set(PROJ_NAME "apps")
 add_executable(${TOOL_NAME} ${SOURCE_FILES})
 
-# we need mysql headers for this project
-include_directories("${CMAKE_CURRENT_LIST_DIR}")
-execute_process(COMMAND mysql_config --cflags OUTPUT_VARIABLE MYSQL_CFLAGS OUTPUT_STRIP_TRAILING_WHITESPACE)
-#message(STATUS ${MYSQL_CFLAGS})
-target_compile_options(${TOOL_NAME} PUBLIC ${MYSQL_CFLAGS})
-
-if (NOT APPLE)
-    execute_process(COMMAND mysql_config --libs OUTPUT_VARIABLE MYSQL_LIBS OUTPUT_STRIP_TRAILING_WHITESPACE)
-    #message(STATUS ${MYSQL_LIBS})
-    target_link_libraries(${TOOL_NAME} ${MYSQL_LIBS} token wallet ${BASE_LIBS})
-else()
-    target_link_libraries (${TOOL_NAME} /usr/local/mysql/lib/libmysqlclient.a wallet token ${BASE_LIBS})
-endif()
+# Add the project static libs at linking
+target_link_libraries (${TOOL_NAME} wallet token ${BASE_LIBS})
 
 # Testing
 # Define paths to test folder and gold folder
@@ -38,6 +27,9 @@ set(GOLD_PATH "${GOLD_PATH}/${PROJ_NAME}/${TOOL_NAME}")
 # Additional target to make the README.md
 build_readme(${CMAKE_CURRENT_SOURCE_DIR} ${TOOL_NAME})
 
+# To run only specific tests we define a test configuration named "test_all"
+add_custom_target(test-all COMMAND ${CMAKE_CTEST_COMMAND} -C test_all)
+
 # Function to run an special or slow test case
 function(run_special_test testName)
     run_the_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
@@ -45,10 +37,12 @@ endfunction(run_special_test)
 
 # Function to run an individual test case
 function(run_test testName)
-    run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+     run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
 endfunction(run_test)
 
 # Enter one line for each individual test
+run_test("acctExport_no_params")
+run_test("acctExport_help"                           "-h")
 
 # Installation steps, this tool is renamed at installation
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

@@ -7,7 +7,6 @@ debug = false
 logs = false
 trace = false
 single = false
-parse = false
 json = true
 
 [fields]
