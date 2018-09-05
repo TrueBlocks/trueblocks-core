@@ -232,6 +232,8 @@ void CFunction::registerClass(void) {
     builtIns.push_back(_biCFunction);
 
     // EXISTING_CODE
+    ADD_FIELD(CFunction, "input_names", T_TEXT, ++fieldNum);
+    HIDE_FIELD(CFunction, "input_names");
     HIDE_FIELD(CFunction, "indexed");
     HIDE_FIELD(CFunction, "anonymous");
     // EXISTING_CODE
@@ -263,8 +265,18 @@ string_q nextFunctionChunk_custom(const string_q& fieldIn, const void *dataPtr) 
             case 'i':
                 if ( fieldIn % "isBuiltin" ) {
                     return int_2_Str(fun->isBuiltin);
+
+                } else if ( fieldIn % "input_names") {
+                    string_q ret;
+                    for (size_t i = 0 ; i < fun->inputs.size() ; i++) {
+                        ret += fun->inputs[i].name;
+                        if (i < fun->inputs.size())
+                            ret += ",";
+                    }
+                    return ret;
                 }
                 break;
+
             case 'o':
                 if ( fieldIn % "origName" ) {
                     return fun->origName;

@@ -57,6 +57,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-d" || arg == "--data") {
             parts |= SIG_FTYPE;
             asData = true;
+            colorsOff();
 
         } else if (arg == "-s" || arg == "--silent") {
             silent = true;

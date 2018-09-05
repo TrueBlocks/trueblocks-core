@@ -16,6 +16,7 @@
 //---------------------------------------------------------------------------------------------------
 static COption params[] = {
     COption("-named",    "Show addresses from named accounts as per ethName"),
+    COption("-scraper",  "Show addresses from scraper config.toml (if found in current folder"),
     COption("",          "Show the list of Ethereum accounts known to the local node or named accounts."),
 };
 static size_t nParams = sizeof(params) / sizeof(COption);
@@ -30,7 +31,12 @@ bool COptions::parseArguments(string_q& command) {
     while (!command.empty()) {
         string_q arg = nextTokenClear(command, ' ');
         if (arg == "-n" || arg == "--named") {
-            named = true;
+            fromNamed = true;
+
+        } else if (arg == "-s" || arg == "--scraper") {
+            if (!fileExists("./config.toml"))
+                return usage("--scraper option requires a file ./config.toml exists in current folder. Quitting...");
+            fromScraper = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -53,7 +59,8 @@ void COptions::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
 
-    named = false;
+    fromNamed = false;
+    fromScraper = false;
     minArgs = 0;
 }
 
