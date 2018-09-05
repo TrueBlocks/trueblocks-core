@@ -210,13 +210,17 @@ int main(int argc, const char *argv[]) {
         }
 
         if (!isGenerate) {
-
+            string_q format = getGlobalConfig()->getDisplayStr(false, STR_FORMAT_FUNCDATA);
+            string_q header = substitute(substitute(format, "[{", ""), "}]", "");
+            cout << header << "\n";
+            replace(format, "[{address}]", toLower(options.primaryAddr));
             if (options.asData) {
-                for (size_t i = 0 ; i < functions.size() ; i++) {
-                    const CFunction *func = &functions[i];
-                    if (!func->constant || !options.noconst) {
-                        string_q format = getGlobalConfig()->getDisplayStr(false, STR_FORMAT_FUNCDATA);
-                        cout << func->Format(format);
+
+                for (auto func : functions) {
+                    HIDE_FIELD(CFunction, "inputs");
+                    HIDE_FIELD(CFunction, "outputs");
+                    if (!func.constant || !options.noconst) {
+                        cout << func.Format(format) << "\n";
                     }
                 }
 

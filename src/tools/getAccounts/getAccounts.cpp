@@ -11,13 +11,14 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
+#include "acctlib.h"
 
 extern void readCustomAddrs(CAddressArray& array);
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
     getCurlContext()->provider = "None";  // --named option runs without a node
-    etherlib_init();
+    acctlib_init();
 
     COptions options;
     if (!options.prepareArguments(argc, argv))
@@ -30,7 +31,21 @@ int main(int argc, const char *argv[]) {
             return 0;
 
         CAddressArray addrs;
-        if (options.named) {
+        if (options.fromScraper) {
+            CToml toml("./config.toml");
+            //            cout << toml << "\n";
+            CAccountWatchArray watches;
+            loadWatchList(toml, watches, "list");
+            for (auto watch : watches)
+                addrs.push_back(watch.address);
+            if (options.fromNamed) {
+                watches.clear();
+                loadWatchList(toml, watches, "named");
+                for (auto watch : watches)
+                    addrs.push_back(watch.address);
+            }
+
+        } else if (options.fromNamed) {
             for (size_t i = 0 ; i < options.namedAccounts.size() ; i++)
                 addrs.push_back(options.namedAccounts[i].addr);
 
@@ -38,11 +53,11 @@ int main(int argc, const char *argv[]) {
             getAccounts(addrs);
             readCustomAddrs(addrs);
             if (isTestMode()) {
-               addrs.clear();
-               addrs.push_back("0x0000000000000000000000000000000000000000");
-               addrs.push_back("0x0000000000000000000000000000000000000001");
-               addrs.push_back("0x0000000000000000000000000000000000000002");
-               addrs.push_back("0x0000000000000000000000000000000000000003");
+                addrs.clear();
+                addrs.push_back("0x0000000000000000000000000000000000000000");
+                addrs.push_back("0x0000000000000000000000000000000000000001");
+                addrs.push_back("0x0000000000000000000000000000000000000002");
+                addrs.push_back("0x0000000000000000000000000000000000000003");
             }
         }
 
@@ -52,6 +67,8 @@ int main(int argc, const char *argv[]) {
             cout << addrs[i] << (found ? acct.Format(" ([{NAME}])") : "") << "\n";
         }
     }
+
+    acctlib_cleanup();
     return 0;
 }
 

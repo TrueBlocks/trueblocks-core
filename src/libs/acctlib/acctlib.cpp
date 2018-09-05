@@ -1,4 +1,3 @@
-#pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
@@ -12,15 +11,26 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
+#include "acctlib.h"
 
-class COptions : public COptionsBase {
-public:
-    bool fromNamed;
-    bool fromScraper;
+//-------------------------------------------------------------------------
+void acctlib_init(void) {
+    etherlib_init();
 
-    COptions(void);
-    ~COptions(void) {}
+    CAccountWatch::registerClass();
+    CAcctCacheItem::registerClass();
+    CBalanceHistory::registerClass();
+    CBalHistory::registerClass();
+    CIncomeStatement::registerClass();
 
-    bool parseArguments(string_q& command);
-    void Init(void);
-};
+    CTreeRoot::registerClass();
+    CTreeNode::registerClass();
+    CInfix::registerClass();
+    CBranch::registerClass();
+    CLeaf::registerClass();
+}
+
+//-------------------------------------------------------------------------
+void acctlib_cleanup(void) {
+    etherlib_cleanup();
+}
