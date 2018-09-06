@@ -11,6 +11,41 @@
 #include "tokenlib.h"
 #include "walletlib.h"
 
+#define cBlack 1
+#define cRed 1
+#define cGreen 1
+#define cYellow 1
+#define cBlue 1
+#define cMagenta 1
+#define cTeal 1
+#define cWhite 1
+#define cOff 1
+#define bbold 1
+#define italic 1
+#define underline 1
+#define reversed 1
+#define strikethru 1
+#define greenCheck 1
+#define redX 1
+#undef biBlack
+#undef bBlack
+#undef bRed
+#undef bGreen
+#undef bYellow
+#undef bBlue
+#undef bMagenta
+#undef bTeal
+#undef bWhite
+#undef iBlack
+#undef iRed
+#undef iGreen
+#undef iYellow
+#undef iBlue
+#undef iMagenta
+#undef iTeal
+#undef iWhite
+#undef asYellow
+
 //-----------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
@@ -26,7 +61,7 @@ public:
     bool logs_on;
     bool trace_on;
     bool autocorrect_on;
-    bool json_on;
+    string_q defaultFmt;
     bool report_bals;
     string_q hideFields;
     string_q showFields;
@@ -47,7 +82,6 @@ public:
     bool accountForExtTransaction (const CBlock& block, const CTransaction *trans);
     bool accountForIntTransaction (const CBlock& block, const CTransaction *trans, const CTrace *trace);
     bool closeIncomeStatement     (const CBlock& block);
-    bool exportData               (void);
 
     bool     loadWatches    (const CToml& toml);
     string_q annotate       (const string_q& strIn) const;
@@ -60,6 +94,8 @@ public:
 };
 
 //------------------------------------------------------------------------
+extern bool upgradeData(COptions& options);
+extern bool exportData(COptions& options);
 extern bool articulateTransaction(CTransaction *p);
 extern bool articulateEvent(CLogEntry *p);
 

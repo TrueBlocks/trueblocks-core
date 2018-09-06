@@ -12,7 +12,7 @@ static COption params[] = {
     COption("-lo(g)s",       "display smart contract lo(g)s or events"),
     COption("-trace",        "display smart contract internal traces"),
     COption("-accounting",   "display credits and debits per account and reconcile at each block"),
-    COption("-json",         "ignore export format and export as json"),
+    COption("-fmt:<fmt>",    "export format (on of [json|txt|csv] (ignored if trans_fmt is non-empty)"),
     COption("-bals",         "if a balance does not reconcile, export a message to a file"),
     COption("-kBlock:<num>", "start processing at block :k"),
     COption("",              "Index transactions for a given Ethereum address (or series of addresses).\n"),
@@ -32,7 +32,7 @@ bool COptions::parseArguments(string_q& command) {
     Init();
     while (!command.empty()) {
         string_q arg = nextTokenClear(command, ' ');
-        if (contains(arg, "-k:") || contains(arg, "--kBlock:")) {
+        if (startsWith(arg, "-k:") || startsWith(arg, "--kBlock:")) {
 
             arg = substitute(substitute(arg, "-k:", ""), "--kBlock:", "");
             if (!isNumeral(arg)) {
@@ -53,8 +53,12 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-b" || arg == "--bals") {
             report_bals = true;
 
-        } else if (arg == "-j" || arg == "--json") {
-            json_on = true;
+        } else if (startsWith(arg, "-f:") || startsWith(arg, "--fmt:")) {
+
+            arg = substitute(substitute(arg, "-f:", ""), "--fmt:", "");
+            if (arg != "json" && arg != "txt" && arg != "csv")
+                return usage("Export format must be one of [ json | txt | csv ]. Quitting...");
+            defaultFmt = arg;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
@@ -75,26 +79,26 @@ bool COptions::parseArguments(string_q& command) {
     logs_on        = toml.getConfigBool("display", "logs",        false) || logs_on;
     trace_on       = toml.getConfigBool("display", "trace",       false) || trace_on;
     autocorrect_on = toml.getConfigBool("display", "autocorrect", false) || autocorrect_on;
-    json_on        = toml.getConfigBool("display", "json",        false) || json_on;
+//    json_on        = toml.getConfigBool("display", "json",        false) || json_on;
     hideFields     = toml.getConfigStr ("fields",  "hide",        "");
     showFields     = toml.getConfigStr ("fields",  "show",        "");
 
     // If we're not told to use Json, then we use format strings. No format string == export as json
-    if (!json_on) {
+    if (!(defaultFmt == "json")) {
         transFmt   = cleanFmt(toml.getConfigStr ("formats", "trans_fmt",   defTransFmt));
         traceFmt   = cleanFmt(toml.getConfigStr ("formats", "trace_fmt",   defTraceFmt));
     } else {
         accounting_on = trace_on = logs_on = false;
-        colorsOff();
+//        colorsOff();
     }
 
-    replaceAll(transFmt, "{ISERROR}", cRed + "ERROR:{b:ISERROR}");
-    replaceAll(traceFmt, "{ISERROR}", cRed + "ERROR:{b:ISERROR}");
+    replaceAll(transFmt, "{ISERROR}", "ERROR:{b:ISERROR}");
+    replaceAll(traceFmt, "{ISERROR}", "ERROR:{b:ISERROR}");
 
-    if (!json_on) {
-        cout << "Only --json option currently works. Please add --json to command line.\n";
-        return false;
-
+    if (!(defaultFmt == "json")) {
+//        cout << "Only --json option currently works. Please add --json to command line.\n";
+//        return false;
+//
     } else {
         // show certain fields and hide others
 const char *defHide =
@@ -144,7 +148,7 @@ void COptions::Init(void) {
     trace_on = false;
     autocorrect_on = false;
     report_bals = false;
-    json_on = false;
+    defaultFmt = "json";
     hideFields = "";
     showFields = "";
     kBlock = 0;
@@ -157,6 +161,8 @@ void COptions::Init(void) {
 
     tx_nAccountedFor = 0;
     tx_nDisplayed = 0;
+
+    minArgs = 0;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -170,7 +176,20 @@ COptions::~COptions(void) {
 
 //-----------------------------------------------------------------------
 string_q cleanFmt(const string_q& str) {
-    return (substitute(substitute(substitute(substitute(substitute((str), "\\n\\\n", "\\n"), "\n", ""), "\\n", "\n"), "\\t", "\t"), "\\r", "\r"));
+    return (
+//            substitute(
+                       substitute(
+                                  substitute(
+                                             substitute(
+//                                                        substitute(
+                                                                   (str),
+//                                                                   "\\n\\\n", "\\n"),
+                                                        "\n", ""),
+                                             "\\n", "\n"),
+                                  "\\t", "\t")
+//            ,
+//                       "\\r", "\r")
+            );
 }
 
 //-----------------------------------------------------------------------
