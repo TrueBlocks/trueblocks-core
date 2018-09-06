@@ -19,14 +19,13 @@ bool COptions::openIncomeStatement(const CBlock& block) {
             w->qbis.nodeBal = getNodeBal(w->balanceHistory, w->address, block.blockNumber-1);
             bigint_t diff = (w->qbis.nodeBal - w->qbis.endBal);
             if (diff != 0) {
-                string_q c1 = watches[i].color, c2 = cOff;
-                cout << "\n" << bRed << string_q(5, '-') << " WARNING " << string_q(166, '-') << "\n";
+                cout << "\n" << string_q(5, '-') << " WARNING " << string_q(166, '-') << "\n";
                 cout
-                    << c1 << w->address << c2 << " is out of balance by "
-                    << cRed << wei_2_Ether(bni_2_Str(diff)) << cOff
+                    << w->address << " is out of balance by "
+                    << wei_2_Ether(bni_2_Str(diff))
                     << " ether at the start of block "
-                    << cYellow << block.blockNumber << "\n" << cOff;
-                cout << bRed << string_q(180, '-') << cOff << "\n";
+                    << cYellow << block.blockNumber << "\n";
+                cout << string_q(180, '-') << "\n";
             }
         }
     }
@@ -131,23 +130,21 @@ bool COptions::closeIncomeStatement(const CBlock& block) {
         CIncomeStatement header;
         header.begBal = header.endBal = -1;
 
-        cout << cOff << string_q(23, ' ') << cWhite << " Profit and Loss for block #" << block.blockNumber << " (" << ts_2_Date(block.timestamp).Format(FMT_JSON) << ")\n";
-//        cout << bBlack << string_q(23, ' ') << BG << string_q(155, '-') << cOff << "\n";
-        cout           << padCenter("",23) << " " << BG << header << "  " << padCenter("nodeBal",34) << cOff << "\n";
-//        cout << bBlack << string_q(23, ' ') << string_q(155, '-') << cOff << "\n";
+        cout << string_q(23, ' ') << " Profit and Loss for block #" << block.blockNumber << " (" << ts_2_Date(block.timestamp).Format(FMT_JSON) << ")\n";
+        cout << padCenter("",23) << " " << header << "  " << padCenter("nodeBal",34) << "\n";
         for (size_t i = 0 ; i < watches.size() ; i++) {
             watches.at(i).qbis.blockNum = block.blockNumber;
             watches.at(i).qbis.begBal = watches[i].qbis.endBal;
             watches.at(i).qbis.endBal = (watches[i].qbis.begBal + watches[i].qbis.inflow - watches[i].qbis.outflow - watches[i].qbis.gasCostInWei);
 
-            cout << watches[i].color << padRight(watches[i].displayName(false,true,false,14,6),24) << cOff << watches[i].qbis << "   ";
+            cout << watches[i].color << padRight(watches[i].displayName(false,true,false,14,6),24) << watches[i].qbis << "   ";
 
             if (i < watches.size()-1) {
                 watches.at(i).qbis.nodeBal = getNodeBal(watches.at(i).balanceHistory, watches[i].address, block.blockNumber);
                 cout << padLeft(wei_2_Ether(bni_2_Str(watches[i].qbis.nodeBal)),23);
                 if (!watches[i].qbis.balanced()) {
 
-                    cout << " " << bRed << padLeft(wei_2_Ether(bni_2_Str(watches[i].qbis.difference())),23) << cOff << " " << redX;
+                    cout << " " << padLeft(wei_2_Ether(bni_2_Str(watches[i].qbis.difference())),23) << " " << redX;
                     if (report_bals) {
                         ostringstream os;
                         os << block.blockNumber << "\t" << watches[i].address << "\t" << watches[i].qbis.endBal << "\n";
@@ -163,9 +160,8 @@ bool COptions::closeIncomeStatement(const CBlock& block) {
         cout << string_q(23, ' ') << string_q(125, '-') << "\n";
         cout << padRight("Total:",24) << total << " ";
         cout << greenCheck;
-        cout << cOff;
         if (tx_nAccountedFor)
-            cout << "\n" << bYellow << string_q(180, '-') << "\n";
+            cout << "\n" << string_q(180, '-') << "\n";
         cout.flush();
     }
 

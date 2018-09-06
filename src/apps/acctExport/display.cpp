@@ -13,7 +13,7 @@ void COptions::displayTransaction(ostream& os, const CTransaction *theTrans) con
 
     string_q functionStr = theTrans->Format("[{FUNCTION}]");
 
-    string_q format = substitute(substitute(substitute(transFmt, "{", cWhite + "{"), "}", "}" + cYellow), "\n", "\n" + cYellow);
+    string_q format = substitute(substitute(substitute(transFmt, "{", "{"), "}", "}"), "\n", "\n");
     format = substitute(substitute(format, "[{FUNCTION}]", functionStr), "[{FUNC}]", toProper(nextTokenClear(functionStr,'|')));
 
     string_q fmt = format;
@@ -23,7 +23,7 @@ void COptions::displayTransaction(ostream& os, const CTransaction *theTrans) con
         replaceAll(fmt, "GASCOST}",  "GASCOST}++USD_GC++");
     }
 
-    string_q transStr = substitute(theTrans->Format(fmt), "...", cYellow + "..." + cOff);
+    string_q transStr = substitute(theTrans->Format(fmt), "...", "...");
     if (contains(transStr, "++PRICE++")) {
         timestamp_t ts = str_2_Ts(theTrans->Format("[{TIMESTAMP}]"));
         transStr = substitute(transStr, "++PRICE++", asDollars(ts, weiPerEther));
@@ -55,8 +55,8 @@ void COptions::displayTransaction(ostream& os, const CTransaction *theTrans) con
             string_q eventType = extract(string_q(l->getRuntimeClass()->m_ClassName), 1);
             string_q evtStr = substitute(substitute(l->toJson1(), "{","{ \"type\": \"" + eventType + "\" "), "}", " }");
             if (!isJson) {
-                evtStr = substitute(reformat(evtStr, 140), "...", cYellow + "..." + cOff);
-                os << "\t" << cYellow << "log " << i << cOff << ":\t\t" << annotate(evtStr) << "\n";;
+                evtStr = substitute(reformat(evtStr, 140), "...", "...");
+                os << "\t" << "log " << i << ":\t\t" << annotate(evtStr) << "\n";;
             }
         }
     }
@@ -89,7 +89,7 @@ void COptions::displayTrace(ostream& os, const CTransaction *theTrans) const {
         trans1.receipt.contractAddress = trace->action.address;
         trans1.receipt.gasUsed         = trace->result.gasUsed;
 //        trans1.function                = articulateTransaction(&trans1)->function;
-        os << "\n\t" << cYellow << "trace " << t << ":\t" << cWhite << substitute(trans1.Format(fmt), " UTC", "");
+        os << "\n\t" << "trace " << t << ":\t" << substitute(trans1.Format(fmt), " UTC", "");
     }
     os << "\n";
     return;
