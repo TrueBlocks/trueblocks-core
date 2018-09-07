@@ -58,8 +58,6 @@ public:
 };
 typedef map<CAddressAppearance, uint64_t> CAddressAppearanceMap;
 typedef vector<CAddressAppearance> CAddressAppearanceArray;
-typedef bool (*ADDRESSFUNC)(const CAddressAppearance& item, void *data);
-typedef bool (*TRANSFUNC)(const CTransaction *trans, void *data);
 
 extern bool isPotentialAddr(biguint_t test, address_t& addrOut);
 extern void potentialAddr(ADDRESSFUNC func, void *data, const CAddressAppearance& item, const string_q& potList);

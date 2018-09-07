@@ -25,6 +25,9 @@ namespace qblocks {
 
 // EXISTING_CODE
 class CBlock;
+class CAddressAppearance;
+typedef bool (*ADDRESSFUNC)(const CAddressAppearance& item, void *data);
+typedef bool (*TRANSFUNC)(const CTransaction *trans, void *data);
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -61,6 +64,8 @@ public:
     CTraceArray traces;
     string_q articulatedTx;
     CFunction *func;
+    bool forEveryAddress      (ADDRESSFUNC func, TRANSFUNC filt = NULL, void *data = NULL);
+    bool forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC filt = NULL, void *data = NULL);
     // EXISTING_CODE
     bool operator==(const CTransaction& item) const;
     bool operator!=(const CTransaction& item) const { return !operator==(item); }
