@@ -43,6 +43,7 @@ public:
 
     // EXISTING_CODE
     bool loadABIFromFile(const string_q& fileName);
+    friend class CAccountWatch;
     // EXISTING_CODE
     bool operator==(const CAbi& item) const;
     bool operator!=(const CAbi& item) const { return !operator==(item); }
