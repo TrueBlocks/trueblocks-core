@@ -2,8 +2,6 @@
  * This source code is confidential proprietary information which is
  * Copyright (c) 2017 by Great Hill Corporation.
  * All Rights Reserved
- *
- * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
 #include "options.h"
 
@@ -13,7 +11,7 @@ void COptions::displayTransaction(ostream& os, const CTransaction *theTrans) con
 
     string_q functionStr = theTrans->Format("[{FUNCTION}]");
 
-    string_q format = substitute(substitute(substitute(fmtStr, "{", "{"), "}", "}"), "\n", "\n");
+    string_q format = substitute(substitute(substitute(transFmt, "{", "{"), "}", "}"), "\n", "\n");
     format = substitute(substitute(format, "[{FUNCTION}]", functionStr), "[{FUNC}]", toProper(nextTokenClear(functionStr,'|')));
 
     string_q fmt = format;
@@ -39,9 +37,9 @@ void COptions::displayTrace(ostream& os, const CTransaction *theTrans) const {
     const CTraceArray& traces = theTrans->traces;
 //    bool err = theTrans->isError;
 
-    string_q fmt = fmtStr;
+    string_q fmt = transFmt;
     if (fmt.empty())
-        fmt = fmtStr;
+        fmt = transFmt;
     fmt = substitute(substitute(fmt, "\n\t","\n\t\t\t"), "{ARTICULATEDTX}","{w:100:ARTICULATEDTX}...");
     for (uint32_t t = 0 ; t < traces.size() ; t++) {
         const CTrace *trace = &traces[t];
