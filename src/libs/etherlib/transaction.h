@@ -211,6 +211,7 @@ extern CArchive& operator>>(CArchive& archive, CTransaction& tra);
 // EXISTING_CODE
 extern bool sortTransactionsForWrite(const CTransaction& t1, const CTransaction& t2);
 extern string_q decodeRLP(const string_q& name, const string_q& input, size_t nItems, string_q *items);
+extern string_q decodeRLP(const string_q& name, const string_q& input, const CStringArray& types);
 extern string_q nextBlockChunk(const string_q& fieldIn, const void *data);
 // EXISTING_CODE
 }  // namespace qblocks
