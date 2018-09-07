@@ -7,15 +7,19 @@
 
 //---------------------------------------------------------------------------------------------------
 static COption params[] = {
-    COption("-fmt:<fmt>", "export format (one of [json|txt|csv]"),
-    COption("",           "Export transactions for one or more Ethereum addresses.\n"),
+    COption("-fmt:<fmt>",     "export format (one of [json|txt|csv]"),
+    COption("-fi(l)ter:<addr>", "show results for this address (you may specify more than one filter)"),
+    COption("",               "Export transactions for one or more Ethereum addresses.\n"),
 };
 static size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
+    CAccountWatch::registerClass();
+
     export_t fmt = JSON;
+    CStringArray filters;
     if (!standardOptions(command))
         return false;
 
@@ -30,6 +34,10 @@ bool COptions::parseArguments(string_q& command) {
             else if ( arg == "json") fmt = JSON;
             else return usage("Export format must be one of [ json | txt | csv ]. Quitting...");
 
+        } else if (startsWith(arg, "-l:") || startsWith(arg, "--filter:")) {
+            arg = substitute(substitute(arg, "-l:", ""), "--filter:", "");
+            filters.push_back(arg);
+
         } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
@@ -43,6 +51,15 @@ bool COptions::parseArguments(string_q& command) {
     CToml toml("./config.toml");
     if (!loadWatches(toml))
         return false;
+
+    if (filters.size() > 0) {
+        for (CAccountWatch& watch : watches) {
+            watch.enabled = false;
+            for (auto addr : filters)
+                if (addr % watch.address)
+                    watch.enabled = true;
+        }
+    }
 
     // show certain fields and hide others
     manageFields(defHide, false);
@@ -128,15 +145,15 @@ void manageFields(const string_q& listIn, bool show) {
 //-----------------------------------------------------------------------
 string_q defTransFmt = "{ \"date\": \"[{DATE}]\", \"from\": \"[{FROM}]\", \"to\": \"[{TO}]\", \"value\": \"[{VALUE}]\" }";
 string_q defHide =
-"CTransaction: nonce, input"
+    "CTransaction: nonce, input"
 "|" "CLogEntry: data, topics"
 "|" "CTrace: blockHash, blockNumber, transactionHash, transactionPosition, traceAddress, subtraces"
 "|" "CTraceAction: init"
 "|" "CTraceResult: code"
-"|" "CFunction: constant, payable, outputs"
-"|" "CParameter: indexed, isPointer, isArray, isObject";
+"|" "CFunction: constant, payable, outputs, signature, encoding, type, articulate_str"
+"|" "CParameter: type, indexed, isPointer, isArray, isObject";
 string_q defShow =
-"CTransaction: price, gasCost, articulatedTx, traces, isError, date, ether"
+    "CTransaction: price, gasCost, articulatedTx, traces, isError, date, ether"
 "|" "CLogEntry: articulatedLog"
 "|" "CTraceAction: "
 "|" "CTraceResult: "

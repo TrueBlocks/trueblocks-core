@@ -9,11 +9,14 @@ extern bool visitAddrs(const CAddressAppearance& item, void *data);
 //-----------------------------------------------------------------------
 bool exportData(COptions& options) {
 
+    bool first = true;
     if (options.transFmt.empty())
         cout << "[";
 
+#define N options.items.size()
+
     CBlock block;
-    for (size_t index = 0 ; index < options.items.size() ; index++) {
+    for (size_t index = 0 ; index < N ; index++) {
 
         const CAcctCacheItem *item = &options.items[index];
 
@@ -29,24 +32,27 @@ bool exportData(COptions& options) {
         if (item->transIndex < block.transactions.size()) {
             CTransaction *trans = &block.transactions[item->transIndex];
             trans->forEveryAddress(visitAddrs, NULL, &options.addrsInBlock);
-            getTraces(trans->traces, trans->hash);
-            articulateTransaction(trans);
+            if (!options.transFmt.empty() || !IS_HIDDEN(CTransaction, "traces"))
+                getTraces(trans->traces, trans->hash);
 
             bool found = false;
             for (size_t w = 0 ; w < options.watches.size() && !found ; w++) {
                 CAccountWatch *watch = &options.watches[w];
+                if (options.transFmt.empty() || contains(toLower(options.transFmt), "articulate"))
+                    articulateTransaction(watch->abi, trans);
                 if (watch->enabled) {
                     for (auto addrList : options.addrsInBlock) {
                         if (addrList.addr % watch->address && !found) {
 
                             ostringstream os;
-                            options.displayTransaction(os, trans);
-                            if (options.transFmt.empty() && index < options.items.size() - 1)
+                            if (options.transFmt.empty() && !first)
                                 os << ",";
+                            options.displayTransaction(os, trans);
                             os << endl;
                             cout << options.annotate(substitute(os.str(),"++WATCH++",watch->address));
                             cout.flush();
                             found = true;
+                            first = false;
 
                         }
                     }
@@ -59,6 +65,25 @@ bool exportData(COptions& options) {
         cout << "]";
 
     return true;
+}
+
+//-----------------------------------------------------------------------
+void COptions::displayTransaction(ostream& os, const CTransaction *theTrans) const {
+
+    string_q fmt = transFmt;
+    if (expContext().asDollars) {
+        replaceAll(fmt, "VALUE}",    "VALUE}++USD_V++");
+        replaceAll(fmt, "ETHER}",    "ETHER}++USD_V++");
+        replaceAll(fmt, "GASCOST}",  "GASCOST}++USD_GC++");
+    }
+    string_q transStr = theTrans->Format(fmt);
+    if (contains(transStr, "++PRICE++")) {
+        timestamp_t ts = str_2_Ts(theTrans->Format("[{TIMESTAMP}]"));
+        transStr = substitute(transStr, "++PRICE++", asDollars(ts, weiPerEther));
+    }
+    os << transStr;
+
+    return;
 }
 
 //-----------------------------------------------------------------------
@@ -98,9 +123,9 @@ bool COptions::loadWatches(const CToml& toml) {
     blk_maxWatchBlock = 0;
 
     // Check the watches for validity
-    for (uint32_t i = 0 ; i < watches.size() ; i++) {
+    for (size_t w = 0 ; w < watches.size() ; w++) {
 
-        CAccountWatch *watch = &watches.at(i);
+        CAccountWatch *watch = &watches.at(w);
         if (!isAddress(watch->address))
             return usage("Invalid watch address " + watch->address + "\n");
 
@@ -112,9 +137,15 @@ bool COptions::loadWatches(const CToml& toml) {
         blk_minWatchBlock = min(blk_minWatchBlock, watch->firstBlock);
         blk_maxWatchBlock = max(blk_maxWatchBlock, watch->lastBlock);
 
-        string_q abiFile = blockCachePath("abis/" + watch->address + ".json");
-        watch->abi.loadABIFromFile(abiFile);
-        //        cout << fileExists(abiFile) << " : " << watch->abi << "\n";
+        watch->abi.loadABIFromFile(blockCachePath("abis/" + watch->address + ".json"));
+        watch->abi.loadABIFromFile(blockCachePath("abis/0xTokenLib.json"));
+        watch->abi.loadABIFromFile(blockCachePath("abis/0xWalletLib.json"));
+        // We may as well articulate the named contracts while we're at it
+        for (size_t n = 0 ; n < named.size() ; n++) {
+            CAccountWatch *alt = &named.at(n);
+            if (alt->enabled)
+                watch->abi.loadABIFromFile(blockCachePath("abis/" + alt->address + ".json"));
+        }
     }
 
     watches.push_back(CAccountWatch("Others", "Other Accts", 0, UINT32_MAX, ""));

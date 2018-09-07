@@ -287,6 +287,7 @@ CParameter::CParameter(string_q& textIn) {
 
 //-----------------------------------------------------------------------
 CParameter::CParameter(const string_q& n, const string_q& t, const string_q& v) {
+    initialize();
     name = n;
     type = t;
     value = v;
@@ -294,6 +295,7 @@ CParameter::CParameter(const string_q& n, const string_q& t, const string_q& v) 
 
 //-----------------------------------------------------------------------
 CParameter::CParameter(const string_q& n, const string_q& t, uint64_t v) {
+    initialize();
     name = n;
     type = t;
     value = uint_2_Str(v);
@@ -301,6 +303,7 @@ CParameter::CParameter(const string_q& n, const string_q& t, uint64_t v) {
 
 //-----------------------------------------------------------------------
 CParameter::CParameter(const string_q& n, const string_q& t, int64_t v) {
+    initialize();
     name = n;
     type = t;
     value = int_2_Str(v);
@@ -308,6 +311,7 @@ CParameter::CParameter(const string_q& n, const string_q& t, int64_t v) {
 
 //-----------------------------------------------------------------------
 CParameter::CParameter(const string_q& n, const string_q& t, bool v) {
+    initialize();
     name = n;
     type = t;
     value = bool_2_Str(v);
@@ -315,6 +319,7 @@ CParameter::CParameter(const string_q& n, const string_q& t, bool v) {
 
 //-----------------------------------------------------------------------
 CParameter::CParameter(const string_q& n, const string_q& t, biguint_t v) {
+    initialize();
     name = n;
     type = t;
     value = bnu_2_Str(v);
@@ -322,6 +327,7 @@ CParameter::CParameter(const string_q& n, const string_q& t, biguint_t v) {
 
 //-----------------------------------------------------------------------
 CParameter::CParameter(const string_q& n, const string_q& t, const CStringArray& array) {
+    initialize();
     name = n;
     type = t;
     for (auto s : array)
