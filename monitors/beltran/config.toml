@@ -12,7 +12,7 @@ json = true
 hide=
 sxhow=
 show_example_all = CTransaction:all|CReceipt:all|CLogEntry:all|CTrace:all|CTraceResult:all|CTraceAction:all|CParameter:all
-show = \
+sxhow = \
 	CTransaction: none| \
 	CReceipt: none, logs \
 	CLogEntry: none, articulatedLog \
@@ -20,7 +20,8 @@ show = \
 	
 
 [formats]
-trans_fmt = [{TIMESTAMP}]\t[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{TRACEID}]\t[{FROM}]\t[{TO}]\t[{ETHER}]\t[{GAS}]\t[{GASPRICE}]\t[{GASUSED}]\t[TRUE{b:ISERROR}]\t[{ENCODING}]\t[{ARTICULATED}]
+trans_fmt = [{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{HASH}]
+txrans_fmt = [{TIMESTAMP}]\t[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{TRACEID}]\t[{FROM}]\t[{TO}]\t[{ETHER}]\t[{GAS}]\t[{GASPRICE}]\t[{GASUSED}]\t[TRUE{b:ISERROR}]\t[{ENCODING}]\t[{ARTICULATED}]
 
 [[watches]]
 list = [
