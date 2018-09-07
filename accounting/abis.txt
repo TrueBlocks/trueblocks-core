@@ -18,7 +18,6 @@ address	encoding	type	constant	name	signature	input_names
 0xb8c77482e45f1f44de1745f52c74426c631bdd52	0xcc16f5dbb4873280815c1ee09dbd06736cffcc184412cf7a71a0fdb75d397ca5	event	0	Burn	Burn(address,uint256)	from,value,
 0xb8c77482e45f1f44de1745f52c74426c631bdd52	0xf97a274face0b5517365ad396b1fdba6f68bd3135ef603e44272adba3af5a1e0	event	0	Freeze	Freeze(address,uint256)	from,value,
 0xb8c77482e45f1f44de1745f52c74426c631bdd52	0x2cfce4af01bcb9d6cf6c84ee1b7c491100b8695368264146a94d71e10a63083f	event	0	Unfreeze	Unfreeze(address,uint256)	from,value,
-address	encoding	type	constant	name	signature	input_names
 0xd26114cd6ee289accf82350c8d8487fedb8a0c07	0x05d2035b	function	1	mintingFinished	mintingFinished()	
 0xd26114cd6ee289accf82350c8d8487fedb8a0c07	0x06fdde03	function	1	name	name()	
 0xd26114cd6ee289accf82350c8d8487fedb8a0c07	0x095ea7b3	function	0	approve	approve(address,uint256)	_spender,_value,
@@ -43,7 +42,6 @@ address	encoding	type	constant	name	signature	input_names
 0xd26114cd6ee289accf82350c8d8487fedb8a0c07	0x7805862f689e2f13df9f062ff482ad3ad112aca9e0847911ed832e158c525b33	event	0	Unpause	Unpause()	
 0xd26114cd6ee289accf82350c8d8487fedb8a0c07	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	0	Approval	Approval(address,address,uint256)	owner,spender,value,
 0xd26114cd6ee289accf82350c8d8487fedb8a0c07	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	from,to,value,
-address	encoding	type	constant	name	signature	input_names
 0xdac17f958d2ee523a2206206994597c13d831ec7	0x06fdde03	function	1	name	name()	
 0xdac17f958d2ee523a2206206994597c13d831ec7	0x0753c30c	function	0	deprecate	deprecate(address)	_upgradedAddress,
 0xdac17f958d2ee523a2206206994597c13d831ec7	0x095ea7b3	function	0	approve	approve(address,uint256)	_spender,_value,
@@ -86,7 +84,6 @@ address	encoding	type	constant	name	signature	input_names
 0xdac17f958d2ee523a2206206994597c13d831ec7	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	from,to,value,
 0xdac17f958d2ee523a2206206994597c13d831ec7	0x6985a02210a168e66602d3235cb6db0e70f92b3ba4d376a33c0f3d9434bff625	event	0	Pause	Pause()	
 0xdac17f958d2ee523a2206206994597c13d831ec7	0x7805862f689e2f13df9f062ff482ad3ad112aca9e0847911ed832e158c525b33	event	0	Unpause	Unpause()	
-address	encoding	type	constant	name	signature	input_names
 0xe41d2489571d322189246dafa5ebde1f4699f498	0x06fdde03	function	1	name	name()	
 0xe41d2489571d322189246dafa5ebde1f4699f498	0x095ea7b3	function	0	approve	approve(address,uint256)	_spender,_value,
 0xe41d2489571d322189246dafa5ebde1f4699f498	0x18160ddd	function	1	totalSupply	totalSupply()	
@@ -98,7 +95,6 @@ address	encoding	type	constant	name	signature	input_names
 0xe41d2489571d322189246dafa5ebde1f4699f498	0xdd62ed3e	function	1	allowance	allowance(address,address)	_owner,_spender,
 0xe41d2489571d322189246dafa5ebde1f4699f498	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	_from,_to,_value,
 0xe41d2489571d322189246dafa5ebde1f4699f498	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	0	Approval	Approval(address,address,uint256)	_owner,_spender,_value,
-address	encoding	type	constant	name	signature	input_names
 0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27	0x06fdde03	function	1	name	name()	
 0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27	0x095ea7b3	function	0	approve	approve(address,uint256)	_spender,_value,
 0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27	0x18160ddd	function	1	totalSupply	totalSupply()	
@@ -127,7 +123,6 @@ address	encoding	type	constant	name	signature	input_names
 0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27	0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0	event	0	OwnershipTransferred	OwnershipTransferred(address,address)	previousOwner,newOwner,
 0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	0	Approval	Approval(address,address,uint256)	owner,spender,value,
 0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	from,to,value,
-address	encoding	type	constant	name	signature	input_names
 0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27	0x06fdde03	function	1	name	name()	
 0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27	0x095ea7b3	function	0	approve	approve(address,uint256)	_spender,_value,
 0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27	0x18160ddd	function	1	totalSupply	totalSupply()	
@@ -156,7 +151,6 @@ address	encoding	type	constant	name	signature	input_names
 0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27	0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0	event	0	OwnershipTransferred	OwnershipTransferred(address,address)	previousOwner,newOwner,
 0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	0	Approval	Approval(address,address,uint256)	owner,spender,value,
 0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	from,to,value,
-address	encoding	type	constant	name	signature	input_names
 0x0d8775f648430679a709e98d2b0cb6250d2887ef	0x01a7a8c0	function	1	batFundDeposit	batFundDeposit()	
 0x0d8775f648430679a709e98d2b0cb6250d2887ef	0x06fdde03	function	1	name	name()	
 0x0d8775f648430679a709e98d2b0cb6250d2887ef	0x095ea7b3	function	0	approve	approve(address,uint256)	_spender,_value,
@@ -183,7 +177,6 @@ address	encoding	type	constant	name	signature	input_names
 0x0d8775f648430679a709e98d2b0cb6250d2887ef	0xb33527d2e0d30b7aece2c5e82927985866c1b75173d671c14f4457bf67aa6910	event	0	CreateBAT	CreateBAT(address,uint256)	_to,_value,
 0x0d8775f648430679a709e98d2b0cb6250d2887ef	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	_from,_to,_value,
 0x0d8775f648430679a709e98d2b0cb6250d2887ef	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	0	Approval	Approval(address,address,uint256)	_owner,_spender,_value,
-address	encoding	type	constant	name	signature	input_names
 0x1985365e9f78359a9b6ad760e32412f4a445e862	0x06fdde03	function	1	name	name()	
 0x1985365e9f78359a9b6ad760e32412f4a445e862	0x095ea7b3	function	0	approve	approve(address,uint256)	_spender,_value,
 0x1985365e9f78359a9b6ad760e32412f4a445e862	0x18160ddd	function	1	totalSupply	totalSupply()	
@@ -224,7 +217,6 @@ address	encoding	type	constant	name	signature	input_names
 0x1985365e9f78359a9b6ad760e32412f4a445e862	0xcc16f5dbb4873280815c1ee09dbd06736cffcc184412cf7a71a0fdb75d397ca5	event	0	Burn	Burn(address,uint256)	target,value,
 0x1985365e9f78359a9b6ad760e32412f4a445e862	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	0	Approval	Approval(address,address,uint256)	owner,spender,value,
 0x1985365e9f78359a9b6ad760e32412f4a445e862	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	from,to,value,
-address	encoding	type	constant	name	signature	input_names
 0xa15c7ebe1f07caf6bff097d8a589fb8ac49ae5b3	0x05d2035b	function	1	mintingFinished	mintingFinished()	
 0xa15c7ebe1f07caf6bff097d8a589fb8ac49ae5b3	0x06fdde03	function	1	name	name()	
 0xa15c7ebe1f07caf6bff097d8a589fb8ac49ae5b3	0x095ea7b3	function	0	approve	approve(address,uint256)	_spender,_value,
@@ -255,7 +247,6 @@ address	encoding	type	constant	name	signature	input_names
 0xa15c7ebe1f07caf6bff097d8a589fb8ac49ae5b3	0xae5184fba832cb2b1f702aca6117b8d265eaf03ad33eb133f19dde0f5920fa08	event	0	MintFinished	MintFinished()	
 0xa15c7ebe1f07caf6bff097d8a589fb8ac49ae5b3	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	0	Approval	Approval(address,address,uint256)	owner,spender,value,
 0xa15c7ebe1f07caf6bff097d8a589fb8ac49ae5b3	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	from,to,value,
-address	encoding	type	constant	name	signature	input_names
 0xa74476443119a942de498590fe1f2454d7d4ac0d	0x06fdde03	function	1	name	name()	
 0xa74476443119a942de498590fe1f2454d7d4ac0d	0x16222950	function	1	golemFactory	golemFactory()	
 0xa74476443119a942de498590fe1f2454d7d4ac0d	0x18160ddd	function	1	totalSupply	totalSupply()	
@@ -281,7 +272,6 @@ address	encoding	type	constant	name	signature	input_names
 0xa74476443119a942de498590fe1f2454d7d4ac0d	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	_from,_to,_value,
 0xa74476443119a942de498590fe1f2454d7d4ac0d	0x18df02dcc52b9c494f391df09661519c0069bd8540141946280399408205ca1a	event	0	Migrate	Migrate(address,address,uint256)	_from,_to,_value,
 0xa74476443119a942de498590fe1f2454d7d4ac0d	0xbb28353e4598c3b9199101a66e0989549b659a59a54d2c27fbb183f1932c8e6d	event	0	Refund	Refund(address,uint256)	_from,_value,
-address	encoding	type	constant	name	signature	input_names
 0xb7cb1c96db6b22b0d3d9536e0108d062bd488f74	0x06fdde03	function	1	name	name()	
 0xb7cb1c96db6b22b0d3d9536e0108d062bd488f74	0x095ea7b3	function	0	approve	approve(address,uint256)	_spender,_value,
 0xb7cb1c96db6b22b0d3d9536e0108d062bd488f74	0x18160ddd	function	1	totalSupply	totalSupply()	
@@ -293,7 +283,6 @@ address	encoding	type	constant	name	signature	input_names
 0xb7cb1c96db6b22b0d3d9536e0108d062bd488f74	0xdd62ed3e	function	1	allowance	allowance(address,address)	_owner,_spender,
 0xb7cb1c96db6b22b0d3d9536e0108d062bd488f74	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	from,to,value,
 0xb7cb1c96db6b22b0d3d9536e0108d062bd488f74	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	0	Approval	Approval(address,address,uint256)	owner,spender,value,
-address	encoding	type	constant	name	signature	input_names
 0xcb97e65f07da24d46bcdd078ebebd7c6e6e3d750	0x06fdde03	function	1	name	name()	
 0xcb97e65f07da24d46bcdd078ebebd7c6e6e3d750	0x095ea7b3	function	0	approve	approve(address,uint256)	_spender,_value,
 0xcb97e65f07da24d46bcdd078ebebd7c6e6e3d750	0x18160ddd	function	1	totalSupply	totalSupply()	
@@ -307,7 +296,6 @@ address	encoding	type	constant	name	signature	input_names
 0xcb97e65f07da24d46bcdd078ebebd7c6e6e3d750	0xdd62ed3e	function	1	allowance	allowance(address,address)	_owner,_spender,
 0xcb97e65f07da24d46bcdd078ebebd7c6e6e3d750	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	_from,_to,_value,
 0xcb97e65f07da24d46bcdd078ebebd7c6e6e3d750	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	0	Approval	Approval(address,address,uint256)	_owner,_spender,_value,
-address	encoding	type	constant	name	signature	input_names
 0x168296bb09e24a88805cb9c33356536b980d3fc5	0x06fdde03	function	1	name	name()	
 0x168296bb09e24a88805cb9c33356536b980d3fc5	0x095ea7b3	function	0	approve	approve(address,uint256)	_spender,_value,
 0x168296bb09e24a88805cb9c33356536b980d3fc5	0x18160ddd	function	1	totalSupply	totalSupply()	
@@ -319,7 +307,6 @@ address	encoding	type	constant	name	signature	input_names
 0x168296bb09e24a88805cb9c33356536b980d3fc5	0xdd62ed3e	function	1	allowance	allowance(address,address)	_owner,_spender,
 0x168296bb09e24a88805cb9c33356536b980d3fc5	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	from,to,value,
 0x168296bb09e24a88805cb9c33356536b980d3fc5	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	0	Approval	Approval(address,address,uint256)	owner,spender,value,
-address	encoding	type	constant	name	signature	input_names
 0x744d70fdbe2ba4cf95131626614a1763df805b9e	0x06fdde03	function	1	name	name()	
 0x744d70fdbe2ba4cf95131626614a1763df805b9e	0x095ea7b3	function	0	approve	approve(address,uint256)	_spender,_amount,
 0x744d70fdbe2ba4cf95131626614a1763df805b9e	0x17634514	function	1	creationBlock	creationBlock()	
@@ -349,7 +336,6 @@ address	encoding	type	constant	name	signature	input_names
 0x744d70fdbe2ba4cf95131626614a1763df805b9e	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	_from,_to,_amount,
 0x744d70fdbe2ba4cf95131626614a1763df805b9e	0x086c875b377f900b07ce03575813022f05dd10ed7640b5282cf6d3c3fc352ade	event	0	NewCloneToken	NewCloneToken(address,uint256)	_cloneToken,_snapshotBlock,
 0x744d70fdbe2ba4cf95131626614a1763df805b9e	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	0	Approval	Approval(address,address,uint256)	_owner,_spender,_amount,
-address	encoding	type	constant	name	signature	input_names
 0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a	0x02f652a3	function	0	setTransferAgent	setTransferAgent(address,bool)	addr,state,
 0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a	0x05d2035b	function	1	mintingFinished	mintingFinished()	
 0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a	0x06fdde03	function	1	name	name()	
@@ -391,7 +377,6 @@ address	encoding	type	constant	name	signature	input_names
 0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a	0x30385c845b448a36257a6a1716e6ad2e1bc2cbe333cde1e69fe849ad6511adfe	event	0	Minted	Minted(address,uint256)	receiver,amount,
 0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	from,to,value,
 0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	0	Approval	Approval(address,address,uint256)	owner,spender,value,
-address	encoding	type	constant	name	signature	input_names
 0xfa1a856cfa3409cfa145fa4e20eb270df3eb21ab	0x06fdde03	function	1	name	name()	
 0xfa1a856cfa3409cfa145fa4e20eb270df3eb21ab	0x095ea7b3	function	0	approve	approve(address,uint256)	_spender,_value,
 0xfa1a856cfa3409cfa145fa4e20eb270df3eb21ab	0x18160ddd	function	1	totalSupply	totalSupply()	
@@ -403,7 +388,6 @@ address	encoding	type	constant	name	signature	input_names
 0xfa1a856cfa3409cfa145fa4e20eb270df3eb21ab	0xdd62ed3e	function	1	allowance	allowance(address,address)	_owner,_spender,
 0xfa1a856cfa3409cfa145fa4e20eb270df3eb21ab	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	_from,_to,_value,
 0xfa1a856cfa3409cfa145fa4e20eb270df3eb21ab	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	0	Approval	Approval(address,address,uint256)	_owner,_spender,_value,
-address	encoding	type	constant	name	signature	input_names
 0x3893b9422cd5d70a81edeffe3d5a1c6a978310bb	0x06fdde03	function	1	name	name()	
 0x3893b9422cd5d70a81edeffe3d5a1c6a978310bb	0x18160ddd	function	1	totalSupply	totalSupply()	
 0x3893b9422cd5d70a81edeffe3d5a1c6a978310bb	0x23b872dd	function	0	transferFrom	transferFrom(address,address,uint256)	from,to,value,
@@ -421,7 +405,6 @@ address	encoding	type	constant	name	signature	input_names
 0x3893b9422cd5d70a81edeffe3d5a1c6a978310bb	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	from,to,value,
 0x3893b9422cd5d70a81edeffe3d5a1c6a978310bb	0x4f2ccab30e52b306d3db2a1a0de078b7086c50ed233ea398995eaf7d64ac63be	event	0	Approval	Approval(address,uint256,address,bytes)	from,value,to,extraData,
 0x3893b9422cd5d70a81edeffe3d5a1c6a978310bb	0x9736aeb40a8f30a5c076a9897428fdf7ec0e909c96dce63533664c9b5c835da6	event	0	OwnershipTransfered	OwnershipTransfered(address)	owner,
-address	encoding	type	constant	name	signature	input_names
 0x4ceda7906a5ed2179785cd3a40a69ee8bc99c466	0x06fdde03	function	1	name	name()	
 0x4ceda7906a5ed2179785cd3a40a69ee8bc99c466	0x095ea7b3	function	0	approve	approve(address,uint256)	_spender,_value,
 0x4ceda7906a5ed2179785cd3a40a69ee8bc99c466	0x18160ddd	function	1	totalSupply	totalSupply()	
@@ -463,7 +446,6 @@ address	encoding	type	constant	name	signature	input_names
 0x4ceda7906a5ed2179785cd3a40a69ee8bc99c466	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	0	Approval	Approval(address,address,uint256)	owner,spender,value,
 0x4ceda7906a5ed2179785cd3a40a69ee8bc99c466	0xc3599666213715dfabdf658c56a97b9adfad2cd9689690c70c79b20bc61940c9	event	0	Burn	Burn(address,bytes32,uint256)	from,to,value,
 0x4ceda7906a5ed2179785cd3a40a69ee8bc99c466	0xd8138f8a3f377c5259ca548e70e4c2de94f129f5a11036a15b69513cba2b426a	event	0	Claimed	Claimed(address,uint256)	claimer,value,
-address	encoding	type	constant	name	signature	input_names
 0x514910771af9ca656af840dff83e8264ecf986ca	0x06fdde03	function	1	name	name()	
 0x514910771af9ca656af840dff83e8264ecf986ca	0x095ea7b3	function	0	approve	approve(address,uint256)	_spender,_value,
 0x514910771af9ca656af840dff83e8264ecf986ca	0x18160ddd	function	1	totalSupply	totalSupply()	
@@ -478,7 +460,6 @@ address	encoding	type	constant	name	signature	input_names
 0x514910771af9ca656af840dff83e8264ecf986ca	0xdd62ed3e	function	1	allowance	allowance(address,address)	_owner,_spender,
 0x514910771af9ca656af840dff83e8264ecf986ca	0xe19260aff97b920c7df27010903aeb9c8d2be5d310a2c67824cf3f15396e4c16	event	0	Transfer	Transfer(address,address,uint256,bytes)	from,to,value,data,
 0x514910771af9ca656af840dff83e8264ecf986ca	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	0	Approval	Approval(address,address,uint256)	owner,spender,value,
-address	encoding	type	constant	name	signature	input_names
 0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c	0x06fdde03	function	1	name	name()	
 0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c	0x095ea7b3	function	0	approve	approve(address,uint256)	_spender,_value,
 0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c	0x1608f18f	function	0	disableTransfers	disableTransfers(bool)	_disable,
@@ -505,7 +486,6 @@ address	encoding	type	constant	name	signature	input_names
 0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c	0x343765429aea5a34b3ff6a3785a98a5abb2597aca87bfbb58632c173d585373a	event	0	OwnerUpdate	OwnerUpdate(address,address)	_prevOwner,_newOwner,
 0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	_from,_to,_value,
 0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	0	Approval	Approval(address,address,uint256)	_owner,_spender,_value,
-address	encoding	type	constant	name	signature	input_names
 0x6c6ee5e31d828de241282b9606c8e98ea48526e2	0x05d2035b	function	1	mintingFinished	mintingFinished()	
 0x6c6ee5e31d828de241282b9606c8e98ea48526e2	0x06fdde03	function	1	name	name()	
 0x6c6ee5e31d828de241282b9606c8e98ea48526e2	0x07546172	function	1	minter	minter()	
@@ -535,7 +515,6 @@ address	encoding	type	constant	name	signature	input_names
 0x6c6ee5e31d828de241282b9606c8e98ea48526e2	0xb828d9b5c78095deeeeff2eca2e5d4fe046ce3feb4c99702624a3fd384ad2dbc	event	0	MintingFinished	MintingFinished()	
 0x6c6ee5e31d828de241282b9606c8e98ea48526e2	0xb90306ad06b2a6ff86ddc9327db583062895ef6540e62dc50add009db5b356eb	event	0	Burn	Burn(uint256)	amount,
 0x6c6ee5e31d828de241282b9606c8e98ea48526e2	0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0	event	0	OwnershipTransferred	OwnershipTransferred(address,address)	previousOwner,newOwner,
-address	encoding	type	constant	name	signature	input_names
 0xbf2179859fc6d5bee9bf9158632dc51678a4100e	0x027ec848	function	0	setDurationOfLock	setDurationOfLock(uint256)	_durationOfLock,
 0xbf2179859fc6d5bee9bf9158632dc51678a4100e	0x05d2035b	function	1	mintingFinished	mintingFinished()	
 0xbf2179859fc6d5bee9bf9158632dc51678a4100e	0x06fdde03	function	1	name	name()	
@@ -585,7 +564,6 @@ address	encoding	type	constant	name	signature	input_names
 0xbf2179859fc6d5bee9bf9158632dc51678a4100e	0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0	event	0	OwnershipTransferred	OwnershipTransferred(address,address)	previousOwner,newOwner,
 0xbf2179859fc6d5bee9bf9158632dc51678a4100e	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	from,to,value,
 0xbf2179859fc6d5bee9bf9158632dc51678a4100e	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	0	Approval	Approval(address,address,uint256)	owner,spender,value,
-address	encoding	type	constant	name	signature	input_names
 0xe0b7927c4af23765cb51314a0e0521a9645f0e2a	0x095ea7b3	function	0	approve	approve(address,uint256)	_spender,_value,
 0xe0b7927c4af23765cb51314a0e0521a9645f0e2a	0x13af4035	function	0	setOwner	setOwner(address)	_owner,
 0xe0b7927c4af23765cb51314a0e0521a9645f0e2a	0x18160ddd	function	1	totalSupply	totalSupply()	
@@ -603,7 +581,6 @@ address	encoding	type	constant	name	signature	input_names
 0xe0b7927c4af23765cb51314a0e0521a9645f0e2a	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	_from,_to,_value,
 0xe0b7927c4af23765cb51314a0e0521a9645f0e2a	0x0f6798a560793a54c3bcfe86a93cde1e73087d944c0ea20544137d4121396885	event	0	Mint	Mint(address,uint256)	_recipient,_amount,
 0xe0b7927c4af23765cb51314a0e0521a9645f0e2a	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	0	Approval	Approval(address,address,uint256)	_owner,_spender,_value,
-address	encoding	type	constant	name	signature	input_names
 0x35a9b440da4410dd63df8c54672b728970560328	0x06fdde03	function	1	name	name()	
 0x35a9b440da4410dd63df8c54672b728970560328	0x095ea7b3	function	0	approve	approve(address,uint256)	_spender,_amount,
 0x35a9b440da4410dd63df8c54672b728970560328	0x18160ddd	function	1	totalSupply	totalSupply()	
@@ -616,7 +593,6 @@ address	encoding	type	constant	name	signature	input_names
 0x35a9b440da4410dd63df8c54672b728970560328	0xdd62ed3e	function	1	allowance	allowance(address,address)	_owner,_spender,
 0x35a9b440da4410dd63df8c54672b728970560328	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	_from,_to,_value,
 0x35a9b440da4410dd63df8c54672b728970560328	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	0	Approval	Approval(address,address,uint256)	_owner,_spender,_value,
-address	encoding	type	constant	name	signature	input_names
 0x595832f8fc6bf59c85c527fec3740a1b7a361269	0x06fdde03	function	1	name	name()	
 0x595832f8fc6bf59c85c527fec3740a1b7a361269	0x08f978c6	function	1	migrationInfo	migrationInfo()	
 0x595832f8fc6bf59c85c527fec3740a1b7a361269	0x095ea7b3	function	0	approve	approve(address,uint256)	_spender,_value,
@@ -638,7 +614,6 @@ address	encoding	type	constant	name	signature	input_names
 0x595832f8fc6bf59c85c527fec3740a1b7a361269	0x14fa274cf60cf17ec351674ca0666a478cd8c0e8dad97858b8d5111b5fa50ea3	event	0	MigrationInfoSet	MigrationInfoSet(string)	newMigrationInfo,
 0x595832f8fc6bf59c85c527fec3740a1b7a361269	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	from,to,value,
 0x595832f8fc6bf59c85c527fec3740a1b7a361269	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	0	Approval	Approval(address,address,uint256)	owner,spender,value,
-address	encoding	type	constant	name	signature	input_names
 0x618e75ac90b12c6049ba3b27f5d5f8651b0037f6	0x06fdde03	function	1	name	name()	
 0x618e75ac90b12c6049ba3b27f5d5f8651b0037f6	0x095ea7b3	function	0	approve	approve(address,uint256)	_spender,_value,
 0x618e75ac90b12c6049ba3b27f5d5f8651b0037f6	0x18160ddd	function	1	totalSupply	totalSupply()	
@@ -659,7 +634,6 @@ address	encoding	type	constant	name	signature	input_names
 0x618e75ac90b12c6049ba3b27f5d5f8651b0037f6	0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0	event	0	OwnershipTransferred	OwnershipTransferred(address,address)	previousOwner,newOwner,
 0x618e75ac90b12c6049ba3b27f5d5f8651b0037f6	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	0	Approval	Approval(address,address,uint256)	owner,spender,value,
 0x618e75ac90b12c6049ba3b27f5d5f8651b0037f6	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	from,to,value,
-address	encoding	type	constant	name	signature	input_names
 0x9cda8a60dd5afa156c95bd974428d91a0812e054	0x06fdde03	function	1	name	name()	
 0x9cda8a60dd5afa156c95bd974428d91a0812e054	0x095ea7b3	function	0	approve	approve(address,uint256)	_spender,_value,
 0x9cda8a60dd5afa156c95bd974428d91a0812e054	0x18160ddd	function	1	totalSupply	totalSupply()	
@@ -676,7 +650,6 @@ address	encoding	type	constant	name	signature	input_names
 0x9cda8a60dd5afa156c95bd974428d91a0812e054	0xdd62ed3e	function	1	allowance	allowance(address,address)	_owner,_spender,
 0x9cda8a60dd5afa156c95bd974428d91a0812e054	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	_from,_to,_value,
 0x9cda8a60dd5afa156c95bd974428d91a0812e054	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	0	Approval	Approval(address,address,uint256)	_owner,_spender,_value,
-address	encoding	type	constant	name	signature	input_names
 0x8dd5fbce2f6a956c3022ba3663759011dd51e73e	0x02d3fdc9	function	1	burnMin	burnMin()	
 0x8dd5fbce2f6a956c3022ba3663759011dd51e73e	0x06fdde03	function	1	name	name()	
 0x8dd5fbce2f6a956c3022ba3663759011dd51e73e	0x095ea7b3	function	0	approve	approve(address,uint256)	spender,value,
@@ -748,7 +721,6 @@ address	encoding	type	constant	name	signature	input_names
 0x8dd5fbce2f6a956c3022ba3663759011dd51e73e	0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0	event	0	OwnershipTransferred	OwnershipTransferred(address,address)	previousOwner,newOwner,
 0x8dd5fbce2f6a956c3022ba3663759011dd51e73e	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	0	Approval	Approval(address,address,uint256)	owner,spender,value,
 0x8dd5fbce2f6a956c3022ba3663759011dd51e73e	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	from,to,value,
-address	encoding	type	constant	name	signature	input_names
 0x9ab165d795019b6d8b3e971dda91071421305e5a	0x06fdde03	function	1	name	name()	
 0x9ab165d795019b6d8b3e971dda91071421305e5a	0x095ea7b3	function	0	approve	approve(address,uint256)	_spender,_value,
 0x9ab165d795019b6d8b3e971dda91071421305e5a	0x18160ddd	function	1	totalSupply	totalSupply()	
@@ -761,7 +733,6 @@ address	encoding	type	constant	name	signature	input_names
 0x9ab165d795019b6d8b3e971dda91071421305e5a	0xdd62ed3e	function	1	allowance	allowance(address,address)	_owner,_spender,
 0x9ab165d795019b6d8b3e971dda91071421305e5a	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	_from,_to,_value,
 0x9ab165d795019b6d8b3e971dda91071421305e5a	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	0	Approval	Approval(address,address,uint256)	_owner,_spender,_value,
-address	encoding	type	constant	name	signature	input_names
 0xa4e8c3ec456107ea67d3075bf9e3df3a75823db0	0x06fdde03	function	1	name	name()	
 0xa4e8c3ec456107ea67d3075bf9e3df3a75823db0	0x095ea7b3	function	0	approve	approve(address,uint256)	_spender,_value,
 0xa4e8c3ec456107ea67d3075bf9e3df3a75823db0	0x18160ddd	function	1	totalSupply	totalSupply()	
@@ -776,7 +747,6 @@ address	encoding	type	constant	name	signature	input_names
 0xa4e8c3ec456107ea67d3075bf9e3df3a75823db0	0xdd62ed3e	function	1	allowance	allowance(address,address)	_owner,_spender,
 0xa4e8c3ec456107ea67d3075bf9e3df3a75823db0	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	0	Approval	Approval(address,address,uint256)	owner,spender,value,
 0xa4e8c3ec456107ea67d3075bf9e3df3a75823db0	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	from,to,value,
-address	encoding	type	constant	name	signature	input_names
 0xdd974d5c2e2928dea5f71b9825b8b646686bd200	0x06fdde03	function	1	name	name()	
 0xdd974d5c2e2928dea5f71b9825b8b646686bd200	0x095ea7b3	function	0	approve	approve(address,uint256)	_spender,_value,
 0xdd974d5c2e2928dea5f71b9825b8b646686bd200	0x18160ddd	function	1	totalSupply	totalSupply()	
@@ -797,7 +767,6 @@ address	encoding	type	constant	name	signature	input_names
 0xdd974d5c2e2928dea5f71b9825b8b646686bd200	0xcc16f5dbb4873280815c1ee09dbd06736cffcc184412cf7a71a0fdb75d397ca5	event	0	Burn	Burn(address,uint256)	_burner,_value,
 0xdd974d5c2e2928dea5f71b9825b8b646686bd200	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	0	Approval	Approval(address,address,uint256)	_owner,_spender,_value,
 0xdd974d5c2e2928dea5f71b9825b8b646686bd200	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	_from,_to,_value,
-address	encoding	type	constant	name	signature	input_names
 0x39bb259f66e1c59d5abef88375979b4d20d98022	0x06fdde03	function	1	name	name()	
 0x39bb259f66e1c59d5abef88375979b4d20d98022	0x095ea7b3	function	0	approve	approve(address,uint256)	_spender,_value,
 0x39bb259f66e1c59d5abef88375979b4d20d98022	0x18160ddd	function	1	totalSupply	totalSupply()	
@@ -820,7 +789,6 @@ address	encoding	type	constant	name	signature	input_names
 0x39bb259f66e1c59d5abef88375979b4d20d98022	0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0	event	0	OwnershipTransferred	OwnershipTransferred(address,address)	previousOwner,newOwner,
 0x39bb259f66e1c59d5abef88375979b4d20d98022	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	0	Approval	Approval(address,address,uint256)	owner,spender,value,
 0x39bb259f66e1c59d5abef88375979b4d20d98022	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	from,to,value,
-address	encoding	type	constant	name	signature	input_names
 0x58a4884182d9e835597f405e5f258290e46ae7c2	0x06fdde03	function	1	name	name()	
 0x58a4884182d9e835597f405e5f258290e46ae7c2	0x095ea7b3	function	0	approve	approve(address,uint256)	_spender,_value,
 0x58a4884182d9e835597f405e5f258290e46ae7c2	0x18160ddd	function	1	totalSupply	totalSupply()	
@@ -835,7 +803,6 @@ address	encoding	type	constant	name	signature	input_names
 0x58a4884182d9e835597f405e5f258290e46ae7c2	0xdd62ed3e	function	1	allowance	allowance(address,address)	_owner,_spender,
 0x58a4884182d9e835597f405e5f258290e46ae7c2	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	0	Approval	Approval(address,address,uint256)	owner,spender,value,
 0x58a4884182d9e835597f405e5f258290e46ae7c2	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	from,to,value,
-address	encoding	type	constant	name	signature	input_names
 0xb91318f35bdb262e9423bc7c7c2a3a93dd93c92c	0x06fdde03	function	1	name	name()	
 0xb91318f35bdb262e9423bc7c7c2a3a93dd93c92c	0x095ea7b3	function	0	approve	approve(address,uint256)	_spender,_value,
 0xb91318f35bdb262e9423bc7c7c2a3a93dd93c92c	0x18160ddd	function	1	totalSupply	totalSupply()	
@@ -849,7 +816,6 @@ address	encoding	type	constant	name	signature	input_names
 0xb91318f35bdb262e9423bc7c7c2a3a93dd93c92c	0xdd62ed3e	function	1	allowance	allowance(address,address)	_owner,_spender,
 0xb91318f35bdb262e9423bc7c7c2a3a93dd93c92c	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	_from,_to,_value,
 0xb91318f35bdb262e9423bc7c7c2a3a93dd93c92c	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	0	Approval	Approval(address,address,uint256)	_owner,_spender,_value,
-address	encoding	type	constant	name	signature	input_names
 0xef68e7c694f40c8202821edf525de3782458639f	0x095ea7b3	function	0	approve	approve(address,uint256)	_spender,_value,
 0xef68e7c694f40c8202821edf525de3782458639f	0x18160ddd	function	1	totalSupply	totalSupply()	
 0xef68e7c694f40c8202821edf525de3782458639f	0x1e85107c	function	1	bonusPercentages	bonusPercentages(uint256)	param_0,
@@ -888,7 +854,6 @@ address	encoding	type	constant	name	signature	input_names
 0xef68e7c694f40c8202821edf525de3782458639f	0x100c98fe43bef515268f854995b9fe23e0d72dbe3f2726094d9f1864ab4afde2	event	0	SaleFailed	SaleFailed()	
 0xef68e7c694f40c8202821edf525de3782458639f	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	0	Approval	Approval(address,address,uint256)	owner,spender,value,
 0xef68e7c694f40c8202821edf525de3782458639f	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	from,to,value,
-address	encoding	type	constant	name	signature	input_names
 0x12480e24eb5bec1a9d4369cab6a80cad3c0a377a	0x05fefda7	function	0	setPrices	setPrices(uint256,uint256)	newSellPrice,newBuyPrice,
 0x12480e24eb5bec1a9d4369cab6a80cad3c0a377a	0x06fdde03	function	1	name	name()	
 0x12480e24eb5bec1a9d4369cab6a80cad3c0a377a	0x095ea7b3	function	0	approve	approve(address,uint256)	_spender,_value,
@@ -912,7 +877,6 @@ address	encoding	type	constant	name	signature	input_names
 0x12480e24eb5bec1a9d4369cab6a80cad3c0a377a	0xf2fde38b	function	0	transferOwnership	transferOwnership(address)	newOwner,
 0x12480e24eb5bec1a9d4369cab6a80cad3c0a377a	0x48335238b4855f35377ed80f164e8c6f3c366e54ac00b96a6402d4a9814a03a5	event	0	FrozenFunds	FrozenFunds(address,bool)	target,frozen,
 0x12480e24eb5bec1a9d4369cab6a80cad3c0a377a	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	from,to,value,
-address	encoding	type	constant	name	signature	input_names
 0xf0ee6b27b759c9893ce4f094b49ad28fd15a23e4	0x06fdde03	function	1	name	name()	
 0xf0ee6b27b759c9893ce4f094b49ad28fd15a23e4	0x095ea7b3	function	0	approve	approve(address,uint256)	_spender,_value,
 0xf0ee6b27b759c9893ce4f094b49ad28fd15a23e4	0x18160ddd	function	1	totalSupply	totalSupply()	
@@ -935,7 +899,6 @@ address	encoding	type	constant	name	signature	input_names
 0xf0ee6b27b759c9893ce4f094b49ad28fd15a23e4	0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0	event	0	OwnershipTransferred	OwnershipTransferred(address,address)	previousOwner,newOwner,
 0xf0ee6b27b759c9893ce4f094b49ad28fd15a23e4	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	0	Approval	Approval(address,address,uint256)	owner,spender,value,
 0xf0ee6b27b759c9893ce4f094b49ad28fd15a23e4	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	from,to,value,
-address	encoding	type	constant	name	signature	input_names
 0xf85feea2fdd81d51177f6b8f35f0e6734ce45f5f	0x06fdde03	function	1	name	name()	
 0xf85feea2fdd81d51177f6b8f35f0e6734ce45f5f	0x095ea7b3	function	0	approve	approve(address,uint256)	_spender,_value,
 0xf85feea2fdd81d51177f6b8f35f0e6734ce45f5f	0x18160ddd	function	1	totalSupply	totalSupply()	
@@ -958,7 +921,6 @@ address	encoding	type	constant	name	signature	input_names
 0xf85feea2fdd81d51177f6b8f35f0e6734ce45f5f	0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0	event	0	OwnershipTransferred	OwnershipTransferred(address,address)	previousOwner,newOwner,
 0xf85feea2fdd81d51177f6b8f35f0e6734ce45f5f	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	0	Approval	Approval(address,address,uint256)	owner,spender,value,
 0xf85feea2fdd81d51177f6b8f35f0e6734ce45f5f	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	from,to,value,
-address	encoding	type	constant	name	signature	input_names
 0x4672bad527107471cb5067a887f4656d585a8a31	0x06fdde03	function	1	name	name()	
 0x4672bad527107471cb5067a887f4656d585a8a31	0x095ea7b3	function	0	approve	approve(address,uint256)	spender,tokens,
 0x4672bad527107471cb5067a887f4656d585a8a31	0x18160ddd	function	1	totalSupply	totalSupply()	
@@ -977,7 +939,6 @@ address	encoding	type	constant	name	signature	input_names
 0x4672bad527107471cb5067a887f4656d585a8a31	0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0	event	0	OwnershipTransferred	OwnershipTransferred(address,address)	_from,_to,
 0x4672bad527107471cb5067a887f4656d585a8a31	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	from,to,tokens,
 0x4672bad527107471cb5067a887f4656d585a8a31	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	0	Approval	Approval(address,address,uint256)	tokenOwner,spender,tokens,
-address	encoding	type	constant	name	signature	input_names
 0x9992ec3cf6a55b00978cddf2b27bc6882d88d1ec	0x06fdde03	function	1	name	name()	
 0x9992ec3cf6a55b00978cddf2b27bc6882d88d1ec	0x095ea7b3	function	0	approve	approve(address,uint256)	_spender,_value,
 0x9992ec3cf6a55b00978cddf2b27bc6882d88d1ec	0x18160ddd	function	1	totalSupply	totalSupply()	
@@ -992,7 +953,6 @@ address	encoding	type	constant	name	signature	input_names
 0x9992ec3cf6a55b00978cddf2b27bc6882d88d1ec	0xdd62ed3e	function	1	allowance	allowance(address,address)	_owner,_spender,
 0x9992ec3cf6a55b00978cddf2b27bc6882d88d1ec	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	from,to,value,
 0x9992ec3cf6a55b00978cddf2b27bc6882d88d1ec	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	0	Approval	Approval(address,address,uint256)	owner,spender,value,
-address	encoding	type	constant	name	signature	input_names
 0xea11755ae41d889ceec39a63e6ff75a02bc1c00d	0x06fdde03	function	1	name	name()	
 0xea11755ae41d889ceec39a63e6ff75a02bc1c00d	0x095ea7b3	function	0	approve	approve(address,uint256)	_spender,_value,
 0xea11755ae41d889ceec39a63e6ff75a02bc1c00d	0x18160ddd	function	1	totalSupply	totalSupply()	
@@ -1014,7 +974,6 @@ address	encoding	type	constant	name	signature	input_names
 0xea11755ae41d889ceec39a63e6ff75a02bc1c00d	0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0	event	0	OwnershipTransferred	OwnershipTransferred(address,address)	previousOwner,newOwner,
 0xea11755ae41d889ceec39a63e6ff75a02bc1c00d	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	0	Approval	Approval(address,address,uint256)	owner,spender,value,
 0xea11755ae41d889ceec39a63e6ff75a02bc1c00d	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	from,to,value,
-address	encoding	type	constant	name	signature	input_names
 0xb3104b4b9da82025e8b9f8fb28b3553ce2f67069	0x0142c9ae	function	1	isSoleout	isSoleout()	
 0xb3104b4b9da82025e8b9f8fb28b3553ce2f67069	0x06fdde03	function	1	name	name()	
 0xb3104b4b9da82025e8b9f8fb28b3553ce2f67069	0x095ea7b3	function	0	approve	approve(address,uint256)	_spender,_value,
@@ -1042,7 +1001,6 @@ address	encoding	type	constant	name	signature	input_names
 0xb3104b4b9da82025e8b9f8fb28b3553ce2f67069	0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0	event	0	OwnershipTransferred	OwnershipTransferred(address,address)	previousOwner,newOwner,
 0xb3104b4b9da82025e8b9f8fb28b3553ce2f67069	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	0	Approval	Approval(address,address,uint256)	owner,spender,value,
 0xb3104b4b9da82025e8b9f8fb28b3553ce2f67069	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	0	Transfer	Transfer(address,address,uint256)	from,to,value,
-address	encoding	type	constant	name	signature	input_names
 0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2	0x06fdde03	function	1	name	name()	
 0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2	0x07da68f5	function	0	stop	stop()	
 0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2	0x095ea7b3	function	0	approve	approve(address,uint256)	guy,wad,
