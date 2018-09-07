@@ -1,0 +1,28 @@
+grabABI argc: 2 [1:0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359] 
+grabABI 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 
+ABI for address 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359
+	function proposals                  (uint256 param_0)
+	function executeProposal            (uint256 proposalNumber,bytes transactionBytecode)
+	function memberId                   (address param_0)
+	function numProposals               ()
+	function priceOfAUnicornInFinney    ()
+	function changeUnicorn              (uint256 newUnicornPriceInFinney,address newUnicornAddress)
+	function members                    (uint256 param_0)
+	function debatingPeriodInMinutes    ()
+	function minimumQuorum              ()
+	function changeMembership           (address targetMember,uint256 voteWeight,bool canAddProposals,string memberName)
+	function newProposalInWei           (address beneficiary,uint256 weiAmount,string JobDescription,bytes transactionBytecode)
+	function owner                      ()
+	function majorityMargin             ()
+	function unicornAddress             ()
+	function newProposalInEther         (address beneficiary,uint256 etherAmount,string JobDescription,bytes transactionBytecode)
+	function changeVotingRules          (uint256 minimumQuorumForProposals,uint256 minutesForDebate,int256 marginOfVotesForMajority)
+	function vote                       (uint256 proposalNumber,bool supportsProposal,string justificationText)
+	function checkProposalCode          (uint256 proposalNumber,address beneficiary,uint256 amount,bytes transactionBytecode)
+	function transferOwnership          (address _newOwner)
+	event ProposalAdded                 (uint256 proposalID,address recipient,uint256 amount,string description)
+	event Voted                         (uint256 proposalID,bool position,address voter,string justification)
+	event ProposalTallied               (uint256 proposalID,int256 result,uint256 quorum,bool active)
+	event MembershipChanged             (address member)
+	event ChangeOfRules                 (uint256 minimumQuorum,uint256 debatingPeriodInMinutes,int256 majorityMargin)
+

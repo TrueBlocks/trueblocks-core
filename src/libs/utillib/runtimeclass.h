@@ -137,4 +137,7 @@ public: \
         f->setName(NEW_NAME); \
 }
 
+//------------------------------------------------------------
+#define IS_HIDDEN(CLASS_NAME, FIELD_NAME) GETRUNTIME_CLASS(CLASS_NAME)->isFieldHidden(FIELD_NAME)
+
 }  // namespace qblocks
