@@ -212,7 +212,8 @@ int main(int argc, const char *argv[]) {
         if (!isGenerate) {
             string_q format = getGlobalConfig()->getDisplayStr(false, STR_FORMAT_FUNCDATA);
             string_q header = substitute(substitute(format, "[{", ""), "}]", "");
-            cout << header << "\n";
+            if (!isTestMode())
+                cout << header << "\n";
             replace(format, "[{address}]", toLower(options.primaryAddr));
             if (options.asData) {
 

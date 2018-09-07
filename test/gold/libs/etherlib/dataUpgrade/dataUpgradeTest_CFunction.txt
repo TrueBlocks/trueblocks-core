@@ -16,6 +16,7 @@ signature           	1010	0	131122	T_TEXT TS_STRING
 encoding            	1011	0	131122	T_TEXT TS_STRING
 inputs              	1012	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 outputs             	1013	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+input_names         	1014	1	131122	T_TEXT TS_STRING
 {
   "constant": 0,
   "payable": 0,
@@ -39,6 +40,7 @@ signature           	1010	1	131122	T_TEXT TS_STRING
 encoding            	1011	1	131122	T_TEXT TS_STRING
 inputs              	1012	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 outputs             	1013	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+input_names         	1014	1	131122	T_TEXT TS_STRING
 {
 }
 
@@ -58,6 +60,7 @@ signature           	1010	0	131122	T_TEXT TS_STRING
 encoding            	1011	0	131122	T_TEXT TS_STRING
 inputs              	1012	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 outputs             	1013	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+input_names         	1014	0	131122	T_TEXT TS_STRING
 {
   "schema": 5005,
   "deleted": 0,

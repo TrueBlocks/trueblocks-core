@@ -611,4 +611,3 @@ string_q decodeRLP(const string_q& name, const string_q& input, size_t nItems, s
 }
 // EXISTING_CODE
 }  // namespace qblocks
-

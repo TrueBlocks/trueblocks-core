@@ -21,15 +21,12 @@ int main(int argc, const char *argv[]) {
 
     // while (!options.commandList.empty())
     {
-
         string_q command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
             return 0;
 
-        //if (
-        upgradeData(options);
-        //)
-         //   exportData(options);
+        loadData(options);
+        exportData(options);
     }
 
     return 0;
