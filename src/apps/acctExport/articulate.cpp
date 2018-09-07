@@ -106,11 +106,11 @@ bool articulateTransaction(const CAbi& abi, CTransaction *p) {
     if (p && (p->input.length() >= 10 || p->input == "0x")) {
         string_q encoding = extract(p->input, 0, 10);
         string_q params   = extract(p->input, 10);
-        
-        for (size_t i = 0 ; i < abi.abiByEncoding1.size(); i ++) {
-            CFunction *ff = (CFunction *)&abi.abiByEncoding1[i];
+
+        for (size_t i = 0 ; i < abi.abiByEncoding.size(); i ++) {
+            CFunction *ff = (CFunction *)&abi.abiByEncoding[i];
             if (encoding % ff->encoding) {
-                p->func = new CFunction(abi.abiByEncoding1[i]);
+                p->func = new CFunction(abi.abiByEncoding[i]);
                 return decodeRLP2(p->func, params);
             }
         }
@@ -136,10 +136,10 @@ bool articulateEvent(const CAbi& abi, CLogEntry *p) {
         }
         params += data;
 
-        for (size_t i = 0 ; i < abi.abiByEncoding1.size(); i ++) {
-            CFunction *ff = (CFunction *)&abi.abiByEncoding1[i];
+        for (size_t i = 0 ; i < abi.abiByEncoding.size(); i ++) {
+            CFunction *ff = (CFunction *)&abi.abiByEncoding[i];
             if (ff->encoding % topic_2_Str(p->topics[0])) {
-                p->func = new CFunction(abi.abiByEncoding1[i]);
+                p->func = new CFunction(abi.abiByEncoding[i]);
                 return decodeRLP2(p->func, params);
             }
         }
