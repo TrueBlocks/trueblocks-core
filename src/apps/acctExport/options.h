@@ -37,6 +37,8 @@ public:
 
     typedef bool (*NAMEVISITFUNC)(string_q& str, const CAccountWatch& watch);
     void renameItems(string_q& str, const CAccountWatchArray& array) const;
+    void displayTransaction(ostream& os, const CTransaction *theTrans) const;
+    void displayTrace(ostream& os, const CTransaction *theTrans) const;
 };
 
 //------------------------------------------------------------------------
