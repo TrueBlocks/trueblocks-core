@@ -352,8 +352,8 @@ const CBaseNode *CAccountWatch::getObjectAt(const string_q& fieldName, size_t in
         return &qbis;
     if ( fieldName % "balanceHistory" && index < balanceHistory.size() )
         return &balanceHistory[index];
-    if ( fieldName % "abi" )
-        return &abi[index];
+//    if ( fieldName % "abi" )
+//        return &abi[index];
     return NULL;
 }
 
