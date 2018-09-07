@@ -1,0 +1,31 @@
+[settings]
+name = topICOs
+
+[display]
+accounting = false
+logs = false
+trace = false
+single = false
+parse = false
+json = true
+
+[fields]
+hide=
+show=
+show_example_all = CTransaction:all|CReceipt:all|CLogEntry:all|CTrace:all|CTraceResult:all|CTraceAction:all|CParameter:all
+show_example_logs = \
+	CTransaction: none| \
+	CReceipt: none, logs \
+	CLogEntry: none, articulatedLog \
+	CTrace: none
+	
+[formats]
+trans_fmt = [{TIMESTAMP}]\t[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{TRACEID}]\t[{FROM}]\t[{TO}]\t[{ETHER}]\t[{GAS}]\t[{GASPRICE}]\t[{GASUSED}]\t[TRUE{b:ISERROR}]\t[{ENCODING}]\t[{ARTICULATED}]
+
+[[watches]]
+list = [
+    { address = "0xf85fEea2FdD81d51177F6b8F35F0e6734Ce45F5F", name = "CMT",   firstBlock = 4654938, color = "green_c" },
+    { address = "0x3883f5e181fccaF8410FA61e12b59BAd963fb645", name = "THETA", firstBlock = 4728491, color = "green_c" },
+    { address = "0xf0Ee6b27b759C9893Ce4f094b49ad28fd15A23e4", name = "ENG",   firstBlock = 4358024, color = "green_c" },
+    { address = "0x12480E24eb5bec1a9D4369CaB6a80caD3c0A377A", name = "SUB",   firstBlock = 4070607, color = "green_c" },
+]
