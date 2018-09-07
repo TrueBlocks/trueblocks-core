@@ -2,46 +2,33 @@
  * This source code is confidential proprietary information which is
  * Copyright (c) 2017 by Great Hill Corporation.
  * All Rights Reserved
- *
- * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
 static COption params[] = {
-    COption("-filt(e)r:<addr>", "display only transactions from the filter address"),
-    COption("-fmt:<fmt>",       "export format (on of [json|txt|csv] (ignored if trans_fmt is non-empty)"),
-    COption("",                 "Index transactions for a given Ethereum address (or series of addresses).\n"),
+    COption("-fmt:<fmt>", "export format (one of [json|txt|csv]"),
+    COption("",           "Export transactions for one or more Ethereum addresses.\n"),
 };
 static size_t nParams = sizeof(params) / sizeof(COption);
 
-extern const char* defTransFmt;
-extern string_q cleanFmt(const string_q& str);
-extern void manageFields(const string_q& listIn, bool show);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
+    export_t fmt = JSON;
     if (!standardOptions(command))
         return false;
 
     Init();
     while (!command.empty()) {
         string_q arg = nextTokenClear(command, ' ');
-        if (startsWith(arg, "-e:") || startsWith(arg, "--filter:")) {
-
-            arg = substitute(substitute(arg, "-e:", ""), "--filter:", "");
-            if (!isAddress(arg)) {
-                cerr << usage("Invalid address " + arg + ". --filter flag requires a valid address. Quitting...");
-                return false;
-            }
-            filter = arg;
-
-        } else if (startsWith(arg, "-f:") || startsWith(arg, "--fmt:")) {
+        if (startsWith(arg, "-f:") || startsWith(arg, "--fmt:")) {
 
             arg = substitute(substitute(arg, "-f:", ""), "--fmt:", "");
-            if (arg != "json" && arg != "txt" && arg != "csv")
-                return usage("Export format must be one of [ json | txt | csv ]. Quitting...");
-            defaultFmt = arg;
+                 if ( arg == "txt" ) fmt = TXT;
+            else if ( arg == "csv" ) fmt = CSV;
+            else if ( arg == "json") fmt = JSON;
+            else return usage("Export format must be one of [ json | txt | csv ]. Quitting...");
 
         } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
@@ -57,32 +44,26 @@ bool COptions::parseArguments(string_q& command) {
     if (!loadWatches(toml))
         return false;
 
-    fmtStr     = cleanFmt(toml.getConfigStr ("formats", "trans_fmt", ""));
-    hideFields = toml.getConfigStr ("fields",  "hide",      "");
-    showFields = toml.getConfigStr ("fields",  "show",      "");
-
     // show certain fields and hide others
-const char *defHide =
-    "CTransaction: nonce, input"
-"|" "CLogEntry: data, topics"
-"|" "CTrace: blockHash, blockNumber, transactionHash, transactionPosition, traceAddress, subtraces"
-"|" "CTraceAction: init"
-"|" "CTraceResult: code"
-"|" "CFunction: constant, payable, outputs"
-"|" "CParameter: indexed, isPointer, isArray, isObject";
-
-const char *defShow =
-    "CTransaction: price, gasCost, articulatedTx, traces, isError, date, ether"
-"|" "CLogEntry: articulatedLog"
-"|" "CTraceAction: "
-"|" "CTraceResult: "
-"|" "CFunction: "
-"|" "CParameter: ";
-
     manageFields(defHide, false);
     manageFields(defShow, true);
-    manageFields(hideFields, false);
-    manageFields(showFields, true);
+    manageFields(toml.getConfigStr("fields", "hide", ""), false);
+    manageFields(toml.getConfigStr("fields", "show", ""), true );
+
+    transFmt = "";  // empty string gets us JSON output
+    if (fmt != JSON) {
+        string_q format = toml.getConfigStr("formats", "trans_fmt", "");
+        if (format.empty())
+            return usage("Non-json export requires 'trans_fmt' string in config.toml. Quitting...");
+        transFmt = cleanFmt(format);
+        if (fmt == CSV)
+            transFmt = "\"" + substitute(transFmt, "\t", "\",\"") + "\"";
+        string_q header = toLower(transFmt);
+        for (auto ch : header)
+            if (ch != '[' && ch != '{' && ch != '}' && ch != ']')
+                cout << ch;
+        cout << "\n";
+    }
 
     return true;
 }
@@ -92,12 +73,7 @@ void COptions::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
 
-    fmtStr = "";
-    defaultFmt = ""; //"json";
-    hideFields = "";
-    showFields = "";
-    filter = "";
-
+    transFmt = "";
     blk_minWatchBlock = 0;
     blk_maxWatchBlock = UINT32_MAX;
 
@@ -150,5 +126,20 @@ void manageFields(const string_q& listIn, bool show) {
 }
 
 //-----------------------------------------------------------------------
-//const char* defTransFmt = "{ \"date\": \"[{DATE}]\", \"from\": \"[{FROM}]\", \"to\": \"[{TO}]\", \"value\": \"[{VALUE}]\" }";
-const char* defTransFmt = "+=+ \"date\": \"[{DATE}]\", \"from\": \"[{FROM}]\", \"to\": \"[{TO}]\", \"value\": \"[{VALUE}]\" =+=";
+string_q defTransFmt = "{ \"date\": \"[{DATE}]\", \"from\": \"[{FROM}]\", \"to\": \"[{TO}]\", \"value\": \"[{VALUE}]\" }";
+string_q defHide =
+"CTransaction: nonce, input"
+"|" "CLogEntry: data, topics"
+"|" "CTrace: blockHash, blockNumber, transactionHash, transactionPosition, traceAddress, subtraces"
+"|" "CTraceAction: init"
+"|" "CTraceResult: code"
+"|" "CFunction: constant, payable, outputs"
+"|" "CParameter: indexed, isPointer, isArray, isObject";
+string_q defShow =
+"CTransaction: price, gasCost, articulatedTx, traces, isError, date, ether"
+"|" "CLogEntry: articulatedLog"
+"|" "CTraceAction: "
+"|" "CTraceResult: "
+"|" "CFunction: "
+"|" "CParameter: ";
+

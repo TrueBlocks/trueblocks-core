@@ -3,8 +3,6 @@
  * This source code is confidential proprietary information which is
  * Copyright (c) 2017 by Great Hill Corporation.
  * All Rights Reserved
- *
- * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
 #include "etherlib.h"
 #include "acctlib.h"
@@ -14,13 +12,9 @@
 //-----------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    address_t filter;
     blknum_t blk_minWatchBlock;
     blknum_t blk_maxWatchBlock;
-    string_q defaultFmt;
-    string_q hideFields;
-    string_q showFields;
-    string_q fmtStr;
+    string_q transFmt;
     CAccountWatchArray watches;
     CAccountWatchArray named;
     CAcctCacheItemArray items;
@@ -47,6 +41,20 @@ extern bool exportData(COptions& options);
 extern bool articulateTransaction(CTransaction *p);
 extern bool articulateEvent(CLogEntry *p);
 
+//------------------------------------------------------------------------
+extern string_q cleanFmt    (const string_q& str);
+extern void     manageFields(const string_q& listIn, bool show);
+extern string_q defTransFmt;
+extern string_q defHide;
+extern string_q defShow;
+
 //-----------------------------------------------------------------------------
 extern CStringArray signatures;
 extern CStringArray topics;
+
+//-----------------------------------------------------------------------------
+enum export_t {
+    JSON = 1,
+    TXT = 2,
+    CSV = 3,
+};

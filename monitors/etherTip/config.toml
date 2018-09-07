@@ -8,16 +8,14 @@ debug = false
 logs = false
 trace = false
 single = false
-json = true
 
 [fields]
 hide=
 show=
 
 [formats]
-txrans_fmt = [{BLOCKNUMBER}],[{TRANSACTIONINDEX}]
-
-trans_fmt = [{DATE} ] \
+trans_fmt = [{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{HASH}]
+txrans_fmt = [{DATE} ] \
             [{BLOCKNUMBER} ][{TRANSACTIONINDEX} ] \
             [{FROM} ][{TO} ][{ETHER} ][{ISERROR} ] \
             [\r\n\tarticulated:\t{ARTICULATED}] \
@@ -25,6 +23,6 @@ trans_fmt = [{DATE} ] \
 
 [[watches]]
 list = [
-	{ address = "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359", name = "FoundationTipJar", firstBlock = 988725, color = "magenta_b" },
-    { address = "0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7", name = "Unicorns",         firstBlock = 988949, color = "blue_b"   }
+	{ address = "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359", name = "FoundationTipJar", firstBlock = 988725, color = "magenta_b", enabled = false },
+    { address = "0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7", name = "Unicorns",         firstBlock = 988949, color = "blue_b", enabled = true }
 ]
