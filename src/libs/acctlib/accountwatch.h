@@ -39,6 +39,7 @@ public:
     CIncomeStatement qbis;
     CBalanceHistoryArray balanceHistory;
     wei_t nodeBal;
+    bool enabled;
     CAbi abi;
 
 public:
@@ -118,7 +119,8 @@ inline void CAccountWatch::initialize(void) {
     qbis.initialize();
     balanceHistory.clear();
     nodeBal = 0;
-    abi = CAbi();
+    enabled = true;
+    abi.initialize();
 
     // EXISTING_CODE
     lastBlock = UINT_MAX;
@@ -141,6 +143,7 @@ inline void CAccountWatch::duplicate(const CAccountWatch& ac) {
     qbis = ac.qbis;
     balanceHistory = ac.balanceHistory;
     nodeBal = ac.nodeBal;
+    enabled = ac.enabled;
     abi = ac.abi;
 
     // EXISTING_CODE

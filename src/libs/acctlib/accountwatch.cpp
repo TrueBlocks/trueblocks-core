@@ -72,7 +72,7 @@ bool CAccountWatch::setValueByName(const string_q& fieldName, const string_q& fi
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "address" ) { address = str_2_Addr(fieldValue); return true; }
-//            if ( fieldName % "abi" ) { abi = grabABI(address); return true; }
+            if ( fieldName % "abi" ) { /* abi = fieldValue; */ return false; }
             break;
         case 'b':
             if ( fieldName % "balanceHistory" ) {
@@ -90,6 +90,9 @@ bool CAccountWatch::setValueByName(const string_q& fieldName, const string_q& fi
             break;
         case 'd':
             if ( fieldName % "deepScan" ) { deepScan = str_2_Bool(fieldValue); return true; }
+            break;
+        case 'e':
+            if ( fieldName % "enabled" ) { enabled = str_2_Bool(fieldValue); return true; }
             break;
         case 'f':
             if ( fieldName % "firstBlock" ) { firstBlock = str_2_Uint(fieldValue); return true; }
@@ -140,6 +143,7 @@ bool CAccountWatch::Serialize(CArchive& archive) {
     archive >> qbis;
     archive >> balanceHistory;
     archive >> nodeBal;
+    archive >> enabled;
 //    archive >> abi;
     finishParse();
     return true;
@@ -162,6 +166,7 @@ bool CAccountWatch::SerializeC(CArchive& archive) const {
     archive << qbis;
     archive << balanceHistory;
     archive << nodeBal;
+    archive << enabled;
 //    archive << abi;
 
     return true;
@@ -208,6 +213,7 @@ void CAccountWatch::registerClass(void) {
     ADD_FIELD(CAccountWatch, "qbis", T_OBJECT, ++fieldNum);
     ADD_FIELD(CAccountWatch, "balanceHistory", T_OBJECT|TS_ARRAY, ++fieldNum);
     ADD_FIELD(CAccountWatch, "nodeBal", T_WEI, ++fieldNum);
+    ADD_FIELD(CAccountWatch, "enabled", T_BOOL, ++fieldNum);
     ADD_FIELD(CAccountWatch, "abi", T_OBJECT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
@@ -215,7 +221,6 @@ void CAccountWatch::registerClass(void) {
     HIDE_FIELD(CAccountWatch, "deleted");
     HIDE_FIELD(CAccountWatch, "showing");
     HIDE_FIELD(CAccountWatch, "cname");
-    HIDE_FIELD(CAccountWatch, "abi");
 
     builtIns.push_back(_biCAccountWatch);
 
@@ -267,7 +272,7 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "address" ) return addr_2_Str(address);
-            if ( fieldName % "abi" ) { ostringstream os; os << abi; return os.str(); }
+            if ( fieldName % "abi" ) { expContext().noFrst=true; return abi.Format(); }
             break;
         case 'b':
             if ( fieldName % "balanceHistory" || fieldName % "balanceHistoryCnt" ) {
@@ -288,6 +293,9 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
             break;
         case 'd':
             if ( fieldName % "deepScan" ) return int_2_Str(deepScan);
+            break;
+        case 'e':
+            if ( fieldName % "enabled" ) return int_2_Str(enabled);
             break;
         case 'f':
             if ( fieldName % "firstBlock" ) return uint_2_Str(firstBlock);
@@ -316,6 +324,14 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
         return f;
     }
 
+    s = toUpper(string_q("abi")) + "::";
+    if (contains(fieldName, s)) {
+        string_q f = fieldName;
+        replaceAll(f, s, "");
+        f = abi.getValueByName(f);
+        return f;
+    }
+
     // Finally, give the parent class a chance
     return CBaseNode::getValueByName(fieldName);
 }
@@ -336,6 +352,8 @@ const CBaseNode *CAccountWatch::getObjectAt(const string_q& fieldName, size_t in
         return &qbis;
     if ( fieldName % "balanceHistory" && index < balanceHistory.size() )
         return &balanceHistory[index];
+    if ( fieldName % "abi" )
+        return &abi[index];
     return NULL;
 }
 

@@ -8,43 +8,6 @@
 #include "options.h"
 
 extern bool visitAddrs(const CAddressAppearance& item, void *data);
-
-//-----------------------------------------------------------------------
-bool loadData(COptions& options) {
-    string_q fileName = "./cache/" + options.watches[0].address + ".acct.bin";
-
-    // If we've already upgraded the file, we've deleted it and we're done...
-    if (!fileExists(fileName))
-        return true;
-
-    // If the file is locked, we need to tell the user.
-    if (fileExists(fileName + ".lck"))
-        return usage("The cache lock file is present. The program is either already "
-                     "running or it did not end cleanly the\n\tlast time it ran. "
-                     "Quit the already running program or, if it is not running, "
-                     "remove the lock\n\tfile: " + fileName + ".lck'. Quitting...");
-
-    uint64_t nRecords = (fileSize(fileName) / (sizeof(uint64_t) * 2));
-    if (!nRecords)
-        return usage("Old style cache file is present, but empty. Remove it to continue.");
-
-    uint64_t *buffer = new uint64_t[nRecords * 2];
-    bzero(buffer, nRecords * 2);
-
-    CArchive txCache(READING_ARCHIVE);
-    if (txCache.Lock(fileName, binaryReadOnly, LOCK_NOWAIT)) {
-        txCache.Read(buffer, sizeof(uint64_t) * 2, nRecords);
-        txCache.Release();
-    } else {
-        return usage("Could not open old style cache file. Quiting...");
-    }
-
-    for (size_t i = 0 ; i < nRecords ; i++)
-        options.items.push_back(CAcctCacheItem(buffer[i*2], buffer[(i*2)+1]));
-
-    return true;
-}
-
 //-----------------------------------------------------------------------
 bool exportData(COptions& options) {
 
@@ -62,8 +25,35 @@ bool exportData(COptions& options) {
             getBlock(block, item->blockNum);
             for (auto trans : block.transactions)
                 trans.pBlock = &block;
+        }
+        options.addrsInBlock.clear();
 
-            block.forEveryAddress(visitAddrs, NULL, &options.addrsInBlock);
+        if (item->transIndex < block.transactions.size()) {
+            CTransaction *trans = &block.transactions[item->transIndex];
+            trans->forEveryAddress(visitAddrs, NULL, &options.addrsInBlock);
+            getTraces(trans->traces, trans->hash);
+            articulateTransaction(trans);
+
+            bool found = false;
+            for (size_t w = 0 ; w < options.watches.size() && !found ; w++) {
+                CAccountWatch *watch = &options.watches[w];
+                if (watch->enabled) {
+                    for (auto addrList : options.addrsInBlock) {
+                        if (addrList.addr % watch->address && !found) {
+
+                            ostringstream os;
+                            options.displayTransaction(os, trans);
+                            if ((options.defaultFmt == "json") && index < options.items.size() - 1)
+                                os << ",";
+                            os << endl;
+                            cout << options.annotate(substitute(os.str(),"++WATCH++",watch->address));
+                            cout.flush();
+                            found = true;
+
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -141,3 +131,38 @@ bool visitAddrs(const CAddressAppearance& item, void *data) {
     return true;
 }
 
+//-----------------------------------------------------------------------
+bool loadData(COptions& options) {
+    string_q fileName = "./cache/" + options.watches[0].address + ".acct.bin";
+
+    // If we've already upgraded the file, we've deleted it and we're done...
+    if (!fileExists(fileName))
+        return true;
+
+    // If the file is locked, we need to tell the user.
+    if (fileExists(fileName + ".lck"))
+        return usage("The cache lock file is present. The program is either already "
+                     "running or it did not end cleanly the\n\tlast time it ran. "
+                     "Quit the already running program or, if it is not running, "
+                     "remove the lock\n\tfile: " + fileName + ".lck'. Quitting...");
+
+    uint64_t nRecords = (fileSize(fileName) / (sizeof(uint64_t) * 2));
+    if (!nRecords)
+        return usage("Old style cache file is present, but empty. Remove it to continue.");
+
+    uint64_t *buffer = new uint64_t[nRecords * 2];
+    bzero(buffer, nRecords * 2);
+
+    CArchive txCache(READING_ARCHIVE);
+    if (txCache.Lock(fileName, binaryReadOnly, LOCK_NOWAIT)) {
+        txCache.Read(buffer, sizeof(uint64_t) * 2, nRecords);
+        txCache.Release();
+    } else {
+        return usage("Could not open old style cache file. Quiting...");
+    }
+
+    for (size_t i = 0 ; i < nRecords ; i++)
+        options.items.push_back(CAcctCacheItem(buffer[i*2], buffer[(i*2)+1]));
+
+    return true;
+}
