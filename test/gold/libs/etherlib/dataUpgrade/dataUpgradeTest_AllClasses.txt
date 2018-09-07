@@ -60,6 +60,7 @@ signature           	1010	0	131122	T_TEXT TS_STRING
 encoding            	1011	0	131122	T_TEXT TS_STRING
 inputs              	1012	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 outputs             	1013	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+input_names         	1014	1	131122	T_TEXT TS_STRING
 {
   "constant": 0,
   "payable": 0,
@@ -83,6 +84,7 @@ signature           	1010	1	131122	T_TEXT TS_STRING
 encoding            	1011	1	131122	T_TEXT TS_STRING
 inputs              	1012	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 outputs             	1013	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+input_names         	1014	1	131122	T_TEXT TS_STRING
 {
 }
 
@@ -102,6 +104,7 @@ signature           	1010	0	131122	T_TEXT TS_STRING
 encoding            	1011	0	131122	T_TEXT TS_STRING
 inputs              	1012	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 outputs             	1013	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+input_names         	1014	0	131122	T_TEXT TS_STRING
 {
   "schema": 5005,
   "deleted": 0,
@@ -197,6 +200,7 @@ deepScan            	1010	0	65556	T_BOOL TS_NUMERAL
 qbis                	1011	0	1048651	T_OBJECT TS_OBJECT
 balanceHistory      	1012	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 nodeBal             	1013	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+abi                 	1014	1	1048651	T_OBJECT TS_OBJECT
 {
   "address": "0x0",
   "firstBlock": 0,
@@ -230,6 +234,7 @@ deepScan            	1010	1	65556	T_BOOL TS_NUMERAL
 qbis                	1011	1	1048651	T_OBJECT TS_OBJECT
 balanceHistory      	1012	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 nodeBal             	1013	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+abi                 	1014	1	1048651	T_OBJECT TS_OBJECT
 {
 }
 
@@ -249,6 +254,7 @@ deepScan            	1010	0	65556	T_BOOL TS_NUMERAL
 qbis                	1011	0	1048651	T_OBJECT TS_OBJECT
 balanceHistory      	1012	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 nodeBal             	1013	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+abi                 	1014	0	1048651	T_OBJECT TS_OBJECT
 {
   "schema": 5005,
   "deleted": 0,

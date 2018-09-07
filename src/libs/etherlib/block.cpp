@@ -473,45 +473,58 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data)
 
     foundOne(func, data, blockNumber, NOPOS, 0, miner, "miner");
     for (size_t tr = 0 ; tr < transactions.size() ; tr++) {
-        const CTransaction *trans   = &transactions[tr];
-        const CReceipt     *receipt = &trans->receipt;
-        foundOne(func, data, blockNumber, tr, 0, trans->from,               "from");
-        foundOne(func, data, blockNumber, tr, 0, trans->to,                 "to");
-        foundOne(func, data, blockNumber, tr, 0, receipt->contractAddress,  "creation");
-        foundPot(func, data, blockNumber, tr, 0, extract(trans->input, 10), "input");
-        for (size_t l = 0 ; l < receipt->logs.size() ; l++) {
-            const CLogEntry *log = &receipt->logs[l];
-            string_q logId = "log_" + uint_2_Str(l) + "_";
-            foundOne(func, data, blockNumber, tr, 0, log->address, logId +  "generator");
-            for (size_t t = 0 ; t < log->topics.size() ; t++) {
-                address_t addr;
-                string_q topId = uint_2_Str(t);
-                if (isPotentialAddr(log->topics[t], addr)) {
-                    foundOne(func, data, blockNumber, tr, 0, addr, logId +  "topic_" + topId);
-                }
-            }
-            foundPot(func, data, blockNumber, tr, 0, extract(log->data, 2), logId + "data");
-        }
+        CTransaction *trans = &transactions[tr];
+        if (!trans->forEveryAddress(func, filterFunc, data))
+            return false;
+    }
+    return true;
+}
 
-        // If we're not filtering, or the filter passes, proceed. Note the filter depends on the
-        // transaction only, not on any address.
-        if (!filterFunc || !filterFunc(trans, data)) {  // may look at DDos range and nTraces for example
-            CTraceArray traces;
-            getTraces(traces, trans->hash);
-            for (size_t t = 0 ; t < traces.size() ; t++) {
-                const CTrace *trace = &traces[t];  // taking a non-const reference
-                string_q trID = "trace_" + uint_2_Str(t) + "_" + stringy(trace->traceAddress);
-                foundOne(func, data, blockNumber, tr, t+10, trace->action.from,          trID + "from");
-                foundOne(func, data, blockNumber, tr, t+10, trace->action.to,            trID + "to");
-                foundOne(func, data, blockNumber, tr, t+10, trace->action.refundAddress, trID + "refundAddr");
-                foundOne(func, data, blockNumber, tr, t+10, trace->action.address,       trID + "creation");
-                foundOne(func, data, blockNumber, tr, t+10, trace->result.address,       trID + "self-destruct");
-                string_q input = extract(trace->action.input, 10);
-                if (!input.empty())
-                    foundPot(func, data, blockNumber, tr, t+10, input, trID + "input");
+//---------------------------------------------------------------------------
+bool CTransaction::forEveryAddress(ADDRESSFUNC funcy, TRANSFUNC filt, void *data) {
+    blknum_t tr = transactionIndex;
+    const CReceipt *recPtr = &receipt;
+    foundOne(funcy, data, blockNumber, tr, 0, from,               "from");
+    foundOne(funcy, data, blockNumber, tr, 0, to,                 "to");
+    foundOne(funcy, data, blockNumber, tr, 0, recPtr->contractAddress,  "creation");
+    foundPot(funcy, data, blockNumber, tr, 0, extract(input, 10), "input");
+    for (size_t l = 0 ; l < recPtr->logs.size() ; l++) {
+        const CLogEntry *log = &recPtr->logs[l];
+        string_q logId = "log_" + uint_2_Str(l) + "_";
+        foundOne(funcy, data, blockNumber, tr, 0, log->address, logId +  "generator");
+        for (size_t t = 0 ; t < log->topics.size() ; t++) {
+            address_t addr;
+            string_q topId = uint_2_Str(t);
+            if (isPotentialAddr(log->topics[t], addr)) {
+                foundOne(funcy, data, blockNumber, tr, 0, addr, logId +  "topic_" + topId);
             }
+        }
+        foundPot(funcy, data, blockNumber, tr, 0, extract(log->data, 2), logId + "data");
+    }
+
+    // If we're not filtering, or the filter passes, proceed. Note the filter depends on the
+    // transaction only, not on any address.
+    if (!filt || !filt(this, data)) {  // may look at DDos range and nTraces for example
+        CTraceArray trcs;
+        getTraces(trcs, hash);
+        for (size_t t = 0 ; t < trcs.size() ; t++) {
+            const CTrace *trace = &trcs[t];  // taking a non-const reference
+            string_q trID = "trace_" + uint_2_Str(t) + "_" + stringy(trace->traceAddress);
+            foundOne(funcy, data, blockNumber, tr, t+10, trace->action.from,          trID + "from");
+            foundOne(funcy, data, blockNumber, tr, t+10, trace->action.to,            trID + "to");
+            foundOne(funcy, data, blockNumber, tr, t+10, trace->action.refundAddress, trID + "refundAddr");
+            foundOne(funcy, data, blockNumber, tr, t+10, trace->action.address,       trID + "creation");
+            foundOne(funcy, data, blockNumber, tr, t+10, trace->result.address,       trID + "self-destruct");
+            string_q inpt = extract(trace->action.input, 10);
+            if (!inpt.empty())
+                foundPot(funcy, data, blockNumber, tr, t+10, inpt, trID + "input");
         }
     }
+    return true;
+}
+
+//---------------------------------------------------------------------------
+bool CTransaction::forEveryUniqueAddress(ADDRESSFUNC funcy, TRANSFUNC filt, void *data) {
     return true;
 }
 // EXISTING_CODE
