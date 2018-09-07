@@ -609,5 +609,14 @@ string_q decodeRLP(const string_q& name, const string_q& input, size_t nItems, s
     result = substitute(result, "|", "\", \"");
     return quote + name + quote + ", " + result;
 }
+
+//---------------------------------------------------------------------------
+string_q decodeRLP(const string_q& name, const string_q& input, const CStringArray& types) {
+    string_q items[256];
+    size_t nItems = 0;
+    for (auto type : types)
+        items[nItems++] = type;
+    return decodeRLP(name, input, nItems, items);
+}
 // EXISTING_CODE
 }  // namespace qblocks
