@@ -2,8 +2,6 @@
  * This source code is confidential proprietary information which is
  * Copyright (c) 2017 by Great Hill Corporation.
  * All Rights Reserved
- *
- * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
 #include "options.h"
 
@@ -11,7 +9,7 @@ extern bool visitAddrs(const CAddressAppearance& item, void *data);
 //-----------------------------------------------------------------------
 bool exportData(COptions& options) {
 
-    if (options.defaultFmt == "json")
+    if (options.transFmt.empty())
         cout << "[";
 
     CBlock block;
@@ -43,7 +41,7 @@ bool exportData(COptions& options) {
 
                             ostringstream os;
                             options.displayTransaction(os, trans);
-                            if ((options.defaultFmt == "json") && index < options.items.size() - 1)
+                            if (options.transFmt.empty() && index < options.items.size() - 1)
                                 os << ",";
                             os << endl;
                             cout << options.annotate(substitute(os.str(),"++WATCH++",watch->address));
@@ -57,7 +55,7 @@ bool exportData(COptions& options) {
         }
     }
 
-    if (options.defaultFmt == "json")
+    if (options.transFmt.empty())
         cout << "]";
 
     return true;
@@ -66,7 +64,7 @@ bool exportData(COptions& options) {
 //-----------------------------------------------------------------------
 void COptions::renameItems(string_q& str, const CAccountWatchArray& watchArray) const {
     for (auto watch : watchArray) {
-        if ((defaultFmt == "json")) {
+        if (transFmt.empty()) {
             CStringArray fields = { "to", "from", "address", "contractAddress" };
             for (auto field : fields) {
                 string_q target = "\"" + field + "\": \"" + watch.address + "\"";
@@ -81,7 +79,7 @@ string_q COptions::annotate(const string_q& strIn) const {
     string_q ret = strIn;
     renameItems(ret, watches);
     renameItems(ret, named);
-    return substitute(substitute(ret, "+=+", "{"), "=+=", "}");
+    return ret;
 }
 
 //-----------------------------------------------------------------------
