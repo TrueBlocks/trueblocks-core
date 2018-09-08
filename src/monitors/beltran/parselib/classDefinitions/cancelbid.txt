@@ -1,6 +1,0 @@
-[settings]
-class     = CCancelBid
-baseClass = CTransaction
-fields    = address bidder|bytes32 seal|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

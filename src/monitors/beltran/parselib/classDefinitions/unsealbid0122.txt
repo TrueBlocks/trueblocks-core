@@ -1,6 +1,0 @@
-[settings]
-class     = CUnsealBid0122
-baseClass = CTransaction
-fields    = bytes32 _hash|address _owner|uint256 _value|bytes32 _salt|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"
