@@ -380,8 +380,7 @@ namespace qblocks {
 
         size_t nBytes = fileSize(filename);
 
-        // Allocate a enough space to store the file so its not realloced each
-        // time we do +=
+        // Allocate a enough space to store the file so its not realloced each time we do +=
         char *val = new char[nBytes+100];
         memset(val, 0, nBytes+100);
         char *s = val;
@@ -396,10 +395,9 @@ namespace qblocks {
                 nChars += strlen(buff);
                 if (buffer) {
                     size_t len = strlen(buff);
-                    strncpy(s, buff, len);
+                    strncpy(s, buff, 4096);  // extra space to avoid warning on Arch linux
                     s += len;
                 }
-
                 nLines++;
             }
 
