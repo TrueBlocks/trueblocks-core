@@ -1,0 +1,6 @@
+[settings]
+class     = CUnsealBid
+baseClass = CTransaction
+fields    = bytes32 _hash|uint256 _value|bytes32 _salt|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

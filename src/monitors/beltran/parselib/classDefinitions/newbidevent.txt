@@ -1,0 +1,6 @@
+[settings]
+class     = CNewBidEvent
+baseClass = CLogEntry
+fields    = bytes32 hash|address bidder|uint256 deposit|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"
