@@ -18,7 +18,7 @@ public:
     CAccountWatchArray watches;
     CAccountWatchArray named;
     CAcctCacheItemArray items;
-    CAddressAppearanceArray addrsInBlock;
+    CBlock curBlock;
 
     COptions(void);
     ~COptions(void);

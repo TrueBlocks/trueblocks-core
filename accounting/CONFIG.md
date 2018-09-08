@@ -1,3 +1,5 @@
+### Options in the config.toml File
+
 [settings]
 name = topICOs
 
@@ -18,15 +20,12 @@ show_example_logs = \
 	CReceipt: none, logs \
 	CLogEntry: none, articulatedLog \
 	CTrace: none
-	
+
 [formats]
 trans_fmt = [{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{HASH}]
 txrans_fmt = [{TIMESTAMP}]\t[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{TRACEID}]\t[{FROM}]\t[{TO}]\t[{ETHER}]\t[{GAS}]\t[{GASPRICE}]\t[{GASUSED}]\t[TRUE{b:ISERROR}]\t[{ENCODING}]\t[{ARTICULATED}]
 
 [[watches]]
 list = [
-    { address = "0x9992ec3cf6a55b00978cddf2b27bc6882d88d1ec", name = "POLY",  firstBlock = 4994844, color = "green_c" },
-    { address = "0x4672bad527107471cb5067a887f4656d585a8a31", name = "DROP",  firstBlock = 4935794, color = "green_c" },
-    { address = "0xea11755ae41d889ceec39a63e6ff75a02bc1c00d", name = "CTXC",  firstBlock = 5229336, color = "green_c" },
-    { address = "0xb3104b4b9da82025e8b9f8fb28b3553ce2f67069", name = "BIX",   firstBlock = 4319840, color = "green_c" },
+    { address = "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2", name = "MKR", firstBlock = 4895439, color = "green_c" },
 ]

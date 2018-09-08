@@ -5,64 +5,86 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
-extern bool visitAddrs(const CAddressAppearance& item, void *data);
+extern bool exportTransaction(COptions& options, const CAcctCacheItem *item);
 //-----------------------------------------------------------------------
 bool exportData(COptions& options) {
 
-    bool first = true;
     if (options.transFmt.empty())
         cout << "[";
 
-#define N options.items.size()
+    for (size_t index = 0 ; index < options.items.size() ; index++)
+        exportTransaction(options, &options.items[index]);
 
-    CBlock block;
-    for (size_t index = 0 ; index < N ; index++) {
+    if (options.transFmt.empty())
+        cout << "]";
 
-        const CAcctCacheItem *item = &options.items[index];
+    return true;
+}
 
-        // visit the addresses in the block
-        if (item->blockNum > block.blockNumber) {
-            block = CBlock();
-            getBlock(block, item->blockNum);
-            for (auto trans : block.transactions)
-                trans.pBlock = &block;
-        }
-        options.addrsInBlock.clear();
+//-----------------------------------------------------------------------
+bool exportTransaction(COptions& options, const CAcctCacheItem *item) {
 
-        if (item->transIndex < block.transactions.size()) {
-            CTransaction *trans = &block.transactions[item->transIndex];
-            trans->forEveryAddress(visitAddrs, NULL, &options.addrsInBlock);
-            if (!options.transFmt.empty() || !IS_HIDDEN(CTransaction, "traces"))
-                getTraces(trans->traces, trans->hash);
+    static bool first = false;
 
-            bool found = false;
-            for (size_t w = 0 ; w < options.watches.size() && !found ; w++) {
-                CAccountWatch *watch = &options.watches[w];
-                if (options.transFmt.empty() || contains(toLower(options.transFmt), "articulate"))
-                    articulateTransaction(watch->abi, trans);
-                if (watch->enabled) {
-                    for (auto addrList : options.addrsInBlock) {
-                        if (addrList.addr % watch->address && !found) {
+    // This happens on every transaction, but it could happen on every block
+    CBloomArray blooms;
+    string_q bloomFilename = substitute(getBinaryFilename(item->blockNum), "/blocks/", "/blooms/");
+    CArchive bloomCache(READING_ARCHIVE);
+    if (bloomCache.Lock(bloomFilename, binaryReadOnly, LOCK_NOWAIT)) {
+        bloomCache >> blooms;
+        bloomCache.Release();
+    }
 
-                            ostringstream os;
-                            if (options.transFmt.empty() && !first)
-                                os << ",";
-                            options.displayTransaction(os, trans);
-                            os << endl;
-                            cout << options.annotate(substitute(os.str(),"++WATCH++",watch->address));
-                            cout.flush();
-                            found = true;
-                            first = false;
-
-                        }
-                    }
+    // This happens on every transaction, but it could happen on every block
+    size_t atLeastOne = 0;
+    for (CAccountWatch& watch : options.watches) {
+        if (watch.enabled) {
+            watch.inBlock = false;
+            for (auto bloom : blooms) {
+                if (isBloomHit(watch.bloom, bloom)) {
+                    watch.inBlock = true;
+                    atLeastOne++;
                 }
             }
         }
     }
+    if (!atLeastOne) {
+        cerr << item->blockNum << " " << item->transIndex << "\r";
+        cerr.flush();
+        return true;
+    }
 
-    if (options.transFmt.empty())
-        cout << "]";
+    // visit the addresses in the block
+    if (item->blockNum > options.curBlock.blockNumber) {
+        options.curBlock = CBlock();
+        getBlock(options.curBlock, item->blockNum);
+        for (auto trans : options.curBlock.transactions)
+            trans.pBlock = &options.curBlock;
+    }
+
+    if (item->transIndex < options.curBlock.transactions.size()) {
+        CTransaction *trans = &options.curBlock.transactions[item->transIndex];
+        if (!options.transFmt.empty() || !IS_HIDDEN(CTransaction, "traces"))
+            getTraces(trans->traces, trans->hash);
+
+        bool found = false;
+        for (size_t w = 0 ; w < options.watches.size() && !found ; w++) {
+            CAccountWatch *watch = &options.watches[w];
+            if (options.transFmt.empty() || contains(toLower(options.transFmt), "articulate"))
+                articulateTransaction(watch->abi, trans);
+            if (watch->enabled) {
+                ostringstream os;
+                if (options.transFmt.empty() && !first)
+                    os << ",";
+                options.displayTransaction(os, trans);
+                os << endl;
+                cout << options.annotate(substitute(os.str(),"++WATCH++",watch->address));
+                cout.flush();
+                found = true;
+                first = false;
+            }
+        }
+    }
 
     return true;
 }
@@ -149,14 +171,6 @@ bool COptions::loadWatches(const CToml& toml) {
     }
 
     watches.push_back(CAccountWatch("Others", "Other Accts", 0, UINT32_MAX, ""));
-    return true;
-}
-
-//----------------------------------------------------------------
-bool visitAddrs(const CAddressAppearance& item, void *data) {
-    CAddressAppearanceArray *array = reinterpret_cast<CAddressAppearanceArray*>(data);
-    if (!isZeroAddr(item.addr))
-        array->push_back(item);
     return true;
 }
 
