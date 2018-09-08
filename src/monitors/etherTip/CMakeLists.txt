@@ -20,8 +20,8 @@ set(PROJ_NAME "monitors")
 add_executable(${TOOL_NAME} ${SOURCE_FILES})
 
 # Add the project static libs at linking
-#set(THE_LIBS "${CMAKE_CURRENT_LIST_DIR}/parselib/libparseetherTip.a" wallet token ${BASE_LIBS})
-set(THE_LIBS wallet token ${BASE_LIBS})
+#set(THE_LIBS "${CMAKE_CURRENT_LIST_DIR}/parselib/libparseetherTip.a" token wallet ${BASE_LIBS})
+set(THE_LIBS token wallet ${BASE_LIBS})
 target_link_libraries (${PROJECT_NAME} ${THE_LIBS} ncurses)
 
 # Testing
