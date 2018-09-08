@@ -1,6 +1,0 @@
-[settings]
-class     = CHashRegisteredEvent
-baseClass = CLogEntry
-fields    = bytes32 hash|address owner|uint256 value|uint256 registrationDate|
-includes  = logentry.h
-cIncs     = #include "etherlib.h"

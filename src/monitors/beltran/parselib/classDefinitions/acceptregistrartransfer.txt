@@ -1,6 +1,0 @@
-[settings]
-class     = CAcceptRegistrarTransfer
-baseClass = CTransaction
-fields    = bytes32 hash|address deed|uint256 registrationDate|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

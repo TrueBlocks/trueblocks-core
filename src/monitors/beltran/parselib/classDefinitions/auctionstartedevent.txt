@@ -1,6 +1,0 @@
-[settings]
-class     = CAuctionStartedEvent
-baseClass = CLogEntry
-fields    = bytes32 hash|uint256 registrationDate|
-includes  = logentry.h
-cIncs     = #include "etherlib.h"
