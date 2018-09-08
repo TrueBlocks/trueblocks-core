@@ -24,7 +24,7 @@ bool exportData(COptions& options) {
 //-----------------------------------------------------------------------
 bool exportTransaction(COptions& options, const CAcctCacheItem *item) {
 
-    static bool first = false;
+    static bool first = true;
 
     // This happens on every transaction, but it could happen on every block
     CBloomArray blooms;

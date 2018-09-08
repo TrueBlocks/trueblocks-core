@@ -5,4 +5,6 @@
 *.bak
 *.gz
 *.json
-x
+*_changed.txt
+*_new_not_old.txt
+*_old_not_new.txt

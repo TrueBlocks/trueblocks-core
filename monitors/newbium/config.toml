@@ -19,8 +19,8 @@ txrans_fmt = [{TIMESTAMP}]\t[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{FROM}]\t[{T
 
 [[watches]]
 list = [
-    { address = "0x814964b1bceAf24e26296D031EaDf134a2Ca4105", name = "Newbium",         firstBlock = 3989717, color = "green_c", enabled = false },
-    { address = "0xc9d7fec9889690bbff0a0df758d13e5a55dd7822", name = "Newbium Creator", firstBlock = 3984610, color = "green_c", enabled = true }
+    { address = "0x814964b1bceaf24e26296d031eadf134a2ca4105", name = "Newbium",         firstBlock = 3989717, color = "green_c", enabled = false },
+    { address = "0xc9d7fec9889690bbff0a0df758d13e5a55dd7822", name = "Newbium Creator", firstBlock = 3984610, color = "green_c", enabled = false }
 ]
 named = [
     { address = "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819", name = "EtherDelta_2", color = "blue_b", enabled = true }
