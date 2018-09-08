@@ -84,6 +84,10 @@ bool exportTransaction(COptions& options, const CAcctCacheItem *item) {
                 first = false;
             }
         }
+    } else {
+        // TODO(tjayrush): This should never happen
+        // cerr << "Invalid data at cache item: " << item->blockNum << "." << item->transIndex << "\n";
+        // cerr.flush();
     }
 
     return true;
