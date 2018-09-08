@@ -92,7 +92,7 @@ namespace testing {  // NOLINT
     try { \
         (a); \
         cout << " --> Test did not throw\n"; \
-    } catch (exception e) { \
+    } catch (exception& e) { \
         cout << " --> Test threw with message: " << e.what() << "\n"; \
     }
 
@@ -101,7 +101,7 @@ namespace testing {  // NOLINT
     try { \
         (a); \
         cout << " --> Test did not throw\n"; \
-    } catch (exception e) { \
+    } catch (exception& e) { \
         cout << " --> Test threw with message: " << e.what() << "\n"; \
     }
 
