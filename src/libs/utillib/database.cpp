@@ -395,7 +395,7 @@ namespace qblocks {
                 nChars += strlen(buff);
                 if (buffer) {
                     size_t len = strlen(buff);
-                    strncpy(s, buff, 4096);  // extra space to avoid warning on Arch linux
+                    strncpy(s, buff, nBytes+100+1);  // extra space to avoid warning on Arch linux
                     s += len;
                 }
                 nLines++;
