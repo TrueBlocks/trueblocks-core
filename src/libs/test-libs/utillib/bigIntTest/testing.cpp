@@ -287,7 +287,7 @@ int main(int argc, const char *argv[]) {
                      9,
                      uint64_t(10000000000)), "1000000000000000000");
 
-    } catch(char const* err) {
+    } catch (char const* err) {
         cout << "The library threw an exception: " << err << endl;
     }
 
