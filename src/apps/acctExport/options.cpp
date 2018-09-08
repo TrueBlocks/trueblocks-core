@@ -1,3 +1,6 @@
+//IT SHOULD NOT START IF IT CANNOT FIND THE FILE.
+//I REMOVED AN ADDRESS ENTRY, THE FIRST, WHICH CHANGED THE NAME OF THE FILE
+//SHOULD DISALLOW WEIRD COMMAND LINE options
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
  * Copyright (c) 2017 by Great Hill Corporation.
@@ -159,4 +162,3 @@ string_q defShow =
 "|" "CTraceResult: "
 "|" "CFunction: "
 "|" "CParameter: ";
-
