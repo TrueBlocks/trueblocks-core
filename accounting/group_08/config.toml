@@ -1,0 +1,31 @@
+[settings]
+name = topICOs
+
+[display]
+accounting = false
+logs = false
+trace = false
+single = false
+parse = false
+json = true
+
+[fields]
+hide=
+show=
+show_example_all = CTransaction:all|CReceipt:all|CLogEntry:all|CTrace:all|CTraceResult:all|CTraceAction:all|CParameter:all
+show_example_logs = \
+	CTransaction: none| \
+	CReceipt: none, logs \
+	CLogEntry: none, articulatedLog \
+	CTrace: none
+	
+[formats]
+trans_fmt = [{TIMESTAMP}]\t[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{TRACEID}]\t[{FROM}]\t[{TO}]\t[{ETHER}]\t[{GAS}]\t[{GASPRICE}]\t[{GASUSED}]\t[TRUE{b:ISERROR}]\t[{ENCODING}]\t[{ARTICULATED}]
+
+[[watches]]
+list = [
+    { address = "0x9ab165d795019b6d8b3e971dda91071421305e5a", name = "AOA", firstBlock = 5634490, color = "green_c" },
+    { address = "0xA4e8C3Ec456107eA67d3075bF9e3DF3A75823DB0", name = "LOOM", firstBlock = 5188927, color = "green_c" },
+    { address = "0xdd974d5c2e2928dea5f71b9825b8b646686bd200", name = "KNC", firstBlock = 4264898, color = "green_c" },
+    { address = "0x8dd5fbce2f6a956c3022ba3663759011dd51e73e", name = "TUSD", firstBlock = 5197514, color = "green_c" },
+]
