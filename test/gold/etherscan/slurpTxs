@@ -1,7 +1,11 @@
-address=0xc9d7fec9889690bbff0a0df758d13e5a55dd7822
-symbol=newbium
-start=3984600
-stop=6153963
+address=$1
+#0x814964b1bceaf24e26296d031eadf134a2ca4105
+symbol=$2
+00_newbium
+start=0
+#3989717
+stop=7000000
+#6218382
 
 curl -o $symbol-$address-ext.json "http://api.etherscan.io/api?module=account&action=txlist&address=$address&startblock=$start&endblock=$stop&sort=asc"
 jq -r '.result[].blockNumber'      $symbol-$address-ext.json >$symbol-$address-ext-blocks.txt
@@ -23,3 +27,6 @@ sort -u $symbol-$address-ext-join2.txt $symbol-$address-int-join2.txt > $symbol-
 #comm -12 $symbol-$address-jay-blocks.txt $symbol-$address-etherscan-unique.txt > results/$symbol-$address-common.txt
 #comm -13 $symbol-$address-jay-blocks.txt $symbol-$address-etherscan-unique.txt > results/$symbol-$address-not_ethscan.txt
 #comm -23 $symbol-$address-jay-blocks.txt $symbol-$address-etherscan-unique.txt > results/$symbol-$address-not_qblocks.txt
+
+rm -f *-int*
+rm -f *-ext*
