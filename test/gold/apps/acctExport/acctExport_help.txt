@@ -1,12 +1,12 @@
 acctExport argc: 2 [1:-h] 
 acctExport -h 
 
-  Usage:    acctExport [-e|-f|-v|-h]  
-  Purpose:  Index transactions for a given Ethereum address (or series of addresses).
+  Usage:    acctExport [-f|-l|-v|-h]  
+  Purpose:  Export transactions for one or more Ethereum addresses.
              
   Where:    
-	-e  (--filter val)    display only transactions from the filter address
-	-f  (--fmt val)       export format (on of [json|txt|csv] (ignored if trans_fmt is non-empty)
+	-f  (--fmt val)       export format (one of [json|txt|csv]
+	-l  (--filter val)    show results for this address (you may specify more than one filter)
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 

@@ -153,8 +153,8 @@ namespace qblocks {
 
         // Check twice for existance since the previous command creates the file but may take some time
         waitForCreate(filename);
-extern string_q binaryFileToString(const string_q& filename);
-        string_q ret = binaryFileToString(filename);
+string_q asciiFileToString(const string_q& fn);
+        string_q ret = asciiFileToString(filename);
         remove(filename.c_str());
         return trim(ret, '\n');
     }
