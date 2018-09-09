@@ -21,10 +21,19 @@ bool exportData(COptions& options) {
     return true;
 }
 
+bool isInTransaction(CBlock& block, blknum_t tx_id, const address_t& addr);
 //-----------------------------------------------------------------------
 bool exportTransaction(COptions& options, const CAcctCacheItem *item) {
 
     static bool first = true;
+
+    // visit the addresses in the block
+    if (item->blockNum > options.curBlock.blockNumber) {
+        options.curBlock = CBlock();
+        getBlock(options.curBlock, item->blockNum);
+        for (auto trans : options.curBlock.transactions)
+            trans.pBlock = &options.curBlock;
+    }
 
     // This happens on every transaction, but it could happen on every block
     CBloomArray blooms;
@@ -36,36 +45,31 @@ bool exportTransaction(COptions& options, const CAcctCacheItem *item) {
     }
 
     // This happens on every transaction, but it could happen on every block
-    size_t atLeastOne = 0;
+    bool foundOne = false;
     for (CAccountWatch& watch : options.watches) {
-        if (watch.enabled) {
-            watch.inBlock = false;
+        if (!foundOne && watch.enabled) {
             for (auto bloom : blooms) {
                 if (isBloomHit(makeBloom(watch.address), bloom)) {
-                    watch.inBlock = true;
-                    atLeastOne++;
+                    if (isInTransaction(options.curBlock, item->transIndex, watch.address)) {
+                        foundOne = true;
+                        break;
+                    }
                 }
             }
         }
     }
-    if (!atLeastOne) {
+
+    if (!foundOne) {
         cerr << item->blockNum << " " << item->transIndex << "\r";
         cerr.flush();
         return true;
     }
 
-    // visit the addresses in the block
-    if (item->blockNum > options.curBlock.blockNumber) {
-        options.curBlock = CBlock();
-        getBlock(options.curBlock, item->blockNum);
-        for (auto trans : options.curBlock.transactions)
-            trans.pBlock = &options.curBlock;
-    }
-
     if (item->transIndex < options.curBlock.transactions.size()) {
         CTransaction *trans = &options.curBlock.transactions[item->transIndex];
         if (!options.transFmt.empty() || !IS_HIDDEN(CTransaction, "traces"))
-            getTraces(trans->traces, trans->hash);
+            if (trans->traces.size() == 0)
+                getTraces(trans->traces, trans->hash);
 
         bool found = false;
         for (size_t w = 0 ; w < options.watches.size() && !found ; w++) {
@@ -212,4 +216,32 @@ bool loadData(COptions& options) {
         options.items.push_back(CAcctCacheItem(buffer[i*2], buffer[(i*2)+1]));
 
     return true;
+}
+
+//----------------------------------------------------------------
+bool visitAddrs(const CAddressAppearance& item, void *data) {
+    CAddressAppearanceArray *array = reinterpret_cast<CAddressAppearanceArray*>(data);
+    if (!isZeroAddr(item.addr))
+        array->push_back(item);
+    return true;
+}
+
+//----------------------------------------------------------------
+// Return 'true' if we want the caller NOT to visit the traces of this transaction
+bool transFilter(const CTransaction *trans, void *data) {
+    if (!ddosRange(trans->blockNumber))
+        return false;
+    return (getTraceCount(trans->hash) > 250);
+}
+
+//-----------------------------------------------------------------------
+bool isInTransaction(CBlock& block, blknum_t tx_id, const address_t& needle) {
+    if (tx_id < block.transactions.size()) {
+        CAddressAppearanceArray haystack;
+        block.transactions[tx_id].forEveryAddress(visitAddrs, transFilter, &haystack);
+        for (auto hay : haystack)
+            if (hay.addr % needle)
+                return true;
+    }
+    return false;
 }
