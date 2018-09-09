@@ -1,0 +1,25 @@
+address=0xc9d7fec9889690bbff0a0df758d13e5a55dd7822
+symbol=newbium
+start=3984600
+stop=6153963
+
+curl -o $symbol-$address-ext.json "http://api.etherscan.io/api?module=account&action=txlist&address=$address&startblock=$start&endblock=$stop&sort=asc"
+jq -r '.result[].blockNumber'      $symbol-$address-ext.json >$symbol-$address-ext-blocks.txt
+jq -r '.result[].transactionIndex' $symbol-$address-ext.json >$symbol-$address-ext-tx.txt
+jq -r '.result[].hash'             $symbol-$address-ext.json >$symbol-$address-ext-hash.txt
+paste $symbol-$address-ext-blocks.txt $symbol-$address-ext-tx.txt   >$symbol-$address-ext-join1.txt
+paste $symbol-$address-ext-join1.txt  $symbol-$address-ext-hash.txt >$symbol-$address-ext-join2.txt
+
+curl -o $symbol-$address-int.json "http://api.etherscan.io/api?module=account&action=txlistinternal&address=$address&startblock=$start&endblock=$stop&sort=asc"
+jq -r '.result[].blockNumber' $symbol-$address-int.json > $symbol-$address-int-blocks.txt
+jq -r '.result[].transactionIndex' $symbol-$address-int.json > $symbol-$address-int-tx.txt
+jq -r '.result[].hash' $symbol-$address-int.json > $symbol-$address-int-hash.txt
+paste $symbol-$address-int-blocks.txt $symbol-$address-int-tx.txt   >$symbol-$address-int-join1.txt
+paste $symbol-$address-int-join1.txt  $symbol-$address-int-hash.txt >$symbol-$address-int-join2.txt
+
+sort -u $symbol-$address-ext-join2.txt $symbol-$address-int-join2.txt > $symbol-$address.txt
+
+#cat $symbol-$address.txt  | tail -n +2 | awk '{print $1}' | sort -u > $symbol-$address-jay-blocks.txt
+#comm -12 $symbol-$address-jay-blocks.txt $symbol-$address-etherscan-unique.txt > results/$symbol-$address-common.txt
+#comm -13 $symbol-$address-jay-blocks.txt $symbol-$address-etherscan-unique.txt > results/$symbol-$address-not_ethscan.txt
+#comm -23 $symbol-$address-jay-blocks.txt $symbol-$address-etherscan-unique.txt > results/$symbol-$address-not_qblocks.txt
