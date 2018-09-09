@@ -1,4 +1,4 @@
-acctExport --fmt txt --filter $1 | tee ../../test/gold/monitors/$2_$1.txt
+#acctExport --fmt txt --filter $1 | tee ../../test/gold/monitors/$2_$1.txt
 
 echo $1 | sed 's/0x//' >y
 cat y | sed 's/^/s\/0x\//' | sed 's/$/\//' >z
@@ -14,9 +14,9 @@ cat crap | cut -f2,3 | sed 's/$/ 0x/' | sed -f z | sed 's/^/.\/getem.2 /' >x ; c
 colorEcho -t "Diffing for changes: $2_$1"
 diff --suppress-common-lines -y ../../test/gold/monitors/$2_$1.txt ~/src.GitHub.1/quickBlocks/test/gold/monitors/$2_$1.txt  | grep "|" | tee $1_changed.txt
 
-open $1_new_not_old.txt
-open $1_old_not_new.txt
-open $1_changed.txt
+nano $1_new_not_old.txt
+nano $1_old_not_new.txt
+nano $1_changed.txt
 
 sleep 1
 rm -f crap w x y z
