@@ -41,7 +41,7 @@ bool exportTransaction(COptions& options, const CAcctCacheItem *item) {
         if (watch.enabled) {
             watch.inBlock = false;
             for (auto bloom : blooms) {
-                if (isBloomHit(watch.bloom, bloom)) {
+                if (isBloomHit(makeBloom(watch.address), bloom)) {
                     watch.inBlock = true;
                     atLeastOne++;
                 }

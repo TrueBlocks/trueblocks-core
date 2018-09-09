@@ -146,9 +146,6 @@ namespace qblocks {
 
     //----------------------------------------------------------------------
     extern size_t stringToAsciiFile(const string_q& fileName, const string_q& contents);
-    extern string_q binaryFileToString(const string_q& filename);
-    extern bool asciiFileToBuffer(const string_q& filename, size_t& nChars,
-                                        string_q *buffer, size_t maxLines = INT_MAX);
     extern uint64_t appendToAsciiFile(const string_q& fileName, const string_q& addContents);
 
     //----------------------------------------------------------------------
@@ -170,18 +167,9 @@ namespace qblocks {
                                 const string_q& ns = "", bool spaces = true);
 
     //----------------------------------------------------------------------
-    inline bool asciiFileToBuffer(const string_q& filename, string_q *contents, size_t maxLines = INT_MAX) {
-        size_t unused = 0;
-        return asciiFileToBuffer(filename, unused, contents, maxLines);
-    }
+    extern string_q asciiFileToString(const string_q& filename);
 
     //----------------------------------------------------------------------
-    inline string_q asciiFileToString(const string_q& filename) {
-        string_q contents;
-        asciiFileToBuffer(filename, &contents);
-        return contents;
-    }
-
     inline bool isFileLocked(const string_q& fileName) {
         return fileExists(fileName + ".lck");
     }
