@@ -1,0 +1,28 @@
+filename=$2-$1
+address=$1
+start=0
+stop=6250000
+
+curl -o json/$filename-api-e.json "http://api.etherscan.io/api?module=account&action=txlist&address=$address&startblock=$start&endblock=$stop&sort=asc"
+curl -o json/$filename-api-i.json "http://api.etherscan.io/api?module=account&action=txlistinternal&address=$address&startblock=$start&endblock=$stop&sort=asc"
+#exit
+
+jq -r '.result[].blockNumber'      json/$filename-api-e.json   >$filename-ext-blocks.txt
+jq -r '.result[].transactionIndex' json/$filename-api-e.json   >$filename-ext-tx.txt
+jq -r '.result[].hash'             json/$filename-api-e.json   >$filename-ext-hash.txt
+paste $filename-ext-blocks.txt     $filename-ext-tx.txt        >$filename-ext-join1.txt
+paste $filename-ext-join1.txt      $filename-ext-hash.txt      >$filename-ext-join2.txt
+
+jq -r '.result[].blockNumber'      json/$filename-api-i.json   >$filename-int-blocks.txt
+jq -r '.result[].transactionIndex' json/$filename-api-i.json   >$filename-int-tx.txt
+jq -r '.result[].hash'             json/$filename-api-i.json   >$filename-int-hash.txt
+paste $filename-int-blocks.txt     $filename-int-tx.txt        >$filename-int-join1.txt
+paste $filename-int-join1.txt      $filename-int-hash.txt      >$filename-int-join2.txt
+
+cat $filename-ext-join2.txt $filename-int-join2.txt | tr '\t' '.' >file
+#sort -un file | tr '.' '\t' > txt/$filename.txt
+sort -u file | tr '.' '\t' > txt/$filename.txt
+
+rm -f file
+rm -f *-int*
+rm -f *-ext*
