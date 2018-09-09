@@ -206,6 +206,20 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
+    string_q asciiFileToString(const string_q& fileName) {
+
+        size_t len = fileSize(fileName);
+        vector<char> buffer(len);
+        CArchive archive(READING_ARCHIVE);
+        if (archive.Lock(fileName, asciiReadOnly, LOCK_NOWAIT)) {
+            archive.Read(buffer.data(), len, 1);
+            archive.Release();
+        }
+
+        return string_q(buffer.data(), len);
+    }
+
+    //----------------------------------------------------------------------
     uint64_t appendToAsciiFile(const string_q& fileName, const string_q& addContents) {
         CArchive asciiCache(WRITING_ARCHIVE);
         if (asciiCache.Lock(fileName, asciiWriteAppend, LOCK_NOWAIT)) {

@@ -229,45 +229,6 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    static bool binaryFileToBuffer(const string_q& filename, size_t& nChars, char *buffer) {
-        if (!fileExists(filename)) {
-            nChars = 0;
-            if (buffer)
-                buffer[0] = '\0';
-            return false;
-        }
-
-        nChars = fileSize(filename);
-        if (buffer) {
-            CBinFile lock;
-            if (lock.Lock(filename, binaryReadOnly, LOCK_NOWAIT)) {  // do not wait for lock - read only file
-                ASSERT(lock.isOpen());
-                lock.Seek(0, SEEK_SET);
-                lock.Read(buffer, nChars, sizeof(char));
-                buffer[nChars] = '\0';
-                lock.Release();
-            } else {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    //----------------------------------------------------------------------
-    string_q binaryFileToString(const string_q& filename) {
-        string_q ret;
-        size_t nChars = 0;
-        if (binaryFileToBuffer(filename, nChars, NULL)) {
-            char *buffer = new char[nChars + 100];  // safty factor
-            if (binaryFileToBuffer(filename, nChars, buffer))
-                ret = buffer;
-            if (buffer)
-                delete [] buffer;
-        }
-        return ret;
-    }
-
-    //----------------------------------------------------------------------
     bool CSharedResource::Eof(void) const {
         ASSERT(isOpen());
         return feof(m_fp);
@@ -367,59 +328,6 @@ namespace qblocks {
         ASSERT(isOpen());
         ASSERT(isAscii());
         fprintf(m_fp, "%s", str.c_str());
-    }
-
-    //----------------------------------------------------------------------
-    bool asciiFileToBuffer(const string_q& filename, size_t& nChars, string_q *buffer, size_t maxLines) {
-        if (!fileExists(filename) || folderExists(filename)) {
-            nChars = 0;
-            if (buffer)
-                *buffer = "";
-            return false;
-        }
-
-        size_t nBytes = fileSize(filename);
-
-        // Allocate a enough space to store the file so its not realloced each time we do +=
-        char *val = new char[nBytes+100];
-        memset(val, 0, nBytes+100);
-        char *s = val;
-
-        CAsciiFile lock;
-        if (lock.Lock(filename, asciiReadOnly, LOCK_NOWAIT)) {  // do not wait for lock - read only file
-            uint64_t nLines = 0;
-
-            ASSERT(lock.isOpen());
-            char buff[4096];
-            while (nLines < maxLines && lock.ReadLine(buff, 4096)) {
-                nChars += strlen(buff);
-                if (buffer) {
-                    size_t len = strlen(buff);
-                    strncpy(s, buff, len);  // extra space to avoid warning on Arch linux
-                    s += len;
-                }
-                nLines++;
-            }
-
-            lock.Release();
-        } else {
-            // ...and not report any errors since errors will have already been reported by InstallCheck
-            // lock.LockFailure();
-            if (val)
-                delete [] val;
-            return false;
-        }
-
-        ASSERT(s);
-        *s = '\0';
-
-        if (buffer && val)
-            *buffer = val;
-
-        if (val)
-            delete [] val;
-
-        return true;
     }
 
     //----------------------------------------------------------------------
