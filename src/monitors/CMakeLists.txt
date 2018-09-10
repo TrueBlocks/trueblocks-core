@@ -12,7 +12,7 @@ include_directories(${BASE_INCLUDE})
 
 # Compilation order of the src subdirectories
 
-#add_subdirectory(scripts)
+add_subdirectory(scripts)
 
 #add_subdirectory(etherTip/parselib)
 #add_subdirectory(etherTip)
