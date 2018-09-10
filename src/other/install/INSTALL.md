@@ -39,8 +39,8 @@ yum -y install qt-devel cmake
 sudo pkg install lang/gcc49 git cmake python ftp/curl
 cd /usr/include  
 sudo ln -s ./usr/local/include/curl curl  
-export CPLUS\_INCLUDE\_PATH=/usr/local/include/:${CPLUS\_INCLUDE\_PATH}
-export LIBRARY\_PATH=/usr/local/lib/:${LIBRARY\_PATH}
+export CPLUS_INCLUDE_PATH=/usr/local/include/:${CPLUS_INCLUDE_PATH}
+export LIBRARY_PATH=/usr/local/lib/:${LIBRARY_PATH}
 ```
 
 [Continue below](#finish) to build and install QBlocks
