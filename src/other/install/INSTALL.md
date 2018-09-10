@@ -26,6 +26,7 @@ sudo yum install cmake python python-devel libcurl-devel
 ```bash
 sudo dnf group install 'Development Tools'
 sudo dnf install cmake python python-devel libcurl-devel
+yum -y install qt-devel cmake
 ```
 
 [Continue below](#finish) to build and install QBlocks
