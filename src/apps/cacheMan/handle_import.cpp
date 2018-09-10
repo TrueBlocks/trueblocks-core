@@ -13,7 +13,7 @@ bool COptions::handleImport(void) const {
     ASSERT(fileExists("./import.txt"));
 
     CAcctCacheItemArray dataArray;
-    if (!handleRead("Reading", 1, dataArray))
+    if (!handleRead("Reading", fileExists(filenames[0]), dataArray))
         return false;
 
     string_q contents = asciiFileToString("./import.txt");

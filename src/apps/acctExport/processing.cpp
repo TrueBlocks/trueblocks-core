@@ -35,34 +35,38 @@ bool exportTransaction(COptions& options, const CAcctCacheItem *item) {
             trans.pBlock = &options.curBlock;
     }
 
-    // This happens on every transaction, but it could happen on every block
-    CBloomArray blooms;
-    string_q bloomFilename = substitute(getBinaryFilename(item->blockNum), "/blocks/", "/blooms/");
-    CArchive bloomCache(READING_ARCHIVE);
-    if (bloomCache.Lock(bloomFilename, binaryReadOnly, LOCK_NOWAIT)) {
-        bloomCache >> blooms;
-        bloomCache.Release();
-    }
+    bool useBloom = (getEnvStr("NOBLOOM") != "true");
 
     // This happens on every transaction, but it could happen on every block
-    bool foundOne = false;
-    for (CAccountWatch& watch : options.watches) {
-        if (!foundOne && watch.enabled) {
-            for (auto bloom : blooms) {
-                if (isBloomHit(makeBloom(watch.address), bloom)) {
-                    if (isInTransaction(options.curBlock, item->transIndex, watch.address)) {
-                        foundOne = true;
-                        break;
+    string_q bloomFilename = substitute(getBinaryFilename(item->blockNum), "/blocks/", "/blooms/");
+    if (useBloom && fileExists(bloomFilename)) {
+        CBloomArray blooms;
+        CArchive bloomCache(READING_ARCHIVE);
+        if (bloomCache.Lock(bloomFilename, binaryReadOnly, LOCK_NOWAIT)) {
+            bloomCache >> blooms;
+            bloomCache.Release();
+        }
+
+        // This happens on every transaction, but it could happen on every block
+        bool foundOne = false;
+        for (CAccountWatch& watch : options.watches) {
+            if (!foundOne && watch.enabled) {
+                for (auto bloom : blooms) {
+                    if (isBloomHit(makeBloom(watch.address), bloom)) {
+                        if (isInTransaction(options.curBlock, item->transIndex, watch.address)) {
+                            foundOne = true;
+                            break;
+                        }
                     }
                 }
             }
         }
-    }
 
-    if (!foundOne) {
-        cerr << item->blockNum << " " << item->transIndex << "\r";
-        cerr.flush();
-        return true;
+        if (!foundOne) {
+            cerr << item->blockNum << " " << item->transIndex << "\r";
+            cerr.flush();
+            return true;
+        }
     }
 
     if (item->transIndex < options.curBlock.transactions.size()) {
