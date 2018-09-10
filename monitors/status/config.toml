@@ -14,9 +14,9 @@ trans_fmt = [{TIMESTAMP}]\t[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{TRACEID}]\t[
 
 [[watches]]
 list = [
-    { address = "0x744d70FDBE2Ba4CF95131626614a1763DF805B9E", name = "StatusNetwork", firstBlock = 3898960, color = "green_c" },
-    { address = "0xa1c957C0210397D2d0296341627B74411756d476", name = "TokenFactory", firstBlock = 3898915, color = "green_c" },
-    { address = "0x52aE2B53C847327f95A5084a7C38c0adb12fD302", name = "Controller", firstBlock = 3899582, color = "green_c" }
+    { address = "0x744d70FDBE2Ba4CF95131626614a1763DF805B9E", name = "StatusNetwork", firstBlock = 3898960, color = "green_c", enabled = true },
+    { address = "0xa1c957C0210397D2d0296341627B74411756d476", name = "TokenFactory", firstBlock = 3898915, color = "green_c", enabled = true },
+    { address = "0x52aE2B53C847327f95A5084a7C38c0adb12fD302", name = "Controller", firstBlock = 3899582, color = "green_c", enabled = true }
 ]
 
 # make sure to always put arrays at the end of the file

@@ -25,5 +25,5 @@ txrans_fmt = [{WATCHED}]\t[{HASH}]\t[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]#[{TIME
 
 [[watches]]
 list = [
-    { address = "0x39bb259f66e1c59d5abef88375979b4d20d98022", name = "WAX",   firstBlock = 4761555, color = "green_c", enabled = false },
+    { address = "0x39bb259f66e1c59d5abef88375979b4d20d98022", name = "WAX",   firstBlock = 4761555, color = "green_c", enabled = true },
 ]
