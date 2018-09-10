@@ -35,7 +35,7 @@ bool exportTransaction(COptions& options, const CAcctCacheItem *item) {
             trans.pBlock = &options.curBlock;
     }
 
-    bool useBloom = true; //(getEnvStr("NOBLOOM") != "true");
+    bool useBloom = (getEnvStr("USEBLOOM") == "true");
 
     // This happens on every transaction, but it could happen on every block
     string_q bloomFilename = substitute(getBinaryFilename(item->blockNum), "/blocks/", "/blooms/");
