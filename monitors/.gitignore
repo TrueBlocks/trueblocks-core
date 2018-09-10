@@ -3,7 +3,6 @@
 */bin/*
 *.lck
 *.bak
-*.gz
 *.json
 *_changed.txt
 *_new_not_old.txt
