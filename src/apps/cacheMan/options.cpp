@@ -161,7 +161,7 @@ bool COptions::parseArguments(string_q& command) {
         CToml toml("./config.toml");
         loadWatches(toml);
         if (filenames.empty())
-            filenames.push_back(watches[0].address + ".acct.bin");
+            filenames.push_back("cache/" + watches[0].address + ".acct.bin");
         handleImport();
         return false;
 
