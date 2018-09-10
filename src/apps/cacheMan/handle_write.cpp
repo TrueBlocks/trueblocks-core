@@ -1,0 +1,43 @@
+/*-------------------------------------------------------------------------
+ * This source code is confidential proprietary information which is
+ * Copyright (c) 2017 by Great Hill Corporation.
+ * All Rights Reserved
+ *
+ * The LICENSE at the root of this repo details your rights (if any)
+ *------------------------------------------------------------------------*/
+#include "options.h"
+
+//-------------------------------------------------------------------------
+bool COptions::handleWrite(const string_q& outputFilename, const CAcctCacheItemArray& dataArray, CACHEFILTERFUNC filterFunc) const {
+
+    cerr << "\tWriting...";
+    uint64_t nWritten = 0;
+
+    blknum_t currentLast = str_2_Uint(asciiFileToString("./cache/lastBlock.txt"));
+
+    CArchive txCache(WRITING_ARCHIVE);
+    if (!txCache.Lock(outputFilename, binaryWriteCreate, LOCK_WAIT))
+        return usage("Could not open merge file: " + outputFilename + ". Quitting.");
+
+    CAcctCacheItem prev;
+    for (uint32_t i = 0 ; i < dataArray.size() && !shouldQuit() ; i++) {
+        CAcctCacheItem item = dataArray[i];
+        if (prev != item && (!filterFunc || (*filterFunc)(((COptions*)this)->removals, item))) {
+            lockSection(true);
+            txCache << item.blockNum << item.transIndex;
+            if (item.blockNum > currentLast && filterFunc == NULL)
+                writeLastBlock(item.blockNum);
+            lockSection(false);
+            nWritten++;
+            cerr << (!(nWritten % 10000) ? "." : "");
+        }
+        prev = item;
+    }
+    txCache.Release();
+
+    cerr << cYellow << nWritten << cOff << " records written, " << cYellow << (dataArray.size() - nWritten) << cOff << " records ignored.\n";
+    cerr << "\tWritten to " << cTeal << outputFilename << cOff << "\n";
+
+    return !shouldQuit();
+}
+
