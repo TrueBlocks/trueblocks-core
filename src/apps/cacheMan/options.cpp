@@ -130,13 +130,13 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (!isBals && filenames.size() == 0)
+    if (!isBals && filenames.size() == 0 && !isImport)
         return usage("You must provide at least one filename. Quitting.");
     if (mode.empty())
         mode = "list|";
     if (isMerge && filenames.size() < 2)
         return usage("Merge command needs at least two filenames. Quitting.");
-    if ((isSort || isRemove || isImport || isCacheBal) && filenames.size() != 1)
+    if ((isSort || isRemove || isCacheBal) && filenames.size() != 1)
         return usage("Command requires a single filename. Quitting.");
 
     if (isBals) {
@@ -156,6 +156,12 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     } else if (isImport) {
+        if (!fileExists("./config.toml"))
+            return usage("Could not open file: ./config.toml. Quitting.");
+        CToml toml("./config.toml");
+        loadWatches(toml);
+        if (filenames.empty())
+            filenames.push_back(watches[0].address + ".acct.bin");
         handleImport();
         return false;
 
