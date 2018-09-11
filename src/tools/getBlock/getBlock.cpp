@@ -74,9 +74,6 @@ int main(int argc, const char * argv[]) {
 //------------------------------------------------------------
 string_q doOneBlock(uint64_t num, const COptions& opt) {
 
-    CBlock latest;
-    getBlock(latest, "latest");
-
     CBlock gold;
     gold.blockNumber = num;
     string_q result;
@@ -94,6 +91,8 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
                 generic.parseJson3(result);
                 result = generic.result;
                 if (gold.parseJson3(result)) {
+                    CBlock latest;
+                    getBlock(latest, "latest");
                     string_q fileName = getBinaryFilename(num);
                     gold.finalized = isBlockFinal(gold.timestamp, latest.timestamp);
                     writeBlockToBinary(gold, fileName);
@@ -115,6 +114,8 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
         }
 
         if (opt.force) {  // turn this on to force a write of the block to the disc
+            CBlock latest;
+            getBlock(latest, "latest");
             gold.finalized = isBlockFinal(gold.timestamp, latest.timestamp);
             writeBlockToBinary(gold, fileName);
         }
