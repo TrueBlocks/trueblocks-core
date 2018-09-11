@@ -136,7 +136,36 @@ namespace qblocks {
         // getCurlContext()->callBackFunc = writeCallback;
         getCurlContext()->setPostData(method, params);
 
+#ifdef DEBUG_RPC
+#if 1
+char v;
+#define WAIT1() \
+v = (char)getchar(); \
+if (v == 'q') { \
+	exit(0); \
+}
+#else
+#define WAIT1()
+#endif
+static int x = 0;
+cerr << " method:\t" << method << params << "\n"; \
+cerr << " source:\t" << getCurlContext()->provider << "\n"; \
+WAIT1()
+#endif
         CURLcode res = curl_easy_perform(getCurl());
+
+#ifdef DEBUG_RPC
+#define WAIT(msg) \
+cerr << string_q(128, '-') << "\n" << ++x << "." << msg << "\n"; \
+cerr << " result:\t[" << substitute(getCurlContext()->result, "\n", " ") << "]\n"; \
+cerr << " fallBack:\t" << getEnvStr("FALLBACK") << "\n"; \
+cerr << " earlyAbort:\t" << getCurlContext()->earlyAbort << "\n"; \
+cerr << " res:\t\t" << curl_easy_strerror(res) << "\n"; \
+WAIT1()
+#else
+#define WAIT(msg)
+#endif
+
         if (res != CURLE_OK && !getCurlContext()->earlyAbort) {
             string_q currentSource = getCurlContext()->provider;
             string_q fallBack = getEnvStr("FALLBACK");
@@ -147,6 +176,7 @@ namespace qblocks {
                     cerr << "\tWarning: " << cOff << "Only the 'infura' fallback is supported.\n";
                     cerr << "\tIt is impossible for QBlocks to proceed. Quitting...\n";
                     cerr << "\n";
+WAIT("res != CURLE_OK --> fallBack != infura --> quiting")
                     exit(0);
                 }
 
@@ -157,6 +187,7 @@ namespace qblocks {
                     cerr << "\tnode. " << fallBack << " does not support tracing. It ";
                     cerr << "is impossible\n\tfor QBlocks to proceed. Quitting...\n";
                     cerr << "\n";
+WAIT("res != CURLE_OK --> fallBack == infura but tracing --> quiting")
                     exit(0);
                 }
                 getCurlContext()->theID--;
@@ -165,8 +196,10 @@ namespace qblocks {
                 getCurl(true); getCurl();
                 // since we failed, we leave the new provider, otherwise we would have to save
                 // the results and reset it here.
+WAIT("res != CURLE_OK --> fallBack == infura --> calling back in to Infura")
                 return callRPC(method, params, raw);
             }
+
             cerr << cYellow;
             cerr << "\n";
             cerr << "\tWarning: " << cOff << "The request to the Ethereum node ";
@@ -174,9 +207,23 @@ namespace qblocks {
             cerr << bTeal << curl_easy_strerror(res) << cOff << ".\n";
             cerr << "\tIt is impossible for QBlocks to proceed. Quitting...\n";
             cerr << "\n";
+WAIT("fallback didn't work. Quitting")
             exit(0);
         }
 
+double delay = str_2_Double(getEnvStr("RATE_LIMIT"));
+if (delay != 0.0 && getCurlContext()->provider == "remote") {
+	static bool sleeping = false;
+	if (!sleeping) {
+		cerr << "rate limted.";
+		sleeping = true;
+	}
+	cerr << ".";
+	cerr.flush();
+	sleep(delay);
+}
+
+WAIT("! (res != CURLE_OK && !getCurlContext()->earlyAbort)")
         if (getCurlContext()->result.empty()) {
             cerr << cYellow;
             cerr << "\n";
@@ -224,6 +271,9 @@ namespace qblocks {
         ASSERT(userdata);
         CCurlContext *data = (CCurlContext*)userdata;  // NOLINT
         data->result += s;
+#ifdef DEBUG_RPC
+        cerr << "in writeCallback, data->result ==> " << data->result << "\n";
+#endif
 
         if (data && data->curlNoteFunc)
             if (!(*data->curlNoteFunc)(ptr, size, nmemb, userdata))  // returns zero if it wants us to stop
