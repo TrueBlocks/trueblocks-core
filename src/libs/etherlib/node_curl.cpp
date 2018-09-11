@@ -211,7 +211,7 @@ WAIT("fallback didn't work. Quitting")
             exit(0);
         }
 
-double delay = str_2_Double(getEnvStr("RATE_LIMIT"));
+unsigned int delay = (unsigned int)str_2_Uint(getEnvStr("RATE_LIMIT"));
 if (delay != 0.0 && getCurlContext()->provider == "remote") {
 	static bool sleeping = false;
 	if (!sleeping) {
