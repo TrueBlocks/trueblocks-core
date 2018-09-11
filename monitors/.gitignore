@@ -1,5 +1,5 @@
-*/cache/*.acct.bin
-*/cache/lastBlock.txt
+*.acct.bin
+lastBlock.txt
 */bin/*
 *.lck
 *.bak
