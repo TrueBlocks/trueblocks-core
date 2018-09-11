@@ -16,15 +16,20 @@ bool COptions::handleImport(void) const {
     if (!handleRead("Reading", fileExists(filenames[0]), dataArray))
         return false;
 
+    CStringArray lines;
     string_q contents = asciiFileToString("./import.txt");
-    while (!contents.empty() && !shouldQuit()) {
-        string_q line  = nextTokenClear(contents,'\n');
+    size_t nRecords = explode(lines, contents, '\n');
+    for (auto line : lines) {
         CAcctCacheItem item(line);
         if (item.blockNum > 0) {
             dataArray.push_back(item);
-            cerr << "\tImporting item " << item << "\n";
+            if (!(dataArray.size() % 13)) {
+                cerr << "\tImporting record " << dataArray.size() << " of " << nRecords << "\r";
+                cerr.flush();
+            }
         }
     }
+    cerr << "\n";
     if (!isTestMode()) {
         copyFile("./import.txt", "import.bak");
         remove("./import.txt");

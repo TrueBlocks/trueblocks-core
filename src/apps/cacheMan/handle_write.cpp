@@ -28,8 +28,8 @@ bool COptions::handleWrite(const string_q& outputFilename, const CAcctCacheItemA
             if (item.blockNum > currentLast && filterFunc == NULL)
                 writeLastBlock(item.blockNum);
             lockSection(false);
+            cerr << (!(nWritten % 5000) ? "." : "");
             nWritten++;
-            cerr << (!(nWritten % 10000) ? "." : "");
         }
         prev = item;
     }
