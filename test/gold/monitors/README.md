@@ -2,7 +2,6 @@
 
 The gzipped archives in this folder contain what we think are the best available lists of transactions for the given monitors. Some of them are 'final' in the sense that they've been verified against EtherScan. The verified data is in 
 
-
 	00_newbium-0x814964b1bceaf24e26296d031eadf134a2ca4105.txt.gz
 	00_newbium-0xc9d7fec9889690bbff0a0df758d13e5a55dd7822.txt.gz
 	00_etherTip-0x89205a3a3b2a69de6dbf7f01ed13b2108b2c43e7.txt.gz

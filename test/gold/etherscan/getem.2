@@ -19,9 +19,8 @@ jq -r '.result[].hash'             json/$filename-api-i.json   >$filename-int-ha
 paste $filename-int-blocks.txt     $filename-int-tx.txt        >$filename-int-join1.txt
 paste $filename-int-join1.txt      $filename-int-hash.txt      >$filename-int-join2.txt
 
-cat $filename-ext-join2.txt $filename-int-join2.txt | tr '\t' '.' >file
-#sort -un file | tr '.' '\t' > txt/$filename.txt
-sort -u file | tr '.' '\t' > txt/$filename.txt
+cat $filename-ext-join2.txt $filename-int-join2.txt >file
+qbsort -s file > txt/$filename.txt
 
 rm -f file
 rm -f *-int*
