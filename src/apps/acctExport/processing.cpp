@@ -5,15 +5,22 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
+//---------------------------------------------------------------------------------------------
 extern bool exportTransaction(COptions& options, const CAcctCacheItem *item);
+inline bool isInRange(blknum_t ref, blknum_t start, blknum_t end) {
+    return (start <= ref && end >= ref);
+}
 //-----------------------------------------------------------------------
 bool exportData(COptions& options) {
 
     if (options.transFmt.empty())
         cout << "[";
 
-    for (size_t index = 0 ; index < options.items.size() ; index++)
-        exportTransaction(options, &options.items[index]);
+    for (size_t index = 0 ; index < options.items.size() ; index++) {
+        CAcctCacheItem *item = &options.items[index];
+        if (isInRange(item->blockNum, options.blk_minWatchBlock, options.blk_maxWatchBlock))
+            exportTransaction(options, item);
+    }
 
     if (options.transFmt.empty())
         cout << "]";

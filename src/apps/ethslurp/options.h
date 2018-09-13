@@ -34,6 +34,7 @@ public:
     string_q name;
     bool cache;
     size_t acct_id;
+    string_q type;
 
     COptions(void);
     ~COptions(void);
