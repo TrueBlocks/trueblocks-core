@@ -1,6 +1,5 @@
-*uniq*
-*int*
-*ext*
-*getem*
 *.txt
 *.json
+*.gz
+colorEcho
+getem*
