@@ -1,0 +1,35 @@
+ethslurp argc: 4 [1:0x1324e7b922b30B49Ab8EA81086341cc41C249346] [2:-t] [3:junk] 
+ethslurp 0x1324e7b922b30B49Ab8EA81086341cc41C249346 -t junk 
+Processing: 0x1324e7b922b30B49Ab8EA81086341cc41C249346 -t:junk
+
+  Type must be either 'int', 'ext', or 'both'. Quitting...
+
+  Usage:    ethslurp [-b|-d|-f|-i|-e|-t|-v|-h] addr  
+  Purpose:  Fetches data off the Ethereum blockchain for an arbitrary account or smart contract. Optionally formats the output to your specification. Note: --income and --expense are mutually exclusive as are --blocks and --dates.
+             
+  Where:    
+	addr                  the address of the account or contract to slurp (required)
+	-b  (--blocks range)  export records in block range (:0[:max])
+	-d  (--dates val)     export records in date range (:yyyymmdd[hhmmss][:yyyymmdd[hhmmss]])
+	-f  (--fmt val)       pretty print, optionally add ':txt,' ':csv,' or ':html'
+	-i  (--income)        include income transactions only
+	-e  (--expense)       include expenditures only
+	-t  (--type val)      extract either [ ext | int | both ] type of transactions
+
+#### Hidden options (shown during testing only)
+	-r  (--rerun)         re-run the most recent slurp
+	-o  (--open)          open the configuration file for editing
+	-m  (--max val)       maximum transactions to slurp (:250000)
+	-s  (--sleep val)     sleep for :x seconds
+	-f  (--func val)      display only --func:functionName records
+	-e  (--errFilt val)   display only non-error transactions or only errors with :errsOnly
+	-r  (--reverse)       display results sorted in reverse chronological order (chronological by default)
+	-a  (--acct_id val)   for 'cache' mode, use this as the :acct_id for the cache (0 otherwise)
+	-c  (--cache)         write the data to a local QBlocks cache
+	-n  (--name val)      name this address
+#### Hidden options (shown during testing only)
+
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Powered by QBlocks

@@ -1,6 +1,5 @@
 *.acct.bin
 lastBlock.txt
-*/bin/*
 *.lck
 *.bak
 *.json
