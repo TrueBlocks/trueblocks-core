@@ -1,23 +1,38 @@
-./getem.1 0x3883f5e181fccaf8410fa61e12b59bad963fb645 10_theta
-#./getem.1 0x12480e24eb5bec1a9d4369cab6a80cad3c0a377a 10_sub
-#./getem.1 0x9ab165d795019b6d8b3e971dda91071421305e5a 08_aoa
-#./getem.1 0x9cda8a60dd5afa156c95bd974428d91a0812e054 07_ttu
-#./getem.1 0xf0ee6b27b759c9893ce4f094b49ad28fd15a23e4 10_eng
-#./getem.1 0xf85feea2fdd81d51177f6b8f35f0e6734ce45f5f 10_cmt
+#!/usr/bin/env bash
+#
+# A shell script to retrieve transaction histories from EtherScan and compare them
+# to transaction histories created by qblocks. We are hoping for no transactions
+# from EtherScan that qblocks doesn't find. And zero or more transations from
+# qblocks that EtherScan doesn't find.
+#
+# All the work is done in a series of sub programs stored in the 'scripts'
+# subfolder. The process starts with cmp_ethscan(addr, name, <optional>)
+# where the third parameter indicates that the analysis has been confirmed.
+#
+# Important note: These shell scripts assumes that ./quickBlocks/bin is
+# in your $PATH
+#
+
+./scripts/cmp_ethscan 0x9cda8a60dd5afa156c95bd974428d91a0812e054 07_ttu
+#./scripts/cmp_ethscan 0x3883f5e181fccaf8410fa61e12b59bad963fb645 10_theta
+#./scripts/cmp_ethscan 0x12480e24eb5bec1a9d4369cab6a80cad3c0a377a 10_sub
+#./scripts/cmp_ethscan 0x9ab165d795019b6d8b3e971dda91071421305e5a 08_aoa
+#./scripts/cmp_ethscan 0xf0ee6b27b759c9893ce4f094b49ad28fd15a23e4 10_eng
+#./scripts/cmp_ethscan 0xf85feea2fdd81d51177f6b8f35f0e6734ce45f5f 10_cmt
 
 # not final
-# ./getem.1 0x12480e24eb5bec1a9d4369cab6a80cad3c0a377a 10_sub
-# ./getem.1 0x3893b9422cd5d70a81edeffe3d5a1c6a978310bb 05_mith
-# ./getem.1 0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2 12_maker
-# ./getem.1 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 00_etherTip
+# ./scripts/cmp_ethscan 0x12480e24eb5bec1a9d4369cab6a80cad3c0a377a 10_sub
+# ./scripts/cmp_ethscan 0x3893b9422cd5d70a81edeffe3d5a1c6a978310bb 05_mith
+# ./scripts/cmp_ethscan 0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2 12_maker
+# ./scripts/cmp_ethscan 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 00_etherTip
 
 # final
-# ./getem.1 0x814964b1bceaf24e26296d031eadf134a2ca4105 00_newbium   final/
-# ./getem.1 0xc9d7fec9889690bbff0a0df758d13e5a55dd7822 00_newbium   final/
-# ./getem.1 0x423b5f62b328d0d6d44870f4eee316befa0b2df5 00_gonetwork final/
-# ./getem.1 0x35a9b440da4410dd63df8c54672b728970560328 07_mana      final/
-# ./getem.1 0x514910771af9ca656af840dff83e8264ecf986ca 05_link      final/
-# ./getem.1 0x595832f8fc6bf59c85c527fec3740a1b7a361269 07_power     final/
-# ./getem.1 0x89205a3a3b2a69de6dbf7f01ed13b2108b2c43e7 00_etherTip  final/
-# ./getem.1 0xdac17f958d2ee523a2206206994597c13d831ec7 01_usdt      final/
-# ./getem.1 0xb3104b4b9da82025e8b9f8fb28b3553ce2f67069 11_bix       final/
+# ./scripts/cmp_ethscan 0x814964b1bceaf24e26296d031eadf134a2ca4105 00_newbium   final/
+# ./scripts/cmp_ethscan 0xc9d7fec9889690bbff0a0df758d13e5a55dd7822 00_newbium   final/
+# ./scripts/cmp_ethscan 0x423b5f62b328d0d6d44870f4eee316befa0b2df5 00_gonetwork final/
+# ./scripts/cmp_ethscan 0x35a9b440da4410dd63df8c54672b728970560328 07_mana      final/
+# ./scripts/cmp_ethscan 0x514910771af9ca656af840dff83e8264ecf986ca 05_link      final/
+# ./scripts/cmp_ethscan 0x595832f8fc6bf59c85c527fec3740a1b7a361269 07_power     final/
+# ./scripts/cmp_ethscan 0x89205a3a3b2a69de6dbf7f01ed13b2108b2c43e7 00_etherTip  final/
+# ./scripts/cmp_ethscan 0xdac17f958d2ee523a2206206994597c13d831ec7 01_usdt      final/
+# ./scripts/cmp_ethscan 0xb3104b4b9da82025e8b9f8fb28b3553ce2f67069 11_bix       final/
