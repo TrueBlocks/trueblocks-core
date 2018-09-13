@@ -1,0 +1,38 @@
+filename=$3$2-$1
+address=$1
+
+#--
+# Make params easier to read
+#
+filename=$3$2-$1
+address=$1
+
+#--
+# For the following code to work, you must add these entries to your ~/.quickblocks/ethslurp.toml file
+#
+#   [display]
+#   fmt_ethscan_fieldList = blockNumber|transactionIndex|hash
+#   fmt_ethscan_file      = [{HEADER}]\n[{RECORDS}]
+#   fmt_ethscan_record    = [{FIELDS}]\n
+#   fmt_ethscan_field     = \t[{FIELD}]
+#
+
+#--
+# Export regular transactions
+#
+ethslurp $address --type ext --blocks 0-6250000 --fmt:ethscan >results/$filename-ext.txt
+
+#--
+# Export internal transactions
+#
+ethslurp $address --type int --blocks 0-6250000 --fmt:ethscan >results/$filename-int.txt
+
+#--
+# Put the files together (keeping only real records)
+#
+cat results/$filename-ext.txt results/$filename-int.txt | grep 0x >results/$filename-both.txt
+
+#--
+# Sort by blockNumber and transactionIndex
+#
+qbsort -s results/$filename-both.txt >txt/$filename.txt

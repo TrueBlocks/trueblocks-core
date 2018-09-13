@@ -1,23 +1,57 @@
-./getem.2 $1 $2
+#--
+# Make params easier to read
+#
+filename=$3$2-$1
+address=$1
 
+#--
+# Files we want to compare
+#
+qb_result=../monitors/txt/$filename.txt
+es_result=txt/$filename.txt
+
+#--
+# We use Etherscan to verify our results, so grap the list of transactions from EtherScan
+#
+#./slurp_es $address $2 $3
+./slurp_es.2 $address $2 $3
+
+#--
+# We need a little sed program in a file called 'z'
+#
 echo $1 | sed 's/0x//' >y
 cat y | sed 's/^/s\/0x\//' | sed 's/$/\//' >z
 
-./colorEcho -t "Diffing for in new gold, not in old gold: $2-$1"
-diff --suppress-common-lines -y ~/src.GitHub/quickBlocks/test/gold/monitors/txt/$3$2-$1.txt txt/$2-$1.txt | grep "<" | cut -c1-20 >crap
-cat crap | cut -f1,2 | sed 's/$/ 0x/' | sed -f z | sed 's/^/.\/getem.3 /' >x ; chmod uog+x x ; ./x | tee results/$1_qb_not_es.txt
+#--
+# Figure out if there are any records in qblock but not etherscan, then use getTrans to see if qblocks is right or wrong
+#
+qbnes=results/$3$2-$1_qb_not_es
+echo "Looking for records in new gold that are not in old gold"
+diff --suppress-common-lines -y $qb_result $es_result | grep "<" | cut  -c1-20  | cut -f1,2 | sed 's/$/ 0x/' | sed -f z | sed 's/^/.\/check_node /' >x
+chmod uog+x x
+./x | tee $qbnes.txt
+open $qbnes.txt
 
-./colorEcho -t "Diffing for in old gold, not in new gold: $2-$1"
-diff --suppress-common-lines -y ~/src.GitHub/quickBlocks/test/gold/monitors/txt/$3$2-$1.txt txt/$2-$1.txt | grep ">" | cut -c15-100 >crap
-cat crap | cut -f2,3 | sed 's/$/ 0x/' | sed -f z | sed 's/^/.\/getem.3 /' >x ; chmod uog+x x ; ./x | tee results/$1_es_not_qb.txt
+#--
+# Figure out if there are any records in qblock but not etherscan, then use getTrans to see if qblocks is right or wrong
+#
+esnqb=results/$3$2-$1_es_not_qb
+echo "Looking for records from etherscan that do not appear in qblocks"
+diff --suppress-common-lines -y $qb_result $es_result | grep ">" | cut -c15-100 | cut -f2,3 | sed 's/$/ 0x/' | sed -f z | sed 's/^/.\/check_node /' >x
+chmod uog+x x
+./x | tee $esnqb.txt
+open $esnqb.txt
 
-./colorEcho -t "Diffing for changes: $2-$1"
-diff --suppress-common-lines -y ~/src.GitHub/quickBlocks/test/gold/monitors/txt/$3$2-$1.txt txt/$2-$1.txt | grep "|" | tee results/$1_changed.txt
-
-open results/$1_qb_not_es.txt
-open results/$1_es_not_qb.txt
-open results/$1_changed.txt
+#--
+# Finally look for records in both that are different
+#
+chg=results/$3$2-$1_changes
+echo "Looking for common records with changes"
+diff --suppress-common-lines -y $qb_result $es_result | grep "|" | tee $chg.txt
+open $chg.txt
 
 sleep 1
-rm -f crap w x y z
-#rm -f $1*.txt
+rm -f crap x y z
+rm -f results/*ext*
+rm -f results/*int*
+rm -f results/*both*
