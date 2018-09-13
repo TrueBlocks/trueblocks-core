@@ -1,0 +1,78 @@
+name: absentis
+version: "0.0.1"
+author: Andrew P. <aplaza@liquidthink.net>
+about: Validates Transactions
+args:
+  - config:
+        short: c
+        long: config
+        value_name: FILE
+        help: "Sets a custom config file (default ~/.config/absentis.toml)"
+        required: false
+        takes_value: true
+  - verbose:
+        short: v
+        multiple: true
+        help: Sets level of verbosity
+  - identify:
+        short: i
+        long: identify
+        help: Sets a node (by identifier) to use from the configuration file
+        takes_value: true
+        required: false
+  - node:
+        short: n
+        long: node
+        help: Sets a node to use. enter the full path to the node, ie 'http://localhost:8545' or '~/.geth/ipc'
+        takes_value: true
+        required: false
+        requires:
+          - transport
+        conflicts_with:
+          - infura
+          - identify
+  - infura:
+        long: infura
+        help: Set the Infura API Key
+        takes_value: true
+        required: false
+        conflicts_with:
+          - identify
+          - node
+  - csv_validate:
+        short: V
+        long: validate-csv
+        value_name: FILE
+        help: Sets a csv file to parse and validate transactions
+        takes_value: true
+        required: false
+        requires:
+          - to
+          - address
+  - from:
+      long: from
+      help: Set the block from which to start exploring
+      takes_value: true
+      required: false
+  - to:
+      long: to
+      help: Set the block to stop exploring
+      takes_value: true
+      required: false
+  - address:
+      long: address
+      help: Set address
+      takes_value: true
+      required: false
+  - transport:
+        short: t
+        long: transport
+        help: Choose a transport to use
+        required: false
+        possible_values: [ipc, http, infura]
+        takes_value: true
+  - generate_config:
+        short: g
+        long: generate-config
+        help: Generates an example configuration file at ~/.config/absentis.toml
+        required: false
