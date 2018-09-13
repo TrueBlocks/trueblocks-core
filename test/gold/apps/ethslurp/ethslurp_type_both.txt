@@ -1,8 +1,8 @@
-ethslurp argc: 2 [1:--] 
-ethslurp -- 
-Processing: --
+ethslurp argc: 4 [1:0x1324e7b922b30B49Ab8EA81086341cc41C249346] [2:--type] [3:both] 
+ethslurp 0x1324e7b922b30B49Ab8EA81086341cc41C249346 --type both 
+Processing: 0x1324e7b922b30B49Ab8EA81086341cc41C249346 --type:both
 
-  Invalid option: --
+  Type 'both' is currently disabled. Use --ext then --int. Quitting...
 
   Usage:    ethslurp [-b|-d|-f|-i|-e|-t|-v|-h] addr  
   Purpose:  Fetches data off the Ethereum blockchain for an arbitrary account or smart contract. Optionally formats the output to your specification. Note: --income and --expense are mutually exclusive as are --blocks and --dates.
