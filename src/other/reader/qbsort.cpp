@@ -29,6 +29,13 @@ public:
             return true;
         return v1.hash < v2.hash;
     }
+    bool operator==(const CItem& i) const {
+        if (i.bn != bn) return false;
+        if (i.tx != tx) return false;
+        if (i.hash != hash) return false;
+        return true;
+    }
+    bool operator!=(const CItem& i) const { return !operator==(i); }
 };
 typedef vector<CItem> CItemArray;
 
@@ -55,7 +62,8 @@ int main(int argc, const char *argv[]) {
 
         CItemArray items;
         string_q contents = asciiFileToString(options.fileName);
-        nextTokenClear(contents, '\n'); // skip line
+        if (startsWith(contents, "blockNumber"))
+            nextTokenClear(contents, '\n'); // skip header line
         CStringArray lines;
         explode(lines, contents, '\n');
         for (auto line : lines) {
@@ -63,6 +71,7 @@ int main(int argc, const char *argv[]) {
                 return usage("Invalid line: " + line + "\n");
             items.push_back(CItem(line));
         }
+
         if (options.sort) {
             std::sort(items.begin(), items.end(), [](const CItem& lhs, const CItem& rhs) {
                 uint64_t n1 = lhs.bn * 10000 + lhs.tx;
@@ -71,9 +80,14 @@ int main(int argc, const char *argv[]) {
             });
         }
 
+        CItem lastItem("0\t0\t0");
         cout << "blocknumber\ttransactionindex\thash\n";
-        for (auto item : items)
-            cout << item << "\n";
+        for (auto item : items) {
+            if (item != lastItem) {
+                cout << item << "\n";
+                lastItem = item;
+            }
+        }
     }
     return 0;
 }

@@ -255,22 +255,17 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
         CTransaction trans;
         while (trans.parseJson3(contents)) {
             int64_t transBlock = static_cast<int64_t>(trans.blockNumber);
-            if (options.type == "int") {
-                findTransactionsIndex(trans);
-                theAccount.transactions.push_back(trans);
-                if (!(++nNewBlocks % REP_FREQ) && !isTestMode()) {
-                    cerr << "\tFound new transaction at block " << transBlock << ". Importing...\r";
-                    cerr.flush();
-                }
-            } else if (transBlock > theAccount.lastBlock) {  // add the new transaction if it's in a new block
+            if (transBlock > theAccount.lastBlock) {  // add the new transaction if it's in a new block
+                if (options.type == "int")
+                    findTransactionsIndex(trans);
                 theAccount.transactions.push_back(trans);
                 lastBlock = transBlock;
                 if (!(++nNewBlocks % REP_FREQ) && !isTestMode()) {
                     cerr << "\tFound new transaction at block " << transBlock << ". Importing...\r";
                     cerr.flush();
                 }
+                trans = CTransaction();  // reset
             }
-            trans = CTransaction();  // reset
         }
         if (!isTestMode() && nNewBlocks) {
             cerr << "\tFound new transaction at block " << lastBlock << ". Importing...\n";
