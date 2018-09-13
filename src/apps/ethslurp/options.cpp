@@ -20,6 +20,7 @@ static COption params[] = {
     COption("-fmt:<str>",       "pretty print, optionally add ':txt,' ':csv,' or ':html'"),
     COption("-income",          "include income transactions only"),
     COption("-expense",         "include expenditures only"),
+    COption("-type:<tx_type>",  "extract either [ ext | int | both ] type of transactions"),
     COption("@rerun",           "re-run the most recent slurp"),
     COption("@open",            "open the configuration file for editing"),
     COption("@max:<val>",       "maximum transactions to slurp (:250000)"),
@@ -52,6 +53,14 @@ bool COptions::parseArguments(string_q& command) {
             if (expenseOnly)
                 return usage("Only one of --income or --expense may be specified.");
             incomeOnly = true;
+
+        } else if (startsWith(arg, "-t:") || startsWith(arg, "--type:")) {
+            type = substitute(substitute(arg, "-t:", ""), "--type:", "");
+            if (type == "both")
+                return usage("Type 'both' is currently disabled. Use --ext then --int. Quitting...");
+
+            if (type != "int" && type != "ext")
+                return usage("Type must be either 'int', 'ext', or 'both'. Quitting...");
 
         } else if (arg == "-e" || arg == "--expense") {
             if (incomeOnly)

@@ -15,6 +15,7 @@
 #include "options.h"
 
 extern bool sortReverseChron(const CTransaction& f1, const CTransaction& f2);
+extern void findTransactionsIndex(CTransaction& trans);
 //--------------------------------------------------------------------------------
 int main(int argc, const char * argv[]) {
 
@@ -152,7 +153,7 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
     loadABI(theAccount.abi, theAccount.addr);
 
     // Do we have the data for this address cached?
-    string_q cacheFilename = blockCachePath("slurps/" + theAccount.addr + ".bin");
+    string_q cacheFilename = blockCachePath("slurps/" + theAccount.addr + (options.type == "int" ? ".int" : "") + ".bin");
     bool needToRead = fileExists(cacheFilename);
     if (options.rerun && theAccount.transactions.size())
         needToRead = false;
@@ -196,7 +197,8 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
         done = true;
 #endif
         while (!done) {
-            string_q url = string_q("https://api.etherscan.io/api?module=account&action=txlist&sort=asc") +
+            string_q url = string_q("https://api.etherscan.io/api?module=account&sort=asc") +
+            "&action="  + (options.type == "int" ? "txlistinternal" : "txlist") +
             "&address=" + theAccount.addr +
             "&page="    + uint_2_Str(page) +
             "&offset="  + uint_2_Str(options.pageSize) +
@@ -253,7 +255,14 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
         CTransaction trans;
         while (trans.parseJson3(contents)) {
             int64_t transBlock = static_cast<int64_t>(trans.blockNumber);
-            if (transBlock > theAccount.lastBlock) {  // add the new transaction if it's in a new block
+            if (options.type == "int") {
+                findTransactionsIndex(trans);
+                theAccount.transactions.push_back(trans);
+                if (!(++nNewBlocks % REP_FREQ) && !isTestMode()) {
+                    cerr << "\tFound new transaction at block " << transBlock << ". Importing...\r";
+                    cerr.flush();
+                }
+            } else if (transBlock > theAccount.lastBlock) {  // add the new transaction if it's in a new block
                 theAccount.transactions.push_back(trans);
                 lastBlock = transBlock;
                 if (!(++nNewBlocks % REP_FREQ) && !isTestMode()) {
@@ -289,7 +298,7 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
     double stop = qbNow();
     double timeSpent = stop-start;
     string_q timeRep = (isTestMode() ? "--time--" : double_2_Str(timeSpent));
-    cout << "\tLoaded " << theAccount.transactions.size() << " total records in "
+    cerr << "\tLoaded " << theAccount.transactions.size() << " total records in "
             << timeRep << " seconds\n";
     fflush(stderr);
 
@@ -626,4 +635,14 @@ bool isFunction(const CTransaction *trans, const string_q& func) {
 //        return (trans->inputToFunction() == " ");
 //    return (trans->funcPtr ? trans->funcPtr->name == func : false);
     return false;
+}
+
+//---------------------------------------------------------------------------
+void findTransactionsIndex(CTransaction& trans) {
+    CTransaction thing;
+    getTransaction(thing, trans.hash);
+    cout << "index: " << trans.transactionIndex << "\n";
+    trans.transactionIndex = thing.transactionIndex;
+    cout << "index: " << trans.transactionIndex << "\n";
+    trans.isInternal = true;
 }
