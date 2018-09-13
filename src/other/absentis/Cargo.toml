@@ -1,0 +1,38 @@
+cargo-features = ["edition"]
+
+[package]
+name = "absentis"
+version = "0.1.0"
+authors = ["Andrew Plaza <aplaza@liquidthink.net>"]
+edition = '2018'
+
+[dependencies]
+tokio = "0.1.7"
+tokio-core = "0.1.17"
+web3 = { git = "https://github.com/InsidiousMind/rust-web3", branch = "insi_traces-api-revise-patch"}
+futures = "0.1.23"
+serde = "1.0.70"
+serde_json = "1.0.24"
+serde_derive = "1.0.70"
+failure = "0.1.1"
+hyper = "0.12"
+toml = "0.4"
+dirs = "1.0.2"
+log = { version = "0.4.3", features = ["std", "serde"] }
+env_logger = "0.5.11"
+regex = "*"
+bytes = "*"
+colored = "1.6.1"
+hex = "0.3.2"
+config = "0.9.0"
+separator = "0.3.1"
+clap = { version= "2.32", features = ["yaml"]}
+reduce = "0.1"
+pretty_env_logger = "0.2.4"
+csv = "1"
+rayon = "1.0.2"
+itertools = "0.7.8"
+rustc-hex = "*"
+bincode = "*"
+flate2 = "1.0"
+
