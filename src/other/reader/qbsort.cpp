@@ -15,7 +15,9 @@ public:
     blknum_t bn;
     blknum_t tx;
     hash_t   hash;
+    bool     isnull;
     CItem(const string_q& line) {
+        isnull = contains(line, "null");
         hash = line;
         bn = str_2_Uint(nextTokenClear(hash, '\t'));
         tx = str_2_Uint(nextTokenClear(hash, '\t'));
@@ -32,7 +34,7 @@ typedef vector<CItem> CItemArray;
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CItem& item) {
-    os << item.bn << "\t" << item.tx << "\t" << item.hash;
+    os << item.bn << "\t" << (item.isnull ? "null" : uint_2_Str(item.tx)) << "\t" << item.hash;
     return os;
 }
 
@@ -54,8 +56,9 @@ int main(int argc, const char *argv[]) {
         CItemArray items;
         string_q contents = asciiFileToString(options.fileName);
         nextTokenClear(contents, '\n'); // skip line
-        while (!contents.empty()) {
-            string_q line = nextTokenClear(contents, '\n');
+        CStringArray lines;
+        explode(lines, contents, '\n');
+        for (auto line : lines) {
             if (!countOf(line, '\t'))
                 return usage("Invalid line: " + line + "\n");
             items.push_back(CItem(line));
@@ -68,7 +71,7 @@ int main(int argc, const char *argv[]) {
             });
         }
 
-        cout << "blockNumber\ttransactionIndex\thash\n";
+        cout << "blocknumber\ttransactionindex\thash\n";
         for (auto item : items)
             cout << item << "\n";
     }
