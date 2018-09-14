@@ -16,6 +16,7 @@
 
 extern bool sortReverseChron(const CTransaction& f1, const CTransaction& f2);
 extern void findTransactionsIndex(CTransaction& trans);
+extern bool writeTheDatabase(string_q&,COptions&,CAccount&,uint64_t&,uint64_t,uint64_t,const string_q&,string_q&);
 //--------------------------------------------------------------------------------
 int main(int argc, const char * argv[]) {
 
@@ -170,15 +171,8 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
         archive.Close();
     }
 
-    time_q now = Now();
-    time_q fileTime = fileLastModifyDate(cacheFilename);
-
-    // If the user tells us he/she wants to update the cache, or the cache
-    // hasn't been updated in five minutes, then update it
-    uint64_t nSeconds = max((uint64_t)60, getGlobalConfig("ethslurp")->getConfigInt("settings", "update_freq", 300));
-    if (uint64_t(now - fileTime) > nSeconds) {
+    {
         // This is how many records we currently have
-        uint64_t origCount  = theAccount.transactions.size();
         uint64_t nNewBlocks = 0;
 
         if (!isTestMode())
@@ -190,7 +184,6 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
         uint64_t page = max(theAccount.lastPage, (uint64_t)1);
 
         // Keep reading until we get less than a full page
-        string_q contents;
         bool done = false;
 // #define NO_INTERNET
 #ifdef NO_INTERNET
@@ -214,12 +207,11 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
                     message = "No transactions were found for address '" + theAccount.addr + "'.";
                 return options.fromFile;
             }
-            contents += thisPage;
 
             uint64_t nRecords = countOf(thisPage, '}') - 1;
-            nRead += nRecords;
+            nRead = nRecords;
             if (!isTestMode())
-                cerr << "\tDownloaded " << nRead << " potentially new transactions.\r";
+                cerr << "\tDownloaded " << nRead << " potentially new transactions.                  \r";
 
             // If we got a full page, there are more to come
             done = (nRecords < options.pageSize);
@@ -235,58 +227,9 @@ bool CSlurperApp::Slurp(COptions& options, string_q& message) {
             // Make sure we don't spin forever
             if (nRead >= options.maxTransactions)
                 done = true;
-        }
 
-        size_t minBlock = 0, maxBlock = 0;
-        findBlockRange(contents, minBlock, maxBlock);
-#ifndef NO_INTERNET
-        if (!isTestMode())
-            cerr << "\n\tDownload contains blocks from " << minBlock << " to " << maxBlock << "\n";
-#endif
-
-        // Keep track of which last full page we've read
-        theAccount.lastPage = page;
-        theAccount.pageSize = options.pageSize;
-
-        // pre allocate the array (probably wrong input here--reserve takes max needed size, not addition size needed)
-        theAccount.transactions.reserve(nRead);
-
-        int64_t lastBlock = 0;  // DO NOT CHANGE! MAKES A BUG IF YOU MAKE IT UNSIGNED
-        CTransaction trans;
-        while (trans.parseJson3(contents)) {
-            int64_t transBlock = static_cast<int64_t>(trans.blockNumber);
-            if (transBlock > theAccount.lastBlock) {  // add the new transaction if it's in a new block
-                if (options.type == "int")
-                    findTransactionsIndex(trans);
-                theAccount.transactions.push_back(trans);
-                lastBlock = transBlock;
-                if (!(++nNewBlocks % REP_FREQ) && !isTestMode()) {
-                    cerr << "\tFound new transaction at block " << transBlock << ". Importing...\r";
-                    cerr.flush();
-                }
-                trans = CTransaction();  // reset
-            }
-        }
-        if (!isTestMode() && nNewBlocks) {
-            cerr << "\tFound new transaction at block " << lastBlock << ". Importing...\n";
-            cerr.flush();
-        }
-
-        theAccount.lastBlock = max(theAccount.lastBlock, lastBlock);
-        // Write the data if we got new data
-        size_t newRecords = (theAccount.transactions.size() - origCount);
-        if (newRecords) {
-            if (!isTestMode())
-                cerr << "\tWriting " << newRecords << " new records to cache\n";
-            CArchive archive(WRITING_ARCHIVE);
-            if (archive.Lock(cacheFilename, binaryWriteCreate, LOCK_CREATE)) {
-                theAccount.Serialize(archive);
-                archive.Close();
-
-            } else {
-                message = "Could not open file: '" + cacheFilename + "'\n";
+            if (!writeTheDatabase(thisPage,options,theAccount,nNewBlocks,page,nRead,cacheFilename,message))
                 return options.fromFile;
-            }
         }
     }
 
@@ -519,6 +462,78 @@ void CSlurperApp::buildDisplayStrings(COptions& options) {
             replaceAll(theAccount.displayString, "\":\"", "\": \"");
         }
     }
+}
+
+//--------------------------------------------------------------------------------
+void screenMsg(const string_q& msg) {
+    cerr << "\t" << padRight(msg, 80) << "\r";
+    cerr.flush();
+}
+
+//--------------------------------------------------------------------------------
+bool writeTheDatabase(string_q& contents,
+                          COptions& options,
+                          CAccount& theAccount,
+                          uint64_t& nNewBlocks,
+                          uint64_t page,
+                          uint64_t nRead,
+                          const string_q& cacheFilename,
+                          string_q& message) {
+
+    uint64_t origCount = theAccount.transactions.size();
+
+    size_t minBlock = 0, maxBlock = 0;
+    findBlockRange(contents, minBlock, maxBlock);
+#ifndef NO_INTERNET
+    if (!isTestMode())
+        screenMsg("Download contains blocks from " + uint_2_Str(minBlock) + " to " + uint_2_Str(maxBlock));
+#endif
+
+    // Keep track of which last full page we've read
+    theAccount.lastPage = page;
+    theAccount.pageSize = options.pageSize;
+
+    // pre allocate the array (probably wrong input here--reserve takes max needed size, not addition size needed)
+    theAccount.transactions.reserve(theAccount.transactions.size() + nRead);
+
+    int64_t lastBlock = 0;  // DO NOT CHANGE! MAKES A BUG IF YOU MAKE IT UNSIGNED
+    CTransaction trans;
+    while (trans.parseJson3(contents)) {
+        int64_t transBlock = static_cast<int64_t>(trans.blockNumber);
+        if (transBlock > theAccount.lastBlock) {  // add the new transaction if it's in a new block
+            if (options.type == "int")
+                findTransactionsIndex(trans);
+            theAccount.transactions.push_back(trans);
+            lastBlock = transBlock;
+            if (!(++nNewBlocks % REP_FREQ) && !isTestMode())
+                screenMsg("Found new transaction at block " + int_2_Str(transBlock) + ". Importing...");
+            trans = CTransaction();  // reset
+        }
+    }
+    if (!isTestMode() && nNewBlocks)
+        screenMsg("Found new transaction at block " + int_2_Str(lastBlock) + ". Importing...");
+
+    theAccount.lastBlock = max(theAccount.lastBlock, lastBlock);
+    // Write the data if we got new data
+    if ((theAccount.transactions.size() - origCount) > 0) {
+        if (!isTestMode()) {
+            cerr << "\n";
+            screenMsg("Wrote records " + uint_2_Str(origCount) + "-" + uint_2_Str(theAccount.transactions.size()) + " to the cache...");
+        }
+        CArchive archive(WRITING_ARCHIVE);
+        if (archive.Lock(cacheFilename, binaryWriteCreate, LOCK_CREATE)) {
+            lockSection(true);
+            theAccount.Serialize(archive);
+            archive.Close();
+            lockSection(false);
+
+        } else {
+            message = "\tCould not open file: '" + cacheFilename + "'                 \n";
+            return false;
+        }
+    }
+    cerr << "\n";
+    return !shouldQuit();
 }
 
 //--------------------------------------------------------------------------------

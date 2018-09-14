@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+cd ../../../../monitors/final/00_gonetwork/ ; acctExport ; cd -
+#cd ../../../../monitors/final/00_newbium/ ; acctExport ; cd -
+#cd ../../../../monitors/final/01_usdt/ ; acctExport ; cd -
+#cd ../../../../monitors/final/05_link/ ; acctExport ; cd -
+#cd ../../../../monitors/final/07_mana/ ; acctExport ; cd -
+#cd ../../../../monitors/final/07_power/ ; acctExport ; cd -
+#cd ../../../../monitors/final/07_ttu/ ; acctExport ; cd -
+#cd ../../../../monitors/final/08_aoa/ ; acctExport ; cd -
+#cd ../../../../monitors/final/11_bix/ ; acctExport ; cd -
+
+#cd ../../../../monitors/final_not/00_etherTip/ ; acctExport ; cd -
+#cd ../../../../monitors/final_not/05_mith/ ; acctExport ; cd -
+#cd ../../../../monitors/final_not/10_sub/ ; acctExport ; cd -
+
+#cd ../../../../monitors/00_status/ ; acctExport ; cd -
+#cd ../../../../monitors/01_bnb/ ; acctExport ; cd -
+#cd ../../../../monitors/01_omg/ ; acctExport ; cd -
+#cd ../../../../monitors/01_zrx/ ; acctExport ; cd -
+#cd ../../../../monitors/02_bat/ ; acctExport ; cd -
+#cd ../../../../monitors/02_maker/ ; acctExport ; cd -
+#cd ../../../../monitors/02_rep/ ; acctExport ; cd -
+#cd ../../../../monitors/02_zil/ ; acctExport ; cd -
+#cd ../../../../monitors/03_btm/ ; acctExport ; cd -
+#cd ../../../../monitors/03_gnt/ ; acctExport ; cd -
+#cd ../../../../monitors/03_npxs/ ; acctExport ; cd -
+#cd ../../../../monitors/03_wtc/ ; acctExport ; cd -
+#cd ../../../../monitors/04_iost/ ; acctExport ; cd -
+#cd ../../../../monitors/04_ppt/ ; acctExport ; cd -
+#cd ../../../../monitors/04_rhoc/ ; acctExport ; cd -
+#cd ../../../../monitors/04_snt/ ; acctExport ; cd -
+#cd ../../../../monitors/05_aion/ ; acctExport ; cd -
+#cd ../../../../monitors/05_kcs/ ; acctExport ; cd -
+#cd ../../../../monitors/06_bnt/ ; acctExport ; cd -
+#cd ../../../../monitors/06_dgd/ ; acctExport ; cd -
+#cd ../../../../monitors/06_elf/ ; acctExport ; cd -
+#cd ../../../../monitors/06_hot/ ; acctExport ; cd -
+#cd ../../../../monitors/07_qash/ ; acctExport ; cd -
+#cd ../../../../monitors/08_knc/ ; acctExport ; cd -
+#cd ../../../../monitors/08_loom/ ; acctExport ; cd -
+#cd ../../../../monitors/08_tusd/ ; acctExport ; cd -
+#cd ../../../../monitors/09_lrc/ ; acctExport ; cd -
+#cd ../../../../monitors/09_noah/ ; acctExport ; cd -
+#cd ../../../../monitors/09_nuls/ ; acctExport ; cd -
+#cd ../../../../monitors/09_wax/ ; acctExport ; cd -
+#cd ../../../../monitors/10_cmt/ ; acctExport ; cd -
+#cd ../../../../monitors/10_eng/ ; acctExport ; cd -
+#cd ../../../../monitors/10_theta/ ; acctExport ; cd -
+#cd ../../../../monitors/11_ctxc/ ; acctExport ; cd -
+#cd ../../../../monitors/11_drop/ ; acctExport ; cd -
+#cd ../../../../monitors/11_poly/ ; acctExport ; cd -

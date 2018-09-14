@@ -1,4 +1,8 @@
 *.txt
 *.json
-*.md
 *.gz
+colorEcho
+getem*
+README.md
+/json/
+/txt/

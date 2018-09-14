@@ -53,12 +53,12 @@ echo $bytes_only | sed 's/^/s\/0x\//' | sed 's/$/\//' >z
 #--
 # Figure out if there are any records in qblock but not etherscan, then use getTrans to see if qblocks is right or wrong
 #
-qbnes=results/$3$2-$1_qb_not_es
-echo "Looking for qblocks records that are not in etherscan"
-diff --suppress-common-lines -y $qb_result $es_result | grep "<" | cut  -c1-20  | cut -f1,2 | sed 's/$/ 0x/' | sed -f z | sed 's/^/.\/check_node /' >x
-chmod uog+x x
-./x | tee $qbnes.txt
-nano $qbnes.txt
+#qbnes=results/$3$2-$1_qb_not_es
+#echo "Looking for qblocks records that are not in etherscan"
+#diff --suppress-common-lines -y $qb_result $es_result | grep "<" | cut  -c1-20  | cut -f1,2 | sed 's/$/ 0x/' | sed -f z | sed 's/^/.\/check_node /' >x
+#chmod uog+x x
+#./x | tee $qbnes.txt
+#nano $qbnes.txt
 
 #--
 # Figure out if there are any records in qblock but not etherscan, then use getTrans to see if qblocks is right or wrong

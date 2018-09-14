@@ -19,8 +19,7 @@ xtrans_fmt = [{TIMESTAMP}]\t[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{TRACEID}]\t
 
 [[watches]]
 list = [
-    { address = "0x423b5f62b328d0d6d44870f4eee316befa0b2df5", name = "GoNetwork", firstBlock = 5449023, color = "green_c" }
+    { address = "0x423b5f62b328d0d6d44870f4eee316befa0b2df5", name = "GoNetwork", firstBlock = 5449023 }
 ]
-
 
 # make sure to always put arrays at the end of the file

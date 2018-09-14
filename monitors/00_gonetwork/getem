@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+#
+name=00_gonetwork
+address=0x423b5f62b328d0d6d44870f4eee316befa0b2df5
+gold=../../../test/gold/monitors/txt/final
+
+# Note: we don't user bloom filters, so no USEBLOOM env variable
+acctExport --fmt txt --filter $address  | tee $gold/$name-$address.txt
