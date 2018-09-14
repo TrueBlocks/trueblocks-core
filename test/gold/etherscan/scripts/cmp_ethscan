@@ -32,7 +32,7 @@ es_result=txt/$filename.txt
 #       (2) EtherScan does not return a 'transactionIndex' for internal transactions
 #           (other parts of qblocks needs transactionIndex)
 #
-# ./scripts/slurp_using_curl $1 $2 $3
+./scripts/slurp_using_curl $1 $2 $3
 #
 # Both of these issues are fixed by using the second method instead. This method uses 'ethslurp'
 # to extract the transactions from EtherScan. It's slower (but only the first time it runs 
@@ -42,7 +42,7 @@ es_result=txt/$filename.txt
 #
 # Our preference is the second method. Each method takes the same three pararameters as this script.
 #
-./scripts/slurp_using_ethslurp $1 $2 $3
+#./scripts/slurp_using_ethslurp $1 $2 $3
 
 #--
 # We need a little sed program in a file called 'z'
