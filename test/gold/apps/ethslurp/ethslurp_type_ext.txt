@@ -2,6 +2,7 @@ ethslurp argc: 4 [1:0x1324e7b922b30B49Ab8EA81086341cc41C249346] [2:--type] [3:ex
 ethslurp 0x1324e7b922b30B49Ab8EA81086341cc41C249346 --type ext 
 Processing: 0x1324e7b922b30B49Ab8EA81086341cc41C249346 --type:ext
 	Slurping 0x1324e7b922b30b49ab8ea81086341cc41c249346
+
 	Loaded 44 total records in --time-- seconds
 	Filter passed 44 visible records of 44 in --time-- seconds
 
