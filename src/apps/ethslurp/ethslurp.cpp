@@ -504,7 +504,7 @@ bool writeTheDatabase(string_q& contents,
             if (options.type == "int")
                 findTransactionsIndex(trans);
             theAccount.transactions.push_back(trans);
-            lastBlock = transBlock;
+            theAccount.lastBlock = transBlock;
             if (!(++nNewBlocks % REP_FREQ) && !isTestMode())
                 screenMsg("Found new transaction at block " + int_2_Str(transBlock) + ". Importing...");
             trans = CTransaction();  // reset
@@ -517,7 +517,6 @@ bool writeTheDatabase(string_q& contents,
     // Write the data if we got new data
     if ((theAccount.transactions.size() - origCount) > 0) {
         if (!isTestMode()) {
-            cerr << "\n";
             screenMsg("Wrote records " + uint_2_Str(origCount) + "-" + uint_2_Str(theAccount.transactions.size()) + " to the cache...");
         }
         CArchive archive(WRITING_ARCHIVE);
