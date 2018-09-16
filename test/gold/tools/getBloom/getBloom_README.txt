@@ -2,7 +2,7 @@ getBloom argc: 2 [1:-th]
 getBloom -th 
 #### Usage
 
-`Usage:`    getBloom [-r|-e|-b|-c|-a|-i|-v|-h] &lt;block&gt; [block...]  
+`Usage:`    getBloom [-r|-e|-b|-c|-a|-i|-n|-v|-h] &lt;block&gt; [block...]  
 `Purpose:`  Returns bloom filter(s) from running node (the default) or as EAB from QBlocks.
              
 `Where:`  
@@ -16,6 +16,7 @@ getBloom -th
 | -c | --receipts | show only the receipt-level blooms (--raw only) |
 | -a | --bars | display blooms as bar chart instead of hex |
 | -i | --bits | display blooms as bits instead of hex |
+| -n | --bitcounts | display the number of bits lit per bloom |
 
 #### Hidden options (shown during testing only)
 | -f | --force | force a re-write of the bloom to the cache |

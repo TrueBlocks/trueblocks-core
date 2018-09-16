@@ -3,7 +3,7 @@ getBloom
 
   Not enough arguments presented.
 
-  Usage:    getBloom [-r|-e|-b|-c|-a|-i|-v|-h] <block> [block...]  
+  Usage:    getBloom [-r|-e|-b|-c|-a|-i|-n|-v|-h] <block> [block...]  
   Purpose:  Returns bloom filter(s) from running node (the default) or as EAB from QBlocks.
              
   Where:    
@@ -14,6 +14,7 @@ getBloom
 	-c  (--receipts)      show only the receipt-level blooms (--raw only)
 	-a  (--bars)          display blooms as bar chart instead of hex
 	-i  (--bits)          display blooms as bits instead of hex
+	-n  (--bitcounts)     display the number of bits lit per bloom
 
 #### Hidden options (shown during testing only)
 	-f  (--force)         force a re-write of the bloom to the cache
