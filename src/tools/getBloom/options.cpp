@@ -14,15 +14,16 @@
 
 //---------------------------------------------------------------------------------------------------
 static COption params[] = {
-    COption("~block_list", "a space-separated list of one or more blocks for which to retrieve blooms"),
-    COption("-raw",        "pull the bloom filter directly from the running node (the default)"),
-    COption("-eab",        "pull the enhanced adaptive blooms from QBlocks cache"),
-    COption("-block",      "show only the block-level bloom (--raw only)"),
-    COption("-re(c)eipts", "show only the receipt-level blooms (--raw only)"),
-    COption("-b(a)rs",     "display blooms as bar chart instead of hex"),
-    COption("-b(i)ts",     "display blooms as bits instead of hex"),
-    COption("@force",      "force a re-write of the bloom to the cache"),
-    COption("",            "Returns bloom filter(s) from running node (the default) or as EAB from QBlocks.\n"),
+    COption("~block_list",  "a space-separated list of one or more blocks for which to retrieve blooms"),
+    COption("-raw",         "pull the bloom filter directly from the running node (the default)"),
+    COption("-eab",         "pull the enhanced adaptive blooms from QBlocks cache"),
+    COption("-block",       "show only the block-level bloom (--raw only)"),
+    COption("-re(c)eipts",  "show only the receipt-level blooms (--raw only)"),
+    COption("-b(a)rs",      "display blooms as bar chart instead of hex"),
+    COption("-b(i)ts",      "display blooms as bits instead of hex"),
+    COption("-bitcou(n)ts", "display the number of bits lit per bloom"),
+    COption("@force",       "force a re-write of the bloom to the cache"),
+    COption("",             "Returns bloom filter(s) from running node (the default) or as EAB from QBlocks.\n"),
 };
 static size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -47,6 +48,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-e" || arg == "--eab") {
             isRaw = false;  // last in wins
+
+        } else if (arg == "-n" || arg == "--bitcounts") {
+            bitCounts = true;
 
         } else if (arg == "-b" || arg == "--block") {
             blockOnly = true;
@@ -104,6 +108,7 @@ void COptions::Init(void) {
     isRaw        = true;
     asBits       = false;
     asBars       = false;
+    bitCounts    = false;
     force        = false;
     receiptsOnly = false;
     blockOnly    = false;

@@ -67,6 +67,7 @@ bool CLogEntry::setValueByName(const string_q& fieldName, const string_q& fieldV
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "address" ) { address = str_2_Addr(fieldValue); return true; }
+            if ( fieldName % "articulatedLog" ) { articulatedLog = fieldValue; return true; }
             break;
         case 'd':
             if ( fieldName % "data" ) { data = fieldValue; return true; }
@@ -113,6 +114,7 @@ bool CLogEntry::Serialize(CArchive& archive) {
     archive >> data;
     archive >> logIndex;
     archive >> topics;
+//    archive >> articulatedLog;
     finishParse();
     return true;
 }
@@ -129,6 +131,7 @@ bool CLogEntry::SerializeC(CArchive& archive) const {
     archive << data;
     archive << logIndex;
     archive << topics;
+//    archive << articulatedLog;
 
     return true;
 }
@@ -169,6 +172,8 @@ void CLogEntry::registerClass(void) {
     ADD_FIELD(CLogEntry, "data", T_TEXT, ++fieldNum);
     ADD_FIELD(CLogEntry, "logIndex", T_NUMBER, ++fieldNum);
     ADD_FIELD(CLogEntry, "topics", T_OBJECT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CLogEntry, "articulatedLog", T_TEXT|TS_ARRAY, ++fieldNum);
+    HIDE_FIELD(CLogEntry, "articulatedLog");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CLogEntry, "schema");
@@ -179,7 +184,6 @@ void CLogEntry::registerClass(void) {
     builtIns.push_back(_biCLogEntry);
 
     // EXISTING_CODE
-    ADD_FIELD(CLogEntry, "articulatedLog", T_TEXT|TS_ARRAY, ++fieldNum);
     HIDE_FIELD(CLogEntry, "articulatedLog");
     // EXISTING_CODE
 }
@@ -252,6 +256,7 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "address" ) return addr_2_Str(address);
+            if ( fieldName % "articulatedLog" ) return articulatedLog;
             break;
         case 'd':
             if ( fieldName % "data" ) return data;

@@ -215,6 +215,7 @@ void CAccountWatch::registerClass(void) {
     ADD_FIELD(CAccountWatch, "nodeBal", T_WEI, ++fieldNum);
     ADD_FIELD(CAccountWatch, "enabled", T_BOOL, ++fieldNum);
     ADD_FIELD(CAccountWatch, "abi", T_OBJECT, ++fieldNum);
+    HIDE_FIELD(CAccountWatch, "abi");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAccountWatch, "schema");
