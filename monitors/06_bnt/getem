@@ -1,1 +1,23 @@
-./getem.1 0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c 06_bnt
+#!/usr/bin/env bash
+
+[ -z "$QB_ROOT" ] && echo "Need to set QB_ROOT" && exit 1;
+
+address=0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c
+name=`basename ${PWD}`
+fin=final/
+filename=$fin$name-$address.txt
+GOLD=${QB_ROOT}/test/gold/monitors/txt/
+
+echo "addr: " $address
+echo "name: " $name
+echo "fin: " $fin
+echo "filename: " $filename
+echo "gold: " $GOLD
+#exit
+
+# freshen the cache (or build it) using acctScraper (note will not work
+# on end user's machine since we did not release it)
+acctScrape --maxBlocks 4000000
+
+# Export to the txt repo
+USEBLOOM=true acctExport --fmt txt --filter $address | tee $GOLD/monitors/txt/$filename.txt
