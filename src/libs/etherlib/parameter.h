@@ -68,6 +68,7 @@ public:
     explicit CParameter(const string_q& n, const string_q& type, const CStringArray& array);
     string_q getFunctionAssign(uint64_t which) const;
     string_q getEventAssign(uint64_t which, uint64_t nIndexed = NOPOS) const;
+    bool noWrite;
     // EXISTING_CODE
     bool operator==(const CParameter& item) const;
     bool operator!=(const CParameter& item) const { return !operator==(item); }
@@ -128,6 +129,7 @@ inline void CParameter::initialize(void) {
     value = "";
 
     // EXISTING_CODE
+    noWrite = false;
     // EXISTING_CODE
 }
 
@@ -146,6 +148,7 @@ inline void CParameter::duplicate(const CParameter& pa) {
     value = pa.value;
 
     // EXISTING_CODE
+    noWrite = pa.noWrite;
     // EXISTING_CODE
     finishParse();
 }

@@ -48,6 +48,7 @@ public:
     uint64_t isError;
     uint64_t isInternal;
     CReceipt receipt;
+    string_q articulatedTx;
 
 public:
     CTransaction(void);
@@ -62,7 +63,6 @@ public:
     // EXISTING_CODE
     const CBlock *pBlock;
     CTraceArray traces;
-    string_q articulatedTx;
     CFunction *func;
     bool forEveryAddress      (ADDRESSFUNC func, TRANSFUNC filt = NULL, void *data = NULL);
     bool forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC filt = NULL, void *data = NULL);
@@ -79,6 +79,7 @@ protected:
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
+    friend class CAccount;
     // EXISTING_CODE
 };
 
@@ -135,10 +136,10 @@ inline void CTransaction::initialize(void) {
     isError = 0;
     isInternal = 0;
     receipt.initialize();
+    articulatedTx = "";
 
     // EXISTING_CODE
     pBlock = NULL;
-    articulatedTx = "";
     func = NULL;
     traces.clear();
     // EXISTING_CODE
@@ -164,10 +165,10 @@ inline void CTransaction::duplicate(const CTransaction& tr) {
     isError = tr.isError;
     isInternal = tr.isInternal;
     receipt = tr.receipt;
+    articulatedTx = tr.articulatedTx;
 
     // EXISTING_CODE
     pBlock = tr.pBlock;  // no deep copy, we don't own it
-    articulatedTx = tr.articulatedTx;
     func = (tr.func ? new CFunction(*tr.func) : NULL);
     traces = tr.traces;
     // EXISTING_CODE

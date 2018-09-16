@@ -1,5 +1,5 @@
 [settings]
 class     = CAccountWatch
-fields    = address address|string name|string color|blknum firstBlock|blknum lastBlock|bool deepScan|CIncomeStatement qbis|CBalanceHistoryArray balanceHistory|wei nodeBal|bool enabled=true|CAbi abi
+fields    = address address|string name|string color|blknum firstBlock|blknum lastBlock|bool deepScan|CIncomeStatement qbis|CBalanceHistoryArray balanceHistory|wei nodeBal|bool enabled=true|CAbi abi (nowrite)
 includes  = abilib.h|transaction.h|incomestatement.h|balancehistory.h
 cIncs     = #include "etherlib.h"

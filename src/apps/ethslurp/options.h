@@ -13,28 +13,17 @@
  *-------------------------------------------------------------------------------------------*/
 #include <algorithm>
 #include "etherlib.h"
+#include "webapi.h"
 
-class COptions : public COptionsBase {
+class COptions : public CBlockOptions {
 public:
-    bool prettyPrint;
-    bool rerun;
-    bool incomeOnly;
-    bool expenseOnly;
-    COptionsBlockList blocks;
-    time_q firstDate;
-    string_q funcFilter;
-    int errFilt;
-    bool reverseSort;
-    time_q lastDate;
-    bool openFile;
-    string_q addr;
-    size_t maxTransactions;
-    size_t pageSize;
+    CAddressArray addrs;
+    CWebAPI api;
+    string_q header;
+    string_q displayString;
     string_q exportFormat;
-    string_q name;
-    bool cache;
-    size_t acct_id;
     string_q type;
+    bool silent;
 
     COptions(void);
     ~COptions(void);
@@ -42,4 +31,12 @@ public:
     string_q postProcess(const string_q& which, const string_q& str) const override;
     bool parseArguments(string_q& command) override;
     void Init(void) override;
+
+    string_q getFormatString(const string_q& name, bool ignoreBlank);
+    void buildDisplayStrings(void);
 };
+
+//---------------------------------------------------------------------------------------------
+inline bool isInRange(blknum_t ref, blknum_t start, blknum_t end) {
+    return (start <= ref && end >= ref);
+}

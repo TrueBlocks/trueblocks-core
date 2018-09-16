@@ -98,6 +98,9 @@ bool CTransaction::setValueByName(const string_q& fieldName, const string_q& fie
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
+        case 'a':
+            if ( fieldName % "articulatedTx" ) { articulatedTx = fieldValue; return true; }
+            break;
         case 'b':
             if ( fieldName % "blockHash" ) { blockHash = str_2_Hash(fieldValue); return true; }
             if ( fieldName % "blockNumber" ) { blockNumber = str_2_Uint(fieldValue); return true; }
@@ -173,6 +176,7 @@ bool CTransaction::Serialize(CArchive& archive) {
     archive >> isError;
     archive >> isInternal;
     archive >> receipt;
+//    archive >> articulatedTx;
     finishParse();
     return true;
 }
@@ -200,6 +204,7 @@ bool CTransaction::SerializeC(CArchive& archive) const {
     archive << isError;
     archive << isInternal;
     archive << receipt;
+//    archive << articulatedTx;
 
     return true;
 }
@@ -251,6 +256,8 @@ void CTransaction::registerClass(void) {
     ADD_FIELD(CTransaction, "isError", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "isInternal", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "receipt", T_OBJECT, ++fieldNum);
+    ADD_FIELD(CTransaction, "articulatedTx", T_TEXT|TS_ARRAY, ++fieldNum);
+    HIDE_FIELD(CTransaction, "articulatedTx");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTransaction, "schema");
@@ -271,7 +278,6 @@ void CTransaction::registerClass(void) {
     // Add custom fields
     ADD_FIELD(CTransaction, "gasCost", T_WEI, ++fieldNum);
     ADD_FIELD(CTransaction, "function", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTransaction, "articulatedTx", T_TEXT|TS_ARRAY, ++fieldNum);
     ADD_FIELD(CTransaction, "events", T_TEXT, ++fieldNum);
     ADD_FIELD(CTransaction, "price", T_TEXT, ++fieldNum);
     ADD_FIELD(CTransaction, "gasUsed", T_GAS, ++fieldNum);
@@ -284,7 +290,6 @@ void CTransaction::registerClass(void) {
 
     // Hide fields we don't want to show by default
     HIDE_FIELD(CTransaction, "function");
-    HIDE_FIELD(CTransaction, "articulatedTx");
     HIDE_FIELD(CTransaction, "events");
     HIDE_FIELD(CTransaction, "price");
     HIDE_FIELD(CTransaction, "encoding");
@@ -431,6 +436,9 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
+        case 'a':
+            if ( fieldName % "articulatedTx" ) return articulatedTx;
+            break;
         case 'b':
             if ( fieldName % "blockHash" ) return hash_2_Str(blockHash);
             if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
@@ -611,3 +619,4 @@ string_q decodeRLP(const string_q& name, const string_q& input, size_t nItems, s
 }
 // EXISTING_CODE
 }  // namespace qblocks
+

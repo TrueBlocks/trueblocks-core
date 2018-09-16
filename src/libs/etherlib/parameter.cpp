@@ -274,6 +274,10 @@ ostream& operator<<(ostream& os, const CParameter& item) {
 //---------------------------------------------------------------------------
 CParameter::CParameter(string_q& textIn) {
     initialize();
+    if (contains(textIn, "nowrite")) {
+        noWrite = true;
+        replace(textIn," (nowrite)","");
+    }
     if (contains(textIn, "=")) {
         strDefault = textIn;
         textIn = nextTokenClear(strDefault, '=');

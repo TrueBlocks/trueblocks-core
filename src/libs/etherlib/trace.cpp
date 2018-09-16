@@ -70,6 +70,7 @@ bool CTrace::setValueByName(const string_q& fieldName, const string_q& fieldValu
 
     switch (tolower(fieldName[0])) {
         case 'a':
+            if ( fieldName % "articulatedTrace" ) { articulatedTrace = fieldValue; return true; }
             if ( fieldName % "action" ) { /* action = fieldValue; */ return false; }
             break;
         case 'b':
@@ -131,6 +132,7 @@ bool CTrace::Serialize(CArchive& archive) {
     archive >> transactionPosition;
     archive >> type;
     archive >> error;
+//    archive >> articulatedTrace;
     archive >> action;
     archive >> result;
     finishParse();
@@ -153,6 +155,7 @@ bool CTrace::SerializeC(CArchive& archive) const {
     archive << transactionPosition;
     archive << type;
     archive << error;
+//    archive << articulatedTrace;
     archive << action;
     archive << result;
 
@@ -199,6 +202,8 @@ void CTrace::registerClass(void) {
     ADD_FIELD(CTrace, "transactionPosition", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTrace, "type", T_TEXT, ++fieldNum);
     ADD_FIELD(CTrace, "error", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTrace, "articulatedTrace", T_TEXT|TS_ARRAY, ++fieldNum);
+    HIDE_FIELD(CTrace, "articulatedTrace");
     ADD_FIELD(CTrace, "action", T_OBJECT, ++fieldNum);
     ADD_FIELD(CTrace, "result", T_OBJECT, ++fieldNum);
 
@@ -257,6 +262,7 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
+            if ( fieldName % "articulatedTrace" ) return articulatedTrace;
             if ( fieldName % "action" ) { expContext().noFrst=true; return action.Format(); }
             break;
         case 'b':

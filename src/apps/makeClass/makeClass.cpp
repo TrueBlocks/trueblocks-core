@@ -233,6 +233,7 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
         string_q badSet   = "//\t[{NAME}] = ??; /""* unknown type: [{TYPE}] */\n";
         string_q setFmt   = "\t[{NAME}]";
         string_q regFmt   = "\tADD_FIELD(CL_NM, \"[{NAME}]\", T_TEXT, ++fieldNum);\n", regType;
+        string_q regHide  = "\tHIDE_FIELD(CL_NM, \"[{NAME}]\");\n";
         string_q clearFmt = "\tif ([{NAME}])\n\t\tdelete [{NAME}];\n\t[{NAME}] = NULL;\n";
         string_q subClsFmt = STR_SUBCLASS;
 
@@ -308,7 +309,12 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
             }
         }
 
-        fieldReg  += substitute(fld.Format(regFmt), "T_TEXT", regType); replaceAll(fieldReg, "CL_NM", "[{CLASS_NAME}]");
+        fieldReg  += substitute(fld.Format(regFmt), "T_TEXT", regType);
+        replaceAll(fieldReg, "CL_NM", "[{CLASS_NAME}]");
+        if (fld.noWrite) {
+            fieldReg += fld.Format(regHide);
+            replaceAll(fieldReg, "CL_NM", "[{CLASS_NAME}]");
+        }
         fieldCase += fld.Format("[{TYPE}]+[{NAME}]-[{ISPOINTER}]~[{ISOBJECT}]|");
         fieldDec  += (convertTypes(fld.Format(decFmt)) + "\n");
         fieldCopy += substitute(substitute(fld.Format(copyFmt), "+SHORT+", "[{SHORT}]"), "++CLASS++", "[{CLASS_NAME}]");
@@ -338,6 +344,7 @@ string_q ptrReadFmt =
 "            return false;\n"
 "        [{NAME}]->Serialize(archive);\n"
 "    }\n";
+string_q readFmt = "\tarchive >> [{NAME}];\n";
 
 string_q ptrWriteFmt =
 "    archive << ([{NAME}] != NULL);\n"
@@ -345,9 +352,10 @@ string_q ptrWriteFmt =
 "        archive << [{NAME}]->getRuntimeClass()->getClassNamePtr();\n"
 "        [{NAME}]->SerializeC(archive);\n"
 "    }\n";
+string_q writeFmt = "\tarchive << [{NAME}];\n";
 
-        fieldArchiveRead  += fld.Format(fld.isPointer ? ptrReadFmt  : "\tarchive >> [{NAME}];\n");
-        fieldArchiveWrite += fld.Format(fld.isPointer ? ptrWriteFmt : "\tarchive << [{NAME}];\n");
+        fieldArchiveRead  += ((fld.noWrite ? "//" : "") + fld.Format(fld.isPointer ? ptrReadFmt  : readFmt));
+        fieldArchiveWrite += ((fld.noWrite ? "//" : "") + fld.Format(fld.isPointer ? ptrWriteFmt : writeFmt));
     }
 
     //------------------------------------------------------------------------------------------------
