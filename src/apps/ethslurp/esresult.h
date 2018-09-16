@@ -17,63 +17,39 @@
  */
 #include <vector>
 #include <map>
-#include "abilib.h"
-#include "traceaction.h"
-#include "traceresult.h"
+#include "utillib.h"
 
 namespace qblocks {
 
 // EXISTING_CODE
-/*
- FROM RPC DOCUMENTATION
- traceAddress field
- The traceAddress field of all returned traces, gives the exact location in the
- call trace [index in root, index in first CALL, index in second CALL, ...].
- i.e. if the trace is:
-    A calls B, B calls G, A calls C, C calls G
- returns
-    [ {A: []}, {B: [0]}, {G: [0, 0]}, {C: [1]}, {G: [1, 0]} ]
-*/
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CTrace : public CBaseNode {
+class CESResult : public CBaseNode {
 public:
-    hash_t blockHash;
-    blknum_t blockNumber;
-    uint64_t subtraces;
-    CStringArray traceAddress;
-    hash_t transactionHash;
-    uint64_t transactionPosition;
-    string_q type;
-    string_q error;
-    string_q articulatedTrace;
-    CTraceAction action;
-    CTraceResult result;
+    string_q status;
+    string_q message;
+    string_q result;
 
 public:
-    CTrace(void);
-    CTrace(const CTrace& tr);
-    virtual ~CTrace(void);
-    CTrace& operator=(const CTrace& tr);
+    CESResult(void);
+    CESResult(const CESResult& es);
+    virtual ~CESResult(void);
+    CESResult& operator=(const CESResult& es);
 
-    DECLARE_NODE(CTrace);
-
-    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
-    const string_q getStringAt(const string_q& name, size_t i) const override;
+    DECLARE_NODE(CESResult);
 
     // EXISTING_CODE
-    bool isError(void) const;
     // EXISTING_CODE
-    bool operator==(const CTrace& item) const;
-    bool operator!=(const CTrace& item) const { return !operator==(item); }
-    friend bool operator<(const CTrace& v1, const CTrace& v2);
-    friend ostream& operator<<(ostream& os, const CTrace& item);
+    bool operator==(const CESResult& item) const;
+    bool operator!=(const CESResult& item) const { return !operator==(item); }
+    friend bool operator<(const CESResult& v1, const CESResult& v2);
+    friend ostream& operator<<(ostream& os, const CESResult& item);
 
 protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CTrace& tr);
+    void duplicate(const CESResult& es);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -81,71 +57,55 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline CTrace::CTrace(void) {
+inline CESResult::CESResult(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CTrace::CTrace(const CTrace& tr) {
+inline CESResult::CESResult(const CESResult& es) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(tr);
+    duplicate(es);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CTrace::~CTrace(void) {
+inline CESResult::~CESResult(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CTrace::clear(void) {
+inline void CESResult::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CTrace::initialize(void) {
+inline void CESResult::initialize(void) {
     CBaseNode::initialize();
 
-    blockHash = "";
-    blockNumber = 0;
-    subtraces = 0;
-    traceAddress.clear();
-    transactionHash = "";
-    transactionPosition = 0;
-    type = "";
-    error = "";
-    articulatedTrace = "";
-    action.initialize();
-    result.initialize();
+    status = "";
+    message = "";
+    result = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CTrace::duplicate(const CTrace& tr) {
+inline void CESResult::duplicate(const CESResult& es) {
     clear();
-    CBaseNode::duplicate(tr);
+    CBaseNode::duplicate(es);
 
-    blockHash = tr.blockHash;
-    blockNumber = tr.blockNumber;
-    subtraces = tr.subtraces;
-    traceAddress = tr.traceAddress;
-    transactionHash = tr.transactionHash;
-    transactionPosition = tr.transactionPosition;
-    type = tr.type;
-    error = tr.error;
-    articulatedTrace = tr.articulatedTrace;
-    action = tr.action;
-    result = tr.result;
+    status = es.status;
+    message = es.message;
+    result = es.result;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -153,15 +113,15 @@ inline void CTrace::duplicate(const CTrace& tr) {
 }
 
 //--------------------------------------------------------------------------
-inline CTrace& CTrace::operator=(const CTrace& tr) {
-    duplicate(tr);
+inline CESResult& CESResult::operator=(const CESResult& es) {
+    duplicate(es);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CTrace::operator==(const CTrace& item) const {
+inline bool CESResult::operator==(const CESResult& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -169,7 +129,7 @@ inline bool CTrace::operator==(const CTrace& item) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CTrace& v1, const CTrace& v2) {
+inline bool operator<(const CESResult& v1, const CESResult& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -177,9 +137,9 @@ inline bool operator<(const CTrace& v1, const CTrace& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CTrace> CTraceArray;
-extern CArchive& operator>>(CArchive& archive, CTraceArray& array);
-extern CArchive& operator<<(CArchive& archive, const CTraceArray& array);
+typedef vector<CESResult> CESResultArray;
+extern CArchive& operator>>(CArchive& archive, CESResultArray& array);
+extern CArchive& operator<<(CArchive& archive, const CESResultArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

@@ -32,6 +32,7 @@ public:
     string_q data;
     uint64_t logIndex;
     CTopicArray topics;
+    string_q articulatedLog;
 
 public:
     CLogEntry(void);
@@ -45,7 +46,6 @@ public:
 
     // EXISTING_CODE
     const CReceipt *pReceipt;
-    string_q articulatedLog;
     CFunction *func;
     // EXISTING_CODE
     bool operator==(const CLogEntry& item) const;
@@ -105,6 +105,7 @@ inline void CLogEntry::initialize(void) {
     data = "";
     logIndex = 0;
     topics.clear();
+    articulatedLog = "";
 
     // EXISTING_CODE
     pReceipt = NULL;
@@ -122,6 +123,7 @@ inline void CLogEntry::duplicate(const CLogEntry& lo) {
     data = lo.data;
     logIndex = lo.logIndex;
     topics = lo.topics;
+    articulatedLog = lo.articulatedLog;
 
     // EXISTING_CODE
     articulatedLog = lo.articulatedLog;

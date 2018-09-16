@@ -29,12 +29,8 @@ namespace qblocks {
 class CAccount : public CBaseNode {
 public:
     address_t addr;
-    string_q header;
-    string_q displayString;
-    uint64_t pageSize;
-    uint64_t lastPage;
-    int64_t lastBlock;
-    uint64_t nVisible;
+    uint64_t latestPage;
+    CTransaction latestTx;
     CTransactionArray transactions;
 
 public:
@@ -48,9 +44,9 @@ public:
     const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    CAbi abi;
-    size_t deleteNotShowing(void);
+    string_q displayString;
     bool handleCustomFormat(ostream& ctx, const string_q& fmtIn, void *data = NULL) const;
+    bool isNewTrans(const CTransaction& trans);
     // EXISTING_CODE
     bool operator==(const CAccount& item) const;
     bool operator!=(const CAccount& item) const { return !operator==(item); }
@@ -94,8 +90,6 @@ inline CAccount::~CAccount(void) {
 //--------------------------------------------------------------------------
 inline void CAccount::clear(void) {
     // EXISTING_CODE
-    abi.abiByName.clear();
-    abi.abiByEncoding.clear();
     // EXISTING_CODE
 }
 
@@ -104,16 +98,11 @@ inline void CAccount::initialize(void) {
     CBaseNode::initialize();
 
     addr = "";
-    header = "";
-    displayString = "";
-    pageSize = 0;
-    lastPage = 0;
-    lastBlock = -1;
-    nVisible = 0;
+    latestPage = 1;
+    latestTx.initialize();
     transactions.clear();
 
     // EXISTING_CODE
-    abi = CAbi();
     // EXISTING_CODE
 }
 
@@ -123,18 +112,11 @@ inline void CAccount::duplicate(const CAccount& ac) {
     CBaseNode::duplicate(ac);
 
     addr = ac.addr;
-    header = ac.header;
-    displayString = ac.displayString;
-    pageSize = ac.pageSize;
-    lastPage = ac.lastPage;
-    lastBlock = ac.lastBlock;
-    nVisible = ac.nVisible;
+    latestPage = ac.latestPage;
+    latestTx = ac.latestTx;
     transactions = ac.transactions;
 
     // EXISTING_CODE
-    abi = ac.abi;
-    abi.abiByName = ac.abi.abiByName;
-    abi.abiByEncoding = ac.abi.abiByEncoding;
     // EXISTING_CODE
     finishParse();
 }
@@ -170,9 +152,6 @@ extern CArchive& operator<<(CArchive& archive, const CAccountArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern uint64_t verbose;
-#define REP_FREQ   11
-#define REP_INFREQ 563
 // EXISTING_CODE
 }  // namespace qblocks
 

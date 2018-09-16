@@ -158,6 +158,7 @@ string_q defHide =
 string_q defShow =
     "CTransaction: price, gasCost, articulatedTx, traces, isError, date, ether"
 "|" "CLogEntry: articulatedLog"
+"|" "CTrace: articulatedTrace"
 "|" "CTraceAction: "
 "|" "CTraceResult: "
 "|" "CFunction: "
