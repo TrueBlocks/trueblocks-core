@@ -3,7 +3,7 @@ getBloom 1590000 4000001-4000002 1001001-1001100 1234567
 
   Specify only a single block range at a time.
 
-  Usage:    getBloom [-r|-e|-b|-c|-a|-i|-v|-h] <block> [block...]  
+  Usage:    getBloom [-r|-e|-b|-c|-a|-i|-n|-v|-h] <block> [block...]  
   Purpose:  Returns bloom filter(s) from running node (the default) or as EAB from QBlocks.
              
   Where:    
@@ -14,6 +14,7 @@ getBloom 1590000 4000001-4000002 1001001-1001100 1234567
 	-c  (--receipts)      show only the receipt-level blooms (--raw only)
 	-a  (--bars)          display blooms as bar chart instead of hex
 	-i  (--bits)          display blooms as bits instead of hex
+	-n  (--bitcounts)     display the number of bits lit per bloom
 
 #### Hidden options (shown during testing only)
 	-f  (--force)         force a re-write of the bloom to the cache
