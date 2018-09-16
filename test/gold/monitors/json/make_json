@@ -6,7 +6,7 @@
 #./scripts/export_json 0xf0ee6b27b759c9893ce4f094b49ad28fd15a23e4 10_eng
 #./scripts/export_json 0xf85feea2fdd81d51177f6b8f35f0e6734ce45f5f 10_cmt
 #./scripts/export_json 0x39bb259f66e1c59d5abef88375979b4d20d98022 09_wax
-#./scripts/export_json 0xb91318f35bdb262e9423bc7c7c2a3a93dd93c92c 09_nuls
+./scripts/export_json 0xb91318f35bdb262e9423bc7c7c2a3a93dd93c92c 09_nuls
 #./scripts/export_json 0x58a4884182d9e835597f405e5f258290e46ae7c2 09_noah
 #./scripts/export_json 0xef68e7c694f40c8202821edf525de3782458639f 09_lrc
 #./scripts/export_json 0x8dd5fbce2f6a956c3022ba3663759011dd51e73e 08_tusd
@@ -44,8 +44,8 @@
 # ./scripts/export_json 0x12480e24eb5bec1a9d4369cab6a80cad3c0a377a 10_sub
 
 # final
-./scripts/export_json 0x814964b1bceaf24e26296d031eadf134a2ca4105 00_newbium   final/
-./scripts/export_json 0xc9d7fec9889690bbff0a0df758d13e5a55dd7822 00_newbium   final/
+#####./scripts/export_json 0x814964b1bceaf24e26296d031eadf134a2ca4105 00_newbium   final/
+#####./scripts/export_json 0xc9d7fec9889690bbff0a0df758d13e5a55dd7822 00_newbium   final/
 # ./scripts/export_json 0x423b5f62b328d0d6d44870f4eee316befa0b2df5 00_gonetwork final/
 # ./scripts/export_json 0xdac17f958d2ee523a2206206994597c13d831ec7 01_usdt      final/
 # ./scripts/export_json 0xa74476443119a942de498590fe1f2454d7d4ac0d 03_gnt       final/

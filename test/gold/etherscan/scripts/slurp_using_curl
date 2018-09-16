@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 filename=$3$2-$1
 address=$1
 

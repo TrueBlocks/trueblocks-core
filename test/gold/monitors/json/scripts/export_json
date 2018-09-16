@@ -3,7 +3,9 @@
 address=$1
 name=$2
 fin=$3
+folder=$3$2
+filename=$3$2-$1
 monitors=/Users/jrush/src.GitHub/quickBlocks/monitors/
 gold=/Users/jrush/src.GitHub/quickBlocks/test/gold/monitors/json
 
-cd $monitors/$3$2 ; acctExport --fmt json | jsonlint | tee $gold/$3$2-$1.json ; cd -
+echo "cd $monitors/$folder ; acctExport --fmt json --filter $address| tee x ; cat x | jsonlint | tee $gold/$filename.json ; cd -"
