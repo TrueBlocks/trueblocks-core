@@ -1,1 +1,3 @@
-getem_internal.1 0x9cda8a60dd5afa156c95bd974428d91a0812e054 07_ttu
+#!/usr/bin/env bash
+
+getem_internal.1 0x9cda8a60dd5afa156c95bd974428d91a0812e054 07_ttu final/

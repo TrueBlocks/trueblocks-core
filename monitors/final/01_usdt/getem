@@ -1,1 +1,3 @@
-getem_internal.1 0xdac17f958d2ee523a2206206994597c13d831ec7 01_usdt
+#!/usr/bin/env bash
+
+getem_internal.1 0xdac17f958d2ee523a2206206994597c13d831ec7 01_usdt final/

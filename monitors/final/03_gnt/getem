@@ -1,1 +1,3 @@
-getem_internal.1 0xa74476443119a942de498590fe1f2454d7d4ac0d 03_gnt
+#!/usr/bin/env bash
+
+getem_internal.1 0xa74476443119a942de498590fe1f2454d7d4ac0d 03_gnt final/

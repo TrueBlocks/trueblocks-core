@@ -1,1 +1,3 @@
-getem_internal.1 0xb3104b4b9da82025e8b9f8fb28b3553ce2f67069 11_bix
+#!/usr/bin/env bash
+
+getem_internal.1 0xb3104b4b9da82025e8b9f8fb28b3553ce2f67069 11_bix final/

@@ -1,2 +1,4 @@
-getem_internal.1 0x3883f5e181fccaf8410fa61e12b59bad963fb645 10_theta
+#!/usr/bin/env bash
+
+getem_internal.1 0x3883f5e181fccaf8410fa61e12b59bad963fb645 10_theta final/
 
