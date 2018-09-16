@@ -17,7 +17,7 @@ qbis                	1011	0	1048651	T_OBJECT TS_OBJECT
 balanceHistory      	1012	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 nodeBal             	1013	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 enabled             	1014	0	65556	T_BOOL TS_NUMERAL
-abi                 	1015	0	1048651	T_OBJECT TS_OBJECT
+abi                 	1015	1	1048651	T_OBJECT TS_OBJECT
 {
   "address": "0x0",
   "firstBlock": 0,
@@ -33,11 +33,7 @@ abi                 	1015	0	1048651	T_OBJECT TS_OBJECT
   },
   "balanceHistory": [],
   "nodeBal": 0,
-  "enabled": 1,
-  "abi": {
-    "abiByName": [],
-    "abiByEncoding": []
-  }
+  "enabled": 1
 }
 
 --------------------------------------------------------------------------------

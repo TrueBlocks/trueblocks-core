@@ -1,14 +1,20 @@
 ethslurp argc: 3 [1:0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0] [2:-b 4186279-4186279] 
 ethslurp 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 -b 4186279-4186279 
 Processing: 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 -b:4186279-4186279
-	Slurping 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0
 
-	Loaded 6 total records in --time-- seconds
-	Filter passed 1 visible records of 6 in --time-- seconds
+  'stop' must be strictly larger than 'start'
 
-        {
-"hash":"0x2aaf4eadd831cb1a0fef654f98b183679ef17c73b8633d14fc2417ef79da120b","blockHash":"0x4d372256ad75e54ee85de19d9a058c07c220631b3e74355662a9b77927489642","blockNumber":"4186279","transactionIndex":"2","nonce":"7","timestamp":"1503327574","from":"0xae041ae80fac16891184be898c4359ccda01fa76","to":"0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0","value":"1000000000000000000","gas":"21000","gasPrice":"60000000000","input":"0x","isError":"0","isInternal":"0","gasUsed":"21000","date":"2017-08-21 14:59:34 UTC","ether":"1.000000000000000000"
-        },
+  Usage:    ethslurp [-b|-t|-f|-b|-s|-v|-h] addrs  
+  Purpose:  Fetches data from EtherScan for an arbitrary address. Formats the output to your specification.
+             
+  Where:    
+	addrs                 one or more addresses to slurp (required)
+	-b  (--blocks range)  an optional range of blocks to slurp
+	-t  (--type val)      extract either [ ext | int | both ] type of transactions
+	-f  (--fmt val)       pretty print, optionally add ':txt,' ':csv,' or ':html'
+	-b  (--blocks range)  export records in block range (:0[:max])
+	-s  (--silent)        Run silently (only freshen the data, do not display it)
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
 
-	Exported 1 records in --time-- seconds             
-
+  Powered by QBlocks
