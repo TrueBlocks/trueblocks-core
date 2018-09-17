@@ -4,9 +4,9 @@
 
 address=0xbf2179859fc6d5bee9bf9158632dc51678a4100e
 name=`basename ${PWD}`
-fin=final/
+fin=
 filename=$fin$name-$address.txt
-GOLD=${QB_ROOT}/test/gold/monitors/txt/
+GOLD=${QB_ROOT}/test/gold/monitors/txt
 
 echo "addr: " $address
 echo "name: " $name
@@ -20,4 +20,4 @@ echo "gold: " $GOLD
 acctScrape --maxBlocks 4000000
 
 # Export to the txt repo
-USEBLOOM=true acctExport --fmt txt --filter $address | tee $GOLD/monitors/txt/$filename.txt
+USEBLOOM=true acctExport --fmt txt --filter $address | tee $GOLD/$filename
