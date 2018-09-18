@@ -102,6 +102,9 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    if (blocks.start == 0 && blocks.stop == 0)
+        blocks.stop = INT_MAX;
+
     return true;
 }
 
