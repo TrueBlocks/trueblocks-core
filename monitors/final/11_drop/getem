@@ -4,7 +4,7 @@
 
 address=0x4672bad527107471cb5067a887f4656d585a8a31
 name=`basename ${PWD}`
-fin=
+fin=final/
 filename=$fin$name-$address.txt
 GOLD=${QB_ROOT}/test/gold/monitors/txt
 

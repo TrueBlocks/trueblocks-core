@@ -1,3 +1,5 @@
+echo
 echo "------------------ $1.$2 ----------------------------"
+echo
 getTrans $1.$2 -v -t >w
-cat w | grep -i $3
+cat w | grep -i $3 | cut -c1-150
