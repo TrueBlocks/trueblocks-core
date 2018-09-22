@@ -29,7 +29,7 @@ int main(int argc, const char * argv[]) {
             return 0;
 
         // There can be more than one thing to do...
-        if (!options.quiet && !options.showAddrs && !options.uniqAddrs)
+        if (!options.quiet && !options.showAddrs && !options.uniqAddrs && !options.counting)
             cout << (options.isMulti() ? "[" : "");
 
         string_q list = options.getBlockNumList();
@@ -64,7 +64,7 @@ int main(int argc, const char * argv[]) {
             }
         }
 
-        if (!options.quiet && !options.showAddrs && !options.uniqAddrs)
+        if (!options.quiet && !options.showAddrs && !options.uniqAddrs && !options.counting)
             cout << (options.isMulti() ? "]" : "");
     }
 
@@ -240,12 +240,23 @@ string_q getAddresses(uint64_t num, const COptions& opt) {
         block.forEveryAddress(visitAddrs, transFilter, &array);
     sort(array.begin(), array.end(), sortByBlocknumTxId);
 
+    uint64_t cnt = 0;
     ostringstream os;
-    for (auto elem : array)
-        if (opt.filters.size() == 0 || passesFilter(opt.filters, elem.addr))
-            os << elem << "\n";
+    for (auto elem : array) {
+        if (opt.filters.size() == 0 || passesFilter(opt.filters, elem.addr)) {
+            if (opt.counting) {
+                cnt++;
+            } else {
+                os << elem << "\n";
+            }
+        }
+    }
 
-    return os.str().c_str();
+    if (opt.counting) {
+        os << num << "\t" << cnt << "\n";
+    }
+
+    return os.str();
 }
 
 //----------------------------------------------------------------

@@ -2,9 +2,9 @@
 
 [ -z "$QB_ROOT" ] && echo "Need to set QB_ROOT" && exit 1;
 
-address=0xb7cb1c96db6b22b0d3d9536e0108d062bd488f74
+address=0x618e75ac90b12c6049ba3b27f5d5f8651b0037f6
 name=`basename ${PWD}`
-fin=
+fin=final
 filename=$fin$name-$address.txt
 GOLD=${QB_ROOT}/test/gold/monitors/txt
 

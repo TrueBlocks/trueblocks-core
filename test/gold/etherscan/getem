@@ -13,7 +13,6 @@
 # in your $PATH
 #
 
-./scripts/cmp_ethscan 0x9992ec3cf6a55b00978cddf2b27bc6882d88d1ec 11_poly
 #./scripts/cmp_ethscan 0xf0ee6b27b759c9893ce4f094b49ad28fd15a23e4 10_eng
 #./scripts/cmp_ethscan 0xf85feea2fdd81d51177f6b8f35f0e6734ce45f5f 10_cmt
 #./scripts/cmp_ethscan 0x39bb259f66e1c59d5abef88375979b4d20d98022 09_wax
@@ -23,7 +22,6 @@
 #./scripts/cmp_ethscan 0x8dd5fbce2f6a956c3022ba3663759011dd51e73e 08_tusd
 #./scripts/cmp_ethscan 0xa4e8c3ec456107ea67d3075bf9e3df3a75823db0 08_loom
 #./scripts/cmp_ethscan 0xdd974d5c2e2928dea5f71b9825b8b646686bd200 08_knc
-#./scripts/cmp_ethscan 0x618e75ac90b12c6049ba3b27f5d5f8651b0037f6 07_qash
 #./scripts/cmp_ethscan 0x039b5649a59967e3e936d7471f9c3700100ee1ab 05_kcs
 #./scripts/cmp_ethscan 0x4ceda7906a5ed2179785cd3a40a69ee8bc99c466 05_aion
 #./scripts/cmp_ethscan 0x744d70fdbe2ba4cf95131626614a1763df805b9e 04_snt
@@ -46,7 +44,9 @@
 # ./scripts/cmp_ethscan 0x89205a3a3b2a69de6dbf7f01ed13b2108b2c43e7 00_etherTip
 # ./scripts/cmp_ethscan 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 00_etherTip
 # ./scripts/cmp_ethscan 0x12480e24eb5bec1a9d4369cab6a80cad3c0a377a 10_sub
-# ./scripts/cmp_ethscan 0xb7cb1c96db6b22b0d3d9536e0108d062bd488f74 03_wtc (very messed up)
+./scripts/cmp_ethscan 0xb7cb1c96db6b22b0d3d9536e0108d062bd488f74 03_wtc
+# (very messed up)
+# ./scripts/cmp_ethscan 0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c 06_bnt
 
 # final
 # ./scripts/cmp_ethscan 0x814964b1bceaf24e26296d031eadf134a2ca4105 00_newbium   final/
@@ -69,4 +69,5 @@
 # ./scripts/cmp_ethscan 0xe0b7927c4af23765cb51314a0e0521a9645f0e2a 06_dgd       final/
 # ./scripts/cmp_ethscan 0xbf2179859fc6d5bee9bf9158632dc51678a4100e 06_elf       final/
 # ./scripts/cmp_ethscan 0x4672bad527107471cb5067a887f4656d585a8a31 11_drop      final/
-# ./scripts/cmp_ethscan 0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c 06_bnt
+# ./scripts/cmp_ethscan 0x9992ec3cf6a55b00978cddf2b27bc6882d88d1ec 11_poly      final/
+# ./scripts/cmp_ethscan 0x618e75ac90b12c6049ba3b27f5d5f8651b0037f6 07_qash      final/
