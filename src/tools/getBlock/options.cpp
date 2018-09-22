@@ -131,9 +131,19 @@ bool COptions::parseArguments(string_q& command) {
             uniqAddrs = false;
             showAddrs = true;
 
+        } else if (arg == "--addrsCnt") {
+            uniqAddrs = false;
+            showAddrs = true;
+            counting = true;
+
         } else if (arg == "-u" || arg == "--uniq") {
             uniqAddrs = true;
             showAddrs = false;
+
+        } else if (arg == "--uniqCnt") {
+            uniqAddrs = true;
+            showAddrs = false;
+            counting = true;
 
         } else if (arg == "-m" || arg == "--number") {
             number = true;
@@ -268,6 +278,7 @@ void COptions::Init(void) {
     hashes      = false;
     showAddrs   = false;
     uniqAddrs   = false;
+    counting    = false;
     number      = false;
     traces      = false;
     force       = false;
