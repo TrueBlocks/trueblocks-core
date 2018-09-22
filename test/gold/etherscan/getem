@@ -22,6 +22,8 @@
 #./scripts/cmp_ethscan 0x8dd5fbce2f6a956c3022ba3663759011dd51e73e 08_tusd
 #./scripts/cmp_ethscan 0xa4e8c3ec456107ea67d3075bf9e3df3a75823db0 08_loom
 #./scripts/cmp_ethscan 0xdd974d5c2e2928dea5f71b9825b8b646686bd200 08_knc
+#./scripts/cmp_ethscan 0x618e75ac90b12c6049ba3b27f5d5f8651b0037f6 07_qash
+#./scripts/cmp_ethscan 0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c 06_bnt
 #./scripts/cmp_ethscan 0x039b5649a59967e3e936d7471f9c3700100ee1ab 05_kcs
 #./scripts/cmp_ethscan 0x4ceda7906a5ed2179785cd3a40a69ee8bc99c466 05_aion
 #./scripts/cmp_ethscan 0x744d70fdbe2ba4cf95131626614a1763df805b9e 04_snt
