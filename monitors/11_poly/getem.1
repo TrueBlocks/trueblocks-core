@@ -1,0 +1,23 @@
+#acctExport --fmt txt --filter $1 | tee ../../test/gold/monitors/$2_$1.txt
+
+echo $1 | sed 's/0x//' >y
+cat y | sed 's/^/s\/0x\//' | sed 's/$/\//' >z
+
+colorEcho -t "Diffing for in new gold, not in old gold: $2_$1"
+diff --suppress-common-lines -y ../../test/gold/monitors/$2_$1.txt ~/src.GitHub.1/quickBlocks/test/gold/monitors/$2_$1.txt  | grep "<" | cut -c1-20 >crap
+cat crap | cut -f1,2 | sed 's/$/ 0x/' | sed -f z | sed 's/^/.\/getem.2 /' >x ; chmod uog+x x ; ./x | tee $1_new_not_old.txt
+
+colorEcho -t "Diffing for in old gold, not in new gold: $2_$1"
+diff --suppress-common-lines -y ../../test/gold/monitors/$2_$1.txt ~/src.GitHub.1/quickBlocks/test/gold/monitors/$2_$1.txt  | grep ">" | cut -c15-100 >crap
+cat crap | cut -f2,3 | sed 's/$/ 0x/' | sed -f z | sed 's/^/.\/getem.2 /' >x ; chmod uog+x x ; ./x | tee $1_old_not_new.txt
+
+colorEcho -t "Diffing for changes: $2_$1"
+diff --suppress-common-lines -y ../../test/gold/monitors/$2_$1.txt ~/src.GitHub.1/quickBlocks/test/gold/monitors/$2_$1.txt  | grep "|" | tee $1_changed.txt
+
+nano $1_new_not_old.txt
+nano $1_old_not_new.txt
+nano $1_changed.txt
+
+sleep 1
+rm -f crap w x y z
+#rm -f $1*.txt
