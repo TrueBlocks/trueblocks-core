@@ -225,6 +225,18 @@ string_q nextTraceChunk_custom(const string_q& fieldIn, const void *dataPtr) {
     if (tra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'a':
+                if ( fieldIn % "articulatedTrace" ) {
+                    if (!tra->articulatedTrace.empty())
+                        return tra->articulatedTrace;
+                    if (tra->func) {
+                        ostringstream os;
+                        os << *tra->func;
+                        return os.str();
+                    }
+                    return "";
+                }
+                break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
