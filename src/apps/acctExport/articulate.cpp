@@ -103,6 +103,10 @@ bool articulateTransaction(const CAbi& abi, CTransaction *p) {
     for (size_t i = 0 ; i < p->receipt.logs.size() ; i++)
         articulateEvent(abi, &p->receipt.logs[i]);
 
+    // articulate the traces, so we can return with a fully articulated object
+    for (size_t i = 0 ; i < p->traces.size() ; i++)
+        articulateTrace(abi, &p->traces[i]);
+
     if (p && (p->input.length() >= 10 || p->input == "0x")) {
         string_q encoding = extract(p->input, 0, 10);
         string_q params   = extract(p->input, 10);
@@ -145,4 +149,25 @@ bool articulateEvent(const CAbi& abi, CLogEntry *p) {
         }
     }
     return articulateTokenEvent(p);
+}
+
+//-----------------------------------------------------------------------
+bool articulateTrace(const CAbi& abi, CTrace *p) {
+
+    if (p->func)
+        return false;
+
+    if (p && (p->action.input.length() >= 10 || p->action.input == "0x")) {
+        string_q encoding = extract(p->action.input, 0, 10);
+        string_q params   = extract(p->action.input, 10);
+
+        for (size_t i = 0 ; i < abi.abiByEncoding.size(); i ++) {
+            CFunction *ff = (CFunction *)&abi.abiByEncoding[i];
+            if (encoding % ff->encoding) {
+                p->func = new CFunction(abi.abiByEncoding[i]);
+                return decodeRLP2(p->func, params);
+            }
+        }
+    }
+    return false;
 }
