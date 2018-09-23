@@ -16,7 +16,7 @@ bool exportData(COptions& options) {
     if (options.transFmt.empty())
         cout << "[";
 
-    for (size_t index = 0 ; index < 4 ; index++) { //options.items.size() ; index++) {
+    for (size_t index = 0 ; index < options.items.size() ; index++) {
         CAcctCacheItem *item = &options.items[index];
         if (isInRange(item->blockNum, options.blk_minWatchBlock, options.blk_maxWatchBlock))
             exportTransaction(options, item);
