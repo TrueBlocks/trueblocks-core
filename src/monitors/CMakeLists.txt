@@ -14,8 +14,8 @@ include_directories(${BASE_INCLUDE})
 
 add_subdirectory(scripts)
 
-#add_subdirectory(etherTip/parselib)
-#add_subdirectory(etherTip)
+add_subdirectory(etherTip/parselib)
+add_subdirectory(etherTip)
 
 #add_subdirectory(gonetwork/parselib)
 #add_subdirectory(gonetwork)
