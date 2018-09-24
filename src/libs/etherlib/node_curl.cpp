@@ -39,12 +39,19 @@ namespace qblocks {
 // #define DEBUG_RPC
     void CCurlContext::setPostData(const string_q& method, const string_q& params) {
         Clear();
-        postData += "{";
+        postData  = "{";
         postData +=  quote("jsonrpc") + ":"  + quote("2.0")  + ",";
         postData +=  quote("method")  + ":"  + quote(method) + ",";
         postData +=  quote("params")  + ":"  + params + ",";
         postData +=  quote("id")      + ":"  + quote(getCurlID());
         postData += "}";
+#ifdef PROVING
+        if (expContext().proving) {
+            if (expContext().proof.str().length() > 1)
+                expContext().proof << ",";
+            expContext().proof << postData;
+        }
+#endif
 #ifdef DEBUG_RPC
         cerr << postData << "\n";
         cerr.flush();

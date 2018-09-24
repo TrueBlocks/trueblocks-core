@@ -31,6 +31,7 @@ public:
     int quiet;
     string_q format;
     bool priceBlocks;
+    CBlock latest;
     CAddressArray filters;
 
     COptions(void);
