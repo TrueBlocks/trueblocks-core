@@ -46,8 +46,6 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     Init();
-    blknum_t latestBlock = getLatestBlockFromClient();
-    bool isLatest = false;
     while (!command.empty()) {
 
         string_q arg = nextTokenClear(command, ' ');
@@ -79,7 +77,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-o" || arg == "--force") {
             etherlib_init("binary");
-            latestBlock = getLatestBlockFromClient();
             force = true;
 
         } else if (arg == "--normalize") {
@@ -105,7 +102,7 @@ bool COptions::parseArguments(string_q& command) {
                 cout << " (+" << diffDiff << ")";
             }
             cout << cOff << "\n";
-            isLatest = true;
+            return false;
 
         } else if (startsWith(arg, "--source:")) {
             string_q mode = substitute(arg, "--source:", "");
@@ -113,12 +110,10 @@ bool COptions::parseArguments(string_q& command) {
                 isRaw = true;
 
             } else if (mode == "c" || mode == "cache") {
-                latestBlock = getLatestBlockFromClient();
                 isCache = true;
 
             } else if (mode == "r" || mode == "remote") {
                 etherlib_init("remote");
-                latestBlock = getLatestBlockFromClient();
 
             } else {
                 return usage("Invalide source. Must be either '(r)aw' or '(c)ache'. Quitting...");
@@ -206,7 +201,7 @@ bool COptions::parseArguments(string_q& command) {
 
         } else {
 
-            string_q ret = blocks.parseBlockList(arg, latestBlock);
+            string_q ret = blocks.parseBlockList(arg, latest.blockNumber);
             if (endsWith(ret, "\n")) {
                 cerr << "\n  " << ret << "\n";
                 return false;
@@ -255,7 +250,7 @@ bool COptions::parseArguments(string_q& command) {
     if (number && (!showAddrs && !uniqAddrs))
         return usage("--number option is only available with either --addrs or --uniq. Quitting...");
 
-    if (!blocks.hasBlocks() && !isLatest)
+    if (!blocks.hasBlocks())
         return usage("You must specify at least one block. Quitting...");
 
     format = getGlobalConfig()->getDisplayStr(false, "");
@@ -287,6 +282,7 @@ void COptions::Init(void) {
     quiet       = 0;  // quiet has levels
     format      = "";
     priceBlocks = false;
+    // latest.clear(); // use the same latest block for every run
     filters.clear();
     blocks.Init();
 }

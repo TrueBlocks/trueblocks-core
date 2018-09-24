@@ -18,8 +18,9 @@ int main(int argc, const char * argv[]) {
 
     etherlib_init();
 
-    // Parse command line, allowing for command files
+    // We want to get the latestBlock prior to turning on --prove for example
     COptions options;
+    getBlock(options.latest, "latest");
     if (!options.prepareArguments(argc, argv))
         return 0;
 
@@ -29,8 +30,15 @@ int main(int argc, const char * argv[]) {
             return 0;
 
         // There can be more than one thing to do...
+#ifndef PROVING
         if (!options.quiet && !options.showAddrs && !options.uniqAddrs && !options.counting)
             cout << (options.isMulti() ? "[" : "");
+#else
+        if (!options.quiet && !options.showAddrs && !options.uniqAddrs && !options.counting && !expContext().proving)
+            cout << (options.isMulti() ? "[" : "");
+        if (expContext().proving)
+            expContext().proof << "[";
+#endif
 
         string_q list = options.getBlockNumList();
         while (!list.empty() && !shouldQuit()) {
@@ -53,10 +61,12 @@ int main(int argc, const char * argv[]) {
                     result = normalizeBlock(result, false, bn >= byzantiumBlock);
                 }
                 if (!options.quiet) {
-                    cout << result;
-                    if (!list.empty())
-                        cout << ",";
-                    cout << "\n";
+                    if (!result.empty()) {
+                        cout << result;
+                        if (!list.empty())
+                            cout << ",";
+                        cout << "\n";
+                    }
 
                 } else {
                     interumReport(cerr, bn);
@@ -64,10 +74,18 @@ int main(int argc, const char * argv[]) {
             }
         }
 
+#ifndef PROVING
         if (!options.quiet && !options.showAddrs && !options.uniqAddrs && !options.counting)
             cout << (options.isMulti() ? "]" : "");
+#else
+        if (!options.quiet && !options.showAddrs && !options.uniqAddrs && !options.counting && !expContext().proving)
+            cout << (options.isMulti() ? "]" : "");
+        if (expContext().proving)
+            expContext().proof << "]";
+#endif
     }
 
+    etherlib_cleanup();
     return 0;
 }
 
@@ -91,10 +109,8 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
                 generic.parseJson3(result);
                 result = generic.result;
                 if (gold.parseJson3(result)) {
-                    CBlock latest;
-                    getBlock(latest, "latest");
                     string_q fileName = getBinaryFilename(num);
-                    gold.finalized = isBlockFinal(gold.timestamp, latest.timestamp);
+                    gold.finalized = isBlockFinal(gold.timestamp, opt.latest.timestamp);
                     writeBlockToBinary(gold, fileName);
                 }
             }
@@ -114,9 +130,7 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
         }
 
         if (opt.force) {  // turn this on to force a write of the block to the disc
-            CBlock latest;
-            getBlock(latest, "latest");
-            gold.finalized = isBlockFinal(gold.timestamp, latest.timestamp);
+            gold.finalized = isBlockFinal(gold.timestamp, opt.latest.timestamp);
             writeBlockToBinary(gold, fileName);
         }
 
@@ -136,6 +150,16 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
             }
         }
     }
+
+#ifndef PROVING
+#else
+    if (expContext().proving) {
+        if (!expContext().proof.str().empty())
+            expContext().proof << ",";
+        expContext().proof << substitute(substitute(result, " ", ""), "\n", "");
+        result = "";
+    }
+#endif
     return result;
 }
 
