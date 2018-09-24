@@ -239,6 +239,18 @@ namespace qblocks {
 
         }
 
+#ifdef PROVING
+        if (isEnabled(OPT_PROVE) && contains(cmdLine, "--prove ")) {
+            replaceAll(cmdLine, "--prove ", "");
+            expContext().proving = true;
+        }
+
+        if (isEnabled(OPT_VERIFY) && contains(cmdLine, "--verify ")) {
+            replaceAll(cmdLine, "--verify ", "");
+            expContext().verifying = true;
+        }
+#endif
+
         if (isEnabled(OPT_ETHER) && contains(cmdLine, "--ether " )) {
             replaceAll(cmdLine, "--ether ", "");
             expContext().asEther = true;
@@ -284,11 +296,17 @@ namespace qblocks {
             return true;
         if (isEnabled(OPT_VERBOSE) && (arg == "-v" || startsWith(arg, "-v:") || startsWith(arg, "--verbose")))
             return true;
+#ifdef PROVING
+        if (isEnabled(OPT_PROVE) && arg == "--prove")
+            return true;
+        if (isEnabled(OPT_VERIFY) && arg == "--verify")
+            return true;
+#endif
         if (isEnabled(OPT_ETHER) && arg == "--ether")
             return true;
         if (isEnabled(OPT_WEI) && arg == "--wei")
             return true;
-        if (isEnabled(OPT_DOLLARS) && arg == "--ether")
+        if (isEnabled(OPT_DOLLARS) && arg == "--dollars")
             return true;
         if (isEnabled(OPT_PARITY) && (arg == "--parity"))
             return true;

@@ -16,6 +16,7 @@
 #include "filenames.h"
 #include "toml.h"
 
+// #define PROVING 1
 // Bit flags to enable / disable various options
 #define OPT_HELP    (1<<1)
 #define OPT_VERBOSE (1<<2)
@@ -24,10 +25,14 @@
 #define OPT_ETHER   (1<<5)
 #define OPT_DENOM   (OPT_DOLLARS|OPT_WEI|OPT_ETHER)
 #define OPT_PARITY  (1<<6)
-#define OPT_BLOCKS  (1<<8)
-#define OPT_TRANS   (1<<10)
-#define OPT_ADDRS   (1<<12)
-#define OPT_DEFAULT (OPT_HELP|OPT_VERBOSE|OPT_DENOM|OPT_BLOCKS|OPT_ADDRS|OPT_PARITY)
+#ifndef PROVING
+#define OPT_DEFAULT (OPT_HELP|OPT_VERBOSE|OPT_DENOM|OPT_PARITY)
+#else
+#define OPT_PROVE   (1<<7)
+#define OPT_VERIFY  (1<<8)
+#define OPT_TRUEDATA (OPT_PROVE|OPT_VERIFY)
+#define OPT_DEFAULT (OPT_HELP|OPT_VERBOSE|OPT_DENOM|OPT_PARITY|OPT_TRUEDATA)
+#endif
 
 namespace qblocks {
 
