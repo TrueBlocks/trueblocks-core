@@ -12,14 +12,8 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 
+#define MINI_TRANS 1
 namespace qblocks {
-
-    //--------------------------------------------------------------------------
-    typedef enum {
-        miniBlock = (0x1<<1),
-        miniTrans = (0x1<<2),
-        miniBlocks = (miniBlock|miniTrans)
-    } miniBlockType;
 
     //------------------------------------------------------------------------
     class CMiniBlock {
@@ -27,7 +21,9 @@ namespace qblocks {
         blknum_t    blockNumber;
         timestamp_t timestamp;
         txnum_t     firstTrans;
+#ifdef MINI_TRANS
         txnum_t     nTrans;
+#endif
 
                  CMiniBlock (void);
         explicit CMiniBlock (const CBlock *block);
@@ -36,6 +32,7 @@ namespace qblocks {
         string_q Format     (void) const;
     };
 
+#ifdef MINI_TRANS
     //------------------------------------------------------------------------
     class CMiniTrans {
     public:
@@ -51,6 +48,7 @@ namespace qblocks {
         void     toTrans    (CTransaction& trans) const;
         string_q Format     (void) const;
     };
+#endif
 
     //--------------------------------------------------------------------------
     class CInMemoryCache {
@@ -69,35 +67,50 @@ namespace qblocks {
         bool            isLoaded;
 
         CBinFile blocksOnDisc;
+#ifdef MINI_TRANS
         CBinFile transOnDisc;
-
+#endif
         // Very important note: the two pointers are not allocated. They are pointers to a location
         // in the memory mapped file. They appear to be allocated array pointers, but they are
         // actually FILE pointers and should not be cleaned up.
         CMiniBlock *blocks;
+#ifdef MINI_TRANS
         const CMiniTrans *trans;
+#endif
 
     private:
         blknum_t        nBlocks;
+#ifdef MINI_TRANS
         txnum_t         nTrans;
+#endif
         uint64_t        start;
         uint64_t        count;
     };
 
     //-------------------------------------------------------------------------
     // function pointer types for forEvery functions
+#ifdef MINI_TRANS
     typedef bool (*MINIBLOCKVISITFUNC)(CMiniBlock& block, const CMiniTrans *trans, void *data);
     typedef bool (*MINITRANSVISITFUNC)(CMiniTrans& trans, void *data);
+#else
+    typedef bool (*MINIBLOCKVISITFUNC)(CMiniBlock& block, void *data);
+#endif
     typedef bool (*BLOCKVISITFUNC)(CBlock& block, void *data);
 
     //-------------------------------------------------------------------------
     extern bool forEveryFullBlockInMemory    (BLOCKVISITFUNC     func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
     extern bool forEveryMiniBlockInMemory    (MINIBLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
     extern bool forOnlyMiniBlocks            (MINIBLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
+#ifdef MINI_TRANS
     extern bool forOnlyMiniTransactions      (MINITRANSVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
+#endif
     extern void clearInMemoryCache           (void);
 
 }  // namespace qblocks
 
 //-------------------------------------------------------------------------
+#ifdef MINI_TRANS
 extern bool visitMiniBlock(CMiniBlock& block, const CMiniTrans *trans, void *data);
+#else
+extern bool visitMiniBlock(CMiniBlock& block, void *data);
+#endif

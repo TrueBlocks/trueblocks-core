@@ -27,7 +27,9 @@ namespace qblocks {
         blockNumber = block->blockNumber;
         timestamp   = block->timestamp;
         firstTrans  = 0;
+#ifdef MINI_TRANS
         nTrans      = 0;
+#endif
     }
 
     //--------------------------------------------------------------------------
@@ -43,7 +45,9 @@ namespace qblocks {
         os << "blockNumber: " << blockNumber << " ";
         os << "timestamp: "   << timestamp   << " ";
         os << "firstTrans: "  << firstTrans  << " ";
+#ifdef MINI_TRANS
         os << "nTrans: "      << nTrans      << " ";
+#endif
         return os.str().c_str();
     }
 
@@ -51,10 +55,13 @@ namespace qblocks {
     bool CMiniBlock::operator==(const CBlock& b) const {
         if (b.blockNumber         != blockNumber) return false;
         if (b.timestamp           != timestamp) return false;
+#ifdef MINI_TRANS
         if (b.transactions.size() != nTrans) return false;
+#endif
         return true;
     }
 
+#ifdef MINI_TRANS
     //--------------------------------------------------------------------------
     CMiniTrans::CMiniTrans(void) {
         bzero(this, sizeof(CMiniTrans));
@@ -92,6 +99,7 @@ namespace qblocks {
         os << "value: "    << value      << " ";
         return os.str().c_str();
     }
+#endif
 
     //--------------------------------------------------------------------------
     CInMemoryCache::CInMemoryCache(void) {
@@ -108,10 +116,14 @@ namespace qblocks {
         // blocksOnDisc
         // transOnDisc
         blocks    = NULL;
+#ifdef MINI_TRANS
         trans     = NULL;
+#endif
 
         nBlocks   = fileSize(miniBlockCache) / sizeof(CMiniBlock);
+#ifdef MINI_TRANS
         nTrans    = fileSize(miniTransCache) / sizeof(CMiniTrans);
+#endif
         start     = 0;
         count     = 0;
 
@@ -127,10 +139,14 @@ namespace qblocks {
         // if (trans)
         //     delete [] trans;
         blocks = NULL;
+#ifdef MINI_TRANS
         trans = NULL;
+#endif
 
         blocksOnDisc.Release();
+#ifdef MINI_TRANS
         transOnDisc.Release();
+#endif
 
         Init();
     }
@@ -166,10 +182,12 @@ namespace qblocks {
             cerr << "The miniBlockCache (" << miniBlockCache << ") is locked. The program cannot be run. Quitting...\n";
             cerr.flush();
             exit(0);
+#ifdef MINI_TRANS
         } else if (isFileLocked(miniTransCache)) {
             cerr << "The miniTransCache (" << miniTransCache << ") is locked. The program cannot be run. Quitting...\n";
             cerr.flush();
             exit(0);
+#endif
         }
 
         blknum_t latestBlock = getLatestBlockFromCache();
@@ -179,8 +197,10 @@ namespace qblocks {
         CMemMapFile blockFile(miniBlockCache.c_str(),  CMemMapFile::WholeFile, CMemMapFile::SequentialScan);
         blocks = (CMiniBlock*)(blockFile.getData());  // NOLINT
 
+#ifdef MINI_TRANS
         CMemMapFile transFile(miniTransCache.c_str(),  CMemMapFile::WholeFile, CMemMapFile::SequentialScan);
         trans  = reinterpret_cast<const CMiniTrans *>(transFile.getData());
+#endif
 
         cerr << "\n" << TIMER_IN(startTime);
         return true;
@@ -229,8 +249,13 @@ namespace qblocks {
 
             if (inRange(cache->blocks[i].blockNumber, start, start + count - 1)) {
 
+#ifdef MINI_TRANS
                 if (!(*func)(cache->blocks[i], &cache->trans[0], data))
                     return false;
+#else
+                if (!(*func)(cache->blocks[i], data))
+                    return false;
+#endif
 
             } else if (cache->blocks[i].blockNumber >= start + count) {
 
@@ -263,6 +288,7 @@ namespace qblocks {
                 CBlock block;
                 cache->blocks[i].toBlock(block);
                 gas_t gasUsed = 0;
+#ifdef MINI_TRANS
                 for (txnum_t tr = cache->blocks[i].firstTrans ;
                         tr < cache->blocks[i].firstTrans + cache->blocks[i].nTrans;
                         tr++) {
@@ -271,6 +297,7 @@ namespace qblocks {
                     gasUsed += tt.receipt.gasUsed;
                     block.transactions.push_back(tt);
                 }
+#endif
                 block.gasUsed = gasUsed;
                 if (!(*func)(block, data))
                     return false;
@@ -292,8 +319,10 @@ namespace qblocks {
         return true;
     }
 
+#ifdef MINI_TRANS
     bool forOnlyMiniTransactions(MINITRANSVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
         return true;
     }
+#endif
 
 }  // namespace qblocks
