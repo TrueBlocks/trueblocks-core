@@ -101,8 +101,8 @@ bool exportTransaction(COptions& options, const CAcctCacheItem *item) {
                 found = true;
                 first = false;
             }
-            cerr << item->blockNum << "." << item->transIndex << "\n";
-            cerr.flush();
+//            cerr << item->blockNum << "." << item->transIndex << "\n";
+//            cerr.flush();
         }
     } else {
         // TODO(tjayrush): This should never happen
