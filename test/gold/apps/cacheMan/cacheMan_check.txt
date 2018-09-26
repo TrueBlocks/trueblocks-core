@@ -1,0 +1,4 @@
+cacheMan argc: 3 [1:-c] [2:Duplicate.acct.bin] 
+cacheMan -c Duplicate.acct.bin 
+Checking cache: Duplicate.acct.bin
+	No problems found (n: 6 / bn: 1332455).               
