@@ -4,7 +4,7 @@
 
 address=0x618e75ac90b12c6049ba3b27f5d5f8651b0037f6
 name=`basename ${PWD}`
-fin=final
+fin=final/
 filename=$fin$name-$address.txt
 GOLD=${QB_ROOT}/test/gold/monitors/txt
 
@@ -13,6 +13,7 @@ echo "name: " $name
 echo "fin: " $fin
 echo "filename: " $filename
 echo "gold: " $GOLD
+echo "path: " $GOLD/$filename
 #exit
 
 # freshen the cache (or build it) using acctScraper (note will not work
@@ -20,4 +21,4 @@ echo "gold: " $GOLD
 acctScrape --maxBlocks 6000000
 
 # Export to the txt repo
-USEBLOOM=true acctExport --fmt txt --filter $address | tee $GOLD/$filename
+acctExport --fmt txt --filter $address | tee $GOLD/$filename

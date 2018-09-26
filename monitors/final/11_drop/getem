@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-[ -z "$QB_ROOT" ] && echo "You need to set the env variable \$QB_ROOT. Set it to the root of the Qblocks repo." && exit 1;
+[ -z "$QB_ROOT" ] && echo "Need to set QB_ROOT" && exit 1;
 
 address=0x4672bad527107471cb5067a887f4656d585a8a31
 name=`basename ${PWD}`
@@ -13,12 +13,12 @@ echo "name: " $name
 echo "fin: " $fin
 echo "filename: " $filename
 echo "gold: " $GOLD
-echo "path: " $GOLD/$fliename
+echo "path: " $GOLD/$filename
 #exit
 
 # freshen the cache (or build it) using acctScraper (note will not work
 # on end user's machine since we did not release it)
-acctScrape --maxBlocks 10000000
+acctScrape --maxBlocks 6000000
 
 # Export to the txt repo
 USEBLOOM=true acctExport --fmt txt --filter $address | tee $GOLD/$filename

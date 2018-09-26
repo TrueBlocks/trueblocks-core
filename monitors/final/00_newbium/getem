@@ -1,4 +1,26 @@
 #!/usr/bin/env bash
 
-getem_internal.1 0x814964b1bceaf24e26296d031eadf134a2ca4105 00_newbium final/
-getem_internal.1 0xc9d7fec9889690bbff0a0df758d13e5a55dd7822 00_newbium final/
+[ -z "$QB_ROOT" ] && echo "Need to set QB_ROOT" && exit 1;
+
+address=0x814964b1bceaf24e26296d031eadf134a2ca4105
+name=`basename ${PWD}`
+fin=final/
+filename=$fin$name-$address.txt
+GOLD=${QB_ROOT}/test/gold/monitors/txt
+
+echo "addr: " $address
+echo "name: " $name
+echo "fin: " $fin
+echo "filename: " $filename
+echo "gold: " $GOLD
+echo "path: " $GOLD/$filename
+#exit
+
+# freshen the cache (or build it) using acctScraper (note will not work
+# on end user's machine since we did not release it)
+acctScrape --maxBlocks 6000000
+
+# Export to the txt repo
+USEBLOOM=true acctExport --fmt txt --filter $address | tee $GOLD/$filename
+
+## 0xc9d7fec9889690bbff0a0df758d13e5a55dd7822

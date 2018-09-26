@@ -4,7 +4,7 @@
 
 address=0xe0b7927c4af23765cb51314a0e0521a9645f0e2a
 name=`basename ${PWD}`
-fin=final
+fin=final/
 filename=$fin$name-$address.txt
 GOLD=${QB_ROOT}/test/gold/monitors/txt
 
@@ -13,6 +13,7 @@ echo "name: " $name
 echo "fin: " $fin
 echo "filename: " $filename
 echo "gold: " $GOLD
+echo "path: " $GOLD/$filename
 #exit
 
 # freshen the cache (or build it) using acctScraper (note will not work

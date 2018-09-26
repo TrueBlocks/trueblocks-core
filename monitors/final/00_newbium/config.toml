@@ -19,12 +19,12 @@ trans_fmt = [{TIMESTAMP}]\t[{BLOCKNUMBER}]\t[{FROM}]\t[{TO}]
 
 [[watches]]
 list = [
-    { address = "0x814964b1bceaf24e26296d031eadf134a2ca4105", name = "Newbium",         firstBlock = 3989717, color = "green_c", enabled=true  },
-    { address = "0xc9d7fec9889690bbff0a0df758d13e5a55dd7822", name = "Newbium Creator", firstBlock = 3984610, color = "green_c", enabled=false },
+    { address = "0x814964b1bceaf24e26296d031eadf134a2ca4105", name = "Newbium",         firstBlock = 3989717, lastBlock = 6250000 },
+    { address = "0xc9d7fec9889690bbff0a0df758d13e5a55dd7822", name = "Newbium Creator", firstBlock = 3984610, lastBlock = 6250000 },
 ]
 named = [
-    { address = "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819", name = "EtherDelta_2", color = "blue_b" },
-    { address = "0x12459C951127e0c374FF9105DdA097662A027093", name = "0xProto_Exch1", color = "blue_b" },
+    { address = "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819", name = "EtherDelta_2" },
+    { address = "0x12459C951127e0c374FF9105DdA097662A027093", name = "0xProto_Exch1" },
 ]
 
 # make sure to always put arrays at the end of the file
