@@ -46,8 +46,7 @@
 # ./scripts/cmp_ethscan 0x89205a3a3b2a69de6dbf7f01ed13b2108b2c43e7 00_etherTip
 # ./scripts/cmp_ethscan 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 00_etherTip
 # ./scripts/cmp_ethscan 0x12480e24eb5bec1a9d4369cab6a80cad3c0a377a 10_sub
-./scripts/cmp_ethscan 0xb7cb1c96db6b22b0d3d9536e0108d062bd488f74 03_wtc
-# (very messed up)
+# ./scripts/cmp_ethscan 0xb7cb1c96db6b22b0d3d9536e0108d062bd488f74 03_wtc (very messed up)
 # ./scripts/cmp_ethscan 0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c 06_bnt
 
 # final
@@ -72,4 +71,7 @@
 # ./scripts/cmp_ethscan 0xbf2179859fc6d5bee9bf9158632dc51678a4100e 06_elf       final/
 # ./scripts/cmp_ethscan 0x4672bad527107471cb5067a887f4656d585a8a31 11_drop      final/
 # ./scripts/cmp_ethscan 0x9992ec3cf6a55b00978cddf2b27bc6882d88d1ec 11_poly      final/
-# ./scripts/cmp_ethscan 0x618e75ac90b12c6049ba3b27f5d5f8651b0037f6 07_qash      final/
+
+# double checked
+./scripts/cmp_ethscan 0x618e75ac90b12c6049ba3b27f5d5f8651b0037f6 07_qash      final/
+

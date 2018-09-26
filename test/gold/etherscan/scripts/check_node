@@ -1,0 +1,12 @@
+colorEcho -t "------------------ $1.$2 ----------------------------"
+
+getTrans $1.$2 --belongs $3
+
+##
+##getTrans $1.$2 -v -t >w
+##cat w | grep -i $3
+##
+
+##
+##getBlock $1 --addrs --filter 0x$3
+##

@@ -45,19 +45,18 @@ es_result=txt/$filename.txt
 ./scripts/slurp_using_ethslurp $1 $2 $3
 
 #--
-# We need a little sed program in a file called 'z'
-#
-bytes_only=`echo $1 | sed 's/0x//'`
-echo $bytes_only | sed 's/^/s\/0x\//' | sed 's/$/\//' >z
+# We need a little sed program to attach address to the end of a line
+echo "--belongs $address" | sed 's/^/s\/$\/ /' | sed 's/$/\//' >z
 
 #--
 # Figure out if there are any records in qblock but not etherscan, then use getTrans to see if qblocks is right or wrong
 #
 qbnes=results/$3$2-$1_qb_not_es
 echo "Looking for qblocks records that are not in etherscan"
-diff --suppress-common-lines -y $qb_result $es_result | grep "<" | cut  -c1-20  | cut -f1,2 | sed 's/$/ 0x/' | sed -f z | sed 's/^/.\/check_node /' >x
-chmod uog+x x
-./x | tee $qbnes.txt
+diff --suppress-common-lines -y $qb_result $es_result | grep "<" | cut -f1,2 | tr '\t' '.' | sed -f z | sed 's/^/getTrans /' >x
+#chmod uog+x x
+#./x | tee $qbnes.txt
+cat ./x | tee $qbnes.txt
 nano $qbnes.txt
 
 #--
@@ -65,9 +64,10 @@ nano $qbnes.txt
 #
 esnqb=results/$3$2-$1_es_not_qb
 echo "Looking for records from etherscan that do not appear in qblocks"
-diff --suppress-common-lines -y $qb_result $es_result | grep ">" | cut -c15-100 | cut -f2,3 | sed 's/$/ 0x/' | sed -f z | sed 's/^/.\/check_node /' >x
-chmod uog+x x
-./x | tee $esnqb.txt
+diff --suppress-common-lines -y $qb_result $es_result | grep ">" | cut -c15-100 | cut -f2,3 | tr '\t' '.' | sed -f z | sed 's/^/getTrans /' >x
+#chmod uog+x x
+#./x | tee $qbnes.txt
+cat ./x | tee $esnqb.txt
 nano $esnqb.txt
 
 #--
