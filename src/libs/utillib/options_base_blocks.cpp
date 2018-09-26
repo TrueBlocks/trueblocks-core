@@ -54,25 +54,40 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     string_q COptionsBlockList::parseBlockList(const string_q& argIn, blknum_t lastBlock) {
-        string_q arg = argIn;
-        if (contains(arg, "-")) {
 
-            // scrape off the skip marker if any
-            if (contains(arg, ":")) {
-                string_q s = arg;
-                arg = nextTokenClear(s, ':');
-                skip = max(blknum_t(1), str_2_Uint(s));
-            }
+        string_q arg = argIn;
+
+        // scrape off the skip marker if any
+        if (contains(arg, ":")) {
+            string_q s = arg;
+            arg = nextTokenClear(s, ':');
+            skip = max(blknum_t(1), str_2_Uint(s));
+        }
+
+        if (contains(arg, "-") || contains(arg, "+")) {
 
             // If we already have a range, bail
             if (start != stop)
                 return "Specify only a single block range at a time.";
 
-            string_q stp = arg;
-            string_q strt = nextTokenClear(stp, '-');
-            if (strt == "latest")
+            if (startsWith(arg, "latest"))
                 return "Cannot start range with 'latest'";
 
+            if (contains(arg, "+")) {
+                string_q n = nextTokenClear(arg, '+');
+                blknum_t s1 = parseBlockOption(n, lastBlock);
+                if (!n.empty())
+                    return n;
+                n = arg;
+                blknum_t s2 = parseBlockOption(n, lastBlock);
+                if (!n.empty())
+                    return n;
+                s2 = s1 + s2;
+                arg = uint_2_Str(s1) + "-" + uint_2_Str(s2);
+            }
+
+            string_q stp = arg;
+            string_q strt = nextTokenClear(stp, '-');
             string_q msg = strt;
             start = parseBlockOption(msg, lastBlock);
             if (!msg.empty())
