@@ -1,0 +1,4 @@
+cacheMan argc: 3 [1:-f] [2:TipJar.acct.bin] 
+cacheMan -f TipJar.acct.bin 
+Fixing cache: TipJar.acct.bin
+	There was nothing to fix (1332455).

@@ -1,0 +1,7 @@
+cacheMan argc: 4 [1:-md] [2:TipJar.acct.bin] [3:Duplicate.acct.bin] 
+cacheMan -md TipJar.acct.bin Duplicate.acct.bin 
+	Merging cache: TipJar.acct.bin...6 existing records read.
+	Merging cache: Duplicate.acct.bin...6 existing records read.
+	Sorting...done
+	Writing....6 records written, 6 records ignored.
+	Written to ./merged.bin
