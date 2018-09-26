@@ -14,12 +14,13 @@
 
 //---------------------------------------------------------------------------------------------------
 static COption params[] = {
-    COption("~!trans_list", "a space-separated list of one or more transaction identifiers "
-                                "(tx_hash, bn.txID, blk_hash.txID)"),
-    COption("-raw",         "retrieve raw transaction directly from the running node"),
-    COption("-nTraces",     "report on how many traces the transaction generated and deepest trace"),
-    COption("@trace",       "include the transactions trace after the transaction"),
-    COption("",             "Retrieve an Ethereum transaction from the local cache or a running node."),
+    COption("~!trans_list",    "a space-separated list of one or more transaction identifiers "
+                                  "(tx_hash, bn.txID, blk_hash.txID)"),
+    COption("-raw",            "retrieve raw transaction directly from the running node"),
+    COption("-nTraces",        "report on how many traces the transaction generated and deepest trace"),
+    COption("-belongs:<addr>", "report true of false if the given address is found anywhere in the transaction"),
+    COption("@trace",          "include the transactions trace after the transaction"),
+    COption("",                "Retrieve an Ethereum transaction from the local cache or a running node."),
 };
 static size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -40,6 +41,13 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-n" || arg == "--nTraces") {
             nTraces = true;
+
+        } else if (startsWith(arg, "-b:") || startsWith(arg, "--belongs:")) {
+            string_q orig = arg;
+            arg = substitute(substitute(arg, "-b:", ""), "--belongs:", "");
+            if (!isAddress(arg))
+                return usage(arg + " does not appear to be a valid Ethereum address.\n");
+            filters.push_back(str_2_Addr(toLower(arg)));
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -76,6 +84,8 @@ void COptions::Init(void) {
     incTrace = false;
     nTraces = false;
     format = "";
+    filters.clear();
+    belongs = false;
 }
 
 //---------------------------------------------------------------------------------------------------

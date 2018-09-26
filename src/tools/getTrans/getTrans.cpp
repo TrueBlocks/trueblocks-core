@@ -26,18 +26,50 @@ int main(int argc, const char *argv[]) {
         return 0;
 
     options.nCmds = countOf(options.commandList, '\n');
-    if (options.nCmds > 1 && verbose)
+    if (options.nCmds > 1 && verbose && options.filters.size() == 0)
         cout << "[\n";
     while (!options.commandList.empty()) {
         string_q command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
             return 0;
-        forEveryTransactionInList(visitTransaction, &options, options.transList.queries);
+        if (options.filters.size() > 0) {
+            forEveryTransactionInList(checkBelongs, &options, options.transList.queries);
+            if (!options.belongs) {
+                for (auto addr : options.filters) {
+                    cout << "\taddress " << cRed << addr << cOff << " not found";
+                    cout << string_q(70,' ') << "\n";
+                }
+            }
+        } else {
+            forEveryTransactionInList(visitTransaction, &options, options.transList.queries);
+        }
     }
-    if (options.nCmds > 1 && verbose)
+    if (options.nCmds > 1 && verbose && options.filters.size() == 0)
         cout << "]\n";
     cout.flush();
     return 0;
+}
+
+//----------------------------------------------------------------
+bool visitAddrs(const CAddressAppearance& item, void *data) {
+    COptions *opt = (COptions*)data;
+    if (opt->belongs)
+        return false;
+
+    for (auto addr : opt->filters) {
+        if (addr % item.addr) {
+            cout << "\t" << cGreen << " found at " << cTeal << item << cOff << "                     \r";
+            cout.flush();
+            opt->belongs = true;
+            return true; //false;  // we're done
+        }
+    }
+    return true;
+}
+
+//--------------------------------------------------------------
+bool checkBelongs(CTransaction& trans, void *data) {
+    return trans.forEveryAddress(visitAddrs, NULL, data);
 }
 
 //--------------------------------------------------------------
