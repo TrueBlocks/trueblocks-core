@@ -18,6 +18,7 @@ class COptions : public COptionsBase {
 public:
     CAddressArray filters;
     bool belongs;
+    bool chkAsStr;
     COptionsTransList transList;
     bool isRaw;
     bool incTrace;
@@ -33,5 +34,3 @@ public:
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 };
-
-extern bool checkBelongs(CTransaction& trans, void *data);
