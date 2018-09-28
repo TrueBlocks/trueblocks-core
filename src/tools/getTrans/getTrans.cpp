@@ -15,6 +15,7 @@
 #include "options.h"
 
 extern bool visitTransaction(CTransaction& trans, void *data);
+extern bool checkBelongs(CTransaction& trans, void *data);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
@@ -33,11 +34,19 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
         if (options.filters.size() > 0) {
+            bool on = options.chkAsStr;
+            options.chkAsStr = false;
             forEveryTransactionInList(checkBelongs, &options, options.transList.queries);
             if (!options.belongs) {
-                for (auto addr : options.filters) {
-                    cout << "\taddress " << cRed << addr << cOff << " not found ";
-                    cout << options.transList.queries << "\n";
+                if (on) {
+                    options.chkAsStr = on;
+                    forEveryTransactionInList(checkBelongs, &options, options.transList.queries);
+                }
+                if (!options.belongs) {
+                    for (auto addr : options.filters) {
+                        cout << "\taddress " << cRed << addr << cOff << " not found ";
+                        cout << options.transList.queries << "\n";
+                    }
                 }
             }
         } else {
@@ -87,7 +96,41 @@ bool visitAddrs(const CAddressAppearance& item, void *data) {
 
 //--------------------------------------------------------------
 bool checkBelongs(CTransaction& trans, void *data) {
-    return trans.forEveryAddress(visitAddrs, NULL, data);
+    if (!trans.forEveryAddress(visitAddrs, NULL, data))
+        return false; // if we've been told we're done (because we found the target), stop searching
+
+    // if we're still searching, and we want to search input and event data as a string, do so
+    COptions *opt = (COptions*)data;
+    if (!opt->chkAsStr)
+        return true;
+
+    for (auto addr : opt->filters) {
+        string_q bytes = substitute(addr, "0x", "");
+        if (contains(trans.input, bytes)) {
+            cout << "\t" << cRed << addr << cOff << " found at input by string search at ";
+            cout << cTeal << trans.blockNumber << "." << trans.transactionIndex << cOff << "                       \n";
+            opt->belongs = true;
+            return false;
+        }
+        for (auto l : trans.receipt.logs) {
+            if (contains(l.data, bytes)) {
+                cout << "\t" << cRed << addr << cOff << " found at log by string search at ";
+                cout << cTeal << trans.blockNumber << "." << trans.transactionIndex << cOff << "                       \n";
+                opt->belongs = true;
+                return false;
+            }
+        }
+        getTraces(trans.traces, trans.hash);
+        for (auto trace : trans.traces) {
+            if (contains(trace.action.input, bytes)) {
+                cout << "\t" << cRed << addr << cOff << " found at trace by string search at ";
+                cout << cTeal << trans.blockNumber << "." << trans.transactionIndex << cOff << "                       \n";
+                opt->belongs = true;
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
 //--------------------------------------------------------------
