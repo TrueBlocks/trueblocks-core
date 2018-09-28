@@ -14,7 +14,7 @@ hide=
 sxhow=CParameter:type
 
 [formats]
-trans_fmt = [{TIMESTAMP}]\t[{BLOCKNUMBER}]\t[{FROM}]\t[{TO}]
+trans_fmt = [{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{HASH}]
 #trans_fmt = [{TIMESTAMP}]\t[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{FROM}]\t[{TO}]\t[{VALUE}]\t[{GAS}]\t[{GASPRICE}]\t[{GASUSED}]\t[{ISERROR}]\t[{ENCODING}]\t[{ARTICULATEDTX}]
 
 [[watches]]

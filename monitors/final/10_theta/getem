@@ -21,4 +21,4 @@ echo "path: " $GOLD/$filename
 acctScrape --maxBlocks 6000000
 
 # Export to the txt repo
-USEBLOOM=true acctExport --fmt txt --filter $address | tee $GOLD/$filename
+acctExport --useBloom --fmt txt --filter $address | tee $GOLD/$filename

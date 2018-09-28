@@ -46,7 +46,7 @@ es_result=txt/$filename.txt
 
 #--
 # We need a little sed program to attach address to the end of a line
-echo "--belongs $address" | sed 's/^/s\/$\/ /' | sed 's/$/\//' >z
+echo "--asStrs --belongs $address" | sed 's/^/s\/$\/ /' | sed 's/$/\//' >z
 
 #--
 # Figure out if there are any records in qblock but not etherscan, then use getTrans to see if qblocks is right or wrong
