@@ -53,10 +53,10 @@ echo "--belongs $address" | sed 's/^/s\/$\/ /' | sed 's/$/\//' >z
 #
 qbnes=results/$3$2-$1_qb_not_es
 echo "Looking for qblocks records that are not in etherscan"
-diff --suppress-common-lines -y $qb_result $es_result | grep "<" | cut -f1,2 | tr '\t' '.' | sed -f z | sed 's/^/getTrans /' >x
-#chmod uog+x x
-#./x | tee $qbnes.txt
-cat ./x | tee $qbnes.txt
+diff --suppress-common-lines -y $qb_result $es_result | grep "<" | cut -f1,2 | tr '\t' '.' | sed -f z | sed 's/^/getTrans /' >u
+chmod uog+x u
+#./u | tee $qbnes.txt
+cat ./u | tee $qbnes.txt
 nano $qbnes.txt
 
 #--
@@ -64,10 +64,10 @@ nano $qbnes.txt
 #
 esnqb=results/$3$2-$1_es_not_qb
 echo "Looking for records from etherscan that do not appear in qblocks"
-diff --suppress-common-lines -y $qb_result $es_result | grep ">" | cut -c15-100 | cut -f2,3 | tr '\t' '.' | sed -f z | sed 's/^/getTrans /' >x
-#chmod uog+x x
-#./x | tee $qbnes.txt
-cat ./x | tee $esnqb.txt
+diff --suppress-common-lines -y $qb_result $es_result | grep ">" | cut -c15-100 | cut -f2,3 | tr '\t' '.' | sed -f z | sed 's/^/getTrans /' >v
+chmod uog+x v
+#./v | tee $esnqb.txt
+cat ./v | tee $esnqb.txt
 nano $esnqb.txt
 
 #--
