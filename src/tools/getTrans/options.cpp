@@ -18,7 +18,8 @@ static COption params[] = {
                                   "(tx_hash, bn.txID, blk_hash.txID)"),
     COption("-raw",            "retrieve raw transaction directly from the running node"),
     COption("-nTraces",        "report on how many traces the transaction generated and deepest trace"),
-    COption("-belongs:<addr>", "report true of false if the given address is found anywhere in the transaction"),
+    COption("@belongs:<addr>", "report true of false if the given address is found anywhere in the transaction"),
+    COption("@asStrs",         "when checking --belongs, treat input and log data as single string"),
     COption("@trace",          "include the transactions trace after the transaction"),
     COption("",                "Retrieve an Ethereum transaction from the local cache or a running node."),
 };
@@ -41,6 +42,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-n" || arg == "--nTraces") {
             nTraces = true;
+
+        } else if (arg == "-a" || arg == "--asStrs") {
+            chkAsStr = true;
 
         } else if (startsWith(arg, "-b:") || startsWith(arg, "--belongs:")) {
             string_q orig = arg;
@@ -86,6 +90,7 @@ void COptions::Init(void) {
     format = "";
     filters.clear();
     belongs = false;
+    chkAsStr = false;
 }
 
 //---------------------------------------------------------------------------------------------------
