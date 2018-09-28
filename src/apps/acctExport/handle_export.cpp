@@ -6,20 +6,36 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------
-extern bool exportTransaction(COptions& options, const CAcctCacheItem *item);
+extern bool exportTransaction(COptions& options, const CAcctCacheItem *item, bool first);
+extern bool checkBloom(COptions& options, const CAcctCacheItem *item);
+extern bool isInTransaction(CTransaction *trans, const address_t& addr);
+
+//---------------------------------------------------------------------------------------------
 inline bool isInRange(blknum_t ref, blknum_t start, blknum_t end) {
     return (start <= ref && end >= ref);
 }
+
 //-----------------------------------------------------------------------
 bool exportData(COptions& options) {
+
+    // We want to articulate if we're producing JSON or if we're producing text and the format includes the fields
+    options.needsArt = (options.transFmt.empty() || contains(toLower(options.transFmt), "articulate"));
+
+    // We need traces if traces are not hidden, or we're doing JSON, or we're doing text and the format includes traces
+    options.needsTrace = !IS_HIDDEN(CTransaction, "traces");
+    if (options.needsTrace)
+        options.needsTrace = (options.transFmt.empty() || contains(toLower(options.transFmt), "traces"));
 
     if (options.transFmt.empty())
         cout << "[";
 
+    bool first = true;
     for (size_t index = 0 ; index < options.items.size() ; index++) {
         CAcctCacheItem *item = &options.items[index];
-        if (isInRange(item->blockNum, options.blk_minWatchBlock, options.blk_maxWatchBlock))
-            exportTransaction(options, item);
+        if (isInRange(item->blockNum, options.blk_minWatchBlock, options.blk_maxWatchBlock)) {
+            exportTransaction(options, item, first);
+            first = false;
+        }
     }
 
     if (options.transFmt.empty())
@@ -28,108 +44,80 @@ bool exportData(COptions& options) {
     return true;
 }
 
-bool isInTransaction(CBlock& block, blknum_t tx_id, const address_t& addr);
 //-----------------------------------------------------------------------
-bool exportTransaction(COptions& options, const CAcctCacheItem *item) {
+bool exportTransaction(COptions& options, const CAcctCacheItem *item, bool first) {
 
-    static bool first = true;
-
-    // visit the addresses in the block
+    // If we've found a new block...
     if (item->blockNum > options.curBlock.blockNumber) {
+
+        // We want to note that we're at a new block (order matters)
         options.curBlock = CBlock();
         getBlock(options.curBlock, item->blockNum);
-        for (auto trans : options.curBlock.transactions)
+        // And make sure to note which block is holding the transaction
+        for (CTransaction& trans : options.curBlock.transactions)
             trans.pBlock = &options.curBlock;
+
+        // We check the bloom (if we're told to), otherwise we assume the cache
+        // is correct. Generally, we don't have to do this since acctScrape did
+        // it already, but in some cases the user may wish to do it anyway.
+        if (!checkBloom(options, item))
+            return true;  // continue the scan
     }
 
-    bool useBloom = (getEnvStr("USEBLOOM") == "true");
-    bool final = (getEnvStr("FINAL") == "true");
-    if (final)
-        useBloom = false;
-
-    // This happens on every transaction, but it could happen on every block
-    string_q bloomFilename = substitute(getBinaryFilename(item->blockNum), "/blocks/", "/blooms/");
-    if (useBloom && fileExists(bloomFilename)) {
-        CBloomArray blooms;
-        CArchive bloomCache(READING_ARCHIVE);
-        if (bloomCache.Lock(bloomFilename, binaryReadOnly, LOCK_NOWAIT)) {
-            bloomCache >> blooms;
-            bloomCache.Release();
-        }
-
-        // This happens on every transaction, but it could happen on every block
-        bool foundOne = false;
-        for (CAccountWatch& watch : options.watches) {
-            if (!foundOne && watch.enabled) {
-                for (auto bloom : blooms) {
-                    if (isBloomHit(makeBloom(watch.address), bloom)) {
-                        if (isInTransaction(options.curBlock, item->transIndex, watch.address)) {
-                            foundOne = true;
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-
-        if (!foundOne) {
-            cerr << item->blockNum << " " << item->transIndex << "\r";
-            cerr.flush();
-            return true;
-        }
-    }
-
+    // TODO(tjayrush): This weird protection should not be needed, but for some reason, it is.
     if (item->transIndex < options.curBlock.transactions.size()) {
+
+        // If we need the traces, get them before we scan through the watches. Only get them
+        // if we don't already have them.
         CTransaction *trans = &options.curBlock.transactions[item->transIndex];
-        if (!options.transFmt.empty() || !IS_HIDDEN(CTransaction, "traces"))
+        if (options.needsTrace)
             if (trans->traces.size() == 0)
                 getTraces(trans->traces, trans->hash);
 
+        // We show a transaction only once even if it was involved from more than one watch perspective
         bool found = false;
         for (size_t w = 0 ; w < options.watches.size() && !found ; w++) {
             CAccountWatch *watch = &options.watches[w];
-            if (options.transFmt.empty() || contains(toLower(options.transFmt), "articulate"))
+
+            // Note: we do this outside of the check for enablement becuase even disabled watches can
+            // be useful when articulating data
+            if (options.needsArt)
                 articulateTransaction(watch->abi, trans);
-            if (watch->enabled) {
+
+            if (watch->enabled && isInTransaction(trans, watch->address)) {
+
+                // Only report once even if it appears for more than one watch
+                found = true;
+
+                // We need to use a string stream here because we want to annotate later
                 ostringstream os;
+
+                // We're exporting JSON, so we need commas
                 if (options.transFmt.empty() && !first)
                     os << ",";
-                options.displayTransaction(os, trans);
+                os << trans->Format(options.transFmt);
                 os << endl;
+
+                // TODO(tjayrush): We want to price 'value', 'ether', and 'gasCost' in US dollars
+                // if expContext.asDollars is true
+
                 cout << options.annotate(substitute(os.str(),"++WATCH++",watch->address));
                 cout.flush();
-                found = true;
-                first = false;
+
+            } else {
+                cerr << "\t\t" << cTeal << "skipping: " << *item << cOff << "\r";
+                cerr.flush();
             }
-//            cerr << item->blockNum << "." << item->transIndex << "\n";
-//            cerr.flush();
         }
+
     } else {
         // TODO(tjayrush): This should never happen
-        // cerr << "Invalid data at cache item: " << item->blockNum << "." << item->transIndex << "\n";
-        // cerr.flush();
+        cerr << "Invalid data at cache item: " << item->blockNum << "." << item->transIndex << "\n";
+        cerr.flush();
+        exit(0);
     }
 
     return true;
-}
-
-//-----------------------------------------------------------------------
-void COptions::displayTransaction(ostream& os, const CTransaction *theTrans) const {
-
-    string_q fmt = transFmt;
-    if (expContext().asDollars) {
-        replaceAll(fmt, "VALUE}",    "VALUE}++USD_V++");
-        replaceAll(fmt, "ETHER}",    "ETHER}++USD_V++");
-        replaceAll(fmt, "GASCOST}",  "GASCOST}++USD_GC++");
-    }
-    string_q transStr = theTrans->Format(fmt);
-    if (contains(transStr, "++PRICE++")) {
-        timestamp_t ts = str_2_Ts(theTrans->Format("[{TIMESTAMP}]"));
-        transStr = substitute(transStr, "++PRICE++", asDollars(ts, weiPerEther));
-    }
-    os << transStr;
-
-    return;
 }
 
 //-----------------------------------------------------------------------
@@ -251,13 +239,40 @@ bool transFilter(const CTransaction *trans, void *data) {
 }
 
 //-----------------------------------------------------------------------
-bool isInTransaction(CBlock& block, blknum_t tx_id, const address_t& needle) {
-    if (tx_id < block.transactions.size()) {
-        CAddressAppearanceArray haystack;
-        block.transactions[tx_id].forEveryAddress(visitAddrs, transFilter, &haystack);
-        for (auto hay : haystack)
-            if (hay.addr % needle)
-                return true;
+bool isInTransaction(CTransaction *trans, const address_t& needle) {
+    CAddressAppearanceArray haystack;
+    trans->forEveryAddress(visitAddrs, transFilter, &haystack);
+    for (auto hay : haystack)
+        if (hay.addr % needle)
+            return true;
+    return false;
+}
+
+//-----------------------------------------------------------------------
+bool checkBloom(COptions& options, const CAcctCacheItem *item) {
+
+    // If we are not checking blooms, assume it's in the block
+    if (!options.useBloom)
+        return true;
+
+    // If the bloom doesn't exist, assume it's in the block
+    string_q bloomFilename = substitute(getBinaryFilename(item->blockNum), "/blocks/", "/blooms/");
+    if (!fileExists(bloomFilename))
+        return true;
+
+    // Check to see if any of the enabled watched accounts are in the bloom
+    CBloomArray blooms;
+    CArchive bloomCache(READING_ARCHIVE);
+    if (bloomCache.Lock(bloomFilename, binaryReadOnly, LOCK_NOWAIT)) {
+        bloomCache >> blooms;
+        bloomCache.Release();
     }
+
+    for (auto bloom : blooms)
+        for (auto watch : options.watches)
+            if (watch.enabled)
+                if (isBloomHit(makeBloom(watch.address), bloom))
+                    return true;
+
     return false;
 }

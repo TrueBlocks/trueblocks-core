@@ -371,8 +371,10 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
                 if ( fieldIn % "parsed" )
                     return nextBasenodeChunk(fieldIn, tra);
                 // EXISTING_CODE
-                if ( fieldIn % "price" )
-                    return "++PRICE++";
+                if ( fieldIn % "price" ) {
+                    timestamp_t ts = str_2_Ts(tra->Format("[{TIMESTAMP}]"));  // it may only be on the block
+                    return asDollars(ts, weiPerEther);
+                }
                 // EXISTING_CODE
                 break;
 

@@ -10,9 +10,10 @@
 
 //---------------------------------------------------------------------------------------------------
 static COption params[] = {
-    COption("-fmt:<fmt>",     "export format (one of [json|txt|csv]"),
+    COption("-fmt:<fmt>",       "export format (one of [json|txt|csv]"),
     COption("-fi(l)ter:<addr>", "show results for this address (you may specify more than one filter)"),
-    COption("",               "Export transactions for one or more Ethereum addresses.\n"),
+    COption("-useBlooms",       "use bloom filters to decide whether or not to re-check the cache"),
+    COption("",                 "Export transactions for one or more Ethereum addresses.\n"),
 };
 static size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -41,6 +42,9 @@ bool COptions::parseArguments(string_q& command) {
             arg = substitute(substitute(arg, "-l:", ""), "--filter:", "");
             filters.push_back(arg);
 
+        } else if ((arg == "-u") || (arg == "--useBlooms")) {
+            useBloom = true;
+
         } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
@@ -62,6 +66,13 @@ bool COptions::parseArguments(string_q& command) {
                 if (addr % watch.address)
                     watch.enabled = true;
         }
+
+//        HIDE_FIELD(CAccountWatch, "qbis");
+//        for (CAccountWatch& watch : watches) {
+//            cout << watch << "\n";
+//        }
+//        cout << "Press enter to continue >";
+//        getchar();
     }
 
     // show certain fields and hide others
@@ -96,6 +107,7 @@ void COptions::Init(void) {
     transFmt = "";
     blk_minWatchBlock = 0;
     blk_maxWatchBlock = UINT32_MAX;
+    useBloom = false;
 
     minArgs = 0;
 }
