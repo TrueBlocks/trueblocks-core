@@ -1,0 +1,29 @@
+name=$1
+address=$2
+
+[ -z "$name" ] && echo "You must provide a name: ./maker <name> <address>" && exit 1;
+[ -z "$address" ] && echo "You must provide an address: ./maker <name> <address>" && exit 1;
+
+echo $name
+echo $address
+
+mkdir -p $name
+cd $name
+pwd
+
+isContract -w $address | cut -f2 -d' ' | sed 's/^/s\/FIRST\//' | sed 's/$/\//' >z
+cat z
+
+mkdir -p cache
+cat ../config.toml | sed 's/ADDR/'$address'/' | sed 's/NAME/'$name'/' | sed -f z >config.toml
+
+find .
+
+cat config.toml
+
+grep -i $address ../the_txt/*.txt >raw_data
+cat raw_data | cut -f2 -d: | cut -f1,2 | tee import.txt
+
+cacheMan -i
+#acctExport --fmt txt --filter $address
+acctExport

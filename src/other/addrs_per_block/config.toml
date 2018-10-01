@@ -1,0 +1,22 @@
+[settings]
+name = NAME
+
+[display]
+accounting = false
+debug = false
+logs = false
+trace = false
+single = false
+autocorrect = false
+parse = false
+
+[fields]
+hide=CTransaction:traces
+
+[formats]
+trans_fmt = [{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{HASH}]
+
+[[watches]]
+list = [
+    { address = "ADDR", name = "NAME", firstBlock = FIRST }
+]
