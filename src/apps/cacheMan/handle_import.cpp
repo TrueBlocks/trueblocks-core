@@ -17,7 +17,8 @@ bool COptions::handleImport(void) const {
         return false;
 
     CStringArray lines;
-    string_q contents = asciiFileToString("./import.txt");
+    string_q contents;
+    asciiFileToString("./import.txt", contents);
     size_t nRecords = explode(lines, contents, '\n');
     for (auto line : lines) {
         CAcctCacheItem item(line);

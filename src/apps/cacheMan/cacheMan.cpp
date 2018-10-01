@@ -137,7 +137,9 @@ int main(int argc, const char *argv[]) {
                 blknum_t lastBlock = 0;
                 CFilename lbFn(options.filenames[fn]);
                 string_q lbFileName = lbFn.getPath() + "lastBlock.txt";
-                uint32_t prevLastBlock = (uint32_t)str_2_Uint(asciiFileToString(lbFileName));
+                string_q contents;
+                asciiFileToString(lbFileName, contents);
+                uint32_t prevLastBlock = (uint32_t)str_2_Uint(contents);
                 if (options.stats.nFixed || options.stats.nTruncs) {
                     if (!isTestMode()) {
                         string_q backFile = options.filenames[fn]+".bak";

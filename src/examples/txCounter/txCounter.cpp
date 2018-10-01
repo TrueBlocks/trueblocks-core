@@ -30,7 +30,8 @@ public:
         {}
     void countOne(const CBlock& block);
     void loadFromFile(void) {
-        string_q contents = asciiFileToString("./data/countsByWeek.txt");
+        string_q contents;
+        asciiFileToString("./data/countsByWeek.txt", contents);
         string_q last;
         while (!contents.empty()) {
             string_q str = trim(nextTokenClear(contents, '\n'));

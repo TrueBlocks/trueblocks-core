@@ -61,7 +61,8 @@ int main(int argc, const char *argv[]) {
             return 0;
 
         CItemArray items;
-        string_q contents = asciiFileToString(options.fileName);
+        string_q contents;
+        asciiFileToString(options.fileName, contents);
         if (startsWith(contents, "blockNumber"))
             nextTokenClear(contents, '\n'); // skip header line
         CStringArray lines;

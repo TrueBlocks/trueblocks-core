@@ -206,17 +206,24 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    string_q asciiFileToString(const string_q& fileName) {
-
+    size_t asciiFileToBuffer(const string_q& fileName, vector<char>& buffer) {
         size_t len = fileSize(fileName);
-        vector<char> buffer(len);
+        buffer.resize(len);
         CArchive archive(READING_ARCHIVE);
         if (archive.Lock(fileName, asciiReadOnly, LOCK_NOWAIT)) {
             archive.Read(buffer.data(), len, 1);
             archive.Release();
         }
+        return buffer.size();
+    }
 
-        return string_q(buffer.data(), len);
+    //----------------------------------------------------------------------
+    size_t asciiFileToString(const string_q& fileName, string_q& contents) {
+        vector<char> buffer;
+        asciiFileToBuffer(fileName, buffer);
+        buffer.push_back('\0');  // not sure if this is needed or not. At worse it's redundant
+        contents = buffer.data();
+        return contents.size();
     }
 
     //----------------------------------------------------------------------

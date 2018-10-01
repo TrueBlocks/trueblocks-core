@@ -13,6 +13,8 @@ getTrans -h --qblocks
 	-n  (--nTraces)       report on how many traces the transaction generated and deepest trace
 
 #### Hidden options (shown during testing only)
+	-b  (--belongs val)   report true of false if the given address is found anywhere in the transaction
+	-a  (--asStrs)        when checking --belongs, treat input and log data as single string
 	-t  (--trace)         include the transactions trace after the transaction
 #### Hidden options (shown during testing only)
 

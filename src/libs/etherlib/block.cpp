@@ -438,20 +438,6 @@ extern void foundOne(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blk
 extern void foundPot(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList, const string_q& reason); // NOLINT
 
 //---------------------------------------------------------------------------
-bool CBlock::forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data) {
-
-    if (!func)
-        return false;
-
-    CAddressAppearanceMap addrMap;
-    forEveryAddress(accumulateAddresses, filterFunc, &addrMap);
-    for (CAddressAppearanceMap::iterator it = addrMap.begin(); it != addrMap.end(); ++it)
-        (*func)(it->first, data);
-
-    return true;
-}
-
-//---------------------------------------------------------------------------
 string_q stringy(const CStringArray& array) {
     bool first = true;
     string_q ret;
@@ -481,6 +467,32 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data)
 }
 
 //---------------------------------------------------------------------------
+bool getTracesAndVisit(const hash_t& hash, CAddressAppearance& item, ADDRESSFUNC funcy, void *data) {
+    string_q str;
+    queryRawTrace(str, hash);
+
+    CRPCResult generic;
+    generic.parseJson3(str);  // pull out the result
+
+    blknum_t traceID=0;
+    CTrace trace;
+    while (trace.parseJson3(generic.result)) {
+        string_q trID = "trace_" + uint_2_Str(traceID) + "_" + stringy(trace.traceAddress);
+        foundOne(funcy, data, item.getBn(), item.getTx(), traceID+10, trace.action.from,          trID + "from");
+        foundOne(funcy, data, item.getBn(), item.getTx(), traceID+10, trace.action.to,            trID + "to");
+        foundOne(funcy, data, item.getBn(), item.getTx(), traceID+10, trace.action.refundAddress, trID + "refundAddr");
+        foundOne(funcy, data, item.getBn(), item.getTx(), traceID+10, trace.action.address,       trID + "creation");
+        foundOne(funcy, data, item.getBn(), item.getTx(), traceID+10, trace.result.address,       trID + "self-destruct");
+        string_q inpt = extract(trace.action.input, 10);
+        if (!inpt.empty())
+            foundPot(funcy, data, item.getBn(), item.getTx(), traceID+10, inpt, trID + "input");
+        traceID++;
+        trace = CTrace();  // reset
+    }
+    return true;
+}
+
+//---------------------------------------------------------------------------
 bool CTransaction::forEveryAddress(ADDRESSFUNC funcy, TRANSFUNC filt, void *data) {
     blknum_t tr = transactionIndex;
     const CReceipt *recPtr = &receipt;
@@ -505,20 +517,8 @@ bool CTransaction::forEveryAddress(ADDRESSFUNC funcy, TRANSFUNC filt, void *data
     // If we're not filtering, or the filter passes, proceed. Note the filter depends on the
     // transaction only, not on any address.
     if (!filt || !filt(this, data)) {  // may look at DDos range and nTraces for example
-        CTraceArray trcs;
-        getTraces(trcs, hash);
-        for (size_t t = 0 ; t < trcs.size() ; t++) {
-            const CTrace *trace = &trcs[t];  // taking a non-const reference
-            string_q trID = "trace_" + uint_2_Str(t) + "_" + stringy(trace->traceAddress);
-            foundOne(funcy, data, blockNumber, tr, t+10, trace->action.from,          trID + "from");
-            foundOne(funcy, data, blockNumber, tr, t+10, trace->action.to,            trID + "to");
-            foundOne(funcy, data, blockNumber, tr, t+10, trace->action.refundAddress, trID + "refundAddr");
-            foundOne(funcy, data, blockNumber, tr, t+10, trace->action.address,       trID + "creation");
-            foundOne(funcy, data, blockNumber, tr, t+10, trace->result.address,       trID + "self-destruct");
-            string_q inpt = extract(trace->action.input, 10);
-            if (!inpt.empty())
-                foundPot(funcy, data, blockNumber, tr, t+10, inpt, trID + "input");
-        }
+        CAddressAppearance item(blockNumber, tr, NOPOS, "", "");
+        getTracesAndVisit(hash, item, funcy, data);
     }
     return true;
 }

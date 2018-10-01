@@ -83,7 +83,9 @@ bool COptions::parseArguments(string_q& command) {
             normalize = true;
 
         } else if (arg == "-l" || arg == "--latest") {
-            uint64_t lastUpdate = str_2_Uint(asciiFileToString("/tmp/getBlock_junk.txt"));
+            string_q contents;
+            asciiFileToString("/tmp/getBlock_junk.txt", contents);
+            uint64_t lastUpdate = str_2_Uint(contents);
             uint64_t cache = NOPOS, client = NOPOS;
             getLatestBlocks(cache, client);
             uint64_t diff = cache > client ? 0 : client - cache;
@@ -274,6 +276,7 @@ void COptions::Init(void) {
     showAddrs   = false;
     uniqAddrs   = false;
     counting    = false;
+    addrCnt     = 0;
     number      = false;
     traces      = false;
     force       = false;
