@@ -177,7 +177,8 @@ namespace qblocks {
             commandList = "";
             // The command line also has a --file in it, so add these commands as well
             fromFile = true;
-            string_q contents =  asciiFileToString(cmdFileName);
+            string_q contents;
+            asciiFileToString(cmdFileName, contents);
             replaceAll(contents, "\t", " ");
             replaceAll(contents, "-v", "");
             replaceAll(contents, "-h", "");
@@ -680,7 +681,9 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         string_q cmd = editor + " \"" + fileName + "\"";
         if (isTestMode()) {
             cout << "Testing editFile: " << substitute(cmd, "nano", "open") << "\n";
-            cout << asciiFileToString(fileName) << "\n";
+            string_q contents;
+            asciiFileToString(fileName, contents);
+            cout << contents << "\n";
         } else {
             if (system(cmd.c_str())) {}  // do not remove. Silences compiler warnings
         }
@@ -765,7 +768,9 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         string_q toolStr = toml->getConfigStr("tools", "list", "<not_set>");
         if (toolStr == "<not_set>") {
             string_q fileName = configPath("quickBlocks.toml");
-            stringToAsciiFile(fileName, asciiFileToString(fileName) + "\n" + STR_DEFAULT_TOOLNAMES);
+            string_q contents;
+            asciiFileToString(fileName, contents);
+            stringToAsciiFile(fileName, contents + "\n" + STR_DEFAULT_TOOLNAMES);
             toml = getGlobalConfig("reload");
             toolStr = toml->getConfigStr("tools", "list", "");
         }
@@ -901,7 +906,9 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             cout << "Reading from text database\n";
 
         // Read the data from the names database and clean it up if needed
-        string_q contents = trimWhitespace(asciiFileToString(textFile));
+        string_q contents;
+        asciiFileToString(textFile, contents);
+        contents = trimWhitespace(contents);
         replaceAll(contents, "\t\t", "\t");
         if (!endsWith(contents, "\n"))
             contents += "\n";

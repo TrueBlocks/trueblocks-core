@@ -44,9 +44,7 @@ int main(int argc, const char * argv[]) {
         while (!list.empty() && !shouldQuit()) {
             blknum_t bn = str_2_Uint(nextTokenClear(list, '|'));
             if (options.showAddrs || options.uniqAddrs) {
-                string_q checkResults = getAddresses(bn, options);
-                cout << checkResults;
-                cout.flush();
+                getAddresses(bn, options);
 
             } else if (options.isCheck) {
                 string_q checkResults = checkOneBlock(bn, options);
@@ -246,6 +244,8 @@ extern bool transFilter(const CTransaction *trans, void *data);
 
 //------------------------------------------------------------
 bool passesFilter(const CAddressArray& array, const address_t& in) {
+    if (array.size() == 0)
+        return true;
     for (auto elem : array)
         if (elem % in)
             return true;
@@ -255,39 +255,34 @@ bool passesFilter(const CAddressArray& array, const address_t& in) {
 //------------------------------------------------------------
 string_q getAddresses(uint64_t num, const COptions& opt) {
 
-    CAddressAppearanceArray array;
     CBlock block;
     getBlock(block, num);
     if (opt.uniqAddrs)
-        block.forEveryUniqueAddress(visitAddrs, transFilter, &array);
+        block.forEveryUniqueAddress(visitAddrs, transFilter, (void*)&opt);
     else
-        block.forEveryAddress(visitAddrs, transFilter, &array);
-    sort(array.begin(), array.end(), sortByBlocknumTxId);
-
-    uint64_t cnt = 0;
-    ostringstream os;
-    for (auto elem : array) {
-        if (opt.filters.size() == 0 || passesFilter(opt.filters, elem.addr)) {
-            if (opt.counting) {
-                cnt++;
-            } else {
-                os << elem << "\n";
-            }
-        }
-    }
-
-    if (opt.counting) {
-        os << num << "\t" << cnt << "\n";
-    }
-
-    return os.str();
+        block.forEveryAddress(visitAddrs, transFilter, (void*)&opt);
+    return "";;
 }
 
 //----------------------------------------------------------------
 bool visitAddrs(const CAddressAppearance& item, void *data) {
-    CAddressAppearanceArray *array = reinterpret_cast<CAddressAppearanceArray*>(data);
-    if (!isZeroAddr(item.addr))
-        array->push_back(item);
+    if (!isZeroAddr(item.addr)) {
+        COptions *opt = (COptions*)data;
+        if (opt->counting) {
+            opt->addrCnt++;
+
+        } else if (passesFilter(opt->filters, item.addr)) {
+            cout << item;
+            if (!isTestMode())
+                cout << "                   ";
+            cout << "\n";
+            cout.flush();
+
+        } else {
+            cerr << "skipping: " << item << "\r";
+            cerr.flush();
+        }
+    }
     return true;
 }
 

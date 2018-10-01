@@ -66,7 +66,8 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Not a valid filename: " + orig + ". Quitting...");
             if (!fileExists(fileName.getFullPath()))
                 return usage("File " + fileName.relativePath() + " not found. Quitting...");
-            string_q contents = asciiFileToString(fileName.getFullPath());
+            string_q contents;
+            asciiFileToString(fileName.getFullPath(), contents);
             if (contents.empty())
                 return usage("No addresses were found in file " + fileName.relativePath() + ". Quitting...");
             while (!contents.empty()) {
