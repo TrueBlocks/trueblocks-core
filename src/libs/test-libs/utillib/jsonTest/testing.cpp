@@ -44,20 +44,31 @@ int main(int argc, const char * argv[]) {
 
         string_q fn = "tests/" + options.fileName + ".json";
         cout << fn << "\n";
-        string_q contents = asciiFileToString(fn);
-        if (options.fileName == "blocks") {
 
+        string contents;
+        asciiFileToString(fn, contents);
+        if (options.fileName == "blocks") {
             CBlock block;
             while (block.parseJson3(contents))  // returns 'true' if anyting was parsed
                 cout << block << "\n";
 
         } else if (options.fileName == "traces") {
-
             CTrace trace;
             while (trace.parseJson3(contents))
                 cout << trace << "\n";
 
+        } else if (options.fileName == "big") {
+
+            //cout << contents;
+            CRPCResult generic;
+            while (generic.parseJson3(contents)) {
+                CTrace trace;
+                while (trace.parseJson3(generic.result))
+                    cout << trace << "\n";
+            }
+
         } else {
+
             GETRUNTIME_CLASS(CTrace)->sortFieldList();
             CTraceArray array;
             CTrace trace;

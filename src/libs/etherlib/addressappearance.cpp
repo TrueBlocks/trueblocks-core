@@ -27,10 +27,33 @@ ostream& operator<<(ostream& os, const CAddressAppearance& item) {
 }
 
 //---------------------------------------------------------------------------
-uint64_t insertUnique(CAddressAppearanceMap *addrMap, const CAddressAppearance& _value) {
-    CAddressAppearanceMap::iterator it = addrMap->find(_value);
-    if (it == addrMap->end())  // not found
-        it = addrMap->insert(make_pair(_value, true)).first;
+class CUniqueState {
+    ADDRESSFUNC func;
+    void *data;
+    uint64_t cnt;
+    string_q thing = "|/-\\|/-\\";
+public:
+    CUniqueState(ADDRESSFUNC f, void *d) {
+        func = f;
+        data = d;
+    }
+    CAddressAppearanceMap addrMap;
+    bool insertUnique(const CAddressAppearance& _value);
+};
+
+//---------------------------------------------------------------------------
+bool CUniqueState::insertUnique(const CAddressAppearance& _value) {
+    CAddressAppearanceMap::iterator it = addrMap.find(_value);
+    if (it == addrMap.end()) {  // not found
+        it = addrMap.insert(make_pair(_value, true)).first;
+        if (func)
+            (*func)(it->first, data);
+    } else if (!isTestMode()) {
+        cerr << cGreen << thing[((cnt++/4)%8)] << cOff << "\b";
+        if (!(cnt%100))
+            cerr << ".";
+        cerr.flush();
+    }
     return it->second;
 }
 
@@ -39,7 +62,16 @@ bool accumulateAddresses(const CAddressAppearance& item, void *data) {
     if (isZeroAddr(item.addr))
         return true;
     CAddressAppearance search(item.getBn(), item.getTx(), item.getTc(), item.addr, item.reason);
-    insertUnique((CAddressAppearanceMap*)data, search);  // NOLINT
+    ((CUniqueState*)data)->insertUnique(search);  // NOLINT
+    return true;
+}
+
+//---------------------------------------------------------------------------
+bool CBlock::forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data) {
+    if (!func)
+        return false;
+    CUniqueState state(func, data);
+    forEveryAddress(accumulateAddresses, filterFunc, &state);
     return true;
 }
 

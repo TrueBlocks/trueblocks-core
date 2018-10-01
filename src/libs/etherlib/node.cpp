@@ -543,7 +543,8 @@ extern void registerQuitHandler(QUITHANDLER qh);
             return false;
         }
         // assume the item is already clear
-        string_q contents = asciiFileToString(fileName);
+        string_q contents;
+        asciiFileToString(fileName, contents);
         if (contains(contents, "null")) {
             replaceAll(contents, "null", "\"0x\"");
             stringToAsciiFile(fileName, contents);

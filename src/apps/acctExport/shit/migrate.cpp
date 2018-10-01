@@ -22,7 +22,9 @@ bool processMigrate(void) {
         cerr << "Path '" << path << "' not found. Quitting...\n";
         return false;
     }
-    string_q contents = trim(substitute(substitute(asciiFileToString(path), "\n", " "), ";", ";\n"),' ');
+    string_q contents;
+    asciiFileToString(path, contents);
+    contents = trim(substitute(substitute(contents, "\n", " "), ";", ";\n"),' ');
     while (!contents.empty()) {
         string_q line = substitute(trim(nextTokenClear(contents, '\n'),' '), "  ", " ");
         if (!startsWith(line, "#") && !line.empty()) {

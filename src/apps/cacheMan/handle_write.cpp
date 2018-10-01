@@ -13,7 +13,9 @@ bool COptions::handleWrite(const string_q& outputFilename, const CAcctCacheItemA
     cerr << "\tWriting...";
     uint64_t nWritten = 0;
 
-    blknum_t currentLast = str_2_Uint(asciiFileToString("./cache/lastBlock.txt"));
+    string_q contents;
+    asciiFileToString("./cache/lastBlock.txt", contents);
+    blknum_t currentLast = str_2_Uint(contents);
 
     CArchive txCache(WRITING_ARCHIVE);
     if (!txCache.Lock(outputFilename, binaryWriteCreate, LOCK_WAIT))

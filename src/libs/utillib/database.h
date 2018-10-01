@@ -167,7 +167,7 @@ namespace qblocks {
                                 const string_q& ns = "", bool spaces = true);
 
     //----------------------------------------------------------------------
-    extern string_q asciiFileToString(const string_q& filename);
+    extern size_t asciiFileToString(const string_q& filename, string& contents);
 
     //----------------------------------------------------------------------
     inline bool isFileLocked(const string_q& fileName) {

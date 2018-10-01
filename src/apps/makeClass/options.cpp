@@ -172,7 +172,8 @@ bool listClasses(const string_q& path, void *data) {
             COptions *opts = reinterpret_cast<COptions*>(data);
             bool include = true;
             if (!opts->filter.empty()) {
-                string_q contents = asciiFileToString(path);
+                string_q contents;
+                asciiFileToString(path, contents);
                 include = contains(contents, opts->filter);
             }
             if (include) {
