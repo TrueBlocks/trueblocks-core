@@ -380,7 +380,8 @@ string_q writeFmt = "\tarchive << [{NAME}];\n";
 
     //------------------------------------------------------------------------------------------------
     string_q headerFile = substitute(substitute(dataFile, ".txt", ".h"), "./classDefinitions/", "./");
-    string_q headSource = asciiFileToString(configPath("makeClass/blank.h"));
+    string_q headSource;
+    asciiFileToString(configPath("makeClass/blank.h"), headSource);
     replaceAll(headSource, "[{GET_OBJ}]",        (hasObjGetter ? string_q(STR_GETOBJ_HEAD)+(hasStrGetter?"":"\n") : ""));
     replaceAll(headSource, "[{GET_STR}]",        (hasStrGetter ? string_q(STR_GETSTR_HEAD)+"\n" : ""));
     replaceAll(headSource, "[FIELD_COPY]",       fieldCopy);
@@ -422,7 +423,8 @@ string_q writeFmt = "\tarchive << [{NAME}];\n";
     string_q fieldStr = fieldList.size() ? substitute(getCaseCode(fieldCase, ""), "[{PTR}]", "") : "// No fields";
 
     string_q srcFile    = substitute(substitute(dataFile, ".txt", ".cpp"), "./classDefinitions/", "./");
-    string_q srcSource  = asciiFileToString(configPath("makeClass/blank.cpp"));
+    string_q srcSource;
+    asciiFileToString(configPath("makeClass/blank.cpp"), srcSource);
     if ((startsWith(className, "CNew") || className == "CPriceQuote") && !contains(getCWD(), "parse"))
         replace(srcSource, "version of the data\n", STR_UPGRADE_CODE);
     replaceAll(srcSource, "[{GET_OBJ}]",         fieldGetObj);

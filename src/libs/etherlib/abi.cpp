@@ -285,7 +285,8 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
 //---------------------------------------------------------------------------
 bool CAbi::loadABIFromFile(const string_q& fileName) {
 
-    string_q contents = asciiFileToString(fileName);
+    string_q contents;
+    asciiFileToString(fileName, contents);
     CFunction func;
     while (func.parseJson3(contents)) {
         abiByName.push_back(func);

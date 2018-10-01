@@ -170,7 +170,7 @@ bool articulateTrace(const CAbi& abi, CTrace *p) {
         }
     }
 
-#if 0
+#if 1
     // Not really hacky, but sort of hacky way to articulate token and wallet traces. We pretend the trace is
     // a transaction and take advantage of existing code. All we need is the function point anyway.
     CTransaction dummy;

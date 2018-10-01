@@ -23,6 +23,7 @@ public:
     bool showAddrs;
     bool uniqAddrs;
     bool counting;
+    uint64_t addrCnt;
     bool number;
     bool traces;
     bool force;

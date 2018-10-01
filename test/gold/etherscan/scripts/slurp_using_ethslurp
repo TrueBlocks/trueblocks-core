@@ -22,7 +22,7 @@ filename=$3$2-$1
 # Default block range
 #
 start=0
-stop=6250000
+stop=6249999
 
 #--
 # For this code to work, you must add these entries to your ~/.quickblocks/ethslurp.toml file
