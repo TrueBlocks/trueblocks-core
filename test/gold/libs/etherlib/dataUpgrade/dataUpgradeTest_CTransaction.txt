@@ -156,7 +156,7 @@ traces              	1032	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
   },
   "articulatedTx": [],
   "gasCost": 0,
-  "price": "++PRICE++",
+  "price": "1.400000000000000000",
   "gasUsed": 0,
   "date": "1970-01-01 00:00:00 UTC",
   "datesh": "1970-01-01",
