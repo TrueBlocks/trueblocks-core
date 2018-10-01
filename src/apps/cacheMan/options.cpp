@@ -85,7 +85,8 @@ bool COptions::parseArguments(string_q& command) {
             if (!fileExists("./remove.txt"))
                 return usage("File ./remove.txt not found. Quitting...");
             cerr << cGreen << "Found removal file...\n";
-            string_q contents = asciiFileToString("./remove.txt");
+            string_q contents;
+            asciiFileToString("./remove.txt", contents);
             while (!contents.empty()) {
                 string_q line  = nextTokenClear(contents,'\n');
                 CAcctCacheItem item(line);

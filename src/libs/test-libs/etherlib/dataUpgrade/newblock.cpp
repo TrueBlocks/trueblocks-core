@@ -421,7 +421,8 @@ bool readOneNewBlock_fromBinary(CNewBlock& block, const string_q& fileName) {
 //-----------------------------------------------------------------------
 bool readOneNewBlock_fromJson(CNewBlock& block, const string_q& fileName) {
     block = CNewBlock();  // reset
-    string_q contents = asciiFileToString(fileName);
+    string_q contents;
+    asciiFileToString(fileName, contents);
     if (contains(contents, "null")) {
         replaceAll(contents, "null", "\"0x\"");
         stringToAsciiFile(fileName, contents);

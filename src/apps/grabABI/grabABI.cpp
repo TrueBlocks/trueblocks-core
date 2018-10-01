@@ -44,7 +44,8 @@ inline string_q projectName(void) {
 
 //-----------------------------------------------------------------------
 inline void makeTheCode(const string_q& fn, const string_q& addr) {
-    string_q theCode = asciiFileToString(templateFolder + fn);
+    string_q theCode;
+    asciiFileToString(templateFolder + fn, theCode);
     replaceAll(theCode, "[{ADDR}]", addr);
     replaceAll(theCode, "[{PROJECT_NAME}]", projectName());
     writeTheCode(classDir + "../" + fn, theCode, "", fn != "CMakeFile.txt");
@@ -91,7 +92,7 @@ string_q acquireABI(CFunctionArray& functions, const address_t& addr, const COpt
             cerr << "Reading ABI for " << addr << " from cache " + dispName + "\r";
             cerr.flush();
         }
-        results = asciiFileToString(fileName);
+        asciiFileToString(fileName, results);
 
     } else {
         if (verbose && !isTestMode()) {
@@ -190,7 +191,9 @@ int main(int argc, const char *argv[]) {
                     cerr << "ABI for '" + options.addrs[i] + "' not found. Quitting...\n";
                     return 0;
                 }
-                cout << asciiFileToString(fileName) << "\n";
+                string_q contents;
+                asciiFileToString(fileName, contents);
+                cout << contents << "\n";
             }
             return 0;
         }
@@ -411,7 +414,8 @@ int main(int argc, const char *argv[]) {
             // The library make file
             replaceReverse(sources, " \\\n", " \\\n" + options.prefix + ".cpp\n");
             if (!options.isBuiltin()) {
-                string_q makefile = asciiFileToString(templateFolder + "parselib/CMakeLists.txt");
+                string_q makefile;
+                asciiFileToString(templateFolder + "parselib/CMakeLists.txt", makefile);
                 replaceAll(makefile, "[{PROJECT_NAME}]", projectName());
                 writeTheCode(classDir + "CMakeLists.txt", makefile);
             }
@@ -422,7 +426,8 @@ int main(int argc, const char *argv[]) {
             replace(factory1, " if (encoding == func_[{LOWER}])", "");
             replace(factory2, "} else ", "");
 
-            string_q sourceCode = asciiFileToString(templateFolder + "parselib/parselib.cpp");
+            string_q sourceCode;
+            asciiFileToString(templateFolder + "parselib/parselib.cpp", sourceCode);
             parseInit = "parselib_init(QUITHANDLER qh)";
             if (!options.isBuiltin())
                 replaceAll(sourceCode, "[{PREFIX}]_init(void)", parseInit);

@@ -170,7 +170,7 @@ string_q COptions::getFormatString(const string_q& which, bool ignoreBlank) {
             errMsg = string_q("Formatting file '") + file +
             "' for display string '" + formatName + "' not found. Quiting...\n";
         else
-            ret = asciiFileToString(file);
+            asciiFileToString(file, ret);
 
     } else if (contains(ret, "fmt_")) {  // it's referring to another format string...
         string_q newName = ret;
