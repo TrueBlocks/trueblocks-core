@@ -86,7 +86,9 @@ bool testReadWrite(COptions& options) {
             writeToJson(block, "./newFmt.json");
             ASSERT(fileExists("./newFmt.json"));
             reportNode(&block);
-            cout << asciiFileToString("./newFmt.json") << "\n";
+            string_q contents;
+            asciiFileToString("./newFmt.json", contents);
+            cout << contents << "\n";
             cout.flush();
             break;
         }
@@ -111,7 +113,9 @@ bool testReadWrite(COptions& options) {
             writeToJson(newBlock, "./newFmt2.json");
             ASSERT(fileExists("./newFmt2.json"));
             reportNode(&newBlock);
-            cout << asciiFileToString("./newFmt2.json") << "\n";
+            string_q contents;
+            asciiFileToString("./newFmt2.json", contents);
+            cout << contents << "\n";
             cout.flush();
             break;
         }

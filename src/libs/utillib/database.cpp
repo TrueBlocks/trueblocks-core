@@ -386,7 +386,8 @@ namespace qblocks {
     //------------------------------------------------------------------------------------------------------------
     void writeTheCode(const string_q& fileName, const string_q& codeOutIn, const string_q& ns, bool spaces) {
         string_q codeOut = codeOutIn;
-        string_q orig = asciiFileToString(fileName);
+        string_q orig;
+        asciiFileToString(fileName, orig);
         string_q existingCode = substitute(orig, "//EXISTING_CODE", "// EXISTING_CODE");
         if (spaces) {
             replaceAll(existingCode, "    ", "\t");

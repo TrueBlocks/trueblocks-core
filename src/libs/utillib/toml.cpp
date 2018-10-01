@@ -101,7 +101,8 @@ extern string_q collapseArrays(const string_q& inStr);
         string_q curGroup;
         clear();
 
-        string_q contents = asciiFileToString(filename);
+        string_q contents;
+        asciiFileToString(filename, contents);
         replaceAll(contents, "\\\n ", "\\\n");  // if ends with '\' + '\n' + space, make it just '\' + '\n'
         replaceAll(contents, "\\\n", "");       // if ends with '\' + '\n', its a continuation, so fold in
         replaceAll(contents, "\\\r\n", "");     // same for \r\n
