@@ -80,7 +80,10 @@ bool visitAddrs(const CAddressAppearance& item, void *data) {
             else
                 cout << "\n";
 #else
-            cout << "\r";
+            if (verbose)
+                cout << "\n";
+            else
+                cout << "\r";
 #endif
             cout.flush();
             opt->belongs = true;
