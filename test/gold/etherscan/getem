@@ -52,13 +52,13 @@
 # final
 # ./scripts/cmp_ethscan 0x423b5f62b328d0d6d44870f4eee316befa0b2df5 00_gonetwork final/
 # ./scripts/cmp_ethscan 0xe0b7927c4af23765cb51314a0e0521a9645f0e2a 06_dgd       final/
-# ./scripts/cmp_ethscan 0x4672bad527107471cb5067a887f4656d585a8a31 11_drop      final/
 # ./scripts/cmp_ethscan 0x9992ec3cf6a55b00978cddf2b27bc6882d88d1ec 11_poly      final/
 # ./scripts/cmp_ethscan 0xa74476443119a942de498590fe1f2454d7d4ac0d 03_gnt       final/
 
 # FAILED DOUBLE CHECK
 # ./scripts/cmp_ethscan 0xbf2179859fc6d5bee9bf9158632dc51678a4100e 06_elf       final/
 # ./scripts/cmp_ethscan 0x6c6ee5e31d828de241282b9606c8e98ea48526e2 06_hot       final/
+# ./scripts/cmp_ethscan 0x4672bad527107471cb5067a887f4656d585a8a31 11_drop      final/
 
 # double checked
 #DONE ./scripts/cmp_ethscan 0x618e75ac90b12c6049ba3b27f5d5f8651b0037f6 07_qash      final/
