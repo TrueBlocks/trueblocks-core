@@ -1,31 +1,3 @@
-getBlock argc: 3 [1:245001] [2:--number] 
-getBlock 245001 --number 
-
-  --number option is only available with either --addrs or --uniq. Quitting...
-
-  Usage:    getBlock [-r|-n|-c|-l|-a|-u|-m|-l|-v|-h] <block> [block...]  
-  Purpose:  Returns block(s) from local cache or directly from a running node.
-             
-  Where:    
-	block_list            a space-separated list of one or more blocks to retrieve (required)
-	-r  (--raw)           pull the block data from the running Ethereum node (no cache)
-	-n  (--hash_only)     display only transaction hashes, default is to display full transaction detail
-	-c  (--check)         compare results between qblocks and Ethereum node, report differences, if any
-	-l  (--latest)        display the latest blocks at both the node and the cache
-	-a  (--addrs)         display all addresses included in the block
-	-u  (--uniq)          display only uniq addresses found in the block
-	-m  (--number)        useful only for --addrs or --uniq, only display the number of addresses involved
-	-l  (--filter val)    useful only for --addrs or --uniq, only display this address in results
-
-#### Hidden options (shown during testing only)
-	-o  (--force)         force a re-write of the block to the cache
-	-q  (--quiet)         do not print results to screen, used for speed testing and data checking
-	-s  (--source val)    either :c(a)che or :(r)aw, source for data retrival. (shortcuts -c = qblocks, -r = node)
-	-f  (--fields val)    either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default)
-	-n  (--normalize)     normalize (remove un-common fields and sort) for comparison with other results (testing)
-#### Hidden options (shown during testing only)
-
-	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
-	-h  (--help)          display this help screen
-
-  Powered by QBlocks
+getBlock argc: 3 [1:245001] [2:--uniqCnt] 
+getBlock 245001 --uniqCnt 
+There were 3 unique addreseses found.
