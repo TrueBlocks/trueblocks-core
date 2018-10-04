@@ -8,6 +8,7 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
+/*
 //-----------------------------------------------------------------------
 bool COptions::openIncomeStatement(const CBlock& block) {
     if (!accounting_on)
@@ -186,4 +187,5 @@ bool COptions::closeIncomeStatement(const CBlock& block) {
     }
     return true;
 }
+*/
 #endif

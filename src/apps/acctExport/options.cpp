@@ -28,6 +28,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     Init();
+//    outFile = "file.txt";
     while (!command.empty()) {
         string_q arg = nextTokenClear(command, ' ');
         if (startsWith(arg, "-f:") || startsWith(arg, "--fmt:")) {
@@ -81,6 +82,27 @@ bool COptions::parseArguments(string_q& command) {
     manageFields(toml.getConfigStr("fields", "hide", ""), false);
     manageFields(toml.getConfigStr("fields", "show", ""), true );
 
+    if (!outFile.empty()) {
+        outStream.open(outFile);
+        out = new COutPiped(outStream.rdbuf(), cout);
+    }
+/*
+ int main() {
+        // or: std::filebuf of;
+        //     of.open("file.txt", std::ios_base::out);
+        std::ofstream of("file.txt");
+        {
+            // or: opiped raii(&of, std::cout);
+            opiped raii(of.rdbuf(), std::cout);
+            std::cout << "going into file" << std::endl;
+        }
+        std::cout << "going on screen" << std::endl;
+    }
+
+    out = new COutPiped(
+    if (outputFile)
+*/
+    
     transFmt = "";  // empty string gets us JSON output
     if (fmt != JSON) {
         string_q format = toml.getConfigStr("formats", "trans_fmt", "");
@@ -110,10 +132,16 @@ void COptions::Init(void) {
     useBloom = false;
 
     minArgs = 0;
+    if (out)
+        delete out;
+    out = NULL;
+    outFile = "";
+    outStream.close();
 }
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
+    out = NULL;
     Init();
 }
 
