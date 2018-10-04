@@ -261,23 +261,30 @@ string_q getAddresses(uint64_t num, const COptions& opt) {
         block.forEveryUniqueAddress(visitAddrs, transFilter, (void*)&opt);
     else
         block.forEveryAddress(visitAddrs, transFilter, (void*)&opt);
-    return "";;
+    if (opt.counting) {
+        uint64_t cnt = opt.addrCnt;
+        string_q be  = (cnt == 1 ? "was " : "were ");
+        string_q adj = (opt.uniqAddrs ? " unique" : "");
+        cout << "There " << be << opt.addrCnt << adj << " addreses" << (cnt == 1 ? "" : "es") << " found.\n";
+    }
+    return "";
 }
 
 //----------------------------------------------------------------
 bool visitAddrs(const CAddressAppearance& item, void *data) {
     if (!isZeroAddr(item.addr)) {
         COptions *opt = (COptions*)data;
-        if (opt->counting) {
-            opt->addrCnt++;
+        if (passesFilter(opt->filters, item.addr)) {
+            if (opt->counting) {
+                opt->addrCnt++;
 
-        } else if (passesFilter(opt->filters, item.addr)) {
-            cout << item;
-            if (!isTestMode())
-                cout << "                   ";
-            cout << "\n";
-            cout.flush();
-
+            } else {
+                cout << item;
+                if (!isTestMode())
+                    cout << "                   ";
+                cout << "\n";
+                cout.flush();
+            }
         } else {
             cerr << "skipping: " << item << "\r";
             cerr.flush();

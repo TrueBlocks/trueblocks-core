@@ -21,7 +21,7 @@ static COption params[] = {
     COption("-latest",             "display the latest blocks at both the node and the cache"),
     COption("-addrs",              "display all addresses included in the block"),
     COption("-uniq",               "display only uniq addresses found in the block"),
-    COption("-nu(m)ber",           "useful only for --addrs or --uniq, only display the number of addresses involved"),
+    COption("-nu(m)ber",           "display address counts (alterntively --addrCnt or --uniqCnt)"),
     COption("-fi(l)ter:<addr>",    "useful only for --addrs or --uniq, only display this address in results"),
 //    COption("-trac(e)s",         "include transaction traces in the export"),
 //    COption("-addresses:<val>",  "display addresses included in block as one of: [ all | to | from |\n\t\t\t\t"
@@ -143,7 +143,7 @@ bool COptions::parseArguments(string_q& command) {
             counting = true;
 
         } else if (arg == "-m" || arg == "--number") {
-            number = true;
+            counting = true;
 
         } else if (arg == "-e" || arg == "--traces") {
             traces = true;
@@ -249,7 +249,7 @@ bool COptions::parseArguments(string_q& command) {
         HIDE_FIELD(CBlock,       "finalized");
     }
 
-    if (number && (!showAddrs && !uniqAddrs))
+    if (counting && (!showAddrs && !uniqAddrs))
         return usage("--number option is only available with either --addrs or --uniq. Quitting...");
 
     if (!blocks.hasBlocks())
@@ -277,7 +277,6 @@ void COptions::Init(void) {
     uniqAddrs   = false;
     counting    = false;
     addrCnt     = 0;
-    number      = false;
     traces      = false;
     force       = false;
     normalize   = false;
