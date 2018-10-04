@@ -48,7 +48,7 @@ bool CUniqueState::insertUnique(const CAddressAppearance& _value) {
         it = addrMap.insert(make_pair(_value, true)).first;
         if (func)
             (*func)(it->first, data);
-    } else if (!isTestMode()) {
+    } else if (!isTestMode() && addrMap.size() > 500) {
         cerr << cGreen << thing[((cnt++/4)%8)] << cOff << "\b";
         if (!(cnt%100))
             cerr << ".";
