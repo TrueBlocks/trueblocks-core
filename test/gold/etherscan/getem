@@ -13,8 +13,6 @@
 # in your $PATH
 #
 
-# ./scripts/cmp_ethscan 0xf0ee6b27b759c9893ce4f094b49ad28fd15a23e4 10_eng
-# ./scripts/cmp_ethscan 0xf85feea2fdd81d51177f6b8f35f0e6734ce45f5f 10_cmt
 # ./scripts/cmp_ethscan 0x39bb259f66e1c59d5abef88375979b4d20d98022 09_wax
 # ./scripts/cmp_ethscan 0xb91318f35bdb262e9423bc7c7c2a3a93dd93c92c 09_nuls
 # ./scripts/cmp_ethscan 0x58a4884182d9e835597f405e5f258290e46ae7c2 09_noah
@@ -45,14 +43,12 @@
 # not final
 # ./scripts/cmp_ethscan 0x89205a3a3b2a69de6dbf7f01ed13b2108b2c43e7 00_etherTip
 # ./scripts/cmp_ethscan 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 00_etherTip
-# ./scripts/cmp_ethscan 0x12480e24eb5bec1a9d4369cab6a80cad3c0a377a 10_sub
 # ./scripts/cmp_ethscan 0xb7cb1c96db6b22b0d3d9536e0108d062bd488f74 03_wtc (very messed up)
 # ./scripts/cmp_ethscan 0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c 06_bnt
 
 # final
 # ./scripts/cmp_ethscan 0x423b5f62b328d0d6d44870f4eee316befa0b2df5 00_gonetwork final/
 # ./scripts/cmp_ethscan 0xe0b7927c4af23765cb51314a0e0521a9645f0e2a 06_dgd       final/
-# ./scripts/cmp_ethscan 0x9992ec3cf6a55b00978cddf2b27bc6882d88d1ec 11_poly      final/
 # ./scripts/cmp_ethscan 0xa74476443119a942de498590fe1f2454d7d4ac0d 03_gnt       final/
 
 # FAILED DOUBLE CHECK
@@ -61,18 +57,22 @@
 # ./scripts/cmp_ethscan 0x4672bad527107471cb5067a887f4656d585a8a31 11_drop      final/
 
 # double checked
-#DONE ./scripts/cmp_ethscan 0x618e75ac90b12c6049ba3b27f5d5f8651b0037f6 07_qash      final/
-#DONE ./scripts/cmp_ethscan 0x168296bb09e24a88805cb9c33356536b980d3fc5 04_rhoc      final/
-#DONE ./scripts/cmp_ethscan 0x814964b1bceaf24e26296d031eadf134a2ca4105 00_newbium   final/
-#DONE ./scripts/cmp_ethscan 0xc9d7fec9889690bbff0a0df758d13e5a55dd7822 00_newbium   final/
-#DONE ./scripts/cmp_ethscan 0x35a9b440da4410dd63df8c54672b728970560328 07_mana      final/
-#DONE ./scripts/cmp_ethscan 0x3893b9422cd5d70a81edeffe3d5a1c6a978310bb 05_mith      final/
-#DONE ./scripts/cmp_ethscan 0x9cda8a60dd5afa156c95bd974428d91a0812e054 07_ttu       final/
-#DONE ./scripts/cmp_ethscan 0xa15c7ebe1f07caf6bff097d8a589fb8ac49ae5b3 03_npxs      final/
-#DONE ./scripts/cmp_ethscan 0xdac17f958d2ee523a2206206994597c13d831ec7 01_usdt      final/
-#DONE ./scripts/cmp_ethscan 0x595832f8fc6bf59c85c527fec3740a1b7a361269 07_power     final/
-#DONE ./scripts/cmp_ethscan 0x9ab165d795019b6d8b3e971dda91071421305e5a 08_aoa       final/
-#DONE ./scripts/cmp_ethscan 0x514910771af9ca656af840dff83e8264ecf986ca 05_link      final/
-#DONE ./scripts/cmp_ethscan 0x3883f5e181fccaf8410fa61e12b59bad963fb645 10_theta     final/
-#DONE ./scripts/cmp_ethscan 0xb3104b4b9da82025e8b9f8fb28b3553ce2f67069 11_bix       final/
-#DONE ./scripts/cmp_ethscan 0xea11755ae41d889ceec39a63e6ff75a02bc1c00d 11_ctxc      final/
+#./scripts/cmp_ethscan 0x814964b1bceaf24e26296d031eadf134a2ca4105 00_newbium   final/
+#./scripts/cmp_ethscan 0xc9d7fec9889690bbff0a0df758d13e5a55dd7822 00_newbium   final/
+#./scripts/cmp_ethscan 0xdac17f958d2ee523a2206206994597c13d831ec7 01_usdt      final/
+#./scripts/cmp_ethscan 0xa15c7ebe1f07caf6bff097d8a589fb8ac49ae5b3 03_npxs      final/
+#./scripts/cmp_ethscan 0x168296bb09e24a88805cb9c33356536b980d3fc5 04_rhoc      final/
+#./scripts/cmp_ethscan 0x514910771af9ca656af840dff83e8264ecf986ca 05_link      final/
+#./scripts/cmp_ethscan 0x3893b9422cd5d70a81edeffe3d5a1c6a978310bb 05_mith      final/
+#./scripts/cmp_ethscan 0x35a9b440da4410dd63df8c54672b728970560328 07_mana      final/
+#./scripts/cmp_ethscan 0x595832f8fc6bf59c85c527fec3740a1b7a361269 07_power     final/
+#./scripts/cmp_ethscan 0x618e75ac90b12c6049ba3b27f5d5f8651b0037f6 07_qash      final/
+#./scripts/cmp_ethscan 0x9cda8a60dd5afa156c95bd974428d91a0812e054 07_ttu       final/
+#./scripts/cmp_ethscan 0x9ab165d795019b6d8b3e971dda91071421305e5a 08_aoa       final/
+#./scripts/cmp_ethscan 0x3883f5e181fccaf8410fa61e12b59bad963fb645 10_theta     final/
+#./scripts/cmp_ethscan 0xf0ee6b27b759c9893ce4f094b49ad28fd15a23e4 10_eng       final/
+#./scripts/cmp_ethscan 0xf85feea2fdd81d51177f6b8f35f0e6734ce45f5f 10_cmt       final/
+#./scripts/cmp_ethscan 0xb3104b4b9da82025e8b9f8fb28b3553ce2f67069 11_bix       final/
+#./scripts/cmp_ethscan 0xea11755ae41d889ceec39a63e6ff75a02bc1c00d 11_ctxc      final/
+#./scripts/cmp_ethscan 0x9992ec3cf6a55b00978cddf2b27bc6882d88d1ec 11_poly      final/
+./scripts/cmp_ethscan 0x12480e24eb5bec1a9d4369cab6a80cad3c0a377a 10_sub

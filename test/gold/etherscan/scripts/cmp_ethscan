@@ -57,7 +57,7 @@ diff --suppress-common-lines -y $qb_result $es_result | grep "<" | cut -f1,2 | t
 chmod uog+x u
 #./u | tee $qbnes.txt
 cat ./u | tee $qbnes.txt
-nano $qbnes.txt
+#nano $qbnes.txt
 
 #--
 # Figure out if there are any records in qblock but not etherscan, then use getTrans to see if qblocks is right or wrong
@@ -68,7 +68,7 @@ diff --suppress-common-lines -y $qb_result $es_result | grep ">" | cut -c15-100 
 chmod uog+x v
 #./v | tee $esnqb.txt
 cat ./v | tee $esnqb.txt
-nano $esnqb.txt
+#nano $esnqb.txt
 
 #--
 # Finally look for records in both that are different
@@ -76,8 +76,13 @@ nano $esnqb.txt
 chg=results/$3$2-$1_changes
 echo "Looking for common records with changes"
 diff --suppress-common-lines -y $qb_result $es_result | grep "|" | tee $chg.txt
-nano $chg.txt
+#nano $chg.txt
 
+wc $qbnes.txt
+wc $esnqb.txt
+wc $chg.txt
+wc $qb_result
+wc $es_result
 sleep 1
 rm -f crap x y z
 #rm -f results/*ext*

@@ -7,7 +7,7 @@ logs = false
 trace = false
 single = false
 parse = false
-json = true
+#json = true
 
 [fields]
 hide=
@@ -21,9 +21,9 @@ show_example_logs = \
 	
 [formats]
 trans_fmt = [{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{HASH}]
-txrans_fmt = [{TIMESTAMP}]\t[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{TRACEID}]\t[{FROM}]\t[{TO}]\t[{ETHER}]\t[{GAS}]\t[{GASPRICE}]\t[{GASUSED}]\t[TRUE{b:ISERROR}]\t[{ENCODING}]\t[{ARTICULATED}]
+txrans_fmt = [{WATCHED}]\t[{HASH}]\t[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]#[{TIMESTAMP}]\t[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{TRACEID}]\t[{FROM}]\t[{TO}]\t[{ETHER}]\t[{GAS}]\t[{GASPRICE}]\t[{GASUSED}]\t[TRUE{b:ISERROR}]\t[{ENCODING}]\t[{ARTICULATED}]
 
 [[watches]]
 list = [
-    { address = "0xf0ee6b27b759c9893ce4f094b49ad28fd15a23e4", name = "ENG",   firstBlock = 4358024, color = "green_c", enabled = true },
+    { address = "0x39bb259f66e1c59d5abef88375979b4d20d98022", name = "WAX",   firstBlock = 4761555, lastBlock 6250000 },
 ]
