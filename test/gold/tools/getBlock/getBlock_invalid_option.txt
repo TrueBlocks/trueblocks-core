@@ -14,7 +14,7 @@ getBlock -x 1001001
 	-l  (--latest)        display the latest blocks at both the node and the cache
 	-a  (--addrs)         display all addresses included in the block
 	-u  (--uniq)          display only uniq addresses found in the block
-	-m  (--number)        useful only for --addrs or --uniq, only display the number of addresses involved
+	-m  (--number)        display address counts (alterntively --addrCnt or --uniqCnt)
 	-l  (--filter val)    useful only for --addrs or --uniq, only display this address in results
 
 #### Hidden options (shown during testing only)

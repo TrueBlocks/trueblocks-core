@@ -1,7 +1,7 @@
-getBlock argc: 3 [1:245001] [2:--addr] 
-getBlock 245001 --addr 
+getBlock argc: 3 [1:245001] [2:--number] 
+getBlock 245001 --number 
 
-  Invalid option: --addr
+  --number option is only available with either --addrs or --uniq. Quitting...
 
   Usage:    getBlock [-r|-n|-c|-l|-a|-u|-m|-l|-v|-h] <block> [block...]  
   Purpose:  Returns block(s) from local cache or directly from a running node.
