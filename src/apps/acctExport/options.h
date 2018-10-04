@@ -9,6 +9,20 @@
 #include "tokenlib.h"
 #include "walletlib.h"
 
+class COutPiped {
+public:
+    COutPiped(streambuf * buf, ostream& os)
+        : redir(os) {
+            old_buf = os.rdbuf(buf);
+        }
+    ~COutPiped(void)
+        {
+            redir.rdbuf(old_buf);
+        }
+    ostream& redir;
+    streambuf *old_buf;
+};
+
 //-----------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
@@ -22,6 +36,9 @@ public:
     bool useBloom;
     bool needsArt;
     bool needsTrace;
+    COutPiped *out;
+    string_q outFile;
+    ofstream outStream;
 
     COptions(void);
     ~COptions(void);

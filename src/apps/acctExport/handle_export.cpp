@@ -104,6 +104,11 @@ bool exportTransaction(COptions& options, const CAcctCacheItem *item, bool first
                 cout << options.annotate(substitute(os.str(),"++WATCH++",watch->address));
                 cout.flush();
 
+                if (options.out && !(item->blockNum % 3)) {
+                    cerr << "\t\t" << cTeal << "exporting: " << *item << cOff << "\r";
+                    cerr.flush();
+                }
+
             } else {
                 cerr << "\t\t" << cTeal << "skipping: " << *item << cOff << "\r";
                 cerr.flush();
