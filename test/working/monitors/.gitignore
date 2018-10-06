@@ -1,8 +1,6 @@
+*
 *.txt
 *.json
 *.gz
 colorEcho
 getem*
-README.md
-/json/
-/txt/
