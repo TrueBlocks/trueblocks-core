@@ -55,7 +55,7 @@
 # ./scripts/cmp_ethscan 0x4672bad527107471cb5067a887f4656d585a8a31 11_drop      final/
 
 # double checked
-#       ./scripts/cmp_ethscan 0x814964b1bceaf24e26296d031eadf134a2ca4105 00_newbium   final/
+#./scripts/cmp_ethscan 0x814964b1bceaf24e26296d031eadf134a2ca4105 00_newbium   final/
 #./scripts/cmp_ethscan 0xc9d7fec9889690bbff0a0df758d13e5a55dd7822 00_newbium   final/
 #./scripts/cmp_ethscan 0xdac17f958d2ee523a2206206994597c13d831ec7 01_usdt      final/
 #./scripts/cmp_ethscan 0xa15c7ebe1f07caf6bff097d8a589fb8ac49ae5b3 03_npxs      final/

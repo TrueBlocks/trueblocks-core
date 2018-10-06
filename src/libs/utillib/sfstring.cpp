@@ -41,7 +41,7 @@ namespace qblocks {
         for (auto ch : input) {
             if (ch != needle) {
                 buffer += ch;
-            } else if (ch == needle && buffer != "") {
+            } else if (ch == needle) {
                 result.push_back(trimWhitespace(buffer));
                 buffer = "";
             }
