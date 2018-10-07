@@ -13,9 +13,7 @@
 # in your $PATH
 #
 
-# ./scripts/cmp_ethscan 0x58a4884182d9e835597f405e5f258290e46ae7c2 09_noah
 # ./scripts/cmp_ethscan 0xef68e7c694f40c8202821edf525de3782458639f 09_lrc
-# ./scripts/cmp_ethscan 0x8dd5fbce2f6a956c3022ba3663759011dd51e73e 08_tusd
 # ./scripts/cmp_ethscan 0xa4e8c3ec456107ea67d3075bf9e3df3a75823db0 08_loom
 # ./scripts/cmp_ethscan 0xdd974d5c2e2928dea5f71b9825b8b646686bd200 08_knc
 # ./scripts/cmp_ethscan 0x618e75ac90b12c6049ba3b27f5d5f8651b0037f6 07_qash
@@ -75,4 +73,6 @@
 #./scripts/cmp_ethscan 0x9992ec3cf6a55b00978cddf2b27bc6882d88d1ec 11_poly      final/
 #./scripts/cmp_ethscan 0x39bb259f66e1c59d5abef88375979b4d20d98022 09_wax       final/
 #./scripts/cmp_ethscan 0x12480e24eb5bec1a9d4369cab6a80cad3c0a377a 10_sub       final/
-./scripts/cmp_ethscan 0xb91318f35bdb262e9423bc7c7c2a3a93dd93c92c 09_nuls final/
+#./scripts/cmp_ethscan 0xb91318f35bdb262e9423bc7c7c2a3a93dd93c92c 09_nuls      final/
+#./scripts/cmp_ethscan 0x58a4884182d9e835597f405e5f258290e46ae7c2 09_noah      final/
+#./scripts/cmp_ethscan 0x8dd5fbce2f6a956c3022ba3663759011dd51e73e 08_tusd      final/
