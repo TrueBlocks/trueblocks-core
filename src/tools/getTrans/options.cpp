@@ -18,8 +18,8 @@ static COption params[] = {
                                   "(tx_hash, bn.txID, blk_hash.txID)"),
     COption("-raw",            "retrieve raw transaction directly from the running node"),
     COption("-nTraces",        "report on how many traces the transaction generated and deepest trace"),
-    COption("@belongs:<addr>", "report true of false if the given address is found anywhere in the transaction"),
-    COption("@asStrs",         "when checking --belongs, treat input and log data as single string"),
+    COption("@belongs:<addr>", "report true or false if the given address is found anywhere in the transaction"),
+    COption("@asStrs",         "when checking --belongs, treat input and log data as a string"),
     COption("@trace",          "include the transactions trace after the transaction"),
     COption("",                "Retrieve an Ethereum transaction from the local cache or a running node."),
 };
