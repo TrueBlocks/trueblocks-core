@@ -27,32 +27,61 @@ ostream& operator<<(ostream& os, const CAddressAppearance& item) {
 }
 
 //---------------------------------------------------------------------------
-class CUniqueState {
-    ADDRESSFUNC func;
-    void *data;
-    uint64_t cnt;
-    string_q thing = "|/-\\|/-\\";
-public:
-    CUniqueState(ADDRESSFUNC f, void *d) {
-        func = f;
-        data = d;
+struct addrOnlyComparator {
+    bool operator()(const CAddressAppearance& v1, const CAddressAppearance& v2) const {
+        return v1.addr < v2.addr;
     }
-    CAddressAppearanceMap addrMap;
-    bool insertUnique(const CAddressAppearance& _value);
 };
 
 //---------------------------------------------------------------------------
+struct addrTxComparator {
+    bool operator()(const CAddressAppearance& v1, const CAddressAppearance& v2) const {
+        if (v1.addr < v2.addr)
+            return true;
+        if (v1.addr > v2.addr)
+            return false;
+        if (v2.tx == NOPOS)
+            return false;
+        return v1.tx < v2.tx;
+    }
+};
+
+//---------------------------------------------------------------------------
+typedef map<CAddressAppearance,bool,addrOnlyComparator> CAddressOnlyAppearanceMap;
+typedef map<CAddressAppearance,bool,addrTxComparator> CAddressTxAppearanceMap;
+//---------------------------------------------------------------------------
+class CUniqueState {
+    ADDRESSFUNC func;
+    void *data;
+    CAddressOnlyAppearanceMap *addrOnlyMap;
+    CAddressTxAppearanceMap *addrTxMap;
+public:
+    CUniqueState(ADDRESSFUNC f, void *d, bool perTx) {
+        func = f;
+        data = d;
+        addrOnlyMap = (perTx ? NULL : new CAddressOnlyAppearanceMap);
+        addrTxMap   = (perTx ? new CAddressTxAppearanceMap : NULL);
+    }
+    bool insertUnique(const CAddressAppearance& _value);
+ };
+
+//---------------------------------------------------------------------------
 bool CUniqueState::insertUnique(const CAddressAppearance& _value) {
-    CAddressAppearanceMap::iterator it = addrMap.find(_value);
-    if (it == addrMap.end()) {  // not found
-        it = addrMap.insert(make_pair(_value, true)).first;
+    if (addrOnlyMap) {
+        CAddressOnlyAppearanceMap::iterator it = addrOnlyMap->find(_value);
+        if (it == addrOnlyMap->end()) {  // not found
+            it = addrOnlyMap->insert(make_pair(_value, true)).first;
+            if (func)
+                (*func)(it->first, data);
+        }
+        return it->second;
+    }
+
+    CAddressTxAppearanceMap::iterator it = addrTxMap->find(_value);
+    if (it == addrTxMap->end()) {  // not found
+        it = addrTxMap->insert(make_pair(_value, true)).first;
         if (func)
             (*func)(it->first, data);
-    } else if (!isTestMode() && addrMap.size() > 500) {
-        cerr << cGreen << thing[((cnt++/4)%8)] << cOff << "\b";
-        if (!(cnt%100))
-            cerr << ".";
-        cerr.flush();
     }
     return it->second;
 }
@@ -61,8 +90,9 @@ bool CUniqueState::insertUnique(const CAddressAppearance& _value) {
 bool accumulateAddresses(const CAddressAppearance& item, void *data) {
     if (isZeroAddr(item.addr))
         return true;
-    CAddressAppearance search(item.getBn(), item.getTx(), item.getTc(), item.addr, item.reason);
-    ((CUniqueState*)data)->insertUnique(search);  // NOLINT
+    CUniqueState * state = (CUniqueState*)data;
+    CAddressAppearance search(item.bn, item.tx, item.tc, item.addr, item.reason);
+    state->insertUnique(search);  // NOLINT
     return true;
 }
 
@@ -70,7 +100,16 @@ bool accumulateAddresses(const CAddressAppearance& item, void *data) {
 bool CBlock::forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data) {
     if (!func)
         return false;
-    CUniqueState state(func, data);
+    CUniqueState state(func, data, false);
+    forEveryAddress(accumulateAddresses, filterFunc, &state);
+    return true;
+}
+
+//---------------------------------------------------------------------------
+bool CBlock::forEveryUniqueAddressPerTx(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data) {
+    if (!func)
+        return false;
+    CUniqueState state(func, data, true);
     forEveryAddress(accumulateAddresses, filterFunc, &state);
     return true;
 }
@@ -129,19 +168,6 @@ void foundPot(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t t
     CAddressAppearance item(bn, tx, tc, "", reason);
     potentialAddr(func, data, item, potList);
 }
-
-//---------------------------------------------------------------------------
-blknum_t CAddressAppearance::getBn(void) const { return bn; }
-//---------------------------------------------------------------------------
-blknum_t CAddressAppearance::getTx(void) const { return tx; }
-//---------------------------------------------------------------------------
-blknum_t CAddressAppearance::getTc(void) const { return tc; }
-//---------------------------------------------------------------------------
-void CAddressAppearance::setBlock(CBlock *pBlock) { bn = pBlock->blockNumber; }
-//---------------------------------------------------------------------------
-void CAddressAppearance::setTrans(CTransaction *pTrans) { tx = pTrans->transactionIndex; }
-//---------------------------------------------------------------------------
-void CAddressAppearance::setTrace(CTrace *pTrace, blknum_t t) { tc = t; }
 
 }  // namespace qblocks
 

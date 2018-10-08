@@ -20,7 +20,9 @@
 //--------------------------------------------------------------
 extern void everyAddress(CBlock& block);
 extern void everyUniqueAddress(CBlock& block);
+extern void everyUniqueAddressPerTx(CBlock& block);
 extern void everySortedUniqueAddress(CBlock& block);
+extern void everySortedUniqueAddressPerTx(CBlock& block);
 extern void testFormatting(CBlock& block);
 static string_q sep(120, '-');
 
@@ -43,8 +45,8 @@ int main(int argc, const char *argv[]) {
     cout << sep << "\n";
     switch (options.testNum) {
         case 0:  everyAddress(block);             break;
-        case 1:  everyUniqueAddress(block);       break;
-        case 2:  everySortedUniqueAddress(block); break;
+        case 1:  everyUniqueAddress(block);       everyUniqueAddressPerTx(block); break;
+        case 2:  everySortedUniqueAddress(block); everySortedUniqueAddressPerTx(block); break;
         default: testFormatting(block);           break;
     }
 
@@ -76,14 +78,14 @@ bool transFilter(const CTransaction *trans, void *data) {
 
 //----------------------------------------------------------------
 bool sortAddressArray(const CAddressAppearance& v1, const CAddressAppearance& v2) {
-    if (v1.getBn() != v2.getBn())
-        return v1.getBn() < v2.getBn();
-    int64_t vv1 = (int64_t)v1.getTx();
-    int64_t vv2 = (int64_t)v2.getTx();
+    if (v1.bn != v2.bn)
+        return v1.bn < v2.bn;
+    int64_t vv1 = (int64_t)v1.tx;
+    int64_t vv2 = (int64_t)v2.tx;
     if (vv1 != vv2)
         return vv1 < vv2;
-    if (v1.getTc() != v2.getTc())
-        return v1.getTc() < v2.getTc();
+    if (v1.tc != v2.tc)
+        return v1.tc < v2.tc;
     return v1.addr < v2.addr;
 }
 
@@ -104,6 +106,22 @@ void everySortedUniqueAddress(CBlock& block) {
     cout << "Every unique addresses in block 4312145 (sorted)\n";
     vector<CAddressAppearance> array;
     block.forEveryUniqueAddress(accumAddrs, transFilter, &array);
+    sort(array.begin(), array.end(), sortAddressArray);
+    for (auto elem : array)
+        cout << elem << "\n";
+}
+
+//--------------------------------------------------------------
+void everyUniqueAddressPerTx(CBlock& block) {
+    cout << "Every unique addresses per tx in block 4312145\n";
+    block.forEveryUniqueAddressPerTx(visitAddrs, transFilter, NULL);
+}
+
+//--------------------------------------------------------------
+void everySortedUniqueAddressPerTx(CBlock& block) {
+    cout << "Every unique addresses per tx in block 4312145 (sorted)\n";
+    vector<CAddressAppearance> array;
+    block.forEveryUniqueAddressPerTx(accumAddrs, transFilter, &array);
     sort(array.begin(), array.end(), sortAddressArray);
     for (auto elem : array)
         cout << elem << "\n";

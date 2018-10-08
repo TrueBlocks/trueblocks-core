@@ -25,11 +25,10 @@ namespace qblocks {
 
 //---------------------------------------------------------------------------
 class CAddressAppearance {
+public:
     blknum_t bn;
     blknum_t tx;
     blknum_t tc;
-
-public:
     address_t addr;
     string_q reason;
     CAddressAppearance(void) : bn(0), tx(0), tc(0), addr(""), reason("") { }
@@ -45,18 +44,8 @@ public:
     }
     CAddressAppearance(blknum_t b, blknum_t x, blknum_t c, const address_t& a, const string_q r)
         : bn(b), tx(x), tc(c), addr(a), reason(r) { }
-    friend bool operator<(const CAddressAppearance& v1, const CAddressAppearance& v2) {
-        return v1.addr < v2.addr;
-    }
-    blknum_t getBn(void) const;
-    blknum_t getTx(void) const;
-    blknum_t getTc(void) const;
-    void setBlock(CBlock *pBlock);
-    void setTrans(CTransaction *pTrans);
-    void setTrace(CTrace *pTrace, blknum_t t);
     friend ostream& operator<<(ostream& os, const CAddressAppearance& item);
 };
-typedef map<CAddressAppearance, uint64_t> CAddressAppearanceMap;
 typedef vector<CAddressAppearance> CAddressAppearanceArray;
 
 extern bool isPotentialAddr(biguint_t test, address_t& addrOut);

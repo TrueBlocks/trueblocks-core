@@ -31,7 +31,7 @@ int main(int argc, const char * argv[]) {
 
         // There can be more than one thing to do...
 #ifndef PROVING
-        if (!options.quiet && !options.showAddrs && !options.uniqAddrs && !options.counting)
+        if (!options.quiet && options.filterType.empty())
             cout << (options.isMulti() ? "[" : "");
 #else
         if (!options.quiet && !options.showAddrs && !options.uniqAddrs && !options.counting && !expContext().proving)
@@ -43,7 +43,7 @@ int main(int argc, const char * argv[]) {
         string_q list = options.getBlockNumList();
         while (!list.empty() && !shouldQuit()) {
             blknum_t bn = str_2_Uint(nextTokenClear(list, '|'));
-            if (options.showAddrs || options.uniqAddrs) {
+            if (!options.filterType.empty()) {
                 getAddresses(bn, options);
 
             } else if (options.isCheck) {
@@ -73,7 +73,7 @@ int main(int argc, const char * argv[]) {
         }
 
 #ifndef PROVING
-        if (!options.quiet && !options.showAddrs && !options.uniqAddrs && !options.counting)
+        if (!options.quiet && options.filterType.empty())
             cout << (options.isMulti() ? "]" : "");
 #else
         if (!options.quiet && !options.showAddrs && !options.uniqAddrs && !options.counting && !expContext().proving)
@@ -228,12 +228,12 @@ void interumReport(ostream& os, blknum_t i) {
 
 //------------------------------------------------------------
 bool sortByBlocknumTxId(const CAddressAppearance& v1, const CAddressAppearance& v2) {
-    if (v1.getBn() != v2.getBn())
-        return v1.getBn() < v2.getBn();
-    else if (v1.getTx() != v2.getTx())
-        return v1.getTx() < v2.getTx();
-    else if (v1.getTc() != v2.getTc())
-        return v1.getTc() < v2.getTc();
+    if (v1.bn != v2.bn)
+        return v1.bn < v2.bn;
+    else if (v1.tx != v2.tx)
+        return v1.tx < v2.tx;
+    else if (v1.tc != v2.tc)
+        return v1.tc < v2.tc;
     else if (v1.reason != v2.reason)
         return v1.reason < v2.reason;
     return v1.addr < v2.addr;
@@ -257,14 +257,16 @@ string_q getAddresses(uint64_t num, const COptions& opt) {
 
     CBlock block;
     getBlock(block, num);
-    if (opt.uniqAddrs)
+    if (opt.filterType == "uniq")
         block.forEveryUniqueAddress(visitAddrs, transFilter, (void*)&opt);
+    else if (opt.filterType == "uniqTx")
+        block.forEveryUniqueAddressPerTx(visitAddrs, transFilter, (void*)&opt);
     else
         block.forEveryAddress(visitAddrs, transFilter, (void*)&opt);
     if (opt.counting) {
         uint64_t cnt = opt.addrCnt;
         string_q be  = (cnt == 1 ? "was " : "were ");
-        string_q adj = (opt.uniqAddrs ? " unique" : "");
+        string_q adj = (contains(opt.filterType, "uniq") ? " unique" : "");
         cout << "There " << be << opt.addrCnt << adj << " addreses" << (cnt == 1 ? "" : "es") << " found.\n";
     }
     return "";
@@ -285,9 +287,6 @@ bool visitAddrs(const CAddressAppearance& item, void *data) {
                 cout << "\n";
                 cout.flush();
             }
-        } else {
-            cerr << "skipping: " << item << "\r";
-            cerr.flush();
         }
     }
     return true;
