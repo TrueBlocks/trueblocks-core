@@ -93,7 +93,7 @@ namespace testing {  // NOLINT
         (a); \
         cout << " --> Test did not throw\n"; \
     } catch (exception& e) { \
-        cout << " --> Test threw with message: " << e.what() << "\n"; \
+        cout << " --> Test threw with message: " << string_q(e.what()).substr(0,12) << "\n"; \
     }
 
 #define SHOULD_NOT_THROW(msg, a) \
@@ -102,7 +102,7 @@ namespace testing {  // NOLINT
         (a); \
         cout << " --> Test did not throw\n"; \
     } catch (exception& e) { \
-        cout << " --> Test threw with message: " << e.what() << "\n"; \
+        cout << " --> Test threw with message: " << string_q(e.what()).substr(0,12) << "\n"; \
     }
 
 inline int RUN_ALL_TESTS(void) {
