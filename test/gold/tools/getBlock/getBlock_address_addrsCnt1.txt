@@ -1,0 +1,3 @@
+getBlock argc: 4 [1:3982128] [2:--addrs] [3:--number] 
+getBlock 3982128 --addrs --number 
+There were 728 addreseses found.

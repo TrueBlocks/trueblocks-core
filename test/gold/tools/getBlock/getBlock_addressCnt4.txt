@@ -1,3 +1,0 @@
-getBlock argc: 3 [1:245001] [2:--addrsCnt] 
-getBlock 245001 --addrsCnt 
-There were 5 addreseses found.

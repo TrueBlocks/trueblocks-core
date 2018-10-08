@@ -20,10 +20,6 @@ public:
     bool isRaw;
     bool isCache;
     bool hashes;
-    bool showAddrs;
-    bool uniqAddrs;
-    bool counting;
-    uint64_t addrCnt;
     bool traces;
     bool force;
     bool normalize;
@@ -32,6 +28,9 @@ public:
     string_q format;
     bool priceBlocks;
     CBlock latest;
+    bool counting;
+    uint64_t addrCnt;
+    string_q filterType;
     CAddressArray filters;
 
     COptions(void);
