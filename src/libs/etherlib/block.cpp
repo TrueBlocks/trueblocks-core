@@ -478,14 +478,14 @@ bool getTracesAndVisit(const hash_t& hash, CAddressAppearance& item, ADDRESSFUNC
     CTrace trace;
     while (trace.parseJson3(generic.result)) {
         string_q trID = "trace_" + uint_2_Str(traceID) + "_" + stringy(trace.traceAddress);
-        foundOne(funcy, data, item.getBn(), item.getTx(), traceID+10, trace.action.from,          trID + "from");
-        foundOne(funcy, data, item.getBn(), item.getTx(), traceID+10, trace.action.to,            trID + "to");
-        foundOne(funcy, data, item.getBn(), item.getTx(), traceID+10, trace.action.refundAddress, trID + "refundAddr");
-        foundOne(funcy, data, item.getBn(), item.getTx(), traceID+10, trace.action.address,       trID + "creation");
-        foundOne(funcy, data, item.getBn(), item.getTx(), traceID+10, trace.result.address,       trID + "self-destruct");
+        foundOne(funcy, data, item.bn, item.tx, traceID+10, trace.action.from,          trID + "from");
+        foundOne(funcy, data, item.bn, item.tx, traceID+10, trace.action.to,            trID + "to");
+        foundOne(funcy, data, item.bn, item.tx, traceID+10, trace.action.refundAddress, trID + "refundAddr");
+        foundOne(funcy, data, item.bn, item.tx, traceID+10, trace.action.address,       trID + "creation");
+        foundOne(funcy, data, item.bn, item.tx, traceID+10, trace.result.address,       trID + "self-destruct");
         string_q inpt = extract(trace.action.input, 10);
         if (!inpt.empty())
-            foundPot(funcy, data, item.getBn(), item.getTx(), traceID+10, inpt, trID + "input");
+            foundPot(funcy, data, item.bn, item.tx, traceID+10, inpt, trID + "input");
         traceID++;
         trace = CTrace();  // reset
     }
@@ -525,6 +525,11 @@ bool CTransaction::forEveryAddress(ADDRESSFUNC funcy, TRANSFUNC filt, void *data
 
 //---------------------------------------------------------------------------
 bool CTransaction::forEveryUniqueAddress(ADDRESSFUNC funcy, TRANSFUNC filt, void *data) {
+    return true;
+}
+
+//---------------------------------------------------------------------------
+bool CTransaction::forEveryUniqueAddressPerTx(ADDRESSFUNC funcy, TRANSFUNC filt, void *data) {
     return true;
 }
 // EXISTING_CODE

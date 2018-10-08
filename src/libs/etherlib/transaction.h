@@ -64,8 +64,9 @@ public:
     const CBlock *pBlock;
     CTraceArray traces;
     CFunction *func;
-    bool forEveryAddress      (ADDRESSFUNC func, TRANSFUNC filt = NULL, void *data = NULL);
+    bool forEveryAddress(ADDRESSFUNC func, TRANSFUNC filt = NULL, void *data = NULL);
     bool forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC filt = NULL, void *data = NULL);
+    bool forEveryUniqueAddressPerTx(ADDRESSFUNC func, TRANSFUNC filt = NULL, void *data = NULL);
     // EXISTING_CODE
     bool operator==(const CTransaction& item) const;
     bool operator!=(const CTransaction& item) const { return !operator==(item); }

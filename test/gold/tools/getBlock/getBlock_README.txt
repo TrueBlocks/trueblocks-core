@@ -2,7 +2,7 @@ getBlock argc: 2 [1:-th]
 getBlock -th 
 #### Usage
 
-`Usage:`    getBlock [-r|-n|-c|-l|-a|-u|-m|-l|-v|-h] &lt;block&gt; [block...]  
+`Usage:`    getBlock [-r|-n|-c|-l|-a|-u|-x|-m|-l|-v|-h] &lt;block&gt; [block...]  
 `Purpose:`  Returns block(s) from local cache or directly from a running node.
              
 `Where:`  
@@ -15,8 +15,9 @@ getBlock -th
 | -c | --check | compare results between qblocks and Ethereum node, report differences, if any |
 | -l | --latest | display the latest blocks at both the node and the cache |
 | -a | --addrs | display all addresses included in the block |
-| -u | --uniq | display only uniq addresses found in the block |
-| -m | --number | display address counts (alterntively --addrCnt or --uniqCnt) |
+| -u | --uniq | display only uniq addresses found per block |
+| -x | --uniqTx | display only uniq addresses found per transaction |
+| -m | --number | display address counts (alterntively --addrCnt, --uniqTxCnt, or --uniqCnt) |
 | -l | --filter val | useful only for --addrs or --uniq, only display this address in results |
 
 #### Hidden options (shown during testing only)

@@ -20,8 +20,9 @@ static COption params[] = {
     COption("-check",              "compare results between qblocks and Ethereum node, report differences, if any"),
     COption("-latest",             "display the latest blocks at both the node and the cache"),
     COption("-addrs",              "display all addresses included in the block"),
-    COption("-uniq",               "display only uniq addresses found in the block"),
-    COption("-nu(m)ber",           "display address counts (alterntively --addrCnt or --uniqCnt)"),
+    COption("-uniq",               "display only uniq addresses found per block"),
+    COption("-uniqT(x)",           "display only uniq addresses found per transaction"),
+    COption("-nu(m)ber",           "display address counts (alterntively --addrCnt, --uniqTxCnt, or --uniqCnt)"),
     COption("-fi(l)ter:<addr>",    "useful only for --addrs or --uniq, only display this address in results"),
 //    COption("-trac(e)s",         "include transaction traces in the export"),
 //    COption("-addresses:<val>",  "display addresses included in block as one of: [ all | to | from |\n\t\t\t\t"
@@ -125,21 +126,24 @@ bool COptions::parseArguments(string_q& command) {
             hashes = true;
 
         } else if (arg == "-a" || arg == "--addrs") {
-            uniqAddrs = false;
-            showAddrs = true;
+            filterType = "addrs";
 
         } else if (arg == "--addrsCnt") {
-            uniqAddrs = false;
-            showAddrs = true;
+            filterType = "addrs";
             counting = true;
 
         } else if (arg == "-u" || arg == "--uniq") {
-            uniqAddrs = true;
-            showAddrs = false;
+            filterType = "uniq";
 
         } else if (arg == "--uniqCnt") {
-            uniqAddrs = true;
-            showAddrs = false;
+            filterType = "uniq";
+            counting = true;
+
+        } else if (arg == "-x" || arg == "--uniqTx") {
+            filterType = "uniqTx";
+
+        } else if (arg == "--uniqTxCnt") {
+            filterType = "uniqTx";
             counting = true;
 
         } else if (arg == "-m" || arg == "--number") {
@@ -249,7 +253,7 @@ bool COptions::parseArguments(string_q& command) {
         HIDE_FIELD(CBlock,       "finalized");
     }
 
-    if (counting && (!showAddrs && !uniqAddrs))
+    if (counting && (filterType.empty()))
         return usage("--number option is only available with either --addrs or --uniq. Quitting...");
 
     if (!blocks.hasBlocks())
@@ -273,8 +277,7 @@ void COptions::Init(void) {
     isRaw       = false;
     isCache     = false;
     hashes      = false;
-    showAddrs   = false;
-    uniqAddrs   = false;
+    filterType  = "";
     counting    = false;
     addrCnt     = 0;
     traces      = false;
