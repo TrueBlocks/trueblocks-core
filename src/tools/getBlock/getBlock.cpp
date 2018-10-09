@@ -243,12 +243,12 @@ extern bool visitAddrs(const CAddressAppearance& item, void *data);
 extern bool transFilter(const CTransaction *trans, void *data);
 
 //------------------------------------------------------------
-bool passesFilter(const CAddressArray& array, const address_t& in) {
-    if (array.size() == 0)
+bool passesFilter(const COptions *opts, const CAddressAppearance& item) {
+    if (opts->filters.size() == 0)
         return true;
-    for (auto elem : array)
-        if (elem % in)
-            return true;
+    for (auto elem : opts->filters)
+        if (elem % item.addr)
+            return (item.tc != 10) ? true : opts->showZeroTrace;
     return false;
 }
 
@@ -277,12 +277,12 @@ string_q getAddresses(uint64_t num, const COptions& opt) {
 bool visitAddrs(const CAddressAppearance& item, void *data) {
     if (!isZeroAddr(item.addr)) {
         COptions *opt = (COptions*)data;
-        if (passesFilter(opt->filters, item.addr)) {
+        if (passesFilter(opt, item)) {
             if (opt->counting) {
                 opt->addrCnt++;
 
             } else {
-                cout << item;
+                cout << item.Format(opt->format);
                 if (!isTestMode())
                     cout << "                   ";
                 cout << "\n";

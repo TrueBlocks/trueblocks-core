@@ -27,6 +27,26 @@ ostream& operator<<(ostream& os, const CAddressAppearance& item) {
 }
 
 //---------------------------------------------------------------------------
+string_q CAddressAppearance::Format(const string_q& fmt) const {
+    if (fmt.empty()) {
+        ostringstream os;
+        os << *this;
+        return os.str();
+    }
+    string_q ret = fmt;
+    ret = substitute(ret, "{BN}", uint_2_Str(bn));
+    ret = substitute(ret, "{TX}", tx == NOPOS ? "" : uint_2_Str(tx));
+    ret = substitute(ret, "{TC}", tx < 10 ? "" : uint_2_Str(tc));
+    ret = substitute(ret, "{ADDR}", addr);
+    ret = substitute(ret, "{REASON}", reason);
+    ret = substitute(ret, "[", "");
+    ret = substitute(ret, "]", "");
+    ret = substitute(ret, "+(", "[{");
+    ret = substitute(ret, ")+", "}]");
+    return ret;
+}
+
+//---------------------------------------------------------------------------
 struct addrOnlyComparator {
     bool operator()(const CAddressAppearance& v1, const CAddressAppearance& v2) const {
         return v1.addr < v2.addr;
