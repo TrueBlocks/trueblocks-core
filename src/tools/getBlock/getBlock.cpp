@@ -267,7 +267,8 @@ string_q getAddresses(uint64_t num, const COptions& opt) {
         uint64_t cnt = opt.addrCnt;
         string_q be  = (cnt == 1 ? "was " : "were ");
         string_q adj = (contains(opt.filterType, "uniq") ? " unique" : "");
-        cout << "There " << be << opt.addrCnt << adj << " addreses" << (cnt == 1 ? "" : "es") << " found.\n";
+        cout << "There " << be << opt.addrCnt << adj << " addreses" << (cnt == 1 ? "" : "es") << " found in block " << block.blockNumber << ".\n";
+        ((COptions*)&opt)->addrCnt = 0;
     }
     return "";
 }
