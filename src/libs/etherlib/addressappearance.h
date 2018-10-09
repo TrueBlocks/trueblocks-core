@@ -44,6 +44,7 @@ public:
     }
     CAddressAppearance(blknum_t b, blknum_t x, blknum_t c, const address_t& a, const string_q r)
         : bn(b), tx(x), tc(c), addr(a), reason(r) { }
+    string_q Format(const string_q& fmt) const;
     friend ostream& operator<<(ostream& os, const CAddressAppearance& item);
 };
 typedef vector<CAddressAppearance> CAddressAppearanceArray;
