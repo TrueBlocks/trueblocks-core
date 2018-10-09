@@ -263,7 +263,6 @@ bool COptions::parseArguments(string_q& command) {
     if (contains(format, "{PRICE:CLOSE}")) {
 //        priceBlocks = true;
     }
-
     return true;
 }
 
@@ -273,20 +272,21 @@ void COptions::Init(void) {
     nParamsRef = nParams;
     pOptions = this;
 
-    isCheck     = false;
-    isRaw       = false;
-    isCache     = false;
-    hashes      = false;
-    filterType  = "";
-    counting    = false;
-    addrCnt     = 0;
-    traces      = false;
-    force       = false;
-    normalize   = false;
-    silent      = false;
-    quiet       = 0;  // quiet has levels
-    format      = "";
-    priceBlocks = false;
+    isCheck       = false;
+    isRaw         = false;
+    isCache       = false;
+    hashes        = false;
+    filterType    = "";
+    counting      = false;
+    addrCnt       = 0;
+    traces        = false;
+    force         = false;
+    normalize     = false;
+    silent        = false;
+    quiet         = 0;  // quiet has levels
+    format        = "";
+    priceBlocks   = false;
+    showZeroTrace = getGlobalConfig()->getConfigBool("display", "showZeroTrace", false);
     // latest.clear(); // use the same latest block for every run
     filters.clear();
     blocks.Init();
