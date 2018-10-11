@@ -36,6 +36,7 @@ public:
     bool useBloom;
     bool needsArt;
     bool needsTrace;
+    bool showProgress;
     COutPiped *out;
     string_q outFile;
     ofstream outStream;
