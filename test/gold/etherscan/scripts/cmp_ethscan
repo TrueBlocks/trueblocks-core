@@ -22,6 +22,10 @@ filename=$3$2-$1
 # These are the files we will be comparing
 #
 qb_result=../monitors/txt/$filename.txt
+qb_result_ext=results/$filename-ext.txt
+qb_result_int=results/$filename-int.txt
+qb_result_tok=results/$filename-tok.txt
+#qb_result_min=results/$filename-min.txt
 es_result=txt/$filename.txt
 
 #--
@@ -56,7 +60,8 @@ echo "Looking for qblocks records that are not in etherscan"
 diff --suppress-common-lines -y $qb_result $es_result | grep "<" | cut -f1,2 | tr '\t' '.' | sed -f z | sed 's/^/getTrans /' >u
 chmod uog+x u
 #./u | tee $qbnes.txt
-cat ./u | tee $qbnes.txt
+#cat ./u | tee $qbnes.txt
+cat ./u >$qbnes.txt
 #nano $qbnes.txt
 
 #--
@@ -67,7 +72,8 @@ echo "Looking for records from etherscan that do not appear in qblocks"
 diff --suppress-common-lines -y $qb_result $es_result | grep ">" | cut -c15-100 | cut -f2,3 | tr '\t' '.' | sed -f z | sed 's/^/getTrans /' >v
 chmod uog+x v
 #./v | tee $esnqb.txt
-cat ./v | tee $esnqb.txt
+#cat ./v | tee $esnqb.txt
+cat ./v >$esnqb.txt
 #nano $esnqb.txt
 
 #--
@@ -83,8 +89,9 @@ wc $esnqb.txt
 wc $chg.txt
 wc $qb_result
 wc $es_result
+wc $qb_result_ext
+wc $qb_result_int
+wc $qb_result_tok
+#wc $qb_result_min
 sleep 1
 rm -f crap x y z
-#rm -f results/*ext*
-#rm -f results/*int*
-#rm -f results/*both*

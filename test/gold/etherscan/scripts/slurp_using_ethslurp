@@ -40,26 +40,31 @@ stop=6249999
 es_result=txt/$filename.txt
 es_ext_results=results/$filename-ext.txt
 es_int_results=results/$filename-int.txt
-es_both_results=results/$filename-both.txt
+es_tok_results=results/$filename-tok.txt
+#es_min_results=results/$filename-min.txt
+es_all_results=results/$filename-all.txt
 
-#--
 # Export regular transactions to a temporary file
-#
 ethslurp $address --type ext --blocks $start-$stop --fmt:ethscan >$es_ext_results
 
-#--
 # Export internal transactions
-#
 ethslurp $address --type int --blocks $start-$stop --fmt:ethscan >$es_int_results
+
+# Export token transactions to a temporary file
+ethslurp $address --type token --blocks $start-$stop --fmt:ethscan >$es_tok_results
+
+## Export mining data to a temporary file
+#ethslurp $address --type miner --blocks $start-$stop --fmt:ethscan >$es_minresults
 
 #--
 # Put the files together (keeping only real records)
 #
-cat $es_ext_results $es_int_results | grep "0x" >$es_both_results
+#cat $es_ext_results $es_int_results $es_tok_results $es_min_results | grep "0x" >$es_all_results
+cat $es_ext_results $es_int_results $es_tok_results | grep "0x" >$es_all_results
 
 #--
 # Sort by blockNumber and transactionIndex, and we're done
 #
 # Note: build 'qbsort' with "cd $(QB_ROOT)/src/other/reader ; make ; cd -"
 #
-qbsort -s $es_both_results >$es_result
+qbsort -s $es_all_results >$es_result

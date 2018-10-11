@@ -2,7 +2,7 @@
 
 [ -z "$QB_ROOT" ] && echo "Need to set QB_ROOT" && exit 1;
 
-address=0x4ceda7906a5ed2179785cd3a40a69ee8bc99c466
+address=0xa4e8c3ec456107ea67d3075bf9e3df3a75823db0
 name=`basename ${PWD}`
 fin=final/
 filename=$fin$name-$address.txt
@@ -21,4 +21,5 @@ echo "path: " $GOLD/$filename
 acctScrape --maxBlocks 6000000
 
 # Export to the txt repo
-acctExport --fmt txt | tee $GOLD/$filename
+echo
+acctExport --fmt txt >$GOLD/$filename
