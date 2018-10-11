@@ -65,6 +65,17 @@ inline void screenMsg(const string_q& msg) {
 }
 
 //--------------------------------------------------------------------------------
+string_q getEthscanAction(const string_q& type) {
+    if (type == "token")
+        return "tokentx";
+    else if (type == "miner")
+        return "getminedblocks&blocktype=blocks";
+    else if (type == "int")
+        return "txlistinternal";
+    return "txlist";
+}
+
+//--------------------------------------------------------------------------------
 bool Slurp(CAccount& theAccount, COptions& options, string_q& message) {
 
     theAccount.transactions.clear();
@@ -72,7 +83,7 @@ bool Slurp(CAccount& theAccount, COptions& options, string_q& message) {
     theAccount.addr = options.addrs[0];
     cerr << "\t" << "Slurping " << theAccount.addr << "\n";
 
-    string_q cacheFilename = blockCachePath("slurps/" + theAccount.addr + (options.type == "int" ? ".int" : "") + ".bin");
+    string_q cacheFilename = blockCachePath("slurps/" + theAccount.addr + (options.type == "ext" || options.type.empty() ? "" : "."+options.type) + ".bin");
     CArchive inArchive(READING_ARCHIVE);
     if (fileExists(cacheFilename)) {
         if (!inArchive.Lock(cacheFilename, binaryReadOnly, LOCK_NOWAIT)) {
@@ -87,7 +98,7 @@ bool Slurp(CAccount& theAccount, COptions& options, string_q& message) {
     bool done = false;
     while (!done) {
         string_q url = string_q("https://api.etherscan.io/api?module=account&sort=asc") +
-                "&action="  + (options.type == "int" ? "txlistinternal" : "txlist") +
+                "&action="  + getEthscanAction(options.type) +
                 "&address=" + theAccount.addr +
                 "&page="    + uint_2_Str(theAccount.latestPage) +
                 "&offset="  + uint_2_Str(5000) +
