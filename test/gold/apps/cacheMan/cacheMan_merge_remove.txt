@@ -2,11 +2,11 @@ cacheMan argc: 3 [1:-r] [2:merged.acct.bin]
 cacheMan -r merged.acct.bin 
 Found removal file...
 	removal instruction: 1-989198.3	removal instruction: 2-989332.2	removal instruction: 3-989345.2	removal instruction: 4-992893.13                                                                
-	Reading cache: merged.acct.bin...11 existing records read.
+	Reading cache: merged.acct.bin...15 existing records read.
 	Sorting...done
 	Will remove item 989198.3 if found
 	Will remove item 989332.2 if found
 	Will remove item 989345.2 if found
 	Will remove item 992893.13 if found
-	Writing....11 records written, 0 records ignored.
+	Writing....11 records written, 4 records ignored.
 	Written to merged.acct.bin
