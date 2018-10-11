@@ -2,5 +2,4 @@
 bin
 *.o
 proj.xcodeproj
-*.bin
 compare
