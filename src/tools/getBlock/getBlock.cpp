@@ -244,11 +244,13 @@ extern bool transFilter(const CTransaction *trans, void *data);
 
 //------------------------------------------------------------
 bool passesFilter(const COptions *opts, const CAddressAppearance& item) {
+    if (item.tc == 10 && !opts->showZeroTrace)
+        return false;
     if (opts->filters.size() == 0)
         return true;
     for (auto elem : opts->filters)
         if (elem % item.addr)
-            return (item.tc != 10) ? true : opts->showZeroTrace;
+            return true;
     return false;
 }
 
