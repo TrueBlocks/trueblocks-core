@@ -1,8 +1,8 @@
-ethslurp argc: 4 [1:0x1324e7b922b30B49Ab8EA81086341cc41C249346] [2:--type] [3:both] 
-ethslurp 0x1324e7b922b30B49Ab8EA81086341cc41C249346 --type both 
-Processing: 0x1324e7b922b30B49Ab8EA81086341cc41C249346 --type:both
+ethslurp argc: 4 [1:0x1324e7b922b30B49Ab8EA81086341cc41C249346] [2:--type] [3:all] 
+ethslurp 0x1324e7b922b30B49Ab8EA81086341cc41C249346 --type all 
+Processing: 0x1324e7b922b30B49Ab8EA81086341cc41C249346 --type:all
 
-  Type 'both' is currently disabled. Use --ext then --int. Quitting...
+  Type 'all' is currently disabled. Quitting...
 
   Usage:    ethslurp [-b|-t|-f|-b|-s|-v|-h] addrs  
   Purpose:  Fetches data from EtherScan for an arbitrary address. Formats the output to your specification.
@@ -10,7 +10,7 @@ Processing: 0x1324e7b922b30B49Ab8EA81086341cc41C249346 --type:both
   Where:    
 	addrs                 one or more addresses to slurp (required)
 	-b  (--blocks range)  an optional range of blocks to slurp
-	-t  (--type val)      extract either [ ext | int | both ] type of transactions
+	-t  (--type val)      extract either [ ext | int | token | miner | all ] type of transactions
 	-f  (--fmt val)       pretty print, optionally add ':txt,' ':csv,' or ':html'
 	-b  (--blocks range)  export records in block range (:0[:max])
 	-s  (--silent)        Run silently (only freshen the data, do not display it)
