@@ -1,3 +1,3 @@
 getBlock argc: 3 [1:3982128] [2:--addrsCnt] 
 getBlock 3982128 --addrsCnt 
-There were 728 addreseses found.
+There were 502 addreseses found in block 3982128.
