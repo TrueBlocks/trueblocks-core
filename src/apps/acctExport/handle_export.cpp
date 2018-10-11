@@ -32,6 +32,10 @@ bool exportData(COptions& options) {
     bool first = true;
     for (size_t index = 0 ; index < options.items.size() ; index++) {
         CAcctCacheItem *item = &options.items[index];
+        if (options.showProgress && !(index%3)) {
+            cerr << "bn: " << item->blockNum << " tx: " << item->transIndex << "\r";
+            cerr.flush();
+        }
         if (isInRange(item->blockNum, options.blk_minWatchBlock, options.blk_maxWatchBlock)) {
             exportTransaction(options, item, first);
             first = false;
