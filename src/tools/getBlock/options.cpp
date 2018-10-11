@@ -263,6 +263,8 @@ bool COptions::parseArguments(string_q& command) {
     if (contains(format, "{PRICE:CLOSE}")) {
 //        priceBlocks = true;
     }
+
+    showZeroTrace = getGlobalConfig()->getConfigBool("display", "showZeroTrace", false);
     return true;
 }
 
@@ -286,7 +288,7 @@ void COptions::Init(void) {
     quiet         = 0;  // quiet has levels
     format        = "";
     priceBlocks   = false;
-    showZeroTrace = getGlobalConfig()->getConfigBool("display", "showZeroTrace", false);
+    showZeroTrace = false;
     // latest.clear(); // use the same latest block for every run
     filters.clear();
     blocks.Init();
