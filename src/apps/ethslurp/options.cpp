@@ -16,7 +16,7 @@
 static COption params[] = {
     COption("~addrs",           "one or more addresses to slurp"),
     COption("-blocks:<range>",   "an optional range of blocks to slurp"),
-    COption("-type:<tx_type>",  "extract either [ ext | int | both ] type of transactions"),
+    COption("-type:<tx_type>",  "extract either [ ext | int | token | miner | all ] type of transactions"),
     COption("-fmt:<str>",       "pretty print, optionally add ':txt,' ':csv,' or ':html'"),
     COption("-blocks:<range>",  "export records in block range (:0[:max])"),
     COption("-silent",          "Run silently (only freshen the data, do not display it)"),
@@ -39,11 +39,11 @@ bool COptions::parseArguments(string_q& command) {
 
         if (startsWith(arg, "-t:") || startsWith(arg, "--type:")) {
             type = substitute(substitute(arg, "-t:", ""), "--type:", "");
-            if (type == "both")
-                return usage("Type 'both' is currently disabled. Use --ext then --int. Quitting...");
+            if (type == "all")
+                return usage("Type 'all' is currently disabled. Quitting...");
 
-            if (type != "int" && type != "ext")
-                return usage("Type must be either 'int', 'ext', or 'both'. Quitting...");
+            if (type != "int" && type != "ext" && type != "token" && type != "miner")
+                return usage("Type must be either 'int', 'ext', 'token', 'miner' or 'all'. Quitting...");
 
         } else if (arg == "-f") {
             exportFormat = "json";
@@ -114,6 +114,7 @@ void COptions::Init(void) {
     nParamsRef = nParams;
     pOptions = this;
 
+    type = "";
     blocks.Init();
     exportFormat = "json";
     addrs.clear();

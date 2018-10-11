@@ -76,7 +76,9 @@ run_test("ethslurp_invalid_type1"                   "0x1324e7b922b30B49Ab8EA8108
 run_test("ethslurp_invalid_type2"                   "0x1324e7b922b30B49Ab8EA81086341cc41C249346" " -t"     " junk")
 run_test("ethslurp_type_ext"                        "0x1324e7b922b30B49Ab8EA81086341cc41C249346" " --type" " ext")
 run_test("ethslurp_type_int"                        "0x1324e7b922b30B49Ab8EA81086341cc41C249346" " --type" " int")
-run_test("ethslurp_type_both"                       "0x1324e7b922b30B49Ab8EA81086341cc41C249346" " --type" " both")
+run_test("ethslurp_type_token"                      "0xbb9bc244d798123fde783fcc1c72d3bb8c189413" " --type" " token" " --blocks" " 1428756-1428758")
+run_test("ethslurp_type_miner"                      "0x05a56e2d52c817161883f50c441c3228cfe54d9f" " --type" " miner" " --blocks" " 1-1000")
+run_test("ethslurp_type_both"                       "0x1324e7b922b30B49Ab8EA81086341cc41C249346" " --type" " all")
 
 run_special_test("ethslurp_not_found_address"              "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b5")
 #run_special_test("ethslurp_date_range_1"                   "0x1324e7b922b30B49Ab8EA81086341cc41C249346" " -d:20170519:20170618")
