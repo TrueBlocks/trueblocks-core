@@ -13,9 +13,6 @@
 # in your $PATH
 #
 
-# ./scripts/cmp_ethscan 0xef68e7c694f40c8202821edf525de3782458639f 09_lrc
-# ./scripts/cmp_ethscan 0xdd974d5c2e2928dea5f71b9825b8b646686bd200 08_knc
-# ./scripts/cmp_ethscan 0x618e75ac90b12c6049ba3b27f5d5f8651b0037f6 07_qash
 # ./scripts/cmp_ethscan 0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c 06_bnt
 # ./scripts/cmp_ethscan 0x039b5649a59967e3e936d7471f9c3700100ee1ab 05_kcs
 # ./scripts/cmp_ethscan 0x4ceda7906a5ed2179785cd3a40a69ee8bc99c466 05_aion
@@ -36,7 +33,6 @@
 # ./scripts/cmp_ethscan 0x423b5f62b328d0d6d44870f4eee316befa0b2df5 00_gonetwork
 # ./scripts/cmp_ethscan 0x89205a3a3b2a69de6dbf7f01ed13b2108b2c43e7 00_etherTip
 # ./scripts/cmp_ethscan 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 00_etherTip
-# ./scripts/cmp_ethscan 0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c 06_bnt
 
 # final
 # ./scripts/cmp_ethscan 0x423b5f62b328d0d6d44870f4eee316befa0b2df5 00_gonetwork final/
@@ -57,7 +53,7 @@
 #./scripts/cmp_ethscan 0xbf2179859fc6d5bee9bf9158632dc51678a4100e 06_elf       final/
 #./scripts/cmp_ethscan 0x6c6ee5e31d828de241282b9606c8e98ea48526e2 06_hot       final/
 #./scripts/cmp_ethscan 0x35a9b440da4410dd63df8c54672b728970560328 07_mana      final/
-./scripts/cmp_ethscan 0x595832f8fc6bf59c85c527fec3740a1b7a361269 07_power     final/
+#./scripts/cmp_ethscan 0x595832f8fc6bf59c85c527fec3740a1b7a361269 07_power     final/
 #./scripts/cmp_ethscan 0x618e75ac90b12c6049ba3b27f5d5f8651b0037f6 07_qash      final/
 #./scripts/cmp_ethscan 0x9cda8a60dd5afa156c95bd974428d91a0812e054 07_ttu       final/
 #./scripts/cmp_ethscan 0x9ab165d795019b6d8b3e971dda91071421305e5a 08_aoa       final/
@@ -65,7 +61,7 @@
 #./scripts/cmp_ethscan 0xa4e8c3ec456107ea67d3075bf9e3df3a75823db0 08_loom      final/
 #./scripts/cmp_ethscan 0x58a4884182d9e835597f405e5f258290e46ae7c2 09_noah      final/
 #./scripts/cmp_ethscan 0x39bb259f66e1c59d5abef88375979b4d20d98022 09_wax       final/
-./scripts/cmp_ethscan 0xb91318f35bdb262e9423bc7c7c2a3a93dd93c92c 09_nuls      final/
+#./scripts/cmp_ethscan 0xb91318f35bdb262e9423bc7c7c2a3a93dd93c92c 09_nuls      final/
 #./scripts/cmp_ethscan 0xf0ee6b27b759c9893ce4f094b49ad28fd15a23e4 10_eng       final/
 #./scripts/cmp_ethscan 0xf85feea2fdd81d51177f6b8f35f0e6734ce45f5f 10_cmt       final/
 #./scripts/cmp_ethscan 0x3883f5e181fccaf8410fa61e12b59bad963fb645 10_theta     final/
@@ -74,3 +70,5 @@
 #./scripts/cmp_ethscan 0xea11755ae41d889ceec39a63e6ff75a02bc1c00d 11_ctxc      final/
 #./scripts/cmp_ethscan 0x4672bad527107471cb5067a887f4656d585a8a31 11_drop      final/
 #./scripts/cmp_ethscan 0x9992ec3cf6a55b00978cddf2b27bc6882d88d1ec 11_poly      final/
+#./scripts/cmp_ethscan 0xdd974d5c2e2928dea5f71b9825b8b646686bd200 08_knc       final/
+#./scripts/cmp_ethscan 0xef68e7c694f40c8202821edf525de3782458639f 09_lrc       final/

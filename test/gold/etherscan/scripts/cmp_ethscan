@@ -17,13 +17,18 @@
 #
 address=$1
 filename=$3$2-$1
+echo
+msg="Processing: $address to $filename"
+colorEcho -t "$msg"
 
 #--
 # These are the files we will be comparing
 #
 qb_result=../monitors/txt/$filename.txt
-qb_result_ext=../monitors/results/$filename-ext.txt
-qb_result_int=../monitors/results/$filename-int.txt
+es_result_ext=results/$filename-ext.txt
+es_result_int=results/$filename-int.txt
+es_result_tok=results/$filename-tok.txt
+#es_result_min=results/$filename-min.txt
 es_result=txt/$filename.txt
 
 #--
@@ -87,8 +92,10 @@ wc $esnqb.txt
 wc $chg.txt
 wc $qb_result
 wc $es_result
-wc $qb_result_ext
-wc $qb_result_int
+wc $es_result_ext
+wc $es_result_int
+wc $es_result_tok
+#wc $es_result_min
 sleep 1
 rm -f crap x y z
 #rm -f results/*ext*
