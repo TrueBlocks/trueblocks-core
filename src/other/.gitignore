@@ -1,10 +1,9 @@
 addrs_loaddata
 addrs_newchifra
 addrs_by_block
-addrs_extraction
 addrs_query
+addrs_sqlite_example
 rock_*
-sqlite_example
 web3scan
 dao_accounting
 single-simple
