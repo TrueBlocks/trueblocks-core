@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+clear
+ps -ef | grep getBlock | grep -v grep | grep -v latest
+
+echo
+tail -n 1 *.txt | grep -v "^$" | sed 's/==>/|/' | tr '\n' ' ' | tr '|' '\n' | tr '\t' ' '  | sed 's/<==/==>/'
+
+echo
+du -hm * 2>&1 | sort -n | grep -v getem | grep -v data | grep -v progress | grep -v file
+
+#echo
+#du -h files/* | sort -n | tail -10
