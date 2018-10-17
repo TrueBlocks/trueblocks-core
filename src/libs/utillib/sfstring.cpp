@@ -53,7 +53,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    size_t explodeForEach(const string& input, char needle, APPLYFUNC func, void *data) {
+    size_t forEveryExplodedItem(const string& input, char needle, APPLYFUNC func, void *data) {
 
         if (!func)
             return 0;
