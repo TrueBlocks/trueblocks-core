@@ -194,6 +194,7 @@ namespace qblocks {
         return archive;
     }
 
+    //----------------------------------------------------------------------
     CArchive& operator>>(CArchive& archive, CUintArray& array) {
         uint64_t count;
         archive >> count;
@@ -203,6 +204,27 @@ namespace qblocks {
             array.push_back(num);
         }
         return archive;
+    }
+
+    //----------------------------------------------------------------------
+    bool forEveryLineInAsciiFile(const string_q& filename, CHARPTRFUNC func, void *data) {
+        if (!func)
+            return false;
+
+        CArchive archive(READING_ARCHIVE);
+        if (archive.Lock(filename, asciiReadOnly, LOCK_NOWAIT)) {
+            bool done = false;
+            while (!done) {
+                char buffer[4096];
+                bzero(buffer, 4096);
+                done = (archive.ReadLine(buffer, 4096) == NULL);
+                if (!done)
+                    done = !(*func)(buffer, data);  // returns true to continue
+            }
+            archive.Release();
+            return done;
+        }
+        return true;
     }
 
     //----------------------------------------------------------------------
