@@ -68,7 +68,8 @@ namespace qblocks {
     typedef vector<CNameValue> CNameValueArray;
 
     //-------------------------------------------------------------------------
-    typedef bool (*APPLYFUNC)(string_q& line, void *data);
+    typedef bool (*APPLYFUNC)     (string_q& line, void *data);
+    typedef bool (*CHARPTRFUNC)   (const char *str, void *data);
     typedef int  (*SEARCHFUNC)    (const void *ob1, const void *ob2);
     typedef int  (*SORTINGFUNC)   (const void *ob1, const void *ob2);
 
