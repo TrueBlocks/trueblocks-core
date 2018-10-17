@@ -37,6 +37,9 @@ bool cutFiles(const string_q& path, void *data) {
     } else {
 
         if (endsWith(path, ".txt")) {
+            blknum_t bn = bnFromPath(path);
+            if (bn < 4350000)
+                return true;
             CThing *thing = (CThing*)data;
             thing->sourceFile = path;
             forEveryLineInAsciiFile(path, writeRecord, thing);
@@ -48,6 +51,15 @@ bool cutFiles(const string_q& path, void *data) {
 //-----------------------------------------------------------------------------
 bool writeRecord(const char *l, void *data) {
     CThing *thing = (CThing*)data;
+    static bool on = false;
+    const char *find = strstr(l, "4358591\t108\t\t0xea421551ac2403a98543bd8227cd57998915ad32\tinput");
+    if (find) {
+        on = true;
+        thing->nWritten = 500000;
+        return true;
+    }
+    if (!on)
+        return true;
     blknum_t bn = str_2_Uint(l);
     if (!thing->output || thing->nWritten == 500000) {
         if (thing->output) {
@@ -72,7 +84,9 @@ bool writeRecord(const char *l, void *data) {
     thing->output->flush();
     thing->nWritten++;
     ((char*)l)[strlen(l)-1] = '\r';
-    cerr << "\t" << cGreen << bn << ": " << cTeal << l << cOff;
+    static uint64_t counter = 0;
+    if (!(++counter%43))
+        cerr << "\t" << cGreen << bn << ": " << cTeal << l << cOff;
     cerr.flush();
     return true;
 }
