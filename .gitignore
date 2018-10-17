@@ -1,3 +1,5 @@
+local_config
+
 *.xcodeproj
 objs
 build
