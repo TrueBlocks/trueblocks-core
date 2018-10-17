@@ -102,7 +102,7 @@ namespace qblocks {
     extern string_q nextTokenClear       (string_q& str, char delim, bool doClear = true);
     extern string_q snagFieldClear       (string_q& str, const string_q& tagName, const string_q& defVal = "");
     extern size_t   explode              (CStringArray& result, const string& input, char ch);
-    extern size_t   explodeForEach       (const string& input, char ch, APPLYFUNC func, void *data);
+    extern size_t   forEveryExplodedItem (const string& input, char ch, APPLYFUNC func, void *data);
 
     //---------------------------------------------------------------------------------------
     inline string_q getEnvStr(const char* name) {
