@@ -1,0 +1,31 @@
+DAO
+0xbb9bc244d798123fde783fcc1c72d3bb8c189413
+/Users/jrush/src.GitHub/quickBlocks/src/other/addrs_query/test/DAO
+.
+./import.bak
+./cache
+./cache/0xbb9bc244d798123fde783fcc1c72d3bb8c189413.acct.bin
+./config.toml
+[settings]
+name = DAO
+
+[display]
+accounting = false
+debug = false
+logs = false
+trace = false
+single = false
+autocorrect = false
+parse = false
+
+[fields]
+hide=CTransaction:traces
+
+[formats]
+trans_fmt = [{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{HASH}]
+#trans_fmt = "[{DATE}]","[{FROM}]","[{TO}]","[{ETHER}]"
+
+[[watches]]
+list = [
+    { address = "0xbb9bc244d798123fde783fcc1c72d3bb8c189413", name = "DAO", firstBlock = 0 }
+]
