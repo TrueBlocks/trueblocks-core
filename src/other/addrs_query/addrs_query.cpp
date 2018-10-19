@@ -5,21 +5,23 @@
  *
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
-#include "etherlib.h"
+#include "acctlib.h"
 
 //----------------------------------------------------------------
 struct Thing1 {
 public:
-    char addr[43];  // 0x + 40 chars + \0
-    char num [8];   // less than 10,000,000 + \0
+    char addr  [43];  // '0x' + 40 chars + \t
+    char block [10];  // less than 1,000,000,000 + \t
+    char txid  [6];   // less than 100000 + \n
 };
 
 //----------------------------------------------------------------
 class Options {
 public:
-    address_t addr;
-    blknum_t num;
-    CBlockNumArray blocks;
+    address_t queryAddr;
+    blknum_t  startBlock;
+    CAcctCacheItemArray items;
+    Options(void) { queryAddr = ""; startBlock = 0; }
 };
 
 extern bool visitFiles(const string_q& path, void *data);
@@ -32,14 +34,15 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    Options opts;
-    opts.addr = argv[1];
-    opts.num = (str_2_Uint(argv[2]) / 10000) * 10000;
+    Options options;
+    options.queryAddr = argv[1];
+    options.startBlock = str_2_Uint(argv[2]);
 
-    string_q path = blockCachePath("addr_index/00/by_block/");
-    forEveryFileInFolder(path, visitFiles, &opts);
-    for (auto blk : opts.blocks)
-        cout << "getBlock " << blk << " --addrs --filter " << opts.addr << " 2>/dev/null\n";
+    string_q path = blockCachePath("addr_index/sorted_by_block/");
+    forEveryFileInFolder(path, visitFiles, &options);
+    cerr << "Found " << options.items.size() << " transactions for account " << options.queryAddr << string_q(20, ' ') << "\n";
+    for (auto item : options.items)
+        cout << item << "\n";
 
     return 0;
 }
@@ -56,17 +59,21 @@ bool visitFiles(const string_q& path, void *data) {
 
     if (endsWith(path,'/')) {
         return forEveryFileInFolder(path+"*",visitFiles,data);
+
     } else {
 
         if (endsWith(path, ".txt")) {
+            cerr << "Scanning " << path << "             \r";
+            cerr.flush();
+
             blknum_t bn = bnFromPath(path);
             Options *opt = (Options*)data;
-            if (bn >= opt->num) {
-                address_t addr = opt->addr;
+            if (bn >= opt->startBlock) {
+                address_t addr = opt->queryAddr;
                 CMemMapFile blockFile(path, CMemMapFile::WholeFile, CMemMapFile::RandomAccess);
                 Thing1 *records = (Thing1 *)(blockFile.getData());  // NOLINT
                 uint64_t size = fileSize(path);
-                uint64_t nRecs = size / 51;
+                uint64_t nRecs = size / 59;
 
                 Thing1 t;
                 strncpy(t.addr, addr.c_str(), 42);
@@ -86,22 +93,26 @@ bool visitFiles(const string_q& path, void *data) {
                     uint64_t remains  = (pFound - pRecords) / sizeof(Thing1);
                     done = false;
                     for (uint64_t i = 0 ; i < remains && !done ; i++) {
-                        char n[8];
-                        bzero(n, 8);
-                        strncpy(n, found[i].num, 7);
-                        char s[43];
-                        bzero(s, 43);
-                        strncpy(s, found[i].addr, 42);
+                        char bl[10];
+                        bzero(bl, 10);
+                        strncpy(bl, found[i].block, 9);
+                        char tx[6];
+                        bzero(tx, 6);
+                        strncpy(tx, found[i].txid, 5);
+                        char ad[43];
+                        bzero(ad, 43);
+                        strncpy(ad, found[i].addr, 42);
                         if (!strncmp(addr.c_str(), found[i].addr, 42)) {
-                            opt->blocks.push_back(str_2_Uint(n));
-                        } else {
-                            static int x=0;
-                            if (!(++x%13)) {
-                                cerr << cTeal << n << " " << cYellow << s << cOff << "\r";
-                                cerr.flush();
-                            }
+                            CAcctCacheItem item(str_2_Uint(bl), str_2_Uint(tx));
+                            opt->items.push_back(item);
+//                        } else {
+//                            static int x=0;
+//                            if (!(++x % 43)) {
+//                                cerr << cTeal << bl << "." << tx << " " << cYellow << ad << cOff << "\r";
+//                                cerr.flush();
+//                            }
                         }
-                        if (strncmp(s, addr.c_str(), 42) > 0)
+                        if (strncmp(ad, addr.c_str(), 42) > 0)
                             done = true;
                     }
                 }
