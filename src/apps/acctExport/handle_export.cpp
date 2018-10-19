@@ -19,7 +19,7 @@ inline bool isInRange(blknum_t ref, blknum_t start, blknum_t end) {
 bool exportData(COptions& options) {
 
     // We want to articulate if we're producing JSON or if we're producing text and the format includes the fields
-    options.needsArt = (options.transFmt.empty() || contains(toLower(options.transFmt), "articulate"));
+    options.needsArt = (options.transFmt.empty() || contains(toLower(options.transFmt), "articulate") || contains(toLower(options.transFmt), "function"));
 
     // We need traces if traces are not hidden, or we're doing JSON, or we're doing text and the format includes traces
     options.needsTrace = !IS_HIDDEN(CTransaction, "traces");

@@ -14,7 +14,7 @@ parse = false
 hide=CTransaction:traces
 
 [formats]
-trans_fmt = [{w:8:BLOCKNUMBER}]\t[{w:5:TRANSACTIONINDEX}]\t[{HASH}]
+trans_fmt = [{w:8:BLOCKNUMBER}]\t[{w:5:TRANSACTIONINDEX}]\t[{DATE}]\t[{TO}]\t[{ETHER}]\t[{FUNCTION}]\t[{b:iserror}]
 #trans_fmt = "[{DATE}]","[{FROM}]","[{TO}]","[{ETHER}]"
 
 [[watches]]
