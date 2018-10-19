@@ -1,7 +1,7 @@
 #-------------------------------------------------
 libraries=../../libs
 bin=bin
-cflags=-std=c++11 -Werror -Wall -O2 -I. -I$(libraries)/utillib -I$(libraries)/etherlib -I$(libraries)/acctlib
+cflags=-std=c++11 -Werror -Wall -O2 -I. -I$(libraries)/utillib -I$(libraries)/etherlib
 
 #-------------------------------------------------
 # for mac builds
@@ -10,7 +10,7 @@ libs=$(libraries)/*.a /usr/lib/libcurl.dylib
 #libs=$(libraries)/*.a -lcurl
 
 #-------------------------------------------------
-exec=addrs_query
+exec=addrs_bytes
 product=objs/$(exec)
 dest=$(bin)/$(exec)
 
