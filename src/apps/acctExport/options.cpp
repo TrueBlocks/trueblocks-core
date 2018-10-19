@@ -102,7 +102,7 @@ bool COptions::parseArguments(string_q& command) {
     out = new COutPiped(
     if (outputFile)
 */
-    
+
     transFmt = "";  // empty string gets us JSON output
     if (fmt != JSON) {
         string_q format = toml.getConfigStr("formats", "trans_fmt", "");
@@ -112,8 +112,12 @@ bool COptions::parseArguments(string_q& command) {
         if (fmt == CSV)
             transFmt = "\"" + substitute(transFmt, "\t", "\",\"") + "\"";
         string_q header = toLower(transFmt);
+        for (uint32_t i = 0 ; i < 10 ; i++) {
+            string_q str = "w:" + uint_2_Str(i);
+            header = substitute(header, str, "");
+        }
         for (auto ch : header)
-            if (ch != '[' && ch != '{' && ch != '}' && ch != ']')
+            if (ch != '[' && ch != '{' && ch != '}' && ch != ']' && ch != ':')
                 cout << ch;
         cout << "\n";
     }
