@@ -1,32 +1,40 @@
-name=$1
-address=$2
+#!/bin/bash
 
+name=$1
 [ -z "$name" ] && echo "You must provide a name: ./maker <name> <address>" && exit 1;
+
+address=$2
 [ -z "$address" ] && echo "You must provide an address: ./maker <name> <address>" && exit 1;
 
-echo $name
-echo $address
+lastBlock=0
+if [ -e $name/config.toml ]
+then
+    colorEcho -c green -t "Refreshing monitor for address" | tr '\n' ' '
+    colorEcho -c teal -t $address
+    cd $name
+    lastBlock=`cat cache/lastBlock.txt`
+else
+    colorEcho -c green -t "Building monitor for address" | tr '\n' ' '
+    colorEcho -c teal -t $address
+    lastBlock=`isContract -w $address 2>/dev/null | cut -f2 -d' '`
+    if [[ -z "${lastBlock// }" ]]
+    then
+        lastBlock=0
+    fi
+    echo $lastBlock | sed 's/^/s\/FIRST\//' | sed 's/$/\//' >z
+    mkdir -p $name
+    cd $name
+    mkdir -p cache
+    cat ../config.toml | sed 's/ADDR/'$address'/' | sed 's/NAME/'$name'/' | sed -f ../z >config.toml
+    rm ../z
+    # just in case
+    cat config.toml | sed 's/FIRST/0/' >z ; cat z >config.toml
+    rm -f z
+fi
 
-mkdir -p $name
-cd $name
-pwd
-
-isContract -w $address 2>/dev/null | cut -f2 -d' ' | sed 's/^/s\/FIRST\//' | sed 's/$/\//' >z
-cat z
-
-mkdir -p cache
-cat ../config.toml | sed 's/ADDR/'$address'/' | sed 's/NAME/'$name'/' | sed -f z >config.toml
-# just in case
-cat config.toml | sed 's/FIRST/0/' >z ; cat z >config.toml
-rm -f z
-
-find .
-cat config.toml
-
-curl http://localhost:8000/addressTx/$address >import.txt
-#grep -i $address ../the_txt/*.txt >raw_data
-#cat raw_data | cut -f2 -d: | cut -f1,2 | tee import.txt
-
-cacheMan -i
-acctExport --fmt txt --filter $address
-#acctExport
+colorEcho -c green -t "Importing..."
+../../addrs_query/bin/addrs_query $address $lastBlock | tr '.' '\t' >import.txt
+cacheMan -i | grep -v "^$"
+colorEcho -c green -t "Exporting..."
+acctExport --fmt txt 2>/dev/null | sed 's/^/        /'
+#acctExport 2>/dev/null
