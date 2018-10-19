@@ -20,7 +20,7 @@ $(exec).cpp
 
 #-------------------------------------------------
 all:
-	@cd ../../../build ; make ; cd -
+#	@cd ../../../build ; make ; cd -
 	@make app
 
 app:
