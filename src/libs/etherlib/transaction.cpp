@@ -346,8 +346,12 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
                 break;
             case 'f':
                 if ( fieldIn % "function" ) {
-                    string_q ret = substitute(tra->articulatedTx, "\"","");
-                    return nextTokenClear(ret, ',');
+                    string_q ret = tra->Format("[{ARTICULATEDTX}]");
+                    if (ret.empty())
+                        return "";
+                    CFunction func;
+                    func.parseJson3(ret);
+                    return func.name;
                 }
                 break;
             case 'g':
