@@ -14,17 +14,15 @@ extern bool writeRecord(const char *line, void *data);
 //-----------------------------------------------------------------------------
 class CThing {
 public:
-    uint64_t nWritten;
-    string_q outputFilename;
-    string_q sourceFile;
-    CArchive *output;
-    CThing(void) { output = NULL; nWritten = 0; }
+    CStringArray lines;
+    CThing(void) { lines.reserve(70000000); }
 };
 
 //-----------------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
+    colorsOff();
     CThing thing;
-    forEveryFileInFolder(blockCachePath("addr_index/unsorted_by_10000"), cutFiles, &thing);
+    forEveryFileInFolder(blockCachePath("addr_index/unsorted_by_block"), cutFiles, &thing);
     return 0;
 }
 
@@ -37,9 +35,136 @@ bool cutFiles(const string_q& path, void *data) {
     } else {
 
         if (endsWith(path, ".txt")) {
-            blknum_t bn = bnFromPath(path);
-            if (bn < 4350000)
-                return true;
+            CThing *thing = (CThing*)data;
+            cerr << "Visiting " << path << "...";
+            forEveryLineInAsciiFile(path, writeRecord, data);
+            CArchive output(READING_ARCHIVE);
+            string_q filename = substitute(path, "/unsorted_by_block", "/sorted_by_block");
+            if (!output.Lock(filename, asciiWriteCreate, LOCK_NOWAIT))
+                return false;
+            cerr << "\nSorting...";
+            sort(thing->lines.begin(), thing->lines.end());
+            cerr << "Writing...";
+            for (auto line : thing->lines)
+                output.WriteLine(line);
+            cerr << "Done\n";
+            output.Release();
+            thing->lines.clear();
+            thing->lines.reserve(70000000);
+        }
+    }
+    return true;
+}
+
+//-----------------------------------------------------------------------------
+bool writeRecord(const char *l, void *data) {
+    CThing *thing = (CThing*)data;
+    string_q str(l);
+    CStringArray fields;
+    explode(fields, str, '\t');
+    ostringstream os;
+    os << fields[3] << "\t" << padLeft(fields[0], 9, '0') << "\t" << padLeft(fields[1], 5, '0') << "\n";
+    string_q s = os.str();
+    thing->lines.push_back(s);
+    static uint32_t cnt = 0;
+    if (!(++cnt%750)) {
+        cerr << ".";
+        cerr.flush();
+    }
+    return true;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#if 0
+/*-------------------------------------------------------------------------
+ * This source code is confidential proprietary information which is
+ * Copyright (c) 2017 by Great Hill Corporation.
+ * All Rights Reserved
+ *
+ * The LICENSE at the root of this repo details your rights (if any)
+ *------------------------------------------------------------------------*/
+#include "options.h"
+
+//-----------------------------------------------------------------------------
+extern bool cutFiles(const string_q& path, void *data);
+extern bool writeRecord(const char *line, void *data);
+
+//-----------------------------------------------------------------------------
+class CThing {
+public:
+    string_q outputFilename;
+    string_q sourceFile;
+    CArchive *output;
+    blknum_t prevBlock;
+    uint64_t fileSize;
+    CThing(void) { output = NULL; prevBlock = NOPOS; fileSize = 0; }
+    bool isFileFull(blknum_t bn) {
+        if (fileSize >= 50000000 && bn != prevBlock) {
+            prevBlock = bn;
+            fileSize = 0;
+            return true;
+        }
+        return false;
+#if 0
+               if (bn < 1000000) { return !(bn % 100000);  // for very early blocks, store 100000 blocks per file
+        } else if (bn < 2350000) { return !(bn % 50000 );  // for blocks less than 2370000, store 50000 blocks per file
+        } else if (bn < 2370000) { return !(bn % 1500  );  // for early blocks, store 1500 records per file
+        } else if (bn < 2460000) { return !(bn % 500   );  // for primary dDos blocks, store 500 records per file
+        } else if (bn < 3500000) { return !(bn % 50000 );  // go back to 50000 for a while
+        } else if (bn < 4000000) { return !(bn % 50000 );  // blocks start getting fuller, so lower to 10000 blocks per file
+        } else if (bn < 5000000) { return !(bn % 5000  );  // getting pretty full, lower to 5000 blocks per file
+        }                          return !(bn % 2500  );  // for anything over block 5000000, store 2500 blocks per file
+#endif
+    }
+};
+
+//-----------------------------------------------------------------------------
+int main(int argc, const char *argv[]) {
+    colorsOff();
+    CThing thing;
+    forEveryFileInFolder(blockCachePath("addr_index/unsorted_by_n_lines"), cutFiles, &thing);
+    return 0;
+}
+
+//-----------------------------------------------------------------------------
+bool cutFiles(const string_q& path, void *data) {
+
+    if (endsWith(path,'/')) {
+        return forEveryFileInFolder(path+"*", cutFiles, data);
+
+    } else {
+
+        if (endsWith(path, ".txt")) {
+//            blknum_t bn = bnFromPath(path);
+//            if (bn < 4350000)
+//                return true;
             CThing *thing = (CThing*)data;
             thing->sourceFile = path;
             forEveryLineInAsciiFile(path, writeRecord, thing);
@@ -51,45 +176,50 @@ bool cutFiles(const string_q& path, void *data) {
 //-----------------------------------------------------------------------------
 bool writeRecord(const char *l, void *data) {
     CThing *thing = (CThing*)data;
-    static bool on = false;
-    const char *find = strstr(l, "4358591\t108\t\t0xea421551ac2403a98543bd8227cd57998915ad32\tinput");
-    if (find) {
-        on = true;
-        thing->nWritten = 500000;
-        return true;
-    }
-    if (!on)
-        return true;
+//    static bool on = true;
+//    const char *find = NULL; //strstr(l, "4358591\t108\t\t0xea421551ac2403a98543bd8227cd57998915ad32\tinput");
+//    if (find) {
+//        on = true;
+//        return true;
+//    }
+//    if (!on)
+//        return true;
     blknum_t bn = str_2_Uint(l);
-    if (!thing->output || thing->nWritten == 500000) {
-        if (thing->output) {
-            thing->output->Release();
-            delete thing->output;
-            thing->output = NULL;
+    if (!thing->output || thing->isFileFull(bn)) {
+        string_q newPath = blockCachePath("addr_index/unsorted_by_block/") + padLeft(uint_2_Str(bn), 9, '0') + ".txt";
+        if (!thing->output || newPath != thing->outputFilename) {
+            thing->outputFilename = newPath;
+            if (thing->output) {
+                thing->output->Release();
+                delete thing->output;
+                thing->output = NULL;
+            }
+            thing->output = new CArchive(READING_ARCHIVE);
+            if (!thing->output) {
+                cerr << "Could allocate file pointer " << thing->outputFilename << "\n";
+                return false;
+            }
+            cerr << "\tOpening file " << thing->outputFilename << "\n";
+            if (!thing->output->Lock(thing->outputFilename, asciiWriteCreate, LOCK_NOWAIT)) {
+                cerr << "Could not open file " << thing->outputFilename << "\n";
+                return false;
+            }
         }
-        thing->output = new CArchive(READING_ARCHIVE);
-        if (!thing->output) {
-            cerr << "Could allocate file pointer " << thing->outputFilename << "\n";
-            return false;
-        }
-        thing->outputFilename = blockCachePath("addr_index/unsorted_by_n_lines/") + padLeft(uint_2_Str(bn), 9, '0') + ".txt";
-        cerr << "\tOpening file " << thing->outputFilename << "\n";
-        if (!thing->output->Lock(thing->outputFilename, asciiWriteCreate, LOCK_NOWAIT)) {
-            cerr << "Could not open file " << thing->outputFilename << "\n";
-            return false;
-        }
-        thing->nWritten = 0;
     }
+
+    size_t len = strlen(l);
+    thing->fileSize += len;
+    thing->prevBlock = bn;
     thing->output->WriteLine(l);
     thing->output->flush();
-    thing->nWritten++;
-    ((char*)l)[strlen(l)-1] = '\r';
+    ((char*)l)[len-1] = '\r';
     static uint64_t counter = 0;
-    if (!(++counter%43))
-        cerr << "\t" << cGreen << bn << ": " << cTeal << l << cOff;
+    if (!(++counter%71))
+        cerr << "\t" << cGreen << thing->fileSize << ": " << cTeal << l << cOff;
     cerr.flush();
     return true;
 }
+#endif
 
 
 

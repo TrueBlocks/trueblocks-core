@@ -32,7 +32,7 @@ bool exportData(COptions& options) {
     bool first = true;
     for (size_t index = 0 ; index < options.items.size() ; index++) {
         CAcctCacheItem *item = &options.items[index];
-        if (options.showProgress && !(index%3)) {
+        if ((options.showProgress && !(index%3)) || index == options.items.size() -1) {
             cerr << "bn: " << item->blockNum << " tx: " << item->transIndex << "\r";
             cerr.flush();
         }
