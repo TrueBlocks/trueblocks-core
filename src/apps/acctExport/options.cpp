@@ -13,6 +13,7 @@ static COption params[] = {
     COption("-fmt:<fmt>",       "export format (one of [json|txt|csv]"),
     COption("-fi(l)ter:<addr>", "show results for this address (you may specify more than one filter)"),
     COption("-useBlooms",       "use bloom filters to decide whether or not to re-check the cache"),
+    COption("-ignoreDdos",      "ignore apparent dDos transactions."),
     COption("",                 "Export transactions for one or more Ethereum addresses.\n"),
 };
 static size_t nParams = sizeof(params) / sizeof(COption);
@@ -42,6 +43,9 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-l:") || startsWith(arg, "--filter:")) {
             arg = substitute(substitute(arg, "-l:", ""), "--filter:", "");
             filters.push_back(arg);
+
+        } else if (arg == "-i" || arg == "--ignoreDdos") {
+            ignoreDdos = true;
 
         } else if ((arg == "-u") || (arg == "--useBlooms")) {
             useBloom = true;
@@ -102,6 +106,7 @@ bool COptions::parseArguments(string_q& command) {
     out = new COutPiped(
     if (outputFile)
 */
+    
 
     transFmt = "";  // empty string gets us JSON output
     if (fmt != JSON) {
@@ -135,6 +140,9 @@ void COptions::Init(void) {
     blk_maxWatchBlock = UINT32_MAX;
     showProgress = getGlobalConfig()->getConfigBool("debug", "showProgress", false);
     useBloom = false;
+    ignoreDdos = true;
+    needsArt = false;
+    needsTrace = false;
 
     minArgs = 0;
     if (out)

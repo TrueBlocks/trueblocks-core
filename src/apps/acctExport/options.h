@@ -37,6 +37,7 @@ public:
     bool needsArt;
     bool needsTrace;
     bool showProgress;
+    bool ignoreDdos;
     COutPiped *out;
     string_q outFile;
     ofstream outStream;
@@ -49,6 +50,7 @@ public:
 
     bool     loadWatches    (const CToml& toml);
     string_q annotate       (const string_q& strIn) const;
+    bool     shouldTrace    (const CTransaction *trans) const;
 
     typedef bool (*NAMEVISITFUNC)(string_q& str, const CAccountWatch& watch);
     void renameItems(string_q& str, const CAccountWatchArray& array) const;

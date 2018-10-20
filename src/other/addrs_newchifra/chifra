@@ -36,5 +36,5 @@ colorEcho -c green -t "Importing..."
 ../../addrs_query/bin/addrs_query $address $lastBlock | tr '.' '\t' >import.txt
 cacheMan -i | grep -v "^$"
 colorEcho -c green -t "Exporting..."
-acctExport --fmt txt 2>/dev/null | sed 's/^/        /'
+acctExport --fmt txt --ignoreDdos 2>/dev/null | sed 's/^/        /'
 #acctExport 2>/dev/null
