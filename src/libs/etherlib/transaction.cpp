@@ -341,8 +341,22 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
             case 'e':
                 if ( fieldIn % "ether" )
                     return wei_2_Ether(bnu_2_Str(tra->value));
-                if ( fieldIn % "encoding" )
+                else if ( fieldIn % "encoding" )
                     return extract(tra->input, 0, 10);
+                else if ( fieldIn % "events" ) {
+                    string_q ret;
+                    for (uint64_t n = 0 ; n < tra->receipt.logs.size() ; n++) {
+                        string_q v = tra->receipt.logs[n].Format("[{ARTICULATEDLOG}]");
+                        if (v.empty())
+                            return "";
+                        CFunction func;
+                        func.parseJson3(v);
+                        if (!ret.empty())
+                            ret += ",";
+                        ret += func.name;
+                    }
+                    return ret;
+                }
                 break;
             case 'f':
                 if ( fieldIn % "function" ) {

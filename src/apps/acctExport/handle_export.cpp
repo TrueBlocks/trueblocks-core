@@ -9,6 +9,7 @@
 extern bool exportTransaction(COptions& options, const CAcctCacheItem *item, bool first);
 extern bool checkBloom(COptions& options, const CAcctCacheItem *item);
 extern bool isInTransaction(CTransaction *trans, const address_t& addr);
+extern bool transFilter(const CTransaction *trans, void *data);
 
 //---------------------------------------------------------------------------------------------
 inline bool isInRange(blknum_t ref, blknum_t start, blknum_t end) {
@@ -19,7 +20,11 @@ inline bool isInRange(blknum_t ref, blknum_t start, blknum_t end) {
 bool exportData(COptions& options) {
 
     // We want to articulate if we're producing JSON or if we're producing text and the format includes the fields
-    options.needsArt = (options.transFmt.empty() || contains(toLower(options.transFmt), "articulate") || contains(toLower(options.transFmt), "function"));
+    options.needsArt =
+        (options.transFmt.empty() ||
+            contains(toLower(options.transFmt), "articulate") ||
+            contains(toLower(options.transFmt), "function") ||
+            contains(toLower(options.transFmt), "events"));
 
     // We need traces if traces are not hidden, or we're doing JSON, or we're doing text and the format includes traces
     options.needsTrace = !IS_HIDDEN(CTransaction, "traces");
@@ -74,9 +79,8 @@ bool exportTransaction(COptions& options, const CAcctCacheItem *item, bool first
         // If we need the traces, get them before we scan through the watches. Only get them
         // if we don't already have them.
         CTransaction *trans = &options.curBlock.transactions[item->transIndex];
-        if (options.needsTrace)
-            if (trans->traces.size() == 0)
-                getTraces(trans->traces, trans->hash);
+        if (options.shouldTrace(trans))
+            getTraces(trans->traces, trans->hash);
 
         // We show a transaction only once even if it was involved from more than one watch perspective
         bool found = false;
@@ -114,7 +118,11 @@ bool exportTransaction(COptions& options, const CAcctCacheItem *item, bool first
                 }
 
             } else {
-                cerr << "\t\t" << cTeal << "skipping: " << *item << cOff << "\r";
+                cerr << "\t\t" << cTeal << "skipping: " << *item << cOff;
+//                if (transFilter(trans, NULL))
+//                    cerr << " (possible dDos transaction)\n";
+//                else
+                    cerr << "\r";
                 cerr.flush();
             }
         }
@@ -127,6 +135,18 @@ bool exportTransaction(COptions& options, const CAcctCacheItem *item, bool first
     }
 
     return true;
+}
+
+//-----------------------------------------------------------------------
+bool COptions::shouldTrace(const CTransaction *trans) const {
+    if (!needsTrace)
+        return false;
+
+    if (trans->traces.size() > 0)  // we already have the traces
+        return false;
+
+    // Returns 'true' if we want the caller NOT to visit the traces of this transaction
+    return !transFilter(trans, NULL);
 }
 
 //-----------------------------------------------------------------------
@@ -244,7 +264,15 @@ bool visitAddrs(const CAddressAppearance& item, void *data) {
 bool transFilter(const CTransaction *trans, void *data) {
     if (!ddosRange(trans->blockNumber))
         return false;
-    return (getTraceCount(trans->hash) > 250);
+    static string_q exclusions;
+    if (exclusions.empty())
+        exclusions = getGlobalConfig("blockScrape")->getConfigStr("exclusions", "list", "");
+    if (contains(exclusions, trans->to))
+        return true;
+    if (contains(exclusions, trans->from))
+        return true;
+    uint64_t count = getTraceCount(trans->hash);
+    return (count > 250);
 }
 
 //-----------------------------------------------------------------------
