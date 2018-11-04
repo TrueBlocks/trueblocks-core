@@ -15,9 +15,9 @@ txrans_fmt = [{TIMESTAMP}]\t[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{TRACEID}]\t
 
 [[watches]]
 list = [
-    { address = "0x744d70fdbe2ba4cf95131626614a1763df805b9e", name = "StatusNetwork", firstBlock = 3898960, lastBlock = 6250000 },
-    { address = "0xa1c957c0210397d2d0296341627b74411756d476", name = "TokenFactory", firstBlock = 3898915, lastBlock = 6250000 },
-    { address = "0x52ae2b53c847327f95a5084a7c38c0adb12fd302", name = "Controller", firstBlock = 3899582, lastBlock = 6250000 }
+    { address = "0x744d70fdbe2ba4cf95131626614a1763df805b9e", name = "StatusNetwork", firstBlock = 3898960, lastBlock = 6500000 },
+    { address = "0xa1c957c0210397d2d0296341627b74411756d476", name = "TokenFactory", firstBlock = 3898915, lastBlock = 6500000 },
+    { address = "0x52ae2b53c847327f95a5084a7c38c0adb12fd302", name = "Controller", firstBlock = 3899582, lastBlock = 6500000 }
 ]
 
 # make sure to always put arrays at the end of the file

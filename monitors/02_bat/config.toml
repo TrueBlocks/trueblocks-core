@@ -25,5 +25,5 @@ trans_fmt = [{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{HASH}]
 
 [[watches]]
 list = [
-    { address = "0x0d8775f648430679a709e98d2b0cb6250d2887ef", name = "BAT", firstBlock = 3788558, lastBlock = 6250000 },
+    { address = "0x0d8775f648430679a709e98d2b0cb6250d2887ef", name = "BAT", firstBlock = 3788558, lastBlock = 6500000 },
 ]

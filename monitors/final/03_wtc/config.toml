@@ -25,5 +25,5 @@ txrans_fmt = [{TIMESTAMP}]\t[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{TRACEID}]\t
 
 [[watches]]
 list = [
-    { address = "0xb7cb1c96db6b22b0d3d9536e0108d062bd488f74", name = "WTC", firstBlock = 4038913, lastBlock = 6250000 },
+    { address = "0xb7cb1c96db6b22b0d3d9536e0108d062bd488f74", name = "WTC", firstBlock = 4038913, lastBlock = 6500000 },
 ]
