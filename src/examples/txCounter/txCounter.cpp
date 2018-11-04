@@ -73,7 +73,7 @@ int main(int argc, char *argv[]) {
         string_q fileName = getBinaryFilename(i);
         if (fileExists(fileName)) {
             CBlock block;
-            readFromBinary(block, fileName);
+            readBlockFromBinary(block, fileName);
             counter.countOne(block);
         } else {
             if (verbose) {
