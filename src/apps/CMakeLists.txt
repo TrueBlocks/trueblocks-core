@@ -17,3 +17,12 @@ add_subdirectory(ethslurp)
 add_subdirectory(grabABI)
 add_subdirectory(makeClass)
 add_subdirectory(cacheMan)
+
+add_subdirectory(blockScrape)
+add_subdirectory(acctScrape)
+#add_subdirectory(acctExport)
+add_subdirectory(chifra)
+add_subdirectory(miniBlocks)
+
+add_subdirectory(blockMan)
+add_subdirectory(bloomMan)
