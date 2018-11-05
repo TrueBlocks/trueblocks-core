@@ -35,8 +35,8 @@ add_subdirectory(dao)
 add_subdirectory(ENS/parselib)
 add_subdirectory(ENS)
 
-add_subdirectory(etherTip/parselib)
-add_subdirectory(etherTip)
+#add_subdirectory(etherTip/parselib)
+#add_subdirectory(etherTip)
 
 add_subdirectory(firstBlood/parselib)
 add_subdirectory(firstBlood)
