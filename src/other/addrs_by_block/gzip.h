@@ -1,3 +1,4 @@
+#pragma once
 // ============================================================================
 // gzstream, C++ iostream classes wrapping the zlib compression library.
 // Copyright (C) 2001  Deepak Bandyopadhyay, Lutz Kettner
@@ -25,7 +26,6 @@
 // Standard streambuf implementation following Nicolai Josuttis, "The
 // Standard C++ Library".
 // ============================================================================
-
 #ifndef GZSTREAM_H
 #define GZSTREAM_H 1
 
