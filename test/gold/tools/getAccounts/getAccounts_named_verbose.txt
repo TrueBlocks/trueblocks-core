@@ -44,5 +44,7 @@ getAccounts --named -v
 0xff3519eeeea3e76f1f699ccce5e23ee0bdda41ac (Blockchain Capital)
 0xd8912c10681d8b21fd3742244f44658dba12264e (Pluton)
 0x89205a3a3b2a69de6dbf7f01ed13b2108b2c43e7 (Unicorns)
+0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 (Etherum Tip Jar)
 0x713b73c3994442b533e6a083ec968e40606810ec (Eth Early Adoption Reg)
 0x06012c8cf97bead5deae237070f9587f8e7a266d (CryptoKitties)
+0x814964b1bceaf24e26296d031eadf134a2ca4105 (NewBium)
