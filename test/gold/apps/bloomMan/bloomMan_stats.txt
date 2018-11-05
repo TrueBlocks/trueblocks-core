@@ -1,0 +1,4 @@
+bloomMan argc: 3 [1:4001001-4001002] [2:--stats] 
+bloomMan 4001001-4001002 --stats 
+                                                                                          blockNum	nBlocks	nBloomFiles	noBlooms	nBlooms	nBits	nBytes
+4010000	1	0	0	0	0	0
