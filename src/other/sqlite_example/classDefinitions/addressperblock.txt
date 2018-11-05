@@ -1,5 +1,0 @@
-[settings]
-class       = CAddressPerBlock
-fields      = string id|string block_number|string tx_index|string trace_id|address address|string reason
-includes    = etherlib.h
-cIncs       = #include "etherlib.h"

@@ -1,1 +1,0 @@
-source activate py2

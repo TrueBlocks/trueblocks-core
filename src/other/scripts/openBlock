@@ -1,0 +1,3 @@
+getBlock $1 >/tmp/junk.json
+open /tmp/junk.json
+rm -f /tmp/junk.json

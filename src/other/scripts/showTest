@@ -1,0 +1,4 @@
+cd ..
+export QUICKBLOCKS=`pwd`
+
+find $QUICKBLOCKS/test/working -name "*$1*" -exec cat '{}' ';'
