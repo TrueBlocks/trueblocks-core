@@ -1,6 +1,6 @@
 chifra argc: 2 [1:folder] 
 chifra folder 
-Monitor folder ~/src.GitHub/quickBlocks-private/test/gold/apps/chifra/folder
+Monitor folder ~/src.GitHub/quickBlocks/test/gold/apps/chifra/folder
 
   You must supply at least one Ethereum address to monitor.
 

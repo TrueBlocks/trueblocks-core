@@ -54,4 +54,3 @@ TIP	Etherum Tip Jar		0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359	Ethereum.org	The
 EEAR	Eth Early Adoption Reg	0x713b73c3994442b533e6a083ec968e40606810ec	quickBlocks.io	An early, known-dead address useful for testing
 CK	CryptoKitties		0x06012c8cf97BEaD5deAe237070F9587f8E7A266d	Etherscan.io	The famous first ERC721 token
 NEWB	NewBium			0x814964b1bceaf24e26296d031eadf134a2ca4105	Self		Usual test case for QuickBlocks
-
