@@ -1,0 +1,2 @@
+https://github.com/cinemast/libjson-rpc-cpp
+https://github.com/ethereum/solidity/blob/develop/test/RPCSession.cpp

@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+echo s/single/$1/g >shit
+echo s/Single/$2/g >>shit
+
+mv ./proj.xcodeproj/xcuserdata/jrush.xcuserdatad/xcschemes/single.xcscheme ./proj.xcodeproj/xcuserdata/jrush.xcuserdatad/xcschemes/$1.xcscheme
+mv ./single.cpp ./$1.cpp
+
+fixProj.1 ./$1.cpp
+fixProj.1 ./options.cpp 2>/dev/null
+fixProj.1 ./options.h 2>/dev/null
+fixProj.1 ./makefile
+fixProj.1 ./CMakeLists.txt 2>/dev/null
+fixProj.1 ./proj.xcodeproj/project.pbxproj
+fixProj.1 ./proj.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+fixProj.1 ./proj.xcodeproj/xcuserdata/jrush.xcuserdatad/xcschemes/xcschememanagement.plist
+fixProj.1 ./proj.xcodeproj/xcuserdata/jrush.xcuserdatad/xcschemes/$1.xcscheme
+
+rm -f shit
+rm -f bin/single
+
+mkdir bin 2>/dev/null
