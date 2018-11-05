@@ -1,0 +1,6 @@
+[settings]
+class     = CChangeDailyLimit
+baseClass = CTransaction
+fields    = uint256 _dailyLimit|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

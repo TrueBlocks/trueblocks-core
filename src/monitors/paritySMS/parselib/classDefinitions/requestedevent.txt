@@ -1,0 +1,6 @@
+[settings]
+class     = CRequestedEvent
+baseClass = CLogEntry
+fields    = address who|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"

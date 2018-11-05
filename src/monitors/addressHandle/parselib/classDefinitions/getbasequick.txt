@@ -1,0 +1,6 @@
+[settings]
+class     = CGetBaseQuick
+baseClass = CTransaction
+fields    = bytes32 _base|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

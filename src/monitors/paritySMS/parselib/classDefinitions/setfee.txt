@@ -1,0 +1,6 @@
+[settings]
+class     = CSetFee
+baseClass = CTransaction
+fields    = uint256 _new|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

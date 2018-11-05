@@ -1,5 +1,7 @@
 #!/usr/bin/python
-
+#
+# scraper.py
+#
 import sys
 import subprocess
 import os

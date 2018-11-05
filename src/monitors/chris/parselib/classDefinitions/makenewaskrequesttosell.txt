@@ -1,0 +1,6 @@
+[settings]
+class     = CMakeNewAskRequestToSELL
+baseClass = CTransaction
+fields    = uint256 _tokenAmount|uint256 _dollarPrice|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

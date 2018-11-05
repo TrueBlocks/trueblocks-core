@@ -1,0 +1,6 @@
+[settings]
+class     = CDisableTransfers
+baseClass = CTransaction
+fields    = bool _disable|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

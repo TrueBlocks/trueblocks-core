@@ -1,0 +1,6 @@
+[settings]
+class     = CWithdrawEvent
+baseClass = CLogEntry
+fields    = address sender|address to|uint256 eth|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"

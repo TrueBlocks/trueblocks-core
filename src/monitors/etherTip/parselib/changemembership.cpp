@@ -158,7 +158,6 @@ void CChangeMembership::registerClass(void) {
     ADD_FIELD(CChangeMembership, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CChangeMembership, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CChangeMembership, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CChangeMembership, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CChangeMembership, "targetMember", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CChangeMembership, "voteWeight", T_NUMBER, ++fieldNum);
     ADD_FIELD(CChangeMembership, "canAddProposals", T_BOOL, ++fieldNum);
@@ -168,7 +167,6 @@ void CChangeMembership::registerClass(void) {
     HIDE_FIELD(CChangeMembership, "schema");
     HIDE_FIELD(CChangeMembership, "deleted");
     HIDE_FIELD(CChangeMembership, "showing");
-    HIDE_FIELD(CChangeMembership, "cname");
 
     builtIns.push_back(_biCChangeMembership);
 

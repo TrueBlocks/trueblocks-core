@@ -1,0 +1,6 @@
+[settings]
+class     = CReceivePlayerNameList
+baseClass = CTransaction
+fields    = uint256 _pID|bytes32 _name|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

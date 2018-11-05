@@ -1,0 +1,6 @@
+[settings]
+class     = CChange
+baseClass = CTransaction
+fields    = address _fromToken|address _toToken|uint256 _amount|uint256 _minReturn|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

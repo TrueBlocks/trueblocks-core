@@ -1,0 +1,6 @@
+[settings]
+class     = CDailyLimitChangeEvent
+baseClass = CLogEntry
+fields    = uint256 dailyLimit|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"

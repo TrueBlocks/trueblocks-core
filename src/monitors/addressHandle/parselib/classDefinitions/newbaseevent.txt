@@ -1,0 +1,6 @@
+[settings]
+class     = CNewBaseEvent
+baseClass = CLogEntry
+fields    = bytes32 _base|address _address|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"

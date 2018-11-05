@@ -1,0 +1,6 @@
+[settings]
+class     = CRemoveClaim
+baseClass = CTransaction
+fields    = address issuer|address subject|bytes32 key|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

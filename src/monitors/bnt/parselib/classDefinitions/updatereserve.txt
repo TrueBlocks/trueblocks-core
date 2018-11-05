@@ -1,0 +1,6 @@
+[settings]
+class     = CUpdateReserve
+baseClass = CTransaction
+fields    = address _reserveToken|uint8 _ratio|bool _enableVirtualBalance|uint256 _virtualBalance|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

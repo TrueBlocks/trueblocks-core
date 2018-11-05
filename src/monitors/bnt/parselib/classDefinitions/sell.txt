@@ -1,0 +1,6 @@
+[settings]
+class     = CSell
+baseClass = CTransaction
+fields    = address _reserveToken|uint256 _sellAmount|uint256 _minReturn|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

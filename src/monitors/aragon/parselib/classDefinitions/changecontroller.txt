@@ -1,0 +1,6 @@
+[settings]
+class     = CChangeController
+baseClass = CTransaction
+fields    = address _newController|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

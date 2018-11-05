@@ -1,0 +1,148 @@
+#Copyright (C) 2015 Forecast Foundation OU, full GPL notice in LICENSE
+
+
+# Storage of all reputation
+# maps reporter public address to reputation they have
+data reputation[2**160]
+
+# owner [account balance is coming from], then spender, e.g. approvedToSpend[owner][spender]
+# returns amount spender can spend
+data approvedToSpend[2**160][2**160]
+
+# whether the contract has been finished seeding
+data seeded
+# keeps track of total rep in the system
+data totalSupply
+# token name for display
+data name
+# token symbol for display
+data symbol
+# amount of decimals per unit of rep
+data decimals
+
+data creator
+data creation
+
+event Transfer(from:address:indexed, to:address:indexed, value:uint256)
+event Approval(owner:address:indexed, spender:address:indexed, fxpValue:uint256)
+
+# 18 decimals
+macro WEI_TO_ETH:
+    10 ** 18
+
+macro assertZeroValue():
+    if(msg.value > 0):
+        if(!send(msg.sender, msg.value)):
+            ~invalid()
+
+data controller
+
+def init():
+    self.controller = 0x0
+    self.name = "Reputation"
+    self.symbol = "REP"
+    self.decimals = 18
+    self.creator = msg.sender
+    self.creation = block.timestamp
+
+def any():
+    assertZeroValue()
+
+# Transfer rep
+# @return 1 if reputation sent
+def transfer(receiver: address, fxpValue: uint256):
+    senderBalance = self.reputation[msg.sender]
+    if(senderBalance < fxpValue or !self.seeded or stillCreating()):
+        ~invalid()
+    if(!safeToSubtract(self.reputation[msg.sender], fxpValue) or !safeToAdd(self.reputation[receiver], fxpValue)):
+        ~invalid()
+    self.reputation[msg.sender] -= fxpValue
+    self.reputation[receiver] += fxpValue
+    log(type = Transfer, msg.sender, receiver, fxpValue)
+    return(1: uint256)
+
+# TransferFrom per token api allowing another contract to withdraw on user's behalf
+# fails unless from has authorized sender
+# @return 1 if rep sent
+def transferFrom(from: address, receiver: address, fxpValue: uint256):
+    senderBalance = self.reputation[from]
+    if(senderBalance < fxpValue or fxpValue > self.approvedToSpend[from][msg.sender] or !self.seeded or stillCreating()):
+        ~invalid()
+    if(!safeToSubtract(self.reputation[from], fxpValue) or !safeToAdd(self.reputation[receiver], fxpValue)):
+        ~invalid()
+    self.approvedToSpend[from][msg.sender] -= fxpValue
+    self.reputation[from] -= fxpValue
+    self.reputation[receiver] += fxpValue
+    log(type = Transfer, from, receiver, fxpValue)
+    return(1: uint256)
+
+# Allows spender to withdraw from your rep account
+def approve(spender: address, amount: uint256):
+    self.approvedToSpend[msg.sender][spender] = amount
+    log(type = Approval, msg.sender, spender, amount)
+    return(1: uint256)
+
+# Sets the initial distribution of rep
+def setSaleDistribution(addresses: address[], balances: uint256[]):
+    i = 0
+    numberOfAddresses = len(addresses)
+    if(numberOfAddresses != len(balances)):
+        ~invalid()
+    if(self.seeded or !stillCreating()):
+        ~invalid()
+    if(msg.sender != self.creator):
+        ~invalid()
+    while(i < numberOfAddresses):
+        if(!self.reputation[addresses[i]] and !self.seeded):
+            self.reputation[addresses[i]] = balances[i]
+            self.totalSupply += balances[i]
+            log(type = Transfer, 0, addresses[i], balances[i])
+        i += 1
+    if(self.totalSupply == 11000000 * WEI_TO_ETH):
+        self.seeded = 1
+    if(self.totalSupply > 11000000 * WEI_TO_ETH):
+        ~invalid()
+    return(1: uint256)
+
+def getRidOfDustForLaunch():
+    if(msg.sender != 0x668Fc8D2004379275357c8D8e2502E19153AdEEe):
+        ~invalid()
+    if(self.reputation[0x0000000000000000000000000000000000000000]):
+        self.totalSupply -= self.reputation[0x0000000000000000000000000000000000000000]
+        self.reputation[0x0000000000000000000000000000000000000000] = 0
+        return(1)
+    else:
+        ~invalid()
+
+# Returns amount spender can withdraw from owner
+def allowance(owner: address, spender: address):
+    return(self.approvedToSpend[owner][spender]: uint256)
+
+def totalSupply():
+    return(self.totalSupply: uint256)
+
+# @return reputation fxpValue
+def balanceOf(address: address):
+    return(self.reputation[address]: uint256)
+
+def name():
+    return(self.name: uint256)
+
+def decimals():
+    return(self.decimals: uint256)
+
+def symbol():
+    return(self.symbol: uint256)
+
+def getSeeded():
+    return(self.seeded: uint256)
+
+macro stillCreating():
+    block.timestamp < (self.creation + 15000)
+
+# safe adders idea pulled from piper merriam's btcrelay audit
+macro safeToAdd($a, $b):
+    (($a + $b) >= $a)
+
+macro safeToSubtract($a, $b):
+    ($b <= $a)

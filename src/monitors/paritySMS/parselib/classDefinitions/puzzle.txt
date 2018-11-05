@@ -1,0 +1,6 @@
+[settings]
+class     = CPuzzle
+baseClass = CTransaction
+fields    = address _who|bytes32 _puzzle|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

@@ -1,0 +1,6 @@
+[settings]
+class     = CTransfer
+baseClass = CTransaction
+fields    = bytes32 _hash|address newOwner|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

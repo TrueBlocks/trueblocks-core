@@ -149,7 +149,6 @@ void CChangeVotingRules::registerClass(void) {
     ADD_FIELD(CChangeVotingRules, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CChangeVotingRules, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CChangeVotingRules, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CChangeVotingRules, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CChangeVotingRules, "minimumQuorumForProposals", T_NUMBER, ++fieldNum);
     ADD_FIELD(CChangeVotingRules, "minutesForDebate", T_NUMBER, ++fieldNum);
     ADD_FIELD(CChangeVotingRules, "marginOfVotesForMajority", T_NUMBER, ++fieldNum);
@@ -158,7 +157,6 @@ void CChangeVotingRules::registerClass(void) {
     HIDE_FIELD(CChangeVotingRules, "schema");
     HIDE_FIELD(CChangeVotingRules, "deleted");
     HIDE_FIELD(CChangeVotingRules, "showing");
-    HIDE_FIELD(CChangeVotingRules, "cname");
 
     builtIns.push_back(_biCChangeVotingRules);
 

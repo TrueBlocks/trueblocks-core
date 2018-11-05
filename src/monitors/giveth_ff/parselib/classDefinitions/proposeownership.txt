@@ -1,0 +1,6 @@
+[settings]
+class     = CProposeOwnership
+baseClass = CTransaction
+fields    = address _newOwnerCandidate|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

@@ -1,0 +1,6 @@
+[settings]
+class     = CMintReserve
+baseClass = CTransaction
+fields    = address beneficiary|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

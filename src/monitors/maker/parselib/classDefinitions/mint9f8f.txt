@@ -1,0 +1,6 @@
+[settings]
+class     = CMint9f8f
+baseClass = CTransaction
+fields    = uint256 wad|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

@@ -1,0 +1,6 @@
+[settings]
+class     = CSetCap
+baseClass = CTransaction
+fields    = uint256 _cap|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

@@ -1,0 +1,6 @@
+[settings]
+class     = CPush
+baseClass = CTransaction
+fields    = address dst|uint256 wad|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

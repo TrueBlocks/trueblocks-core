@@ -1,0 +1,6 @@
+[settings]
+class     = CSettingChangeEvent
+baseClass = CLogEntry
+fields    = address _admin|uint8 _setting|uint256 _value|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"

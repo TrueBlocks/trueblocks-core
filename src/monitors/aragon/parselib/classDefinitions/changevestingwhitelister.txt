@@ -1,0 +1,6 @@
+[settings]
+class     = CChangeVestingWhitelister
+baseClass = CTransaction
+fields    = address _newWhitelister|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

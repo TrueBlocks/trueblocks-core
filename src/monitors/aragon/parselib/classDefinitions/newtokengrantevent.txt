@@ -1,0 +1,6 @@
+[settings]
+class     = CNewTokenGrantEvent
+baseClass = CLogEntry
+fields    = address from|address to|uint256 value|uint64 start|uint64 cliff|uint64 vesting|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"

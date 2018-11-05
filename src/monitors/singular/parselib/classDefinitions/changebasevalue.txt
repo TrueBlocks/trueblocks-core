@@ -1,0 +1,6 @@
+[settings]
+class     = CChangeBaseValue
+baseClass = CTransaction
+fields    = uint256 valueInWei|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

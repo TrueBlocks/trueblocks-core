@@ -1,0 +1,6 @@
+[settings]
+class     = CSetOwner
+baseClass = CTransaction
+fields    = address owner_|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

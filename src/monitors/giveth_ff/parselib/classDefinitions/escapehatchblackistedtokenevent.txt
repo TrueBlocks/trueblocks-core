@@ -1,0 +1,6 @@
+[settings]
+class     = CEscapeHatchBlackistedTokenEvent
+baseClass = CLogEntry
+fields    = address token|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"

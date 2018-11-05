@@ -143,14 +143,12 @@ void CTransferOwnership::registerClass(void) {
     ADD_FIELD(CTransferOwnership, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CTransferOwnership, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CTransferOwnership, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CTransferOwnership, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CTransferOwnership, "newOwner", T_ADDRESS, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTransferOwnership, "schema");
     HIDE_FIELD(CTransferOwnership, "deleted");
     HIDE_FIELD(CTransferOwnership, "showing");
-    HIDE_FIELD(CTransferOwnership, "cname");
 
     builtIns.push_back(_biCTransferOwnership);
 

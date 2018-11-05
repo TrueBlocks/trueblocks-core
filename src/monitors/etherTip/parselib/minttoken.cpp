@@ -148,7 +148,6 @@ void CMintToken::registerClass(void) {
     ADD_FIELD(CMintToken, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CMintToken, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CMintToken, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CMintToken, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CMintToken, "target", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CMintToken, "mintedAmount", T_NUMBER, ++fieldNum);
 
@@ -156,7 +155,6 @@ void CMintToken::registerClass(void) {
     HIDE_FIELD(CMintToken, "schema");
     HIDE_FIELD(CMintToken, "deleted");
     HIDE_FIELD(CMintToken, "showing");
-    HIDE_FIELD(CMintToken, "cname");
 
     builtIns.push_back(_biCMintToken);
 

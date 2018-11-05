@@ -1,0 +1,6 @@
+[settings]
+class     = CBurnEvent
+baseClass = CLogEntry
+fields    = address guy|uint256 wad|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"

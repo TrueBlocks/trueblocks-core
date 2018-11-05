@@ -1,0 +1,3 @@
+mkdir parselib 2>/dev/null
+cd parselib
+grabABI 0xb8c77482e45f1f44de1745f52c74426c631bdd52 0x00c5e04176d95a286fcce0e68c683ca0bfec8454 -s -n $1

@@ -1,0 +1,6 @@
+[settings]
+class     = CIssueTokens
+baseClass = CTransaction
+fields    = address _for|uint256 tokenCount|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

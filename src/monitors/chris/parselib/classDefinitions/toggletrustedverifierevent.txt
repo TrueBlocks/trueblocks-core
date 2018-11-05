@@ -1,0 +1,6 @@
+[settings]
+class     = CToggleTrustedVerifierEvent
+baseClass = CLogEntry
+fields    = address _verifier|bool _isTrustedVerifier|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"

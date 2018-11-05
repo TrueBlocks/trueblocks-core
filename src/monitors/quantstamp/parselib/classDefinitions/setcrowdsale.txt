@@ -1,0 +1,6 @@
+[settings]
+class     = CSetCrowdsale
+baseClass = CTransaction
+fields    = address _crowdSaleAddr|uint256 _amountForSale|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

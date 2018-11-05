@@ -1,0 +1,6 @@
+[settings]
+class     = CWithdraw
+baseClass = CTransaction
+fields    = uint256 _amount|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

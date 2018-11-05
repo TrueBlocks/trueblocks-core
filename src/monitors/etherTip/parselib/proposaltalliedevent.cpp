@@ -158,7 +158,6 @@ void CProposalTalliedEvent::registerClass(void) {
     ADD_FIELD(CProposalTalliedEvent, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CProposalTalliedEvent, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CProposalTalliedEvent, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CProposalTalliedEvent, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CProposalTalliedEvent, "proposalID", T_NUMBER, ++fieldNum);
     ADD_FIELD(CProposalTalliedEvent, "result", T_NUMBER, ++fieldNum);
     ADD_FIELD(CProposalTalliedEvent, "quorum", T_NUMBER, ++fieldNum);
@@ -168,7 +167,6 @@ void CProposalTalliedEvent::registerClass(void) {
     HIDE_FIELD(CProposalTalliedEvent, "schema");
     HIDE_FIELD(CProposalTalliedEvent, "deleted");
     HIDE_FIELD(CProposalTalliedEvent, "showing");
-    HIDE_FIELD(CProposalTalliedEvent, "cname");
 
     builtIns.push_back(_biCProposalTalliedEvent);
 

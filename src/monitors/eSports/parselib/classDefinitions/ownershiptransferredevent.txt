@@ -1,0 +1,6 @@
+[settings]
+class     = COwnershipTransferredEvent
+baseClass = CLogEntry
+fields    = address previousOwner|address newOwner|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"

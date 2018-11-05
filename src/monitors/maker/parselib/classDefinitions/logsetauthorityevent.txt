@@ -1,0 +1,6 @@
+[settings]
+class     = CLogSetAuthorityEvent
+baseClass = CLogEntry
+fields    = address authority|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"

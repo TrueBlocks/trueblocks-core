@@ -1,0 +1,6 @@
+[settings]
+class     = CReclaimMisplacedTokensEvent
+baseClass = CLogEntry
+fields    = address _from|uint256 _tokenAmount|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"

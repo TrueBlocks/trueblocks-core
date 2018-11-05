@@ -1,0 +1,6 @@
+[settings]
+class     = CBidRevealedEvent
+baseClass = CLogEntry
+fields    = bytes32 hash|address owner|uint256 value|uint8 status|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"

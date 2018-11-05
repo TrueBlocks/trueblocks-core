@@ -1,0 +1,6 @@
+[settings]
+class     = CSubmitTransaction
+baseClass = CTransaction
+fields    = address destination|uint256 value|bytes data|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

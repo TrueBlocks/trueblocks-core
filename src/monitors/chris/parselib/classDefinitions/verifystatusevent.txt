@@ -1,0 +1,6 @@
+[settings]
+class     = CVerifyStatusEvent
+baseClass = CLogEntry
+fields    = address _verifier|address _account|uint256 _verifyDate|string _verifyMetaData|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"

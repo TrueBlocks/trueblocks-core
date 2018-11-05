@@ -1,0 +1,6 @@
+[settings]
+class     = CReplaceOwner
+baseClass = CTransaction
+fields    = address owner|address newOwner|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

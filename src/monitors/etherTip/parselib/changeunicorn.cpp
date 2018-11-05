@@ -146,7 +146,6 @@ void CChangeUnicorn::registerClass(void) {
     ADD_FIELD(CChangeUnicorn, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CChangeUnicorn, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CChangeUnicorn, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CChangeUnicorn, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CChangeUnicorn, "newUnicornPriceInFinney", T_NUMBER, ++fieldNum);
     ADD_FIELD(CChangeUnicorn, "newUnicornAddress", T_ADDRESS, ++fieldNum);
 
@@ -154,7 +153,6 @@ void CChangeUnicorn::registerClass(void) {
     HIDE_FIELD(CChangeUnicorn, "schema");
     HIDE_FIELD(CChangeUnicorn, "deleted");
     HIDE_FIELD(CChangeUnicorn, "showing");
-    HIDE_FIELD(CChangeUnicorn, "cname");
 
     builtIns.push_back(_biCChangeUnicorn);
 

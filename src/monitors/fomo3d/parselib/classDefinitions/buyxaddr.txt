@@ -1,0 +1,6 @@
+[settings]
+class     = CBuyXaddr
+baseClass = CTransaction
+fields    = address _affCode|uint256 _team|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

@@ -1,0 +1,6 @@
+[settings]
+class     = CClaimRemovedEvent
+baseClass = CLogEntry
+fields    = address issuer|address subject|bytes32 key|uint256 removedAt|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"

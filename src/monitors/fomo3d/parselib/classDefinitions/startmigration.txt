@@ -1,0 +1,6 @@
+[settings]
+class     = CStartMigration
+baseClass = CTransaction
+fields    = address _newCorpBank|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

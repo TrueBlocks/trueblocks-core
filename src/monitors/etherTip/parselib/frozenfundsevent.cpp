@@ -148,7 +148,6 @@ void CFrozenFundsEvent::registerClass(void) {
     ADD_FIELD(CFrozenFundsEvent, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CFrozenFundsEvent, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CFrozenFundsEvent, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CFrozenFundsEvent, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CFrozenFundsEvent, "target", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CFrozenFundsEvent, "frozen", T_BOOL, ++fieldNum);
 
@@ -156,7 +155,6 @@ void CFrozenFundsEvent::registerClass(void) {
     HIDE_FIELD(CFrozenFundsEvent, "schema");
     HIDE_FIELD(CFrozenFundsEvent, "deleted");
     HIDE_FIELD(CFrozenFundsEvent, "showing");
-    HIDE_FIELD(CFrozenFundsEvent, "cname");
 
     builtIns.push_back(_biCFrozenFundsEvent);
 

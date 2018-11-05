@@ -1,0 +1,6 @@
+[settings]
+class     = CTransferXEvent
+baseClass = CLogEntry
+fields    = address _from|address _to|uint256 _value|string _transferMetaData|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"

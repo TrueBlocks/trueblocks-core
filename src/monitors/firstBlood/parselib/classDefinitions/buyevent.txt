@@ -1,0 +1,6 @@
+[settings]
+class     = CBuyEvent
+baseClass = CLogEntry
+fields    = address sender|uint256 eth|uint256 fbt|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"

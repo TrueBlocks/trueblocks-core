@@ -1,0 +1,6 @@
+[settings]
+class     = CMove
+baseClass = CTransaction
+fields    = address src|address dst|uint256 wad|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

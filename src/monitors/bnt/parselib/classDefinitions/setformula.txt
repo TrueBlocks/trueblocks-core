@@ -1,0 +1,6 @@
+[settings]
+class     = CSetFormula
+baseClass = CTransaction
+fields    = address _formula|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

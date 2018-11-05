@@ -1,0 +1,6 @@
+[settings]
+class     = COnWithdrawEvent
+baseClass = CLogEntry
+fields    = uint256 playerID|address playerAddress|bytes32 playerName|uint256 ethOut|uint256 timeStamp|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"

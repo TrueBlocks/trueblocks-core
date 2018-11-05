@@ -143,14 +143,12 @@ void CMembershipChangedEvent::registerClass(void) {
     ADD_FIELD(CMembershipChangedEvent, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CMembershipChangedEvent, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CMembershipChangedEvent, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CMembershipChangedEvent, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CMembershipChangedEvent, "member", T_ADDRESS, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CMembershipChangedEvent, "schema");
     HIDE_FIELD(CMembershipChangedEvent, "deleted");
     HIDE_FIELD(CMembershipChangedEvent, "showing");
-    HIDE_FIELD(CMembershipChangedEvent, "cname");
 
     builtIns.push_back(_biCMembershipChangedEvent);
 

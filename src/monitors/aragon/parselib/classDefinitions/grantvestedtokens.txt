@@ -1,0 +1,6 @@
+[settings]
+class     = CGrantVestedTokens
+baseClass = CTransaction
+fields    = address _to|uint256 _value|uint64 _start|uint64 _cliff|uint64 _vesting|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

@@ -148,7 +148,6 @@ void CExecuteProposal::registerClass(void) {
     ADD_FIELD(CExecuteProposal, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CExecuteProposal, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CExecuteProposal, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CExecuteProposal, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CExecuteProposal, "proposalNumber", T_NUMBER, ++fieldNum);
     ADD_FIELD(CExecuteProposal, "transactionBytecode", T_TEXT, ++fieldNum);
 
@@ -156,7 +155,6 @@ void CExecuteProposal::registerClass(void) {
     HIDE_FIELD(CExecuteProposal, "schema");
     HIDE_FIELD(CExecuteProposal, "deleted");
     HIDE_FIELD(CExecuteProposal, "showing");
-    HIDE_FIELD(CExecuteProposal, "cname");
 
     builtIns.push_back(_biCExecuteProposal);
 

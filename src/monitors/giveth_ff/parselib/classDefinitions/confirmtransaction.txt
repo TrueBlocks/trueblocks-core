@@ -1,0 +1,6 @@
+[settings]
+class     = CConfirmTransaction
+baseClass = CTransaction
+fields    = uint256 transactionId|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

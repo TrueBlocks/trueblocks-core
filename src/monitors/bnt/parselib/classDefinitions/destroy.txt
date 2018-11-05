@@ -1,0 +1,6 @@
+[settings]
+class     = CDestroy
+baseClass = CTransaction
+fields    = address _from|uint256 _amount|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

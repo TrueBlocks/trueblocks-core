@@ -1,0 +1,6 @@
+[settings]
+class     = CAcceptRequestEvent
+baseClass = CLogEntry
+fields    = uint256 _key|uint256 _etherAmount|uint256 _tokenAmount|uint256 _dollarPrice|address _acceptor|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"

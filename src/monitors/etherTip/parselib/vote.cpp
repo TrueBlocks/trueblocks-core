@@ -153,7 +153,6 @@ void CVote::registerClass(void) {
     ADD_FIELD(CVote, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CVote, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CVote, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CVote, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CVote, "proposalNumber", T_NUMBER, ++fieldNum);
     ADD_FIELD(CVote, "supportsProposal", T_BOOL, ++fieldNum);
     ADD_FIELD(CVote, "justificationText", T_TEXT, ++fieldNum);
@@ -162,7 +161,6 @@ void CVote::registerClass(void) {
     HIDE_FIELD(CVote, "schema");
     HIDE_FIELD(CVote, "deleted");
     HIDE_FIELD(CVote, "showing");
-    HIDE_FIELD(CVote, "cname");
 
     builtIns.push_back(_biCVote);
 

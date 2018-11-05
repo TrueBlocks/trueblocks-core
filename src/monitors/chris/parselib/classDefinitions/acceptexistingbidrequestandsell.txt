@@ -1,0 +1,6 @@
+[settings]
+class     = CAcceptExistingBidRequestAndSELL
+baseClass = CTransaction
+fields    = uint256 _key|uint256 _tokenAmount|uint256 _dollarPrice|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

@@ -1,0 +1,6 @@
+[settings]
+class     = CLogNoteEvent
+baseClass = CLogEntry
+fields    = bytes4 sig|address guy|bytes32 foo|bytes32 bar|uint256 wad|bytes fax|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"

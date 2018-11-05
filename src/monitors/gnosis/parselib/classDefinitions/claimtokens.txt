@@ -1,0 +1,6 @@
+[settings]
+class     = CClaimTokens
+baseClass = CTransaction
+fields    = address receiver|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

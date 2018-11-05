@@ -1,0 +1,6 @@
+[settings]
+class     = CClaimSetEvent
+baseClass = CLogEntry
+fields    = address issuer|address subject|bytes32 key|bytes32 value|uint256 updatedAt|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"

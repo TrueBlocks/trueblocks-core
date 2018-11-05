@@ -1,0 +1,6 @@
+[settings]
+class     = CChangeFounder
+baseClass = CTransaction
+fields    = address newFounder|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

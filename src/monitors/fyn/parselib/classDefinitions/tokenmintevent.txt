@@ -1,0 +1,6 @@
+[settings]
+class     = CTokenMintEvent
+baseClass = CLogEntry
+fields    = address newTokenHolder|uint256 amountOfTokens|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"

@@ -1,0 +1,6 @@
+[settings]
+class     = CMint
+baseClass = CTransaction
+fields    = address guy|uint256 wad|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

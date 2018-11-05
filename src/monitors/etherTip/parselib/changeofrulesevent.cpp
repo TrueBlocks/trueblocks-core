@@ -151,7 +151,6 @@ void CChangeOfRulesEvent::registerClass(void) {
     ADD_FIELD(CChangeOfRulesEvent, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CChangeOfRulesEvent, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CChangeOfRulesEvent, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CChangeOfRulesEvent, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CChangeOfRulesEvent, "minimumQuorum", T_NUMBER, ++fieldNum);
     ADD_FIELD(CChangeOfRulesEvent, "debatingPeriodInMinutes", T_NUMBER, ++fieldNum);
     ADD_FIELD(CChangeOfRulesEvent, "majorityMargin", T_NUMBER, ++fieldNum);
@@ -160,7 +159,6 @@ void CChangeOfRulesEvent::registerClass(void) {
     HIDE_FIELD(CChangeOfRulesEvent, "schema");
     HIDE_FIELD(CChangeOfRulesEvent, "deleted");
     HIDE_FIELD(CChangeOfRulesEvent, "showing");
-    HIDE_FIELD(CChangeOfRulesEvent, "cname");
 
     builtIns.push_back(_biCChangeOfRulesEvent);
 

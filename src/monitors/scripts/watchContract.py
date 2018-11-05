@@ -1,4 +1,7 @@
 #!/usr/bin/python
+#
+# watchContract.py
+#
 
 import sys
 import subprocess
@@ -23,14 +26,14 @@ if len(sys.argv) > 2:
     option = "--" + sys.argv[2]
 
 os.chdir('../monitors')
-os.system('ls | grep -v scripts | grep -v README | grep -v "^file" | grep -v template | grep -v known_contracts | sort -uf >/tmp/junk')
+os.system('ls | grep -v scripts | grep -v README | grep -v "^file" | grep -v template | grep -v known_contracts | sort -uf >./file')
 while True:
-    with open('/tmp/junk') as f:
+    with open('./file') as f:
         os.system('clear')
         contracts = f.read().splitlines()
         for contract in contracts:
             command = 'cd ' + contract + ' ; '
-            command = command + 'acctScrape -m 50000 ' + option + ' ; '
+            command = command + 'acctScrape -l 1 -m 50000 ' + option + ' ; '
             command = command + 'cd .. >/dev/null'
             os.system(command)
 #            print(command)

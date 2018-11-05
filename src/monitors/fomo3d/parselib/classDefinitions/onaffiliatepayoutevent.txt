@@ -1,0 +1,6 @@
+[settings]
+class     = COnAffiliatePayoutEvent
+baseClass = CLogEntry
+fields    = uint256 affiliateID|address affiliateAddress|bytes32 affiliateName|uint256 roundID|uint256 buyerID|uint256 amount|uint256 timeStamp|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"

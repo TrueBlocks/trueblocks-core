@@ -1,0 +1,6 @@
+[settings]
+class     = CSetVault
+baseClass = CTransaction
+fields    = address _newVaultAddress|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

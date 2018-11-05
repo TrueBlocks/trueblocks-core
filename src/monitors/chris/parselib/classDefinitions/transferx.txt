@@ -1,0 +1,6 @@
+[settings]
+class     = CTransferX
+baseClass = CTransaction
+fields    = address _to|uint256 _amount|string _transferMetaData|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

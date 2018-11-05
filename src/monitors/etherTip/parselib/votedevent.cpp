@@ -156,7 +156,6 @@ void CVotedEvent::registerClass(void) {
     ADD_FIELD(CVotedEvent, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CVotedEvent, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CVotedEvent, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CVotedEvent, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CVotedEvent, "proposalID", T_NUMBER, ++fieldNum);
     ADD_FIELD(CVotedEvent, "position", T_BOOL, ++fieldNum);
     ADD_FIELD(CVotedEvent, "voter", T_ADDRESS, ++fieldNum);
@@ -166,7 +165,6 @@ void CVotedEvent::registerClass(void) {
     HIDE_FIELD(CVotedEvent, "schema");
     HIDE_FIELD(CVotedEvent, "deleted");
     HIDE_FIELD(CVotedEvent, "showing");
-    HIDE_FIELD(CVotedEvent, "cname");
 
     builtIns.push_back(_biCVotedEvent);
 

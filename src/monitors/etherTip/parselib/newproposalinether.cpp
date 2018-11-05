@@ -158,7 +158,6 @@ void CNewProposalInEther::registerClass(void) {
     ADD_FIELD(CNewProposalInEther, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CNewProposalInEther, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CNewProposalInEther, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CNewProposalInEther, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CNewProposalInEther, "beneficiary", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CNewProposalInEther, "etherAmount", T_NUMBER, ++fieldNum);
     ADD_FIELD(CNewProposalInEther, "JobDescription", T_TEXT, ++fieldNum);
@@ -168,7 +167,6 @@ void CNewProposalInEther::registerClass(void) {
     HIDE_FIELD(CNewProposalInEther, "schema");
     HIDE_FIELD(CNewProposalInEther, "deleted");
     HIDE_FIELD(CNewProposalInEther, "showing");
-    HIDE_FIELD(CNewProposalInEther, "cname");
 
     builtIns.push_back(_biCNewProposalInEther);
 

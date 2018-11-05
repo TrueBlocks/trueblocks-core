@@ -1,0 +1,6 @@
+[settings]
+class     = CToggleTrustedVerifier
+baseClass = CTransaction
+fields    = address _verifier|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

@@ -1,0 +1,6 @@
+[settings]
+class     = CFundTransferEvent
+baseClass = CLogEntry
+fields    = address _backer|uint256 _amount|bool _isContribution|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"

@@ -1,0 +1,6 @@
+[settings]
+class     = CRegisterNameXID
+baseClass = CTransaction
+fields    = string _nameString|uint256 _affCode|bool _all|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

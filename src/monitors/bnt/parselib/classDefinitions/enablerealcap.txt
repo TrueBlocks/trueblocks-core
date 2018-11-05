@@ -1,0 +1,6 @@
+[settings]
+class     = CEnableRealCap
+baseClass = CTransaction
+fields    = uint256 _cap|uint256 _key|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

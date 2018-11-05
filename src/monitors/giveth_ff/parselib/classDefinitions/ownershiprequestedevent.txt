@@ -1,0 +1,6 @@
+[settings]
+class     = COwnershipRequestedEvent
+baseClass = CLogEntry
+fields    = address by|address to|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"

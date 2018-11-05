@@ -1,0 +1,6 @@
+[settings]
+class     = CSetDeadline
+baseClass = CTransaction
+fields    = uint256 timestamp|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

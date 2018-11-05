@@ -148,7 +148,6 @@ void CFreezeAccount::registerClass(void) {
     ADD_FIELD(CFreezeAccount, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CFreezeAccount, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CFreezeAccount, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CFreezeAccount, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CFreezeAccount, "target", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CFreezeAccount, "freeze", T_BOOL, ++fieldNum);
 
@@ -156,7 +155,6 @@ void CFreezeAccount::registerClass(void) {
     HIDE_FIELD(CFreezeAccount, "schema");
     HIDE_FIELD(CFreezeAccount, "deleted");
     HIDE_FIELD(CFreezeAccount, "showing");
-    HIDE_FIELD(CFreezeAccount, "cname");
 
     builtIns.push_back(_biCFreezeAccount);
 

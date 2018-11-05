@@ -1,0 +1,6 @@
+[settings]
+class     = CSetCanCreateGrants
+baseClass = CTransaction
+fields    = address _addr|bool _allowed|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

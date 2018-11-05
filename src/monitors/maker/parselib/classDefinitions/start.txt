@@ -1,0 +1,6 @@
+[settings]
+class     = CStart
+baseClass = CTransaction
+fields    = 
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

@@ -158,7 +158,6 @@ void CNewProposalInWei::registerClass(void) {
     ADD_FIELD(CNewProposalInWei, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CNewProposalInWei, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CNewProposalInWei, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CNewProposalInWei, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CNewProposalInWei, "beneficiary", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CNewProposalInWei, "weiAmount", T_NUMBER, ++fieldNum);
     ADD_FIELD(CNewProposalInWei, "JobDescription", T_TEXT, ++fieldNum);
@@ -168,7 +167,6 @@ void CNewProposalInWei::registerClass(void) {
     HIDE_FIELD(CNewProposalInWei, "schema");
     HIDE_FIELD(CNewProposalInWei, "deleted");
     HIDE_FIELD(CNewProposalInWei, "showing");
-    HIDE_FIELD(CNewProposalInWei, "cname");
 
     builtIns.push_back(_biCNewProposalInWei);
 

@@ -1,0 +1,6 @@
+[settings]
+class     = CApprove
+baseClass = CTransaction
+fields    = address guy|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

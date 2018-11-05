@@ -1,0 +1,6 @@
+[settings]
+class     = CCapReachedEvent
+baseClass = CLogEntry
+fields    = address _beneficiary|uint256 _amountRaised|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"
