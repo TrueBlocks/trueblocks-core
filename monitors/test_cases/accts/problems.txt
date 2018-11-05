@@ -1,0 +1,42 @@
+=================
+These transaction should be in the cache, but are not
+=================
+2420364    8    0
+2420391    13    3
+2501522    2    0
+2501525    5    3
+2501554    9    3
+2511426    11    0
+2511433    9    23
+2570945    0    0
+2571040    0    0
+2593109    9    0
+2593396    17    0
+2597778    0    0
+2597783    24    5
+2603045    1    14
+2610051    2    0
+2610062    3    22
+2613236    1    5
+2627729    2    0
+2627736    12    22
+2677451    14    22
+2694533    1    5
+2694555    1    7
+2694563    1    5
+=================
+=================
+
+0x9519afbc60719a83c470ceec41e32d3e4b8b262e is out of balance by -0.00720640000000000 ether at the start of block 1974002
+
+0xa92e6abc1156b6ed4948cc962cb60f250d422c68 is out of balance by -90.065711913526067215 ether at the start of block 2742899
+0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c is out of balance by 0.166106035924744464 ether at the start of block 2742899
+0xf1aa581f353005ba3765b81bf52d6b1c488c2767 is out of balance by -0.00000000000000034 ether at the start of block 2742899
+0xd31f381ad54386895852f311fc3be2008c88cb27 is out of balance by 0.815448668014981273 ether at the start of block 2742899
+0x85979379cb90d63fe944763b42b9ec4b49573ea7 is out of balance by 149.998910300000000000 ether at the start of block 2742899
+0x3464e758c8372d7cb536eaf9f5a126d3f574f4c3 is out of balance by 0.500000000000000000 ether at the start of block 2742899
+0x9e5adb4e5c299654c2f0619624f7c9eb7b9a3a1a is out of balance by 0.000125829000000000 ether at the start of block 2742899
+
+0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 is out of balance by 0.-15000000000000000 ether at the start of block 2873699
+
+0x00a3819199113fc6a6e6ba1298afde7377e2009b is out of balance by 0.006239747599269714 ether at the start of block 3574667

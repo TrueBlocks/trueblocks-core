@@ -26,14 +26,16 @@ if len(sys.argv) > 2:
     option = "--" + sys.argv[2]
 
 os.chdir('../monitors')
-os.system('ls | grep -v scripts | grep -v README | grep -v "^file" | grep -v template | grep -v known_contracts | sort -uf >./file')
+os.system('ls | grep -v CONFIG | grep -v README | grep -v "^file" | grep -v final | grep -v test_cases | sort -uf >./file')
+os.system('ls final | grep -v final | sed "s/^/final\//" | sort -uf >>./file')
+os.system('ls test_cases | grep -v test_cases | sed "s/^/test_cases\//" | sort -uf >>./file')
 while True:
     with open('./file') as f:
         os.system('clear')
         contracts = f.read().splitlines()
         for contract in contracts:
             command = 'cd ' + contract + ' ; '
-            command = command + 'acctScrape -l 1 -m 50000 ' + option + ' ; '
+            command = command + 'acctScrape -l 1 -m 5000 ' + option + ' ; '
             command = command + 'cd .. >/dev/null'
             os.system(command)
 #            print(command)
