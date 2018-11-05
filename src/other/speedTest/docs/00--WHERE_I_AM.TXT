@@ -1,0 +1,29 @@
+1.	Run geth in a separate window
+2.	For b in 0...2_750_000
+		echo "eth_getBlock(i)" | get attach >b.json
+3.	For b in 0...2_750_000
+		read b.json
+		write b.bin
+4.	For b in 0...2_750_000
+		fromGeth = read b.json
+		fromSlurp = generate string_b from b.bin
+		compare fromGeth with fromSlurp
+		if (geth and slurp are perfect match)
+			archive geth's original json
+5.	Start auto_update
+		each x mins ask geth for the latest block
+		for b in lastBlock...latestBlock
+			use RPC to ask geth for the block
+			store b.bin
+			store b.json to archive
+		b = random list of 100 blocks between 0 and latest
+			read directly from geth, compare the binary's json
+
+First DAO Block:	1520861
+Last DAO Block:		1599205
+
+
+Trouble: bins may not contain full geth 1.5 blocks
+	such as mixMatch, r, s, v and possibly others
+
+I must turn on FULL_REPORT to expose mixMatch, r, s, v and unquote numbers as per Parity

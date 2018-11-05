@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+#
+# Edit all source code files in current source
+# tree and opens them for editing in Atom
+#
+if [ "$(uname)" == "Darwin" ]; then
+    /usr/local/bin/nano -E -T 4 -l `find -E . -iregex ".*\.(h|cpp|toml|ake|md|py|js|sql)" -exec grep -Hs$2 "$1" '{}' ';' | cut -f1 -d: | sort -u | grep -v Binary | xargs`
+elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+    /usr/local/bin/nano -E -T 4 `find . -regextype posix-extended -iregex ".*\.(h|cpp|toml|ake|md|py|js|sql)" -exec grep -Hs$2 "$1" '{}' ';' | cut -f1 -d: | sort -u | grep -v Binary | xargs`
+fi

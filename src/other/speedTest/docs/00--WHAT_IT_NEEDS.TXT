@@ -1,0 +1,15 @@
+First DAO Block:        1520861
+Last DAO Block:         1599205
+
+
+It should accept 'latest,' 'start,' 'end.'
+
+Or whatever options are accepted by teh RPC stiuff
+
+
+There is a very large amount of duplicated data in the JSON. I should implement fromParent in makeClass to pick data up from parent (for example, blockNumber which 
+exists four or five times in the data). Changing format will require reloading .bin files.
+
+Also--the pParent should be used (it's already there). I can generate a getParent (per header file, not as part of the class) that will ASSERT that the parent is what 
+we expect it to be and return the parent. To test this, I should see the .bin files get smaller (by a lot) but the JSON files be identical.
+

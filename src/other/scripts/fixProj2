@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+echo s/blockScrape/$1/g >shit
+
+mv ./xcuserdata/jrush.xcuserdatad/xcschemes/blockScrape.xcscheme ./xcuserdata/jrush.xcuserdatad/xcschemes/$1.xcscheme
+
+fixProj.1 ./project.pbxproj
+fixProj.1 ./project.xcworkspace/contents.xcworkspacedata
+fixProj.1 ./xcuserdata/jrush.xcuserdatad/xcschemes/xcschememanagement.plist
+fixProj.1 ./xcuserdata/jrush.xcuserdatad/xcschemes/$1.xcscheme
+
+rm -f shit

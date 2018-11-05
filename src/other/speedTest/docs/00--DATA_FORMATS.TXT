@@ -1,0 +1,66 @@
+Block:
+====================================================================================================
+difficulty		QUANTITY			integer of the difficulty for this block.
+  extraData		DATA				the "extra data" field of this block.
+gasLimit		QUANTITY			the maximum gas allowed in this block.
+gasUsed			QUANTITY			the total used gas by all transactions in this block.
+hash			DATA,		 32 Bytes	hash of the block. null when its pending block.
+logsBloom		DATA,		256 Bytes	the bloom filter for the logs of the block. null when its pending block.
+miner			DATA,		 20 Bytes	the address of the beneficiary to whom the mining rewards were given.
+mixHash							(not documented, present in both geth15 and parity)
+nonce			DATA,		  8 Bytes	hash of the generated proof-of-work. null when its pending block. (missing from parity)
+number			QUANTITY			the block number. null when its pending block.
+parentHash		DATA,		 32 Bytes	hash of the parent block.
+receiptsRoot		DATA,		 32 Bytes	the root of the receipts trie of the block.
+sha3Uncles		DATA,		 32 Bytes	SHA3 of the uncles data in the block.
+size			QUANTITY			integer the size of this block in bytes.
+stateRoot		DATA,		 32 Bytes	the root of the final state trie of the block.
+timestamp		QUANTITY			the unix timestamp for when the block was collated.
+totalDifficulty		QUANTITY			integer of the total difficulty of the chain until this block.
+  transactions		Array				Array of transaction objects, or 32 Bytes transaction hashes depending on the last given parameter.
+transactionsRoot	DATA,		 32 Bytes	the root of the transaction trie of the block.
+  uncles		Array				Array of uncle hashes.
+====================================================================================================
+
+Transaction:
+====================================================================================================
+hash			DATA		 32 Bytes	hash of the transaction.
+nonce			QUANTITY			the number of transactions made by the sender prior to this one.
+blockHash		DATA		 32 Bytes	hash of the block where this transaction was in. null when its pending.
+blockNumber		QUANTITY			block number where this transaction was in. null when its pending.
+transactionIndex	QUANTITY			integer of the transactions index position in the block. null when its pending.
+from			DATA		 20 Bytes	address of the sender.
+to			DATA		 20 Bytes	address of the receiver. null when its a contract creation transaction.
+value			QUANTITY			value transferred in Wei.
+gasPrice		QUANTITY			gas price provided by the sender in Wei.
+gas			QUANTITY			gas provided by the sender.
+input			DATA				the data send along with the transaction.
+  receipt		CUSTOM
+====================================================================================================
+
+Receipt:
+====================================================================================================
+transactionHash		DATA		 32 Bytes	hash of the transaction.
+transactionIndex	QUANTITY			integer of the transactions index position in the block.
+blockHash		DATA		 32 Bytes	hash of the block where this transaction was in.
+blockNumber		QUANTITY			block number where this transaction was in.
+cumulativeGasUsed	QUANTITY			The total amount of gas used when this transaction was executed in the block.
+gasUsed			QUANTITY			The amount of gas used by this specific transaction alone.
+contractAddress		DATA		 20 Bytes	The contract address created, if the transaction was a contract creation, otherwise null.
+  logs			Array				Array of log objects, which this transaction generated.
+====================================================================================================
+
+Receipt Logs:
+====================================================================================================
+type			TAG				pending when the log is pending. mined if log is already mined.
+logIndex		QUANTITY			integer of the log index position in the block. null when its pending log.
+transactionIndex	QUANTITY			integer of the transactions index position log was created from. null when its pending log.
+transactionHash		DATA		 32 Bytes	hash of the transactions this log was created from. null when its pending log.
+blockHash		DATA		 32 Bytes	hash of the block where this log was in. null when its pending. null when its pending log.
+blockNumber		QUANTITY			the block number where this log was in. null when its pending. null when its pending log.
+address			DATA		 20 Bytes	address from which this log originated.
+data			DATA				contains one or more 32 Bytes non-indexed arguments of the log.
+topics			Array of DATA			Array of 0 to 4 32 Bytes DATA of indexed log arguments.
+							In solidity: The first topic is the hash of the signature of the event, e.g. 
+							Deposit(address,bytes32,uint256), except you declared the event with the anonymous specifier.
+====================================================================================================

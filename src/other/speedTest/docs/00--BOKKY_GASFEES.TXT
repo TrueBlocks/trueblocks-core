@@ -1,0 +1,133 @@
+#!/bin/sh
+
+# ------------------------------------------------------------------------------
+# Find Daily Transactions On The Ethereum Blockchain
+# 
+# Works on Linux and OS/X. May work on Windows with Cygwin.
+#
+# Usage:
+#   1. Download this script to findDailyTransactions
+#   2. `chmod 700 findDailyTransactions`
+#   3. Run `geth console` in a window.
+#   4. Then run this script `./findDailyTransactions` in a separate window.
+#
+# History:
+#   * Jan 05 2017 - Version 1.0
+#
+# Enjoy. (c) BokkyPooBah 2016. The MIT licence.
+# ------------------------------------------------------------------------------
+
+OUTPUTFILE=findDailyTransactions.out
+TSVFILE=findDailyTransactions.tsv
+TSVSUMMARY=findDailyTransactionsSummary.tsv
+
+# geth attach << EOF
+geth attach << EOF > $OUTPUTFILE
+
+var blocksPerDay = 24 * 60 * 60 / 14;
+console.log("Blocks per day: " + blocksPerDay);
+
+// Get extra day
+var blocksPerMonth = blocksPerDay * 32;
+console.log("Blocks per month: " + blocksPerMonth);
+
+var endBlock = eth.blockNumber;
+var startBlock = parseInt(endBlock - blocksPerMonth);
+
+// Testing
+// startBlock = parseInt(endBlock - 10);
+
+console.log("Start block: " + startBlock);
+console.log("End block: " + endBlock);
+
+var count = {};
+var costMap = {};
+
+console.log("Data: Day\tTime\tHash\tGasPrice\tGasUsed\tCost");
+for (var i = startBlock; i <= endBlock; i++) {
+  var block = eth.getBlock(i, true);
+  if (block != null) {
+    block.transactions.forEach(function(t) {
+      var date = new Date(block.timestamp * 1000);
+      var day = date.toJSON().substring(0, 10);
+      var time = date.toJSON().substring(11, 19);
+      // var key = date.toJSON().substring(11, 16);
+      var key = day;
+      var tx = eth.getTransaction(t.hash);
+      var txR = eth.getTransactionReceipt(t.hash);
+      var gasUsed = txR.gasUsed;
+      var gasPrice = tx.gasPrice;
+      var cost = new BigNumber(gasUsed).mul(gasPrice).div(1e18);
+      if (count[key]) {
+        count[key]++;
+      } else {
+        count[key] = 1;
+      }
+      if (costMap[key]) {
+        costMap[key] = costMap[key].plus(cost);
+      } else {
+        costMap[key] = new BigNumber(cost);
+      }
+      console.log("Data: " + day + "\t" + time + "\t" + t.hash + "\t" + gasPrice + "\t" + gasUsed + "\t" + cost);
+    });
+  } 
+}
+
+var keys = [];
+
+for (var key in count) {
+  keys.push(key);
+}
+
+keys.sort();
+
+console.log("Summary: Date\tTxCount\tSumCost");
+for (var i = 0; i < keys.length; i++) {
+  var key = keys[i];
+  var num = count[key];
+  var cost = costMap[key];
+  console.log("Summary: " + key + " " + num + " " + cost);
+}
+
+EOF
+
+grep "Data:" $OUTPUTFILE | sed "s/Data: //" > $TSVFILE
+grep "Summary:" $OUTPUTFILE | sed "s/Summary: //" > $TSVSUMMARY
+
+
+#Date    TxCount SumCost
+#2016-12-03 13652 9.031858962045600786
+#2016-12-04 39643 26.2590678522622502
+#2016-12-05 41613 31.260227778687816479
+#2016-12-06 48200 34.724190362202270091
+#2016-12-07 41757 34.986830893400990279
+#2016-12-08 39587 792.488980472847617318
+#2016-12-09 41444 31.427944831704979055
+#2016-12-10 40564 29.027316459710687448
+#2016-12-11 39164 36.802824752362151712
+#2016-12-12 38741 31.236666299979217642
+#2016-12-13 44664 30.96445138376004775
+#2016-12-14 47294 34.886653378922419663
+#2016-12-15 46102 34.427867607164909959
+#2016-12-16 43953 30.59438815455709639
+#2016-12-17 39442 32.801700786191403698
+#2016-12-18 36640 27.723246559895049134
+#2016-12-19 45599 36.451357768973606076
+#2016-12-20 44241 43.901597465334609193
+#2016-12-21 50793 54.747365402673830874
+#2016-12-22 55173 38.844405597480919257
+#2016-12-23 44391 29.67366918963357803
+#2016-12-24 37757 25.81752534909212622
+#2016-12-25 36601 24.217901540017729787
+#2016-12-26 34565 23.120413010232811283
+#2016-12-27 42370 36.398134576455099831
+#2016-12-28 43386 31.575304426588826066
+#2016-12-29 46546 40.700293206458891043
+#2016-12-30 44561 44.81091076572642845
+#2016-12-31 41220 28.598800805711720561
+#2017-01-01 38730 25.262224854177027598
+#2017-01-02 39652 28.118341055529409329
+#2017-01-03 45883 40.245343098687603577
+#2017-01-04 50673 39.504583436605983867
+#2017-01-05 12948 9.243102890131226982
+
