@@ -1,0 +1,28 @@
+[settings]
+name = Address Handler
+index = 150994946
+
+[display]
+accounting = true
+debug = true
+#logs = true
+trace = true
+single = true
+autocorrect = true
+parse = false
+
+[formats]
+trans_fmt = [{DATE} ] \
+            [{BLOCKNUMBER} ][{TRANSACTIONINDEX} ] \
+            [{FROM} ][{TO} ][{ETHER} ][{ISERROR} ] \
+            [\r\n\tarticulated:\t{ARTICULATED}] \
+            [\r\n\tgas cost:\t{GASCOST}][ (used/price: {GASUSED}][ @ {GASPRICE})]
+
+[[watches]]
+list = [
+    { address = "0x25D94b021b69D9C01931Ff40Bd265CfC3D920f72", name = "Handler Service", firstBlock = 5319337, color = "magenta_b" },
+    { address = "0xFd495eeEd737b002Ea62Cf0534e7707a9656ba19", name = "Owner", firstBlock = 3719301, color = "teal_b" }
+]
+
+
+# make sure to always put arrays at the end of the file

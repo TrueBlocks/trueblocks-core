@@ -1,0 +1,28 @@
+[settings]
+name = Maker
+index = 1207959584
+
+[display]
+accounting = true
+debug = true
+#logs = true
+#trace = true
+#single = true
+autocorrect = true
+parse = false
+
+[formats]
+trans_fmt = [{DATE} ] \
+            [{BLOCKNUMBER} ][{TRANSACTIONINDEX} ] \
+            [{FROM} ][{TO} ][{ETHER} ][{ISERROR} ] \
+            [\r\n\tarticulated:\t{ARTICULATED}] \
+            [\r\n\tgas cost:\t{GASCOST}][ (used/price: {GASUSED}][ @ {GASPRICE})]
+
+[[watches]]
+list = [
+    { address = "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2", name = "MakerToken", firstBlock = 4621060, color = "green_c" },
+    { address = "0x7bb0b08587b8a6b8945e09f1baca426558b0f06a", name = "MakerOwner", firstBlock = 4131769, color = "green_c" }
+]
+
+
+# make sure to always put arrays at the end of the file

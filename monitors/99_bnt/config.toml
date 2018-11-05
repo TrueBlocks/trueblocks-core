@@ -1,0 +1,29 @@
+[settings]
+name = Bancor
+index = 537396224
+
+[display]
+accounting = false
+debug = false
+logs = false
+trace = false
+single = false
+autocorrect = true
+parse = false
+
+[formats]
+trans_fmt = [{DATE} ] \
+            [{BLOCKNUMBER} ][{TRANSACTIONINDEX} ] \
+            [{FROM} ][{TO} ][{ETHER} ][{ISERROR} ] \
+            [\r\n\tarticulated:\t{ARTICULATED}] \
+            [\r\n\tgas cost:\t{GASCOST}][ (used/price: {GASUSED}][ @ {GASPRICE})]
+
+[[watches]]
+list = [
+    { address = "0x1F573D6Fb3F13d689FF844B4cE37794d79a7FF1C", name = "bntToken",     firstBlock = 3851100, color = "magenta_b" },
+    { address = "0xD76b5c2A23ef78368d8E34288B5b65D616B746aE", name = "bntEthToken",  firstBlock = 3912700, color = "white_b"   },
+    { address = "0xCA83bD8c4C7B1c0409B25FbD7e70B1ef57629fF4", name = "bntChanger",   firstBlock = 3912800, color = "blue_b"    },
+    { address = "0x77a77eca75445841875ebb67a33d0a97dc34d924", name = "bntPurchase",  firstBlock = 3914800, color = "green_b"   },
+    { address = "0xbbc79794599b19274850492394004087cbf89710", name = "bntCrowdSale", firstBlock = 3851207, color = "teal_b"    },
+    { address = "0x5894110995b8c8401bd38262ba0c8ee41d4e4658", name = "bntWallet",    firstBlock = 3850682, color = "yellow_b"  }
+]

@@ -1,0 +1,27 @@
+[settings]
+name = R Chain
+index = 2097172
+
+[display]
+accounting = true
+debug = true
+single = true
+logs = true
+trace = true
+autocorrect = true
+parse = false
+
+[formats]
+trans_fmt = [{DATE} ] \
+            [{BLOCKNUMBER} ][{TRANSACTIONINDEX} ] \
+            [{FROM} ][{TO} ][{ETHER} ][{ISERROR} ] \
+            [\r\n\tarticulated:\t{ARTICULATED}] \
+            [\r\n\tgas cost:\t{GASCOST}][ (used/price: {GASUSED}][ @ {GASPRICE})]
+
+[[watches]]
+list = [
+    { address = "0x168296bb09e24a88805cb9c33356536b980d3fc5", name = "RChainToken", firstBlock = 3383350, color = "green_c" }
+    { address = "0xe17c20292b2f1b0ff887dc32a73c259fae25f03b", name = "RChainMint", firstBlock = 3383276, color = "teal_b" }
+]
+
+# make sure to always put arrays at the end of the file

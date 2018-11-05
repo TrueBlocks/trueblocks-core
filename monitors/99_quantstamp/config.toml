@@ -1,0 +1,29 @@
+[settings]
+name = QuantStamp
+index = 234881024
+
+[display]
+accounting = false
+debug = false
+logs = false
+trace = false
+single = false
+autocorrect = true
+parse = false
+
+[formats]
+trans_fmt = [{DATE} ] \
+            [{BLOCKNUMBER} ][{TRANSACTIONINDEX} ] \
+            [{FROM} ][{TO} ][{ETHER} ][{ISERROR} ] \
+            [\r\n\tarticulated:\t{ARTICULATED}] \
+            [\r\n\tgas cost:\t{GASCOST}][ (used/price: {GASUSED}][ @ {GASPRICE})]
+
+[[watches]]
+list = [
+    { address = "0x99ea4dB9EE77ACD40B119BD1dC4E33e1C070b80d", name = "QuantStampToken", firstBlock = 4568243, color = "green_c" },
+    { address = "0x92af6067f7fe2ae488439c2b79ef7f8fc57e5ad3", name = "QuantStampAdmin", firstBlock = 4591674, color = "green_c" },
+    { address = "0x39a03cb1b1937a41b9846f4ca48822220819884f", name = "QuantStampOwner", firstBlock = 4568233, color = "green_c" },
+    { address = "0xad41548fa92921597da3ae783a330396b47cba3c", name = "QuantStampCrowd", firstBlock = 4568278, color = "green_c" }
+]
+
+# make sure to always put arrays at the end of the file

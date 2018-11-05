@@ -1,0 +1,27 @@
+[settings]
+name = forRichard
+index = 536871040
+
+[display]
+accounting = false
+debug = false
+logs = false
+trace = false
+single = false
+autocorrect = true
+parse = false
+
+[formats]
+trans_fmt = [{DATE} ] \
+            [{BLOCKNUMBER} ][{TRANSACTIONINDEX} ] \
+            [{FROM} ][{TO} ][{ETHER} ][{ISERROR} ] \
+            [\r\n\tarticulated:\t{ARTICULATED}] \
+            [\r\n\tgas cost:\t{GASCOST}][ (used/price: {GASUSED}][ @ {GASPRICE})]
+
+[[watches]]
+list = [
+    { address = "0x1492004547ff0efd778cc2c14e794b26b4701105", name = "forRichard", firstBlock = 4290958, color = "green_c" }
+]
+
+
+# make sure to always put arrays at the end of the file

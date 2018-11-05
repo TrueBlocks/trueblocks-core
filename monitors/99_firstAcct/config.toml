@@ -1,0 +1,32 @@
+[settings]
+name = firstAcct
+index = 12296
+
+[display]
+accounting = true
+debug = true
+logs = true
+trace = true
+single = true
+autocorrect = true
+parse = false
+
+[formats]
+trans_fmt = [{DATE} ] \
+            [{BLOCKNUMBER} ][{TRANSACTIONINDEX} ] \
+            [{FROM} ][{TO} ][{ETHER} ][{ISERROR} ] \
+            [\r\n\tarticulated:\t{ARTICULATED}] \
+            [\r\n\tgas cost:\t{GASCOST}][ (used/price: {GASUSED}][ @ {GASPRICE})]
+
+[[watches]]
+list = [
+    { address = "0xa1e4380a3b1f749673e270229993ee55f35663b4", name = "firstAccount", firstBlock = 46000, color = "magenta_b" },
+    { address = "0x5ed8cee6b63b1c6afce3ad7c92f4fd7e1b8fad9f", name = "otherAcct1", firstBlock = 46000, color = "blue_b" },
+    { address = "0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B", name = "otherAcct2", firstBlock = 46000, color = "white_b" },
+    { address = "0xc2c2c26961e5560081003bb157549916b21744db", name = "otherAcct3", firstBlock = 46000, color = "green_b" },
+    { address = "0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae", name = "otherAcct4", firstBlock = 46000, color = "teal_b" },
+    { address = "0x5abfec25f74cd88437631a7731906932776356f9", name = "atherAcct5", firstBlock = 46000, color = "red_b" }
+]
+
+
+# make sure to always put arrays at the end of the file

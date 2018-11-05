@@ -1,0 +1,27 @@
+[settings]
+name = eSports
+index = 1544
+
+[display]
+accounting = true
+debug = true
+#logs = true
+#trace = true
+single = true
+autocorrect = true
+parse = false
+
+[formats]
+trans_fmt = [{DATE} ] \
+            [{BLOCKNUMBER} ][{TRANSACTIONINDEX} ] \
+            [{FROM} ][{TO} ][{ETHER} ][{ISERROR} ] \
+            [\r\n\tarticulated:\t{ARTICULATED}] \
+            [\r\n\tgas cost:\t{GASCOST}][ (used/price: {GASUSED}][ @ {GASPRICE})]
+
+[[watches]]
+list = [
+    { address = "0xe29c5b523590165795bbd7d52369c2895b18841f", name = "ERT Token", firstBlock = 4464433, color = "teal_c" },
+    { address = "0x433c630737025289075011f6774c4fa061958b8f", name = "Recipient", firstBlock = 4345100, color = "teal_c" }
+]
+
+# make sure to always put arrays at the end of the file

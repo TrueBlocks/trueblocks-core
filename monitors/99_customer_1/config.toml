@@ -1,0 +1,27 @@
+[settings]
+name = Customer 1
+index = 285474816
+
+[display]
+accounting = true
+debug = true
+#logs = true
+trace = true
+single = true
+autocorrect = true
+parse = false
+
+[formats]
+trans_fmt = [{DATE} ] \
+            [{BLOCKNUMBER} ][{TRANSACTIONINDEX} ] \
+            [{FROM} ][{TO} ][{ETHER} ][{ISERROR} ] \
+            [\r\n\tarticulated:\t{ARTICULATED}] \
+            [\r\n\tgas cost:\t{GASCOST}][ (used/price: {GASUSED}][ @ {GASPRICE})]
+
+[[watches]]
+list = [
+    { address = "0xee0e3503022a0d46d078832a8c133eeca78674cd", name = "Account 1", firstBlock = 3680202, color = "green_c" }
+]
+
+
+# make sure to always put arrays at the end of the file

@@ -1,0 +1,26 @@
+[settings]
+name = Augur
+index = 2359552
+
+[display]
+accounting = true
+debug = true
+logs = true
+trace = true
+single = true
+autocorrect = true
+parse = false
+
+[formats]
+trans_fmt = [{DATE} ] \
+            [{BLOCKNUMBER} ][{TRANSACTIONINDEX} ] \
+            [{FROM} ][{TO} ][{ETHER} ][{ISERROR} ] \
+            [\r\n\tarticulated:\t{ARTICULATED}] \
+            [\r\n\tgas cost:\t{GASCOST}][ (used/price: {GASUSED}][ @ {GASPRICE})]
+
+[[watches]]
+list = [
+    { address = "0xe94327d07fc17907b4db788e5adf2ed424addff6", name = "Augur New",     firstBlock = 4086425, color = "green_c" },
+    { address = "0x7e614ec62cfd5761f20a9c5a2fe2bc0ac7431918", name = "Augur Owner",   firstBlock = 4084526, color = "blue_b"  },
+    { address = "0x48c80F1f4D53D5951e5D5438B54Cba84f29F32a5", name = "REP-Augur-Old", firstBlock = 2378196, color = "red_b"   }
+]

@@ -1,0 +1,23 @@
+[settings]
+name = aragon
+
+[display]
+accounting = false
+debug = false
+logs = false
+trace = false
+single = false
+parse = false
+
+[formats]
+trans_fmt = [{TIMESTAMP}]\t[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{TRACEID}]\t[{FROM}]\t[{TO}]\t[{VALUE}]\t[{GAS}]\t[{GASPRICE}]\t[{GASUSED}]\t[{ISERROR}]\t[{ENCODING}]\t[{ARTICULATED}]
+
+[[watches]]
+list = [
+    { address = "0x960b236A07cf122663c4303350609A66A7B288C0", name = "Ant Contract", firstBlock = 3710000, color = "green_c" },
+    { address = "0x175B5d76B0eAA2c66bee02c393F96D6cC05e7ff9", name = "Factory", firstBlock = 3710000, color = "green_c" },
+    { address = "0xD39902f046B5885D70e9E66594b65f84D4d1c952", name = "Controler", firstBlock = 3710000, color = "green_c" }
+]
+
+
+# make sure to always put arrays at the end of the file

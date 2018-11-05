@@ -1,0 +1,24 @@
+[settings]
+name = White Hat Group
+index = 8396804
+
+[display]
+accounting = true
+debug = true
+logs = true
+trace = true
+single = true
+autocorrect = true
+parse = false
+
+[formats]
+trans_fmt = [{DATE} ] \
+            [{BLOCKNUMBER} ][{TRANSACTIONINDEX} ] \
+            [{FROM} ][{TO} ][{ETHER} ][{ISERROR} ] \
+            [\r\n\tarticulated:\t{ARTICULATED}] \
+            [\r\n\tgas cost:\t{GASCOST}][ (used/price: {GASUSED}][ @ {GASPRICE})]
+
+[[watches]]
+list = [
+    { address = "0x1dba1131000664b884a1ba238464159892252d3a", name = "White Hat MultiSig", firstBlock = 4041150, color = "green_c", deepScan = true }
+]

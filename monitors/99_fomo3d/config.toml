@@ -1,0 +1,27 @@
+[settings]
+name = etherTip
+index = 8916992
+
+[display]
+accounting = true
+debug = true
+logs = true
+trace = true
+single = true
+autocorrect = true
+#parse = false
+
+[formats]
+trans_fmt = [{DATE} ] \
+            [{BLOCKNUMBER} ][{TRANSACTIONINDEX} ] \
+            [{FROM} ][{TO} ][{ETHER} ][{ISERROR} ] \
+            [\r\n\tarticulated:\t{ARTICULATED}] \
+            [\r\n\tgas cost:\t{GASCOST}][ (used/price: {GASUSED}][ @ {GASPRICE})]
+
+[[watches]]
+list = [
+    { address = "0xf9ba0955b0509ac6138908ccc50d5bd296e48d7d", name = "Fomo3D-1", firstBlock = 5915369, color = "green_c" },
+    { address = "0x4c7b8591c50f4ad308d07d6294f2945e074420f5", name = "Fomo3D-2", firstBlock = 5905529, color = "green_c" },
+    { address = "0xa62142888aba8370742be823c1782d17a0389da1", name = "Fomo3D-3", firstBlock = 5915466, color = "green_c" },
+    { address = "0xdd4950f977ee28d2c132f1353d1595035db444ee", name = "Fomo3D-4", firstBlock = 5905157, color = "green_c" }
+]

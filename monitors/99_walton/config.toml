@@ -1,0 +1,27 @@
+[settings]
+name = Walton chain
+index = 4164
+
+[display]
+accounting = true
+debug = true
+logs = true
+trace = true
+single = true
+autocorrect = true
+parse = false
+
+[formats]
+trans_fmt = [{DATE} ] \
+            [{BLOCKNUMBER} ][{TRANSACTIONINDEX} ] \
+            [{FROM} ][{TO} ][{ETHER} ][{ISERROR} ] \
+            [\r\n\tarticulated:\t{ARTICULATED}] \
+            [\r\n\tgas cost:\t{GASCOST}][ (used/price: {GASUSED}][ @ {GASPRICE})]
+
+[[watches]]
+list = [
+    { address = "0xb7cB1C96dB6B22b0D3d9536E0108d062BD488F74", name = "WaltonChain", firstBlock = 4211941, color = "green_c" },
+    { address = "0x309a272885bdeA62d99c4E32E40bEe93A3cCef6a", name = "Creator", firstBlock = 3989697, color = "green_c" }
+]
+
+# make sure to always put arrays at the end of the file

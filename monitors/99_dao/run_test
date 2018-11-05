@@ -1,0 +1,2 @@
+bin/dao -k:1716000 --trace --single
+

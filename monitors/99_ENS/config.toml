@@ -1,0 +1,28 @@
+[settings]
+name=ENS
+index = 4194434
+
+[display]
+accounting = true
+debug = true
+logs = true
+trace = true
+single = true
+#autocorrect = true
+#parse = false
+
+[formats]
+trans_fmt = [{DATE} ] \
+            [{BLOCKNUMBER} ][{TRANSACTIONINDEX} ] \
+            [{FROM} ][{TO} ][{ETHER} ][{ISERROR} ] \
+            [\r\n\tinput:\t\t{l:140:INPUT}] \
+            [\r\n\tarticulated:\t{l:140:ARTICULATED}] \
+            [\r\n\tgas cost:\t{GASCOST}][ (used/price: {GASUSED}][ @ {GASPRICE})]
+trans_export = [{DATE}]\t[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{TRACEID}]\t[{FROM}]\t[{TO}]\t[{ETHER}]\t[{ISERROR}]\t[{ARTICULATED}]\t[{GASCOST}]\t[{GASUSED}]\t[{GASPRICE}]
+
+[[watches]]
+list = [
+	{ address = "0x314159265dd8dbb310642f98f50c066173c1259b", name = "ENS",           firstBlock = 3327417, color = "magenta_b" },
+	{ address = "0x6090A6e47849629b7245Dfa1Ca21D94cd15878Ef", name = "ENS Registrar", firstBlock = 3605331, color = "green_b"   },
+	{ address = "0x012233b3c8177f0778d910ed88170b82de3bfe57", name = "Old Registrar", firstBlock = 3330177, color = "teal_b"    }
+]

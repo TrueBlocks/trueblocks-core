@@ -1,0 +1,28 @@
+[settings]
+name = SingularDTV
+index = 2097680
+
+[display]
+accounting = true
+debug = true
+logs = true
+trace = true
+single = true
+autocorrect = true
+parse = false
+
+[formats]
+trans_fmt = [{DATE} ] \
+            [{BLOCKNUMBER} ][{TRANSACTIONINDEX} ] \
+            [{FROM} ][{TO} ][{ETHER} ][{ISERROR} ] \
+            [\r\n\tarticulated:\t{ARTICULATED}] \
+            [\r\n\tgas cost:\t{GASCOST}][ (used/price: {GASUSED}][ @ {GASPRICE})]
+
+[[watches]]
+list = [
+    { address = "0xaeC2E87E0A235266D9C5ADc9DEb4b2E29b54D009", name = "snglToken",     firstBlock = 2366377, color = "green_b"   },
+    { address = "0xe736091fc36f1ad476f5e4e03e4425940822d3ba", name = "snglFund",      firstBlock = 2364373, color = "white_b"   },
+    { address = "0xbdF5c4F1c1A9D7335a6a68d9AA011D5F40cf5520", name = "snglCrowdsale", firstBlock = 2364411, color = "blue_b"    },
+    { address = "0xc78310231aa53bd3d0fea2f8c705c67730929d8f", name = "snglFundsAcct", firstBlock = 2228842, color = "magenta_b" },
+    { address = "0x5901Deb2C898D5dBE5923E05e510E95968a35067", name = "snglWallet",    firstBlock = 2224943, color = "teal_b"    }
+]

@@ -1,0 +1,25 @@
+[settings]
+name = paritySMS
+index = 32840
+
+[display]
+accounting = true
+debug = true
+logs = true
+trace = true
+single = true
+autocorrect = true
+parse = false
+
+[formats]
+trans_fmt = [{DATE} ] \
+            [{BLOCKNUMBER} ][{TRANSACTIONINDEX} ] \
+            [{FROM} ][{TO} ][{ETHER} ][{ISERROR} ] \
+            [\r\n\tarticulated:\t{ARTICULATED}] \
+            [\r\n\tgas cost:\t{GASCOST}][ (used/price: {GASUSED}][ @ {GASPRICE})]
+
+[[watches]]
+list = [
+	{ address = "0x9ae98746EB8a0aeEe5fF2b6B15875313a986f103", name = "Parity SMS", firstBlock = 3011646, color = "magenta_b" },
+	{ address = "0x00433f38561cc8799077c7E4e3CD6d0D777bd0e0", name = "Delegator",  firstBlock = 3013577, color = "white_b"   }
+]

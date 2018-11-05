@@ -1,0 +1,31 @@
+[settings]
+name = expertyHack
+index = 402653185
+
+[display]
+accounting = true
+debug = true
+#logs = true
+trace = true
+single = true
+autocorrect = true
+parse = false
+
+[formats]
+trans_fmt = [{DATE} ] \
+            [{BLOCKNUMBER} ][{TRANSACTIONINDEX} ] \
+            [{FROM} ][{TO} ][{ETHER} ][{ISERROR} ] \
+            [\r\n\tarticulated:\t{ARTICULATED}] \
+            [\r\n\tgas cost:\t{GASCOST}][ (used/price: {GASUSED}][ @ {GASPRICE})]
+
+[[watches]]
+list = [
+    { address = "0x82744Ba0766bDEe409885C2186c44A4A73b0c97F", name = "Hacker1", firstBlock = 4978827, color = "green_c" },
+    { address = "0xcd559e2F53B3AA765b1c133F828bfee1DC12DdD7", name = "Hacker2", firstBlock = 4978827, color = "green_c" },
+    { address = "0x3EfdDA1AF5e25CfAB6f1C90473175199EBD90EAE", name = "Hacker3", firstBlock = 4978827, color = "green_c" },
+    { address = "0x277a6536564aAFB8BA1DDe4B11FF4B7F4E1686D2", name = "Hacker4", firstBlock = 4978827, color = "green_c" },
+    { address = "0x0014d0CEaBb0a942F03E2C6e8835f810ABB48A22", name = "Hacker5", firstBlock = 4978827, color = "green_c" },
+    { address = "0x028CB19BFe036C3b95b41AB08ddE98cAbb881Df8", name = "Hacker6", firstBlock = 4978827, color = "green_c" },
+]
+
+# make sure to always put arrays at the end of the file

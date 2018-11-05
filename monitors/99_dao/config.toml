@@ -1,0 +1,30 @@
+[settings]
+name = The DAO
+index = 671154176
+
+[display]
+#accounting = true
+#debug = true
+#logs = true
+#trace = true
+#single = true
+#autocorrect = true
+#parse = false
+no_color = true
+
+[formats]
+txrans_fmt = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413\t[{BLOCKNUMBER}]
+trans_fmt = [{DATE} ] \
+            [{BLOCKNUMBER} ][{TRANSACTIONINDEX} ] \
+            [{FROM} ][{TO} ][{ETHER} ][{ISERROR} ] \
+            [\r\n\tarticulated:\t{ARTICULATED}] \
+            [\r\n\tgas cost:\t{GASCOST}][ (used/price: {GASUSED}][ @ {GASPRICE})]
+
+[[watches]]
+list = [
+    { address = "0xbb9bc244d798123fde783fcc1c72d3bb8c189413", name = "DAO",        firstBlock = 1428757, color = "green_b"   },
+    { address = "0x807640a13483f8ac783c557fcdf27be11ea4ac7a", name = "extraBal",   firstBlock = 1428757, color = "green_b"   },
+    { address = "0xBf4eD7b27F1d666546E30D74d50d173d20bca754", name = "Withdraw",   firstBlock = 1883496, color = "white_b"   },
+    { address = "0xc0ee9db1a9e07ca63e4ff0d5fb6f86bf68d47b89", name = "Attacker 1", firstBlock = 1706608, color = "blue_b"    },
+    { address = "0xf835a0247b0063c04ef22006ebe57c5f11977cc4", name = "Attacker 2", firstBlock = 1706609, color = "magenta_b" }
+]

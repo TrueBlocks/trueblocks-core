@@ -1,0 +1,22 @@
+[settings]
+name = superRare
+
+[display]
+accounting = false
+debug = false
+logs = false
+trace = false
+single = false
+parse = false
+
+[formats]
+trans_fmt = [{TIMESTAMP}]\t[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{TRACEID}]\t[{FROM}]\t[{TO}]\t[{VALUE}]\t[{GAS}]\t[{GASPRICE}]\t[{GASUSED}]\t[{ISERROR}]\t[{ENCODING}]\t[{ARTICULATED}]
+
+[[watches]]
+list = [
+    { address = "0x41a322b28d0ff354040e2cbc676f0320d8c8850d", name = "Super Rare", firstBlock = 5364090, color = "green_c" },
+    { address = "0x4ce80560ede7d0c8800292f9517988ef479e6ee6", name = "Creator", firstBlock = 5362311, color = "green_c" }
+]
+
+
+# make sure to always put arrays at the end of the file

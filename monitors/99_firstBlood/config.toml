@@ -1,0 +1,26 @@
+[settings]
+name = firstBlood
+index = 4195840
+
+[display]
+accounting = false
+debug = false
+logs = false
+trace = false
+single = false
+autocorrect = true
+parse = false
+
+[formats]
+trans_fmt = [{DATE} ] \
+            [{BLOCKNUMBER} ][{TRANSACTIONINDEX} ] \
+            [{FROM} ][{TO} ][{ETHER} ][{ISERROR} ] \
+            [\r\n\tarticulated:\t{ARTICULATED}] \
+            [\r\n\tgas cost:\t{GASCOST}][ (used/price: {GASUSED}][ @ {GASPRICE})]
+
+[[watches]]
+list = [
+	{ address = "0xaf30d2a7e90d7dc361c8c4585e9bb7d2f6f15bc7", name = "FirstBlood", firstBlock = 2321002, color = "magenta_b" },
+	{ address = "0x3286652Eacf7aBF27383Dd1a9218bA9d8169D15E", name = "Signer",     firstBlock = 3629943, color = "white_b"   },
+	{ address = "0xa5384627F6DcD3440298E2D8b0Da9d5F0FCBCeF7", name = "Founder",    firstBlock = 2319597, color = "blue_b"    }
+]
