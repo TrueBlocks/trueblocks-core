@@ -1,27 +1,31 @@
-## blockScrape
+## blockMan
 
 ***
 **Note:** This tool is available through [our website](http://quickblocks.io). Contact us at [sales@greathill.com](mailto:sales@greathill.com) for more information.
 ***
 
-The `blockScrape` app queries your local node (or the ${FALLBACK} node if configured) using the RPC interface reading each block from any EVM-based blockchain. After extensive optimizations to the data, including <img width=500px align="right" src="docs/image.png"> determining each transaction's error status and expanding internal message calls, the blocks are stored in a speed-optimized database for fast retrieval. By doing as much work as possible prior to storage, QBlocks is able to achieve significant increases in speed of retrieval over the node.
+The `blockMan` app queries your local node (or the ${FALLBACK} node if configured) using the RPC interface reading each block from any EVM-based blockchain. After extensive optimizations to the data, including <img width=500px align="right" src="docs/image.png"> determining each transaction's error status and expanding internal message calls, the blocks are stored in a speed-optimized database for fast retrieval. By doing as much work as possible prior to storage, QBlocks is able to achieve significant increases in speed of retrieval over the node.
 
 
 Using operating system tools such as Linux's `cron` you can easily maintain a  constantly fresh QBlocks database. Using QBlocks `display strings` technology, it is even easy to populate a regular web 2.0 database and from there a full featured website representing the full state of your smart contract.
 
 #### Usage
 
-`Usage:`    blockScrape [-n|-s|-e|-m|-v|-h]  
-`Purpose:`  Decentralized blockchain scraper and block cache.
+`Usage:`    blockMan [-c|-l|-r|-d|-e|-n|-i|-v|-h] mode  
+`Purpose:`  Indexes non-emtpy blocks (i.e. one or more transactions). Alternatively, lists non-empty blocks or checks for correctness.
              
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-| -n | --noWrite | do not write binary blocks to disc (default: write the blocks) |
-| -s | --start val | first block to visit (default: last visited block + 1) |
-| -e | --end val | last block to visit (required if --start supplied) |
-| -m | --maxBlocks val | maximum number of blocks to process (defaults to 5000) |
+|  | mode | one of 'check,' 'list,' 'refreshen' |
+| -c | --check val | check that empty blocks are empty, and visa versa. Optionally start at :block |
+| -l | --list | list all non-empty block numbers |
+| -r | --refreshen | remove the full-block index and re-create it |
+| -d | --deep | when doing 'check', do a deep check |
+| -e | --emptyOnly | when doing 'check', skip non-empty blocks (i.e. check only blocks with no transactions) |
+| -n | --noEmpty | when doing 'check', skip empty blocks (i.e. check only blocks with transactions) |
+| -i | --indexOnly | only create the index, don't save any blocks (applies only to --refreshen mode) |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
