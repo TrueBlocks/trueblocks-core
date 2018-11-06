@@ -1,6 +1,0 @@
-[settings]
-class     = CWithdrawTokens
-baseClass = CTransaction
-fields    = address _token|address _to|uint256 _amount|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

@@ -1,6 +1,0 @@
-[settings]
-class     = CAllocateTokens
-baseClass = CTransaction
-fields    = address _to|uint256 amountWei|uint256 amountMiniQsp|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

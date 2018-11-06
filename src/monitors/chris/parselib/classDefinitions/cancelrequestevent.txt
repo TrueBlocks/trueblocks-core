@@ -1,6 +1,0 @@
-[settings]
-class     = CCancelRequestEvent
-baseClass = CLogEntry
-fields    = uint256 _key|address _sender|uint256 _deposit|uint256 _amount|
-includes  = logentry.h
-cIncs     = #include "etherlib.h"

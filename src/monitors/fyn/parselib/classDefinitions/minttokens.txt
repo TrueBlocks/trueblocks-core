@@ -1,6 +1,0 @@
-[settings]
-class     = CMintTokens
-baseClass = CTransaction
-fields    = address newTokenHolder|uint256 etherAmount|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

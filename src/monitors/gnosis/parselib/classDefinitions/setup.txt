@@ -1,6 +1,0 @@
-[settings]
-class     = CSetup
-baseClass = CTransaction
-fields    = address _gnosisToken|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

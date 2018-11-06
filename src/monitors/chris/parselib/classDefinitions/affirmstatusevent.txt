@@ -1,6 +1,0 @@
-[settings]
-class     = CAffirmStatusEvent
-baseClass = CLogEntry
-fields    = address _sender|address _account|uint256 _affirmDate|uint256 _value|
-includes  = logentry.h
-cIncs     = #include "etherlib.h"

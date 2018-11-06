@@ -1,6 +1,0 @@
-[settings]
-class     = CChangeSetting
-baseClass = CTransaction
-fields    = uint8 _setting|uint256 _value|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

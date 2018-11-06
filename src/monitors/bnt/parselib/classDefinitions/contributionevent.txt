@@ -1,6 +1,0 @@
-[settings]
-class     = CContributionEvent
-baseClass = CLogEntry
-fields    = address _contributor|uint256 _amount|uint256 _return|
-includes  = logentry.h
-cIncs     = #include "etherlib.h"

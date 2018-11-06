@@ -1,6 +1,0 @@
-[settings]
-class     = CPuzzledEvent
-baseClass = CLogEntry
-fields    = address who|bytes32 puzzle|
-includes  = logentry.h
-cIncs     = #include "etherlib.h"

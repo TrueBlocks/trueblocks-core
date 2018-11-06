@@ -1,6 +1,0 @@
-[settings]
-class     = CAuctionEndedEvent
-baseClass = CLogEntry
-fields    = uint256 _final_price|
-includes  = logentry.h
-cIncs     = #include "etherlib.h"

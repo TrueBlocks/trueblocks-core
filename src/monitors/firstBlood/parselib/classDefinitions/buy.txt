@@ -1,6 +1,0 @@
-[settings]
-class     = CBuy
-baseClass = CTransaction
-fields    = uint8 v|bytes32 r|bytes32 s|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

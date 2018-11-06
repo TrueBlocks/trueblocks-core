@@ -1,6 +1,0 @@
-[settings]
-class     = CProposalTalliedEvent
-baseClass = CLogEntry
-fields    = uint256 proposalID|int256 result|uint256 quorum|bool active|
-includes  = logentry.h
-cIncs     = #include "etherlib.h"

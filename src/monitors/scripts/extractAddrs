@@ -1,1 +1,0 @@
-cat config.toml | grep address | cut -f2 -d\"

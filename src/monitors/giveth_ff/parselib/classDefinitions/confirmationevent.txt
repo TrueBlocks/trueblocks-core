@@ -1,6 +1,0 @@
-[settings]
-class     = CConfirmationEvent
-baseClass = CLogEntry
-fields    = address sender|uint256 transactionId|
-includes  = logentry.h
-cIncs     = #include "etherlib.h"

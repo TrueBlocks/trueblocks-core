@@ -1,6 +1,0 @@
-[settings]
-class     = CDepositEvent
-baseClass = CLogEntry
-fields    = address token|address user|uint256 amount|uint256 balance|
-includes  = logentry.h
-cIncs     = #include "etherlib.h"

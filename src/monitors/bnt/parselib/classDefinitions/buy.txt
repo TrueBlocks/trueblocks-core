@@ -1,6 +1,0 @@
-[settings]
-class     = CBuy
-baseClass = CTransaction
-fields    = address _reserveToken|uint256 _depositAmount|uint256 _minReturn|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

@@ -1,6 +1,0 @@
-[settings]
-class     = CRevoke
-baseClass = CTransaction
-fields    = address _who|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

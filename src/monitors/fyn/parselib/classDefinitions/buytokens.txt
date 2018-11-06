@@ -1,6 +1,0 @@
-[settings]
-class     = CBuyTokens
-baseClass = CTransaction
-fields    = address _beneficiary|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

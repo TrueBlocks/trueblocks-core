@@ -1,6 +1,0 @@
-[settings]
-class     = CExecutionFailureEvent
-baseClass = CLogEntry
-fields    = uint256 transactionId|
-includes  = logentry.h
-cIncs     = #include "etherlib.h"

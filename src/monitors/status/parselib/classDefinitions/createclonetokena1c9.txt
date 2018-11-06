@@ -1,6 +1,0 @@
-[settings]
-class     = CCreateCloneTokena1c9
-baseClass = CTransaction
-fields    = address _parentToken|uint256 _snapshotBlock|string _tokenName|uint8 _decimalUnits|string _tokenSymbol|bool _transfersEnabled|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

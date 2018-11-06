@@ -1,6 +1,0 @@
-[settings]
-class     = CBuy77a7
-baseClass = CTransaction
-fields    = 
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

@@ -1,6 +1,0 @@
-[settings]
-class     = CGenerateTokens
-baseClass = CTransaction
-fields    = address _owner|uint256 _amount|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

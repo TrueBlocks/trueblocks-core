@@ -1,6 +1,0 @@
-[settings]
-class     = CEraseNode
-baseClass = CTransaction
-fields    = CStringArray labels|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

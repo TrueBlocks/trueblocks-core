@@ -1,6 +1,0 @@
-[settings]
-class     = CFill
-baseClass = CTransaction
-fields    = CBigUintArray data|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

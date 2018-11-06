@@ -1,6 +1,0 @@
-[settings]
-class     = CNewProposalInWei
-baseClass = CTransaction
-fields    = address beneficiary|uint256 weiAmount|string JobDescription|bytes transactionBytecode|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

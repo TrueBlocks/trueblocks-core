@@ -1,6 +1,0 @@
-[settings]
-class     = COnNewNameEvent
-baseClass = CLogEntry
-fields    = uint256 playerID|address playerAddress|bytes32 playerName|bool isNewPlayer|uint256 affiliateID|address affiliateAddress|bytes32 affiliateName|uint256 amountPaid|uint256 timeStamp|
-includes  = logentry.h
-cIncs     = #include "etherlib.h"

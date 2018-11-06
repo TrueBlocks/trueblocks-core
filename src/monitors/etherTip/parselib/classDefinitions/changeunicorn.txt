@@ -1,6 +1,0 @@
-[settings]
-class     = CChangeUnicorn
-baseClass = CTransaction
-fields    = uint256 newUnicornPriceInFinney|address newUnicornAddress|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

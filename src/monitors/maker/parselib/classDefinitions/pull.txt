@@ -1,6 +1,0 @@
-[settings]
-class     = CPull
-baseClass = CTransaction
-fields    = address src|uint256 wad|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

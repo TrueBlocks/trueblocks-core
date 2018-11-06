@@ -1,6 +1,0 @@
-[settings]
-class     = CRequirementChangeEvent
-baseClass = CLogEntry
-fields    = uint256 required|
-includes  = logentry.h
-cIncs     = #include "etherlib.h"

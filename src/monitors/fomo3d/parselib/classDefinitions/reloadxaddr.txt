@@ -1,6 +1,0 @@
-[settings]
-class     = CReLoadXaddr
-baseClass = CTransaction
-fields    = address _affCode|uint256 _team|uint256 _eth|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

@@ -1,6 +1,0 @@
-[settings]
-class     = CMigrateBalance
-baseClass = CTransaction
-fields    = address _holder|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

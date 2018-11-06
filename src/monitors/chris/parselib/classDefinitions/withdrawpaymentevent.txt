@@ -1,6 +1,0 @@
-[settings]
-class     = CWithdrawPaymentEvent
-baseClass = CLogEntry
-fields    = address _account|uint256 _payment|
-includes  = logentry.h
-cIncs     = #include "etherlib.h"

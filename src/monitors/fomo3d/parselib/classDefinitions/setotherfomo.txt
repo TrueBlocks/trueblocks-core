@@ -1,6 +1,0 @@
-[settings]
-class     = CSetOtherFomo
-baseClass = CTransaction
-fields    = address _otherF3D|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

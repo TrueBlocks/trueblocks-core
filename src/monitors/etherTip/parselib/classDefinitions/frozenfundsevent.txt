@@ -1,6 +1,0 @@
-[settings]
-class     = CFrozenFundsEvent
-baseClass = CLogEntry
-fields    = address target|bool frozen|
-includes  = logentry.h
-cIncs     = #include "etherlib.h"

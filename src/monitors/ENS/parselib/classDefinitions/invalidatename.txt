@@ -1,6 +1,0 @@
-[settings]
-class     = CInvalidateName
-baseClass = CTransaction
-fields    = string unhashedName|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

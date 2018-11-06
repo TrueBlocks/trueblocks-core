@@ -1,6 +1,0 @@
-[settings]
-class     = COwnerRemovalEvent
-baseClass = CLogEntry
-fields    = address owner|
-includes  = logentry.h
-cIncs     = #include "etherlib.h"

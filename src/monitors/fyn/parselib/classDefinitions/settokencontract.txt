@@ -1,6 +1,0 @@
-[settings]
-class     = CSetTokenContract
-baseClass = CTransaction
-fields    = address newTokenContractAddr|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

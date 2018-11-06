@@ -1,6 +1,0 @@
-[settings]
-class     = CEmergencyStopActivatedEvent
-baseClass = CLogEntry
-fields    = 
-includes  = logentry.h
-cIncs     = #include "etherlib.h"

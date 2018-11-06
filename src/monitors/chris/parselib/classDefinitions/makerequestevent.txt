@@ -1,6 +1,0 @@
-[settings]
-class     = CMakeRequestEvent
-baseClass = CLogEntry
-fields    = uint256 _key|uint256 _date|uint256 _tokenAmount|uint256 _dollarPrice|uint8 _requestType|address _requester|
-includes  = logentry.h
-cIncs     = #include "etherlib.h"

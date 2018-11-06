@@ -1,6 +1,0 @@
-[settings]
-class     = CSetClaim
-baseClass = CTransaction
-fields    = address subject|bytes32 key|bytes32 value|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

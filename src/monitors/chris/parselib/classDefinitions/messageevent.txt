@@ -1,6 +1,0 @@
-[settings]
-class     = CMessageEvent
-baseClass = CLogEntry
-fields    = string fName|string message|
-includes  = logentry.h
-cIncs     = #include "etherlib.h"

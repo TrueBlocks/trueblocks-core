@@ -1,6 +1,0 @@
-[settings]
-class     = CNewSmartTokenEvent
-baseClass = CLogEntry
-fields    = address _token|
-includes  = logentry.h
-cIncs     = #include "etherlib.h"

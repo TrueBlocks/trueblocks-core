@@ -1,6 +1,0 @@
-[settings]
-class     = CSetFiatContractAddress
-baseClass = CTransaction
-fields    = address _address|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

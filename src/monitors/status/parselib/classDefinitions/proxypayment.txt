@@ -1,6 +1,0 @@
-[settings]
-class     = CProxyPayment
-baseClass = CTransaction
-fields    = address param_0|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

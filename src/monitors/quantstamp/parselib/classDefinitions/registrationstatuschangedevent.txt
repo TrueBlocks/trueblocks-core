@@ -1,6 +1,0 @@
-[settings]
-class     = CRegistrationStatusChangedEvent
-baseClass = CLogEntry
-fields    = address target|bool isRegistered|
-includes  = logentry.h
-cIncs     = #include "etherlib.h"

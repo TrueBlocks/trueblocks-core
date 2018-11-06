@@ -1,6 +1,0 @@
-[settings]
-class     = CRegisterNameXname
-baseClass = CTransaction
-fields    = string _nameString|bytes32 _affCode|bool _all|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

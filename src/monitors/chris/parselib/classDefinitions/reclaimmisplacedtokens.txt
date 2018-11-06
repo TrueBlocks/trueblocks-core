@@ -1,6 +1,0 @@
-[settings]
-class     = CReclaimMisplacedTokens
-baseClass = CTransaction
-fields    = address _account|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

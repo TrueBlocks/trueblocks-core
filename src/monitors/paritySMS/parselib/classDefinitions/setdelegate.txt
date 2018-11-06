@@ -1,6 +1,0 @@
-[settings]
-class     = CSetDelegate
-baseClass = CTransaction
-fields    = address _new|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

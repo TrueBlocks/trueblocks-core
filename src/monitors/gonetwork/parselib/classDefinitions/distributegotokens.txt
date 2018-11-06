@@ -1,6 +1,0 @@
-[settings]
-class     = CDistributeGoTokens
-baseClass = CTransaction
-fields    = address receiver_address|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

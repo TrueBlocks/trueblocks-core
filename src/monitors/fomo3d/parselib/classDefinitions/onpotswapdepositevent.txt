@@ -1,6 +1,0 @@
-[settings]
-class     = COnPotSwapDepositEvent
-baseClass = CLogEntry
-fields    = uint256 roundID|uint256 amountAddedToPot|
-includes  = logentry.h
-cIncs     = #include "etherlib.h"

@@ -1,6 +1,0 @@
-[settings]
-class     = CBurn9f8f
-baseClass = CTransaction
-fields    = address guy|uint256 wad|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

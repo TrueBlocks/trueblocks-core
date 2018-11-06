@@ -1,6 +1,0 @@
-[settings]
-class     = CBuyXid
-baseClass = CTransaction
-fields    = uint256 _affCode|uint256 _team|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

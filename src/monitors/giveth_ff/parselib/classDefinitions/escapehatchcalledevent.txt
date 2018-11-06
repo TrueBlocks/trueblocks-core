@@ -1,6 +1,0 @@
-[settings]
-class     = CEscapeHatchCalledEvent
-baseClass = CLogEntry
-fields    = address token|uint256 amount|
-includes  = logentry.h
-cIncs     = #include "etherlib.h"

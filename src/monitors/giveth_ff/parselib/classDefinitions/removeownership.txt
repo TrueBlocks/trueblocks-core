@@ -1,6 +1,0 @@
-[settings]
-class     = CRemoveOwnership
-baseClass = CTransaction
-fields    = uint256 _dac|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

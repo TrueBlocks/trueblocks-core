@@ -1,6 +1,0 @@
-[settings]
-class     = CRegisterUsers
-baseClass = CTransaction
-fields    = address[] contributors|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

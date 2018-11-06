@@ -1,3 +1,0 @@
-mkdir parselib 2>/dev/null
-cd parselib
-grabABI 0xb97048628db6b661d4c2aa833e95dbe1a905b280 -s -n $1

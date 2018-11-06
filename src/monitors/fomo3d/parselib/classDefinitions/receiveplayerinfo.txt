@@ -1,6 +1,0 @@
-[settings]
-class     = CReceivePlayerInfo
-baseClass = CTransaction
-fields    = uint256 _pID|address _addr|bytes32 _name|uint256 _laff|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

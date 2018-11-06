@@ -1,6 +1,0 @@
-[settings]
-class     = COrder
-baseClass = CTransaction
-fields    = address tokenGet|uint256 amountGet|address tokenGive|uint256 amountGive|uint256 expires|uint256 nonce|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

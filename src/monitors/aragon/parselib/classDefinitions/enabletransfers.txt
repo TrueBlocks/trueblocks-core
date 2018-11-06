@@ -1,6 +1,0 @@
-[settings]
-class     = CEnableTransfers
-baseClass = CTransaction
-fields    = bool _transfersEnabled|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

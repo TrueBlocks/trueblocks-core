@@ -1,6 +1,0 @@
-[settings]
-class     = CSetAuthority
-baseClass = CTransaction
-fields    = address authority_|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

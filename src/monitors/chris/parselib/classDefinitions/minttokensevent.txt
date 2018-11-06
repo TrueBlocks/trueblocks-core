@@ -1,6 +1,0 @@
-[settings]
-class     = CMintTokensEvent
-baseClass = CLogEntry
-fields    = uint256 _value|uint256 _balance|
-includes  = logentry.h
-cIncs     = #include "etherlib.h"

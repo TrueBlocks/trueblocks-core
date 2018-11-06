@@ -1,6 +1,0 @@
-[settings]
-class     = CReLoadXid
-baseClass = CTransaction
-fields    = uint256 _affCode|uint256 _team|uint256 _eth|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

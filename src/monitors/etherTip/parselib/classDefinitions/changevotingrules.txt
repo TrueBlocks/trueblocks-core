@@ -1,6 +1,0 @@
-[settings]
-class     = CChangeVotingRules
-baseClass = CTransaction
-fields    = uint256 minimumQuorumForProposals|uint256 minutesForDebate|int256 marginOfVotesForMajority|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

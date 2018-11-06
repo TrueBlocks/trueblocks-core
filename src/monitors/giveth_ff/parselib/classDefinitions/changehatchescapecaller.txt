@@ -1,6 +1,0 @@
-[settings]
-class     = CChangeHatchEscapeCaller
-baseClass = CTransaction
-fields    = address _newEscapeHatchCaller|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

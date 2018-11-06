@@ -1,6 +1,0 @@
-[settings]
-class     = CAddExcluded
-baseClass = CTransaction
-fields    = address _toExclude|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

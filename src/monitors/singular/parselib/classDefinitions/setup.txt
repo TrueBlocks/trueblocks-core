@@ -1,6 +1,0 @@
-[settings]
-class     = CSetup
-baseClass = CTransaction
-fields    = address singularDTVCrowdfundingAddress|address singularDTVTokenAddress|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

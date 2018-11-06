@@ -1,6 +1,0 @@
-[settings]
-class     = CBurnTokens
-baseClass = CTransaction
-fields    = uint256 _amount|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

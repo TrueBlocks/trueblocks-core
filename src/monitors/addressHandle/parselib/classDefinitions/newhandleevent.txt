@@ -1,6 +1,0 @@
-[settings]
-class     = CNewHandleEvent
-baseClass = CLogEntry
-fields    = bytes32 _base|bytes32 _handle|address _address|
-includes  = logentry.h
-cIncs     = #include "etherlib.h"

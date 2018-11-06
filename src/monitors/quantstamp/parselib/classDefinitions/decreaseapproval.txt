@@ -1,6 +1,0 @@
-[settings]
-class     = CDecreaseApproval
-baseClass = CTransaction
-fields    = address _spender|uint256 _subtractedValue|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

@@ -1,6 +1,0 @@
-[settings]
-class     = CChangeAccountLevelsAddr
-baseClass = CTransaction
-fields    = address accountLevelsAddr_|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

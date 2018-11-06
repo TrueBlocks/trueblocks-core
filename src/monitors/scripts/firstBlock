@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-#
-# Usage: ethview
-#
-# Extracts ethereum addresses from a monitor config file and opens
-# each  in Etherscan
-
-ethslurp -f:txt $1 2>/dev/null | head -2 | cut -f3,8 | xargs

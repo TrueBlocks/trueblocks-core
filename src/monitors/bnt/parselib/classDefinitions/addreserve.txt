@@ -1,6 +1,0 @@
-[settings]
-class     = CAddReserve
-baseClass = CTransaction
-fields    = address _token|uint8 _ratio|bool _enableVirtualBalance|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

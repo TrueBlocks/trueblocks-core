@@ -1,6 +1,0 @@
-[settings]
-class     = CTrade
-baseClass = CTransaction
-fields    = address tokenGet|uint256 amountGet|address tokenGive|uint256 amountGive|uint256 expires|uint256 nonce|address user|uint8 v|bytes32 r|bytes32 s|uint256 amount|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

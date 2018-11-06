@@ -1,6 +1,0 @@
-[settings]
-class     = CChangeFeeMake
-baseClass = CTransaction
-fields    = uint256 feeMake_|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

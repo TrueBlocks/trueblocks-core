@@ -1,6 +1,0 @@
-[settings]
-class     = COwnerUpdateEvent
-baseClass = CLogEntry
-fields    = address _prevOwner|address _newOwner|
-includes  = logentry.h
-cIncs     = #include "etherlib.h"

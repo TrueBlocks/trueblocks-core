@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-#
-# Usage: ethview
-#
-# Extracts ethereum addresses from a monitor config file and opens
-# each  in Etherscan
-
-extractAddrs | sed 's/^/ethscan.py /' >/tmp/file ; chmod uog+x /tmp/file ; /tmp/file ; rm /tmp/file

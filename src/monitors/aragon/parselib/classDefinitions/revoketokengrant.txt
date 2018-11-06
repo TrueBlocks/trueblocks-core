@@ -1,6 +1,0 @@
-[settings]
-class     = CRevokeTokenGrant
-baseClass = CTransaction
-fields    = address _holder|uint256 _grantId|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

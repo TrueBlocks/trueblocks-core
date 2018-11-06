@@ -1,6 +1,0 @@
-[settings]
-class     = CEscapeHatch
-baseClass = CTransaction
-fields    = address _token|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

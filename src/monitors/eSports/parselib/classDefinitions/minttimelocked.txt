@@ -1,6 +1,0 @@
-[settings]
-class     = CMintTimelocked
-baseClass = CTransaction
-fields    = address _to|uint256 _amount|uint32 _releaseTime|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

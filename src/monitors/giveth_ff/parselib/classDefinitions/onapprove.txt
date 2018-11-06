@@ -1,6 +1,0 @@
-[settings]
-class     = COnApprove
-baseClass = CTransaction
-fields    = address _owner|address _spender|uint256 _amount|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

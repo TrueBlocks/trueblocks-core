@@ -1,6 +1,0 @@
-[settings]
-class     = CAffirmStatusAsAccreditedInvestor
-baseClass = CTransaction
-fields    = address _account|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

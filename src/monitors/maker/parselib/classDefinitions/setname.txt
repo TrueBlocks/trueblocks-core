@@ -1,6 +1,0 @@
-[settings]
-class     = CSetName
-baseClass = CTransaction
-fields    = bytes32 name_|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

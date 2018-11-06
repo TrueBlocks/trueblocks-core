@@ -1,6 +1,0 @@
-[settings]
-class     = CSoftWithdrawRevenueFor
-baseClass = CTransaction
-fields    = address forAddress|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

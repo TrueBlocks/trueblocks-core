@@ -1,6 +1,0 @@
-[settings]
-class     = CAllocateBountyAndEcosystemTokensEvent
-baseClass = CLogEntry
-fields    = address sender|
-includes  = logentry.h
-cIncs     = #include "etherlib.h"

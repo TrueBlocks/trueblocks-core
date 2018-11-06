@@ -1,6 +1,0 @@
-[settings]
-class     = CDisableReservePurchases
-baseClass = CTransaction
-fields    = address _reserveToken|bool _disable|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"
