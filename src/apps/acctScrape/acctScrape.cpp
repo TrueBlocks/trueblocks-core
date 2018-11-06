@@ -97,7 +97,7 @@ int main(int argc, const char *argv[]) {
     cerr << options.name << " bn: " << options.firstBlock + options.nBlocks << options << "\r";
     cerr.flush();
 
-    if (options.nBlocks > 400 && options.logLevel > 0) {
+    if (options.blkStats.nSeen > 1000 && options.logLevel > 0) {
         appendToAsciiFile(blockCachePath("blooms/blooms_stats.txt"), options.finalReport(qbNow()-startTime));
     }
 
