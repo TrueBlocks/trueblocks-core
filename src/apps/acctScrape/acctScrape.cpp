@@ -35,24 +35,34 @@ int main(int argc, const char *argv[]) {
     if (!options.parseArguments(command))
         return 1;
 
+    if (!isParity() || !nodeHasTraces()) {
+        cerr << "This tool only runs against Parity and only if --tracing is enabled. Quitting..." << endl;
+        return 1;
+    }
+
     CToml config("./config.toml");
+    if (!fileExists(config.getFilename())) {
+        cerr << "Configuration file '" << config.getFilename() << " not found. Quitting." << endl;
+        return 1;
+    }
+
     if (!options.loadMonitors(config))
         return 1;
 
     if (!folderExists("./cache")) {
-        cerr << "The cache folder (./cache/) does not exist. Quitting\n";
+        cerr << "The cache folder (./cache/) does not exist. Quitting" << endl;
         return 1;
     }
 
     string_q cacheFileName = "./cache/" + options.monitors[0].address + ".acct.bin";
     if (fileExists(cacheFileName+".lck") || fileExists("./cache/lastBlock.txt.lck")) {
-        cerr << "The cache is locked. acctScrape cannot run. Quitting...\n";
+        cerr << "The cache is locked. acctScrape cannot run. Quitting..." << endl;
         return 1;
     }
 
     string_q bloomPath = blockCachePath("/blooms/");
     if (!folderExists(bloomPath)) {
-        cerr << "The bloom file cache '" << bloomPath << " was not found. acctScrape cannot run. Quitting...\n";
+        cerr << "The bloom file cache '" << bloomPath << " was not found. acctScrape cannot run. Quitting..." << endl;
         return 1;
     }
 
@@ -73,8 +83,10 @@ int main(int argc, const char *argv[]) {
             options.lastBlock = min(getLatestBlockFromCache(), options.maxWatchBlock);
             options.firstBlock = min(blockNum, options.lastBlock);
             options.nBlocks = min(options.lastBlock - options.firstBlock, options.maxBlocks);
-            if (verbose)
-                cerr << "Visiting blooms between " << options.firstBlock << " and " << options.firstBlock + options.nBlocks << "\n";
+            if (verbose) {
+                cerr << "Visiting blooms between " << options.firstBlock << " and ";
+                cerr << options.firstBlock + options.nBlocks << endl;
+            }
 
             //if (options.useAddressIndex) {
             // THIS IS WHERE WE CAN READ THE ADDRESS INDEX WHICH GIVES US A LIST OF BLOCKS
@@ -108,12 +120,6 @@ int main(int argc, const char *argv[]) {
 
 //-----------------------------------------------------------------------
 bool visitBloomFilters(const string_q& path, void *data) {
-
-    if (!isParity() || !nodeHasTraces()) {
-        cerr << "This tool will only run if it is running against a Parity node that has tracing enabled. Quitting...";
-        cerr.flush();
-        return false;
-    }
 
     COptions *options = reinterpret_cast<COptions*>(data);
     if (endsWith(path, "/")) {
@@ -154,7 +160,7 @@ bool visitBloomFilters(const string_q& path, void *data) {
                 if (!bloomCache.Lock(path, binaryReadOnly, LOCK_NOWAIT)) {
                     // If we can't read the bloom, we want to skip over it next time, so write last block
                     writeLastBlock(bn);
-                    cerr << "Could not open file " << path << ". Quitting search.\n";
+                    cerr << "Could not open file " << path << ". Quitting search." << endl;
                     return false; // end the search
                 }
 
@@ -204,7 +210,7 @@ bool visitBloomFilters(const string_q& path, void *data) {
                         acctCache >> addrs;
                         acctCache.Release();
 
-                        if (verbose>1) {
+                        if (verbose > 1) {
                             cerr << "Addresses in block:\n";
                             for (size_t a = 0 ; a < addrs.size() ; a++) {
                                 cerr << "\t" << addrs[a] << "\n";
@@ -215,18 +221,12 @@ bool visitBloomFilters(const string_q& path, void *data) {
                             address_t addr = options->monitors[ac].address;
                             vector<address_t>::iterator it = find(addrs.begin(), addrs.end(), addr);
                             if (it != addrs.end()) {
-                                if (verbose) {
-                                    cerr << "\tSearching...found " << addr << "\n";
-                                    cerr.flush();
-                                    //getchar();
-                                }
+                                if (verbose)
+                                    cerr << "\tSearching...found " << addr << endl;
                                 hasPotential = true;
                             } else {
-                                if (verbose) {
-                                    cerr << "\tSearching...not found " << addr << "\n";
-                                    cerr.flush();
-                                    //getchar();
-                                }
+                                if (verbose)
+                                    cerr << "\tSearching...not found " << addr << endl;
                                 hasPotential = false;
                             }
                         }
@@ -236,14 +236,12 @@ bool visitBloomFilters(const string_q& path, void *data) {
                             options->addrStats.nSkipped++;
                     } else {
                         if (verbose)
-                            cerr << "Could not open file " << acctFile << "\n";
-                        //getchar();
+                            cerr << "Could not open file " << acctFile << endl;
                         options->addrStats.nSkipped++;
                     }
                 } else {
                     if (verbose)
-                        cerr << "File " << acctFile << " does not exist.\n";
-                    //getchar();
+                        cerr << "File " << acctFile << " does not exist." << endl;
                     options->addrStats.nSkipped++;
                 }
             }
@@ -270,10 +268,8 @@ bool visitBloomFilters(const string_q& path, void *data) {
 //-----------------------------------------------------------------------
 bool processBlock(blknum_t bn, COptions *options) {
 
-    if (options->debugging) {
-        cerr << "At least one bloom hit on block " << bn << ". Fetching block.\n";
-        cerr.flush();
-    }
+    if (options->debugging)
+        cerr << "At least one bloom hit on block " << bn << ". Fetching block." << endl;
 
     options->blkStats.nQueried++;
     options->blockCounted = false;
@@ -300,17 +296,16 @@ bool processBlock(blknum_t bn, COptions *options) {
     } else {
         // Could not read block, or it had zero transactions. This is a bug. Skip over it next time
         writeLastBlock(bn);
-        cerr << "Block " << bn << " had no transactions but a non-zero bloom. This is a bug. Quitting...\n";
-        cerr.flush();
+        cerr << "Block " << bn << " had no transactions but a non-zero bloom. This is a bug. Quitting..." << endl;
         return false; // end the search
     }
 
     return !shouldQuit();
 }
 
-#define REP(n, v) if (options->debugging) { cerr << "\t" << padRight(n,8) << ": " << (v) << "\n"; }
-#define DEBUG_PRINT1(a)   if (options->debugging > 1) { cerr << (a) << "\n"; cerr.flush(); }
-#define DEBUG_PRINT2(a,b) if (options->debugging > 1) { cerr << (a) << (b) << "\n"; cerr.flush(); }
+#define REP(n, v) if (options->debugging) { cerr << "\t" << padRight(n,8) << ": " << (v) << endl; }
+#define DEBUG_PRINT1(a)   if (options->debugging > 1) { cerr << (a) << endl; }
+#define DEBUG_PRINT2(a,b) if (options->debugging > 1) { cerr << (a) << (b) << endl; }
 //-----------------------------------------------------------------------
 bool processTransaction(const CBlock& block, const CTransaction *trans, COptions *options) {
 
@@ -339,7 +334,6 @@ bool processTransaction(const CBlock& block, const CTransaction *trans, COptions
             else if (trans->to   % watched) { hit = true; REP("to",       trans->to  ); }
             else if (trans->from % watched) { hit = true; REP("to",       trans->from); }
             else if (contrAddr   % watched) { hit = true; REP("contract", contrAddr);   }
-            if (options->debugging) { cerr.flush(); }
 
             if (!hit) {
                 // If we did not find a hit, dig deeper
@@ -382,10 +376,8 @@ bool processTransaction(const CBlock& block, const CTransaction *trans, COptions
                 }
                 options->transStats.nHit++;
 
-                if (options->debugging) {
-                    cerr << "Would have written record at " << block.blockNumber << " " << trans->transactionIndex << "\n";
-                    cerr.flush();
-                }
+                if (options->debugging)
+                    cerr << "Would have written record at " << block.blockNumber << " " << trans->transactionIndex << endl;
 
                 if (!isTestMode()) {
                     // We found something...write it to the cache...
@@ -406,11 +398,10 @@ bool processTransaction(const CBlock& block, const CTransaction *trans, COptions
                 }
 
                 // Report to the screen
-                cout << "        " << options->monitors[ac].displayName(false,true,true,8)
+                cerr << "        " << options->monitors[ac].displayName(false,true,true,8)
                         << ": " << trans->Format(fmt)
                         << " (" << options->blkStats.nSeen << " of " << options->nBlocks << ") "
-                        << "                    \n";
-                cout.flush();
+                        << "                    " << endl;
 
             } else {
                 cerr << options->name << " bn: " << block.blockNumber << *options << "\r";
@@ -453,7 +444,6 @@ bool processTraces(const CBlock& block, const CTransaction *trans, const CAccoun
         else if (action->address       % watched) { REP("action->addr", action->address      ); hit = true; }
         else if (action->refundAddress % watched) { REP("action->ref",  action->refundAddress); hit = true; }
         else if (result->address       % watched) { REP("result->addr", result->address      ); hit = true; }
-        if (options->debugging) { cerr.flush(); }
 
         if (hit) {
             DEBUG_PRINT1("Trace hit");
@@ -469,17 +459,12 @@ bool processTraces(const CBlock& block, const CTransaction *trans, const CAccoun
 //-----------------------------------------------------------------------
 bool COptions::loadMonitors(const CToml& config) {
 
-    if (!fileExists(config.getFilename())) {
-        cerr << "Configuration file '" << config.getFilename() << " not found. Quitting.\n";
-        return false;
-    }
-
     minWatchBlock = UINT32_MAX;
     maxWatchBlock = 0;
 
     string_q watchStr = config.getConfigStr("watches", "list", "");
     if (watchStr.empty()) {
-        cerr << "Empty list of watches. Quitting.\n";
+        cerr << "Empty list of watches. Quitting." << endl;
         return false;
     }
 
@@ -505,7 +490,7 @@ bool COptions::loadMonitors(const CToml& config) {
             maxWatchBlock = max(maxWatchBlock, watch.lastBlock);
             monitors.push_back(watch);
         } else {
-            cerr << msg << "\n";
+            cerr << msg << endl;
             return false;
         }
         watch = CAccountWatch();  // reset
@@ -520,7 +505,7 @@ void writeLastBlock(blknum_t bn) {
     if (!isTestMode())
         stringToAsciiFile("./cache/lastBlock.txt", uint_2_Str(bn) + "\n");
     else
-        cerr << "Would have written lastBlock.txt file: " << bn << "\n";
+        cerr << "Would have written lastBlock.txt file: " << bn << endl;
 }
 
 //-------------------------------------------------------------------------
