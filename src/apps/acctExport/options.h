@@ -16,19 +16,21 @@
 #include "tokenlib.h"
 #include "walletlib.h"
 
-class COutPiped {
+//#define OUTPUT_REDIR 1
+#ifdef OUTPUT_REDIR
+class COutputPipe {
 public:
-    COutPiped(streambuf * buf, ostream& os)
-        : redir(os) {
-            old_buf = os.rdbuf(buf);
-        }
-    ~COutPiped(void)
-        {
-            redir.rdbuf(old_buf);
-        }
+    COutputPipe(streambuf * buf, ostream& os) : redir(os) {
+        old_buf = os.rdbuf(buf);
+    }
+
+    ~COutputPipe(void) {
+        redir.rdbuf(old_buf);
+    }
     ostream& redir;
     streambuf *old_buf;
 };
+#endif
 
 //-----------------------------------------------------------------------
 class COptions : public COptionsBase {
@@ -45,9 +47,11 @@ public:
     bool needsTrace;
     bool showProgress;
     bool ignoreDdos;
-    COutPiped *out;
+#ifdef OUTPUT_REDIR
+    COutputPipe *out;
     string_q outFile;
     ofstream outStream;
+#endif
 
     COptions(void);
     ~COptions(void);
