@@ -36,7 +36,9 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     Init();
-//    outFile = "file.txt";
+#ifdef OUTPUT_REDIR
+    outFile = "file.txt";
+#endif
     while (!command.empty()) {
         string_q arg = nextTokenClear(command, ' ');
         if (startsWith(arg, "-f:") || startsWith(arg, "--fmt:")) {
@@ -93,27 +95,12 @@ bool COptions::parseArguments(string_q& command) {
     manageFields(toml.getConfigStr("fields", "hide", ""), false);
     manageFields(toml.getConfigStr("fields", "show", ""), true );
 
+#ifdef OUTPUT_REDIR
     if (!outFile.empty()) {
         outStream.open(outFile);
-        out = new COutPiped(outStream.rdbuf(), cout);
+        out = new COutputPipe(outStream.rdbuf(), cout);
     }
-/*
- int main() {
-        // or: std::filebuf of;
-        //     of.open("file.txt", std::ios_base::out);
-        std::ofstream of("file.txt");
-        {
-            // or: opiped raii(&of, std::cout);
-            opiped raii(of.rdbuf(), std::cout);
-            std::cout << "going into file" << std::endl;
-        }
-        std::cout << "going on screen" << std::endl;
-    }
-
-    out = new COutPiped(
-    if (outputFile)
-*/
-    
+#endif
 
     transFmt = "";  // empty string gets us JSON output
     if (fmt != JSON) {
@@ -123,15 +110,6 @@ bool COptions::parseArguments(string_q& command) {
         transFmt = cleanFmt(format);
         if (fmt == CSV)
             transFmt = "\"" + substitute(transFmt, "\t", "\",\"") + "\"";
-        string_q header = toLower(transFmt);
-        for (uint32_t i = 0 ; i < 10 ; i++) {
-            string_q str = "w:" + uint_2_Str(i);
-            header = substitute(header, str, "");
-        }
-        for (auto ch : header)
-            if (ch != '[' && ch != '{' && ch != '}' && ch != ']' && ch != ':')
-                cout << ch;
-        cout << "\n";
     }
 
     return true;
@@ -152,21 +130,30 @@ void COptions::Init(void) {
     needsTrace = false;
 
     minArgs = 0;
+#ifdef OUTPUT_REDIR
     if (out)
         delete out;
     out = NULL;
     outFile = "";
     outStream.close();
+#endif
 }
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
+#ifdef OUTPUT_REDIR
     out = NULL;
+#endif
     Init();
 }
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+#ifdef OUTPUT_REDIR
+    if (out)
+        delete out;
+    outStream.close();
+#endif
 }
 
 //-----------------------------------------------------------------------
