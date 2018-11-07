@@ -26,6 +26,16 @@ inline bool isInRange(blknum_t ref, blknum_t start, blknum_t end) {
 //-----------------------------------------------------------------------
 bool exportData(COptions& options) {
 
+    string_q header = toLower(options.transFmt);
+    for (uint32_t i = 0 ; i < 10 ; i++) {
+        string_q str = "w:" + uint_2_Str(i);
+        header = substitute(header, str, "");
+    }
+    for (auto ch : header)
+        if (ch != '[' && ch != '{' && ch != '}' && ch != ']' && ch != ':')
+            cout << ch;
+    cout << endl;
+
     // We want to articulate if we're producing JSON or if we're producing text and the format includes the fields
     options.needsArt =
         (options.transFmt.empty() ||
@@ -119,18 +129,13 @@ bool exportTransaction(COptions& options, const CAcctCacheItem *item, bool first
                 cout << options.annotate(substitute(os.str(),"++WATCH++",watch->address));
                 cout.flush();
 
-                if (options.out && !(item->blockNum % 3)) {
-                    cerr << "\t\t" << cTeal << "exporting: " << *item << cOff << "\r";
-                    cerr.flush();
-                }
-
+#ifdef OUTPUT_REDIR
+                if (options.out && !(item->blockNum % 3))
+                    cerr << "\t" << cTeal << "exporting: " << *item << cOff << endl;
+#endif
+                
             } else {
-                cerr << "\t\t" << cTeal << "skipping: " << *item << cOff;
-//                if (transFilter(trans, NULL))
-//                    cerr << " (possible dDos transaction)\n";
-//                else
-                    cerr << "\r";
-                cerr.flush();
+                cerr << "\t" << cTeal << "skipping: " << *item << cOff << endl;
             }
         }
 
