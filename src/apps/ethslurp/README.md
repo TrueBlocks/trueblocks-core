@@ -6,19 +6,19 @@ While `ethslurp` does have its shortcomings, it also provides some nice features
 
 #### Usage
 
-`Usage:`    ethslurp [-b|-d|-f|-i|-e|-v|-h] addr  
-`Purpose:`  Fetches data off the Ethereum blockchain for an arbitrary account or smart contract. Optionally formats the output to your specification. Note: --income and --expense are mutually exclusive as are --blocks and --dates.
+`Usage:`    ethslurp [-b|-t|-f|-b|-s|-v|-h] addrs  
+`Purpose:`  Fetches data from EtherScan for an arbitrary address. Formats the output to your specification.
              
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | addr | the address of the account or contract to slurp |
-| -b | --blocks range | export records in block range (:0[:max]) |
-| -d | --dates val | export records in date range (:yyyymmdd[hhmmss][:yyyymmdd[hhmmss]]) |
+|  | addrs | one or more addresses to slurp |
+| -b | --blocks range | an optional range of blocks to slurp |
+| -t | --type val | extract either [ ext &#124; int &#124; token &#124; miner &#124; all ] type of transactions |
 | -f | --fmt val | pretty print, optionally add ':txt,' ':csv,' or ':html' |
-| -i | --income | include income transactions only |
-| -e | --expense | include expenditures only |
+| -b | --blocks range | export records in block range (:0[:max]) |
+| -s | --silent | Run silently (only freshen the data, do not display it) |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
