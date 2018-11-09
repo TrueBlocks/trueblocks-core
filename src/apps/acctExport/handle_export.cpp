@@ -1,15 +1,8 @@
-/*-------------------------------------------------------------------------------------------
- * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
- *
- * This program is free software: you may redistribute it and/or modify it under the terms
- * of the GNU General Public License as published by the Free Software Foundation, either
- * version 3 of the License, or (at your option) any later version. This program is
- * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
- * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * General Public License for more details. You should have received a copy of the GNU General
- * Public License along with this program. If not, see http://www.gnu.org/licenses/.
- *-------------------------------------------------------------------------------------------*/
+/*-------------------------------------------------------------------------
+ * This source code is confidential proprietary information which is
+ * Copyright (c) 2017 by Great Hill Corporation.
+ * All Rights Reserved
+ *------------------------------------------------------------------------*/
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------
@@ -130,10 +123,11 @@ bool exportTransaction(COptions& options, const CAcctCacheItem *item, bool first
                 cout.flush();
 
 #ifdef OUTPUT_REDIR
-                if (options.out && !(item->blockNum % 3))
-                    cerr << "\t" << cTeal << "exporting: " << *item << cOff << endl;
+                if (options.out) {
+                    cerr << "\t" << cTeal << "exporting: " << *item << cOff << "\r";
+                    cerr.flush();
+                }
 #endif
-                
             } else {
                 cerr << "\t" << cTeal << "skipping: " << *item << cOff << endl;
             }

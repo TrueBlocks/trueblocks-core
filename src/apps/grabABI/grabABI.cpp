@@ -550,8 +550,6 @@ const char* STR_HEADERFILE =
 " * This source code is confidential proprietary information which is\n"
 " * Copyright (c) 2017 by Great Hill Corporation.\n"
 " * All Rights Reserved\n"
-" *\n"
-" * The LICENSE at the root of this repo details your rights (if any)\n"
 " *------------------------------------------------------------------------*/\n"
 " /*\n"
 "  *\n"
