@@ -26,7 +26,7 @@ public:
     blknum_t           oneBlock;
     blknum_t           oneTrans;
     timestamp_t        lastTimestamp;
-    bool               ignoreAddrs;
+    bool               checkAddrs;
     bool               ignoreBlooms;
     bool               writeBlocks;
     string_q           exclusions;
