@@ -65,7 +65,7 @@ int main(int argc, const char *argv[]) {
         options.nBlocks    = 1;
         string_q fileName = substitute(getBinaryFilename(options.oneBlock), "/blocks/", "/blooms/");
         setenv("TEST_MODE", "true", true);
-        options.debugging = 1;
+        options.debugging = (verbose ? 2 : 1);
         visitBloomFilters(fileName, &options);
 
     } else {
@@ -192,7 +192,7 @@ bool visitBloomFilters(const string_q& path, void *data) {
 
             // If we hit one or more blooms...we first want to scan the per-block accounts cache
             // to see if we need to descend into the actual block
-            if (!options->ignoreAddrs && hasPotential) {
+            if (options->checkAddrs && hasPotential) {
                 string_q acctFile = substitute(path, "/blooms/", "/accounts/");
                 options->addrStats.nSeen++;
                 if (fileExists(acctFile)) {
@@ -398,6 +398,8 @@ bool processTransaction(const CBlock& block, const CTransaction *trans, COptions
 
             } else {
                 cerr << options->name << " bn: " << block.blockNumber << *options << "\r";
+                if (options->debugging)
+                    cerr << "\n";
                 cerr.flush();
             }
         }

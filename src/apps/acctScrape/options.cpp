@@ -12,8 +12,8 @@ static COption params[] = {
     COption("-oneTra(n)s:<val>", "check if the block and transaction would be a hit"),
     COption("-writeBlocks",      "write binary blocks to cache (default: do not write blocks)"),
     COption("-all",              "scan to the end of the blockchain (ignore --maxBlocks)"),
-    COption("-noA(d)drs",        "do not use the per-block address lists (faster if you use them)"),
     COption("-noBloom(s)",       "do not use adaptive enhanced blooms (much faster if you use them)"),
+    COption("@checkAddrs",       "use the per-block address lists (disabled)"),
     COption("@logLevel:<val>",   "specify the log level (default 1)"),
     COption("",                  "Index transactions for a given Ethereum address (or series of addresses).\n"),
 };
@@ -58,8 +58,8 @@ bool COptions::parseArguments(string_q& command) {
             else
                 return usage("Please provide an integer value for --logLevel. Quitting...");
 
-        } else if (arg == "-d" || arg == "--noAddrs") {
-            ignoreAddrs = true;
+        } else if (arg == "-c" || arg == "--checkAddrs") {
+            checkAddrs = true;
 
         } else if (arg == "-a" || arg == "--all") {
             isAll = true;
@@ -130,7 +130,7 @@ void COptions::Init(void) {
     oneTrans      = 0;
     lastTimestamp = 0;
     writeBlocks   = false;
-    ignoreAddrs   = false;
+    checkAddrs    = false;
     ignoreBlooms  = false;
     firstBlock    = 0;
     nBlocks       = 0;
