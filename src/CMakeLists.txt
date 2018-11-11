@@ -139,6 +139,6 @@ endfunction(run_the_special_test)
 # ----------------------------------------------------------------------------------------
 # Compilation order for the subfolders
 add_subdirectory (libs)
-add_subdirectory (apps)
 add_subdirectory (tools)
+add_subdirectory (apps)
 add_subdirectory (other)

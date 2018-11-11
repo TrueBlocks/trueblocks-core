@@ -14,7 +14,6 @@ include_directories(${BASE_INCLUDE})
 add_subdirectory(acctExport)
 add_subdirectory(ethprice)
 add_subdirectory(grabABI)
-add_subdirectory(makeClass)
 add_subdirectory(cacheMan)
 
 add_subdirectory(blockScrape)
