@@ -10,7 +10,7 @@ You may optionally specify one or more blocks at which to report.
 
 #### Usage
 
-`Usage:`    getTokenBal [-b|-d|-l fn|-n|-t|-i|-v|-h] &lt;address&gt; &lt;address&gt; [address...] [block...]  
+`Usage:`    getTokenBal [-b|-d|-l fn|-n|-t|-v|-h] &lt;address&gt; &lt;address&gt; [address...] [block...]  
 `Purpose:`  Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).
              
 `Where:`  
@@ -24,7 +24,6 @@ You may optionally specify one or more blocks at which to report.
 | -l | --list fn | an alternative way to specify an address_list, place one address per line in the file 'fn' |
 | -n | --noZero | suppress the display of zero balance accounts |
 | -t | --total | if more than one balance is requested, display a total as well |
-| -i | --info | retreive standarized information (name, decimals, totalSupply, etc.) about the token |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
