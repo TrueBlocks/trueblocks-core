@@ -1,3 +1,0 @@
-cat proposed/test$1.txt | grep -v confirmations >tmp.fil
-rm -f proposed/test$1.txt
-mv tmp.fil proposed/test$1.txt
