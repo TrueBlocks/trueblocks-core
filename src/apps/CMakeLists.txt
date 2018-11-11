@@ -13,7 +13,6 @@ include_directories(${BASE_INCLUDE})
 # Compilation order of the src subdirectories
 add_subdirectory(acctExport)
 add_subdirectory(ethprice)
-add_subdirectory(ethslurp)
 add_subdirectory(grabABI)
 add_subdirectory(makeClass)
 add_subdirectory(cacheMan)
