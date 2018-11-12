@@ -163,7 +163,7 @@ COptions::~COptions(void) {
 //---------------------------------------------------------------------------------------------------
 bool listClasses(const string_q& path, void *data) {
     if (endsWith(path, "/")) {
-        forAllFiles(path + "*", listClasses, data);
+        forEveryFileInFolder(path + "*", listClasses, data);
 
     } else {
         if (contains(path, ".txt")) {

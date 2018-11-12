@@ -116,7 +116,7 @@ bool visitBloomFilters(const string_q& path, void *data) {
 
     COptions *options = reinterpret_cast<COptions*>(data);
     if (endsWith(path, "/")) {
-        forAllFiles(path + "*", visitBloomFilters, data);
+        forEveryFileInFolder(path + "*", visitBloomFilters, data);
 
     } else {
 

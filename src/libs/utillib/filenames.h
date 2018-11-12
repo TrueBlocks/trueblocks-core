@@ -47,7 +47,6 @@ namespace qblocks {
     typedef bool (*FILEVISITOR)(const string_q& str, void *data);
 
     //------------------------------------------------------------------
-    extern bool forAllFiles(const string_q& mask, FILEVISITOR func, void *data);
     extern bool forEveryFileInFolder(const string_q& mask, FILEVISITOR func, void *data);
     extern string_q getHomeFolder(void);
 
