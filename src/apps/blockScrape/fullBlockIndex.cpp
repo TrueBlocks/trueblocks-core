@@ -10,7 +10,7 @@
 bool markFullBlocks(const string_q& path, void *data) {
 
     if (endsWith(path, "/")) {
-        forAllFiles(path + "*", markFullBlocks, data);
+        forEveryFileInFolder(path + "*", markFullBlocks, data);
 
     } else {
 
