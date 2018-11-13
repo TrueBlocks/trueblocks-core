@@ -1,6 +1,6 @@
 ### Install
 
-Pull the latest copy of the qblocks repo:
+Pull the latest copy of the qblocks repo ([Instructions here](https://github.com/Great-Hill-Corporation/quickBlocks/blob/develop/src/other/install/INSTALL.md)). Then,
 
     git pull
     cd ./build
@@ -12,33 +12,32 @@ Next, do this:
     cd ../src/other/addr_ipfs
     make
 
-This will build `./bin/addr_query` (although it may fail, see below).
+This will build `./bin/addr_query` (although it may fail on Linux, see below).
 
 #### Building on Linux:
 
-If you're on Linux, the build will fail. Make these changes to the `makefile`.
+If you're on Linux, the build will fail. Make these changes to the `makefile` at lines 6 through 10.
 
-     6 #-------------------------------------------------
-     7 # for mac builds
-     8 #libs=$(libraries)/*.a /usr/lib/libcurl.dylib       <---- comment this line
-     9 # for ubuntu builds
-    10 libs=$(libraries)/*.a -lcurl                        <---- uncomment this line
-    11
-
+     #-------------------------------------------------
+     # for mac builds
+     #libs=$(libraries)/*.a /usr/lib/libcurl.dylib       <---- comment this line
+     # for ubuntu builds
+     libs=$(libraries)/*.a -lcurl                        <---- uncomment this line
+    
 #### Downloading the indicies:
      
-Start your IPFS daemon (not sure if this is needed). Next download the transaction-per-account indicies using IPS and this command:
+Start your IPFS daemon (not sure if this is needed). Next download the transaction-per-account indicies using IPFS and this command:
 
     ./getem
 
-This command assumes you have IPFS installed and will take about 20 minutes. It downloads more than 50 GB of data onto your hard drive. Once that's done, run this command:
+This command assumes you have IPFS installed and will take about 20 minutes. It downloads more than 50 GB of data onto your hard drive into the folder `./data` in the current folder. Once that's done, run this command:
 
     ./bin/addr_query <address> <start_block>
     
 where:
 
-    your_address:        is the address of the account you want to scrape, and  
-    start_block_num:     is the block from which to start the search (you may enter '0')
+    address:        is the address of the account you want to scrape, and  
+    start_block:    is the block from which to start the search (you may enter '0')
 
 After a few seconds, you should see a series of transactions in which the given address was invovled.
 
@@ -48,7 +47,7 @@ After a few seconds, you should see a series of transactions in which the given 
 
 #### Displaying the data (hacky version)
 
-To display the data you can do this. First, find the address of a smart contract. For example, 
+Assuming you're running an Ethereum node locally, you can display the data by following these steps. First, find the address of a smart contract. For example, 
 
     ethName bancor
     
@@ -68,7 +67,7 @@ It should report
 
     Found 216396 transactions for account 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 
-And now we show the transactions and traces:
+And now we show the full detail of the transactions and traces on that account:
 
     getTrans --verbose --trace --file:bancor.txt
     
