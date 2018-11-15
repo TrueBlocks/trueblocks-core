@@ -1,6 +1,8 @@
 local_config
 
 *.xcodeproj
+.idea
+.vscode
 objs
 build
 
