@@ -13,7 +13,7 @@
 #include "acctlib.h"
 
 //----------------------------------------------------------------
-struct Thing1 {
+struct CIndexRecord {
 public:
     char addr  [43];  // '0x' + 40 chars + \t
     char block [10];  // less than 1,000,000,000 + \t
@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
     }
 
     Options options;
-    options.queryAddr = argv[1];
+    options.queryAddr = toLower(argv[1]);
     options.startBlock = str_2_Uint(argv[2]);
 
     string_q path = "./data/";
@@ -54,8 +54,8 @@ int main(int argc, char *argv[])
 
 //---------------------------------------------------------------
 int findFunc(const void *v1, const void *v2) {
-    const Thing1 *t1 = (const Thing1 *)v1;
-    const Thing1 *t2 = (const Thing1 *)v2;
+    const CIndexRecord *t1 = (const CIndexRecord *)v1;
+    const CIndexRecord *t2 = (const CIndexRecord *)v2;
     return strncmp(t1->addr, t2->addr, 42);
 }
 
@@ -76,13 +76,13 @@ bool visitFiles(const string_q& path, void *data) {
             if (bn >= opt->startBlock) {
                 address_t addr = opt->queryAddr;
                 CMemMapFile blockFile(path, CMemMapFile::WholeFile, CMemMapFile::RandomAccess);
-                Thing1 *records = (Thing1 *)(blockFile.getData());  // NOLINT
+                CIndexRecord *records = (CIndexRecord *)(blockFile.getData());  // NOLINT
                 uint64_t size = fileSize(path);
                 uint64_t nRecs = size / 59;
 
-                Thing1 t;
+                CIndexRecord t;
                 strncpy(t.addr, addr.c_str(), 42);
-                Thing1 *found = reinterpret_cast<Thing1*>(bsearch(&t, records, nRecs, sizeof(Thing1), findFunc));
+                CIndexRecord *found = reinterpret_cast<CIndexRecord*>(bsearch(&t, records, nRecs, sizeof(CIndexRecord), findFunc));
                 if (found) {
                     bool done = false;
                     while (found > records && !done) {
@@ -95,7 +95,7 @@ bool visitFiles(const string_q& path, void *data) {
 
                     uint64_t pRecords = (uint64_t)records;
                     uint64_t pFound   = (uint64_t)found;
-                    uint64_t remains  = (pFound - pRecords) / sizeof(Thing1);
+                    uint64_t remains  = (pFound - pRecords) / sizeof(CIndexRecord);
                     done = false;
                     for (uint64_t i = 0 ; i < remains && !done ; i++) {
                         char bl[10];
@@ -110,12 +110,6 @@ bool visitFiles(const string_q& path, void *data) {
                         if (!strncmp(addr.c_str(), found[i].addr, 42)) {
                             CAcctCacheItem item(str_2_Uint(bl), str_2_Uint(tx));
                             opt->items.push_back(item);
-//                        } else {
-//                            static int x=0;
-//                            if (!(++x % 43)) {
-//                                cerr << cTeal << bl << "." << tx << " " << cYellow << ad << cOff << "\r";
-//                                cerr.flush();
-//                            }
                         }
                         if (strncmp(ad, addr.c_str(), 42) > 0)
                             done = true;
