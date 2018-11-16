@@ -18,4 +18,10 @@ namespace qblocks {
 
     double qbNow(void);
 
+    typedef std::chrono::steady_clock::time_point timepoint_t;
+    typedef std::chrono::duration<double> duration_t;
+#define qbNow2() std::chrono::steady_clock::now()
+    extern void resetClock(void);
+    extern string_q TIC(void);
+
 }  // namespace qblocks
