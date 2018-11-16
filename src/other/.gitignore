@@ -10,9 +10,9 @@ acctIndex
 addrs_bytes
 addrs_extraction_1
 addrs_extraction_2
+addrs_extraction_3
 addrs_loaddata
 addrs_newchifra
-addrs_query
 addrs_sorted
 addrs_sqlite_example
 allABIs
