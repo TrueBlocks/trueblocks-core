@@ -12,9 +12,18 @@
  *-------------------------------------------------------------------------------------------*/
 
 #include "performance.h"
+#include "conversions.h"
 
 namespace qblocks {
 
+    static timepoint_t t1 = qbNow2();
+    void resetClock(void) { t1 = qbNow2(); }
+    string_q TIC(void) {
+        timepoint_t t2 = qbNow2();
+        double ret = std::chrono::duration_cast<duration_t>(t2 - t1).count();
+        t1 = t2;
+        return double_2_Str(ret, 5);
+    }
     double qbNow(void) {
         struct timeval tv;
         gettimeofday(&tv, 0);
