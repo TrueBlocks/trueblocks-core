@@ -7,9 +7,9 @@ absentis
 acctByBlock
 acctByBlock2
 acctIndex
-addrs_by_block
 addrs_bytes
-addrs_extraction
+addrs_extraction_1
+addrs_extraction_2
 addrs_loaddata
 addrs_newchifra
 addrs_query
