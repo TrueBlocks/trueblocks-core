@@ -19,7 +19,7 @@ extern bool checkBelongs(CTransaction& trans, void *data);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    etherlib_init();
+    etherlib_init(quickQuitHandler);
 
     // Parse command line, allowing for command files
     COptions options;
