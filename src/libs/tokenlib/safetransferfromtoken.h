@@ -23,7 +23,7 @@
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class QSafeTransferFromToke : public CTransaction {
+class QSafeTransferFromToken : public CTransaction {
 public:
     address_t _from;
     address_t _to;
@@ -31,24 +31,24 @@ public:
     string_q _data;
 
 public:
-    QSafeTransferFromToke(void);
-    QSafeTransferFromToke(const QSafeTransferFromToke& sa);
-    virtual ~QSafeTransferFromToke(void);
-    QSafeTransferFromToke& operator=(const QSafeTransferFromToke& sa);
+    QSafeTransferFromToken(void);
+    QSafeTransferFromToken(const QSafeTransferFromToken& sa);
+    virtual ~QSafeTransferFromToken(void);
+    QSafeTransferFromToken& operator=(const QSafeTransferFromToken& sa);
 
-    DECLARE_NODE(QSafeTransferFromToke);
+    DECLARE_NODE(QSafeTransferFromToken);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const QSafeTransferFromToke& item) const;
-    bool operator!=(const QSafeTransferFromToke& item) const { return !operator==(item); }
-    friend bool operator<(const QSafeTransferFromToke& v1, const QSafeTransferFromToke& v2);
-    friend ostream& operator<<(ostream& os, const QSafeTransferFromToke& item);
+    bool operator==(const QSafeTransferFromToken& item) const;
+    bool operator!=(const QSafeTransferFromToken& item) const { return !operator==(item); }
+    friend bool operator<(const QSafeTransferFromToken& v1, const QSafeTransferFromToken& v2);
+    friend ostream& operator<<(ostream& os, const QSafeTransferFromToken& item);
 
 protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const QSafeTransferFromToke& sa);
+    void duplicate(const QSafeTransferFromToken& sa);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -56,14 +56,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline QSafeTransferFromToke::QSafeTransferFromToke(void) {
+inline QSafeTransferFromToken::QSafeTransferFromToken(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline QSafeTransferFromToke::QSafeTransferFromToke(const QSafeTransferFromToke& sa) {
+inline QSafeTransferFromToken::QSafeTransferFromToken(const QSafeTransferFromToken& sa) {
     // EXISTING_CODE
     // EXISTING_CODE
     duplicate(sa);
@@ -73,20 +73,20 @@ inline QSafeTransferFromToke::QSafeTransferFromToke(const QSafeTransferFromToke&
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline QSafeTransferFromToke::~QSafeTransferFromToke(void) {
+inline QSafeTransferFromToken::~QSafeTransferFromToken(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QSafeTransferFromToke::clear(void) {
+inline void QSafeTransferFromToken::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void QSafeTransferFromToke::initialize(void) {
+inline void QSafeTransferFromToken::initialize(void) {
     CTransaction::initialize();
 
     _from = "";
@@ -99,7 +99,7 @@ inline void QSafeTransferFromToke::initialize(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void QSafeTransferFromToke::duplicate(const QSafeTransferFromToke& sa) {
+inline void QSafeTransferFromToken::duplicate(const QSafeTransferFromToken& sa) {
     clear();
     CTransaction::duplicate(sa);
 
@@ -114,7 +114,7 @@ inline void QSafeTransferFromToke::duplicate(const QSafeTransferFromToke& sa) {
 }
 
 //--------------------------------------------------------------------------
-inline QSafeTransferFromToke& QSafeTransferFromToke::operator=(const QSafeTransferFromToke& sa) {
+inline QSafeTransferFromToken& QSafeTransferFromToken::operator=(const QSafeTransferFromToken& sa) {
     duplicate(sa);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -122,7 +122,7 @@ inline QSafeTransferFromToke& QSafeTransferFromToke::operator=(const QSafeTransf
 }
 
 //-------------------------------------------------------------------------
-inline bool QSafeTransferFromToke::operator==(const QSafeTransferFromToke& item) const {
+inline bool QSafeTransferFromToken::operator==(const QSafeTransferFromToken& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -130,7 +130,7 @@ inline bool QSafeTransferFromToke::operator==(const QSafeTransferFromToke& item)
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const QSafeTransferFromToke& v1, const QSafeTransferFromToke& v2) {
+inline bool operator<(const QSafeTransferFromToken& v1, const QSafeTransferFromToken& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -138,9 +138,9 @@ inline bool operator<(const QSafeTransferFromToke& v1, const QSafeTransferFromTo
 }
 
 //---------------------------------------------------------------------------
-typedef vector<QSafeTransferFromToke> QSafeTransferFromTokeArray;
-extern CArchive& operator>>(CArchive& archive, QSafeTransferFromTokeArray& array);
-extern CArchive& operator<<(CArchive& archive, const QSafeTransferFromTokeArray& array);
+typedef vector<QSafeTransferFromToken> QSafeTransferFromTokenArray;
+extern CArchive& operator>>(CArchive& archive, QSafeTransferFromTokenArray& array);
+extern CArchive& operator<<(CArchive& archive, const QSafeTransferFromTokenArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

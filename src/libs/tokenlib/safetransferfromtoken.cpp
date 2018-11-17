@@ -15,18 +15,18 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <algorithm>
-#include "safetransferfromtoke.h"
+#include "safetransferfromtoken.h"
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QSafeTransferFromToke, CTransaction);
+IMPLEMENT_NODE(QSafeTransferFromToken, CTransaction);
 
 //---------------------------------------------------------------------------
 static string_q nextSafetransferfromtokeChunk(const string_q& fieldIn, const void *dataPtr);
 static string_q nextSafetransferfromtokeChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QSafeTransferFromToke::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QSafeTransferFromToken::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -46,7 +46,7 @@ void QSafeTransferFromToke::Format(ostream& ctx, const string_q& fmtIn, void *da
 //---------------------------------------------------------------------------
 string_q nextSafetransferfromtokeChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const QSafeTransferFromToke *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QSafeTransferFromToken *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -55,7 +55,7 @@ string_q nextSafetransferfromtokeChunk(const string_q& fieldIn, const void *data
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QSafeTransferFromToke::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
+bool QSafeTransferFromToken::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -76,13 +76,13 @@ bool QSafeTransferFromToke::setValueByName(const string_q& fieldName, const stri
 }
 
 //---------------------------------------------------------------------------------------------------
-void QSafeTransferFromToke::finishParse() {
+void QSafeTransferFromToken::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QSafeTransferFromToke::Serialize(CArchive& archive) {
+bool QSafeTransferFromToken::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -104,7 +104,7 @@ bool QSafeTransferFromToke::Serialize(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QSafeTransferFromToke::SerializeC(CArchive& archive) const {
+bool QSafeTransferFromToken::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
@@ -120,7 +120,7 @@ bool QSafeTransferFromToke::SerializeC(CArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, QSafeTransferFromTokeArray& array) {
+CArchive& operator>>(CArchive& archive, QSafeTransferFromTokenArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -132,7 +132,7 @@ CArchive& operator>>(CArchive& archive, QSafeTransferFromTokeArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const QSafeTransferFromTokeArray& array) {
+CArchive& operator<<(CArchive& archive, const QSafeTransferFromTokenArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -141,7 +141,7 @@ CArchive& operator<<(CArchive& archive, const QSafeTransferFromTokeArray& array)
 }
 
 //---------------------------------------------------------------------------
-void QSafeTransferFromToke::registerClass(void) {
+void QSafeTransferFromToken::registerClass(void) {
     static bool been_here = false;
     if (been_here) return;
     been_here = true;
@@ -149,22 +149,22 @@ void QSafeTransferFromToke::registerClass(void) {
     CTransaction::registerClass();
 
     size_t fieldNum = 1000;
-    ADD_FIELD(QSafeTransferFromToke, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(QSafeTransferFromToke, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(QSafeTransferFromToke, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(QSafeTransferFromToke, "cname", T_TEXT,  ++fieldNum);
-    ADD_FIELD(QSafeTransferFromToke, "_from", T_ADDRESS, ++fieldNum);
-    ADD_FIELD(QSafeTransferFromToke, "_to", T_ADDRESS, ++fieldNum);
-    ADD_FIELD(QSafeTransferFromToke, "_tokenId", T_NUMBER, ++fieldNum);
-    ADD_FIELD(QSafeTransferFromToke, "_data", T_TEXT, ++fieldNum);
+    ADD_FIELD(QSafeTransferFromToken, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(QSafeTransferFromToken, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QSafeTransferFromToken, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QSafeTransferFromToken, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(QSafeTransferFromToken, "_from", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(QSafeTransferFromToken, "_to", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(QSafeTransferFromToken, "_tokenId", T_NUMBER, ++fieldNum);
+    ADD_FIELD(QSafeTransferFromToken, "_data", T_TEXT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(QSafeTransferFromToke, "schema");
-    HIDE_FIELD(QSafeTransferFromToke, "deleted");
-    HIDE_FIELD(QSafeTransferFromToke, "showing");
-    HIDE_FIELD(QSafeTransferFromToke, "cname");
+    HIDE_FIELD(QSafeTransferFromToken, "schema");
+    HIDE_FIELD(QSafeTransferFromToken, "deleted");
+    HIDE_FIELD(QSafeTransferFromToken, "showing");
+    HIDE_FIELD(QSafeTransferFromToken, "cname");
 
-    builtIns.push_back(_biQSafeTransferFromToke);
+    builtIns.push_back(_biQSafeTransferFromToken);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -172,7 +172,7 @@ void QSafeTransferFromToke::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextSafetransferfromtokeChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QSafeTransferFromToke *saf = reinterpret_cast<const QSafeTransferFromToke *>(dataPtr);
+    const QSafeTransferFromToken *saf = reinterpret_cast<const QSafeTransferFromToken *>(dataPtr);
     if (saf) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -194,7 +194,7 @@ string_q nextSafetransferfromtokeChunk_custom(const string_q& fieldIn, const voi
 }
 
 //---------------------------------------------------------------------------
-bool QSafeTransferFromToke::readBackLevel(CArchive& archive) {
+bool QSafeTransferFromToken::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE
@@ -203,7 +203,7 @@ bool QSafeTransferFromToke::readBackLevel(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-string_q QSafeTransferFromToke::getValueByName(const string_q& fieldName) const {
+string_q QSafeTransferFromToken::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
     string_q ret = nextSafetransferfromtokeChunk_custom(fieldName, this);
@@ -228,7 +228,7 @@ string_q QSafeTransferFromToke::getValueByName(const string_q& fieldName) const 
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const QSafeTransferFromToke& item) {
+ostream& operator<<(ostream& os, const QSafeTransferFromToken& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
