@@ -28,7 +28,7 @@
 #include "approveandcall.h"
 #include "ownerof.h"
 #include "safetransferfrom.h"
-#include "safetransferfromtoke.h"
+#include "safetransferfromtoken.h"
 #include "setapprovalforall.h"
 #include "transfer.h"
 #include "transferfrom.h"
@@ -52,7 +52,7 @@ extern const string_q func_isApprovedForAll_qb;
 extern const string_q func_name_qb;
 extern const string_q func_ownerOf_qb;
 extern const string_q func_safeTransferFrom_qb;
-extern const string_q func_safeTransferFromToke_qb;
+extern const string_q func_safeTransferFromToken_qb;
 extern const string_q func_setApprovalForAll_qb;
 extern const string_q func_symbol_qb;
 extern const string_q func_totalSupply_qb;
@@ -73,7 +73,7 @@ inline bool isTokenRelated(const CTransaction *trans) {
             startsWith(trans->input, func_transferFrom_qb) ||
             startsWith(trans->input, func_approve_qb) ||
             startsWith(trans->input, func_safeTransferFrom_qb) ||
-            startsWith(trans->input, func_safeTransferFromToke_qb) ||
+            startsWith(trans->input, func_safeTransferFromToken_qb) ||
             startsWith(trans->input, func_setApprovalForAll_qb) ||
             startsWith(trans->input, func_approveAndCall_qb) ||
             startsWith(trans->input, func_allowance_qb) ||
