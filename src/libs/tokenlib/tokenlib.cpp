@@ -26,7 +26,7 @@ void tokenlib_init(void) {
     QApproveAndCall::registerClass();
     QOwnerOf::registerClass();
     QSafeTransferFrom::registerClass();
-    QSafeTransferFromToke::registerClass();
+    QSafeTransferFromToken::registerClass();
     QSetApprovalForAll::registerClass();
     QTransfer::registerClass();
     QTransferFrom::registerClass();
@@ -45,7 +45,7 @@ const string_q func_isApprovedForAll_qb = "0xe985e9c5";
 const string_q func_name_qb = "0x06fdde03";
 const string_q func_ownerOf_qb = "0x6352211e";
 const string_q func_safeTransferFrom_qb = "0x42842e0e";
-const string_q func_safeTransferFromToke_qb = "0xb88d4fde";
+const string_q func_safeTransferFromToken_qb = "0xb88d4fde";
 const string_q func_setApprovalForAll_qb = "0xa22cb465";
 const string_q func_symbol_qb = "0x95d89b41";
 const string_q func_totalSupply_qb = "0x18160ddd";
@@ -115,10 +115,10 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             a->articulatedTx = decodeRLP("safeTransferFrom", params, nItems, items);
             return a;
 
-        } else if (encoding == func_safeTransferFromToke_qb) {
+        } else if (encoding == func_safeTransferFromToken_qb) {
             // function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes _data)
             // 0xb88d4fde
-            QSafeTransferFromToke *a = new QSafeTransferFromToke;
+            QSafeTransferFromToken *a = new QSafeTransferFromToken;
             a->CTransaction::operator=(*p);
             a->_from = str_2_Addr(extract(params, 0*64, 64));
             a->_to = str_2_Addr(extract(params, 1*64, 64));
@@ -128,7 +128,7 @@ const CTransaction *promoteToToken(const CTransaction *p) {
             items[nItems++] = "address";
             items[nItems++] = "uint256";
             items[nItems++] = "bytes";
-            a->articulatedTx = decodeRLP("safeTransferFromToke", params, nItems, items);
+            a->articulatedTx = decodeRLP("safeTransferFromToken", params, nItems, items);
             return a;
 
         } else if (encoding == func_setApprovalForAll_qb) {
@@ -222,10 +222,10 @@ bool articulateToken(CTransaction *p) {
             p->func->inputs.push_back(CParameter("_tokenId", "", str_2_Wei("0x" + extract(params, 2*64, 64))));
             return true;
 
-        } else if (encoding == func_safeTransferFromToke_qb) {
+        } else if (encoding == func_safeTransferFromToken_qb) {
             // function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes _data)
             // 0xb88d4fde
-            p->func = new CFunction("safeTransferFromToke");
+            p->func = new CFunction("safeTransferFromToken");
             p->func->inputs.push_back(CParameter("_from", "", str_2_Addr(extract(params, 0*64, 64))));
             p->func->inputs.push_back(CParameter("_to", "", str_2_Addr(extract(params, 1*64, 64))));
             p->func->inputs.push_back(CParameter("_tokenId", "", str_2_Wei("0x" + extract(params, 2*64, 64))));

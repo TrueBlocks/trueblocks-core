@@ -267,12 +267,7 @@
       }
     ],
     "name": "setApprovalForAll",
-    "outputs": [
-      {
-        "name": "x",
-        "type": "y"
-      }
-    ],
+    "outputs": [],
     "payable": false,
     "type": "function"
   },
@@ -316,7 +311,7 @@
     ],
     "name": "safeTransferFrom",
     "outputs": [],
-    "payable": false,
+    "payable": true,
     "type": "function"
   },
   {
@@ -341,6 +336,54 @@
     ],
     "name": "safeTransferFrom",
     "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_interfaceID",
+        "type": "bytes4"
+      }
+    ],
+    "name": "supportsInterface",
+    "outputs": [
+      {
+        "name": "_ret",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_operator",
+        "type": "address"
+      },
+      {
+        "name": "_from",
+        "type": "address"
+      },
+      {
+        "name": "_tokenId",
+        "type": "uint256"
+      },
+      {
+        "name": "_data",
+        "type": "bytes"
+      }
+    ],
+    "name": "onERC721Received",
+    "outputs": [
+      {
+        "name": "_ret",
+        "type": "bytes4"
+      }
+    ],
     "payable": false,
     "type": "function"
   },
