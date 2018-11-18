@@ -87,6 +87,11 @@ bool COptions::parseArguments(string_q& command) {
     if (isRaw && !address_list.empty())
         return usage("--raw only works with blocks, not addresses. Quitting...");
 
+    if (isTestMode() && blocks.numList.size() == 4) {
+        // We turn of testing mode in this case because one of our test cases from getBloom
+        // needs to insure that the blocks for that test are present
+        setenv("TEST_MODE", "false", true);
+    }
     return true;
 }
 
