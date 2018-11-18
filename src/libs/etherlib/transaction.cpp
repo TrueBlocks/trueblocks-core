@@ -99,7 +99,13 @@ bool CTransaction::setValueByName(const string_q& fieldName, const string_q& fie
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "articulatedTx" ) { articulatedTx = fieldValue; return true; }
+            if ( fieldName % "articulatedTx" ) {
+                string_q str = fieldValue;
+                while (!str.empty()) {
+                    articulatedTx.push_back(nextTokenClear(str, ','));
+                }
+                return true;
+            }
             break;
         case 'b':
             if ( fieldName % "blockHash" ) { blockHash = str_2_Hash(fieldValue); return true; }
@@ -315,15 +321,10 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'a':
-                if ( fieldIn % "articulatedTx" ) {
-                    if (!tra->articulatedTx.empty())
-                        return tra->articulatedTx;
-                    if (tra->func) {
-                        ostringstream os;
-                        os << *tra->func;
-                        return os.str();
-                    }
-                    return "";
+                if ( fieldIn % "articulatedTx" && tra->articulatedTx.size() == 0 && tra->func) {
+                    ostringstream os;
+                    os << *tra->func;
+                    return os.str();
                 }
                 break;
             case 'c':
@@ -457,7 +458,18 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "articulatedTx" ) return articulatedTx;
+            if ( fieldName % "articulatedTx" || fieldName % "articulatedTxCnt" ) {
+                size_t cnt = articulatedTx.size();
+                if (endsWith(fieldName, "Cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt) return "";
+                string_q retS;
+                for (size_t i = 0 ; i < cnt ; i++) {
+                    retS += ("\"" + articulatedTx[i] + "\"");
+                    retS += ((i < cnt - 1) ? ",\n" + indent() : "\n");
+                }
+                return retS;
+            }
             break;
         case 'b':
             if ( fieldName % "blockHash" ) return hash_2_Str(blockHash);
@@ -544,9 +556,14 @@ ostream& operator<<(ostream& os, const CTransaction& item) {
 const CBaseNode *CTransaction::getObjectAt(const string_q& fieldName, size_t index) const {
     if ( fieldName % "receipt" )
         return &receipt;
-    else if ( fieldName % "traces" && index < traces.size() )
-        return &traces[index];
     return NULL;
+}
+
+//---------------------------------------------------------------------------
+const string_q CTransaction::getStringAt(const string_q& name, size_t i) const {
+    if ( name % "articulatedTx" && i < articulatedTx.size() )
+        return (articulatedTx[i]);
+    return "";
 }
 
 //---------------------------------------------------------------------------

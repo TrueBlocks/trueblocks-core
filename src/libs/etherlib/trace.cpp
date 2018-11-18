@@ -70,7 +70,13 @@ bool CTrace::setValueByName(const string_q& fieldName, const string_q& fieldValu
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "articulatedTrace" ) { articulatedTrace = fieldValue; return true; }
+            if ( fieldName % "articulatedTrace" ) {
+                string_q str = fieldValue;
+                while (!str.empty()) {
+                    articulatedTrace.push_back(nextTokenClear(str, ','));
+                }
+                return true;
+            }
             if ( fieldName % "action" ) { /* action = fieldValue; */ return false; }
             break;
         case 'b':
@@ -226,15 +232,10 @@ string_q nextTraceChunk_custom(const string_q& fieldIn, const void *dataPtr) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'a':
-                if ( fieldIn % "articulatedTrace" ) {
-                    if (!tra->articulatedTrace.empty())
-                        return tra->articulatedTrace;
-                    if (tra->func) {
-                        ostringstream os;
-                        os << *tra->func;
-                        return os.str();
-                    }
-                    return "";
+                if ( fieldIn % "articulatedTrace" && tra->articulatedTrace.size() == 0 && tra->func) {
+                    ostringstream os;
+                    os << *tra->func;
+                    return os.str();
                 }
                 break;
             // EXISTING_CODE
@@ -274,7 +275,18 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "articulatedTrace" ) return articulatedTrace;
+            if ( fieldName % "articulatedTrace" || fieldName % "articulatedTraceCnt" ) {
+                size_t cnt = articulatedTrace.size();
+                if (endsWith(fieldName, "Cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt) return "";
+                string_q retS;
+                for (size_t i = 0 ; i < cnt ; i++) {
+                    retS += ("\"" + articulatedTrace[i] + "\"");
+                    retS += ((i < cnt - 1) ? ",\n" + indent() : "\n");
+                }
+                return retS;
+            }
             if ( fieldName % "action" ) { expContext().noFrst=true; return action.Format(); }
             break;
         case 'b':
@@ -356,6 +368,8 @@ const CBaseNode *CTrace::getObjectAt(const string_q& fieldName, size_t index) co
 const string_q CTrace::getStringAt(const string_q& name, size_t i) const {
     if ( name % "traceAddress" && i < traceAddress.size() )
         return (traceAddress[i]);
+    if ( name % "articulatedTrace" && i < articulatedTrace.size() )
+        return (articulatedTrace[i]);
     return "";
 }
 
