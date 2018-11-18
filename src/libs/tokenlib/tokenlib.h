@@ -26,6 +26,7 @@
 #include "transferevent.h"
 #include "approve.h"
 #include "approveandcall.h"
+#include "onerc721received.h"
 #include "ownerof.h"
 #include "safetransferfrom.h"
 #include "safetransferfromtoken.h"
@@ -50,10 +51,12 @@ extern const string_q func_exists_qb;
 extern const string_q func_getApproved_qb;
 extern const string_q func_isApprovedForAll_qb;
 extern const string_q func_name_qb;
+extern const string_q func_onERC721Received_qb;
 extern const string_q func_ownerOf_qb;
 extern const string_q func_safeTransferFrom_qb;
 extern const string_q func_safeTransferFromToken_qb;
 extern const string_q func_setApprovalForAll_qb;
+extern const string_q func_supportsInterface_qb;
 extern const string_q func_symbol_qb;
 extern const string_q func_totalSupply_qb;
 extern const string_q func_transfer_qb;
