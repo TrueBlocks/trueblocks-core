@@ -36,7 +36,7 @@ string_q classDir;
 //-----------------------------------------------------------------------
 inline string_q projectName(void) {
     CFilename fn(classDir+"tmp");
-    string_q ret = substitute(substitute(substitute(fn.getPath(), "parselib/", ""), "parseLib/", ""), "//", "");
+    string_q ret = substitute(substitute(substitute(fn.getPath(), "", ""), "", ""), "//", "");
     nextTokenClearReverse(ret, '/');
     ret = nextTokenClearReverse(ret, '/');
     return ret;
@@ -65,7 +65,12 @@ void addIfUnique(const string_q& addr, CFunctionArray& functions, CFunction& fun
         // the first four characters of the contract's address.
         if (decorateNames && f.name == func.name && !f.isBuiltin) {
             func.origName = func.name;
-            func.name += (startsWith(addr, "0x") ? extract(addr, 2, 4) : extract(addr, 0, 4));
+            if (addr == "0xTokenLib")
+                func.name += "Token";
+            else if (addr == "0xWalletLib")
+                func.name += "Wallet";
+            else
+                func.name += (startsWith(addr, "0x") ? extract(addr, 2, 4) : extract(addr, 0, 4));
         }
     }
 
@@ -373,7 +378,7 @@ int main(int argc, const char *argv[]) {
                             replaceAll(out, "int32[]",   "CIntArray");
                             stringToAsciiFile(classDefs+fileName, out);
                             if (func->type == "event")
-                                cout << "Generating class for event type: '" << theClass << "'\n";
+                                cout << "Generating class for derived event type: '" << theClass << "'\n";
                             else
                                 cout << "Generating class for derived transaction type: '" << theClass << "'\n";
 
@@ -415,7 +420,7 @@ int main(int argc, const char *argv[]) {
             replaceReverse(sources, " \\\n", " \\\n" + options.prefix + ".cpp\n");
             if (!options.isBuiltin()) {
                 string_q makefile;
-                asciiFileToString(templateFolder + "parselib/CMakeLists.txt", makefile);
+                asciiFileToString(templateFolder + "CMakeLists.txt", makefile);
                 replaceAll(makefile, "[{PROJECT_NAME}]", projectName());
                 writeTheCode(classDir + "CMakeLists.txt", makefile);
             }
@@ -427,7 +432,7 @@ int main(int argc, const char *argv[]) {
             replace(factory2, "} else ", "");
 
             string_q sourceCode;
-            asciiFileToString(templateFolder + "parselib/parselib.cpp", sourceCode);
+            asciiFileToString(templateFolder + "parselib.cpp", sourceCode);
             parseInit = "parselib_init(QUITHANDLER qh)";
             if (!options.isBuiltin())
                 replaceAll(sourceCode, "[{PREFIX}]_init(void)", parseInit);
@@ -517,7 +522,7 @@ const char* STR_FACTORY1 =
 "\t\t\ta->C[{BASE}]::operator=(*p);\n"
 "[{ASSIGNS1}]"
 "[{ITEMS1}]"
-"\t\t\ta->articulatedTx = [{PARSEIT}];\n"
+"\t\t\ta->articulatedTx.push_back([{PARSEIT}]);\n"
 "\t\t\treturn a;\n"
 "\n";
 
@@ -530,7 +535,7 @@ const char* STR_FACTORY2 =
 "\t\t\ta->C[{BASE}]::operator=(*p);\n"
 "[{ASSIGNS2}]"
 "[{ITEMS2}]"
-"\t\t\ta->articulatedLog = [{PARSEIT}];\n"
+"\t\t\ta->articulatedLog.push_back([{PARSEIT}]);\n"
 "\t\t\treturn a;\n"
 "\n";
 

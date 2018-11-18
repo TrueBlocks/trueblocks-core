@@ -12,6 +12,7 @@ include_directories(${BASE_INCLUDE})
 
 # Compilation order of the src subdirectories
 add_subdirectory(makeClass) # do this first
+add_subdirectory(grabABI)
 add_subdirectory(ethName)
 add_subdirectory(ethslurp)
 add_subdirectory(getAccounts)
