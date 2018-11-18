@@ -102,6 +102,22 @@ bool COptions::parseArguments(string_q& command) {
     if (receiptsOnly && !isRaw)
         return usage("--eab and --receipts options are not allowed together. Choose one. Quitting...");
 
+    // Initialize these here (hack alert)
+    CBloomReceipt noRemove1; CBloomTrans noRemove2; CBloomBlock noRemove3;
+    HIDE_FIELD(CBloomTrans, "hash");
+    if (blockOnly)
+        HIDE_FIELD(CBloomBlock, "transactions");
+
+    if (receiptsOnly)
+        HIDE_FIELD(CBloomBlock, "logsBloom");
+
+    if (bitCount || verbose) {
+        UNHIDE_FIELD(CBloomReceipt, "bitCount");
+        UNHIDE_FIELD(CBloomBlock, "bitCount");
+        if (verbose)
+            UNHIDE_FIELD(CBloomBlock, "sizeInBytes");
+    }
+
     return true;
 }
 

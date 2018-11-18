@@ -34,8 +34,7 @@ int main(int argc, const char * argv[]) {
         string_q list = options.getBlockNumList();
         while (!list.empty()) {
             blknum_t bn = str_2_Uint(nextTokenClear(list, '|'));
-            string_q result = doOneBloom(bn, options);
-            cout << result;
+            cout << doOneBloom(bn, options);
             if (!options.asBars && !options.asBitBars && !options.asPctBars) {
                 if (!list.empty())
                     cout << ",";
@@ -48,166 +47,124 @@ int main(int argc, const char * argv[]) {
     return 0;
 }
 
+//-------------------------------------------------------------------------------------
+typedef string_q (*BLOOMTOSTRFUNC)(const bloom_t& bloom, void *data);
+//-------------------------------------------------------------------------------------
+string_q pctBar(const bloom_t& bloom, void *data) { uint64_t div = (uint64_t)data; return string_q(bitsTwiddled(bloom) * 200 / div, '-'); }
+string_q bitBar(const bloom_t& bloom, void *data) { return string_q(bitsTwiddled(bloom), '-');              }
+string_q bars  (const bloom_t& bloom, void *data) { return bloom_2_Bar(bloom);                              }
+
+//-------------------------------------------------------------------------------------
+string_q showBloom(blknum_t bn, const CBloomArray& blooms, BLOOMTOSTRFUNC func, void *data=NULL) {
+    if (!func)
+        return "";
+    ostringstream os;
+    for (size_t bl = 0 ; bl < blooms.size() ; bl++) {
+        string_q head = (bl == 0 ? uint_2_Str(bn) + ": " : "");
+        string_q line = (bitsTwiddled(blooms[bl]) == 0 ? "" : (*func)(blooms[bl], data));
+        if (bl == 0 || !line.empty()) {
+            os << padLeft(head, 9);
+            if (!line.empty())
+                os << line;
+            os  << "\n";
+        }
+    }
+    return os.str();
+}
+
 #include "bloom_blocks.h"
 //-------------------------------------------------------------------------------------
 string_q doOneBloom(uint64_t num, const COptions& opt) {
 
-    CBlock gold;
-    gold.blockNumber = num;
-    string_q result;
-    string_q numStr = uint_2_Str(num);
+    CBloomArray blooms;
 
+    ostringstream os;
     if (opt.isRaw) {
 
-        string_q r = getRawBlock(num);
         CBloomBlock rawBlock;
-        rawBlock.parseJson3(r);
-        HIDE_FIELD(CBloomTrans, "hash");
-
-        if (opt.blockOnly) {
-            rawBlock.transactions.clear();
-            HIDE_FIELD(CBloomBlock, "transactions");
-        }
-
-        if (opt.receiptsOnly) {
-            //HIDE_FIELD(CBloomBlock, "number");
-            HIDE_FIELD(CBloomBlock, "logsBloom");
-        }
-
-        if (opt.bitCount) {
-            UNHIDE_FIELD(CBloomReceipt, "bitCount");
-            UNHIDE_FIELD(CBloomBlock, "bitCount");
-        }
-
-        if (opt.asBits) {
-            bloom_t bloom = str_2_BigUint(rawBlock.logsBloom);
-            rawBlock.logsBloom = bloom_2_Bits(bloom);
-            for (size_t i = 0 ; i < rawBlock.transactions.size() ; i++) {
-                bloom = str_2_BigUint(rawBlock.transactions[i].receipt.logsBloom);  // .at cannot go past end of vector!
-                rawBlock.transactions.at(i).receipt.logsBloom = bloom_2_Bits(bloom);
-            }
-        }
-
-        if (opt.asBars) {
-            ostringstream os;
-            os << num << ": ";
-            bloom_t bloom = str_2_BigUint(rawBlock.logsBloom);
-            os << bloom_2_Bar(bloom) << "\n";
-            if (opt.receiptsOnly) {
-                for (size_t i = 0 ; i < rawBlock.transactions.size() ; i++) {
-                    bloom = str_2_BigUint(rawBlock.transactions[i].receipt.logsBloom);
-                    string_q x = bloom_2_Bar(bloom);
-                    if (!x.empty())
-                        os << padLeft("", 9) << x << "\n";
-                }
-            }
-            return os.str().c_str();
-        }
-
-        if (opt.asBitBars) {
-            ostringstream os;
-            os << num << ": ";
-            bloom_t bloom = str_2_BigUint(rawBlock.logsBloom);
-            os << string_q(bitsTwiddled(bloom), '-') << "\n";
-            if (opt.receiptsOnly) {
-                for (size_t i = 0 ; i < rawBlock.transactions.size() ; i++) {
-                    bloom = str_2_BigUint(rawBlock.transactions[i].receipt.logsBloom);
-                    string_q x = string_q(bitsTwiddled(bloom), '-') ;
-                    if (!x.empty())
-                        os << padLeft("", 9) << x << "\n";
-                }
-            }
-            return os.str().c_str();
-        }
-
-        if (opt.asPctBars) {
-            ostringstream os;
-            os << num << ": ";
-            bloom_t bloom = str_2_BigUint(rawBlock.logsBloom);
-            os << string_q(bitsTwiddled(bloom) * 200 / 1024, '-') << "\n";
-            if (opt.receiptsOnly) {
-                for (size_t i = 0 ; i < rawBlock.transactions.size() ; i++) {
-                    bloom = str_2_BigUint(rawBlock.transactions[i].receipt.logsBloom);
-                    string_q x = string_q(bitsTwiddled(bloom) * 200 / 1024, '-') ;
-                    if (!x.empty())
-                        os << padLeft("", 9) << x << "\n";
-                }
-            }
-            return os.str().c_str();
-        }
-
-        ostringstream os;
+        string_q raw = getRawBlock(num);
+        rawBlock.parseJson3(raw);
         if (opt.blockOnly)
-            os << rawBlock.Format() << "\n";
-        else
+            rawBlock.transactions.clear();
+
+        blooms.push_back(str_2_BigUint(rawBlock.logsBloom));
+        if (opt.receiptsOnly) {
+            for (size_t i = 0 ; i < rawBlock.transactions.size() ; i++)
+                blooms.push_back(str_2_BigUint(rawBlock.transactions[i].receipt.logsBloom));
+        }
+
+             if (opt.asBars)    return showBloom(num, blooms, bars);
+        else if (opt.asBitBars) return showBloom(num, blooms, bitBar);
+        else if (opt.asPctBars) return showBloom(num, blooms, pctBar, (void*)1024);
+        else {
+            CBloomTransArray showing;
+            if (opt.asBits)
+                rawBlock.logsBloom = bloom_2_Bits(str_2_BigUint(rawBlock.logsBloom));
+            for (size_t i = 0 ; i < rawBlock.transactions.size() ; i++) {
+                bloom_t bloom = str_2_BigUint(rawBlock.transactions[i].receipt.logsBloom);  // .at cannot go past end of vector!
+                if (verbose || bloom != 0) {
+                    if (opt.asBits)
+                        rawBlock.transactions.at(i).receipt.logsBloom = bloom_2_Bits(bloom);
+                    CBloomTrans t = rawBlock.transactions.at(i);
+                    showing.push_back(t);
+                }
+            }
+            rawBlock.transactions = showing;
+            SHOW_FIELD(CBloomBlock, "transactions");
+            if (rawBlock.transactions.size() == 0)
+                HIDE_FIELD(CBloomBlock, "transactions");
             rawBlock.doExport(os);
-        return os.str().c_str();
+        }
 
     } else {
 
-        CBloomArray blooms;
-        readBloomArray(blooms, substitute(getBinaryFilename(num), "/blocks/", "/blooms/"));
-
-        if (opt.asBars) {
-            ostringstream os;
-            for (size_t i = 0 ; i < blooms.size() ; i++) {
-                string_q head = (i == 0 ? uint_2_Str(num) + ": " : "");
-                os << padLeft(head, 9) << bloom_2_Bar(blooms[i]) << "\n";
-            }
-            return os.str().c_str();
-        }
-
-        if (opt.asBitBars) {
-            ostringstream os;
-            for (size_t i = 0 ; i < blooms.size() ; i++) {
-                string_q head = (i == 0 ? uint_2_Str(num) + ": " : "");
-                os << padLeft(head, 9) << string_q(bitsTwiddled(blooms[i]), '-') << "\n";
-            }
-            return os.str().c_str();
-        }
-
-        if (opt.asPctBars) {
-            ostringstream os;
-            bloom_t all = 0;
+        string_q fileName = substitute(getBinaryFilename(num), "/blocks/", "/blooms/");
+        readBloomArray(blooms, fileName);
+             if (opt.asBars)    return showBloom(num, blooms, bars);
+        else if (opt.asBitBars) return showBloom(num, blooms, bitBar);
+        else if (opt.asPctBars) {
+            bloom_t one_bloom = 0;
+            uint64_t n = blooms.size();
             for (size_t i = 0 ; i < blooms.size() ; i++)
-                all = joinBloom(all, blooms[i]);
-            os << padLeft(uint_2_Str(num), 9) << ": ";
-            if (blooms.size())
-                os << string_q(bitsTwiddled(all) * 200 / (1024 * blooms.size()), '-');
-            os << "\n";
-            return os.str().c_str();
-        }
+                one_bloom = joinBloom(one_bloom, blooms[i]);
+            blooms.clear(); blooms.push_back(one_bloom);
+            return showBloom(num, blooms, pctBar, (void*)(1024 * n));
 
-        ostringstream os;
-        os << "{\n";
-        os << "\t\"blockNumber\": \"" << num << "\",\n";
-        if (opt.bitCount) {
-            os << "\t\"bitCounts\": [\n";
+        } else {
+
+            os << "{\n";
+            os << "\t\"blockNumber\": \"" << num << "\",\n";
+            if (verbose || opt.bitCount) {
+                os << "\t\"bitCount\": [\n";
+                for (size_t i = 0 ; i < blooms.size() ; i++) {
+                    os << "\t\t" << uint_2_Str(bitsTwiddled(blooms[i]));
+                    if (i < blooms.size() - 1)
+                        os << ",";
+                    os << "\n";
+                }
+                os << "\t],\n";
+                if (verbose)
+                    os << "\t\"sizeInBytes\": " << fileSize(fileName) << ",\n";
+            }
+            os << "\t\"eab\": [\n";
             for (size_t i = 0 ; i < blooms.size() ; i++) {
-                os << "\t\t" << uint_2_Str(bitsTwiddled(blooms[i]));
-                if (i < blooms.size() - 1)
-                    os << ",";
-                os << "\n";
+                bloom_t bloom = blooms[i];
+                if (verbose || bloom != 0) {
+                    if (opt.asBits) {
+                        os << "\t\t\"0x" << bloom_2_Bits(bloom) << "\"";
+
+                    } else {
+                        os << "\t\t\"0x" << bloom_2_Bytes(bloom) << "\"";
+
+                    }
+                    if (i < blooms.size() - 1)
+                        os << ",";
+                    os << "\n";
+                }
             }
-            os << "\t],\n";
+            os << "\t]\n}";
+
         }
-        os << "\t\"eab\": [\n";
-        for (size_t i = 0 ; i < blooms.size() ; i++) {
-            bloom_t bloom = blooms[i];
-            if (opt.asBits) {
-                os << "\t\t\"0x" << bloom_2_Bits(bloom) << "\"";
-
-            } else {
-                os << "\t\t\"0x" << bloom_2_Bytes(bloom) << "\"";
-
-            }
-            if (i < blooms.size() - 1)
-                os << ",";
-            os << "\n";
-        }
-        os << "\t]\n}";
-
-        result = os.str().c_str();
     }
-    return result;
+    return os.str();
 }

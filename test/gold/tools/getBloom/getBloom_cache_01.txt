@@ -3,7 +3,7 @@ getBloom --eab 2768801 1995314 1958017 --parity --bitcount
 [
 {
 	"blockNumber": "2768801",
-	"bitCounts": [
+	"bitCount": [
 		18
 	],
 	"eab": [
@@ -12,7 +12,7 @@ getBloom --eab 2768801 1995314 1958017 --parity --bitcount
 },
 {
 	"blockNumber": "1995314",
-	"bitCounts": [
+	"bitCount": [
 		27
 	],
 	"eab": [
@@ -21,7 +21,7 @@ getBloom --eab 2768801 1995314 1958017 --parity --bitcount
 },
 {
 	"blockNumber": "1958017",
-	"bitCounts": [
+	"bitCount": [
 		15
 	],
 	"eab": [
