@@ -21,7 +21,7 @@ static COption params[] = {
     COption("-re(c)eipts",  "show only the receipt-level blooms (--raw only)"),
     COption("-b(a)rs",      "display blooms as bar chart instead of hex"),
     COption("-b(i)ts",      "display blooms as bits instead of hex"),
-    COption("-bitcou(n)ts", "display the number of bits lit per bloom"),
+    COption("-bitcou(n)t",  "display the number of bits lit per bloom"),
     COption("@force",       "force a re-write of the bloom to the cache"),
     COption("",             "Returns bloom filter(s) from running node (the default) or as EAB from QBlocks.\n"),
 };
@@ -49,8 +49,8 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-e" || arg == "--eab") {
             isRaw = false;  // last in wins
 
-        } else if (arg == "-n" || arg == "--bitcounts") {
-            bitCounts = true;
+        } else if (arg == "-n" || arg == "--bitcount") {
+            bitCount = true;
 
         } else if (arg == "-b" || arg == "--block") {
             blockOnly = true;
@@ -108,7 +108,7 @@ void COptions::Init(void) {
     isRaw        = true;
     asBits       = false;
     asBars       = false;
-    bitCounts    = false;
+    bitCount     = false;
     force        = false;
     receiptsOnly = false;
     blockOnly    = false;

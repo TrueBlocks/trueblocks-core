@@ -74,6 +74,11 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
             HIDE_FIELD(CBloomBlock, "logsBloom");
         }
 
+        if (opt.bitCount) {
+            UNHIDE_FIELD(CBloomReceipt, "bitCount");
+            UNHIDE_FIELD(CBloomBlock, "bitCount");
+        }
+
         if (opt.asBits) {
             bloom_t bloom = str_2_BigUint(rawBlock.logsBloom);
             rawBlock.logsBloom = bloom_2_Bits(bloom);
@@ -126,14 +131,21 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
         ostringstream os;
         os << "{\n";
         os << "\t\"blockNumber\": \"" << num << "\",\n";
+        if (opt.bitCount) {
+            os << "\t\"bitCounts\": [\n";
+            for (size_t i = 0 ; i < blooms.size() ; i++) {
+                os << "\t\t" << uint_2_Str(bitsTwiddled(blooms[i]));
+                if (i < blooms.size() - 1)
+                    os << ",";
+                os << "\n";
+            }
+            os << "\t],\n";
+        }
         os << "\t\"eab\": [\n";
         for (size_t i = 0 ; i < blooms.size() ; i++) {
             bloom_t bloom = blooms[i];
             if (opt.asBits) {
                 os << "\t\t\"0x" << bloom_2_Bits(bloom) << "\"";
-
-            } else if (opt.asBars) {
-                os << "\t\t\"0x" << "X" << "\"";
 
             } else {
                 os << "\t\t\"0x" << bloom_2_Bytes(bloom) << "\"";
@@ -144,6 +156,7 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
             os << "\n";
         }
         os << "\t]\n}";
+
         result = os.str().c_str();
     }
     return result;

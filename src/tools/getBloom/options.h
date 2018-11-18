@@ -22,7 +22,7 @@ public:
     bool receiptsOnly;
     bool asBits;
     bool asBars;
-    bool bitCounts;
+    bool bitCount;
 
     COptions(void);
     ~COptions(void);

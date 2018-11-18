@@ -33,15 +33,15 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    inline biguint_t makeBloom(const string_q& hexIn) {
+    inline bloom_t makeBloom(const string_q& hexIn) {
         if (hexIn.empty() || !startsWith(hexIn, "0x"))
             return 0;
 
 extern string_q getSha3 (const string_q& hexIn);
         string_q sha = getSha3(hexIn);
-        biguint_t bloom;
+        bloom_t bloom;
         for (size_t i = 0 ; i < 3 ; i++)
-            bloom |= (biguint_t(1) << (strtoul(("0x" +
+            bloom |= (bloom_t(1) << (strtoul(("0x" +
                             extract(sha, 2 + (i * 4), 4)).c_str(), NULL, 16)) % 2048);
         return bloom;
     }
@@ -52,12 +52,12 @@ extern string_q getSha3 (const string_q& hexIn);
     }
 
     //-------------------------------------------------------------------------
-    inline bool isBloomHit(const biguint_t& test, const biguint_t filter) {
+    inline bool isBloomHit(const bloom_t& test, const bloom_t filter) {
         return ((test & filter) == test);
     }
 
     //-------------------------------------------------------------------------
-    inline bool isBloomHit(const string_q& hexIn, const biguint_t filter) {
+    inline bool isBloomHit(const string_q& hexIn, const bloom_t filter) {
         return isBloomHit(makeBloom(hexIn), filter);
     }
 

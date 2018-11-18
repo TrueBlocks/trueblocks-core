@@ -18,7 +18,7 @@
 | -c | --receipts | show only the receipt-level blooms (--raw only) |
 | -a | --bars | display blooms as bar chart instead of hex |
 | -i | --bits | display blooms as bits instead of hex |
-| -n | --bitcounts | display the number of bits lit per bloom |
+| -n | --bitcount | display the number of bits lit per bloom |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

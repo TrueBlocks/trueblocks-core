@@ -58,7 +58,7 @@ run_test("getBloom_badopt10"        "4501030" " -a" " --bits")
 run_test("getBloom_badopt11"        "4501030" " -a" " -i")
 run_test("getBloom_badopt12"        "4501030" " --bars" " -i")
 run_test("getBloom_badopt14"        "4501030" " --eab" " --block")
-run_test("getBloom_badopt15"        "4501030" " --eab" " --receipts")
+run_test("getBloom_badopt15"        "4501030" " --eab" " --receipts" " --bitcount")
 
 run_test("getBloom_rawlast1"        "4501030" " --eab" " --raw")
 run_test("getBloom_rawlast2"        "4501030" " -e" " -r")
@@ -72,23 +72,23 @@ run_test("getBloom_bits_eab"        "4501030" " --bits" " --eab")
 run_test("getBloom_bars_block"      "2501030-2501060" " --bars" " --block")
 run_test("getBloom_bars_receipt"    "2501030-2501060" " --bars" " --receipts")
 
-run_test("getBloom_combo_one_range" "1590000 4000001-4000002 1001001 1234567 --receipts")
+run_test("getBloom_combo_one_range" "1590000 4000001-4000002 1001001 1234567 --receipts --bitcount")
 run_test("getBloom_combo_two_range" "1590000" " 4000001-4000002" " 1001001-1001100" " 1234567")
 
 # display a bunch of blocks raw
-run_test("getBloom_raw_01"          "--raw" " 2768801" " 1995314" " 1958017")
+run_test("getBloom_raw_01"          "--raw" " 2768801" " 1995314" " 1958017" "  --bitcount")
 run_test("getBloom_raw_02"          "-r"    " 2768801" " 1995314" " 1958017")
 
 # so that the test works, we must first bring these blooms onto the cache (uses undocumented options)
 run_the_test(${TEST_PATH} ${GOLD_PATH} "getBloom_force_01" ${EXECUTABLE_OUTPUT_PATH}/getBlock " 2768801" " 1995314" " 1958017" " -o")
 
 # display a bunch of blocks from cache
-run_test("getBloom_cache_01"        "--eab" " 2768801" " 1995314" " 1958017" " --parity")
+run_test("getBloom_cache_01"        "--eab" " 2768801" " 1995314" " 1958017" " --parity" " --bitcount")
 run_test("getBloom_cache_02"        "-e"    " 2768801" " 1995314" " 4501011" " --parity")
 
 run_test("getBloom_parity_hex"      "--parity" " 0x2e7721" " --block")
 run_test("getBloom_parity_num"      "--parity" " 728708")
-run_test("getBloom_parity_range"    "--parity" " 358450-0x5785a")
+run_test("getBloom_parity_range"    "--parity" " 358450-0x5785a" " --bitcount")
 
 run_test("getBloom_force_02"        " 2769609" " 2799895" " 2872831" " 3076260" " -o")
 run_test("getBloom_multi1"          "--parity" " -r" " 2769609" " 2799895" " 2872831" " 3076260")

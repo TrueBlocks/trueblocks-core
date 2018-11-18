@@ -1,5 +1,5 @@
-getBloom argc: 4 [1:4501030] [2:--eab] [3:--receipts] 
-getBloom 4501030 --eab --receipts 
+getBloom argc: 5 [1:4501030] [2:--eab] [3:--receipts] [4:--bitcount] 
+getBloom 4501030 --eab --receipts --bitcount 
 
   --eab and --receipts options are not allowed together. Choose one. Quitting...
 
@@ -14,7 +14,7 @@ getBloom 4501030 --eab --receipts
 	-c  (--receipts)      show only the receipt-level blooms (--raw only)
 	-a  (--bars)          display blooms as bar chart instead of hex
 	-i  (--bits)          display blooms as bits instead of hex
-	-n  (--bitcounts)     display the number of bits lit per bloom
+	-n  (--bitcount)      display the number of bits lit per bloom
 
 #### Hidden options (shown during testing only)
 	-f  (--force)         force a re-write of the bloom to the cache
