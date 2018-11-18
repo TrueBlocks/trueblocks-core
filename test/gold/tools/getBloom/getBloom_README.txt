@@ -16,7 +16,7 @@ getBloom -th
 | -c | --receipts | show only the receipt-level blooms (--raw only) |
 | -a | --bars | display blooms as bar chart instead of hex |
 | -i | --bits | display blooms as bits instead of hex |
-| -n | --bitcounts | display the number of bits lit per bloom |
+| -n | --bitcount | display the number of bits lit per bloom |
 
 #### Hidden options (shown during testing only)
 | -f | --force | force a re-write of the bloom to the cache |
