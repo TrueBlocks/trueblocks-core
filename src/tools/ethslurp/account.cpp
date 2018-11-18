@@ -217,14 +217,6 @@ string_q nextAccountChunk_custom(const string_q& fieldIn, const void *dataPtr) {
 //---------------------------------------------------------------------------
 bool CAccount::readBackLevel(CArchive& archive) {
 
-//x    address_t addr;
-//x    string_q header;
-//x    string_q displayString;
-//x    uint64_t pageSize;
-//x    uint64_t lastPage;
-//x    int64_t lastBlock;
-//x    uint64_t nVisible;
-//x    CTransactionArray transactions;
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE

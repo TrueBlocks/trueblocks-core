@@ -32,7 +32,7 @@ public:
     string_q data;
     uint64_t logIndex;
     CTopicArray topics;
-    string_q articulatedLog;
+    CStringArray articulatedLog;
 
 public:
     CLogEntry(void);
@@ -105,11 +105,10 @@ inline void CLogEntry::initialize(void) {
     data = "";
     logIndex = 0;
     topics.clear();
-    articulatedLog = "";
+    articulatedLog.clear();
 
     // EXISTING_CODE
     pReceipt = NULL;
-    articulatedLog = "";
     func = NULL;
     // EXISTING_CODE
 }
@@ -126,7 +125,6 @@ inline void CLogEntry::duplicate(const CLogEntry& lo) {
     articulatedLog = lo.articulatedLog;
 
     // EXISTING_CODE
-    articulatedLog = lo.articulatedLog;
     // no deep copy because it's const
     pReceipt = lo.pReceipt;
     func = (lo.func ? new CFunction(*lo.func) : NULL);

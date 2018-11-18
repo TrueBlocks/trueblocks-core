@@ -48,7 +48,7 @@ public:
     uint64_t isError;
     uint64_t isInternal;
     CReceipt receipt;
-    string_q articulatedTx;
+    CStringArray articulatedTx;
 
 public:
     CTransaction(void);
@@ -59,6 +59,7 @@ public:
     DECLARE_NODE(CTransaction);
 
     const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
+    const string_q getStringAt(const string_q& name, size_t i) const override;
 
     // EXISTING_CODE
     const CBlock *pBlock;
@@ -137,7 +138,7 @@ inline void CTransaction::initialize(void) {
     isError = 0;
     isInternal = 0;
     receipt.initialize();
-    articulatedTx = "";
+    articulatedTx.clear();
 
     // EXISTING_CODE
     pBlock = NULL;
