@@ -7,99 +7,9 @@ getBloom 4000001-4000003
     "transactions": [
         {
             "receipt": {
-                "logsBloom": "0x0"
-            },
-            "transactionIndex": "0"
-        },
-        {
-            "receipt": {
-                "logsBloom": "0x0"
-            },
-            "transactionIndex": "1"
-        },
-        {
-            "receipt": {
-                "logsBloom": "0x0"
-            },
-            "transactionIndex": "2"
-        },
-        {
-            "receipt": {
-                "logsBloom": "0x0"
-            },
-            "transactionIndex": "3"
-        },
-        {
-            "receipt": {
-                "logsBloom": "0x0"
-            },
-            "transactionIndex": "4"
-        },
-        {
-            "receipt": {
-                "logsBloom": "0x0"
-            },
-            "transactionIndex": "5"
-        },
-        {
-            "receipt": {
-                "logsBloom": "0x0"
-            },
-            "transactionIndex": "6"
-        },
-        {
-            "receipt": {
-                "logsBloom": "0x0"
-            },
-            "transactionIndex": "7"
-        },
-        {
-            "receipt": {
-                "logsBloom": "0x0"
-            },
-            "transactionIndex": "8"
-        },
-        {
-            "receipt": {
-                "logsBloom": "0x0"
-            },
-            "transactionIndex": "9"
-        },
-        {
-            "receipt": {
                 "logsBloom": "0x00000000000000000000000000000000000000000400000000000000000000000000000000000000000000000080000028000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000040000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002000000000000000000008000000000000000000000000000000000000000000000000000004100000000000000000000000000000400000000000000000000000"
             },
             "transactionIndex": "10"
-        },
-        {
-            "receipt": {
-                "logsBloom": "0x0"
-            },
-            "transactionIndex": "11"
-        },
-        {
-            "receipt": {
-                "logsBloom": "0x0"
-            },
-            "transactionIndex": "12"
-        },
-        {
-            "receipt": {
-                "logsBloom": "0x0"
-            },
-            "transactionIndex": "13"
-        },
-        {
-            "receipt": {
-                "logsBloom": "0x0"
-            },
-            "transactionIndex": "14"
-        },
-        {
-            "receipt": {
-                "logsBloom": "0x0"
-            },
-            "transactionIndex": "15"
         }
     ]
 },
@@ -112,54 +22,6 @@ getBloom 4000001-4000003
                 "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000008000004080000000000000000000000200000000000000000000000000000000004000000100000000000000000000010000000000000000000400000000000000000040000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002000000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
             },
             "transactionIndex": "0"
-        },
-        {
-            "receipt": {
-                "logsBloom": "0x0"
-            },
-            "transactionIndex": "1"
-        },
-        {
-            "receipt": {
-                "logsBloom": "0x0"
-            },
-            "transactionIndex": "2"
-        },
-        {
-            "receipt": {
-                "logsBloom": "0x0"
-            },
-            "transactionIndex": "3"
-        },
-        {
-            "receipt": {
-                "logsBloom": "0x0"
-            },
-            "transactionIndex": "4"
-        },
-        {
-            "receipt": {
-                "logsBloom": "0x0"
-            },
-            "transactionIndex": "5"
-        },
-        {
-            "receipt": {
-                "logsBloom": "0x0"
-            },
-            "transactionIndex": "6"
-        },
-        {
-            "receipt": {
-                "logsBloom": "0x0"
-            },
-            "transactionIndex": "7"
-        },
-        {
-            "receipt": {
-                "logsBloom": "0x0"
-            },
-            "transactionIndex": "8"
         }
     ]
 }
