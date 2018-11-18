@@ -47,7 +47,7 @@ public:
     uint64_t transactionPosition;
     string_q type;
     string_q error;
-    string_q articulatedTrace;
+    CStringArray articulatedTrace;
     CTraceAction action;
     CTraceResult result;
 
@@ -127,7 +127,7 @@ inline void CTrace::initialize(void) {
     transactionPosition = 0;
     type = "";
     error = "";
-    articulatedTrace = "";
+    articulatedTrace.clear();
     action.initialize();
     result.initialize();
 

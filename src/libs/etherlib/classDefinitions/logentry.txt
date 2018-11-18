@@ -1,6 +1,6 @@
 [settings]
 class     = CLogEntry
-fields    = address address|string data|uint64 logIndex|CTopicArray topics|string articulatedLog (nowrite)
+fields    = address address|string data|uint64 logIndex|CTopicArray topics|CStringArray articulatedLog (nowrite)
 includes  = abilib.h
 cIncs     = #include "etherlib.h"
 scope     = extern
