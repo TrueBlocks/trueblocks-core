@@ -40,6 +40,10 @@ function(run_test testName)
      run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
 endfunction(run_test)
 
+# Weird, but we have to call bloomMan here to seed the blooms into the cache so the test cases pass
+#run_the_test(${TEST_PATH} ${GOLD_PATH} "getBloom_preload1" ${EXECUTABLE_OUTPUT_PATH}/bloomMan " --rewrite 1958017 1995314 2501030-2501060 2768801 2769609")
+#run_the_test(${TEST_PATH} ${GOLD_PATH} "getBloom_preload2" ${EXECUTABLE_OUTPUT_PATH}/bloomMan " --rewrite 2799895 2872831 3076260 4501011 4501030-4501060")
+
 # Enter one line for each individual test
 run_test("getBloom_README"          "-th")
 run_test("getBloom_no_params"       )
