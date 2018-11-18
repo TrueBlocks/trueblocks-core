@@ -15,18 +15,18 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <algorithm>
-#include "safetransferfromtoken.h"
+#include "onerc721received.h"
 #include "etherlib.h"
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(QSafeTransferFromToken, CTransaction);
+IMPLEMENT_NODE(QOnERC721Received, CTransaction);
 
 //---------------------------------------------------------------------------
-static string_q nextSafetransferfromtokenChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextSafetransferfromtokenChunk_custom(const string_q& fieldIn, const void *dataPtr);
+static string_q nextOnerc721receivedChunk(const string_q& fieldIn, const void *dataPtr);
+static string_q nextOnerc721receivedChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void QSafeTransferFromToken::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QOnERC721Received::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -40,13 +40,13 @@ void QSafeTransferFromToken::Format(ostream& ctx, const string_q& fmtIn, void *d
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextSafetransferfromtokenChunk, this);
+        ctx << getNextChunk(fmt, nextOnerc721receivedChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextSafetransferfromtokenChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextOnerc721receivedChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const QSafeTransferFromToken *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QOnERC721Received *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -55,7 +55,7 @@ string_q nextSafetransferfromtokenChunk(const string_q& fieldIn, const void *dat
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QSafeTransferFromToken::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
+bool QOnERC721Received::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -64,8 +64,8 @@ bool QSafeTransferFromToken::setValueByName(const string_q& fieldName, const str
 
     switch (tolower(fieldName[0])) {
         case '_':
+            if ( fieldName % "_operator" ) { _operator = str_2_Addr(fieldValue); return true; }
             if ( fieldName % "_from" ) { _from = str_2_Addr(fieldValue); return true; }
-            if ( fieldName % "_to" ) { _to = str_2_Addr(fieldValue); return true; }
             if ( fieldName % "_tokenId" ) { _tokenId = str_2_Wei(fieldValue); return true; }
             if ( fieldName % "_data" ) { _data = toLower(fieldValue); return true; }
             break;
@@ -76,13 +76,13 @@ bool QSafeTransferFromToken::setValueByName(const string_q& fieldName, const str
 }
 
 //---------------------------------------------------------------------------------------------------
-void QSafeTransferFromToken::finishParse() {
+void QOnERC721Received::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QSafeTransferFromToken::Serialize(CArchive& archive) {
+bool QOnERC721Received::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -95,8 +95,8 @@ bool QSafeTransferFromToken::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
+    archive >> _operator;
     archive >> _from;
-    archive >> _to;
     archive >> _tokenId;
     archive >> _data;
     finishParse();
@@ -104,15 +104,15 @@ bool QSafeTransferFromToken::Serialize(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool QSafeTransferFromToken::SerializeC(CArchive& archive) const {
+bool QOnERC721Received::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
+    archive << _operator;
     archive << _from;
-    archive << _to;
     archive << _tokenId;
     archive << _data;
 
@@ -120,7 +120,7 @@ bool QSafeTransferFromToken::SerializeC(CArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, QSafeTransferFromTokenArray& array) {
+CArchive& operator>>(CArchive& archive, QOnERC721ReceivedArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -132,7 +132,7 @@ CArchive& operator>>(CArchive& archive, QSafeTransferFromTokenArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const QSafeTransferFromTokenArray& array) {
+CArchive& operator<<(CArchive& archive, const QOnERC721ReceivedArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -141,7 +141,7 @@ CArchive& operator<<(CArchive& archive, const QSafeTransferFromTokenArray& array
 }
 
 //---------------------------------------------------------------------------
-void QSafeTransferFromToken::registerClass(void) {
+void QOnERC721Received::registerClass(void) {
     static bool been_here = false;
     if (been_here) return;
     been_here = true;
@@ -149,38 +149,38 @@ void QSafeTransferFromToken::registerClass(void) {
     CTransaction::registerClass();
 
     size_t fieldNum = 1000;
-    ADD_FIELD(QSafeTransferFromToken, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(QSafeTransferFromToken, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(QSafeTransferFromToken, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(QSafeTransferFromToken, "cname", T_TEXT,  ++fieldNum);
-    ADD_FIELD(QSafeTransferFromToken, "_from", T_ADDRESS, ++fieldNum);
-    ADD_FIELD(QSafeTransferFromToken, "_to", T_ADDRESS, ++fieldNum);
-    ADD_FIELD(QSafeTransferFromToken, "_tokenId", T_NUMBER, ++fieldNum);
-    ADD_FIELD(QSafeTransferFromToken, "_data", T_TEXT, ++fieldNum);
+    ADD_FIELD(QOnERC721Received, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(QOnERC721Received, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QOnERC721Received, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(QOnERC721Received, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(QOnERC721Received, "_operator", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(QOnERC721Received, "_from", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(QOnERC721Received, "_tokenId", T_NUMBER, ++fieldNum);
+    ADD_FIELD(QOnERC721Received, "_data", T_TEXT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(QSafeTransferFromToken, "schema");
-    HIDE_FIELD(QSafeTransferFromToken, "deleted");
-    HIDE_FIELD(QSafeTransferFromToken, "showing");
-    HIDE_FIELD(QSafeTransferFromToken, "cname");
+    HIDE_FIELD(QOnERC721Received, "schema");
+    HIDE_FIELD(QOnERC721Received, "deleted");
+    HIDE_FIELD(QOnERC721Received, "showing");
+    HIDE_FIELD(QOnERC721Received, "cname");
 
-    builtIns.push_back(_biQSafeTransferFromToken);
+    builtIns.push_back(_biQOnERC721Received);
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextSafetransferfromtokenChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QSafeTransferFromToken *saf = reinterpret_cast<const QSafeTransferFromToken *>(dataPtr);
-    if (saf) {
+string_q nextOnerc721receivedChunk_custom(const string_q& fieldIn, const void *dataPtr) {
+    const QOnERC721Received *one = reinterpret_cast<const QOnERC721Received *>(dataPtr);
+    if (one) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, saf);
+                    return nextBasenodeChunk(fieldIn, one);
                 // EXISTING_CODE
                 // EXISTING_CODE
                 break;
@@ -194,7 +194,7 @@ string_q nextSafetransferfromtokenChunk_custom(const string_q& fieldIn, const vo
 }
 
 //---------------------------------------------------------------------------
-bool QSafeTransferFromToken::readBackLevel(CArchive& archive) {
+bool QOnERC721Received::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE
@@ -203,18 +203,18 @@ bool QSafeTransferFromToken::readBackLevel(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-string_q QSafeTransferFromToken::getValueByName(const string_q& fieldName) const {
+string_q QOnERC721Received::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
-    string_q ret = nextSafetransferfromtokenChunk_custom(fieldName, this);
+    string_q ret = nextOnerc721receivedChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
     // Return field values
     switch (tolower(fieldName[0])) {
         case '_':
+            if ( fieldName % "_operator" ) return addr_2_Str(_operator);
             if ( fieldName % "_from" ) return addr_2_Str(_from);
-            if ( fieldName % "_to" ) return addr_2_Str(_to);
             if ( fieldName % "_tokenId" ) return bnu_2_Str(_tokenId);
             if ( fieldName % "_data" ) return _data;
             break;
@@ -228,7 +228,7 @@ string_q QSafeTransferFromToken::getValueByName(const string_q& fieldName) const
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const QSafeTransferFromToken& item) {
+ostream& operator<<(ostream& os, const QOnERC721Received& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
