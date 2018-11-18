@@ -1,15 +1,10 @@
-/*-------------------------------------------------------------------------------------------
- * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+/*-------------------------------------------------------------------------
+ * This source code is confidential proprietary information which is
+ * Copyright (c) 2017 by Great Hill Corporation.
+ * All Rights Reserved
  *
- * This program is free software: you may redistribute it and/or modify it under the terms
- * of the GNU General Public License as published by the Free Software Foundation, either
- * version 3 of the License, or (at your option) any later version. This program is
- * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
- * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * General Public License for more details. You should have received a copy of the GNU General
- * Public License along with this program. If not, see http://www.gnu.org/licenses/.
- *-------------------------------------------------------------------------------------------*/
+ * The LICENSE at the root of this repo details your rights (if any)
+ *------------------------------------------------------------------------*/
 /*
  * This code was generated automatically from grabABI and makeClass. You may
  * edit the file, but keep your edits inside the 'EXISTING_CODE' tags.
@@ -197,105 +192,6 @@ const CTransaction *promoteToWallet(const CTransaction *p) {
 }
 
 //-----------------------------------------------------------------------
-bool articulateWallet(CTransaction *p) {
-
-    if (p && (p->input.length() >= 10 || p->input == "0x")) {
-        string_q encoding = extract(p->input, 0, 10);
-        string_q params   = extract(p->input, 10);
-        // EXISTING_CODE
-        // EXISTING_CODE
-
-        if (encoding == func_addOwner_qb) {
-            // function addOwner(address _owner)
-            // 0x7065cb48
-            p->func = new CFunction("addOwner");
-            p->func->inputs.push_back(CParameter("_owner", "address", str_2_Addr(extract(params, 0*64, 64))));
-            return true;
-
-        } else if (encoding == func_changeOwner_qb) {
-            // function changeOwner(address _from, address _to)
-            // 0xf00d4b5d
-            p->func = new CFunction("changeOwner");
-            p->func->inputs.push_back(CParameter("_from", "address", str_2_Addr(extract(params, 0*64, 64))));
-            p->func->inputs.push_back(CParameter("_to", "address", str_2_Addr(extract(params, 1*64, 64))));
-            return true;
-
-        } else if (encoding == func_changeRequirement_qb) {
-            // function changeRequirement(uint256 _newRequired)
-            // 0xba51a6df
-            p->func = new CFunction("changeRequirement");
-            p->func->inputs.push_back(CParameter("_newRequired", "uint256", str_2_Wei("0x" + extract(params, 0*64, 64))));
-            return true;
-
-        } else if (encoding == func_confirm_qb) {
-            // function confirm(bytes32 _h)
-            // 0x797af627
-            p->func = new CFunction("confirm");
-            p->func->inputs.push_back(CParameter("_h", "bytes32", extract(params, 0*64, 64)));
-            return true;
-
-        } else if (encoding == func_execute_qb) {
-            // function execute(address _to, uint256 _value, bytes _data)
-            // 0xb61d27f6
-            p->func = new CFunction("execute");
-            p->func->inputs.push_back(CParameter("_to", "address", str_2_Addr(extract(params, 0*64, 64))));
-            p->func->inputs.push_back(CParameter("_value", "uint256", str_2_Wei("0x" + extract(params, 1*64, 64))));
-            p->func->inputs.push_back(CParameter("_data", "bytes", extract(params, 2*64)));
-            return true;
-
-        } else if (encoding == func_isOwner_qb) {
-            // function isOwner(address _addr)
-            // 0x2f54bf6e
-            p->func = new CFunction("isOwner");
-            p->func->inputs.push_back(CParameter("_addr", "address", str_2_Addr(extract(params, 0*64, 64))));
-            return true;
-
-        } else if (encoding == func_kill_qb) {
-            // function kill(address _to)
-            // 0xcbf0b0c0
-            p->func = new CFunction("kill");
-            p->func->inputs.push_back(CParameter("_to", "address", str_2_Addr(extract(params, 0*64, 64))));
-            return true;
-
-        } else if (encoding == func_removeOwner_qb) {
-            // function removeOwner(address _owner)
-            // 0x173825d9
-            p->func = new CFunction("removeOwner");
-            p->func->inputs.push_back(CParameter("_owner", "address", str_2_Addr(extract(params, 0*64, 64))));
-            return true;
-
-        } else if (encoding == func_resetSpentToday_qb) {
-            // function resetSpentToday()
-            // 0x5c52c2f5
-            // p->func = new CFunction("resetSpentToday");
-            return true;
-
-        } else if (encoding == func_revoke_qb) {
-            // function revoke(bytes32 _operation)
-            // 0xb75c7dc6
-            p->func = new CFunction("revoke");
-            p->func->inputs.push_back(CParameter("_operation", "bytes32", extract(params, 0*64, 64)));
-            return true;
-
-        } else if (encoding == func_setDailyLimit_qb) {
-            // function setDailyLimit(uint256 _newLimit)
-            // 0xb20d30a9
-            p->func = new CFunction("setDailyLimit");
-            p->func->inputs.push_back(CParameter("_newLimit", "uin256", str_2_Wei("0x" + extract(params, 0*64, 64))));
-            return true;
-
-        }
-        // falls through
-    }
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    // If we haven't found the thing, we can send back an extended thing
-    return new CTransaction(*p);
-}
-
-//-----------------------------------------------------------------------
 const string_q evt_Confirmation_qb = "0xe1c52dc63b719ade82e8bea94cc41a0d5d28e4aaf536adb5e9cccc9ff8c1aeda";
 const string_q evt_ConfirmationNeeded_qb = "0x1733cbb53659d713b79580f79f3f9ff215f78a7c7aa45890f3b89fc5cddfbf32";
 const string_q evt_Deposit_qb = "0xe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c";
@@ -325,7 +221,6 @@ const CLogEntry *promoteToWalletEvent(const CLogEntry *p) {
         params += data;
         // EXISTING_CODE
         // EXISTING_CODE
-
         if (topic_2_Str(p->topics[0]) % evt_Confirmation_qb) {
             // event Confirmation(address owner, bytes32 operation)
             // 0xe1c52dc63b719ade82e8bea94cc41a0d5d28e4aaf536adb5e9cccc9ff8c1aeda
@@ -466,6 +361,100 @@ const CLogEntry *promoteToWalletEvent(const CLogEntry *p) {
     // If we haven't found the thing, we can send back an extended thing
     return new CLogEntry(*p);
 }
+// EXISTING_CODE
+//-----------------------------------------------------------------------
+bool articulateWallet(CTransaction *p) {
+
+    if (p && (p->input.length() >= 10 || p->input == "0x")) {
+        string_q encoding = extract(p->input, 0, 10);
+        string_q params   = extract(p->input, 10);
+
+        if (encoding == func_addOwner_qb) {
+            // function addOwner(address _owner)
+            // 0x7065cb48
+            p->func = new CFunction("addOwner");
+            p->func->inputs.push_back(CParameter("_owner", "address", str_2_Addr(extract(params, 0*64, 64))));
+            return true;
+
+        } else if (encoding == func_changeOwner_qb) {
+            // function changeOwner(address _from, address _to)
+            // 0xf00d4b5d
+            p->func = new CFunction("changeOwner");
+            p->func->inputs.push_back(CParameter("_from", "address", str_2_Addr(extract(params, 0*64, 64))));
+            p->func->inputs.push_back(CParameter("_to", "address", str_2_Addr(extract(params, 1*64, 64))));
+            return true;
+
+        } else if (encoding == func_changeRequirement_qb) {
+            // function changeRequirement(uint256 _newRequired)
+            // 0xba51a6df
+            p->func = new CFunction("changeRequirement");
+            p->func->inputs.push_back(CParameter("_newRequired", "uint256", str_2_Wei("0x" + extract(params, 0*64, 64))));
+            return true;
+
+        } else if (encoding == func_confirm_qb) {
+            // function confirm(bytes32 _h)
+            // 0x797af627
+            p->func = new CFunction("confirm");
+            p->func->inputs.push_back(CParameter("_h", "bytes32", extract(params, 0*64, 64)));
+            return true;
+
+        } else if (encoding == func_execute_qb) {
+            // function execute(address _to, uint256 _value, bytes _data)
+            // 0xb61d27f6
+            p->func = new CFunction("execute");
+            p->func->inputs.push_back(CParameter("_to", "address", str_2_Addr(extract(params, 0*64, 64))));
+            p->func->inputs.push_back(CParameter("_value", "uint256", str_2_Wei("0x" + extract(params, 1*64, 64))));
+            p->func->inputs.push_back(CParameter("_data", "bytes", extract(params, 2*64)));
+            return true;
+
+        } else if (encoding == func_isOwner_qb) {
+            // function isOwner(address _addr)
+            // 0x2f54bf6e
+            p->func = new CFunction("isOwner");
+            p->func->inputs.push_back(CParameter("_addr", "address", str_2_Addr(extract(params, 0*64, 64))));
+            return true;
+
+        } else if (encoding == func_kill_qb) {
+            // function kill(address _to)
+            // 0xcbf0b0c0
+            p->func = new CFunction("kill");
+            p->func->inputs.push_back(CParameter("_to", "address", str_2_Addr(extract(params, 0*64, 64))));
+            return true;
+
+        } else if (encoding == func_removeOwner_qb) {
+            // function removeOwner(address _owner)
+            // 0x173825d9
+            p->func = new CFunction("removeOwner");
+            p->func->inputs.push_back(CParameter("_owner", "address", str_2_Addr(extract(params, 0*64, 64))));
+            return true;
+
+        } else if (encoding == func_resetSpentToday_qb) {
+            // function resetSpentToday()
+            // 0x5c52c2f5
+            // p->func = new CFunction("resetSpentToday");
+            return true;
+
+        } else if (encoding == func_revoke_qb) {
+            // function revoke(bytes32 _operation)
+            // 0xb75c7dc6
+            p->func = new CFunction("revoke");
+            p->func->inputs.push_back(CParameter("_operation", "bytes32", extract(params, 0*64, 64)));
+            return true;
+
+        } else if (encoding == func_setDailyLimit_qb) {
+            // function setDailyLimit(uint256 _newLimit)
+            // 0xb20d30a9
+            p->func = new CFunction("setDailyLimit");
+            p->func->inputs.push_back(CParameter("_newLimit", "uin256", str_2_Wei("0x" + extract(params, 0*64, 64))));
+            return true;
+
+        }
+        // falls through
+    }
+
+    // If we haven't found the thing, we can send back an extended thing
+    return new CTransaction(*p);
+}
 
 //-----------------------------------------------------------------------
 bool articulateWalletEvent(CLogEntry *p) {
@@ -473,8 +462,6 @@ bool articulateWalletEvent(CLogEntry *p) {
     size_t nTops = p->topics.size();
     if (nTops > 0) {  // the '0'th topic is the event signature
         string_q data = extract(p->data, 2);
-        // EXISTING_CODE
-        // EXISTING_CODE
 
         if (topic_2_Str(p->topics[0]) % evt_Confirmation_qb) {
             // event Confirmation(address owner, bytes32 operation)
@@ -565,12 +552,10 @@ bool articulateWalletEvent(CLogEntry *p) {
         // fall through
     }
 
-    // EXISTING_CODE
-    // EXISTING_CODE
-
     // If we haven't found the thing, we can send back an extended thing
     return new CLogEntry(*p);
 }
+// EXISTING_CODE
 
 /*
  ABI for addr : 0xWalletLib
