@@ -389,6 +389,14 @@ namespace qblocks {
         string_q orig;
         asciiFileToString(fileName, orig);
         string_q existingCode = substitute(orig, "//EXISTING_CODE", "// EXISTING_CODE");
+        string_q checkCode = existingCode;
+        uint64_t cnt = 0;
+        while (contains(checkCode, "// EXISTING_CODE")) {
+            replace(checkCode, "// EXISTING_CODE", "");
+            cnt++;
+        }
+        if ((cnt %2))
+            codeOut = "#error \"Uneven number of EXISTING_CODE blocks in the file.\"\n" + codeOut;
         if (spaces) {
             replaceAll(existingCode, "    ", "\t");
             replaceAll(codeOut,      "    ", "\t");
