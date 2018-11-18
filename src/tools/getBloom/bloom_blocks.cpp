@@ -55,12 +55,13 @@ CBloomTrans::CBloomTrans(void) {
         ADD_FIELD(CBloomTrans, "hash", T_TEXT, 1);
         ADD_FIELD(CBloomTrans, "receipt", T_OBJECT, 2);
         ADD_FIELD(CBloomTrans, "transactionIndex", T_TEXT, 3);
+        HIDE_FIELD(CBloomTrans, "hash");
         been_here = true;
     }
 }
 bool CBloomTrans::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
-    if (fieldName == "transactionIndex"   ) { transactionIndex = str_2_Uint(fieldValue); return true; }
     if (fieldName == "hash"   ) { hash = fieldValue; return true; }
+    if (fieldName == "transactionIndex"   ) { transactionIndex = str_2_Uint(fieldValue); return true; }
     return true;
 }
 string_q CBloomTrans::getValueByName(const string_q& fieldName) const {
@@ -85,15 +86,18 @@ CBloomBlock::CBloomBlock(void) {
     static bool been_here = false;
     if (!been_here) {
         ADD_FIELD(CBloomBlock, "bitCount", T_NUMBER, 1);
-        ADD_FIELD(CBloomBlock, "logsBloom", T_TEXT, 2);
-        ADD_FIELD(CBloomBlock, "number", T_TEXT, 3);
-        ADD_FIELD(CBloomBlock, "transactions", T_OBJECT|TS_ARRAY, 4);
+        ADD_FIELD(CBloomBlock, "sizeInBytes", T_NUMBER, 2);
+        ADD_FIELD(CBloomBlock, "logsBloom", T_TEXT, 3);
+        ADD_FIELD(CBloomBlock, "number", T_TEXT, 4);
+        ADD_FIELD(CBloomBlock, "transactions", T_OBJECT|TS_ARRAY, 5);
         HIDE_FIELD(CBloomBlock, "bitCount");
+        HIDE_FIELD(CBloomBlock, "sizeInBytes");
         been_here = true;
     }
 }
 bool CBloomBlock::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
-    if (fieldName == "bitCount"   ) { /* nothing to do */ return true; }
+    if (fieldName == "bitCount"    ) { /* nothing to do */ return true; }
+    if (fieldName == "sizeInBytes" ) { /* nothing to do */ return true; }
     if (fieldName == "logsBloom"   ) { logsBloom    = fieldValue; return true; }
     if (fieldName == "number"      ) { number       = str_2_Uint(fieldValue); return true; }
     if (fieldName == "transactions") {
@@ -113,7 +117,13 @@ bool CBloomBlock::setValueByName(const string_q& fieldName, const string_q& fiel
     return true;
 }
 string_q CBloomBlock::getValueByName(const string_q& fieldName) const {
-    if (fieldName == "bitCount"   ) return uint_2_Str(bitsTwiddled(str_2_Wei(logsBloom)));
+    if (fieldName == "bitCount"    ) return uint_2_Str(bitsTwiddled(str_2_Wei(logsBloom)));
+    if (fieldName == "sizeInBytes" ) {
+        uint64_t cnt = small(logsBloom).size();
+        for (size_t i = 0 ; i < transactions.size() ; i++)
+            cnt += small(transactions[i].receipt.logsBloom).size();
+        return uint_2_Str((cnt - 2) / 2); // ignore 0x and size in bytes (to be fair)
+    }
     if (fieldName == "logsBloom"   ) return small(logsBloom);
     if (fieldName == "number"      ) return uint_2_Str(number);
     if (fieldName == "transactionsCnt") return uint_2_Str(transactions.size());

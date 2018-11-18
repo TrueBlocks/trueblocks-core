@@ -38,13 +38,14 @@ public:
     const CBaseNode *getObjectAt(const string_q& name, size_t i) const override;
 };
 IMPLEMENT_UNUSED(CBloomTrans);
+typedef vector<CBloomTrans> CBloomTransArray;
 
 //-----------------------------------------------------------------------------
 class CBloomBlock : public CBaseNode {
 public:
     string_q logsBloom;
     blknum_t number;
-    vector<CBloomTrans> transactions;
+    CBloomTransArray transactions;
     DECLARE_NODE(CBloomBlock);
     CBloomBlock(void);
     const CBaseNode *getObjectAt(const string_q& name, size_t i) const override;
