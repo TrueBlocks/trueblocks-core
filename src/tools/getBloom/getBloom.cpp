@@ -36,7 +36,7 @@ int main(int argc, const char * argv[]) {
             blknum_t bn = str_2_Uint(nextTokenClear(list, '|'));
             string_q result = doOneBloom(bn, options);
             cout << result;
-            if (!options.asBars) {
+            if (!options.asBars && !options.asBitBars && !options.asPctBars) {
                 if (!list.empty())
                     cout << ",";
                 cout << "\n";
@@ -70,7 +70,7 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
         }
 
         if (opt.receiptsOnly) {
-            HIDE_FIELD(CBloomBlock, "number");
+            //HIDE_FIELD(CBloomBlock, "number");
             HIDE_FIELD(CBloomBlock, "logsBloom");
         }
 
@@ -90,18 +90,47 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
 
         if (opt.asBars) {
             ostringstream os;
-            if (opt.receiptsOnly)
-                os << "\n" << string_q(90, '-') << " " << rawBlock.number << string_q(90, '-') << "\n";
-            else
-                os << num << ": ";
+            os << num << ": ";
             bloom_t bloom = str_2_BigUint(rawBlock.logsBloom);
             os << bloom_2_Bar(bloom) << "\n";
-            for (size_t i = 0 ; i < rawBlock.transactions.size() ; i++) {
-                if (opt.receiptsOnly) {
+            if (opt.receiptsOnly) {
+                for (size_t i = 0 ; i < rawBlock.transactions.size() ; i++) {
                     bloom = str_2_BigUint(rawBlock.transactions[i].receipt.logsBloom);
                     string_q x = bloom_2_Bar(bloom);
                     if (!x.empty())
-                        os << x << "\n";
+                        os << padLeft("", 9) << x << "\n";
+                }
+            }
+            return os.str().c_str();
+        }
+
+        if (opt.asBitBars) {
+            ostringstream os;
+            os << num << ": ";
+            bloom_t bloom = str_2_BigUint(rawBlock.logsBloom);
+            os << string_q(bitsTwiddled(bloom), '-') << "\n";
+            if (opt.receiptsOnly) {
+                for (size_t i = 0 ; i < rawBlock.transactions.size() ; i++) {
+                    bloom = str_2_BigUint(rawBlock.transactions[i].receipt.logsBloom);
+                    string_q x = string_q(bitsTwiddled(bloom), '-') ;
+                    if (!x.empty())
+                        os << padLeft("", 9) << x << "\n";
+                }
+            }
+            return os.str().c_str();
+        }
+
+        if (opt.asPctBars) {
+            ostringstream os;
+            os << num << ": ";
+            bloom_t bloom = str_2_BigUint(rawBlock.logsBloom);
+            os << string_q(bitsTwiddled(bloom) * 200 / 1024, '-') << "\n";
+            if (opt.receiptsOnly) {
+                for (size_t i = 0 ; i < rawBlock.transactions.size() ; i++) {
+                    bloom = str_2_BigUint(rawBlock.transactions[i].receipt.logsBloom);
+                    string_q x = string_q(bitsTwiddled(bloom) * 200 / 1024, '-') ;
+                    if (!x.empty())
+                        os << padLeft("", 9) << x << "\n";
                 }
             }
             return os.str().c_str();
@@ -125,6 +154,27 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
                 string_q head = (i == 0 ? uint_2_Str(num) + ": " : "");
                 os << padLeft(head, 9) << bloom_2_Bar(blooms[i]) << "\n";
             }
+            return os.str().c_str();
+        }
+
+        if (opt.asBitBars) {
+            ostringstream os;
+            for (size_t i = 0 ; i < blooms.size() ; i++) {
+                string_q head = (i == 0 ? uint_2_Str(num) + ": " : "");
+                os << padLeft(head, 9) << string_q(bitsTwiddled(blooms[i]), '-') << "\n";
+            }
+            return os.str().c_str();
+        }
+
+        if (opt.asPctBars) {
+            ostringstream os;
+            bloom_t all = 0;
+            for (size_t i = 0 ; i < blooms.size() ; i++)
+                all = joinBloom(all, blooms[i]);
+            os << padLeft(uint_2_Str(num), 9) << ": ";
+            if (blooms.size())
+                os << string_q(bitsTwiddled(all) * 200 / (1024 * blooms.size()), '-');
+            os << "\n";
             return os.str().c_str();
         }
 
