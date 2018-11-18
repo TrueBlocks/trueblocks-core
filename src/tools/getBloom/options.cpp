@@ -19,8 +19,10 @@ static COption params[] = {
     COption("-eab",         "pull the enhanced adaptive blooms from QBlocks cache"),
     COption("-block",       "show only the block-level bloom (--raw only)"),
     COption("-re(c)eipts",  "show only the receipt-level blooms (--raw only)"),
-    COption("-b(a)rs",      "display blooms as bar chart instead of hex"),
     COption("-b(i)ts",      "display blooms as bits instead of hex"),
+    COption("-b(a)rs",      "display blooms as bar chart instead of hex"),
+    COption("-bitbar(s)",   "display nBits as a bar chart"),
+    COption("-pctbars",     "display nBits as a percentage of bloom space"),
     COption("-bitcou(n)t",  "display the number of bits lit per bloom"),
     COption("@force",       "force a re-write of the bloom to the cache"),
     COption("",             "Returns bloom filter(s) from running node (the default) or as EAB from QBlocks.\n"),
@@ -38,7 +40,6 @@ bool COptions::parseArguments(string_q& command) {
     while (!command.empty()) {
 
         string_q arg = nextTokenClear(command, ' ');
-
         if (arg == "-o" || arg == "--force") {
             etherlib_init("binary");
             force = true;
@@ -64,13 +65,15 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-a" || arg == "--bars") {
             asBars = true;
-            if (asBits)
-                return usage("Please choose either --bits or --bars, not both. Quitting...");
 
         } else if (arg == "-i" || arg == "--bits") {
             asBits = true;
-            if (asBars)
-                return usage("Please choose either --bits or --bars, not both. Quitting...");
+
+        } else if (arg == "-s" || arg == "--bitbars") {
+            asBitBars = true;
+
+        } else if (arg == "-p" || arg == "--pctbars") {
+            asPctBars = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg))
@@ -86,6 +89,9 @@ bool COptions::parseArguments(string_q& command) {
             }
         }
     }
+
+    if (asBits + asBars + asBitBars + asPctBars > 1)
+        return usage("Only one of --bits, --bars, --barbits, or --pctbars may be chosen. Quitting...");
 
     if (!blocks.hasBlocks())
         return usage("You must specify at least one block number or block hash. Quitting...");
@@ -108,6 +114,8 @@ void COptions::Init(void) {
     isRaw        = true;
     asBits       = false;
     asBars       = false;
+    asBitBars    = false;
+    asPctBars    = false;
     bitCount     = false;
     force        = false;
     receiptsOnly = false;

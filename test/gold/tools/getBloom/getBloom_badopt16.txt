@@ -1,7 +1,7 @@
-getBloom argc: 5 [1:4501030] [2:--eab] [3:--receipts] [4:--bitcount] 
-getBloom 4501030 --eab --receipts --bitcount 
+getBloom argc: 4 [1:4501030] [2:--bars] [3:--bitbars] 
+getBloom 4501030 --bars --bitbars 
 
-  --eab and --receipts options are not allowed together. Choose one. Quitting...
+  Only one of --bits, --bars, --barbits, or --pctbars may be chosen. Quitting...
 
   Usage:    getBloom [-r|-e|-b|-c|-i|-a|-s|-p|-n|-v|-h] <block> [block...]  
   Purpose:  Returns bloom filter(s) from running node (the default) or as EAB from QBlocks.
