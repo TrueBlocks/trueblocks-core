@@ -1,8 +1,7 @@
 isContract argc: 2 [1:0x90e63c3d53e0ea496845b7a03ec7548b70014a923] 
 isContract 0x90e63c3d53e0ea496845b7a03ec7548b70014a923 
 
-  0x90e63c3d53e0ea496845b7a03ec7548b70014a923 does not appear to be a valid Ethereum address.
-
+  0x90e63c3d53e0ea496845b7a03ec7548b70014a923 does not appear to be a valid Ethereum address. Quitting...
 
   Usage:    isContract [-d|-b|-n|-w|-v|-h] <address> [address...]  
   Purpose:  Returns 'true' or 'false' if the given address(es) holds byte code (optionally displays the code).
