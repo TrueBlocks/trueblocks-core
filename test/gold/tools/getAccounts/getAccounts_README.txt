@@ -13,3 +13,7 @@ getAccounts -th
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
+`Notes:`
+
+- To customize this list add an `extra_accounts` section to the config file (see documentation).
+
