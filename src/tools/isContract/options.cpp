@@ -30,6 +30,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
+    blknum_t latestBlock = getLatestBlockFromClient();
     Init();
     while (!command.empty()) {
 
@@ -52,12 +53,26 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
 
-         } else {
-
-             if (!isAddress(arg))
-                 return usage(arg + " does not appear to be a valid Ethereum address.\n");
+        } else if (isHash(arg)) {
+            string_q ret = blocks.parseBlockList(arg, latestBlock);
+            if (endsWith(ret, "\n")) {
+                cerr << "\n  " << ret << "\n";
+                return false;
+            } else if (!ret.empty()) {
+                return usage(ret);
+            }
+        } else if (startsWith(arg, "0x")) {
+            if (!isAddress(arg))
+                return usage(arg + " does not appear to be a valid Ethereum address. Quitting...");
             addrs.push_back(str_2_Addr(toLower(arg)));
-
+        } else {
+            string_q ret = blocks.parseBlockList(arg, latestBlock);
+            if (endsWith(ret, "\n")) {
+                cerr << "\n  " << ret << "\n";
+                return false;
+            } else if (!ret.empty()) {
+                return usage(ret);
+            }
         }
     }
 
