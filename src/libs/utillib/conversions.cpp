@@ -12,9 +12,7 @@
  *-------------------------------------------------------------------------------------------*/
 #include "biglib.h"
 #include "conversions.h"
-#include <iomanip> // setprecision
-#include <sstream> // stringstream
-
+#include <iomanip>
 
 // TODO(tjayrush): inline these conversions
 
