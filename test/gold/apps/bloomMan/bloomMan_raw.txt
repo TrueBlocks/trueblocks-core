@@ -4,6 +4,5 @@ getBloom argc: 2 [1:3231401]
 getBloom 3231401 
 {
     "logsBloom": "0x0",
-    "number": "3231401",
-    "transactions": []
+    "number": "3231401"
 }
