@@ -12,7 +12,6 @@
  *-------------------------------------------------------------------------------------------*/
 #include "biglib.h"
 #include "conversions.h"
-#include <iomanip>
 
 // TODO(tjayrush): inline these conversions
 
@@ -261,8 +260,7 @@ namespace qblocks {
     string_q double_2_Str(double f, size_t nDecimals) {
         stringstream stream;
         stream << fixed << setprecision((int)nDecimals) << f;
-        std::string output = stream.str();
-        return output;
+        return stream.str();
     }
 
     //--------------------------------------------------------------------------------
