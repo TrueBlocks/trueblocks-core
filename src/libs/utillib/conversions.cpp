@@ -12,6 +12,9 @@
  *-------------------------------------------------------------------------------------------*/
 #include "biglib.h"
 #include "conversions.h"
+#include <iomanip> // setprecision
+#include <sstream> // stringstream
+
 
 // TODO(tjayrush): inline these conversions
 
@@ -258,14 +261,10 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     string_q double_2_Str(double f, size_t nDecimals) {
-        char s[100], r[100];
-        memset(s, '\0', 100);
-        memset(r, '\0', 100);
-        sprintf(s, "%.*g", (int)nDecimals, ((int64_t)(  pow(10, nDecimals) * (  fabs(f) - labs( (int64_t) f )  )  + 0.5)) / pow(10,nDecimals));  // NOLINT
-        if (strchr(s, 'e'))
-            s[1] = '\0';
-        sprintf(r, "%d%s", static_cast<int>(f), s+1);  // NOLINT
-        return string_q(r);
+        stringstream stream;
+        stream << fixed << setprecision((int)nDecimals) << f;
+        std::string output = stream.str();
+        return output;
     }
 
     //--------------------------------------------------------------------------------
