@@ -42,6 +42,7 @@
 #include <map>
 #include <tuple>
 #include <chrono>
+#include <iomanip>
 
 //-------------------------------------------------------------------------
 using namespace std;  // NOLINT
