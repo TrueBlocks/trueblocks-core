@@ -14,7 +14,7 @@
 
 //---------------------------------------------------------------------------------------------------
 static COption params[] = {
-    COption("~mode", "a number between 0 and 3 inclusive"),
+    COption("~mode", "a number between 0 and 4 inclusive"),
     COption("",      "Test all the ridiculous conversions from whatever2Whatever.\n"),
 };
 static size_t nParams = sizeof(params) / sizeof(COption);
