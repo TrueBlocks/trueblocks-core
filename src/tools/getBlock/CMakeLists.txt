@@ -81,6 +81,7 @@ run_test("getBlock_parity_num"   "--parity"       " 728708")
 run_special_test("getBlock_parity_range" "--parity"       " 358450-0x5785a")
 
 run_test("getBlock_force_02"                  " 2769609" " 2799895" " 2872831" " 3076260" " -o")
+run_test("getBlock_force_fail"                " 2769609" " 2799895" " 2872831" " 3076260" " -o" " --uniqTx")
 run_test("getBlock_multi1"   "--parity" " -r" " 2769609" " 2799895" " 2872831" " 3076260")
 run_test("getBlock_multi2"   "--parity" " -d" " 2769609" " 2799895" " 2872831" " 3076260")
 
