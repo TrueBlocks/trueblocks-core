@@ -28,7 +28,8 @@ void CBlockOptions::Init(void) {
 uint64_t findBlockNumByHash(const hash_t& hash, void *data) {
     ASSERT(isHash(hash));
     CBlock block;
-    if (!getBlock(block, hash)) {
+    getBlock(block, hash);  // getBlock returns true if it has transactions and false otherwise
+    if (block.hash != hash) {
         cerr << "Block hash '" << hash << "' does not appear to be a valid block hash. Quitting...";
         exit(0);
     }
