@@ -256,6 +256,9 @@ bool COptions::parseArguments(string_q& command) {
     if (counting && (filterType.empty()))
         return usage("--number option is only available with either --addrs or --uniq. Quitting...");
 
+    if (!filterType.empty() && force)
+        return usage("The --force option is not available when using one of the address options. Quitting...");
+
     if (!blocks.hasBlocks())
         return usage("You must specify at least one block. Quitting...");
 

@@ -16,7 +16,7 @@
 //------------------------------------------------------------
 int main(int argc, const char * argv[]) {
 
-    etherlib_init();
+    etherlib_init(quickQuitHandler);
 
     // We want to get the latestBlock prior to turning on --prove for example
     COptions options;
