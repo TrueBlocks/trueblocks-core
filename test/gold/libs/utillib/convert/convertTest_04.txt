@@ -1,0 +1,15 @@
+convert argc: 2 [1:4] 
+convert 4 
+0. Running TestConverts_4
+	000.000 double_2_Str1                    ==> passed 'double_2_Str(14.15019, 5)' is equal to '"14.15019"'
+	000.001 double_2_Str2                    ==> passed 'double_2_Str(14.15019, 3)' is equal to '"14.150"'
+	000.002 double_2_Str3                    ==> passed 'double_2_Str(10586816.10315913591, 10)' is equal to '"10586816.1031591352"'
+	000.003 double_2_Str4                    ==> passed 'double_2_Str(10586816.10315913591, 2)' is equal to '"10586816.10"'
+	000.004 double_2_Str5                    ==> passed 'double_2_Str(1050, 3)' is equal to '"1050.000"'
+	000.005 double_2_Str6                    ==> passed 'double_2_Str(0.150100005, 9)' is equal to '"0.150100005"'
+	000.006 double_2_Str1                    ==> passed 'double_2_Str(-14.15019, 5)' is equal to '"-14.15019"'
+	000.007 double_2_Str2                    ==> passed 'double_2_Str(-14.15019, 3)' is equal to '"-14.150"'
+	000.008 double_2_Str3                    ==> passed 'double_2_Str(-10586816.10315913591, 10)' is equal to '"-10586816.1031591352"'
+	000.009 double_2_Str4                    ==> passed 'double_2_Str(-10586816.10315913591, 2)' is equal to '"-10586816.10"'
+	000.010 double_2_Str5                    ==> passed 'double_2_Str(-1050, 3)' is equal to '"-1050.000"'
+	000.011 double_2_Str6                    ==> passed 'double_2_Str(-0.150100005, 9)' is equal to '"-0.150100005"'
