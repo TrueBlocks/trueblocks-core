@@ -33,7 +33,7 @@ You may name your own blocks (for example, to denote the start of an ICO perhaps
   - daofund (1428756), daohack (1718497), daofork (1920000), devcon2 (2286910)
   - tangerine (2463000), spurious (2675000), stateclear (2717576), eea (3265360)
   - ens2 (3327417), parityhack1 (4041179), byzantium (4370000), devcon3 (4469339)
-  - parityhack2 (4501969), constantinople (tbd), latest (--)
+  - parityhack2 (4501969), kitties(4605167), constantinople (tbd), latest (--)
 
 #### Other Options
 
