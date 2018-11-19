@@ -58,6 +58,7 @@ void COptions::Init(void) {
 
     paramsPtr = params;
     nParamsRef = nParams;
+    pOptions = this;
 
     fromNamed = false;
     fromScraper = false;
@@ -80,4 +81,11 @@ COptions::COptions(void) {
                 substitute(string_q(STR_DEFAULT_NAMEDATA), " |", "|"), "|", "\t"));
     loadNames();
     Init();
+}
+
+//--------------------------------------------------------------------------------
+string_q COptions::postProcess(const string_q& which, const string_q& str) const {
+    if (which == "notes" && (verbose || COptions::isReadme))
+        return "To customize this list add an [{extra_accounts}] section to the config file (see documentation).\n";
+    return str;
 }
