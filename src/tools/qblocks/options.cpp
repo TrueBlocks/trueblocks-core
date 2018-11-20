@@ -16,7 +16,7 @@
 //---------------------------------------------------------------------------------------------------
 static COption params[] = {
     COption("~cmd",        "one of {cmds}"),
-    COption("~sub_cmd(s)", "sub-command[s] for <cmd>. Use qblock cmd --help for help on the cmd"),
+    COption("~options(s)", "optiosn sent to <cmd>. Use 'qblock cmd --help' for help on <cmd>"),
     COption("",            "Overarching command for all QBlocks tools.\n"),
 };
 static size_t nParams = sizeof(params) / sizeof(COption);
@@ -37,7 +37,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (!findToolName(toolName, cmd))
-        return usage("Sub-command must be one of [" + toolNicknames() + "]. Quitting...");
+        return usage("Command must be one of [" + toolNicknames() + "]. Quitting...");
     return true;
 }
 
@@ -59,9 +59,10 @@ COptions::COptions(void) {
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
     if (which == "options") {
-        return substitute(str, "cmd sub_cmds", "<cmd> <sub_cmds>");
+        return substitute(str, "cmd options", "<cmd> <options>");
     } else if (which == "oneDescription") {
-        return substitute(str, "{cmds}", "[ " + substitute(toolNicknames(), "|", " | ") + " ]");
+        string_q list = toolNicknames();
+        return substitute(substitute(substitute(str," (required)",""), "{cmds}", "[" + list + "]"), "|]", "]");
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
         return "You may add you own commands by entering a value in the config file.";
     }
