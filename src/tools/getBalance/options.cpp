@@ -69,7 +69,7 @@ bool COptions::parseArguments(string_q& command) {
                 if (!isAddress(line))
                     return usage(line + " does not appear to be a valid "
                                         "Ethereum address. Quitting...");
-                addrs.push_back(line);
+                addrs.push_back(toLower(line));
             }
 
         } else if (startsWith(arg, '-')) {  // do not collapse
@@ -91,7 +91,7 @@ bool COptions::parseArguments(string_q& command) {
 
             if (!isAddress(arg))
                 return usage(arg + " does not appear to be a valid Ethereum address. Quitting...");
-            addrs.push_back(arg);
+            addrs.push_back(toLower(arg));
 
         } else {
 
