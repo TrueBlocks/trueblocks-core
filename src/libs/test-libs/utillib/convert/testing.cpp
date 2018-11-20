@@ -184,6 +184,7 @@ TEST_F(CThisTest, TestConverts_4) {
         ASSERT_EQ("double_2_Str10", double_2_Str(-10586816.10315913591, 2), "-10586816.10")
         ASSERT_EQ("double_2_Str11", double_2_Str(-1050, 3), "-1050.000")
         ASSERT_EQ("double_2_Str12", double_2_Str(-0.150100005, 9), "-0.150100005")
+
         //ASSERT_EQ("double_2_Str13", double_2_Str(10586816.10315913591, 11), "10586816.10315913591")
 
         // Significant figures
@@ -192,7 +193,7 @@ TEST_F(CThisTest, TestConverts_4) {
         ASSERT_EQ("double_2_Str15", double_2_Str(0.000000000), "0")
 
         ASSERT_EQ("addr_2_Str1", addr_2_Str("0x281055afc982d96fab65b3a49cac8b878184cb16"), "0x281055afc982d96fab65b3a49cac8b878184cb16")
-        
+
 
         return true;
     }}
