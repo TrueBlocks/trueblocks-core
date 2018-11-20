@@ -178,12 +178,17 @@ TEST_F(CThisTest, TestConverts_4) {
         ASSERT_EQ("double_2_Str4", double_2_Str(10586816.10315913591, 2), "10586816.10")
         ASSERT_EQ("double_2_Str5", double_2_Str(1050, 3), "1050.000")
         ASSERT_EQ("double_2_Str6", double_2_Str(0.150100005, 9), "0.150100005")
-        ASSERT_EQ("double_2_Str1", double_2_Str(-14.15019, 5), "-14.15019")
-        ASSERT_EQ("double_2_Str2", double_2_Str(-14.15019, 3), "-14.150")
-        ASSERT_EQ("double_2_Str3", double_2_Str(-10586816.10315913591, 10), "-10586816.1031591352") // should be 10586816.1031591359???
-        ASSERT_EQ("double_2_Str4", double_2_Str(-10586816.10315913591, 2), "-10586816.10")
-        ASSERT_EQ("double_2_Str5", double_2_Str(-1050, 3), "-1050.000")
-        ASSERT_EQ("double_2_Str6", double_2_Str(-0.150100005, 9), "-0.150100005")
+        ASSERT_EQ("double_2_Str7", double_2_Str(-14.15019, 5), "-14.15019")
+        ASSERT_EQ("double_2_Str8", double_2_Str(-14.15019, 3), "-14.150")
+        ASSERT_EQ("double_2_Str9", double_2_Str(-10586816.10315913591, 10), "-10586816.1031591352") // should be -10586816.1031591359???
+        ASSERT_EQ("double_2_Str10", double_2_Str(-10586816.10315913591, 2), "-10586816.10")
+        ASSERT_EQ("double_2_Str11", double_2_Str(-1050, 3), "-1050.000")
+        ASSERT_EQ("double_2_Str12", double_2_Str(-0.150100005, 9), "-0.150100005")
+        //ASSERT_EQ("double_2_Str13", double_2_Str(10586816.10315913591, 11), "10586816.10315913591")
+
+        // Significant figures
+        ASSERT_EQ("double_2_Str_14", double_2_Str(1.100000000005), "1.1")
+
         return true;
     }}
 
