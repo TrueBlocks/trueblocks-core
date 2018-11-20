@@ -257,10 +257,24 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    string_q double_2_Str(double f, size_t nDecimals) {
+    string_q double_2_Str(double f, int nDecimals) {
+
+        // if no nDecimals specified, default to 10 with trailing zero truncation
+        bool truncate = false;
+        if(nDecimals == -1) {
+            nDecimals = 10;
+            truncate = true;
+        }
+
         stringstream stream;
-        stream << fixed << setprecision((int)nDecimals) << f;
-        return stream.str();
+        stream << fixed << setprecision(nDecimals) << f;
+        std::string str = stream.str();
+        if(truncate) {
+            str.erase(str.find_last_not_of('0') + 1, std::string::npos);
+            // if all decimals gone, truncate period
+            str.erase(str.find_last_not_of('.') + 1, std::string::npos);
+        }
+        return str;
     }
 
     //--------------------------------------------------------------------------------
