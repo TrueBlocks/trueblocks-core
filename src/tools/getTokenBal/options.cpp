@@ -154,7 +154,7 @@ void COptions::Init(void) {
     total = false;
     tokenInfo = "";
     blocks.Init();
-    optionOff(OPT_DOLLARS);
+    optionOff(OPT_DOLLARS|OPT_ETHER);
 }
 
 //---------------------------------------------------------------------------------------------------
