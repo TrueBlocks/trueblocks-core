@@ -965,9 +965,14 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     "    { name = \"getBalance\",  value = \"balance\"  },\n"
     "    { name = \"getTokenBal\", value = \"tokenbal\" },\n"
     "    { name = \"isContract\",  value = \"contract\" },\n"
+    "    { name = \"ethslurp\",    value = \"slurp\"    },\n"
+    "    { name = \"grabABI\",     value = \"grab\"     },\n"
+    "    { name = \"ethprice\",    value = \"price\"    },\n"
     "    { name = \"ethName\",     value = \"name\"     },\n"
     "    { name = \"whenBlock\",   value = \"when\"     },\n"
     "    { name = \"whereBlock\",  value = \"where\"    },\n"
     "]";
+    //   Tools not added included for searching: makeClass, acctExport, acctScrape,
+    //   blockMan, bloomMan, cacheMan, blockScrape, chifra, miniBlocks
 
 }  // namespace qblocks
