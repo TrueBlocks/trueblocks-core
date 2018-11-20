@@ -58,6 +58,10 @@ run_test("qblocks_help_names"    "name"     " -h")
 run_test("qblocks_help_when"     "when"     " -h")
 run_test("qblocks_help_where"    "where"    " -h")
 
+run_test("qblocks_help_info1"    "-info")
+run_test("qblocks_help_info2"    "-i")
+run_test("qblocks_help_info3"    "block"    " -i")
+
 run_test("qblocks_data_block"    "block"    " 2001001")
 run_test("qblocks_data_trans"    "trans"    " 2001002.0")
 run_test("qblocks_data_receipt"  "receipt"  " 2001002.0")
