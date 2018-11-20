@@ -94,9 +94,12 @@ extern void rebuildFourByteDB(void);
             if (!isAddress(arg) && arg != "0xTokenLib" && arg != "0xWalletLib")
                 return usage("Invalid address '" + arg + "'. Length is not equal to 40 characters (20 bytes).\n");
             address_t addr = str_2_Addr(arg);
-            if (arg == "0xTokenLib" || arg == "0xWalletLib")
+            if (arg == "0xTokenLib" || arg == "0xWalletLib") {
                 addr = arg;
-            addrs.push_back(addr);
+                addrs.push_back(addr);
+            } else {
+                addrs.push_back(toLower(addr));
+            }
         }
     }
 
