@@ -19,5 +19,6 @@ whenBlock -l
       - byzantium        4370000
       - devcon3          4469339
       - parityhack2      4501969
+      - kitties          4605167
       - constantinople       tbd
       - latest                  
