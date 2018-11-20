@@ -23,7 +23,7 @@ list = [
 	{ name = "byzantium",      value = "4370000" },
 	{ name = "devcon3",        value = "4469339" },
 	{ name = "parityhack2",    value = "4501969" },
-    { name = "kitties",        value = "4605167" },
+	{ name = "kitties",        value = "4605167" },
 	{ name = "constantinople", value = "tbd"     },
 	{ name = "latest",         value = ""        }
 ]

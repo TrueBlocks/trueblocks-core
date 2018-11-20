@@ -301,7 +301,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     bool getAccounts(CAddressArray& addrs) {
         string_q results = callRPC("eth_accounts", "[]", false);
         while (!results.empty())
-            addrs.push_back(nextTokenClear(results, ','));
+            addrs.push_back(toLower(nextTokenClear(results, ',')));
         return true;
     }
 
