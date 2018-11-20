@@ -62,7 +62,7 @@ namespace qblocks {
     extern string_q    int_2_Str    (int64_t num);
     extern string_q    uint_2_Str   (uint64_t num);
     extern string_q    gas_2_Str    (const gas_t& gas);
-    extern string_q    double_2_Str (double f, size_t nDecimals = 10);
+    extern string_q    double_2_Str (double f, int nDecimals = -1);
     extern string_q    bni_2_Str    (const bigint_t& bn);
     extern string_q    bnu_2_Str    (const biguint_t& bu);
     extern string_q    addr_2_Str   (const address_t& addr);
