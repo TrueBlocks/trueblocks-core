@@ -15,9 +15,10 @@
 
 //---------------------------------------------------------------------------------------------------
 static COption params[] = {
-    COption("~cmd",        "one of {cmds}"),
-    COption("~options(s)", "optiosn sent to <cmd>. Use 'qblock cmd --help' for help on <cmd>"),
-    COption("",            "Overarching command for all QBlocks tools.\n"),
+    COption("~cmd",       "one of {cmds}"),
+    COption("~option(s)", "options sent to <cmd>. Use 'qblock cmd --help' for help on <cmd>"),
+    COption("-info",      "Ignore <cmd> and display info about the QBlocks system"),
+    COption("",           "Overarching command for all QBlocks tools.\n"),
 };
 static size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -30,10 +31,17 @@ bool COptions::parseArguments(string_q& command) {
     Init();
     while (!command.empty()) {
         string_q arg = nextTokenClear(command, ' ');
-        if (cmd.empty())
-            cmd = arg;
-        else
+        if (cmd.empty()) {
+            if (arg == "-i" || arg == "--info") {
+                cmd = "block";
+                args = "--latest";
+                command = "";
+            } else {
+                cmd = arg;
+            }
+        } else {
             args += (arg + " ");
+        }
     }
 
     if (!findToolName(toolName, cmd))
@@ -60,9 +68,14 @@ COptions::COptions(void) {
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
     if (which == "options") {
         return substitute(str, "cmd options", "<cmd> <options>");
+    } else if (which == "usage") {
+        return substitute(str, "[-i|]", "[-i]");
     } else if (which == "oneDescription") {
         string_q list = toolNicknames();
-        return substitute(substitute(substitute(str," (required)",""), "{cmds}", "[" + list + "]"), "|]", "]");
+        list = substitute(substitute(str, " (required)", ""), "{cmds}", "[" + list + "]");
+        list = substitute(list, "|]", "]");
+        list = substitute(list, "[-i|]", "[-i]");
+        return list;
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
         return "You may add you own commands by entering a value in the config file.";
     }
