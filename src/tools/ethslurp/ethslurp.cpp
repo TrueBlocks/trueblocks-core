@@ -35,8 +35,8 @@ int main(int argc, const char * argv[]) {
         string_q message;
         if (!Slurp(theAccount, options, message)) {
 
-            if (startsWith(message, "No transactions")) {
-                cerr << cRed << "\t" << message << cOff << "\n";
+            if (contains(message, "transactions")) {
+                cerr << cRed << "\t" << substitute(message, "Notransactionsfound", "No transactions found") << cOff << "\n";
                 return 0;
             } else {
                 return usage(message);
@@ -107,8 +107,10 @@ bool Slurp(CAccount& theAccount, COptions& options, string_q& message) {
         string_q responseStr = urlToString(url);
         CESResult response;
         response.parseJson3(responseStr);
-        if (response.message != "OK")
-            return usage("Error retrieving results: " + response.message + ". Quitting...") || options.fromFile;
+        if (response.message != "OK") {
+            message = "Error retrieving results: " + response.message + ". Quitting...";
+            return options.fromFile;
+        }
 
         uint64_t nRecords = countOf(response.result, '}');
         screenMsg("Downloaded " + uint_2_Str(nRecords) + " records from EtherScan.");
