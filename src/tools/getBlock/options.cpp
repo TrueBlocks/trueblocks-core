@@ -92,16 +92,14 @@ bool COptions::parseArguments(string_q& command) {
             uint64_t diff = cache > client ? 0 : client - cache;
             stringToAsciiFile("/tmp/getBlock_junk.txt", uint_2_Str(diff));  // for next time
 
-            cout << cGreen << "Hostname:                " << cYellow;
-            cout << (isTestMode() ? "--hostname--" : doCommand("hostname")) << cOff << "\n";
-            cout << cGreen << "Latest block in cache:  " << cYellow;
-            cout << (isTestMode() ? "--cache--"  : padNum8T(cache))  << cOff << "\n";
-            cout << cGreen << "Latest block at client: " << cYellow;
-            cout << (isTestMode() ? "--client--" : padNum8T(client)) << cOff << "\n";
-            cout << cGreen << "Difference:             " << cYellow;
-            cout << (isTestMode() ? "--diff--"   : padNum8T(diff));
+            cout << cGreen << "Hostname:                " << cYellow << (isTestMode() ? "--hostname--"  : doCommand("hostname")) << cOff << "\n";
+            cout << cGreen << "Version:                 " << cYellow <<                                   getVersionStr() << cOff << "\n";
+            cout << cGreen << "Location of cache:       " << cYellow << (isTestMode() ? "--cache_dir--" : blockCachePath("")) << cOff << "\n";
+            cout << cGreen << "Latest block in cache:  "  << cYellow << (isTestMode() ? "--cache--"     : padNum8T(cache))  << cOff << "\n";
+            cout << cGreen << "Latest block at client: "  << cYellow << (isTestMode() ? "--client--"    : padNum8T(client)) << cOff << "\n";
+            cout << cGreen << "Behind head (catchup):  "  << cYellow << (isTestMode() ? "--diff--"      : padNum8T(diff));
             if (!isTestMode() && lastUpdate) {
-                uint64_t diffDiff = lastUpdate - diff;
+                uint64_t diffDiff = (diff > lastUpdate ? 0 : lastUpdate - diff);
                 cout << " (+" << diffDiff << ")";
             }
             cout << cOff << "\n";
