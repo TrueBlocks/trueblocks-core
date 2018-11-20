@@ -193,6 +193,18 @@ TEST_F(CThisTest, TestConverts_4) {
         ASSERT_EQ("double_2_Str15", double_2_Str(0.000000000), "0")
 
         ASSERT_EQ("addr_2_Str1", addr_2_Str("0x281055afc982d96fab65b3a49cac8b878184cb16"), "0x281055afc982d96fab65b3a49cac8b878184cb16")
+        ASSERT_EQ("addr_2_Str2", addr_2_Str(""), "0x0")
+
+        biguint_t a = 65536;
+        bigint_t b = 65536;
+        ASSERT_EQ("bnu_2_Hex1", bnu_2_Hex(a * a * a * a * a * a * a * a), "100000000000000000000000000000000")
+        ASSERT_EQ("bni_2_Str1", bni_2_Str(b * b * b * b * b * b * b * b), "340282366920938463463374607431768211456")
+
+        ASSERT_EQ("bool_2_Str1", bool_2_Str(true), "1")
+        biguint_t c = 100000;
+        ASSERT_EQ("exp2BigUint1", exp2BigUint("1e30"), biguint_t(c * c * c * c * c * c))
+
+        ASSERT_EQ("hex_2_Uint64_1", hex_2_Uint64("0x39fab"), 237483)
 
 
         return true;
