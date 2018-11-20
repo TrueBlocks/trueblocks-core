@@ -82,7 +82,7 @@ namespace testing {  // NOLINT
     if ((a) == (b)) { \
         cout << "passed '" << #a << "' is equal to '" << #b << "'" << "\n"; \
     } else { \
-        cout << "failed '" << #a << "' should be equal to '" << #b << "'" << "\n"; \
+        cout << "failed '" << #a << "' should be equal to '" << #b << "' but got '" << a << "'\n"; \
         return false; \
     } \
 }
