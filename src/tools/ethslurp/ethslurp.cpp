@@ -105,13 +105,12 @@ bool Slurp(CAccount& theAccount, COptions& options, string_q& message) {
                 "&apikey="  + options.api.getKey();
 
         string_q responseStr = urlToString(url);
+        if (!contains(responseStr, "\"message\":\"OK\"")) {
+            message = "Error: " + responseStr + ". Quitting...";
+            return false;
+        }
         CESResult response;
         response.parseJson3(responseStr);
-        if (response.message != "OK") {
-            message = "Error retrieving results: " + response.message + ". Quitting...";
-            return options.fromFile;
-        }
-
         uint64_t nRecords = countOf(response.result, '}');
         screenMsg("Downloaded " + uint_2_Str(nRecords) + " records from EtherScan.");
 
