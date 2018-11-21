@@ -1,6 +1,0 @@
-[settings]
-class     = CChangeProposalDeposit
-baseClass = CTransaction
-fields    = uint256 _proposalDeposit|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"
