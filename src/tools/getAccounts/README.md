@@ -37,6 +37,10 @@ Using ethName to find Singular's address, list tokens held by other token accoun
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
+`Notes:`
+
+- To customize this list add an `extra_accounts` section to the config file (see documentation).
+
 #### Other Options
 
 All **QBlocks** command-line tools support the following commands (although in some case, they have no meaning):
