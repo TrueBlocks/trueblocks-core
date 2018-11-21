@@ -1,6 +1,0 @@
-[settings]
-class     = CAddBlackList
-baseClass = CTransaction
-fields    = address _evilUser|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

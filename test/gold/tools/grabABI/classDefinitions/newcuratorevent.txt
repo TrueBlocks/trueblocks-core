@@ -1,6 +1,0 @@
-[settings]
-class     = CNewCuratorEvent
-baseClass = CLogEntry
-fields    = address _newCurator|
-includes  = logentry.h
-cIncs     = #include "etherlib.h"
