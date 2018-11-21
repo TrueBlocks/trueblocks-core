@@ -1,0 +1,6 @@
+[settings]
+class     = CDeprecateEvent
+baseClass = CLogEntry
+fields    = address newAddress|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"

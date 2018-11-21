@@ -1,0 +1,6 @@
+[settings]
+class     = CProposalAddedEvent
+baseClass = CLogEntry
+fields    = uint256 proposalID|address recipient|uint256 amount|bool newCurator|string description|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"

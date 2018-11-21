@@ -1,0 +1,78 @@
+grabABI argc: 6 [1:0xdac17f958d2ee523a2206206994597c13d831ec7] [2:-v] [3:-n] [4:-e] [5:-g] 
+grabABI 0xdac17f958d2ee523a2206206994597c13d831ec7 -v -n -e -g 
+Generating class for derived event type: 'CAddedBlackListEvent'
+	makeClass argc: 3 [1:-r] [2:addedblacklistevent] 
+makeClass -r addedblacklistevent 
+Would run class definition file: addedblacklistevent (not run, testing)
+Generating class for derived event type: 'CDeprecateEvent'
+	makeClass argc: 3 [1:-r] [2:deprecateevent] 
+makeClass -r deprecateevent 
+Would run class definition file: deprecateevent (not run, testing)
+Generating class for derived event type: 'CDestroyedBlackFundsEvent'
+	makeClass argc: 3 [1:-r] [2:destroyedblackfundsevent] 
+makeClass -r destroyedblackfundsevent 
+Would run class definition file: destroyedblackfundsevent (not run, testing)
+Generating class for derived event type: 'CIssueEvent'
+	makeClass argc: 3 [1:-r] [2:issueevent] 
+makeClass -r issueevent 
+Would run class definition file: issueevent (not run, testing)
+Generating class for derived event type: 'CParamsEvent'
+	makeClass argc: 3 [1:-r] [2:paramsevent] 
+makeClass -r paramsevent 
+Would run class definition file: paramsevent (not run, testing)
+Generating class for derived event type: 'CPauseEvent'
+	makeClass argc: 3 [1:-r] [2:pauseevent] 
+makeClass -r pauseevent 
+Would run class definition file: pauseevent (not run, testing)
+Generating class for derived event type: 'CRedeemEvent'
+	makeClass argc: 3 [1:-r] [2:redeemevent] 
+makeClass -r redeemevent 
+Would run class definition file: redeemevent (not run, testing)
+Generating class for derived event type: 'CRemovedBlackListEvent'
+	makeClass argc: 3 [1:-r] [2:removedblacklistevent] 
+makeClass -r removedblacklistevent 
+Would run class definition file: removedblacklistevent (not run, testing)
+Generating class for derived event type: 'CUnpauseEvent'
+	makeClass argc: 3 [1:-r] [2:unpauseevent] 
+makeClass -r unpauseevent 
+Would run class definition file: unpauseevent (not run, testing)
+Generating class for derived transaction type: 'CAddBlackList'
+	makeClass argc: 3 [1:-r] [2:addblacklist] 
+makeClass -r addblacklist 
+Would run class definition file: addblacklist (not run, testing)
+Generating class for derived transaction type: 'CDeprecate'
+	makeClass argc: 3 [1:-r] [2:deprecate] 
+makeClass -r deprecate 
+Would run class definition file: deprecate (not run, testing)
+Generating class for derived transaction type: 'CDestroyBlackFunds'
+	makeClass argc: 3 [1:-r] [2:destroyblackfunds] 
+makeClass -r destroyblackfunds 
+Would run class definition file: destroyblackfunds (not run, testing)
+Generating class for derived transaction type: 'CIssue'
+	makeClass argc: 3 [1:-r] [2:issue] 
+makeClass -r issue 
+Would run class definition file: issue (not run, testing)
+Generating class for derived transaction type: 'CPause'
+	makeClass argc: 3 [1:-r] [2:pause] 
+makeClass -r pause 
+Would run class definition file: pause (not run, testing)
+Generating class for derived transaction type: 'CRedeem'
+	makeClass argc: 3 [1:-r] [2:redeem] 
+makeClass -r redeem 
+Would run class definition file: redeem (not run, testing)
+Generating class for derived transaction type: 'CRemoveBlackList'
+	makeClass argc: 3 [1:-r] [2:removeblacklist] 
+makeClass -r removeblacklist 
+Would run class definition file: removeblacklist (not run, testing)
+Generating class for derived transaction type: 'CSetParams'
+	makeClass argc: 3 [1:-r] [2:setparams] 
+makeClass -r setparams 
+Would run class definition file: setparams (not run, testing)
+Generating class for derived transaction type: 'CTransferOwnership'
+	makeClass argc: 3 [1:-r] [2:transferownership] 
+makeClass -r transferownership 
+Would run class definition file: transferownership (not run, testing)
+Generating class for derived transaction type: 'CUnpause'
+	makeClass argc: 3 [1:-r] [2:unpause] 
+makeClass -r unpause 
+Would run class definition file: unpause (not run, testing)

@@ -1,0 +1,6 @@
+[settings]
+class     = CRemoveBlackList
+baseClass = CTransaction
+fields    = address _clearedUser|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

@@ -1,0 +1,6 @@
+[settings]
+class     = CDestroyBlackFunds
+baseClass = CTransaction
+fields    = address _blackListedUser|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"
