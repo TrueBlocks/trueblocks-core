@@ -257,17 +257,17 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    string_q double_2_Str(double f, int nDecimals) {
+    string_q double_2_Str(double f, size_t nDecimals) {
 
         // if no nDecimals specified, default to 10 with trailing zero truncation
         bool truncate = false;
-        if(nDecimals == -1) {
+        if(nDecimals == NOPOS) {
             nDecimals = 10;
             truncate = true;
         }
 
         stringstream stream;
-        stream << fixed << setprecision(nDecimals) << f;
+        stream << fixed << setprecision((int)nDecimals) << f;
         std::string str = stream.str();
         if(truncate) {
             str.erase(str.find_last_not_of('0') + 1, std::string::npos);
