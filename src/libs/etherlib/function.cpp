@@ -62,7 +62,7 @@ bool CFunction::setValueByName(const string_q& fieldName, const string_q& fieldV
         signature = getSignature(SIG_CANONICAL);
         return true;
     } else if (fieldName % "name") {
-        name = substitute(fieldValue, "_", "");
+        name = fieldValue;
         return true;
     }
     // EXISTING_CODE

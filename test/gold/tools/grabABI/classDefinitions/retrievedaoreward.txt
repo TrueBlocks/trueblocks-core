@@ -1,0 +1,6 @@
+[settings]
+class     = CRetrieveDAOReward
+baseClass = CTransaction
+fields    = bool _toMembers|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

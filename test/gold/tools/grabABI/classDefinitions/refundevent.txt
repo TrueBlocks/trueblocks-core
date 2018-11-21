@@ -1,0 +1,6 @@
+[settings]
+class     = CRefundEvent
+baseClass = CLogEntry
+fields    = address to|uint256 value|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"
