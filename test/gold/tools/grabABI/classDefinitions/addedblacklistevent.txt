@@ -1,0 +1,6 @@
+[settings]
+class     = CAddedBlackListEvent
+baseClass = CLogEntry
+fields    = address _user|
+includes  = logentry.h
+cIncs     = #include "etherlib.h"

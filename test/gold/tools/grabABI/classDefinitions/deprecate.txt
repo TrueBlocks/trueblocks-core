@@ -1,0 +1,6 @@
+[settings]
+class     = CDeprecate
+baseClass = CTransaction
+fields    = address _upgradedAddress|
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

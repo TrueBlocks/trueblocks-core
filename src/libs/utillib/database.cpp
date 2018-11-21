@@ -433,7 +433,7 @@ namespace qblocks {
             replace(codeOut, "~", "virtual ~");
 
         // If we don't write it because it's identical, it won't force a rebuild
-        if (orig != codeOut)
+        if (orig != codeOut && !isTestMode())
             stringToAsciiFile(fileName, codeOut);
     }
 
