@@ -34,9 +34,8 @@ int main(int argc, const char * argv[]) {
 
         string_q message;
         if (!Slurp(theAccount, options, message)) {
-
             if (contains(message, "transactions")) {
-                cerr << cRed << "\t" << substitute(message, "Notransactionsfound", "No transactions found") << cOff << "\n";
+                cerr << cRed << "\t" << message << cOff << "\n";
                 return 0;
             } else {
                 return usage(message);
