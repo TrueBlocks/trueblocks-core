@@ -22,8 +22,6 @@ rm -fR compare
 echo "Copying working to compare..."
 cp -pR working compare
 find compare -name "*gitignore*" -exec rm '{}' ';'
-cp -pR gold/etherscan compare/
-cp -pR gold/monitors compare/
 
 cd $QUICKBLOCKS/build/
 
