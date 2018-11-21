@@ -1,6 +1,0 @@
-[settings]
-class     = CTransferOwnership
-baseClass = CTransaction
-fields    = address newOwner|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

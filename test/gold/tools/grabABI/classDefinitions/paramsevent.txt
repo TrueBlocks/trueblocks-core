@@ -1,6 +1,0 @@
-[settings]
-class     = CParamsEvent
-baseClass = CLogEntry
-fields    = uint256 feeBasisPoints|uint256 maxFee|
-includes  = logentry.h
-cIncs     = #include "etherlib.h"

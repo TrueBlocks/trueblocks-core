@@ -1,6 +1,0 @@
-[settings]
-class     = CVotedEvent
-baseClass = CLogEntry
-fields    = uint256 proposalID|bool position|address voter|
-includes  = logentry.h
-cIncs     = #include "etherlib.h"
