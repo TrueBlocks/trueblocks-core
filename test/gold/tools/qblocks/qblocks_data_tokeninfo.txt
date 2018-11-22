@@ -1,5 +1,5 @@
-qblocks argc: 5 [1:tokenbal] [2:0x4775daf2fdc3b3c513ef2a6e07862c27f9d6f781] [3:0xaec2e87e0a235266d9c5adc9deb4b2e29b54d009] [4:2367305] 
-qblocks tokenbal 0x4775daf2fdc3b3c513ef2a6e07862c27f9d6f781 0xaec2e87e0a235266d9c5adc9deb4b2e29b54d009 2367305 
+qblocks argc: 5 [1:tokeninfo] [2:0x4775daf2fdc3b3c513ef2a6e07862c27f9d6f781] [3:0xaec2e87e0a235266d9c5adc9deb4b2e29b54d009] [4:2367305] 
+qblocks tokeninfo 0x4775daf2fdc3b3c513ef2a6e07862c27f9d6f781 0xaec2e87e0a235266d9c5adc9deb4b2e29b54d009 2367305 
 calling: getTokenInfo 0x4775daf2fdc3b3c513ef2a6e07862c27f9d6f781 0xaec2e87e0a235266d9c5adc9deb4b2e29b54d009 2367305  --qblocks
 
 getTokenInfo argc: 5 [1:0x4775daf2fdc3b3c513ef2a6e07862c27f9d6f781] [2:0xaec2e87e0a235266d9c5adc9deb4b2e29b54d009] [3:2367305] [4:--qblocks] 
