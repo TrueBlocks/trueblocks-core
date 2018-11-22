@@ -963,7 +963,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     "    { name = \"getBloom\",    value = \"bloom\"    },\n"
     "    { name = \"getAccounts\", value = \"accounts\" },\n"
     "    { name = \"getBalance\",  value = \"balance\"  },\n"
-    "    { name = \"getTokenBal\", value = \"tokenbal\" },\n"
+    "    { name = \"getTokenInfo\", value = \"tokenbal\" },\n"
     "    { name = \"isContract\",  value = \"contract\" },\n"
     "    { name = \"ethslurp\",    value = \"slurp\"    },\n"
     "    { name = \"grabABI\",     value = \"grab\"     },\n"

@@ -12,7 +12,7 @@ While primarily illustrative, these tools are also useful. For example, you may 
 
 + [getTrace](getTrace) / [getBloom](getBloom): These programs are similar to the previous group but give you access to much a lower level of Ethereum's data structures.
 
-+ [getBalance](getBalance) / [getTokenBal](getTokenBal): Unlike the above commands, `getBalance` and `getTokenBal` operate directly against the node. These programs retrieve balances `ether` or `token` balances from one or more smart contracts given block number. We use these program in testing QBlocks [monitors](../monitors) and to ensure that our cacheing mechanisms work properly.
++ [getBalance](getBalance) / [getTokenInfo](getTokenInfo): Unlike the above commands, `getBalance` and `getTokenInfo` operate directly against the node. These programs retrieve balances `ether` or `token` balances from one or more smart contracts given block number. We use these program in testing QBlocks [monitors](../monitors) and to ensure that our cacheing mechanisms work properly.
 
 + [isContract](isContract) This app returns `true` or `false` depending if the address is a smart contract. It may also be used to pull the actual byte code of the contract, if present. Furthermore, it can be used to compare two Ethereum addresses to see if they hold the same byte code.
 
