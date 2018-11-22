@@ -65,7 +65,7 @@ getBloom
 getCode
 getLogs
 getReceipt
-getTokenBal
+getTokenInfo
 getTrace
 getTrans
 grabABI
