@@ -1,11 +1,11 @@
-qblocks argc: 3 [1:tokenbal] [2:-h] 
-qblocks tokenbal -h 
+qblocks argc: 3 [1:tokeninfo] [2:-h] 
+qblocks tokeninfo -h 
 calling: getTokenInfo -h  --qblocks
 
 getTokenInfo argc: 3 [1:-h] [2:--qblocks] 
 getTokenInfo -h --qblocks 
 
-  Usage:    qblocks tokenbal [-b|-d|-l fn|-n|-t|-v|-h] <address> <address> [address...] [block...]  
+  Usage:    qblocks tokeninfo [-b|-d|-l fn|-n|-t|-v|-h] <address> <address> [address...] [block...]  
   Purpose:  Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).
              
   Where:    
