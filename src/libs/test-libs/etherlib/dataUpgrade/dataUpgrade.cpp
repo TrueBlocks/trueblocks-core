@@ -26,14 +26,15 @@ namespace qblocks {
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    etherlib_init();
+    acctlib_init();
 
     CNewBlock::registerClass();
     CNewReceipt::registerClass();
-    CAccountWatch::registerClass();
-    CAcctCacheItem::registerClass();
-    CBalHistory::registerClass();
-    CIncomeStatement::registerClass();
+//    CAccountWatch::registerClass();
+//    CApiSpec::registerClass();
+//    CAcctCacheItem::registerClass();
+//    CBalHistory::registerClass();
+//    CIncomeStatement::registerClass();
     UNHIDE_FIELD(CBaseNode, "cname");
 
     COptions options;
@@ -165,6 +166,7 @@ CBaseNode *getNode(const string_q& nodeType) {
     else if (nodeType == "CTreeNode")        node = CTreeNode::createObject();
     else if (nodeType == "CTreeRoot")        node = CTreeRoot::createObject();
     else if (nodeType == "CAccountWatch")    node = CAccountWatch::createObject();
+    else if (nodeType == "CApiSpec")         node = CApiSpec::createObject();
     else if (nodeType == "CBalHistory")      node = CBalHistory::createObject();
     else if (nodeType == "CBlock")           node = CBlock::createObject();
     else if (nodeType == "CIncomeStatement") node = CIncomeStatement::createObject();
