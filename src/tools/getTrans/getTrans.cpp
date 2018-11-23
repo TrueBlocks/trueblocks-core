@@ -186,7 +186,7 @@ bool visitTransaction(CTransaction& trans, void *data) {
 
     if (verbose) {
         if (opt->articulate) {
-            opt->abi_spec.loadABIFromFile(blockCachePath("abis/" + toLower(trans.to) + ".json"));
+            opt->abi_spec.loadByAddress(trans.to);
             articulateTransaction(opt->abi_spec, &trans);
         }
         trans.doExport(cout);
