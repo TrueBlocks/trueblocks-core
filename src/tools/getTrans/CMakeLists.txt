@@ -42,6 +42,8 @@ endfunction(run_test)
 
 # Weird, but we have to call the getBlock code to make sure the block is in the cache
 run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrans_preload" ${EXECUTABLE_OUTPUT_PATH}/getBlock " 3657480" " -o")
+# Weird, but we have to get a customied ABI for the given address
+run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrans_preload_abi" ${EXECUTABLE_OUTPUT_PATH}/grabABI " 0x159cf1e9ae58211b588f5e3bf1d7e423952d959b")
 
 # Enter one line for each individual test
 run_test("getTrans_README"            "-th")
