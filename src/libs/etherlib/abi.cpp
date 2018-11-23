@@ -82,6 +82,9 @@ bool CAbi::setValueByName(const string_q& fieldName, const string_q& fieldValue)
                 return true;
             }
             break;
+        case 'l':
+            if ( fieldName % "loaded" ) { loaded = fieldValue; return true; }
+            break;
         default:
             break;
     }
@@ -110,6 +113,7 @@ bool CAbi::Serialize(CArchive& archive) {
     // EXISTING_CODE
     archive >> abiByName;
     archive >> abiByEncoding;
+//    archive >> loaded;
     finishParse();
     return true;
 }
@@ -124,6 +128,7 @@ bool CAbi::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     archive << abiByName;
     archive << abiByEncoding;
+//    archive << loaded;
 
     return true;
 }
@@ -162,6 +167,7 @@ void CAbi::registerClass(void) {
     ADD_FIELD(CAbi, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CAbi, "abiByName", T_OBJECT|TS_ARRAY, ++fieldNum);
     ADD_FIELD(CAbi, "abiByEncoding", T_OBJECT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CAbi, "loaded", T_TEXT,  ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAbi, "schema");
@@ -243,6 +249,9 @@ string_q CAbi::getValueByName(const string_q& fieldName) const {
                 return retS;
             }
             break;
+        case 'l':
+            if ( fieldName % "loaded" ) return loaded;
+            break;
     }
 
     // EXISTING_CODE
@@ -282,6 +291,20 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+//---------------------------------------------------------------------------
+bool CAbi::loadByAddress(address_t addrIn) {
+    if (contains(loaded, addrIn+"|"))
+        return true;
+    address_t addr = addrIn;
+    if (addr != "0xTokenLib" && addr != "0xWalletLib")
+        addr = toLower(addr);
+    string_q fileName = blockCachePath("abis/" + addr + ".json");
+    bool ret = loadABIFromFile(fileName);
+    if (ret)
+        loaded += addrIn + "|";
+    return ret;
+}
+
 //---------------------------------------------------------------------------
 bool CAbi::loadABIFromFile(const string_q& fileName) {
 

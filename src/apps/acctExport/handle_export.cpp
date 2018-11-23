@@ -207,14 +207,14 @@ bool COptions::loadWatches(const CToml& toml) {
         blk_minWatchBlock = min(blk_minWatchBlock, watch->firstBlock);
         blk_maxWatchBlock = max(blk_maxWatchBlock, watch->lastBlock);
 
-        watch->abi_spec.loadABIFromFile(blockCachePath("abis/" + watch->address + ".json"));
-        watch->abi_spec.loadABIFromFile(blockCachePath("abis/0xTokenLib.json"));
-        watch->abi_spec.loadABIFromFile(blockCachePath("abis/0xWalletLib.json"));
+        watch->abi_spec.loadByAddress(watch->address);
+        watch->abi_spec.loadByAddress("0xTokenLib");
+        watch->abi_spec.loadByAddress("0xWalletLib");
         // We may as well articulate the named contracts while we're at it
         for (size_t n = 0 ; n < named.size() ; n++) {
             CAccountWatch *alt = &named.at(n);
             if (alt->enabled)
-                watch->abi_spec.loadABIFromFile(blockCachePath("abis/" + alt->address + ".json"));
+                watch->abi_spec.loadByAddress(alt->address);
         }
     }
 
