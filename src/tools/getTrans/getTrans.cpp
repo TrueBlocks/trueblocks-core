@@ -26,9 +26,9 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    options.nCmds = countOf(options.commandList, '\n');
-    if (options.nCmds > 1 && verbose && options.filters.size() == 0)
-        cout << "[\n";
+    size_t cmdCnt = countOf(options.commandList, '\n') + 1;
+    if (verbose && cmdCnt > 1)
+        cout << "[";
     while (!options.commandList.empty()) {
         string_q command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
@@ -50,10 +50,15 @@ int main(int argc, const char *argv[]) {
                 }
             }
         } else {
+            size_t txCnt = countOf(options.transList.queries, '|') + 1;
+            if (verbose && txCnt > 1 && cmdCnt < 2)
+                cout << "[";
             forEveryTransactionInList(visitTransaction, &options, options.transList.queries);
+            if (verbose && txCnt > 1 && cmdCnt < 2)
+                cout << "]";
         }
     }
-    if (options.nCmds > 1 && verbose && options.filters.size() == 0)
+    if (verbose && cmdCnt > 1)
         cout << "]\n";
     cout.flush();
     return 0;
@@ -63,6 +68,7 @@ int main(int argc, const char *argv[]) {
 //----------------------------------------------------------------
 bool visitAddrs(const CAddressAppearance& item, void *data) {
     COptions *opt = (COptions*)data;
+
 #ifdef EARLY_QUIT
     if (opt->belongs)
         return false;
@@ -99,13 +105,16 @@ bool visitAddrs(const CAddressAppearance& item, void *data) {
 
 //--------------------------------------------------------------
 bool checkBelongs(CTransaction& trans, void *data) {
-    if (!trans.forEveryAddress(visitAddrs, NULL, data))
+    COptions *opt = (COptions*)data;
+
+    if (!trans.forEveryAddress(visitAddrs, NULL, data)) {
         return false; // if we've been told we're done (because we found the target), stop searching
+    }
 
     // if we're still searching, and we want to search input and event data as a string, do so
-    COptions *opt = (COptions*)data;
-    if (!opt->chkAsStr)
+    if (!opt->chkAsStr) {
         return true;
+    }
 
     for (auto addr : opt->filters) {
         string_q bytes = substitute(addr, "0x", "");
@@ -139,7 +148,9 @@ bool checkBelongs(CTransaction& trans, void *data) {
 //--------------------------------------------------------------
 bool visitTransaction(CTransaction& trans, void *data) {
     COptions *opt = reinterpret_cast<COptions *>(data);
-    opt->nVisited++;
+    if (verbose && opt->index > 0)
+        cout << ",";
+    opt->index++;
 
     bool badHash = !isHash(trans.hash);
     bool isBlock = contains(trans.hash, "block");
@@ -166,38 +177,21 @@ bool visitTransaction(CTransaction& trans, void *data) {
         return true;
     }
 
-    if (verbose) {
-        trans.doExport(cout);
-        if (opt->nVisited <= opt->nCmds && verbose)
-            cout << ",";
-        cout << "\n";
-    } else {
-        cout << trans.Format(opt->format);
+    string_q fmt = opt->format;
+    if (opt->incTrace) {
+        getTraces(trans.traces, trans.hash);
+        SHOW_FIELD(CTransaction, "traces");
+        fmt = substitute(fmt, "\n", "\tnTraces:[{TRACESCNT}]\n");
     }
 
-    if (opt->incTrace) {
-        uint64_t nTr = getTraceCount(trans.hash);
-        CTraceArray traces;
-        getTraces(traces, trans.hash);
-        if (traces.size()) {
-            size_t dTs = 0;
-            cout << "[";
-            for (size_t i = 0 ; i < traces.size() ; i++) {
-                const CTrace *trace = &traces[i];
-                trace->doExport(cout);
-                dTs = max(dTs, trace->traceAddress.size());
-            }
-            cout << "]\n";
-            if (opt->nTraces) {
-                string_q fmt = ",{ \"nTraces\": [N]-[NN], \"depth\": [D] }";
-                cout << substitute(
-                        substitute(
-                        substitute(fmt,
-                                   "[N]", uint_2_Str(nTr)),
-                                   "[NN]", uint_2_Str(traces.size())),
-                                   "[D]", uint_2_Str(dTs));
-            }
+    if (verbose) {
+        if (opt->articulate) {
+            opt->abi_spec.loadABIFromFile(blockCachePath("abis/" + toLower(trans.to) + ".json"));
+            articulateTransaction(opt->abi_spec, &trans);
         }
+        trans.doExport(cout);
+    } else {
+        cout << trans.Format(fmt);
     }
 
     return true;

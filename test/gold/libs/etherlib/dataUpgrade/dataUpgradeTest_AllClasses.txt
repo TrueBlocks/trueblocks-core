@@ -196,17 +196,16 @@ name                	1006	0	131122	T_TEXT TS_STRING
 color               	1007	0	131122	T_TEXT TS_STRING
 firstBlock          	1008	0	65561	T_NUMBER TS_NUMERAL
 lastBlock           	1009	0	65561	T_NUMBER TS_NUMERAL
-deepScan            	1010	0	65556	T_BOOL TS_NUMERAL
-qbis                	1011	0	1048651	T_OBJECT TS_OBJECT
-balanceHistory      	1012	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-nodeBal             	1013	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-enabled             	1014	0	65556	T_BOOL TS_NUMERAL
-abi                 	1015	1	1048651	T_OBJECT TS_OBJECT
+qbis                	1010	0	1048651	T_OBJECT TS_OBJECT
+balanceHistory      	1011	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+nodeBal             	1012	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+enabled             	1013	0	65556	T_BOOL TS_NUMERAL
+api_spec            	1014	0	1048651	T_OBJECT TS_OBJECT
+abi_spec            	1015	1	1048651	T_OBJECT TS_OBJECT
 {
   "address": "0x0",
   "firstBlock": 0,
   "lastBlock": 4294967295,
-  "deepScan": 0,
   "qbis": {
     "begBal": 0,
     "inflow": 0,
@@ -217,7 +216,9 @@ abi                 	1015	1	1048651	T_OBJECT TS_OBJECT
   },
   "balanceHistory": [],
   "nodeBal": 0,
-  "enabled": 1
+  "enabled": 1,
+  "api_spec": {
+  }
 }
 
 --------------------------------------------------------------------------------
@@ -232,12 +233,12 @@ name                	1006	1	131122	T_TEXT TS_STRING
 color               	1007	1	131122	T_TEXT TS_STRING
 firstBlock          	1008	1	65561	T_NUMBER TS_NUMERAL
 lastBlock           	1009	1	65561	T_NUMBER TS_NUMERAL
-deepScan            	1010	1	65556	T_BOOL TS_NUMERAL
-qbis                	1011	1	1048651	T_OBJECT TS_OBJECT
-balanceHistory      	1012	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-nodeBal             	1013	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-enabled             	1014	1	65556	T_BOOL TS_NUMERAL
-abi                 	1015	1	1048651	T_OBJECT TS_OBJECT
+qbis                	1010	1	1048651	T_OBJECT TS_OBJECT
+balanceHistory      	1011	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+nodeBal             	1012	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+enabled             	1013	1	65556	T_BOOL TS_NUMERAL
+api_spec            	1014	1	1048651	T_OBJECT TS_OBJECT
+abi_spec            	1015	1	1048651	T_OBJECT TS_OBJECT
 {
 }
 
@@ -253,12 +254,12 @@ name                	1006	0	131122	T_TEXT TS_STRING
 color               	1007	0	131122	T_TEXT TS_STRING
 firstBlock          	1008	0	65561	T_NUMBER TS_NUMERAL
 lastBlock           	1009	0	65561	T_NUMBER TS_NUMERAL
-deepScan            	1010	0	65556	T_BOOL TS_NUMERAL
-qbis                	1011	0	1048651	T_OBJECT TS_OBJECT
-balanceHistory      	1012	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-nodeBal             	1013	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-enabled             	1014	0	65556	T_BOOL TS_NUMERAL
-abi                 	1015	0	1048651	T_OBJECT TS_OBJECT
+qbis                	1010	0	1048651	T_OBJECT TS_OBJECT
+balanceHistory      	1011	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+nodeBal             	1012	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+enabled             	1013	0	65556	T_BOOL TS_NUMERAL
+api_spec            	1014	0	1048651	T_OBJECT TS_OBJECT
+abi_spec            	1015	0	1048651	T_OBJECT TS_OBJECT
 {
   "schema": 5005,
   "deleted": 0,
@@ -267,7 +268,6 @@ abi                 	1015	0	1048651	T_OBJECT TS_OBJECT
   "address": "0x0",
   "firstBlock": 0,
   "lastBlock": 4294967295,
-  "deepScan": 0,
   "qbis": {
     "begBal": 0,
     "inflow": 0,
@@ -279,7 +279,9 @@ abi                 	1015	0	1048651	T_OBJECT TS_OBJECT
   "balanceHistory": [],
   "nodeBal": 0,
   "enabled": 1,
-  "abi": {
+  "api_spec": {
+  },
+  "abi_spec": {
     "schema": 5005,
     "deleted": 0,
     "showing": 1,
@@ -504,7 +506,7 @@ address             	1005	0	131127	T_ADDRESS TS_STRING
 data                	1006	0	131122	T_TEXT TS_STRING
 logIndex            	1007	0	65561	T_NUMBER TS_NUMERAL
 topics              	1008	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-articulatedLog      	1009	1	655410	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY
+articulatedLog      	1009	1	1048651	T_OBJECT TS_OBJECT
 {
   "address": "0x0",
   "logIndex": 0,
@@ -522,7 +524,7 @@ address             	1005	1	131127	T_ADDRESS TS_STRING
 data                	1006	1	131122	T_TEXT TS_STRING
 logIndex            	1007	1	65561	T_NUMBER TS_NUMERAL
 topics              	1008	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-articulatedLog      	1009	1	655410	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY
+articulatedLog      	1009	1	1048651	T_OBJECT TS_OBJECT
 {
 }
 
@@ -537,7 +539,7 @@ address             	1005	0	131127	T_ADDRESS TS_STRING
 data                	1006	0	131122	T_TEXT TS_STRING
 logIndex            	1007	0	65561	T_NUMBER TS_NUMERAL
 topics              	1008	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-articulatedLog      	1009	0	655410	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY
+articulatedLog      	1009	0	1048651	T_OBJECT TS_OBJECT
 {
   "schema": 5005,
   "deleted": 0,
@@ -546,7 +548,17 @@ articulatedLog      	1009	0	655410	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY
   "address": "0x0",
   "logIndex": 0,
   "topics": [],
-  "articulatedLog": []
+  "articulatedLog": {
+    "schema": 5005,
+    "deleted": 0,
+    "showing": 1,
+    "cname": "Function",
+    "anonymous": 0,
+    "constant": 0,
+    "payable": 0,
+    "inputs": [],
+    "outputs": []
+  }
 }
 
 --------------------------------------------------------------------------------
@@ -710,7 +722,7 @@ transactionHash     	1009	0	131132	T_HASH TS_STRING
 transactionPosition 	1010	0	65561	T_NUMBER TS_NUMERAL
 type                	1011	0	131122	T_TEXT TS_STRING
 error               	1012	0	131122	T_TEXT TS_STRING
-articulatedTrace    	1013	1	655410	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY
+articulatedTrace    	1013	1	1048651	T_OBJECT TS_OBJECT
 action              	1014	0	1048651	T_OBJECT TS_OBJECT
 result              	1015	0	1048651	T_OBJECT TS_OBJECT
 {
@@ -750,7 +762,7 @@ transactionHash     	1009	1	131132	T_HASH TS_STRING
 transactionPosition 	1010	1	65561	T_NUMBER TS_NUMERAL
 type                	1011	1	131122	T_TEXT TS_STRING
 error               	1012	1	131122	T_TEXT TS_STRING
-articulatedTrace    	1013	1	655410	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY
+articulatedTrace    	1013	1	1048651	T_OBJECT TS_OBJECT
 action              	1014	1	1048651	T_OBJECT TS_OBJECT
 result              	1015	1	1048651	T_OBJECT TS_OBJECT
 {
@@ -771,7 +783,7 @@ transactionHash     	1009	0	131132	T_HASH TS_STRING
 transactionPosition 	1010	0	65561	T_NUMBER TS_NUMERAL
 type                	1011	0	131122	T_TEXT TS_STRING
 error               	1012	0	131122	T_TEXT TS_STRING
-articulatedTrace    	1013	0	655410	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY
+articulatedTrace    	1013	0	1048651	T_OBJECT TS_OBJECT
 action              	1014	0	1048651	T_OBJECT TS_OBJECT
 result              	1015	0	1048651	T_OBJECT TS_OBJECT
 {
@@ -785,7 +797,17 @@ result              	1015	0	1048651	T_OBJECT TS_OBJECT
   "traceAddress": [],
   "transactionHash": "0x0",
   "transactionPosition": 0,
-  "articulatedTrace": [],
+  "articulatedTrace": {
+    "schema": 5005,
+    "deleted": 0,
+    "showing": 1,
+    "cname": "Function",
+    "anonymous": 0,
+    "constant": 0,
+    "payable": 0,
+    "inputs": [],
+    "outputs": []
+  },
   "action": {
     "address": "0x0",
     "balance": 0,
@@ -951,7 +973,7 @@ input               	1016	0	131122	T_TEXT TS_STRING
 isError             	1017	0	65561	T_NUMBER TS_NUMERAL
 isInternal          	1018	1	65561	T_NUMBER TS_NUMERAL
 receipt             	1019	0	1048651	T_OBJECT TS_OBJECT
-articulatedTx       	1020	1	655410	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY
+articulatedTx       	1020	1	1048651	T_OBJECT TS_OBJECT
 confirmations       	1021	1	65561	T_NUMBER TS_NUMERAL
 gasCost             	1022	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 function            	1023	1	131122	T_TEXT TS_STRING
@@ -1012,7 +1034,7 @@ input               	1016	1	131122	T_TEXT TS_STRING
 isError             	1017	1	65561	T_NUMBER TS_NUMERAL
 isInternal          	1018	1	65561	T_NUMBER TS_NUMERAL
 receipt             	1019	1	1048651	T_OBJECT TS_OBJECT
-articulatedTx       	1020	1	655410	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY
+articulatedTx       	1020	1	1048651	T_OBJECT TS_OBJECT
 confirmations       	1021	1	65561	T_NUMBER TS_NUMERAL
 gasCost             	1022	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 function            	1023	1	131122	T_TEXT TS_STRING
@@ -1050,7 +1072,7 @@ input               	1016	0	131122	T_TEXT TS_STRING
 isError             	1017	0	65561	T_NUMBER TS_NUMERAL
 isInternal          	1018	0	65561	T_NUMBER TS_NUMERAL
 receipt             	1019	0	1048651	T_OBJECT TS_OBJECT
-articulatedTx       	1020	0	655410	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY
+articulatedTx       	1020	0	1048651	T_OBJECT TS_OBJECT
 confirmations       	1021	0	65561	T_NUMBER TS_NUMERAL
 gasCost             	1022	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 function            	1023	0	131122	T_TEXT TS_STRING
@@ -1091,7 +1113,17 @@ traces              	1032	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
     "logs": [],
     "status": null
   },
-  "articulatedTx": [],
+  "articulatedTx": {
+    "schema": 5005,
+    "deleted": 0,
+    "showing": 1,
+    "cname": "Function",
+    "anonymous": 0,
+    "constant": 0,
+    "payable": 0,
+    "inputs": [],
+    "outputs": []
+  },
   "gasCost": 0,
   "price": "1.400000000000000000",
   "gasUsed": 0,
