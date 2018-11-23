@@ -3,14 +3,13 @@
  * Copyright (c) 2017 by Great Hill Corporation.
  * All Rights Reserved
  *------------------------------------------------------------------------*/
-#include "tokenlib.h"
+#include "etherlib.h"
 #include "options.h"
 
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
     etherlib_init(quickQuitHandler);
-    tokenlib_init();
 
     // Parse command line, allowing for command files
     COptions options;
