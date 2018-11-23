@@ -126,7 +126,7 @@ getTrans -a -v -t 6687987.11 6513870.62
         "value": "0x713fa27cb26b5902ea398b04d21e6018bba3a2f1"
       },
       {
-        "name": "_value",
+        "name": "_amount",
         "strDefault": "",
         "value": "8263636363636363636"
       }
@@ -154,7 +154,7 @@ getTrans -a -v -t 6687987.11 6513870.62
             "value": "0x713fa27cb26b5902ea398b04d21e6018bba3a2f1"
           },
           {
-            "name": "_value",
+            "name": "_amount",
             "strDefault": "",
             "value": "8263636363636363636"
           }
