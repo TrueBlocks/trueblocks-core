@@ -21,6 +21,7 @@
 #include "transaction.h"
 #include "incomestatement.h"
 #include "balancehistory.h"
+#include "apispec.h"
 
 namespace qblocks {
 
@@ -35,12 +36,12 @@ public:
     string_q color;
     blknum_t firstBlock;
     blknum_t lastBlock;
-    bool deepScan;
     CIncomeStatement qbis;
     CBalanceHistoryArray balanceHistory;
     wei_t nodeBal;
     bool enabled;
-    CAbi abi;
+    CApiSpec api_spec;
+    CAbi abi_spec;
 
 public:
     CAccountWatch(void);
@@ -115,12 +116,12 @@ inline void CAccountWatch::initialize(void) {
     color = "";
     firstBlock = 0;
     lastBlock = 0;
-    deepScan = 0;
     qbis.initialize();
     balanceHistory.clear();
     nodeBal = 0;
     enabled = true;
-    abi.initialize();
+    api_spec.initialize();
+    abi_spec.initialize();
 
     // EXISTING_CODE
     lastBlock = UINT_MAX;
@@ -139,12 +140,12 @@ inline void CAccountWatch::duplicate(const CAccountWatch& ac) {
     color = ac.color;
     firstBlock = ac.firstBlock;
     lastBlock = ac.lastBlock;
-    deepScan = ac.deepScan;
     qbis = ac.qbis;
     balanceHistory = ac.balanceHistory;
     nodeBal = ac.nodeBal;
     enabled = ac.enabled;
-    abi = ac.abi;
+    api_spec = ac.api_spec;
+    abi_spec = ac.abi_spec;
 
     // EXISTING_CODE
     lastBlock = ac.lastBlock;

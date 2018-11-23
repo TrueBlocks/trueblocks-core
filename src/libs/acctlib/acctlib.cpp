@@ -18,6 +18,7 @@ void acctlib_init(void) {
     etherlib_init();
 
     CAccountWatch::registerClass();
+    CApiSpec::registerClass();
     CAcctCacheItem::registerClass();
     CBalanceHistory::registerClass();
     CBalHistory::registerClass();
