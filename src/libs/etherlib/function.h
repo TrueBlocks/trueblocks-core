@@ -55,6 +55,9 @@ public:
     string_q encodeItem(void) const;
     bool isBuiltin;
     string_q origName;
+    friend class CTransaction;
+    friend class CLogEntry;
+    friend class CTrace;
     // EXISTING_CODE
     bool operator==(const CFunction& item) const;
     bool operator!=(const CFunction& item) const { return !operator==(item); }

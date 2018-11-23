@@ -67,13 +67,7 @@ bool CLogEntry::setValueByName(const string_q& fieldName, const string_q& fieldV
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "address" ) { address = str_2_Addr(fieldValue); return true; }
-            if ( fieldName % "articulatedLog" ) {
-                string_q str = fieldValue;
-                while (!str.empty()) {
-                    articulatedLog.push_back(nextTokenClear(str, ','));
-                }
-                return true;
-            }
+            if ( fieldName % "articulatedLog" ) { /* articulatedLog = fieldValue; */ return true; }
             break;
         case 'd':
             if ( fieldName % "data" ) { data = fieldValue; return true; }
@@ -178,7 +172,7 @@ void CLogEntry::registerClass(void) {
     ADD_FIELD(CLogEntry, "data", T_TEXT, ++fieldNum);
     ADD_FIELD(CLogEntry, "logIndex", T_NUMBER, ++fieldNum);
     ADD_FIELD(CLogEntry, "topics", T_OBJECT|TS_ARRAY, ++fieldNum);
-    ADD_FIELD(CLogEntry, "articulatedLog", T_TEXT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CLogEntry, "articulatedLog", T_OBJECT, ++fieldNum);
     HIDE_FIELD(CLogEntry, "articulatedLog");
 
     // Hide our internal fields, user can turn them on if they like
@@ -199,13 +193,6 @@ string_q nextLogentryChunk_custom(const string_q& fieldIn, const void *dataPtr) 
     if (log) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
-            case 'a':
-                if ( fieldIn % "articulatedLog" && log->articulatedLog.size() == 0 && log->func) {
-                    ostringstream os;
-                    os << *log->func;
-                    return os.str();
-                }
-                break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
@@ -256,18 +243,7 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "address" ) return addr_2_Str(address);
-            if ( fieldName % "articulatedLog" || fieldName % "articulatedLogCnt" ) {
-                size_t cnt = articulatedLog.size();
-                if (endsWith(fieldName, "Cnt"))
-                    return uint_2_Str(cnt);
-                if (!cnt) return "";
-                string_q retS;
-                for (size_t i = 0 ; i < cnt ; i++) {
-                    retS += ("\"" + articulatedLog[i] + "\"");
-                    retS += ((i < cnt - 1) ? ",\n" + indent() : "\n");
-                }
-                return retS;
-            }
+            if ( fieldName % "articulatedLog" ) { expContext().noFrst=true; return articulatedLog.Format(); }
             break;
         case 'd':
             if ( fieldName % "data" ) return data;
@@ -317,11 +293,16 @@ ostream& operator<<(ostream& os, const CLogEntry& item) {
 }
 
 //---------------------------------------------------------------------------
+const CBaseNode *CLogEntry::getObjectAt(const string_q& fieldName, size_t index) const {
+    if ( fieldName % "articulatedLog" )
+        return &articulatedLog;
+    return NULL;
+}
+
+//---------------------------------------------------------------------------
 const string_q CLogEntry::getStringAt(const string_q& name, size_t i) const {
     if ( name % "topics" && i < topics.size() )
         return topic_2_Str(topics[i]);
-    if ( name % "articulatedLog" && i < articulatedLog.size() )
-        return (articulatedLog[i]);
     return "";
 }
 
