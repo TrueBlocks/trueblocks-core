@@ -17,10 +17,10 @@ static COption params[] = {
     COption("~!trans_list",    "a space-separated list of one or more transaction identifiers "
                                   "(tx_hash, bn.txID, blk_hash.txID)"),
     COption("-raw",            "retrieve raw transaction directly from the running node"),
-    COption("-nTraces",        "report on how many traces the transaction generated and deepest trace"),
+    COption("-trace",          "display the transaction's trace"),
+    COption("-articulate",     "articulate the transactions if an ABI is found"),
     COption("@belongs:<addr>", "report true or false if the given address is found anywhere in the transaction"),
     COption("@asStrs",         "when checking --belongs, treat input and log data as a string"),
-    COption("@trace",          "include the transactions trace after the transaction"),
     COption("",                "Retrieve an Ethereum transaction from the local cache or a running node."),
 };
 static size_t nParams = sizeof(params) / sizeof(COption);
@@ -40,15 +40,16 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-t" || arg == "--trace") {
             incTrace = true;
 
-        } else if (arg == "-n" || arg == "--nTraces") {
-            nTraces = true;
+        } else if (arg == "-a" || arg == "--articulate") {
+            articulate = true;
+            verbose = true;
 
-        } else if (arg == "-a" || arg == "--asStrs") {
+        } else if (arg == "--asStrs") {
             chkAsStr = true;
 
-        } else if (startsWith(arg, "-b:") || startsWith(arg, "--belongs:")) {
+        } else if (startsWith(arg, "--belongs:")) {
             string_q orig = arg;
-            arg = substitute(substitute(arg, "-b:", ""), "--belongs:", "");
+            arg = substitute(arg, "--belongs:", "");
             if (!isAddress(arg))
                 return usage(arg + " does not appear to be a valid Ethereum address.\n");
             filters.push_back(str_2_Addr(toLower(arg)));
@@ -66,6 +67,18 @@ bool COptions::parseArguments(string_q& command) {
                 return usage(ret);
 
         }
+    }
+
+    if (articulate) {
+        // show certain fields and hide others
+        manageFields(defHide, false);
+        manageFields(defShow, true);
+        manageFields("CTransaction:price", false);
+
+        //    manageFields(toml.getConfigStr("fields", "hide", ""), false);
+        //    manageFields(toml.getConfigStr("fields", "show", ""), true );
+        abi_spec.loadABIFromFile(blockCachePath("abis/0xTokenLib.json"));
+        abi_spec.loadABIFromFile(blockCachePath("abis/0xWalletLib.json"));
     }
 
     if (!transList.hasTrans())
@@ -86,7 +99,7 @@ void COptions::Init(void) {
     transList.Init();
     isRaw = false;
     incTrace = false;
-    nTraces = false;
+    articulate = false;
     format = "";
     filters.clear();
     belongs = false;
@@ -102,9 +115,7 @@ COptions::COptions(void) {
     HIDE_FIELD(CTransaction, "cumulativeGasUsed");
 
     Init();
-    // Don't reset these for each command
-    nCmds = 0;
-    nVisited = 0;
+    index = 0;
     if (isTestMode())
         UNHIDE_FIELD(CTransaction, "isError");
 }

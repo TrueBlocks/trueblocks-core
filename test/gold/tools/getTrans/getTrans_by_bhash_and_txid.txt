@@ -1,6 +1,6 @@
 getTrans argc: 4 [1:0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4] [2:-v] [3:--parity] 
 getTrans 0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4 -v --parity 
-{
+[{
     "blockHash": "0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853",
     "blockNumber": "0x3d0900",
     "from": "0x4786d4f77ee23405ef7352796d0ee4f7f4a95c91",
@@ -30,4 +30,4 @@ getTrans 0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4 -v
     "to": "0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
     "transactionIndex": "0x4",
     "value": "0xdda3a6b505a6800"
-}
+}]
