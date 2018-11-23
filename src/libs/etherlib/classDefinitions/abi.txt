@@ -1,5 +1,5 @@
 [settings]
 class    = CAbi
-fields   = CFunctionArray abiByName|CFunctionArray abiByEncoding
+fields   = CFunctionArray abiByName|CFunctionArray abiByEncoding|string loaded (nowrite)
 includes = function.h|parameter.h
 cIncs    = #include "node.h"

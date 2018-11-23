@@ -30,6 +30,7 @@ class CAbi : public CBaseNode {
 public:
     CFunctionArray abiByName;
     CFunctionArray abiByEncoding;
+    string_q loaded;
 
 public:
     CAbi(void);
@@ -43,6 +44,7 @@ public:
 
     // EXISTING_CODE
     bool loadABIFromFile(const string_q& fileName);
+    bool loadByAddress(address_t addr);
     friend class CAccountWatch;
     // EXISTING_CODE
     bool operator==(const CAbi& item) const;
@@ -87,8 +89,6 @@ inline CAbi::~CAbi(void) {
 //--------------------------------------------------------------------------
 inline void CAbi::clear(void) {
     // EXISTING_CODE
-    abiByName.clear();
-    abiByEncoding.clear();
     // EXISTING_CODE
 }
 
@@ -98,6 +98,7 @@ inline void CAbi::initialize(void) {
 
     abiByName.clear();
     abiByEncoding.clear();
+    loaded = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -110,6 +111,7 @@ inline void CAbi::duplicate(const CAbi& ab) {
 
     abiByName = ab.abiByName;
     abiByEncoding = ab.abiByEncoding;
+    loaded = ab.loaded;
 
     // EXISTING_CODE
     // EXISTING_CODE
