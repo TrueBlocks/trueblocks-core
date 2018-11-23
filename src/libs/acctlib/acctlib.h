@@ -20,6 +20,7 @@
 #include "infix.h"
 #include "leaf.h"
 #include "treenode.h"
+#include "apispec.h"
 
 extern void acctlib_init(void);
 extern void acctlib_cleanup(void);
