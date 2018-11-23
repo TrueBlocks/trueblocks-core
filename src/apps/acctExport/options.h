@@ -6,8 +6,6 @@
  *------------------------------------------------------------------------*/
 #include "etherlib.h"
 #include "acctlib.h"
-#include "tokenlib.h"
-#include "walletlib.h"
 
 //#define OUTPUT_REDIR 1
 #ifdef OUTPUT_REDIR
@@ -63,16 +61,10 @@ public:
 //------------------------------------------------------------------------
 extern bool loadData(COptions& options);
 extern bool exportData(COptions& options);
-extern bool articulateTransaction(const CAbi& abi, CTransaction *p);
-extern bool articulateEvent(const CAbi& abi, CLogEntry *l);
-extern bool articulateTrace(const CAbi& abi, CTrace *t);
 
 //------------------------------------------------------------------------
 extern string_q cleanFmt    (const string_q& str);
-extern void     manageFields(const string_q& listIn, bool show);
 extern string_q defTransFmt;
-extern string_q defHide;
-extern string_q defShow;
 
 //-----------------------------------------------------------------------------
 extern CStringArray signatures;
