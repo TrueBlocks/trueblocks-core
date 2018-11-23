@@ -15,6 +15,7 @@ add_subdirectory(makeClass) # do this first
 add_subdirectory(grabABI)
 add_subdirectory(ethName)
 add_subdirectory(ethslurp)
+add_subdirectory(ethprice)
 add_subdirectory(getAccounts)
 add_subdirectory(getBlock)
 add_subdirectory(getBloom)
