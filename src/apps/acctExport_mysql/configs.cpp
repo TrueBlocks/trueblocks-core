@@ -15,7 +15,6 @@ bool processConfigs(const COptions& options) {
     HIDE_FIELD(CAccountWatch, "qbis");
     HIDE_FIELD(CAccountWatch, "nodeBal");
     HIDE_FIELD(CAccountWatch, "id");
-    HIDE_FIELD(CAccountWatch, "deepScan");
     HIDE_FIELD(CAccountWatch, "color");
 
     CMySqlServer sqlServer;
