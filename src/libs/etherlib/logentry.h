@@ -32,7 +32,7 @@ public:
     string_q data;
     uint64_t logIndex;
     CTopicArray topics;
-    CStringArray articulatedLog;
+    CFunction articulatedLog;
 
 public:
     CLogEntry(void);
@@ -42,11 +42,11 @@ public:
 
     DECLARE_NODE(CLogEntry);
 
+    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
     const string_q getStringAt(const string_q& name, size_t i) const override;
 
     // EXISTING_CODE
     const CReceipt *pReceipt;
-    CFunction *func;
     // EXISTING_CODE
     bool operator==(const CLogEntry& item) const;
     bool operator!=(const CLogEntry& item) const { return !operator==(item); }
@@ -73,7 +73,6 @@ inline CLogEntry::CLogEntry(void) {
 //--------------------------------------------------------------------------
 inline CLogEntry::CLogEntry(const CLogEntry& lo) {
     // EXISTING_CODE
-    func = NULL;
     // EXISTING_CODE
     duplicate(lo);
 }
@@ -91,9 +90,6 @@ inline CLogEntry::~CLogEntry(void) {
 //--------------------------------------------------------------------------
 inline void CLogEntry::clear(void) {
     // EXISTING_CODE
-    if (func)
-        delete func;
-    func = NULL;
     // EXISTING_CODE
 }
 
@@ -105,11 +101,10 @@ inline void CLogEntry::initialize(void) {
     data = "";
     logIndex = 0;
     topics.clear();
-    articulatedLog.clear();
+    articulatedLog.initialize();
 
     // EXISTING_CODE
     pReceipt = NULL;
-    func = NULL;
     // EXISTING_CODE
 }
 
@@ -127,7 +122,6 @@ inline void CLogEntry::duplicate(const CLogEntry& lo) {
     // EXISTING_CODE
     // no deep copy because it's const
     pReceipt = lo.pReceipt;
-    func = (lo.func ? new CFunction(*lo.func) : NULL);
     // EXISTING_CODE
     finishParse();
 }
