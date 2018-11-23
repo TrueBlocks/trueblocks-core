@@ -962,4 +962,54 @@ extern void registerQuitHandler(QUITHANDLER qh);
     //--------------------------------------------------------------------------
     biguint_t weiPerEther = (modexp(10, 9, uint64_t(10000000000)) * modexp(10, 9, uint64_t(10000000000)));
 
+    //-----------------------------------------------------------------------
+    void manageFields(const string_q& listIn, bool show) {
+        string_q list = substitute(listIn, " ", "");
+        while (!list.empty()) {
+            string_q fields = nextTokenClear(list, '|');
+            string_q cl = nextTokenClear(fields, ':');
+            CBaseNode *item =  createObjectOfType(cl);
+            while (item && !fields.empty()) {
+                string_q fieldName = nextTokenClear(fields, ',');
+                if (fieldName == "all") {
+                    if (show) {
+                        item->getRuntimeClass()->showAllFields();
+                    } else {
+                        item->getRuntimeClass()->hideAllFields();
+                    }
+                } else if (fieldName == "none") {
+                    if (show) {
+                        item->getRuntimeClass()->hideAllFields();
+                    } else {
+                        item->getRuntimeClass()->showAllFields();
+                    }
+                } else {
+                    CFieldData *f = item->getRuntimeClass()->findField(fieldName);
+                    if (f)
+                        f->setHidden(!show);
+                }
+            }
+            delete item;
+        }
+    }
+
+    //-----------------------------------------------------------------------
+    string_q defHide =
+        "CTransaction: nonce, input"
+    "|" "CLogEntry: data, topics"
+    "|" "CTrace: blockHash, blockNumber, transactionHash, transactionPosition, traceAddress, subtraces"
+    "|" "CTraceAction: init"
+    "|" "CTraceResult: code"
+    "|" "CFunction: constant, payable, outputs, signature, encoding, type, articulate_str"
+    "|" "CParameter: type, indexed, isPointer, isArray, isObject";
+
+    string_q defShow =
+        "CTransaction: price, gasCost, articulatedTx, traces, isError, date, ether"
+    "|" "CLogEntry: articulatedLog"
+    "|" "CTrace: articulatedTrace"
+    "|" "CTraceAction: "
+    "|" "CTraceResult: "
+    "|" "CFunction: "
+    "|" "CParameter: ";
+
 }  // namespace qblocks

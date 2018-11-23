@@ -48,7 +48,7 @@ public:
     uint64_t isError;
     uint64_t isInternal;
     CReceipt receipt;
-    CStringArray articulatedTx;
+    CFunction articulatedTx;
 
 public:
     CTransaction(void);
@@ -59,12 +59,10 @@ public:
     DECLARE_NODE(CTransaction);
 
     const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
-    const string_q getStringAt(const string_q& name, size_t i) const override;
 
     // EXISTING_CODE
     const CBlock *pBlock;
     CTraceArray traces;
-    CFunction *func;
     bool forEveryAddress(ADDRESSFUNC func, TRANSFUNC filt = NULL, void *data = NULL);
     bool forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC filt = NULL, void *data = NULL);
     bool forEveryUniqueAddressPerTx(ADDRESSFUNC func, TRANSFUNC filt = NULL, void *data = NULL);
@@ -95,7 +93,6 @@ inline CTransaction::CTransaction(void) {
 //--------------------------------------------------------------------------
 inline CTransaction::CTransaction(const CTransaction& tr) {
     // EXISTING_CODE
-    func = NULL;
     // EXISTING_CODE
     duplicate(tr);
 }
@@ -113,9 +110,6 @@ inline CTransaction::~CTransaction(void) {
 //--------------------------------------------------------------------------
 inline void CTransaction::clear(void) {
     // EXISTING_CODE
-    if (func)
-        delete func;
-    func = NULL;
     // EXISTING_CODE
 }
 
@@ -138,11 +132,10 @@ inline void CTransaction::initialize(void) {
     isError = 0;
     isInternal = 0;
     receipt.initialize();
-    articulatedTx.clear();
+    articulatedTx.initialize();
 
     // EXISTING_CODE
     pBlock = NULL;
-    func = NULL;
     traces.clear();
     // EXISTING_CODE
 }
@@ -171,7 +164,6 @@ inline void CTransaction::duplicate(const CTransaction& tr) {
 
     // EXISTING_CODE
     pBlock = tr.pBlock;  // no deep copy, we don't own it
-    func = (tr.func ? new CFunction(*tr.func) : NULL);
     traces = tr.traces;
     // EXISTING_CODE
     finishParse();
@@ -216,6 +208,9 @@ extern bool sortTransactionsForWrite(const CTransaction& t1, const CTransaction&
 extern string_q decodeRLP(const string_q& name, const string_q& input, size_t nItems, string_q *items);
 extern string_q decodeRLP(const CFunction *func, const string_q& input);
 extern string_q nextBlockChunk(const string_q& fieldIn, const void *data);
+extern bool articulateTransaction(const CAbi& abi, CTransaction *p);
+extern bool articulateLog(const CAbi& abi, CLogEntry *l);
+extern bool articulateTrace(const CAbi& abi, CTrace *t);
 // EXISTING_CODE
 }  // namespace qblocks
 
