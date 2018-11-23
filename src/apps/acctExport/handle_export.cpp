@@ -3,6 +3,7 @@
  * Copyright (c) 2017 by Great Hill Corporation.
  * All Rights Reserved
  *------------------------------------------------------------------------*/
+#include "etherlib.h"
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------
@@ -100,7 +101,7 @@ bool exportTransaction(COptions& options, const CAcctCacheItem *item, bool first
             // Note: we do this outside of the check for enablement becuase even disabled watches can
             // be useful when articulating data
             if (options.needsArt)
-                articulateTransaction(watch->abi, trans);
+                articulateTransaction(watch->abi_spec, trans);
 
             if (watch->enabled && isInTransaction(trans, watch->address)) {
 
@@ -206,14 +207,14 @@ bool COptions::loadWatches(const CToml& toml) {
         blk_minWatchBlock = min(blk_minWatchBlock, watch->firstBlock);
         blk_maxWatchBlock = max(blk_maxWatchBlock, watch->lastBlock);
 
-        watch->abi.loadABIFromFile(blockCachePath("abis/" + watch->address + ".json"));
-        watch->abi.loadABIFromFile(blockCachePath("abis/0xTokenLib.json"));
-        watch->abi.loadABIFromFile(blockCachePath("abis/0xWalletLib.json"));
+        watch->abi_spec.loadABIFromFile(blockCachePath("abis/" + watch->address + ".json"));
+        watch->abi_spec.loadABIFromFile(blockCachePath("abis/0xTokenLib.json"));
+        watch->abi_spec.loadABIFromFile(blockCachePath("abis/0xWalletLib.json"));
         // We may as well articulate the named contracts while we're at it
         for (size_t n = 0 ; n < named.size() ; n++) {
             CAccountWatch *alt = &named.at(n);
             if (alt->enabled)
-                watch->abi.loadABIFromFile(blockCachePath("abis/" + alt->address + ".json"));
+                watch->abi_spec.loadABIFromFile(blockCachePath("abis/" + alt->address + ".json"));
         }
     }
 

@@ -62,7 +62,14 @@ bool COptions::parseArguments(string_q& command) {
     if (!fileExists("./config.toml"))
         return usage("The config.toml file was not found. Are you in the right folder? Quitting...\n");
 
+    // show certain fields and hide others
+    manageFields(defHide, false);
+    manageFields(defShow, true);
+
     CToml toml("./config.toml");
+    manageFields(toml.getConfigStr("fields", "hide", ""), false);
+    manageFields(toml.getConfigStr("fields", "show", ""), true );
+
     if (!loadWatches(toml))
         return false;
 
@@ -73,20 +80,7 @@ bool COptions::parseArguments(string_q& command) {
                 if (addr % watch.address)
                     watch.enabled = true;
         }
-
-//        HIDE_FIELD(CAccountWatch, "qbis");
-//        for (CAccountWatch& watch : watches) {
-//            cout << watch << "\n";
-//        }
-//        cout << "Press enter to continue >";
-//        getchar();
     }
-
-    // show certain fields and hide others
-    manageFields(defHide, false);
-    manageFields(defShow, true);
-    manageFields(toml.getConfigStr("fields", "hide", ""), false);
-    manageFields(toml.getConfigStr("fields", "show", ""), true );
 
 #ifdef OUTPUT_REDIR
     if (!outFile.empty()) {
@@ -153,53 +147,3 @@ COptions::~COptions(void) {
 string_q cleanFmt(const string_q& str) {
     return (substitute(substitute(substitute(str, "\n", ""), "\\n", "\n"), "\\t", "\t"));
 }
-
-//-----------------------------------------------------------------------
-void manageFields(const string_q& listIn, bool show) {
-    string_q list = substitute(listIn, " ", "");
-    while (!list.empty()) {
-        string_q fields = nextTokenClear(list, '|');
-        string_q cl = nextTokenClear(fields, ':');
-        CBaseNode *item =  createObjectOfType(cl);
-        while (item && !fields.empty()) {
-            string_q fieldName = nextTokenClear(fields, ',');
-            if (fieldName == "all") {
-                if (show) {
-                    item->getRuntimeClass()->showAllFields();
-                } else {
-                    item->getRuntimeClass()->hideAllFields();
-                }
-            } else if (fieldName == "none") {
-                if (show) {
-                    item->getRuntimeClass()->hideAllFields();
-                } else {
-                    item->getRuntimeClass()->showAllFields();
-                }
-            } else {
-                CFieldData *f = item->getRuntimeClass()->findField(fieldName);
-                if (f)
-                    f->setHidden(!show);
-            }
-        }
-        delete item;
-    }
-}
-
-//-----------------------------------------------------------------------
-string_q defTransFmt = "{ \"date\": \"[{DATE}]\", \"from\": \"[{FROM}]\", \"to\": \"[{TO}]\", \"value\": \"[{VALUE}]\" }";
-string_q defHide =
-    "CTransaction: nonce, input"
-"|" "CLogEntry: data, topics"
-"|" "CTrace: blockHash, blockNumber, transactionHash, transactionPosition, traceAddress, subtraces"
-"|" "CTraceAction: init"
-"|" "CTraceResult: code"
-"|" "CFunction: constant, payable, outputs, signature, encoding, type, articulate_str"
-"|" "CParameter: type, indexed, isPointer, isArray, isObject";
-string_q defShow =
-    "CTransaction: price, gasCost, articulatedTx, traces, isError, date, ether"
-"|" "CLogEntry: articulatedLog"
-"|" "CTrace: articulatedTrace"
-"|" "CTraceAction: "
-"|" "CTraceResult: "
-"|" "CFunction: "
-"|" "CParameter: ";
