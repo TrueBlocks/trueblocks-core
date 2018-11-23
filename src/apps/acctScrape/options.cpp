@@ -86,6 +86,17 @@ bool COptions::parseArguments(string_q& command) {
 #endif
 #endif
 
+    if (!fileExists("./config.toml"))
+        return usage("The config.toml file was not found. Are you in the right folder? Quitting...\n");
+
+    // show certain fields and hide others
+    manageFields(defHide, false);
+    manageFields(defShow, true);
+
+    CToml toml("./config.toml");
+    manageFields(toml.getConfigStr("fields", "hide", ""), false);
+    manageFields(toml.getConfigStr("fields", "show", ""), true );
+
     if (oneTrans && !oneBlock)
         return usage("If you specify oneTrans, you must specify oneBlock. Quitting...");
 
@@ -147,4 +158,3 @@ COptions::COptions(void) : blkStats(), addrStats(), transStats(), traceStats(), 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
 }
-
