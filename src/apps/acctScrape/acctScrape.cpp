@@ -16,7 +16,7 @@ extern string_q report         (const COptions& options, double start, double st
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    etherlib_init();
+    acctlib_init();
 
     COptions options;
     if (!options.prepareArguments(argc, argv))
@@ -344,7 +344,7 @@ bool processTransaction(const CBlock& block, const CTransaction *trans, COptions
                         const CLogEntry *l = &trans->receipt.logs[lg];
                              if (l->address % watched       ) { hit = true; REP("l->addr", l->address); }
                         else if (containsI(l->data, extended)) { hit = true; REP("l->data", "..." + extract(l->data, toLower(l->data).find(toLower(extended))))
-}
+                        }
 
                         // Or if we find it as one of the topics. Note, won't spin if we've already hit.
                         for (size_t tp = 1 ; tp < l->topics.size() && !hit ; tp++) {
@@ -378,6 +378,16 @@ bool processTransaction(const CBlock& block, const CTransaction *trans, COptions
                     options->txCache << block.blockNumber << trans->transactionIndex;
                     options->txCache.flush();
                     writeLastBlock(block.blockNumber);
+
+                    if (!acct->api_spec.uri.empty()) {
+                        if (trans->traces.size() == 0)
+                            getTraces(((CTransaction*)trans)->traces, trans->hash);
+                        // THIS IS WHERE I WOULD WRITE TO AN API
+                        articulateTransaction(acct->abi_spec, (CTransaction*)trans);
+                        cout << *trans << "\n";
+                        cout.flush();
+                    }
+
                     // Also, we optionally write blocks if we're told to do so
                     if (options->writeBlocks) {
                         string_q fn = getBinaryFilename(block.blockNumber);
@@ -469,6 +479,14 @@ bool COptions::loadMonitors(const CToml& config) {
         watch.color   = convertColor(watch.color);
         watch.address = str_2_Addr(toLower(watch.address));
         watch.nodeBal = getBalance(watch.address, watch.firstBlock-1, false);
+        watch.api_spec.method = config.getConfigStr("api_spec", "method", "");
+        watch.api_spec.uri = config.getConfigStr("api_spec", "uri", "");
+        watch.api_spec.token = config.getConfigStr("api_spec", "token", "");
+        if (!watch.api_spec.uri.empty()) {
+            watch.abi_spec.loadABIFromFile(blockCachePath("abis/" + watch.address + ".json"));
+            watch.abi_spec.loadABIFromFile(blockCachePath("abis/0xTokenLib.json"));
+            watch.abi_spec.loadABIFromFile(blockCachePath("abis/0xWalletLib.json"));
+        }
 
         string_q msg;
         if (!isAddress(watch.address)) {
@@ -484,6 +502,7 @@ bool COptions::loadMonitors(const CToml& config) {
             minWatchBlock = min(minWatchBlock, watch.firstBlock);
             maxWatchBlock = max(maxWatchBlock, watch.lastBlock);
             monitors.push_back(watch);
+
         } else {
             cerr << msg << endl;
             return false;
