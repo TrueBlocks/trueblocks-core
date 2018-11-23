@@ -15,7 +15,7 @@ transactionHash     	1009	0	131132	T_HASH TS_STRING
 transactionPosition 	1010	0	65561	T_NUMBER TS_NUMERAL
 type                	1011	0	131122	T_TEXT TS_STRING
 error               	1012	0	131122	T_TEXT TS_STRING
-articulatedTrace    	1013	1	655410	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY
+articulatedTrace    	1013	1	1048651	T_OBJECT TS_OBJECT
 action              	1014	0	1048651	T_OBJECT TS_OBJECT
 result              	1015	0	1048651	T_OBJECT TS_OBJECT
 {
@@ -55,7 +55,7 @@ transactionHash     	1009	1	131132	T_HASH TS_STRING
 transactionPosition 	1010	1	65561	T_NUMBER TS_NUMERAL
 type                	1011	1	131122	T_TEXT TS_STRING
 error               	1012	1	131122	T_TEXT TS_STRING
-articulatedTrace    	1013	1	655410	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY
+articulatedTrace    	1013	1	1048651	T_OBJECT TS_OBJECT
 action              	1014	1	1048651	T_OBJECT TS_OBJECT
 result              	1015	1	1048651	T_OBJECT TS_OBJECT
 {
@@ -76,7 +76,7 @@ transactionHash     	1009	0	131132	T_HASH TS_STRING
 transactionPosition 	1010	0	65561	T_NUMBER TS_NUMERAL
 type                	1011	0	131122	T_TEXT TS_STRING
 error               	1012	0	131122	T_TEXT TS_STRING
-articulatedTrace    	1013	0	655410	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY
+articulatedTrace    	1013	0	1048651	T_OBJECT TS_OBJECT
 action              	1014	0	1048651	T_OBJECT TS_OBJECT
 result              	1015	0	1048651	T_OBJECT TS_OBJECT
 {
@@ -90,7 +90,12 @@ result              	1015	0	1048651	T_OBJECT TS_OBJECT
   "traceAddress": [],
   "transactionHash": "0x0",
   "transactionPosition": 0,
-  "articulatedTrace": [],
+  "articulatedTrace": {
+    "constant": 0,
+    "payable": 0,
+    "inputs": [],
+    "outputs": []
+  },
   "action": {
     "address": "0x0",
     "balance": 0,
