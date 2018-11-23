@@ -47,6 +47,8 @@ int main(int argc, const char *argv[]) {
 
                 } else if (options.isCheck) {
                     options.blocks.forEveryBlockNumber(checkBloom, &options);
+                    if (!verbose)
+                        cout << "\n";
 
                 } else {
                     ASSERT(options.isReWrite);
