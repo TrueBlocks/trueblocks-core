@@ -53,9 +53,10 @@ run_test("getTrans_invalid_param_1"   ".th")
 run_test("getTrans_invalid_param_2"   ".whatever")
 run_test("getTrans_invalid_param_3"   "1233123")
 run_test("getTrans_by_txhash"          "0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765")
-run_test("getTrans_by_bnun_and_txid"   "4000000.5")
+run_test("getTrans_by_bnun_and_txid"   "4000000.5" " --trace")
 run_test("getTrans_by_bhash_and_txid"  "0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4" " -v" " --parity")
-run_test("getTrans_keys_combination" "0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765" " 4000000.5" " 0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4")
+run_test("getTrans_keys_combination" "0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765" " 4000000.5" " 0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4" " -v")
+run_test("getTrans_mulit_line_mulit_txs" "--file:cmd_file_1" " -v")
 run_test("getTrans_from_node"          "-r" " 4000000.5")
 run_test("getTrans_from_node_long"     "--raw" " 4000000.5")
 run_test("getTrans_help"               "-h")
@@ -64,8 +65,8 @@ run_test("getTrans_should_be_error"    "0xeec4ccd13fe05907f9d732a8ad245bcb7f9182
 
 run_test("getTrans_verbose_blk_idx1"   "-v" " 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3")
 run_test("getTrans_verbose_blk_idx2"   "--verbose" " 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.4")
-run_test("getTrans_verbose_blk_idx3"   "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3" " -v")
-
+run_test("getTrans_verbose_blk_idx3"   "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3" " -v" " -t")
+run_test("getTrans_articulate"         "-a" " -v" " -t" " 6687987.11" " 6513870.62")
 run_test("getTrans_by_blk_hash_good"   "0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55" " --verbose")
 # this test case should fail, but it doesn't. It calls for a transaction (#155) that does not exist since this block only has 94 transactions
 #run_test("getTrans_by_blk_hash_bad"    "0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.155" " -v")

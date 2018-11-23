@@ -1,6 +1,6 @@
 getTrans argc: 3 [1:0xeec4ccd13fe05907f9d732a8ad245bcb7f918217157b89baaa23895c12eb329a] [2:--verbose] 
 getTrans 0xeec4ccd13fe05907f9d732a8ad245bcb7f918217157b89baaa23895c12eb329a --verbose 
-{
+[{
   "hash": "0xeec4ccd13fe05907f9d732a8ad245bcb7f918217157b89baaa23895c12eb329a",
   "blockHash": "0xb1fcff633029ee18ab6482b58ff8b6e95dd7c82a954c852157152a7a6d32785e",
   "blockNumber": 4370000,
@@ -21,4 +21,4 @@ getTrans 0xeec4ccd13fe05907f9d732a8ad245bcb7f918217157b89baaa23895c12eb329a --ve
     "status": 0
   },
   "gasUsed": 50000
-}
+}]
