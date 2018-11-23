@@ -60,8 +60,8 @@ extern const string_q evt_ApprovalForAll_qb;
 extern const string_q evt_Transfer_qb;
 
 // EXISTING_CODE
-extern bool articulateToken(CTransaction *p);
-extern bool articulateTokenEvent(CLogEntry *p);
+//extern bool articulateToken(CTransaction *p, void *data);
+//extern bool articulateTokenEvent(CLogEntry *p, void *data);
 
 //-----------------------------------------------------------------------
 inline bool isTokenRelated(const CTransaction *trans) {
