@@ -1,0 +1,181 @@
+getTrans argc: 6 [1:-a] [2:-v] [3:-t] [4:6687987.11] [5:6513870.62] 
+getTrans -a -v -t 6687987.11 6513870.62 
+[{
+  "hash": "0x8c0b6d6bf0390ba6618b10aa629f8208c8b871b0c052408505a7d9b5bf015f91",
+  "blockHash": "0x9a06b1e8e7249a36a5e532997882429805c7a6510e91b05fd9b5ad6e367acb13",
+  "blockNumber": 6687987,
+  "transactionIndex": 11,
+  "timestamp": 1541987121,
+  "from": "0x752c71a68e4e0ea308c6e4209b7802d135c49292",
+  "to": "0x159cf1e9ae58211b588f5e3bf1d7e423952d959b",
+  "value": 0,
+  "gas": 200000,
+  "gasPrice": 50000000000,
+  "isError": 0,
+  "receipt": {
+    "contractAddress": "0x0",
+    "gasUsed": 78518,
+    "logs": [
+      {
+        "address": "0x159cf1e9ae58211b588f5e3bf1d7e423952d959b",
+        "logIndex": 4,
+        "articulatedLog": {
+          "name": "CancelRequest",
+          "inputs": [
+            {
+              "name": "_key",
+              "strDefault": "",
+              "value": "668943053339463440964226444874938884815264715410"
+            },
+            {
+              "name": "_sender",
+              "strDefault": "",
+              "value": "0x0000000000000000000000000000000000000001"
+            },
+            {
+              "name": "_deposit",
+              "strDefault": "",
+              "value": "307140400019656960"
+            },
+            {
+              "name": "_amount",
+              "strDefault": "",
+              "value": "25000000000000000000"
+            }
+          ]
+        }
+      }
+    ],
+    "status": 1
+  },
+  "articulatedTx": {
+    "name": "cancelExistingRequest",
+    "inputs": [
+      {
+        "name": "_key",
+        "strDefault": "",
+        "value": "1"
+      }
+    ]
+  },
+  "gasCost": 3925900000000000,
+  "gasUsed": 78518,
+  "date": "2018-11-12 01:45:21 UTC",
+  "ether": 0.000000000000000000,
+  "traces": [
+    {
+      "type": "call",
+      "error": "",
+      "articulatedTrace": {
+        "name": "cancelExistingRequest",
+        "inputs": [
+          {
+            "name": "_key",
+            "strDefault": "",
+            "value": "1"
+          }
+        ]
+      },
+      "action": {
+        "address": "0x0",
+        "balance": 0,
+        "callType": "call",
+        "from": "0x752c71a68e4e0ea308c6e4209b7802d135c49292",
+        "gas": 178536,
+        "input": "0x0a3120f20000000000000000000000000000000000000000000000000000000000000001",
+        "refundAddress": "0x0",
+        "to": "0x159cf1e9ae58211b588f5e3bf1d7e423952d959b",
+        "value": 0
+      },
+      "result": {
+        "address": "0x0",
+        "gasUsed": 57054,
+        "output": "0x"
+      }
+    }
+  ]
+},{
+  "hash": "0x2d92337aa72c51eaf61ab52692af28cc2f7efb62e32bbc1d8a420099a22510e9",
+  "blockHash": "0x10a610f712557f961e854be9b19561eea3c9c19ab7b302027877181935789da8",
+  "blockNumber": 6513870,
+  "transactionIndex": 62,
+  "timestamp": 1539524970,
+  "from": "0x713fa27cb26b5902ea398b04d21e6018bba3a2f1",
+  "to": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+  "value": 0,
+  "gas": 3000000,
+  "gasPrice": 2000000000,
+  "isError": 1,
+  "receipt": {
+    "contractAddress": "0x0",
+    "gasUsed": 3000000,
+    "logs": [],
+    "status": 0
+  },
+  "articulatedTx": {
+    "name": "transferFrom",
+    "inputs": [
+      {
+        "name": "_from",
+        "strDefault": "",
+        "value": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413"
+      },
+      {
+        "name": "_to",
+        "strDefault": "",
+        "value": "0x713fa27cb26b5902ea398b04d21e6018bba3a2f1"
+      },
+      {
+        "name": "_value",
+        "strDefault": "",
+        "value": "8263636363636363636"
+      }
+    ]
+  },
+  "gasCost": 6000000000000000,
+  "gasUsed": 3000000,
+  "date": "2018-10-14 13:49:30 UTC",
+  "ether": 0.000000000000000000,
+  "traces": [
+    {
+      "type": "call",
+      "error": "Badjumpdestination",
+      "articulatedTrace": {
+        "name": "transferFrom",
+        "inputs": [
+          {
+            "name": "_from",
+            "strDefault": "",
+            "value": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413"
+          },
+          {
+            "name": "_to",
+            "strDefault": "",
+            "value": "0x713fa27cb26b5902ea398b04d21e6018bba3a2f1"
+          },
+          {
+            "name": "_value",
+            "strDefault": "",
+            "value": "8263636363636363636"
+          }
+        ]
+      },
+      "action": {
+        "address": "0x0",
+        "balance": 0,
+        "callType": "call",
+        "from": "0x713fa27cb26b5902ea398b04d21e6018bba3a2f1",
+        "gas": 2975272,
+        "input": "0x23b872dd000000000000000000000000bb9bc244d798123fde783fcc1c72d3bb8c189413000000000000000000000000713fa27cb26b5902ea398b04d21e6018bba3a2f100000000000000000000000000000000000000000000000072ae557d778bd174",
+        "refundAddress": "0x0",
+        "to": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+        "value": 0
+      },
+      "result": {
+        "address": "0x0",
+        "gasUsed": 0,
+        "output": ""
+      }
+    }
+  ]
+}]

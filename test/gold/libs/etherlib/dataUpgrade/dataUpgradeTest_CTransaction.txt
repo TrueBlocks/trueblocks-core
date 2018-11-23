@@ -22,7 +22,7 @@ input               	1016	0	131122	T_TEXT TS_STRING
 isError             	1017	0	65561	T_NUMBER TS_NUMERAL
 isInternal          	1018	1	65561	T_NUMBER TS_NUMERAL
 receipt             	1019	0	1048651	T_OBJECT TS_OBJECT
-articulatedTx       	1020	1	655410	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY
+articulatedTx       	1020	1	1048651	T_OBJECT TS_OBJECT
 confirmations       	1021	1	65561	T_NUMBER TS_NUMERAL
 gasCost             	1022	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 function            	1023	1	131122	T_TEXT TS_STRING
@@ -79,7 +79,7 @@ input               	1016	1	131122	T_TEXT TS_STRING
 isError             	1017	1	65561	T_NUMBER TS_NUMERAL
 isInternal          	1018	1	65561	T_NUMBER TS_NUMERAL
 receipt             	1019	1	1048651	T_OBJECT TS_OBJECT
-articulatedTx       	1020	1	655410	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY
+articulatedTx       	1020	1	1048651	T_OBJECT TS_OBJECT
 confirmations       	1021	1	65561	T_NUMBER TS_NUMERAL
 gasCost             	1022	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 function            	1023	1	131122	T_TEXT TS_STRING
@@ -117,7 +117,7 @@ input               	1016	0	131122	T_TEXT TS_STRING
 isError             	1017	0	65561	T_NUMBER TS_NUMERAL
 isInternal          	1018	0	65561	T_NUMBER TS_NUMERAL
 receipt             	1019	0	1048651	T_OBJECT TS_OBJECT
-articulatedTx       	1020	0	655410	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY
+articulatedTx       	1020	0	1048651	T_OBJECT TS_OBJECT
 confirmations       	1021	0	65561	T_NUMBER TS_NUMERAL
 gasCost             	1022	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 function            	1023	0	131122	T_TEXT TS_STRING
@@ -154,7 +154,12 @@ traces              	1032	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
     "logs": [],
     "status": null
   },
-  "articulatedTx": [],
+  "articulatedTx": {
+    "constant": 0,
+    "payable": 0,
+    "inputs": [],
+    "outputs": []
+  },
   "gasCost": 0,
   "price": "1.400000000000000000",
   "gasUsed": 0,
