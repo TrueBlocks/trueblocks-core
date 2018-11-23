@@ -522,7 +522,7 @@ const char* STR_FACTORY1 =
 "\t\t\ta->C[{BASE}]::operator=(*p);\n"
 "[{ASSIGNS1}]"
 "[{ITEMS1}]"
-"\t\t\ta->articulatedTx.push_back([{PARSEIT}]);\n"
+"\t\t\t/""/a->articulatedTx.push_back([{PARSEIT}]);\n"
 "\t\t\treturn a;\n"
 "\n";
 
