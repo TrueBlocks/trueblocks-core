@@ -47,7 +47,7 @@ public:
     uint64_t transactionPosition;
     string_q type;
     string_q error;
-    CStringArray articulatedTrace;
+    CFunction articulatedTrace;
     CTraceAction action;
     CTraceResult result;
 
@@ -64,7 +64,6 @@ public:
 
     // EXISTING_CODE
     bool isError(void) const;
-    CFunction *func;
     // EXISTING_CODE
     bool operator==(const CTrace& item) const;
     bool operator!=(const CTrace& item) const { return !operator==(item); }
@@ -91,7 +90,6 @@ inline CTrace::CTrace(void) {
 //--------------------------------------------------------------------------
 inline CTrace::CTrace(const CTrace& tr) {
     // EXISTING_CODE
-    func = NULL;
     // EXISTING_CODE
     duplicate(tr);
 }
@@ -109,9 +107,6 @@ inline CTrace::~CTrace(void) {
 //--------------------------------------------------------------------------
 inline void CTrace::clear(void) {
     // EXISTING_CODE
-    if (func)
-        delete func;
-    func = NULL;
     // EXISTING_CODE
 }
 
@@ -127,12 +122,11 @@ inline void CTrace::initialize(void) {
     transactionPosition = 0;
     type = "";
     error = "";
-    articulatedTrace.clear();
+    articulatedTrace.initialize();
     action.initialize();
     result.initialize();
 
     // EXISTING_CODE
-    func = NULL;
     // EXISTING_CODE
 }
 
@@ -154,7 +148,6 @@ inline void CTrace::duplicate(const CTrace& tr) {
     result = tr.result;
 
     // EXISTING_CODE
-    func = (tr.func ? new CFunction(*tr.func) : NULL);
     // EXISTING_CODE
     finishParse();
 }

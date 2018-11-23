@@ -99,13 +99,7 @@ bool CTransaction::setValueByName(const string_q& fieldName, const string_q& fie
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "articulatedTx" ) {
-                string_q str = fieldValue;
-                while (!str.empty()) {
-                    articulatedTx.push_back(nextTokenClear(str, ','));
-                }
-                return true;
-            }
+            if ( fieldName % "articulatedTx" ) { /* articulatedTx = fieldValue; */ return false; }
             break;
         case 'b':
             if ( fieldName % "blockHash" ) { blockHash = str_2_Hash(fieldValue); return true; }
@@ -262,7 +256,7 @@ void CTransaction::registerClass(void) {
     ADD_FIELD(CTransaction, "isError", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "isInternal", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "receipt", T_OBJECT, ++fieldNum);
-    ADD_FIELD(CTransaction, "articulatedTx", T_TEXT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CTransaction, "articulatedTx", T_OBJECT, ++fieldNum);
     HIDE_FIELD(CTransaction, "articulatedTx");
 
     // Hide our internal fields, user can turn them on if they like
@@ -320,13 +314,6 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
     if (tra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
-            case 'a':
-                if ( fieldIn % "articulatedTx" && tra->articulatedTx.size() == 0 && tra->func) {
-                    ostringstream os;
-                    os << *tra->func;
-                    return os.str();
-                }
-                break;
             case 'c':
                 if ( fieldIn % "contractAddress" ) return addr_2_Str(tra->receipt.contractAddress);
                 break;
@@ -460,18 +447,7 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "articulatedTx" || fieldName % "articulatedTxCnt" ) {
-                size_t cnt = articulatedTx.size();
-                if (endsWith(fieldName, "Cnt"))
-                    return uint_2_Str(cnt);
-                if (!cnt) return "";
-                string_q retS;
-                for (size_t i = 0 ; i < cnt ; i++) {
-                    retS += ("\"" + articulatedTx[i] + "\"");
-                    retS += ((i < cnt - 1) ? ",\n" + indent() : "\n");
-                }
-                return retS;
-            }
+            if ( fieldName % "articulatedTx" ) { expContext().noFrst=true; return articulatedTx.Format(); }
             break;
         case 'b':
             if ( fieldName % "blockHash" ) return hash_2_Str(blockHash);
@@ -509,9 +485,9 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
     }
 
     // EXISTING_CODE
-    if ( fieldName % "traces" || fieldName % "traceCnt" ) {
+    if ( fieldName % "traces" || fieldName % "tracesCnt" ) {
         size_t cnt = traces.size();
-        if (endsWith(fieldName, "Cnt"))
+        if (endsWith(toLower(fieldName), "cnt"))
             return uint_2_Str(cnt);
         if (!cnt) return "";
         string_q retS;
@@ -558,14 +534,11 @@ ostream& operator<<(ostream& os, const CTransaction& item) {
 const CBaseNode *CTransaction::getObjectAt(const string_q& fieldName, size_t index) const {
     if ( fieldName % "receipt" )
         return &receipt;
+    if ( fieldName % "articulatedTx" )
+        return &articulatedTx;
+    if ( fieldName % "traces" && index < traces.size())
+        return &traces[index];
     return NULL;
-}
-
-//---------------------------------------------------------------------------
-const string_q CTransaction::getStringAt(const string_q& name, size_t i) const {
-    if ( name % "articulatedTx" && i < articulatedTx.size() )
-        return (articulatedTx[i]);
-    return "";
 }
 
 //---------------------------------------------------------------------------
@@ -609,10 +582,10 @@ inline string_q hex2String(const string_q& inHex) {
 #define old_toBigNum3(a, b)      padNum3(old_grabBigNum(a, b))
 #define old_toBoolean(a, b)      (old_grabBigNum(a, b) ? "true" : "false")
 #define old_toBytes(a, b)        extract((a), 64*(b), 64)
-string_q parseTheInput(const string_q& params, size_t nItems, string_q *types) {
+inline string_q parseTheInput(const string_q& params, size_t nItems, string_q *types) {
 
     string_q ret;
-    for (size_t item = 0 ; item < (size_t)nItems ; item++) {
+    for (size_t item = 0 ; item < nItems ; item++) {
         string_q t = types[item];
         bool isDynamic = (t == "string" || t == "bytes" || contains(t, "[]"));
         string_q val;
@@ -622,22 +595,19 @@ string_q parseTheInput(const string_q& params, size_t nItems, string_q *types) {
         else if ( t == "uint3"                      )   val =          old_toBigNum3  (params, item);
         else if ( contains(t, "int") &&   !isDynamic)   val =          old_toBigNum2  (params, item);
         else if ( contains(t, "bytes") && !isDynamic)   val =          old_toBytes    (params, item);
-        else if ( isDynamic                         )   val = "off:" + old_toBigNum2  (params, item);
-        else                                            val = "unknown type: " + t;
-
-        if (contains(val, "off:")) {
-            size_t start = str_2_Uint(substitute(val, "off:", "")) / (size_t)32;
-            size_t len   = old_grabBigNum(params, start);
+        else if (!isDynamic                         )   val = "unknown type: " + t;
+        else if ( isDynamic ) {
+            size_t start = str_2_Uint(old_toBigNum2(params, item)) / (size_t)32;
+            size_t len = old_grabBigNum(params, start);
             if (len == NOPOS)
                 len = params.length()-start;
             if (t == "string") {
-                val += substitute(
-                            substitute(
-                                substitute(
-                                    hex2String(extract(params, (start+1) * 64, len * 2)),
-                                "\n", "\\n"),
-                            "\r", ""),
-                        "\"", "\\\"");
+                string_q ss1 = extract(params, (start+1) * 64, len * 2);
+                string_q ss2 = hex2String(ss1);
+                ss2 = substitute(ss2, "\n", "\\n");
+                ss2 = substitute(ss2, "\r", "");
+                ss2 = substitute(ss2, "\"", "\\\"");
+                val += ss2;
             } else {
                 val = "0x" + extract(params, (start+1) * 64, len * 2);
             }
@@ -649,13 +619,97 @@ string_q parseTheInput(const string_q& params, size_t nItems, string_q *types) {
 }
 
 //---------------------------------------------------------------------------
-string_q decodeRLP(const string_q& name, const string_q& input, size_t nItems, string_q *items) {
+inline string_q decodeRLP(const string_q& name, const string_q& input, size_t nItems, string_q *items) {
     string_q quote = "\"";
     string_q params = input;
     string_q result = parseTheInput(params, nItems, items);
     result = substitute(result, "|", "\", \"");
     return quote + name + quote + ", " + result;
 }
+
+//---------------------------------------------------------------------------
+inline bool decodeRLP2(CFunction *func, const string_q& input) {
+    string_q items[256];
+    size_t nItems = 0;
+    for (auto param : func->inputs)
+        items[nItems++] = param.type;
+    string_q decoded = substitute(decodeRLP(func->name, input, nItems, items), "\"", "");
+    nextTokenClear(decoded, ',');
+    for (size_t j = 0 ; j < func->inputs.size(); j++)
+        func->inputs[j].value = trim(nextTokenClear(decoded, ','));
+    return true;
+}
+
+//-----------------------------------------------------------------------
+bool articulateTransaction(const CAbi& abi, CTransaction *p) {
+
+    // articulate the events, so we can return with a fully articulated object
+    for (size_t i = 0 ; i < p->receipt.logs.size() ; i++)
+        articulateLog(abi, &p->receipt.logs[i]);
+
+    // articulate the traces, so we can return with a fully articulated object
+    for (size_t i = 0 ; i < p->traces.size() ; i++)
+        articulateTrace(abi, &p->traces[i]);
+
+    if (p && (p->input.length() >= 10 || p->input == "0x")) {
+        string_q encoding = extract(p->input, 0, 10);
+        string_q params   = extract(p->input, 10);
+
+        for (size_t i = 0 ; i < abi.abiByEncoding.size(); i ++) {
+            CFunction *ff = (CFunction *)&abi.abiByEncoding[i];
+            if (encoding % ff->encoding) {
+                p->articulatedTx = CFunction(abi.abiByEncoding[i]);
+                return decodeRLP2(&p->articulatedTx, params);
+            }
+        }
+    }
+    return false;
+}
+
+//-----------------------------------------------------------------------
+bool articulateLog(const CAbi& abi, CLogEntry *p) {
+
+    size_t nTops = p->topics.size();
+    if (nTops > 0) {  // the '0'th topic is the event signature
+        string_q data = extract(p->data, 2);
+        string_q params;
+        bool first = true;
+        for (auto t : p->topics) {
+            if (!first)
+                params += extract(topic_2_Str(t),2);
+            first = false;
+        }
+        params += data;
+
+        for (size_t i = 0 ; i < abi.abiByEncoding.size(); i ++) {
+            CFunction *ff = (CFunction *)&abi.abiByEncoding[i];
+            if (ff->encoding % topic_2_Str(p->topics[0])) {
+                p->articulatedLog = CFunction(abi.abiByEncoding[i]);
+                return decodeRLP2(&p->articulatedLog, params);
+            }
+        }
+    }
+    return false;
+}
+
+//-----------------------------------------------------------------------
+bool articulateTrace(const CAbi& abi, CTrace *p) {
+
+    if (p && (p->action.input.length() >= 10 || p->action.input == "0x")) {
+        string_q encoding = extract(p->action.input, 0, 10);
+        string_q params   = extract(p->action.input, 10);
+
+        for (size_t i = 0 ; i < abi.abiByEncoding.size(); i ++) {
+            CFunction *ff = (CFunction *)&abi.abiByEncoding[i];
+            if (encoding % ff->encoding) {
+                p->articulatedTrace = CFunction(abi.abiByEncoding[i]);
+                return decodeRLP2(&p->articulatedTrace, params);
+            }
+        }
+    }
+    return false;
+}
+
 // EXISTING_CODE
 }  // namespace qblocks
 
