@@ -12,7 +12,7 @@ set(EXECUTABLE_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/../bin")
 
 # Define the executable to be generated
 set(TOOL_NAME "ethprice")
-set(PROJ_NAME "apps")
+set(PROJ_NAME "tools")
 add_executable(${TOOL_NAME} ${SOURCE_FILES})
 
 # Add the project static libs at linking
