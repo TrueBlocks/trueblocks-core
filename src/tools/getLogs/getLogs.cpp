@@ -30,36 +30,51 @@ int main(int argc, const char *argv[]) {
             return 0;
         forEveryTransactionInList(visitTransaction, &options, options.transList.queries);
     }
+
+    size_t cnt = 0;
+    cout << "[";
+    for (auto l : options.logs) {
+        if (cnt++ > 0)
+            cout << ",";
+        l.doExport(cout);
+    }
+    if (cnt && options.rawLogs.size())
+        cout << ",\n";
+
+    cnt = 0;
+    for (auto str : options.rawLogs) {
+        if (cnt++ > 0)
+            cout << ",\n";
+        cout << str;
+    }
+    cout << "]";
+
     return 0;
 }
 
 //--------------------------------------------------------------
 bool visitTransaction(CTransaction& trans, void *data) {
-    const COptions *opt = (const COptions*)data;
-
+    COptions *opt = (COptions*)data;
     if (contains(trans.hash, "invalid")) {
-        cerr << cRed << "Warning:" << cOff;
-        cerr << " The logs for transaction " << nextTokenClear(trans.hash, ' ') << " were not found.\n";
+        ostringstream os;
+        os << cRed << "{ \"error\": \"The logs for transaction ";
+        os << nextTokenClear(trans.hash, ' ') << " were not found.\" }" << cOff;
+        opt->rawLogs.push_back(os.str());
         return true;
     }
 
     if (opt->isRaw) {
         // Note: this call is redundant. The transaction is already populated (if it's valid), but we need the raw data)
-        //        string_q results;
-        //        queryRawLogs(results, trans.getValueByName("hash"));
-        //        cout << results;
-        //        return true;
-        cout << "Raw option is not implemented.\n";
-        return false;
+        string_q raw;
+        //queryRawLogs(<#string_q &results#>, <#const address_t &addr#>, <#uint64_t fromBlock#>, <#uint64_t toBlock#>)(raw, trans.getValueByName("hash"));
+        raw = substitute(raw,"[{\"jsonrpc\":\"2.0\",\"result\":[", "");
+        raw = substitute(raw,"],\"id\":1}\n]", "");
+        opt->rawLogs.push_back(raw);
+        return true;
     }
 
-    cout << "[";
-    for (size_t i = 0 ; i < trans.receipt.logs.size() ; i++) {
-        if (i != 0)
-            cout << ",\n";
-        trans.receipt.logs[i].doExport(cout);
-    }
-    cout << "]\n";
+    for (auto l : trans.receipt.logs)
+        opt->logs.push_back(l);
 
     return true;
 }

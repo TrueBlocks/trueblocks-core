@@ -1,6 +1,6 @@
 getReceipt argc: 2 [1:4000000.5] 
 getReceipt 4000000.5 
-{
+[{
   "contractAddress": "0x0",
   "gasUsed": 52616,
   "logs": [
@@ -16,4 +16,4 @@ getReceipt 4000000.5
     }
   ],
   "status": null
-}
+}]

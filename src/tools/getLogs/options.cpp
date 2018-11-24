@@ -71,6 +71,8 @@ void COptions::Init(void) {
     transList.Init();
     address_list = "";
     isRaw = false;
+    logs.reserve(5000);
+    rawLogs.reserve(5000);
 }
 
 //---------------------------------------------------------------------------------------------------

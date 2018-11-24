@@ -30,29 +30,49 @@ int main(int argc, const char *argv[]) {
             return 0;
         forEveryTransactionInList(visitTransaction, &options, options.transList.queries);
     }
+
+    size_t cnt = 0;
+    cout << "[";
+    for (auto r : options.receipts) {
+        if (cnt++ > 0)
+            cout << ",";
+        r.doExport(cout);
+    }
+    if (cnt && options.rawReceipts.size())
+        cout << ",\n";
+
+    cnt = 0;
+    for (auto str : options.rawReceipts) {
+        if (cnt++ > 0)
+            cout << ",\n";
+        cout << str;
+    }
+    cout << "]";
+
     return 0;
 }
 
+
 //--------------------------------------------------------------
 bool visitTransaction(CTransaction& trans, void *data) {
-    const COptions *opt = (const COptions*)data;
-
+    COptions *opt = (COptions*)data;
     if (contains(trans.hash, "invalid")) {
-        cerr << cRed << "Warning:" << cOff;
-        cerr << " The receipt for transaction " << nextTokenClear(trans.hash, ' ') << " was not found.\n";
+        ostringstream os;
+        os << cRed << "{ \"error\": \"The receipt for transaction ";
+        os << nextTokenClear(trans.hash, ' ') << " was not found.\" }" << cOff;
+        opt->rawReceipts.push_back(os.str());
         return true;
     }
 
     if (opt->isRaw) {
-        // Note: this call is redundant. The transaction is already populated (if it's valid), but we need the raw data)
-        string_q results;
-        queryRawReceipt(results, trans.getValueByName("hash"));
-        cout << results;
+        string_q raw;
+        queryRawReceipt(raw, trans.getValueByName("hash"));
+        raw = substitute(raw,"{\"jsonrpc\":\"2.0\",\"result\":", "");
+        raw = substitute(raw,",\"id\":1}", "");
+        opt->rawReceipts.push_back(raw);
         return true;
     }
 
-    trans.receipt.doExport(cout);
-    cout << "\n";
-
+    opt->receipts.push_back(trans.receipt);
     return true;
 }
