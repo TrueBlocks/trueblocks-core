@@ -37,37 +37,27 @@ int main(int argc, const char *argv[]) {
 bool visitTransaction(CTransaction& trans, void *data) {
     const COptions *opt = (const COptions*)data;
 
-    bool badHash = !isHash(trans.hash);
-    bool isBlock = contains(trans.hash, "block");
-    trans.hash = substitute(substitute(trans.hash, "-block_not_found", ""), "-trans_not_found", "");
-    if (opt->isRaw) {
-        if (badHash) {
-            cerr << "{\"jsonrpc\":\"2.0\",\"result\":{\"hash\":\"";
-            cerr << substitute(trans.hash, " ", "") << "\",\"result\":\"";
-            cerr << (isBlock ? "block " : "");
-            cerr << "hash not found\"},\"id\":-1}" << "\n";
-            return true;
-        }
+    if (contains(trans.hash, "invalid")) {
+        cerr << cRed << "Warning:" << cOff;
+        cerr << " The logs for transaction " << nextTokenClear(trans.hash, ' ') << " were not found.\n";
+        return true;
+    }
 
+    if (opt->isRaw) {
         // Note: this call is redundant. The transaction is already populated (if it's valid), but we need the raw data)
         //        string_q results;
         //        queryRawLogs(results, trans.getValueByName("hash"));
         //        cout << results;
         //        return true;
         cout << "Raw option is not implemented.\n";
-        exit(0);
-    }
-
-    if (badHash) {
-        cerr << cRed << "Warning:" << cOff;
-        cerr << " The " << (isBlock ? "block " : "") << "hash " << cYellow << trans.hash << cOff << " was not found.\n";
-        return true;
+        return false;
     }
 
     cout << "[";
     for (size_t i = 0 ; i < trans.receipt.logs.size() ; i++) {
+        if (i != 0)
+            cout << ",\n";
         trans.receipt.logs[i].doExport(cout);
-        cout << (i < trans.receipt.logs.size()-1 ? ",\n" : "\n");
     }
     cout << "]\n";
 
