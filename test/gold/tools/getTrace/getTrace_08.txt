@@ -27,8 +27,7 @@ getTrace 0x590c575213aeec61ac15949f65b941ef2fb863479eb28a75d3a190278d88d1e7 --pa
         "gasUsed": "0xb2fc",
         "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
     }
-},
-{
+},{
     "blockHash": "0x759de0be90043e350377c7d1be2f639ead0953b06a16c32552265659bd134f2d",
     "blockNumber": "0x22033b",
     "subtraces": "0x0",
@@ -57,5 +56,4 @@ getTrace 0x590c575213aeec61ac15949f65b941ef2fb863479eb28a75d3a190278d88d1e7 --pa
         "gasUsed": "0x0",
         "output": "0x"
     }
-}
-]
+}]
