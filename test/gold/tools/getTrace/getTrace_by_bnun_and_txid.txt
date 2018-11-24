@@ -27,8 +27,7 @@ getTrace 4348290.92
     "gasUsed": 48838,
     "output": "0x"
   }
-},
-{
+},{
   "blockHash": "0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73",
   "blockNumber": 4348290,
   "subtraces": 0,
@@ -57,8 +56,7 @@ getTrace 4348290.92
     "gasUsed": 28693,
     "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
   }
-},
-{
+},{
   "blockHash": "0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73",
   "blockNumber": 4348290,
   "subtraces": 0,
@@ -87,5 +85,4 @@ getTrace 4348290.92
     "gasUsed": 0,
     "output": "0x"
   }
-}
-]
+}]

@@ -19,6 +19,8 @@ public:
     COptionsTransList transList;
     string_q address_list;
     bool isRaw;
+    CLogEntryArray logs;
+    CStringArray rawLogs;
 
     COptions(void);
     ~COptions(void);

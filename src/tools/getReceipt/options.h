@@ -18,6 +18,8 @@ class COptions : public COptionsBase {
 public:
     COptionsTransList transList;
     bool isRaw;
+    CReceiptArray receipts;
+    CStringArray  rawReceipts;
 
     COptions(void);
     ~COptions(void);

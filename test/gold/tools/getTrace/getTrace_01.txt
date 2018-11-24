@@ -27,9 +27,7 @@ getTrace 0x27fe46968ee62ec01ccb5dd3cbabd479f03c0374c2b6897c0faabfc748367b12 0x0c
         "gasUsed": "0x0",
         "output": ""
     }
-}
-]
-[{
+},{
     "blockHash": "0xd7ab17132d817d58c4f6d0ab5cebf169d3a56a9e6619fcd57e4073ed189d866b",
     "blockNumber": "0x22026a",
     "subtraces": "0x0",
@@ -56,5 +54,4 @@ getTrace 0x27fe46968ee62ec01ccb5dd3cbabd479f03c0374c2b6897c0faabfc748367b12 0x0c
         "gasUsed": "0x0",
         "output": "0x"
     }
-}
-]
+}]
