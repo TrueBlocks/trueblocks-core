@@ -1,6 +1,6 @@
 getReceipt argc: 3 [1:0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55] [2:--verbose] 
 getReceipt 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55 --verbose 
-{
+[{
   "contractAddress": "0x0",
   "gasUsed": 44493,
   "logs": [
@@ -14,4 +14,4 @@ getReceipt 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55
     }
   ],
   "status": null
-}
+}]

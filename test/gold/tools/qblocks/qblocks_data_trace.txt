@@ -31,8 +31,7 @@ getTrace 2001002.0 --qblocks
     "gasUsed": 7473,
     "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
   }
-},
-{
+},{
   "blockHash": "0xcd4dbd459893241b0c21c91d64b445b1eb0579f7341afd17e7b797795a7f1d7e",
   "blockNumber": 2001002,
   "subtraces": 0,
@@ -61,8 +60,7 @@ getTrace 2001002.0 --qblocks
     "gasUsed": 197,
     "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
   }
-},
-{
+},{
   "blockHash": "0xcd4dbd459893241b0c21c91d64b445b1eb0579f7341afd17e7b797795a7f1d7e",
   "blockNumber": 2001002,
   "subtraces": 0,

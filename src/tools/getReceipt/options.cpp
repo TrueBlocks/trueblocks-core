@@ -65,6 +65,8 @@ void COptions::Init(void) {
 
     transList.Init();
     isRaw = false;
+    receipts.reserve(5000);
+    rawReceipts.reserve(5000);;
 }
 
 //---------------------------------------------------------------------------------------------------

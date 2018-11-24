@@ -19,6 +19,8 @@ public:
     COptionsTransList transList;
     bool isRaw;
     bool countOnly;
+    CTraceArray  traces;
+    CStringArray rawTraces;
 
     COptions(void);
     ~COptions(void);

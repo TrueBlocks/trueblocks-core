@@ -27,5 +27,4 @@ getTrace 0xa0205abafa7565ef328755bbf85c2588ec69c71da64703f05925b060838be15e
     "gasUsed": 0,
     "output": "0x"
   }
-}
-]
+}]

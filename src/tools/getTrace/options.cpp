@@ -70,6 +70,8 @@ void COptions::Init(void) {
     transList.Init();
     isRaw = false;
     countOnly = false;
+    traces.reserve(5000);
+    rawTraces.reserve(5000);
 }
 
 //---------------------------------------------------------------------------------------------------

@@ -27,5 +27,4 @@ getTrace 0x409141e962166ceb967fa8cf8cded2394af088d6d270f1a0642c9bbfaf416348
     "gasUsed": 1516792,
     "output": ""
   }
-}
-]
+}]
