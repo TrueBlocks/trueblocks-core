@@ -148,32 +148,21 @@ bool checkBelongs(CTransaction& trans, void *data) {
 //--------------------------------------------------------------
 bool visitTransaction(CTransaction& trans, void *data) {
     COptions *opt = reinterpret_cast<COptions *>(data);
+
+    if (contains(trans.hash, "invalid")) {
+        cerr << cRed << "Warning:" << cOff;
+        cerr << " The transaction " << nextTokenClear(trans.hash, ' ') << " was not found.\n";
+        return true;
+    }
     if (verbose && opt->index > 0)
         cout << ",";
     opt->index++;
 
-    bool badHash = !isHash(trans.hash);
-    bool isBlock = contains(trans.hash, "block");
-    trans.hash = substitute(substitute(trans.hash, "-block_not_found", ""), "-trans_not_found", "");
     if (opt->isRaw) {
-        if (badHash) {
-            cerr << "{\"jsonrpc\":\"2.0\",\"result\":{\"hash\":\"";
-            cerr << substitute(trans.hash, " ", "") << "\",\"result\":\"";
-            cerr << (isBlock ? "block " : "");
-            cerr << "hash not found\"},\"id\":-1}" << "\n";
-            return true;
-        }
-
         // Note: this call is redundant. The transaction is already populated (if it's valid), but we need the raw data)
         string_q results;
         queryRawTransaction(results, trans.getValueByName("hash"));
         cout << results;
-        return true;
-    }
-
-    if (badHash) {
-        cerr << cRed << "Warning:" << cOff;
-        cerr << " The " << (isBlock ? "block " : "") << "hash " << cYellow << trans.hash << cOff << " was not found.\n";
         return true;
     }
 

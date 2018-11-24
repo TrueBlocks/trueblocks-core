@@ -892,6 +892,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         string_q list = trans_list;
         while (!list.empty()) {
             string_q item = nextTokenClear(list, '|');
+            string_q orig = item;
             bool hasDot = contains(item, ".");
             bool hasHex = startsWith(item, "0x");
 
@@ -901,29 +902,30 @@ extern void registerQuitHandler(QUITHANDLER qh);
             CTransaction trans;
             if (hasHex) {
                 if (hasDot) {
-                    // We are not fully formed, we have to ask the node for the receipt
-                    getTransaction(trans, hash, txID);  // blockHash.txID
+                    // blockHash.txID
+                    getTransaction(trans, hash, txID);
+
                 } else {
-                    // We are not fully formed, we have to ask the node for the receipt
-                    getTransaction(trans, hash);  // transHash
+                    // transHash
+                    getTransaction(trans, hash);
                 }
             } else {
-                getTransaction(trans, str_2_Uint(hash), txID);  // blockNum.txID
+                // blockNum.txID
+                getTransaction(trans, str_2_Uint(hash), txID);
             }
 
             CBlock block;
             trans.pBlock = &block;
-            getBlock(block, trans.blockNumber);
-            if (block.transactions.size() > trans.transactionIndex)
-                trans.isError = block.transactions[trans.transactionIndex].isError;
-            getReceipt(trans.receipt, trans.getValueByName("hash"));
-            trans.finishParse();
-            if (!isHash(trans.hash)) {
-                // If the transaction has no hash here, either the block hash or the transaction hash being asked
-                // for doesn't exist. We need to report which hash failed and why to the caller. Because we have
-                // no better way, we report that in the hash itself. There are three cases, two with either block
-                // hash or block num one with transaction hash. Note: This will fail if we move to non-string hashes
-                trans.hash = hash + "-" + (!hasHex || hasDot ? "block_not_found" : "trans_not_found");
+            if (isHash(trans.hash)) {
+                // Note: at this point, we are not fully formed, we have to ask the node for the receipt
+                getBlock(block, trans.blockNumber);
+                if (block.transactions.size() > trans.transactionIndex)
+                    trans.isError = block.transactions[trans.transactionIndex].isError;
+                getReceipt(trans.receipt, trans.getValueByName("hash"));
+                trans.finishParse();
+            } else {
+                // If the transaction has no hash here, there was a problem. Let the caller know
+                trans.hash = orig + " invalid";
             }
 
             if (!(*func)(trans, data))
