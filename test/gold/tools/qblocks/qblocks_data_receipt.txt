@@ -4,9 +4,9 @@ calling: getReceipt 2001002.0  --qblocks
 
 getReceipt argc: 3 [1:2001002.0] [2:--qblocks] 
 getReceipt 2001002.0 --qblocks 
-{
+[{
   "contractAddress": "0x0",
   "gasUsed": 31561,
   "logs": [],
   "status": null
-}
+}]

@@ -30,24 +30,46 @@ int main(int argc, const char *argv[]) {
             return 0;
         forEveryTransactionInList(visitTransaction, &options, options.transList.queries);
     }
+
+    size_t cnt = 0;
+    cout << "[";
+    for (auto tr : options.traces) {
+        if (cnt++ > 0)
+            cout << ",";
+        tr.doExport(cout);
+    }
+    if (cnt && options.rawTraces.size())
+        cout << ",\n";
+
+    cnt = 0;
+    for (auto str : options.rawTraces) {
+        if (cnt++ > 0)
+            cout << ",\n";
+        cout << str;
+    }
+    cout << "]";
+
     return 0;
 }
 
 //--------------------------------------------------------------
 bool visitTransaction(CTransaction& trans, void *data) {
-    const COptions *opt = (const COptions*)data;
-
+    COptions *opt = (COptions*)data;
     if (contains(trans.hash, "invalid")) {
-        cerr << cRed << "Warning:" << cOff;
-        cerr << " The traces for transaction " << nextTokenClear(trans.hash, ' ') << " were not found.\n";
+        ostringstream os;
+        os << cRed << "{ \"error\": \"The traces for transaction ";
+        os << nextTokenClear(trans.hash, ' ') << " were not found.\" }" << cOff;
+        opt->rawTraces.push_back(os.str());
         return true;
     }
 
     if (opt->isRaw) {
         // Note: this call is redundant. The transaction is already populated (if it's valid), but we need the raw data)
-        string_q results;
-        queryRawTrace(results, trans.getValueByName("hash"));
-        cout << results;
+        string_q raw;
+        queryRawTrace(raw, trans.getValueByName("hash"));
+        raw = substitute(raw,"[{\"jsonrpc\":\"2.0\",\"result\":[", "");
+        raw = substitute(raw,"],\"id\":1}\n]", "");
+        opt->rawTraces.push_back(raw);
         return true;
     }
 
@@ -57,14 +79,8 @@ bool visitTransaction(CTransaction& trans, void *data) {
     } else {
         CTraceArray traces;
         getTraces(traces, trans.getValueByName("hash"));
-
-        cout << "[";
-        for (size_t i = 0 ; i < traces.size() ; i++) {
-            if (i != 0)
-                cout << ",\n";
-            traces[i].doExport(cout);
-        }
-        cout << "]\n";
+        for (auto tr : traces)
+            opt->traces.push_back(tr);
     }
 
     return true;

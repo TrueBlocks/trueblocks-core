@@ -1,6 +1,6 @@
 getReceipt argc: 2 [1:0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765] 
 getReceipt 0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765 
-{
+[{
   "contractAddress": "0x0",
   "gasUsed": 39512,
   "logs": [
@@ -22,4 +22,4 @@ getReceipt 0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765
     }
   ],
   "status": null
-}
+}]

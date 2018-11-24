@@ -1,6 +1,6 @@
 getReceipt argc: 4 [1:0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4] [2:-v] [3:--parity] 
 getReceipt 0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4 -v --parity 
-{
+[{
     "contractAddress": "0x0",
     "gasUsed": "0x76d0",
     "logs": [
@@ -14,4 +14,4 @@ getReceipt 0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4 
         }
     ],
     "status": null
-}
+}]

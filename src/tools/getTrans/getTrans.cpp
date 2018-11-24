@@ -148,10 +148,11 @@ bool checkBelongs(CTransaction& trans, void *data) {
 //--------------------------------------------------------------
 bool visitTransaction(CTransaction& trans, void *data) {
     COptions *opt = reinterpret_cast<COptions *>(data);
-
     if (contains(trans.hash, "invalid")) {
-        cerr << cRed << "Warning:" << cOff;
-        cerr << " The transaction " << nextTokenClear(trans.hash, ' ') << " was not found.\n";
+        ostringstream os;
+        os << cRed << "{ \"error\": \"The receipt for transaction ";
+        os << nextTokenClear(trans.hash, ' ') << " was not found.\" }" << cOff;
+        cerr << os.str();
         return true;
     }
     if (verbose && opt->index > 0)

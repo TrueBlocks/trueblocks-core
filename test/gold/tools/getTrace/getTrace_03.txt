@@ -27,8 +27,7 @@ getTrace 0x17104ac9d3312d8c136b7f44d4b8b47852618065ebfa534bd2d3b5ef218ca1f3
     "gasUsed": 10626,
     "output": "0x"
   }
-},
-{
+},{
   "blockHash": "0x7eb25504e4c202cf3d62fd585d3e238f592c780cca82dacb2ed3cb5b38883add",
   "blockNumber": 3068185,
   "subtraces": 0,
@@ -57,8 +56,7 @@ getTrace 0x17104ac9d3312d8c136b7f44d4b8b47852618065ebfa534bd2d3b5ef218ca1f3
     "gasUsed": 387,
     "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
   }
-},
-{
+},{
   "blockHash": "0x7eb25504e4c202cf3d62fd585d3e238f592c780cca82dacb2ed3cb5b38883add",
   "blockNumber": 3068185,
   "subtraces": 0,
@@ -87,5 +85,4 @@ getTrace 0x17104ac9d3312d8c136b7f44d4b8b47852618065ebfa534bd2d3b5ef218ca1f3
     "gasUsed": 0,
     "output": "0x"
   }
-}
-]
+}]
