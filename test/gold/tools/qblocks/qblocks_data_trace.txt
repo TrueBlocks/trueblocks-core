@@ -91,5 +91,4 @@ getTrace 2001002.0 --qblocks
     "gasUsed": 0,
     "output": "0x"
   }
-}
-]
+}]

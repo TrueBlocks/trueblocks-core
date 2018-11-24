@@ -37,29 +37,17 @@ int main(int argc, const char *argv[]) {
 bool visitTransaction(CTransaction& trans, void *data) {
     const COptions *opt = (const COptions*)data;
 
-    bool badHash = !isHash(trans.hash);
-    bool isBlock = contains(trans.hash, "block");
-    trans.hash = substitute(substitute(trans.hash, "-block_not_found", ""), "-trans_not_found", "");
-    if (opt->isRaw) {
-        if (badHash) {
-            cerr << "{\"jsonrpc\":\"2.0\",\"result\":{\"hash\":\"";
-            cerr << substitute(trans.hash, " ", "") << "\",\"result\":\"";
-            cerr << (isBlock ? "block " : "");
-            cerr << "hash not found\"},\"id\":-1}" << "\n";
-            return true;
-        }
+    if (contains(trans.hash, "invalid")) {
+        cerr << cRed << "Warning:" << cOff;
+        cerr << " The receipt for transaction " << nextTokenClear(trans.hash, ' ') << " was not found.\n";
+        return true;
+    }
 
+    if (opt->isRaw) {
         // Note: this call is redundant. The transaction is already populated (if it's valid), but we need the raw data)
         string_q results;
         queryRawReceipt(results, trans.getValueByName("hash"));
         cout << results;
-        return true;
-    }
-
-    if (badHash) {
-        cerr << cRed << "Warning:" << cOff;
-        cerr << " The " << (isBlock ? "block " : "") << "hash " << cYellow;
-        cerr << trans.hash << cOff << " was not found.\n";
         return true;
     }
 
