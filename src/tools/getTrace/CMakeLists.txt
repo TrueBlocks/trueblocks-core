@@ -72,7 +72,7 @@ run_special_test("getTrace_by_blk_hash_good"   "0x693b52d0fc09ec86d86aa117dd2b39
 # this test case should fail, but it doesn't. It calls for a transaction (#155) that does not exist since this block only has 94 transactions
 #run_special_test("getTrace_by_blk_hash_bad"    "0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.155" " -v")
 
-run_special_test("getTrace_three_ways"         "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.79" " -v" " 3657480.79" " 0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad")
+run_test("getTrace_three_ways"         "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.79" " -v" " 3657480.79" " 0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad")
 # this test case should fail but does not because if one has a --file: option, the rest of the options (other than the built-ins) are ignored
 #run_special_test("getTrace_by_file"            "--bad --file:cmd_file")
 run_special_test("getTrace_by_file"            "--file:cmd_file")
