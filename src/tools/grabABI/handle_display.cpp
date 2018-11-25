@@ -21,6 +21,12 @@ void handle_display(COptions& options) {
     CFunctionArray functions;
     for (auto addr : options.addrs)
         acquireABI(functions, addr, options, false);
+    if (options.loadKnown) {
+        CAbi abi;
+        abi.loadKnownABIs();
+        for (auto func : abi.abiByEncoding)
+            functions.push_back(func);
+    }
 
     string_q format = getGlobalConfig()->getDisplayStr(false, STR_FORMAT_FUNCDATA);
     string_q header = substitute(substitute(format, "[{", ""), "}]", "");
