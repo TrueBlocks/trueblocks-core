@@ -1,6 +1,0 @@
-[settings]
-class     = QRequirementChangedEvent
-baseClass = CLogEntry
-fields    = uint256 newRequirement|
-includes  = logentry.h
-cIncs     = #include "etherlib.h"
