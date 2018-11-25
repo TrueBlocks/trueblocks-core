@@ -42,8 +42,10 @@ void handle_generate(COptions& options) {
         theABI += acquireABI(functions, addr, options, false) + "\n\n";
     }
     if (options.loadKnown) {
-        acquireABI(functions, "token_abis",  options, true);
-        acquireABI(functions, "wallet_abis", options, true);
+        CAbi abi;
+        abi.loadKnownABIs();
+        for (auto func : abi.abiByEncoding)
+            functions.push_back(func);
     }
 
     verbose = false;

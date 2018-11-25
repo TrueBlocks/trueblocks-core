@@ -110,7 +110,7 @@ bool COptions::parseArguments(string_q& command) {
     if (parts != SIG_CANONICAL && verbose)
         parts |= SIG_DETAILS;
 
-    if (!addrs.size())
+    if (!addrs.size() && !loadKnown)
         return usage("Please supply at least one Ethereum address.\n");
 
     if (isGenerate && asData)
