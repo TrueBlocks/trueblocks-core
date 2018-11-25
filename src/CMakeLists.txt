@@ -58,9 +58,7 @@ set (BASE_LIBS acct ether util ${CURL_LIBRARIES})
 set (BASE_INCLUDE 
      "${CMAKE_SOURCE_DIR}/libs/utillib"
      "${CMAKE_SOURCE_DIR}/libs/etherlib"
-     "${CMAKE_SOURCE_DIR}/libs/acctlib"
-     "${CMAKE_SOURCE_DIR}/libs/tokenlib"
-     "${CMAKE_SOURCE_DIR}/libs/wallelib")
+     "${CMAKE_SOURCE_DIR}/libs/acctlib")
 
 # ----------------------------------------------------------------------------------------
 # Folders for various purposes
