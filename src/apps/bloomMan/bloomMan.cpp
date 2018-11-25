@@ -162,7 +162,8 @@ bool checkBloom(blknum_t bn, void *data) {
             if (verbose) {
                 string_q res;
                 compareBlooms(makeBloom(array[j]), hitBloom, res);
-                cerr << res << "\n";
+                if (!res.empty())
+                    cerr << res << "\n";
             }
         }
         //        } else {
