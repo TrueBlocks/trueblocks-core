@@ -30,7 +30,7 @@ class CAbi : public CBaseNode {
 public:
     CFunctionArray abiByName;
     CFunctionArray abiByEncoding;
-    string_q loaded;
+    string_q loadedList;
 
 public:
     CAbi(void);
@@ -98,7 +98,7 @@ inline void CAbi::initialize(void) {
 
     abiByName.clear();
     abiByEncoding.clear();
-    loaded = "";
+    loadedList = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -111,7 +111,7 @@ inline void CAbi::duplicate(const CAbi& ab) {
 
     abiByName = ab.abiByName;
     abiByEncoding = ab.abiByEncoding;
-    loaded = ab.loaded;
+    loadedList = ab.loadedList;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -146,6 +146,10 @@ inline bool operator<(const CAbi& v1, const CAbi& v2) {
 typedef vector<CAbi> CAbiArray;
 extern CArchive& operator>>(CArchive& archive, CAbiArray& array);
 extern CArchive& operator<<(CArchive& archive, const CAbiArray& array);
+
+//---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CAbi& abi);
+extern CArchive& operator>>(CArchive& archive, CAbi& abi);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

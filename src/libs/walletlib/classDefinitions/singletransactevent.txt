@@ -1,6 +1,0 @@
-[settings]
-class     = QSingleTransactEvent
-baseClass = CLogEntry
-fields    = address owner|uint256 value|address to|bytes data|
-includes  = logentry.h
-cIncs     = #include "etherlib.h"
