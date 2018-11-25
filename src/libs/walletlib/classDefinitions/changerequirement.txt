@@ -1,6 +1,0 @@
-[settings]
-class     = QChangeRequirement
-baseClass = CTransaction
-fields    = uint256 _newRequired|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"
