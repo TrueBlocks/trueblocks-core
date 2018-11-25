@@ -484,8 +484,7 @@ bool COptions::loadMonitors(const CToml& config) {
         watch.api_spec.token = config.getConfigStr("api_spec", "token", "");
         if (!watch.api_spec.uri.empty()) {
             watch.abi_spec.loadByAddress(watch.address);
-            watch.abi_spec.loadByAddress("0xTokenLib");
-            watch.abi_spec.loadByAddress("0xWalletLib");
+            watch.abi_spec.loadKnownABIs();
         }
 
         string_q msg;
