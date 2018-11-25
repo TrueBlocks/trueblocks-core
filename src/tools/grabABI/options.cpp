@@ -39,11 +39,13 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     Init();
+    bool asJson = false, isOpen = false;
     while (!command.empty()) {
         string_q arg = nextTokenClear(command, ' ');
         if (arg == "-g" || arg == "--gen" || arg == "--generate") {
             classDir = getCWD();
             prefix = getPrefix(classDir);
+            isGenerate = true;
 
         } else if (arg == "-c" || arg == "--canonical") {
             if (parts&SIG_ENCODE)
@@ -77,7 +79,7 @@ extern void rebuildFourByteDB(void);
             raw = true;
 
         } else if (arg == "-o" || arg == "--open") {
-            open = true;
+            isOpen = true;
 
         } else if (arg == "-j" || arg == "--json") {
             asJson = true;
@@ -92,7 +94,7 @@ extern void rebuildFourByteDB(void);
             if (primaryAddr.empty())
                 primaryAddr = arg;
             if (!isAddress(arg) && arg != "0xTokenLib" && arg != "0xWalletLib")
-                return usage("Invalid address '" + arg + "'. Length is not equal to 40 characters (20 bytes).\n");
+                return usage("Invalid address '" + arg + "'. Length (" + uint_2_Str(arg.length()) + ") is not equal to 40 characters (20 bytes).\n");
             address_t addr = str_2_Addr(arg);
             if (arg == "0xTokenLib" || arg == "0xWalletLib") {
                 addr = arg;
@@ -112,10 +114,34 @@ extern void rebuildFourByteDB(void);
     if (!addrs.size())
         return usage("Please supply at least one Ethereum address.\n");
 
-    bool isGenerate = !classDir.empty();
     if (isGenerate && asData)
         return usage("Incompatible options --generate and --data. Quitting...");
 
+    if (asJson) {
+        for (auto addr : addrs) {
+            string_q fileName = blockCachePath("abis/" + addr + ".json");
+            if (!fileExists(fileName)) {
+                cerr << "ABI for '" + addr + "' not found. Quitting...\n";
+                return false;
+            }
+            string_q contents;
+            asciiFileToString(fileName, contents);
+            cout << contents << "\n";
+        }
+        return false;
+    }
+
+    if (isOpen) {
+        for (auto addr : addrs) {
+            string_q fileName = blockCachePath("abis/" + addr + ".json");
+            if (!fileExists(fileName)) {
+                cerr << "ABI for '" + addr + "' not found. Quitting...\n";
+                return false;
+            }
+            editFile(fileName);
+        }
+        return false;
+    }
     return true;
 }
 
@@ -127,12 +153,11 @@ void COptions::Init(void) {
 
     parts = SIG_DEFAULT;
     noconst = false;
-    open = false;
     silent = false;
-    asJson = false;
     raw = false;
     decNames = true;
     asData = false;
+    isGenerate = false;
     addrs.clear();
 }
 
