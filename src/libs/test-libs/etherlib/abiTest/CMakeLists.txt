@@ -12,7 +12,7 @@ set(EXECUTABLE_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/../bin/test")
 
 # Define the executable to be generated
 set(TOOL_NAME "abiTest")
-set(PROJ_NAME "libs/abilib")
+set(PROJ_NAME "libs/etherlib")
 add_executable(${TOOL_NAME} ${SOURCE_FILES})
 
 # Add the project static libs at linking
