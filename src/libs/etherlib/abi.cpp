@@ -83,7 +83,7 @@ bool CAbi::setValueByName(const string_q& fieldName, const string_q& fieldValue)
             }
             break;
         case 'l':
-            if ( fieldName % "loaded" ) { loaded = fieldValue; return true; }
+            if ( fieldName % "loadedList" ) { loadedList = fieldValue; return true; }
             break;
         default:
             break;
@@ -113,7 +113,7 @@ bool CAbi::Serialize(CArchive& archive) {
     // EXISTING_CODE
     archive >> abiByName;
     archive >> abiByEncoding;
-//    archive >> loaded;
+//    archive >> loadedList;
     finishParse();
     return true;
 }
@@ -128,7 +128,7 @@ bool CAbi::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     archive << abiByName;
     archive << abiByEncoding;
-//    archive << loaded;
+//    archive << loadedList;
 
     return true;
 }
@@ -167,7 +167,8 @@ void CAbi::registerClass(void) {
     ADD_FIELD(CAbi, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CAbi, "abiByName", T_OBJECT|TS_ARRAY, ++fieldNum);
     ADD_FIELD(CAbi, "abiByEncoding", T_OBJECT|TS_ARRAY, ++fieldNum);
-    ADD_FIELD(CAbi, "loaded", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CAbi, "loadedList", T_TEXT, ++fieldNum);
+    HIDE_FIELD(CAbi, "loadedList");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAbi, "schema");
@@ -214,6 +215,18 @@ bool CAbi::readBackLevel(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CAbi& abi) {
+    abi.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CAbi& abi) {
+    abi.Serialize(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
 string_q CAbi::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
@@ -250,7 +263,7 @@ string_q CAbi::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'l':
-            if ( fieldName % "loaded" ) return loaded;
+            if ( fieldName % "loadedList" ) return loadedList;
             break;
     }
 
@@ -293,7 +306,7 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
 // EXISTING_CODE
 //---------------------------------------------------------------------------
 bool CAbi::loadByAddress(address_t addrIn) {
-    if (contains(loaded, addrIn+"|"))
+    if (contains(loadedList, addrIn+"|"))
         return true;
     address_t addr = addrIn;
     if (addr != "0xTokenLib" && addr != "0xWalletLib")
@@ -301,7 +314,7 @@ bool CAbi::loadByAddress(address_t addrIn) {
     string_q fileName = blockCachePath("abis/" + addr + ".json");
     bool ret = loadABIFromFile(fileName);
     if (ret)
-        loaded += addrIn + "|";
+        loadedList += addrIn + "|";
     return ret;
 }
 

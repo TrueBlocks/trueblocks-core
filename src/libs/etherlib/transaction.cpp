@@ -516,6 +516,14 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
         return f;
     }
 
+    s = toUpper(string_q("articulatedTx")) + "::";
+    if (contains(fieldName, s)) {
+        string_q f = fieldName;
+        replaceAll(f, s, "");
+        f = articulatedTx.getValueByName(f);
+        return f;
+    }
+
     // Finally, give the parent class a chance
     return CBaseNode::getValueByName(fieldName);
 }
@@ -536,7 +544,7 @@ const CBaseNode *CTransaction::getObjectAt(const string_q& fieldName, size_t ind
         return &receipt;
     if ( fieldName % "articulatedTx" )
         return &articulatedTx;
-    if ( fieldName % "traces" && index < traces.size())
+    if ( fieldName % "traces" && index < traces.size() )
         return &traces[index];
     return NULL;
 }
@@ -596,7 +604,8 @@ inline string_q parseTheInput(const string_q& params, size_t nItems, string_q *t
         else if ( contains(t, "int") &&   !isDynamic)   val =          old_toBigNum2  (params, item);
         else if ( contains(t, "bytes") && !isDynamic)   val =          old_toBytes    (params, item);
         else if (!isDynamic                         )   val = "unknown type: " + t;
-        else if ( isDynamic ) {
+        else {
+            ASSERT(isDynamic);
             size_t start = str_2_Uint(old_toBigNum2(params, item)) / (size_t)32;
             size_t len = old_grabBigNum(params, start);
             if (len == NOPOS)
@@ -709,7 +718,6 @@ bool articulateTrace(const CAbi& abi, CTrace *p) {
     }
     return false;
 }
-
 // EXISTING_CODE
 }  // namespace qblocks
 
