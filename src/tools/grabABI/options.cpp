@@ -26,7 +26,8 @@ static COption params[] = {
     COption("@json",      "print the ABI to the screen as json"),
     COption("@silent",    "if ABI cannot be acquired, fail silently (useful for scripting)"),
     COption("@nodec",     "do not decorate duplicate names"),
-    COption("@freshen",   "regenerate the binary database version of all ABIs in the abi cache"),
+    COption("@known",     "load common 'known' ABIs from cache"),
+//    COption("@freshen",   "regenerate the binary database version of all ABIs in the abi cache"),
     COption("",           "Fetches the ABI for a smart contract. Optionally generates C++ source code "
                           "representing that ABI.\n"),
 };
@@ -56,6 +57,9 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-e" || arg == "--encode") {
             parts |= SIG_ENCODE;
 
+        } else if (arg == "-k" || arg == "--known") {
+            loadKnown = true;
+
         } else if (arg == "-d" || arg == "--data") {
             parts |= SIG_FTYPE;
             asData = true;
@@ -67,10 +71,10 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-n" || arg == "--noconst") {
             noconst = true;
 
-        } else if (arg == "-f" || arg == "--freshen") {
-extern void rebuildFourByteDB(void);
-            rebuildFourByteDB();
-            exit(0);
+//        } else if (arg == "-f" || arg == "--freshen") {
+//extern void rebuildFourByteDB(void);
+//            rebuildFourByteDB();
+//            exit(0);
 
         } else if (arg == "--nodec") {
             decNames = false;
@@ -93,15 +97,10 @@ extern void rebuildFourByteDB(void);
         } else {
             if (primaryAddr.empty())
                 primaryAddr = arg;
-            if (!isAddress(arg) && arg != "0xTokenLib" && arg != "0xWalletLib")
+            if (!isAddress(arg))
                 return usage("Invalid address '" + arg + "'. Length (" + uint_2_Str(arg.length()) + ") is not equal to 40 characters (20 bytes).\n");
             address_t addr = str_2_Addr(arg);
-            if (arg == "0xTokenLib" || arg == "0xWalletLib") {
-                addr = arg;
-                addrs.push_back(addr);
-            } else {
-                addrs.push_back(toLower(addr));
-            }
+            addrs.push_back(toLower(addr));
         }
     }
 
@@ -154,6 +153,7 @@ void COptions::Init(void) {
     parts = SIG_DEFAULT;
     noconst = false;
     silent = false;
+    loadKnown = false;
     raw = false;
     decNames = true;
     asData = false;
@@ -206,29 +206,29 @@ bool visitABIs(const string_q& path, void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-void rebuildFourByteDB(void) {
-
-    string_q fileList;
-    string_q abiPath = blockCachePath("abis/");
-    cout << abiPath << "\n";
-    forEveryFileInFolder(abiPath+"*", visitABIs, &fileList);
-
-    CFunctionArray funcArray;
-    while (!fileList.empty()) {
-        string_q fileName = nextTokenClear(fileList, '\n');
-        CAbi abi;
-        abi.loadABIFromFile(fileName);
-        for (size_t f = 0 ; f < abi.abiByEncoding.size() ; f++) {
-            funcArray.push_back(abi.abiByEncoding[f]);
-            cout << abi.abiByEncoding[f].encoding << " : ";
-            cout << abi.abiByEncoding[f].name << " : ";
-            cout << abi.abiByEncoding[f].signature << "\n";
-        }
-    }
-    sort(funcArray.begin(), funcArray.end());
-    CArchive funcCache(WRITING_ARCHIVE);
-    if (funcCache.Lock(abiPath+"abis.bin", binaryWriteCreate, LOCK_CREATE)) {
-        funcCache << funcArray;
-        funcCache.Release();
-    }
-}
+//void rebuildFourByteDB(void) {
+//
+//    string_q fileList;
+//    string_q abiPath = blockCachePath("abis/");
+//    cout << abiPath << "\n";
+//    forEveryFileInFolder(abiPath+"*", visitABIs, &fileList);
+//
+//    CFunctionArray funcArray;
+//    while (!fileList.empty()) {
+//        string_q fileName = nextTokenClear(fileList, '\n');
+//        CAbi abi;
+//        abi.loadABIFromFile(fileName);
+//        for (size_t f = 0 ; f < abi.abiByEncoding.size() ; f++) {
+//            funcArray.push_back(abi.abiByEncoding[f]);
+//            cout << abi.abiByEncoding[f].encoding << " : ";
+//            cout << abi.abiByEncoding[f].name << " : ";
+//            cout << abi.abiByEncoding[f].signature << "\n";
+//        }
+//    }
+//    sort(funcArray.begin(), funcArray.end());
+//    CArchive funcCache(WRITING_ARCHIVE);
+//    if (funcCache.Lock(abiPath+"abis.bin", binaryWriteCreate, LOCK_CREATE)) {
+//        funcCache << funcArray;
+//        funcCache.Release();
+//    }
+//}
