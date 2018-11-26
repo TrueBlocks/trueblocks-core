@@ -30,6 +30,14 @@ build_readme(${CMAKE_CURRENT_SOURCE_DIR} ${TOOL_NAME})
 ## To run only specific tests we define a test configuration named "test_all"
 #add_custom_target(test-all COMMAND ${CMAKE_CTEST_COMMAND} -C test_all)
 
+## To run only specific tests we define a test configuration named "test_state"
+add_custom_target(test-state COMMAND ${CMAKE_CTEST_COMMAND} -C test_state)
+
+# Function to run state test cases
+function(run_state_test testName)
+    run_the_state_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(run_state_test)
+
 # Function to run an special or slow test case
 function(run_special_test testName)
     run_the_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
@@ -76,7 +84,7 @@ run_test("getBalance_special_block_2" "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d35
 run_test("getBalance_special_block_3" "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " first")
 run_test("getBalance_wei"             "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 4000000" " --wei")
 run_test("getBalance_ether"           "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 4000000" " --ether")
-run_test("getBalance_changes"         "0xbb9bc244d798123fde783fcc1c72d3bb8c189413" " 1430957-1430966" " --changes")
+run_state_test("getBalance_changes"         "0xbb9bc244d798123fde783fcc1c72d3bb8c189413" " 1430957-1430966" " --changes")
 run_test("getBalance_e_dao_1500000"   "0xbb9bc244d798123fde783fcc1c72d3bb8c189413" " 1500000" " --ether")
 run_test("getBalance_e_two_accts"     "0xbb9bc244d798123fde783fcc1c72d3bb8c189413" " 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 0x7cb57b5a97eabe94205c07890be4c1ad31e486a8" " 1500000" " --ether")
 run_test("getBalance_e_tip_4"         "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 1500000" " 2000000" " 2500000" " 3000000" " --ether")
@@ -84,7 +92,7 @@ run_test("getBalance_e_tip_4"         "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d35
 # Don't run this test since it defaults to latest block which chages at every 14 seconds
 #run_test("getBalance_no_block"    "0xbb9bc244d798123fde783fcc1c72d3bb8c189413")
 
-run_test("getBalance_blockByHash" "0x89205a3a3b2a69de6dbf7f01ed13b2108b2c43e7" " 0x45205b0bdb6c9cc9bf0eb3753ae98175c563389b41b2d4a2178593a3415772c1")
+run_state_test("getBalance_blockByHash" "0x89205a3a3b2a69de6dbf7f01ed13b2108b2c43e7" " 0x45205b0bdb6c9cc9bf0eb3753ae98175c563389b41b2d4a2178593a3415772c1")
 
 # Installation steps
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)
