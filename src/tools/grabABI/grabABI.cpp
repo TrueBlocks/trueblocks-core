@@ -29,10 +29,10 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        if (!options.isGenerate) {
-            handle_display(options);
+        if (options.isGenerate) {
+            options.handle_generate();
         } else {
-            handle_generate(options);
+            options.handle_display();
         }
     }
     return 0;
