@@ -16,42 +16,32 @@
 
 extern const char* STR_FORMAT_FUNCDATA;
 //-----------------------------------------------------------------------
-void handle_display(COptions& options) {
-
-    CFunctionArray functions;
-    for (auto addr : options.addrs)
-        acquireABI(functions, addr, options, false);
-    if (options.loadKnown) {
-        CAbi abi;
-        abi.loadKnownABIs();
-        for (auto func : abi.abiByEncoding)
-            functions.push_back(func);
-    }
+void COptions::handle_display(void) {
 
     string_q format = getGlobalConfig()->getDisplayStr(false, STR_FORMAT_FUNCDATA);
     string_q header = substitute(substitute(format, "[{", ""), "}]", "");
-    if (options.asData)
+    if (asData)
         cout << header << "\n";
-    replace(format, "[{address}]", toLower(options.primaryAddr));
+    replace(format, "[{address}]", toLower("")); //primaryAddr));
 
-    if (options.asData) {
-        for (auto func : functions) {
+    for (auto abi : abi_specs) {
+        if (asData) {
             HIDE_FIELD(CFunction, "inputs");
             HIDE_FIELD(CFunction, "outputs");
-            if (!func.constant || !options.noconst) {
-                cout << func.Format(format) << "\n";
+            for (auto interface : abi.interfaces) {
+                if (!interface.constant || !noconst) {
+                    cout << interface.Format(format) << "\n";
+                }
             }
+        } else {
+            // print to a buffer because we have to modify it before we print it
+            cout << "ABI for address " <<  abi.address << "\n";
+            for (auto interface : abi.interfaces) {
+                if (!interface.constant || !noconst)
+                    cout << interface.getSignature(parts) << "\n";
+            }
+            cout << "\n";
         }
-
-    } else {
-        // print to a buffer because we have to modify it before we print it
-        cout << "ABI for address " << options.primaryAddr;
-        cout << (options.addrs.size() > 1 ? " and others" : "") << "\n";
-        for (auto func : functions) {
-            if (!func.constant || !options.noconst)
-                cout << func.getSignature(options.parts) << "\n";
-        }
-        cout << "\n";
     }
 }
 
