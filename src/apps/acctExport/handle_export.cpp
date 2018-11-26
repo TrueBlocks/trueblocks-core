@@ -101,7 +101,7 @@ bool exportTransaction(COptions& options, const CAcctCacheItem *item, bool first
             // Note: we do this outside of the check for enablement becuase even disabled watches can
             // be useful when articulating data
             if (options.needsArt)
-                articulateTransaction(watch->abi_spec, trans);
+                watch->abi_spec.articulateTransaction(trans);
 
             if (watch->enabled && isInTransaction(trans, watch->address)) {
 

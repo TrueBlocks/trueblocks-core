@@ -14,6 +14,7 @@
 #include "basetypes.h"
 #include "biglib.h"
 #include "curl_code.h"
+#include "database.h"
 
 namespace qblocks {
 
@@ -25,7 +26,7 @@ namespace qblocks {
             curl = curl_easy_init();
             if (!curl) {
                 fprintf(stderr, "Curl failed to initialize. Quitting...\n");
-                exit(0);
+                quickQuitHandler(0);
             }
 
         } else if (cleanup) {
@@ -84,7 +85,7 @@ namespace qblocks {
         CURLcode res = curl_easy_perform(getCurl_internal());
         if (res != CURLE_OK) {
             fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
-            exit(0);
+            quickQuitHandler(0);
         }
 
         return result.c_str();
