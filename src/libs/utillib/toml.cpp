@@ -121,9 +121,9 @@ extern string_q collapseArrays(const string_q& inStr);
 
                 } else {
                     if (curGroup.empty()) {
-                        cerr << "key: " << value << " found outside of a controlling group. Quitting...\n";
+                        cerr << "There is  problem in the toml file " << filename << ": invalid key '" << value << "' found outside of a controlling group. Quitting...\n";
                         cerr.flush();
-                        exit(0);
+                        quickQuitHandler(0);
                     }
                     string_q key = nextTokenClear(value, '=');  // value may be empty, but not whitespace
                     key   = trimWhitespace(key);
