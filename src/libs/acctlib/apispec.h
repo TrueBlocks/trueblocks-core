@@ -29,7 +29,7 @@ class CApiSpec : public CBaseNode {
 public:
     string_q method;
     string_q uri;
-    string_q token;
+    string_q headers;
 
 public:
     CApiSpec(void);
@@ -40,6 +40,8 @@ public:
     DECLARE_NODE(CApiSpec);
 
     // EXISTING_CODE
+    bool sendData(const string_q& data);
+    string_q getData(const string_q& params);
     friend class CAccountWatch;
     // EXISTING_CODE
     bool operator==(const CApiSpec& item) const;
@@ -106,7 +108,7 @@ inline void CApiSpec::duplicate(const CApiSpec& ap) {
 
     method = ap.method;
     uri = ap.uri;
-    token = ap.token;
+    headers = ap.headers;
 
     // EXISTING_CODE
     // EXISTING_CODE
