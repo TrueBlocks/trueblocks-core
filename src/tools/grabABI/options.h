@@ -22,8 +22,8 @@ public:
     bool loadKnown;
     bool decNames;
     bool isGenerate;
+    CAbiArray abi_specs;
     CAddressArray addrs;
-    string_q primaryAddr;
     string_q classDir;
     string_q prefix;
     bool silent;
@@ -38,10 +38,10 @@ public:
     bool isToken(void) const { return prefix % "tokenlib"; }
     bool isWallet(void) const { return prefix % "walletlib"; }
     bool isBuiltin(void) const { return isToken() || isWallet(); }
+    void handle_display(void);
+    void handle_generate(void);
 };
 
 //-----------------------------------------------------------------------
-extern string_q getPrefix       (const string_q& in);
-extern string_q acquireABI      (CFunctionArray& functions, const address_t& addr, const COptions& opt, bool builtIn);
-extern void     handle_display  (COptions& options);
-extern void     handle_generate (COptions& options);
+extern string_q getPrefix (const string_q& in);
+extern string_q acquireABI(CAbi& abi, const address_t& addr, bool raw, bool silent, bool decNames);

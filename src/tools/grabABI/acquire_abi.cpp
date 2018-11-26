@@ -15,11 +15,11 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------
-bool addIfUnique(const string_q& addr, CFunctionArray& functions, CFunction& func, bool decorateNames) {
+bool addIfUnique(CAbi& abi, const string_q& addr, CFunction& func, bool decorateNames) {
     if (func.name.empty())  // && func.type != "constructor")
         return false;
 
-    for (auto f : functions) {
+    for (auto f : abi.interfaces) {
         if (f.encoding == func.encoding)
             return false;
 
@@ -32,12 +32,12 @@ bool addIfUnique(const string_q& addr, CFunctionArray& functions, CFunction& fun
         }
     }
 
-    functions.push_back(func);
+    abi.interfaces.push_back(func);
     return true;
 }
 
 //-----------------------------------------------------------------------
-string_q acquireABI(CFunctionArray& functions, const address_t& addr, const COptions& opt, bool builtIn) {
+string_q acquireABI(CAbi& abi, const address_t& addr, bool raw, bool silent, bool decNames) {
 
     string_q results;
     string_q fileName = blockCachePath("abis/" + addr + ".json");
@@ -50,7 +50,7 @@ string_q acquireABI(CFunctionArray& functions, const address_t& addr, const COpt
     string_q dispName = substitute(fileName, configPath(""), "|");
     nextTokenClear(dispName, '|');
     dispName = "~/.quickBlocks/" + dispName;
-    if (fileExists(fileName) && !opt.raw) {
+    if (fileExists(fileName) && !raw) {
 
         if (verbose && !isTestMode()) {
             cerr << "Reading ABI for " << addr << " from cache " + dispName + "\r";
@@ -84,7 +84,7 @@ string_q acquireABI(CFunctionArray& functions, const address_t& addr, const COpt
             establishFolder(fileName);
             stringToAsciiFile(fileName, "["+results+"]");
         } else if (contains(results, "source code not verified")) {
-            if (!opt.silent) {
+            if (!silent) {
                 cerr << "\n";
                 cerr << cRed << "Warning: " << cOff;
                 cerr << "Failed to grab the ABI. Etherscan returned:\n\n\t";
@@ -95,7 +95,7 @@ string_q acquireABI(CFunctionArray& functions, const address_t& addr, const COpt
                 quickQuitHandler(0);
             }
         } else {
-            if (!opt.silent) {
+            if (!silent) {
                 cerr << "Etherscan returned " << results << "\n";
                 cerr << "Could not grab ABI for " + addr + " from etherscan.io.\n";
                 quickQuitHandler(0);
@@ -110,8 +110,7 @@ string_q acquireABI(CFunctionArray& functions, const address_t& addr, const COpt
     CFunction func;
     ostringstream os;
     while (func.parseJson3(results)) {
-        func.isBuiltin = builtIn;
-        if (addIfUnique(addr, functions, func, opt.decNames))
+        if (addIfUnique(abi, addr, func, decNames))
             func.doExport(os);
         func = CFunction();  // reset
     }

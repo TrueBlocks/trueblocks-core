@@ -147,11 +147,13 @@ bool test_old_bug(void) {
     CAbi abi;
     cout << string_q(120, '-') << "\nABI of test1.json\n" << string_q(120, '-') << "\n";
     abi.loadABIFromFile("./test1.json");
+    sort(abi.interfaces.begin(), abi.interfaces.end(), sortByFunctionName);
     cout << abi << "\n";
     abi = CAbi();
 
     cout << string_q(120, '-') << "\nABI of test2.json\n" << string_q(120, '-') << "\n";
     abi.loadABIFromFile("./test2.json");
+    sort(abi.interfaces.begin(), abi.interfaces.end(), sortByFunctionName);
     cout << abi << "\n";
     return true;
 }
