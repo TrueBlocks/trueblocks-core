@@ -168,6 +168,68 @@ TEST_F(CThisTest, TestConverts_3) {
     return true;
 }}
 
+//------------------------------------------------------------------------
+namespace qblocks {
+    extern uint64_t hex_2_Uint64(const string_q &str);
+    extern biguint_t exp_2_BigUint(const string_q &str);
+}
+TEST_F(CThisTest, TestConverts_4) {
+        cout << "Running " << testName << "\n";
+
+        ASSERT_EQ("double_2_Str1", double_2_Str(14.15019, 5), "14.15019")
+        ASSERT_EQ("double_2_Str2", double_2_Str(14.15019, 3), "14.150")
+        ASSERT_EQ("double_2_Str3", double_2_Str(10586816.10315913591, 10), "10586816.1031591352") // should be 10586816.1031591359???
+        ASSERT_EQ("double_2_Str4", double_2_Str(10586816.10315913591, 2), "10586816.10")
+        ASSERT_EQ("double_2_Str5", double_2_Str(1050, 3), "1050.000")
+        ASSERT_EQ("double_2_Str6", double_2_Str(0.150100005, 9), "0.150100005")
+        ASSERT_EQ("double_2_Str7", double_2_Str(-14.15019, 5), "-14.15019")
+        ASSERT_EQ("double_2_Str8", double_2_Str(-14.15019, 3), "-14.150")
+        ASSERT_EQ("double_2_Str9", double_2_Str(-10586816.10315913591, 10), "-10586816.1031591352") // should be -10586816.1031591359???
+        ASSERT_EQ("double_2_Str10", double_2_Str(-10586816.10315913591, 2), "-10586816.10")
+        ASSERT_EQ("double_2_Str11", double_2_Str(-1050, 3), "-1050.000")
+        ASSERT_EQ("double_2_Str12", double_2_Str(-0.150100005, 9), "-0.150100005")
+        ASSERT_NOT_EQ("double_2_Str17", double_2_Str(-1e-10, 4), "-0.0001")
+
+        // Significant figures
+        ASSERT_EQ("double_2_Str14", double_2_Str(1.100000000005), "1.1")
+        ASSERT_EQ("double_2_Str15", double_2_Str(0.), "0")
+        ASSERT_EQ("double_2_Str15", double_2_Str(0.000000000), "0")
+
+
+        ASSERT_EQ("addr_2_Str1", addr_2_Str("0x281055afc982d96fab65b3a49cac8b878184cb16"), "0x281055afc982d96fab65b3a49cac8b878184cb16")
+        ASSERT_EQ("addr_2_Str2", addr_2_Str(""), "0x0")
+
+        biguint_t a = 65536;
+        bigint_t b = 65536;
+        ASSERT_EQ("bnu_2_Hex1", bnu_2_Hex(a * a * a * a * a * a * a * a), "100000000000000000000000000000000")
+        ASSERT_EQ("bni_2_Str1", bni_2_Str(a * a * a * a * a * a * a * a), "340282366920938463463374607431768211456")
+        ASSERT_EQ("bool_2_Str1", bool_2_Str(true), "1")
+        biguint_t c = 100000;
+        ASSERT_EQ("exp_2_BigUint1", exp_2_BigUint("1e30"), biguint_t(c * c * c * c * c * c))
+
+        ASSERT_EQ("hex_2_Uint641", hex_2_Uint64("0x39fab"), 237483)
+        ASSERT_EQ("int_2_Str_1", int_2_Str(141), "141")
+        ASSERT_EQ("isAddress_1", isAddress("0x30149141"), false)
+        ASSERT_EQ("isAddress_2", isAddress("0x919d0131fa5f77d99fbbbbace50bcb6e62332bf2"), true)
+        ASSERT_EQ("isHash_1", isHash("0x0"), false)
+        ASSERT_EQ("isHash_2", isHash("0xe8eb97ee9461770e3b731bcf39cd1f583eba1e46b9124158a7a62b0bad0af57f"), true)
+        ASSERT_EQ("isHexStr_1", isHexStr("0x52gw91"), false)
+        ASSERT_EQ("isHexStr_2", isHexStr("0x0"), true)
+        ASSERT_EQ("isHexStr_3", isHexStr("1x4014"), false)
+        ASSERT_EQ("isNumeral_1", isNumeral("1041941"), true)
+        ASSERT_EQ("isNumeral_2", isNumeral("0x31499"), false)
+        ASSERT_EQ("isNumeral_3", isNumeral("lovecats"), false)
+        ASSERT_EQ("isNumeral_4", isNumeral(" 1041"), false)
+        ASSERT_EQ("isUnsigned_1", isUnsigned("1041"), true)
+        ASSERT_EQ("isUnsigned_2", isUnsigned("-1041"), false)
+        ASSERT_EQ("isUnsigned_3", isUnsigned("lovecats"), false)
+        ASSERT_EQ("isUnsigned_4", isUnsigned("0x41"), true)
+        ASSERT_EQ("isZeroHash_1", isZeroHash("0x0"), true)
+        ASSERT_EQ("isZeroHash_2", isZeroHash("123"), false)
+
+        return true;
+    }}
+
 #include "options.h"
 //------------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
@@ -187,6 +249,7 @@ int main(int argc, const char *argv[]) {
             case 1: LOAD_TEST(TestConverts_1); break;
             case 2: LOAD_TEST(TestConverts_2); break;
             case 3: LOAD_TEST(TestConverts_3); break;
+            case 4: LOAD_TEST(TestConverts_4); break;
         }
     }
 
