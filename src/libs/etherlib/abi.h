@@ -45,9 +45,9 @@ public:
     const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    bool loadKnownABIs(void);
+    bool loadKnownABIs(const string_q& which);
     bool loadByAddress(address_t addr);
-    bool loadABIFromFile(const string_q& fileName);
+    bool loadABIFromFile(const string_q& fileName, bool builtIn);
     bool articulateTransaction(CTransaction *p) const;
     bool articulateLog(CLogEntry *l) const;
     bool articulateTrace(CTrace *t) const;
