@@ -9,7 +9,7 @@ showing             	1003	1	65556	T_BOOL TS_NUMERAL
 cname               	1004	1	131122	T_TEXT TS_STRING
 abiByName           	1005	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 abiByEncoding       	1006	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-loaded              	1007	1	131122	T_TEXT TS_STRING
+loaded              	1007	0	131122	T_TEXT TS_STRING
 {
   "abiByName": [],
   "abiByEncoding": []
