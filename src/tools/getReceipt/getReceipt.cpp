@@ -52,6 +52,7 @@ int main(int argc, const char *argv[]) {
     return 0;
 }
 
+
 //--------------------------------------------------------------
 bool visitTransaction(CTransaction& trans, void *data) {
     COptions *opt = (COptions*)data;
