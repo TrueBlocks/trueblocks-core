@@ -374,6 +374,8 @@ bool processTransaction(const CBlock& block, const CTransaction *trans, COptions
 
                 if (!isTestMode()) {
                     // We found something...write it to the cache...
+
+
                     lockSection(true);
                     options->txCache << block.blockNumber << trans->transactionIndex;
                     options->txCache.flush();
@@ -383,9 +385,8 @@ bool processTransaction(const CBlock& block, const CTransaction *trans, COptions
                         if (trans->traces.size() == 0)
                             getTraces(((CTransaction*)trans)->traces, trans->hash);
                         acct->abi_spec.articulateTransaction((CTransaction*)trans);
-//                        ((CAccountWatch*)acct)->api_spec.sendData(trans->Format());
-//                        ((CAccountWatch*)acct)->api_spec.sendData("cleanup");
-//                        cout << *trans << "\n";
+                        ((CAccountWatch*)acct)->api_spec.sendData(trans->Format());
+                        ((CAccountWatch*)acct)->api_spec.sendData("cleanup");
                         cout << "\n";
                         cout.flush();
 //                        getchar();
