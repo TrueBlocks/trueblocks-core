@@ -1,0 +1,1 @@
+mysqldump -u root tokenomics_local
