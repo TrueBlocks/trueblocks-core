@@ -208,7 +208,7 @@ bool COptions::loadWatches(const CToml& toml) {
         blk_maxWatchBlock = max(blk_maxWatchBlock, watch->lastBlock);
 
         watch->abi_spec.loadByAddress(watch->address);
-        watch->abi_spec.loadKnownABIs("all");
+        watch->abi_spec.loadKnownABIs();
         // We may as well articulate the named contracts while we're at it
         for (size_t n = 0 ; n < named.size() ; n++) {
             CAccountWatch *alt = &named.at(n);

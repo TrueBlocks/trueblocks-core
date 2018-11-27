@@ -10,7 +10,7 @@ cacheBalances
 checkMonitors.py
 clearLocks
 ddos
-doTesting*
+doTestingAll
 edAll
 exportJson
 exportMonitors.py
@@ -41,6 +41,7 @@ colorEcho
 colordiff
 cpTest
 diffTest
+doTesting
 editAll
 ethName
 ethgoog
@@ -65,7 +66,6 @@ getCode
 getLogs
 getReceipt
 getTokenInfo
-getTokenBal
 getTrace
 getTrans
 grabABI

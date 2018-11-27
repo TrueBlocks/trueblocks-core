@@ -67,7 +67,7 @@ run_test("grabABI_known_prev_json_bug1"          "0x5901deb2c898d5dbe5923e05e510
 run_test("grabABI_known_prev_json_bug2"          "0x5f742383b6d1298980030d6af943b76cdd902143" " --json")
 #run_test("grabABI_local_fail"                    "0x314159265dd8dbb310642f98f50c066173c1259b")
 run_test("grabABI_local_file"                    "0x314159265dd8dbb310642f98f50c066173c1259c")
-run_test("grabABI_etherTip"                      "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " --known" " -e")
+run_test("grabABI_etherTip"                      "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359")
 run_test("grabABI_underbar_functions"            "0xdac17f958d2ee523a2206206994597c13d831ec7")
 run_test("grabABI_known_contracts"               "--known" " -e")
 

@@ -1,95 +1,28 @@
-grabABI argc: 4 [1:0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359] [2:--known] [3:-e] 
-grabABI 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 --known -e 
+grabABI argc: 2 [1:0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359] 
+grabABI 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 
 ABI for address 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359
-	function proposals                  (uint256 param_0) [0x013cf08b]
-	function executeProposal            (uint256 proposalNumber,bytes transactionBytecode) [0x237e9492]
-	function memberId                   (address param_0) [0x39106821]
-	function numProposals               () [0x400e3949]
-	function priceOfAUnicornInFinney    () [0x50c34878]
-	function changeUnicorn              (uint256 newUnicornPriceInFinney,address newUnicornAddress) [0x522103fa]
-	function members                    (uint256 param_0) [0x5daf08ca]
-	function debatingPeriodInMinutes    () [0x69bd3436]
-	function minimumQuorum              () [0x8160f0b5]
-	function changeMembership           (address targetMember,uint256 voteWeight,bool canAddProposals,string memberName) [0x824dbc9a]
-	function newProposalInWei           (address beneficiary,uint256 weiAmount,string JobDescription,bytes transactionBytecode) [0x83876bc9]
-	function owner                      () [0x8da5cb5b]
-	function majorityMargin             () [0xaa02a90f]
-	function unicornAddress             () [0xb7782455]
-	function newProposalInEther         (address beneficiary,uint256 etherAmount,string JobDescription,bytes transactionBytecode) [0xb9f256cd]
-	function changeVotingRules          (uint256 minimumQuorumForProposals,uint256 minutesForDebate,int256 marginOfVotesForMajority) [0xbcca1fd3]
-	function vote                       (uint256 proposalNumber,bool supportsProposal,string justificationText) [0xd3c0715b]
-	function checkProposalCode          (uint256 proposalNumber,address beneficiary,uint256 amount,bytes transactionBytecode) [0xeceb2945]
-	function transferOwnership          (address newOwner) [0xf2fde38b]
-	event ProposalAdded                 (uint256 proposalID,address recipient,uint256 amount,string description) [0x646fec02522b41e7125cfc859a64fd4f4cefd5dc3b6237ca0abe251ded1fa881]
-	event Voted                         (uint256 proposalID,bool position,address voter,string justification) [0xc34f869b7ff431b034b7b9aea9822dac189a685e0b015c7d1be3add3f89128e8]
-	event ProposalTallied               (uint256 proposalID,int256 result,uint256 quorum,bool active) [0xd220b7272a8b6d0d7d6bcdace67b936a8f175e6d5c1b3ee438b72256b32ab3af]
-	event MembershipChanged             (address member) [0x4cea7af04e7093442a4d8d039e7b517557c4787a8cf68f900473c9bf3abfae4c]
-	event ChangeOfRules                 (uint256 minimumQuorum,uint256 debatingPeriodInMinutes,int256 majorityMargin) [0xa439d3fa452be5e0e1e24a8145e715f4fd8b9c08c96a42fd82a855a85e5d57de]
-
-ABI for address token_abis
-	event Approval                      (address indexed _owner,address indexed _spender,uint256 _value) [0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925]
-	event Transfer                      (address indexed _from,address indexed _to,uint256 _value) [0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef]
-	function approve                    (address _spender,uint256 _value) [0x095ea7b3]
-	function transfer                   (address _to,uint256 _value) [0xa9059cbb]
-	function transferFrom               (address _from,address _to,uint256 _value) [0x23b872dd]
-
-ABI for address wallet_abis
-	constructor                         (address[] _owners,uint256 _required) [0xfcd52c14]
-	fallback                            () [0x861731d5]
-	constructor                         (address[] _owners,uint256 _required,uint256 _daylimit) [0xaf8342fe]
-	event Confirmation                  (address indexed _sender,uint256 indexed _transactionId) [0x4a504a94899432a9846e1aa406dceb1bcfd538bb839071d49d1e5e23f5be30ef]
-	event Confirmation                  (address owner,bytes32 operation) [0xe1c52dc63b719ade82e8bea94cc41a0d5d28e4aaf536adb5e9cccc9ff8c1aeda]
-	event ConfirmationNeeded            (bytes32 operation,address initiator,uint256 value,address to,bytes data) [0x1733cbb53659d713b79580f79f3f9ff215f78a7c7aa45890f3b89fc5cddfbf32]
-	event Deposit                       (address from,uint256 value) [0xe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c]
-	event Deposit                       (address indexed _sender,uint256 _value) [0xe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c]
-	event Execution                     (uint256 indexed _transactionId) [0x33e13ecb54c3076d8e8bb8c2881800a4d972b792045ffae98fdf46df365fed75]
-	event ExecutionFailure              (uint256 indexed _transactionId) [0x526441bb6c1aba3c9a4a6ca1d6545da9c2333c8c48343ef398eb858d72b79236]
-	function MAX_OWNER_COUNT            () [0xd74f8edd]
-	event MultiTransact                 (address owner,bytes32 operation,uint256 value,address to,bytes data) [0xe7c957c06e9a662c1a6c77366179f5b702b97651dc28eee7d5bf1dff6e40bb4a]
-	event OwnerAdded                    (address newOwner) [0x994a936646fe87ffe4f1e469d3d6aa417d6b855598397f323de5b449f765f0c3]
-	event OwnerAddition                 (address indexed _owner) [0xf39e6e1eb0edcf53c221607b54b00cd28f3196fed0a24994dc308b8f611b682d]
-	event OwnerChanged                  (address oldOwner,address newOwner) [0xb532073b38c83145e3e5135377a08bf9aab55bc0fd7c1179cd4fb995d2a5159c]
-	event OwnerRemoval                  (address indexed _owner) [0x8001553a916ef2f495d26a907cc54d96ed840d7bda71e73194bf5a9df7a76b90]
-	event OwnerRemoved                  (address oldOwner) [0x58619076adf5bb0943d100ef88d52d7c3fd691b19d3a9071b555b651fbf418da]
-	event RequirementChange             (uint256 _required) [0xa3f1ee9126a074d9326c682f561767f710e927faa811f7a99829d49dc421797a]
-	event RequirementChanged            (uint256 newRequirement) [0xacbdb084c721332ac59f9b8e392196c9eb0e4932862da8eb9beaf0dad4f550da]
-	event Revocation                    (address indexed _sender,uint256 indexed _transactionId) [0xf6a317157440607f36269043eb55f1287a5a19ba2216afeab88cd46cbcfb88e9]
-	event Revoke                        (address owner,bytes32 operation) [0xc7fb647e59b18047309aa15aad418e5d7ca96d173ad704f1031a2c3d7591734b]
-	event SingleTransact                (address owner,uint256 value,address to,bytes data) [0x92ca3a80853e6663fa31fa10b99225f18d4902939b4c53a9caae9043f6efd004]
-	event Submission                    (uint256 indexed _transactionId) [0xc0ba8fe4b176c1714197d43b9cc6bcf797a4a7461c5fe8d0ef6e184ae7601e51]
-	function addOwner                   (address owner) [0x7065cb48]
-	function addOwner                   (address _owner) [0x7065cb48]
-	function changeOwner                (address _from,address _to) [0xf00d4b5d]
-	function changeRequirement          (uint256 _required) [0xba51a6df]
-	function changeRequirement          (uint256 _newRequired) [0xba51a6df]
-	function confirm                    (bytes32 _h) [0x797af627]
-	function confirmTransaction         (uint256 transactionId) [0xc01a8c84]
-	function confirmations              (uint256 param_0,address param_1) [0x3411c81c]
-	function execute                    (address _to,uint256 _value,bytes _data) [0xb61d27f6]
-	function executeTransaction         (uint256 transactionId) [0xee22610b]
-	function getConfirmationCount       (uint256 transactionId) [0x8b51d13f]
-	function getConfirmations           (uint256 transactionId) [0xb5dc40c3]
-	function getOwners                  () [0xa0e67e2b]
-	function getTransactionCount        (bool pending,bool executed) [0x54741525]
-	function getTransactionIds          (uint256 from,uint256 to,bool pending,bool executed) [0xa8abe69a]
-	function hasConfirmed               (bytes32 _operation,address _owner) [0xc2cf7326]
-	function isConfirmed                (uint256 transactionId) [0x784547a7]
-	function isOwner                    (address param_0) [0x2f54bf6e]
-	function isOwner                    (address _addr) [0x2f54bf6e]
-	function kill                       (address _to) [0xcbf0b0c0]
-	function m_dailyLimit               () [0xf1736d86]
-	function m_numOwners                () [0x4123cb6b]
-	function m_required                 () [0x746c9171]
-	function owners                     (uint256 param_0) [0x025e7c27]
-	function removeOwner                (address _owner) [0x173825d9]
-	function removeOwner                (address owner) [0x173825d9]
-	function replaceOwner               (address owner,address newOwner) [0xe20056e6]
-	function required                   () [0xdc8452cd]
-	function resetSpentToday            () [0x5c52c2f5]
-	function revoke                     (bytes32 _operation) [0xb75c7dc6]
-	function revokeConfirmation         (uint256 transactionId) [0x20ea8d86]
-	function setDailyLimit              (uint256 _newLimit) [0xb20d30a9]
-	function submitTransaction          (address destination,uint256 value,bytes data) [0xc6427474]
-	function transactionCount           () [0xb77bf600]
-	function transactions               (uint256 param_0) [0x9ace38c2]
+	function proposals                  (uint256 param_0)
+	function executeProposal            (uint256 proposalNumber,bytes transactionBytecode)
+	function memberId                   (address param_0)
+	function numProposals               ()
+	function priceOfAUnicornInFinney    ()
+	function changeUnicorn              (uint256 newUnicornPriceInFinney,address newUnicornAddress)
+	function members                    (uint256 param_0)
+	function debatingPeriodInMinutes    ()
+	function minimumQuorum              ()
+	function changeMembership           (address targetMember,uint256 voteWeight,bool canAddProposals,string memberName)
+	function newProposalInWei           (address beneficiary,uint256 weiAmount,string JobDescription,bytes transactionBytecode)
+	function owner                      ()
+	function majorityMargin             ()
+	function unicornAddress             ()
+	function newProposalInEther         (address beneficiary,uint256 etherAmount,string JobDescription,bytes transactionBytecode)
+	function changeVotingRules          (uint256 minimumQuorumForProposals,uint256 minutesForDebate,int256 marginOfVotesForMajority)
+	function vote                       (uint256 proposalNumber,bool supportsProposal,string justificationText)
+	function checkProposalCode          (uint256 proposalNumber,address beneficiary,uint256 amount,bytes transactionBytecode)
+	function transferOwnership          (address newOwner)
+	event ProposalAdded                 (uint256 proposalID,address recipient,uint256 amount,string description)
+	event Voted                         (uint256 proposalID,bool position,address voter,string justification)
+	event ProposalTallied               (uint256 proposalID,int256 result,uint256 quorum,bool active)
+	event MembershipChanged             (address member)
+	event ChangeOfRules                 (uint256 minimumQuorum,uint256 debatingPeriodInMinutes,int256 majorityMargin)
 
