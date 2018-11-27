@@ -20,9 +20,8 @@ int main(int argc, const char *argv[]) {
         return 0;
 
     cout << bGreen << "Starting blockMan...\n" << cOff;
-    CStringArray commands;
-    explode(commands, options.commandList, '\n');
-    for (auto command : commands) {
+    while (!options.commandList.empty()) {
+        string_q command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
             return 0;
 

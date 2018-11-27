@@ -24,10 +24,7 @@ int main(int argc, const char *argv[]) {
 
     cerr << bBlack << Now().Format(FMT_JSON) << cOff << ": Monitoring " << cYellow << getCWD() << cOff << "             \n";
 
-    CStringArray commands;
-    explode(commands, options.commandList, '\n');
-    if (commands.empty()) commands.push_back("--noop");
-    string_q command = commands[0];
+    string_q command = nextTokenClear(options.commandList, '\n');
     if (!options.parseArguments(command))
         return 1;
 

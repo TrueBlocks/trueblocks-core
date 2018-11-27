@@ -29,9 +29,8 @@ int main(int argc, const char *argv[]) {
     size_t cmdCnt = countOf(options.commandList, '\n') + 1;
     if (verbose && cmdCnt > 1)
         cout << "[";
-    CStringArray commands;
-    explode(commands, options.commandList, '\n');
-    for (auto command : commands) {
+    while (!options.commandList.empty()) {
+        string_q command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
             return 0;
         if (options.filters.size() > 0) {

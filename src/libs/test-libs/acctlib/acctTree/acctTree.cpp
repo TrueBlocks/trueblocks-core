@@ -28,10 +28,10 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    CStringArray commands;
-    explode(commands, options.commandList, '\n');
-    if (commands.empty()) commands.push_back("--noop");
-    for (auto command : commands) {
+    if (options.commandList.empty())
+        options.commandList = "null";
+    while (!options.commandList.empty()) {
+        string_q command = nextTokenClear(options.commandList, '\n');
         if (!options.parseArguments(command))
             return 0;
 

@@ -248,22 +248,19 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     bool COptionsBase::standardOptions(string_q& cmdLine) {
 
-        // Note: check each item individual in case more than one appears on the command line
         cmdLine += " ";
 
-        if (contains(cmdLine, "--noop ")) {
-            // do nothing
-            replaceAll(cmdLine, "--noop ", "");
-        }
-
+        // Note: check each item individual in case more than one appears on the command line
         if (contains(cmdLine, "--version ")) {
             cerr << programName << " (quickBlocks) " << getVersionStr() << "\n";
             exit(0);
+
         }
 
         if (contains(cmdLine, "--nocolor ")) {
             replaceAll(cmdLine, "--nocolor ", "");
             colorsOff();
+
         }
 
         if (contains(cmdLine, "--qblocks ")) {
@@ -297,6 +294,7 @@ namespace qblocks {
             expContext().asEther = true;
             expContext().asDollars = false;
             expContext().asWei = false;
+
         }
 
         if (isEnabled(OPT_WEI) && contains(cmdLine, "--wei ")) {
@@ -304,6 +302,7 @@ namespace qblocks {
             expContext().asEther = false;
             expContext().asDollars = false;
             expContext().asWei = true;
+
         }
 
         if (isEnabled(OPT_DOLLARS) && contains(cmdLine, "--dollars ")) {
@@ -311,6 +310,7 @@ namespace qblocks {
             expContext().asEther = false;
             expContext().asDollars = true;
             expContext().asWei = false;
+
         }
 
         if (isEnabled(OPT_PARITY) && contains(cmdLine, "--parity ")) {
@@ -354,7 +354,7 @@ namespace qblocks {
             return true;
         if (arg == "--nocolor")
             return true;
-        if (arg == "--noop")
+        if (arg == "null")
             return true;
         return false;
     }
