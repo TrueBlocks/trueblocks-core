@@ -169,6 +169,10 @@ TEST_F(CThisTest, TestConverts_3) {
 }}
 
 //------------------------------------------------------------------------
+namespace qblocks {
+    extern uint64_t hex_2_Uint64(const string_q &str);
+    extern biguint_t exp_2_BigUint(const string_q &str);
+}
 TEST_F(CThisTest, TestConverts_4) {
         cout << "Running " << testName << "\n";
 
@@ -185,7 +189,6 @@ TEST_F(CThisTest, TestConverts_4) {
         ASSERT_EQ("double_2_Str11", double_2_Str(-1050, 3), "-1050.000")
         ASSERT_EQ("double_2_Str12", double_2_Str(-0.150100005, 9), "-0.150100005")
         ASSERT_NOT_EQ("double_2_Str17", double_2_Str(-1e-10, 4), "-0.0001")
-        // ASSERT_EQ("double_2_Str13", double_2_Str(10586816.10315913591, 11), "10586816.10315913591")
 
         // Significant figures
         ASSERT_EQ("double_2_Str14", double_2_Str(1.100000000005), "1.1")
@@ -200,12 +203,11 @@ TEST_F(CThisTest, TestConverts_4) {
         bigint_t b = 65536;
         ASSERT_EQ("bnu_2_Hex1", bnu_2_Hex(a * a * a * a * a * a * a * a), "100000000000000000000000000000000")
         ASSERT_EQ("bni_2_Str1", bni_2_Str(a * a * a * a * a * a * a * a), "340282366920938463463374607431768211456")
-
         ASSERT_EQ("bool_2_Str1", bool_2_Str(true), "1")
         biguint_t c = 100000;
-        ASSERT_EQ("exp2BigUint1", exp2BigUint("1e30"), biguint_t(c * c * c * c * c * c))
+        ASSERT_EQ("exp_2_BigUint1", exp_2_BigUint("1e30"), biguint_t(c * c * c * c * c * c))
 
-        ASSERT_EQ("hex_2_Uint64_1", hex_2_Uint64("0x39fab"), 237483)
+        ASSERT_EQ("hex_2_Uint641", hex_2_Uint64("0x39fab"), 237483)
 
 
         return true;

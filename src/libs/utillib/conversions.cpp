@@ -19,7 +19,7 @@ namespace qblocks {
 
     extern uint64_t hex_2_Uint64(const string_q& str);
     extern int64_t  hex_2_Int64(const string_q& str) { return (int64_t)hex_2_Uint64(str); }
-    extern biguint_t exp2BigUint (const string_q &str);
+    extern biguint_t exp_2_BigUint (const string_q &str);
 
     //--------------------------------------------------------------------------------
     string_q chr_2_HexStr(const string_q& str) {
@@ -218,7 +218,7 @@ namespace qblocks {
         if (contains(str, "0x"))
             return biguint_t(BigUnsignedInABase(extract(str, 2).c_str(), 16));
         if (contains(str, "e"))
-            return exp2BigUint(str.c_str());
+            return exp_2_BigUint(str.c_str());
         return str_2_BigUint(str);
     }
 
@@ -430,7 +430,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    biguint_t exp2BigUint(const string_q &s) {
+    biguint_t exp_2_BigUint(const string_q &s) {
         string_q exponent = s.c_str();
         string_q decimals = nextTokenClear(exponent, 'e');
         string_q num = nextTokenClear(decimals, '.');
