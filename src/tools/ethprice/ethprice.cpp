@@ -42,8 +42,8 @@ int main(int argc, const char* argv[]) {
                 cout << quotes[indexFromTimeStamp(quotes, options.at)].Format(fmtStr);
 
             } else {
-                if (verbose > 1)
-                    UNHIDE_FIELD(CPriceQuote, "schema");
+//                if (verbose > 1)
+//                    UNHIDE_FIELD(CPriceQuote, "schema");
                 if (isJson)
                     cout << "[\n";
                 size_t step = (options.freq / 5);
