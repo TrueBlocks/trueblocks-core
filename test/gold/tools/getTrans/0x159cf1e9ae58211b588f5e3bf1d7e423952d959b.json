@@ -389,7 +389,7 @@
         "type": "address"
       },
       {
-        "name": "_amount",
+        "name": "_value",
         "type": "uint256"
       }
     ],
