@@ -452,7 +452,7 @@ string_q stringy(const CStringArray& array) {
 }
 
 //---------------------------------------------------------------------------
-bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC traceFilter, void *data) {
+bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data) {
 
     if (!func)
         return false;
@@ -460,7 +460,7 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC traceFilter, void *data
     foundOne(func, data, blockNumber, NOPOS, 0, miner, "miner");
     for (size_t tr = 0 ; tr < transactions.size() ; tr++) {
         CTransaction *trans = &transactions[tr];
-        if (!trans->forEveryAddress(func, traceFilter, data))
+        if (!trans->forEveryAddress(func, filterFunc, data))
             return false;
     }
     return true;
