@@ -23,14 +23,16 @@
 namespace qblocks {
 
 // EXISTING_CODE
+class CTransaction;
+class CLogEntry;
+class CTrace;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
 class CAbi : public CBaseNode {
 public:
-    CFunctionArray abiByName;
-    CFunctionArray abiByEncoding;
-    string_q loaded;
+    address_t address;
+    CFunctionArray interfaces;
 
 public:
     CAbi(void);
@@ -43,8 +45,12 @@ public:
     const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    bool loadABIFromFile(const string_q& fileName);
+    bool loadKnownABIs(const string_q& which);
     bool loadByAddress(address_t addr);
+    bool loadABIFromFile(const string_q& fileName, bool builtIn);
+    bool articulateTransaction(CTransaction *p) const;
+    bool articulateLog(CLogEntry *l) const;
+    bool articulateTrace(CTrace *t) const;
     friend class CAccountWatch;
     // EXISTING_CODE
     bool operator==(const CAbi& item) const;
@@ -96,9 +102,8 @@ inline void CAbi::clear(void) {
 inline void CAbi::initialize(void) {
     CBaseNode::initialize();
 
-    abiByName.clear();
-    abiByEncoding.clear();
-    loaded = "";
+    address = "";
+    interfaces.clear();
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -109,9 +114,8 @@ inline void CAbi::duplicate(const CAbi& ab) {
     clear();
     CBaseNode::duplicate(ab);
 
-    abiByName = ab.abiByName;
-    abiByEncoding = ab.abiByEncoding;
-    loaded = ab.loaded;
+    address = ab.address;
+    interfaces = ab.interfaces;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -146,6 +150,10 @@ inline bool operator<(const CAbi& v1, const CAbi& v2) {
 typedef vector<CAbi> CAbiArray;
 extern CArchive& operator>>(CArchive& archive, CAbiArray& array);
 extern CArchive& operator<<(CArchive& archive, const CAbiArray& array);
+
+//---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CAbi& abi);
+extern CArchive& operator>>(CArchive& archive, CAbi& abi);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

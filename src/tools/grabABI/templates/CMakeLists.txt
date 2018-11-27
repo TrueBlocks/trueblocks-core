@@ -19,7 +19,7 @@ set(PROJ_NAME "monitors")
 add_executable(${TOOL_NAME} ${SOURCE_FILES})
 
 # Add the project static libs at linking
-set(THE_LIBS "${CMAKE_CURRENT_LIST_DIR}/parselib/libparse[{PROJECT_NAME}].a" token wallet ${BASE_LIBS})
+set(THE_LIBS "${CMAKE_CURRENT_LIST_DIR}/parselib/libparse[{PROJECT_NAME}].a" ${BASE_LIBS})
 target_link_libraries (${PROJECT_NAME} ${THE_LIBS} ncurses)
 
 # Testing
@@ -27,6 +27,9 @@ target_link_libraries (${PROJECT_NAME} ${THE_LIBS} ncurses)
 set(TEST_EXE "${EXECUTABLE_OUTPUT_PATH}/${TOOL_NAME}")
 set(TEST_PATH "${TEST_PATH}/${PROJ_NAME}/${TOOL_NAME}")
 set(GOLD_PATH "${GOLD_PATH}/${PROJ_NAME}/${TOOL_NAME}")
+
+# To run only specific tests we define a test configuration named "test_all"
+add_custom_target(test-all COMMAND ${CMAKE_CTEST_COMMAND} -C test_all)
 
 # Function to run an special or slow test case
 function(run_special_test testName)

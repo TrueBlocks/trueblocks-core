@@ -30,6 +30,14 @@ build_readme(${CMAKE_CURRENT_SOURCE_DIR} ${TOOL_NAME})
 # To run only specific tests we define a test configuration named "test_all"
 add_custom_target(test-all COMMAND ${CMAKE_CTEST_COMMAND} -C test_all)
 
+## To run only specific tests we define a test configuration named "test_state"
+add_custom_target(test-state COMMAND ${CMAKE_CTEST_COMMAND} -C test_state)
+
+# Function to run state test cases
+function(run_state_test testName)
+    run_the_state_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(run_state_test)
+
 # Function to run an special or slow test case
 function(run_special_test testName)
     run_the_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
@@ -98,14 +106,14 @@ run_test("isContract_long_display_code_2" " 0x3003208e77edf3b088b122b5de3a6fc8c8
 run_test("isContract_diff_2"              "0x3003208e77edf3b088b122b5de3a6fc8c8ef679d" " 0x3003208e77edf3b088b122b5de3a6fc8c8ef6794" " -n")
 run_test("isContract_from_file"           "--file:cmd_file")
 
-run_test("isContract_when_fail"            "0x1234567890123456789012345678901234567890" " -w")
-run_test("isContract_when_unicorn_988949"  "0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7" " -w")
-run_test("isContract_when_go_5449023"      "0x423b5F62b328D0D6D44870F4Eee316befA0b2dF5" " -w")
-run_test("isContract_when_newbium_3989717" "0x814964b1bceAf24e26296D031EaDf134a2Ca4105" " -w")
-run_test("isContract_when_status_3898960"  "0x744d70FDBE2Ba4CF95131626614a1763DF805B9E" " -w")
-run_test("isContract_when_check"           "0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7" " 0x423b5F62b328D0D6D44870F4Eee316befA0b2dF5" "0x814964b1bceAf24e26296D031EaDf134a2Ca4105" " 0x744d70FDBE2Ba4CF95131626614a1763DF805B9E" "0x1234567890123456789012345678901234567890")
-run_test("isContract_when_all_fail"        "0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7" " 0x423b5F62b328D0D6D44870F4Eee316befA0b2dF5" "0x814964b1bceAf24e26296D031EaDf134a2Ca4105" " 0x744d70FDBE2Ba4CF95131626614a1763DF805B9E" "0x1234567890123456789012345678901234567890" "-w")
-run_test("isContract_when_all_ok"          "0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7" " 0x423b5F62b328D0D6D44870F4Eee316befA0b2dF5" "0x814964b1bceAf24e26296D031EaDf134a2Ca4105" " 0x744d70FDBE2Ba4CF95131626614a1763DF805B9E" "-w")
+run_state_test("isContract_when_fail"            "0x1234567890123456789012345678901234567890" " -w")
+run_state_test("isContract_when_unicorn_988949"  "0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7" " -w")
+run_state_test("isContract_when_go_5449023"      "0x423b5F62b328D0D6D44870F4Eee316befA0b2dF5" " -w")
+run_state_test("isContract_when_newbium_3989717" "0x814964b1bceAf24e26296D031EaDf134a2Ca4105" " -w")
+run_state_test("isContract_when_status_3898960"  "0x744d70FDBE2Ba4CF95131626614a1763DF805B9E" " -w")
+run_state_test("isContract_when_check"           "0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7" " 0x423b5F62b328D0D6D44870F4Eee316befA0b2dF5" " 0x814964b1bceAf24e26296D031EaDf134a2Ca4105" " 0x744d70FDBE2Ba4CF95131626614a1763DF805B9E" " 0x1234567890123456789012345678901234567890")
+run_state_test("isContract_when_all_fail"        "0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7" " 0x423b5F62b328D0D6D44870F4Eee316befA0b2dF5" " 0x814964b1bceAf24e26296D031EaDf134a2Ca4105" " 0x744d70FDBE2Ba4CF95131626614a1763DF805B9E" " 0x1234567890123456789012345678901234567890" " -w")
+run_state_test("isContract_when_all_ok"          "0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7" " 0x423b5F62b328D0D6D44870F4Eee316befA0b2dF5" " 0x814964b1bceAf24e26296D031EaDf134a2Ca4105" " 0x744d70FDBE2Ba4CF95131626614a1763DF805B9E" " -w")
 
 # Installation steps
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

@@ -20,7 +20,7 @@ chmod uog+x test_results
 
 cd $QUICKBLOCKS/test/
 echo "Removing compare folder..."
-rm -fR compare
+rm -fR compare/
 
 echo "Copying working to compare..."
 cp -pR working compare

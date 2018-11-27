@@ -1,6 +1,0 @@
-[settings]
-class     = QApprovalEvent
-baseClass = CLogEntry
-fields    = address _owner|address _spender|uint256 _value|
-includes  = logentry.h
-cIncs     = #include "etherlib.h"

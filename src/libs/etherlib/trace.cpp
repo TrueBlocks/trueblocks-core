@@ -70,7 +70,7 @@ bool CTrace::setValueByName(const string_q& fieldName, const string_q& fieldValu
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "articulatedTrace" ) { /* articulatedTrace = fieldVal; */ return true; }
+            if ( fieldName % "articulatedTrace" ) { /* articulatedTrace = fieldValue; */ return false; }
             if ( fieldName % "action" ) { /* action = fieldValue; */ return false; }
             break;
         case 'b':
@@ -301,6 +301,14 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
 
     string_q s;
+    s = toUpper(string_q("articulatedTrace")) + "::";
+    if (contains(fieldName, s)) {
+        string_q f = fieldName;
+        replaceAll(f, s, "");
+        f = articulatedTrace.getValueByName(f);
+        return f;
+    }
+
     s = toUpper(string_q("action")) + "::";
     if (contains(fieldName, s)) {
         string_q f = fieldName;

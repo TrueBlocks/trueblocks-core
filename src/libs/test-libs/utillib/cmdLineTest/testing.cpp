@@ -58,8 +58,9 @@ int main(int argc, const char *argv[]) {
 
     bool ret = true;
     LOAD_TEST(Test1);
-    while (!opts.commandList.empty()) {
-        string_q command = nextTokenClear(opts.commandList, '\n');
+    CStringArray commands;
+    explode(commands, opts.commandList, '\n');
+    for (auto command : commands) {
         if (!opts.parseArguments(command))
             return 0;
         cout << string_q(80, '-') << "\n";

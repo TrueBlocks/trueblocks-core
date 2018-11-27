@@ -12,7 +12,6 @@ include_directories(${BASE_INCLUDE})
 
 # Compilation order of the src subdirectories
 add_subdirectory(makeClass) # do this first
-add_subdirectory(grabABI)
 add_subdirectory(ethName)
 add_subdirectory(ethslurp)
 add_subdirectory(ethprice)
@@ -25,6 +24,7 @@ add_subdirectory(getTrans)
 add_subdirectory(getTrace)
 add_subdirectory(getBalance)
 add_subdirectory(getTokenInfo)
+add_subdirectory(grabABI)
 add_subdirectory(isContract)
 add_subdirectory(whenBlock)
 add_subdirectory(whereBlock)
