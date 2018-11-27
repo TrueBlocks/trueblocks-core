@@ -183,6 +183,9 @@ extern CArchive& operator>>(CArchive& archive, CFunction& fun);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+inline bool sortByFuncName(const CFunction& f1, const CFunction& f2) {
+    return f1.name < f2.name;
+}
 // EXISTING_CODE
 }  // namespace qblocks
 
