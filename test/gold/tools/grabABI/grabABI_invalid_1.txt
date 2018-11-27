@@ -1,7 +1,7 @@
 grabABI argc: 2 [1:0x00001] 
 grabABI 0x00001 
 
-  Invalid address '0x00001'. Length is not equal to 40 characters (20 bytes).
+  Invalid address '0x00001'. Length (7) is not equal to 40 characters (20 bytes).
 
 
   Usage:    grabABI [-c|-g|-d|-e|-n|-o|-r|-v|-h] addr  
@@ -21,7 +21,7 @@ grabABI 0x00001
 	-j  (--json)          print the ABI to the screen as json
 	-s  (--silent)        if ABI cannot be acquired, fail silently (useful for scripting)
 	-n  (--nodec)         do not decorate duplicate names
-	-f  (--freshen)       regenerate the binary database version of all ABIs in the abi cache
+	-k  (--known)         load common 'known' ABIs from cache
 #### Hidden options (shown during testing only)
 
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level

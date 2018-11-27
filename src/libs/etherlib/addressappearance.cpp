@@ -117,20 +117,20 @@ bool accumulateAddresses(const CAddressAppearance& item, void *data) {
 }
 
 //---------------------------------------------------------------------------
-bool CBlock::forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data) {
+bool CBlock::forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC traceFilter, void *data) {
     if (!func)
         return false;
     CUniqueState state(func, data, false);
-    forEveryAddress(accumulateAddresses, filterFunc, &state);
+    forEveryAddress(accumulateAddresses, traceFilter, &state);
     return true;
 }
 
 //---------------------------------------------------------------------------
-bool CBlock::forEveryUniqueAddressPerTx(ADDRESSFUNC func, TRANSFUNC filterFunc, void *data) {
+bool CBlock::forEveryUniqueAddressPerTx(ADDRESSFUNC func, TRANSFUNC traceFilter, void *data) {
     if (!func)
         return false;
     CUniqueState state(func, data, true);
-    forEveryAddress(accumulateAddresses, filterFunc, &state);
+    forEveryAddress(accumulateAddresses, traceFilter, &state);
     return true;
 }
 

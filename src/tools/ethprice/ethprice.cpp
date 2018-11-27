@@ -24,8 +24,9 @@ int main(int argc, const char* argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    while (!options.commandList.empty()) {
-        string_q command = nextTokenClear(options.commandList, '\n');
+    CStringArray commands;
+    explode(commands, options.commandList, '\n');
+    for (auto command : commands) {
         if (!options.parseArguments(command))
             return 0;
 
@@ -41,8 +42,8 @@ int main(int argc, const char* argv[]) {
                 cout << quotes[indexFromTimeStamp(quotes, options.at)].Format(fmtStr);
 
             } else {
-                if (verbose > 1)
-                    UNHIDE_FIELD(CPriceQuote, "schema");
+//                if (verbose > 1)
+//                    UNHIDE_FIELD(CPriceQuote, "schema");
                 if (isJson)
                     cout << "[\n";
                 size_t step = (options.freq / 5);

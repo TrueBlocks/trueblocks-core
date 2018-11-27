@@ -28,7 +28,7 @@ If you're on Linux, the build will fail. Make these changes to the `makefile` at
      
 Start your IPFS daemon (not sure if this is needed). Next download the transaction-per-account indicies using IPFS and this command:
 
-    ./getem
+    ./getem.sh
 
 This command assumes you have IPFS installed and will take about 20 minutes. It downloads more than 50 GB of data onto your hard drive into the folder `./data` in the current folder. Once that's done, run this command:
 

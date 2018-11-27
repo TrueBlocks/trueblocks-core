@@ -1,19 +1,6 @@
 isContract argc: 6 [1:0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7] [2:0x423b5F62b328D0D6D44870F4Eee316befA0b2dF5] [3:0x814964b1bceAf24e26296D031EaDf134a2Ca4105] [4:0x744d70FDBE2Ba4CF95131626614a1763DF805B9E] [5:-w] 
 isContract 0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7 0x423b5F62b328D0D6D44870F4Eee316befA0b2dF5 0x814964b1bceAf24e26296D031EaDf134a2Ca4105 0x744d70FDBE2Ba4CF95131626614a1763DF805B9E -w 
-
-  --whenDep option requires a full archive node. Quitting...
-
-  Usage:    isContract [-d|-b|-n|-w|-v|-h] <address> [address...] [block...]  
-  Purpose:  Returns 'true' or 'false' if the given address(es) holds byte code (optionally displays the code).
-             
-  Where:    
-	address_list          one or more addresses (0x...) from which to retrieve balances (required)
-	block_list            an optional list of one or more blocks at which to report balances, defaults to 'latest'
-	-d  (--data)          display results as data (addr <tab> is_contract)
-	-b  (--bytes)         display the byte code at the address(es)
-	-n  (--nodiff)        return 'true' if (exactly) two Ethereum addresses have identical code
-	-w  (--whenDep)       for smart contracts only, return the first block when the address had code
-	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
-	-h  (--help)          display this help screen
-
-  Powered by QBlocks
+whenDeployed(0x89205a3a3b2a69de6dbf7f01ed13b2108b2c43e7): 988949
+whenDeployed(0x423b5f62b328d0d6d44870f4eee316befa0b2df5): 5449023
+whenDeployed(0x814964b1bceaf24e26296d031eadf134a2ca4105): 3989717
+whenDeployed(0x744d70fdbe2ba4cf95131626614a1763df805b9e): 3898960

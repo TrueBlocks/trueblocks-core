@@ -101,7 +101,7 @@ bool exportTransaction(COptions& options, const CAcctCacheItem *item, bool first
             // Note: we do this outside of the check for enablement becuase even disabled watches can
             // be useful when articulating data
             if (options.needsArt)
-                articulateTransaction(watch->abi_spec, trans);
+                watch->abi_spec.articulateTransaction(trans);
 
             if (watch->enabled && isInTransaction(trans, watch->address)) {
 
@@ -208,8 +208,7 @@ bool COptions::loadWatches(const CToml& toml) {
         blk_maxWatchBlock = max(blk_maxWatchBlock, watch->lastBlock);
 
         watch->abi_spec.loadByAddress(watch->address);
-        watch->abi_spec.loadByAddress("0xTokenLib");
-        watch->abi_spec.loadByAddress("0xWalletLib");
+        watch->abi_spec.loadKnownABIs("all");
         // We may as well articulate the named contracts while we're at it
         for (size_t n = 0 ; n < named.size() ; n++) {
             CAccountWatch *alt = &named.at(n);

@@ -26,12 +26,14 @@ static COption params[] = {
     COption("@json",      "print the ABI to the screen as json"),
     COption("@silent",    "if ABI cannot be acquired, fail silently (useful for scripting)"),
     COption("@nodec",     "do not decorate duplicate names"),
-    COption("@freshen",   "regenerate the binary database version of all ABIs in the abi cache"),
+    COption("@known",     "load common 'known' ABIs from cache"),
+//    COption("@freshen",   "regenerate the binary database version of all ABIs in the abi cache"),
     COption("",           "Fetches the ABI for a smart contract. Optionally generates C++ source code "
                           "representing that ABI.\n"),
 };
 static size_t nParams = sizeof(params) / sizeof(COption);
 
+extern bool sortByFuncName(const CFunction& f1, const CFunction& f2);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
@@ -39,11 +41,13 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     Init();
+    bool asJson = false, isOpen = false;
     while (!command.empty()) {
         string_q arg = nextTokenClear(command, ' ');
         if (arg == "-g" || arg == "--gen" || arg == "--generate") {
             classDir = getCWD();
             prefix = getPrefix(classDir);
+            isGenerate = true;
 
         } else if (arg == "-c" || arg == "--canonical") {
             if (parts&SIG_ENCODE)
@@ -53,6 +57,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-e" || arg == "--encode") {
             parts |= SIG_ENCODE;
+
+        } else if (arg == "-k" || arg == "--known") {
+            loadKnown = true;
 
         } else if (arg == "-d" || arg == "--data") {
             parts |= SIG_FTYPE;
@@ -65,10 +72,10 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-n" || arg == "--noconst") {
             noconst = true;
 
-        } else if (arg == "-f" || arg == "--freshen") {
-extern void rebuildFourByteDB(void);
-            rebuildFourByteDB();
-            exit(0);
+//        } else if (arg == "-f" || arg == "--freshen") {
+//extern void rebuildFourByteDB(void);
+//            rebuildFourByteDB();
+//            exit(0);
 
         } else if (arg == "--nodec") {
             decNames = false;
@@ -77,7 +84,7 @@ extern void rebuildFourByteDB(void);
             raw = true;
 
         } else if (arg == "-o" || arg == "--open") {
-            open = true;
+            isOpen = true;
 
         } else if (arg == "-j" || arg == "--json") {
             asJson = true;
@@ -89,17 +96,9 @@ extern void rebuildFourByteDB(void);
             }
 
         } else {
-            if (primaryAddr.empty())
-                primaryAddr = arg;
-            if (!isAddress(arg) && arg != "0xTokenLib" && arg != "0xWalletLib")
-                return usage("Invalid address '" + arg + "'. Length is not equal to 40 characters (20 bytes).\n");
-            address_t addr = str_2_Addr(arg);
-            if (arg == "0xTokenLib" || arg == "0xWalletLib") {
-                addr = arg;
-                addrs.push_back(addr);
-            } else {
-                addrs.push_back(toLower(addr));
-            }
+            if (!isAddress(arg))
+                return usage("Invalid address '" + arg + "'. Length (" + uint_2_Str(arg.length()) + ") is not equal to 40 characters (20 bytes).\n");
+            addrs.push_back(toLower(str_2_Addr(arg)));
         }
     }
 
@@ -109,12 +108,57 @@ extern void rebuildFourByteDB(void);
     if (parts != SIG_CANONICAL && verbose)
         parts |= SIG_DETAILS;
 
-    if (!addrs.size())
+    if (!addrs.size() && !loadKnown)
         return usage("Please supply at least one Ethereum address.\n");
 
-    bool isGenerate = !classDir.empty();
     if (isGenerate && asData)
         return usage("Incompatible options --generate and --data. Quitting...");
+
+    if (asJson) {
+        for (auto addr : addrs) {
+            string_q fileName = blockCachePath("abis/" + addr + ".json");
+            if (!fileExists(fileName)) {
+                cerr << "ABI for '" + addr + "' not found. Quitting...\n";
+                return false;
+            }
+            string_q contents;
+            asciiFileToString(fileName, contents);
+            cout << contents << "\n";
+        }
+        return false;
+    }
+
+    if (isOpen) {
+        for (auto addr : addrs) {
+            string_q fileName = blockCachePath("abis/" + addr + ".json");
+            if (!fileExists(fileName)) {
+                cerr << "ABI for '" + addr + "' not found. Quitting...\n";
+                return false;
+            }
+            editFile(fileName);
+        }
+        return false;
+    }
+
+    for (auto addr : addrs) {
+        CAbi abi;
+        acquireABI(abi, addr, raw, silent, decNames);
+        abi.address = addr;
+        sort(abi.interfaces.begin(), abi.interfaces.end(), ::sortByFuncName);
+        abi_specs.push_back(abi);
+    }
+    if (loadKnown) {
+        CAbi abi;
+        abi.loadKnownABIs("token_abis");
+        abi.address = "token_abis";
+        sort(abi.interfaces.begin(), abi.interfaces.end(), ::sortByFuncName);
+        abi_specs.push_back(abi);
+        CAbi abi1;
+        abi1.loadKnownABIs("wallet_abis");
+        abi1.address = "wallet_abis";
+        sort(abi1.interfaces.begin(), abi1.interfaces.end(), ::sortByFuncName);
+        abi_specs.push_back(abi1);
+    }
 
     return true;
 }
@@ -127,12 +171,12 @@ void COptions::Init(void) {
 
     parts = SIG_DEFAULT;
     noconst = false;
-    open = false;
     silent = false;
-    asJson = false;
+    loadKnown = false;
     raw = false;
     decNames = true;
     asData = false;
+    isGenerate = false;
     addrs.clear();
 }
 
@@ -181,29 +225,45 @@ bool visitABIs(const string_q& path, void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-void rebuildFourByteDB(void) {
+//void rebuildFourByteDB(void) {
+//
+//    string_q fileList;
+//    string_q abiPath = blockCachePath("abis/");
+//    cout << abiPath << "\n";
+//    forEveryFileInFolder(abiPath+"*", visitABIs, &fileList);
+//
+//    CFunctionArray funcArray;
+//    while (!fileList.empty()) {
+//        string_q fileName = nextTokenClear(fileList, '\n');
+//        CAbi abi;
+//        abi.loadABIFromFile(fileName, false);
+//        for (auto interface : abi.interfaces) {
+//            funcArray.push_back(interface);
+//            cout << interface.encoding << " : ";
+//            cout << interface.name << " : ";
+//            cout << interface.signature << "\n";
+//        }
+//    }
+//    sort(funcArray.begin(), funcArray.end());
+//    CArchive funcCache(WRITING_ARCHIVE);
+//    if (funcCache.Lock(abiPath+"abis.bin", binaryWriteCreate, LOCK_CREATE)) {
+//        funcCache << funcArray;
+//        funcCache.Release();
+//    }
+//}
 
-    string_q fileList;
-    string_q abiPath = blockCachePath("abis/");
-    cout << abiPath << "\n";
-    forEveryFileInFolder(abiPath+"*", visitABIs, &fileList);
+bool sortByFuncType(const CFunction& f1, const CFunction& f2) {
+    if (f1.type == "constructor")
+        return true;
+    if (f1.type == "fallback")
+        return true;
+    if (f1.type == "function")
+        return true;
+    return false;
+}
 
-    CFunctionArray funcArray;
-    while (!fileList.empty()) {
-        string_q fileName = nextTokenClear(fileList, '\n');
-        CAbi abi;
-        abi.loadABIFromFile(fileName);
-        for (size_t f = 0 ; f < abi.abiByEncoding.size() ; f++) {
-            funcArray.push_back(abi.abiByEncoding[f]);
-            cout << abi.abiByEncoding[f].encoding << " : ";
-            cout << abi.abiByEncoding[f].name << " : ";
-            cout << abi.abiByEncoding[f].signature << "\n";
-        }
-    }
-    sort(funcArray.begin(), funcArray.end());
-    CArchive funcCache(WRITING_ARCHIVE);
-    if (funcCache.Lock(abiPath+"abis.bin", binaryWriteCreate, LOCK_CREATE)) {
-        funcCache << funcArray;
-        funcCache.Release();
-    }
+bool sortByFuncName(const CFunction& f1, const CFunction& f2) {
+    if (f1.type != f2.type)
+        return sortByFuncType(f1, f2);
+    return f1.name < f2.name;
 }
