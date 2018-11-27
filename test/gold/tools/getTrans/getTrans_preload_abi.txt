@@ -22,7 +22,7 @@ ABI for address 0x159cf1e9ae58211b588f5e3bf1d7e423952d959b
 	function toggleTrustedVerifier      (address _verifier)
 	function transfer                   (address _to,uint256 _amount)
 	function transferAnyERC20Token      (address _tokenAddress,uint256 _tokens)
-	function transferFrom               (address _from,address _to,uint256 _value)
+	function transferFrom               (address _from,address _to,uint256 _amount)
 	function transferX                  (address _to,uint256 _amount,string _transferMetaData)
 	function verifyStatusAsAccreditedInvestor(address _account,string _verifyMetaData)
 	event MakeRequest                   (uint256 _key,uint256 _date,uint256 _tokenAmount,uint256 _dollarPrice,uint8 _requestType,address indexed _requester)
