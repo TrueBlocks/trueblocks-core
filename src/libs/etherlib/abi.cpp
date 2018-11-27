@@ -275,40 +275,40 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-    static string_q known_abi_folder;
     bool visitABI(const qblocks::string_q& path, void *data) {
         if (!endsWith(path, ".json"))
             return true;
         CAbi *abi = (CAbi*)data;
-        string_q address = substitute(substitute(path, known_abi_folder, ""), ".json", "");
-        if (!abi->loadABIFromFile(address))
+        if (!abi->loadABIFromFile(path, true))
             return false;
-        for (CFunction& interface : abi->interfaces)
-            interface.isBuiltin = true;
         return true;
     }
 
     //---------------------------------------------------------------------------
-    bool CAbi::loadKnownABIs(void) {
-        if (known_abi_folder.empty())
-            known_abi_folder = configPath("known_abis/");
-        return forEveryFileInFolder(known_abi_folder, visitABI, this);
+    bool CAbi::loadKnownABIs(const string_q& which) {
+        if (which == "all")
+            return forEveryFileInFolder(configPath("known_abis/*"), visitABI, this);
+        return loadABIFromFile(configPath("known_abis/" + which + ".json"), true);
     }
 
     //---------------------------------------------------------------------------
     bool CAbi::loadByAddress(address_t addrIn) {
         string_q addr = toLower(addrIn);
         string_q fileName = blockCachePath("abis/" + addr + ".json");
-        return loadABIFromFile(fileName);
+        return loadABIFromFile(fileName, false);
     }
 
     //---------------------------------------------------------------------------
-    bool CAbi::loadABIFromFile(const string_q& fileName) {
+    bool CAbi::loadABIFromFile(const string_q& fileName, bool builtIn) {
+
+        if (!fileExists(fileName))
+            return false;
 
         string_q contents;
         asciiFileToString(fileName, contents);
         CFunction func;
         while (func.parseJson3(contents)) {
+            func.isBuiltin = builtIn;
             interfaces.push_back(func);
             func = CFunction();  // reset
         }

@@ -487,7 +487,7 @@ bool COptions::loadMonitors(const CToml& config) {
         watch.api_spec.headers = config.getConfigStr("api_spec", "headers", "");
         if (!watch.api_spec.uri.empty()) {
             watch.abi_spec.loadByAddress(watch.address);
-            watch.abi_spec.loadKnownABIs();
+            watch.abi_spec.loadKnownABIs("all");
         }
 
         string_q msg;
