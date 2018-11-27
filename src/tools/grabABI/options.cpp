@@ -33,6 +33,7 @@ static COption params[] = {
 };
 static size_t nParams = sizeof(params) / sizeof(COption);
 
+extern bool sortByFuncName(const CFunction& f1, const CFunction& f2);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
@@ -143,6 +144,7 @@ bool COptions::parseArguments(string_q& command) {
         CAbi abi;
         acquireABI(abi, addr, raw, silent, decNames);
         abi.address = addr;
+        sort(abi.interfaces.begin(), abi.interfaces.end(), ::sortByFuncName);
         abi_specs.push_back(abi);
     }
     if (loadKnown) {
@@ -249,3 +251,19 @@ bool visitABIs(const string_q& path, void *dataPtr) {
 //        funcCache.Release();
 //    }
 //}
+
+bool sortByFuncType(const CFunction& f1, const CFunction& f2) {
+    if (f1.type == "constructor")
+        return true;
+    if (f1.type == "fallback")
+        return true;
+    if (f1.type == "function")
+        return true;
+    return false;
+}
+
+bool sortByFuncName(const CFunction& f1, const CFunction& f2) {
+    if (f1.type != f2.type)
+        return sortByFuncType(f1, f2);
+    return f1.name < f2.name;
+}
