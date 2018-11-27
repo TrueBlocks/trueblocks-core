@@ -14,5 +14,5 @@ add_subdirectory (acctlib)
 add_subdirectory (test-libs)
 
 # Headers installation steps
-file(GLOB HEADER_FILES "utillib/*.h" "etherlib/*.h" "acctlib/*.h")
+file(GLOB HEADER_FILES "utillib/*.h" "etherlib/*.h" "acctlib/*.h" "tokenlib/*.h" "walletlib/*.h")
 install (FILES ${HEADER_FILES} DESTINATION include)
