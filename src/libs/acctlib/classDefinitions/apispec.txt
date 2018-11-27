@@ -1,6 +1,6 @@
 [settings]
 class     = CApiSpec
-fields    = string_q method|string_q uri|string_q token
+fields    = string method|string uri|string headers
 includes  = utillib.h
 cIncs     = #include "utillib.h"
 serialize = true
