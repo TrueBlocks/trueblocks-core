@@ -69,7 +69,7 @@ run_test("grabABI_known_prev_json_bug2"          "0x5f742383b6d1298980030d6af943
 run_test("grabABI_local_file"                    "0x314159265dd8dbb310642f98f50c066173c1259c")
 run_test("grabABI_etherTip"                      "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359")
 run_test("grabABI_underbar_functions"            "0xdac17f958d2ee523a2206206994597c13d831ec7")
-run_test("grabABI_known_contracts"               "--known" " -e")
+#run_test("grabABI_known_contracts"               "--known" " -e")
 
 run_special_test("grabABI_known_prev_bug3"       "0x6090a6e47849629b7245dfa1ca21d94cd15878ef" " --raw")
 run_special_test("grabABI_known_prev_bug4"       "0x6810e776880c02933d47db1b9fc05908e5386b96" " --raw")
