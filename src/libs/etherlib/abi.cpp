@@ -63,7 +63,7 @@ bool CAbi::setValueByName(const string_q& fieldName, const string_q& fieldValue)
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "address" ) { address = str_2_Addr(fieldValue); return true; }
+            if ( fieldName % "address" ) { address = fieldValue; return true; }
             break;
         case 'i':
             if ( fieldName % "interfaces" ) {
@@ -154,7 +154,7 @@ void CAbi::registerClass(void) {
     ADD_FIELD(CAbi, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CAbi, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CAbi, "cname", T_TEXT,  ++fieldNum);
-    ADD_FIELD(CAbi, "address", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(CAbi, "address", T_TEXT, ++fieldNum);
     ADD_FIELD(CAbi, "interfaces", T_OBJECT|TS_ARRAY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
@@ -224,7 +224,7 @@ string_q CAbi::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "address" ) return addr_2_Str(address);
+            if ( fieldName % "address" ) return address;
             break;
         case 'i':
             if ( fieldName % "interfaces" || fieldName % "interfacesCnt" ) {
@@ -476,6 +476,7 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
         }
         return false;
     }
-// EXISTING_CODE
+
+    // EXISTING_CODE
 }  // namespace qblocks
 

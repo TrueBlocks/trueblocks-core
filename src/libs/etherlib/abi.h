@@ -102,8 +102,8 @@ inline void CAbi::clear(void) {
 inline void CAbi::initialize(void) {
     CBaseNode::initialize();
 
-    address = "";
     interfaces.clear();
+    address = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -114,8 +114,8 @@ inline void CAbi::duplicate(const CAbi& ab) {
     clear();
     CBaseNode::duplicate(ab);
 
-    address = ab.address;
     interfaces = ab.interfaces;
+    address = ab.address;
 
     // EXISTING_CODE
     // EXISTING_CODE
