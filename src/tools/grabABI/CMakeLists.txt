@@ -56,9 +56,9 @@ run_test("grabABI_generation"                    "0xbb9bc244d798123fde783fcc1c72
 run_test("grabABI_generation2"                   "0xdac17f958d2ee523a2206206994597c13d831ec7" " -v" " -n" " -e" " -g" " code")
 run_test("grabABI_verbose5"                      "0xbb9bc244d798123fde783fcc1c72d3bb8c189413" " -vng" " code")
 run_test("grabABI_invalid_1"                     "0x00001")
-run_test("grabABI_not_found"                     "0x1728039ce0d18a799c081c5c7fa2090dd365a8d0" " -o")
+run_test("grabABI_not_found"                    "0x1728039ce0d18a799c081c5c7fa2090dd365a8d0" " -o")
 
-run_test("grabABI_no_abi1"                       "0x1728039ce0d18a799c081c5c7fa2090dd365a8d0" " --raw")
+run_test("grabABI_no_abi1"                      "0x1728039ce0d18a799c081c5c7fa2090dd365a8d0" " --raw")
 run_test("grabABI_no_abi2"                       "0x1728039ce0d18a799c081c5c7fa2090dd365a8d0" " --json")
 
 run_test("grabABI_known_prev_bug1"               "0x5901deb2c898d5dbe5923e05e510e95968a35067" " --raw")
@@ -69,7 +69,6 @@ run_test("grabABI_local_fail"                    "0x314159265dd8dbb310642f98f50c
 run_test("grabABI_local_file"                    "0x314159265dd8dbb310642f98f50c066173c1259c")
 run_test("grabABI_etherTip"                      "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359")
 run_test("grabABI_underbar_functions"            "0xdac17f958d2ee523a2206206994597c13d831ec7")
-run_test("grabABI_known_contracts"               "0xTokenLib" " 0xWalletLib" " -e")
 
 run_special_test("grabABI_known_prev_bug3"       "0x6090a6e47849629b7245dfa1ca21d94cd15878ef" " --raw")
 run_special_test("grabABI_known_prev_bug4"       "0x6810e776880c02933d47db1b9fc05908e5386b96" " --raw")
