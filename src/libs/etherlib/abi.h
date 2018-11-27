@@ -45,7 +45,6 @@ public:
     // EXISTING_CODE
     bool loadKnownABIs(void);
     bool loadByAddress(address_t addr);
-    bool loadABIFromFile(const string_q& fileName);
     friend class CAccountWatch;
     // EXISTING_CODE
     bool operator==(const CAbi& item) const;
@@ -60,6 +59,7 @@ protected:
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
+    bool loadABIFromFile(const string_q& fileName);
     // EXISTING_CODE
 };
 
