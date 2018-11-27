@@ -208,7 +208,24 @@ TEST_F(CThisTest, TestConverts_4) {
         ASSERT_EQ("exp_2_BigUint1", exp_2_BigUint("1e30"), biguint_t(c * c * c * c * c * c))
 
         ASSERT_EQ("hex_2_Uint641", hex_2_Uint64("0x39fab"), 237483)
-
+        ASSERT_EQ("int_2_Str_1", int_2_Str(141), "141")
+        ASSERT_EQ("isAddress_1", isAddress("0x30149141"), false)
+        ASSERT_EQ("isAddress_2", isAddress("0x919d0131fa5f77d99fbbbbace50bcb6e62332bf2"), true)
+        ASSERT_EQ("isHash_1", isHash("0x0"), false)
+        ASSERT_EQ("isHash_2", isHash("0xe8eb97ee9461770e3b731bcf39cd1f583eba1e46b9124158a7a62b0bad0af57f"), true)
+        ASSERT_EQ("isHexStr_1", isHexStr("0x52gw91"), false)
+        ASSERT_EQ("isHexStr_2", isHexStr("0x0"), true)
+        ASSERT_EQ("isHexStr_3", isHexStr("1x4014"), false)
+        ASSERT_EQ("isNumeral_1", isNumeral("1041941"), true)
+        ASSERT_EQ("isNumeral_2", isNumeral("0x31499"), false)
+        ASSERT_EQ("isNumeral_3", isNumeral("lovecats"), false)
+        ASSERT_EQ("isNumeral_4", isNumeral(" 1041"), false)
+        ASSERT_EQ("isUnsigned_1", isUnsigned("1041"), true)
+        ASSERT_EQ("isUnsigned_2", isUnsigned("-1041"), false)
+        ASSERT_EQ("isUnsigned_3", isUnsigned("lovecats"), false)
+        ASSERT_EQ("isUnsigned_4", isUnsigned("0x41"), true)
+        ASSERT_EQ("isZeroHash_1", isZeroHash("0x0"), true)
+        ASSERT_EQ("isZeroHash_2", isZeroHash("123"), false)
 
         return true;
     }}
