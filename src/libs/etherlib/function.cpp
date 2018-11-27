@@ -309,18 +309,6 @@ bool CFunction::readBackLevel(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CFunction& fun) {
-    fun.SerializeC(archive);
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CFunction& fun) {
-    fun.Serialize(archive);
-    return archive;
-}
-
-//---------------------------------------------------------------------------
 string_q CFunction::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first

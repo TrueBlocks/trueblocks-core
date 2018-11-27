@@ -11,6 +11,8 @@ project (libs)
 add_subdirectory (utillib)
 add_subdirectory (etherlib)
 add_subdirectory (acctlib)
+add_subdirectory (tokenlib)
+add_subdirectory (walletlib)
 add_subdirectory (test-libs)
 
 # Headers installation steps

@@ -67,7 +67,7 @@ bool CLogEntry::setValueByName(const string_q& fieldName, const string_q& fieldV
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "address" ) { address = str_2_Addr(fieldValue); return true; }
-            if ( fieldName % "articulatedLog" ) { /* articulatedLog = fieldValue; */ return false; }
+            if ( fieldName % "articulatedLog" ) { /* articulatedLog = fieldValue; */ return true; }
             break;
         case 'd':
             if ( fieldName % "data" ) { data = fieldValue; return true; }
@@ -277,15 +277,6 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
             return ret;
     }
     // EXISTING_CODE
-
-    string_q s;
-    s = toUpper(string_q("articulatedLog")) + "::";
-    if (contains(fieldName, s)) {
-        string_q f = fieldName;
-        replaceAll(f, s, "");
-        f = articulatedLog.getValueByName(f);
-        return f;
-    }
 
     // Finally, give the parent class a chance
     return CBaseNode::getValueByName(fieldName);
