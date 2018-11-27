@@ -62,11 +62,11 @@ bool CApiSpec::setValueByName(const string_q& fieldName, const string_q& fieldVa
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
-        case 'h':
-            if ( fieldName % "headers" ) { headers = fieldValue; return true; }
-            break;
         case 'm':
             if ( fieldName % "method" ) { method = fieldValue; return true; }
+            break;
+        case 'h':
+            if ( fieldName % "headers" ) { headers = fieldValue; return true; }
             break;
         case 'u':
             if ( fieldName % "uri" ) { uri = fieldValue; return true; }
@@ -221,11 +221,11 @@ string_q CApiSpec::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
-        case 'h':
-            if ( fieldName % "headers" ) return headers;
-            break;
         case 'm':
             if ( fieldName % "method" ) return method;
+            break;
+        case 'h':
+            if ( fieldName % "headers" ) return headers;
             break;
         case 'u':
             if ( fieldName % "uri" ) return uri;

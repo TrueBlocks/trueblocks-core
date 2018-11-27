@@ -93,9 +93,9 @@ inline void CApiSpec::clear(void) {
 inline void CApiSpec::initialize(void) {
     CBaseNode::initialize();
 
-    method = "";
-    uri = "";
-    headers = "";
+//    method = ??; /* unknown type: string_q */
+//    uri = ??; /* unknown type: string_q */
+//    token = ??; /* unknown type: string_q */
 
     // EXISTING_CODE
     // EXISTING_CODE
