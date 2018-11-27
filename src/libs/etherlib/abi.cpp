@@ -305,32 +305,12 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-bool visitABI(const qblocks::string_q& path, void *data) {
-    CStringArray *files = (CStringArray*)data;
-    if (endsWith(path, ".json"))
-        files->push_back(path);
-    return true;
-}
-
-//---------------------------------------------------------------------------
-bool CAbi::loadKnownABIs(void) {
-    CStringArray files;
-    forEveryFileInFolder(configPath("known_abis/*"), visitABI, &files);
-    for (auto fileName : files) {
-        if (!contains(loadedList, fileName+"|")) {
-            if (loadABIFromFile(fileName)) {
-                loadedList += fileName + "|";
-            }
-        }
-    }
-    return true;
-}
-
-//---------------------------------------------------------------------------
 bool CAbi::loadByAddress(address_t addrIn) {
-    string_q addr = toLower(addrIn);
-    if (contains(loadedList, addr+"|"))
+    if (contains(loadedList, addrIn+"|"))
         return true;
+    address_t addr = addrIn;
+    if (addr != "0xTokenLib" && addr != "0xWalletLib")
+        addr = toLower(addr);
     string_q fileName = blockCachePath("abis/" + addr + ".json");
     bool ret = loadABIFromFile(fileName);
     if (ret)

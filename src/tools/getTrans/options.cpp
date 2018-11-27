@@ -77,7 +77,8 @@ bool COptions::parseArguments(string_q& command) {
 
         //    manageFields(toml.getConfigStr("fields", "hide", ""), false);
         //    manageFields(toml.getConfigStr("fields", "show", ""), true );
-        abi_spec.loadKnownABIs();
+        abi_spec.loadByAddress("0xTokenLib");
+        abi_spec.loadByAddress("0xWalletLib");
     }
 
     if (!transList.hasTrans())

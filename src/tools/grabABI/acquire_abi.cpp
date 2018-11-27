@@ -28,7 +28,12 @@ bool addIfUnique(const string_q& addr, CFunctionArray& functions, CFunction& fun
         // the first four characters of the contract's address.
         if (decorateNames && f.name == func.name && !f.isBuiltin) {
             func.origName = func.name;
-            func.name += (startsWith(addr, "0x") ? extract(addr, 2, 4) : extract(addr, 0, 4));
+            if (addr == "0xTokenLib")
+                func.name += "Token";
+            else if (addr == "0xWalletLib")
+                func.name += "Wallet";
+            else
+                func.name += (startsWith(addr, "0x") ? extract(addr, 2, 4) : extract(addr, 0, 4));
         }
     }
 

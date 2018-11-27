@@ -22,7 +22,7 @@ grabABI -th
 | -j | --json | print the ABI to the screen as json |
 | -s | --silent | if ABI cannot be acquired, fail silently (useful for scripting) |
 | -n | --nodec | do not decorate duplicate names |
-| -k | --known | load common 'known' ABIs from cache |
+| -f | --freshen | regenerate the binary database version of all ABIs in the abi cache |
 #### Hidden options (shown during testing only)
 
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |

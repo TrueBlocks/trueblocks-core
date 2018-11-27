@@ -43,7 +43,7 @@ public:
     const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    bool loadKnownABIs(void);
+    bool loadABIFromFile(const string_q& fileName);
     bool loadByAddress(address_t addr);
     friend class CAccountWatch;
     // EXISTING_CODE
@@ -59,7 +59,6 @@ protected:
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
-    bool loadABIFromFile(const string_q& fileName);
     // EXISTING_CODE
 };
 

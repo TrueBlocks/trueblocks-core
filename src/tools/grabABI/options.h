@@ -19,7 +19,6 @@ public:
     bool noconst;
     bool raw;
     bool asData;
-    bool loadKnown;
     bool decNames;
     bool isGenerate;
     CAddressArray addrs;

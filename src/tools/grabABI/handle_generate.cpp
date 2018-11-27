@@ -35,15 +35,16 @@ static string_q classDir;
 //-----------------------------------------------------------------------
 void handle_generate(COptions& options) {
 
-    string_q theABI;
     CFunctionArray functions;
+    if (!(options.addrs[0] % "0xTokenLib") && !(options.addrs[0] % "0xWalletLib")) {
+        acquireABI(functions, "0xTokenLib",  options, true);
+        acquireABI(functions, "0xWalletLib", options, true);
+    }
+
+    string_q theABI;
     for (auto addr : options.addrs) {
         theABI += ("ABI for addr : " + addr + "\n");
         theABI += acquireABI(functions, addr, options, false) + "\n\n";
-    }
-    if (options.loadKnown) {
-        acquireABI(functions, "token_abis",  options, true);
-        acquireABI(functions, "wallet_abis", options, true);
     }
 
     verbose = false;
