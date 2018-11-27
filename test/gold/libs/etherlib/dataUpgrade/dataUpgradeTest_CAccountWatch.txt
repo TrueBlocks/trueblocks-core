@@ -98,6 +98,7 @@ abi_spec            	1015	0	1048651	T_OBJECT TS_OBJECT
   "api_spec": {
   },
   "abi_spec": {
+    "address": "0x0",
     "interfaces": []
   }
 }
