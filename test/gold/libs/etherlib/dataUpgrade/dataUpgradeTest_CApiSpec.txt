@@ -9,7 +9,7 @@ showing             	1003	1	65556	T_BOOL TS_NUMERAL
 cname               	1004	1	131122	T_TEXT TS_STRING
 method              	1005	0	131122	T_TEXT TS_STRING
 uri                 	1006	0	131122	T_TEXT TS_STRING
-token               	1007	0	131122	T_TEXT TS_STRING
+headers             	1007	0	131122	T_TEXT TS_STRING
 {
 }
 
@@ -22,7 +22,7 @@ showing             	1003	1	65556	T_BOOL TS_NUMERAL
 cname               	1004	1	131122	T_TEXT TS_STRING
 method              	1005	1	131122	T_TEXT TS_STRING
 uri                 	1006	1	131122	T_TEXT TS_STRING
-token               	1007	1	131122	T_TEXT TS_STRING
+headers             	1007	1	131122	T_TEXT TS_STRING
 {
 }
 
@@ -35,7 +35,7 @@ showing             	1003	0	65556	T_BOOL TS_NUMERAL
 cname               	1004	0	131122	T_TEXT TS_STRING
 method              	1005	0	131122	T_TEXT TS_STRING
 uri                 	1006	0	131122	T_TEXT TS_STRING
-token               	1007	0	131122	T_TEXT TS_STRING
+headers             	1007	0	131122	T_TEXT TS_STRING
 {
   "schema": 5005,
   "deleted": 0,

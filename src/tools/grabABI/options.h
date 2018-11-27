@@ -17,16 +17,15 @@ class COptions : public COptionsBase {
 public:
     uint64_t parts;
     bool noconst;
-    bool open;
-    bool asJson;
     bool raw;
     bool asData;
+    bool loadKnown;
     bool decNames;
+    bool isGenerate;
+    CAbiArray abi_specs;
     CAddressArray addrs;
-    string_q primaryAddr;
     string_q classDir;
     string_q prefix;
-    string_q theABI;
     bool silent;
 
     COptions(void);
@@ -39,6 +38,10 @@ public:
     bool isToken(void) const { return prefix % "tokenlib"; }
     bool isWallet(void) const { return prefix % "walletlib"; }
     bool isBuiltin(void) const { return isToken() || isWallet(); }
+    void handle_display(void);
+    void handle_generate(void);
 };
 
-extern string_q getPrefix(const string_q& in);
+//-----------------------------------------------------------------------
+extern string_q getPrefix (const string_q& in);
+extern string_q acquireABI(CAbi& abi, const address_t& addr, bool raw, bool silent, bool decNames);

@@ -58,9 +58,7 @@ set (BASE_LIBS acct ether util ${CURL_LIBRARIES})
 set (BASE_INCLUDE 
      "${CMAKE_SOURCE_DIR}/libs/utillib"
      "${CMAKE_SOURCE_DIR}/libs/etherlib"
-     "${CMAKE_SOURCE_DIR}/libs/acctlib"
-     "${CMAKE_SOURCE_DIR}/libs/tokenlib"
-     "${CMAKE_SOURCE_DIR}/libs/wallelib")
+     "${CMAKE_SOURCE_DIR}/libs/acctlib")
 
 # ----------------------------------------------------------------------------------------
 # Folders for various purposes
@@ -114,6 +112,21 @@ function(run_the_special_test testPath goldPath testName testExe) # Optional arg
 	    #message(STATUS ${testExe} " " ${TEST_FILE} " " ${GOLD_FILE})
     endif()
 endfunction(run_the_special_test)
+
+# ----------------------------------------------------------------------------------------
+# Runs state tests that are only run with "make test-state"
+function(run_the_state_test testPath goldPath testName testExe) # Optional argv4 with command parameters
+    set(TEST_FILE "${testPath}/${testName}.txt")
+    set(GOLD_FILE "${goldPath}/${testName}.txt")
+    if (NOT ${ARGV4} STREQUAL "" )
+        # In ARGV4 we receive the parameters to be passed to testExe  (optional)
+        add_test(NAME ${testName} COMMAND ${TEST_CHECK} ${testExe} ${ARGN} ${TEST_FILE} ${GOLD_FILE} CONFIGURATIONS test_state)
+	    #message(STATUS ${testExe} " " ${ARGN} " " ${TEST_FILE} " " ${GOLD_FILE})
+    else()
+        add_test(NAME ${testName} COMMAND ${TEST_CHECK} ${testExe} ${TEST_FILE} ${GOLD_FILE} CONFIGURATIONS test_state)
+	    #message(STATUS ${testExe} " " ${TEST_FILE} " " ${GOLD_FILE})
+    endif()
+endfunction(run_the_state_test)
 
 # ----------------------------------------------------------------------------------------
 ## Function to Concatenate multiple files in a single output file

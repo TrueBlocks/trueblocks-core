@@ -1,5 +1,6 @@
 [settings]
-class    = CAbi
-fields   = CFunctionArray abiByName|CFunctionArray abiByEncoding|string loaded (nowrite)
-includes = function.h|parameter.h
-cIncs    = #include "node.h"
+class     = CAbi
+fields    = address address|CFunctionArray interfaces
+includes  = function.h|parameter.h
+cIncs     = #include "node.h"
+serialize = true

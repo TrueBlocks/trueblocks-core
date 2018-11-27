@@ -24,7 +24,10 @@ int main(int argc, const char *argv[]) {
 
     cerr << bBlack << Now().Format(FMT_JSON) << cOff << ": Monitoring " << cYellow << getCWD() << cOff << "             \n";
 
-    string_q command = nextTokenClear(options.commandList, '\n');
+    CStringArray commands;
+    explode(commands, options.commandList, '\n');
+    if (commands.empty()) commands.push_back("--noop");
+    string_q command = commands[0];
     if (!options.parseArguments(command))
         return 1;
 
@@ -378,16 +381,18 @@ bool processTransaction(const CBlock& block, const CTransaction *trans, COptions
                     options->txCache << block.blockNumber << trans->transactionIndex;
                     options->txCache.flush();
                     writeLastBlock(block.blockNumber);
-
+                    // Send the data to an api if we have one
                     if (!acct->api_spec.uri.empty()) {
                         if (trans->traces.size() == 0)
                             getTraces(((CTransaction*)trans)->traces, trans->hash);
-                        // THIS IS WHERE I WOULD WRITE TO AN API
-                        articulateTransaction(acct->abi_spec, (CTransaction*)trans);
-                        cout << *trans << "\n";
+                        acct->abi_spec.articulateTransaction((CTransaction*)trans);
+                        ((CAccountWatch*)acct)->api_spec.sendData(trans->Format());
+                        ((CAccountWatch*)acct)->api_spec.sendData("cleanup");
+//                        cout << *trans << "\n";
+                        cout << "\n";
                         cout.flush();
+//                        getchar();
                     }
-
                     // Also, we optionally write blocks if we're told to do so
                     if (options->writeBlocks) {
                         string_q fn = getBinaryFilename(block.blockNumber);
@@ -481,11 +486,10 @@ bool COptions::loadMonitors(const CToml& config) {
         watch.nodeBal = getBalance(watch.address, watch.firstBlock-1, false);
         watch.api_spec.method = config.getConfigStr("api_spec", "method", "");
         watch.api_spec.uri = config.getConfigStr("api_spec", "uri", "");
-        watch.api_spec.token = config.getConfigStr("api_spec", "token", "");
+        watch.api_spec.headers = config.getConfigStr("api_spec", "headers", "");
         if (!watch.api_spec.uri.empty()) {
             watch.abi_spec.loadByAddress(watch.address);
-            watch.abi_spec.loadByAddress("0xTokenLib");
-            watch.abi_spec.loadByAddress("0xWalletLib");
+            watch.abi_spec.loadKnownABIs("all");
         }
 
         string_q msg;
@@ -553,3 +557,4 @@ string_q COptions::finalReport(double timing) const {
     os << traceStats.nSeen << "\n";
     return os.str();
 }
+

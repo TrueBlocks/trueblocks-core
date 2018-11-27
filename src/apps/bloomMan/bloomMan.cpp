@@ -22,9 +22,9 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    while (!options.commandList.empty()) {
-
-        string_q command = nextTokenClear(options.commandList, '\n');
+    CStringArray commands;
+    explode(commands, options.commandList, '\n');
+    for (auto command : commands) {
         if (!options.parseArguments(command))
             return 0;
 
@@ -162,7 +162,8 @@ bool checkBloom(blknum_t bn, void *data) {
             if (verbose) {
                 string_q res;
                 compareBlooms(makeBloom(array[j]), hitBloom, res);
-                cerr << res << "\n";
+                if (!res.empty())
+                    cerr << res << "\n";
             }
         }
         //        } else {
