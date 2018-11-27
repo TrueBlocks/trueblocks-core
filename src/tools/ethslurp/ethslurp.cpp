@@ -25,9 +25,10 @@ int main(int argc, const char * argv[]) {
         return 0;
 
     CAccount theAccount; //CSlurperApp slurper;
-    while (!options.commandList.empty()) {
 
-        string_q command = nextTokenClear(options.commandList, '\n');
+    CStringArray commands;
+    explode(commands, options.commandList, '\n');
+    for (auto command : commands) {
         cerr << "Processing: " << command << "\n";
         if (!options.parseArguments(command))
             return 0;
