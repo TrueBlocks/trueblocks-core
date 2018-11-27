@@ -147,10 +147,15 @@ bool COptions::parseArguments(string_q& command) {
     }
     if (loadKnown) {
         CAbi abi;
-        abi.loadKnownABIs();
-        abi.address = "known_abis";
+        abi.loadKnownABIs("token_abis");
+        abi.address = "token_abis";
         sort(abi.interfaces.begin(), abi.interfaces.end(), ::sortByFuncName);
         abi_specs.push_back(abi);
+        CAbi abi1;
+        abi1.loadKnownABIs("wallet_abis");
+        abi1.address = "wallet_abis";
+        sort(abi1.interfaces.begin(), abi1.interfaces.end(), ::sortByFuncName);
+        abi_specs.push_back(abi1);
     }
 
     return true;
@@ -229,7 +234,7 @@ bool visitABIs(const string_q& path, void *dataPtr) {
 //    while (!fileList.empty()) {
 //        string_q fileName = nextTokenClear(fileList, '\n');
 //        CAbi abi;
-//        abi.loadABIFromFile(fileName);
+//        abi.loadABIFromFile(fileName, false);
 //        for (auto interface : abi.interfaces) {
 //            funcArray.push_back(interface);
 //            cout << interface.encoding << " : ";
