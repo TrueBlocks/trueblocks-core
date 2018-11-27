@@ -95,9 +95,12 @@ bool COptions::parseArguments(string_q& command) {
             }
 
         } else {
+            if (primaryAddr.empty())
+                primaryAddr = arg;
             if (!isAddress(arg))
                 return usage("Invalid address '" + arg + "'. Length (" + uint_2_Str(arg.length()) + ") is not equal to 40 characters (20 bytes).\n");
-            addrs.push_back(toLower(str_2_Addr(arg)));
+            address_t addr = str_2_Addr(arg);
+            addrs.push_back(toLower(addr));
         }
     }
 
@@ -138,21 +141,6 @@ bool COptions::parseArguments(string_q& command) {
         }
         return false;
     }
-
-    for (auto addr : addrs) {
-        CAbi abi;
-        acquireABI(abi, addr, raw, silent, decNames);
-        abi.address = addr;
-        abi_specs.push_back(abi);
-    }
-    if (loadKnown) {
-        CAbi abi;
-        abi.loadKnownABIs();
-        abi.address = "known_abis";
-        sort(abi.interfaces.begin(), abi.interfaces.end(), ::sortByFuncName);
-        abi_specs.push_back(abi);
-    }
-
     return true;
 }
 
@@ -230,11 +218,11 @@ bool visitABIs(const string_q& path, void *dataPtr) {
 //        string_q fileName = nextTokenClear(fileList, '\n');
 //        CAbi abi;
 //        abi.loadABIFromFile(fileName);
-//        for (auto interface : abi.interfaces) {
-//            funcArray.push_back(interface);
-//            cout << interface.encoding << " : ";
-//            cout << interface.name << " : ";
-//            cout << interface.signature << "\n";
+//        for (size_t f = 0 ; f < abi.abiByEncoding.size() ; f++) {
+//            funcArray.push_back(abi.abiByEncoding[f]);
+//            cout << abi.abiByEncoding[f].encoding << " : ";
+//            cout << abi.abiByEncoding[f].name << " : ";
+//            cout << abi.abiByEncoding[f].signature << "\n";
 //        }
 //    }
 //    sort(funcArray.begin(), funcArray.end());

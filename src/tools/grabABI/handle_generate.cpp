@@ -33,23 +33,36 @@ static string_q templateFolder = configPath("grabABI/");
 static string_q classDir;
 
 //-----------------------------------------------------------------------
-void COptions::handle_generate(void) {
+void handle_generate(COptions& options) {
+
+    string_q theABI;
+    CFunctionArray functions;
+    for (auto addr : options.addrs) {
+        theABI += ("ABI for addr : " + addr + "\n");
+        theABI += acquireABI(functions, addr, options, false) + "\n\n";
+    }
+    if (options.loadKnown) {
+        CAbi abi;
+        abi.loadKnownABIs();
+        for (auto func : abi.abiByEncoding)
+            functions.push_back(func);
+    }
 
     verbose = false;
-    classDir = substitute((classDir), "~/", getHomeFolder());
+    sort(functions.begin(), functions.end(), ::sortByFuncName);
+    classDir = substitute((options.classDir), "~/", getHomeFolder());
     string_q classDefs = classDir + "classDefinitions/";
     establishFolder(classDefs);
 
     string_q funcExterns, evtExterns, funcDecls, evtDecls, sigs, evts;
     string_q headers;
-    if (!isToken()) headers += ("#include \"tokenlib.h\"\n");
-    if (!isWallet()) headers += ("#ifndef NOWALLETLIB\n#include \"walletlib.h\"\n#endif\n");
+    if (!options.isToken()) headers += ("#include \"tokenlib.h\"\n");
+    if (!options.isWallet()) headers += ("#ifndef NOWALLETLIB\n#include \"walletlib.h\"\n#endif\n");
     string_q sources = "src= \\\n", registers, factory1, factory2;
 
-    for (auto abi : abi_specs) {
-    for (auto interface : abi.interfaces) {
-        if (!interface.isBuiltin) {
-            string_q name = interface.Format("[{NAME}]") + (interface.type == "event" ? "Event" : "");
+    for (auto func : functions) {
+        if (!func.isBuiltin) {
+            string_q name = func.Format("[{NAME}]") + (func.type == "event" ? "Event" : "");
             if (name == "eventEvent")
                 name = "logEntry";
             if (startsWith(name, '_'))
@@ -58,46 +71,46 @@ void COptions::handle_generate(void) {
             string_q fixed;
             fixed = ch;
             name = fixed + extract(name, 1);
-            string_q theClass = (isBuiltin() ? "Q" : "C") + name;
-            bool isConst = interface.constant;
-            bool isEmpty = name.empty() || interface.type.empty();
+            string_q theClass = (options.isBuiltin() ? "Q" : "C") + name;
+            bool isConst = func.constant;
+            bool isEmpty = name.empty() || func.type.empty();
             bool isLog = contains(toLower(name), "logentry");
             if (!isEmpty && !isLog) {
                 if (name != "DefFunction") {
-                    if (interface.type == "event") {
-                        evtExterns += interface.Format("extern const string_q evt_[{NAME}]{QB};\n");
-                        string_q decl = "const string_q evt_[{NAME}]{QB} = \"" + interface.encoding + "\";\n";
-                        evtDecls += interface.Format(decl);
-                        if (!isBuiltin())
-                            evts += interface.Format("\tevt_[{NAME}],\n");
+                    if (func.type == "event") {
+                        evtExterns += func.Format("extern const string_q evt_[{NAME}]{QB};\n");
+                        string_q decl = "const string_q evt_[{NAME}]{QB} = \"" + func.encoding + "\";\n";
+                        evtDecls += func.Format(decl);
+                        if (!options.isBuiltin())
+                            evts += func.Format("\tevt_[{NAME}],\n");
                     } else {
-                        funcExterns += interface.Format("extern const string_q func_[{NAME}]{QB};\n");
-                        string_q decl = "const string_q func_[{NAME}]{QB} = \"" + interface.encoding + "\";\n";
-                        funcDecls += interface.Format(decl);
-                        if (!isBuiltin())
-                            sigs += interface.Format("\tfunc_[{NAME}],\n");
+                        funcExterns += func.Format("extern const string_q func_[{NAME}]{QB};\n");
+                        string_q decl = "const string_q func_[{NAME}]{QB} = \"" + func.encoding + "\";\n";
+                        funcDecls += func.Format(decl);
+                        if (!options.isBuiltin())
+                            sigs += func.Format("\tfunc_[{NAME}],\n");
                     }
                 }
                 string_q fields, assigns1, assigns2, items1, items2;
                 uint64_t nIndexed = 0;
-                for (size_t j = 0 ; j < interface.inputs.size() ; j++) {
-                    fields   += interface.inputs[j].Format("[{TYPE}][ {NAME}]|");
-                    assigns1 += interface.inputs[j].Format(interface.inputs[j].getFunctionAssign(j));
-                    items1   += "\t\t\titems[nItems++] = \"" + interface.inputs[j].type + "\";\n";
-                    nIndexed += interface.inputs[j].indexed;
-                    string_q res = interface.inputs[j].Format(interface.inputs[j].getEventAssign(j+1, nIndexed));
+                for (size_t j = 0 ; j < func.inputs.size() ; j++) {
+                    fields   += func.inputs[j].Format("[{TYPE}][ {NAME}]|");
+                    assigns1 += func.inputs[j].Format(func.inputs[j].getFunctionAssign(j));
+                    items1   += "\t\t\titems[nItems++] = \"" + func.inputs[j].type + "\";\n";
+                    nIndexed += func.inputs[j].indexed;
+                    string_q res = func.inputs[j].Format(func.inputs[j].getEventAssign(j+1, nIndexed));
                     replace(res, "++", "[");
                     replace(res, "++", "]");
                     assigns2 += res;
-                    items2   += "\t\t\titems[nItems++] = \"" + interface.inputs[j].type + "\";\n";
+                    items2   += "\t\t\titems[nItems++] = \"" + func.inputs[j].type + "\";\n";
                 }
 
-                string_q base = (interface.type == "event" ? "LogEntry" : "Transaction");
+                string_q base = (func.type == "event" ? "LogEntry" : "Transaction");
                 if (name == "LogEntry")
                     base = "LogEntry";
 
                 string_q out = STR_CLASSDEF;
-                replace(out, "[{DIR}]", substitute(classDir, getHomeFolder(), "~/"));
+                replace(out, "[{DIR}]", substitute(options.classDir, getHomeFolder(), "~/"));
                 replace(out, "[{CLASS}]", theClass);
                 replace(out, "[{FIELDS}]", fields);
                 replace(out, "[{BASE}]", base);
@@ -110,7 +123,7 @@ void COptions::handle_generate(void) {
                 }
                 sources += substitute(fileName, ".txt", ".cpp") + " \\\n";
                 if (base == "Transaction") {
-                    string_q f1, fName = interface.Format("[{NAME}]");
+                    string_q f1, fName = func.Format("[{NAME}]");
                     f1 = string_q(STR_FACTORY1);
                     replaceAll(f1, "[{CLASS}]", theClass);
                     replaceAll(f1, "[{NAME}]", fName);
@@ -127,15 +140,15 @@ void COptions::handle_generate(void) {
                                substitute(
                                           substitute(
                                                      substitute(
-                                                                substitute(interface.getSignature(SIG_DEFAULT), "\t", ""),
+                                                                substitute(func.getSignature(SIG_DEFAULT), "\t", ""),
                                                                 "  ", " "), " (", "("), ",", ", "));
-                    replace(f1, "[{ENCODING}]", interface.getSignature(SIG_ENCODE));
+                    replace(f1, "[{ENCODING}]", func.getSignature(SIG_ENCODE));
                     replace(f1, " defFunction(string)", "()");
                     if (!isConst)
                         factory1 += f1;
 
                 } else if (name != "LogEntry") {
-                    string_q f2, fName = interface.Format("[{NAME}]");
+                    string_q f2, fName = func.Format("[{NAME}]");
                     f2 = substitute(
                                     substitute(string_q(STR_FACTORY2), "[{CLASS}]", theClass), "[{LOWER}]", fName);
                     replace(f2, "[{ASSIGNS2}]", assigns2);
@@ -147,9 +160,9 @@ void COptions::handle_generate(void) {
                             substitute(
                                        substitute(
                                                   substitute(
-                                                             substitute(interface.getSignature(SIG_DEFAULT|SIG_IINDEXED), "\t", ""),
+                                                             substitute(func.getSignature(SIG_DEFAULT|SIG_IINDEXED), "\t", ""),
                                                              "  ", " "), " (", "("), ",", ", "));
-                    replace(f2, "[{ENCODING}]", interface.getSignature(SIG_ENCODE));
+                    replace(f2, "[{ENCODING}]", func.getSignature(SIG_ENCODE));
                     if (!isConst)
                         factory2 += f2;
                 }
@@ -162,7 +175,7 @@ void COptions::handle_generate(void) {
                     replaceAll(out, "uint32[]",  "CUintArray");  // order matters
                     replaceAll(out, "int32[]",   "CIntArray");
                     stringToAsciiFile(classDefs+fileName, out);
-                    if (interface.type == "event")
+                    if (func.type == "event")
                         cout << "Generating class for derived event type: '" << theClass << "'\n";
                     else
                         cout << "Generating class for derived transaction type: '" << theClass << "'\n";
@@ -180,31 +193,30 @@ void COptions::handle_generate(void) {
             }
         }
     }
-    }
 
     // The library header file
-    if (!isBuiltin())
+    if (!options.isBuiltin())
         headers += ("#include \"processing.h\"\n");
     string_q headerCode = substitute(string_q(STR_HEADERFILE), "[{HEADERS}]", headers);
     string_q parseInit = "parselib_init(QUITHANDLER qh=defaultQuitHandler)";
-    if (!isBuiltin())
+    if (!options.isBuiltin())
         replaceAll(headerCode, "[{PREFIX}]_init(void)", parseInit);
-    //replaceAll(headerCode, "[{ADDR}]", substitute(primaryAddr, "0x", ""));
-    replaceAll(headerCode, "[{HEADER_SIGS}]", isBuiltin() ? "" : STR_HEADER_SIGS);
-    replaceAll(headerCode, "[{PREFIX}]", toLower(prefix));
-    string_q pprefix = (isBuiltin() ? substitute(toProper(prefix), "lib", "") : "Func");
+    replaceAll(headerCode, "[{ADDR}]", substitute(options.primaryAddr, "0x", ""));
+    replaceAll(headerCode, "[{HEADER_SIGS}]", options.isBuiltin() ? "" : STR_HEADER_SIGS);
+    replaceAll(headerCode, "[{PREFIX}]", toLower(options.prefix));
+    string_q pprefix = (options.isBuiltin() ? substitute(toProper(options.prefix), "lib", "") : "Func");
     replaceAll(headerCode, "[{PPREFIX}]", pprefix);
     replaceAll(headerCode, "FuncEvent", "Event");
     string_q comment = "//------------------------------------------------------------------------\n";
     funcExterns = (funcExterns.empty() ? "// No functions" : funcExterns);
     evtExterns = (evtExterns.empty() ? "// No events" : evtExterns);
     replaceAll(headerCode, "[{EXTERNS}]", comment+funcExterns+"\n"+comment+evtExterns);
-    headerCode = substitute(headerCode, "{QB}", (isBuiltin() ? "_qb" : ""));
-    writeTheCode(classDir + prefix + ".h", headerCode);
+    headerCode = substitute(headerCode, "{QB}", (options.isBuiltin() ? "_qb" : ""));
+    writeTheCode(classDir + options.prefix + ".h", headerCode);
 
     // The library make file
-    replaceReverse(sources, " \\\n", " \\\n" + prefix + ".cpp\n");
-    if (!isBuiltin()) {
+    replaceReverse(sources, " \\\n", " \\\n" + options.prefix + ".cpp\n");
+    if (!options.isBuiltin()) {
         string_q makefile;
         asciiFileToString(templateFolder + "CMakeLists.txt", makefile);
         replaceAll(makefile, "[{PROJECT_NAME}]", projectName());
@@ -220,25 +232,25 @@ void COptions::handle_generate(void) {
     string_q sourceCode;
     asciiFileToString(templateFolder + "parselib.cpp", sourceCode);
     parseInit = "parselib_init(QUITHANDLER qh)";
-    if (!isBuiltin())
+    if (!options.isBuiltin())
         replaceAll(sourceCode, "[{PREFIX}]_init(void)", parseInit);
-    if (isToken()) {
+    if (options.isToken()) {
         replace(sourceCode, "return promoteToToken(p);", "return promoteToWallet(p);");
         replace(sourceCode, "return promoteToTokenEvent(p);", "return promoteToWalletEvent(p);");
-    } else if (isWallet()) {
+    } else if (options.isWallet()) {
         replace(sourceCode, "return promoteToToken(p);", "return new CTransaction(*p);");
         replace(sourceCode, "return promoteToTokenEvent(p);", "return new CLogEntry(*p);");
         replaceAll(sourceCode, "never returns NULL",
                    "If we haven't found the thing, we can send back an extended thing");
     }
-    replace(sourceCode, "[{BLKPATH}]", isBuiltin() ? "" : STR_BLOCK_PATH);
-    replaceAll(sourceCode, "[{CODE_SIGS}]", (isBuiltin() ? "" : STR_CODE_SIGS));
-    //replaceAll(sourceCode, "[{ADDR}]", substitute(primaryAddr, "0x", ""));
-    replaceAll(sourceCode, "[{ABI}]", ""); //theABI);
+    replace(sourceCode, "[{BLKPATH}]", options.isBuiltin() ? "" : STR_BLOCK_PATH);
+    replaceAll(sourceCode, "[{CODE_SIGS}]", (options.isBuiltin() ? "" : STR_CODE_SIGS));
+    replaceAll(sourceCode, "[{ADDR}]", substitute(options.primaryAddr, "0x", ""));
+    replaceAll(sourceCode, "[{ABI}]", theABI);
     replaceAll(sourceCode, "[{REGISTERS}]", registers);
-    string_q chainInit = (isToken() ?
+    string_q chainInit = (options.isToken() ?
                           "\twalletlib_init();\n" :
-                          (isWallet() ? "" : "\ttokenlib_init();\n"));
+                          (options.isWallet() ? "" : "\ttokenlib_init();\n"));
     replaceAll(sourceCode, "[{CHAINLIB}]",   chainInit);
     replaceAll(sourceCode, "[{FACTORY1}]",   factory1.empty() ? "\t\t{\n\t\t\t// No functions\n" : factory1);
     replaceAll(sourceCode, "[{INIT_CODE}]",  factory1.empty() ? "" : STR_ITEMS);
@@ -247,39 +259,39 @@ void COptions::handle_generate(void) {
 
     headers = ("#include \"tokenlib.h\"\n");
     headers += ("#include \"walletlib.h\"\n");
-    if (!isBuiltin())
+    if (!options.isBuiltin())
         headers += "#include \"[{PREFIX}].h\"\n";
     replaceAll(sourceCode, "[{HEADERS}]", headers);
-    replaceAll(sourceCode, "[{PREFIX}]", prefix);
-    pprefix = (isBuiltin() ? substitute(toProper(prefix), "lib", "") : "Func");
+    replaceAll(sourceCode, "[{PREFIX}]", options.prefix);
+    pprefix = (options.isBuiltin() ? substitute(toProper(options.prefix), "lib", "") : "Func");
     replaceAll(sourceCode, "[{PPREFIX}]", pprefix);
     replaceAll(sourceCode, "FuncEvent", "Event");
     replaceAll(sourceCode, "[{FUNC_DECLS}]", funcDecls.empty() ? "// No functions" : funcDecls);
     replaceAll(sourceCode, "[{SIGS}]", sigs.empty() ? "\t// No functions\n" : sigs);
     replaceAll(sourceCode, "[{EVENT_DECLS}]", evtDecls.empty() ? "// No events" : evtDecls);
     replaceAll(sourceCode, "[{EVTS}]", evts.empty() ? "\t// No events\n" : evts);
-    sourceCode = substitute(sourceCode, "{QB}", (isBuiltin() ? "_qb" : ""));
-    writeTheCode(classDir + prefix + ".cpp", sourceCode);
+    sourceCode = substitute(sourceCode, "{QB}", (options.isBuiltin() ? "_qb" : ""));
+    writeTheCode(classDir + options.prefix + ".cpp", sourceCode);
 
     // The code
-    if (!isBuiltin()) {
+    if (!options.isBuiltin()) {
         string_q addrList;
-        for (auto addr : addrs)
+        for (auto addr : options.addrs)
             addrList += (addr + "");
         makeTheCode("rebuild",        trim(addrList));
-        makeTheCode("CMakeLists.txt", ""); //primaryAddr);
-        makeTheCode("debug.h",        ""); //primaryAddr);
-        makeTheCode("debug.cpp",      ""); //primaryAddr);
-        makeTheCode("options.cpp",    ""); //primaryAddr);
-        makeTheCode("options.h",      ""); //primaryAddr);
-        makeTheCode("main.cpp",       ""); //primaryAddr);
-        makeTheCode("main.h",         ""); //primaryAddr);
-        makeTheCode("visitor.cpp",    ""); //primaryAddr);
-        makeTheCode("visitor.h",      ""); //primaryAddr);
-        makeTheCode("accounting.cpp", ""); //primaryAddr);
-        makeTheCode("display.cpp",    ""); //primaryAddr);
-        makeTheCode("processing.cpp", ""); //primaryAddr);
-        makeTheCode("processing.h",   ""); //primaryAddr);
+        makeTheCode("CMakeLists.txt", options.primaryAddr);
+        makeTheCode("debug.h",        options.primaryAddr);
+        makeTheCode("debug.cpp",      options.primaryAddr);
+        makeTheCode("options.cpp",    options.primaryAddr);
+        makeTheCode("options.h",      options.primaryAddr);
+        makeTheCode("main.cpp",       options.primaryAddr);
+        makeTheCode("main.h",         options.primaryAddr);
+        makeTheCode("visitor.cpp",    options.primaryAddr);
+        makeTheCode("visitor.h",      options.primaryAddr);
+        makeTheCode("accounting.cpp", options.primaryAddr);
+        makeTheCode("display.cpp",    options.primaryAddr);
+        makeTheCode("processing.cpp", options.primaryAddr);
+        makeTheCode("processing.h",   options.primaryAddr);
     }
 }
 

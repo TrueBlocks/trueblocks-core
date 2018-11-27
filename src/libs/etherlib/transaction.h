@@ -208,6 +208,9 @@ extern bool sortTransactionsForWrite(const CTransaction& t1, const CTransaction&
 extern string_q decodeRLP(const string_q& name, const string_q& input, size_t nItems, string_q *items);
 extern string_q decodeRLP(const CFunction *func, const string_q& input);
 extern string_q nextBlockChunk(const string_q& fieldIn, const void *data);
+extern bool articulateTransaction(const CAbi& abi, CTransaction *p);
+extern bool articulateLog(const CAbi& abi, CLogEntry *l);
+extern bool articulateTrace(const CAbi& abi, CTrace *t);
 // EXISTING_CODE
 }  // namespace qblocks
 

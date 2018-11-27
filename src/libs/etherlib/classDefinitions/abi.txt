@@ -1,6 +1,6 @@
 [settings]
 class     = CAbi
-fields    = CFunctionArray interfaces|string loadedList (nowrite)
+fields    = CFunctionArray abiByName|CFunctionArray abiByEncoding|string loadedList (nowrite)
 includes  = function.h|parameter.h
 cIncs     = #include "node.h"
 serialize = true

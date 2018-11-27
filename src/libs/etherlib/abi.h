@@ -23,16 +23,14 @@
 namespace qblocks {
 
 // EXISTING_CODE
-class CTransaction;
-class CLogEntry;
-class CTrace;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
 class CAbi : public CBaseNode {
 public:
-    address_t address;
-    CFunctionArray interfaces;
+    CFunctionArray abiByName;
+    CFunctionArray abiByEncoding;
+    string_q loadedList;
 
 public:
     CAbi(void);
@@ -48,9 +46,6 @@ public:
     bool loadKnownABIs(void);
     bool loadByAddress(address_t addr);
     bool loadABIFromFile(const string_q& fileName);
-    bool articulateTransaction(CTransaction *p) const;
-    bool articulateLog(CLogEntry *l) const;
-    bool articulateTrace(CTrace *t) const;
     friend class CAccountWatch;
     // EXISTING_CODE
     bool operator==(const CAbi& item) const;
@@ -102,8 +97,9 @@ inline void CAbi::clear(void) {
 inline void CAbi::initialize(void) {
     CBaseNode::initialize();
 
-    interfaces.clear();
-    address = "";
+    abiByName.clear();
+    abiByEncoding.clear();
+    loadedList = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -114,8 +110,9 @@ inline void CAbi::duplicate(const CAbi& ab) {
     clear();
     CBaseNode::duplicate(ab);
 
-    interfaces = ab.interfaces;
-    address = ab.address;
+    abiByName = ab.abiByName;
+    abiByEncoding = ab.abiByEncoding;
+    loadedList = ab.loadedList;
 
     // EXISTING_CODE
     // EXISTING_CODE
