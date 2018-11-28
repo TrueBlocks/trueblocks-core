@@ -1,5 +1,5 @@
-getBlock argc: 2 [1:daofork] 
-getBlock daofork 
+getBlock argc: 3 [1:daofork] [2:--force] 
+getBlock daofork --force 
 {
     "gasLimit": 4712384,
     "gasUsed": 84000,
