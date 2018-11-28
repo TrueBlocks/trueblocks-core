@@ -254,7 +254,9 @@ bool visitABIs(const string_q& path, void *dataPtr) {
 //}
 
 bool sortByFuncName(const CFunction& f1, const CFunction& f2) {
-    string_q s1 = (f1.type == "event" ? "zzzevent" : f1.type) + f1.name;
-    string_q s2 = (f2.type == "event" ? "zzzevent" : f2.type) + f2.name;
+    string_q s1 = (f1.type == "event" ? "zzzevent" : f1.type) + f1.name + f1.encoding;
+    for (auto f : f1.inputs) s1 += f.name;
+    string_q s2 = (f2.type == "event" ? "zzzevent" : f2.type) + f2.name + f2.encoding;
+    for (auto f : f2.inputs) s2 += f.name;
     return s1 < s2;
 }
