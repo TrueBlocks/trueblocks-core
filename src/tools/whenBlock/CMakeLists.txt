@@ -41,14 +41,16 @@ function(run_test testName)
 endfunction(run_test)
 
 # Enter one line for each individual test
-run_test("whenBlock_README"                       "-th")
-run_test("whenBlock_noparams"                     )
-run_test("whenBlock_special_block_iceage"         "iceage")
-run_test("whenBlock_special_block_daohack"        "daohack" " -v")
-run_test("whenBlock_special_block_daofork"        "daofork" " -v")
-run_test("whenBlock_special_block_spurious"       "spurious")
-run_test("whenBlock_special_block_not_found"      "idonotexist")
-run_test("whenBlock_customized_1"                 "myblock")
+run_test("whenBlock_README"                               "-th")
+run_test("whenBlock_noparams"                             )
+run_test("whenBlock_special_block_iceage"                 "iceage")
+run_test("whenBlock_special_block_daohack"                "daohack" " -v")
+run_test("whenBlock_special_block_daofork"                "daofork" " -v")
+run_test("whenBlock_special_block_spurious"               "spurious")
+run_test("whenBlock_special_block_not_found"              "idonotexist")
+run_test("whenBlock_customized_1"                         "myblock")  # customized
+run_test("whenBlock_upgrade_test"                         "--help")  # customized
+run_test("whenBlock_blockByHash"                          "0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b")
 
 run_special_test("whenBlock_02"                           "--file:blocks.txt" " -v")
 run_special_test("whenBlock_03"                           "--file:dates.txt")
@@ -95,7 +97,7 @@ run_special_test("whenBlock_combined_options_1"           "-d"        " -v" " 10
 run_special_test("whenBlock_combined_options_2"           "-d"        " --verbose" " 10000")
 run_special_test("whenBlock_combined_options_3"           "--data"   " --verbose" " 10000")
 run_special_test("whenBlock_special_block_first"          "first" " -v")
-run_special_test("whenBlock_homestead_customized"         "homestead" " -v")
+run_special_test("whenBlock_homestead_customized"         "homestead" " -v")  # customized
 run_special_test("whenBlock_special_block_daofund"        "daofund" " -v")
 run_special_test("whenBlock_special_block_tangerine"      "tangerine" " -v")
 run_special_test("whenBlock_special_block_stateclear"     "stateclear" " -v")
@@ -103,8 +105,6 @@ run_special_test("whenBlock_special_block_multi1"         "stateclear" " iceage"
 run_special_test("whenBlock_special_block_multi2"         "stateclear" " iceage" " 4001001" " junk" " -v")
 run_special_test("whenBlock_help"                         "-h")
 run_special_test("whenBlock_long_help"                    "--help")
-
-run_test("whenBlock_blockByHash"                          "0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b")
 
 # Installation steps
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)
