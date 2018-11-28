@@ -29,8 +29,8 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     Init();
-    while (!command.empty()) {
-        string_q arg = nextTokenClear(command, ' ');
+    explode(arguments, command, ' ');
+    for (auto arg : arguments) {
         if (cmd.empty()) {
             if (arg == "-i" || arg == "--info") {
                 cmd = "block";
@@ -51,6 +51,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
+    arguments.clear();
     paramsPtr = params;
     nParamsRef = nParams;
     pOptions = this;

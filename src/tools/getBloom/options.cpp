@@ -37,9 +37,8 @@ bool COptions::parseArguments(string_q& command) {
 
     Init();
     blknum_t latestBlock = getLatestBlockFromClient();
-    while (!command.empty()) {
-
-        string_q arg = nextTokenClear(command, ' ');
+    explode(arguments, command, ' ');
+    for (auto arg : arguments) {
         if (arg == "-o" || arg == "--force") {
             etherlib_init("binary");
             force = true;
@@ -123,6 +122,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
+    arguments.clear();
     paramsPtr  = params;
     nParamsRef = nParams;
     pOptions = this;
