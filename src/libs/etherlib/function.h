@@ -49,12 +49,12 @@ public:
     const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    explicit CFunction(const string_q& n) : name(n) { }
+    bool isBuiltIn;
+    string_q origName;
     bool hasAddrs;
+    explicit CFunction(const string_q& n) : name(n) { }
     string_q getSignature(uint64_t parts) const;
     string_q encodeItem(void) const;
-    bool isBuiltin;
-    string_q origName;
     friend class CTransaction;
     friend class CLogEntry;
     friend class CTrace;
@@ -120,7 +120,7 @@ inline void CFunction::initialize(void) {
 
     // EXISTING_CODE
     hasAddrs = false;
-    isBuiltin = false;
+    isBuiltIn = false;
     origName = "";
     // EXISTING_CODE
 }
@@ -142,7 +142,7 @@ inline void CFunction::duplicate(const CFunction& fu) {
 
     // EXISTING_CODE
     hasAddrs = fu.hasAddrs;
-    isBuiltin = fu.isBuiltin;
+    isBuiltIn = fu.isBuiltIn;
     origName = fu.origName;
     // EXISTING_CODE
     finishParse();
@@ -185,4 +185,3 @@ extern CArchive& operator>>(CArchive& archive, CFunction& fun);
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-
