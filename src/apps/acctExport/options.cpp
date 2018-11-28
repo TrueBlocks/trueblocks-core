@@ -32,8 +32,8 @@ bool COptions::parseArguments(string_q& command) {
 #ifdef OUTPUT_REDIR
     outFile = "file.txt";
 #endif
-    while (!command.empty()) {
-        string_q arg = nextTokenClear(command, ' ');
+    explode(arguments, command, ' ');
+    for (auto arg : arguments) {
         if (startsWith(arg, "-f:") || startsWith(arg, "--fmt:")) {
 
             arg = substitute(substitute(arg, "-f:", ""), "--fmt:", "");
@@ -104,6 +104,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
+    arguments.clear();
     paramsPtr = params;
     nParamsRef = nParams;
 

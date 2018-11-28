@@ -24,9 +24,8 @@ bool COptions::parseArguments(string_q& command) {
 
     Init();
     blknum_t latestBlock = getLatestBlockFromCache();
-    while (!command.empty()) {
-        string_q arg = nextTokenClear(command, ' ');
-
+    explode(arguments, command, ' ');
+    for (auto arg : arguments) {
         if (arg == "-s" || arg == "--stats") {
             isStats = true;
 
@@ -97,6 +96,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
+    arguments.clear();
     paramsPtr = params;
     nParamsRef = nParams;
 
