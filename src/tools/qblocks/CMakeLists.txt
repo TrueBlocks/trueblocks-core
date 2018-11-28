@@ -58,7 +58,7 @@ run_test("qblocks_help_names"     "name"      " -h")
 run_test("qblocks_help_when"      "when"      " -h")
 run_test("qblocks_help_where"     "where"     " -h")
 
-run_test("qblocks_help_info1"     "-info")
+run_test("qblocks_help_info1"     "--info")
 run_test("qblocks_help_info2"     "-i")
 run_test("qblocks_help_info3"     "block"     " -i")
 
