@@ -177,7 +177,7 @@ bool visitTransaction(CTransaction& trans, void *data) {
 
     if (verbose) {
         if (opt->articulate) {
-            opt->abi_spec.loadByAddress(trans.to);
+            opt->abi_spec.loadAbiByAddress(trans.to);
             opt->abi_spec.articulateTransaction(&trans);
         }
         trans.doExport(cout);
