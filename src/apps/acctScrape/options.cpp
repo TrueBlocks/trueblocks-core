@@ -28,8 +28,8 @@ bool COptions::parseArguments(string_q& command) {
     bool isAll = false;
 
     Init();
-    while (!command.empty()) {
-        string_q arg = nextTokenClear(command, ' ');
+    explode(arguments, command, ' ');
+    for (auto arg : arguments) {
         if (startsWith(arg, "-m:") || startsWith(arg, "--maxBlocks:")) {
             nextTokenClear(arg,':');
             if (isUnsigned(arg))
@@ -129,6 +129,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
+    arguments.clear();
     paramsPtr = params;
     nParamsRef = nParams;
 
