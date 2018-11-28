@@ -36,8 +36,8 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     Init();
-    while (!command.empty()) {
-        string_q arg = nextTokenClear(command, ' ');
+    explode(arguments, command, ' ');
+    for (auto arg : arguments) {
         if ((arg == "-e" || arg == "--edit" || arg == "-o" || arg == "--open")) {
             if (isRun)
                 return usage("Incompatible options '-r' and '-e'. Choose one or the other.");
@@ -135,6 +135,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
+    arguments.clear();
     paramsPtr = params;
     nParamsRef = nParams;
 
