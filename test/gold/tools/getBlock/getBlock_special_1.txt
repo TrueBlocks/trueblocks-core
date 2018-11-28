@@ -1,5 +1,5 @@
-getBlock argc: 2 [1:stateclear] 
-getBlock stateclear 
+getBlock argc: 3 [1:stateclear] [2:--force] 
+getBlock stateclear --force 
 {
     "gasLimit": 3296773,
     "gasUsed": 1226267,
