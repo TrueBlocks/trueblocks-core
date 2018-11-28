@@ -33,8 +33,8 @@ bool COptions::parseArguments(string_q& command) {
 
     Init();
     blknum_t latestBlock = getLatestBlockFromClient();
-    while (!command.empty()) {
-        string_q arg = nextTokenClear(command, ' ');
+    explode(arguments, command, ' ');
+    for (auto arg : arguments) {
         string_q orig = arg;
 
         if (startsWith(arg, "-t:") || startsWith(arg, "--type:")) {
@@ -110,6 +110,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
+    arguments.clear();
     paramsPtr = params;
     nParamsRef = nParams;
     pOptions = this;
