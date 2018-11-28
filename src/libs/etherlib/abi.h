@@ -45,9 +45,12 @@ public:
     const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    bool loadKnownABIs(const string_q& which);
-    bool loadByAddress(address_t addr);
-    bool loadABIFromFile(const string_q& fileName, bool builtIn);
+    bool addIfUnique(const string_q& addr, CFunction& func, bool decorateNames);
+    bool loadAbiKnown(const string_q& which);
+    bool loadAbiByAddress(address_t addr);
+    bool loadAbiFromFile(const string_q& fileName, bool builtIn);
+    bool loadAbiFromString(const string_q& str, bool builtIn);
+    bool loadAbiAndCache(const address_t& addr, bool raw, bool silent, bool decNames);
     bool articulateTransaction(CTransaction *p) const;
     bool articulateLog(CLogEntry *l) const;
     bool articulateTrace(CTrace *t) const;
@@ -159,4 +162,3 @@ extern CArchive& operator>>(CArchive& archive, CAbi& abi);
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

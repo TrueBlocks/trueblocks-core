@@ -3,7 +3,8 @@ abiTest generation encoding
 Generation test...
 Testing of already sorted JSON
 {
-  "array1": [
+  "address": "0x0",
+  "interfaces": [
     {
       "name": "a",
       "constant": 0,
@@ -53,7 +54,8 @@ Testing of already sorted JSON
 }
 
 {
-  "array1": [
+  "address": "0x0",
+  "interfaces": [
     {
       "name": "a",
       "constant": 0,
@@ -104,7 +106,8 @@ Testing of already sorted JSON
 
 Testing of not sorted JSON
 {
-  "array1": [
+  "address": "0x0",
+  "interfaces": [
     {
       "name": "a",
       "constant": 0,
@@ -190,7 +193,8 @@ Testing of not sorted JSON
 }
 
 {
-  "array1": [
+  "address": "0x0",
+  "interfaces": [
     {
       "name": "a",
       "constant": 0,
