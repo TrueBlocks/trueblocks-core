@@ -38,6 +38,7 @@ namespace qblocks {
 
     class COptionsBase {
     public:
+        CStringArray arguments;
         static uint32_t enableBits;
         static bool needsOption;
         static bool isReadme;
