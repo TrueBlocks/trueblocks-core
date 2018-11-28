@@ -27,8 +27,8 @@ bool COptions::parseArguments(string_q& command) {
         return usage("You may not use the --file with this application. Quitting...");
 
     Init();
-    while (!command.empty()) {
-        string_q arg = nextTokenClear(command, ' ');
+    explode(arguments, command, ' ');
+    for (auto arg : arguments) {
         if (arg == "-n" || arg == "--noWrite") {
             writeBlocks = false;
 
@@ -122,6 +122,9 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
+    arguments.clear();
+    paramsPtr = params;
+    nParamsRef = nParams;
 
     start       = NOPOS;
     end         = NOPOS;
@@ -129,9 +132,6 @@ void COptions::Init(void) {
     writeBlocks = true;
     keepAddrIdx = false;
     minArgs     = 0;
-
-    paramsPtr = params;
-    nParamsRef = nParams;
 }
 
 //---------------------------------------------------------------------------------------------------
