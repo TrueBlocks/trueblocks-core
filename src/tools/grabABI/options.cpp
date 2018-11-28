@@ -253,18 +253,10 @@ bool visitABIs(const string_q& path, void *dataPtr) {
 //    }
 //}
 
-bool sortByFuncType(const CFunction& f1, const CFunction& f2) {
-    if (f1.type == "constructor")
-        return true;
-    if (f1.type == "fallback")
-        return true;
-    if (f1.type == "function")
-        return true;
-    return false;
-}
-
 bool sortByFuncName(const CFunction& f1, const CFunction& f2) {
-    if (f1.type != f2.type)
-        return sortByFuncType(f1, f2);
-    return f1.name < f2.name;
+    string_q s1 = (f1.type == "event" ? "zzzevent" : f1.type) + f1.name + f1.encoding;
+    for (auto f : f1.inputs) s1 += f.name;
+    string_q s2 = (f2.type == "event" ? "zzzevent" : f2.type) + f2.name + f2.encoding;
+    for (auto f : f2.inputs) s2 += f.name;
+    return s1 < s2;
 }
