@@ -488,8 +488,8 @@ bool COptions::loadMonitors(const CToml& config) {
         watch.api_spec.uri = config.getConfigStr("api_spec", "uri", "");
         watch.api_spec.headers = config.getConfigStr("api_spec", "headers", "");
         if (!watch.api_spec.uri.empty()) {
-            watch.abi_spec.loadByAddress(watch.address);
-            watch.abi_spec.loadKnownABIs("all");
+            watch.abi_spec.loadAbiByAddress(watch.address);
+            watch.abi_spec.loadAbiKnown("all");
         }
 
         string_q msg;
