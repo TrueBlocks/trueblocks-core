@@ -857,6 +857,21 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     }
 
     //-----------------------------------------------------------------------
+    static bool sortByValue(const CNameValue& p1, const CNameValue& p2) {
+        blknum_t b1 = str_2_Uint(p1.second);
+        blknum_t b2 = str_2_Uint(p2.second);
+        if (b1 == 0) {
+            if (p1.first == "latest") b1 = NOPOS;
+            if (p1.first == "constantinople") b1 = (NOPOS-2);
+        }
+        if (b2 == 0) {
+            if (p2.first == "latest") b2 = NOPOS;
+            if (p2.first == "constantinople") b2 = (NOPOS-2);
+        }
+        return b1 < b2;
+    }
+
+    //-----------------------------------------------------------------------
     void COptionsBase::loadSpecials(void) {
 
         const CToml *toml = getGlobalConfig("whenBlock");
@@ -868,6 +883,23 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             specials.push_back(pair);
             keyVal = CKeyValuePair();  // reset
         }
+
+        // Upgrade to include new specials for existing installations
+        if (toml->getVersion() < getVersionNum(0,6,0)) {
+            bool hasKitties = false;
+            for (auto special : specials) {
+                if (special.first == "kitties")
+                    hasKitties = true;
+            }
+            if (!hasKitties) {
+                CNameValue pair = make_pair("kitties", "4605167");
+                specials.push_back(pair);
+                ((CToml *)toml)->setConfigStr("version", "current", getVersionStr());
+                ((CToml *)toml)->writeFile();
+            }
+        }
+
+        sort(specials.begin(), specials.end(), sortByValue);
         return;
     }
 

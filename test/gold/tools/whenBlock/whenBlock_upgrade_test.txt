@@ -1,5 +1,6 @@
 whenBlock argc: 2 [1:--help] 
 whenBlock --help 
+
   Usage:    whenBlock [-d|-l|-v|-h] < block | date > [ block... | date... ]  
   Purpose:  Finds the nearest block prior to a date, or the nearest date prior to a block.
             Alternatively, search for one of special 'named' blocks.
