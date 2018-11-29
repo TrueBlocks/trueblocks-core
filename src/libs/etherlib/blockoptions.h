@@ -21,3 +21,16 @@ public:
     string_q getBlockNumList(void);
     void Init(void);
 };
+
+//-----------------------------------------------------------------------------
+class CHistoryOptions : public CBlockOptions {
+public:
+    map<blknum_t, timestamp_t> timestampMap;
+    blknum_t newestBlock;
+    blknum_t oldestBlock;
+    CHistoryOptions(void) { Init(); }
+    ~CHistoryOptions(void) { }
+    void Init(void) override { newestBlock = oldestBlock = NOPOS; }
+    string_q getDispBal(blknum_t blockNum, biguint_t bal, bool asData);
+    bool hasHistory(void) const;
+};
