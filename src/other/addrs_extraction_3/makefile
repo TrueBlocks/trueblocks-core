@@ -24,6 +24,7 @@ all:
 	@make app
 
 app:
+	@mkdir bin 2>/dev/null
 	@make $(product)
 	mv $(product) $(dest)
 
