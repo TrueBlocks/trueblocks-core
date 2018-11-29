@@ -11,11 +11,11 @@ acctByBlock
 acctByBlock2
 acctIndex
 addrs_bytes
-addrs_extraction_1
-addrs_extraction_2
-addrs_extraction_3
+#addrs_extraction_1
+#addrs_extraction_2
+#addrs_extraction_3
 addrs_loaddata
-addrs_newchifra
+#addrs_newchifra
 addrs_sorted
 addrs_sqlite_example
 allABIs
