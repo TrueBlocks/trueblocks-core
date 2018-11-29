@@ -33,45 +33,32 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        size_t nAccts = options.addrs.size();
-        bool needsTotal = (nAccts > 1 && options.total);
-
         // For each address
         for (auto addr : options.addrs) {
             options.state.curAddr = addr;
             options.blocks.forEveryBlockNumber(visitBlock, &options);
         }
 
-        if (needsTotal) {
-            string_q sBal = bnu_2_Str(options.state.totalVal);
-            if (expContext().asEther) {
-                sBal = wei_2_Ether(bnu_2_Str(options.state.totalVal));
-            } else if (expContext().asDollars) {
-                if (options.timestampMap[options.state.latestBlock] == (timestamp_t)0) {
-                    CBlock blk;
-                    getBlock(blk, options.state.latestBlock);
-                    options.timestampMap[options.state.latestBlock] = blk.timestamp;
-                }
-                if (options.asData)
-                    sBal = substitute(
-                            dispDollars(options.timestampMap[options.state.latestBlock], options.state.totalVal),
-                            ",", "");
-                else
-                    sBal = padLeft("$" +
-                            dispDollars(options.timestampMap[options.state.latestBlock], options.state.totalVal), 14);
-            }
-            cout << "        Total for " << cGreen << nAccts << cOff;
+        if (options.total && options.addrs.size() > 1) {
+            string_q dispBal = options.getDispBal(options.newestBlock, options.state.totalVal, options.asData);
+            cout << "        Total for " << cGreen << options.addrs.size() << cOff;
             cout << " accounts at " << cTeal << "latest" << cOff << " block";
-            cout << " is " << cYellow << substitute(sBal, "  ", " ") << cOff << "\n";
+            cout << " is " << cYellow << substitute(dispBal, "  ", " ") << cOff << "\n";
         }
+    }
+
+    if (options.state.totalVal == 0 && options.noZero) {
+        cerr << "    No values were reported\n";
+        options.state.needsNewline = false;
     }
 
     if (options.state.needsNewline)
         cerr << string_q(103, ' ') << "\n";
 
-    if ((options.state.latestBlock - options.state.earliestBlock) > 250 && !nodeHasBalances() && !isTestMode())
-        cerr << cRed << "    Warning: " << cOff << "The node you're using does not have historical balances. Reported "
-                                                    "values may be wrong.\n";
+    if (!options.hasHistory()) {
+        cerr << cRed << "    Warning: " << cOff;
+        cerr << "Your node does not have historical balances. Historical information is incorrect.\n";
+    }
 
     return 0;
 }
@@ -80,31 +67,18 @@ int main(int argc, const char *argv[]) {
 bool visitBlock(uint64_t blockNum, void *data) {
 
     COptions *options = reinterpret_cast<COptions *>(data);
-    if (blockNum < options->state.earliestBlock)
-        options->state.earliestBlock = blockNum;
+    if (blockNum < options->oldestBlock)
+        options->oldestBlock = blockNum;
 
-    if (blockNum > options->state.latestBlock) {
-        string_q late = (isTestMode() ? "--" : uint_2_Str(options->state.latestBlock));
+    if (blockNum > options->newestBlock) {
+        string_q late = (isTestMode() ? "--" : uint_2_Str(options->newestBlock));
         return usage("Block " + uint_2_Str(blockNum) + " is later than the last valid block " + late + ". Quitting...");
     }
 
     biguint_t bal = getBalance(options->state.curAddr, blockNum, false);
     options->state.totalVal += bal;
-    string_q sBal = bnu_2_Str(bal);
-    if (expContext().asEther) {
-        sBal = wei_2_Ether(bnu_2_Str(bal));
-    } else if (expContext().asDollars) {
-        if (options->timestampMap[blockNum] == (timestamp_t)0) {
-            CBlock blk;
-            getBlock(blk, blockNum);
-            options->timestampMap[blockNum] = blk.timestamp;
-        }
-        if (options->asData)
-            sBal = substitute(dispDollars(options->timestampMap[blockNum], bal), ",", "");
-        else
-            sBal = padLeft("$" + dispDollars(options->timestampMap[blockNum], bal), 14);
-    }
 
+    string_q dispBal = options->getDispBal(blockNum, bal, options->asData);
     options->state.needsNewline = true;
     bool show = true;
     if (options->changes) {
@@ -116,11 +90,11 @@ bool visitBlock(uint64_t blockNum, void *data) {
     if (show && (bal > 0 || !options->noZero)) {
 
         if (options->asData) {
-            cout << blockNum << "\t" << options->state.curAddr << "\t" << sBal << "\n";
+            cout << blockNum << "\t" << options->state.curAddr << "\t" << dispBal << "\n";
         } else {
             cout << "    Balance for account " << cGreen << options->state.curAddr << cOff;
             cout << " at block " << cTeal << blockNum << cOff;
-            cout << " is " << cYellow << sBal << cOff << "\n";
+            cout << " is " << cYellow << dispBal << cOff << "\n";
         }
 
         options->state.needsNewline = false;
@@ -132,7 +106,7 @@ bool visitBlock(uint64_t blockNum, void *data) {
         } else {
             cerr << "    Balance for account " << cGreen << options->state.curAddr << cOff;
             cerr << " at block " << cTeal << blockNum << cOff;
-            cerr << " is " << cYellow << sBal << cOff << "           \r";
+            cerr << " is " << cYellow << dispBal << cOff << "           \r";
         }
     }
     cerr.flush();

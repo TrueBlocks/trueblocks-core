@@ -43,7 +43,7 @@ void COptions::handle_generate(void) {
     string_q funcExterns, evtExterns, funcDecls, evtDecls, sigs, evts;
     string_q headers;
     if (!isToken()) headers += ("#include \"tokenlib.h\"\n");
-    if (!isWallet()) headers += ("#ifndef NOWALLETLIB\n#include \"walletlib.h\"\n#endif\n");
+    if (!isWallet()) headers += ("#include \"walletlib.h\"\n");
     string_q sources = "src= \\\n", registers, factory1, factory2;
 
     for (auto abi : abi_specs) {
