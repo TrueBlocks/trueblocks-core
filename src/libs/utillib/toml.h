@@ -82,11 +82,12 @@ namespace qblocks {
 
         string_q getType(void) const override { return "CToml"; }
 
-        string_q getConfigStr   (const string_q& group, const string_q& key, const string_q& def) const;
-        uint64_t getConfigInt   (const string_q& group, const string_q& key, uint64_t def) const;
+        string_q  getConfigStr   (const string_q& group, const string_q& key, const string_q& def) const;
+        uint64_t  getConfigInt   (const string_q& group, const string_q& key, uint64_t def) const;
         biguint_t getConfigBigInt(const string_q& group, const string_q& key, biguint_t def) const;
-        bool     getConfigBool  (const string_q& group, const string_q& key, bool def) const;
-        string_q getDisplayStr  (bool terse, const string_q& def, const string_q& color = cTeal) const;
+        bool      getConfigBool  (const string_q& group, const string_q& key, bool def) const;
+        string_q  getDisplayStr  (bool terse, const string_q& def, const string_q& color = cTeal) const;
+        uint64_t  getVersion     (void) const;
 
         void setConfigStr  (const string_q& group, const string_q& key, const string_q& value);
         void setConfigInt  (const string_q& group, const string_q& key, uint64_t value);

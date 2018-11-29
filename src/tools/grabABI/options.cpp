@@ -144,19 +144,19 @@ bool COptions::parseArguments(string_q& command) {
         CAbi abi;
         abi.loadAbiAndCache(addr, raw, silent, decNames);
         abi.address = addr;
-        sort(abi.interfaces.begin(), abi.interfaces.end(), ::sortByFuncName);
+        sort(abi.interfaces.begin(), abi.interfaces.end(), sortByFuncName);
         abi_specs.push_back(abi);
     }
     if (loadKnown) {
         CAbi abi;
         abi.loadAbiKnown("token_abis");
         abi.address = "token_abis";
-        sort(abi.interfaces.begin(), abi.interfaces.end(), ::sortByFuncName);
+        sort(abi.interfaces.begin(), abi.interfaces.end(), sortByFuncName);
         abi_specs.push_back(abi);
         CAbi abi1;
         abi1.loadAbiKnown("wallet_abis");
         abi1.address = "wallet_abis";
-        sort(abi1.interfaces.begin(), abi1.interfaces.end(), ::sortByFuncName);
+        sort(abi1.interfaces.begin(), abi1.interfaces.end(), sortByFuncName);
         abi_specs.push_back(abi1);
     }
 
