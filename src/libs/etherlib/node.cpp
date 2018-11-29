@@ -146,6 +146,8 @@ extern void registerQuitHandler(QUITHANDLER qh);
     //--------------------------------------------------------------
     void getTraces(CTraceArray& traces, const hash_t& hash) {
 
+        traces.clear();
+
         string_q str;
         queryRawTrace(str, hash);
 
