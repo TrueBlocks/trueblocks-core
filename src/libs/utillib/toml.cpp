@@ -14,6 +14,7 @@
 
 #include "toml.h"
 #include "conversions.h"
+#include "version.h"
 
 namespace qblocks {
 
@@ -182,6 +183,19 @@ extern string_q collapseArrays(const string_q& inStr);
         if (found && !found->comment)
             return found->value;
         return def;
+    }
+
+    //-------------------------------------------------------------------------
+    uint64_t CToml::getVersion(void) const {
+        uint16_t v1 = 0, v2 = 0, v3 = 0;
+        CTomlKey *found = findKey("version", "current");
+        if (found && !found->comment) {
+            string_q value = found->value;
+            v1 = (uint16_t)str_2_Uint(nextTokenClear(value, '.'));
+            v2 = (uint16_t)str_2_Uint(nextTokenClear(value, '.'));
+            v3 = (uint16_t)str_2_Uint(nextTokenClear(value, '.'));
+        }
+        return getVersionNum(v1, v2, v3);
     }
 
     //-------------------------------------------------------------------------
