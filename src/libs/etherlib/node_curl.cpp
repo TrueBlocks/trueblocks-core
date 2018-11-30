@@ -38,9 +38,11 @@ namespace qblocks {
 //-------------------------------------------------------------------------
 //#define DEBUG_RPC
 #ifdef DEBUG_RPC
-#if 1
+int x = 0;
 char v;
+#if 0  // turn on if you want to pause between steps
 #define PAUSE() \
+cerr << "Hit enter to continue: "; \
 v = (char)getchar(); \
 if (v == 'q') { \
 quickQuitHandler(0); \
@@ -48,9 +50,6 @@ quickQuitHandler(0); \
 #else
 #define PAUSE()
 #endif
-cerr << " method:\t" << method << params << "\n"; \
-cerr << " source:\t" << getCurlContext()->provider << "\n"; \
-PAUSE();
 #define WAIT(msg) \
 cerr << string_q(128, '-') << "\n" << ++x << "." << msg << "\n"; \
 cerr << " result:\t[" << substitute(getCurlContext()->result, "\n", " ") << "]\n"; \
@@ -58,9 +57,10 @@ cerr << " fallBack:\t" << getEnvStr("FALLBACK") << "\n"; \
 cerr << " earlyAbort:\t" << getCurlContext()->earlyAbort << "\n"; \
 cerr << " res:\t\t" << curl_easy_strerror(res) << "\n"; \
 PAUSE()
-#else
+#else  // DEBUG_RPC
 #define WAIT(msg)
-#endif
+#define PAUSE()
+#endif  // DEBUG_RPC
 
     //-------------------------------------------------------------------------
     void CCurlContext::setPostData(const string_q& method, const string_q& params) {
@@ -79,8 +79,8 @@ PAUSE()
         }
 #endif
 #ifdef DEBUG_RPC
-        cerr << postData << "\n";
-        cerr.flush();
+cerr << "postData: " << postData << "\n";
+cerr.flush();
 #endif
         curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDS,    postData.c_str());
         curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDSIZE, postData.length());
@@ -168,8 +168,17 @@ PAUSE()
 
         // getCurlContext()->callBackFunc = writeCallback;
         getCurlContext()->setPostData(method, params);
+#ifdef DEBUG_RPC
+cerr << " method:\t" << method << params << "\n"; \
+cerr << " source:\t" << getCurlContext()->provider << "\n"; \
+cerr << "calling curl_easy_perform";
+#endif
         CURLcode res = curl_easy_perform(getCurl());
 
+#ifdef DEBUG_RPC
+cerr << " after easy perform\n";
+PAUSE();
+#endif
         if (res != CURLE_OK && !getCurlContext()->earlyAbort) {
             string_q currentSource = getCurlContext()->provider;
             string_q fallBack = getEnvStr("FALLBACK");
@@ -236,24 +245,30 @@ WAIT("! (res != CURLE_OK && !getCurlContext()->earlyAbort)")
             cerr << "\n";
             exit(0);
         } else if (contains(getCurlContext()->result, "error")) {
-            if (verbose > 1) {
+#ifdef DEBUG_RPC
+            if (verbose > 1)
+#endif
+            {
                 cerr << getCurlContext()->result;
                 cerr << getCurlContext()->postData << "\n";
             }
         }
 
 #ifdef DEBUG_RPC
-        //    cout << "\n" << string_q(80, '-') << "\n";
-        //    cout << thePost << "\n";
-        cout << string_q(60, '=') << "\n";
-        cout << "received: " << getCurlContext()->result << "\n";
-        cout.flush();
+//    cout << "\n" << string_q(80, '-') << "\n";
+//    cout << thePost << "\n";
+cout << string_q(60, '=') << "\n";
+cout << "received: " << getCurlContext()->result << "\n";
+cout.flush();
 #endif
 
-        if (raw)
+        if (raw) {
+WAIT("returning1: " + getCurlContext()->result);
             return getCurlContext()->result;
+        }
         CRPCResult generic;
         generic.parseJson3(getCurlContext()->result);
+WAIT("returning2: " + generic.result);
         return generic.result;
     }
 
