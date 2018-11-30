@@ -42,8 +42,8 @@ bool COptions::parseArguments(string_q& command) {
 
     Init();
     bool asJson = false, isOpen = false;
-    while (!command.empty()) {
-        string_q arg = nextTokenClear(command, ' ');
+    explode(arguments, command, ' ');
+    for (auto arg : arguments) {
         if (arg == "-g" || arg == "--gen" || arg == "--generate") {
             classDir = getCWD();
             prefix = getPrefix(classDir);
@@ -142,21 +142,21 @@ bool COptions::parseArguments(string_q& command) {
 
     for (auto addr : addrs) {
         CAbi abi;
-        acquireABI(abi, addr, raw, silent, decNames);
+        abi.loadAbiAndCache(addr, raw, silent, decNames);
         abi.address = addr;
-        sort(abi.interfaces.begin(), abi.interfaces.end(), ::sortByFuncName);
+        sort(abi.interfaces.begin(), abi.interfaces.end(), sortByFuncName);
         abi_specs.push_back(abi);
     }
     if (loadKnown) {
         CAbi abi;
-        abi.loadKnownABIs("token_abis");
+        abi.loadAbiKnown("token_abis");
         abi.address = "token_abis";
-        sort(abi.interfaces.begin(), abi.interfaces.end(), ::sortByFuncName);
+        sort(abi.interfaces.begin(), abi.interfaces.end(), sortByFuncName);
         abi_specs.push_back(abi);
         CAbi abi1;
-        abi1.loadKnownABIs("wallet_abis");
+        abi1.loadAbiKnown("wallet_abis");
         abi1.address = "wallet_abis";
-        sort(abi1.interfaces.begin(), abi1.interfaces.end(), ::sortByFuncName);
+        sort(abi1.interfaces.begin(), abi1.interfaces.end(), sortByFuncName);
         abi_specs.push_back(abi1);
     }
 
@@ -165,6 +165,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
+    arguments.clear();
     paramsPtr = params;
     nParamsRef = nParams;
     pOptions = this;
@@ -236,7 +237,7 @@ bool visitABIs(const string_q& path, void *dataPtr) {
 //    while (!fileList.empty()) {
 //        string_q fileName = nextTokenClear(fileList, '\n');
 //        CAbi abi;
-//        abi.loadABIFromFile(fileName, false);
+//        abi.loadAbiFromFile(fileName, false);
 //        for (auto interface : abi.interfaces) {
 //            funcArray.push_back(interface);
 //            cout << interface.encoding << " : ";
@@ -252,18 +253,10 @@ bool visitABIs(const string_q& path, void *dataPtr) {
 //    }
 //}
 
-bool sortByFuncType(const CFunction& f1, const CFunction& f2) {
-    if (f1.type == "constructor")
-        return true;
-    if (f1.type == "fallback")
-        return true;
-    if (f1.type == "function")
-        return true;
-    return false;
-}
-
 bool sortByFuncName(const CFunction& f1, const CFunction& f2) {
-    if (f1.type != f2.type)
-        return sortByFuncType(f1, f2);
-    return f1.name < f2.name;
+    string_q s1 = (f1.type == "event" ? "zzzevent" : f1.type) + f1.name + f1.encoding;
+    for (auto f : f1.inputs) s1 += f.name;
+    string_q s2 = (f2.type == "event" ? "zzzevent" : f2.type) + f2.name + f2.encoding;
+    for (auto f : f2.inputs) s2 += f.name;
+    return s1 < s2;
 }

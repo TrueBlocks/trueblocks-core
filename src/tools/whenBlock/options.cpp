@@ -36,8 +36,8 @@ bool COptions::parseArguments(string_q& command) {
     bool foundOne = false;
     Init();
     blknum_t latestBlock = getLatestBlockFromClient();
-    while (!command.empty()) {
-        string_q arg = nextTokenClear(command, ' ');
+    explode(arguments, command, ' ');
+    for (auto arg : arguments) {
         string_q orig = arg;
 
         if (arg == "UTC") {
@@ -133,6 +133,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
+    arguments.clear();
     paramsPtr  = params;
     nParamsRef = nParams;
     pOptions = this;
@@ -148,6 +149,21 @@ COptions::COptions(void) {
     sorts[0] = GETRUNTIME_CLASS(CBlock);
     sorts[1] = GETRUNTIME_CLASS(CTransaction);
     sorts[2] = GETRUNTIME_CLASS(CReceipt);
+
+    // Upgrade the configuration file by opening it, fixing the data, and then re-writing it
+    CToml toml(configPath("whenBlock.toml"));
+
+    // versions prior to 0.6.0
+    if (toml.getVersion() < getVersionNum(0,6,0)) {
+        string_q ss = toml.getConfigStr("specials", "list", "");
+        if (!contains(ss, "kitties")) {
+            ss = substitute(ss, ",{ name : \"constantinople\",",
+                            ",{ name : \"kitties\", value : \"4605167\" },{ name : \"constantinople\",");
+            toml.setConfigStr("specials", "list", ss);
+            toml.setConfigStr("version", "current", getVersionStr());
+            toml.writeFile();
+        }
+    }
 
     Init();
 }

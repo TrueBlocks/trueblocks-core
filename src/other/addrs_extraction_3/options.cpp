@@ -1,4 +1,3 @@
-#pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
@@ -11,16 +10,3 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include <vector>
-#include "etherlib.h"
-
-//-----------------------------------------------------------------------------
-class CJunk : public CBaseNode {
-public:
-    vector<CFunction> array1;
-    DECLARE_NODE(CJunk);
-    CJunk(void);
-};
-inline void CJunk::finishParse(void) {}
-inline bool CJunk::Serialize(CArchive& archive) {return true;}
-inline bool CJunk::SerializeC(CArchive& archive) const {return true;}

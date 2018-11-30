@@ -117,9 +117,6 @@ bool exportTransaction(COptions& options, const CAcctCacheItem *item, bool first
                 os << trans->Format(options.transFmt);
                 os << endl;
 
-                // TODO(tjayrush): We want to price 'value', 'ether', and 'gasCost' in US dollars
-                // if expContext.asDollars is true
-
                 cout << options.annotate(substitute(os.str(),"++WATCH++",watch->address));
                 cout.flush();
 
@@ -207,13 +204,13 @@ bool COptions::loadWatches(const CToml& toml) {
         blk_minWatchBlock = min(blk_minWatchBlock, watch->firstBlock);
         blk_maxWatchBlock = max(blk_maxWatchBlock, watch->lastBlock);
 
-        watch->abi_spec.loadByAddress(watch->address);
-        watch->abi_spec.loadKnownABIs("all");
+        watch->abi_spec.loadAbiByAddress(watch->address);
+        watch->abi_spec.loadAbiKnown("all");
         // We may as well articulate the named contracts while we're at it
         for (size_t n = 0 ; n < named.size() ; n++) {
             CAccountWatch *alt = &named.at(n);
             if (alt->enabled)
-                watch->abi_spec.loadByAddress(alt->address);
+                watch->abi_spec.loadAbiByAddress(alt->address);
         }
     }
 

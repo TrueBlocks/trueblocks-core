@@ -52,3 +52,40 @@ string_q CBlockOptions::getBlockNumList(void) {
     blocks.forEveryBlockNumber(blockNumToString, &ret);
     return ret;
 }
+
+//--------------------------------------------------------------------------------
+string_q CHistoryOptions::getDispBal(blknum_t bn, biguint_t bal, bool asData) {
+    // make finding the dollar value quicker (if we need it)
+    if (expContext().asDollars && (timestampMap[bn] == (timestamp_t)0)) {
+        CBlock blk;
+        getBlock(blk, bn);
+        timestampMap[bn] = blk.timestamp;
+    }
+
+    ostringstream os;
+    if (expContext().asEther) {
+        os << wei_2_Ether(bal);
+    } else if (expContext().asDollars) {
+        string_q s = displayDollars(timestampMap[bn], bal);
+        if (asData) {
+            os << substitute(s, ",", "");
+        } else {
+            os << padLeft("$" + s, 14);
+        }
+    } else {
+        os << bal;
+    }
+    return os.str();
+}
+
+//--------------------------------------------------------------------------------
+bool CHistoryOptions::hasHistory(void) const {
+    if (isTestMode())  // we don't report this error during testing
+        return true;
+
+    if (!nodeHasBalances())
+        return false;
+
+    blknum_t n_blocks = getGlobalConfig()->getConfigInt("history", "n_blocks", 250);
+    return (newestBlock - oldestBlock) < n_blocks;
+}
