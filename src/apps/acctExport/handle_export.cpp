@@ -117,9 +117,6 @@ bool exportTransaction(COptions& options, const CAcctCacheItem *item, bool first
                 os << trans->Format(options.transFmt);
                 os << endl;
 
-                // TODO(tjayrush): We want to price 'value', 'ether', and 'gasCost' in US dollars
-                // if expContext.asDollars is true
-
                 cout << options.annotate(substitute(os.str(),"++WATCH++",watch->address));
                 cout.flush();
 
