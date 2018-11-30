@@ -10,7 +10,6 @@ extern const string_q fmt;
 extern bool processBlock       (blknum_t bn, COptions *options);
 extern bool processTransaction (const CBlock& block, const CTransaction *trans, COptions *options);
 extern bool processTraces      (const CBlock& block, const CTransaction *trans, const CAccountWatch *acct, COptions *options);
-extern void getTraces2         (blknum_t bn, CTraceArray& traces, const hash_t& hashIn);
 extern void writeLastBlock     (blknum_t bn);
 extern string_q report         (const COptions& options, double start, double stop);
 //-----------------------------------------------------------------------
@@ -438,7 +437,7 @@ bool processTraces(const CBlock& block, const CTransaction *trans, const CAccoun
     }
 
     CTraceArray traces;
-    getTraces2(block.blockNumber, traces, trans->hash); // This call right here is very slow
+    getTraces(traces, trans->hash); // This call right here is very slow
 
     DEBUG_PRINT2("nTraces: ", traces.size());
     address_t watched = acct->address;
@@ -488,8 +487,8 @@ bool COptions::loadMonitors(const CToml& config) {
         watch.api_spec.uri = config.getConfigStr("api_spec", "uri", "");
         watch.api_spec.headers = config.getConfigStr("api_spec", "headers", "");
         if (!watch.api_spec.uri.empty()) {
-            watch.abi_spec.loadByAddress(watch.address);
-            watch.abi_spec.loadKnownABIs("all");
+            watch.abi_spec.loadAbiByAddress(watch.address);
+            watch.abi_spec.loadAbiKnown("all");
         }
 
         string_q msg;

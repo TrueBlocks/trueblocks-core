@@ -1,5 +1,5 @@
-qblocks argc: 2 [1:-info] 
-qblocks -info 
+qblocks argc: 2 [1:--info] 
+qblocks --info 
 calling: getBlock --latest --qblocks
 
 getBlock argc: 3 [1:--latest] [2:--qblocks] 

@@ -1,3 +1,4 @@
+#pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
@@ -11,36 +12,14 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
-#include "junk.h"
+//#include "acctlib.h"
 
-//-------------------------------------------------------------------------
-IMPLEMENT_NODE(CJunk, CBaseNode);
-CJunk::CJunk(void) {
-    static bool been_here = false;
-    if (!been_here) {
-        ADD_FIELD(CJunk, "array1", T_OBJECT|TS_ARRAY, 1001);
-        been_here = true;
-    }
-}
-bool CJunk::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
-    return true;
-}
-string_q CJunk::getValueByName(const string_q& fieldName) const {
-    if (fieldName == "array1") {
-        size_t cnt = array1.size();
-        if (endsWith(fieldName, "Cnt"))
-            return uint_2_Str(cnt);
-        if (!cnt) return "";
-        string_q retS;
-        for (size_t i = 0 ; i < cnt ; i++) {
-            retS += array1[i].Format();
-            retS += ((i < cnt - 1) ? ",\n" : "\n");
-        }
-        return retS;
-    }
-    return "";
-}
-void CJunk::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
-    ctx << toJson();
-    return;
-}
+//-----------------------------------------------------------------------------
+class COptions : public COptionsBase {
+public:
+    COptions(void);
+    ~COptions(void);
+
+    bool parseArguments(string_q& command);
+    void Init(void);
+};

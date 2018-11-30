@@ -19,7 +19,7 @@ namespace qblocks {
 
     extern uint64_t hex_2_Uint64(const string_q& str);
     extern int64_t  hex_2_Int64(const string_q& str) { return (int64_t)hex_2_Uint64(str); }
-    extern biguint_t exp2BigUint (const string_q &str);
+    extern biguint_t exp_2_BigUint (const string_q &str);
 
     //--------------------------------------------------------------------------------
     string_q chr_2_HexStr(const string_q& str) {
@@ -218,7 +218,7 @@ namespace qblocks {
         if (contains(str, "0x"))
             return biguint_t(BigUnsignedInABase(extract(str, 2).c_str(), 16));
         if (contains(str, "e"))
-            return exp2BigUint(str.c_str());
+            return exp_2_BigUint(str.c_str());
         return str_2_BigUint(str);
     }
 
@@ -258,14 +258,23 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     string_q double_2_Str(double f, size_t nDecimals) {
-        char s[100], r[100];
-        memset(s, '\0', 100);
-        memset(r, '\0', 100);
-        sprintf(s, "%.*g", (int)nDecimals, ((int64_t)(  pow(10, nDecimals) * (  fabs(f) - labs( (int64_t) f )  )  + 0.5)) / pow(10,nDecimals));  // NOLINT
-        if (strchr(s, 'e'))
-            s[1] = '\0';
-        sprintf(r, "%d%s", static_cast<int>(f), s+1);  // NOLINT
-        return string_q(r);
+
+        // if no nDecimals specified, default to 10 with trailing zero truncation
+        bool truncate = false;
+        if(nDecimals == NOPOS) {
+            nDecimals = 10;
+            truncate = true;
+        }
+
+        stringstream stream;
+        stream << fixed << setprecision((int)nDecimals) << f;
+        std::string str = stream.str();
+        if(truncate) {
+            str.erase(str.find_last_not_of('0') + 1, std::string::npos);
+            // if all decimals gone, truncate period
+            str.erase(str.find_last_not_of('.') + 1, std::string::npos);
+        }
+        return str;
     }
 
     //--------------------------------------------------------------------------------
@@ -421,7 +430,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    biguint_t exp2BigUint(const string_q &s) {
+    biguint_t exp_2_BigUint(const string_q &s) {
         string_q exponent = s.c_str();
         string_q decimals = nextTokenClear(exponent, 'e');
         string_q num = nextTokenClear(decimals, '.');

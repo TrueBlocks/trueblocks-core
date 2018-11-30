@@ -47,10 +47,8 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     Init();
-    while (!command.empty()) {
-
-        string_q arg = nextTokenClear(command, ' ');
-
+    explode(arguments, command, ' ');
+    for (auto arg : arguments) {
         // shortcuts
         if (arg == "-r" || arg == "--raw")   { arg = "--source:raw";   }
         if (arg == "-d" || arg == "--cache") { arg = "--source:cache"; }
@@ -84,13 +82,14 @@ bool COptions::parseArguments(string_q& command) {
             normalize = true;
 
         } else if (arg == "-l" || arg == "--latest") {
+            string_q tmpStore = configPath("cache/tmp/getBlock-latest.txt");
             string_q contents;
-            asciiFileToString("/tmp/getBlock_junk.txt", contents);
+            asciiFileToString(tmpStore, contents);
             uint64_t lastUpdate = str_2_Uint(contents);
             uint64_t cache = NOPOS, client = NOPOS;
             getLatestBlocks(cache, client);
             uint64_t diff = cache > client ? 0 : client - cache;
-            stringToAsciiFile("/tmp/getBlock_junk.txt", uint_2_Str(diff));  // for next time
+            stringToAsciiFile(tmpStore, uint_2_Str(diff));  // for next time
 
             cout << cGreen << "Hostname:                " << cYellow << (isTestMode() ? "--hostname--"  : doCommand("hostname")) << cOff << "\n";
             cout << cGreen << "Version:                 " << cYellow <<                                   getVersionStr() << cOff << "\n";
@@ -271,6 +270,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
+    arguments.clear();
     paramsPtr  = params;
     nParamsRef = nParams;
     pOptions = this;
