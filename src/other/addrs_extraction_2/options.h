@@ -11,27 +11,15 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "pricequote.h"
+#include "etherlib.h"
+//#include "acctlib.h"
 
-namespace qblocks {
+//-----------------------------------------------------------------------------
+class COptions : public COptionsBase {
+public:
+    COptions(void);
+    ~COptions(void);
 
-    typedef bool (*PRICEPARSEFUNC)(CPriceQuote& quote, string_q& str);
-    extern bool parsePoloniex(CPriceQuote& quote, string_q& str);
-    extern const char* STR_PRICE_URL;
-
-    class CPriceSource {
-    public:
-        string_q url;
-        string_q pair;
-        PRICEPARSEFUNC func;
-        CPriceSource(const string_q& u = STR_PRICE_URL,
-                     const string_q& p = "USDT_ETH",
-                     PRICEPARSEFUNC f = parsePoloniex)
-            : url(u), pair(p), func(f) {}
-        string_q getDatabasePath(string& source) const;
-    };
-
-    extern bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes,
-                    bool freshen, string_q& message, uint64_t step = 1);
-
-}  // namespace qblocks
+    bool parseArguments(string_q& command);
+    void Init(void);
+};

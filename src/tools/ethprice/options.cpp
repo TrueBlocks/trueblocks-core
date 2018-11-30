@@ -68,10 +68,11 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (!fileExists(source.getDatabasePath())) {
+    string_q unused;
+    if (!fileExists(source.getDatabasePath(unused))) {
         if (verbose)
             cerr << "Establishing price database cache.\n";
-        establishFolder(source.getDatabasePath());
+        establishFolder(source.getDatabasePath(unused));
     }
 
     return true;

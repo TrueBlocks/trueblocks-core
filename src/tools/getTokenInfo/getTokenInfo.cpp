@@ -10,7 +10,6 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#define NOWALLETLIB
 #include "etherlib.h"
 #include "options.h"
 
@@ -34,7 +33,7 @@ int main(int argc, const char *argv[]) {
             return 0;
 
         if (!options.tokenInfo.empty()) {
-            cout << getTokenInfo(options.tokenInfo, options.tokens, "", getLatestBlockFromClient()) << "\n";
+            cout << getTokenInfo(options.tokenInfo, options.tokens[0], "", options.newestBlock) << "\n";
 
         } else {
             if (options.asData)
@@ -46,9 +45,10 @@ int main(int argc, const char *argv[]) {
         }
     }
 
-    if ((options.latestBlock - options.earliestBlock) > 250 && !nodeHasBalances() && !isTestMode())
-        cerr << cRed << "    Warning: " << cOff << "The node you're using does not have historical balances. Reported "
-                                                    "values may be wrong.\n";
+    if (!options.hasHistory()) {
+        cerr << cRed << "    Warning: " << cOff;
+        cerr << "Your node does not have historical balances. Historical information is incorrect.\n";
+    }
 
     return 0;
 }
@@ -57,47 +57,35 @@ int main(int argc, const char *argv[]) {
 void reportByToken(COptions& options) {
 
     biguint_t totalVal = 0;
-    uint64_t nAccts = countOf(options.holders, '|') + 1;
-    bool needsTotal = (nAccts > 1 && options.total);
+    uint64_t cnt = 0;
 
     bool needsNewline = true;
     // For each token contract
-    string_q tokens = options.tokens;
-    while (!tokens.empty()) {
-        address_t token = nextTokenClear(tokens, '|');
+    for (auto token : options.tokens) {
         if (!options.asData)
             cout << "\n  For token contract: " << bBlue << token << cOff << "\n";
 
         // For each holder
-        string_q holders = options.holders;
-        while (!holders.empty()) {
-            address_t holder = nextTokenClear(holders, '|');
+        for (auto holder : options.holders) {
+            cnt++;
 
             // For each block
             string_q blocks = options.getBlockNumList();
             while (!blocks.empty()) {
                 blknum_t blockNum = str_2_Uint(nextTokenClear(blocks, '|'));
-                if (blockNum < options.earliestBlock)
-                    options.earliestBlock = blockNum;
+                if (blockNum < options.oldestBlock)
+                    options.oldestBlock = blockNum;
                 biguint_t bal = str_2_Wei(getTokenInfo("balanceOf", token, holder, blockNum));
                 totalVal += bal;
-                string_q sBal = bnu_2_Str(bal);
-                if (expContext().asEther) {
-                    sBal = wei_2_Ether(bnu_2_Str(bal));
-                } else if (expContext().asDollars) {
-                    CBlock blk;
-                    getBlock(blk, blockNum);
-                    sBal = padLeft("$" + dispDollars(blk.timestamp, bal), 14);
-                }
-
+                string_q dispBal = options.getDispBal(options.newestBlock, bal, options.asData);
                 needsNewline = true;
                 if (bal > 0 || !options.noZero) {
                     if (options.asData) {
-                        cout << blockNum << "\t" << token << "\t" << holder << "\t" << sBal << "\n";
+                        cout << blockNum << "\t" << token << "\t" << holder << "\t" << dispBal << "\n";
                     } else {
                         cout << "    Balance for account " << cGreen << holder << cOff;
                         cout << " at block " << cTeal << blockNum << cOff;
-                        cout << " is " << cYellow << sBal << cOff << "\n";
+                        cout << " is " << cYellow << dispBal << cOff << "\n";
                     }
                     needsNewline = false;
                 } else if (!isTestMode()) {
@@ -106,7 +94,7 @@ void reportByToken(COptions& options) {
                     } else {
                         cerr << "    Balance for account " << cGreen << holder << cOff;
                         cerr << " at block " << cTeal << blockNum << cOff;
-                        cerr << " is " << cYellow << sBal << cOff << "           \r";
+                        cerr << " is " << cYellow << dispBal << cOff << "           \r";
                     }
                 }
                 cerr.flush();
@@ -115,18 +103,11 @@ void reportByToken(COptions& options) {
         }
     }
 
-    if (needsTotal) {
-        string_q sBal = bnu_2_Str(totalVal);
-        if (expContext().asEther) {
-            sBal = wei_2_Ether(bnu_2_Str(totalVal));
-        } else if (expContext().asDollars) {
-            CBlock blk;
-            getBlock(blk, getLatestBlockFromClient());
-            sBal = padLeft("$" + dispDollars(blk.timestamp, totalVal), 14);
-        }
-        cout << "        Total for " << cGreen << nAccts << cOff;
+    if (options.total && cnt > 1) {
+        string_q dispBal = options.getDispBal(options.newestBlock, totalVal, options.asData);
+        cout << "        Total for " << cGreen << cnt << cOff;
         cout << " accounts at " << cTeal << "latest" << cOff << " block";
-        cout << " is " << cYellow << substitute(sBal, "  ", " ") << cOff << "\n";
+        cout << " is " << cYellow << dispBal << cOff << "\n";
     }
 
     if (needsNewline)
@@ -137,47 +118,35 @@ void reportByToken(COptions& options) {
 void reportByAccount(COptions& options) {
 
     biguint_t totalVal = 0;
-    uint64_t nAccts = countOf(options.holders, '|') + 1;
-    bool needsTotal = (nAccts > 1 && options.total);
+    uint64_t cnt = 0;
 
     bool needsNewline = true;
     // For each holder
-    string_q holders = options.holders;
-    while (!holders.empty()) {
-        address_t holder = nextTokenClear(holders, '|');
+    for (auto holder : options.holders) {
         if (!options.asData)
             cout << "\n  For account: " << bBlue << holder << cOff << "\n";
 
         // For each token contract
-        string_q tokens = options.tokens;
-        while (!tokens.empty()) {
-            address_t token = nextTokenClear(tokens, '|');
+        for (auto token : options.holders) {
+            cnt++;
 
             // For each block
             string_q blocks = options.getBlockNumList();
             while (!blocks.empty()) {
                 blknum_t blockNum = str_2_Uint(nextTokenClear(blocks, '|'));
-                if (blockNum < options.earliestBlock)
-                    options.earliestBlock = blockNum;
+                if (blockNum < options.oldestBlock)
+                    options.oldestBlock = blockNum;
                 biguint_t bal = str_2_Wei(getTokenInfo("balanceOf", token, holder, blockNum));
                 totalVal += bal;
-                string_q sBal = bnu_2_Str(bal);
-                if (expContext().asEther) {
-                    sBal = wei_2_Ether(bnu_2_Str(bal));
-                } else if (expContext().asDollars) {
-                    CBlock blk;
-                    getBlock(blk, blockNum);
-                    sBal = padLeft("$" + dispDollars(blk.timestamp, bal), 14);
-                }
-
+                string_q dispBal = options.getDispBal(options.newestBlock, bal, options.asData);
                 needsNewline = true;
                 if (bal > 0 || !options.noZero) {
                     if (options.asData) {
-                        cout << blockNum << "\t" << token << "\t" << holder << "\t" << sBal << "\n";
+                        cout << blockNum << "\t" << token << "\t" << holder << "\t" << dispBal << "\n";
                     } else {
                         cout << "    Balance of token contract " << cGreen << token << cOff;
                         cout << " at block " << cTeal << blockNum << cOff;
-                        cout << " is " << cYellow << sBal << cOff << "\n";
+                        cout << " is " << cYellow << dispBal << cOff << "\n";
                     }
                     needsNewline = false;
                 } else if (!isTestMode()) {
@@ -186,7 +155,7 @@ void reportByAccount(COptions& options) {
                     } else {
                         cerr << "    Balance of token contract " << cGreen << token << cOff;
                         cerr << " at block " << cTeal << blockNum << cOff;
-                        cerr << " is " << cYellow << sBal << cOff << "           \r";
+                        cerr << " is " << cYellow << dispBal << cOff << "           \r";
                     }
                 }
                 cerr.flush();
@@ -195,18 +164,11 @@ void reportByAccount(COptions& options) {
         }
     }
 
-    if (needsTotal) {
-        string_q sBal = bnu_2_Str(totalVal);
-        if (expContext().asEther) {
-            sBal = wei_2_Ether(bnu_2_Str(totalVal));
-        } else if (expContext().asDollars) {
-            CBlock blk;
-            getBlock(blk, getLatestBlockFromClient());
-            sBal = padLeft("$" + dispDollars(blk.timestamp, totalVal), 14);
-        }
-        cout << "        Total for " << cGreen << nAccts << cOff;
+    if (options.total && cnt > 1) {
+        string_q dispBal = options.getDispBal(options.newestBlock, totalVal, options.asData);
+        cout << "        Total for " << cGreen << cnt << cOff;
         cout << " accounts at " << cTeal << "latest" << cOff << " block";
-        cout << " is " << cYellow << substitute(sBal, "  ", " ") << cOff << "\n";
+        cout << " is " << cYellow << dispBal << cOff << "\n";
     }
 
     if (needsNewline)
