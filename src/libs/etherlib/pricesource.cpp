@@ -24,8 +24,8 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------
-    string_q CPriceSource::getDatabasePath(void) const {
-        string_q source = substitute(substitute(url, "http://", ""), "https://", "");
+    string_q CPriceSource::getDatabasePath(string_q& source) const {
+        source = substitute(substitute(url, "http://", ""), "https://", "");
         source = nextTokenClear(source, '.');
         string_q ret = blockCachePath("prices/" + source + "_" + pair + ".bin");
         establishFolder(ret);
@@ -37,12 +37,23 @@ namespace qblocks {
     bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool freshen,
                             string_q& message, uint64_t step) {
 
-        string_q cacheFile = source.getDatabasePath();
+        string_q dataSource;
+        string_q cacheFile = source.getDatabasePath(dataSource);
 
         // Load and possibly refresh the price database
         time_q lastRead = time_q(2015, 1, 1, 0, 0, 0);
         if (contains(source.pair, "BTC"))
             lastRead = time_q(2009, 1, 1, 0, 0, 0);
+
+        if (!fileExists(cacheFile)) {
+            string_q zipFile = configPath("cache/prices/") + dataSource + "_" + source.pair + ".bin.gz";
+            if (zipFile != cacheFile) {
+                string_q cmd = "cp -pf " + zipFile + " " + cacheFile + ".gz";
+                cmd += (" ; cd " + blockCachePath("prices/") + " ; gunzip *.gz");
+                doCommand(cmd);
+            }
+        }
+
         if (fileExists(cacheFile)) {
             if (!isTestMode())
                 cerr << "Updating prices...\r";
