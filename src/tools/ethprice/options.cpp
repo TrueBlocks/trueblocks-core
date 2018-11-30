@@ -31,9 +31,8 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     Init();
-    while (!command.empty()) {
-
-        string_q arg  = nextTokenClear(command, ' ');
+    explode(arguments, command, ' ');
+    for (auto arg : arguments) {
         // do not collapse
         if (arg == "-c" || arg == "--current")
             arg = "-a:now";
@@ -69,10 +68,11 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (!fileExists(source.getDatabasePath())) {
+    string_q unused;
+    if (!fileExists(source.getDatabasePath(unused))) {
         if (verbose)
             cerr << "Establishing price database cache.\n";
-        establishFolder(source.getDatabasePath());
+        establishFolder(source.getDatabasePath(unused));
     }
 
     return true;
@@ -80,6 +80,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
+    arguments.clear();
     paramsPtr = params;
     nParamsRef = nParams;
 

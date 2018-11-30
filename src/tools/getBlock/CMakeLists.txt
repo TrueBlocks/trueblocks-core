@@ -50,10 +50,10 @@ run_test("getBlock_byhash"       "0x79990fd526c4751139a7a3afc7420cde1a1141b1920d
 run_test("getBlock_blooms"       "1590000"        " 4000001" " 4000002")
 run_test("getBlock_range"        "4000001-4000003")
 run_test("getBlock_baddata"      "1590000"        " 4000001-4000002" " x400x001")
-run_test("getBlock_special_1"    "stateclear")
-run_test("getBlock_special_2"    "daofork")
+run_test("getBlock_special_1"    "stateclear" " --force")
+run_test("getBlock_special_2"    "daofork" " --force")
 
-run_test("getBlock_combo_one_range" "1590000" " 4000001-4000002" " 1001001" " 1234567")
+run_test("getBlock_combo_one_range" "1590000" " 4000001-4000002" " 1001001" " 1234567" " --force")
 run_test("getBlock_combo_two_range" "1590000" " 4000001-4000002" " 1001001-1001100" " 1234567")
 
 # display a bunch of blocks raw
@@ -79,9 +79,9 @@ run_test("getBlock_check_02"     "1995314"        " --check")
 run_test("getBlock_check_03"     "1958017"        " -c")
 run_test("getBlock_chk_245001"   "245001"         " --check")
 
-run_test("getBlock_parity_hex"   "--parity"       " 0x2e7721")
+run_test("getBlock_parity_hex"   "--parity"       " 0x2e7721" " --force")
 run_test("getBlock_parity_num"   "--parity"       " 728708")
-run_special_test("getBlock_parity_range" "--parity"       " 358450-0x5785a")
+run_special_test("getBlock_parity_range" "--parity"       " 358450-0x5785a" " --force")
 
 run_test("getBlock_force_02"                  " 2769609" " 2799895" " 2872831" " 3076260" " -o")
 run_test("getBlock_force_fail"                " 2769609" " 2799895" " 2872831" " 3076260" " -o" " --uniqTx")
@@ -114,8 +114,8 @@ run_test("getBlock_address_uniqTxCnt2" "3982128"  " --uniqTxCnt")
 
 run_test("getBlock_addrCntFail" "3982128"  " --number")
 
-run_special_test("getBlock_cmd_file1" "--file:cmd_file1")
-run_special_test("getBlock_cmd_file2" "--file:cmd_file2")
+run_special_test("getBlock_cmd_file1" "--file:cmd_file1" " --force")
+run_special_test("getBlock_cmd_file2" "--file:cmd_file2" " --force")
 
 # More options
 run_test("getBlock_help" "-h")

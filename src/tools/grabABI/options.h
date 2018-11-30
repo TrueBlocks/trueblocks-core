@@ -37,11 +37,10 @@ public:
 
     bool isToken(void) const { return prefix % "tokenlib"; }
     bool isWallet(void) const { return prefix % "walletlib"; }
-    bool isBuiltin(void) const { return isToken() || isWallet(); }
+    bool isBuiltIn(void) const { return isToken() || isWallet(); }
     void handle_display(void);
     void handle_generate(void);
 };
 
 //-----------------------------------------------------------------------
 extern string_q getPrefix (const string_q& in);
-extern string_q acquireABI(CAbi& abi, const address_t& addr, bool raw, bool silent, bool decNames);

@@ -34,11 +34,9 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     Init();
-    latestBlock = getLatestBlockFromClient();
-    earliestBlock = latestBlock;
-    string_q address_list;
-    while (!command.empty()) {
-        string_q arg = nextTokenClear(command, ' ');
+    CAddressArray addrs;
+    explode(arguments, command, ' ');
+    for (auto arg : arguments) {
         string_q orig = arg;
         if (arg == "-d" || arg == "--data") {
             asData = true;
@@ -74,7 +72,7 @@ bool COptions::parseArguments(string_q& command) {
                 string_q line = nextTokenClear(contents, '\n');
                 if (!isAddress(line))
                     return usage(line + " does not appear to be a valid Ethereum address. Quitting...");
-                address_list += line + "|";
+                addrs.push_back(toLower(line));
             }
 
         } else if (startsWith(arg, '-')) {  // do not collapse
@@ -84,7 +82,7 @@ bool COptions::parseArguments(string_q& command) {
             }
 
         } else if (isHash(arg)) {
-            string_q ret = blocks.parseBlockList(arg, latestBlock);
+            string_q ret = blocks.parseBlockList(arg, newestBlock);
             if (endsWith(ret, "\n")) {
                 cerr << "\n  " << ret << "\n";
                 return false;
@@ -96,11 +94,11 @@ bool COptions::parseArguments(string_q& command) {
 
             if (!isAddress(arg))
                 return usage(arg + " does not appear to be a valid Ethereum address. Quitting...");
-            address_list += arg + "|";
+            addrs.push_back(toLower(arg));
 
         } else {
 
-            string_q ret = blocks.parseBlockList(arg, latestBlock);
+            string_q ret = blocks.parseBlockList(arg, newestBlock);
             if (endsWith(ret, "\n")) {
                 cerr << "\n  " << ret << "\n";
                 return false;
@@ -113,52 +111,60 @@ bool COptions::parseArguments(string_q& command) {
     if (asData && total)
         return usage("Totalling is not available when exporting data.");
 
-    address_list = trim(address_list, '|');
-    if (tokenInfo.empty() && countOf(address_list, '|') < 1)
+    if (tokenInfo.empty() && addrs.size() < 2)
         return usage("You must provide both a token contract and an account. Quitting...");
 
-    if (!byAccount) {
-        // first item is ERC20 contract, remainder are accounts
-        // token holder1 holder2
-        holders = address_list;
-        tokens = nextTokenClear(holders, '|');
-
-    } else {
-        // last item is account, preceeding are ERC20 contracts
-        reverse(address_list);
-        // holder token2 token1 - reversed
-        tokens = address_list;
-        holders = nextTokenClear(tokens, '|');
-        reverse(tokens); reverse(holders);
+    address_t lastItem;
+    for (auto addr : addrs) {
+        if (byAccount) {
+            // all items but the last are tokens, the last item is the account <token> [tokens...] <holder>
+            tokens.push_back(addr);
+            lastItem = addr;
+        } else {
+            // first item is ERC20 contract, remainder are accounts <token> <holder1> [holder2...]
+            if (tokens.empty())
+                tokens.push_back(addr);
+            else
+                holders.push_back(addr);
+        }
     }
 
-    if (!blocks.hasBlocks()) {
-        // use 'latest'
-        blocks.numList.push_back(latestBlock);
+    if (byAccount) {
+        // remove the last one and push it on the holders array
+        tokens.pop_back();
+        holders.push_back(lastItem);
     }
+
+    if (!blocks.hasBlocks())
+        blocks.numList.push_back(newestBlock);  // use 'latest'
 
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
+    arguments.clear();
     paramsPtr = params;
     nParamsRef = nParams;
     pOptions = this;
 
-    tokens = "";
-    holders = "";
+    tokens.clear();
+    holders.clear();
+
+    optionOff(OPT_DOLLARS|OPT_ETHER);
     asData = false;
     noZero = false;
     byAccount = false;
     total = false;
     tokenInfo = "";
     blocks.Init();
-    optionOff(OPT_DOLLARS|OPT_ETHER);
+    CHistoryOptions::Init();
+    newestBlock = oldestBlock = getLatestBlockFromClient();
 }
 
 //---------------------------------------------------------------------------------------------------
-COptions::COptions(void) {
+COptions::COptions(void) : CHistoryOptions() {
+
     // will sort the fields in these classes if --parity is given
     sorts[0] = GETRUNTIME_CLASS(CBlock);
     sorts[1] = GETRUNTIME_CLASS(CTransaction);
@@ -176,17 +182,17 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
 
     if (which == "options") {
         return
-            substitute(substitute(str, "address_list block_list",
-                        "<address> <address> [address...] [block...]"), "-l|", "-l fn|");
+            substitute(substitute(str, "address_list block_list", "<address> <address> [address...] [block...]"),
+                                            "-l|", "-l fn|");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 
         string_q ret;
         ret += "[{addresses}] must start with '0x' and be forty characters long.\n";
-        ret += "[{block_list}] may be space-separated list of values, a start-end range, a [{special}], "
-                    "or any combination.\n";
-        ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if configured "
-                    "(see documentation).\n";
+        ret += "[{block_list}] may be a space-separated list of values, a start-end range, a "
+                    "[{special}], or any combination.\n";
+        ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if "
+                    "configured (see documentation).\n";
         ret += "If the token contract(s) from which you request balances are not ERC20 compliant, the results "
                     "are undefined.\n";
         ret += "If the queried node does not store historical state, the results are undefined.\n";

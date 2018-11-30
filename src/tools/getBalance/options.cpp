@@ -35,10 +35,8 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     Init();
-    blknum_t latestBlock = getLatestBlockFromClient();
-    state.earliestBlock = latestBlock;
-    while (!command.empty()) {
-        string_q arg = nextTokenClear(command, ' ');
+    explode(arguments, command, ' ');
+    for (auto arg : arguments) {
         string_q orig = arg;
         if (arg == "-d" || arg == "--data") {
             asData = true;
@@ -62,13 +60,11 @@ bool COptions::parseArguments(string_q& command) {
             string_q contents;
             asciiFileToString(fileName.getFullPath(), contents);
             if (contents.empty())
-                return usage("No addresses were found in file " +
-                                        fileName.relativePath() + ". Quitting...");
+                return usage("No addresses were found in file " + fileName.relativePath() + ". Quitting...");
             while (!contents.empty()) {
                 string_q line = nextTokenClear(contents, '\n');
                 if (!isAddress(line))
-                    return usage(line + " does not appear to be a valid "
-                                        "Ethereum address. Quitting...");
+                    return usage(line + " does not appear to be a valid Ethereum address. Quitting...");
                 addrs.push_back(toLower(line));
             }
 
@@ -79,7 +75,7 @@ bool COptions::parseArguments(string_q& command) {
             }
 
         } else if (isHash(arg)) {
-            string_q ret = blocks.parseBlockList(arg, latestBlock);
+            string_q ret = blocks.parseBlockList(arg, newestBlock);
             if (endsWith(ret, "\n")) {
                 cerr << "\n  " << ret << "\n";
                 return false;
@@ -95,7 +91,7 @@ bool COptions::parseArguments(string_q& command) {
 
         } else {
 
-            string_q ret = blocks.parseBlockList(arg, latestBlock);
+            string_q ret = blocks.parseBlockList(arg, newestBlock);
             if (endsWith(ret, "\n")) {
                 cerr << "\n  " << ret << "\n";
                 return false;
@@ -112,13 +108,14 @@ bool COptions::parseArguments(string_q& command) {
         return usage("You must provide at least one Ethereum address.");
 
     if (!blocks.hasBlocks())
-        blocks.numList.push_back(latestBlock);  // use 'latest'
+        blocks.numList.push_back(newestBlock);  // use 'latest'
 
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
+    arguments.clear();
     paramsPtr = params;
     nParamsRef = nParams;
     pOptions = this;
@@ -129,11 +126,13 @@ void COptions::Init(void) {
     total = false;
     changes = false;
     blocks.Init();
-    CBlockOptions::Init();
+    CHistoryOptions::Init();
+    newestBlock = oldestBlock = getLatestBlockFromClient();
 }
 
 //---------------------------------------------------------------------------------------------------
-COptions::COptions(void) {
+COptions::COptions(void) : CHistoryOptions() {
+
     // will sort the fields in these classes if --parity is given
     sorts[0] = GETRUNTIME_CLASS(CBlock);
     sorts[1] = GETRUNTIME_CLASS(CTransaction);

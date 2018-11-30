@@ -8,6 +8,8 @@ file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}")
 file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}/names")
 file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}/cache")
 file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}/cache/abis")
+file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}/cache/prices")
+file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}/cache/tmp")
 file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}/known_abis")
 file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}/makeClass")
 file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}/grabABI")
@@ -34,11 +36,19 @@ if (NOT EXISTS "${QUICKBLOCKS_TOML_FILE}")
     file(COPY "${CMAKE_SOURCE_DIR}/../../../src/other/install/ethslurp.toml" DESTINATION "${QUICKBLOCKS_HOME}" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 endif()
 
-# Create names fie only if it does not exist
+# Create names file only if it does not exist
 set(QUICKBLOCKS_NAMES_FILE "${QUICKBLOCKS_HOME}/names/names.txt")
 if (NOT EXISTS "${QUICKBLOCKS_NAMES_FILE}")
     message(STATUS "Copying names file ${QUICKBLOCKS_NAMES_FILE}")
     file(COPY "${CMAKE_SOURCE_DIR}/../../../src/other/install/names.txt" DESTINATION "${QUICKBLOCKS_HOME}/names" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+endif()
+
+# Create names file only if it does not exist
+set(QUICKBLOCKS_PRICES_FILE "${QUICKBLOCKS_HOME}/cache/prices/poloniex_USDT_ETH.bin.gz")
+if (NOT EXISTS "${QUICKBLOCKS_PRICES_FILE}")
+    set(QUICKBLOCKS_PRICES_SOURCE "${CMAKE_SOURCE_DIR}/../../../src/other/install/prices/poloniex_USDT_ETH.bin.gz")
+    message(STATUS "Copying price data to ${QUICKBLOCKS_HOME}/cache/prices")
+    file(COPY "${QUICKBLOCKS_PRICES_SOURCE}" DESTINATION "${QUICKBLOCKS_HOME}/cache/prices" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 endif()
 
 # makeClass content

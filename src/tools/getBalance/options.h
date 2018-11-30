@@ -17,18 +17,19 @@
 class CState {
 public:
     bool needsNewline;
-    blknum_t latestBlock;
-    blknum_t earliestBlock;
     biguint_t totalVal;
     biguint_t lastBal;
     address_t curAddr;
-    CState(void) { needsNewline = true; latestBlock = getLatestBlockFromClient(); totalVal = 0; lastBal = 0; }
+    CState(void) {
+        needsNewline = true;
+        totalVal = 0;
+        lastBal = 0;
+    }
 };
 
 //-----------------------------------------------------------------------------
-class COptions : public CBlockOptions {
+class COptions : public CHistoryOptions {
 public:
-    map<blknum_t, timestamp_t> timestampMap;
     CState state;
     CAddressArray addrs;
     bool asData;

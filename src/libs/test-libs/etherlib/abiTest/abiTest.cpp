@@ -13,7 +13,6 @@
 #include <algorithm>
 #include "etherlib.h"
 #include "options.h"
-#include "junk.h"
 
 extern bool test_encodings  (void);
 extern bool test_generation (void);
@@ -23,6 +22,7 @@ extern bool test_evt_assign (void);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
+    CAbi::registerClass();
     CParameter::registerClass();
 
     COptions options;
@@ -99,40 +99,28 @@ bool test_encodings(void) {
 //---------------------------------------------------------------------------
 bool sortByFunctionName(const CFunction& f1, const CFunction& f2) { return f1.name < f2.name; }
 
-//---------------------------------------------------------------------------
-bool loadABIFromString(CJunk& abi, const string_q& in) {
-
-    string_q contents = in;
-    CFunction func;
-    while (func.parseJson3(contents)) {
-        abi.array1.push_back(func);
-        func = CFunction();  // reset
-    }
-    return true;
-}
-
 //--------------------------------------------------------------
 bool test_generation(void) {
     CFunction::registerClass();
     CParameter::registerClass();
 
     {
-        CJunk abi;
+        CAbi abi;
         cout << "Testing of already sorted JSON\n";
-        loadABIFromString(abi, getAlreadySortedJson());
-        sort(abi.array1.begin(), abi.array1.end(), sortByFunctionName);
+        abi.loadAbiFromString(getAlreadySortedJson(), false);
+        sort(abi.interfaces.begin(), abi.interfaces.end(), sortByFunctionName);
         cout << abi.Format() << "\n\n";
-        sort(abi.array1.begin(), abi.array1.end());
+        sort(abi.interfaces.begin(), abi.interfaces.end());
         cout << abi.Format() << "\n\n";
     }
 
     {
-        CJunk abi;
+        CAbi abi;
         cout << "Testing of not sorted JSON\n";
-        loadABIFromString(abi, getNotSortedJson());
-        sort(abi.array1.begin(), abi.array1.end(), sortByFunctionName);
+        abi.loadAbiFromString(getNotSortedJson(), false);
+        sort(abi.interfaces.begin(), abi.interfaces.end(), sortByFunctionName);
         cout << abi.Format() << "\n\n";
-        sort(abi.array1.begin(), abi.array1.end());
+        sort(abi.interfaces.begin(), abi.interfaces.end());
         cout << abi.Format() << "\n\n";
     }
 
@@ -147,13 +135,13 @@ bool test_old_bug(void) {
 
     CAbi abi;
     cout << string_q(120, '-') << "\nABI of test1.json\n" << string_q(120, '-') << "\n";
-    abi.loadABIFromFile("./test1.json", false);
+    abi.loadAbiFromFile("./test1.json", false);
     sort(abi.interfaces.begin(), abi.interfaces.end(), sortByFunctionName);
     cout << abi << "\n";
     abi = CAbi();
 
     cout << string_q(120, '-') << "\nABI of test2.json\n" << string_q(120, '-') << "\n";
-    abi.loadABIFromFile("./test2.json", false);
+    abi.loadAbiFromFile("./test2.json", false);
     sort(abi.interfaces.begin(), abi.interfaces.end(), sortByFunctionName);
     cout << abi << "\n";
     return true;

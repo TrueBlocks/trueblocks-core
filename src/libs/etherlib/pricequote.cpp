@@ -235,7 +235,7 @@ string_q CPriceQuote::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'c':
-            if ( fieldName % "close" ) return double_2_Str(close);
+            if ( fieldName % "close" ) return double_2_Str(close, 5);
             break;
         case 't':
             if ( fieldName % "timestamp" ) return ts_2_Str(timestamp);
@@ -271,7 +271,7 @@ uint64_t indexFromTimeStamp(const CPriceQuoteArray& quotes, timestamp_t ts) {
 }
 
 //-----------------------------------------------------------------------
-string_q asDollars(timestamp_t ts, biguint_t weiIn) {
+string_q wei_2_Dollars(timestamp_t ts, biguint_t weiIn) {
     if (weiIn == 0)
         return "";
     static CPriceQuoteArray quotes;
@@ -307,12 +307,11 @@ string_q insertCommas(const string_q& dIn) {
 }
 
 //-----------------------------------------------------------------------
-string_q dispDollars(timestamp_t ts, biguint_t weiIn) {
-    string_q sBal = asDollars(ts, weiIn);
-    string_q d = nextTokenClear(sBal, '.');
+string_q displayDollars(timestamp_t ts, biguint_t weiIn) {
+    string_q ret = wei_2_Dollars(ts, weiIn);
+    string_q d = nextTokenClear(ret, '.');
     d = insertCommas(d);
-    sBal = (sBal.empty() ? "0.00" : d + "." + extract(sBal, 0, 2));
-    return sBal;
+    return (ret.empty() ? "0.00" : d + "." + extract(ret, 0, 2));
 }
 // EXISTING_CODE
 }  // namespace qblocks

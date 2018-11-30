@@ -14,17 +14,15 @@
 #include "etherlib.h"
 
 //-----------------------------------------------------------------------------
-class COptions : public CBlockOptions {
+class COptions : public CHistoryOptions {
 public:
-    blknum_t latestBlock;
-    blknum_t earliestBlock;
-    string_q tokens;
-    string_q holders;
+    CAddressArray tokens;
+    CAddressArray holders;
+    string_q tokenInfo;
     bool asData;
     bool byAccount;
     bool noZero;
     bool total;
-    string_q tokenInfo;
 
     COptions(void);
     ~COptions(void);
