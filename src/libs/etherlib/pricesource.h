@@ -28,7 +28,7 @@ namespace qblocks {
                      const string_q& p = "USDT_ETH",
                      PRICEPARSEFUNC f = parsePoloniex)
             : url(u), pair(p), func(f) {}
-        string_q getDatabasePath(void) const;
+        string_q getDatabasePath(string& source) const;
     };
 
     extern bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes,
