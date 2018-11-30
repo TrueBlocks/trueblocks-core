@@ -245,7 +245,7 @@ WAIT("! (res != CURLE_OK && !getCurlContext()->earlyAbort)")
             cerr << "\n";
             exit(0);
         } else if (contains(getCurlContext()->result, "error")) {
-#ifdef DEBUG_RPC
+#ifndef DEBUG_RPC
             if (verbose > 1)
 #endif
             {
