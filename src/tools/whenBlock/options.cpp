@@ -150,6 +150,15 @@ COptions::COptions(void) {
     sorts[1] = GETRUNTIME_CLASS(CTransaction);
     sorts[2] = GETRUNTIME_CLASS(CReceipt);
 
+    CToml toml(configPath("whenBlock.toml"));
+    if (toml.getVersion() < getVersionNum()) {
+        toml.setConfigStr("version", "current", getVersionStr());
+        string_q ss = toml.getConfigStr("specials", "list", "");
+        ss = substitute(ss, ",{ name : \"constantinople\",",
+                        ",{ name : \"kitties\", value : \"4605167\" },{ name : \"constantinople\",");
+        toml.setConfigStr("specials", "list", ss);
+        toml.writeFile();
+    }
     Init();
 }
 

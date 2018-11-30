@@ -883,22 +883,6 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             specials.push_back(pair);
             keyVal = CKeyValuePair();  // reset
         }
-
-        // Upgrade to include new specials for existing installations
-        if (toml->getVersion() < getVersionNum(0,6,0)) {
-            bool hasKitties = false;
-            for (auto special : specials) {
-                if (special.first == "kitties")
-                    hasKitties = true;
-            }
-            if (!hasKitties) {
-                CNameValue pair = make_pair("kitties", "4605167");
-                specials.push_back(pair);
-                ((CToml *)toml)->setConfigStr("version", "current", getVersionStr());
-                ((CToml *)toml)->writeFile();
-            }
-        }
-
         sort(specials.begin(), specials.end(), sortByValue);
         return;
     }
