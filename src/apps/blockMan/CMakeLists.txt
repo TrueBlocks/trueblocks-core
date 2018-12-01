@@ -43,16 +43,11 @@ endfunction(run_test)
 # Enter one line for each individual test
 run_test("blockMan_README"    "-th")
 run_test("blockMan_bad_input" "--thing")
-#run_test("blockMan_list"      "--list" " --skip 50000")
+run_test("blockMan_stats"      "--stats")
 
 # DO NOT USE THESE OPTIONS FOR TESTING, THEY ARE LONG RUNNING AND IRREVERSABLY CHANGE DATA FILES
-#run_test("blockMan_list"     "--check")
-#run_test("blockMan_list"     "--check" " 500000")
-#run_test("blockMan_list"     "--check" " --deep")
-#run_test("blockMan_list"     "--check" " --emptyOnly")
-#run_test("blockMan_list"     "--check" " --noOnly")
-#run_test("blockMan_list"     "--freshen")
-#run_test("blockMan_list"     "--refreshen")
+#run_test("blockMan_check_1"   "--check" " --empty")
+#run_test("blockMan_check_1"   "--check" " --full")
 # DO NOT USE THESE OPTIONS FOR TESTING, THEY ARE LONG RUNNING AND IRREVERSABLY CHANGE DATA FILES
 
 # Installation steps, this tool is renamed at installation

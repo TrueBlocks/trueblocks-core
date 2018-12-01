@@ -709,9 +709,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-------------------------------------------------------------------------
-    bool forEveryNonEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
-
-        // Read the non-empty block index file and spit it out only non-empty blocks
+    bool forEveryNonEmptyBlockByNumber(UINT64VISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
         if (!func)
             return false;
 
@@ -723,41 +721,35 @@ extern void registerQuitHandler(QUITHANDLER qh);
         ASSERT(fullBlockCache.isOpen());
 
         uint64_t nItems = fileSize(fullBlockIndex) / sizeof(uint64_t);
-        uint64_t *contents = new uint64_t[nItems];
-        if (contents) {
+        uint64_t *items = new uint64_t[nItems];
+        if (items) {
             // read the entire full block index
-            fullBlockCache.Read(contents, sizeof(uint64_t), nItems);
+            fullBlockCache.Read(items, sizeof(uint64_t), nItems);
             fullBlockCache.Release();  // release it since we don't need it any longer
 
             for (uint64_t i = 0 ; i < nItems ; i = i + skip) {
                 // TODO(tjayrush): This should be a binary search not a scan. This is why it appears to wait
-                uint64_t item = contents[i];
+                uint64_t item = items[i];
                 if (inRange(item, start, start + count - 1)) {
-                    CBlock block;
-                    if (getBlock(block, contents[i])) {
-                        bool ret = (*func)(block, data);
-                        if (!ret) {
-                            // Cleanup and return if user tells us to
-                            delete [] contents;
-                            return false;
-                        }
+                    bool ret = (*func)(items[i], data);
+                    if (!ret) {
+                        // Cleanup and return if user tells us to
+                        delete [] items;
+                        return false;
                     }
                 } else {
                     // do nothing
                 }
             }
-            delete [] contents;
+            delete [] items;
         }
         return true;
     }
 
     //-------------------------------------------------------------------------
-    bool forEveryEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
+    bool forEveryEmptyBlockByNumber(UINT64VISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
         if (!func)
             return false;
-
-        getCurlContext()->provider = "local";   // the empty blocks are not on disk, so we have to
-                                                // ask parity. Don't write them, though
 
         CArchive fullBlockCache(READING_ARCHIVE);
         if (!fullBlockCache.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT)) {
@@ -766,34 +758,83 @@ extern void registerQuitHandler(QUITHANDLER qh);
         }
         ASSERT(fullBlockCache.isOpen());
 
-        uint64_t nItems = fileSize(fullBlockIndex) / sizeof(uint64_t) + 1;  // we need an extra one for item '0'
-        uint64_t *contents = new uint64_t[nItems+2];  // extra space
-        if (contents) {
-            // read the entire full block index
-            fullBlockCache.Read(&contents[0], sizeof(uint64_t), nItems-1);  // one less since we asked for an extra one
-            fullBlockCache.Release();  // release it since we don't need it any longer
-
-            contents[0] = 0;  // Starting point (because we are build the empty list from the non-empty list)
-            uint64_t cnt = start;
-            for (uint64_t i = 1 ; i < nItems ; i = i + skip) {  // first one is assumed to be the '0' block
-                while (cnt < contents[i]) {
-                    CBlock block;
-                    // Both 'queryBlock' and 'getBlock' return false if there are no
-                    // transactions, so we ignore the return value
-                    getBlock(block, cnt);
-                    if (!(*func)(block, data)) {
-                        getCurlContext()->provider = "binary";
-                        delete [] contents;
-                        return false;
-                    }
-                    cnt++;  // go to the next one
-                }
-                cnt++;  // contents[i] has transactions, so skip it
-            }
-            delete [] contents;
+        uint64_t nItems = fileSize(fullBlockIndex) / sizeof(uint64_t) + 1;
+        uint64_t *items = new uint64_t[nItems+2];
+        if (!items) {
+            cerr << "forEveryEmptyBlockOnDisc failed: could not allocate memory\n";
+            return false;
         }
-        getCurlContext()->provider = "binary";
+
+        fullBlockCache.Read(&items[0], sizeof(uint64_t), nItems);
+        fullBlockCache.Release();
+
+        CBlockRangeArray ranges;
+        ranges.reserve(nItems * 35 / 100);  // less than 1/3 of blocks are empty
+
+        uint64_t previous = (uint64_t)(start-1);
+        uint64_t end = (start + count);
+        for (size_t i = 0 ; i < nItems ; i++) {
+            uint64_t current = items[i];
+            if (start == 0 || (current >= start-1)) {
+                int64_t diff = ((int64_t)current - (int64_t)previous) - 1;
+                uint64_t udiff = (uint64_t)diff;
+                if ((previous+1) <= (previous+udiff))
+                    ranges.push_back(make_pair(previous+1, min(end, current)));
+            }
+            previous = current;
+            if (current >= end)
+                break;
+        }
+
+        for (auto range : ranges) {
+            for (uint64_t bn = range.first ; bn < range.second ; bn++) {
+                if (!(*func)(bn, data)) {
+                    if (items)
+                        delete [] items;
+                    return false;
+                }
+            }
+        }
+        if (items)
+            delete [] items;
         return true;
+    }
+
+    //-------------------------------------------------------------------------
+    class CPassThru {
+    public:
+        BLOCKVISITFUNC origFunc;
+        void *origData;
+    };
+
+    //-------------------------------------------------------------------------
+    bool passThruFunction(uint64_t num, void *data) {
+        CBlock block;
+        getBlock(block, num);
+        CPassThru *passThru = (CPassThru*)data;
+        return passThru->origFunc(block, passThru->origData);
+    }
+
+    //-------------------------------------------------------------------------
+    bool forEveryNonEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
+        CPassThru passThru;
+        passThru.origFunc = func;
+        passThru.origData = data;
+        getCurlContext()->provider = "local";
+        bool ret = forEveryNonEmptyBlockByNumber(passThruFunction, &passThru, start, count, skip);
+        getCurlContext()->provider = "binary";
+        return ret;
+    }
+
+    //-------------------------------------------------------------------------
+    bool forEveryEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
+        CPassThru passThru;
+        passThru.origFunc = func;
+        passThru.origData = data;
+        getCurlContext()->provider = "local";
+        bool ret = forEveryEmptyBlockByNumber(passThruFunction, &passThru, start, count, skip);
+        getCurlContext()->provider = "binary";
+        return ret;
     }
 
     //-------------------------------------------------------------------------
