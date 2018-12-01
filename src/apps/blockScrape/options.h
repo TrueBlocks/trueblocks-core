@@ -53,5 +53,5 @@ extern bool visitNonEmptyBlock(CBlock& node, void *data);
 extern bool visitEmptyBlock(CBlock& node, void *data);
 
 //-------------------------------------------------------------------------
-extern bool establishFullBlockIndex(void);
+extern bool establishBlockIndex(void);
 extern bool freshenLocalCache(COptions& options);
