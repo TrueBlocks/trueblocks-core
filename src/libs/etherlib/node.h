@@ -105,7 +105,9 @@ namespace qblocks {
     extern bool forEveryBlock                (BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
     extern bool forEveryBlockOnDisc          (BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
     extern bool forEveryNonEmptyBlockOnDisc  (BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
+    extern bool forEveryNonEmptyBlockByNumber(UINT64VISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
     extern bool forEveryEmptyBlockOnDisc     (BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
+    extern bool forEveryEmptyBlockByNumber   (UINT64VISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
 
     //-------------------------------------------------------------------------
     // forEvery functions

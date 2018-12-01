@@ -9,14 +9,10 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    bool deepCheck;
-    bool noEmpty;
-    bool emptyOnly;
-    int skip;
-    string_q mode;
-    FILE *fp;
-    uint64_t lastBlock;
     uint64_t startBlock;
+    bool showStats;
+    bool empty;
+    bool full;
 
     COptions(void);
     ~COptions(void);
@@ -28,3 +24,7 @@ public:
 //-----------------------------------------------------------------------------
 extern bool visitNonEmptyBlock(CBlock& node, void *data);
 extern bool visitEmptyBlock(CBlock& node, void *data);
+
+//-----------------------------------------------------------------------------
+extern void handle_check(COptions& options);
+extern void handle_stats(COptions& options);

@@ -1,0 +1,8 @@
+blockMan argc: 2 [1:--stats] 
+blockMan --stats 
+Starting scan...
+fullBlocks stats:
+	Full blocks:	3000000
+	Empty blocks:	999999
+	Total blocks:	3999999
+...done
