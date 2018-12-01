@@ -18,16 +18,16 @@ int main(int argc, const char *argv[]) {
     CStringArray commands;
     explode(commands, options.commandList, '\n');
     if (commands.empty()) commands.push_back("--noop");
-    string_q command = commands[0];
-    if (!options.parseArguments(command))
-        return 0;
+    for (auto command : commands) {
+        if (!options.parseArguments(command))
+            return 0;
 
-    cout << bGreen << "Scraping new blocks..." << "\n" << cOff;
-    if (!freshenLocalCache(options))
-        cout << "\tThe tool ended with an error.";
-    cout << bGreen << "...done\n" << cOff;
+        cout << bGreen << "Scraping new blocks..." << "\n" << cOff;
+        if (!freshenLocalCache(options))
+            cout << "\tThe tool ended with an error.";
+        cout << bGreen << "...done\n" << cOff;
+    }
 
     etherlib_cleanup();
-
     return 0;
 }

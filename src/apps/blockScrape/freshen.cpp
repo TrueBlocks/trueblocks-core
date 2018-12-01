@@ -1,9 +1,3 @@
-//Store blooms for miners in empty_blocks folder
-/*
-should be an option to write out winning miner addresses for empty blocks
- options:
-    --bitMax
- */
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
  * Copyright (c) 2017 by Great Hill Corporation.
