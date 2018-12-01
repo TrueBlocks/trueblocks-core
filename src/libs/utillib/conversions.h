@@ -22,6 +22,7 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     using timestamp_t = int64_t;
     using blknum_t    = uint64_t;
+    using blkrange_t  = pair<blknum_t, blknum_t>;
     using txnum_t     = uint64_t;
     using gas_t       = uint64_t;
     using address_t   = string_q;
@@ -31,15 +32,16 @@ namespace qblocks {
     using topic_t     = biguint_t;
 
     //-------------------------------------------------------------------------
-    using CStringArray   = vector < string_q  >;
-    using CBlockNumArray = vector < uint64_t  >;
-    using CUintArray     = vector < uint64_t  >;
-    using CIntArray      = vector < int64_t   >;
-    using CBigUintArray  = vector < biguint_t  >;
-    using CBigIntArray   = vector < bigint_t   >;
-    using CAddressArray  = vector < address_t >;
-    using CBloomArray    = vector < bloom_t   >;
-    using CTopicArray    = vector < topic_t   >;
+    using CStringArray     = vector < string_q   >;
+    using CBlockNumArray   = vector < uint64_t   >;
+    using CBlockRangeArray = vector < blkrange_t >;
+    using CUintArray       = vector < uint64_t   >;
+    using CIntArray        = vector < int64_t    >;
+    using CBigUintArray    = vector < biguint_t  >;
+    using CBigIntArray     = vector < bigint_t   >;
+    using CAddressArray    = vector < address_t  >;
+    using CBloomArray      = vector < bloom_t    >;
+    using CTopicArray      = vector < topic_t    >;
 
     //-------------------------------------------------------------------------
     extern bool        str_2_Bool   (const string_q& str);

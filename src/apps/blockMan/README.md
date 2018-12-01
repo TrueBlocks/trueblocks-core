@@ -18,14 +18,9 @@ Using operating system tools such as Linux's `cron` you can easily maintain a  c
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | mode | one of 'check,' 'list,' 'refreshen' |
+|  | mode | one of 'check,' 'list |
 | -c | --check val | check that empty blocks are empty, and visa versa. Optionally start at :block |
 | -l | --list | list all non-empty block numbers |
-| -r | --refreshen | remove the full-block index and re-create it |
-| -d | --deep | when doing 'check', do a deep check |
-| -e | --emptyOnly | when doing 'check', skip non-empty blocks (i.e. check only blocks with no transactions) |
-| -n | --noEmpty | when doing 'check', skip empty blocks (i.e. check only blocks with transactions) |
-| -i | --indexOnly | only create the index, don't save any blocks (applies only to --refreshen mode) |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
