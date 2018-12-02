@@ -17,6 +17,7 @@
 static COption params[] = {
     COption("-at:<timestamp>",                 "Report the price since nearest five minutes to the given timestamp"),
     COption("-current",                        "Report on the current price (i.e. -at:now)"),
+    COption("-data",                           "Export prices as JSON data"),
     COption("-freshen",                        "Freshen database (append new data)"),
     COption("-period:<5|15|30|*120|240|1440>", "Display prices in this increment. One of [5|15|30|120*|240|1440]"),
     COption("-pair:<val>",                     "Which price pair to freshen or list (see Poloniex)"),
@@ -40,6 +41,10 @@ bool COptions::parseArguments(string_q& command) {
 
         if (arg == "-f" || arg == "--freshen") {
             freshen = true;
+
+        } else if (arg == "-d" || arg == "--data") {
+            // we don't have to do anything, simply handling the option
+            // enables the behavour. Don't remove.
 
         } else if (startsWith(arg, "-a:") || startsWith(arg, "--at:")) {
             arg = substitute(substitute(orig, "-a:", ""), "--at:", "");
