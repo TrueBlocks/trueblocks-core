@@ -22,7 +22,7 @@ You may optionally specify one or more blocks at which to report.
 | -b | --byAcct | consider each address an ERC20 token except the last, whose balance is reported for each token |
 | -d | --data | render results as tab delimited data (for example, to build a cap table) |
 | -l | --list fn | an alternative way to specify an address_list, place one address per line in the file 'fn' |
-| -n | --noZero | suppress the display of zero balance accounts |
+| -n | --nozero | suppress the display of zero balance accounts |
 | -t | --total | if more than one balance is requested, display a total as well |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
