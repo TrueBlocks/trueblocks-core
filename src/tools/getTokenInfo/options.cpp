@@ -19,7 +19,7 @@ static COption params[] = {
     COption("-byAcct",       "consider each address an ERC20 token except the last, whose balance is reported for each token"),
     COption("-data",         "render results as tab delimited data (for example, to build a cap table)"),
     COption("-list:<fn>",    "an alternative way to specify an address_list, place one address per line in the file 'fn'"),
-    COption("-noZero",       "suppress the display of zero balance accounts"),
+    COption("-nozero",       "suppress the display of zero balance accounts"),
     COption("-total",        "if more than one balance is requested, display a total as well"),
     COption("@info:<val>",   "retreive information [name|decimals|totalSupply|version|symbol|all] about the token"),
     COption("",              "Retrieve the token balance(s) for one or more addresses at the given (or "
@@ -41,7 +41,7 @@ bool COptions::parseArguments(string_q& command) {
         if (arg == "-d" || arg == "--data") {
             asData = true;
 
-        } else if (arg == "-n" || arg == "--noZero") {
+        } else if (arg == "-n" || arg == "--nozero") {
             noZero = true;
 
         } else if (arg == "-t" || arg == "--total") {
