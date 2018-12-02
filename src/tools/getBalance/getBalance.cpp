@@ -75,7 +75,7 @@ bool visitBlock(uint64_t blockNum, void *data) {
         return usage("Block " + uint_2_Str(blockNum) + " is later than the last valid block " + late + ". Quitting...");
     }
 
-    biguint_t bal = getBalance(options->state.curAddr, blockNum, false);
+    wei_t bal = getBalanceAt(options->state.curAddr, blockNum);
     options->state.totalVal += bal;
 
     string_q dispBal = options->getDispBal(blockNum, bal, options->asData);
