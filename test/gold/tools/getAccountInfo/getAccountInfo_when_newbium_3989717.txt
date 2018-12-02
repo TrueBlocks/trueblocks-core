@@ -1,3 +1,3 @@
-isContract argc: 3 [1:0x814964b1bceAf24e26296D031EaDf134a2Ca4105] [2:-w] 
-isContract 0x814964b1bceAf24e26296D031EaDf134a2Ca4105 -w 
+getAccountInfo argc: 3 [1:0x814964b1bceAf24e26296D031EaDf134a2Ca4105] [2:-w] 
+getAccountInfo 0x814964b1bceAf24e26296D031EaDf134a2Ca4105 -w 
 whenDeployed(0x814964b1bceaf24e26296d031eadf134a2ca4105): 3989717
