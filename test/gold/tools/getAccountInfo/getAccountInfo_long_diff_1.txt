@@ -1,0 +1,3 @@
+getAccountInfo argc: 4 [1:0x26c4e381ffbdc825be9b986c3ba40525f0771e8d] [2:0x26c4e381ffbdc825be9b986c3ba40525f0771e8d] [3:--nodiff] 
+getAccountInfo 0x26c4e381ffbdc825be9b986c3ba40525f0771e8d 0x26c4e381ffbdc825be9b986c3ba40525f0771e8d --nodiff 
+Code at address '0x26c4e381ffbdc825be9b986c3ba40525f0771e8d) and ((0x26c4e381ffbdc825be9b986c3ba40525f0771e8d) are identical

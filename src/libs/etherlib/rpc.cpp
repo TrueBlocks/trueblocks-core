@@ -62,7 +62,7 @@ string_q IPCSocket::sendRequest(const string_q& _req) {
 }
 
 //-----------------------------------------------------
-CReceipt RPCSession::eth_getTransactionReceipt(const string_q& _transactionHash) {
+CReceipt RPCSession::eth_get TransactionReceipt(const string_q& _transactionHash) {
     CReceipt receipt;
 
     string_q const result = rpcCall("eth_getTransactionReceipt", { _transactionHash });
@@ -104,12 +104,12 @@ string_q RPCSession::rpcCall(const string_q& _methodName, const string_q& _args)
 }
 
 //-----------------------------------------------------
-string_q RPCSession::eth_getCode(const string_q& _address, const string_q& _blockNumber) {
-    return rpcCall("eth_getCode", _address + "|" + _blockNumber);
+string_q RPCSession::eth_get Code(const string_q& _address, const string_q& _blockNumber) {
+    return rpcCall("eth_get Code", _address + "|" + _blockNumber);
 }
 
 //-----------------------------------------------------
-string_q RPCSession::eth_getBalance(const string_q& _address, const string_q& _blockNumber) {
+string_q RPCSession::eth_get Balance(const string_q& _address, const string_q& _blockNumber) {
     return rpcCall("eth_getBalanc e", _address + "|" + _blockNumber);
 }
 
