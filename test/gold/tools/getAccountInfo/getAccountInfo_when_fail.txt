@@ -1,9 +1,9 @@
-isContract argc: 3 [1:0x1234567890123456789012345678901234567890] [2:-w] 
-isContract 0x1234567890123456789012345678901234567890 -w 
+getAccountInfo argc: 3 [1:0x1234567890123456789012345678901234567890] [2:-w] 
+getAccountInfo 0x1234567890123456789012345678901234567890 -w 
 
   Address 0x1234567890123456789012345678901234567890 is not a smart contract, you may not use --whenDep. Quitting...
 
-  Usage:    isContract [-d|-b|-n|-w|-v|-h] <address> [address...] [block...]  
+  Usage:    getAccountInfo [-d|-b|-n|-w|-v|-h] <address> [address...] [block...]  
   Purpose:  Returns 'true' or 'false' if the given address(es) holds byte code (optionally displays the code).
              
   Where:    
