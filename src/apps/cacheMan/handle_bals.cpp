@@ -54,7 +54,7 @@ bool handleCacheBals(COptions& options) {
         for (uint32_t d = 0 ; d < dataArray.size() ; d++) {
             const CAcctCacheItem *item  = &dataArray[d];
             if (item->blockNum >= watch->firstBlock) {
-                bal = getBalance(watch->address, item->blockNum, false);
+                bal = getBalanceAt(watch->address, item->blockNum);
                 if (bal != lastBal) {
                     balCache << item->blockNum << watch->address << bal;
                     balCache.flush();
