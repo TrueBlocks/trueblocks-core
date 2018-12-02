@@ -350,15 +350,58 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-------------------------------------------------------------------------
-    bool getCode(const string_q& addr, string_q& theCode) {
-        string_q a = startsWith(addr, "0x") ? extract(addr, 2) : addr;
-        a = padLeft(a, 40, '0');
-        theCode = callRPC("eth_getCode", "[\"0x" + a +"\"]", false);
-        return theCode.length() != 0;
+    wei_t getBalanceAt(const string_q& addr, blknum_t num) {
+        if (num == NOPOS)
+            num = getLatestBlockFromClient();
+        string_q params = "[\"[{ADDR}]\",\"[{NUM}]\"]";
+        replace(params, "[{ADDR}]", str_2_Addr(addr));
+        replace(params, "[{NUM}]",  uint_2_Hex(num));
+        return str_2_Wei(callRPC("eth_getBalance", params, false));
     }
 
     //-------------------------------------------------------------------------
-    bool getStorageAt(const string_q& addr, uint64_t pos, string_q& theStorage) {
+    bool nodeHasBalances(void) {
+        // Account 0xa1e4380a3b1f749673e270229993ee55f35663b4 owned 2000000000000000000000 (2000 ether)
+        // at block zero. If the node is holding balances (i.e. its an archive node), then it will
+        // return that value for block 1 as well. Otherwise, it will return a zero balance.
+        // NOTE: Unimportantly, account 0xa1e4380a3b1f749673e270229993ee55f35663b4 transacted in the first ever transaction.
+        return getBalanceAt("0xa1e4380a3b1f749673e270229993ee55f35663b4", 1) == str_2_Wei("2000000000000000000000");
+    }
+
+    //-------------------------------------------------------------------------
+    string_q getCodeAt(const string_q& addr, blknum_t num) {
+        if (num == NOPOS)
+            num = getLatestBlockFromClient();
+        string_q params = "[\"[{ADDR}]\",\"[{NUM}]\"]";
+        replace(params, "[{ADDR}]", str_2_Addr(addr));
+        replace(params, "[{NUM}]",  uint_2_Hex(num));
+        return callRPC("eth_getCode", params, false);
+    }
+
+    //-------------------------------------------------------------------------
+    bool isContractAt(const address_t& addr, blknum_t num) {
+        return !substitute(getCodeAt(addr, num), "0x", "").empty();
+    }
+
+    //-------------------------------------------------------------------------
+    uint64_t getNonceAt(const address_t& addr, blknum_t num) {
+        if (num == NOPOS)
+            num = getLatestBlockFromClient();
+        string_q params = "[\"[{ADDR}]\",\"[{NUM}]\"]";
+        replace(params, "[{ADDR}]", str_2_Addr(addr));
+        replace(params, "[{NUM}]",  uint_2_Hex(num));
+        return str_2_Uint(callRPC("eth_getTransactionCount", params, false));
+    }
+
+    //-------------------------------------------------------------------------
+    string_q getStorageAt(const string_q& addr, uint64_t pos, blknum_t num) {
+        if (num == NOPOS)
+            num = getLatestBlockFromClient();
+        string_q params = "[\"[{ADDR}]\",\"[{POS}]\",\"[{NUM}]\"]";
+        replace(params, "[{ADDR}]", str_2_Addr(addr));
+        replace(params, "[{POS}]",  uint_2_Hex(pos));
+        replace(params, "[{NUM}]",  uint_2_Hex(num));
+        return callRPC("eth_getStorageAt", params, false);
         // Calculating the correct position depends on the storage to retrieve. Consider the following
         // contract deployed at 0x295a70b2de5e3953354a6a8344e616ed314d7251 by address
         // 0x391694e7e0b0cce554cb130d723a9d27458f9298.
@@ -375,7 +418,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         //
         // Retrieving the value of pos0 is straight forward:
         //
-        // curl -X POST --data '{"jsonrpc":"2.0", "method": "eth_getStorageAt", "params": ["0x295a70b2de5e3953354a6a8344e616ed314d7251", "0x0", "latest"],
+        // curl -X POST --data '{"jsonrpc":"2.0", "method": "eth_get StorageAt", "params": ["0x295a70b2de5e3953354a6a8344e616ed314d7251", "0x0", "latest"],
         //      "id": 1}' localhost:8545
         //
         // returns {"jsonrpc":"2.0","id":1,"result":"0x00000000000000000000000000000000000000000000000000000000000004d2"}
@@ -399,16 +442,15 @@ extern void registerQuitHandler(QUITHANDLER qh);
         //
         // Now to fetch the storage:
         //
-        //      curl -X POST --data '{"jsonrpc":"2.0", "method": "eth_getStorageAt", "params": ["0x295a70b2de5e3953354a6a8344e616ed314d7251",
+        //      curl -X POST --data '{"jsonrpc":"2.0", "method": "eth_get StorageAt", "params": ["0x295a70b2de5e3953354a6a8344e616ed314d7251",
         //                  "0x6661e9d6d8b923d5bbaab1b96e1dd51ff6ea2a93520fdc9eb75d059238b8c5e9", "latest"], "id": 1}' localhost:8545
         //
         // returns: {"jsonrpc":"2.0","id":1,"result":"0x000000000000000000000000000000000000000000000000000000000000162e"}
         //
-        return false;
     }
 
     //-------------------------------------------------------------------------
-    uint64_t addFilter(address_t addr, const CTopicArray& topics, blknum_t block) {
+    uint64_t addFilter(address_t addr, const CTopicArray& topics, blknum_t num) {
         // Creates a filter object, based on filter options, to notify when the state changes (logs). To check if the state has
         // changed, call eth_getFilterChanges.
         //
@@ -440,24 +482,6 @@ extern void registerQuitHandler(QUITHANDLER qh);
         //      }]
         //  Returns QUANTITY - A filter id.
         return 0;
-    }
-
-    //-------------------------------------------------------------------------
-    biguint_t getBalance(const string_q& addr, blknum_t blockNum, bool isDemo) {
-        string_q a = extract(addr, 2);
-        a = padLeft(a, 40, '0');
-        string_q ret = callRPC("eth_getBalance", "[\"0x" + a + "\",\"" + uint_2_Hex(blockNum) + "\"]", false);
-        return str_2_Wei(ret);
-    }
-
-    //-------------------------------------------------------------------------
-    bool nodeHasBalances(void) {
-        // Account 0xa1e4380a3b1f749673e270229993ee55f35663b4 owned 2000000000000000000000 (2000 ether)
-        // at block zero. If the node is holding balances (i.e. its an archive node), then it will
-        // return that value for block 1 as well. Otherwise, it will return a zero balance.
-        // NOTE: Unimportantly, account 0xa1e4380a3b1f749673e270229993ee55f35663b4 transacted in the first ever transaction.
-        return getBalance("0xa1e4380a3b1f749673e270229993ee55f35663b4", 1, false) ==
-                            str_2_Wei("2000000000000000000000");
     }
 
     //-------------------------------------------------------------------------
