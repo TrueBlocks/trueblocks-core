@@ -76,7 +76,7 @@ bool COptions::parseArguments(string_q& command) {
     exclusions = toLower(getGlobalConfig("blockScrape")->getConfigStr ("exclusions", "list",      ""));
 
     // Make sure the full block index exists. If not, rebuild it
-    establishFullBlockIndex();
+    establishBlockIndex();
 
     blknum_t cache, client;
     getLatestBlocks(cache, client);

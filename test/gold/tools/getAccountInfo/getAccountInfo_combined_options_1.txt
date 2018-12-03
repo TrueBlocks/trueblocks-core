@@ -1,0 +1,20 @@
+getAccountInfo argc: 5 [1:0x26c4e381ffbdc825be9b986c3ba40525f0771e8d] [2:0x26c4e381ffbdc825be9b986c3ba40525f0771e8d] [3:-b] [4:--nodiff] 
+getAccountInfo 0x26c4e381ffbdc825be9b986c3ba40525f0771e8d 0x26c4e381ffbdc825be9b986c3ba40525f0771e8d -b --nodiff 
+
+  Choose only one of --nodiff and --display.
+
+
+  Usage:    getAccountInfo [-d|-b|-n|-w|-v|-h] <address> [address...] [block...]  
+  Purpose:  Returns 'true' or 'false' if the given address(es) holds byte code (optionally displays the code).
+             
+  Where:    
+	address_list          one or more addresses (0x...) from which to retrieve balances (required)
+	block_list            an optional list of one or more blocks at which to report balances, defaults to 'latest'
+	-d  (--data)          display results as data (addr <tab> is_contract)
+	-b  (--bytes)         display the byte code at the address(es)
+	-n  (--nodiff)        return 'true' if (exactly) two Ethereum addresses have identical code
+	-w  (--whenDep)       for smart contracts only, return the first block when the address had code
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Powered by QBlocks

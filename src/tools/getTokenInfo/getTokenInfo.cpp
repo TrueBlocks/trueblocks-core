@@ -127,7 +127,7 @@ void reportByAccount(COptions& options) {
             cout << "\n  For account: " << bBlue << holder << cOff << "\n";
 
         // For each token contract
-        for (auto token : options.holders) {
+        for (auto token : options.tokens) {
             cnt++;
 
             // For each block
