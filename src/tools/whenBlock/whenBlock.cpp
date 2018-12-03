@@ -33,21 +33,18 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        for (size_t i = 0 ; i < options.requests.size() ; i++) {
-
-            string_q value = options.requests[i];
+        for (auto value : options.requests) {
             string_q mode = nextTokenClear(value, ':');
-
             string_q special;
             if (mode == "special") {
                 mode = "block";
                 special = nextTokenClear(value, '|');
                 if (str_2_Uint(value) > getLatestBlockFromClient()) {
-                    cout << "The block number you requested (";
-                    cout << cTeal << special << ": " << value << cOff;
-                    cout << ") is after the latest block (";
-                    cout << cTeal << (isTestMode() ? "TESTING" : uint_2_Str(getLatestBlockFromClient())) << cOff;
-                    cout << "). Quitting...\n";
+                    cerr << "The block number you requested (";
+                    cerr << cTeal << special << ": " << value << cOff;
+                    cerr << ") is after the latest block (";
+                    cerr << cTeal << (isTestMode() ? "TESTING" : uint_2_Str(getLatestBlockFromClient())) << cOff;
+                    cerr << "). Quitting...\n";
                     return 0;
                 }
             }
@@ -58,8 +55,8 @@ int main(int argc, const char *argv[]) {
 
             } else if (mode == "date") {
                 if (!fileExists(miniBlockCache)) {
-                    cout << "Looking up blocks by date is not supported without a miniBlock ";
-                    cout << "database, which is an advanced feature.\n";
+                    cerr << "Looking up blocks by date is not supported without a miniBlock ";
+                    cerr << "database, which is an advanced feature.\n";
 
                 } else {
                     time_q date = ts_2_Date((timestamp_t)str_2_Uint(value));
@@ -94,15 +91,23 @@ int main(int argc, const char *argv[]) {
 //---------------------------------------------------------------
 static CMiniBlock *blocks = NULL;
 static uint64_t nBlocks = 0;
-static uint64_t below = ULONG_MAX;
-static uint64_t above = 0;
+static blknum_t lower = ULONG_MAX;
+static blknum_t higher = 0;
 
 //---------------------------------------------------------------
 int findFunc(const void *v1, const void *v2) {
     const CMiniBlock *m1 = (const CMiniBlock *)v1;
     const CMiniBlock *m2 = (const CMiniBlock *)v2;
-    below = (m1->timestamp > m2->timestamp ? m2->blockNumber : below);
-    above = (m1->timestamp < m2->timestamp ? m2->blockNumber : above);
+    lower  = (m1->timestamp > m2->timestamp ? m2->blockNumber : lower);
+    higher = (m1->timestamp < m2->timestamp ? m2->blockNumber : higher);
+//cout << " b1: " << m1->blockNumber;
+//cout << " (" << m1->timestamp << " - " << ts_2_Date(m1->timestamp);
+//cout << ") b2: " << m2->blockNumber;
+//cout << " (" << m2->timestamp << " - " << ts_2_Date(m2->timestamp);
+//cout << ") d: " << (m1->timestamp - m2->timestamp);
+//cout << " l: " << lower;
+//cout << " h: " << higher << "\n";
+//cout.flush();
     return static_cast<int>(m1->timestamp - m2->timestamp);
 }
 
@@ -157,9 +162,9 @@ bool lookupDate(CBlock& block, const time_q& date) {
         return true;
     }
 
-    //  cout << mini.timestamp << " is somewhere between " << below << " and " << above << "\n";
+//cout << mini.timestamp << " is somewhere between " << lower << " and " << higher << "\n";
     CBlockFinder finder(mini.timestamp);
-    forEveryBlockOnDisc(lookCloser, &finder, below, above-below);
+    forEveryBlockOnDisc(lookCloser, &finder, lower, higher-lower);
     queryBlock(block, uint_2_Str(finder.found), false, false);
     return true;
 }
