@@ -1,11 +1,11 @@
-qblocks argc: 3 [1:contract] [2:-h] 
-qblocks contract -h 
-calling: isContract -h  --qblocks
+qblocks argc: 3 [1:accountinfo] [2:-h] 
+qblocks accountinfo -h 
+calling: getAccountInfo -h  --qblocks
 
-isContract argc: 3 [1:-h] [2:--qblocks] 
-isContract -h --qblocks 
+getAccountInfo argc: 3 [1:-h] [2:--qblocks] 
+getAccountInfo -h --qblocks 
 
-  Usage:    qblocks contract [-d|-b|-n|-w|-v|-h] <address> [address...] [block...]  
+  Usage:    qblocks accountinfo [-d|-b|-n|-w|-v|-h] <address> [address...] [block...]  
   Purpose:  Returns 'true' or 'false' if the given address(es) holds byte code (optionally displays the code).
              
   Where:    

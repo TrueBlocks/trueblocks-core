@@ -46,7 +46,7 @@ namespace qblocks {
         string_q from = escapePath(fromIn);
         string_q to   = escapePath(toIn);
 
-        const string_q copyCmd = "cp -pf";
+        const string_q copyCmd = "cp -f";
         string_q command = copyCmd + " " + from + " " + to;
         if (system(command.c_str())) { }  // do not remove. The test just silences compiler warnings
         return static_cast<int>(fileExists(to));

@@ -33,26 +33,30 @@ namespace qblocks {
     extern size_t   getTraceCount           (const hash_t& hashIn);
 
     //-------------------------------------------------------------------------
+    extern wei_t    getBalanceAt            (const address_t& addr, blknum_t blockNum=NOPOS);
+    extern string_q getCodeAt               (const address_t& addr, blknum_t blockNum=NOPOS);
+    extern string_q getStorageAt            (const address_t& addr, uint64_t pos, blknum_t blockNum=NOPOS);
+    extern uint64_t getNonceAt              (const address_t& addr, blknum_t num=NOPOS);
+
+    //-------------------------------------------------------------------------
     // other methods to access data
     extern bool     getBlock                (CBlock& block,       const hash_t& blockHash);
     extern bool     getTransaction          (CTransaction& trans, const hash_t& txHash);
     extern bool     getTransaction          (CTransaction& trans, const hash_t& blockHash, txnum_t txID);
+    extern bool     isContractAt            (const address_t& addr, blknum_t blockNum=NOPOS);
 
     //-------------------------------------------------------------------------
-    extern bool     queryBlock              (CBlock& block,       const string_q& num, bool needTrace, bool byHash,
-                                                                    size_t& nTraces);
+    extern bool     queryBlock              (CBlock& block,       const string_q& num, bool needTrace, bool byHash, size_t& nTraces);
     extern bool     queryBlock              (CBlock& block,       const string_q& num, bool needTrace, bool byHash);
 
     //-------------------------------------------------------------------------
     // lower level access to the node's responses
-    extern bool     queryRawBlock           (string_q& results,   const string_q& blockNum,
-                                                    bool needTrace, bool hashesOnly);
+    extern bool     queryRawBlock           (string_q& results,   const string_q& blockNum, bool needTrace, bool hashesOnly);
     extern bool     queryRawTransaction     (string_q& results,   const hash_t& txHash);
     extern bool     queryRawReceipt         (string_q& results,   const hash_t& txHash);
     extern bool     queryRawLog             (string_q& results,   const hash_t& hashIn);
     extern bool     queryRawTrace           (string_q& results,   const hash_t& hashIn);
-    extern bool     queryRawLogs            (string_q& results,   const address_t& addr,
-                                                    uint64_t fromBlock, uint64_t toBlock);
+    extern bool     queryRawLogs            (string_q& results,   const address_t& addr, uint64_t fromBlock, uint64_t toBlock);
 
     //-----------------------------------------------------------------------
     extern hash_t   getRawBlock             (blknum_t bn);
@@ -77,13 +81,7 @@ namespace qblocks {
     extern bool     getLatestBlocks         (uint64_t& cache, uint64_t& client);
 
     //-------------------------------------------------------------------------
-    extern bool     getCode                 (const address_t& addr, string_q& theCode);
-    inline string_q getCode                 (const address_t& addr) { string_q ret; getCode(addr, ret); return ret; }  // NOLINT
-    extern bool     getStorageAt            (const address_t& addr, uint64_t pos, string_q&storage);
-    inline string_q getStorageAt            (const address_t& addr, uint64_t pos) { string_q ret; getStorageAt(addr, pos, ret); return ret; }  // NOLINT
     uint64_t        addFilter               (address_t addr, const CTopicArray& topics, blknum_t block);
-    inline bool     isContract              (const address_t& addr) { return !substitute(getCode(addr), "0x", "").empty(); }  // NOLINT
-    extern biguint_t getBalance              (const address_t& addr, blknum_t blockNum, bool isDemo);
     extern bool     getSha3                 (const string_q& hexIn, string_q& shaOut);
     inline string_q getSha3                 (const string_q& hexIn) { string_q ret; getSha3(hexIn,ret); return ret; }  // NOLINT
 
@@ -105,7 +103,9 @@ namespace qblocks {
     extern bool forEveryBlock                (BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
     extern bool forEveryBlockOnDisc          (BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
     extern bool forEveryNonEmptyBlockOnDisc  (BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
+    extern bool forEveryNonEmptyBlockByNumber(UINT64VISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
     extern bool forEveryEmptyBlockOnDisc     (BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
+    extern bool forEveryEmptyBlockByNumber   (UINT64VISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
 
     //-------------------------------------------------------------------------
     // forEvery functions
