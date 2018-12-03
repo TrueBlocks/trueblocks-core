@@ -400,7 +400,7 @@ biguint_t getNodeBal(CBalanceHistoryArray& history, const address_t& addr, blknu
     // This will return 'true' if the node has historical balances - we want to use those
     // balances if they are there
     if (nodeHasBalances())
-        return getBalance(addr, blockNum, false);
+        return getBalanceAt(addr, blockNum);
 
     // If the history is empty, we can try to load the history from a file if it exists...
     string_q binaryFilename = "./balances/" + addr + ".bals.bin";
@@ -463,7 +463,7 @@ biguint_t getNodeBal(CBalanceHistoryArray& history, const address_t& addr, blknu
         return ret;
 
     // We finally fall to the node in case we're near the head
-    return getBalance(addr, blockNum, false);
+    return getBalanceAt(addr, blockNum);
 }
 
 //-----------------------------------------------------------------------

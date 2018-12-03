@@ -482,7 +482,7 @@ bool COptions::loadMonitors(const CToml& config) {
         // cleanup and report on errors
         watch.color   = convertColor(watch.color);
         watch.address = str_2_Addr(toLower(watch.address));
-        watch.nodeBal = getBalance(watch.address, watch.firstBlock-1, false);
+        watch.nodeBal = getBalanceAt(watch.address, watch.firstBlock-1);
         watch.api_spec.method = config.getConfigStr("api_spec", "method", "");
         watch.api_spec.uri = config.getConfigStr("api_spec", "uri", "");
         watch.api_spec.headers = config.getConfigStr("api_spec", "headers", "");

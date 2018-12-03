@@ -20,7 +20,7 @@ static COption params[] = {
     COption("-data",         "render results as tab delimited data"),
     COption("-list:<fn>",    "an alternative way to specify an address_list; place one address per "
                                     "line in the file 'fn'"),
-    COption("-noZero",       "suppress the display of zero balance accounts"),
+    COption("-nozero",       "suppress the display of zero balance accounts"),
     COption("-total",        "if more than one balance is requested, display a total as well."),
     COption("-changes",      "only report a balance when it changes from one block to the next"),
     COption("",              "Retrieve the balance (in wei) for one or more addresses at the given "
@@ -41,7 +41,7 @@ bool COptions::parseArguments(string_q& command) {
         if (arg == "-d" || arg == "--data") {
             asData = true;
 
-        } else if (arg == "-n" || arg == "--noZero") {
+        } else if (arg == "-n" || arg == "--nozero") {
             noZero = true;
 
         } else if (arg == "-t" || arg == "--total") {
