@@ -82,8 +82,7 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     uint64_t        addFilter               (address_t addr, const CTopicArray& topics, blknum_t block);
-    extern bool     getSha3                 (const string_q& hexIn, string_q& shaOut);
-    inline string_q getSha3                 (const string_q& hexIn) { string_q ret; getSha3(hexIn,ret); return ret; }  // NOLINT
+    string_q        getSha3                 (const string_q& hexIn);
 
     //-------------------------------------------------------------------------
     extern string_q getJsonFilename         (uint64_t num);
