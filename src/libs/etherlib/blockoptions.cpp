@@ -84,7 +84,7 @@ bool CHistoryOptions::hasHistory(void) const {
         return true;
 
     if (nodeHasBalances())
-        return false;
+        return true;
 
     blknum_t n_blocks = getGlobalConfig()->getConfigInt("history", "n_blocks", 250);
     return (newestBlock - oldestBlock) < n_blocks;
