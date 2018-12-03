@@ -76,6 +76,8 @@ int main(int argc, const char *argv[]) {
                                     "[{BLOCKNUMBER}\\t][{DATE}]\\n" :
                                     "block #[{BLOCKNUMBER}][ : {TIMESTAMP}][ : {DATE}]\\n");
             string_q fmt = getGlobalConfig()->getDisplayStr(options.alone, def);
+            // we never want to print JSON
+            if (fmt.empty()) fmt = substitute(def, "\\n" , "\n");
             if (verbose && !special.empty()) {
                 string_q sp = "(" + special + ")";
                 replace(fmt, "{BLOCKNUMBER}", "{BLOCKNUMBER} " + sp);
