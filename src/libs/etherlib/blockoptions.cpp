@@ -83,7 +83,7 @@ bool CHistoryOptions::hasHistory(void) const {
     if (isTestMode())  // we don't report this error during testing
         return true;
 
-    if (!nodeHasBalances())
+    if (nodeHasBalances())
         return false;
 
     blknum_t n_blocks = getGlobalConfig()->getConfigInt("history", "n_blocks", 250);
