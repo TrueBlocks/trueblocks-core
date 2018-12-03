@@ -135,6 +135,9 @@ bool COptions::parseArguments(string_q& command) {
         holders.push_back(lastItem);
     }
 
+    if (!tokenInfo.empty() && !holders.empty())
+        return usage("When asking for token info, use only a single token address. Quitting...");
+
     if (!blocks.hasBlocks())
         blocks.numList.push_back(newestBlock);  // use 'latest'
 
