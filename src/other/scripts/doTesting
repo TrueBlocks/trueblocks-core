@@ -1,9 +1,6 @@
 cd ..
 export QUICKBLOCKS=`pwd`
 
-cp -pf $QUICKBLOCKS/src/other/nameFix/custom_names.txt ~/.quickBlocks/cache/names/
-cp -pf $QUICKBLOCKS/src/other/nameFix/custom_names.txt /Volumes/Samsung_T3/scraper/names/
-
 cd $QUICKBLOCKS/test/
 
 echo "Removing working folder test cases..."
