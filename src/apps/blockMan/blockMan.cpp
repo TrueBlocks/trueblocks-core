@@ -20,11 +20,15 @@ int main(int argc, const char *argv[]) {
     for (auto command : commands) {
         if (!options.parseArguments(command))
             return 0;
+
         cerr << bGreen << "Starting scan...\n" << cOff;
-        if (options.showStats)
-            handle_stats(options);
-        else
+
+        if (options.modes & OP_LIST || options.modes & OP_STATS)
+            handle_list(options);
+
+        if (options.modes & OP_CHECK)
             handle_check(options);
+
         cerr << bGreen << "...done\n" << cOff;
     }
 
