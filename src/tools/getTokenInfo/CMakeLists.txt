@@ -89,5 +89,12 @@ run_state_test("getTokenInfo_special_and_block_combination" "0xd26114cd6EE289Acc
 
 run_state_test("getTokenInfo_blockByHash" "0xd26114cd6ee289accf82350c8d8487fedb8a0c07" " 0xcfb98637bcae43c13323eaa1731ced2b716962fd" " 0x45205b0bdb6c9cc9bf0eb3753ae98175c563389b41b2d4a2178593a3415772c1" " 0x966c946dff292e4e5d91169f3007c3c28cd50ca614b18db601806c486f9e6e87")
 
+run_test("getTokenInfo_info_name"        "0xd26114cd6ee289accf82350c8d8487fedb8a0c07" " --info " " name")
+run_test("getTokenInfo_info_totalSupply" "0xd26114cd6ee289accf82350c8d8487fedb8a0c07" " --info " " totalSupply")
+run_test("getTokenInfo_info_decimals"    "0xd26114cd6ee289accf82350c8d8487fedb8a0c07" " --info " " decimals")
+run_test("getTokenInfo_info_version"     "0xd26114cd6ee289accf82350c8d8487fedb8a0c07" " --info " " version")
+run_test("getTokenInfo_info_symbol"      "0xd26114cd6ee289accf82350c8d8487fedb8a0c07" " --info " " symbol")
+run_test("getTokenInfo_info_all"         "0xd26114cd6ee289accf82350c8d8487fedb8a0c07" " --info " " all")
+
 # Installation steps
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)
