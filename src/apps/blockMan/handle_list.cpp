@@ -13,11 +13,11 @@ void handle_list(COptions& options) {
 
     CStatistics stats(&options);
     if (options.incEmpty) {
-        forEveryEmptyBlockByNumber(listEmptyBlocks, &stats, options.startBlock, options.nBlocks);
+        forEveryEmptyBlockByNumber(listEmptyBlocks, &stats, options.startBlock, options.nBlocks, options.skip);
     }
 
     if (options.incFull) {
-        forEveryNonEmptyBlockByNumber(listFullBlocks, &stats, options.startBlock, options.nBlocks);
+        forEveryNonEmptyBlockByNumber(listFullBlocks, &stats, options.startBlock, options.nBlocks, options.skip);
     }
 
     if (options.modes & OP_STATS) {
