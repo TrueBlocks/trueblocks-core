@@ -127,7 +127,9 @@ namespace qblocks {
     #define fullBlockIndex (blockCachePath("fullBlocks.bin"))
     #define accountIndex   (blockCachePath("accountTree.bin"))
     #define miniBlockCache (blockCachePath("miniBlocks.bin"))
+#ifdef MINI_TRANS
     #define miniTransCache (blockCachePath("miniTrans.bin"))
+#endif
     #define blockFolder    (blockCachePath("blocks/"))
     #define bloomFolder    (blockCachePath("blooms/"))
     extern biguint_t weiPerEther;

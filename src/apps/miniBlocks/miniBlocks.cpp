@@ -7,7 +7,11 @@
 #include "options.h"
 #include "reporter.h"
 
+#ifdef MINI_TRANS
 extern bool checkMiniBlocks(CMiniBlock& block, const CMiniTrans *trans, void *data);
+#else
+extern bool checkMiniBlocks(CMiniBlock& block, void *data);
+#endif
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
@@ -60,6 +64,8 @@ int main(int argc, const char *argv[]) {
                 }
 
                 if (!isTestMode()) {  // only when not testing, otherwise way too many
+#ifdef MINI_TRANS
+#error
                     uint64_t cnt = 0;
                     CArchive miniTxCache(READING_ARCHIVE);  // we only ever read the current cache
                     if (miniTxCache.Lock(miniTransCache, binaryReadOnly, LOCK_NOWAIT)) {
@@ -78,6 +84,7 @@ int main(int argc, const char *argv[]) {
                         }
                         miniTxCache.Release();
                     }
+#endif
                 }
 
             } else if (mode == "freshen") {
@@ -86,15 +93,19 @@ int main(int argc, const char *argv[]) {
                 if (!reporter.miniB.Lock(miniBlockCache, openMode, LOCK_WAIT))
                     return usage(reporter.miniB.LockFailure());
 
+#ifdef MINI_TRANS
                 openMode = (fileExists(miniTransCache) ? "a+" : binaryWriteCreate);
                 if (!reporter.miniT.Lock(miniTransCache, openMode, LOCK_WAIT))
                     return usage(reporter.miniT.LockFailure());
+#endif
 
                 if (openMode == "a+")
                     reporter.getLastBlock(options.maxBlocks);
                 forEveryNonEmptyBlockOnDisc(buildMiniBlock, &reporter, reporter.firstBlock(), reporter.size());
                 reporter.miniB.Release();
+#ifdef MINI_TRANS
                 reporter.miniT.Release();
+#endif
                 if (reporter.size())
                     cerr << "\n";
                 reporter.finalReport();
@@ -103,9 +114,11 @@ int main(int argc, const char *argv[]) {
                 uint64_t fSize = fileSize(miniBlockCache);
                 cerr << "  miniBlocks: " << (fSize/oSize) << " fileSize:" << fSize << " itemSize:" << oSize << "\n";
 
+#ifdef MINI_TRANS
                 oSize = sizeof(CMiniTrans);
                 fSize = fileSize(miniTransCache);
                 cerr << "  miniTrans: " << (fSize/oSize) << " fileSize:" << fSize << " itemSize:" << oSize << "\n";
+#endif
             }
         }
     }
@@ -153,6 +166,7 @@ bool buildMiniBlock(CBlock& block, void *data) {
     lockSection(false);
     reporter->sizeB += (uint64_t)sizeof(CMiniBlock);
 
+#ifdef MINI_TRANS
     // Write the transactions
     for (uint32_t i = 0 ; i < block.transactions.size() && !shouldQuit() ; i++) {
         CMiniTrans mini2(&block.transactions[i]);
@@ -162,6 +176,7 @@ bool buildMiniBlock(CBlock& block, void *data) {
         lockSection(false);
         reporter->sizeT += (uint64_t)sizeof(CMiniTrans);
     }
+#endif
 
     // Keep track of the start of the next block
     // Order matters!

@@ -27,9 +27,7 @@ namespace qblocks {
         blockNumber = block->blockNumber;
         timestamp   = block->timestamp;
         firstTrans  = 0;
-#ifdef MINI_TRANS
         nTrans      = 0;
-#endif
     }
 
     //--------------------------------------------------------------------------
@@ -45,9 +43,7 @@ namespace qblocks {
         os << "blockNumber: " << blockNumber << " ";
         os << "timestamp: "   << timestamp   << " ";
         os << "firstTrans: "  << firstTrans  << " ";
-#ifdef MINI_TRANS
         os << "nTrans: "      << nTrans      << " ";
-#endif
         return os.str().c_str();
     }
 
@@ -55,9 +51,7 @@ namespace qblocks {
     bool CMiniBlock::operator==(const CBlock& b) const {
         if (b.blockNumber         != blockNumber) return false;
         if (b.timestamp           != timestamp) return false;
-#ifdef MINI_TRANS
         if (b.transactions.size() != nTrans) return false;
-#endif
         return true;
     }
 
@@ -271,6 +265,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------
+/*
     bool forEveryFullBlockInMemory(BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
 
         CInMemoryCache *cache = getTheCache();
@@ -318,11 +313,12 @@ namespace qblocks {
     bool forOnlyMiniBlocks(MINIBLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
         return true;
     }
+*/
 
-#ifdef MINI_TRANS
-    bool forOnlyMiniTransactions(MINITRANSVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
-        return true;
-    }
-#endif
+//#ifdef MINI_TRANS
+//    bool c(MINITRANSVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
+//        return true;
+//    }
+//#endif
 
 }  // namespace qblocks
