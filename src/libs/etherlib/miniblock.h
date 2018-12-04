@@ -13,6 +13,7 @@
  *-------------------------------------------------------------------------------------------*/
 
 #define MINI_TRANS 1
+#undef MINI_TRANS
 namespace qblocks {
 
     //------------------------------------------------------------------------
@@ -21,9 +22,7 @@ namespace qblocks {
         blknum_t    blockNumber;
         timestamp_t timestamp;
         txnum_t     firstTrans;
-#ifdef MINI_TRANS
         txnum_t     nTrans;
-#endif
 
                  CMiniBlock (void);
         explicit CMiniBlock (const CBlock *block);
@@ -90,19 +89,19 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     // function pointer types for forEvery functions
 #ifdef MINI_TRANS
-    typedef bool (*MINIBLOCKVISITFUNC)(CMiniBlock& block, const CMiniTrans *trans, void *data);
-    typedef bool (*MINITRANSVISITFUNC)(CMiniTrans& trans, void *data);
+//    typedef bool (*MINIBLOCKVISITFUNC)(CMiniBlock& block, const CMiniTrans *trans, void *data);
+//    typedef bool (*MINITRANSVISITFUNC)(CMiniTrans& trans, void *data);
 #else
     typedef bool (*MINIBLOCKVISITFUNC)(CMiniBlock& block, void *data);
 #endif
     typedef bool (*BLOCKVISITFUNC)(CBlock& block, void *data);
 
     //-------------------------------------------------------------------------
-    extern bool forEveryFullBlockInMemory    (BLOCKVISITFUNC     func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
+//    extern bool forEveryFullBlockInMemory    (BLOCKVISITFUNC     func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
     extern bool forEveryMiniBlockInMemory    (MINIBLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
-    extern bool forOnlyMiniBlocks            (MINIBLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
+//    extern bool forOnlyMiniBlocks            (MINIBLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
 #ifdef MINI_TRANS
-    extern bool forOnlyMiniTransactions      (MINITRANSVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
+//    extern bool forOnlyMiniTransactions      (MINITRANSVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
 #endif
     extern void clearInMemoryCache           (void);
 

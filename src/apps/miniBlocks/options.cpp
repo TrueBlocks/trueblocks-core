@@ -59,12 +59,18 @@ bool COptions::parseArguments(string_q& command) {
             mode = "freshen|" + mode;
 
         } else if (arg == "-r" || arg == "--refreshen") {
-            if (fileExists(miniBlockCache) || fileExists(miniTransCache)) {
+            if (fileExists(miniBlockCache)
+#ifdef MINI_TRANS
+                || fileExists(miniTransCache)
+#endif
+                ) {
                 cerr << "Are you sure you want to remove the mini-block index? (y=yes)\n> ";
                 int ch = getchar();
                 if (ch == 'y' || ch == 'Y') {
                     remove(miniBlockCache.c_str());
+#ifdef MINI_TRANS
                     remove(miniTransCache.c_str());
+#endif
                 } else {
                     cerr << "Not removed. Quitting.\n";
                     cerr.flush();
@@ -135,10 +141,12 @@ COptions::COptions(void) {
         cerr << "The miniBlockCache (" << miniBlockCache << ") is locked. The program cannot be run. Quitting...\n";
         cerr.flush();
         exit(0);
+#ifdef MINI_TRANS
     } else if (isFileLocked(miniTransCache)) {
         cerr << "The miniTransCache (" << miniTransCache << ") is locked. The program cannot be run. Quitting...\n";
         cerr.flush();
         exit(0);
+#endif
     }
 }
 
