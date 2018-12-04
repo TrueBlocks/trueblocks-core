@@ -6,104 +6,122 @@
 #include "etherlib.h"
 #include "options.h"
 
+//-----------------------------------------------------------------------------
+extern bool checkDups(blknum_t bn, void *data);
 extern bool checkEmptyBlock(blknum_t bn, void *data);
-extern void report(const string_q& str, bool ok, blknum_t bn, uint64_t nTx);
+extern bool checkEmptyBlock2(CBlock& block, void *data);
+extern bool checkNonEmptyBlock(CBlock& node, void *data);
+extern void report(ostream& os, const string_q& str, blknum_t bn, uint64_t nTx);
 //----------------------------------------------------------------------------------
 void handle_check(COptions& options) {
-    blknum_t latest = getLatestBlockFromClient();
 
-    if (options.empty) {
-        forEveryEmptyBlockByNumber(checkEmptyBlock, &options, options.startBlock, latest);
+    if (options.incEmpty) {
+        forEveryEmptyBlockByNumber(checkEmptyBlock, &options, options.startBlock, options.nBlocks, options.skip);
         cout << endl;
     }
 
-    if (options.full) {
-        forEveryNonEmptyBlockOnDisc(visitNonEmptyBlock, &options, options.startBlock, latest);
+    if (options.incFull) {
+        forEveryNonEmptyBlockOnDisc(checkNonEmptyBlock, &options, options.startBlock, options.nBlocks, options.skip);
         cout << endl;
     }
+
+    blknum_t prev = NOPOS;
+    forEveryNonEmptyBlockByNumber(checkDups, &prev, options.startBlock, options.nBlocks, options.skip);
 }
 
 //----------------------------------------------------------------------------------
-bool visitEmptyBlock(CBlock& block, void *data) {
-
-    bool ok = true;
-    ostringstream os;
-    if (block.transactions.size()) {
-        os << "Block [{BN}] has [{NTX}] transactions but is not in the index [{CK}]\n";
-        ok = false;
-    } else {
-        string_q fileName = getBinaryFilename(block.blockNumber);
-        if (fileExists(fileName)) {
-            os << "Block [{BN}] has zero transactions but its file exists in the cache [{CK}]\n";
-            ok = false;
-        }
-        if (block.gasUsed > 0) {
-            os << "Block [{BN}] has zero transactions but uses more than zero gas [{CK}]\n";
-            ok = false;
-        }
-    }
-    if (ok)
-        os << "Block [{BN}] has [{NTX}] transactions [{CK}] ([{CNT}])          \r";
-
-    report(os.str(), ok, block.blockNumber, block.transactions.size());
-
-    return true;
-}
-
-//----------------------------------------------------------------------------------
-bool visitNonEmptyBlock(CBlock& block, void *data) {
-
-    static uint64_t hitCount = 0;
-    ++hitCount;
-
-    bool ok = true;
-    ostringstream os;
-    if (block.transactions.size()) {
-        string_q fileName = getBinaryFilename(block.blockNumber);
-        if (!fileExists(fileName)) {
-            os << "Block [{BN}] has [{NTX}] transactions but is not in the cache [{CK}]\n";
-            ok = false;
-        }
-        if (block.gasUsed == 0) {
-            os << "Block [{BN}] has [{NTX}] transactions but uses no gas [{CK}]\n";
-            ok = false;
-        }
-    } else {
-        os << "Block [{BN}] has zero transactions but is in the index [{CK}]\n";
-        ok = false;
-    }
-    if (ok)
-        os << "Block [{BN}] has [{NTX}] transactions [{CK}] ([{CNT}]-[{SZ}] b)          \r";
-
-    report(os.str(), ok, block.blockNumber, block.transactions.size());
-
+bool checkDups(blknum_t bn, void *data) {
+    blknum_t *prev = (blknum_t*)data;
+    if (*prev == bn)
+        cout << "Duplicate record at " << bn << " " << redX << "\n";
+    *prev = bn;
     return true;
 }
 
 //----------------------------------------------------------------------------------
 bool checkEmptyBlock(blknum_t bn, void *data) {
+
+    ostringstream os;
     if (!fileExists(getBinaryFilename(bn))) {
-        ostringstream os;
-        os << "Block [{BN}] has [{NTX}] transactions [{CK}] ([{CNT}])          \r";
-        report(os.str(), true, bn, 0);
+        // block is not in index and its file does not exist (ok)
+        os << "Non-indexed block [{BN}] has [{NTX}] transactions [{GCK}]          \r";
+        report(cerr, os.str(), bn, 0);
         return true;
     }
+
     CBlock block;
     getBlock(block, bn);
-    return visitEmptyBlock(block, data);
+    return checkEmptyBlock2(block, data);
 }
 
 //----------------------------------------------------------------------------------
-void report(const string_q& str, bool ok, blknum_t bn, uint64_t nTx) {
-    static uint64_t hitCount = 0;
+bool checkEmptyBlock2(CBlock& block, void *data) {
+
+    ostringstream os;
+    string_q fileName = getBinaryFilename(block.blockNumber);
+    if (block.transactions.size()) {
+        // block is not in index but it has transactions (not ok)
+        os << "Non-indexed block [{BN}] has [{NTX}] transactions but is not in the index [{RCK}]\n";
+        report(cout, os.str(), block.blockNumber, block.transactions.size());
+
+    } else if (fileExists(fileName)) {
+        // block is not in index but its file exists (not ok)
+        os << "Non-indexed block [{BN}] has zero transactions but its file exists in the cache [{RCK}]\n";
+        report(cout, os.str(), block.blockNumber, block.transactions.size());
+
+    } else if (block.gasUsed > 0) {
+        // block is not in index but it uses gas (not ok)
+        os << "Non-indexed block [{BN}] has zero transactions but uses more than zero gas [{RCK}]\n";
+        report(cout, os.str(), block.blockNumber, block.transactions.size());
+
+    } else {
+        // block is okay
+        os << "Non-indexed block [{BN}] has [{NTX}] transactions [{GCK}]          \r";
+        report(cerr, os.str(), block.blockNumber, block.transactions.size());
+    }
+    return true;
+}
+
+string_q yellowCaution = "\e[7m\e[0;33m!!\e[0m";
+//----------------------------------------------------------------------------------
+bool checkNonEmptyBlock(CBlock& block, void *data) {
+
+    ostringstream os;
+    string_q fileName = getBinaryFilename(block.blockNumber);
+    if (!block.transactions.size()) {
+        // block is in index, but it has no transactions (not ok)
+        os << "Indexed block [{BN}] has zero transactions but is in the index [{RCK}]\n";
+        report(cout, os.str(), block.blockNumber, block.transactions.size());
+
+    } else if (!fileExists(fileName)) {
+        // block is in index, but its file does not exist (not ok)
+        os << "Indexed block [{BN}] has [{NTX}] transactions but its file does not exist [{YCK}]\n";
+        os << "getBlock --force " << block.blockNumber << "\n";
+        report(cout, os.str(), block.blockNumber, block.transactions.size());
+
+    } else if (block.gasUsed == 0) {
+        // block is in index, but it doesn't use any gas (not ok)
+        os << "Indexed block [{BN}] has [{NTX}] transactions but uses no gas [{RCK}]\n";
+        report(cout, os.str(), block.blockNumber, block.transactions.size());
+
+    } else {
+        // block is okay
+        os << "Indexed block [{BN}] has [{NTX}] transactions [{GCK}]          \r";
+        report(cerr, os.str(), block.blockNumber, block.transactions.size());
+    }
+    return true;
+}
+
+//----------------------------------------------------------------------------------
+void report(ostream& os, const string_q& str, blknum_t bn, uint64_t nTx) {
     string_q result = str;
     result = substitute(result, "[{",  cYellow);
     result = substitute(result, "}]",  cOff);
     result = substitute(result, "BN",  padLeft(uint_2_Str(bn),9));
-    result = substitute(result, "SZ",  uint_2_Str(fileSize(getBinaryFilename(bn))));
     result = substitute(result, "NTX", padLeft(uint_2_Str(nTx),5));
-    result = substitute(result, "CK",  (ok ? greenCheck : redX));
-    result = substitute(result, "CNT", uint_2_Str(++hitCount));
-    if (!ok) { cout << "\t" << result; cout.flush(); }
-    else     { cerr << "\t" << result; cerr.flush(); }
+    result = substitute(result, "GCK", greenCheck);
+    result = substitute(result, "RCK", redX);
+    result = substitute(result, "YCK", yellowCaution);
+    os << result;
+    os.flush();
 }
