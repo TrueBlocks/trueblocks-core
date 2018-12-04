@@ -188,6 +188,20 @@ string_q getTokenInfo(const string_q& which, const address_t& token, const addre
         replace(cmd, "[TOKEN]",  token);
         replace(cmd, "[HOLDER]", padLeft(extract(holder, 2), 64, '0'));  // encoded data for the transaction
         replace(cmd, "[BLOCK]",  uint_2_Hex(blockNum));
+    } else if (which % "all") {
+        ostringstream os;
+        for (auto opt : infoOptions) {
+            string_q encoding;
+            opt = nextTokenClear(opt,'|');
+            if (opt != "all" && isValidInfo(opt, encoding)) {
+                cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"[CMD]\"}, \"[BLOCK]\"]";
+                replace(cmd, "[TOKEN]",  token);
+                replace(cmd, "[CMD]",    encoding);  // encoded data for the transaction
+                replace(cmd, "[BLOCK]",  uint_2_Hex(blockNum));
+                os << "\"" << opt << "\":\"" << callRPC("eth_call", cmd, false) << "\",\n";
+            }
+        }
+        return "{\n\t" + trim(substitute(trim(os.str(),','),"\n","\n\t"),'\t') + "}";
     } else {
         string_q encoding;
         if (isValidInfo(which, encoding)) {
@@ -203,6 +217,8 @@ string_q getTokenInfo(const string_q& which, const address_t& token, const addre
 
 //-------------------------------------------------------------------------
 bool isValidInfo(const string_q which, string_q& encoding) {
+    if (which == "all")
+        return true;
     for (auto item : infoOptions) {
         if (contains(item, which+"|")) {
             encoding = item;
