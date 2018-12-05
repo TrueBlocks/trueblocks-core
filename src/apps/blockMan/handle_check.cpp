@@ -66,7 +66,7 @@ bool checkEmptyBlock2(CBlock& block, void *data) {
 
     } else if (fileExists(fileName)) {
         // block is not in index but its file exists (not ok)
-        os << "Non-indexed block [{BN}] has zero transactions but its file exists in the cache [{RCK}]\n";
+        os << "Non-indexed block [{BN}] has zero transactions but its file exists on disc [{YCK}]\n";
         report(cout, os.str(), block.blockNumber, block.transactions.size());
 
     } else if (block.gasUsed > 0) {
@@ -96,7 +96,7 @@ bool checkNonEmptyBlock(CBlock& block, void *data) {
     } else if (!fileExists(fileName)) {
         // block is in index, but its file does not exist (not ok)
         os << "Indexed block [{BN}] has [{NTX}] transactions but its file does not exist [{YCK}]\n";
-        os << "getBlock --force " << block.blockNumber << "\n";
+//        os << "getBlock --force " << block.blockNumber << "\n";
         report(cout, os.str(), block.blockNumber, block.transactions.size());
 
     } else if (block.gasUsed == 0) {
