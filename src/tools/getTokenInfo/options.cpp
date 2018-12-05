@@ -123,13 +123,19 @@ bool COptions::parseArguments(string_q& command) {
     for (auto addr : addrs) {
         if (byAccount) {
             // all items but the last are tokens, the last item is the account <token> [tokens...] <holder>
-            tokens.push_back(addr);
+            CAccountWatch watch;
+            watch.address = addr;
+            watch.abi_spec.loadAbiByAddress(addr);
+            tokens.push_back(watch);
             lastItem = addr;
         } else {
             // first item is ERC20 contract, remainder are accounts <token> <holder1> [holder2...]
-            if (tokens.empty())
-                tokens.push_back(addr);
-            else
+            if (tokens.empty()) {
+                CAccountWatch watch;
+                watch.address = addr;
+                watch.abi_spec.loadAbiByAddress(addr);
+                tokens.push_back(watch);
+            } else
                 holders.push_back(addr);
         }
     }
