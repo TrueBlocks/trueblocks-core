@@ -34,10 +34,6 @@ Next, you must install IPFS if you haven't done so aleady [(instructions here)](
 
 The above command assumes IPFS is working properly. You should see the download begin shortly after running this command. The download will take around 20 minutes while nearly 50 GB of data will be copied onto your hard drive. The data will be placed in a local subfolder called `./data`. Once that's done, complete this command:
 
-    cd data ; gunzip * ; cd -
-    
-and then:
-
     ./bin/addr_query <address> <start_block>
     
 where:
