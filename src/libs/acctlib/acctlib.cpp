@@ -14,8 +14,8 @@
 #include "acctlib.h"
 
 //-------------------------------------------------------------------------
-void acctlib_init(void) {
-    etherlib_init();
+void acctlib_init(QUITHANDLER qh) {
+    etherlib_init(qh);
 
     CAccountWatch::registerClass();
     CApiSpec::registerClass();
