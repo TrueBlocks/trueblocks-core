@@ -67,8 +67,8 @@ The previous command stored the list of all transactions on your address in the 
 
 And now we can show the full detail, glorious detail of the transactions and traces for that account:
 
-    getTrans --verbose --trace --file:bancor.txt
+    getTrans --verbose --trace --articulated --file:bancor.txt
     
 #### Note
 
-This data is not `articulated`. Using other tools from QuickBlocks (`chifra`, `blockScrape`, `acctScrape`) will allow you to export articulated JSON data which is much more useful. We're working hard on making this tech available as soon as possible.
+This data is `articulated` but may be less well articulated than possible. Using other tools from QuickBlocks (`chifra`, `blockScrape`, `acctScrape`) will allow you to export fully-articulated JSON data which may be more useful. We're working hard on making this capability available as soon as possible.
