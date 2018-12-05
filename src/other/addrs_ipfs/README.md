@@ -1,36 +1,42 @@
 ### Install
 
-Pull the latest copy of the qblocks repo ([Instructions here](https://github.com/Great-Hill-Corporation/quickBlocks/blob/develop/src/other/install/INSTALL.md)). Then,
+Pull the latest copy of the `qblocks` repo ([Instructions here](https://github.com/Great-Hill-Corporation/quickBlocks/blob/develop/src/other/install/INSTALL.md)). Then from the `./quickBlocks` folder:
 
     git pull
-    cd ./build
+    mkdir build (if not already present)
+    cd ../build
     cmake ../src
     make
     
-Next, do this:
+Next, run this command:
 
     cd ../src/other/addr_ipfs
-    make
 
-This will build `./bin/addr_query` (although it may fail on Linux, see below).
-
-#### Building on Linux:
-
-If you're on Linux, the build will fail. Make these changes to the `makefile` at lines 6 through 10.
+If you're on Linux, edit the `makefile` and make these changes at lines 6 through 10:
 
      #-------------------------------------------------
      # for mac builds
-     #libs=$(libraries)/*.a /usr/lib/libcurl.dylib       <---- comment this line
+     #libs=$(libraries)/*.a /usr/lib/libcurl.dylib       <---- comment out this line
      # for ubuntu builds
      libs=$(libraries)/*.a -lcurl                        <---- uncomment this line
-    
-#### Downloading the indicies:
+
+Save the file and then type:    
+
+    make
+
+This should build a file in the `bin` folder called `./bin/addr_query`.
+
+#### Downloading the transaction indicies:
      
-Start your IPFS daemon (not sure if this is needed). Next download the transaction-per-account indicies using IPFS and this command:
+Next, you must install IPFS if you haven't done so aleady [(instructions here)](https://docs.ipfs.io/introduction/install/). Assuming IPFS is properly installed and working you may now download the transaction-per-account indicies using this command from the `./src/other/addrs_ipfs` folder:
 
-    ./getem.sh
+    ./download_tx_index.sh
 
-This command assumes you have IPFS installed and will take about 20 minutes. It downloads more than 50 GB of data onto your hard drive into the folder `./data` in the current folder. Once that's done, run this command:
+The above command assumes IPFS is working properly. You should see the download begin shortly after running this command. The download will take around 20 minutes while nearly 50 GB of data will be copied onto your hard drive. The data will be placed in a local subfolder called `./data`. Once that's done, complete this command:
+
+    cd data ; gunzip * ; cd -
+    
+and then:
 
     ./bin/addr_query <address> <start_block>
     
@@ -45,32 +51,24 @@ After a few seconds, you should see a series of transactions in which the given 
     block_num.tx_id,
     ...
 
-#### Displaying the data (hacky version)
+Next, given the list of transactions for your address of interest, we want to extract the actual transactional data from the blockchain.
 
-Assuming you're running an Ethereum node locally, you can display the data by following these steps. First, find the address of a smart contract. For example, 
+#### Extracting and displaying the data (hacky version)
 
-    ethName bancor
+In order for the following commands to work, you must be running a local Ethereum `--tracing` node (or `--tracing on --pruning archive`). You may extract and display your contract's data by following these steps:
+
+Using the address of the smart contract you want to explore do this (this example is for the bancor token, but you may use any address):
+
+    ./bin/addrs_query 0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c 0 | xargs >bancor.txt
     
-returns
+The previous command stored the list of all transactions on your address in the file `bancor.txt`. This command should take less than a minute and show a report something like this:
 
-    {
-        "symbol": "BNT",
-        "name": "Bancor Network Token",
-        "addr": "0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c"
-    }
+    Found 216,3xx transactions for account 0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c
 
-Using that address we can extract all the transactions in which that address was involved and put them in a file:
-
-    bin/addrs_query 0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c 0 | xargs >bancor.txt
-    
-It should report
-
-    Found 216396 transactions for account 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
-
-And now we show the full detail of the transactions and traces on that account:
+And now we can show the full detail, glorious detail of the transactions and traces for that account:
 
     getTrans --verbose --trace --file:bancor.txt
     
 #### Note
 
-There's a tonne of code to extract these transacitons from the node and export fully-articulated JSON or .csv. More to come...
+This data is not `articulated`. Using other tools from QuickBlocks (`chifra`, `blockScrape`, `acctScrape`) will allow you to export articulated JSON data which is much more useful. We're working hard on making this tech available as soon as possible.

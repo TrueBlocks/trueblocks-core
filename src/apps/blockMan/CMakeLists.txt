@@ -43,7 +43,7 @@ endfunction(run_test)
 # Enter one line for each individual test
 run_test("blockMan_README"    "-th")
 run_test("blockMan_bad_input" "--thing")
-run_test("blockMan_stats"      "--stats")
+run_test("blockMan_stats"      "--list")
 
 # DO NOT USE THESE OPTIONS FOR TESTING, THEY ARE LONG RUNNING AND IRREVERSABLY CHANGE DATA FILES
 #run_test("blockMan_check_1"   "--check" " --empty")

@@ -548,9 +548,8 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-------------------------------------------------------------------------
-    bool getSha3(const string_q& hexIn, string_q& shaOut) {
-        shaOut = callRPC("web3_sha3", "[\"" + hexIn + "\"]", false);
-        return true;
+    string_q getSha3(const string_q& hexIn) {
+        return callRPC("web3_sha3", "[\"" + hexIn + "\"]", false);
     }
 
     //-----------------------------------------------------------------------
