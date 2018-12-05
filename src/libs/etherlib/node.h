@@ -82,8 +82,7 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     uint64_t        addFilter               (address_t addr, const CTopicArray& topics, blknum_t block);
-    extern bool     getSha3                 (const string_q& hexIn, string_q& shaOut);
-    inline string_q getSha3                 (const string_q& hexIn) { string_q ret; getSha3(hexIn,ret); return ret; }  // NOLINT
+    string_q        getSha3                 (const string_q& hexIn);
 
     //-------------------------------------------------------------------------
     extern string_q getJsonFilename         (uint64_t num);
@@ -128,7 +127,9 @@ namespace qblocks {
     #define fullBlockIndex (blockCachePath("fullBlocks.bin"))
     #define accountIndex   (blockCachePath("accountTree.bin"))
     #define miniBlockCache (blockCachePath("miniBlocks.bin"))
+#ifdef MINI_TRANS
     #define miniTransCache (blockCachePath("miniTrans.bin"))
+#endif
     #define blockFolder    (blockCachePath("blocks/"))
     #define bloomFolder    (blockCachePath("blooms/"))
     extern biguint_t weiPerEther;

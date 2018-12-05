@@ -114,6 +114,11 @@ bool COptions::parseArguments(string_q& command) {
     if (tokenInfo.empty() && addrs.size() < 2)
         return usage("You must provide both a token contract and an account. Quitting...");
 
+    if (!tokenInfo.empty()) {
+        // if tokenInfo is not empty, all addresses are tokens
+        byAccount = true;
+    }
+
     address_t lastItem;
     for (auto addr : addrs) {
         if (byAccount) {
@@ -129,7 +134,8 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (byAccount) {
+    // if tokenInfo is not empty, all addresses are tokens
+    if (byAccount && tokenInfo.empty()) {
         // remove the last one and push it on the holders array
         tokens.pop_back();
         holders.push_back(lastItem);
