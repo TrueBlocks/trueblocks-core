@@ -30,7 +30,7 @@ public:
     blknum_t oldestBlock;
     CHistoryOptions(void) { Init(); }
     ~CHistoryOptions(void) { }
-    void Init(void) override { newestBlock = oldestBlock = NOPOS; }
+    void Init(void) override { CBlockOptions::Init(); newestBlock = oldestBlock = NOPOS; }
     string_q getDispBal(blknum_t blockNum, biguint_t bal, bool asData);
     bool hasHistory(void) const;
 };
