@@ -54,6 +54,7 @@ public:
     bool articulateTransaction(CTransaction *p) const;
     bool articulateLog(CLogEntry *l) const;
     bool articulateTrace(CTrace *t) const;
+    bool articulateOutputs(const string_q& encoding, const string_q& value, CFunction& ret) const;
     friend class CAccountWatch;
     // EXISTING_CODE
     bool operator==(const CAbi& item) const;

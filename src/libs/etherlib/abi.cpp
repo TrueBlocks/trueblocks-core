@@ -450,7 +450,9 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
 #define old_toBigNum3(a, b)      padNum3(old_grabBigNum(a, b))
 #define old_toBoolean(a, b)      (old_grabBigNum(a, b) ? "true" : "false")
 #define old_toBytes(a, b)        extract((a), 64*(b), 64)
-    inline string_q parseTheInput(const string_q& params, size_t nItems, string_q *types) {
+    inline string_q parseTheInput(const string_q& paramsIn, size_t nItems, string_q *types) {
+
+        string_q params = substitute(paramsIn, "0x", "");
 
         string_q ret;
         for (size_t item = 0 ; item < nItems ; item++) {
@@ -458,7 +460,7 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
             bool isDynamic = (t == "string" || t == "bytes" || contains(t, "[]"));
             string_q val;
 
-            if ( t == "address"                    )   val =          old_toAddr     (params, item);  // NOLINT
+                 if ( t == "address"                    )   val =          old_toAddr     (params, item);  // NOLINT
             else if ( t == "bool"                       )   val =          old_toBoolean  (params, item);
             else if ( t == "uint3"                      )   val =          old_toBigNum3  (params, item);
             else if ( contains(t, "int") &&   !isDynamic)   val =          old_toBigNum2  (params, item);
@@ -497,15 +499,15 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
     }
 
     //---------------------------------------------------------------------------
-    inline bool decodeRLP2(CFunction *func, const string_q& input) {
+    inline bool decodeRLP2(const string_q& name, CParameterArray& interfaces, const string_q& input) {
         string_q items[256];
         size_t nItems = 0;
-        for (auto param : func->inputs)
+        for (auto param : interfaces)
             items[nItems++] = param.type;
-        string_q decoded = substitute(decodeRLP(func->name, input, nItems, items), "\"", "");
+        string_q decoded = substitute(decodeRLP(name, input, nItems, items), "\"", "");
         nextTokenClear(decoded, ',');
-        for (size_t j = 0 ; j < func->inputs.size(); j++)
-            func->inputs[j].value = trim(nextTokenClear(decoded, ','));
+        for (size_t j = 0 ; j < interfaces.size(); j++)
+            interfaces[j].value = trim(nextTokenClear(decoded, ','));
         return true;
     }
 
@@ -529,7 +531,7 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
             for (auto interface : interfaces) {
                 if (encoding % interface.encoding) {
                     p->articulatedTx = CFunction(interface);
-                    return decodeRLP2(&p->articulatedTx, params);
+                    return decodeRLP2(interface.name, p->articulatedTx.inputs, params);
                 }
             }
         }
@@ -557,7 +559,7 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
             for (auto interface : interfaces) {
                 if (topic_2_Str(p->topics[0]) % interface.encoding) {
                     p->articulatedLog = CFunction(interface);
-                    return decodeRLP2(&p->articulatedLog, params);
+                    return decodeRLP2(interface.name, p->articulatedLog.inputs, params);
                 }
             }
         }
@@ -576,11 +578,22 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
             for (auto interface : interfaces) {
                 if (encoding % interface.encoding) {
                     p->articulatedTrace = CFunction(interface);
-                    return decodeRLP2(&p->articulatedTrace, params);
+                    return decodeRLP2(interface.name, p->articulatedTrace.inputs, params);
                 }
             }
         }
         return false;
+    }
+
+    //-----------------------------------------------------------------------
+    bool CAbi::articulateOutputs(const string_q& encoding, const string_q& params, CFunction& ret) const {
+        for (auto interface : interfaces) {
+            if (encoding % interface.encoding) {
+                ret = CFunction(interface);
+                return decodeRLP2(interface.name, ret.outputs, params);
+            }
+        }
+        return true;
     }
 
 // EXISTING_CODE
