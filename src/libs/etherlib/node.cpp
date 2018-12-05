@@ -809,13 +809,16 @@ extern void registerQuitHandler(QUITHANDLER qh);
                 break;
         }
 
+        blknum_t next = NOPOS;
         for (auto range : ranges) {
-            for (uint64_t bn = range.first ; bn < range.second ; bn++) {
+            blknum_t st = (next == NOPOS ? range.first : (max(next, range.first)));
+            for (blknum_t bn = st ; bn < range.second ; bn += skip) {
                 if (!(*func)(bn, data)) {
                     if (items)
                         delete [] items;
                     return false;
                 }
+                next = bn + skip;
             }
         }
         if (items)
