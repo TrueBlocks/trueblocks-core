@@ -15,11 +15,11 @@
 
 void reportByToken(COptions& options);
 void reportByAccount(COptions& options);
-extern string_q getTokenInfo(const string_q& which, const address_t& t, const address_t& h, blknum_t b);
+extern string_q getTokenInfo(const string_q& which, const CAccountWatch& w, const address_t& h, blknum_t b);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    etherlib_init(quickQuitHandler);
+    acctlib_init(quickQuitHandler);
 
     // Parse command line, allowing for command files
     COptions options;
@@ -33,7 +33,8 @@ int main(int argc, const char *argv[]) {
             return 0;
 
         if (!options.tokenInfo.empty()) {
-            cout << getTokenInfo(options.tokenInfo, options.tokens[0], "", options.newestBlock) << "\n";
+            for (auto watch : options.tokens)
+                cout << getTokenInfo(options.tokenInfo, watch, "", options.newestBlock) << "\n";
 
         } else {
             if (options.asData)
@@ -63,7 +64,7 @@ void reportByToken(COptions& options) {
     // For each token contract
     for (auto token : options.tokens) {
         if (!options.asData)
-            cout << "\n  For token contract: " << bBlue << token << cOff << "\n";
+            cout << "\n  For token contract: " << bBlue << token.address << cOff << "\n";
 
         // For each holder
         for (auto holder : options.holders) {
@@ -176,43 +177,44 @@ void reportByAccount(COptions& options) {
 }
 
 //-------------------------------------------------------------------------
-string_q getTokenInfo(const string_q& which, const address_t& token, const address_t& holder, blknum_t blockNum) {
+string_q getTokenInfo(const string_q& which, const CAccountWatch& token, const address_t& holder, blknum_t blockNum) {
 
-    if (!isAddress(token))
+    if (!isAddress(token.address))
         return "";
     ASSERT(holder.empty() || isAddress(holder));
 
     string_q cmd;
-    if (which % "balanceOf") {
-        cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"0x70a08231[HOLDER]\"}, \"[BLOCK]\"]";
-        replace(cmd, "[TOKEN]",  token);
-        replace(cmd, "[HOLDER]", padLeft(extract(holder, 2), 64, '0'));  // encoded data for the transaction
-        replace(cmd, "[BLOCK]",  uint_2_Hex(blockNum));
-    } else if (which % "all") {
-        ostringstream os;
+    string_q encoding;
+    ostringstream os;
+    if (which % "all") {
         for (auto opt : infoOptions) {
-            string_q encoding;
             opt = nextTokenClear(opt,'|');
-            if (opt != "all" && isValidInfo(opt, encoding)) {
+            if (opt != "balanceOf" && opt != "all" && isValidInfo(opt, encoding)) {
                 cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"[CMD]\"}, \"[BLOCK]\"]";
-                replace(cmd, "[TOKEN]",  token);
+                replace(cmd, "[TOKEN]",  token.address);
                 replace(cmd, "[CMD]",    encoding);  // encoded data for the transaction
                 replace(cmd, "[BLOCK]",  uint_2_Hex(blockNum));
-                os << "\"" << opt << "\":\"" << callRPC("eth_call", cmd, false) << "\",\n";
+                CFunction ret;
+                token.abi_spec.articulateOutputs(encoding, callRPC("eth_call", cmd, false), ret);
+                os << "\"" << opt << "\": \"" << (ret.outputs.size() ? ret.outputs[0].value : "") << "\",\n";
             }
         }
         return "{\n\t" + trim(substitute(trim(os.str(),','),"\n","\n\t"),'\t') + "}";
+
     } else {
-        string_q encoding;
         if (isValidInfo(which, encoding)) {
-            cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"[CMD]\"}, \"[BLOCK]\"]";
-            replace(cmd, "[TOKEN]",  token);
-            replace(cmd, "[CMD]",    encoding);  // encoded data for the transaction
+            cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"[CMD][HOLDER]\"}, \"[BLOCK]\"]";
+            replace(cmd, "[TOKEN]",  token.address);
+            replace(cmd, "[CMD]",    encoding);
+            replace(cmd, "[HOLDER]", padLeft(extract(holder, 2), 64, '0'));  // encoded data (may be empty)
             replace(cmd, "[BLOCK]",  uint_2_Hex(blockNum));
         }
     }
 
-    return cmd.empty() ? "" : callRPC("eth_call", cmd, false);
+    CFunction ret;
+    token.abi_spec.articulateOutputs(encoding, callRPC("eth_call", cmd, false), ret);
+    os << "{\n    \"" << which << "\": \"" << (ret.outputs.size() ? ret.outputs[0].value : "") << "\"\n}\n";
+    return (which == "balanceOf" ? (ret.outputs.size() ? ret.outputs[0].value : "") : os.str());
 }
 
 //-------------------------------------------------------------------------
@@ -230,4 +232,12 @@ bool isValidInfo(const string_q which, string_q& encoding) {
 }
 
 //-------------------------------------------------------------------------
-CStringArray infoOptions = { "name|0x06fdde03", "totalSupply|0x18160ddd", "decimals|0x313ce567", "version|0x54fd4d50", "symbol|0x95d89b41", "all" };
+CStringArray infoOptions = {
+    "name|0x06fdde03",
+    "totalSupply|0x18160ddd",
+    "balanceOf|0x70a08231",
+    "decimals|0x313ce567",
+    "version|0x54fd4d50",
+    "symbol|0x95d89b41",
+    "all"
+};
