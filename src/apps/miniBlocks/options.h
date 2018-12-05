@@ -25,6 +25,10 @@ public:
 
 //-----------------------------------------------------------------------------
 extern void checkMiniBlocks    (const COptions& opts, CVisitor& reporter);
+#ifdef MINI_TRANS
 extern bool checkMiniBlock     (CMiniBlock& block, const CMiniTrans *trans, void *data);
+#else
+extern bool checkMiniBlock     (CMiniBlock& block, void *data);
+#endif
 extern bool visitNonEmptyBlock (CBlock& node, void *data);
 extern bool visitEmptyBlock    (CBlock& node, void *data);

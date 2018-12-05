@@ -123,7 +123,7 @@ void CFunction::finishParse() {
     for (size_t i = 0 ; i < inputs.size() ; i++)
         hasAddrs |= (inputs[i].type == "address");
     signature = getSignature(SIG_CANONICAL);
-    encoding  = encodeItem();
+    encoding = encodeItem();
     // The input parameters need to have a name. If not, we provide one
     int cnt = 0;
     for (size_t i = 0 ; i < inputs.size() ; i++) {
@@ -449,12 +449,11 @@ string_q CFunction::getSignature(uint64_t parts) const {
 
 //-----------------------------------------------------------------------
 string_q CFunction::encodeItem(void) const {
-    string_q hex = chr_2_HexStr(signature);
-    string_q ret;
-extern bool getSha3(const string_q& hexIn, string_q& shaOut);
-    getSha3(hex, ret);
-    ret = (type == "event" ? ret : extract(ret, 0, 10));
-    return ret;
+    if (encoding == "()")  // optimization
+        return "0x861731d5";
+extern string_q getSha3(const string_q& hexIn);
+    string_q ret = getSha3(chr_2_HexStr(signature));
+    return (type == "event" ? ret : extract(ret, 0, 10));
 }
 // EXISTING_CODE
 }  // namespace qblocks

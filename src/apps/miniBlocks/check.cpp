@@ -17,7 +17,11 @@ void checkMiniBlocks(const COptions& opts, CVisitor& reporter) {
 }
 
 //-----------------------------------------------------------------------------------------------
+#ifdef MINI_TRANS
 bool checkMiniBlock(CMiniBlock& miniBlock, const CMiniTrans *, void *data) {
+#else
+bool checkMiniBlock(CMiniBlock& miniBlock, void *data) {
+#endif
 
     CVisitor *reporter = reinterpret_cast<CVisitor *>(data);
     string_q fn = getBinaryFilename(miniBlock.blockNumber);
