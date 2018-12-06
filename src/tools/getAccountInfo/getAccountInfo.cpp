@@ -47,7 +47,7 @@ int main(int argc, const char *argv[]) {
                 cout << code1 << "\n";
 
             } else if (options.asData) {
-                cout << addr << "\t" << (hasCode ? "true" : "false") << "\n";
+                cout << addr << "\t" << (hasCode ? "true" : "false") << (options.when ? "\t" + uint_2_Str(whenDeployed(addr)) : "") << "\n";
 
             } else if (options.when) {
                 ASSERT(hasCode);
