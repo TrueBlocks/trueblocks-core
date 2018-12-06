@@ -2,10 +2,12 @@
 cmake_minimum_required (VERSION 2.6)
 
 # folder project
-project (samples)
+project (examples)
 
 # messaging
-# message (WARNING  "*** Entering samples folder ***")
+# message (WARNING  "*** Entering examples folder ***")
 
 # Compilation order of the src subdirectories
-#add_subdirectory(lostEther)
+add_subdirectory(simple)
+add_subdirectory(visitAll)
+add_subdirectory(txCounter)
