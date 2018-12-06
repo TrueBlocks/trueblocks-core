@@ -1575,4 +1575,4 @@ ipfs get QmYd8tXAwF8YFEAQMya1dUTyz3i9QervnrtdxRYowcKjLV -o=data/006695061.txt.gz
 ipfs get Qmf3a5TAmvKwvdJLodGrKzRMkMZSvAp2BMEArqQDTamSjo -o=data/006697196.txt.gz
 ipfs get QmPCRnzt7kLDvfLQqkd4pcRW6s6hqsCH9oeKYxcrAtpRaW -o=data/006699825.txt.gz
 cd data
-gunzip * &
+gunzip *.gz &
