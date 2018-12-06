@@ -22,10 +22,6 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-    // Make sure the user is not using the --file option
-    if (!commandList.empty())
-        return usage("You may not use the --file with this application. Quitting...");
-
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
@@ -125,6 +121,7 @@ void COptions::Init(void) {
     arguments.clear();
     paramsPtr = params;
     nParamsRef = nParams;
+    optionOn(OPT_RUNONCE);
 
     start       = NOPOS;
     end         = NOPOS;

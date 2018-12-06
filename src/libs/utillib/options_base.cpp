@@ -324,6 +324,17 @@ namespace qblocks {
                     sorts[i]->sortFieldList();
         }
 
+        // A final set of checks
+        if (isEnabled(OPT_RUNONCE)) {
+            if (countOf(commandList, '\n') > 1)
+                return usage("You may not use the --file with this application. Quitting...");
+            // protect ourselves from running twice over
+            string_q cmd = "ps -ef | grep -i " + programName + " | grep -v grep | grep -v \"sh -c \" | wc -l";
+            uint64_t cnt = str_2_Uint(doCommand(cmd));
+            if (cnt > 1)  // it is running itself, so if two or more, quit
+                return usage("Warning: the command " + programName + " is already running. Quitting...");
+        }
+
         cmdLine = trim(cmdLine);
         return true;
     }

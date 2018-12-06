@@ -33,6 +33,7 @@
 #define OPT_TRUEDATA (OPT_PROVE|OPT_VERIFY)
 #define OPT_DEFAULT (OPT_HELP|OPT_VERBOSE|OPT_DENOM|OPT_PARITY|OPT_TRUEDATA)
 #endif
+#define OPT_RUNONCE (1<<9)
 
 namespace qblocks {
 
