@@ -106,7 +106,7 @@ run_test("getAccountInfo_long_display_code_2" " 0x3003208e77edf3b088b122b5de3a6f
 run_test("getAccountInfo_diff_2"              "0x3003208e77edf3b088b122b5de3a6fc8c8ef679d" " 0x3003208e77edf3b088b122b5de3a6fc8c8ef6794" " -n")
 run_test("getAccountInfo_from_file"           "--file:cmd_file")
 
-run_state_test("getAccountInfo_when_data"            "0x000001f568875f378bf6d170b790967fe429c81a" " -d" " -w")
+run_state_test("getAccountInfo_when_data"            "0x423b5F62b328D0D6D44870F4Eee316befA0b2dF5" " -d" " -w")
 run_state_test("getAccountInfo_when_fail"            "0x1234567890123456789012345678901234567890" " -w")
 run_state_test("getAccountInfo_when_unicorn_988949"  "0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7" " -w")
 run_state_test("getAccountInfo_when_go_5449023"      "0x423b5F62b328D0D6D44870F4Eee316befA0b2dF5" " -w")
