@@ -30,6 +30,8 @@ bool COptions::parseArguments(string_q& command) {
 
     Init();
     blknum_t stopBlock = getLatestBlockFromClient();
+    if (isTestMode())
+        stopBlock = 4000000;
 
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
