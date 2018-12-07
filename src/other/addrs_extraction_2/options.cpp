@@ -26,7 +26,7 @@ bool COptions::parseArguments(string_q& command) {
 
     Init();
     explode(arguments, command, ' ');
-    for (auto arg : arguments) {
+    for (auto const& arg : arguments) {
         return usage("Invalid option: " + arg);
     }
     return true;

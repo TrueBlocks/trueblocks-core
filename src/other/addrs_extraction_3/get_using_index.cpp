@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
     opts.num = (str_2_Uint(argv[2]) / 10000) * 10000;
     string_q path = substitute(blockCachePath("addrs_by_block/00/"), "/blocks/", "/addrs_by_block/");
     forEveryFileInFolder(path, visitFiles, &opts);
-    for (auto blk : opts.blocks)
+    for (auto const& blk : opts.blocks)
         cout << "getBlock " << blk << " --addrs --filter " << opts.addr << " 2>/dev/null\n";
 
     return 0;
