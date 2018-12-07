@@ -52,7 +52,7 @@ bool cutFiles(const string_q& path, void *data) {
             cerr << "\nSorting...";
             sort(thing->lines.begin(), thing->lines.end());
             cerr << "Writing...";
-            for (auto line : thing->lines)
+            for (auto const& line : thing->lines)
                 output.WriteLine(line);
             cerr << "Done\n";
             output.Release();
