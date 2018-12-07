@@ -38,7 +38,7 @@ int main(int argc, const char *argv[]) {
             if (options.diff) {
                 address_t addr2 = *(&addr+1);
                 string_q code2 = getCodeAt(addr2);
-                cout << "Code at address '" << addr << "' and '" << addr2 + ") are "
+                cout << "Code at address '" << addr << "' and '" << addr2 + "' are "
                         << (code1 == code2 ? "identical" : "different") << "\n";
                 break;
 
