@@ -129,7 +129,7 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
         }
 
         if (opt.force) {  // turn this on to force a write of the block to the disc
-            gold.finalized = isBlockFinal(gold.timestamp, opt.latest.timestamp);
+            gold.finalized = isBlockFinal(gold.timestamp, opt.latest.timestamp, (60 * 4));
             writeBlockToBinary(gold, fileName);
         }
 
