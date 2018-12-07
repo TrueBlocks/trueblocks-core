@@ -532,6 +532,14 @@ bool CTransaction::forEveryUniqueAddress(ADDRESSFUNC funcy, TRANSFUNC filt, void
 bool CTransaction::forEveryUniqueAddressPerTx(ADDRESSFUNC funcy, TRANSFUNC filt, void *data) {
     return true;
 }
+
+//---------------------------------------------------------------------------
+bool isBlockFinal(timestamp_t ts_block, timestamp_t ts_chain, timestamp_t seconds) {
+    // If the distance from the front of the node's current view of the front of the chain
+    // is more than the number of seconds provided, consider the block final (even if it isn't
+    // in a perfectly mathematical sense)
+    return ((ts_chain - ts_block) > seconds);
+}
 // EXISTING_CODE
 }  // namespace qblocks
 

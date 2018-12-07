@@ -109,7 +109,7 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
                 result = generic.result;
                 if (gold.parseJson3(result)) {
                     string_q fileName = getBinaryFilename(num);
-                    gold.finalized = isBlockFinal(gold.timestamp, opt.latest.timestamp);
+                    gold.finalized = isBlockFinal(gold.timestamp, opt.latest.timestamp, (60 * 4));
                     writeBlockToBinary(gold, fileName);
                 }
             }
