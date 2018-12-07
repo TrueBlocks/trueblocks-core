@@ -49,7 +49,8 @@ function(run_test testName)
 endfunction(run_test)
 
 # Enter one line for each individual test
-# In most of the tests we need to fix the block to compare with static and inmutable results
+run_the_test(${TEST_PATH} ${GOLD_PATH} "getTokenInfo_preload_abi" ${EXECUTABLE_OUTPUT_PATH}/grabABI " 0xd26114cd6ee289accf82350c8d8487fedb8a0c07")
+
 run_test("getTokenInfo_no_params")
 run_test("getTokenInfo_invalid_params_1" "a" " b" " c")
 run_test("getTokenInfo_invalid_params_2" "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07" " 21321321312321")
