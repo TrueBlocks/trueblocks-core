@@ -87,7 +87,7 @@ int main(int argc, const char *argv[]) {
             // THIS IS WHERE WE CAN READ THE ADDRESS INDEX WHICH GIVES US A LIST OF BLOCKS
             // AND CALL processBlock(bn, options) DIRECTLY
             //  blocks = for each watch, get the list of blocks
-            //  for (auto bn : blocks) {
+            //  for (auto const& bn : blocks) {
             //      options->blkStats.nSeen++;
             //      processBlock(bn, &options);
             //  }

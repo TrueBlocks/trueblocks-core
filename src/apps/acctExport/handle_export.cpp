@@ -25,7 +25,7 @@ bool exportData(COptions& options) {
         string_q str = "w:" + uint_2_Str(i);
         header = substitute(header, str, "");
     }
-    for (auto ch : header)
+    for (auto const& ch : header)
         if (ch != '[' && ch != '{' && ch != '}' && ch != ']' && ch != ':')
             cout << ch;
     cout << endl;
@@ -155,10 +155,10 @@ bool COptions::shouldTrace(const CTransaction *trans) const {
 
 //-----------------------------------------------------------------------
 void COptions::renameItems(string_q& str, const CAccountWatchArray& watchArray) const {
-    for (auto watch : watchArray) {
+    for (auto const& watch : watchArray) {
         if (transFmt.empty()) {
             CStringArray fields = { "to", "from", "address", "contractAddress" };
-            for (auto field : fields) {
+            for (auto const& field : fields) {
                 string_q target = "\"" + field + "\": \"" + watch.address + "\"";
                 str = substitute(str, target, target + ", \"" + field + "Name\": \"" + watch.name + "\"");
             }
@@ -282,7 +282,7 @@ bool transFilter(const CTransaction *trans, void *data) {
 bool isInTransaction(CTransaction *trans, const address_t& needle) {
     CAddressAppearanceArray haystack;
     trans->forEveryAddress(visitAddrs, transFilter, &haystack);
-    for (auto hay : haystack)
+    for (auto const& hay : haystack)
         if (hay.addr % needle)
             return true;
     return false;
@@ -308,8 +308,8 @@ bool checkBloom(COptions& options, const CAcctCacheItem *item) {
         bloomCache.Release();
     }
 
-    for (auto bloom : blooms)
-        for (auto watch : options.watches)
+    for (auto const& bloom : blooms)
+        for (auto const& watch : options.watches)
             if (watch.enabled)
                 if (isBloomHit(makeBloom(watch.address), bloom))
                     return true;
