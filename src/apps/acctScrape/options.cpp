@@ -11,7 +11,7 @@ static COption params[] = {
     COption("-oneBlock:<val>",   "check if the block would be a hit"),
     COption("-oneTra(n)s:<val>", "check if the block and transaction would be a hit"),
     COption("-writeBlocks",      "write binary blocks to cache (default: do not write blocks)"),
-    COption("-all",              "scan to the end of the blockchain (ignore --maxBlocks)"),
+    COption("-maxBlocks:<val>",  "scan at most --maxBlocks blocks ('all' implies scan to end of chain)"),
     COption("-noBloom(s)",       "do not use adaptive enhanced blooms (much faster if you use them)"),
     COption("@checkAddrs",       "use the per-block address lists (disabled)"),
     COption("@logLevel:<val>",   "specify the log level (default 1)"),
@@ -30,12 +30,17 @@ bool COptions::parseArguments(string_q& command) {
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
+        if (arg == "--all" || arg == "-a") arg = "--maxBlocks:all";
         if (startsWith(arg, "-m:") || startsWith(arg, "--maxBlocks:")) {
             nextTokenClear(arg,':');
-            if (isUnsigned(arg))
-                maxBlocks = str_2_Uint(arg);
-            else
-                return usage("Please provide an integer value of maxBlocks. Quitting...");
+            if (arg == "all") {
+                isAll = true;
+            } else {
+                if (isUnsigned(arg))
+                    maxBlocks = str_2_Uint(arg);
+                else
+                    return usage("Please provide an integer value of maxBlocks. Quitting...");
+            }
 
         } else if (startsWith(arg, "-o:") || startsWith(arg, "--oneBlock:")) {
             nextTokenClear(arg,':');
@@ -60,9 +65,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-c" || arg == "--checkAddrs") {
             checkAddrs = true;
-
-        } else if (arg == "-a" || arg == "--all") {
-            isAll = true;
 
         } else if (arg == "-s" || arg == "--noBlooms") {
             ignoreBlooms = true;
