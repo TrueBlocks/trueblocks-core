@@ -74,6 +74,8 @@ bool COptions::parseArguments(string_q& command) {
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
+        } else {
+            return usage("Invalid option: " + arg);
         }
     }
 
