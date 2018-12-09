@@ -6,9 +6,6 @@
 #include "etherlib.h"
 #include "options.h"
 
-#define NEW_CODE 1
-#undef NEW_CODE
-
 extern bool updateIndex(CArchive& fullBlockCache, blknum_t bn);
 extern string_q timerStr(double start);
 //--------------------------------------------------------------------------
@@ -121,13 +118,11 @@ bool freshenLocalCache(COptions& options) {
         replace    (result,  "SEC",   timeStr);
         cout << result;
         cout.flush();
-#ifdef NEW_CODE
-        if ((Now().m_nSeconds - lastRun.m_nSeconds) > 3) {
-            ostringstream os;
-            os << result;
-            appendToAsciiFile("./scraper_log.txt", os.str().c_str());
-        }
-#endif
+//        if ((Now().m_nSeconds - lastRun.m_nSeconds) > 3) {
+//            ostringstream os;
+//            os << result;
+//            appendToAsciiFile("./scraper_log.txt", os.str().c_str());
+//        }
         lastRun = qbNow();
     }
 
@@ -171,25 +166,6 @@ bool addPotentialAddr(const CAddressAppearance& item, void *data) {
     return true;
 }
 
-#ifdef NEW_CODE
-string_q def =
-"0xe25e422e3f9e9374a3d8a75451c790d48fb33218|"
-"0xb09f8a62c6681b0c739dfde7221bfe8f2da3f128|"
-"0xf9110f7f0191317eb4bcd96e80d86946eb5426c5|"
-"0xe30c68bf57296c7418eda6f81b05b4dc2a32bcaa|"
-"0x0c40cf6dd1b74c6edfc4729021a11f57b31e3c27|"
-"0x4b8f3b2e935a341929c0a4efe5110314f39dea73|"
-"0xe0ca2ec1648f4fc94d5ecaad5caa9fa6799ebb28|"
-"0x24957ace036c624ceb626194c7d364ad427b1cd8|"
-"0x7c1cf1f9809c527e5a6becaab56bc34fbe6f2023|"
-"0xfdc77b9cb732eb8c896b152e28294521f5f62e67|"
-"0xd3e32594cedbc102d739142aa70d21f4caea5618|"
-"0xfb34db0651ab62d73a237fcf1aa1057ceb1f6229|"
-"0x8428ce12a1b6aaecfcf2ac5b22d21f3831949da3|"
-"0x413d9d43d2a9388ec8161f43c170a07f68a04b40|"
-;
-#endif
-
 //---------------------------------------------------------------------------
 void foundPot1(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList) {
     CAddressAppearance item(bn, tx, tc, "", "");
@@ -228,54 +204,13 @@ bool visitTransaction(CTransaction& trans, void *data) {
     bool ddos        = ddosRange(sCtx->pBlock->blockNumber);
     bool isDDos      = ddos && nTraces > 250;
     bool isExcl      = ddos && (sCtx->opts->isExcluded(trans.from) || sCtx->opts->isExcluded(trans.to));
-#ifndef NEW_CODE
     if (!isDDos && !isExcl) {
         // We can use forEveryTrace... here because we don't need to save any data on the trace. It's okay to use a copy
         sCtx->potList = "";
         forEveryTraceInTransaction(visitTrace, sCtx, trans);
         // We handle all the traces potentials here since we don't use trace id anyway
-                foundPot1(addPotentialAddr, sCtx, trans.blockNumber, trans.transactionIndex, 0, sCtx->potList);
-    }
-#else
-    bool shit = (containsI(def, trans.from) || containsI(def, trans.to));
-    if (shit) {
-        ostringstream os;
-        os << sCtx->pBlock->blockNumber << "." << trans.transactionIndex;
-        os << "\t" << trans.from;
-        os << "\t" << trans.to;
-        os << "\t" << nTraces;
-        os << "\tisDDos\n";
-        appendToAsciiFile("./skipped.txt", os.str().c_str());
-    }
-
-    if (!shit) { //!isDDos && !isExcl) {
-        // We can use forEveryTrace... here because we don't need to save any data on the trace. It's okay to use a copy
-        sCtx->potList = "";
-        sCtx->reported = false;
-        forEveryTraceInTransaction(visitTrace, sCtx, trans);
-        // We handle all the traces potentials here since we don't use trace id anyway
         foundPot1(addPotentialAddr, sCtx, trans.blockNumber, trans.transactionIndex, 0, sCtx->potList);
     }
-
-    if (isDDos && !shit) {
-        ostringstream os;
-        os << sCtx->pBlock->blockNumber << "." << trans.transactionIndex;
-        os << "\t" << trans.from;
-        os << "\t" << trans.to;
-        os << "\t" << nTraces;
-        os << "\tisDDos\n";
-        appendToAsciiFile("./skipped_ddos.txt", os.str().c_str());
-    }
-
-    if (isExcl && !shit) {
-        ostringstream os;
-        os << sCtx->pBlock->blockNumber << "." << trans.transactionIndex;
-        os << "\t" << trans.from;
-        os << "\t" << trans.to;
-        os << " excluded\n";
-        appendToAsciiFile("./skipped_excl.txt", os.str().c_str());
-    }
-#endif
 
     if (trans.pBlock->blockNumber >= byzantiumBlock)
         trans.isError = (trans.receipt.status == 0); // contains zero on fail
@@ -296,21 +231,6 @@ bool visitTrace(CTrace& trace, void *data) {
             ((CTransaction*)sCtx->pTrans)->isError = trace.isError();
     }
 
-#ifdef NEW_CODE
-    bool shit = (containsI(def, trace.action.from) || containsI(def, trace.action.to));
-    if (shit) {
-        ostringstream os;
-        os << sCtx->pBlock->blockNumber << "." << trace.transactionPosition;
-        os << "\t" << trace.action.from;
-        os << "\t" << trace.action.to;
-        os << "\t" << sCtx->traceCount;
-        os << "\tisDDos2\n";
-        appendToAsciiFile("./skipped_trace_ddos.txt", os.str().c_str());
-        sCtx->reported = true;
-        return false;
-    }
-#endif
-
     sCtx->addToBloom(trace.action.from);
     sCtx->addToBloom(trace.action.to);
     sCtx->addToBloom(trace.action.refundAddress);
@@ -319,24 +239,6 @@ bool visitTrace(CTrace& trace, void *data) {
     sCtx->potList += extract(trace.action.input, 10);
     sCtx->traceCount++;
     sCtx->maxTraceDepth = max(sCtx->maxTraceDepth, (uint64_t)trace.traceAddress.size());
-
-#ifdef NEW_CODE
-    if (!sCtx->reported) {
-        bool ddos = ddosRange(sCtx->pBlock->blockNumber);
-        bool deep = trace.traceAddress.size() > 100;
-        if (ddos && deep) {
-            ostringstream os;
-            os << sCtx->pBlock->blockNumber << "." << trace.transactionPosition;
-            os << "\t" << trace.action.from;
-            os << "\t" << trace.action.to;
-            os << "\t" << sCtx->traceCount;
-            os << "\tisDDos2\n";
-            appendToAsciiFile("./skipped_ddos.txt", os.str().c_str());
-            sCtx->reported = true;
-            return false;
-        }
-    }
-#endif
 
     return true;
 }
