@@ -19,12 +19,8 @@ int main(int argc, const char *argv[]) {
 
     CStringArray files;
 
-    cout << "Getting data from: " << configPath("makeClass/*.*") << endl;
-    listFilesInFolder(files, configPath("makeClass/*.*"));
-    cout << "Found " << files.size() << " files" << endl;
-
-    cout << "Getting data from: " << configPath("grabABI/*.*") << endl;
-    listFilesInFolder(files, configPath("grabABI/*.*"));
+    cout << "Getting data from: ./folder/*" << endl;
+    listFilesInFolder(files, "./folder/*");
     cout << "Found " << files.size() << " files" << endl;
 
     for (auto file : files)
