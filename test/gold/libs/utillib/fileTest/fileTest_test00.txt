@@ -1,15 +1,5 @@
-f-blank.cpp
-f-blank.h
-f-CMakeLists.txt
-f-accounting.cpp
-f-debug.cpp
-f-debug.h
-f-display.cpp
-f-main.cpp
-f-main.h
-f-options.cpp
-f-options.h
-f-parselib.cpp
-f-processing.cpp
-f-processing.h
-f-visitor.h
+Getting data from: ./folder/*
+Found 3 files
+f-file1
+f-file2
+f-file3
