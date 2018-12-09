@@ -186,35 +186,35 @@ extern size_t asciiFileToString(const string_q& filename, string& contents);
             folder += '/';
 
         size_t nFiles = 0;
-        listFiles(nFiles, NULL, folder+"*.*");
+        string_q mask = folder + "*.*";
+        doGlob(nFiles, NULL, mask, true, contains(mask, "/""*/"));
+
         // check to see if it is just folders
         if (!nFiles)
-            listFolders(nFiles, NULL, folder+"*.*");
-        if (!nFiles)
-            listFolders(nFiles, NULL, folder+".");
+            doGlob(nFiles, NULL, mask, false, contains(mask, "/""*/"));
+        if (!nFiles) {
+            mask = folder + ".";
+            doGlob(nFiles, NULL, mask, false, contains(mask, "/""*/"));
+        }
 
         return (nFiles > 0);
     }
 
     //------------------------------------------------------------------
-    void listFiles(size_t& nStrs, string_q *strs, const string_q& mask) {
-        size_t ret = 0;
-        doGlob(ret, strs, mask, true, contains(mask, "/*/")); /* fixes color coding in pico */
-        nStrs = ret;
-    }
+    void listFilesInFolder(CStringArray& items, const string_q& folder) {
+        size_t nItems = 0;
+        doGlob(nItems, NULL, folder, ANY_FILETYPE, contains(folder, "/""*/"));
+        if (!nItems)
+            return;
 
-    //------------------------------------------------------------------
-    void listFolders(size_t& nStrs, string_q *strs, const string_q& mask) {
-        size_t ret = 0;
-        doGlob(ret, strs, mask, false, contains(mask, "/*/")); /* fixes color coding in pico */
-        nStrs = ret;
-    }
+        string_q *ptr = new string_q[nItems];
+        if (!ptr)
+            return;
 
-    //------------------------------------------------------------------
-    void listFilesOrFolders(size_t& nStrs, string_q *strs, const string_q& mask) {
-        size_t ret = 0;
-        doGlob(ret, strs, mask, ANY_FILETYPE, contains(mask, "/*/"));
-        nStrs = ret;
+        doGlob(nItems, ptr, folder, ANY_FILETYPE, contains(folder, "/""*/"));
+        for (size_t i = 0 ; i < nItems ; i++)
+            items.push_back(ptr[i]);
+        delete [] ptr;
     }
 
     //------------------------------------------------------------------

@@ -1,4 +1,3 @@
-#pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
@@ -11,26 +10,19 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+#include "etherlib.h"
 
-namespace qblocks {
+//--------------------------------------------------------------
+int main(int argc, const char *argv[]) {
 
-    //-------------------------------------------------------------------------------
-    extern uint64_t fileSize(const string_q& file);
+    etherlib_init();
 
-    extern void listFilesInFolder(CStringArray& files, const string_q& mask);
+    CStringArray files;
+    listFilesInFolder(files, configPath("makeClass/*.*"));
+    listFilesInFolder(files, configPath("grabABI/*.*"));
+    for (auto file : files)
+        cout << file << endl;
 
-    extern int copyFile(const string_q& from, const string_q& to);
-
-    extern bool folderExists(const string_q& path);
-    extern bool fileExists(const string_q& file);
-
-    extern bool establishFolder(const string_q& path, string_q& created);
-    inline bool establishFolder(const string_q& path) { string_q unused; return establishFolder(path, unused); }
-
-    extern string_q getCWD(const string_q& filename = "");
-    extern string_q doCommand(const string_q& cmd);
-
-    extern string_q makeValidName(const string_q& inOut);
-
-    #define kMaxPathSize _POSIX_PATH_MAX
-}  // namespace qblocks
+    etherlib_cleanup();
+    return 0;
+}
