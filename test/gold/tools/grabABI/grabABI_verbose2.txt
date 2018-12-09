@@ -1,6 +1,6 @@
 grabABI argc: 3 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:-v] 
 grabABI 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -v 
-ABI for address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
+Reading ABI for address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 from --ABI for address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 	function DAOpaidOut                 (address param_0) [0x643f7cdd] constant
 	function DAOrewardAccount           () [0x82bf6464] constant
 	function actualBalance              () [0x39d1f908] constant
