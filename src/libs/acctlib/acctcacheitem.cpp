@@ -235,13 +235,14 @@ ostream& operator<<(ostream& os, const CAcctCacheItem& item) {
 // EXISTING_CODE
 CAcctCacheItem::CAcctCacheItem(string_q& line) {
 
+    initialize();
     replaceAll(line, ".", "\t");
 
-    string_q val = nextTokenClear(line, '\t');
-    blockNum = str_2_Uint(val);
+    if (!contains(line, "\t"))
+        return;
 
-    val = nextTokenClear(line, '\t');
-    transIndex = str_2_Uint(val);
+    blockNum   = str_2_Uint(nextTokenClear(line, '\t'));
+    transIndex = str_2_Uint(nextTokenClear(line, '\t'));
 }
 // EXISTING_CODE
 }  // namespace qblocks

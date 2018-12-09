@@ -88,9 +88,11 @@ bool COptions::parseArguments(string_q& command) {
             while (!contents.empty()) {
                 string_q line  = nextTokenClear(contents,'\n');
                 CAcctCacheItem item(line);
-                removals.push_back(item);
-                cerr << cYellow << "\tremoval instruction: " << cTeal << removals.size() << "-" << item << cOff << "\r";
-                cerr.flush();
+                if (item.blockNum > 0) {
+                    removals.push_back(item);
+                    cerr << cYellow << "\tremoval instruction: " << cTeal << removals.size() << "-" << item << cOff << "\r";
+                    cerr.flush();
+                }
             }
             cerr << "                                                                \n";
             cerr.flush();
