@@ -10,7 +10,7 @@ static COption params[] = {
     COption("~lists",        "list of either account address, blocks, or both (if both, show hits statistics)"),
     COption("-stats",        "calculate statistics for blooms in the block range"),
     COption("-bucket:<val>", "optional bucket size of --stats"),
-    COption("-c(u))m",       "statistics are cummulative (per bucket otherwise) "),
+    COption("-c(u)m",        "statistics are cummulative (per bucket otherwise) "),
     COption("-rewrite",      "re-write the given bloom(s) -- works only with block numbers"),
     COption("-check",        "check that a bloom contains all addresses in the given block(s)"),
     COption("-upgrade",      "read, then write, all blooms (effectivly upgrading them)"),
@@ -74,7 +74,7 @@ bool COptions::parseArguments(string_q& command) {
         return usage("You must provide either a block number or an Ethereum address. Quitting...");
 
     if ((isCheck+isReWrite+isStats) > 1) // cannot do both
-        return usage("You must choose either --check, --rewrite, or --stats. Quitting...");
+        return usage("You must choose only one of --check, --rewrite, or --stats. Quitting...");
 
     else if (!blocks.hasBlocks() || !address_list.empty()) { // has either addresses or no blocks
         if (isCheck || isReWrite || isStats)
@@ -87,10 +87,11 @@ bool COptions::parseArguments(string_q& command) {
         return usage("--raw only works with blocks, not addresses. Quitting...");
 
     if (isTestMode() && blocks.numList.size() == 4) {
-        // We turn of testing mode in this case because one of our test cases from getBloom
+        // We turn off testing mode in this case because one of our test cases from getBloom
         // needs to insure that the blocks for that test are present
         setenv("TEST_MODE", "false", true);
     }
+
     return true;
 }
 
