@@ -166,14 +166,14 @@ bool checkBloom(blknum_t bn, void *data) {
                     cerr << res << "\n";
             }
         }
-        //        } else {
-        //            cerr << "\tNo bloom filters at block " << bn << "                                    \r";
+
     } else {
         if (bn < 46000) {
             cerr << path << " does not exist.\r";
             cerr.flush();
         }
     }
+
     cerr.flush();
     cout.flush();
 
