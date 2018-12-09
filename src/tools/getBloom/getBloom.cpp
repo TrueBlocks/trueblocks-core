@@ -136,18 +136,21 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
             os << "{\n";
             os << "\t\"blockNumber\": \"" << num << "\",\n";
             if (verbose || opt.bitCount) {
-                os << "\t\"bitCount\": [\n";
+                os << "\t\"bitCount\": [";
+                if (blooms.size()) os << "\n";
                 for (size_t i = 0 ; i < blooms.size() ; i++) {
                     os << "\t\t" << uint_2_Str(bitsTwiddled(blooms[i]));
                     if (i < blooms.size() - 1)
                         os << ",";
                     os << "\n";
                 }
-                os << "\t],\n";
+                if (blooms.size()) os << "\t";
+                os << "],\n";
                 if (verbose)
                     os << "\t\"sizeInBytes\": " << fileSize(fileName) << ",\n";
             }
-            os << "\t\"eab\": [\n";
+            os << "\t\"eab\": [";
+            if (blooms.size()) os << "\n";
             for (size_t i = 0 ; i < blooms.size() ; i++) {
                 bloom_t bloom = blooms[i];
                 if (verbose || bloom != 0) {
@@ -163,7 +166,8 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
                     os << "\n";
                 }
             }
-            os << "\t]\n}";
+            if (blooms.size()) os << "\t";
+            os << "]\n}";
 
         }
     }
