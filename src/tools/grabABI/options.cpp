@@ -148,16 +148,17 @@ bool COptions::parseArguments(string_q& command) {
         abi_specs.push_back(abi);
     }
     if (loadKnown) {
-        CAbi abi;
-        abi.loadAbiKnown("token_abis");
-        abi.address = "token_abis";
-        sort(abi.interfaces.begin(), abi.interfaces.end(), sortByFuncName);
-        abi_specs.push_back(abi);
-        CAbi abi1;
-        abi1.loadAbiKnown("wallet_abis");
-        abi1.address = "wallet_abis";
-        sort(abi1.interfaces.begin(), abi1.interfaces.end(), sortByFuncName);
-        abi_specs.push_back(abi1);
+        string_q knownPath = configPath("known_abis/");
+        CStringArray files;
+        listFilesInFolder(files, knownPath + "*.*");
+        for (auto file : files) {
+            CAbi abi;
+            file = substitute(file, "f-", "");
+            abi.loadAbiFromFile(knownPath + file, true);
+            abi.address = substitute(file, ".json","");
+            sort(abi.interfaces.begin(), abi.interfaces.end(), sortByFuncName);
+            abi_specs.push_back(abi);
+        }
     }
 
     return true;
