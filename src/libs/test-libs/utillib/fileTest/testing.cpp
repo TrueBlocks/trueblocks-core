@@ -18,8 +18,15 @@ int main(int argc, const char *argv[]) {
     etherlib_init();
 
     CStringArray files;
+
+    cout << "Getting data from: " << configPath("makeClass/*.*") << endl;
     listFilesInFolder(files, configPath("makeClass/*.*"));
+    cout << "Found " << files.size() << " files" << endl;
+
+    cout << "Getting data from: " << configPath("grabABI/*.*") << endl;
     listFilesInFolder(files, configPath("grabABI/*.*"));
+    cout << "Found " << files.size() << " files" << endl;
+
     for (auto file : files)
         cout << file << endl;
 
