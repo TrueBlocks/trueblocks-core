@@ -49,7 +49,7 @@ bool COptions::handleWrite(const string_q& outputFilename, const CAcctCacheItemA
             writeLastBlock(newLastItem);
         lockSection(false);
         cerr << cYellow << writeArray.size() << cOff << " records written, ";
-        cerr << cYellow << (dataArray.size() - writeArray.size()) << cOff << " records ignored.\n";
+        cerr << cYellow << (dataArray.size() - writeArray.size()) << cOff << " records " << (filterFunc ? "removed" : "ignored") << ".\n";
         cerr << "\tWritten to " << cTeal << outputFilename << cOff << "\n";
     } else {
         cerr << "\tRecords not written\n";
