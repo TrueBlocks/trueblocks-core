@@ -43,7 +43,7 @@ endfunction(run_test)
 # Enter one line for each individual test
 run_test("getAccounts_README"              "-th")
 run_test("getAccounts_run"                 "" )
-run_test("getAccounts_invalid_option"      "-p" )
+run_test("getAccounts_invalid_option"      "-x" )
 run_test("getAccounts_verbose"             "-v" )
 run_test("getAccounts_verbose_long"        "--verbose" )
 run_test("getAccounts_named"               "-n" )
@@ -52,6 +52,7 @@ run_test("getAccounts_named_verbose"       "--named" " -v" )
 run_test("getAccounts_bad_option"          "-a" )
 run_test("getAccounts_help"                "-h")
 run_test("getAccounts_help_long"           "--help")
+run_test("getAccounts_prefund"             "-p" )
 
 # Installation steps
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)
