@@ -13,8 +13,8 @@
 # in your $PATH
 #
 
- ./chifra 0x423b5f62b328d0d6d44870f4eee316befa0b2df5 00_gonetwork
- ./chifra 0x814964b1bceaf24e26296d031eadf134a2ca4105 00_newbium
+./chifra 0x423b5f62b328d0d6d44870f4eee316befa0b2df5 00_gonetwork
+./chifra 0x814964b1bceaf24e26296d031eadf134a2ca4105 00_newbium
 ## ./chifra 0xc9d7fec9889690bbff0a0df758d13e5a55dd7822 00_newbium
 
 ./chifra 0xb8c77482e45f1f44de1745f52c74426c631bdd52 01_bnb
