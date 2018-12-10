@@ -161,7 +161,7 @@ ABI of test1.json
   "inputs": [
     {
       "indexed": 0,
-      "name": "param_0",
+      "name": "val_0",
       "type": "address",
       "isPointer": 0,
       "isArray": 0,
@@ -171,6 +171,7 @@ ABI of test1.json
   "outputs": [
     {
       "indexed": 0,
+      "name": "val_0",
       "type": "uint256",
       "isPointer": 0,
       "isArray": 0,
@@ -189,6 +190,7 @@ ABI of test1.json
   "outputs": [
     {
       "indexed": 0,
+      "name": "val_0",
       "type": "address",
       "isPointer": 0,
       "isArray": 0,
@@ -482,7 +484,7 @@ ABI of test1.json
   "inputs": [
     {
       "indexed": 0,
-      "name": "param_0",
+      "name": "val_0",
       "type": "address",
       "isPointer": 0,
       "isArray": 0,
@@ -492,6 +494,7 @@ ABI of test1.json
   "outputs": [
     {
       "indexed": 0,
+      "name": "val_0",
       "type": "bool",
       "isPointer": 0,
       "isArray": 0,
@@ -573,7 +576,7 @@ ABI of test1.json
   "inputs": [
     {
       "indexed": 0,
-      "name": "param_0",
+      "name": "val_0",
       "type": "address",
       "isPointer": 0,
       "isArray": 0,
@@ -583,6 +586,7 @@ ABI of test1.json
   "outputs": [
     {
       "indexed": 0,
+      "name": "val_0",
       "type": "uint256",
       "isPointer": 0,
       "isArray": 0,
@@ -708,6 +712,7 @@ ABI of test1.json
   "outputs": [
     {
       "indexed": 0,
+      "name": "val_0",
       "type": "uint256",
       "isPointer": 0,
       "isArray": 0,
@@ -754,6 +759,7 @@ ABI of test1.json
   "outputs": [
     {
       "indexed": 0,
+      "name": "val_0",
       "type": "address",
       "isPointer": 0,
       "isArray": 0,
@@ -772,6 +778,7 @@ ABI of test1.json
   "outputs": [
     {
       "indexed": 0,
+      "name": "val_0",
       "type": "address",
       "isPointer": 0,
       "isArray": 0,
@@ -845,6 +852,7 @@ ABI of test1.json
   "outputs": [
     {
       "indexed": 0,
+      "name": "val_0",
       "type": "address",
       "isPointer": 0,
       "isArray": 0,
@@ -929,6 +937,7 @@ ABI of test1.json
   "outputs": [
     {
       "indexed": 0,
+      "name": "val_0",
       "type": "bool",
       "isPointer": 0,
       "isArray": 0,
@@ -947,6 +956,7 @@ ABI of test1.json
   "outputs": [
     {
       "indexed": 0,
+      "name": "val_0",
       "type": "uint256",
       "isPointer": 0,
       "isArray": 0,
@@ -965,6 +975,7 @@ ABI of test1.json
   "outputs": [
     {
       "indexed": 0,
+      "name": "val_0",
       "type": "address",
       "isPointer": 0,
       "isArray": 0,
@@ -983,6 +994,7 @@ ABI of test1.json
   "outputs": [
     {
       "indexed": 0,
+      "name": "val_0",
       "type": "uint256",
       "isPointer": 0,
       "isArray": 0,
@@ -1001,6 +1013,7 @@ ABI of test1.json
   "outputs": [
     {
       "indexed": 0,
+      "name": "val_0",
       "type": "uint256",
       "isPointer": 0,
       "isArray": 0,
@@ -1124,7 +1137,7 @@ ABI of test1.json
   "inputs": [
     {
       "indexed": 0,
-      "name": "param_0",
+      "name": "val_0",
       "type": "address",
       "isPointer": 0,
       "isArray": 0,
@@ -1134,6 +1147,7 @@ ABI of test1.json
   "outputs": [
     {
       "indexed": 0,
+      "name": "val_0",
       "type": "uint256",
       "isPointer": 0,
       "isArray": 0,
@@ -1152,6 +1166,7 @@ ABI of test1.json
   "outputs": [
     {
       "indexed": 0,
+      "name": "val_0",
       "type": "address",
       "isPointer": 0,
       "isArray": 0,
@@ -1170,6 +1185,7 @@ ABI of test1.json
   "outputs": [
     {
       "indexed": 0,
+      "name": "val_0",
       "type": "uint256",
       "isPointer": 0,
       "isArray": 0,
@@ -1187,7 +1203,7 @@ ABI of test1.json
   "inputs": [
     {
       "indexed": 0,
-      "name": "param_0",
+      "name": "val_0",
       "type": "uint256",
       "isPointer": 0,
       "isArray": 0,
@@ -1304,6 +1320,7 @@ ABI of test1.json
   "outputs": [
     {
       "indexed": 0,
+      "name": "val_0",
       "type": "bool",
       "isPointer": 0,
       "isArray": 0,
@@ -1360,6 +1377,7 @@ ABI of test1.json
   "outputs": [
     {
       "indexed": 0,
+      "name": "val_0",
       "type": "address",
       "isPointer": 0,
       "isArray": 0,
@@ -1377,7 +1395,7 @@ ABI of test1.json
   "inputs": [
     {
       "indexed": 0,
-      "name": "param_0",
+      "name": "val_0",
       "type": "address",
       "isPointer": 0,
       "isArray": 0,
@@ -1387,6 +1405,7 @@ ABI of test1.json
   "outputs": [
     {
       "indexed": 0,
+      "name": "val_0",
       "type": "uint256",
       "isPointer": 0,
       "isArray": 0,
@@ -1441,6 +1460,7 @@ ABI of test1.json
   "outputs": [
     {
       "indexed": 0,
+      "name": "val_0",
       "type": "uint256",
       "isPointer": 0,
       "isArray": 0,
@@ -1459,6 +1479,7 @@ ABI of test1.json
   "outputs": [
     {
       "indexed": 0,
+      "name": "val_0",
       "type": "uint256",
       "isPointer": 0,
       "isArray": 0,
@@ -1637,6 +1658,7 @@ ABI of test1.json
   "outputs": [
     {
       "indexed": 0,
+      "name": "val_0",
       "type": "address",
       "isPointer": 0,
       "isArray": 0,
@@ -1665,6 +1687,7 @@ ABI of test1.json
   "outputs": [
     {
       "indexed": 0,
+      "name": "val_0",
       "type": "bool",
       "isPointer": 0,
       "isArray": 0,
@@ -1731,7 +1754,7 @@ ABI of test2.json
   "inputs": [
     {
       "indexed": 0,
-      "name": "param_0",
+      "name": "val_0",
       "type": "address",
       "isPointer": 0,
       "isArray": 0,
@@ -1739,7 +1762,7 @@ ABI of test2.json
     },
     {
       "indexed": 0,
-      "name": "param_1",
+      "name": "val_1",
       "type": "bytes32",
       "isPointer": 0,
       "isArray": 0,
@@ -1747,7 +1770,7 @@ ABI of test2.json
     },
     {
       "indexed": 0,
-      "name": "param_2",
+      "name": "val_2",
       "type": "uint256",
       "isPointer": 0,
       "isArray": 0,
@@ -1766,7 +1789,7 @@ ABI of test2.json
   "inputs": [
     {
       "indexed": 1,
-      "name": "param_0",
+      "name": "val_0",
       "type": "bytes32",
       "isPointer": 0,
       "isArray": 0,
@@ -1774,7 +1797,7 @@ ABI of test2.json
     },
     {
       "indexed": 0,
-      "name": "param_1",
+      "name": "val_1",
       "type": "uint256",
       "isPointer": 0,
       "isArray": 0,
@@ -1793,7 +1816,7 @@ ABI of test2.json
   "inputs": [
     {
       "indexed": 1,
-      "name": "param_0",
+      "name": "val_0",
       "type": "bytes32",
       "isPointer": 0,
       "isArray": 0,
@@ -1801,7 +1824,7 @@ ABI of test2.json
     },
     {
       "indexed": 1,
-      "name": "param_1",
+      "name": "val_1",
       "type": "address",
       "isPointer": 0,
       "isArray": 0,
@@ -1809,7 +1832,7 @@ ABI of test2.json
     },
     {
       "indexed": 0,
-      "name": "param_2",
+      "name": "val_2",
       "type": "uint256",
       "isPointer": 0,
       "isArray": 0,
@@ -1817,7 +1840,7 @@ ABI of test2.json
     },
     {
       "indexed": 0,
-      "name": "param_3",
+      "name": "val_3",
       "type": "uint8",
       "isPointer": 0,
       "isArray": 0,
@@ -1836,7 +1859,7 @@ ABI of test2.json
   "inputs": [
     {
       "indexed": 1,
-      "name": "param_0",
+      "name": "val_0",
       "type": "bytes32",
       "isPointer": 0,
       "isArray": 0,
@@ -1844,7 +1867,7 @@ ABI of test2.json
     },
     {
       "indexed": 1,
-      "name": "param_1",
+      "name": "val_1",
       "type": "string",
       "isPointer": 0,
       "isArray": 0,
@@ -1852,7 +1875,7 @@ ABI of test2.json
     },
     {
       "indexed": 0,
-      "name": "param_2",
+      "name": "val_2",
       "type": "uint256",
       "isPointer": 0,
       "isArray": 0,
@@ -1860,7 +1883,7 @@ ABI of test2.json
     },
     {
       "indexed": 0,
-      "name": "param_3",
+      "name": "val_3",
       "type": "uint256",
       "isPointer": 0,
       "isArray": 0,
@@ -1879,7 +1902,7 @@ ABI of test2.json
   "inputs": [
     {
       "indexed": 1,
-      "name": "param_0",
+      "name": "val_0",
       "type": "bytes32",
       "isPointer": 0,
       "isArray": 0,
@@ -1887,7 +1910,7 @@ ABI of test2.json
     },
     {
       "indexed": 1,
-      "name": "param_1",
+      "name": "val_1",
       "type": "address",
       "isPointer": 0,
       "isArray": 0,
@@ -1895,7 +1918,7 @@ ABI of test2.json
     },
     {
       "indexed": 0,
-      "name": "param_2",
+      "name": "val_2",
       "type": "uint256",
       "isPointer": 0,
       "isArray": 0,
@@ -1903,7 +1926,7 @@ ABI of test2.json
     },
     {
       "indexed": 0,
-      "name": "param_3",
+      "name": "val_3",
       "type": "uint256",
       "isPointer": 0,
       "isArray": 0,
@@ -1922,7 +1945,7 @@ ABI of test2.json
   "inputs": [
     {
       "indexed": 1,
-      "name": "param_0",
+      "name": "val_0",
       "type": "bytes32",
       "isPointer": 0,
       "isArray": 0,
@@ -1930,7 +1953,7 @@ ABI of test2.json
     },
     {
       "indexed": 0,
-      "name": "param_1",
+      "name": "val_1",
       "type": "uint256",
       "isPointer": 0,
       "isArray": 0,
@@ -1949,7 +1972,7 @@ ABI of test2.json
   "inputs": [
     {
       "indexed": 1,
-      "name": "param_0",
+      "name": "val_0",
       "type": "bytes32",
       "isPointer": 0,
       "isArray": 0,
@@ -1957,7 +1980,7 @@ ABI of test2.json
     },
     {
       "indexed": 1,
-      "name": "param_1",
+      "name": "val_1",
       "type": "address",
       "isPointer": 0,
       "isArray": 0,
@@ -1965,7 +1988,7 @@ ABI of test2.json
     },
     {
       "indexed": 0,
-      "name": "param_2",
+      "name": "val_2",
       "type": "uint256",
       "isPointer": 0,
       "isArray": 0,
@@ -1984,7 +2007,7 @@ ABI of test2.json
   "inputs": [
     {
       "indexed": 1,
-      "name": "param_0",
+      "name": "val_0",
       "type": "bytes32",
       "isPointer": 0,
       "isArray": 0,
@@ -1992,7 +2015,7 @@ ABI of test2.json
     },
     {
       "indexed": 1,
-      "name": "param_1",
+      "name": "val_1",
       "type": "bytes32",
       "isPointer": 0,
       "isArray": 0,
@@ -2000,7 +2023,7 @@ ABI of test2.json
     },
     {
       "indexed": 0,
-      "name": "param_2",
+      "name": "val_2",
       "type": "address",
       "isPointer": 0,
       "isArray": 0,
@@ -2019,7 +2042,7 @@ ABI of test2.json
   "inputs": [
     {
       "indexed": 1,
-      "name": "param_0",
+      "name": "val_0",
       "type": "bytes32",
       "isPointer": 0,
       "isArray": 0,
@@ -2027,7 +2050,7 @@ ABI of test2.json
     },
     {
       "indexed": 0,
-      "name": "param_1",
+      "name": "val_1",
       "type": "address",
       "isPointer": 0,
       "isArray": 0,
@@ -2046,7 +2069,7 @@ ABI of test2.json
   "inputs": [
     {
       "indexed": 1,
-      "name": "param_0",
+      "name": "val_0",
       "type": "bytes32",
       "isPointer": 0,
       "isArray": 0,
@@ -2054,7 +2077,7 @@ ABI of test2.json
     },
     {
       "indexed": 0,
-      "name": "param_1",
+      "name": "val_1",
       "type": "uint64",
       "isPointer": 0,
       "isArray": 0,
@@ -2073,7 +2096,7 @@ ABI of test2.json
   "inputs": [
     {
       "indexed": 1,
-      "name": "param_0",
+      "name": "val_0",
       "type": "bytes32",
       "isPointer": 0,
       "isArray": 0,
@@ -2081,7 +2104,7 @@ ABI of test2.json
     },
     {
       "indexed": 0,
-      "name": "param_1",
+      "name": "val_1",
       "type": "address",
       "isPointer": 0,
       "isArray": 0,
@@ -2100,7 +2123,7 @@ ABI of test2.json
   "inputs": [
     {
       "indexed": 0,
-      "name": "param_0",
+      "name": "val_0",
       "type": "address",
       "isPointer": 0,
       "isArray": 0,
@@ -2108,7 +2131,7 @@ ABI of test2.json
     },
     {
       "indexed": 0,
-      "name": "param_1",
+      "name": "val_1",
       "type": "bytes32",
       "isPointer": 0,
       "isArray": 0,
@@ -2128,6 +2151,7 @@ ABI of test2.json
   "outputs": [
     {
       "indexed": 0,
+      "name": "val_0",
       "type": "address",
       "isPointer": 0,
       "isArray": 0,
@@ -2145,7 +2169,7 @@ ABI of test2.json
   "inputs": [
     {
       "indexed": 0,
-      "name": "param_0",
+      "name": "val_0",
       "type": "bytes32",
       "isPointer": 0,
       "isArray": 0,
@@ -2155,6 +2179,7 @@ ABI of test2.json
   "outputs": [
     {
       "indexed": 0,
+      "name": "val_0",
       "type": "uint8",
       "isPointer": 0,
       "isArray": 0,
@@ -2162,6 +2187,7 @@ ABI of test2.json
     },
     {
       "indexed": 0,
+      "name": "val_1",
       "type": "address",
       "isPointer": 0,
       "isArray": 0,
@@ -2169,6 +2195,7 @@ ABI of test2.json
     },
     {
       "indexed": 0,
+      "name": "val_2",
       "type": "uint256",
       "isPointer": 0,
       "isArray": 0,
@@ -2176,6 +2203,7 @@ ABI of test2.json
     },
     {
       "indexed": 0,
+      "name": "val_3",
       "type": "uint256",
       "isPointer": 0,
       "isArray": 0,
@@ -2183,6 +2211,7 @@ ABI of test2.json
     },
     {
       "indexed": 0,
+      "name": "val_4",
       "type": "uint256",
       "isPointer": 0,
       "isArray": 0,
@@ -2200,7 +2229,7 @@ ABI of test2.json
   "inputs": [
     {
       "indexed": 0,
-      "name": "param_0",
+      "name": "val_0",
       "type": "bytes32",
       "isPointer": 0,
       "isArray": 0,
@@ -2219,7 +2248,7 @@ ABI of test2.json
   "inputs": [
     {
       "indexed": 0,
-      "name": "param_0",
+      "name": "val_0",
       "type": "string",
       "isPointer": 0,
       "isArray": 0,
@@ -2238,7 +2267,7 @@ ABI of test2.json
   "inputs": [
     {
       "indexed": 0,
-      "name": "param_0",
+      "name": "val_0",
       "type": "bytes32",
       "isPointer": 0,
       "isArray": 0,
@@ -2257,7 +2286,7 @@ ABI of test2.json
   "inputs": [
     {
       "indexed": 0,
-      "name": "param_0",
+      "name": "val_0",
       "type": "bytes32",
       "isPointer": 0,
       "isArray": 0,
@@ -2267,6 +2296,7 @@ ABI of test2.json
   "outputs": [
     {
       "indexed": 0,
+      "name": "val_0",
       "type": "address",
       "isPointer": 0,
       "isArray": 0,
@@ -2285,6 +2315,7 @@ ABI of test2.json
   "outputs": [
     {
       "indexed": 0,
+      "name": "val_0",
       "type": "uint256",
       "isPointer": 0,
       "isArray": 0,
@@ -2302,7 +2333,7 @@ ABI of test2.json
   "inputs": [
     {
       "indexed": 0,
-      "name": "param_0",
+      "name": "val_0",
       "type": "bytes32",
       "isPointer": 0,
       "isArray": 0,
@@ -2321,7 +2352,7 @@ ABI of test2.json
   "inputs": [
     {
       "indexed": 0,
-      "name": "param_0",
+      "name": "val_0",
       "type": "bytes32",
       "isPointer": 0,
       "isArray": 0,
@@ -2331,6 +2362,7 @@ ABI of test2.json
   "outputs": [
     {
       "indexed": 0,
+      "name": "val_0",
       "type": "address",
       "isPointer": 0,
       "isArray": 0,
@@ -2349,6 +2381,7 @@ ABI of test2.json
   "outputs": [
     {
       "indexed": 0,
+      "name": "val_0",
       "type": "bytes32",
       "isPointer": 0,
       "isArray": 0,
@@ -2366,7 +2399,7 @@ ABI of test2.json
   "inputs": [
     {
       "indexed": 0,
-      "name": "param_0",
+      "name": "val_0",
       "type": "address",
       "isPointer": 0,
       "isArray": 0,
@@ -2374,7 +2407,7 @@ ABI of test2.json
     },
     {
       "indexed": 0,
-      "name": "param_1",
+      "name": "val_1",
       "type": "bytes32",
       "isPointer": 0,
       "isArray": 0,
@@ -2384,6 +2417,7 @@ ABI of test2.json
   "outputs": [
     {
       "indexed": 0,
+      "name": "val_0",
       "type": "address",
       "isPointer": 0,
       "isArray": 0,
@@ -2401,7 +2435,7 @@ ABI of test2.json
   "inputs": [
     {
       "indexed": 0,
-      "name": "param_0",
+      "name": "val_0",
       "type": "bytes32",
       "isPointer": 0,
       "isArray": 0,
@@ -2409,7 +2443,7 @@ ABI of test2.json
     },
     {
       "indexed": 0,
-      "name": "param_1",
+      "name": "val_1",
       "type": "address",
       "isPointer": 0,
       "isArray": 0,
@@ -2428,7 +2462,7 @@ ABI of test2.json
   "inputs": [
     {
       "indexed": 0,
-      "name": "param_0",
+      "name": "val_0",
       "type": "bytes32",
       "isPointer": 0,
       "isArray": 0,
@@ -2436,7 +2470,7 @@ ABI of test2.json
     },
     {
       "indexed": 0,
-      "name": "param_1",
+      "name": "val_1",
       "type": "address",
       "isPointer": 0,
       "isArray": 0,
@@ -2455,7 +2489,7 @@ ABI of test2.json
   "inputs": [
     {
       "indexed": 0,
-      "name": "param_0",
+      "name": "val_0",
       "type": "bytes32",
       "isPointer": 0,
       "isArray": 0,
@@ -2463,7 +2497,7 @@ ABI of test2.json
     },
     {
       "indexed": 0,
-      "name": "param_1",
+      "name": "val_1",
       "type": "bytes32",
       "isPointer": 0,
       "isArray": 0,
@@ -2471,7 +2505,7 @@ ABI of test2.json
     },
     {
       "indexed": 0,
-      "name": "param_2",
+      "name": "val_2",
       "type": "address",
       "isPointer": 0,
       "isArray": 0,
@@ -2490,7 +2524,7 @@ ABI of test2.json
   "inputs": [
     {
       "indexed": 0,
-      "name": "param_0",
+      "name": "val_0",
       "type": "bytes32",
       "isPointer": 0,
       "isArray": 0,
@@ -2498,7 +2532,7 @@ ABI of test2.json
     },
     {
       "indexed": 0,
-      "name": "param_1",
+      "name": "val_1",
       "type": "uint64",
       "isPointer": 0,
       "isArray": 0,
@@ -2517,7 +2551,7 @@ ABI of test2.json
   "inputs": [
     {
       "indexed": 0,
-      "name": "param_0",
+      "name": "val_0",
       "type": "bytes32",
       "isPointer": 0,
       "isArray": 0,
@@ -2525,7 +2559,7 @@ ABI of test2.json
     },
     {
       "indexed": 0,
-      "name": "param_1",
+      "name": "val_1",
       "type": "address",
       "isPointer": 0,
       "isArray": 0,
@@ -2533,7 +2567,7 @@ ABI of test2.json
     },
     {
       "indexed": 0,
-      "name": "param_2",
+      "name": "val_2",
       "type": "uint256",
       "isPointer": 0,
       "isArray": 0,
@@ -2541,7 +2575,7 @@ ABI of test2.json
     },
     {
       "indexed": 0,
-      "name": "param_3",
+      "name": "val_3",
       "type": "bytes32",
       "isPointer": 0,
       "isArray": 0,
@@ -2551,6 +2585,7 @@ ABI of test2.json
   "outputs": [
     {
       "indexed": 0,
+      "name": "val_0",
       "type": "bytes32",
       "isPointer": 0,
       "isArray": 0,
@@ -2568,7 +2603,7 @@ ABI of test2.json
   "inputs": [
     {
       "indexed": 0,
-      "name": "param_0",
+      "name": "val_0",
       "type": "bytes32",
       "isPointer": 0,
       "isArray": 0,
@@ -2587,7 +2622,7 @@ ABI of test2.json
   "inputs": [
     {
       "indexed": 0,
-      "name": "param_0",
+      "name": "val_0",
       "type": "bytes32[]",
       "isPointer": 0,
       "isArray": 0,
@@ -2606,7 +2641,7 @@ ABI of test2.json
   "inputs": [
     {
       "indexed": 0,
-      "name": "param_0",
+      "name": "val_0",
       "type": "bytes32",
       "isPointer": 0,
       "isArray": 0,
@@ -2616,6 +2651,7 @@ ABI of test2.json
   "outputs": [
     {
       "indexed": 0,
+      "name": "val_0",
       "type": "uint8",
       "isPointer": 0,
       "isArray": 0,
@@ -2633,7 +2669,7 @@ ABI of test2.json
   "inputs": [
     {
       "indexed": 0,
-      "name": "param_0",
+      "name": "val_0",
       "type": "bytes32",
       "isPointer": 0,
       "isArray": 0,
@@ -2641,7 +2677,7 @@ ABI of test2.json
     },
     {
       "indexed": 0,
-      "name": "param_1",
+      "name": "val_1",
       "type": "address",
       "isPointer": 0,
       "isArray": 0,
@@ -2660,7 +2696,7 @@ ABI of test2.json
   "inputs": [
     {
       "indexed": 0,
-      "name": "param_0",
+      "name": "val_0",
       "type": "bytes32",
       "isPointer": 0,
       "isArray": 0,
@@ -2679,7 +2715,7 @@ ABI of test2.json
   "inputs": [
     {
       "indexed": 0,
-      "name": "param_0",
+      "name": "val_0",
       "type": "bytes32",
       "isPointer": 0,
       "isArray": 0,
@@ -2689,6 +2725,7 @@ ABI of test2.json
   "outputs": [
     {
       "indexed": 0,
+      "name": "val_0",
       "type": "uint64",
       "isPointer": 0,
       "isArray": 0,
@@ -2706,7 +2743,7 @@ ABI of test2.json
   "inputs": [
     {
       "indexed": 0,
-      "name": "param_0",
+      "name": "val_0",
       "type": "bytes32",
       "isPointer": 0,
       "isArray": 0,
@@ -2714,7 +2751,7 @@ ABI of test2.json
     },
     {
       "indexed": 0,
-      "name": "param_1",
+      "name": "val_1",
       "type": "address",
       "isPointer": 0,
       "isArray": 0,
@@ -2722,7 +2759,7 @@ ABI of test2.json
     },
     {
       "indexed": 0,
-      "name": "param_2",
+      "name": "val_2",
       "type": "uint256",
       "isPointer": 0,
       "isArray": 0,
@@ -2730,7 +2767,7 @@ ABI of test2.json
     },
     {
       "indexed": 0,
-      "name": "param_3",
+      "name": "val_3",
       "type": "bytes32",
       "isPointer": 0,
       "isArray": 0,
