@@ -52,8 +52,11 @@ if (NOT EXISTS "${QUICKBLOCKS_PRICES_FILE}")
 endif()
 
 # prefund
-message(STATUS "Copying prefund file ${QUICKBLOCKS_HOME}/prefunds.txt")
-file(COPY "${CMAKE_SOURCE_DIR}/../../../src/other/install/prefunds.txt" DESTINATION "${QUICKBLOCKS_HOME}/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+set(QUICKBLOCKS_PREFUND_FILE "${QUICKBLOCKS_HOME}/prefunds.txt")
+if (NOT EXISTS "${QUICKBLOCKS_PREFUND_FILE}")
+    message(STATUS "Copying prefund file ${QUICKBLOCKS_PREFUND_FILE}")
+    file(COPY "${CMAKE_SOURCE_DIR}/../../../src/other/install/prefunds.txt" DESTINATION "${QUICKBLOCKS_HOME}/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+endif()
 
 # makeClass content
 file(COPY "${CMAKE_SOURCE_DIR}/../../../bin/makeClass" DESTINATION "${QUICKBLOCKS_HOME}/makeClass")

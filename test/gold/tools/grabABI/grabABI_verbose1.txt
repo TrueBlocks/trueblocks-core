@@ -1,14 +1,14 @@
 grabABI argc: 3 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:-v] 
 grabABI 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -v 
 Reading ABI for address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 from --ABI for address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
-	function DAOpaidOut                 (address param_0) [0x643f7cdd] constant
+	function DAOpaidOut                 (address val_0) [0x643f7cdd] constant
 	function DAOrewardAccount           () [0x82bf6464] constant
 	function actualBalance              () [0x39d1f908] constant
 	function allowance                  (address _owner,address _spender) [0xdd62ed3e] constant
-	function allowedRecipients          (address param_0) [0x4df6d6cc] constant
+	function allowedRecipients          (address val_0) [0x4df6d6cc] constant
 	function approve                    (address _spender,uint256 _amount) [0x095ea7b3]
 	function balanceOf                  (address _owner) [0x70a08231] constant
-	function blocked                    (address param_0) [0xe5962195] constant
+	function blocked                    (address val_0) [0xe5962195] constant
 	function changeAllowedRecipients    (address _recipient,bool _allowed) [0x749f9889]
 	function changeProposalDeposit      (uint256 _proposalDeposit) [0xe33734fd]
 	function checkProposalCode          (uint256 _proposalID,address _recipient,uint256 _amount,bytes _transactionData) [0xeceb2945] constant
@@ -29,15 +29,15 @@ Reading ABI for address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 from --ABI f
 	function newContract                (address _newContract) [0x6837ff1e]
 	function newProposal                (address _recipient,uint256 _amount,string _description,bytes _transactionData,uint256 _debatingPeriod,bool _newCurator) [0x612e45a3]
 	function numberOfProposals          () [0x8d7af473] constant
-	function paidOut                    (address param_0) [0x81f03fcb] constant
+	function paidOut                    (address val_0) [0x81f03fcb] constant
 	function privateCreation            () [0xf8c80d26] constant
 	function proposalDeposit            () [0x8b15a605] constant
-	function proposals                  (uint256 param_0) [0x013cf08b] constant
+	function proposals                  (uint256 val_0) [0x013cf08b] constant
 	function receiveEther               () [0xa3912ec8]
 	function refund                     () [0x590e1ae3]
 	function retrieveDAOReward          (bool _toMembers) [0xa1da2fb9]
 	function rewardAccount              () [0x0e708203] constant
-	function rewardToken                (address param_0) [0xcdef91d0] constant
+	function rewardToken                (address val_0) [0xcdef91d0] constant
 	function splitDAO                   (uint256 _proposalID,address _newCurator) [0x82661dc4]
 	function totalRewardToken           () [0x34145808] constant
 	function totalSupply                () [0x18160ddd] constant
