@@ -1,3 +1,4 @@
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
@@ -46,7 +47,7 @@ int main(int argc, char *argv[])
     string_q path = blockCachePath("addr_index/sorted_by_addr/");
     forEveryFileInFolder(path, visitFiles, &options);
     cerr << "Found " << options.items.size() << " transactions for account " << options.queryAddr << string_q(20, ' ') << "\n";
-    for (auto item : options.items)
+    for (auto const& item : options.items)
         cout << item << "\n";
 
     return 0;

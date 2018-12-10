@@ -30,14 +30,15 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        for (size_t i = 0 ; i < options.addrs.size() ; i++) {
-            address_t addr = options.addrs[i];
+        for (auto const& addr : options.addrs) {
+
             string_q code1 = getCodeAt(addr);
-            bool hasCode = isContractAt(addr);
+            bool hasCode   = isContractAt(addr);
 
             if (options.diff) {
-                string_q code2 = getCodeAt(options.addrs[i+1]);
-                cout << "Code at address '" << addr << ") and (" << "(" << options.addrs[i+1] + ") are "
+                address_t addr2 = *(&addr+1);
+                string_q code2 = getCodeAt(addr2);
+                cout << "Code at address '" << addr << "' and '" << addr2 + "' are "
                         << (code1 == code2 ? "identical" : "different") << "\n";
                 break;
 

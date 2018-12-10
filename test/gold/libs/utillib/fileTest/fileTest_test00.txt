@@ -1,0 +1,5 @@
+Getting data from: ./folder/*
+Found 3 files
+f-file1
+f-file2
+f-file3

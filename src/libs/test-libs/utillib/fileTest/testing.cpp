@@ -10,3 +10,22 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+#include "etherlib.h"
+
+//--------------------------------------------------------------
+int main(int argc, const char *argv[]) {
+
+    etherlib_init();
+
+    CStringArray files;
+
+    cout << "Getting data from: ./folder/*" << endl;
+    listFilesInFolder(files, "./folder/*");
+    cout << "Found " << files.size() << " files" << endl;
+
+    for (auto file : files)
+        cout << file << endl;
+
+    etherlib_cleanup();
+    return 0;
+}

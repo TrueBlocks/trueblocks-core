@@ -10,7 +10,7 @@ ABI for address 0x012233b3c8177f0778d910ed88170b82de3bfe57
 	function registryStarted            ()
 	function releaseDeed                (bytes32 _hash)
 	function rootNode                   ()
-	function sealedBids                 (address param_0,bytes32 param_1)
+	function sealedBids                 (address val_0,bytes32 val_1)
 	function shaBid                     (bytes32 hash,address owner,uint256 value,bytes32 salt)
 	function startAuction               (bytes32 _hash)
 	function startAuctions              (bytes32[] _hashes)

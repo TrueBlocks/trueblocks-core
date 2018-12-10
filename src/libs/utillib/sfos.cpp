@@ -55,7 +55,7 @@ namespace qblocks {
     //------------------------------------------------------------------
     // Returns a list of either files or folders, but not both.
     //------------------------------------------------------------------
-    void doGlob(size_t& nStrs, string_q *strs, const string_q& maskIn, int wantFiles, bool keepPaths ) {
+    void doGlob(size_t& nStrs, string_q *strs, const string_q& maskIn, int wantFiles ) {
         ASSERT(!strs || nStrs);
 
         glob_t globBuf;
@@ -91,15 +91,13 @@ namespace qblocks {
                     if (endsWith(path, '/'))
                         path = extract(path, 0, path.length() - 1);
 
-                    if (!keepPaths) {
-                        // trim path to last directory / file
-                        path = basename((char*)path.c_str());  // NOLINT
-                        if (startsWith(path, '/'))
-                            path = extract(path, 1);
-                        // The path we return is always just the name of the folder or file
-                        // without any leading (or even existing) '/'
-                        ASSERT(path.length() && path[0] != '/');
-                    }
+                    // trim path to last directory / file
+                    path = basename((char*)path.c_str());  // NOLINT
+                    if (startsWith(path, '/'))
+                         path = extract(path, 1);
+                    // The path we return is always just the name of the folder or file
+                    // without any leading (or even existing) '/'
+                    ASSERT(path.length() && path[0] != '/');
 
                     if (wantFiles == ANY_FILETYPE) {
                         if (isDir)
@@ -186,35 +184,35 @@ extern size_t asciiFileToString(const string_q& filename, string& contents);
             folder += '/';
 
         size_t nFiles = 0;
-        listFiles(nFiles, NULL, folder+"*.*");
+        string_q mask = folder + "*.*";
+        doGlob(nFiles, NULL, mask, true);
+
         // check to see if it is just folders
         if (!nFiles)
-            listFolders(nFiles, NULL, folder+"*.*");
-        if (!nFiles)
-            listFolders(nFiles, NULL, folder+".");
+            doGlob(nFiles, NULL, mask, false);
+        if (!nFiles) {
+            mask = folder + ".";
+            doGlob(nFiles, NULL, mask, false);
+        }
 
         return (nFiles > 0);
     }
 
     //------------------------------------------------------------------
-    void listFiles(size_t& nStrs, string_q *strs, const string_q& mask) {
-        size_t ret = 0;
-        doGlob(ret, strs, mask, true, contains(mask, "/*/")); /* fixes color coding in pico */
-        nStrs = ret;
-    }
+    void listFilesInFolder(CStringArray& items, const string_q& folder) {
+        size_t nItems = 0;
+        doGlob(nItems, NULL, folder, ANY_FILETYPE);
+        if (!nItems)
+            return;
 
-    //------------------------------------------------------------------
-    void listFolders(size_t& nStrs, string_q *strs, const string_q& mask) {
-        size_t ret = 0;
-        doGlob(ret, strs, mask, false, contains(mask, "/*/")); /* fixes color coding in pico */
-        nStrs = ret;
-    }
+        string_q *ptr = new string_q[nItems];
+        if (!ptr)
+            return;
 
-    //------------------------------------------------------------------
-    void listFilesOrFolders(size_t& nStrs, string_q *strs, const string_q& mask) {
-        size_t ret = 0;
-        doGlob(ret, strs, mask, ANY_FILETYPE, contains(mask, "/*/"));
-        nStrs = ret;
+        doGlob(nItems, ptr, folder, ANY_FILETYPE);
+        for (size_t i = 0 ; i < nItems ; i++)
+            items.push_back(ptr[i]);
+        delete [] ptr;
     }
 
     //------------------------------------------------------------------

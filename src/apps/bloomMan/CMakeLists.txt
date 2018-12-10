@@ -48,8 +48,8 @@ run_test("bloomMan_invalid_param_2" "-s" " --junk" )
 run_test("bloomMan_noList"          "--stats")
 
 # tests
-run_test("bloomMan_raw"   "--raw"   " 3231401-3231402" )
-#run_test("bloomMan_check" "--check" " 4001001-4001003" )
+run_test("bloomMan_raw"     "--raw"   " 3231401-3231402" )
+#run_test("bloomMan_check"  "--check" " 4001001-4001003" )
 run_test("bloomMan_blocks"  "4001001" " 4001002")
 run_test("bloomMan_addrs"   "0xec513881d33cfec3a961e214f24be49b177b4578" " 0x46ed26db3cae39217027552d589e53a47899b4ce")
 run_test("bloomMan_both"    "4001001" " 0xec513881d33cfec3a961e214f24be49b177b4578")
