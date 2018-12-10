@@ -10,14 +10,14 @@ name=$2
 
 path=monitors/$name
 base_path=`pwd`
-result=/Users/jrush/src.GitHub/quickBlocks-monitors/test/gold/monitors/txt/$name-$address.txt
+result=$QB_MONITORS/test/gold/monitors/txt/$name-$address.txt
 extractor=$base_path/../addrs_extraction_3/bin/addrs_query
-echo $name
-echo $address
-echo $path
-echo $base_path
-echo $result
-echo $extractor
+#echo $name
+#echo $address
+#echo $path
+#echo $base_path
+#echo $result
+#echo $extractor
 #exit
 
 lastBlock=0
@@ -45,7 +45,6 @@ else
     rm $base_path/z
     # just in case
     cat config.toml | sed 's/FIRST/0/' >z ; cat z >config.toml
-    rm -f z
 fi
 
 colorEcho -c green -t "Scanning chain for appearances of $address..."
@@ -54,9 +53,11 @@ $extractor $address $lastBlock >file
 colorEcho -c green -t "Creating import..."
 cat file | tr '.' '\t' >import.txt
 cacheMan -i | grep -v "^$"
-#rm -f import.bak
+rm -f z file import.bak
 
 colorEcho -c green -t "Exporting..."
-#cacheMan -ld cache/0x*.acct.bin >$result
-acctExport 2>/dev/null | tee $result
+acctExport --fmt txt | head -100 2>/dev/null
+colorEcho -c green -t "...and many more"
+echo
+#acctExport 2>/dev/null | tee $result
 #colorEcho -c green -t "JSON file written to $result"

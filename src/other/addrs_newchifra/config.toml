@@ -15,7 +15,7 @@ parse = false
 show=CLogEntry:topics,CLogEntry:data
 
 [formats]
-trans_fmt = [{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]
+trans_fmt = [{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{HASH}]
 #trans_fmt = "[{DATE}]","[{FROM}]","[{TO}]","[{ETHER}]"
 
 [[watches]]
