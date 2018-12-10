@@ -1,0 +1,28 @@
+grabABI argc: 2 [1:0xd26114cd6ee289accf82350c8d8487fedb8a0c07] 
+grabABI 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 
+ABI for address 0xd26114cd6ee289accf82350c8d8487fedb8a0c07
+	function allowance                  (address _owner,address _spender)
+	function approve                    (address _spender,uint256 _value)
+	function balanceOf                  (address _owner)
+	function decimals                   ()
+	function finishMinting              ()
+	function mint                       (address _to,uint256 _amount)
+	function mintTimelocked             (address _to,uint256 _amount,uint256 _releaseTime)
+	function mintingFinished            ()
+	function name                       ()
+	function owner                      ()
+	function pause                      ()
+	function paused                     ()
+	function symbol                     ()
+	function totalSupply                ()
+	function transfer                   (address _to,uint256 _value)
+	function transferFrom               (address _from,address _to,uint256 _value)
+	function transferOwnership          (address newOwner)
+	function unpause                    ()
+	event Approval                      (address indexed owner,address indexed spender,uint256 value)
+	event Mint                          (address indexed to,uint256 value)
+	event MintFinished                  ()
+	event Pause                         ()
+	event Transfer                      (address indexed from,address indexed to,uint256 value)
+	event Unpause                       ()
+

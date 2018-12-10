@@ -293,6 +293,8 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
 
     //---------------------------------------------------------------------------
     bool CAbi::loadAbiByAddress(address_t addrIn) {
+        if (isZeroAddr(addrIn))
+            return false;
         string_q addr = toLower(addrIn);
         string_q fileName = blockCachePath("abis/" + addr + ".json");
         return loadAbiFromFile(fileName, false);
@@ -345,6 +347,9 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
     //-----------------------------------------------------------------------
     bool CAbi::loadAbiAndCache(const address_t& addr, bool raw, bool silent, bool decNames) {
 
+        if (isZeroAddr(addr))
+            return false;
+
         string_q results;
         string_q fileName = blockCachePath("abis/" + addr + ".json");
         string_q localFile("./" + addr + ".json");
@@ -353,43 +358,40 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
             copyFile(localFile, fileName);
         }
 
-        string_q dispName = substitute(fileName, configPath(""), "|");
-        nextTokenClear(dispName, '|');
-        dispName = "~/.quickBlocks/" + dispName;
+        string_q dispName = substitute(fileName, blockCachePath(""), "$CACHE/");
         if (fileExists(fileName) && !raw) {
 
-            if (verbose && !isTestMode()) {
-                cerr << "Reading ABI for " << addr << " from cache " + dispName + "\r";
+            if (verbose) {
+                cerr << "Reading ABI for address " << addr << " from " << (isTestMode() ? "--" : "cache") << "\r";
                 cerr.flush();
             }
             asciiFileToString(fileName, results);
 
         } else {
-            if (verbose && !isTestMode()) {
-                cerr << "Reading ABI for " << addr << " from EtherScan\r";
+            if (verbose) {
+                cerr << "Reading ABI for address " << addr << " from " << (isTestMode() ? "--" : "EtherScan") << "\r";
                 cerr.flush();
             }
             string_q url = string_q("http:/")
-            + "/api.etherscan.io/api?module=contract&action=getabi&address="
-            + addr;
+                                    + "/api.etherscan.io/api?module=contract&action=getabi&address="
+                                    + addr;
             results = substitute(urlToString(url), "\\", "");
             if (!contains(results, "NOTOK")) {
+
                 // Clear the RPC wrapper
-                replace(results, "{\"status\":\"1\",\"message\":\"OK\",\"result\":\"", "");
-                replaceReverse(results, "]\"}", "");
-                if (verbose) {
-                    if (!isTestMode())
-                        cout << verbose << "---------->" << results << "\n";
-                    cout.flush();
-                }
-                nextTokenClear(results, '[');
-                replaceReverse(results, "]}", "");
                 if (!isTestMode()) {
-                    cerr << "Caching abi in " << dispName << "\n";
+                    if (verbose)
+                        cerr << results << endl;
+                    cerr << "Caching abi in " << dispName << endl;
                 }
+                replace(results, "\"result\":\"", "<extract>");
+                replaceReverse(results, "\"}", "</extract>");
+                results = snagFieldClear(results, "extract", "");
                 establishFolder(fileName);
-                stringToAsciiFile(fileName, "["+results+"]");
-            } else if (contains(results, "source code not verified")) {
+                stringToAsciiFile(fileName, results);
+
+            } else if (contains(toLower(results), "source code not verified")) {
+
                 if (!silent) {
                     cerr << "\n";
                     cerr << cRed << "Warning: " << cOff;
@@ -400,12 +402,15 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
                     cerr << cTeal << localFile << cOff << "\n\n";
                     quickQuitHandler(0);
                 }
+
             } else {
+
                 if (!silent) {
                     cerr << "Etherscan returned " << results << "\n";
                     cerr << "Could not grab ABI for " + addr + " from etherscan.io.\n";
                     quickQuitHandler(0);
                 }
+
                 // TODO(tjayrush): If we store the ABI here even if empty, we won't have to get it again, but then
                 // what happens if user later posts the ABI? Need a 'refresh' option or clear cache option
                 establishFolder(fileName);
@@ -518,12 +523,18 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
             return false;
 
         // articulate the events, so we can return with a fully articulated object
-        for (size_t i = 0 ; i < p->receipt.logs.size() ; i++)
-            articulateLog(&p->receipt.logs[i]);
+        for (auto& log : p->receipt.logs)
+            articulateLog(&log);
 
         // articulate the traces, so we can return with a fully articulated object
-        for (size_t i = 0 ; i < p->traces.size() ; i++)
-            articulateTrace(&p->traces[i]);
+        bool hasTraces = true;
+        for (auto& trace : p->traces) {
+            hasTraces = true;
+            trace.articulatedTrace.m_showing = false;
+            ((CAbi*)this)->loadAbiByAddress(trace.action.to);
+            if (articulateTrace(&trace))
+                trace.articulatedTrace.m_showing = true;
+        }
 
         if (p->input.length() >= 10 || p->input == "0x") {
             string_q encoding = extract(p->input, 0, 10);
@@ -531,7 +542,10 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
             for (auto interface : interfaces) {
                 if (encoding % interface.encoding) {
                     p->articulatedTx = CFunction(interface);
-                    return decodeRLP2(interface.name, p->articulatedTx.inputs, params);
+                    p->articulatedTx.showOutput = false;
+                    bool ret1 = decodeRLP2(interface.name, p->articulatedTx.inputs,  params);
+                    bool ret2 = (hasTraces ? decodeRLP2(interface.name, p->articulatedTx.outputs, p->traces[0].result.output) : false);
+                    return (ret1 || ret2);
                 }
             }
         }
@@ -559,6 +573,7 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
             for (auto interface : interfaces) {
                 if (topic_2_Str(p->topics[0]) % interface.encoding) {
                     p->articulatedLog = CFunction(interface);
+                    p->articulatedLog.showOutput = false;
                     return decodeRLP2(interface.name, p->articulatedLog.inputs, params);
                 }
             }
@@ -578,7 +593,10 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
             for (auto interface : interfaces) {
                 if (encoding % interface.encoding) {
                     p->articulatedTrace = CFunction(interface);
-                    return decodeRLP2(interface.name, p->articulatedTrace.inputs, params);
+                    p->articulatedTrace.showOutput = false;
+                    bool ret1 = decodeRLP2(interface.name, p->articulatedTrace.inputs,  params);
+                    bool ret2 = decodeRLP2(interface.name, p->articulatedTrace.outputs, p->result.output);
+                    return (ret1 || ret2);
                 }
             }
         }
@@ -590,6 +608,7 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
         for (auto interface : interfaces) {
             if (encoding % interface.encoding) {
                 ret = CFunction(interface);
+                ret.showOutput = false;
                 return decodeRLP2(interface.name, ret.outputs, params);
             }
         }

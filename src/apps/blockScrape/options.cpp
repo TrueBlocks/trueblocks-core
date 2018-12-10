@@ -11,7 +11,7 @@ static COption params[] = {
     COption("-start:<num>",     "first block to visit (default: last visited block + 1)"),
     COption("-end:<num>",       "last block to visit (required if --start supplied)"),
     COption("-maxBlocks:<num>", "maximum number of blocks to process (defaults to 5000)"),
-    COption("@addrIndex",       "index addresses per block in addition to bloom filters"),
+    COption("@addrIndex",       "index addresses per block in addition to building bloom filters"),
     COption("",                 "Decentralized blockchain scraper and block cache.\n"),
 };
 static size_t nParams = sizeof(params) / sizeof(COption);

@@ -100,7 +100,7 @@ bool testReadWrite(COptions& options) {
             cout.flush();
             readFromJson(block, "./newFmt.json");
             newBlock = CNewBlock(block);
-            newBlock.finalized = isBlockFinal(newBlock.timestamp, latest.timestamp);
+            newBlock.finalized = isBlockFinal(newBlock.timestamp, latest.timestamp, (60 * 4));
             writeNodeToBinary(newBlock, "./newFmt.cache");
             ASSERT(fileExists("./newFmt.cache"));
             reportNode(&block);

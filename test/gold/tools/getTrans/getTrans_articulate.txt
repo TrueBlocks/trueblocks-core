@@ -1,5 +1,5 @@
-getTrans argc: 6 [1:-a] [2:-v] [3:-t] [4:6687987.11] [5:6513870.62] 
-getTrans -a -v -t 6687987.11 6513870.62 
+getTrans argc: 7 [1:-a] [2:-v] [3:-t] [4:6687987.11] [5:6513870.62] [6:0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12] 
+getTrans -a -v -t 6687987.11 6513870.62 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12 
 [{
   "hash": "0x8c0b6d6bf0390ba6618b10aa629f8208c8b871b0c052408505a7d9b5bf015f91",
   "blockHash": "0x9a06b1e8e7249a36a5e532997882429805c7a6510e91b05fd9b5ad6e367acb13",
@@ -24,22 +24,18 @@ getTrans -a -v -t 6687987.11 6513870.62
           "inputs": [
             {
               "name": "_key",
-              "strDefault": "",
               "value": "668943053339463440964226444874938884815264715410"
             },
             {
               "name": "_sender",
-              "strDefault": "",
               "value": "0x0000000000000000000000000000000000000001"
             },
             {
               "name": "_deposit",
-              "strDefault": "",
               "value": "307140400019656960"
             },
             {
               "name": "_amount",
-              "strDefault": "",
               "value": "25000000000000000000"
             }
           ]
@@ -53,7 +49,6 @@ getTrans -a -v -t 6687987.11 6513870.62
     "inputs": [
       {
         "name": "_key",
-        "strDefault": "",
         "value": "1"
       }
     ]
@@ -71,7 +66,6 @@ getTrans -a -v -t 6687987.11 6513870.62
         "inputs": [
           {
             "name": "_key",
-            "strDefault": "",
             "value": "1"
           }
         ]
@@ -117,18 +111,21 @@ getTrans -a -v -t 6687987.11 6513870.62
     "inputs": [
       {
         "name": "_from",
-        "strDefault": "",
         "value": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413"
       },
       {
         "name": "_to",
-        "strDefault": "",
         "value": "0x713fa27cb26b5902ea398b04d21e6018bba3a2f1"
       },
       {
         "name": "_value",
-        "strDefault": "",
         "value": "8263636363636363636"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "success",
+        "value": "false"
       }
     ]
   },
@@ -145,18 +142,21 @@ getTrans -a -v -t 6687987.11 6513870.62
         "inputs": [
           {
             "name": "_from",
-            "strDefault": "",
             "value": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413"
           },
           {
             "name": "_to",
-            "strDefault": "",
             "value": "0x713fa27cb26b5902ea398b04d21e6018bba3a2f1"
           },
           {
             "name": "_value",
-            "strDefault": "",
             "value": "8263636363636363636"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "success",
+            "value": "false"
           }
         ]
       },
@@ -175,6 +175,139 @@ getTrans -a -v -t 6687987.11 6513870.62
         "address": "0x0",
         "gasUsed": 0,
         "output": ""
+      }
+    }
+  ]
+},{
+  "hash": "0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12",
+  "blockHash": "0xcd4dbd459893241b0c21c91d64b445b1eb0579f7341afd17e7b797795a7f1d7e",
+  "blockNumber": 2001002,
+  "transactionIndex": 0,
+  "timestamp": 1470188068,
+  "from": "0xc86d9ed50cb2774a09ed844f7bceef7888ac2e29",
+  "to": "0xebf2bf80c3ddb0b6ac2f88be8dceec7bf12dff22",
+  "value": 4569662960000000000,
+  "gas": 100000,
+  "gasPrice": 100000000000,
+  "isError": 0,
+  "receipt": {
+    "contractAddress": "0x0",
+    "gasUsed": 31561,
+    "logs": [],
+    "status": null
+  },
+  "articulatedTx": {
+    "name": "split",
+    "inputs": [
+      {
+        "name": "targetFork",
+        "value": "0x167a9333bf582556f35bd4d16a7e80e191aa6476"
+      },
+      {
+        "name": "targetNoFork",
+        "value": "0x571b7b69829ce2568b9bc3d32eaf7405dab76b21"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "val_0",
+        "value": "true"
+      }
+    ]
+  },
+  "gasCost": 3156100000000000,
+  "gasUsed": 31561,
+  "date": "2016-08-03 01:34:28 UTC",
+  "ether": 4.569662960000000000,
+  "traces": [
+    {
+      "type": "call",
+      "error": "",
+      "articulatedTrace": {
+        "name": "split",
+        "inputs": [
+          {
+            "name": "targetFork",
+            "value": "0x167a9333bf582556f35bd4d16a7e80e191aa6476"
+          },
+          {
+            "name": "targetNoFork",
+            "value": "0x571b7b69829ce2568b9bc3d32eaf7405dab76b21"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "val_0",
+            "value": "true"
+          }
+        ]
+      },
+      "action": {
+        "address": "0x0",
+        "balance": 0,
+        "callType": "call",
+        "from": "0xc86d9ed50cb2774a09ed844f7bceef7888ac2e29",
+        "gas": 75912,
+        "input": "0x0f2c9329000000000000000000000000167a9333bf582556f35bd4d16a7e80e191aa6476000000000000000000000000571b7b69829ce2568b9bc3d32eaf7405dab76b21",
+        "refundAddress": "0x0",
+        "to": "0xebf2bf80c3ddb0b6ac2f88be8dceec7bf12dff22",
+        "value": 4569662960000000000
+      },
+      "result": {
+        "address": "0x0",
+        "gasUsed": 7473,
+        "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
+      }
+    },
+    {
+      "type": "call",
+      "error": "",
+      "articulatedTrace": {
+        "name": "forked",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "val_0",
+            "value": "true"
+          }
+        ]
+      },
+      "action": {
+        "address": "0x0",
+        "balance": 0,
+        "callType": "call",
+        "from": "0xebf2bf80c3ddb0b6ac2f88be8dceec7bf12dff22",
+        "gas": 50598,
+        "input": "0x16c72721",
+        "refundAddress": "0x0",
+        "to": "0x2bd2326c993dfaef84f696526064ff22eba5b362",
+        "value": 0
+      },
+      "result": {
+        "address": "0x0",
+        "gasUsed": 197,
+        "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
+      }
+    },
+    {
+      "type": "call",
+      "error": "",
+      "articulatedTrace": {},
+      "action": {
+        "address": "0x0",
+        "balance": 0,
+        "callType": "call",
+        "from": "0xebf2bf80c3ddb0b6ac2f88be8dceec7bf12dff22",
+        "gas": 2300,
+        "input": "0x",
+        "refundAddress": "0x0",
+        "to": "0x167a9333bf582556f35bd4d16a7e80e191aa6476",
+        "value": 4569662960000000000
+      },
+      "result": {
+        "address": "0x0",
+        "gasUsed": 0,
+        "output": "0x"
       }
     }
   ]

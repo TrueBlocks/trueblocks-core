@@ -15,7 +15,7 @@
 
 void reportByToken(COptions& options);
 void reportByAccount(COptions& options);
-extern string_q getTokenInfo(const string_q& which, const CAccountWatch& w, const address_t& h, blknum_t b);
+extern string_q getTokenInfo(const string_q& which, CAccountWatch& w, const address_t& h, blknum_t b);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
@@ -82,16 +82,16 @@ void reportByToken(COptions& options) {
                 needsNewline = true;
                 if (bal > 0 || !options.noZero) {
                     if (options.asData) {
-                        cout << blockNum << "\t" << token << "\t" << holder << "\t" << dispBal << "\n";
+                        cout << blockNum << "\t" << token.address << "\t" << holder << "\t" << dispBal << "\n";
                     } else {
                         cout << "    Balance for account " << cGreen << holder << cOff;
                         cout << " at block " << cTeal << blockNum << cOff;
                         cout << " is " << cYellow << dispBal << cOff << "\n";
                     }
                     needsNewline = false;
-                } else if (!isTestMode()) {
+                } else {
                     if (options.asData) {
-                        cerr << blockNum << "\t" << token << "\t" << holder << "         \r";
+                        cerr << blockNum << "\t" << token.address << "\t" << holder << "         \r";
                     } else {
                         cerr << "    Balance for account " << cGreen << holder << cOff;
                         cerr << " at block " << cTeal << blockNum << cOff;
@@ -143,18 +143,18 @@ void reportByAccount(COptions& options) {
                 needsNewline = true;
                 if (bal > 0 || !options.noZero) {
                     if (options.asData) {
-                        cout << blockNum << "\t" << token << "\t" << holder << "\t" << dispBal << "\n";
+                        cout << blockNum << "\t" << token.address << "\t" << holder << "\t" << dispBal << "\n";
                     } else {
-                        cout << "    Balance of token contract " << cGreen << token << cOff;
+                        cout << "    Balance of token contract " << cGreen << token.address << cOff;
                         cout << " at block " << cTeal << blockNum << cOff;
                         cout << " is " << cYellow << dispBal << cOff << "\n";
                     }
                     needsNewline = false;
-                } else if (!isTestMode()) {
+                } else {
                     if (options.asData) {
-                        cerr << blockNum << "\t" << token << "\t" << holder << "         \r";
+                        cerr << blockNum << "\t" << token.address << "\t" << holder << "         \r";
                     } else {
-                        cerr << "    Balance of token contract " << cGreen << token << cOff;
+                        cerr << "    Balance of token contract " << cGreen << token.address << cOff;
                         cerr << " at block " << cTeal << blockNum << cOff;
                         cerr << " is " << cYellow << dispBal << cOff << "           \r";
                     }
@@ -177,11 +177,14 @@ void reportByAccount(COptions& options) {
 }
 
 //-------------------------------------------------------------------------
-string_q getTokenInfo(const string_q& which, const CAccountWatch& token, const address_t& holder, blknum_t blockNum) {
+string_q getTokenInfo(const string_q& which, CAccountWatch& token, const address_t& holder, blknum_t blockNum) {
 
     if (!isAddress(token.address))
         return "";
     ASSERT(holder.empty() || isAddress(holder));
+
+    // we need this, so let's get it
+    token.abi_spec.loadAbiByAddress(token.address);
 
     string_q cmd;
     string_q encoding;
@@ -204,6 +207,8 @@ string_q getTokenInfo(const string_q& which, const CAccountWatch& token, const a
     } else {
         if (isValidInfo(which, encoding)) {
             cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"[CMD][HOLDER]\"}, \"[BLOCK]\"]";
+            if (which != "balanceOf")
+                cmd = substitute(cmd, "[HOLDER]", "");
             replace(cmd, "[TOKEN]",  token.address);
             replace(cmd, "[CMD]",    encoding);
             replace(cmd, "[HOLDER]", padLeft(extract(holder, 2), 64, '0'));  // encoded data (may be empty)
@@ -211,8 +216,11 @@ string_q getTokenInfo(const string_q& which, const CAccountWatch& token, const a
         }
     }
 
+    string_q result = callRPC("eth_call", cmd, false);
+//    if (isTestMode())
+//        cerr << "eth_call for " << which << endl << "\twith: " << cmd << endl << "\treturned: " << result << endl;
     CFunction ret;
-    token.abi_spec.articulateOutputs(encoding, callRPC("eth_call", cmd, false), ret);
+    token.abi_spec.articulateOutputs(encoding, result, ret);
     os << "{\n    \"" << which << "\": \"" << (ret.outputs.size() ? ret.outputs[0].value : "") << "\"\n}\n";
     return (which == "balanceOf" ? (ret.outputs.size() ? ret.outputs[0].value : "") : os.str());
 }

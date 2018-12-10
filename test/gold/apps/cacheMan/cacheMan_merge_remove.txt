@@ -8,5 +8,5 @@ Found removal file...
 	Will remove item 989332.2 if found
 	Will remove item 989345.2 if found
 	Will remove item 992893.13 if found
-	Writing...11 records written, 0 records ignored.
+	Writing...11 records written, 0 records removed.
 	Written to merged.acct.bin

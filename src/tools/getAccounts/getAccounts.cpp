@@ -50,6 +50,15 @@ int main(int argc, const char *argv[]) {
             for (size_t i = 0 ; i < options.namedAccounts.size() ; i++)
                 addrs.push_back(toLower(options.namedAccounts[i].addr));
 
+        } else if (options.fromPrefunded) {
+            string_q contents;
+            asciiFileToString(configPath("prefunds.txt"), contents);
+            CStringArray prefunds;
+            explode(prefunds, contents, '\n');
+            for (auto prefund : prefunds) {
+                cout << nextTokenClear(prefund, '\t') << "\n";
+            }
+
         } else {
             getAccounts(addrs);
             readCustomAddrs(addrs);

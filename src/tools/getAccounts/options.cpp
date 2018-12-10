@@ -15,6 +15,7 @@
 
 //---------------------------------------------------------------------------------------------------
 static COption params[] = {
+    COption("-prefund",  "Show addresses from the list of prefunded addresses"),
     COption("-named",    "Show addresses from named accounts as per ethName"),
     COption("-scraper",  "Show addresses from scraper config.toml (if found in current folder"),
     COption("",          "Show the list of Ethereum accounts known to the local node or named accounts."),
@@ -38,6 +39,9 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("--scraper option requires a file ./config.toml exists in current folder. Quitting...");
             fromScraper = true;
 
+        } else if (arg == "-p" || arg == "--prefund") {
+            fromPrefunded = true;
+
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -60,6 +64,7 @@ void COptions::Init(void) {
     nParamsRef = nParams;
     pOptions = this;
 
+    fromPrefunded = false;
     fromNamed = false;
     fromScraper = false;
     minArgs = 0;

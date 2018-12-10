@@ -497,67 +497,82 @@ namespace qblocks {
         if (!pClass)
             return;
 
-        string_q last;
+        string_q first;
         for (auto field : pClass->fieldList) {
-            if (!field.isHidden()) {
-                last = field.getName();
+            if (!field.isHidden() && first.empty()) {
+                first = field.getName();
             }
         }
 
-        os << "{\n";
-        incIndent();
-        for (auto field : pClass->fieldList) {
-            if (!field.isHidden()) {
+        os << "{";
+        if (m_showing) {
+            incIndent();
+            for (auto field : pClass->fieldList) {
                 string_q name = field.getName();
-                os << indent() << "\"" << name << "\": ";
-                if (field.isArray()) {
-                    uint64_t cnt = str_2_Uint(getValueByName(name+"Cnt"));
-                    os << "[";
-                    if (cnt) {
-                        incIndent();
-                        os << "\n";
-                        for (size_t i = 0 ; i < cnt ; i++) {
-                            os << indent();
-                            const CBaseNode *node = getObjectAt(name, i);
-                            if (node) {
-                                node->doExport(os);
-                            } else {
-                                os << "\"" << getStringAt(name, i) << "\"";
-                            }
-                            if (i < cnt-1)
+                if (!field.isHidden()) {
+                    if (field.isArray()) {
+                        uint64_t cnt = str_2_Uint(getValueByName(name+"Cnt"));
+                        if (cnt || showEmptyField(name)) {
+                            if (field.getName() != first)
                                 os << ",";
                             os << "\n";
+                            os << indent() << "\"" << name << "\": ";
+                            os << "[";
+                            if (cnt) {
+                                incIndent();
+                                os << "\n";
+                                for (size_t i = 0 ; i < cnt ; i++) {
+                                    os << indent();
+                                    const CBaseNode *node = getObjectAt(name, i);
+                                    if (node) {
+                                        node->doExport(os);
+                                    } else {
+                                        os << "\"" << getStringAt(name, i) << "\"";
+                                    }
+                                    if (i < cnt-1)
+                                        os << ",";
+                                    os << "\n";
+                                }
+                                decIndent();
+                                os << indent();
+                            }
+                            os << "]";
                         }
-                        decIndent();
-                        os << indent();
-                    }
-                    os << "]";
-                } else if (field.isObject()) {
-                    const CBaseNode *node = getObjectAt(name, 0);
-                    if (node) {
-                        node->doExport(os);
+
+                    } else if (field.isObject()) {
+
+                        if (field.getName() != first)
+                            os << ",";
+                        os << "\n";
+                        os << indent() << "\"" << name << "\": ";
+                        const CBaseNode *node = getObjectAt(name, 0);
+                        if (node) {
+                            node->doExport(os);
+                        } else {
+                            os << getValueByName(name);
+                        }
+
                     } else {
-                        os << getValueByName(name);
+                        if (field.getName() != first)
+                            os << ",";
+                        os << "\n";
+                        os << indent() << "\"" << name << "\": ";
+                        string_q val = getValueByName(name);
+                        bool isNum = field.m_fieldType & TS_NUMERAL;
+                        if (isNum && expContext().hexNums && !startsWith(val, "0x"))
+                            val = str_2_Hex(val);
+                        bool quote = (!isNum || expContext().quoteNums) && val != "null";
+                        if (quote)
+                            os << "\"";
+                        os << val;
+                        if (quote)
+                            os << "\"";
                     }
-                } else {
-                    string_q val = getValueByName(name);
-                    bool isNum = field.m_fieldType & TS_NUMERAL;
-                    if (isNum && expContext().hexNums && !startsWith(val, "0x"))
-                        val = str_2_Hex(val);
-                    bool quote = (!isNum || expContext().quoteNums) && val != "null";
-                    if (quote)
-                        os << "\"";
-                    os << val;
-                    if (quote)
-                        os << "\"";
                 }
-                if (field.getName() != last)
-                    os << ",";
-                os << "\n";
             }
+            decIndent();
+            os << "\n" << indent();
         }
-        decIndent();
-        os << indent();
         os << "}";
     }
 

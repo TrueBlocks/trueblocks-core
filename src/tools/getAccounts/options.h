@@ -15,6 +15,7 @@
 
 class COptions : public COptionsBase {
 public:
+    bool fromPrefunded;
     bool fromNamed;
     bool fromScraper;
 
