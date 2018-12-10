@@ -18,6 +18,27 @@ bool handleCacheBals(COptions& options) {
         return usage("Cannot cache balances on a machine that doesn't have balances. Quitting...");
 
     CAcctCacheItemArray dataArray;
+
+    // Check to see if it's one of the pre-funded accounts
+    string_q contents;
+    asciiFileToString(configPath("prefunds.txt"), contents);
+    CStringArray prefunds;
+    explode(prefunds, contents, '\n');
+    for (auto const& watch : options.watches) {
+        for (auto prefund : prefunds) {
+            address_t account = nextTokenClear(prefund, '\t');
+            if (account == watch.address) {
+                CAcctCacheItem item;
+                item.blockNum = 1;
+                item.transIndex = NOPOS;
+                dataArray.push_back(item);
+                biguint_t bal = getBalanceAt(watch.address, item.blockNum);
+//                cout << account << "\t" << item << "\t" << bal << endl;
+                continue;
+            }
+        }
+    }
+
     CArchive txCache(READING_ARCHIVE);
     if (txCache.Lock(options.filenames[0], binaryReadOnly, LOCK_NOWAIT)) {
         CAcctCacheItem last;
@@ -40,35 +61,37 @@ bool handleCacheBals(COptions& options) {
     sort(dataArray.begin(), dataArray.end());
 
     establishFolder("./balances/");
-    for (uint32_t w = 0 ; w < options.watches.size() ; w++) {
-        const CAccountWatch *watch = &options.watches[w];
+    for (auto const& watch : options.watches) {
 
-        string_q binaryFilename = "./balances/" + watch->address + ".bals.bin";
+        string_q binaryFilename = "./balances/" + watch.address + ".bals.bin";
         CArchive balCache(WRITING_ARCHIVE);
         if (!balCache.Lock(binaryFilename, binaryWriteCreate, LOCK_WAIT))
             return usage("Cannot open file " + binaryFilename + ". Quitting...");
 
         uint64_t nWritten = 0;
         biguint_t lastBal = biguint_t((uint64_t)NOPOS);
+        size_t cnt = 0;
+        blknum_t lastBlock = NOPOS;
         biguint_t bal = 0;
-        for (uint32_t d = 0 ; d < dataArray.size() ; d++) {
-            const CAcctCacheItem *item  = &dataArray[d];
-            if (item->blockNum >= watch->firstBlock) {
-                bal = getBalanceAt(watch->address, item->blockNum);
-                if (bal != lastBal) {
-                    balCache << item->blockNum << watch->address << bal;
+        for (auto const& item : dataArray) {
+            if (item.blockNum == 1 || item.blockNum >= watch.firstBlock) {
+                bal = getBalanceAt(watch.address, item.blockNum);
+                if (bal != lastBal && item.blockNum != lastBlock) {
+                    balCache << item.blockNum << watch.address << bal;
                     balCache.flush();
                     nWritten++;
                 }
                 lastBal = bal;
+                lastBlock = item.blockNum;
             }
             cout << "\t";
-            cout << cTeal << watch->address << cOff;
-            cout << " (" << nWritten << "/" << d << "/" << dataArray.size() << ") ";
-            cout << item->blockNum << " " << bal << clearStr << "\r";
+            cout << cTeal << watch.address << cOff;
+            cout << " (" << nWritten << "/" << cnt++ << "/" << dataArray.size() << ") ";
+            cout << item.blockNum << " " << bal << clearStr << "\r";
             cout.flush();
         }
-        cerr << "\tWrote " << padNum5T(nWritten++) << " balances to binary file " << cTeal << binaryFilename << cOff << clearStr << "\n";
+        cerr << "\tWrote " << padNum5T(nWritten++) << " balances to binary file " << cTeal;
+        cerr << binaryFilename << cOff << clearStr << "\n";
         cerr.flush();
         balCache.Release();
     }
@@ -84,10 +107,9 @@ bool listBalances(COptions& options) {
     CToml toml("./config.toml");
     options.loadWatches(toml);
 
-    for (uint32_t w = 0 ; w < options.watches.size() ; w++) {
-        const CAccountWatch  *watch = &options.watches[w];
+    for (auto const& watch : options.watches) {
 
-        string_q binaryFilename = "./balances/" + watch->address + ".bals.bin";
+        string_q binaryFilename = "./balances/" + watch.address + ".bals.bin";
         if (!fileExists(binaryFilename))
             return usage("Cannot find file " + binaryFilename + ". Quitting...");
 
@@ -97,17 +119,20 @@ bool listBalances(COptions& options) {
             // If the binary file exists, we use that
             CArchive balCache(READING_ARCHIVE);
             if (balCache.Lock(binaryFilename, binaryReadOnly, LOCK_NOWAIT)) {
-                while (!balCache.Eof()) {
-                    blknum_t bn;
-                    address_t addr;
+
+                do {
+
+                    CAddressAppearance app;
                     biguint_t bal;
-                    if (addr != lastAddr)
-                        cout << "\n";
-                    lastAddr = addr;
-                    balCache >> bn >> addr >> bal;
-                    cout << addr << "\t" << bn << "\t" << bal << "\n";
-                    cout.flush();
-                }
+                    balCache >> app.bn >> app.addr >> bal;
+                    if (app.bn > 0) {
+                        if (app.addr != lastAddr)
+                            cout << endl;
+                        lastAddr = app.addr;
+                        cout << app.addr << "\t" << app.bn << "\t" << bal << endl;
+                    }
+
+                } while (!balCache.Eof());
             }
         }
     }
