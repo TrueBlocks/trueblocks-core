@@ -3,10 +3,10 @@ grabABI 0xaaaf91d9b90df800df4f55c205fd6989c977e73a --raw
 ABI for address 0xaaaf91d9b90df800df4f55c205fd6989c977e73a
 	function Launch                     ()
 	function acceptOwnership            ()
-	function allowance                  (address param_0,address param_1)
+	function allowance                  (address val_0,address val_1)
 	function approve                    (address _spender,uint256 _value)
 	function approveAndCall             (address _spender,uint256 _amount,bytes _extraData)
-	function balanceOf                  (address param_0)
+	function balanceOf                  (address val_0)
 	function burn                       (uint256 _amount)
 	function changeOwner                (address _newOwner)
 	function claimAuctionableTokens     (uint256 amount)

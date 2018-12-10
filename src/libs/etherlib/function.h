@@ -49,6 +49,7 @@ public:
     const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
+    bool showOutput;
     bool isBuiltIn;
     string_q origName;
     bool hasAddrs;
@@ -58,6 +59,9 @@ public:
     friend class CTransaction;
     friend class CLogEntry;
     friend class CTrace;
+    bool showEmptyField(const string_q& fn) const override {
+        return (showOutput || fn != "outputs");
+    }
     // EXISTING_CODE
     bool operator==(const CFunction& item) const;
     bool operator!=(const CFunction& item) const { return !operator==(item); }
@@ -119,6 +123,7 @@ inline void CFunction::initialize(void) {
     outputs.clear();
 
     // EXISTING_CODE
+    showOutput = true;
     hasAddrs = false;
     isBuiltIn = false;
     origName = "";
@@ -141,6 +146,7 @@ inline void CFunction::duplicate(const CFunction& fu) {
     outputs = fu.outputs;
 
     // EXISTING_CODE
+    showOutput = fu.showOutput;
     hasAddrs = fu.hasAddrs;
     isBuiltIn = fu.isBuiltIn;
     origName = fu.origName;

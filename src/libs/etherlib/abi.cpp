@@ -293,6 +293,8 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
 
     //---------------------------------------------------------------------------
     bool CAbi::loadAbiByAddress(address_t addrIn) {
+        if (isZeroAddr(addrIn))
+            return false;
         string_q addr = toLower(addrIn);
         string_q fileName = blockCachePath("abis/" + addr + ".json");
         return loadAbiFromFile(fileName, false);
@@ -344,6 +346,9 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
 
     //-----------------------------------------------------------------------
     bool CAbi::loadAbiAndCache(const address_t& addr, bool raw, bool silent, bool decNames) {
+
+        if (isZeroAddr(addr))
+            return false;
 
         string_q results;
         string_q fileName = blockCachePath("abis/" + addr + ".json");
@@ -518,12 +523,18 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
             return false;
 
         // articulate the events, so we can return with a fully articulated object
-        for (size_t i = 0 ; i < p->receipt.logs.size() ; i++)
-            articulateLog(&p->receipt.logs[i]);
+        for (auto& log : p->receipt.logs)
+            articulateLog(&log);
 
         // articulate the traces, so we can return with a fully articulated object
-        for (size_t i = 0 ; i < p->traces.size() ; i++)
-            articulateTrace(&p->traces[i]);
+        bool hasTraces = true;
+        for (auto& trace : p->traces) {
+            hasTraces = true;
+            trace.articulatedTrace.m_showing = false;
+            ((CAbi*)this)->loadAbiByAddress(trace.action.to);
+            if (articulateTrace(&trace))
+                trace.articulatedTrace.m_showing = true;
+        }
 
         if (p->input.length() >= 10 || p->input == "0x") {
             string_q encoding = extract(p->input, 0, 10);
@@ -531,7 +542,10 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
             for (auto interface : interfaces) {
                 if (encoding % interface.encoding) {
                     p->articulatedTx = CFunction(interface);
-                    return decodeRLP2(interface.name, p->articulatedTx.inputs, params);
+                    p->articulatedTx.showOutput = false;
+                    bool ret1 = decodeRLP2(interface.name, p->articulatedTx.inputs,  params);
+                    bool ret2 = (hasTraces ? decodeRLP2(interface.name, p->articulatedTx.outputs, p->traces[0].result.output) : false);
+                    return (ret1 || ret2);
                 }
             }
         }
@@ -559,6 +573,7 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
             for (auto interface : interfaces) {
                 if (topic_2_Str(p->topics[0]) % interface.encoding) {
                     p->articulatedLog = CFunction(interface);
+                    p->articulatedLog.showOutput = false;
                     return decodeRLP2(interface.name, p->articulatedLog.inputs, params);
                 }
             }
@@ -578,7 +593,10 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
             for (auto interface : interfaces) {
                 if (encoding % interface.encoding) {
                     p->articulatedTrace = CFunction(interface);
-                    return decodeRLP2(interface.name, p->articulatedTrace.inputs, params);
+                    p->articulatedTrace.showOutput = false;
+                    bool ret1 = decodeRLP2(interface.name, p->articulatedTrace.inputs,  params);
+                    bool ret2 = decodeRLP2(interface.name, p->articulatedTrace.outputs, p->result.output);
+                    return (ret1 || ret2);
                 }
             }
         }
@@ -590,6 +608,7 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
         for (auto interface : interfaces) {
             if (encoding % interface.encoding) {
                 ret = CFunction(interface);
+                ret.showOutput = false;
                 return decodeRLP2(interface.name, ret.outputs, params);
             }
         }

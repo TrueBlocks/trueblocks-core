@@ -79,9 +79,12 @@ bool CFunction::setValueByName(const string_q& fieldName, const string_q& fieldV
             break;
         case 'i':
             if ( fieldName % "inputs" ) {
+                uint64_t cnt = 0;
                 CParameter item;
                 string_q str = fieldValue;
                 while (item.parseJson3(str)) {
+                    if (item.name.empty())
+                        item.name = "val_" + uint_2_Str(cnt++);
                     inputs.push_back(item);
                     item = CParameter();  // reset
                 }
@@ -93,9 +96,12 @@ bool CFunction::setValueByName(const string_q& fieldName, const string_q& fieldV
             break;
         case 'o':
             if ( fieldName % "outputs" ) {
+                uint64_t cnt = 0;
                 CParameter item;
                 string_q str = fieldValue;
                 while (item.parseJson3(str)) {
+                    if (item.name.empty())
+                        item.name = "val_" + uint_2_Str(cnt++);
                     outputs.push_back(item);
                     item = CParameter();  // reset
                 }
@@ -128,7 +134,7 @@ void CFunction::finishParse() {
     int cnt = 0;
     for (size_t i = 0 ; i < inputs.size() ; i++) {
         if (inputs[i].name.empty())
-            inputs.at(i).name = "param_" + int_2_Str(cnt++);  // the non-const reference already exists
+            inputs.at(i).name = "val_" + int_2_Str(cnt++);  // the non-const reference already exists
     }
     // EXISTING_CODE
 }
