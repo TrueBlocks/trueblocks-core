@@ -2,4 +2,5 @@
 current = "0.2.0"
 
 [settings]
-blockCachePath = "<NOT_SET>"
+rpcEndpoint=http://localhost:8545
+blockCachePath=<NOT_SET>

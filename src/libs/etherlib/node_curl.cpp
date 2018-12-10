@@ -22,8 +22,9 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     CCurlContext::CCurlContext(void) {
+        CToml toml(configPath("quickBlocks.toml"));
         headers      = "Content-Type: application/json\n";
-        baseURL      = "http://localhost:8545";
+        baseURL      = toml.getConfigStr("settings", "rpcEndpoint", "http://localhost:8545");
         callBackFunc = writeCallback;
         curlNoteFunc = NULL;
         theID        = 1;
