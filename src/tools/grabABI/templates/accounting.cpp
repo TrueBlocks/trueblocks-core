@@ -43,6 +43,8 @@ bool COptions::openIncomeStatement(const CBlock& block) {
     return true;
 }
 
+// THIS IS AN IMPORTANT NOTE - DON'T IGNORE - WE NEED TO ACCOUNT FOR 
+// TRACES NOT TRANSACTIONS. SEE ISSUE #738
 //-----------------------------------------------------------------------
 bool COptions::accountForExtTransaction(const CBlock& block, const CTransaction *trans) {
 

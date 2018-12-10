@@ -76,7 +76,7 @@ bool COptions::parseArguments(string_q& command) {
     if (filters.size() > 0) {
         for (CAccountWatch& watch : watches) {
             watch.enabled = false;
-            for (auto addr : filters)
+            for (auto const& addr : filters)
                 if (addr % watch.address)
                     watch.enabled = true;
         }

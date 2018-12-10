@@ -73,7 +73,9 @@ bool COptions::parseArguments(string_q& command) {
         // show certain fields and hide others
         manageFields(defHide, false);
         manageFields(defShow, true);
+        manageFields("CParameter:strDefault", false);
         manageFields("CTransaction:price", false);
+        manageFields("CFunction:outputs", true);
 
         //    manageFields(toml.getConfigStr("fields", "hide", ""), false);
         //    manageFields(toml.getConfigStr("fields", "show", ""), true );
