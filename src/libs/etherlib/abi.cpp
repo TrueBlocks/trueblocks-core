@@ -614,6 +614,6 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
         }
         return true;
     }
-
 // EXISTING_CODE
 }  // namespace qblocks
+
