@@ -54,7 +54,7 @@ int main(int argc, const char *argv[]) {
         if (visitor.kBlock) {
             // we're not starting at the beginning
             for (uint32_t i = 0 ; i < visitor.watches.size() ; i++) {
-                visitor.watches.at(i).qbis.endBal = getNodeBal(visitor.watches.at(i).balanceHistory, visitor.watches.at(i).address, blockNum);
+                visitor.watches.at(i).statment.endBal = getNodeBal(visitor.watches.at(i).balanceHistory, visitor.watches.at(i).address, blockNum);
             }
         }
 

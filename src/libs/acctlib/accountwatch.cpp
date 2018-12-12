@@ -59,12 +59,12 @@ string_q nextAccountwatchChunk(const string_q& fieldIn, const void *dataPtr) {
 //---------------------------------------------------------------------------------------------------
 bool CAccountWatch::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
-    if (fieldName % "qbis") {
+    if (fieldName % "statement") {
         string_q str = fieldValue;
-        return qbis.parseJson3(str);
+        return statement.parseJson3(str);
     }
     if (fieldName % "balance") {
-        qbis.endBal = qbis.begBal = str_2_Wei(fieldValue);
+        statement.endBal = statement.begBal = str_2_Wei(fieldValue);
         return true;
     }
     // EXISTING_CODE
@@ -102,8 +102,8 @@ bool CAccountWatch::setValueByName(const string_q& fieldName, const string_q& fi
             if ( fieldName % "name" ) { name = fieldValue; return true; }
             if ( fieldName % "nodeBal" ) { nodeBal = str_2_Wei(fieldValue); return true; }
             break;
-        case 'q':
-            if ( fieldName % "qbis" ) { /* qbis = fieldValue; */ return false; }
+        case 's':
+            if ( fieldName % "statement" ) { /* statement = fieldValue; */ return false; }
             break;
         default:
             break;
@@ -137,7 +137,7 @@ bool CAccountWatch::Serialize(CArchive& archive) {
     archive >> color;
     archive >> firstBlock;
     archive >> lastBlock;
-    archive >> qbis;
+    archive >> statement;
     archive >> balanceHistory;
     archive >> nodeBal;
     archive >> enabled;
@@ -160,7 +160,7 @@ bool CAccountWatch::SerializeC(CArchive& archive) const {
     archive << color;
     archive << firstBlock;
     archive << lastBlock;
-    archive << qbis;
+    archive << statement;
     archive << balanceHistory;
     archive << nodeBal;
     archive << enabled;
@@ -207,7 +207,7 @@ void CAccountWatch::registerClass(void) {
     ADD_FIELD(CAccountWatch, "color", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountWatch, "firstBlock", T_NUMBER, ++fieldNum);
     ADD_FIELD(CAccountWatch, "lastBlock", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "qbis", T_OBJECT, ++fieldNum);
+    ADD_FIELD(CAccountWatch, "statement", T_OBJECT, ++fieldNum);
     ADD_FIELD(CAccountWatch, "balanceHistory", T_OBJECT|TS_ARRAY, ++fieldNum);
     ADD_FIELD(CAccountWatch, "nodeBal", T_WEI, ++fieldNum);
     ADD_FIELD(CAccountWatch, "enabled", T_BOOL, ++fieldNum);
@@ -304,8 +304,8 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "name" ) return name;
             if ( fieldName % "nodeBal" ) return wei_2_Str(nodeBal);
             break;
-        case 'q':
-            if ( fieldName % "qbis" ) { expContext().noFrst=true; return qbis.Format(); }
+        case 's':
+            if ( fieldName % "statement" ) { expContext().noFrst=true; return statement.Format(); }
             break;
     }
 
@@ -313,11 +313,11 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
 
     string_q s;
-    s = toUpper(string_q("qbis")) + "::";
+    s = toUpper(string_q("statement")) + "::";
     if (contains(fieldName, s)) {
         string_q f = fieldName;
         replaceAll(f, s, "");
-        f = qbis.getValueByName(f);
+        f = statement.getValueByName(f);
         return f;
     }
 
@@ -353,8 +353,8 @@ ostream& operator<<(ostream& os, const CAccountWatch& item) {
 
 //---------------------------------------------------------------------------
 const CBaseNode *CAccountWatch::getObjectAt(const string_q& fieldName, size_t index) const {
-    if ( fieldName % "qbis" )
-        return &qbis;
+    if ( fieldName % "statement" )
+        return &statement;
     if ( fieldName % "balanceHistory" && index < balanceHistory.size() )
         return &balanceHistory[index];
     if ( fieldName % "api_spec" )
@@ -410,7 +410,7 @@ biguint_t getNodeBal(CBalanceHistoryArray& history, const address_t& addr, blknu
         if (balCache.Lock(binaryFilename, binaryReadOnly, LOCK_NOWAIT)) {
             blknum_t last = NOPOS;
             address_t lastA;
-            while (!balCache.Eof()) {
+            do {
                 blknum_t bn;
                 address_t addr1;
                 biguint_t bal;
@@ -428,7 +428,7 @@ biguint_t getNodeBal(CBalanceHistoryArray& history, const address_t& addr, blknu
                     cerr << "Loaded block  #" << bn << " at " << addr1 << "\r";
                 }
                 cerr.flush();
-            }
+            } while (!balCache.Eof());
         }
         cerr << "\n";
         cerr.flush();
@@ -444,14 +444,11 @@ biguint_t getNodeBal(CBalanceHistoryArray& history, const address_t& addr, blknu
     // ...if it doesn't hit, we need to find the most recent balance
     biguint_t ret = 0;
     for (size_t i = 0 ; i < history.size() ; i++) {
-        // TODO(tjayrush): THIS IS A BUG HACK FIX - SEE ABOVE
-        // We should be able to do >= just below, but if we do, we pick up a zero
-        // balance as the last balance available for any account because the code
-        // that generates the balance history includes a incorrect last duplicated value
+        // if we hit the block number exactly return it
         if (history[i].bn == blockNum)
             return history[i].balance;
 
-        // ...If we've overshot, we report the previous balance
+        // ...If we've overshot, report the previous balance
         if (history[i].bn > blockNum)
             return ret;
 

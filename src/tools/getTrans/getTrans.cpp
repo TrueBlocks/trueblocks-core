@@ -16,6 +16,7 @@
 
 extern bool visitTransaction(CTransaction& trans, void *data);
 extern bool checkBelongs(CTransaction& trans, void *data);
+extern bool checkBelongsDeep(CTransaction& trans, void *data);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
@@ -34,6 +35,7 @@ int main(int argc, const char *argv[]) {
     for (auto command : commands) {
         if (!options.parseArguments(command))
             return 0;
+
         if (options.filters.size() > 0) {
             bool on = options.chkAsStr;
             options.chkAsStr = false;
@@ -41,7 +43,7 @@ int main(int argc, const char *argv[]) {
             if (!options.belongs) {
                 if (on) {
                     options.chkAsStr = on;
-                    forEveryTransactionInList(checkBelongs, &options, options.transList.queries);
+                    forEveryTransactionInList(checkBelongsDeep, &options, options.transList.queries);
                 }
                 if (!options.belongs) {
                     for (auto addr : options.filters) {
@@ -61,19 +63,17 @@ int main(int argc, const char *argv[]) {
     }
     if (verbose && cmdCnt > 1)
         cout << "]\n";
+
     cout.flush();
     return 0;
 }
 
-#define EARLY_QUIT 1
 //----------------------------------------------------------------
 bool visitAddrs(const CAddressAppearance& item, void *data) {
     COptions *opt = (COptions*)data;
 
-#ifdef EARLY_QUIT
     if (opt->belongs)
         return false;
-#endif
 
     for (auto addr : opt->filters) {
         if (addr % item.addr) {
@@ -94,11 +94,7 @@ bool visitAddrs(const CAddressAppearance& item, void *data) {
 #endif
             cout.flush();
             opt->belongs = true;
-#ifdef EARLY_QUIT
             return true;  // we're done
-#else
-            return false;
-#endif
         }
     }
     return true;
@@ -106,17 +102,17 @@ bool visitAddrs(const CAddressAppearance& item, void *data) {
 
 //--------------------------------------------------------------
 bool checkBelongs(CTransaction& trans, void *data) {
+
+    // if we've been told we're done (because we found the target), stop searching
+    if (!trans.forEveryAddress(visitAddrs, NULL, data))
+        return false;
+    return true;
+}
+
+//--------------------------------------------------------------
+bool checkBelongsDeep(CTransaction& trans, void *data) {
+
     COptions *opt = (COptions*)data;
-
-    if (!trans.forEveryAddress(visitAddrs, NULL, data)) {
-        return false; // if we've been told we're done (because we found the target), stop searching
-    }
-
-    // if we're still searching, and we want to search input and event data as a string, do so
-    if (!opt->chkAsStr) {
-        return true;
-    }
-
     for (auto addr : opt->filters) {
         string_q bytes = substitute(addr, "0x", "");
         if (contains(trans.input, bytes)) {
@@ -151,7 +147,7 @@ bool visitTransaction(CTransaction& trans, void *data) {
     COptions *opt = reinterpret_cast<COptions *>(data);
     if (contains(trans.hash, "invalid")) {
         ostringstream os;
-        os << cRed << "{ \"error\": \"The receipt for transaction ";
+        os << cRed << "{ \"error\": \"The transaction ";
         os << nextTokenClear(trans.hash, ' ') << " was not found.\" }" << cOff;
         cerr << os.str();
         return true;

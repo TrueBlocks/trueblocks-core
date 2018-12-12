@@ -120,12 +120,6 @@ bool exportTransaction(COptions& options, const CAcctCacheItem *item, bool first
                 cout << options.annotate(substitute(os.str(),"++WATCH++",watch->address));
                 cout.flush();
 
-#ifdef OUTPUT_REDIR
-                if (options.out) {
-                    cerr << "\t" << cTeal << "exporting: " << *item << cOff << "\r";
-                    cerr.flush();
-                }
-#endif
             } else {
                 cerr << "\t" << cTeal << "skipping: " << *item << cOff << endl;
             }
