@@ -29,9 +29,6 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     Init();
-#ifdef OUTPUT_REDIR
-    outFile = "file.txt";
-#endif
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (startsWith(arg, "-f:") || startsWith(arg, "--fmt:")) {
@@ -82,13 +79,6 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-#ifdef OUTPUT_REDIR
-    if (!outFile.empty()) {
-        outStream.open(outFile);
-        out = new COutputPipe(outStream.rdbuf(), cout);
-    }
-#endif
-
     transFmt = "";  // empty string gets us JSON output
     if (fmt != JSON) {
         string_q format = toml.getConfigStr("formats", "trans_fmt", "");
@@ -118,30 +108,15 @@ void COptions::Init(void) {
     needsTrace = false;
 
     minArgs = 0;
-#ifdef OUTPUT_REDIR
-    if (out)
-        delete out;
-    out = NULL;
-    outFile = "";
-    outStream.close();
-#endif
 }
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
-#ifdef OUTPUT_REDIR
-    out = NULL;
-#endif
     Init();
 }
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-#ifdef OUTPUT_REDIR
-    if (out)
-        delete out;
-    outStream.close();
-#endif
 }
 
 //-----------------------------------------------------------------------

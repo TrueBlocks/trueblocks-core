@@ -339,9 +339,23 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
                             return "";
                         CFunction func;
                         func.parseJson3(v);
+#if 0
+                        if (func.name.empty())
+                            func.name = "UnknownEvent";
+                        ret += (func.name + "(");
+                        for (auto param : func.inputs) {
+                            if (param.name != func.inputs[0].name)
+                                ret += ",";
+                            ret += param.value;
+                        }
+                        ret += ")";
+                        if (n < tra->receipt.logs.size() - 1)
+                            ret += "\n\t";
+#else
                         if (!ret.empty())
                             ret += ",";
                         ret += func.name;
+#endif
                     }
                     return ret;
                 }

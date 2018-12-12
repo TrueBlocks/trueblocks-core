@@ -196,7 +196,7 @@ name                	1006	0	131122	T_TEXT TS_STRING
 color               	1007	0	131122	T_TEXT TS_STRING
 firstBlock          	1008	0	65561	T_NUMBER TS_NUMERAL
 lastBlock           	1009	0	65561	T_NUMBER TS_NUMERAL
-qbis                	1010	0	1048651	T_OBJECT TS_OBJECT
+statement           	1010	0	1048651	T_OBJECT TS_OBJECT
 balanceHistory      	1011	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 nodeBal             	1012	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 enabled             	1013	0	65556	T_BOOL TS_NUMERAL
@@ -206,7 +206,7 @@ abi_spec            	1015	1	1048651	T_OBJECT TS_OBJECT
   "address": "0x0",
   "firstBlock": 0,
   "lastBlock": 4294967295,
-  "qbis": {
+  "statement": {
     "begBal": 0,
     "inflow": 0,
     "outflow": 0,
@@ -233,7 +233,7 @@ name                	1006	1	131122	T_TEXT TS_STRING
 color               	1007	1	131122	T_TEXT TS_STRING
 firstBlock          	1008	1	65561	T_NUMBER TS_NUMERAL
 lastBlock           	1009	1	65561	T_NUMBER TS_NUMERAL
-qbis                	1010	1	1048651	T_OBJECT TS_OBJECT
+statement           	1010	1	1048651	T_OBJECT TS_OBJECT
 balanceHistory      	1011	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 nodeBal             	1012	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 enabled             	1013	1	65556	T_BOOL TS_NUMERAL
@@ -254,7 +254,7 @@ name                	1006	0	131122	T_TEXT TS_STRING
 color               	1007	0	131122	T_TEXT TS_STRING
 firstBlock          	1008	0	65561	T_NUMBER TS_NUMERAL
 lastBlock           	1009	0	65561	T_NUMBER TS_NUMERAL
-qbis                	1010	0	1048651	T_OBJECT TS_OBJECT
+statement           	1010	0	1048651	T_OBJECT TS_OBJECT
 balanceHistory      	1011	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 nodeBal             	1012	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 enabled             	1013	0	65556	T_BOOL TS_NUMERAL
@@ -268,7 +268,7 @@ abi_spec            	1015	0	1048651	T_OBJECT TS_OBJECT
   "address": "0x0",
   "firstBlock": 0,
   "lastBlock": 4294967295,
-  "qbis": {
+  "statement": {
     "begBal": 0,
     "inflow": 0,
     "outflow": 0,

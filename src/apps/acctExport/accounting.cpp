@@ -14,10 +14,10 @@ bool COptions::openIncomeStatement(const CBlock& block) {
 
     for (size_t i = 0 ; i < watches.size() ; i++) {
         CAccountWatch *w = &watches.at(i);
-        w->qbis.inflow = w->qbis.outflow = w->qbis.gasCostInWei = 0;
+        w->statement.inflow = w->statement.outflow = w->statement.gasCostInWei = 0;
         if (i < watches.size()-1) {
-            w->qbis.nodeBal = getNodeBal(w->balanceHistory, w->address, block.blockNumber-1);
-            bigint_t diff = (w->qbis.nodeBal - w->qbis.endBal);
+            w->statement.nodeBal = getNodeBal(w->balanceHistory, w->address, block.blockNumber-1);
+            bigint_t diff = (w->statement.nodeBal - w->statement.endBal);
             if (diff != 0) {
                 cout << "\n" << string_q(5, '-') << " WARNING " << string_q(166, '-') << "\n";
                 cout
@@ -64,16 +64,16 @@ bool COptions::accountForExtTransaction(const CBlock& block, const CTransaction 
     // Nothing to record if there was an error, but we do have to account for gas
     if (trans->isError) { // || trans->value == 0)
         if (fWhich != watches.size() - 1) {
-            watches.at(fWhich).qbis.gasCostInWei += (trans->receipt.gasUsed * trans->gasPrice);
+            watches.at(fWhich).statement.gasCostInWei += (trans->receipt.gasUsed * trans->gasPrice);
             tx_nAccountedFor++;
         }
         return true;
     }
 
-    watches.at(fWhich).qbis.outflow += trans->value;
+    watches.at(fWhich).statement.outflow += trans->value;
     if (fWhich != watches.size() - 1)
-        watches.at(fWhich).qbis.gasCostInWei += (trans->receipt.gasUsed * trans->gasPrice);
-    watches.at(tWhich).qbis.inflow += trans->value;
+        watches.at(fWhich).statement.gasCostInWei += (trans->receipt.gasUsed * trans->gasPrice);
+    watches.at(tWhich).statement.inflow += trans->value;
     tx_nAccountedFor++;
     return true;
 }
@@ -104,11 +104,11 @@ bool COptions::accountForIntTransaction(const CBlock& block, const CTransaction 
             fWhich = i;
     }
 
-    watches.at(fWhich).qbis.outflow += trace->action.value;
+    watches.at(fWhich).statement.outflow += trace->action.value;
     // gas is paid by originating account
     //    if (fWhich != watches.size() - 1)
-    //        watches[fWhich].qbis.gasCostInWei += (trans->receipt.gasUsed * trace->gasPrice);
-    watches.at(tWhich).qbis.inflow += trace->action.value;
+    //        watches[fWhich].statement.gasCostInWei += (trans->receipt.gasUsed * trace->gasPrice);
+    watches.at(tWhich).statement.inflow += trace->action.value;
     tx_nAccountedFor++;
     //    tBuffer.addItem(trace->blockNumber, trace->transactionIndex, trace->hash);
     return true;
@@ -124,7 +124,7 @@ bool COptions::closeIncomeStatement(const CBlock& block) {
 
     CIncomeStatement total;
     for (size_t i = 0 ; i < watches.size() ; i++)
-        total += watches[i].qbis;
+        total += watches[i].statement;
 
     bool outOfBal = false;
 //TODO(tjayrush) This should be an option
@@ -135,21 +135,21 @@ bool COptions::closeIncomeStatement(const CBlock& block) {
         cout << string_q(23, ' ') << " Profit and Loss for block #" << block.blockNumber << " (" << ts_2_Date(block.timestamp).Format(FMT_JSON) << ")\n";
         cout << padCenter("",23) << " " << header << "  " << padCenter("nodeBal",34) << "\n";
         for (size_t i = 0 ; i < watches.size() ; i++) {
-            watches.at(i).qbis.blockNum = block.blockNumber;
-            watches.at(i).qbis.begBal = watches[i].qbis.endBal;
-            watches.at(i).qbis.endBal = (watches[i].qbis.begBal + watches[i].qbis.inflow - watches[i].qbis.outflow - watches[i].qbis.gasCostInWei);
+            watches.at(i).statement.blockNum = block.blockNumber;
+            watches.at(i).statement.begBal = watches[i].statement.endBal;
+            watches.at(i).statement.endBal = (watches[i].statement.begBal + watches[i].statement.inflow - watches[i].statement.outflow - watches[i].statement.gasCostInWei);
 
-            cout << watches[i].color << padRight(watches[i].displayName(false,true,false,14,6),24) << watches[i].qbis << "   ";
+            cout << watches[i].color << padRight(watches[i].displayName(false,true,false,14,6),24) << watches[i].statement << "   ";
 
             if (i < watches.size()-1) {
-                watches.at(i).qbis.nodeBal = getNodeBal(watches.at(i).balanceHistory, watches[i].address, block.blockNumber);
-                cout << padLeft(wei_2_Ether(bni_2_Str(watches[i].qbis.nodeBal)),23);
-                if (!watches[i].qbis.balanced()) {
+                watches.at(i).statement.nodeBal = getNodeBal(watches.at(i).balanceHistory, watches[i].address, block.blockNumber);
+                cout << padLeft(wei_2_Ether(bni_2_Str(watches[i].statement.nodeBal)),23);
+                if (!watches[i].statement.balanced()) {
 
-                    cout << " " << padLeft(wei_2_Ether(bni_2_Str(watches[i].qbis.difference())),23) << " " << redX;
+                    cout << " " << padLeft(wei_2_Ether(bni_2_Str(watches[i].statement.difference())),23) << " " << redX;
                     if (report_bals) {
                         ostringstream os;
-                        os << block.blockNumber << "\t" << watches[i].address << "\t" << watches[i].qbis.endBal << "\n";
+                        os << block.blockNumber << "\t" << watches[i].address << "\t" << watches[i].statement.endBal << "\n";
                         appendToAsciiFile("./balance_import.txt", os.str().c_str());
                     }
                     outOfBal = true;
@@ -177,13 +177,13 @@ bool COptions::closeIncomeStatement(const CBlock& block) {
             return false;
         } else if (ch == 'c') {
             for (size_t i = 0 ; i < watches.size() ; i++)
-                watches.at(i).qbis.correct();
+                watches.at(i).statement.correct();
         }
     }
 
     if (autocorrect_on) {
         for (size_t i = 0 ; i < watches.size() ; i++)
-            watches.at(i).qbis.correct();
+            watches.at(i).statement.correct();
     }
     return true;
 }

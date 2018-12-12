@@ -7,22 +7,6 @@
 #include "etherlib.h"
 #include "acctlib.h"
 
-//#define OUTPUT_REDIR 1
-#ifdef OUTPUT_REDIR
-class COutputPipe {
-public:
-    COutputPipe(streambuf * buf, ostream& os) : redir(os) {
-        old_buf = os.rdbuf(buf);
-    }
-
-    ~COutputPipe(void) {
-        redir.rdbuf(old_buf);
-    }
-    ostream& redir;
-    streambuf *old_buf;
-};
-#endif
-
 //-----------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
@@ -38,11 +22,6 @@ public:
     bool needsTrace;
     bool showProgress;
     bool ignoreDdos;
-#ifdef OUTPUT_REDIR
-    COutputPipe *out;
-    string_q outFile;
-    ofstream outStream;
-#endif
 
     COptions(void);
     ~COptions(void);
