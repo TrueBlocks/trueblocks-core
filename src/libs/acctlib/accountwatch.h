@@ -36,7 +36,7 @@ public:
     string_q color;
     blknum_t firstBlock;
     blknum_t lastBlock;
-    CIncomeStatement qbis;
+    CIncomeStatement statement;
     CBalanceHistoryArray balanceHistory;
     wei_t nodeBal;
     bool enabled;
@@ -116,7 +116,7 @@ inline void CAccountWatch::initialize(void) {
     color = "";
     firstBlock = 0;
     lastBlock = 0;
-    qbis.initialize();
+    statement.initialize();
     balanceHistory.clear();
     nodeBal = 0;
     enabled = true;
@@ -140,7 +140,7 @@ inline void CAccountWatch::duplicate(const CAccountWatch& ac) {
     color = ac.color;
     firstBlock = ac.firstBlock;
     lastBlock = ac.lastBlock;
-    qbis = ac.qbis;
+    statement = ac.statement;
     balanceHistory = ac.balanceHistory;
     nodeBal = ac.nodeBal;
     enabled = ac.enabled;

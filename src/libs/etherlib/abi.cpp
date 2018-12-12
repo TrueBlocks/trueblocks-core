@@ -527,7 +527,7 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
             articulateLog(&log);
 
         // articulate the traces, so we can return with a fully articulated object
-        bool hasTraces = true;
+        bool hasTraces = false;
         for (auto& trace : p->traces) {
             hasTraces = true;
             trace.articulatedTrace.m_showing = false;

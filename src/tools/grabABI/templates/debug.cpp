@@ -90,7 +90,7 @@ bool COptions::enterDebugger(const CBlock& block) {
             case 10:  // 'enter'
                 if (curCmd == "c" || curCmd == "correct") {
                     for (size_t i = 0 ; i < watches.size() ; i++)
-                        watches.at(i).qbis.correct();
+                        watches.at(i).statment.correct();
                     done = true;
                     history(curCmd);
 
