@@ -191,3 +191,4 @@ extern CArchive& operator>>(CArchive& archive, CFunction& fun);
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
+
