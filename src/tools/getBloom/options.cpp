@@ -117,6 +117,8 @@ bool COptions::parseArguments(string_q& command) {
             UNHIDE_FIELD(CBloomBlock, "sizeInBytes");
     }
 
+    bitBound = getGlobalConfig("blockScrape")->getConfigInt("settings", "bitBound", 200);
+
     return true;
 }
 
@@ -136,6 +138,7 @@ void COptions::Init(void) {
     force        = false;
     receiptsOnly = false;
     blockOnly    = false;
+    bitBound     = 200;
     blocks.Init();
 }
 

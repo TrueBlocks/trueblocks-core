@@ -15,6 +15,7 @@ public:
     bool      writeBlocks;
     string_q  exclusions;
     bool      keepAddrIdx;
+    uint64_t  bitBound;
 
     COptions(void);
     ~COptions(void);

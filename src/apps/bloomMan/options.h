@@ -17,6 +17,7 @@ public:
     uint64_t          bucketSize;
     COptionsBlockList blocks;
     string_q          address_list;
+    uint64_t          bitBound;
 
     COptions(void);
     ~COptions(void);

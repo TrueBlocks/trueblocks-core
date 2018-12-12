@@ -92,6 +92,8 @@ bool COptions::parseArguments(string_q& command) {
         setenv("TEST_MODE", "false", true);
     }
 
+    bitBound = getGlobalConfig("blockScrape")->getConfigInt("settings", "bitBound", 200);
+
     return true;
 }
 
@@ -108,6 +110,7 @@ void COptions::Init(void) {
     isRaw         = false;
     address_list  = "";
     bucketSize    = 10000;
+    bitBound      = 200;
     blocks.Init();
 }
 
