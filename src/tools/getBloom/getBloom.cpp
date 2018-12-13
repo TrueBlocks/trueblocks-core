@@ -18,7 +18,7 @@ extern string_q doOneBloom(uint64_t num, const COptions& opt);
 //-------------------------------------------------------------------------------------
 int main(int argc, const char * argv[]) {
 
-    etherlib_init(quickQuitHandler);
+    etherlib_init("binary", quickQuitHandler);
 
     // Parse command line, allowing for command files
     COptions options;
