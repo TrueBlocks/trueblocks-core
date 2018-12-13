@@ -9,7 +9,7 @@
 //----------------------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    etherlib_init("local");
+    etherlib_init("local",  defaultQuitHandler);
 
     COptions options;
     if (!options.prepareArguments(argc, argv))

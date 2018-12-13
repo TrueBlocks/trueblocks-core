@@ -16,7 +16,7 @@
 //-----------------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    etherlib_init();
+    etherlib_init("binary", quickQuitHandler);
     CTreeRoot::registerClass();
     CTreeNode::registerClass();
     CInfix::registerClass();

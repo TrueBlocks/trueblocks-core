@@ -16,7 +16,7 @@ extern bool rawFunc     (blknum_t bn, void *data);
 //-------------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    etherlib_init();
+    etherlib_init("binary", defaultQuitHandler);
 
     COptions options;
     if (!options.prepareArguments(argc, argv))

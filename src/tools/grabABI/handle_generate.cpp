@@ -238,7 +238,7 @@ void COptions::handle_generate(void) {
     replaceAll(sourceCode, "[{REGISTERS}]", registers);
     string_q chainInit = (isToken() ?
                           "\twalletlib_init();\n" :
-                          (isWallet() ? "" : "\ttokenlib_init();\n"));
+                          (isWallet() ? "" : "\ttokenlib_init(mode, qh);\n"));
     replaceAll(sourceCode, "[{CHAINLIB}]",   chainInit);
     replaceAll(sourceCode, "[{FACTORY1}]",   factory1.empty() ? "\t\t{\n\t\t\t// No functions\n" : factory1);
     replaceAll(sourceCode, "[{INIT_CODE}]",  factory1.empty() ? "" : STR_ITEMS);
@@ -415,7 +415,7 @@ const char* STR_CODE_SIGS =
 "\n";
 
 //-----------------------------------------------------------------------
-const char* STR_BLOCK_PATH = "\n\tetherlib_init(qh);";
+const char* STR_BLOCK_PATH = "\n\tetherlib_init(\"binary\", qh);";
 
 //-----------------------------------------------------------------------
 const char* STR_ITEMS =

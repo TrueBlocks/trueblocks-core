@@ -19,7 +19,7 @@ extern string_q getTokenInfo(const string_q& which, CAccountWatch& w, const addr
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    acctlib_init(quickQuitHandler);
+    acctlib_init("binary", quickQuitHandler);
 
     // Parse command line, allowing for command files
     COptions options;
