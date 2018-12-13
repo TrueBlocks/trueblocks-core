@@ -9,7 +9,7 @@
 //----------------------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    etherlib_init(quickQuitHandler);
+    etherlib_init("binary", quickQuitHandler);
 
     COptions options;
     if (!options.prepareArguments(argc, argv))
