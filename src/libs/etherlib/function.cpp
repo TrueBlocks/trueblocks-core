@@ -91,6 +91,9 @@ bool CFunction::setValueByName(const string_q& fieldName, const string_q& fieldV
                 return true;
             }
             break;
+        case 'm':
+            if ( fieldName % "message" ) { message = fieldValue; return true; }
+            break;
         case 'n':
             if ( fieldName % "name" ) { name = fieldValue; return true; }
             break;
@@ -160,6 +163,7 @@ bool CFunction::Serialize(CArchive& archive) {
     archive >> payable;
     archive >> signature;
     archive >> encoding;
+//    archive >> message;
     archive >> inputs;
     archive >> outputs;
     finishParse();
@@ -181,6 +185,7 @@ bool CFunction::SerializeC(CArchive& archive) const {
     archive << payable;
     archive << signature;
     archive << encoding;
+//    archive << message;
     archive << inputs;
     archive << outputs;
 
@@ -226,6 +231,8 @@ void CFunction::registerClass(void) {
     ADD_FIELD(CFunction, "payable", T_BOOL, ++fieldNum);
     ADD_FIELD(CFunction, "signature", T_TEXT, ++fieldNum);
     ADD_FIELD(CFunction, "encoding", T_TEXT, ++fieldNum);
+    ADD_FIELD(CFunction, "message", T_TEXT, ++fieldNum);
+    HIDE_FIELD(CFunction, "message");
     ADD_FIELD(CFunction, "inputs", T_OBJECT|TS_ARRAY, ++fieldNum);
     ADD_FIELD(CFunction, "outputs", T_OBJECT|TS_ARRAY, ++fieldNum);
 
@@ -358,6 +365,9 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
                 }
                 return retS;
             }
+            break;
+        case 'm':
+            if ( fieldName % "message" ) return message;
             break;
         case 'n':
             if ( fieldName % "name" ) return name;

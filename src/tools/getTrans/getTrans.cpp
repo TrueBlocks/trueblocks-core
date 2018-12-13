@@ -20,7 +20,7 @@ extern bool checkBelongsDeep(CTransaction& trans, void *data);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    etherlib_init();
+    etherlib_init(quickQuitHandler);
 
     // Parse command line, allowing for command files
     COptions options;
@@ -175,8 +175,11 @@ bool visitTransaction(CTransaction& trans, void *data) {
         if (opt->articulate) {
             opt->abi_spec.loadAbiByAddress(trans.to);
             opt->abi_spec.articulateTransaction(&trans);
+            if (!trans.articulatedTx.message.empty())
+                SHOW_FIELD(CFunction, "message");
         }
         trans.doExport(cout);
+        HIDE_FIELD(CFunction, "message");
     } else {
         cout << trans.Format(fmt);
     }

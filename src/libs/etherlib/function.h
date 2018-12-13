@@ -35,6 +35,7 @@ public:
     bool payable;
     string_q signature;
     string_q encoding;
+    string_q message;
     CParameterArray inputs;
     CParameterArray outputs;
 
@@ -119,6 +120,7 @@ inline void CFunction::initialize(void) {
     payable = 0;
     signature = "";
     encoding = "";
+    message = "";
     inputs.clear();
     outputs.clear();
 
@@ -142,6 +144,7 @@ inline void CFunction::duplicate(const CFunction& fu) {
     payable = fu.payable;
     signature = fu.signature;
     encoding = fu.encoding;
+    message = fu.message;
     inputs = fu.inputs;
     outputs = fu.outputs;
 

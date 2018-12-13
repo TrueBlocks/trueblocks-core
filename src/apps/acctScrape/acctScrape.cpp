@@ -385,8 +385,11 @@ bool processTransaction(const CBlock& block, const CTransaction *trans, COptions
                         if (trans->traces.size() == 0)
                             getTraces(((CTransaction*)trans)->traces, trans->hash);
                         acct->abi_spec.articulateTransaction((CTransaction*)trans);
+                        if (!trans->articulatedTx.message.empty())
+                            SHOW_FIELD(CFunction, "message");
                         ((CAccountWatch*)acct)->api_spec.sendData(trans->Format());
                         ((CAccountWatch*)acct)->api_spec.sendData("cleanup");
+                        HIDE_FIELD(CFunction, "message");
 //                        cout << *trans << "\n";
                         cout << "\n";
                         cout.flush();
