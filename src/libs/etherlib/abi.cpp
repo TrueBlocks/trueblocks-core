@@ -428,7 +428,7 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
         return !os.str().empty();
     }
     //----------------------------------------------------------------------------
-    inline unsigned char hex2Ascii(char *str) {
+    inline unsigned char hex_2_Ascii(char *str) {
         unsigned char c;
         c =  (unsigned char)((str[0] >= 'A' ? ((str[0]&0xDF)-'A')+10 : (str[0]-'0')));
         c *= 16;
@@ -437,12 +437,15 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
     }
 
     //----------------------------------------------------------------------------
-    inline string_q hex2String(const string_q& inHex) {
-        string_q ret, in = startsWith(inHex, "0x") ? extract(inHex, 2) : inHex;
+    inline string_q hex_2_Str(const string_q& inHex) {
+        string_q ret, in = substitute((startsWith(inHex, "0x") ? extract(inHex, 2) : inHex), "2019", "27");
         while (!in.empty()) {
             string_q nibble = extract(in, 0, 2);
             in = extract(in, 2);
-            ret += (char)hex2Ascii((char*)nibble.c_str());  // NOLINT
+            char ch = (char)hex_2_Ascii((char*)nibble.c_str());  // NOLINT
+            if (!isprint(ch))
+                return "";
+            ret += (char)ch;
         }
         return ret;
     }
@@ -479,7 +482,7 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
                     len = params.length()-start;
                 if (t == "string") {
                     string_q ss1 = extract(params, (start+1) * 64, len * 2);
-                    string_q ss2 = hex2String(ss1);
+                    string_q ss2 = hex_2_Str(ss1);
                     ss2 = substitute(ss2, "\n", "\\n");
                     ss2 = substitute(ss2, "\r", "");
                     ss2 = substitute(ss2, "\"", "\\\"");
@@ -548,6 +551,7 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
                     return (ret1 || ret2);
                 }
             }
+            p->articulatedTx.message = hex_2_Str(p->input);
         }
         return false;
     }
