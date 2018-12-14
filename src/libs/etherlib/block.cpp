@@ -434,8 +434,8 @@ const CBaseNode *CBlock::getObjectAt(const string_q& fieldName, size_t index) co
 // EXISTING_CODE
 //---------------------------------------------------------------------------
 extern bool accumulateAddresses(const CAddressAppearance& item, void *data);
-extern void foundOne(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const address_t& addr, const string_q& reason); // NOLINT
-extern void foundPot(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList, const string_q& reason); // NOLINT
+extern bool foundOne(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const address_t& addr, const string_q& reason); // NOLINT
+extern bool foundPot(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList, const string_q& reason); // NOLINT
 
 //---------------------------------------------------------------------------
 string_q stringy(const CStringArray& array) {
@@ -478,14 +478,14 @@ bool getTracesAndVisit(const hash_t& hash, CAddressAppearance& item, ADDRESSFUNC
     CTrace trace;
     while (trace.parseJson3(generic.result)) {
         string_q trID = "trace_" + uint_2_Str(traceID) + "_" + stringy(trace.traceAddress);
-        foundOne(funcy, data, item.bn, item.tx, traceID+10, trace.action.from,          trID + "from");
-        foundOne(funcy, data, item.bn, item.tx, traceID+10, trace.action.to,            trID + "to");
-        foundOne(funcy, data, item.bn, item.tx, traceID+10, trace.action.refundAddress, trID + "refundAddr");
-        foundOne(funcy, data, item.bn, item.tx, traceID+10, trace.action.address,       trID + "creation");
-        foundOne(funcy, data, item.bn, item.tx, traceID+10, trace.result.address,       trID + "self-destruct");
+        if (!foundOne(funcy, data, item.bn, item.tx, traceID+10, trace.action.from,          trID + "from")) return false;
+        if (!foundOne(funcy, data, item.bn, item.tx, traceID+10, trace.action.to,            trID + "to")) return false;
+        if (!foundOne(funcy, data, item.bn, item.tx, traceID+10, trace.action.refundAddress, trID + "refundAddr")) return false;
+        if (!foundOne(funcy, data, item.bn, item.tx, traceID+10, trace.action.address,       trID + "creation")) return false;
+        if (!foundOne(funcy, data, item.bn, item.tx, traceID+10, trace.result.address,       trID + "self-destruct")) return false;
         string_q inpt = extract(trace.action.input, 10);
         if (!inpt.empty())
-            foundPot(funcy, data, item.bn, item.tx, traceID+10, inpt, trID + "input");
+            if (!foundPot(funcy, data, item.bn, item.tx, traceID+10, inpt, trID + "input")) return false;
         traceID++;
         trace = CTrace();  // reset
     }
@@ -496,22 +496,22 @@ bool getTracesAndVisit(const hash_t& hash, CAddressAppearance& item, ADDRESSFUNC
 bool CTransaction::forEveryAddress(ADDRESSFUNC funcy, TRANSFUNC filt, void *data) {
     blknum_t tr = transactionIndex;
     const CReceipt *recPtr = &receipt;
-    foundOne(funcy, data, blockNumber, tr, 0, from,               "from");
-    foundOne(funcy, data, blockNumber, tr, 0, to,                 "to");
-    foundOne(funcy, data, blockNumber, tr, 0, recPtr->contractAddress,  "creation");
-    foundPot(funcy, data, blockNumber, tr, 0, extract(input, 10), "input");
+    if (!foundOne(funcy, data, blockNumber, tr, 0, from,               "from")) return false;
+    if (!foundOne(funcy, data, blockNumber, tr, 0, to,                 "to")) return false;
+    if (!foundOne(funcy, data, blockNumber, tr, 0, recPtr->contractAddress,  "creation")) return false;
+    if (!foundPot(funcy, data, blockNumber, tr, 0, extract(input, 10), "input")) return false;
     for (size_t l = 0 ; l < recPtr->logs.size() ; l++) {
         const CLogEntry *log = &recPtr->logs[l];
         string_q logId = "log_" + uint_2_Str(l) + "_";
-        foundOne(funcy, data, blockNumber, tr, 0, log->address, logId +  "generator");
+        if (!foundOne(funcy, data, blockNumber, tr, 0, log->address, logId +  "generator")) return false;
         for (size_t t = 0 ; t < log->topics.size() ; t++) {
             address_t addr;
             string_q topId = uint_2_Str(t);
             if (isPotentialAddr(log->topics[t], addr)) {
-                foundOne(funcy, data, blockNumber, tr, 0, addr, logId +  "topic_" + topId);
+                if (!foundOne(funcy, data, blockNumber, tr, 0, addr, logId +  "topic_" + topId)) return false;
             }
         }
-        foundPot(funcy, data, blockNumber, tr, 0, extract(log->data, 2), logId + "data");
+        if (!foundPot(funcy, data, blockNumber, tr, 0, extract(log->data, 2), logId + "data")) return false;
     }
 
     // If we're not filtering, or the filter passes, proceed. Note the filter depends on the
