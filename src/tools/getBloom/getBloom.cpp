@@ -18,7 +18,7 @@ extern string_q doOneBloom(uint64_t num, const COptions& opt);
 //-------------------------------------------------------------------------------------
 int main(int argc, const char * argv[]) {
 
-    etherlib_init(quickQuitHandler);
+    etherlib_init("binary", quickQuitHandler);
 
     // Parse command line, allowing for command files
     COptions options;
@@ -51,7 +51,9 @@ int main(int argc, const char * argv[]) {
 //-------------------------------------------------------------------------------------
 typedef string_q (*BLOOMTOSTRFUNC)(const bloom_t& bloom, void *data);
 //-------------------------------------------------------------------------------------
-string_q pctBar(const bloom_t& bloom, void *data) { uint64_t div = (uint64_t)data; return string_q(bitsTwiddled(bloom) * 200 / div, '-'); }
+// SEARCH FOR 'BIT_TWIDDLE_AMT 200'
+static uint64_t bitBound = 200;
+string_q pctBar(const bloom_t& bloom, void *data) { uint64_t div = (uint64_t)data; return string_q(bitsTwiddled(bloom) * bitBound / div, '-'); }
 string_q bitBar(const bloom_t& bloom, void *data) { return string_q(bitsTwiddled(bloom), '-');              }
 string_q bars  (const bloom_t& bloom, void *data) { return bloom_2_Bar(bloom);                              }
 
@@ -76,6 +78,8 @@ string_q showBloom(blknum_t bn, const CBloomArray& blooms, BLOOMTOSTRFUNC func, 
 #include "bloom_blocks.h"
 //-------------------------------------------------------------------------------------
 string_q doOneBloom(uint64_t num, const COptions& opt) {
+
+    bitBound = opt.bitBound;
 
     CBloomArray blooms;
 

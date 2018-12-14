@@ -22,7 +22,7 @@ static string_q sep(120, '-');
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    etherlib_init();
+    etherlib_init("binary", quickQuitHandler);
 
     COptions options;
     options.minArgs = 0;

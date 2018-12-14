@@ -29,7 +29,7 @@ ostream& operator<<(ostream& os, const CTraceArray& array) {
 //--------------------------------------------------------------
 int main(int argc, const char * argv[]) {
 
-    etherlib_init();
+    etherlib_init("binary", quickQuitHandler);
 
     // Parse command line, allowing for command files
     COptions options;

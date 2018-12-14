@@ -40,7 +40,7 @@ bool COptions::parseArguments(string_q& command) {
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (arg == "-o" || arg == "--force") {
-            etherlib_init("binary");
+            etherlib_init("binary", defaultQuitHandler);
             force = true;
 
         } else if (arg == "-r" || arg == "--raw") {
@@ -117,6 +117,8 @@ bool COptions::parseArguments(string_q& command) {
             UNHIDE_FIELD(CBloomBlock, "sizeInBytes");
     }
 
+    bitBound = getGlobalConfig("blockScrape")->getConfigInt("settings", "bitBound", 200);
+
     return true;
 }
 
@@ -136,6 +138,7 @@ void COptions::Init(void) {
     force        = false;
     receiptsOnly = false;
     blockOnly    = false;
+    bitBound     = 200;
     blocks.Init();
 }
 
