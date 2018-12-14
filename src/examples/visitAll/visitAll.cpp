@@ -16,7 +16,7 @@
 int main(int argc, char *argv[]) {
 
     // Initialize the library
-    etherlib_init(quickQuitHandler);
+    etherlib_init("binary", quickQuitHandler);
 
     // Visit every block between the first and the most recent
     forEveryBlockOnDisc(visitBlock, NULL, 3055641, getLatestBlockFromCache());

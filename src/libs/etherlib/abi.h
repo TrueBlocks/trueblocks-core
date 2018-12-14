@@ -165,3 +165,4 @@ extern string_q decodeRLP(const string_q& name, const string_q& input, size_t nI
 extern string_q decodeRLP(const CFunction *func, const string_q& input);
 // EXISTING_CODE
 }  // namespace qblocks
+

@@ -25,7 +25,7 @@ int main(int argc, const char *argv[]) {
 
     CPerson::registerClass();
 
-    etherlib_init();
+    etherlib_init("binary", quickQuitHandler);
 
     // Parse command line, allowing for command files
     COptions options;

@@ -1,0 +1,32 @@
+getTrans argc: 4 [1:0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344] [2:-a] [3:-v] 
+getTrans 0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344 -a -v 
+[{
+  "hash": "0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344",
+  "blockHash": "0xccb6333a6bc02c0887f0614d9da2cb66520dbd5fc196c8c77c9d10fe7ca673d2",
+  "blockNumber": 1867564,
+  "transactionIndex": 4,
+  "timestamp": 1468270685,
+  "from": "0x9519afbc60719a83c470ceec41e32d3e4b8b262e",
+  "to": "0xcb1547417575261c4d84cab3e989acfd9f9ee35c",
+  "value": 1000000000000000,
+  "gas": 153300,
+  "gasPrice": 20000000000,
+  "isError": 0,
+  "receipt": {
+    "contractAddress": "0x0",
+    "gasUsed": 53300,
+    "logs": [],
+    "status": null
+  },
+  "articulatedTx": {
+    "name": "",
+    "message": "on July 11, 2016 this contract (0xb656b2a9c3b2416437a811e07466ca712f5a5b5a) which is the DAO creator contract sent a transaction to the DarkDOA (0x304a554a310c7e546dfe434669c62820b7d83490) that added the DAO's curator to the DarkDAO's whitelist. Here's the transaction ID: 0x9257c2e0a11de7b7427d4607f5908d6448278070bb73500139387930826fedc0. I'm writing this to the blockchain before anything happens to demonstrate the power of http://ethslurp.com software by Great Hill.",
+    "inputs": [],
+    "outputs": []
+  },
+  "gasCost": 1066000000000000,
+  "gasUsed": 53300,
+  "date": "2016-07-11 20:58:05 UTC",
+  "ether": 0.001000000000000000,
+  "traces": []
+}]

@@ -100,8 +100,11 @@ bool exportTransaction(COptions& options, const CAcctCacheItem *item, bool first
 
             // Note: we do this outside of the check for enablement becuase even disabled watches can
             // be useful when articulating data
-            if (options.needsArt)
+            if (options.needsArt) {
                 watch->abi_spec.articulateTransaction(trans);
+                if (!trans->articulatedTx.message.empty())
+                    SHOW_FIELD(CFunction, "message");
+            }
 
             if (watch->enabled && isInTransaction(trans, watch->address)) {
 
@@ -123,6 +126,7 @@ bool exportTransaction(COptions& options, const CAcctCacheItem *item, bool first
             } else {
                 cerr << "\t" << cTeal << "skipping: " << *item << cOff << endl;
             }
+            HIDE_FIELD(CFunction, "message");
         }
 
     } else {

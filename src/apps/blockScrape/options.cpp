@@ -113,6 +113,8 @@ bool COptions::parseArguments(string_q& command) {
     if (!isParity() || !nodeHasTraces())
         return usage("This tool will only run if it is running against a Parity node that has tracing enabled. Quitting...");
 
+    bitBound = getGlobalConfig("blockScrape")->getConfigInt("settings", "bitBound", 200);
+
     return true;
 }
 
@@ -129,6 +131,7 @@ void COptions::Init(void) {
     writeBlocks = true;
     keepAddrIdx = false;
     minArgs     = 0;
+    bitBound    = 200;
 }
 
 //---------------------------------------------------------------------------------------------------

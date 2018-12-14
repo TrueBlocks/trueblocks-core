@@ -251,8 +251,8 @@ void CScraperCtx::addToBloom(const address_t& addr) {
     totAccounts++;
 //    if (opts && opts->keepAddrIdx)
 //        appendToAsciiFile("addr_index.txt", (addr + "\t" + uint_2_Str(pBlock->blockNumber) + "\n"));
-// SEARCH FOR 'BIT_TWIDDLE_AMT'
-    if (addAddrToBloom(addr, blooms, 200U))
+// SEARCH FOR 'BIT_TWIDDLE_AMT 200'
+    if (addAddrToBloom(addr, blooms, opts->bitBound))
         nAccounts = 0;
 }
 

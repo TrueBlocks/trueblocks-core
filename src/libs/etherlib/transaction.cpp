@@ -331,7 +331,7 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
                     return wei_2_Ether(bnu_2_Str(tra->value));
                 else if ( fieldIn % "encoding" )
                     return extract(tra->input, 0, 10);
-                else if ( fieldIn % "events" ) {
+                else if ( fieldIn % "events" || fieldIn % "eventnames") {
                     string_q ret;
                     for (uint64_t n = 0 ; n < tra->receipt.logs.size() ; n++) {
                         string_q v = tra->receipt.logs[n].Format("[{ARTICULATEDLOG}]");
@@ -339,23 +339,23 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
                             return "";
                         CFunction func;
                         func.parseJson3(v);
-#if 0
-                        if (func.name.empty())
-                            func.name = "UnknownEvent";
-                        ret += (func.name + "(");
-                        for (auto param : func.inputs) {
-                            if (param.name != func.inputs[0].name)
+                        if (fieldIn % "events") {
+                            if (func.name.empty())
+                                func.name = "UnknownEvent";
+                            ret += (func.name + "(\"");
+                            for (auto param : func.inputs) {
+                                if (param.name != func.inputs[0].name)
+                                    ret += "\",\"";
+                                ret += param.value;
+                            }
+                            ret += "\")";
+                            if (n < tra->receipt.logs.size() - 1)
+                                ret += ";";
+                        } else {
+                            if (!ret.empty())
                                 ret += ",";
-                            ret += param.value;
+                            ret += func.name;
                         }
-                        ret += ")";
-                        if (n < tra->receipt.logs.size() - 1)
-                            ret += "\n\t";
-#else
-                        if (!ret.empty())
-                            ret += ",";
-                        ret += func.name;
-#endif
                     }
                     return ret;
                 }

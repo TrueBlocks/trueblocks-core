@@ -50,6 +50,6 @@ public:
 typedef vector<CAddressAppearance> CAddressAppearanceArray;
 
 extern bool isPotentialAddr(biguint_t test, address_t& addrOut);
-extern void potentialAddr(ADDRESSFUNC func, void *data, const CAddressAppearance& item, const string_q& potList);
+extern bool potentialAddr(ADDRESSFUNC func, void *data, const CAddressAppearance& item, const string_q& potList);
 }  // namespace qblocks
 

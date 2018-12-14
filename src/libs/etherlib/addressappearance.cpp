@@ -92,7 +92,8 @@ bool CUniqueState::insertUnique(const CAddressAppearance& _value) {
         if (it == addrOnlyMap->end()) {  // not found
             it = addrOnlyMap->insert(make_pair(_value, true)).first;
             if (func)
-                (*func)(it->first, data);
+                if (!(*func)(it->first, data))
+                    return false;
         }
         return it->second;
     }
@@ -101,7 +102,8 @@ bool CUniqueState::insertUnique(const CAddressAppearance& _value) {
     if (it == addrTxMap->end()) {  // not found
         it = addrTxMap->insert(make_pair(_value, true)).first;
         if (func)
-            (*func)(it->first, data);
+            if (!(*func)(it->first, data))
+                return false;
     }
     return it->second;
 }
@@ -112,8 +114,7 @@ bool accumulateAddresses(const CAddressAppearance& item, void *data) {
         return true;
     CUniqueState * state = (CUniqueState*)data;
     CAddressAppearance search(item.bn, item.tx, item.tc, item.addr, item.reason);
-    state->insertUnique(search);  // NOLINT
-    return true;
+    return state->insertUnique(search);  // NOLINT
 }
 
 //---------------------------------------------------------------------------
@@ -121,8 +122,7 @@ bool CBlock::forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC traceFilter, void
     if (!func)
         return false;
     CUniqueState state(func, data, false);
-    forEveryAddress(accumulateAddresses, traceFilter, &state);
-    return true;
+    return forEveryAddress(accumulateAddresses, traceFilter, &state);
 }
 
 //---------------------------------------------------------------------------
@@ -130,8 +130,7 @@ bool CBlock::forEveryUniqueAddressPerTx(ADDRESSFUNC func, TRANSFUNC traceFilter,
     if (!func)
         return false;
     CUniqueState state(func, data, true);
-    forEveryAddress(accumulateAddresses, traceFilter, &state);
-    return true;
+    return forEveryAddress(accumulateAddresses, traceFilter, &state);
 }
 
 //---------------------------------------------------------------------------
@@ -160,10 +159,10 @@ bool isPotentialAddr(biguint_t test, address_t& addrOut) {
 }
 
 //---------------------------------------------------------------------------
-void potentialAddr(ADDRESSFUNC func, void *data, const CAddressAppearance& item, const string_q& potList) {
+bool potentialAddr(ADDRESSFUNC func, void *data, const CAddressAppearance& item, const string_q& potList) {
 
     if (!func)
-        return;
+        return false;
 
     // Pull out 32-byte chunks and check to see if they are addresses
     address_t addr;
@@ -172,21 +171,23 @@ void potentialAddr(ADDRESSFUNC func, void *data, const CAddressAppearance& item,
         if (isPotentialAddr(test, addr)) {
             CAddressAppearance it(item);
             it.addr = addr;
-            (*func)(it, data);
+            if (!(*func)(it, data))
+                return false;
         }
     }
+    return true;
 }
 
 //---------------------------------------------------------------------------
-void foundOne(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const address_t& addr, const string_q& reason) {  // NOLINT
+bool foundOne(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const address_t& addr, const string_q& reason) {  // NOLINT
     CAddressAppearance item(bn, tx, tc, addr, reason);
-    (*func)(item, data);
+    return (*func)(item, data);
 }
 
 //---------------------------------------------------------------------------
-void foundPot(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList, const string_q& reason) {  // NOLINT
+bool foundPot(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList, const string_q& reason) {  // NOLINT
     CAddressAppearance item(bn, tx, tc, "", reason);
-    potentialAddr(func, data, item, potList);
+    return potentialAddr(func, data, item, potList);
 }
 
 }  // namespace qblocks

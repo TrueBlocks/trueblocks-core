@@ -11,27 +11,31 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
-#include "acctlib.h"
 
-//-------------------------------------------------------------------------
-void acctlib_init(const string_q& mode, QUITHANDLER qh) {
-    etherlib_init(mode, qh);
+extern bool visitAddress(const CAddressAppearance& item, void *data);
+//-----------------------------------------------------------------------------------------------
+int main(int argc, const char *argv[]) {
 
-    CAccountWatch::registerClass();
-    CApiSpec::registerClass();
-    CAcctCacheItem::registerClass();
-    CBalanceHistory::registerClass();
-    CBalHistory::registerClass();
-    CIncomeStatement::registerClass();
+    etherlib_init("binary", quickQuitHandler);
 
-    CTreeRoot::registerClass();
-    CTreeNode::registerClass();
-    CInfix::registerClass();
-    CBranch::registerClass();
-    CLeaf::registerClass();
+    address_t search("0xbb9bc244d798123fde783fcc1c72d3bb8c189413");
+    blknum_t start = 1428000;
+    for (blknum_t bl = start ; bl < getLatestBlockFromClient() ; bl++) {
+        CBlock block;
+        getBlock(block, bl);
+        if (!block.forEveryUniqueAddress(visitAddress, NULL, &search))
+            return 0;
+    }
+    return 0;
 }
 
-//-------------------------------------------------------------------------
-void acctlib_cleanup(void) {
-    etherlib_cleanup();
+//-----------------------------------------------------------------------------------------------
+bool visitAddress(const CAddressAppearance& item, void *data) {
+    if (item.addr == *(address_t *)data) {
+        cout << "Found at " << item << "\n";
+        return false; // we're done
+    }
+    cerr << item << "                    \r";
+    cerr.flush();
+    return true;
 }
