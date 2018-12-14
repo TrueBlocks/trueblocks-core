@@ -20,7 +20,7 @@ extern void unloadCache(void);
 //---------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    etherlib_init(quickQuitHandler);
+    etherlib_init("binary", quickQuitHandler);
 
     // Parse command line, allowing for command files
     COptions options;

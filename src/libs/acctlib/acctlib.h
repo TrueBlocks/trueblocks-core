@@ -22,7 +22,7 @@
 #include "treenode.h"
 #include "apispec.h"
 
-extern void acctlib_init(QUITHANDLER qh);
+extern void acctlib_init(const string_q& mode, QUITHANDLER qh);
 extern void acctlib_cleanup(void);
 
 using namespace qblocks;  // NOLINT

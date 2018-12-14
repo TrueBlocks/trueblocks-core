@@ -46,7 +46,6 @@ public:
     CSpeedTest(const string_q& s, blknum_t st, blknum_t n) : CBlockVisitor(st, n),
         nBlocksVisited(0), nTransVisited(0), totalWei(0), totalGasUsed(0),
         startTime(qbNow()), duration(0.0) {
-            etherlib_init(s);
             src = s;
             progressBar(0,0,0.,"");
         }

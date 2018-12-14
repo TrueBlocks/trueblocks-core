@@ -25,6 +25,7 @@ public:
     bool asBitBars;
     bool asPctBars;
     bool bitCount;
+    uint64_t bitBound;
 
     COptions(void);
     ~COptions(void);

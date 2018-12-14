@@ -16,7 +16,7 @@ extern bool rawFunc     (blknum_t bn, void *data);
 //-------------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    etherlib_init();
+    etherlib_init("binary", defaultQuitHandler);
 
     COptions options;
     if (!options.prepareArguments(argc, argv))
@@ -70,9 +70,11 @@ int main(int argc, const char *argv[]) {
 //-------------------------------------------------------------------------
 bool addrBelongs(blknum_t bn, void *data) {
 
+    COptions *options = (COptions *)data;
+    uint64_t bitBound = options->bitBound;
+
     static size_t since_hit=0;
     since_hit++;
-    COptions *options = (COptions *)data;
     if (verbose)
         cout << "For block: " << bn << "\n";
     string_q path = substitute(getBinaryFilename(bn), "/blocks/", "/blooms/");
@@ -97,15 +99,18 @@ bool addrBelongs(blknum_t bn, void *data) {
                         cout << addr << "\t" << bn << "\n";
                         since_hit = 0;
                     } else
-                        cerr << "\t" << bn << string_q((since_hit/200), '.') << "\r";
+                        // SEARCH FOR 'BIT_TWIDDLE_AMT 200'
+                        cerr << "\t" << bn << string_q((since_hit/bitBound), '.') << "\r";
                 }
             }
         }
     } else {
-        if (verbose)
+        if (verbose) {
             cerr << "\tNo bloom file at block " << bn << "\n\n";
-        else
-            cerr << "\t" << bn << string_q((since_hit/200), '.') << "\r";
+        } else {
+            // SEARCH FOR 'BIT_TWIDDLE_AMT 200'
+            cerr << "\t" << bn << string_q((since_hit/bitBound), '.') << "\r";
+        }
     }
     cerr.flush();
     cout.flush();
@@ -184,6 +189,9 @@ extern string_q formatBloom(const bloom_t& b1, bool bits);
 //-------------------------------------------------------------------------
 bool rewriteBloom(blknum_t bn, void *data) {
 
+    COptions *options = (COptions *)data;
+    uint64_t bitBound = options->bitBound;
+
     CBlock block;
     getBlock(block, bn);
 
@@ -196,8 +204,8 @@ bool rewriteBloom(blknum_t bn, void *data) {
     cout << "\nRewritng block " << bn << "\n";
     CBloomArray newBlooms;
     for (uint32_t j = 0 ; j < array.size() ; j++) {
-        // SEARCH FOR 'BIT_TWIDDLE_AMT'
-        addAddrToBloom(array[j], newBlooms, 200U);
+        // SEARCH FOR 'BIT_TWIDDLE_AMT 200'
+        addAddrToBloom(array[j], newBlooms, bitBound);
         if (verbose)
             cout << "adding " << array[j] << "\n";
         if (verbose) {
@@ -206,7 +214,7 @@ bool rewriteBloom(blknum_t bn, void *data) {
             cerr << res << "\n";
         }
     }
-    COptions *options = (COptions *)data;
+
     if (options->isReWrite) {
         if (!isTestMode())
             writeBloomArray(newBlooms, path);
