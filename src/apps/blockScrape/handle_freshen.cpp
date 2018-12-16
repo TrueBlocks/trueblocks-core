@@ -9,13 +9,13 @@
 extern bool updateIndex(CArchive& fullBlockCache, blknum_t bn);
 extern string_q timerStr(double start);
 //--------------------------------------------------------------------------
-bool freshenLocalCache(COptions& options) {
+bool handle_freshen(COptions& options) {
 
     // Note: It's okay to open this once and keep it open since we protect the write with locksection.
     // If the program quits unexpectedly, the file will get proplery closed anyway.
     CArchive fullBlockCache(WRITING_ARCHIVE);
     if (!fullBlockCache.Lock(fullBlockIndex, "a+", LOCK_WAIT)) {
-        cerr << "updateIndex failed: " << fullBlockCache.LockFailure() << "\n";
+        cerr << "Could not open fullBlock index: " << fullBlockCache.LockFailure() << "\n";
         return false;
     }
 
@@ -23,7 +23,7 @@ bool freshenLocalCache(COptions& options) {
     getBlock(latest, "latest");
 
     double lastRun = qbNow();
-    for (blknum_t num = options.start ; num < options.end && !shouldQuit() ; num++) {
+    for (blknum_t num = options.startBlock ; num < options.endBlock && !shouldQuit() ; num++) {
 
         if (!isParity() || !nodeHasTraces()) {
             cerr << "This tool can only run against a Parity node that has tracing enabled. Quitting..." << "\n";
@@ -52,7 +52,7 @@ bool freshenLocalCache(COptions& options) {
             // If the file exists, we may be able to skip re-scanning it
             bloomOkay = blockOkay = true;
             readBlockFromBinary(block, blockFilename);
-            readBloomArray(sCtx.blooms, bloomFilename);
+            readBloomArray(sCtx.bloomList, bloomFilename);
 
             // If it had been finalized, we wouldn't be re-reading it
             ASSERT(!block.finalized);
@@ -88,7 +88,7 @@ bool freshenLocalCache(COptions& options) {
             block.finalized = isBlockFinal(block.timestamp, latest.timestamp, (60 * 4));
             lockSection(true);
             blockOkay = (options.writeBlocks ? writeBlockToBinary(block, blockFilename) : true);
-            bloomOkay = writeBloomArray(sCtx.blooms, bloomFilename);
+            bloomOkay = writeBloomArray(sCtx.bloomList, bloomFilename);
             if (block.finalized) {
                 updateIndex(fullBlockCache, num);
                 action = "final-b";
@@ -106,13 +106,13 @@ bool freshenLocalCache(COptions& options) {
         replaceAll (result, "}",      cOff);
         replace    (result,  "WRITE", ((block.finalized) ? greenCheck : (bWhite + "✽" + cOff)) + " " + padRight(((blockOkay && bloomOkay) ? action : "skipped"), 10));
         replace    (result,  "NUM",   uint_2_Str(num));
-        replace    (result,  "LEFT",  padNum4T(options.end - num));
+        replace    (result,  "LEFT",  padNum4T(options.endBlock - num));
         replace    (result,  "DATE",  extract(substitute(ts_2_Date(block.timestamp).Format(FMT_JSON), " UTC", ""), 2));
         replace    (result,  "TXS",   padNum3T((uint64_t)block.transactions.size()));
         replace    (result,  "TRC",   padNum4T(sCtx.traceCount));
         replace    (result,  "DPT",   padNum3T(sCtx.maxTraceDepth));
-        replace    (result,  "ADDRS", padNum4T(sCtx.totAccounts));
-        replace    (result,  "BL",    reportBloom(sCtx.blooms));
+        replace    (result,  "ADDRS", padNum4T(sCtx.nAddrsInBlock));
+        replace    (result,  "BL",    reportBloom(sCtx.bloomList));
         replace    (result,  "PATH",  substitute(bloomFilename, blockCachePath(""), "./"));
         replace    (result,  "DIS",   padLeft(int_2_Str(latest.timestamp - block.timestamp),3));
         replace    (result,  "SEC",   timeStr);
@@ -247,13 +247,15 @@ bool visitTrace(CTrace& trace, void *data) {
 void CScraperCtx::addToBloom(const address_t& addr) {
     if (isZeroAddr(addr))
         return;
-    nAccounts++;
-    totAccounts++;
+    nAddrsInBloom++;
+    nAddrsInBlock++;
+
 //    if (opts && opts->keepAddrIdx)
-//        appendToAsciiFile("addr_index.txt", (addr + "\t" + uint_2_Str(pBlock->blockNumber) + "\n"));
-// SEARCH FOR 'BIT_TWIDDLE_AMT 200'
-    if (addAddrToBloom(addr, blooms, opts->bitBound))
-        nAccounts = 0;
+//        addrList.push_back(addr);
+
+    // SEARCH FOR 'BIT_TWIDDLE_AMT 200'
+    if (addAddrToBloom(addr, bloomList, opts->bitBound))
+        nAddrsInBloom = 0;
 }
 
 //----------------------------------------------------------------------------------
@@ -268,4 +270,15 @@ string_q timerStr(double start) {
     if (end.length() < 3) perfStr += "00";
     if (end.length() < 4) perfStr += "0";
     return perfStr;
+}
+
+//----------------------------------------------------------------------------------
+CScraperCtx::CScraperCtx(COptions *o) :
+opts(o),
+pBlock(NULL), pTrans(NULL),
+traceCount(0), maxTraceDepth(0),
+reported(false), nAddrsInBloom(0), nAddrsInBlock(0) {
+    bloomList.resize(1);
+    bloomList.at(0) = 0;
+//    addrList.reserve(35000); // largest # of addrs during dDos
 }
