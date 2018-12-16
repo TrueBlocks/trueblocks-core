@@ -85,8 +85,9 @@ bool COptions::parseArguments(string_q& command) {
             cerr << cGreen << "Found removal file...\n";
             string_q contents;
             asciiFileToString("./remove.txt", contents);
-            while (!contents.empty()) {
-                string_q line  = nextTokenClear(contents,'\n');
+            CStringArray lines;
+            explode(lines, contents, '\n');
+            for (auto line : lines) {
                 CAcctCacheItem item(line);
                 if (item.blockNum > 0) {
                     removals.push_back(item);

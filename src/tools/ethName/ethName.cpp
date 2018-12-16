@@ -31,31 +31,27 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
+        string_q fmt = (options.addrOnly ? "[{ADDR}]" : (options.data ? STR_NAME_DATA : ""));
         if (options.isEdit) {
             editFile(options.namesFile.getFullPath());
-            exit(0);
-        }
 
-        if (!loaded) {
+        } else if (!loaded) {
             usage(options.namesFile.getFullPath() + " is empty. Use ethName -e to add some names. Quitting...");
-            exit(0);
-        }
 
-        string_q fmt = (options.addrOnly ? "[{ADDR}]" : (options.data ? STR_NAME_DATA : ""));
-        if (options.list) {
+        } else if (options.list) {
             if (options.count)
                 cout << options.namedAccounts.size() << " items\n";
             for (size_t i = 0 ; i < options.namedAccounts.size() ; i++)
                 cout << substitute(substitute(options.namedAccounts[i].Format(fmt), "\n", " "), "  ", " ") << "\n";
-            exit(0);
-        }
 
-        string_q ret = options.showMatches();
-        if (!ret.empty())
-            cout << ret;
-        else if (verbose)
-            cout << "Address '" << options.addr << "' not found\n";
-        cout.flush();
+        } else {
+            string_q ret = options.showMatches();
+            if (!ret.empty())
+                cout << ret;
+            else if (verbose)
+                cout << "Address '" << options.addr << "' not found\n";
+            cout.flush();
+        }
     }
 
     return 0;

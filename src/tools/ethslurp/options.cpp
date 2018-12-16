@@ -79,7 +79,7 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // Note this may not return if user chooses to exit
+    // Note this may not return if user chooses to quit
     api.checkKey();
 
     if (addrs.empty())
