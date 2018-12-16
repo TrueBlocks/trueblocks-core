@@ -61,8 +61,9 @@ bool COptions::parseArguments(string_q& command) {
             asciiFileToString(fileName.getFullPath(), contents);
             if (contents.empty())
                 return usage("No addresses were found in file " + fileName.relativePath() + ". Quitting...");
-            while (!contents.empty()) {
-                string_q line = nextTokenClear(contents, '\n');
+            CStringArray lines;
+            explode(lines, contents, '\n');
+            for (auto line : lines) {
                 if (!isAddress(line))
                     return usage(line + " does not appear to be a valid Ethereum address. Quitting...");
                 addrs.push_back(toLower(line));
