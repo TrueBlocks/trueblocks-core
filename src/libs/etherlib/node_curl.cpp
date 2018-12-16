@@ -27,6 +27,7 @@ namespace qblocks {
         callBackFunc = writeCallback;
         curlNoteFunc = NULL;
         theID        = 1;
+        nodeRequired = true;
         Clear();
     }
 

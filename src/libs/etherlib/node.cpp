@@ -20,14 +20,12 @@ namespace qblocks {
     void etherlib_init(const string_q& sourceIn, QUITHANDLER qh) {
 
         string_q fallBack = getEnvStr("FALLBACK");
-        if (!isNodeRunning() && fallBack.empty() && getCurlContext()->provider != "None") {
-            cerr << "\n\t";
-            cerr << cTeal << "Warning: " << cOff << "QBlocks requires a running Ethereum\n";
-            cerr << "\tnode to operate properly. Please start your node.\n";
-            cerr << "\tAlternatively, export FALLBACK=infura in your\n";
-            cerr << "\tenvironment before running this command. Quitting...\n\n";
-            cerr.flush();
-            exit(0);
+        if (true) { //getCurlContext()->nodeRequired && !isNodeRunning() && fallBack.empty()) {
+            cerr << endl;
+            cerr << "\t" << cTeal << "Warning: " << cOff << "This program requires a local running node." << endl;
+            cerr << "\tPlease start your node or export a FALLBACK provider in your environment before " << endl;
+            cerr << "\trunning this command. Quitting..." << endl << endl;
+            quickQuitHandler(EXIT_FAILURE);
         }
 
         establishFolder(blockCachePath(""));
