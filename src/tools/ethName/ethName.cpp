@@ -16,7 +16,7 @@ extern const char* STR_NAME_DATA;
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    getCurlContext()->provider = "None";  // This will run without a node
+    getCurlContext()->nodeRequired = false;  // This will run without a node
     etherlib_init("binary", quickQuitHandler);
 
     COptions options;
