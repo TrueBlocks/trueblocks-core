@@ -96,7 +96,7 @@ bool handle_freshen(COptions& options) {
         }
 
         ASSERT((block.transactions.size() && (blockOkay && bloomOkay)) || (!block.transactions.size() && (!blockOkay && !bloomOkay)));
-        string_q result = "\r  @DATE-DIS-SEC} {NUM} ({LEFT}): ({TXS} /{TRC}-{DPT} /{ADDRS}) WRITE+PATH}: BL\n";
+        string_q result = "\r  @DATE-DIS-SEC} {NUM} ({LEFT}): ({TXS} /{TRC}-{DPT} /{ADDRS}) WRITE+PATH}: BL";
         replaceAll (result, "{",      cYellow);
         replaceAll (result, "+",      (blockOkay && bloomOkay) ? bTeal : bRed);
         replaceAll (result, "@",      bBlack);
@@ -114,13 +114,9 @@ bool handle_freshen(COptions& options) {
         replace    (result,  "PATH",  substitute(bloomFilename, blockCachePath(""), "./"));
         replace    (result,  "DIS",   padLeft(int_2_Str(latest.timestamp - block.timestamp),3));
         replace    (result,  "SEC",   double_2_Str(max(0.0, qbNow() - lastRun), 4));
-        cout << result;
-        cout.flush();
-//        if ((Now().m_nSeconds - lastRun.m_nSeconds) > 3) {
-//            ostringstream os;
-//            os << result;
-//            appendToAsciiFile("./scraper_log.txt", os.str().c_str());
-//        }
+        if (!fileExists(blockCachePath("logs/block-scrape-data.log")))
+            cout << "blk-date\tnow\tsecs2head\tsecs\tbn\tremains\tnTxs\tnTrcs\ttrcDepth\tnAddrs\twrite\tblooms\n";
+        cout << result << endl;
         lastRun = qbNow();
     }
 
