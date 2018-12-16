@@ -56,7 +56,9 @@ int main(int argc, const char *argv[]) {
             CStringArray prefunds;
             explode(prefunds, contents, '\n');
             for (auto prefund : prefunds) {
-                cout << nextTokenClear(prefund, '\t') << "\n";
+                CStringArray fields;
+                explode(fields, prefund, '\t');
+                cout << fields[0] << endl;
             }
 
         } else {
