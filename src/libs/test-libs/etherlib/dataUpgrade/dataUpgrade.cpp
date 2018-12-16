@@ -33,7 +33,6 @@ int main(int argc, const char *argv[]) {
 //    CAccountWatch::registerClass();
 //    CApiSpec::registerClass();
 //    CAcctCacheItem::registerClass();
-//    CBalHistory::registerClass();
 //    CIncomeStatement::registerClass();
     UNHIDE_FIELD(CBaseNode, "cname");
 
@@ -168,7 +167,6 @@ CBaseNode *getNode(const string_q& nodeType) {
     else if (nodeType == "CTreeRoot")        node = CTreeRoot::createObject();
     else if (nodeType == "CAccountWatch")    node = CAccountWatch::createObject();
     else if (nodeType == "CApiSpec")         node = CApiSpec::createObject();
-    else if (nodeType == "CBalHistory")      node = CBalHistory::createObject();
     else if (nodeType == "CBlock")           node = CBlock::createObject();
     else if (nodeType == "CIncomeStatement") node = CIncomeStatement::createObject();
     else if (nodeType == "CLogEntry")        node = CLogEntry::createObject();
