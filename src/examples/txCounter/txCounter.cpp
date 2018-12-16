@@ -32,23 +32,18 @@ public:
     void loadFromFile(void) {
         string_q contents;
         asciiFileToString("./data/countsByWeek.txt", contents);
-        string_q last;
-        while (!contents.empty()) {
-            string_q str = trim(nextTokenClear(contents, '\n'));
-            if (!str.empty())
-                last = str;
-        }
-// 4305968 2017-09-24 00:00:17 UTC 1398084 2907884 0.675315    60868104    20.9321 14.1358 0
-        string_q str;
-        str = nextTokenClear(last, sep); startBlock = str_2_Uint(str);
-              nextTokenClear(last, sep);
-        str = nextTokenClear(last, sep); nEmpty     = str_2_Uint(str);
-        str = nextTokenClear(last, sep); nFull      = str_2_Uint(str);
-        str = nextTokenClear(last, sep);
-        str = nextTokenClear(last, sep); nTrans     = str_2_Uint(str);
-        str = nextTokenClear(last, sep);
-        str = nextTokenClear(last, sep);
-        str = nextTokenClear(last, sep); nTraces    = str_2_Uint(str);
+        CStringArray lines;
+        explode(lines, contents, '\n');
+
+        // 4305968 2017-09-24 00:00:17 UTC 1398084 2907884 0.675315    60868104    20.9321 14.1358 0
+        //    0             1                 2      3        4           5           6       7    8
+        CStringArray fields;
+        explode(fields, lines[lines.size()-1], sep);
+        startBlock = str_2_Uint(fields[0]);
+        nEmpty     = str_2_Uint(fields[2]);
+        nFull      = str_2_Uint(fields[3]);
+        nTrans     = str_2_Uint(fields[5]);
+        nTraces    = str_2_Uint(fields[8]);
     }
 };
 
