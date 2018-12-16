@@ -9,11 +9,11 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    blknum_t  start;
-    blknum_t  end;
+    blknum_t  startBlock;
+    blknum_t  endBlock;
     blknum_t  maxBlocks;
+    string_q  exclusionList;
     bool      writeBlocks;
-    string_q  exclusions;
     bool      keepAddrIdx;
     uint64_t  bitBound;
 
@@ -23,7 +23,7 @@ public:
     bool parseArguments(string_q& command);
     void Init(void);
     bool updateIndex(blknum_t bn);
-    bool isExcluded(const address_t& addr) { return contains(exclusions, addr); }
+    bool isExcluded(const address_t& addr) { return contains(exclusionList, addr); }
 };
 
 //-------------------------------------------------------------------------
@@ -32,27 +32,20 @@ public:
     COptions        *opts;
     CBlock          *pBlock;
     CTransaction    *pTrans;
-    CBloomArray     blooms;
+    CBloomArray      bloomList;
+//    CAddressArray    addrList;
+    string_q         potList;
     uint64_t         traceCount;
     uint64_t         maxTraceDepth;
     bool             reported;
-    uint64_t         nAccounts;
-    uint64_t         totAccounts;
-    string_q         potList; // potential addresses from 'input' or log 'data'
+    uint64_t         nAddrsInBloom;
+    uint64_t         nAddrsInBlock;
 
-    CScraperCtx(COptions *o) :
-        opts(o),
-        pBlock(NULL), pTrans(NULL),
-        traceCount(0), maxTraceDepth(0), reported(false), nAccounts(0), totAccounts(0)
-        { blooms.resize(1); blooms.at(0) = 0; }
+    CScraperCtx(COptions *o);
     void addToBloom(const address_t& addr);
     bool scrape(CBlock& block);
 };
 
-//-----------------------------------------------------------------------------
-extern bool visitNonEmptyBlock(CBlock& node, void *data);
-extern bool visitEmptyBlock(CBlock& node, void *data);
-
 //-------------------------------------------------------------------------
 extern bool establishBlockIndex(void);
-extern bool freshenLocalCache(COptions& options);
+extern bool handle_freshen(COptions& options);
