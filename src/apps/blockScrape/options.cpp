@@ -36,13 +36,13 @@ bool COptions::parseArguments(string_q& command) {
             arg = substitute(substitute(arg, "-s:", ""), "--start:","");
             if (!isUnsigned(arg))
                 return usage("--start must be a non-negative number. Quitting...");
-            start = str_2_Uint(arg);
+            startBlock = str_2_Uint(arg);
 
         } else if (startsWith(arg, "-e:") || startsWith(arg, "--end:")) {
             arg = substitute(substitute(arg, "-e:", ""), "--end:", "");
             if (!isUnsigned(arg))
                 return usage("--end must be a non-negative number. Quitting...");
-            end = str_2_Uint(arg);
+            endBlock = str_2_Uint(arg);
 
         } else if (startsWith(arg, "-m:") || startsWith(arg, "--maxBlocks:")) {
             arg = substitute(substitute(arg, "-m:", ""), "--maxBlocks:", "");
@@ -69,7 +69,7 @@ bool COptions::parseArguments(string_q& command) {
         writeBlocks = getGlobalConfig("blockScrape")->getConfigBool("settings", "writeBlocks", true);
 
     // 'to' addresses (if any) to ignore (helps exclude dDos transactions)
-    exclusions = toLower(getGlobalConfig("blockScrape")->getConfigStr ("exclusions", "list",      ""));
+    exclusionList = toLower(getGlobalConfig("blockScrape")->getConfigStr ("exclusions", "list",      ""));
 
     // Make sure the full block index exists. If not, rebuild it
     establishBlockIndex();
@@ -78,37 +78,37 @@ bool COptions::parseArguments(string_q& command) {
     getLatestBlocks(cache, client);
 
     // Find out where to start and stop
-    if (start == NOPOS && end != NOPOS) {
+    if (startBlock == NOPOS && endBlock != NOPOS) {
 
         // User tried to tell us where to stop, but didn't tell us where to start. Not okay.
         return usage("You may only specify an --end block if you've given a --start block. Quitting...");
 
-    } else if (start != NOPOS && end != NOPOS) {
+    } else if (startBlock != NOPOS && endBlock != NOPOS) {
 
         // The user told us where to start and stop. This is okay, but check for bogus data...
-        if (start >= end)
+        if (startBlock >= endBlock)
             return usage("--start must be before --end. Quitting...");
 
-        if (start > cache)
+        if (startBlock > cache)
             return usage("--start must be later than or equal to the last block already in the cache. Quitting...");
 
-    } else if (start != NOPOS) {
+    } else if (startBlock != NOPOS) {
 
         // The user told us where to start...
-        start = max((uint64_t)47000, start);
+        startBlock = max((uint64_t)47000, startBlock);
         // ...we figure out where to end.
-        end   = max(start + 1, client);
+        endBlock   = max(startBlock + 1, client);
 
     } else {
 
         // The user didn't tell us anything
-        start = max((uint64_t)47000, cache + 1);
-        end   = max(start + 1, client);
+        startBlock = max((uint64_t)47000, cache + 1);
+        endBlock   = max(startBlock + 1, client);
 
     }
 
     // No more than maxBlocks after start
-    end = min(end, start + maxBlocks);
+    endBlock = min(endBlock, startBlock + maxBlocks);
 
     if (!isParity() || !nodeHasTraces())
         return usage("This tool will only run if it is running against a Parity node that has tracing enabled. Quitting...");
@@ -125,8 +125,8 @@ void COptions::Init(void) {
     nParamsRef = nParams;
     optionOn(OPT_RUNONCE);
 
-    start       = NOPOS;
-    end         = NOPOS;
+    startBlock  = NOPOS;
+    endBlock    = NOPOS;
     maxBlocks   = 5000;
     writeBlocks = true;
     keepAddrIdx = false;
