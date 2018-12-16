@@ -23,9 +23,7 @@ int main(int argc, const char *argv[]) {
         return 0;
 
     cerr << bGreen << "Starting miniBlocks...\n" << cOff;
-    CStringArray commands;
-    explode(commands, options.commandList, '\n');
-    for (auto command : commands) {
+    for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
 

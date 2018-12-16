@@ -23,10 +23,7 @@ int main(int argc, const char *argv[]) {
 
     cerr << bBlack << Now().Format(FMT_JSON) << cOff << ": Monitoring " << cYellow << getCWD() << cOff << "             \n";
 
-    CStringArray commands;
-    explode(commands, options.commandList, '\n');
-    if (commands.empty()) commands.push_back("--noop");
-    for (auto command : commands) {
+    for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 1;
 

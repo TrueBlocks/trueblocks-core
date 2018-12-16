@@ -26,10 +26,7 @@ int main(int argc, const char * argv[]) {
 
     CAccount theAccount; //CSlurperApp slurper;
 
-    CStringArray commands;
-    explode(commands, options.commandList, '\n');
-    options.fromFile = commands.size() > 1;
-    for (auto command : commands) {
+    for (auto command : options.commandLines) {
         cerr << "Processing: " << command << "\n";
         if (!options.parseArguments(command))
             return 0;

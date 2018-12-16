@@ -202,7 +202,7 @@ namespace qblocks {
         nArgs = curArg;
 
         // If we have a command file, we will use it, if not we will creat one and pretend we have one.
-        commandList = "";
+        string_q commandList = "";
         for (uint64_t i = 0 ; i < nArgs ; i++) {
             string_q a = args[i];
             if (!contains(a, "--file"))
@@ -236,8 +236,14 @@ namespace qblocks {
             }
         }
         commandList += stdInCmds;
-        replaceAll(commandList, " \n", "\n");
-        commandList = trim(commandList, '\n');
+//        replaceAll(commandList, " \n", "\n");
+//        commandList = trim(commandList, '\n');
+
+        explode(commandLines, commandList, '\n');
+        for (auto& item : commandLines)
+            item = trim(item);
+        if (commandLines.empty())
+            commandLines.push_back("--noop");
 
         if (args) delete [] args;
         return 1;
@@ -324,7 +330,7 @@ namespace qblocks {
 
         // A final set of checks
         if (isEnabled(OPT_RUNONCE)) {
-            if (countOf(commandList, '\n') > 1)
+            if (commandLines.size() > 1)
                 return usage("You may not use the --file with this application. Quitting...");
             // protect ourselves from running twice over
             string_q cmd = "ps -ef | grep -i " + programName + " | grep -v grep | grep -v \"sh -c \" | wc -l";
