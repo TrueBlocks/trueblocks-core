@@ -21,7 +21,6 @@ void acctlib_init(const string_q& mode, QUITHANDLER qh) {
     CApiSpec::registerClass();
     CAcctCacheItem::registerClass();
     CBalanceHistory::registerClass();
-    CBalHistory::registerClass();
     CIncomeStatement::registerClass();
 
     CTreeRoot::registerClass();
