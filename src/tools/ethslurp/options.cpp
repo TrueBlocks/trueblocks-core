@@ -120,6 +120,7 @@ void COptions::Init(void) {
     exportFormat = "json";
     addrs.clear();
     silent = false;
+    fromFile = false;
 }
 
 //---------------------------------------------------------------------------------------------------

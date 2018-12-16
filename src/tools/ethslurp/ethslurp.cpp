@@ -28,6 +28,7 @@ int main(int argc, const char * argv[]) {
 
     CStringArray commands;
     explode(commands, options.commandList, '\n');
+    options.fromFile = commands.size() > 1;
     for (auto command : commands) {
         cerr << "Processing: " << command << "\n";
         if (!options.parseArguments(command))
