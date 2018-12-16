@@ -129,7 +129,7 @@ void myQuitHandler(int s) {
     if (!isendwin()) {
         endwin();
     }
-    exit(1);
+    exit(EXIT_SUCCESS);
 }
 
 //-----------------------------------------------------------------------

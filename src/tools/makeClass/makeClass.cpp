@@ -888,8 +888,6 @@ string_q checkType(const string_q& typeIn) {
         if (keywords[i] == typeIn)
             return typeIn;
     }
-    cerr << "Invalid type: " << typeIn << ". Quitting...(hit enter)\n";
-    cerr.flush();
-    getchar();
-    exit(0);
+    cerr << "Invalid type: " << typeIn << ". Quitting...(hit enter)" << endl;
+    return "";
 }
