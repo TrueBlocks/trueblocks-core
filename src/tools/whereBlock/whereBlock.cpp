@@ -23,10 +23,7 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    CStringArray commands;
-    explode(commands, options.commandList, '\n');
-    if (commands.empty()) commands.push_back("--noop");
-    for (auto command : commands) {
+    for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
 

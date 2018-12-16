@@ -45,9 +45,7 @@ int main(int argc, const char *argv[]) {
         return usage("File '" + fileName.getFullPath() + "' not found. All tests will fail without that file.");
     }
 
-    CStringArray commands;
-    explode(commands, options.commandList, '\n');
-    for (auto command : commands) {
+    for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
 
