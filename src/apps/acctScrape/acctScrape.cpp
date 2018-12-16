@@ -17,7 +17,7 @@ int main(int argc, const char *argv[]) {
 
     acctlib_init("binary", defaultQuitHandler);
 
-    COptions options;
+    COptions options; ASSERT(isEnabled(OPT_RUNONCE));
     if (!options.prepareArguments(argc, argv))
         return 1;
 
@@ -26,94 +26,93 @@ int main(int argc, const char *argv[]) {
     CStringArray commands;
     explode(commands, options.commandList, '\n');
     if (commands.empty()) commands.push_back("--noop");
-    string_q command = commands[0];
-    if (!options.parseArguments(command))
-        return 1;
+    for (auto command : commands) {
+        if (!options.parseArguments(command))
+            return 1;
 
-    if (!isParity() || !nodeHasTraces()) {
-        cerr << "This tool only runs against Parity and only if --tracing is enabled. Quitting..." << endl;
-        return 1;
-    }
+        if (!isParity() || !nodeHasTraces()) {
+            cerr << "This tool only runs against Parity and only if --tracing is enabled. Quitting..." << endl;
+            return 1;
+        }
 
-    CToml config("./config.toml");
-    if (!fileExists(config.getFilename())) {
-        cerr << "Configuration file '" << config.getFilename() << " not found. Quitting." << endl;
-        return 1;
-    }
+        CToml config("./config.toml");
+        if (!fileExists(config.getFilename())) {
+            cerr << "Configuration file '" << config.getFilename() << " not found. Quitting." << endl;
+            return 1;
+        }
 
-    if (!options.loadMonitors(config))
-        return 1;
+        if (!options.loadMonitors(config))
+            return 1;
 
-    if (!folderExists("./cache")) {
-        cerr << "The cache folder (./cache/) does not exist. Quitting" << endl;
-        return 1;
-    }
+        if (!folderExists("./cache")) {
+            cerr << "The cache folder (./cache/) does not exist. Quitting" << endl;
+            return 1;
+        }
 
-    string_q cacheFileName = "./cache/" + options.monitors[0].address + ".acct.bin";
-    if (fileExists(cacheFileName+".lck") || fileExists("./cache/lastBlock.txt.lck")) {
-        cerr << "The cache is locked. acctScrape cannot run. Quitting..." << endl;
-        return 1;
-    }
+        string_q cacheFileName = "./cache/" + options.monitors[0].address + ".acct.bin";
+        if (fileExists(cacheFileName+".lck") || fileExists("./cache/lastBlock.txt.lck")) {
+            cerr << "The cache is locked. acctScrape cannot run. Quitting..." << endl;
+            return 1;
+        }
 
-    string_q bloomPath = blockCachePath("/blooms/");
-    if (!folderExists(bloomPath)) {
-        cerr << "The bloom file cache '" << bloomPath << " was not found. acctScrape cannot run. Quitting..." << endl;
-        return 1;
-    }
+        string_q bloomPath = blockCachePath("/blooms/");
+        if (!folderExists(bloomPath)) {
+            cerr << "The bloom file cache '" << bloomPath << " was not found. acctScrape cannot run. Quitting..." << endl;
+            return 1;
+        }
 
-    double startTime = qbNow();
-    if (options.oneBlock) {
-        options.firstBlock = options.oneBlock;
-        options.nBlocks    = 1;
-        string_q fileName = substitute(getBinaryFilename(options.oneBlock), "/blocks/", "/blooms/");
-        setenv("TEST_MODE", "true", true);
-        options.debugging = (verbose ? 2 : 1);
-        visitBloomFilters(fileName, &options);
+        double startTime = qbNow();
+        if (options.oneBlock) {
+            options.firstBlock = options.oneBlock;
+            options.nBlocks    = 1;
+            string_q fileName = substitute(getBinaryFilename(options.oneBlock), "/blocks/", "/blooms/");
+            setenv("TEST_MODE", "true", true);
+            options.debugging = (verbose ? 2 : 1);
+            visitBloomFilters(fileName, &options);
 
-    } else {
-        string_q results;
-        asciiFileToString("./cache/lastBlock.txt", results);
-        uint64_t blockNum = max(options.minWatchBlock - 1, str_2_Uint(results));
-        if (blockNum <= getLatestBlockFromCache()) {  // the cache may be behind the acct db, so don't scrape
-            options.lastBlock = min(getLatestBlockFromCache(), options.maxWatchBlock);
-            options.firstBlock = min(blockNum, options.lastBlock);
-            options.nBlocks = min(options.lastBlock - options.firstBlock, options.maxBlocks);
-            if (verbose) {
-                cerr << "Visiting blooms between " << options.firstBlock << " and ";
-                cerr << options.firstBlock + options.nBlocks << endl;
-            }
+        } else {
+            string_q results;
+            asciiFileToString("./cache/lastBlock.txt", results);
+            uint64_t blockNum = max(options.minWatchBlock - 1, str_2_Uint(results));
+            if (blockNum <= getLatestBlockFromCache()) {  // the cache may be behind the acct db, so don't scrape
+                options.lastBlock = min(getLatestBlockFromCache(), options.maxWatchBlock);
+                options.firstBlock = min(blockNum, options.lastBlock);
+                options.nBlocks = min(options.lastBlock - options.firstBlock, options.maxBlocks);
+                if (verbose) {
+                    cerr << "Visiting blooms between " << options.firstBlock << " and ";
+                    cerr << options.firstBlock + options.nBlocks << endl;
+                }
 
-            //if (options.useAddressIndex) {
-            // THIS IS WHERE WE CAN READ THE ADDRESS INDEX WHICH GIVES US A LIST OF BLOCKS
-            // AND CALL processBlock(bn, options) DIRECTLY
-            //  blocks = for each watch, get the list of blocks
-            //  for (auto const& bn : blocks) {
-            //      options->blkStats.nSeen++;
-            //      processBlock(bn, &options);
-            //  }
-            //} else
-            {
-                if (options.txCache.Lock(cacheFileName, "a+", LOCK_WAIT)) {
-                    forEveryBloomFile(visitBloomFilters, &options, options.firstBlock, options.nBlocks);
-                    options.txCache.Release();
+                //if (options.useAddressIndex) {
+                // THIS IS WHERE WE CAN READ THE ADDRESS INDEX WHICH GIVES US A LIST OF BLOCKS
+                // AND CALL processBlock(bn, options) DIRECTLY
+                //  blocks = for each watch, get the list of blocks
+                //  for (auto const& bn : blocks) {
+                //      options->blkStats.nSeen++;
+                //      processBlock(bn, &options);
+                //  }
+                //} else
+                {
+                    if (options.txCache.Lock(cacheFileName, "a+", LOCK_WAIT)) {
+                        forEveryBloomFile(visitBloomFilters, &options, options.firstBlock, options.nBlocks);
+                        options.txCache.Release();
+                    }
                 }
             }
         }
+
+        cerr << options.name << " bn: " << options.firstBlock + options.nBlocks << options << "\r";
+        cerr.flush();
+
+        if (options.blkStats.nSeen && options.logLevel > 0) {
+            string_q logFile = blockCachePath("logs/acct-scrape.log");
+            if (!fileExists(logFile))
+                appendToAsciiFile(logFile, options.finalReport(startTime, true));
+            if (options.logLevel >= 2 || options.blkStats.nSeen > 1000)
+                appendToAsciiFile(logFile, options.finalReport(startTime, false));
+        }
     }
-
-    cerr << options.name << " bn: " << options.firstBlock + options.nBlocks << options << "\r";
-    cerr.flush();
-
-    if (options.blkStats.nSeen && options.logLevel > 0) {
-        string_q logFile = blockCachePath("logs/acct-scrape.log");
-        if (!fileExists(logFile))
-            appendToAsciiFile(logFile, options.finalReport(startTime, true));
-        if (options.logLevel >= 2 || options.blkStats.nSeen > 1000)
-            appendToAsciiFile(logFile, options.finalReport(startTime, false));
-    }
-
     etherlib_cleanup();
-
     return 0;
 }
 

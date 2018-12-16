@@ -44,8 +44,8 @@ namespace qblocks {
         static bool needsOption;
         static bool isReadme;
 
+//        CStringArray commands;
         string_q commandList;
-        bool     fromFile;
         uint64_t minArgs;
         CRuntimeClass *sorts[5];
 
