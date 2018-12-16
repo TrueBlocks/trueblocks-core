@@ -92,7 +92,8 @@ bool COptions::parseArguments(string_q& command) {
             stringToAsciiFile(tmpStore, uint_2_Str(diff));  // for next time
 
             cout << cGreen << "Hostname:                " << cYellow << (isTestMode() ? "--hostname--"  : doCommand("hostname")) << cOff << "\n";
-            cout << cGreen << "Version:                 " << cYellow <<                                   getVersionStr() << cOff << "\n";
+            cout << cGreen << "QB Version:              " << cYellow <<                                   getVersionStr() << cOff << "\n";
+            cout << cGreen << "Client Version:          " << cYellow << (isTestMode() ? "--version--"   : getVersionFromClient()) << cOff << "\n";
             cout << cGreen << "Location of cache:       " << cYellow << (isTestMode() ? "--cache_dir--" : blockCachePath("")) << cOff << "\n";
             cout << cGreen << "Latest block in cache:  "  << cYellow << (isTestMode() ? "--cache--"     : padNum8T(cache))  << cOff << "\n";
             cout << cGreen << "Latest block at client: "  << cYellow << (isTestMode() ? "--client--"    : padNum8T(client)) << cOff << "\n";
