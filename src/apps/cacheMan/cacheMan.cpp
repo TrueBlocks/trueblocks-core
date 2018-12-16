@@ -26,11 +26,10 @@ int main(int argc, const char *argv[]) {
         string_q fmtStr = getGlobalConfig()->getDisplayStr(options.asData, def);
 
         // Handle the various modes (there may be more than one)
-        while (!options.mode.empty()) {
-
-            string_q mode = nextTokenClear(options.mode, '|');
+        CStringArray modes;
+        explode(modes, options.mode, '|');
+        for (auto mode: modes) {
             for (uint32_t fn = 0 ; fn < options.filenames.size() ; fn++) {
-
                 options.stats = CStats(); // reset
                 CAcctCacheItem lastItem(0,0);
                 CAcctCacheItemArray fixed;
