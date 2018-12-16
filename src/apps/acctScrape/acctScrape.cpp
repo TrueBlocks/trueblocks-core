@@ -104,8 +104,12 @@ int main(int argc, const char *argv[]) {
     cerr << options.name << " bn: " << options.firstBlock + options.nBlocks << options << "\r";
     cerr.flush();
 
-    if (options.blkStats.nSeen > 1000 && options.logLevel > 0) {
-        appendToAsciiFile(blockCachePath("blooms/blooms_stats.txt"), options.finalReport(qbNow()-startTime));
+    if (options.blkStats.nSeen && options.logLevel > 0) {
+        string_q logFile = blockCachePath("logs/acct-scrape.log");
+        if (!fileExists(logFile))
+            appendToAsciiFile(logFile, options.finalReport(startTime, true));
+        if (options.logLevel >= 2 || options.blkStats.nSeen > 1000)
+            appendToAsciiFile(logFile, options.finalReport(startTime, false));
     }
 
     etherlib_cleanup();
@@ -390,10 +394,8 @@ bool processTransaction(const CBlock& block, const CTransaction *trans, COptions
                         ((CAccountWatch*)acct)->api_spec.sendData(trans->Format());
                         ((CAccountWatch*)acct)->api_spec.sendData("cleanup");
                         HIDE_FIELD(CFunction, "message");
-//                        cout << *trans << "\n";
                         cout << "\n";
                         cout.flush();
-//                        getchar();
                     }
                     // Also, we optionally write blocks if we're told to do so
                     if (options->writeBlocks) {
@@ -432,6 +434,9 @@ bool processTraces(const CBlock& block, const CTransaction *trans, const CAccoun
     bool ddos      = ddosRange(block.blockNumber);
     bool isDDos    = ddos && nTraces > 250;
     bool isExcl    = ddos && options->isExcluded(trans->to);
+
+//cout << block.blockNumber << ": " << ddos << ": " << isDDos << ": " << isExcl << ": " << trans->to << "                                                     " << endl;
+
     if (isDDos || isExcl) {
         DEBUG_PRINT1("Early exist for dDos");
         options->traceStats.nSeen    += nTraces;
@@ -542,21 +547,41 @@ ostream& operator<<(ostream& os, const COptions& item) {
 const string_q fmt = "[{BLOCKNUMBER} ][{w:5:TRANSACTIONINDEX} ][{w:10:DATE} ][{ETHER}]";
 
 //-----------------------------------------------------------------------
-string_q COptions::finalReport(double timing) const {
+string_q COptions::finalReport(double startTime, bool header) const {
     colorsOff();
     ostringstream os;
-    os << monitors[0].name << "\t";
-    os << monitors[0].address << "\t";
-    os << timing << "\t";
-    os << blkStats.nHit << "\t";
-    os << blkStats.nQueried << "\t";
-    os << blkStats.nSeen << "\t";
-    os << nBlocks << "\t";
-    os << transStats.nHit << "\t";
-    os << transStats.nSeen << "\t";
-    os << traceStats.nHit << "\t";
-    os << traceStats.nSkipped << "\t";
-    os << traceStats.nSeen << "\n";
+    if (header) {
+        os << "date\t";
+        os << "name\t";
+        os << "address\t";
+        os << "n-accts\t";
+        os << "timing\t";
+        os << "firstBlock\t";
+        os << "nBlocks\t";
+        os << "blksHit\t";
+        os << "blksQueried\t";
+        os << "blksSeen\t";
+        os << "transHit\t";
+        os << "transSeen\t";
+        os << "tracesHit\t";
+        os << "tracesSkipped\t";
+        os << "tracesSeen\n";
+    } else {
+        os << substitute(Now().Format(FMT_JSON), " UTC", "") << "\t";
+        os << monitors[0].name.substr(0,15) << "\t";
+        os << monitors[0].address << "\t";
+        os << monitors.size() << "\t";
+        os << double_2_Str(max(0.0, qbNow() - startTime), 4) << "\t";
+        os << firstBlock << "\t";
+        os << nBlocks << "\t";
+        os << blkStats.nHit << "\t";
+        os << blkStats.nQueried << "\t";
+        os << blkStats.nSeen << "\t";
+        os << transStats.nHit << "\t";
+        os << transStats.nSeen << "\t";
+        os << traceStats.nHit << "\t";
+        os << traceStats.nSkipped << "\t";
+        os << traceStats.nSeen << "\n";
+    }
     return os.str();
 }
-
