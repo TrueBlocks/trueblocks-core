@@ -7,7 +7,6 @@
 #include "options.h"
 
 extern bool updateIndex(CArchive& fullBlockCache, blknum_t bn);
-extern string_q timerStr(double start);
 //--------------------------------------------------------------------------
 bool handle_freshen(COptions& options) {
 
@@ -96,8 +95,6 @@ bool handle_freshen(COptions& options) {
             lockSection(false);
         }
 
-        string_q timeStr = timerStr(lastRun);
-
         ASSERT((block.transactions.size() && (blockOkay && bloomOkay)) || (!block.transactions.size() && (!blockOkay && !bloomOkay)));
         string_q result = "\r  @DATE-DIS-SEC} {NUM} ({LEFT}): ({TXS} /{TRC}-{DPT} /{ADDRS}) WRITE+PATH}: BL\n";
         replaceAll (result, "{",      cYellow);
@@ -107,7 +104,8 @@ bool handle_freshen(COptions& options) {
         replace    (result,  "WRITE", ((block.finalized) ? greenCheck : (bWhite + "✽" + cOff)) + " " + padRight(((blockOkay && bloomOkay) ? action : "skipped"), 10));
         replace    (result,  "NUM",   uint_2_Str(num));
         replace    (result,  "LEFT",  padNum4T(options.endBlock - num));
-        replace    (result,  "DATE",  extract(substitute(ts_2_Date(block.timestamp).Format(FMT_JSON), " UTC", ""), 2));
+        replace    (result,  "DATE",  substitute(ts_2_Date(block.timestamp).Format(FMT_JSON), " UTC", "")+"\tDATE");
+        replace    (result,  "DATE",  substitute(Now().Format(FMT_JSON), " UTC", ""));
         replace    (result,  "TXS",   padNum3T((uint64_t)block.transactions.size()));
         replace    (result,  "TRC",   padNum4T(sCtx.traceCount));
         replace    (result,  "DPT",   padNum3T(sCtx.maxTraceDepth));
@@ -115,7 +113,7 @@ bool handle_freshen(COptions& options) {
         replace    (result,  "BL",    reportBloom(sCtx.bloomList));
         replace    (result,  "PATH",  substitute(bloomFilename, blockCachePath(""), "./"));
         replace    (result,  "DIS",   padLeft(int_2_Str(latest.timestamp - block.timestamp),3));
-        replace    (result,  "SEC",   timeStr);
+        replace    (result,  "SEC",   double_2_Str(max(0.0, qbNow() - lastRun), 4));
         cout << result;
         cout.flush();
 //        if ((Now().m_nSeconds - lastRun.m_nSeconds) > 3) {
@@ -256,20 +254,6 @@ void CScraperCtx::addToBloom(const address_t& addr) {
     // SEARCH FOR 'BIT_TWIDDLE_AMT 200'
     if (addAddrToBloom(addr, bloomList, opts->bitBound))
         nAddrsInBloom = 0;
-}
-
-//----------------------------------------------------------------------------------
-string_q timerStr(double start) {
-    string_q perfStr = double_2_Str(max(0.0, qbNow() - start), 4);
-    if (!contains(perfStr, "."))
-        perfStr += ".0000";
-    string_q end = perfStr;
-    nextTokenClear(end, '.');
-    if (end.length() < 1) perfStr += ".0000";
-    if (end.length() < 2) perfStr += "000";
-    if (end.length() < 3) perfStr += "00";
-    if (end.length() < 4) perfStr += "0";
-    return perfStr;
 }
 
 //----------------------------------------------------------------------------------
