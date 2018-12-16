@@ -202,7 +202,6 @@ namespace qblocks {
         nArgs = curArg;
 
         // If we have a command file, we will use it, if not we will creat one and pretend we have one.
-        fromFile = false;
         commandList = "";
         for (uint64_t i = 0 ; i < nArgs ; i++) {
             string_q a = args[i];
@@ -217,7 +216,6 @@ namespace qblocks {
                 toAll = (" " + substitute(commandList, "\n", ""));
             commandList = "";
             // The command line also has a --file in it, so add these commands as well
-            fromFile = true;
             string_q contents;
             asciiFileToString(cmdFileName, contents);
             cleanContents(contents);
@@ -913,7 +911,6 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
     //---------------------------------------------------------------------------------------------------
     COptionsBase::COptionsBase(void) : namesFile("") {
-        fromFile = false;
         minArgs = 1;
         isReadme = false;
         needsOption = false;

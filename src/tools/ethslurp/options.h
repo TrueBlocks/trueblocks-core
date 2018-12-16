@@ -24,6 +24,7 @@ public:
     string_q exportFormat;
     string_q type;
     bool silent;
+    bool fromFile;
 
     COptions(void);
     ~COptions(void);
