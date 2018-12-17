@@ -27,12 +27,11 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    size_t cmdCnt = countOf(options.commandList, '\n') + 1;
+    size_t cmdCnt = options.commandLines.size();
     if (verbose && cmdCnt > 1)
         cout << "[";
-    CStringArray commands;
-    explode(commands, options.commandList, '\n');
-    for (auto command : commands) {
+
+    for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
 

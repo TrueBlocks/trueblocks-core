@@ -18,17 +18,17 @@ bool markFullBlocks(const string_q& path, void *data) {
             CArchive *pRes = (CArchive*)data;
             ASSERT(pRes && pRes->isOpen());
 
-            cout << "\tMarking " << path << "              \r";
+            cerr << "\tMarking " << path << "              \r";
             lockSection(true);
             pRes->Write(bnFromPath(path));
             pRes->flush();
             lockSection(false);
 
         } else {
-            cout << "\tSkipping " << path << "              \r";
+            cerr << "\tSkipping " << path << "              \r";
 
         }
-        cout.flush();
+        cerr.flush();
     }
 
     // return true if we should continue (i.e. we should not quit)

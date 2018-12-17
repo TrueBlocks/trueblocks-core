@@ -13,7 +13,6 @@
  *-------------------------------------------------------------------------------------------*/
 #include "accountwatch.h"
 #include "acctcacheitem.h"
-#include "balhistory.h"
 #include "treeroot.h"
 #include "acctlib.h"
 #include "branch.h"

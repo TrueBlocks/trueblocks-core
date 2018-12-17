@@ -75,7 +75,6 @@ bool COptions::parseArguments(string_q& command) {
 //        } else if (arg == "-f" || arg == "--freshen") {
 //extern void rebuildFourByteDB(void);
 //            rebuildFourByteDB();
-//            exit(0);
 
         } else if (arg == "--nodec") {
             decNames = false;

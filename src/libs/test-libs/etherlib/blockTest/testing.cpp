@@ -35,20 +35,21 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    if (!options.parseArguments(options.commandList))
-        return 0;
+    for (auto command : options.commandLines) {
+        if (!options.parseArguments(command))
+            return 0;
 
-    CBlock block;
-    getBlock(block, 4312145);
+        CBlock block;
+        getBlock(block, 4312145);
 
-    cout << sep << "\n";
-    switch (options.testNum) {
-        case 0:  everyAddress(block);             break;
-        case 1:  everyUniqueAddress(block);       everyUniqueAddressPerTx(block); break;
-        case 2:  everySortedUniqueAddress(block); everySortedUniqueAddressPerTx(block); break;
-        default: testFormatting(block);           break;
+        cout << sep << "\n";
+        switch (options.testNum) {
+            case 0:  everyAddress(block);             break;
+            case 1:  everyUniqueAddress(block);       everyUniqueAddressPerTx(block); break;
+            case 2:  everySortedUniqueAddress(block); everySortedUniqueAddressPerTx(block); break;
+            default: testFormatting(block);           break;
+        }
     }
-
     return 0;
 }
 

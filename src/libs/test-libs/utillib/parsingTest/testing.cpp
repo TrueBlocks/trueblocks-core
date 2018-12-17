@@ -29,15 +29,16 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    if (!options.parseArguments(options.commandList))
-        return 0;
+    for (auto command : options.commandLines) {
+        if (!options.parseArguments(command))
+            return 0;
 
-    cout << sep << "\n";
-    switch (options.testNum) {
-        case 1: testNextToken(); break;
-        default: testNative(); break;
+        cout << sep << "\n";
+        switch (options.testNum) {
+            case 1: testNextToken(); break;
+            default: testNative(); break;
+        }
     }
-
     return 0;
 }
 

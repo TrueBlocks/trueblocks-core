@@ -27,9 +27,7 @@ int main(int argc, const char *argv[]) {
     if (isTestMode()) {
         doTests();
     } else {
-        CStringArray commands;
-        explode(commands, options.commandList, '\n');
-        for (auto command : commands) {
+        for (auto command : options.commandLines) {
             if (!options.parseArguments(command))
                 return 0;
             string_q in = argv[1];
