@@ -27,6 +27,7 @@ namespace qblocks {
         callBackFunc = writeCallback;
         curlNoteFunc = NULL;
         theID        = 1;
+        nodeRequired = true;
         Clear();
     }
 
@@ -39,27 +40,22 @@ namespace qblocks {
 //#define DEBUG_RPC
 #ifdef DEBUG_RPC
 int x = 0;
-char v;
-#if 0  // turn on if you want to pause between steps
-#define PAUSE() \
-cerr << "Hit enter to continue: "; \
-v = (char)getchar(); \
-if (v == 'q') { \
-quickQuitHandler(0); \
-}
-#else
-#define PAUSE()
-#endif
-#define WAIT(msg) \
-cerr << string_q(128, '-') << "\n" << ++x << "." << msg << "\n"; \
-cerr << " result:\t[" << substitute(getCurlContext()->result, "\n", " ") << "]\n"; \
-cerr << " fallBack:\t" << getEnvStr("FALLBACK") << "\n"; \
-cerr << " earlyAbort:\t" << getCurlContext()->earlyAbort << "\n"; \
-cerr << " res:\t\t" << curl_easy_strerror(res) << "\n"; \
-PAUSE()
+#define PRINT(msg) \
+cerr << string_q(120, '-') << "\n" << ++x << "." << msg << "\n"; \
+cerr << "\tresult: \t[" << substitute(getCurlContext()->result, "\n", " ") << "]\n"; \
+cerr << "\tfallBack:\t" << getEnvStr("FALLBACK") << "\n"; \
+cerr << "\tearlyAbort:\t" << getCurlContext()->earlyAbort << "\n"; \
+cerr << "\tcurlID: \t" << getCurlContext()->getCurlID() << "\n";
+#define PRINTQ(msg) \
+cerr << string_q(120, '-') << "\n" << ++x << "." << msg << "\n"; \
+cerr << "\tcurlID: \t" << getCurlContext()->getCurlID() << "\n";
+#define PRINTL(msg) \
+cerr << string_q(120,'-') << "\n"; \
+PRINT(msg);
 #else  // DEBUG_RPC
-#define WAIT(msg)
-#define PAUSE()
+#define PRINTQ(msg)
+#define PRINT(msg)
+#define PRINTL(msg)
 #endif  // DEBUG_RPC
 
     //-------------------------------------------------------------------------
@@ -78,10 +74,9 @@ PAUSE()
             expContext().proof << postData;
         }
 #endif
-#ifdef DEBUG_RPC
-cerr << "postData: " << postData << "\n";
-cerr.flush();
-#endif
+
+PRINT("postData: " + postData);
+
         curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDS,    postData.c_str());
         curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDSIZE, postData.length());
         curl_easy_setopt(getCurl(), CURLOPT_WRITEDATA,     this);
@@ -166,20 +161,13 @@ cerr.flush();
     //-------------------------------------------------------------------------
     string_q callRPC(const string_q& method, const string_q& params, bool raw) {
 
+PRINTL("callRPC:\n\tmethod:\t\t" + method + params + "\n\tsource:\t\t" + getCurlContext()->provider);
+
         // getCurlContext()->callBackFunc = writeCallback;
         getCurlContext()->setPostData(method, params);
-#ifdef DEBUG_RPC
-cerr << " method:\t" << method << params << "\n"; \
-cerr << " source:\t" << getCurlContext()->provider << "\n"; \
-cerr << "calling curl_easy_perform";
-#endif
         CURLcode res = curl_easy_perform(getCurl());
-
-#ifdef DEBUG_RPC
-cerr << " after easy perform\n";
-PAUSE();
-#endif
         if (res != CURLE_OK && !getCurlContext()->earlyAbort) {
+PRINT("CURL returned an error: ! CURLE_OK")
             string_q currentSource = getCurlContext()->provider;
             string_q fallBack = getEnvStr("FALLBACK");
             if (!fallBack.empty() && currentSource != fallBack) {
@@ -189,7 +177,7 @@ PAUSE();
                     cerr << "\tWarning: " << cOff << "Only the 'infura' fallback is supported.\n";
                     cerr << "\tIt is impossible for QBlocks to proceed. Quitting...\n";
                     cerr << "\n";
-WAIT("res != CURLE_OK --> fallBack != infura --> quiting")
+PRINT("res != CURLE_OK --> fallBack != infura --> quiting")
                     quickQuitHandler(0);
                 }
 
@@ -200,7 +188,7 @@ WAIT("res != CURLE_OK --> fallBack != infura --> quiting")
                     cerr << "\tnode. " << fallBack << " does not support tracing. It ";
                     cerr << "is impossible\n\tfor QBlocks to proceed. Quitting...\n";
                     cerr << "\n";
-WAIT("res != CURLE_OK --> fallBack == infura but tracing --> quiting")
+PRINT("res != CURLE_OK --> fallBack == infura but tracing --> quiting")
                     quickQuitHandler(0);
                 }
                 getCurlContext()->theID--;
@@ -209,7 +197,7 @@ WAIT("res != CURLE_OK --> fallBack == infura but tracing --> quiting")
                 getCurl(true); getCurl();
                 // since we failed, we leave the new provider, otherwise we would have to save
                 // the results and reset it here.
-WAIT("res != CURLE_OK --> fallBack == infura --> calling back in to Infura")
+PRINT("res != CURLE_OK --> fallBack == infura --> calling back in to Infura")
                 return callRPC(method, params, raw);
             }
 
@@ -220,23 +208,12 @@ WAIT("res != CURLE_OK --> fallBack == infura --> calling back in to Infura")
             cerr << bTeal << curl_easy_strerror(res) << cOff << ".\n";
             cerr << "\tIt is impossible for QBlocks to proceed. Quitting...\n";
             cerr << "\n";
-WAIT("fallback didn't work. Quitting")
+PRINT("fallback didn't work. Quitting")
             quickQuitHandler(0);
         }
 
-//unsigned int delay = (unsigned int)str_2_Uint(getEnvStr("RATE_LIMIT"));
-//if (delay != 0.0 && getCurlContext()->provider == "remote") {
-//	static bool sleeping = false;
-//	if (!sleeping) {
-//		cerr << "rate limted.";
-//		sleeping = true;
-//	}
-//	cerr << ".";
-//	cerr.flush();
-//	sleep(delay);
-//}
+PRINT("CURL returned CURLE_OK")
 
-WAIT("! (res != CURLE_OK && !getCurlContext()->earlyAbort)")
         if (getCurlContext()->result.empty()) {
             cerr << cYellow;
             cerr << "\n";
@@ -254,21 +231,14 @@ WAIT("! (res != CURLE_OK && !getCurlContext()->earlyAbort)")
             }
         }
 
+PRINTL("Received: " + getCurlContext()->result);
 #ifdef DEBUG_RPC
-//    cout << "\n" << string_q(80, '-') << "\n";
-//    cout << thePost << "\n";
-cout << string_q(60, '=') << "\n";
-cout << "received: " << getCurlContext()->result << "\n";
-cout.flush();
+x = 0;
 #endif
-
-        if (raw) {
-WAIT("returning1: " + getCurlContext()->result);
+        if (raw)
             return getCurlContext()->result;
-        }
         CRPCResult generic;
         generic.parseJson3(getCurlContext()->result);
-WAIT("returning2: " + generic.result);
         return generic.result;
     }
 
@@ -288,9 +258,8 @@ WAIT("returning2: " + generic.result);
         ASSERT(userdata);
         CCurlContext *data = (CCurlContext*)userdata;  // NOLINT
         data->result += s;
-#ifdef DEBUG_RPC
-        cerr << "in writeCallback, data->result ==> " << data->result << "\n";
-#endif
+
+PRINTQ("data->result ==> " + string_q(s));
 
         if (data && data->curlNoteFunc)
             if (!(*data->curlNoteFunc)(ptr, size, nmemb, userdata))  // returns zero if it wants us to stop

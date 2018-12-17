@@ -22,10 +22,8 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    cout << bGreen << "Starting miniBlocks...\n" << cOff;
-    CStringArray commands;
-    explode(commands, options.commandList, '\n');
-    for (auto command : commands) {
+    cerr << bGreen << "Starting miniBlocks...\n" << cOff;
+    for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
 
@@ -53,10 +51,10 @@ int main(int argc, const char *argv[]) {
 
                             if (!done && !(cnt++ % options.skip)) {
                                 if (isTestMode())
-                                    cout << block.blockNumber << "\t" << block.firstTrans << "\n";
+                                    cerr << block.blockNumber << "\t" << block.firstTrans << "\n";
                                 else
-                                    cout << (cnt-1) << " : " << block.Format() << "\n";
-                                cout.flush();
+                                    cerr << (cnt-1) << " : " << block.Format() << "\n";
+                                cerr.flush();
                             }
                         }
                         miniBlkCache.Release();
@@ -78,8 +76,8 @@ int main(int argc, const char *argv[]) {
                                 done = true;
 
                             if (!done && !(cnt++ % (options.skip*10))) {
-                                cout << (cnt-1) << " : " << trans.Format() << "\n";
-                                cout.flush();
+                                cerr << (cnt-1) << " : " << trans.Format() << "\n";
+                                cerr.flush();
                             }
                         }
                         miniTxCache.Release();
@@ -122,7 +120,7 @@ int main(int argc, const char *argv[]) {
             }
         }
     }
-    cout << bGreen << "...done\n" << cOff;
+    cerr << bGreen << "...done\n" << cOff;
     return 0;
 }
 
@@ -199,15 +197,15 @@ void CVisitor::interumReport(const CMiniBlock& block) const {
             << "for " << cTeal << padNum4T(block.nTrans) << cOff << " txs) "
             << "nBlocks: " << bBlue << nBlocks << cOff << " (" << sizeB << ") "
             << "nTrans: " << bBlue << nTrans << cOff << " (" << sizeT << ")         \r ";
-    cout.flush();
+    cerr.flush();
 }
 
 //-----------------------------------------------------------------------------------------------
 void CVisitor::finalReport(void) const {
     double endTime  = qbNow();
     double duration = (endTime - startTime);
-    cerr.precision(17);
-    cerr
+    cout.precision(17);
+    cout
             << "  Found: "
             << cGreen << padNum8T(nTrans) << cOff << " transactions in "
             << cGreen << padNum8T(nBlocks) << cOff << " blocks\n  "
@@ -215,5 +213,5 @@ void CVisitor::finalReport(void) const {
             << asYellow(nBlocks/(duration)) << " b/s. (" << sizeB << ") "
             << asYellow(nTrans/(duration))  << " t/s. (" << sizeT << ")"
             << "\n";
-    cerr.flush();
+    cout.flush();
 }

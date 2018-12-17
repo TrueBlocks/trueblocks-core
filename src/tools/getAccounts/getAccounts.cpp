@@ -17,17 +17,14 @@ extern void readCustomAddrs(CAddressArray& array);
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    getCurlContext()->provider = "None";  // --named option runs without a node
+    getCurlContext()->nodeRequired = false;  // --named option runs without a node
     acctlib_init("binary", quickQuitHandler);
 
     COptions options;
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    CStringArray commands;
-    explode(commands, options.commandList, '\n');
-    if (commands.empty()) commands.push_back("--noop");
-    for (auto command : commands) {
+    for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
 
@@ -56,7 +53,9 @@ int main(int argc, const char *argv[]) {
             CStringArray prefunds;
             explode(prefunds, contents, '\n');
             for (auto prefund : prefunds) {
-                cout << nextTokenClear(prefund, '\t') << "\n";
+                CStringArray fields;
+                explode(fields, prefund, '\t');
+                cout << fields[0] << endl;
             }
 
         } else {

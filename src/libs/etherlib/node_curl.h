@@ -26,6 +26,7 @@ namespace qblocks {
         string_q         postData;
         string_q         result;
         string_q         provider;
+        bool             nodeRequired;
         bool             is_error;
         size_t           theID;
 

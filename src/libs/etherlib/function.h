@@ -54,7 +54,7 @@ public:
     bool isBuiltIn;
     string_q origName;
     bool hasAddrs;
-    explicit CFunction(const string_q& n) : name(n) { }
+    explicit CFunction(const string_q& n) : name(n), anonymous(false), constant(false), payable(false) { }
     string_q getSignature(uint64_t parts) const;
     string_q encodeItem(void) const;
     friend class CTransaction;

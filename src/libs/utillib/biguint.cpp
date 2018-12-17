@@ -266,7 +266,7 @@ namespace qblocks {
      * Similarly, to divide 'a' by 'b', we shift 'b' left varying amounts,
      * repeatedly trying to subtract it from 'a'.  When we succeed, we note
      * the fact by setting a bit in the quotient.  While these algorithms
-     * have the same O(n^2) time complexity as Knuth's, the 'constant factor'
+     * have the same O(n^2) time comple xity as Knuth's, the 'constant factor'
      * is likely to be larger.
      *
      * Because I used these algorithms, which require single-block addition

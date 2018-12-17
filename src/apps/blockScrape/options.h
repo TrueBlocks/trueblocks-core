@@ -5,17 +5,19 @@
  * All Rights Reserved.
  *------------------------------------------------------------------------*/
 #include "etherlib.h"
+#include "scraper_context.h"
 
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    blknum_t  start;
-    blknum_t  end;
-    blknum_t  maxBlocks;
-    bool      writeBlocks;
-    string_q  exclusions;
-    bool      keepAddrIdx;
-    uint64_t  bitBound;
+    blknum_t    startBlock;
+    blknum_t    endBlock;
+    blknum_t    maxBlocks;
+    string_q    exclusionList;
+    bool        writeBlocks;
+    uint64_t    bitBound;
+    timestamp_t latestBlockTs;
+    bool        addrIndex;
 
     COptions(void);
     ~COptions(void);
@@ -23,36 +25,9 @@ public:
     bool parseArguments(string_q& command);
     void Init(void);
     bool updateIndex(blknum_t bn);
-    bool isExcluded(const address_t& addr) { return contains(exclusions, addr); }
+    bool isExcluded(const address_t& addr) { return contains(exclusionList, addr); }
 };
-
-//-------------------------------------------------------------------------
-class CScraperCtx {
-public:
-    COptions        *opts;
-    CBlock          *pBlock;
-    CTransaction    *pTrans;
-    CBloomArray     blooms;
-    uint64_t         traceCount;
-    uint64_t         maxTraceDepth;
-    bool             reported;
-    uint64_t         nAccounts;
-    uint64_t         totAccounts;
-    string_q         potList; // potential addresses from 'input' or log 'data'
-
-    CScraperCtx(COptions *o) :
-        opts(o),
-        pBlock(NULL), pTrans(NULL),
-        traceCount(0), maxTraceDepth(0), reported(false), nAccounts(0), totAccounts(0)
-        { blooms.resize(1); blooms.at(0) = 0; }
-    void addToBloom(const address_t& addr);
-    bool scrape(CBlock& block);
-};
-
-//-----------------------------------------------------------------------------
-extern bool visitNonEmptyBlock(CBlock& node, void *data);
-extern bool visitEmptyBlock(CBlock& node, void *data);
 
 //-------------------------------------------------------------------------
 extern bool establishBlockIndex(void);
-extern bool freshenLocalCache(COptions& options);
+extern bool handle_freshen(COptions& options);
