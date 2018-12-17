@@ -15,9 +15,9 @@ public:
     blknum_t    maxBlocks;
     string_q    exclusionList;
     bool        writeBlocks;
-    bool        keepAddrIdx;
     uint64_t    bitBound;
     timestamp_t latestBlockTs;
+    bool        addrIndex;
 
     COptions(void);
     ~COptions(void);

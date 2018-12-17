@@ -29,8 +29,7 @@ bool COptions::parseArguments(string_q& command) {
             writeBlocks = false;
 
         } else if (arg == "-a" || arg == "--addrIndex") {
-            keepAddrIdx = true;
-            return usage("--addrIndex option is not implemented. Quiting...");
+            addrIndex = true;
 
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--start:")) {
             arg = substitute(substitute(arg, "-s:", ""), "--start:","");
@@ -119,6 +118,8 @@ bool COptions::parseArguments(string_q& command) {
     getBlock(latest, "latest");
     latestBlockTs = latest.timestamp;
 
+    establishFolder(blockCachePath("addr_index/unsorted_by_block/"));
+
     return true;
 }
 
@@ -133,7 +134,7 @@ void COptions::Init(void) {
     endBlock    = NOPOS;
     maxBlocks   = 5000;
     writeBlocks = true;
-    keepAddrIdx = false;
+    addrIndex   = false;
     minArgs     = 0;
     bitBound    = 200;
 }
