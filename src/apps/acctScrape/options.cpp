@@ -32,7 +32,7 @@ bool COptions::parseArguments(string_q& command) {
     for (auto arg : arguments) {
         if (arg == "--all" || arg == "-a") arg = "--maxBlocks:all";
         if (startsWith(arg, "-m:") || startsWith(arg, "--maxBlocks:")) {
-            nextTokenClear(arg,':');
+            arg = substitute(substitute(arg, "-m:", ""), "--maxBlocks:", "");
             if (arg == "all") {
                 isAll = true;
             } else {
@@ -43,21 +43,21 @@ bool COptions::parseArguments(string_q& command) {
             }
 
         } else if (startsWith(arg, "-o:") || startsWith(arg, "--oneBlock:")) {
-            nextTokenClear(arg,':');
+            arg = substitute(substitute(arg, "-o:", ""), "--oneBlock:", "");
             if (isUnsigned(arg))
                 oneBlock = str_2_Uint(arg);
             else
                 return usage("Please provide an integer value for oneBlock. Quitting...");
 
         } else if (startsWith(arg, "-n:") || startsWith(arg, "--oneTrans:")) {
-            nextTokenClear(arg,':');
+            arg = substitute(substitute(arg, "-n:", ""), "--oneTrans:", "");
             if (isUnsigned(arg))
                 oneTrans = str_2_Uint(arg);
             else
                 return usage("Please provide an integer value for oneTrans. Quitting...");
 
         } else if (startsWith(arg, "-l:") || startsWith(arg, "--level:")) {
-            nextTokenClear(arg,':');
+            arg = substitute(substitute(arg, "-l:", ""), "--level:", "");
             if (isUnsigned(arg))
                 logLevel = str_2_Uint(arg);
             else

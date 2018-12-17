@@ -3,7 +3,6 @@ CFunction
 CParameter
 CAccount
 CAccountWatch
-CBalHistory
 CBlock
 CIncomeStatement
 CLogEntry

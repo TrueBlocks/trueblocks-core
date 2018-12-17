@@ -51,7 +51,7 @@ public:
     bool isExcluded(const address_t& addr) { return contains(exclusions, addr); }
     bool loadMonitors(const CToml& toml);
     friend ostream& operator<<(ostream& os, const COptions& item);
-    string_q finalReport(double timing) const;
+    string_q finalReport(double timing, bool header) const;
 };
 
 //-----------------------------------------------------------------------

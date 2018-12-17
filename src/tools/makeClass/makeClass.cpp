@@ -31,9 +31,7 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    CStringArray commands;
-    explode(commands, options.commandList, '\n');
-    for (auto command : commands) {
+    for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
 
@@ -888,8 +886,6 @@ string_q checkType(const string_q& typeIn) {
         if (keywords[i] == typeIn)
             return typeIn;
     }
-    cerr << "Invalid type: " << typeIn << ". Quitting...(hit enter)\n";
-    cerr.flush();
-    getchar();
-    exit(0);
+    cerr << "Invalid type: " << typeIn << ". Quitting...(hit enter)" << endl;
+    return "";
 }

@@ -101,7 +101,7 @@ namespace qblocks {
         }
     };
 
-    // destructor gets called on pragram exit to clear curl handle
+    // destructor gets called on pragram end to clear curl handle
     static Cleanup cleanUp;
 
 }  // namespace qblocks

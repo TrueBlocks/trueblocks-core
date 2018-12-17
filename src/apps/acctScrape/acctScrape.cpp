@@ -17,99 +17,99 @@ int main(int argc, const char *argv[]) {
 
     acctlib_init("binary", defaultQuitHandler);
 
-    COptions options;
+    COptions options; ASSERT(isEnabled(OPT_RUNONCE));
     if (!options.prepareArguments(argc, argv))
         return 1;
 
     cerr << bBlack << Now().Format(FMT_JSON) << cOff << ": Monitoring " << cYellow << getCWD() << cOff << "             \n";
 
-    CStringArray commands;
-    explode(commands, options.commandList, '\n');
-    if (commands.empty()) commands.push_back("--noop");
-    string_q command = commands[0];
-    if (!options.parseArguments(command))
-        return 1;
+    for (auto command : options.commandLines) {
+        if (!options.parseArguments(command))
+            return 1;
 
-    if (!isParity() || !nodeHasTraces()) {
-        cerr << "This tool only runs against Parity and only if --tracing is enabled. Quitting..." << endl;
-        return 1;
-    }
+        if (!isParity() || !nodeHasTraces()) {
+            cerr << "This tool only runs against Parity and only if --tracing is enabled. Quitting..." << endl;
+            return 1;
+        }
 
-    CToml config("./config.toml");
-    if (!fileExists(config.getFilename())) {
-        cerr << "Configuration file '" << config.getFilename() << " not found. Quitting." << endl;
-        return 1;
-    }
+        CToml config("./config.toml");
+        if (!fileExists(config.getFilename())) {
+            cerr << "Configuration file '" << config.getFilename() << " not found. Quitting." << endl;
+            return 1;
+        }
 
-    if (!options.loadMonitors(config))
-        return 1;
+        if (!options.loadMonitors(config))
+            return 1;
 
-    if (!folderExists("./cache")) {
-        cerr << "The cache folder (./cache/) does not exist. Quitting" << endl;
-        return 1;
-    }
+        if (!folderExists("./cache")) {
+            cerr << "The cache folder (./cache/) does not exist. Quitting" << endl;
+            return 1;
+        }
 
-    string_q cacheFileName = "./cache/" + options.monitors[0].address + ".acct.bin";
-    if (fileExists(cacheFileName+".lck") || fileExists("./cache/lastBlock.txt.lck")) {
-        cerr << "The cache is locked. acctScrape cannot run. Quitting..." << endl;
-        return 1;
-    }
+        string_q cacheFileName = "./cache/" + options.monitors[0].address + ".acct.bin";
+        if (fileExists(cacheFileName+".lck") || fileExists("./cache/lastBlock.txt.lck")) {
+            cerr << "The cache is locked. acctScrape cannot run. Quitting..." << endl;
+            return 1;
+        }
 
-    string_q bloomPath = blockCachePath("/blooms/");
-    if (!folderExists(bloomPath)) {
-        cerr << "The bloom file cache '" << bloomPath << " was not found. acctScrape cannot run. Quitting..." << endl;
-        return 1;
-    }
+        string_q bloomPath = blockCachePath("/blooms/");
+        if (!folderExists(bloomPath)) {
+            cerr << "The bloom file cache '" << bloomPath << " was not found. acctScrape cannot run. Quitting..." << endl;
+            return 1;
+        }
 
-    double startTime = qbNow();
-    if (options.oneBlock) {
-        options.firstBlock = options.oneBlock;
-        options.nBlocks    = 1;
-        string_q fileName = substitute(getBinaryFilename(options.oneBlock), "/blocks/", "/blooms/");
-        setenv("TEST_MODE", "true", true);
-        options.debugging = (verbose ? 2 : 1);
-        visitBloomFilters(fileName, &options);
+        double startTime = qbNow();
+        if (options.oneBlock) {
+            options.firstBlock = options.oneBlock;
+            options.nBlocks    = 1;
+            string_q fileName = substitute(getBinaryFilename(options.oneBlock), "/blocks/", "/blooms/");
+            setenv("TEST_MODE", "true", true);
+            options.debugging = (verbose ? 2 : 1);
+            visitBloomFilters(fileName, &options);
 
-    } else {
-        string_q results;
-        asciiFileToString("./cache/lastBlock.txt", results);
-        uint64_t blockNum = max(options.minWatchBlock - 1, str_2_Uint(results));
-        if (blockNum <= getLatestBlockFromCache()) {  // the cache may be behind the acct db, so don't scrape
-            options.lastBlock = min(getLatestBlockFromCache(), options.maxWatchBlock);
-            options.firstBlock = min(blockNum, options.lastBlock);
-            options.nBlocks = min(options.lastBlock - options.firstBlock, options.maxBlocks);
-            if (verbose) {
-                cerr << "Visiting blooms between " << options.firstBlock << " and ";
-                cerr << options.firstBlock + options.nBlocks << endl;
-            }
+        } else {
+            string_q results;
+            asciiFileToString("./cache/lastBlock.txt", results);
+            uint64_t blockNum = max(options.minWatchBlock - 1, str_2_Uint(results));
+            if (blockNum <= getLatestBlockFromCache()) {  // the cache may be behind the acct db, so don't scrape
+                options.lastBlock = min(getLatestBlockFromCache(), options.maxWatchBlock);
+                options.firstBlock = min(blockNum, options.lastBlock);
+                options.nBlocks = min(options.lastBlock - options.firstBlock, options.maxBlocks);
+                if (verbose) {
+                    cerr << "Visiting blooms between " << options.firstBlock << " and ";
+                    cerr << options.firstBlock + options.nBlocks << endl;
+                }
 
-            //if (options.useAddressIndex) {
-            // THIS IS WHERE WE CAN READ THE ADDRESS INDEX WHICH GIVES US A LIST OF BLOCKS
-            // AND CALL processBlock(bn, options) DIRECTLY
-            //  blocks = for each watch, get the list of blocks
-            //  for (auto const& bn : blocks) {
-            //      options->blkStats.nSeen++;
-            //      processBlock(bn, &options);
-            //  }
-            //} else
-            {
-                if (options.txCache.Lock(cacheFileName, "a+", LOCK_WAIT)) {
-                    forEveryBloomFile(visitBloomFilters, &options, options.firstBlock, options.nBlocks);
-                    options.txCache.Release();
+                //if (options.useAddressIndex) {
+                // THIS IS WHERE WE CAN READ THE ADDRESS INDEX WHICH GIVES US A LIST OF BLOCKS
+                // AND CALL processBlock(bn, options) DIRECTLY
+                //  blocks = for each watch, get the list of blocks
+                //  for (auto const& bn : blocks) {
+                //      options->blkStats.nSeen++;
+                //      processBlock(bn, &options);
+                //  }
+                //} else
+                {
+                    if (options.txCache.Lock(cacheFileName, "a+", LOCK_WAIT)) {
+                        forEveryBloomFile(visitBloomFilters, &options, options.firstBlock, options.nBlocks);
+                        options.txCache.Release();
+                    }
                 }
             }
         }
+
+        cerr << options.name << " bn: " << options.firstBlock + options.nBlocks << options << "\r";
+        cerr.flush();
+
+        if (options.blkStats.nSeen && options.logLevel > 0) {
+            string_q logFile = blockCachePath("logs/acct-scrape.log");
+            if (!fileExists(logFile))
+                appendToAsciiFile(logFile, options.finalReport(startTime, true));
+            if (options.logLevel >= 2 || options.blkStats.nSeen > 1000)
+                appendToAsciiFile(logFile, options.finalReport(startTime, false));
+        }
     }
-
-    cerr << options.name << " bn: " << options.firstBlock + options.nBlocks << options << "\r";
-    cerr.flush();
-
-    if (options.blkStats.nSeen > 1000 && options.logLevel > 0) {
-        appendToAsciiFile(blockCachePath("blooms/blooms_stats.txt"), options.finalReport(qbNow()-startTime));
-    }
-
     etherlib_cleanup();
-
     return 0;
 }
 
@@ -390,10 +390,8 @@ bool processTransaction(const CBlock& block, const CTransaction *trans, COptions
                         ((CAccountWatch*)acct)->api_spec.sendData(trans->Format());
                         ((CAccountWatch*)acct)->api_spec.sendData("cleanup");
                         HIDE_FIELD(CFunction, "message");
-//                        cout << *trans << "\n";
                         cout << "\n";
                         cout.flush();
-//                        getchar();
                     }
                     // Also, we optionally write blocks if we're told to do so
                     if (options->writeBlocks) {
@@ -432,6 +430,9 @@ bool processTraces(const CBlock& block, const CTransaction *trans, const CAccoun
     bool ddos      = ddosRange(block.blockNumber);
     bool isDDos    = ddos && nTraces > 250;
     bool isExcl    = ddos && options->isExcluded(trans->to);
+
+//cout << block.blockNumber << ": " << ddos << ": " << isDDos << ": " << isExcl << ": " << trans->to << "                                                     " << endl;
+
     if (isDDos || isExcl) {
         DEBUG_PRINT1("Early exist for dDos");
         options->traceStats.nSeen    += nTraces;
@@ -542,21 +543,41 @@ ostream& operator<<(ostream& os, const COptions& item) {
 const string_q fmt = "[{BLOCKNUMBER} ][{w:5:TRANSACTIONINDEX} ][{w:10:DATE} ][{ETHER}]";
 
 //-----------------------------------------------------------------------
-string_q COptions::finalReport(double timing) const {
+string_q COptions::finalReport(double startTime, bool header) const {
     colorsOff();
     ostringstream os;
-    os << monitors[0].name << "\t";
-    os << monitors[0].address << "\t";
-    os << timing << "\t";
-    os << blkStats.nHit << "\t";
-    os << blkStats.nQueried << "\t";
-    os << blkStats.nSeen << "\t";
-    os << nBlocks << "\t";
-    os << transStats.nHit << "\t";
-    os << transStats.nSeen << "\t";
-    os << traceStats.nHit << "\t";
-    os << traceStats.nSkipped << "\t";
-    os << traceStats.nSeen << "\n";
+    if (header) {
+        os << "date\t";
+        os << "name\t";
+        os << "address\t";
+        os << "n-accts\t";
+        os << "timing\t";
+        os << "firstBlock\t";
+        os << "nBlocks\t";
+        os << "blksHit\t";
+        os << "blksQueried\t";
+        os << "blksSeen\t";
+        os << "transHit\t";
+        os << "transSeen\t";
+        os << "tracesHit\t";
+        os << "tracesSkipped\t";
+        os << "tracesSeen\n";
+    } else {
+        os << substitute(Now().Format(FMT_JSON), " UTC", "") << "\t";
+        os << monitors[0].name.substr(0,15) << "\t";
+        os << monitors[0].address << "\t";
+        os << monitors.size() << "\t";
+        os << double_2_Str(max(0.0, qbNow() - startTime), 4) << "\t";
+        os << firstBlock << "\t";
+        os << nBlocks << "\t";
+        os << blkStats.nHit << "\t";
+        os << blkStats.nQueried << "\t";
+        os << blkStats.nSeen << "\t";
+        os << transStats.nHit << "\t";
+        os << transStats.nSeen << "\t";
+        os << traceStats.nHit << "\t";
+        os << traceStats.nSkipped << "\t";
+        os << traceStats.nSeen << "\n";
+    }
     return os.str();
 }
-

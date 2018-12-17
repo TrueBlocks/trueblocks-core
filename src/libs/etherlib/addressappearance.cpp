@@ -47,45 +47,6 @@ string_q CAddressAppearance::Format(const string_q& fmt) const {
 }
 
 //---------------------------------------------------------------------------
-struct addrOnlyComparator {
-    bool operator()(const CAddressAppearance& v1, const CAddressAppearance& v2) const {
-        return v1.addr < v2.addr;
-    }
-};
-
-//---------------------------------------------------------------------------
-struct addrTxComparator {
-    bool operator()(const CAddressAppearance& v1, const CAddressAppearance& v2) const {
-        if (v1.addr < v2.addr)
-            return true;
-        if (v1.addr > v2.addr)
-            return false;
-        if (v2.tx == NOPOS)
-            return false;
-        return v1.tx < v2.tx;
-    }
-};
-
-//---------------------------------------------------------------------------
-typedef map<CAddressAppearance,bool,addrOnlyComparator> CAddressOnlyAppearanceMap;
-typedef map<CAddressAppearance,bool,addrTxComparator> CAddressTxAppearanceMap;
-//---------------------------------------------------------------------------
-class CUniqueState {
-    ADDRESSFUNC func;
-    void *data;
-    CAddressOnlyAppearanceMap *addrOnlyMap;
-    CAddressTxAppearanceMap *addrTxMap;
-public:
-    CUniqueState(ADDRESSFUNC f, void *d, bool perTx) {
-        func = f;
-        data = d;
-        addrOnlyMap = (perTx ? NULL : new CAddressOnlyAppearanceMap);
-        addrTxMap   = (perTx ? new CAddressTxAppearanceMap : NULL);
-    }
-    bool insertUnique(const CAddressAppearance& _value);
- };
-
-//---------------------------------------------------------------------------
 bool CUniqueState::insertUnique(const CAddressAppearance& _value) {
     if (addrOnlyMap) {
         CAddressOnlyAppearanceMap::iterator it = addrOnlyMap->find(_value);

@@ -480,7 +480,7 @@ namespace qblocks {
         if (quitCount(1) > 2) {
             cleanFileLocks();
             if (signum != -1)
-                exit(1);
+                exit(EXIT_SUCCESS);
         }
     }
 
@@ -488,7 +488,7 @@ namespace qblocks {
     void quickQuitHandler(int signum) {
         cleanFileLocks();
         if (signum != -1)
-            exit(1);
+            exit(EXIT_SUCCESS);
     }
 
     //-----------------------------------------------------------------------

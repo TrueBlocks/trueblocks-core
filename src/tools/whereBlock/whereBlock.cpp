@@ -23,10 +23,7 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    CStringArray commands;
-    explode(commands, options.commandList, '\n');
-    if (commands.empty()) commands.push_back("--noop");
-    for (auto command : commands) {
+    for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
 
@@ -37,8 +34,10 @@ int main(int argc, const char *argv[]) {
         cout << (verbose ? "" : "\n  (cache folder: " + cachePath + ")") << "\n";
 
         string_q list = options.getBlockNumList();
-        while (!list.empty()) {
-            blknum_t bn = str_2_Uint(nextTokenClear(list, '|'));
+        CStringArray nums;
+        explode(nums, list, '|');
+        for (auto num : nums) {
+            blknum_t bn = str_2_Uint(num);
             CFilename fileName(substitute(getBinaryFilename(bn), "/blocks/", "/"+options.mode+"s/"));
             bool exists = fileExists(fileName.getFullPath());
 
