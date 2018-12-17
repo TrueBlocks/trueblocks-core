@@ -115,6 +115,10 @@ bool COptions::parseArguments(string_q& command) {
 
     bitBound = getGlobalConfig("blockScrape")->getConfigInt("settings", "bitBound", 200);
 
+    CBlock latest;
+    getBlock(latest, "latest");
+    latestBlockTs = latest.timestamp;
+
     return true;
 }
 
