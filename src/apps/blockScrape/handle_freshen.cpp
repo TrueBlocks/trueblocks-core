@@ -45,7 +45,6 @@ bool handle_freshen(COptions& options) {
         string_q blockFilename = getBinaryFilename(num);
         string_q bloomFilename = substitute(blockFilename, "/blocks/", "/blooms/");
 
-        string_q action;
         bool goodHash = false;
         if (fileExists(blockFilename)) {
             // If the file exists, we may be able to skip re-querying the chain
@@ -65,18 +64,24 @@ bool handle_freshen(COptions& options) {
 
             if (goodHash) {
                 // If it's the same hash, assume it's not final...
-                action = "not final";
+                sCtx.status = "not final";
                 if (block.finalized) {
                     // ...unless it is...
-                    action = "final-a";
+                    sCtx.status = "final-a";
                     lockSection(true);
                     sCtx.blockOkay = (!options.writeBlocks || writeBlockToBinary(block, blockFilename));
                     updateIndex(fullBlockCache, num);
+                    if (options.addrIndex && sCtx.addrList.addrTxMap) {
+                        CAddressTxAppearanceMap::iterator it;
+                        for (it=sCtx.addrList.addrTxMap->begin(); it!=sCtx.addrList.addrTxMap->end(); it++ ) {
+                            cout << it->first << ':' << it->second << std::endl;
+                        }
+                    }
                     lockSection(false);
                 }
             } else {
                 // This is a block re-org, so we will re-scan
-                action = "reorg-re";
+                sCtx.status = "reorg-re";
             }
         }
 
@@ -84,40 +89,27 @@ bool handle_freshen(COptions& options) {
         // If we don't have a good hash (either because we've never seen this block before or it's changed since
         // last read), we need to rescan.
         if (!goodHash && sCtx.scrape(block)) {
-            action += "scanned";
+            sCtx.status += "scanned";
             block.finalized = isBlockFinal(block.timestamp, options.latestBlockTs, (60 * 4));
             lockSection(true);
             sCtx.blockOkay = (options.writeBlocks ? writeBlockToBinary(block, blockFilename) : true);
             sCtx.bloomOkay = writeBloomArray(sCtx.bloomList, bloomFilename);
             if (block.finalized) {
                 updateIndex(fullBlockCache, num);
-                action = "final-b";
+                if (options.addrIndex && sCtx.addrList.addrTxMap) {
+                    cout << "reporting\n";
+                    CAddressTxAppearanceMap::iterator it;
+                    for (it=sCtx.addrList.addrTxMap->begin(); it!=sCtx.addrList.addrTxMap->end(); it++ ) {
+                        cout << it->first << ':' << it->second << std::endl;
+                    }
+                }
+                sCtx.status = "final-b";
             }
             lockSection(false);
         }
+
         ASSERT((block.transactions.size() && (sCtx.blockOkay && sCtx.bloomOkay)) || (!block.transactions.size() && (!sCtx.blockOkay && !sCtx.bloomOkay)));
-
-#define cleanDate(dt)  substitute(substitute((dt).Format(FMT_JSON), " UTC", ""), " ", "T")
-#define cleanDate1(ts) cleanDate(ts_2_Date((ts)))
-
-        string_q status;
-//        status += ((block.finalized ? greenCheck : whiteStar) + " ");
-        status += (cTeal + ((sCtx.blockOkay && sCtx.bloomOkay) ? action : "skipped"));
-
-        cerr << padRight(uint_2_Str(options.endBlock - num), 4) << ": ";
-        ostringstream os; os.precision(4);
-        os << bBlack;
-        os << cleanDate1(sCtx.pBlock->timestamp) << "\t";
-        os << cleanDate (Now())                  << "\t";
-        os << TIC()                              << "\t" << cYellow;
-        os << num                                << "\t";
-        os << block.transactions.size()          << "\t";
-        os << sCtx.traceCount                    << "\t";
-        os << sCtx.maxTraceDepth                 << "\t";
-        os << sCtx.nAddrsInBlock                 << "\t" << cOff;
-        os << status                             << "\t" << cYellow;
-        os << reportBloom(sCtx.bloomList)                << cOff;
-        cout << os.str() << endl;
+        cout << sCtx.report(options.endBlock) << endl;
     }
 
     if (fullBlockCache.isOpen())
