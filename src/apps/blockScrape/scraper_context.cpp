@@ -8,7 +8,7 @@
 
 //----------------------------------------------------------------------------------
 CScraperContext::CScraperContext(COptions *o, CBlock *b)
-    : opts(o), pBlock(b), pTrans(NULL), traceCount(0), maxTraceDepth(0),
+    : opts(o), pBlock(b), pTrans(NULL), addrList(NULL, NULL, true), traceCount(0), maxTraceDepth(0),
       reported(false), nAddrsInBloom(0), nAddrsInBlock(0),
       blockOkay(false), bloomOkay(false)
 {
@@ -136,10 +136,46 @@ void CScraperContext::addToBloom(const address_t& addr) {
     nAddrsInBloom++;
     nAddrsInBlock++;
 
-    //    if (opts && opts->keepAddrIdx)
-    //        addrList.push_back(addr);
+    ASSERT(opts);
+    if (opts->addrIndex && addrList.addrTxMap) {
+        CAddressAppearance app;
+        app.bn = pBlock->blockNumber;
+        if (pTrans)
+            app.tx = pTrans->transactionIndex;
+        app.addr = addr;
+        addrList.insertUnique(app);
+    }
 
     // SEARCH FOR 'BIT_TWIDDLE_AMT 200'
     if (addAddrToBloom(addr, bloomList, opts->bitBound))
         nAddrsInBloom = 0;
+}
+
+#define cleanDate(dt)  substitute(substitute((dt).Format(FMT_JSON), " UTC", ""), " ", "T")
+#define cleanDate1(ts) cleanDate(ts_2_Date((ts)))
+//--------------------------------------------------------------------------
+string_q CScraperContext::report(uint64_t last) {
+
+    cerr << ((pBlock->finalized ? greenCheck : whiteStar) + " ");
+    cerr << padRight(uint_2_Str(last - pBlock->blockNumber), 4) << ": ";
+
+    string_q statusStr;
+    statusStr += (cTeal + ((blockOkay && bloomOkay) ? status : "skipped"));
+
+    ostringstream os;
+    os.precision(4);
+
+    os << bBlack;
+    os << cleanDate1(pBlock->timestamp) << "\t";
+    os << cleanDate (Now())             << "\t";
+    os << TIC()                         << "\t" << cYellow;
+    os << pBlock->blockNumber           << "\t";
+    os << pBlock->transactions.size()   << "\t";
+    os << traceCount                    << "\t";
+    os << maxTraceDepth                 << "\t";
+    os << nAddrsInBlock                 << "\t" << cOff;
+    os << statusStr                     << "\t" << cYellow;
+    os << reportBloom(bloomList)        << cOff;
+
+    return os.str();
 }
