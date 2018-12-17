@@ -35,19 +35,20 @@ namespace qblocks {
     string_q strikethru = "\e[7m";
     string_q greenCheck = "\e[0;32m✓\e[0m";
     string_q redX       = "\e[0;31mX\e[0m";
+    string_q whiteStar  = "\e[0;37m✽\e[0m";
 
     void colorsDim(void) {
         cWhite = (cWhite+dim+italic);
         cGreen = cYellow = cBlue = cMagenta = cTeal = cOff = cBlack = cWhite;
         bbold = italic = underline = reversed = strikethru = "";
-        greenCheck = "✓"; redX = "X";
+        greenCheck = "✓"; redX = "X"; whiteStar = "*";
     }
 
     void colorsOff(void) {
         cBlack = cRed = cGreen = cYellow = cBlue = "";
         cMagenta = cTeal = cWhite = cOff = bbold = "";
         italic = underline = reversed = strikethru = "";
-        greenCheck = "✓"; redX = "X";
+        greenCheck = "✓"; redX = "X"; whiteStar = "*";
     }
 
     void colorsOn(void) {
@@ -67,6 +68,7 @@ namespace qblocks {
         strikethru = "\e[7m";
         greenCheck = "\e[0;32m✓\e[0m";
         redX       = "\e[0;31mX\e[0m";
+        whiteStar  = "\e[0;37m✽\e[0m";
     }
 
     bool colorsDisabled(void) { return cBlack == ""; }

@@ -236,9 +236,6 @@ namespace qblocks {
             }
         }
         commandList += stdInCmds;
-//        replaceAll(commandList, " \n", "\n");
-//        commandList = trim(commandList, '\n');
-
         explode(commandLines, commandList, '\n');
         for (auto& item : commandLines)
             item = trim(item);
