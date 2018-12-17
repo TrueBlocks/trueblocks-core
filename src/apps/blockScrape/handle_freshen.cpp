@@ -10,46 +10,47 @@ extern bool updateIndex(CArchive& fullBlockCache, blknum_t bn);
 //--------------------------------------------------------------------------
 bool handle_freshen(COptions& options) {
 
-    // Note: It's okay to open this once and keep it open since we protect the write with locksection.
-    // If the program quits unexpectedly, the file will get proplery closed anyway.
+    // We open this at the start of the scrape and keep it open until the end of the scrape. Normally,
+    // we'd rather open and shut the file, we're protected with lockSection and we flush every file
+    // write and the file gets cleaned up on exit, so it's all good.
     CArchive fullBlockCache(WRITING_ARCHIVE);
     if (!fullBlockCache.Lock(fullBlockIndex, "a+", LOCK_WAIT)) {
         cerr << "Could not open fullBlock index: " << fullBlockCache.LockFailure() << "\n";
         return false;
     }
 
-    CBlock latest;
-    getBlock(latest, "latest");
+    // Write the header if this is the first time through
+    if (!fileExists(blockCachePath("logs/block-scrape-data.log"))) {
+        cerr << "\t";
+        cout << "block-date\trun-date\tduration\tblockNum\tnTxs\tnTrcs\ttrcDepth\tnAddrs\tstatus\tblooms\n";
+    }
 
-    double lastRun = qbNow();
+    // The startBlock is the last block written to the fullBlockIndex. The lastBlock is the front of
+    // the chain. Block numbers only get written to the fullBlockIndex if they are finalized, so this
+    // means we will revisit blocks until they are finalized (unless we shouldQuit if user hits cntl+C)
     for (blknum_t num = options.startBlock ; num < options.endBlock && !shouldQuit() ; num++) {
-
-        if (!isParity() || !nodeHasTraces()) {
-            cerr << "This tool can only run against a Parity node that has tracing enabled. Quitting..." << "\n";
-            cerr.flush();
-            return false;
-        }
 
         CBlock block;
         block.blockNumber = num;
-        CScraperCtx sCtx(&options);
-        sCtx.pBlock = &block;
+        CScraperContext sCtx(&options, &block);
 
-        // We need to handle the case of a re-org, so we only write the fullBlock index if we are sure
-        // the block is final. In this way, each time we re-start, we will restart from the place
-        // where the last index was written. We also optionally write the block data to disc (this
-        // defaults to true). By making this optional, we can delay writing the larger block data
-        // until we've identified blocks of interest if so desired.
+        // We need to be aware of re-orgs, so we only write to the fullBlock index if we're sure
+        // the block is final. In this way, when we start the next scan we will start from the place
+        // where we left off last time. We optionally write the binary block data to disc (this
+        // defaults to true). By making this optional, we can delay writing the much larger binary
+        // block data until we've identified blocks of interest if so desired. Note: if we are not
+        // writing blocks the behaviour is to requery the chain until a block is final. If we are writing
+        // blocks we only re-query the chain for blocks that don't exist
 
         string_q blockFilename = getBinaryFilename(num);
         string_q bloomFilename = substitute(blockFilename, "/blocks/", "/blooms/");
-        bool blockOkay = false, bloomOkay = false;
 
         string_q action;
         bool goodHash = false;
         if (fileExists(blockFilename)) {
-            // If the file exists, we may be able to skip re-scanning it
-            bloomOkay = blockOkay = true;
+            // If the file exists, we may be able to skip re-querying the chain
+            sCtx.bloomOkay = true;
+            sCtx.blockOkay = true;
             readBlockFromBinary(block, blockFilename);
             readBloomArray(sCtx.bloomList, bloomFilename);
 
@@ -60,7 +61,7 @@ bool handle_freshen(COptions& options) {
             goodHash = (block.hash == getRawBlockHash(num));
 
             // Check to see if its finalized
-            block.finalized = isBlockFinal(block.timestamp, latest.timestamp, (60 * 4));
+            block.finalized = isBlockFinal(block.timestamp, options.latestBlockTs, (60 * 4));
 
             if (goodHash) {
                 // If it's the same hash, assume it's not final...
@@ -69,7 +70,7 @@ bool handle_freshen(COptions& options) {
                     // ...unless it is...
                     action = "final-a";
                     lockSection(true);
-                    blockOkay = (!options.writeBlocks || writeBlockToBinary(block, blockFilename));
+                    sCtx.blockOkay = (!options.writeBlocks || writeBlockToBinary(block, blockFilename));
                     updateIndex(fullBlockCache, num);
                     lockSection(false);
                 }
@@ -84,181 +85,43 @@ bool handle_freshen(COptions& options) {
         // last read), we need to rescan.
         if (!goodHash && sCtx.scrape(block)) {
             action += "scanned";
-            block.finalized = isBlockFinal(block.timestamp, latest.timestamp, (60 * 4));
+            block.finalized = isBlockFinal(block.timestamp, options.latestBlockTs, (60 * 4));
             lockSection(true);
-            blockOkay = (options.writeBlocks ? writeBlockToBinary(block, blockFilename) : true);
-            bloomOkay = writeBloomArray(sCtx.bloomList, bloomFilename);
+            sCtx.blockOkay = (options.writeBlocks ? writeBlockToBinary(block, blockFilename) : true);
+            sCtx.bloomOkay = writeBloomArray(sCtx.bloomList, bloomFilename);
             if (block.finalized) {
                 updateIndex(fullBlockCache, num);
                 action = "final-b";
             }
             lockSection(false);
         }
+        ASSERT((block.transactions.size() && (sCtx.blockOkay && sCtx.bloomOkay)) || (!block.transactions.size() && (!sCtx.blockOkay && !sCtx.bloomOkay)));
 
-        ASSERT((block.transactions.size() && (blockOkay && bloomOkay)) || (!block.transactions.size() && (!blockOkay && !bloomOkay)));
-        string_q result = "\r  @DATE-DIS-SEC} {NUM} ({LEFT}): ({TXS} /{TRC}-{DPT} /{ADDRS}) WRITE+PATH}: BL";
-        replaceAll (result, "{",      cYellow);
-        replaceAll (result, "+",      (blockOkay && bloomOkay) ? bTeal : bRed);
-        replaceAll (result, "@",      bBlack);
-        replaceAll (result, "}",      cOff);
-        replace    (result,  "WRITE", ((block.finalized) ? greenCheck : (bWhite + "✽" + cOff)) + " " + padRight(((blockOkay && bloomOkay) ? action : "skipped"), 10));
-        replace    (result,  "NUM",   uint_2_Str(num));
-        replace    (result,  "LEFT",  padNum4T(options.endBlock - num));
-        replace    (result,  "DATE",  substitute(ts_2_Date(block.timestamp).Format(FMT_JSON), " UTC", "")+"\tDATE");
-        replace    (result,  "DATE",  substitute(Now().Format(FMT_JSON), " UTC", ""));
-        replace    (result,  "TXS",   padNum3T((uint64_t)block.transactions.size()));
-        replace    (result,  "TRC",   padNum4T(sCtx.traceCount));
-        replace    (result,  "DPT",   padNum3T(sCtx.maxTraceDepth));
-        replace    (result,  "ADDRS", padNum4T(sCtx.nAddrsInBlock));
-        replace    (result,  "BL",    reportBloom(sCtx.bloomList));
-        replace    (result,  "PATH",  substitute(bloomFilename, blockCachePath(""), "./"));
-        replace    (result,  "DIS",   padLeft(int_2_Str(latest.timestamp - block.timestamp),3));
-        replace    (result,  "SEC",   double_2_Str(max(0.0, qbNow() - lastRun), 4));
-        if (!fileExists(blockCachePath("logs/block-scrape-data.log")))
-            cout << "blk-date\tnow\tsecs2head\tsecs\tbn\tremains\tnTxs\tnTrcs\ttrcDepth\tnAddrs\twrite\tblooms\n";
-        cout << result << endl;
-        lastRun = qbNow();
+#define cleanDate(dt)  substitute(substitute((dt).Format(FMT_JSON), " UTC", ""), " ", "T")
+#define cleanDate1(ts) cleanDate(ts_2_Date((ts)))
+
+        string_q status;
+//        status += ((block.finalized ? greenCheck : whiteStar) + " ");
+        status += (cTeal + ((sCtx.blockOkay && sCtx.bloomOkay) ? action : "skipped"));
+
+        cerr << padRight(uint_2_Str(options.endBlock - num), 4) << ": ";
+        ostringstream os; os.precision(4);
+        os << bBlack;
+        os << cleanDate1(sCtx.pBlock->timestamp) << "\t";
+        os << cleanDate (Now())                  << "\t";
+        os << TIC()                              << "\t" << cYellow;
+        os << num                                << "\t";
+        os << block.transactions.size()          << "\t";
+        os << sCtx.traceCount                    << "\t";
+        os << sCtx.maxTraceDepth                 << "\t";
+        os << sCtx.nAddrsInBlock                 << "\t" << cOff;
+        os << status                             << "\t" << cYellow;
+        os << reportBloom(sCtx.bloomList)                << cOff;
+        cout << os.str() << endl;
     }
 
     if (fullBlockCache.isOpen())
         fullBlockCache.Release();
 
     return true;
-}
-
-//-------------------------------------------------------------------------
-bool CScraperCtx::scrape(CBlock& block) {
-
-    getObjectViaRPC(block, "eth_getBlockByNumber", "[\"" + uint_2_Hex(block.blockNumber) + "\",true]");
-
-    if (!block.transactions.size()) {
-        if (block.blockNumber < 50000) { // otherwise it appears to be hung
-            cerr << "skipping empty block " << block.blockNumber << "\r";
-            cerr.flush();
-        }
-        // TODO: we do not account for miners of zero transaction blocks, we can
-        // do it here by writing the miner's address to a file
-        return false;
-    }
-
-    // Add the miner to the bloom filter (TODO: we do not account for miners of zero transaction blocks)
-    addToBloom(block.miner);
-
-    // We can't use forEveryTrans... because it uses copies. We need to visit the actual transaction so we can write it
-    for (uint32_t i = 0 ; i < block.transactions.size() ; i++) {
-        if (!visitTransaction(block.transactions.at(i), this))
-            return false;
-    }
-
-    return true;
-}
-
-//-------------------------------------------------------------------------
-bool addPotentialAddr(const CAddressAppearance& item, void *data) {
-    CScraperCtx *sCtx = (CScraperCtx*)data;
-    sCtx->addToBloom(item.addr);
-    return true;
-}
-
-//---------------------------------------------------------------------------
-void foundPot1(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList) {
-    CAddressAppearance item(bn, tx, tc, "", "");
-    potentialAddr(func, data, item, potList);
-}
-
-//-------------------------------------------------------------------------
-// Note: See CBlock::forEveryAddress for a similar algorithm. We can't use that
-// because we are processing transaction error marks here as well.
-bool visitTransaction(CTransaction& trans, void *data) {
-
-    CScraperCtx *sCtx = (CScraperCtx*)data;
-    sCtx->pTrans = &trans;
-    trans.pBlock  = sCtx->pBlock;
-
-    getReceipt(trans.receipt, trans.hash);
-    sCtx->addToBloom(trans.from);
-    sCtx->addToBloom(trans.to);
-    sCtx->addToBloom(trans.receipt.contractAddress);
-    foundPot1(addPotentialAddr, sCtx, trans.blockNumber, trans.transactionIndex, 0, extract(trans.input, 10));
-
-    for (uint32_t lg = 0 ; lg < trans.receipt.logs.size() ; lg++) {
-        const CLogEntry *log = &trans.receipt.logs[lg];
-        sCtx->addToBloom(log->address);
-        // Note: Add topics that look like addresses even though they may be redundant.
-        string_q addr;
-        for (uint32_t tp = 0 ; tp < log->topics.size() ; tp++) {
-            if (isPotentialAddr(log->topics[tp], addr)) {
-                sCtx->addToBloom(addr);
-            }
-        }
-        foundPot1(addPotentialAddr, sCtx, trans.blockNumber, trans.transactionIndex, 0, extract(log->data, 2));
-    }
-
-    uint64_t nTraces = getTraceCount(trans.hash);
-    bool ddos        = ddosRange(sCtx->pBlock->blockNumber);
-    bool isDDos      = ddos && nTraces > 250;
-    bool isExcl      = ddos && (sCtx->opts->isExcluded(trans.from) || sCtx->opts->isExcluded(trans.to));
-    if (!isDDos && !isExcl) {
-        // We can use forEveryTrace... here because we don't need to save any data on the trace. It's okay to use a copy
-        sCtx->potList = "";
-        forEveryTraceInTransaction(visitTrace, sCtx, trans);
-        // We handle all the traces potentials here since we don't use trace id anyway
-        foundPot1(addPotentialAddr, sCtx, trans.blockNumber, trans.transactionIndex, 0, sCtx->potList);
-    }
-
-    if (trans.pBlock->blockNumber >= byzantiumBlock)
-        trans.isError = (trans.receipt.status == 0); // contains zero on fail
-
-    return true;
-}
-
-//-------------------------------------------------------------------------
-bool visitTrace(CTrace& trace, void *data) {
-
-    CScraperCtx *sCtx = (CScraperCtx*)data;
-
-    // Note, this is redundant. It is also done in queryBlock. We do it in both places becuase it is
-    // possible to create (and write) a new block directly from other programs
-    if (sCtx->pTrans->pBlock->blockNumber < byzantiumBlock && // if we are before the byzantium hard fork...
-        sCtx->pTrans->gas == sCtx->pTrans->receipt.gasUsed) { // ...and gasUsed == gasLimit...
-        if (!sCtx->pTrans->isError)                           // ...and we're not yet an error...
-            ((CTransaction*)sCtx->pTrans)->isError = trace.isError();
-    }
-
-    sCtx->addToBloom(trace.action.from);
-    sCtx->addToBloom(trace.action.to);
-    sCtx->addToBloom(trace.action.refundAddress);
-    sCtx->addToBloom(trace.action.address);
-    sCtx->addToBloom(trace.result.address);
-    sCtx->potList += extract(trace.action.input, 10);
-    sCtx->traceCount++;
-    sCtx->maxTraceDepth = max(sCtx->maxTraceDepth, (uint64_t)trace.traceAddress.size());
-
-    return true;
-}
-
-//----------------------------------------------------------------------------------
-void CScraperCtx::addToBloom(const address_t& addr) {
-    if (isZeroAddr(addr))
-        return;
-    nAddrsInBloom++;
-    nAddrsInBlock++;
-
-//    if (opts && opts->keepAddrIdx)
-//        addrList.push_back(addr);
-
-    // SEARCH FOR 'BIT_TWIDDLE_AMT 200'
-    if (addAddrToBloom(addr, bloomList, opts->bitBound))
-        nAddrsInBloom = 0;
-}
-
-//----------------------------------------------------------------------------------
-CScraperCtx::CScraperCtx(COptions *o) :
-opts(o),
-pBlock(NULL), pTrans(NULL),
-traceCount(0), maxTraceDepth(0),
-reported(false), nAddrsInBloom(0), nAddrsInBlock(0) {
-    bloomList.resize(1);
-    bloomList.at(0) = 0;
-//    addrList.reserve(35000); // largest # of addrs during dDos
 }
