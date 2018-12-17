@@ -722,11 +722,17 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     //------------------------------------------------------------------
     void editFile(const string_q& fileName) {
         CToml toml(configPath("quickBlocks.toml"));
-#ifdef __APPLE__
-        string_q editor = toml.getConfigStr("settings", "editor", "open ");
-#else
-        string_q editor = toml.getConfigStr("settings", "editor", "nano ");
-#endif
+        string_q editor = toml.getConfigStr("settings", "editor", "<NOT_SET>");
+        if (!isTestMode() && editor == "<NOT_SET>") {
+            editor = getEnvStr("EDITOR");
+            if (editor.empty()) {
+                cerr << endl;
+                cerr << cTeal << "\tWarning: " << cOff;
+                cerr << "$EDITOR environment setting not found. Either export it or\n";
+                cerr << "\tadd an \"[settings] editor=\" value in the config file." << endl << endl;
+                return;
+            }
+        }
         string_q cmd = editor + " \"" + fileName + "\"";
         if (isTestMode()) {
             cout << "Testing editFile: " << substitute(cmd, "nano", "open") << "\n";
