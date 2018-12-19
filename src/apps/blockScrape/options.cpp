@@ -12,6 +12,7 @@ static COption params[] = {
     COption("-end:<num>",       "last block to visit (required if --start supplied)"),
     COption("-maxBlocks:<num>", "maximum number of blocks to process (defaults to 5000)"),
     COption("@addrIndex",       "index addresses per block in addition to building bloom filters"),
+    COption("@consolidate",     "sort and finalize growing address index (if over 50MB)"),
     COption("",                 "Decentralized blockchain scraper and block cache.\n"),
 };
 static size_t nParams = sizeof(params) / sizeof(COption);
@@ -30,6 +31,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-a" || arg == "--addrIndex") {
             addrIndex = true;
+
+        } else if (arg == "-c" || arg == "--consolidate") {
+            consolidate = true;
 
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--start:")) {
             arg = substitute(substitute(arg, "-s:", ""), "--start:","");
@@ -112,7 +116,8 @@ bool COptions::parseArguments(string_q& command) {
     if (!isParity() || !nodeHasTraces())
         return usage("This tool will only run if it is running against a Parity node that has tracing enabled. Quitting...");
 
-    bitBound = getGlobalConfig("blockScrape")->getConfigInt("settings", "bitBound", 200);
+    bitBound   = getGlobalConfig("blockScrape")->getConfigInt("settings", "bitBound", 200);
+    maxIdxSize = getGlobalConfig("blockScrape")->getConfigInt("settings", "maxIndexBytes", maxIdxSize);
 
     CBlock latest;
     getBlock(latest, "latest");
@@ -135,8 +140,10 @@ void COptions::Init(void) {
     maxBlocks   = 5000;
     writeBlocks = true;
     addrIndex   = false;
+    consolidate = false;
     minArgs     = 0;
     bitBound    = 200;
+    maxIdxSize  = 50000000;  // 50 MB
 }
 
 //---------------------------------------------------------------------------------------------------
