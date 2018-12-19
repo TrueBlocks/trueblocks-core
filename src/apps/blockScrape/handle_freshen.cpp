@@ -70,13 +70,8 @@ bool handle_freshen(COptions& options) {
                     sCtx.status = "final-a";
                     lockSection(true);
                     sCtx.blockOkay = (!options.writeBlocks || writeBlockToBinary(block, blockFilename));
-                    updateIndex(fullBlockCache, num);
-                    if (options.addrIndex && sCtx.addrList.addrTxMap) {
-                        CAddressTxAppearanceMap::iterator it;
-                        for (it=sCtx.addrList.addrTxMap->begin(); it!=sCtx.addrList.addrTxMap->end(); it++ ) {
-                            cout << it->first << ':' << it->second << std::endl;
-                        }
-                    }
+                    if (block.transactions.size())
+                        updateIndex(fullBlockCache, num);
                     lockSection(false);
                 }
             } else {
@@ -88,22 +83,23 @@ bool handle_freshen(COptions& options) {
         // If we already have a good hash, we're re-written it if it's now final, or we don't have to if it isn't.
         // If we don't have a good hash (either because we've never seen this block before or it's changed since
         // last read), we need to rescan.
-        if (!goodHash && sCtx.scrape(block)) {
-            sCtx.status += "scanned";
+        if (!goodHash) {
+            bool hasTxs = sCtx.scrape(block);
+            if (hasTxs)
+                sCtx.status += "scanned";
             block.finalized = isBlockFinal(block.timestamp, options.latestBlockTs, (60 * 4));
+
             lockSection(true);
+            sCtx.updateAddrIndex();
             sCtx.blockOkay = (options.writeBlocks ? writeBlockToBinary(block, blockFilename) : true);
+            // If block has no txs, we want to be able to distinguish
+            bloomFilename = substitute(bloomFilename, ".bin", (hasTxs ? ".bin" : "-e.bin"));
             sCtx.bloomOkay = writeBloomArray(sCtx.bloomList, bloomFilename);
             if (block.finalized) {
-                updateIndex(fullBlockCache, num);
-                if (options.addrIndex && sCtx.addrList.addrTxMap) {
-                    cout << "reporting\n";
-                    CAddressTxAppearanceMap::iterator it;
-                    for (it=sCtx.addrList.addrTxMap->begin(); it!=sCtx.addrList.addrTxMap->end(); it++ ) {
-                        cout << it->first << ':' << it->second << std::endl;
-                    }
+                if (hasTxs) {
+                    sCtx.status = "final-b";
+                    updateIndex(fullBlockCache, num);
                 }
-                sCtx.status = "final-b";
             }
             lockSection(false);
         }
