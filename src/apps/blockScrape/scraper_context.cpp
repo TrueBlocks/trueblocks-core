@@ -261,7 +261,6 @@ string_q CScraperContext::report(uint64_t last) {
     ostringstream os; os.precision(4);
 
     time_q   blkDate = ts_2_Date(pBlock->timestamp);
-    string_q statusStr = (cTeal + ((blockOkay && bloomOkay) ? padRight(status,9) : "skipped"));
 
     os << bBlack;
     os << blkDate.Format(FMT_EXPORT)  << "\t";
@@ -272,8 +271,8 @@ string_q CScraperContext::report(uint64_t last) {
     os << traceCount                  << "\t";
     os << maxTraceDepth               << "\t";
     os << nAddrsInBlock               << "\t";
-    os << addrList.addrTxMap->size()  << "\t" << cOff;
-    os << statusStr                   << "\t" << cYellow;
+    os << addrList.addrTxMap->size()  << "\t" << cTeal;
+    os << padRight(status, 9)         << "\t" << cYellow;
     os << reportBloom(bloomList)      << cOff;
 
     return os.str();
