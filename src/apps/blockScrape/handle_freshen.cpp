@@ -44,7 +44,6 @@ bool handle_freshen(COptions& options) {
 
         string_q blockFilename = getBinaryFilename(num);
         string_q bloomFilename = substitute(blockFilename, "/blocks/", "/blooms/");
-
         bool goodHash = false;
         if (fileExists(blockFilename)) {
             // If the file exists, we may be able to skip re-querying the chain
@@ -85,21 +84,24 @@ bool handle_freshen(COptions& options) {
         // last read), we need to rescan.
         if (!goodHash) {
             bool hasTxs = sCtx.scrape(block);
-            if (hasTxs)
-                sCtx.status += "scanned";
-            block.finalized = isBlockFinal(block.timestamp, options.latestBlockTs, (60 * 4));
 
             lockSection(true);
-            sCtx.updateAddrIndex();
-            sCtx.blockOkay = (options.writeBlocks ? writeBlockToBinary(block, blockFilename) : true);
-            // If block has no txs, we want to be able to distinguish
-            bloomFilename = substitute(bloomFilename, ".bin", (hasTxs ? ".bin" : "-e.bin"));
-            sCtx.bloomOkay = writeBloomArray(sCtx.bloomList, bloomFilename);
-            if (block.finalized) {
-                if (hasTxs) {
+            if (hasTxs) {
+                sCtx.status += "scanned";
+                block.finalized = isBlockFinal(block.timestamp, options.latestBlockTs, (60 * 4));
+                sCtx.updateAddrIndex();
+                sCtx.blockOkay = (options.writeBlocks ? writeBlockToBinary(block, blockFilename) : true);
+                sCtx.bloomOkay = writeBloomArray(sCtx.bloomList, bloomFilename);
+                if (block.finalized) {
                     sCtx.status = "final-b";
                     updateIndex(fullBlockCache, num);
                 }
+            } else {
+                // If block has no txs, we want to be able to distinguish. We always write the bloom and update index
+                sCtx.status += "skipped";
+                bloomFilename = substitute(bloomFilename, ".bin", "-e.bin");
+                sCtx.updateAddrIndex();
+                sCtx.bloomOkay = writeBloomArray(sCtx.bloomList, bloomFilename);
             }
             lockSection(false);
         }
