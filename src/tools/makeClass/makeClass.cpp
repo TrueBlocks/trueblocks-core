@@ -236,31 +236,31 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
         string_q clearFmt = "\tif ([{NAME}])\n\t\tdelete [{NAME}];\n\t[{NAME}] = NULL;\n";
         string_q subClsFmt = STR_SUBCLASS;
 
-               if (fld.type == "bloom")     { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BLOOM";
-        } else if (fld.type == "wei")       { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_WEI";
-        } else if (fld.type == "gas")       { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_GAS";
-        } else if (fld.type == "timestamp") { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_TIMESTAMP";
-        } else if (fld.type == "blknum")    { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
-        } else if (fld.type == "string")    { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
-        } else if (fld.type == "addr")      { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_ADDRESS";
-        } else if (fld.type == "address")   { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_ADDRESS";
-        } else if (fld.type == "hash")      { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_HASH";
+               if (fld.type == "bloom")     { setFmt = "\t[{NAME}] = [{DEF}];\n";    regType = "T_BLOOM";
+        } else if (fld.type == "wei")       { setFmt = "\t[{NAME}] = [{DEF}];\n";    regType = "T_WEI";
+        } else if (fld.type == "gas")       { setFmt = "\t[{NAME}] = [{DEF}];\n";    regType = "T_GAS";
+        } else if (fld.type == "timestamp") { setFmt = "\t[{NAME}] = [{DEF}];\n";    regType = "T_TIMESTAMP";
+        } else if (fld.type == "blknum")    { setFmt = "\t[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
+        } else if (fld.type == "string")    { setFmt = "\t[{NAME}] = [{DEFS}];\n";   regType = "T_TEXT";
+        } else if (fld.type == "addr")      { setFmt = "\t[{NAME}] = [{DEFS}];\n";   regType = "T_ADDRESS";
+        } else if (fld.type == "address")   { setFmt = "\t[{NAME}] = [{DEFS}];\n";   regType = "T_ADDRESS";
+        } else if (fld.type == "hash")      { setFmt = "\t[{NAME}] = [{DEFS}];\n";   regType = "T_HASH";
         } else if (startsWith(fld.type, "bytes")) { setFmt = "\t[{NAME}] = [{DEFS}];\n"; regType = "T_TEXT";
-        } else if (fld.type == "int8")      { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
-        } else if (fld.type == "int16")     { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
-        } else if (fld.type == "int32")     { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
-        } else if (fld.type == "int64")     { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
-        } else if (fld.type == "int256")    { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
-        } else if (fld.type == "uint8")     { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
-        } else if (fld.type == "uint16")    { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
-        } else if (fld.type == "uint32")    { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
-        } else if (fld.type == "uint64")    { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
-        } else if (fld.type == "uint256")   { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_NUMBER";
-        } else if (fld.type == "bool")      { setFmt = "\t[{NAME}] = [{DEF}];\n";  regType = "T_BOOL";
-        } else if (fld.type == "double")    { setFmt = "\t[{NAME}] = [{DEFF}];\n"; regType = "T_DOUBLE";
-        } else if (fld.isPointer)           { setFmt = "\t[{NAME}] = [{DEFP}];\n"; regType = "T_POINTER";
-        } else if (fld.isObject)            { setFmt = "\t[{NAME}].initialize();\n";     regType = "T_OBJECT";
-        } else                               { setFmt = badSet;                     regType = "T_TEXT"; }
+        } else if (fld.type == "int8")      { setFmt = "\t[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
+        } else if (fld.type == "int16")     { setFmt = "\t[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
+        } else if (fld.type == "int32")     { setFmt = "\t[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
+        } else if (fld.type == "int64")     { setFmt = "\t[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
+        } else if (fld.type == "int256")    { setFmt = "\t[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
+        } else if (fld.type == "uint8")     { setFmt = "\t[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
+        } else if (fld.type == "uint16")    { setFmt = "\t[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
+        } else if (fld.type == "uint32")    { setFmt = "\t[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
+        } else if (fld.type == "uint64")    { setFmt = "\t[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
+        } else if (fld.type == "uint256")   { setFmt = "\t[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
+        } else if (fld.type == "bool")      { setFmt = "\t[{NAME}] = [{DEF}];\n";    regType = "T_BOOL";
+        } else if (fld.type == "double")    { setFmt = "\t[{NAME}] = [{DEFF}];\n";   regType = "T_DOUBLE";
+        } else if (fld.isPointer)           { setFmt = "\t[{NAME}] = [{DEFP}];\n";   regType = "T_POINTER";
+        } else if (fld.isObject)            { setFmt = "\t[{NAME}] = [{TYPE}]();\n"; regType = "T_OBJECT";
+        } else                               { setFmt = badSet;                      regType = "T_TEXT"; }
 
         if (contains(fld.type, "Array")) {
             setFmt = "\t[{NAME}].clear();\n";
@@ -817,7 +817,7 @@ const char *STR_GETOBJ_CODE =
 
 //------------------------------------------------------------------------------------------------------------
 const char *STR_GETSTR_HEAD =
-"\tconst string_q getStringAt(const string_q& name, size_t i) const override;\n";
+"\tconst string_q getStringAt(const string_q& fieldName, size_t i) const override;\n";
 
 //------------------------------------------------------------------------------------------------------------
 const char *STR_GETSTR_CODE_FIELD =
@@ -827,7 +827,7 @@ const char *STR_GETSTR_CODE_FIELD =
 //------------------------------------------------------------------------------------------------------------
 const char *STR_GETSTR_CODE =
 "//---------------------------------------------------------------------------\n"
-"const string_q [{CLASS_NAME}]::getStringAt(const string_q& name, size_t i) const {\n"
+"const string_q [{CLASS_NAME}]::getStringAt(const string_q& fieldName, size_t i) const {\n"
 "[{FIELDS}]\treturn \"\";\n"
 "}\n\n";
 

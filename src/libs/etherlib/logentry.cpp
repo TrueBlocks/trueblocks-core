@@ -309,8 +309,8 @@ const CBaseNode *CLogEntry::getObjectAt(const string_q& fieldName, size_t index)
 }
 
 //---------------------------------------------------------------------------
-const string_q CLogEntry::getStringAt(const string_q& name, size_t i) const {
-    if ( name % "topics" && i < topics.size() )
+const string_q CLogEntry::getStringAt(const string_q& fieldName, size_t i) const {
+    if ( fieldName % "topics" && i < topics.size() )
         return topic_2_Str(topics[i]);
     return "";
 }
