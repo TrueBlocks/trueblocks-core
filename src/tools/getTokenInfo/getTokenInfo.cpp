@@ -15,7 +15,7 @@
 
 void reportByToken(COptions& options);
 void reportByAccount(COptions& options);
-extern string_q getTokenInfo(const string_q& which, CAccountWatch& w, const address_t& h, blknum_t b);
+extern string_q getTokenInfo(const string_q& which, CTokenInfo& w, const address_t& h, blknum_t b);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
@@ -31,8 +31,22 @@ int main(int argc, const char *argv[]) {
             return 0;
 
         if (!options.tokenInfo.empty()) {
-            for (auto watch : options.tokens)
-                cout << getTokenInfo(options.tokenInfo, watch, "", options.newestBlock) << "\n";
+            if (options.watches.size() > 1)
+                cout << "[\n";
+            address_t holder = (options.tokenInfo == "balanceOf" ? options.holders[0] : "");
+            for (auto watch : options.watches) {
+                string_q blocks = options.getBlockNumList();
+                while (!blocks.empty()) {
+                    blknum_t blockNum = str_2_Uint(nextTokenClear(blocks, '|'));
+                    cout << getTokenInfo(options.tokenInfo, watch, holder, blockNum) << "\n";
+                    static size_t cnt=0;
+                    if (cnt++ < options.watches.size() - 1)
+                        cout << ",";
+                    cout << "\n";
+                }
+            }
+            if (options.watches.size() > 1)
+                cout << "]\n";
 
         } else {
             if (options.asData)
@@ -59,8 +73,9 @@ void reportByToken(COptions& options) {
     uint64_t cnt = 0;
 
     bool needsNewline = true;
+
     // For each token contract
-    for (auto token : options.tokens) {
+    for (auto token : options.watches) {
         if (!options.asData)
             cout << "\n  For token contract: " << bBlue << token.address << cOff << "\n";
 
@@ -120,13 +135,14 @@ void reportByAccount(COptions& options) {
     uint64_t cnt = 0;
 
     bool needsNewline = true;
+
     // For each holder
     for (auto holder : options.holders) {
         if (!options.asData)
             cout << "\n  For account: " << bBlue << holder << cOff << "\n";
 
         // For each token contract
-        for (auto token : options.tokens) {
+        for (auto token : options.watches) {
             cnt++;
 
             // For each block
@@ -175,7 +191,7 @@ void reportByAccount(COptions& options) {
 }
 
 //-------------------------------------------------------------------------
-string_q getTokenInfo(const string_q& which, CAccountWatch& token, const address_t& holder, blknum_t blockNum) {
+string_q getTokenInfo(const string_q& which, CTokenInfo& token, const address_t& holder, blknum_t blockNum) {
 
     if (!isAddress(token.address))
         return "";
@@ -200,7 +216,7 @@ string_q getTokenInfo(const string_q& which, CAccountWatch& token, const address
                 os << "\"" << opt << "\": \"" << (ret.outputs.size() ? ret.outputs[0].value : "") << "\",\n";
             }
         }
-        return "{\n\t" + trim(substitute(trim(os.str(),','),"\n","\n\t"),'\t') + "}";
+        return "{\n\t" + trim(substitute(trim(trim(os.str(),'\n'),',')+"\n","\n","\n\t"),'\t') + "}";
 
     } else {
         if (isValidInfo(which, encoding)) {
@@ -219,7 +235,7 @@ string_q getTokenInfo(const string_q& which, CAccountWatch& token, const address
 //        cerr << "eth_call for " << which << endl << "\twith: " << cmd << endl << "\treturned: " << result << endl;
     CFunction ret;
     token.abi_spec.articulateOutputs(encoding, result, ret);
-    os << "{\n    \"" << which << "\": \"" << (ret.outputs.size() ? ret.outputs[0].value : "") << "\"\n}\n";
+    os << "{\n    \"" << which << "\": \"" << (ret.outputs.size() ? ret.outputs[0].value : "") << "\"\n}";
     return (which == "balanceOf" ? (ret.outputs.size() ? ret.outputs[0].value : "") : os.str());
 }
 
