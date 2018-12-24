@@ -83,6 +83,20 @@ run_test("getTokenInfo_info_version"     "0xd26114cd6ee289accf82350c8d8487fedb8a
 run_test("getTokenInfo_info_symbol"      "0xd26114cd6ee289accf82350c8d8487fedb8a0c07" " --info " " symbol")
 run_test("getTokenInfo_info_all"         "0xd26114cd6ee289accf82350c8d8487fedb8a0c07" " --info " " all")
 
+run_test("getTokenInfo_info_name2"        "0xd26114cd6ee289accf82350c8d8487fedb8a0c07" " 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " --info " " name")
+run_test("getTokenInfo_info_totalSupply2" "0xd26114cd6ee289accf82350c8d8487fedb8a0c07" " 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " --info " " totalSupply")
+run_test("getTokenInfo_info_decimals2"    "0xd26114cd6ee289accf82350c8d8487fedb8a0c07" " 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " --info " " decimals")
+run_test("getTokenInfo_info_version2"     "0xd26114cd6ee289accf82350c8d8487fedb8a0c07" " 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " --info " " version")
+run_test("getTokenInfo_info_symbol2"      "0xd26114cd6ee289accf82350c8d8487fedb8a0c07" " 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " --info " " symbol")
+run_test("getTokenInfo_info_all2"         "0xd26114cd6ee289accf82350c8d8487fedb8a0c07" " 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " --info " " all")
+
+run_state_test("getTokenInfo_info_name3"        "0xd26114cd6ee289accf82350c8d8487fedb8a0c07" " 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " --info " " name" " 4001001-4001002")
+run_state_test("getTokenInfo_info_totalSupply3" "0xd26114cd6ee289accf82350c8d8487fedb8a0c07" " 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " --info " " totalSupply" " 4001001-4001002")
+run_state_test("getTokenInfo_info_decimals3"    "0xd26114cd6ee289accf82350c8d8487fedb8a0c07" " 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " --info " " decimals" " 4001001-4001002")
+run_state_test("getTokenInfo_info_version3"     "0xd26114cd6ee289accf82350c8d8487fedb8a0c07" " 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " --info " " version" " 4001001-4001002")
+run_state_test("getTokenInfo_info_symbol3"      "0xd26114cd6ee289accf82350c8d8487fedb8a0c07" " 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " --info " " symbol" " 4001001-4001002")
+run_state_test("getTokenInfo_info_all3"         "0xd26114cd6ee289accf82350c8d8487fedb8a0c07" " 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " --info " " all" " 4001001-4001002")
+
 run_state_test("getTokenInfo_multiple_single_block" "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07" " 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28" " 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"  " 4150000")
 run_state_test("getTokenInfo_multiple_multiblock" "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07" " 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28" " 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98" " 4141000" " 4151000" )
 run_state_test("getTokenInfo_by_account" "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 " "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98"  " 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3" " 0xa25d04fa348f107428708ba19c95d1c79b3744bf" " -b" " 4000000") 
