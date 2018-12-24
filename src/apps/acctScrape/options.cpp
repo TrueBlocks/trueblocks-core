@@ -136,7 +136,7 @@ void COptions::Init(void) {
     arguments.clear();
     paramsPtr = params;
     nParamsRef = nParams;
-    optionOn(OPT_RUNONCE);
+//    optionOn(OPT_RUNONCE);
 
     lastBlock     = 0;
     minWatchBlock = 0;
