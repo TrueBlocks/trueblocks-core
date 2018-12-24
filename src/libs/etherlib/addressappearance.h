@@ -48,7 +48,7 @@ public:
     friend ostream& operator<<(ostream& os, const CAddressAppearance& item);
 };
 typedef vector<CAddressAppearance> CAddressAppearanceArray;
-
+typedef bool (*ADDRESSFUNC)(const CAddressAppearance& item, void *data);
 extern bool isPotentialAddr(biguint_t test, address_t& addrOut);
 extern bool potentialAddr(ADDRESSFUNC func, void *data, const CAddressAppearance& item, const string_q& potList);
 
