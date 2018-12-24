@@ -12,11 +12,12 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "acctlib.h"
+#include "tokeninfo.h"
 
 //-----------------------------------------------------------------------------
 class COptions : public CHistoryOptions {
 public:
-    CAccountWatchArray tokens;
+    CTokenInfoArray watches;
     CAddressArray holders;
     string_q tokenInfo;
     bool asData;
