@@ -43,7 +43,7 @@ public:
     DECLARE_NODE(CLogEntry);
 
     const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
-    const string_q getStringAt(const string_q& name, size_t i) const override;
+    const string_q getStringAt(const string_q& fieldName, size_t i) const override;
 
     // EXISTING_CODE
     const CReceipt *pReceipt;
