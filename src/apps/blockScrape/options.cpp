@@ -97,16 +97,18 @@ bool COptions::parseArguments(string_q& command) {
 
     } else if (startBlock != NOPOS) {
 
-        // The user told us where to start...
-        startBlock = max((uint64_t)47000, startBlock);
-        // ...we figure out where to end.
-        endBlock   = max(startBlock + 1, client);
+        if (startBlock < 47000)
+            endBlock = 47001;
+        else
+            endBlock = max(startBlock + 1, client);
 
-    } else {
+     } else {
 
-        // The user didn't tell us anything
-        startBlock = max((uint64_t)47000, cache + 1);
-        endBlock   = max(startBlock + 1, client);
+        startBlock = cache + 1;
+        if (startBlock < 47000)
+            endBlock = 47001;
+        else
+            endBlock = max(startBlock + 1, client);
 
     }
 
