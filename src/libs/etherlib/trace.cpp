@@ -351,8 +351,8 @@ const CBaseNode *CTrace::getObjectAt(const string_q& fieldName, size_t index) co
 }
 
 //---------------------------------------------------------------------------
-const string_q CTrace::getStringAt(const string_q& name, size_t i) const {
-    if ( name % "traceAddress" && i < traceAddress.size() )
+const string_q CTrace::getStringAt(const string_q& fieldName, size_t i) const {
+    if ( fieldName % "traceAddress" && i < traceAddress.size() )
         return (traceAddress[i]);
     return "";
 }
