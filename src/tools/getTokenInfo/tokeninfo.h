@@ -17,46 +17,44 @@
  */
 #include <vector>
 #include <map>
-#include "abilib.h"
+#include "acctlib.h"
 
 namespace qblocks {
 
 // EXISTING_CODE
-class CReceipt;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CLogEntry : public CBaseNode {
+class CTokenInfo : public CAccountWatch {
 public:
-    address_t address;
-    string_q data;
-    uint64_t logIndex;
-    CTopicArray topics;
-    CFunction articulatedLog;
+    address_t addr;
+    wei_t totalSupply;
+    uint64_t decimals;
+    string_q version;
+    string_q symbol;
+    CAddressArray holders;
 
 public:
-    CLogEntry(void);
-    CLogEntry(const CLogEntry& lo);
-    virtual ~CLogEntry(void);
-    CLogEntry& operator=(const CLogEntry& lo);
+    CTokenInfo(void);
+    CTokenInfo(const CTokenInfo& to);
+    virtual ~CTokenInfo(void);
+    CTokenInfo& operator=(const CTokenInfo& to);
 
-    DECLARE_NODE(CLogEntry);
+    DECLARE_NODE(CTokenInfo);
 
-    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
     const string_q getStringAt(const string_q& fieldName, size_t i) const override;
 
     // EXISTING_CODE
-    const CReceipt *pReceipt;
     // EXISTING_CODE
-    bool operator==(const CLogEntry& item) const;
-    bool operator!=(const CLogEntry& item) const { return !operator==(item); }
-    friend bool operator<(const CLogEntry& v1, const CLogEntry& v2);
-    friend ostream& operator<<(ostream& os, const CLogEntry& item);
+    bool operator==(const CTokenInfo& item) const;
+    bool operator!=(const CTokenInfo& item) const { return !operator==(item); }
+    friend bool operator<(const CTokenInfo& v1, const CTokenInfo& v2);
+    friend ostream& operator<<(ostream& os, const CTokenInfo& item);
 
 protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CLogEntry& lo);
+    void duplicate(const CTokenInfo& to);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -64,78 +62,77 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline CLogEntry::CLogEntry(void) {
+inline CTokenInfo::CTokenInfo(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CLogEntry::CLogEntry(const CLogEntry& lo) {
+inline CTokenInfo::CTokenInfo(const CTokenInfo& to) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(lo);
+    duplicate(to);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CLogEntry::~CLogEntry(void) {
+inline CTokenInfo::~CTokenInfo(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CLogEntry::clear(void) {
+inline void CTokenInfo::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CLogEntry::initialize(void) {
-    CBaseNode::initialize();
+inline void CTokenInfo::initialize(void) {
+    CAccountWatch::initialize();
 
-    address = "";
-    data = "";
-    logIndex = 0;
-    topics.clear();
-    articulatedLog.initialize();
+    addr = "";
+    totalSupply = 0;
+    decimals = 0;
+    version = "";
+    symbol = "";
+    holders.clear();
 
     // EXISTING_CODE
-    pReceipt = NULL;
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CLogEntry::duplicate(const CLogEntry& lo) {
+inline void CTokenInfo::duplicate(const CTokenInfo& to) {
     clear();
-    CBaseNode::duplicate(lo);
+    CAccountWatch::duplicate(to);
 
-    address = lo.address;
-    data = lo.data;
-    logIndex = lo.logIndex;
-    topics = lo.topics;
-    articulatedLog = lo.articulatedLog;
+    addr = to.addr;
+    totalSupply = to.totalSupply;
+    decimals = to.decimals;
+    version = to.version;
+    symbol = to.symbol;
+    holders = to.holders;
 
     // EXISTING_CODE
-    // no deep copy because it's const
-    pReceipt = lo.pReceipt;
     // EXISTING_CODE
     finishParse();
 }
 
 //--------------------------------------------------------------------------
-inline CLogEntry& CLogEntry::operator=(const CLogEntry& lo) {
-    duplicate(lo);
+inline CTokenInfo& CTokenInfo::operator=(const CTokenInfo& to) {
+    duplicate(to);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CLogEntry::operator==(const CLogEntry& item) const {
+inline bool CTokenInfo::operator==(const CTokenInfo& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -143,7 +140,7 @@ inline bool CLogEntry::operator==(const CLogEntry& item) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CLogEntry& v1, const CLogEntry& v2) {
+inline bool operator<(const CTokenInfo& v1, const CTokenInfo& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -151,18 +148,16 @@ inline bool operator<(const CLogEntry& v1, const CLogEntry& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CLogEntry> CLogEntryArray;
-extern CArchive& operator>>(CArchive& archive, CLogEntryArray& array);
-extern CArchive& operator<<(CArchive& archive, const CLogEntryArray& array);
+typedef vector<CTokenInfo> CTokenInfoArray;
+extern CArchive& operator>>(CArchive& archive, CTokenInfoArray& array);
+extern CArchive& operator<<(CArchive& archive, const CTokenInfoArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CLogEntry& log);
-extern CArchive& operator>>(CArchive& archive, CLogEntry& log);
+extern CArchive& operator<<(CArchive& archive, const CTokenInfo& tok);
+extern CArchive& operator>>(CArchive& archive, CTokenInfo& tok);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern string_q nextReceiptChunk(const string_q& fieldIn, const void *data);
-extern string_q nextLogentryChunk(const string_q& fieldIn, const void *data);
 // EXISTING_CODE
 }  // namespace qblocks
 

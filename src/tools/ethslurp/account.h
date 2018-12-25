@@ -99,7 +99,7 @@ inline void CAccount::initialize(void) {
 
     addr = "";
     latestPage = 1;
-    latestTx.initialize();
+    latestTx = CTransaction();
     transactions.clear();
 
     // EXISTING_CODE

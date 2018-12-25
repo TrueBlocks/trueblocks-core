@@ -29,5 +29,7 @@ public:
 
     void addToBloom(const address_t& addr);
     bool scrape(CBlock& block);
+    void updateAddrIndex(void);
+    void addToAddrIndex(const address_t& addr);
     string_q report(uint64_t last);
 };

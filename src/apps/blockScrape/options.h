@@ -18,6 +18,8 @@ public:
     uint64_t    bitBound;
     timestamp_t latestBlockTs;
     bool        addrIndex;
+    bool        consolidate;
+    uint64_t    maxIdxSize;
 
     COptions(void);
     ~COptions(void);
