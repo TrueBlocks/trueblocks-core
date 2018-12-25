@@ -150,6 +150,5 @@ bool foundPot(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t t
     CAddressAppearance item(bn, tx, tc, "", reason);
     return potentialAddr(func, data, item, potList);
 }
-
 }  // namespace qblocks
 

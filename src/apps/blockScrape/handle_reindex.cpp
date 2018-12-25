@@ -14,7 +14,7 @@ bool markFullBlocks(const string_q& path, void *data) {
 
     } else {
 
-        if (contains(path, ".bin")) {
+        if (endsWith(path, ".bin") && !endsWith(path, "-e.bin")) {
             CArchive *pRes = (CArchive*)data;
             ASSERT(pRes && pRes->isOpen());
 
@@ -49,11 +49,9 @@ bool establishBlockIndex(void) {
     // Otherwise we rebuild it from scratch by visiting each binary block
     CArchive fullBlockCache(WRITING_ARCHIVE);
     if (fullBlockCache.Lock(fullBlockIndex, binaryWriteCreate, LOCK_WAIT)) {
-        lockSection(true);
         ASSERT(fullBlockCache.isOpen());
         bool finished = forEveryFileInFolder(bloomFolder, markFullBlocks, &fullBlockCache);
         fullBlockCache.Release();
-        lockSection(false);
         if (finished) {
             cerr << bGreen << "Re-indexing completed.\n" << cOff;
             stringToAsciiFile(finFile, "Removing this file will cause the index to rebuild\n");

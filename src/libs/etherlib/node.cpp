@@ -1070,7 +1070,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
     "|" "CTrace: blockHash, blockNumber, transactionHash, transactionPosition, traceAddress, subtraces"
     "|" "CTraceAction: init"
     "|" "CTraceResult: code"
-    "|" "CFunction: constant, payable, outputs, signature, encoding, type, articulate_str"
+    "|" "CFunction: constant, payable, signature, encoding, type, articulate_str"
     "|" "CParameter: type, indexed, isPointer, isArray, isObject";
 
     string_q defShow =
