@@ -27,7 +27,7 @@ int main(int argc, const char *argv[]) {
         CStringArray modes;
         explode(modes, options.mode, '|');
         for (auto mode: modes) {
-            for (uint32_t fn = 0 ; fn < options.filenames.size() ; fn++) {
+            for (size_t fn = 0 ; fn < options.filenames.size() ; fn++) {
                 options.stats = CStats(); // reset
                 CAcctCacheItem lastItem(0,0);
                 CAcctCacheItemArray fixed;
@@ -134,7 +134,7 @@ int main(int argc, const char *argv[]) {
                 string_q lbFileName = lbFn.getPath() + "lastBlock.txt";
                 string_q contents;
                 asciiFileToString(lbFileName, contents);
-                uint32_t prevLastBlock = (uint32_t)str_2_Uint(contents);
+                blknum_t prevLastBlock = str_2_Uint(contents);
                 if (options.stats.nFixed || options.stats.nTruncs) {
                     if (!isTestMode()) {
                         string_q backFile = options.filenames[fn]+".bak";
@@ -153,7 +153,7 @@ int main(int argc, const char *argv[]) {
                         remove(options.filenames[fn].c_str());
                         CArchive txCache2(WRITING_ARCHIVE);
                         if (txCache2.Lock(options.filenames[fn], "wb", LOCK_NOWAIT)) {
-                            for (uint32_t i=0 ; i < fixed.size() ; i++) {
+                            for (size_t i=0 ; i < fixed.size() ; i++) {
                                 txCache2 << fixed[i].blockNum << fixed[i].transIndex;
                                 lastBlock = fixed[i].blockNum;
                             }
