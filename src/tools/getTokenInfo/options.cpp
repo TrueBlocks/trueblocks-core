@@ -111,7 +111,7 @@ bool COptions::parseArguments(string_q& command) {
     if (asData && total)
         return usage("Totalling is not available when exporting data.");
 
-    if (tokenInfo.empty() && addrs.size() < 2)
+    if ((tokenInfo.empty() || tokenInfo == "balanceOf") && addrs.size() < 2)
         return usage("You must provide both a token contract and an account. Quitting...");
 
     if (!tokenInfo.empty()) {
@@ -123,27 +123,27 @@ bool COptions::parseArguments(string_q& command) {
     for (auto addr : addrs) {
         if (byAccount) {
             // all items but the last are tokens, the last item is the account <token> [tokens...] <holder>
-            CAccountWatch watch;
+            CTokenInfo watch;
             watch.address = addr;
             watch.abi_spec.loadAbiByAddress(addr);
-            tokens.push_back(watch);
+            watches.push_back(watch);
             lastItem = addr;
         } else {
             // first item is ERC20 contract, remainder are accounts <token> <holder1> [holder2...]
-            if (tokens.empty()) {
-                CAccountWatch watch;
+            if (watches.empty()) {
+                CTokenInfo watch;
                 watch.address = addr;
                 watch.abi_spec.loadAbiByAddress(addr);
-                tokens.push_back(watch);
+                watches.push_back(watch);
             } else
                 holders.push_back(addr);
         }
     }
 
     // if tokenInfo is not empty, all addresses are tokens
-    if (byAccount && tokenInfo.empty()) {
+    if (byAccount && (tokenInfo.empty() || tokenInfo == "balanceOf")) {
         // remove the last one and push it on the holders array
-        tokens.pop_back();
+        watches.pop_back();
         holders.push_back(lastItem);
     }
 
@@ -160,7 +160,7 @@ void COptions::Init(void) {
     nParamsRef = nParams;
     pOptions = this;
 
-    tokens.clear();
+    watches.clear();
     holders.clear();
 
     optionOff(OPT_DOLLARS|OPT_ETHER);

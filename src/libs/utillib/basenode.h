@@ -58,7 +58,7 @@ namespace qblocks {
         virtual void Format(ostream& ctx, const string_q& fmtIn, void *data = NULL) const { }
         virtual string_q Format(const string_q& fmtIn = "") const { return ""; }
         virtual const CBaseNode *getObjectAt(const string_q& name, size_t i) const { return NULL; }
-        virtual const string_q   getStringAt(const string_q& name, size_t i) const { return ""; }
+        virtual const string_q   getStringAt(const string_q& fieldName, size_t i) const { return ""; }
         virtual bool showEmptyField(const string_q& fn) const { return true; }
 
         void doExport(ostream& os) const;

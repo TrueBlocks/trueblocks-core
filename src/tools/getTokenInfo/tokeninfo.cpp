@@ -15,20 +15,19 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <algorithm>
-#include "logentry.h"
-#include "etherlib.h"
+#include "tokeninfo.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CLogEntry, CBaseNode);
+IMPLEMENT_NODE(CTokenInfo, CAccountWatch);
 
 //---------------------------------------------------------------------------
-extern string_q nextLogentryChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextLogentryChunk_custom(const string_q& fieldIn, const void *dataPtr);
+extern string_q nextTokeninfoChunk(const string_q& fieldIn, const void *dataPtr);
+static string_q nextTokeninfoChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CLogEntry::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CTokenInfo::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -42,13 +41,13 @@ void CLogEntry::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextLogentryChunk, this);
+        ctx << getNextChunk(fmt, nextTokeninfoChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextLogentryChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextTokeninfoChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CLogEntry *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CTokenInfo *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -57,32 +56,37 @@ string_q nextLogentryChunk(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CLogEntry::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
+bool CTokenInfo::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
-    if (pReceipt)
-        if (((CReceipt*)pReceipt)->setValueByName(fieldName, fieldValue))  // NOLINT
-            return true;
     // EXISTING_CODE
+
+    if (CAccountWatch::setValueByName(fieldName, fieldValue))
+        return true;
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "address" ) { address = str_2_Addr(fieldValue); return true; }
-            if ( fieldName % "articulatedLog" ) { /* articulatedLog = fieldValue; */ return false; }
+            if ( fieldName % "addr" ) { addr = str_2_Addr(fieldValue); return true; }
             break;
         case 'd':
-            if ( fieldName % "data" ) { data = fieldValue; return true; }
+            if ( fieldName % "decimals" ) { decimals = str_2_Uint(fieldValue); return true; }
             break;
-        case 'l':
-            if ( fieldName % "logIndex" ) { logIndex = str_2_Uint(fieldValue); return true; }
-            break;
-        case 't':
-            if ( fieldName % "topics" ) {
+        case 'h':
+            if ( fieldName % "holders" ) {
                 string_q str = fieldValue;
                 while (!str.empty()) {
-                    topics.push_back(str_2_Topic(nextTokenClear(str, ',')));
+                    holders.push_back(str_2_Addr(nextTokenClear(str, ',')));
                 }
                 return true;
             }
+            break;
+        case 's':
+            if ( fieldName % "symbol" ) { symbol = fieldValue; return true; }
+            break;
+        case 't':
+            if ( fieldName % "totalSupply" ) { totalSupply = str_2_Wei(fieldValue); return true; }
+            break;
+        case 'v':
+            if ( fieldName % "version" ) { version = fieldValue; return true; }
             break;
         default:
             break;
@@ -91,53 +95,55 @@ bool CLogEntry::setValueByName(const string_q& fieldName, const string_q& fieldV
 }
 
 //---------------------------------------------------------------------------------------------------
-void CLogEntry::finishParse() {
+void CTokenInfo::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CLogEntry::Serialize(CArchive& archive) {
+bool CTokenInfo::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
 
     // Always read the base class (it will handle its own backLevels if any, then
     // read this object's back level (if any) or the current version.
-    CBaseNode::Serialize(archive);
+    CAccountWatch::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> address;
-    archive >> data;
-    archive >> logIndex;
-    archive >> topics;
-//    archive >> articulatedLog;
+    archive >> addr;
+    archive >> totalSupply;
+    archive >> decimals;
+    archive >> version;
+    archive >> symbol;
+//    archive >> holders;
     finishParse();
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CLogEntry::SerializeC(CArchive& archive) const {
+bool CTokenInfo::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
-    CBaseNode::SerializeC(archive);
+    CAccountWatch::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << address;
-    archive << data;
-    archive << logIndex;
-    archive << topics;
-//    archive << articulatedLog;
+    archive << addr;
+    archive << totalSupply;
+    archive << decimals;
+    archive << version;
+    archive << symbol;
+//    archive << holders;
 
     return true;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CLogEntryArray& array) {
+CArchive& operator>>(CArchive& archive, CTokenInfoArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -149,7 +155,7 @@ CArchive& operator>>(CArchive& archive, CLogEntryArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CLogEntryArray& array) {
+CArchive& operator<<(CArchive& archive, const CTokenInfoArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -158,46 +164,49 @@ CArchive& operator<<(CArchive& archive, const CLogEntryArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void CLogEntry::registerClass(void) {
+void CTokenInfo::registerClass(void) {
     static bool been_here = false;
     if (been_here) return;
     been_here = true;
 
+    CAccountWatch::registerClass();
+
     size_t fieldNum = 1000;
-    ADD_FIELD(CLogEntry, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CLogEntry, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CLogEntry, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CLogEntry, "cname", T_TEXT,  ++fieldNum);
-    ADD_FIELD(CLogEntry, "address", T_ADDRESS, ++fieldNum);
-    ADD_FIELD(CLogEntry, "data", T_TEXT, ++fieldNum);
-    ADD_FIELD(CLogEntry, "logIndex", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CLogEntry, "topics", T_OBJECT|TS_ARRAY, ++fieldNum);
-    ADD_FIELD(CLogEntry, "articulatedLog", T_OBJECT, ++fieldNum);
-    HIDE_FIELD(CLogEntry, "articulatedLog");
+    ADD_FIELD(CTokenInfo, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTokenInfo, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CTokenInfo, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CTokenInfo, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CTokenInfo, "addr", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(CTokenInfo, "totalSupply", T_WEI, ++fieldNum);
+    ADD_FIELD(CTokenInfo, "decimals", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTokenInfo, "version", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTokenInfo, "symbol", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTokenInfo, "holders", T_ADDRESS|TS_ARRAY, ++fieldNum);
+    HIDE_FIELD(CTokenInfo, "holders");
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CLogEntry, "schema");
-    HIDE_FIELD(CLogEntry, "deleted");
-    HIDE_FIELD(CLogEntry, "showing");
-    HIDE_FIELD(CLogEntry, "cname");
+    HIDE_FIELD(CTokenInfo, "schema");
+    HIDE_FIELD(CTokenInfo, "deleted");
+    HIDE_FIELD(CTokenInfo, "showing");
+    HIDE_FIELD(CTokenInfo, "cname");
 
-    builtIns.push_back(_biCLogEntry);
+    builtIns.push_back(_biCTokenInfo);
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextLogentryChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CLogEntry *log = reinterpret_cast<const CLogEntry *>(dataPtr);
-    if (log) {
+string_q nextTokeninfoChunk_custom(const string_q& fieldIn, const void *dataPtr) {
+    const CTokenInfo *tok = reinterpret_cast<const CTokenInfo *>(dataPtr);
+    if (tok) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, log);
+                    return nextBasenodeChunk(fieldIn, tok);
                 // EXISTING_CODE
                 // EXISTING_CODE
                 break;
@@ -211,7 +220,7 @@ string_q nextLogentryChunk_custom(const string_q& fieldIn, const void *dataPtr) 
 }
 
 //---------------------------------------------------------------------------
-bool CLogEntry::readBackLevel(CArchive& archive) {
+bool CTokenInfo::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE
@@ -220,79 +229,67 @@ bool CLogEntry::readBackLevel(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CLogEntry& log) {
-    log.SerializeC(archive);
+CArchive& operator<<(CArchive& archive, const CTokenInfo& tok) {
+    tok.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CLogEntry& log) {
-    log.Serialize(archive);
+CArchive& operator>>(CArchive& archive, CTokenInfo& tok) {
+    tok.Serialize(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-string_q CLogEntry::getValueByName(const string_q& fieldName) const {
+string_q CTokenInfo::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
-    string_q ret = nextLogentryChunk_custom(fieldName, this);
+    string_q ret = nextTokeninfoChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "address" ) return addr_2_Str(address);
-            if ( fieldName % "articulatedLog" ) { expContext().noFrst=true; return articulatedLog.Format(); }
+            if ( fieldName % "addr" ) return addr_2_Str(addr);
             break;
         case 'd':
-            if ( fieldName % "data" ) return data;
+            if ( fieldName % "decimals" ) return uint_2_Str(decimals);
             break;
-        case 'l':
-            if ( fieldName % "logIndex" ) return uint_2_Str(logIndex);
-            break;
-        case 't':
-            if ( fieldName % "topics" || fieldName % "topicsCnt" ) {
-                size_t cnt = topics.size();
+        case 'h':
+            if ( fieldName % "holders" || fieldName % "holdersCnt" ) {
+                size_t cnt = holders.size();
                 if (endsWith(fieldName, "Cnt"))
                     return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {
-                    retS += ("\"" + topic_2_Str(topics[i]) + "\"");
+                    retS += ("\"" + holders[i] + "\"");
                     retS += ((i < cnt - 1) ? ",\n" + indent() : "\n");
                 }
                 return retS;
             }
             break;
+        case 's':
+            if ( fieldName % "symbol" ) return symbol;
+            break;
+        case 't':
+            if ( fieldName % "totalSupply" ) return wei_2_Str(totalSupply);
+            break;
+        case 'v':
+            if ( fieldName % "version" ) return version;
+            break;
     }
 
     // EXISTING_CODE
-    // See if this field belongs to the item's container
-    if (fieldName != "cname") {
-        ret = nextReceiptChunk(fieldName, pReceipt);
-        if (contains(ret, "Field not found"))
-            ret = "";
-        if (!ret.empty())
-            return ret;
-    }
     // EXISTING_CODE
-
-    string_q s;
-    s = toUpper(string_q("articulatedLog")) + "::";
-    if (contains(fieldName, s)) {
-        string_q f = fieldName;
-        replaceAll(f, s, "");
-        f = articulatedLog.getValueByName(f);
-        return f;
-    }
 
     // Finally, give the parent class a chance
-    return CBaseNode::getValueByName(fieldName);
+    return CAccountWatch::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CLogEntry& item) {
+ostream& operator<<(ostream& os, const CTokenInfo& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -302,16 +299,9 @@ ostream& operator<<(ostream& os, const CLogEntry& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CLogEntry::getObjectAt(const string_q& fieldName, size_t index) const {
-    if ( fieldName % "articulatedLog" )
-        return &articulatedLog;
-    return NULL;
-}
-
-//---------------------------------------------------------------------------
-const string_q CLogEntry::getStringAt(const string_q& fieldName, size_t i) const {
-    if ( fieldName % "topics" && i < topics.size() )
-        return topic_2_Str(topics[i]);
+const string_q CTokenInfo::getStringAt(const string_q& fieldName, size_t i) const {
+    if ( name % "holders" && i < holders.size() )
+        return (holders[i]);
     return "";
 }
 

@@ -164,6 +164,7 @@ public:
     extern const time_q earliestDate;
 
 #define FMT_JSON string_q("%Y-%m-%d %H:%M:%S UTC")
+#define FMT_EXPORT string_q("%Y-%m-%dT%H:%M:%S")
 
     //---------------------------------------------------------------------------------------------
     extern uint32_t DaysInMonth(uint32_t year, uint32_t month);

@@ -12,6 +12,7 @@ CScraperContext::CScraperContext(COptions *o, CBlock *b)
       reported(false), nAddrsInBloom(0), nAddrsInBlock(0),
       blockOkay(false), bloomOkay(false)
 {
+    ASSERT(addrList.addrTxMap);
     bloomList.resize(1);
     bloomList.at(0) = 0;
     resetClock();
@@ -23,6 +24,9 @@ bool CScraperContext::scrape(CBlock& block) {
 
     getObjectViaRPC(block, "eth_getBlockByNumber", "[\"" + uint_2_Hex(block.blockNumber) + "\",true]");
 
+    // Add the miner to the bloom filter
+    addToBloom(block.miner);
+
     if (!block.transactions.size()) {
         if (block.blockNumber < 50000) { // otherwise it appears to be hung
             cerr << "skipping empty block " << block.blockNumber << "\r";
@@ -32,9 +36,6 @@ bool CScraperContext::scrape(CBlock& block) {
         // do it here by writing the miner's address to a file
         return false;
     }
-
-    // Add the miner to the bloom filter (TODO: we do not account for miners of zero transaction blocks)
-    addToBloom(block.miner);
 
     // We can't use forEveryTrans... because it uses copies. We need to visit the actual transaction so we can write it
     for (uint32_t i = 0 ; i < block.transactions.size() ; i++) {
@@ -131,51 +132,148 @@ bool visitTrace(CTrace& trace, void *data) {
 
 //----------------------------------------------------------------------------------
 void CScraperContext::addToBloom(const address_t& addr) {
+
     if (isZeroAddr(addr))
         return;
+
     nAddrsInBloom++;
     nAddrsInBlock++;
-
-    ASSERT(opts);
-    if (opts->addrIndex && addrList.addrTxMap) {
-        CAddressAppearance app;
-        app.bn = pBlock->blockNumber;
-        if (pTrans)
-            app.tx = pTrans->transactionIndex;
-        app.addr = addr;
-        addrList.insertUnique(app);
-    }
+    addToAddrIndex(addr);
 
     // SEARCH FOR 'BIT_TWIDDLE_AMT 200'
     if (addAddrToBloom(addr, bloomList, opts->bitBound))
         nAddrsInBloom = 0;
 }
 
-#define cleanDate(dt)  substitute(substitute((dt).Format(FMT_JSON), " UTC", ""), " ", "T")
-#define cleanDate1(ts) cleanDate(ts_2_Date((ts)))
+//----------------------------------------------------------------------------------
+void CScraperContext::addToAddrIndex(const address_t& addr) {
+
+    if (!opts->addrIndex)
+        return;
+
+    ASSERT(opts && sCtx.addrList.addrTxMap);
+    CAddressAppearance app;
+    app.addr = addr;
+    app.bn = pBlock->blockNumber;
+    if (pTrans)
+        app.tx = pTrans->transactionIndex;
+    addrList.insertUnique(app);
+}
+
+//--------------------------------------------------------------------------
+class CCounter {
+public:
+    blknum_t bn;
+    blknum_t lines;
+    blknum_t size;
+    CCounter(string_q& line) {
+        CStringArray fields;
+        explode(fields, line, '\t');
+        bn = str_2_Uint(fields[0]);
+        lines = str_2_Uint(fields[1]);
+        size = str_2_Uint(fields[2]);
+    }
+};
+
+//--------------------------------------------------------------------------
+void CScraperContext::updateAddrIndex(void) {
+
+    if (!opts->addrIndex)
+        return;
+
+    ASSERT(pBlock);
+    string_q indexFilename = blockCachePath("/addr_index/unsorted_by_block/" + uint_2_Str(pBlock->blockNumber) + ".txt");
+    string_q countFile     = blockCachePath("/addr_index/unsorted_by_block/counts.txt");
+
+    // Note: we are inside the lockSection
+
+    // We've scanned the block. We have the list of all addresses. We write it here even if it's
+    // not final because the next time we re-visit this block we may not re-scan in which case we
+    // won't have the list. If we do rescan, this list will get re-rewritten.
+    ostringstream os1;
+    ASSERT(addrList.addrTxMap);
+    CAddressTxAppearanceMap::iterator it;
+    for (it=addrList.addrTxMap->begin(); it!=addrList.addrTxMap->end(); it++ ) {
+        os1 << it->first.addr << "\t";
+        os1 << padNum9(it->first.bn) << "\t";
+        os1 << padNum5(it->first.tx) << "\n";;
+    }
+    stringToAsciiFile(indexFilename, os1.str());
+
+    ostringstream os2;
+    os2 << pBlock->blockNumber << "\t" << addrList.addrTxMap->size() << "\t" << fileSize(indexFilename) << "\n";
+    appendToAsciiFile(countFile, os2.str());
+
+    if (opts->consolidate) {
+        string_q contents;
+        asciiFileToString(countFile, contents);
+        CStringArray lines;
+        explode(lines, contents, '\n');
+        vector<CCounter> counters;
+        uint64_t size = 0;
+        for (auto line : lines) {
+            CCounter counter(line);
+            counters.push_back(counter);
+            size += counter.size;
+        }
+        if (size > opts->maxIdxSize) {
+//cout << "Here: " << size << " counters: " << counters.size() << endl;
+//getchar();
+            CStringArray apps;
+            apps.reserve(620000);
+            for (auto counter : counters) {
+                string_q theStuff;
+                string_q fn = substitute(countFile, "counts", uint_2_Str(counter.bn));
+//cout << "fn: " << fn << endl;
+                asciiFileToString(fn, theStuff);
+                CStringArray lns;
+                explode(lns, theStuff, '\n');
+                for (auto ln : lns) {
+                    apps.push_back(ln);
+//cout << ln  << endl;
+                }
+            }
+//getchar();
+            sort(apps.begin(), apps.end());
+            string_q resFile = substitute(countFile, "counts", uint_2_Str(counters.at(0).bn)+"-sorted");
+            for (auto app : apps)
+                appendToAsciiFile(resFile, app + "\n");
+//cout << "File exits, removing older files" << endl;
+//getchar();
+            ::remove(countFile.c_str());
+            for (auto counter : counters)
+                ::remove(substitute(countFile, "counts", uint_2_Str(counter.bn)).c_str());
+            putc(7,stdout);
+//cout << "Done" << endl;
+//getchar();
+        }
+    }
+}
+
 //--------------------------------------------------------------------------
 string_q CScraperContext::report(uint64_t last) {
+
+    ASSERT(sCtx.addrList.addrTxMap);
 
     cerr << ((pBlock->finalized ? greenCheck : whiteStar) + " ");
     cerr << padRight(uint_2_Str(last - pBlock->blockNumber), 4) << ": ";
 
-    string_q statusStr;
-    statusStr += (cTeal + ((blockOkay && bloomOkay) ? status : "skipped"));
+    ostringstream os; os.precision(4);
 
-    ostringstream os;
-    os.precision(4);
+    time_q   blkDate = ts_2_Date(pBlock->timestamp);
 
     os << bBlack;
-    os << cleanDate1(pBlock->timestamp) << "\t";
-    os << cleanDate (Now())             << "\t";
-    os << TIC()                         << "\t" << cYellow;
-    os << pBlock->blockNumber           << "\t";
-    os << pBlock->transactions.size()   << "\t";
-    os << traceCount                    << "\t";
-    os << maxTraceDepth                 << "\t";
-    os << nAddrsInBlock                 << "\t" << cOff;
-    os << statusStr                     << "\t" << cYellow;
-    os << reportBloom(bloomList)        << cOff;
+    os << blkDate.Format(FMT_EXPORT)  << "\t";
+    os << Now().Format(FMT_EXPORT)    << "\t";
+    os << TIC()                       << "\t" << cYellow;
+    os << pBlock->blockNumber         << "\t";
+    os << pBlock->transactions.size() << "\t";
+    os << traceCount                  << "\t";
+    os << maxTraceDepth               << "\t";
+    os << nAddrsInBlock               << "\t";
+    os << addrList.addrTxMap->size()  << "\t" << cTeal;
+    os << padRight(status, 9)         << "\t" << cYellow;
+    os << reportBloom(bloomList)      << cOff;
 
     return os.str();
 }
