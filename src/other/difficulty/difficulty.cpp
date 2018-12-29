@@ -1,3 +1,4 @@
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
@@ -28,7 +29,7 @@ int main(int argc, const char *argv[]) {
             return 0;
 
         blknum_t last = getLatestBlockFromClient();
-        for (blknum_t bn = 6591474 ; bn <= last ; bn++) {
+        for (blknum_t bn = 0 ; bn <= last ; bn++) {
             CBlock block;
             getBlock(block, bn);
             cerr << bGreen << (last - block.blockNumber) << ": " << cOff; cerr.flush();
