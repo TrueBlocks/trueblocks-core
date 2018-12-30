@@ -36,6 +36,10 @@ int main(int argc, char *argv[])
     options.startBlock = str_2_Uint(argv[2]);
 
     string_q path = blockCachePath("addr_index/sorted_by_addr/");
+    if (!folderExists(path)) {
+        cerr << "Path for indexes (" << path << ") not found. Quitting..." << endl;
+        return 1;
+    }
     forEveryFileInFolder(path, visitFiles, &options);
     cerr << "Found " << options.items.size() << " transactions for account " << options.queryAddr << string_q(20, ' ') << "\n";
     for (auto const& item : options.items)
