@@ -11,7 +11,7 @@
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | cmd | one of [block|trans|receipt|logs|trace|bloom|accounts|balance|tokeninfo|contract|slurp|grab|price|name|when|where] |
+|  | cmd | one of [block|trans|receipt|logs|trace|bloom|accounts|balance|tokeninfo|accountinfo|slurp|grab|price|name|when|where] |
 |  | options | options sent to <cmd>. Use 'qblock cmd --help' for help on <cmd> |
 | -i | --info | Ignore <cmd> and display info about the QBlocks system |
 
