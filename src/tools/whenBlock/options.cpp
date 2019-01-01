@@ -159,6 +159,7 @@ COptions::COptions(void) {
         if (!contains(ss, "kitties")) {
             ss = substitute(ss, ",{ name : \"constantinople\",",
                             ",{ name : \"kitties\", value : \"4605167\" },{ name : \"constantinople\",");
+            ss = substitute(ss, "\"tbd\"", "\"7080000\"");
             toml.setConfigStr("specials", "list", ss);
             toml.setConfigStr("version", "current", getVersionStr());
             toml.writeFile();
