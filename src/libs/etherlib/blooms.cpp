@@ -18,36 +18,6 @@
 
 namespace qblocks {
 
-    //-------------------------------------------------------------------------
-    bool compareBlooms(const bloom_t& b1, const bloom_t& b2, string_q& str) {
-        if (verbose > 2) {
-            str = "\n\tbits1: " + uint_2_Str(bitsTwiddled(b1)) + " bits2: " + uint_2_Str(bitsTwiddled(b2));
-            string_q s1 = substitute(bloom_2_Bits(b1), "0", ".");
-            string_q s2 = substitute(bloom_2_Bits(b2), "0", ".");
-            for (size_t i = 0 ; i < 16 ; i++) {
-                string_q m1, m2;
-                for (size_t j = 0 ; j < 128 ; j = j + 10) {
-                    m1 += extract(extract(s1, i*128, 128), j, 10) + " ";
-                    m2 += extract(extract(s2, i*128, 128), j, 10) + " ";
-                }
-                str += ("\n\t" + cRed + m1 + cOff + "\n\t" + m2);
-            }
-        } else if (verbose > 1) {
-            str = "\n\tbits: " + uint_2_Str(bitsTwiddled(b1)) + " " + uint_2_Str(bitsTwiddled(b2));
-            string_q s1 = substitute(substitute(bloom_2_Bytes(b1), "0x", ""), "0", ".");
-            string_q s2 = substitute(substitute(bloom_2_Bytes(b2), "0x", ""), "0", ".");
-            for (size_t i = 0 ; i < 4 ; i++) {
-                string_q m1, m2;
-                for (size_t j = 0 ; j < 128 ; j = j + 10) {
-                    m1 += extract(extract(s1, i*128, 128), j, 10) + " ";
-                    m2 += extract(extract(s2, i*128, 128), j, 10) + " ";
-                }
-                str += ("\n\t" + cRed + m1 + cOff + "\n\t" + m2 + "\n");
-            }
-        }
-        return isBloomHit(b1, b2);
-    }
-
     //----------------------------------------------------------------------------------
     bool addAddrToBloom(const address_t& addr, CBloomArray& blooms, size_t maxBits) {
         // Initialize if not already

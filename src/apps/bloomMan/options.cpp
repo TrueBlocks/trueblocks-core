@@ -22,6 +22,9 @@ static size_t nParams = sizeof(params) / sizeof(COption);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
+    if (!standardOptions(command))
+        return false;
+
     Init();
     blknum_t latestBlock = getLatestBlockFromCache();
     explode(arguments, command, ' ');
@@ -38,10 +41,10 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Please provide an integer value for bucketSize. Quitting...");
 
         } else if (arg == "-u" || arg == "--cum") {
-            isCummulative = true;
+            stats.cummulative = true;
 
         } else if (arg == "-r" || arg == "--rewrite") {
-            isReWrite = true;
+            isRewrite = true;
             registerQuitHandler(defaultQuitHandler);  // we want to protect writes
 
         } else if (arg == "--raw") {
@@ -77,7 +80,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!hasBlocks)  // must have one or the other
         return usage("You must provide at least one block number to process. Quitting...");
 
-    if ((isCheck + isReWrite + isStats) > 1) // cannot do more than one option
+    if ((isCheck + isRewrite + isStats) > 1) // cannot do more than one option
         return usage("You must choose only one of --check, --rewrite, or --stats. Quitting...");
 
     if (isRaw && hasAddrs)
@@ -101,22 +104,24 @@ void COptions::Init(void) {
     paramsPtr = params;
     nParamsRef = nParams;
 
-    isStats       = false;
-    isReWrite     = false;
-    isCheck       = false;
-    isCummulative = false;
-    isRaw         = false;
-    address_list  = "";
-    bucketSize    = 10000;
-    bitBound      = 200;
+    isStats           = false;
+    isRewrite         = false;
+    isCheck           = false;
+    isRaw             = false;
+    stats.cummulative = false;
+    address_list      = "";
+    bucketSize        = 10000;
+    bitBound          = 200;
     blocks.Init();
 }
 
 //---------------------------------------------------------------------------------------------------
-COptions::COptions(void) {
+COptions::COptions(void) : stats(this) {
     Init();
 }
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+    if (isStats && stats.curBucket != stats.lastReport && stats.nVisits > 1)
+        cout << stats.report(stats.lastReport+stats.nVisits+1) << endl;
 }
