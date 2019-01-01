@@ -158,6 +158,7 @@ namespace qblocks {
     typedef void (*QUITHANDLER) (int s);
     extern void  defaultQuitHandler (int s);
     extern void  quickQuitHandler (int signum);
+    extern void  registerQuitHandler(QUITHANDLER qh);
     extern void  cleanFileLocks (void);
 
     //----------------------------------------------------------------------
