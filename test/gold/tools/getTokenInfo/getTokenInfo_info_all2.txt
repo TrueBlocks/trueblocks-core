@@ -7,7 +7,8 @@ getTokenInfo 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29
 	"decimals": "18",
 	"version": "",
 	"symbol": "OMG"
-},
+}
+,
 {
 	"name": "Swarm City Token",
 	"totalSupply": "8342784883587160871653166",
@@ -15,4 +16,5 @@ getTokenInfo 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29
 	"version": "MMT_0.1",
 	"symbol": "SWT"
 }
+
 ]
