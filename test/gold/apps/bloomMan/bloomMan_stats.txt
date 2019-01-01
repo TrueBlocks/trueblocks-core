@@ -1,4 +1,6 @@
-bloomMan argc: 3 [1:4001001-4001002] [2:--stats] 
-bloomMan 4001001-4001002 --stats 
-                                                                                          blockNum	nBlocks	nBloomFiles	noBlooms	nBlooms	nBits	nBytes
-4010000	1	0	0	0	0	0
+bloomMan argc: 5 [1:4001001-4001012] [2:-b] [3:5] [4:--stats] 
+bloomMan 4001001-4001012 -b 5 --stats 
+4001002	1	1	0	5	894	13204001003	2	2	0	8	1479	21204001004	3	3	0	10	1818	2656                                                                                          blockNum	nBlocks	nBloomFiles	noBlooms	nBlooms	nBits	nBytes
+4001005	4	4	0	14	2580	3720
+4001006	1	1	0	6	1206	15924001007	2	2	0	11	2082	29204001008	3	3	0	17	3217	45124001009	4	4	0	21	3993	5576                                                                                          4001010	5	5	0	26	4870	6904
+4001011	1	1	0	4	648	1064                                                                                          4001015	2	1	0	4	648	1064
