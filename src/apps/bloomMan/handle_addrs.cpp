@@ -9,49 +9,49 @@
 //-------------------------------------------------------------------------
 bool handle_addrs(blknum_t bn, void *data) {
 
-    string_q path = substitute(getBinaryFilename(bn), "/blocks/", "/blooms/");
-    if (verbose)
-        cout << "\tpath: " << bTeal << path << cOff << "\n";
-
     COptions *options = (COptions *)data;
-    uint64_t bitBound = options->bitBound;
 
-    static size_t since_hit=0;
-    since_hit++;
-    if (verbose)
-        cout << "For block: " << bn << "\n";
+    string_q path = substitute(getBinaryFilename(bn), "/blocks/", "/blooms/");
+    if (!fileExists(path)) {
+        if (verbose)
+            cerr << "Skipping " << path << endl;
+        return !shouldQuit();
+    }
 
-    if (fileExists(path)) {
-        CBloomArray blooms;
-        readBloomArray(blooms, path);
-        for (uint32_t x = 0 ; x < blooms.size() ; x++) {
-            string_q addrs = options->address_list;
-            while (!addrs.empty()) {
-                string_q addr = nextTokenClear(addrs,'|');
-                string_q res;
-                if (verbose) {
-                    cout << "\tcheck " << cRed << bn << "." << x << cOff << " at ";
-                    cout << addr << " (";
-                    cout << bTeal << (compareBlooms(makeBloom(addr), blooms[x], res) ? "true" : "false") << cOff;
-                    cout << cOff << ")";
-                    cout << res << "\n";
-                } else {
-                    if (isBloomHit(makeBloom(addr), blooms[x])) {
-                        cout << addr << "\t" << bn << "\n";
-                        since_hit = 0;
-                    } else
-                        cerr << "\t" << bn << string_q((since_hit/bitBound), '.') << "\r";
-                }
+    size_t wid = 12;
+    cout << cYellow << "Checking: " << cTeal << bn << cOff << endl;
+    if (verbose && !isTestMode()) {
+        cout << cYellow << padLeft("path:    ", wid) << cTeal << path << cOff;
+        cout << " (" << fileSize(path) << " bytes)" << endl;
+    }
+
+    CBloomArray blooms;
+    readBloomArray(blooms, path);
+
+    CAddressArray addrs;
+    explode(addrs, options->address_list, '|');
+
+    for (auto addr : addrs) {
+        cout << cYellow << padLeft("address: ", wid) << cTeal << addr << cOff << " ";
+        for (auto bloom : blooms) {
+            switch (verbose) {
+                case 0:
+                    cout << (isBloomHit(makeBloom(addr), bloom) ? greenCheck : redX) << " ";
+                    break;
+                case 1:
+                    cout << (isBloomHit(makeBloom(addr), bloom) ? greenCheck+" (hit) " : redX+" (miss) ");
+                    break;
+                case 2:
+                case 3:
+                    cout << "\n\t";
+                    cout << (isBloomHit(makeBloom(addr), bloom) ? greenCheck+" (hit) " : redX+" (miss) ");
+                    cout << cYellow << "bits: "  << cTeal << bitsTwiddled(bloom) << cOff << " ";
+                    cout << compareBlooms(makeBloom(addr), bloom);
+                    break;
             }
         }
-    } else {
-        if (verbose) {
-            cerr << "\tNo bloom file at block " << bn << "\n\n";
-        } else {
-            cerr << "\t" << bn << string_q((since_hit/bitBound), '.') << "\r";
-        }
+        cout << endl;
     }
-    cerr.flush();
-    cout.flush();
+    cout << endl;
     return true;
 }

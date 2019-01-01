@@ -142,30 +142,6 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    string_q bloom_2_BitStr(const bloom_t& bl) {
-        ostringstream os;
-        string_q s1 = substitute(bloom_2_Bits(bl), "0", ".");
-        for (size_t i = 0 ; i < 16 ; i++) {
-            os << "\n\t";
-            for (size_t j = 0 ; j < 128 ; j = j + 10)
-                os << extract(extract(s1, i * 128, 128), j, 10) + " ";
-        }
-        return os.str();
-    }
-
-    //--------------------------------------------------------------------------------
-    string_q bloom_2_ByteStr(const bloom_t& bl) {
-        ostringstream os;
-        string_q s1 = substitute(substitute(bloom_2_Bytes(bl), "0x", ""), "0", ".");
-        for (size_t i = 0 ; i < 4 ; i++) {
-            os << "\n\t";
-            for (size_t j = 0 ; j < 128 ; j = j + 10)
-                os << extract(extract(s1, i * 128, 128), j, 10) + " ";
-        }
-        return os.str();
-    }
-
-    //--------------------------------------------------------------------------------
     bool str_2_Bool(const string_q& str) {
         return static_cast<bool>(str % "true" || str_2_Int(str) != 0);
     }

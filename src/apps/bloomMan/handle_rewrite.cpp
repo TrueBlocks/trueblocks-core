@@ -7,19 +7,35 @@
 #include "options.h"
 
 //-------------------------------------------------------------------------
-bool handle_visit(blknum_t bn, void *data) {
+// Note: We always re-write the bloom unless it has no addresses (which may
+// happen if the miner address is zero in a zero-transaction block.
+bool handle_rewrite(blknum_t bn, void *data) {
 
     string_q path = substitute(getBinaryFilename(bn), "/blocks/", "/blooms/");
-    if (!fileExists(path)) {
-        if (verbose)
-            cerr << "Skipping " << path << "\r";
+
+    CBlock block;
+    getBlock(block, bn);
+
+    CAddressArray array;
+    block.forEveryUniqueAddress(accumAddrs, transFilter, &array);
+
+    if (array.empty())
         return !shouldQuit();
-    }
 
     CBloomArray blooms;
-    readBloomArray(blooms, path);
+    for (size_t j = 0 ; j < array.size() ; j++) {
+        COptions *options = (COptions *)data;
+        addAddrToBloom(array[j], blooms, options->bitBound);
+        if (verbose)
+            cerr << "Adding " << array[j] << endl;
+        if (verbose > 1)
+            cerr << compareBlooms(makeBloom(array[j]), blooms[blooms.size()-1]) << endl;
+    }
 
-    cout << "\n" << cYellow << "Visiting block: " << cTeal << bn << cOff << endl;
+    if (!isTestMode())
+        writeBloomArray(blooms, path);
+
+    cout << "\n" << cYellow << "Rewrote block: " << cTeal << bn << cOff << endl;
     if (verbose && !isTestMode()) {
         cout << "\t" << cYellow << "path: " << cTeal << path << cOff;
         cout << " (" << fileSize(path) << " bytes)" << endl;

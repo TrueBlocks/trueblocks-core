@@ -24,43 +24,25 @@ int main(int argc, const char *argv[]) {
             options.blocks.forEveryBlockNumber(handle_addrs, &options);
 
         } else {
+
             if (options.isRaw) {
-                options.blocks.forEveryBlockNumber(handle_raw, NULL);
+                options.blocks.forEveryBlockNumber(handle_raw, &options);
 
             } else if (options.isStats) {
-                CStatistics stats(options);
-                options.blocks.forEveryBlockNumber(handle_stats, &stats);
-                stats.report(stats.lastMarker + stats.options.bucketSize);
+                options.blocks.forEveryBlockNumber(handle_stats, &options);
 
             } else if (options.isCheck) {
                 options.blocks.forEveryBlockNumber(handle_check, &options);
-                if (!verbose)
-                    cout << "\n";
+
+            } else if (options.isRewrite) {
+                options.blocks.forEveryBlockNumber(handle_rewrite, &options);
 
             } else {
-                ASSERT(options.isReWrite);
                 options.blocks.forEveryBlockNumber(handle_visit, &options);
+
             }
         }
     }
 
     return 0;
-}
-
-//-------------------------------------------------------------------------
-bool accumAddrs(const CAddressAppearance& item, void *data) {
-    if (isZeroAddr(item.addr) || !data)
-        return true;
-    CAddressArray *array = (CAddressArray*)data;
-    array->push_back(item.addr);
-    return true;
-}
-
-//----------------------------------------------------------------
-// Return 'true' if we want the caller NOT to visit the traces of this transaction
-bool transFilter(const CTransaction *trans, void *data) {
-    // TODO: Use an option here for deep trace
-    if (!ddosRange(trans->blockNumber))
-        return false;
-    return (getTraceCount(trans->hash) > 250);
 }
