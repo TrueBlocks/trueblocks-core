@@ -14,6 +14,8 @@ public:
     bool              isCheck;
     bool              isCummulative;
     bool              isRaw;
+    bool              hasAddrs;
+    bool              hasBlocks;
     uint64_t          bucketSize;
     COptionsBlockList blocks;
     string_q          address_list;
@@ -30,14 +32,14 @@ public:
 #define sep '\t'
 
 //-------------------------------------------------------------------------
-class CVisitor {
+class CStatistics {
 public:
     COptions options;
     blknum_t lastMarker;
     uint64_t nBlocks, nWithBlooms, nWithoutBlooms;
     uint64_t nBlooms, nBits, nBytes;
 
-    CVisitor(const COptions& opts) : options(opts) { Reset(); }
+    CStatistics(const COptions& opts) : options(opts) { Reset(); }
 
     void Reset(void) {
         lastMarker = 0;
@@ -67,3 +69,14 @@ public:
         cerr.flush();
     }
 };
+
+//-----------------------------------------------------------------------------
+extern bool handle_visit(blknum_t bn, void *data);
+extern bool handle_stats(blknum_t bn, void *data);
+extern bool handle_check(blknum_t bn, void *data);
+extern bool handle_addrs(blknum_t bn, void *data);
+extern bool handle_raw  (blknum_t bn, void *data);
+
+//-----------------------------------------------------------------------------
+extern bool accumAddrs (const CAddressAppearance& item, void *data);
+extern bool transFilter(const CTransaction *trans, void *data);

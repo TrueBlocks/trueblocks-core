@@ -7,11 +7,11 @@
 #include "options.h"
 
 //-------------------------------------------------------------------------
-bool statsFunc(blknum_t bn, void *data) {
-
-    CVisitor *v = (CVisitor*)data;
+bool handle_stats(blknum_t bn, void *data) {
 
     string_q path = substitute(getBinaryFilename(bn), "/blocks/", "/blooms/");
+
+    CStatistics *v = (CStatistics*)data;
     if (fileExists(path)) {
         CBloomArray blooms;
         readBloomArray(blooms, path);
