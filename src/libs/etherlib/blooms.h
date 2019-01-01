@@ -63,6 +63,7 @@ extern string_q getSha3 (const string_q& hexIn);
 
     //----------------------------------------------------------------------------------
     extern bool compareBlooms(const bloom_t& b1, const bloom_t& b2, string_q& str);
+    inline string_q compareBlooms(const bloom_t& b1, const bloom_t& b2) { string_q ret; compareBlooms(b1, b2, ret); return ret; };
     extern bool addAddrToBloom(const address_t& addr, CBloomArray& blooms, size_t maxBits);
 
     //----------------------------------------------------------------------------------
