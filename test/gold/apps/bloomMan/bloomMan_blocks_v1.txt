@@ -1,5 +1,5 @@
-bloomMan argc: 3 [1:4001001] [2:4001002] 
-bloomMan 4001001 4001002 
+bloomMan argc: 4 [1:4001001] [2:4001002] [3:-v] 
+bloomMan 4001001 4001002 -v 
 
 Visiting block: 4001001
 	bloom: 0 bits: 201
