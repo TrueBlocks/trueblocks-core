@@ -117,6 +117,7 @@ bool COptions::parseArguments(string_q& command) {
             UNHIDE_FIELD(CBloomBlock, "sizeInBytes");
     }
 
+    // SEARCH FOR 'BIT_TWIDDLE_AMT 200'
     bitBound = getGlobalConfig("blockScrape")->getConfigInt("settings", "bitBound", 200);
 
     return true;

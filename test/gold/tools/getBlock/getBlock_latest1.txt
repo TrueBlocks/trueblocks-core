@@ -1,6 +1,7 @@
 getBlock argc: 2 [1:--latest] 
 getBlock --latest 
 Hostname:                --hostname--
+User:                    --username--
 QB Version:              0.5.5-alpha
 Client Version:          --version--
 Location of cache:       --cache_dir--
