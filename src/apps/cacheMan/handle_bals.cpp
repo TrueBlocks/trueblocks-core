@@ -5,7 +5,7 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
-const string_q clearStr(' ', 20);
+const string_q clearStr(20, ' ');
 //------------------------------------------------------------------------
 bool handleCacheBals(COptions& options) {
 
