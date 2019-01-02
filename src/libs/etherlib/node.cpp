@@ -36,7 +36,6 @@ namespace qblocks {
         if (theQuitHandler == NULL || qh != defaultQuitHandler) {
             // Set this once, unless it's non-default
             theQuitHandler = qh;
-extern void registerQuitHandler(QUITHANDLER qh);
             registerQuitHandler(qh);
         }
 

@@ -118,6 +118,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!isParity() || !nodeHasTraces())
         return usage("This tool will only run if it is running against a Parity node that has tracing enabled. Quitting...");
 
+    // SEARCH FOR 'BIT_TWIDDLE_AMT 200'
     bitBound   = getGlobalConfig("blockScrape")->getConfigInt("settings", "bitBound", 200);
     maxIdxSize = getGlobalConfig("blockScrape")->getConfigInt("settings", "maxIndexBytes", maxIdxSize);
 

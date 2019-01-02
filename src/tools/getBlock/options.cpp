@@ -91,7 +91,11 @@ bool COptions::parseArguments(string_q& command) {
             uint64_t diff = cache > client ? 0 : client - cache;
             stringToAsciiFile(tmpStore, uint_2_Str(diff));  // for next time
 
-            cout << cGreen << "Hostname:                " << cYellow << (isTestMode() ? "--hostname--"  : doCommand("hostname")) << cOff << "\n";
+            char hostname[HOST_NAME_MAX];  gethostname(hostname, HOST_NAME_MAX);
+            char username[LOGIN_NAME_MAX]; getlogin_r(username, LOGIN_NAME_MAX);
+
+            cout << cGreen << "Hostname:                " << cYellow << (isTestMode() ? "--hostname--"  : string_q(hostname)) << cOff << "\n";
+            cout << cGreen << "User:                    " << cYellow << (isTestMode() ? "--username--"  : string_q(username)) << cOff << "\n";
             cout << cGreen << "QB Version:              " << cYellow <<                                   getVersionStr() << cOff << "\n";
             cout << cGreen << "Client Version:          " << cYellow << (isTestMode() ? "--version--"   : getVersionFromClient()) << cOff << "\n";
             cout << cGreen << "Location of cache:       " << cYellow << (isTestMode() ? "--cache_dir--" : blockCachePath("")) << cOff << "\n";
