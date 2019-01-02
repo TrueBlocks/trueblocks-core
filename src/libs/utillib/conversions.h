@@ -75,14 +75,14 @@ namespace qblocks {
     extern string_q    ts_2_Str     (timestamp_t ts);
 
     //-------------------------------------------------------------------------
-    extern string_q    chr_2_HexStr (const string_q& str);
-    extern string_q    bnu_2_Hex    (const biguint_t& bu);
-    extern string_q    uint_2_Hex   (uint64_t num);
-    extern string_q    wei_2_Ether  (const string_q& str);
-    extern string_q    wei_2_Ether  (biguint_t val);
-    extern string_q    bloom_2_Bytes(const bloom_t& bl);
-    extern string_q    bloom_2_Bits (const bloom_t& bl);
-    extern string_q    bloom_2_Bar  (const bloom_t& bl);
+    extern string_q    chr_2_HexStr   (const string_q& str);
+    extern string_q    bnu_2_Hex      (const biguint_t& bu);
+    extern string_q    uint_2_Hex     (uint64_t num);
+    extern string_q    wei_2_Ether    (const string_q& str);
+    extern string_q    wei_2_Ether    (biguint_t val);
+    extern string_q    bloom_2_Bytes  (const bloom_t& bl);
+    extern string_q    bloom_2_Bits   (const bloom_t& bl);
+    extern string_q    bloom_2_Bar    (const bloom_t& bl);
 
     //--------------------------------------------------------------------
     class time_q;

@@ -29,7 +29,7 @@ bool COptions::handleWrite(const string_q& outputFilename, const CAcctCacheItemA
     // removals and removing duplicates. It's just easier that way.
     blknum_t newLastItem = currentLastItem;
     CWriteItemArray writeArray;
-    for (uint32_t i = 0 ; i < dataArray.size() && !shouldQuit() ; i++) {
+    for (size_t i = 0 ; i < dataArray.size() && !shouldQuit() ; i++) {
         // filterFunc (if present) returns true if we should include the record
         if (!filterFunc || (*filterFunc)(((COptions*)this)->removals, dataArray[i])) {
             if (i == 0 || dataArray[i-1] != dataArray[i]) {  // removes dups

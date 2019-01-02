@@ -1,3 +1,5 @@
-bloomMan argc: 3 [1:0xec513881d33cfec3a961e214f24be49b177b4578] [2:0x46ed26db3cae39217027552d589e53a47899b4ce] 
-bloomMan 0xec513881d33cfec3a961e214f24be49b177b4578 0x46ed26db3cae39217027552d589e53a47899b4ce 
-Address only modes are not implemented. Quitting...
+bloomMan argc: 3 [1:4001001] [2:0xec513881d33cfec3a961e214f24be49b177b4578] 
+bloomMan 4001001 0xec513881d33cfec3a961e214f24be49b177b4578 
+Checking: 4001001
+   address: 0xec513881d33cfec3a961e214f24be49b177b4578 X ✓ 
+
