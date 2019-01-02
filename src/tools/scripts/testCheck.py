@@ -3,10 +3,10 @@
 #########################################################################################################################################
 # This script receives as input the exact command we have to execute and its parameters.
 # Next-to-last parameter is the output file
-# Lat parameter is the gold file we need to compare with
+# Last parameter is the gold file we need to compare with
 # (Both files can be relative or absolute paths)
 #
-# Example: run_anc_compare.py ethName 0x1 test/tools/tests/test1.txt test-gold/tools/tests/test1.txt
+# Example: testCheck.py ethName 0x1 test/tools/tests/test1.txt test-gold/tools/tests/test1.txt
 #
 # The parameters are (N: total number):
 # argv[0] the name of the python script
@@ -65,24 +65,26 @@ def set_custom_config(goldPath):
     srcPath = os.path.dirname(gold_file).replace("gold", "custom_config", 1) + '/' + test_name + '/'
 
     if os.path.exists(srcPath):
-#        printe("Custom:\t",  srcConfig)
-#        printe("Orig:  \t",  qbConfig)
         for file in CUSTOM_FILES:
             # Build customized file path
             srcConfig = srcPath + file
             qbConfig  = QBLOCKS_PATH + file
+            if file == 'config.toml':
+                qbConfig = gold_path + file
+            #printe("Custom:\t",  srcConfig)
+            #printe("Orig:  \t",  qbConfig)
 
             if os.path.isfile(srcConfig) and os.path.isfile(qbConfig):
                 # source exists and destination exists, save destination
                 copy_file(qbConfig,  qbConfig + '.tmp')
                 copy_file(srcConfig, qbConfig)
-#                printe("\tSave and replace custom config...")
+                #printe("\tSave and replace custom config...")
 
             elif os.path.isfile(srcConfig):
                 # source exists only, note that we need to delete it, then copy it
                 copy_file(srcConfig, qbConfig + '.rm')
                 copy_file(srcConfig, qbConfig)
-#                printe("\tCopy custom config...")
+                #printe("\tCopy custom config...")
 
 #-------------------------------------------------------
 # Restore original qblocks configuration once test run
@@ -91,17 +93,22 @@ def set_custom_config(goldPath):
 def restore_qblocks_config():
     for file in CUSTOM_FILES:
         qbConfig = QBLOCKS_PATH + file
+        if file == 'config.toml':
+            qbConfig = gold_path + file
+
+        #printe("qbConfig:\t",  qbConfig)
+
         # If the temp file exists, copy if back to the original and remove the temp file
         if os.path.isfile(qbConfig + '.tmp'):
             copy_file(qbConfig + '.tmp', qbConfig)
             delete_file(qbConfig + '.tmp')
-#            printe("\tRemoved custom config, replaced original")
+            #printe("\tRemoved custom config, replaced original")
 
         # If the remove note exists, remove both the remove note and the custom config
         if os.path.isfile(qbConfig + '.rm'):
             delete_file(qbConfig)
             delete_file(qbConfig + '.rm')
-#            printe("\tRemoved custom config")
+            #printe("\tRemoved custom config")
 
 #-------------------------------------------------------
 # Delete any cache files for input addr
@@ -131,7 +138,7 @@ def clear_cache(addr):
 #-------------------------------------------------------
 
 # We define here the array of files that we can customize, add more to this array in the future
-CUSTOM_FILES = [ 'whenBlock.toml', 'ethprice.toml' ]
+CUSTOM_FILES = [ 'whenBlock.toml', 'ethprice.toml', 'names.txt', 'config.toml' ]
 
 # Cache path
 QBLOCKS_PATH = os.environ['HOME'] + '/.quickBlocks/'
@@ -154,6 +161,7 @@ if param_number <= 3:
 # Get the output/gold files
 output_file = sys.argv[param_number-2]
 gold_file = sys.argv[param_number-1]
+gold_path = os.path.dirname(gold_file) + '/'
 
 # Check that gold file is present
 if os.path.isfile(gold_file) == False:
@@ -177,7 +185,7 @@ set_custom_config(gold_file)
 # Open output file and execute the command with redirections
 with open(output_file, 'w') as f:
     os.chdir(os.path.dirname(gold_file))
-#    printe(os.getcwd())
+    #printe(os.getcwd())
     os.environ["TEST_MODE"] = "true"
     os.environ["NO_COLOR"] = "true"
     result = subprocess.call(command, stdout=f, stderr=subprocess.STDOUT)
