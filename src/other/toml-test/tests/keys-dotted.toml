@@ -1,0 +1,6 @@
+physical.color = "orange"
+physical.shape = "round"
+site."google.com" = true
+
+a.b.c = 1
+a.d = 2
