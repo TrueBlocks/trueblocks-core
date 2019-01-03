@@ -2,9 +2,9 @@ tomlTest argc: 2 [1:test06.toml]
 tomlTest test06.toml 
 test06.toml
 [version]
-	version=0:9:0
+	version = 0:9:0
 [settings]
-	name=data/054_ChildDAO
+	name = data/054_ChildDAO
 
 name: 		data/054_ChildDAO
 max_width: 	10000
