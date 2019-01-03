@@ -122,9 +122,9 @@ extern string_q collapseArrays(const string_q& inStr);
 
                 } else {
                     if (curGroup.empty()) {
-                        cerr << "There is  problem in the toml file " << filename << ": invalid key '" << value << "' found outside of a controlling group. Quitting...\n";
-                        cerr.flush();
-                        quickQuitHandler(0);
+                        string_q group = "empty-group";
+                        addGroup(group, false, false);
+                        curGroup = group;
                     }
                     string_q key = nextTokenClear(value, '=');  // value may be empty, but not whitespace
                     key   = trimWhitespace(key);
@@ -240,13 +240,20 @@ extern string_q collapseArrays(const string_q& inStr);
     //-------------------------------------------------------------------------
     ostream& operator<<(ostream& os, const CToml& tomlIn) {
         for (auto group : tomlIn.groups) {
-            os << (group.isArray?"[[":"[");
-            os << group.groupName;
-            os << (group.isComment?":comment ":"");
-            os << (group.isArray?"]]":"]");
-            os << "\n";
-            for (auto key : group.keys)
-                os << "\t" << key.keyName << (key.comment?":comment":"") << "=" << key.value << "\n";;
+            bool isEmpty = group.groupName == "empty-group";
+            if (!isEmpty) {
+                os << (group.isArray?"[[":"[");
+                os << group.groupName;
+                os << (group.isComment?":comment ":"");
+                os << (group.isArray?"]]":"]");
+                os << "\n";
+            }
+            for (auto key : group.keys) {
+                string_q val = key.value;
+                if (contains(val, ",") && !contains(val, ", "))
+                    val = substitute(val, ",", ", ");
+                os << (isEmpty ? "" : "\t") << key.keyName << (key.comment?":comment":"") << " = " << val << "\n";
+            }
         }
         return os;
     }
