@@ -1,0 +1,23 @@
+full_t = 1987-07-05T17:45:00Z	
+full_s = 1987-07-05T17:45:00Z 
+full_c = 1987-07-05 17:45:00Z# comment
+full_tc = 1987-07-05T17:45:00Z	# comment with tab
+full_sc = 1987-07-05 17:45:00Z # comment with space
+full_mc = 1987-07-05T17:45:00Z 	  # comment with mixed
+full_sp = 1987-07-05 17:45:00Z     # comment with spaces
+
+date_t = 1987-07-05	
+date_s = 1987-07-05 
+date_c = 1987-07-05 # comment
+date_tc = 1987-07-05	# comment with tab
+date_sc = 1987-07-05 # comment with space
+date_mc = 1987-07-05 	  # comment with mixed
+date_sp = 1987-07-05      # comment with spaces
+
+time_t = 17:45:00.01	
+time_s = 17:45:00.01 
+time_c = 17:45:00.01 # comment
+time_tc = 17:45:00.01	# comment with tab
+time_sc = 17:45:00.01 # comment with space
+time_mc = 17:45:00.01 	  # comment with mixed
+time_sp = 17:45:00.01      # comment with spaces
