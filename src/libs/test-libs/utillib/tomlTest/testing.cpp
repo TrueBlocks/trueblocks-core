@@ -31,6 +31,9 @@ int main(int argc, const char *argv[]) {
         cout << options.filename << "\n" << toml << "\n";
         cout << "name: " << "\t\t" << toml.getConfigStr("settings", "name", "NONAME") << "\n";
         cout << "max_width: " << "\t" << toml.getConfigInt("display", "max_width", 10000) << "\n";
+        cout << "version: " << "\t\t" << toml.getConfigStr("version", "version", "0.0.0") << "\n";
+        if (!toml.getConfigStr("display", "fmt_whale_field", "").empty())
+            cout << "whale: " << "\t\t" << toml.getConfigStr("display", "fmt_whale_field", "") << "\n";
     }
     return 0;
 }

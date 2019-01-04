@@ -8,3 +8,4 @@ test08.toml
 
 name: 		data/023_ChildDAO
 max_width: 	10000
+version: 		0:9:0

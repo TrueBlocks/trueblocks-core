@@ -6,7 +6,7 @@ test14.toml
 [junk]
 	format1 = [{HEAD}]\n\tdate: @[{DATE}]# timestamp: @[{TIMESTAMP}]# from: @[{w:20:FROM}...]# to: @[{w:20:TO}...]# value: @[{w:30:VALUE}]# \n\thash: @[{HASH}]# blockNumber: @[{BLOCKNUMBER}]# txIndex: @[{TRANSACTIONINDEX}]#\n\tinput: @[{INPUT}]#\n[{P}];
 	format2 = insert into transactions values ('[{HASH}]', '[{FROM}]', '[{FUNCTION}]', [{ETHER}])\;\n;
-	value = Checking spaces between equals sign and =
+	value = Checking spaces between equals sign and 
 [watches]
 	address_0 = af30d2a7e90d7dc361c8c4585e9bb7d2f6f15bc7
 	name_0 = FirstBlood
@@ -15,3 +15,4 @@ test14.toml
 
 name: 		NONAME
 max_width: 	10000
+version: 		0.0.0
