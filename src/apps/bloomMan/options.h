@@ -61,9 +61,3 @@ extern bool handle_raw    (blknum_t bn, void *data);
 //-----------------------------------------------------------------------------
 extern bool accumAddrs (const CAddressAppearance& item, void *data);
 extern bool transFilter(const CTransaction *trans, void *data);
-
-//-----------------------------------------------------------------------------
-extern string_q bloom_2_BitStr(const bloom_t& bl);
-extern string_q bloom_2_ByteStr(const bloom_t& bl);
-extern string_q compareBlooms(const bloom_t& b1, const bloom_t& b2);
-extern bool compareBlooms(const bloom_t& b1, const bloom_t& b2, string_q& str);
