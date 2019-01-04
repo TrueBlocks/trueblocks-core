@@ -21,7 +21,7 @@ test00.toml
 	fmt_html_field = \t\t<td>[{FIELD}]</td>\n
 	fmt_json_file = [{RECORDS}]\n
 	fmt_json_record = \n        {\n[{FIELDS}]        }, 
-	fmt_json_field = "[{p:FIELD}]":"[{FIELD}]", 
+	fmt_json_field =  "[{p:FIELD}]":"[{FIELD}]", 
 	fmt_custom_file = file:custom_format_file.html
 	fmt_custom_record = fmt_html_record
 	fmt_custom_field = fmt_html_field
@@ -35,7 +35,7 @@ test00.toml
 	fmt_hack_field = \t[{FIELD}]
 	fmt_mongo_file = [{RECORDS}]\n
 	fmt_mongo_record = db.usercollection.insert({"[{p:Num}]":"[{RECNUM}]", [{FIELDS}]})\n
-	fmt_mongo_field = "[{p:FIELD}]":"[{FIELD}]", 
+	fmt_mongo_field =  "[{p:FIELD}]":"[{FIELD}]", 
 	fmt_addrs_fieldList = addr_list*
 	fmt_addrs_file = [{RECORDS}]
 	fmt_addrs_record = [{ADDR_LIST}\n]
@@ -50,3 +50,5 @@ test00.toml
 
 name: 		NONAME
 max_width: 	10000
+version: 		0:9:0
+whale: 		["{FIELD}"],

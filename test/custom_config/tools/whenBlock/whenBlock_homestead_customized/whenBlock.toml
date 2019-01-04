@@ -1,9 +1,9 @@
 [version]
-current=0.3.0
+current = "0.3.0"
 
 [display]
-terse=[bn: {BLOCKNUMBER}\t][date: {DATE}\t][ts: {TIMESTAMP}\t][gasLimit: {GASLIMIT}]
-format=
+terse = "[bn: {BLOCKNUMBER}\t][date: {DATE}\t][ts: {TIMESTAMP}\t][gasLimit: {GASLIMIT}]"
+format = ""
 
 [[specials]]
 list = [

@@ -7,3 +7,4 @@ test11.toml
 
 name: 		NONAME
 max_width: 	10000
+version: 		0:9:0
