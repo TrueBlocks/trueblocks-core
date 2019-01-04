@@ -17,36 +17,13 @@ bool old=true;
 //----------------------------------------------------------------
 int main(int argc, char *argv[])
 {
-    if (argc == 2)
-        old = false;
-    etherlib_init("binary", quickQuitHandler);
-    forEveryFileInFolder("./tests/", visitFile, NULL);
+    string_q path = "tests/blockScrape.toml";
+
+        CToml oldToml(path);
+    cout << oldToml << endl;
+
+    CNewToml newToml(path);
+    cout << newToml << endl;
+
     return 1;
-}
-
-//----------------------------------------------------------------
-bool visitFile(const string_q& path, void *data) {
-
-    if (endsWith(path, '/')) {
-        forEveryFileInFolder(path + "*", visitFile, data);
-    } else {
-        if (contains(path, "array-empty"))
-            return true;
-        if (endsWith(path, ".toml")) {
-            cout << "path: " << path << endl;
-            if (old) {
-                CToml toml(path);
-                cout << toml << endl;
-            } else {
-                try {
-                    CNewToml g(path);
-                    cout << g << endl;
-                } catch (const parse_exception& e) {
-                    cerr << "Failed to parse " << path << ": " << e.what() << endl;
-                    return false;
-                }
-            }
-        }
-    }
-    return true;
 }

@@ -4,3 +4,4 @@ empty.toml
 
 name: 		NONAME
 max_width: 	10000
+version: 		0.0.0

@@ -11,8 +11,29 @@
 
 namespace cpptoml {
 
-    class CTomlBase;
-    using string_to_base_map = unordered_map<string, shared_ptr<CTomlBase>>;
+    class tomlbase_t;
+    using baseptr_t = shared_ptr<tomlbase_t>;
+    using baseptrarray_t = vector<shared_ptr<tomlbase_t>>;
+
+    class tomltable_t;
+    using tableptr_t = shared_ptr<tomltable_t>;
+    using tableptrarray_t = vector<shared_ptr<tomltable_t>>;
+
+    class tomlarray_t;
+    using arrayptr_t = shared_ptr<tomlarray_t>;
+    using arrayptrarray_t = vector<shared_ptr<tomlarray_t>>;
+
+    class tomltablearray_t;
+    using tablearrayptr_t = shared_ptr<tomltablearray_t>;
+
+    template <class T> class tomlvalue_t;
+    template <class T> using valueptr_t = shared_ptr<tomlvalue_t<T>>;
+    template <class T> using valueptrarray_t = vector<valueptr_t<T>>;
+
+    using strval_t = tomlvalue_t<string>;
+    using strvalptr_t = shared_ptr<tomlvalue_t<string>>;
+
+    using str2basemap_t = unordered_map<string, baseptr_t>;
 
     template <class T, class... Ts>
     struct is_one_of;
@@ -25,13 +46,6 @@ namespace cpptoml {
     struct is_one_of<T, V, Ts...> {
         const static bool value = is_same<T, V>::value || is_one_of<T, Ts...>::value;
     };
-
-    template <class T>
-    class CTomlValue;
-
-    class CTomlArray;
-    class CTomlTable;
-    class CTomlTableArray;
 
     template <class T>
     struct valid_val_t
@@ -52,10 +66,9 @@ namespace cpptoml {
         valid_val_t<typename decay<T>::type>::value,
         typename decay<T>::type, string>::type;
 
-        using type = CTomlValue<value_type>;
+        using type = tomlvalue_t<value_type>;
 
-        static value_type construct(T&& val)
-        {
+        static value_type construct(T&& val) {
             return value_type(val);
         }
     };
@@ -64,7 +77,7 @@ namespace cpptoml {
     struct value_traits<T,
         typename enable_if<!valid_value_or_string_convertible<T>::value && is_floating_point<typename decay<T>::type>::value>::type> {
         using value_type = typename decay<T>::type;
-        using type = CTomlValue<double>;
+        using type = tomlvalue_t<double>;
         static value_type construct(T&& val) {
             return value_type(val);
         }
@@ -76,7 +89,7 @@ namespace cpptoml {
                             && !is_floating_point<typename decay<T>::type>::value
                             && is_signed<typename decay<T>::type>::value>::type> {
         using value_type = int64_t;
-        using type = CTomlValue<int64_t>;
+        using type = tomlvalue_t<int64_t>;
         static value_type construct(T&& val) {
             if (val < (numeric_limits<int64_t>::min)())
                 throw underflow_error{"constructed value cannot be represented by a 64-bit signed integer"};
@@ -91,7 +104,7 @@ namespace cpptoml {
         typename enable_if<!valid_value_or_string_convertible<T>::value
                             && is_unsigned<typename decay<T>::type>::value>::type> {
         using value_type = int64_t;
-        using type = CTomlValue<int64_t>;
+        using type = tomlvalue_t<int64_t>;
         static value_type construct(T&& val) {
             if (val > static_cast<uint64_t>((numeric_limits<int64_t>::max)()))
                 throw overflow_error{"constructed value cannot be represented by a 64-bit signed integer"};
@@ -105,148 +118,146 @@ namespace cpptoml {
     };
 
     template <>
-    struct array_of_trait<CTomlArray> {
-        using return_type = option<vector<shared_ptr<CTomlArray>>>;
+    struct array_of_trait<tomlarray_t> {
+        using return_type = option<arrayptrarray_t>;
     };
 
     template <class T>
-    inline shared_ptr<typename value_traits<T>::type> make_value(T&& val);
-    inline shared_ptr<CTomlArray> make_array();
+    inline shared_ptr<typename value_traits<T>::type> makeValue(T&& val);
+    inline arrayptr_t make_array();
 
     namespace detail {
         template <class T>
-        inline shared_ptr<T> make_element();
+        inline shared_ptr<T> makeElement();
     }
 
-    inline shared_ptr<CTomlTable> makeTable();
-    inline shared_ptr<CTomlTableArray> makeTableArray(bool is_inline = false);
+    inline tableptr_t makeTable();
+    inline tablearrayptr_t makeTableArray(bool is_inline = false);
 
     //-----------------------------------------------------------------
-    class CTomlBase : public enable_shared_from_this<CTomlBase> {
+    class tomlbase_t : public enable_shared_from_this<tomlbase_t> {
     public:
-        virtual ~CTomlBase() = default;
-        virtual shared_ptr<CTomlBase> clone() const = 0;
+        virtual ~tomlbase_t() = default;
+        virtual baseptr_t clone() const = 0;
         virtual bool isValue() const { return false; }
         virtual bool isTable() const { return false; }
         virtual bool isArray() const { return false; }
         virtual bool isTableArray() const { return false; }
-        shared_ptr<CTomlTable> as_table() {
+        tableptr_t as_table() {
             if (isTable())
-                return static_pointer_cast<CTomlTable>(shared_from_this());
+                return static_pointer_cast<tomltable_t>(shared_from_this());
             return nullptr;
         }
-        shared_ptr<CTomlArray> as_array() {
+        arrayptr_t as_array() {
             if (isArray())
-                return static_pointer_cast<CTomlArray>(shared_from_this());
+                return static_pointer_cast<tomlarray_t>(shared_from_this());
             return nullptr;
         }
-        shared_ptr<CTomlTableArray> asTableArray() {
+        tablearrayptr_t asTableArray() {
             if (isTableArray())
-                return static_pointer_cast<CTomlTableArray>(shared_from_this());
+                return static_pointer_cast<tomltablearray_t>(shared_from_this());
             return nullptr;
         }
 
         template <class T>
-        shared_ptr<CTomlValue<T>> as();
+        valueptr_t<T> as();
 
         template <class T>
-        shared_ptr<const CTomlValue<T>> as() const;
+        shared_ptr<const tomlvalue_t<T>> as() const;
 
         template <class Visitor, class... Args>
         void accept(Visitor&& visitor, Args&&... args) const;
 
     protected:
-        CTomlBase() { }
+        tomlbase_t() { }
     };
 
     //-----------------------------------------------------------------
     template <class T>
-    class CTomlValue : public CTomlBase {
-        struct make_shared_enabler { };
+    class tomlvalue_t : public tomlbase_t {
+        struct makeSharedEnabler { };
         template <class U>
         friend shared_ptr<typename value_traits<U>::type>
-        cpptoml::make_value(U&& val);
+        cpptoml::makeValue(U&& val);
     public:
+        tomlvalue_t(const makeSharedEnabler&, const T& val) : tomlvalue_t(val) { }
         static_assert(valid_val_t<T>::value, "invalid value type");
-        shared_ptr<CTomlBase> clone() const override;
-        CTomlValue(const make_shared_enabler&, const T& val) : CTomlValue(val) { }
+        baseptr_t clone() const override;
         bool isValue() const override { return true; }
-        T& get() { return data_; }
+              T& get() { return data_; }
         const T& get() const { return data_; }
     private:
         T data_;
-        CTomlValue(const T& val) : data_(val) { }
-        CTomlValue(const CTomlValue& val) = delete;
-        CTomlValue& operator=(const CTomlValue& val) = delete;
+        tomlvalue_t(const T& val) : data_(val) { }
+        tomlvalue_t(const tomlvalue_t& val) = delete;
+        tomlvalue_t& operator=(const tomlvalue_t& val) = delete;
     };
 
     template <class T>
-    shared_ptr<typename value_traits<T>::type> make_value(T&& val)
-    {
+    shared_ptr<typename value_traits<T>::type> makeValue(T&& val) {
         using value_type = typename value_traits<T>::type;
-        using enabler = typename value_type::make_shared_enabler;
-        return make_shared<value_type>(
-                                            enabler{}, value_traits<T>::construct(forward<T>(val)));
+        using enabler = typename value_type::makeSharedEnabler;
+        return make_shared<value_type>(enabler{}, value_traits<T>::construct(forward<T>(val)));
     }
 
     template <class T>
-    inline shared_ptr<CTomlValue<T>> CTomlBase::as() {
-        return dynamic_pointer_cast<CTomlValue<T>>(shared_from_this());
+    inline valueptr_t<T> tomlbase_t::as() {
+        return dynamic_pointer_cast<tomlvalue_t<T>>(shared_from_this());
     }
 
     // special case value<double> to allow getting an integer parameter as a
     // double value
     template <>
-    inline shared_ptr<CTomlValue<double>> CTomlBase::as()
+    inline shared_ptr<tomlvalue_t<double>> tomlbase_t::as()
     {
-        if (auto v = dynamic_pointer_cast<CTomlValue<double>>(shared_from_this()))
+        if (auto v = dynamic_pointer_cast<tomlvalue_t<double>>(shared_from_this()))
             return v;
-        if (auto v = dynamic_pointer_cast<CTomlValue<int64_t>>(shared_from_this()))
-            return make_value<double>(static_cast<double>(v->get()));
+        if (auto v = dynamic_pointer_cast<tomlvalue_t<int64_t>>(shared_from_this()))
+            return makeValue<double>(static_cast<double>(v->get()));
 
         return nullptr;
     }
 
     template <class T>
-    inline shared_ptr<const CTomlValue<T>> CTomlBase::as() const {
-        return dynamic_pointer_cast<const CTomlValue<T>>(shared_from_this());
+    inline shared_ptr<const tomlvalue_t<T>> tomlbase_t::as() const {
+        return dynamic_pointer_cast<const tomlvalue_t<T>>(shared_from_this());
     }
 
     template <>
-    inline shared_ptr<const CTomlValue<double>> CTomlBase::as() const {
-        if (auto v = dynamic_pointer_cast<const CTomlValue<double>>(shared_from_this()))
+    inline shared_ptr<const tomlvalue_t<double>> tomlbase_t::as() const {
+        if (auto v = dynamic_pointer_cast<const tomlvalue_t<double>>(shared_from_this()))
             return v;
         if (auto v = as<int64_t>()) {
             // the below has to be a non-const value<double> due to a bug in
             // libc++: https://llvm.org/bugs/show_bug.cgi?id=18843
-            return make_value<double>(static_cast<double>(v->get()));
+            return makeValue<double>(static_cast<double>(v->get()));
         }
         return nullptr;
     }
 
     //-----------------------------------------------------------------
-    class CTomlArray : public CTomlBase {
+    class tomlarray_t : public tomlbase_t {
     public:
-        friend shared_ptr<CTomlArray> make_array();
-        shared_ptr<CTomlBase> clone() const override;
+        using size_type = size_t;
+        using iterator = baseptrarray_t::iterator;
+        using const_iterator = baseptrarray_t::const_iterator;
+        friend arrayptr_t make_array();
+        baseptr_t clone() const override;
         virtual bool isArray() const override {
             return true;
         }
-        using size_type = size_t;
-        using iterator = vector<shared_ptr<CTomlBase>>::iterator;
-        using const_iterator = vector<shared_ptr<CTomlBase>>::const_iterator;
         iterator begin() { return values_.begin(); }
         const_iterator begin() const { return values_.begin(); }
         iterator end() { return values_.end(); }
         const_iterator end() const { return values_.end(); }
-        vector<shared_ptr<CTomlBase>>& get() { return values_; }
-        const vector<shared_ptr<CTomlBase>>& get() const { return values_; }
-        shared_ptr<CTomlBase> at(size_t idx) const { return values_.at(idx); }
+        baseptrarray_t& get() { return values_; }
+        const baseptrarray_t& get() const { return values_; }
+        baseptr_t at(size_t idx) const { return values_.at(idx); }
         template <class T>
-        vector<shared_ptr<CTomlValue<T>>> array_of() const {
-            vector<shared_ptr<CTomlValue<T>>> result(values_.size());
+        valueptrarray_t<T> array_of() const {
+            valueptrarray_t<T> result(values_.size());
             transform(values_.begin(), values_.end(), result.begin(),
-                           [&](shared_ptr<CTomlBase> v) { return v->as<T>(); });
+                           [&](baseptr_t v) { return v->as<T>(); });
             return result;
         }
         template <class T>
@@ -262,25 +273,25 @@ namespace cpptoml {
             return {move(result)};
         }
 
-        vector<shared_ptr<CTomlArray>> nested_array() const {
-            vector<shared_ptr<CTomlArray>> result(values_.size());
+        arrayptrarray_t nested_array() const {
+            arrayptrarray_t result(values_.size());
             transform(values_.begin(), values_.end(), result.begin(),
-                           [&](shared_ptr<CTomlBase> v) -> shared_ptr<CTomlArray> {
+                           [&](baseptr_t v) -> arrayptr_t {
                                if (v->isArray())
-                                   return static_pointer_cast<CTomlArray>(v);
-                               return shared_ptr<CTomlArray>{};
+                                   return static_pointer_cast<tomlarray_t>(v);
+                               return arrayptr_t{};
                            });
             return result;
         }
 
         template <class T>
-        void push_back(const shared_ptr<CTomlValue<T>>& val) {
+        void push_back(const valueptr_t<T>& val) {
             if (values_.empty() || values_[0]->as<T>())
                 values_.push_back(val);
             throw runtime_error{"Arrays must be homogenous."};
         }
 
-        void push_back(const shared_ptr<CTomlArray>& val) {
+        void push_back(const arrayptr_t& val) {
             if (values_.empty() || values_[0]->isArray())
                 values_.push_back(val);
             throw runtime_error{"Arrays must be homogenous."};
@@ -288,17 +299,17 @@ namespace cpptoml {
 
         template <class T>
         void push_back(T&& val, typename value_traits<T>::type* = 0) {
-            push_back(make_value(forward<T>(val)));
+            push_back(makeValue(forward<T>(val)));
         }
 
         template <class T>
-        iterator insert(iterator position, const shared_ptr<CTomlValue<T>>& value) {
+        iterator insert(iterator position, const valueptr_t<T>& value) {
             if (values_.empty() || values_[0]->as<T>())
                 return values_.insert(position, value);
             throw runtime_error{"Arrays must be homogenous."};
         }
 
-        iterator insert(iterator position, const shared_ptr<CTomlArray>& value) {
+        iterator insert(iterator position, const arrayptr_t& value) {
             if (values_.empty() || values_[0]->isArray())
                 return values_.insert(position, value);
             throw runtime_error{"Arrays must be homogenous."};
@@ -306,7 +317,7 @@ namespace cpptoml {
 
         template <class T>
         iterator insert(iterator position, T&& val, typename value_traits<T>::type* = 0) {
-            return insert(position, make_value(forward<T>(val)));
+            return insert(position, makeValue(forward<T>(val)));
         }
 
         iterator erase(iterator position) {
@@ -322,30 +333,30 @@ namespace cpptoml {
         }
 
     private:
-        CTomlArray() = default;
+        tomlarray_t() = default;
         template <class InputIterator>
-        CTomlArray(InputIterator begin, InputIterator end) : values_{begin, end} { }
-        CTomlArray(const CTomlArray& obj) = delete;
-        CTomlArray& operator=(const CTomlArray& obj) = delete;
-        vector<shared_ptr<CTomlBase>> values_;
+        tomlarray_t(InputIterator begin, InputIterator end) : values_{begin, end} { }
+        tomlarray_t(const tomlarray_t& obj) = delete;
+        tomlarray_t& operator=(const tomlarray_t& obj) = delete;
+        baseptrarray_t values_;
     };
 
-    inline shared_ptr<CTomlArray> make_array() {
-        struct make_shared_enabler : public CTomlArray {
-            make_shared_enabler() { }
+    inline arrayptr_t make_array() {
+        struct makeSharedEnabler : public tomlarray_t {
+            makeSharedEnabler() { }
         };
-        return make_shared<make_shared_enabler>();
+        return make_shared<makeSharedEnabler>();
     }
 
     namespace detail {
         template <>
-        inline shared_ptr<CTomlArray> make_element<CTomlArray>() { return make_array(); }
+        inline arrayptr_t makeElement<tomlarray_t>() { return make_array(); }
     } // namespace detail
 
     template <>
-    inline typename array_of_trait<CTomlArray>::return_type
-    CTomlArray::get_array_of<CTomlArray>() const {
-        vector<shared_ptr<CTomlArray>> result;
+    inline typename array_of_trait<tomlarray_t>::return_type
+    tomlarray_t::get_array_of<tomlarray_t>() const {
+        arrayptrarray_t result;
         result.reserve(values_.size());
         for (const auto& val : values_) {
             if (auto v = val->as_array())
@@ -356,49 +367,46 @@ namespace cpptoml {
         return {move(result)};
     }
 
-    using strval_t = CTomlValue<string>;
-    using strvalptr_t = shared_ptr<strval_t>;
-
     //-----------------------------------------------------------------
-    class CTomlTableArray : public CTomlBase {
-        friend class CTomlTable;
-        friend shared_ptr<CTomlTableArray> makeTableArray(bool);
+    class tomltablearray_t : public tomlbase_t {
+        friend class tomltable_t;
+        friend tablearrayptr_t makeTableArray(bool);
     public:
-        shared_ptr<CTomlBase> clone() const override;
         using size_type = size_t;
-        using iterator = vector<shared_ptr<CTomlTable>>::iterator;
-        using const_iterator = vector<shared_ptr<CTomlTable>>::const_iterator;
+        using iterator = tableptrarray_t::iterator;
+        using const_iterator = tableptrarray_t::const_iterator;
+        baseptr_t clone() const override;
         iterator begin() { return array_.begin(); }
         const_iterator begin() const { return array_.begin(); }
         iterator end() { return array_.end(); }
         const_iterator end() const { return array_.end(); }
         virtual bool isTableArray() const override { return true; }
-        vector<shared_ptr<CTomlTable>>& get() { return array_; }
-        const vector<shared_ptr<CTomlTable>>& get() const { return array_; }
-        void push_back(const shared_ptr<CTomlTable>& val) { array_.push_back(val); }
-        iterator insert(iterator position, const shared_ptr<CTomlTable>& value) { return array_.insert(position, value); }
+        tableptrarray_t& get() { return array_; }
+        const tableptrarray_t& get() const { return array_; }
+        void push_back(const tableptr_t& val) { array_.push_back(val); }
+        iterator insert(iterator position, const tableptr_t& value) { return array_.insert(position, value); }
         iterator erase(iterator position) { return array_.erase(position); }
         void clear() { array_.clear(); }
         void reserve(size_type n) { array_.reserve(n); }
         bool is_inline() const { return is_inline_; }
     private:
-        CTomlTableArray(bool is_inline = false) : is_inline_(is_inline) { }
-        CTomlTableArray(const CTomlTableArray& obj) = delete;
-        CTomlTableArray& operator=(const CTomlTableArray& rhs) = delete;
-        vector<shared_ptr<CTomlTable>> array_;
+        tomltablearray_t(bool is_inline = false) : is_inline_(is_inline) { }
+        tomltablearray_t(const tomltablearray_t& obj) = delete;
+        tomltablearray_t& operator=(const tomltablearray_t& rhs) = delete;
+        tableptrarray_t array_;
         const bool is_inline_ = false;
     };
 
-    inline shared_ptr<CTomlTableArray> makeTableArray(bool is_inline) {
-        struct make_shared_enabler : public CTomlTableArray {
-            make_shared_enabler(bool mse_is_inline) : CTomlTableArray(mse_is_inline) { }
+    inline tablearrayptr_t makeTableArray(bool is_inline) {
+        struct makeSharedEnabler : public tomltablearray_t {
+            makeSharedEnabler(bool mse_is_inline) : tomltablearray_t(mse_is_inline) { }
         };
-        return make_shared<make_shared_enabler>(is_inline);
+        return make_shared<makeSharedEnabler>(is_inline);
     }
 
     namespace detail {
         template <>
-        inline shared_ptr<CTomlTableArray> make_element<CTomlTableArray>() {
+        inline tablearrayptr_t makeElement<tomltablearray_t>() {
             return makeTableArray(true);
         }
     } // namespace detail
@@ -409,7 +417,7 @@ namespace cpptoml {
     template <class T>
     typename enable_if<
         !is_floating_point<T>::value && is_signed<T>::value,
-        option<T>>::type get_impl(const shared_ptr<CTomlBase>& elem) {
+        option<T>>::type get_impl(const baseptr_t& elem) {
         if (auto v = elem->as<int64_t>()) {
             if (v->get() < (numeric_limits<T>::min)())
                 throw underflow_error{ "T cannot represent the value requested in get"};
@@ -424,7 +432,7 @@ namespace cpptoml {
     template <class T>
     typename enable_if<
         !is_same<T, bool>::value && is_unsigned<T>::value,
-        option<T>>::type get_impl(const shared_ptr<CTomlBase>& elem) {
+        option<T>>::type get_impl(const baseptr_t& elem) {
         if (auto v = elem->as<int64_t>()) {
             if (v->get() < 0)
                 throw underflow_error{"T cannot store negative value in get"};
@@ -439,7 +447,7 @@ namespace cpptoml {
     template <class T>
     typename enable_if<
         !is_integral<T>::value || is_same<T, bool>::value,
-        option<T>>::type get_impl(const shared_ptr<CTomlBase>& elem) {
+        option<T>>::type get_impl(const baseptr_t& elem) {
         if (auto v = elem->as<T>()) {
             return {v->get()};
         } else {
@@ -448,13 +456,13 @@ namespace cpptoml {
     }
 
     //-----------------------------------------------------------------
-    class CTomlTable : public CTomlBase {
+    class tomltable_t : public tomlbase_t {
     public:
-        friend class CTomlTableArray;
-        friend shared_ptr<CTomlTable> makeTable();
-        shared_ptr<CTomlBase> clone() const override;
-        using iterator = string_to_base_map::iterator;
-        using const_iterator = string_to_base_map::const_iterator;
+        friend class tomltablearray_t;
+        friend tableptr_t makeTable();
+        baseptr_t clone() const override;
+        using iterator = str2basemap_t::iterator;
+        using const_iterator = str2basemap_t::const_iterator;
         iterator begin() { return map_.begin(); }
         const_iterator begin() const { return map_.begin(); }
         iterator end() { return map_.end(); }
@@ -463,28 +471,28 @@ namespace cpptoml {
         bool empty() const { return map_.empty(); }
         bool contains(const string& key) const { return map_.find(key) != map_.end(); }
         bool contains_qualified(const string& key) const { return resolve_qualified(key); }
-        shared_ptr<CTomlBase> get(const string& key) const { return map_.at(key); }
-        shared_ptr<CTomlBase> get_qualified(const string& key) const {
-            shared_ptr<CTomlBase> p;
+        baseptr_t get(const string& key) const { return map_.at(key); }
+        baseptr_t get_qualified(const string& key) const {
+            baseptr_t p;
             resolve_qualified(key, &p);
             return p;
         }
-        shared_ptr<CTomlTable> get_table(const string& key) const {
+        tableptr_t get_table(const string& key) const {
             if (contains(key) && get(key)->isTable())
-                return static_pointer_cast<CTomlTable>(get(key));
+                return static_pointer_cast<tomltable_t>(get(key));
             return nullptr;
         }
-        shared_ptr<CTomlTable> get_table_qualified(const string& key) const {
+        tableptr_t get_table_qualified(const string& key) const {
             if (contains_qualified(key) && get_qualified(key)->isTable())
-                return static_pointer_cast<CTomlTable>(get_qualified(key));
+                return static_pointer_cast<tomltable_t>(get_qualified(key));
             return nullptr;
         }
-        shared_ptr<CTomlArray> get_array(const string& key) const {
+        arrayptr_t get_array(const string& key) const {
             if (!contains(key))
                 return nullptr;
             return get(key)->as_array();
         }
-        shared_ptr<CTomlArray> getArrayQualified(const string& key) const {
+        arrayptr_t getArrayQualified(const string& key) const {
             if (!contains_qualified(key))
                 return nullptr;
             return get_qualified(key)->as_array();
@@ -537,13 +545,13 @@ namespace cpptoml {
             return {};
         }
 
-        void insert(const string& key, const shared_ptr<CTomlBase>& value) {
+        void insert(const string& key, const baseptr_t& value) {
             map_[key] = value;
         }
 
         template <class T>
         void insert(const string& key, T&& val, typename value_traits<T>::type* = 0) {
-            insert(key, make_value(forward<T>(val)));
+            insert(key, makeValue(forward<T>(val)));
         }
 
         void erase(const string& key) {
@@ -551,9 +559,9 @@ namespace cpptoml {
         }
 
     private:
-        CTomlTable() { }
-        CTomlTable(const CTomlTable& obj) = delete;
-        CTomlTable& operator=(const CTomlTable& rhs) = delete;
+        tomltable_t() { }
+        tomltable_t(const tomltable_t& obj) = delete;
+        tomltable_t& operator=(const tomltable_t& rhs) = delete;
         CStringArray split(const string& value, char separator) const {
             CStringArray result;
             string::size_type p = 0;
@@ -566,7 +574,7 @@ namespace cpptoml {
             return result;
         }
 
-        bool resolve_qualified(const string& key, shared_ptr<CTomlBase>* p = nullptr) const {
+        bool resolve_qualified(const string& key, baseptr_t* p = nullptr) const {
             auto parts = split(key, '.');
             auto last_key = parts.back();
             parts.pop_back();
@@ -585,13 +593,13 @@ namespace cpptoml {
             return true;
         }
 
-        string_to_base_map map_;
+        str2basemap_t map_;
     };
 
     template <>
-    inline typename array_of_trait<CTomlArray>::return_type CTomlTable::get_array_of<CTomlArray>(const string& key) const {
+    inline typename array_of_trait<tomlarray_t>::return_type tomltable_t::get_array_of<tomlarray_t>(const string& key) const {
         if (auto v = get_array(key)) {
-            vector<shared_ptr<CTomlArray>> result;
+            arrayptrarray_t result;
             result.reserve(v->get().size());
             for (const auto& b : v->get()) {
                 if (auto val = b->as_array())
@@ -605,9 +613,9 @@ namespace cpptoml {
     }
 
     template <>
-    inline typename array_of_trait<CTomlArray>::return_type CTomlTable::getQualifiedArrayOf<CTomlArray>(const string& key) const {
+    inline typename array_of_trait<tomlarray_t>::return_type tomltable_t::getQualifiedArrayOf<tomlarray_t>(const string& key) const {
         if (auto v = getArrayQualified(key)) {
-            vector<shared_ptr<CTomlArray>> result;
+            arrayptrarray_t result;
             result.reserve(v->get().size());
             for (const auto& b : v->get()) {
                 if (auto val = b->as_array())
@@ -620,26 +628,26 @@ namespace cpptoml {
         return {};
     }
 
-    shared_ptr<CTomlTable> makeTable() {
-        struct make_shared_enabler : public CTomlTable {
-            make_shared_enabler() { }
+    tableptr_t makeTable() {
+        struct makeSharedEnabler : public tomltable_t {
+            makeSharedEnabler() { }
         };
-        return make_shared<make_shared_enabler>();
+        return make_shared<makeSharedEnabler>();
     }
 
     namespace detail {
         template <>
-        inline shared_ptr<CTomlTable> make_element<CTomlTable>() {
+        inline tableptr_t makeElement<tomltable_t>() {
             return makeTable();
         }
     } // namespace detail
 
     template <class T>
-    shared_ptr<CTomlBase> CTomlValue<T>::clone() const {
-        return make_value(data_);
+    baseptr_t tomlvalue_t<T>::clone() const {
+        return makeValue(data_);
     }
 
-    inline shared_ptr<CTomlBase> CTomlArray::clone() const {
+    inline baseptr_t tomlarray_t::clone() const {
         auto result = make_array();
         result->reserve(values_.size());
         for (const auto& ptr : values_)
@@ -647,7 +655,7 @@ namespace cpptoml {
         return result;
     }
 
-    inline shared_ptr<CTomlBase> CTomlTableArray::clone() const {
+    inline baseptr_t tomltablearray_t::clone() const {
         auto result = makeTableArray(is_inline());
         result->reserve(array_.size());
         for (const auto& ptr : array_)
@@ -655,7 +663,7 @@ namespace cpptoml {
         return result;
     }
 
-    inline shared_ptr<CTomlBase> CTomlTable::clone() const {
+    inline baseptr_t tomltable_t::clone() const {
         auto result = makeTable();
         for (const auto& pr : map_)
             result->insert(pr.first, pr.second->clone());
@@ -721,7 +729,7 @@ namespace cpptoml {
     };
 
     template <class OnError>
-    consumer<OnError> make_consumer(striter_t& it, const striter_t& end, OnError&& on_error) {
+    consumer<OnError> makeConsumer(striter_t& it, const striter_t& end, OnError&& on_error) {
         return consumer<OnError>(it, end, forward<OnError>(on_error));
     }
 
@@ -753,9 +761,9 @@ namespace cpptoml {
     public:
         parser(istream& stream) : input_(stream) { }
         parser& operator=(const parser& parser) = delete;
-        shared_ptr<CTomlTable> parse() {
-            shared_ptr<CTomlTable> root = makeTable();
-            CTomlTable* curr_table = root.get();
+        tableptr_t parse() {
+            tableptr_t root = makeTable();
+            tomltable_t* curr_table = root.get();
             while (detail::getline(input_, line_)) {
                 line_number_++;
                 auto it = line_.begin();
@@ -796,7 +804,7 @@ namespace cpptoml {
         }
 
         //----
-        void parse_table(striter_t& it, const striter_t& end, CTomlTable*& curr_table) {
+        void parse_table(striter_t& it, const striter_t& end, tomltable_t*& curr_table) {
             ++it;
             if (it == end)
                 throw_parse_exception("Unexpected end of table");
@@ -807,7 +815,7 @@ namespace cpptoml {
         }
 
         //----
-        void parse_single_table(striter_t& it, const striter_t& end, CTomlTable*& curr_table) {
+        void parse_single_table(striter_t& it, const striter_t& end, tomltable_t*& curr_table) {
             if (it == end || *it == ']')
                 throw_parse_exception("Table name cannot be empty");
             string full_table_name;
@@ -823,9 +831,9 @@ namespace cpptoml {
                 if (curr_table->contains(part)) {
                     auto b = curr_table->get(part);
                     if (b->isTable())
-                        curr_table = static_cast<CTomlTable*>(b.get());
+                        curr_table = static_cast<tomltable_t*>(b.get());
                     else if (b->isTableArray())
-                        curr_table = static_pointer_cast<CTomlTableArray>(b)
+                        curr_table = static_pointer_cast<tomltablearray_t>(b)
                         ->get()
                         .back()
                         .get();
@@ -837,7 +845,7 @@ namespace cpptoml {
                 {
                     inserted = true;
                     curr_table->insert(part, makeTable());
-                    curr_table = static_cast<CTomlTable*>(curr_table->get(part).get());
+                    curr_table = static_cast<tomltable_t*>(curr_table->get(part).get());
                 }
             };
 
@@ -860,7 +868,7 @@ namespace cpptoml {
             if (!inserted)
             {
                 auto isValue = [](const pair<const string&,
-                     const shared_ptr<CTomlBase>&>& p) {
+                     const baseptr_t&>& p) {
                     return p.second->isValue();
                 };
 
@@ -883,7 +891,7 @@ namespace cpptoml {
         }
 
         //----
-        void parse_table_array(striter_t& it, const striter_t& end, CTomlTable*& curr_table) {
+        void parse_table_array(striter_t& it, const striter_t& end, tomltable_t*& curr_table) {
             ++it;
             if (it == end || *it == ']')
                 throw_parse_exception("Table array name cannot be empty");
@@ -921,9 +929,9 @@ namespace cpptoml {
                     } else {
                         // otherwise, just keep traversing down the key name
                         if (b->isTable())
-                            curr_table = static_cast<CTomlTable*>(b.get());
+                            curr_table = static_cast<tomltable_t*>(b.get());
                         else if (b->isTableArray())
-                            curr_table = static_pointer_cast<CTomlTableArray>(b)
+                            curr_table = static_pointer_cast<tomltablearray_t>(b)
                             ->get()
                             .back()
                             .get();
@@ -940,7 +948,7 @@ namespace cpptoml {
                     if (it != end && *it == ']')
                     {
                         curr_table->insert(part, makeTableArray());
-                        auto arr = static_pointer_cast<CTomlTableArray>(
+                        auto arr = static_pointer_cast<tomltablearray_t>(
                                                                          curr_table->get(part));
                         arr->get().push_back(makeTable());
                         curr_table = arr->get().back().get();
@@ -951,7 +959,7 @@ namespace cpptoml {
                     {
                         curr_table->insert(part, makeTable());
                         curr_table
-                        = static_cast<CTomlTable*>(curr_table->get(part).get());
+                        = static_cast<tomltable_t*>(curr_table->get(part).get());
                     }
                 }
             };
@@ -959,7 +967,7 @@ namespace cpptoml {
             key_part_handler(parse_key(it, end, key_end, key_part_handler));
 
             // consume the last "]]"
-            auto eat = make_consumer(it, end, [this]() {
+            auto eat = makeConsumer(it, end, [this]() {
                 throw_parse_exception("Unterminated table array name");
             });
             eat(']');
@@ -970,7 +978,7 @@ namespace cpptoml {
         }
 
         //----
-        void parse_key_value(striter_t& it, striter_t& end, CTomlTable* curr_table) {
+        void parse_key_value(striter_t& it, striter_t& end, tomltable_t* curr_table) {
             auto key_end = [](char c) { return c == '='; };
             auto key_part_handler = [&](const string& part) {
                 // two cases: this key part exists already, in which case it must
@@ -979,7 +987,7 @@ namespace cpptoml {
                 if (curr_table->contains(part)) {
                     auto val = curr_table->get(part);
                     if (val->isTable()) {
-                        curr_table = static_cast<CTomlTable*>(val.get());
+                        curr_table = static_cast<tomltable_t*>(val.get());
                     } else {
                         throw_parse_exception("Key " + part
                                               + " already exists as a value");
@@ -1072,7 +1080,7 @@ namespace cpptoml {
         }
 
         //----
-        shared_ptr<CTomlBase> parse_value(striter_t& it, striter_t& end) {
+        baseptr_t parse_value(striter_t& it, striter_t& end) {
             parse_t type = determine_value_type(it, end);
             switch (type) {
                 case parse_t::STRING:
@@ -1165,7 +1173,7 @@ namespace cpptoml {
                     return parse_multiline_string(it, end, delim);
                 }
             }
-            return make_value<string>(string_literal(it, end, delim));
+            return makeValue<string>(string_literal(it, end, delim));
         }
 
         //----
@@ -1206,7 +1214,7 @@ namespace cpptoml {
                         // check for """
                         if (*check++ == delim && *check++ == delim && *check++ == delim) {
                             local_it = check;
-                            ret = make_value<string>(ss.str());
+                            ret = makeValue<string>(ss.str());
                             break;
                         }
                     }
@@ -1358,7 +1366,7 @@ namespace cpptoml {
         }
 
         //----
-        shared_ptr<CTomlBase> parse_number(striter_t& it, const striter_t& end) {
+        baseptr_t parse_number(striter_t& it, const striter_t& end) {
             auto check_it = it;
             auto check_end = find_end_of_number(it, end);
             auto eat_sign = [&]() {
@@ -1392,12 +1400,12 @@ namespace cpptoml {
                 && (check_it[1] == 'x' || check_it[1] == 'o' || check_it[1] == 'b'))
             {
                 ++check_it;
-                char CTomlBase = *check_it;
+                char tomlbase_t = *check_it;
                 ++check_it;
-                if (CTomlBase == 'x') {
+                if (tomlbase_t == 'x') {
                     eat_hex();
                     return parse_int(it, check_it, 16);
-                } else if (CTomlBase == 'o') {
+                } else if (tomlbase_t == 'o') {
                     auto start = check_it;
                     eat_numbers();
                     auto val = parse_int(start, check_it, 8, "0");
@@ -1421,13 +1429,13 @@ namespace cpptoml {
                     if (*it == '-')
                         val = -val;
                     it = check_it + 3;
-                    return make_value(val);
+                    return makeValue(val);
                 } else if (check_it[0] == 'n' && check_it[1] == 'a' && check_it[2] == 'n') {
                     auto val = numeric_limits<double>::quiet_NaN();
                     if (*it == '-')
                         val = -val;
                     it = check_it + 3;
-                    return make_value(val);
+                    return makeValue(val);
                 }
             }
 
@@ -1460,13 +1468,13 @@ namespace cpptoml {
         }
 
         //----
-        shared_ptr<CTomlValue<int64_t>> parse_int(striter_t& it, const striter_t& end, int CTomlBase = 10, const char* prefix = "") {
+        shared_ptr<tomlvalue_t<int64_t>> parse_int(striter_t& it, const striter_t& end, int tomlbase_t = 10, const char* prefix = "") {
             string v{it, end};
             v = prefix + v;
             v.erase(remove(v.begin(), v.end(), '_'), v.end());
             it = end;
             try {
-                return make_value<int64_t>(stoll(v, nullptr, CTomlBase));
+                return makeValue<int64_t>(stoll(v, nullptr, tomlbase_t));
             } catch (const invalid_argument& ex) {
                 throw_parse_exception("Malformed number (invalid argument: "
                                       + string{ex.what()} + ")");
@@ -1478,14 +1486,14 @@ namespace cpptoml {
         }
 
         //----
-        shared_ptr<CTomlValue<double>> parse_float(striter_t& it, const striter_t& end) {
+        shared_ptr<tomlvalue_t<double>> parse_float(striter_t& it, const striter_t& end) {
             string v{it, end};
             v.erase(remove(v.begin(), v.end(), '_'), v.end());
             it = end;
             char decimal_point = '.'; //localeconv()->decimal_point[0];
             replace(v.begin(), v.end(), '.', decimal_point);
             try {
-                return make_value<double>(stod(v));
+                return makeValue<double>(stod(v));
 
             } catch (const invalid_argument& ex) {
                 throw_parse_exception("Malformed number (invalid argument: "
@@ -1498,17 +1506,17 @@ namespace cpptoml {
         }
 
         //----
-        shared_ptr<CTomlValue<bool>> parse_bool(striter_t& it, const striter_t& end) {
-            auto eat = make_consumer(it, end, [this]() {
+        shared_ptr<tomlvalue_t<bool>> parse_bool(striter_t& it, const striter_t& end) {
+            auto eat = makeConsumer(it, end, [this]() {
                 throw_parse_exception("Attempted to parse invalid boolean value");
             });
 
             if (*it == 't') {
                 eat("true");
-                return make_value<bool>(true);
+                return makeValue<bool>(true);
             } else if (*it == 'f') {
                 eat("false");
-                return make_value<bool>(false);
+                return makeValue<bool>(false);
             }
             eat.error();
             return nullptr;
@@ -1555,7 +1563,7 @@ namespace cpptoml {
         //----
         loc_time_t read_time(striter_t& it, const striter_t& end) {
             auto time_end = find_end_of_time(it, end);
-            auto eat = make_consumer(it, time_end, [&]() { throw_parse_exception("Malformed time"); });
+            auto eat = makeConsumer(it, time_end, [&]() { throw_parse_exception("Malformed time"); });
 
             loc_time_t ltime;
 
@@ -1579,15 +1587,15 @@ namespace cpptoml {
         }
 
         //----
-        shared_ptr<CTomlValue<loc_time_t>>
+        shared_ptr<tomlvalue_t<loc_time_t>>
         parse_time(striter_t& it, const striter_t& end) {
-            return make_value(read_time(it, end));
+            return makeValue(read_time(it, end));
         }
 
         //----
-        shared_ptr<CTomlBase> parse_date(striter_t& it, const striter_t& end) {
+        baseptr_t parse_date(striter_t& it, const striter_t& end) {
             auto date_end = find_end_of_date(it, end);
-            auto eat = make_consumer(it, date_end, [&]() { throw_parse_exception("Malformed date"); });
+            auto eat = makeConsumer(it, date_end, [&]() { throw_parse_exception("Malformed date"); });
 
             loc_date_t ldate;
             ldate.year = eat.eat_digits(4);
@@ -1597,7 +1605,7 @@ namespace cpptoml {
             ldate.day = eat.eat_digits(2);
 
             if (it == date_end)
-                return make_value(ldate);
+                return makeValue(ldate);
 
             eat.eat_or('T', ' ');
 
@@ -1606,7 +1614,7 @@ namespace cpptoml {
             static_cast<loc_time_t&>(ldt) = read_time(it, date_end);
 
             if (it == date_end)
-                return make_value(ldt);
+                return makeValue(ldt);
 
             off_datetime_t dt;
             static_cast<loc_datetime_t&>(dt) = ldt;
@@ -1630,17 +1638,17 @@ namespace cpptoml {
             if (it != date_end)
                 throw_parse_exception("Malformed date");
 
-            return make_value(dt);
+            return makeValue(dt);
         }
 
         //----
-        shared_ptr<CTomlBase> parse_array(striter_t& it, striter_t& end) {
+        baseptr_t parse_array(striter_t& it, striter_t& end) {
             // this gets ugly because of the "homogeneity" restriction:
             // arrays can either be of only one type, or contain arrays
             // (each of those arrays could be of different types, though)
             //
             // because of the latter portion, we don't really have a choice
-            // but to represent them as arrays of CTomlBase values...
+            // but to represent them as arrays of tomlbase_t values...
             ++it;
 
             // ugh---have to read the first value to determine array type...
@@ -1672,9 +1680,9 @@ namespace cpptoml {
                 case parse_t::BOOL:
                     return parse_value_array<bool>(it, end);
                 case parse_t::ARRAY:
-                    return parse_object_array<CTomlArray>(&parser::parse_array, '[', it, end);
+                    return parse_object_array<tomlarray_t>(&parser::parse_array, '[', it, end);
                 case parse_t::INLINE_TABLE:
-                    return parse_object_array<CTomlTableArray>(&parser::parse_inline_table, '{', it, end);
+                    return parse_object_array<tomltablearray_t>(&parser::parse_inline_table, '{', it, end);
                 default:
                     throw_parse_exception("Unable to parse array");
             }
@@ -1683,7 +1691,7 @@ namespace cpptoml {
 
         //----
         template <class Value>
-        shared_ptr<CTomlArray> parse_value_array(striter_t& it, striter_t& end) {
+        arrayptr_t parse_value_array(striter_t& it, striter_t& end) {
             auto arr = make_array();
             while (it != end && *it != ']') {
                 auto val = parse_value(it, end);
@@ -1705,7 +1713,7 @@ namespace cpptoml {
         //----
         template <class Object, class Function>
         shared_ptr<Object> parse_object_array(Function&& fun, char delim, striter_t& it, striter_t& end) {
-            auto arr = detail::make_element<Object>();
+            auto arr = detail::makeElement<Object>();
             while (it != end && *it != ']') {
                 if (*it != delim)
                     throw_parse_exception("Unexpected character in array");
@@ -1723,7 +1731,7 @@ namespace cpptoml {
         }
 
         //----
-        shared_ptr<CTomlTable> parse_inline_table(striter_t& it, striter_t& end) {
+        tableptr_t parse_inline_table(striter_t& it, striter_t& end) {
             auto tbl = makeTable();
             do {
                 ++it;
@@ -1830,7 +1838,7 @@ namespace cpptoml {
      * Utility function to parse a file as a TOML file. Returns the root table.
      * Throws a parse_exception if the file cannot be opened.
      */
-    inline shared_ptr<CTomlTable> parse_file(const string& filename) {
+    inline tableptr_t parse_file(const string& filename) {
         ifstream file{filename};
         if (!file.is_open())
             throw parse_exception{filename + " could not be opened for parsing"};
@@ -1844,41 +1852,40 @@ namespace cpptoml {
     template <>
     struct value_accept<> {
         template <class Visitor, class... Args>
-        static void accept(const CTomlBase&, Visitor&&, Args&&...) { }
+        static void accept(const tomlbase_t&, Visitor&&, Args&&...) { }
     };
 
     template <class T, class... Ts>
     struct value_accept<T, Ts...> {
         template <class Visitor, class... Args>
-        static void accept(const CTomlBase& b, Visitor&& visitor, Args&&... args) {
+        static void accept(const tomlbase_t& b, Visitor&& visitor, Args&&... args) {
             if (auto v = b.as<T>()) {
                 visitor.visit(*v, forward<Args>(args)...);
             } else {
-                value_accept<Ts...>::accept(b, forward<Visitor>(visitor),
-                                            forward<Args>(args)...);
+                value_accept<Ts...>::accept(b, forward<Visitor>(visitor), forward<Args>(args)...);
             }
         }
     };
 
     /**
-     * CTomlBase implementation of accept() that calls visitor.visit() on the concrete
+     * tomlbase_t implementation of accept() that calls visitor.visit() on the concrete
      * class.
      */
     template <class Visitor, class... Args>
-    void CTomlBase::accept(Visitor&& visitor, Args&&... args) const {
+    void tomlbase_t::accept(Visitor&& visitor, Args&&... args) const {
         if (isValue()) {
             using value_acceptor = value_accept<string, int64_t, double, bool, loc_date_t,
             loc_time_t, loc_datetime_t, off_datetime_t>;
             value_acceptor::accept(*this, forward<Visitor>(visitor), forward<Args>(args)...);
 
         } else if (isTable()) {
-            visitor.visit(static_cast<const CTomlTable&>(*this), forward<Args>(args)...);
+            visitor.visit(static_cast<const tomltable_t&>(*this), forward<Args>(args)...);
 
         } else if (isArray()) {
-            visitor.visit(static_cast<const CTomlArray&>(*this), forward<Args>(args)...);
+            visitor.visit(static_cast<const tomlarray_t&>(*this), forward<Args>(args)...);
 
         } else if (isTableArray()) {
-            visitor.visit(static_cast<const CTomlTableArray&>(*this), forward<Args>(args)...);
+            visitor.visit(static_cast<const tomltablearray_t&>(*this), forward<Args>(args)...);
         }
     }
 
@@ -1890,12 +1897,12 @@ namespace cpptoml {
 
     public:
         template <class T>
-        void visit(const CTomlValue<T>& v, bool = false) {
+        void visit(const tomlvalue_t<T>& v, bool = false) {
             write(v);
         }
 
-        void visit(const CTomlTable& t, bool in_array = false) {
-            write_table_header(in_array);
+        void visit(const tomltable_t& t, bool in_array = false) {
+            writeTableHeader(in_array);
             CStringArray values;
             CStringArray tables;
 
@@ -1927,7 +1934,7 @@ namespace cpptoml {
             endline();
         }
 
-        void visit(const CTomlArray& a, bool = false) {
+        void visit(const tomlarray_t& a, bool = false) {
             write("[");
             for (unsigned int i = 0; i < a.get().size(); ++i) {
                 if (i > 0)
@@ -1941,7 +1948,7 @@ namespace cpptoml {
             write("]");
         }
 
-        void visit(const CTomlTableArray& t, bool = false) {
+        void visit(const tomltablearray_t& t, bool = false) {
             for (unsigned int j = 0; j < t.get().size(); ++j) {
                 if (j > 0)
                     endline();
@@ -1986,7 +1993,7 @@ namespace cpptoml {
             write("\"");
         }
 
-        void write(const CTomlValue<double>& v) {
+        void write(const tomlvalue_t<double>& v) {
             stringstream ss;
             ss << showpoint
             << setprecision(numeric_limits<double>::max_digits10)
@@ -2005,26 +2012,24 @@ namespace cpptoml {
         template <class T>
         typename enable_if<
         is_one_of<T, int64_t, loc_date_t, loc_time_t, loc_datetime_t, off_datetime_t>::value>::type
-        write(const CTomlValue<T>& v) {
+        write(const tomlvalue_t<T>& v) {
             write(v.get());
         }
 
-        void write(const CTomlValue<bool>& v) {
+        void write(const tomlvalue_t<bool>& v) {
             write((v.get() ? "true" : "false"));
         }
 
-        void write_table_header(bool in_array = false) {
+        void writeTableHeader(bool in_array = false) {
             if (!path_.empty()) {
                 indent();
                 write("[");
-                if (in_array) {
+                if (in_array)
                     write("[");
-                }
 
                 for (unsigned int i = 0; i < path_.size(); ++i) {
-                    if (i > 0) {
+                    if (i > 0)
                         write(".");
-                    }
 
                     if (path_[i].find_first_not_of("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-")
                         == string::npos) {
@@ -2035,18 +2040,14 @@ namespace cpptoml {
                         write("\"");
                     }
                 }
-
                 if (in_array)
-                {
                     write("]");
-                }
-
                 write("]");
                 endline();
             }
         }
 
-        void write_table_item_header(const CTomlBase& b) {
+        void write_table_item_header(const tomlbase_t& b) {
             if (!b.isTable() && !b.isTableArray()) {
                 indent();
                 if (path_.back().find_first_not_of("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-")
@@ -2057,7 +2058,6 @@ namespace cpptoml {
                     write(escape_string(path_.back()));
                     write("\"");
                 }
-
                 write(" = ");
             }
         }
@@ -2086,32 +2086,32 @@ namespace cpptoml {
         bool has_naked_endline_;
     };
 
-    inline ostream& operator<<(ostream& stream, const CTomlBase& b) {
+    inline ostream& operator<<(ostream& stream, const tomlbase_t& b) {
         CTomlWriter writer{stream};
         b.accept(writer);
         return stream;
     }
 
     template <class T>
-    ostream& operator<<(ostream& stream, const CTomlValue<T>& v) {
+    ostream& operator<<(ostream& stream, const tomlvalue_t<T>& v) {
         CTomlWriter writer{stream};
         v.accept(writer);
         return stream;
     }
 
-    inline ostream& operator<<(ostream& stream, const CTomlTable& t) {
+    inline ostream& operator<<(ostream& stream, const tomltable_t& t) {
         CTomlWriter writer{stream};
         t.accept(writer);
         return stream;
     }
 
-    inline ostream& operator<<(ostream& stream, const CTomlTableArray& t) {
+    inline ostream& operator<<(ostream& stream, const tomltablearray_t& t) {
         CTomlWriter writer{stream};
         t.accept(writer);
         return stream;
     }
 
-    inline ostream& operator<<(ostream& stream, const CTomlArray& a) {
+    inline ostream& operator<<(ostream& stream, const tomlarray_t& a) {
         CTomlWriter writer{stream};
         a.accept(writer);
         return stream;
@@ -2123,7 +2123,7 @@ namespace cpptoml {
             toml = parse_file(path);
         }
     public:
-        shared_ptr<CTomlTable> toml;
+        tableptr_t toml;
     };
 
     inline ostream& operator<<(ostream& stream, const CNewToml& a) {

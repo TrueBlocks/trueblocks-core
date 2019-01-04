@@ -317,7 +317,12 @@ extern string_q collapseArrays(const string_q& inStr);
 
     //---------------------------------------------------------------------------------------
     void CToml::CTomlGroup::addKey(const string_q& keyName, const string_q& val, bool commented) {
-        CTomlKey key(keyName, val, commented);
+        string_q str = substitute(val, "\"\"\"", "");
+        if (endsWith(str, '\"'))
+            str = extract(str, 0, str.length()-1);
+        if (startsWith(str, '\"'))
+            str = extract(str, 1);
+        CTomlKey key(keyName, substitute(substitute(str, "\\\"", "\""), "\\#", "#"), commented);
         keys.push_back(key);
         return;
     }
