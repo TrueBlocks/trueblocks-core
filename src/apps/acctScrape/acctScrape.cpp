@@ -475,7 +475,7 @@ bool COptions::loadMonitors(const CToml& config) {
     minWatchBlock = UINT32_MAX;
     maxWatchBlock = 0;
 
-    string_q watchStr = config.getConfigStr("watches", "list", "");
+    string_q watchStr = config.getConfigJson("watches", "list", "");
     if (watchStr.empty()) {
         cerr << "Empty list of watches. Quitting." << endl;
         return false;

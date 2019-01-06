@@ -1,0 +1,5 @@
+{
+  "zero1": {"type": "float", "value": "0"},
+  "zero2": {"type": "float", "value": "-0"},
+  "zero3": {"type": "float", "value": "0"}
+}

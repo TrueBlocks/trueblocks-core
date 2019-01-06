@@ -154,13 +154,10 @@ COptions::COptions(void) {
     CToml toml(configPath("whenBlock.toml"));
 
     // versions prior to 0.6.0
-    if (toml.getVersion() < getVersionNum(0,6,0)) {
+    if (toml.getVersion() < getVersionNum(0,5,5)) {
         string_q ss = toml.getConfigStr("specials", "list", "");
         if (!contains(ss, "kitties")) {
-            ss = substitute(ss, ",{ name : \"constantinople\",",
-                            ",{ name : \"kitties\", value : \"4605167\" },{ name : \"constantinople\",");
-            ss = substitute(ss, "\"tbd\"", "\"7080000\"");
-            toml.setConfigStr("specials", "list", ss);
+            toml.setConfigStr("specials", "list", STR_DEFAULT_WHENBLOCKS);
             toml.setConfigStr("version", "current", getVersionStr());
             toml.writeFile();
         }

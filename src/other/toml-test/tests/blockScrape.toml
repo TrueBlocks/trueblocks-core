@@ -1,9 +1,8 @@
 [settings]
-#maxBlocks=10000
-writeBlocks=true
+writeBlocks = true
 
 [exclusions]
-list="""0xe0ca2ec1648f4fc94d5ecaad5caa9fa6799ebb28|\
+list = """0xe0ca2ec1648f4fc94d5ecaad5caa9fa6799ebb28|\
     0x7c1cf1f9809c527e5a6becaab56bc34fbe6f2023|\
     0x0978b496a1635e4a0b4ff867569cf43ee030e967|\
     0x2213d4738bfec14a2f98df5e428f48ebbde33e12|\
