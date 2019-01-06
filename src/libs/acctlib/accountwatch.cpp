@@ -467,7 +467,7 @@ biguint_t getNodeBal(CBalanceHistoryArray& history, const address_t& addr, blknu
 // This assumes there are valid watches. Caller is expected to check
 void loadWatchList(const CToml& toml, CAccountWatchArray& watches, const string_q& key) {
 
-    string_q watchStr = toml.getConfigStr("watches", key, "");
+    string_q watchStr = toml.getConfigJson("watches", key, "");
 
     CAccountWatch watch;
     while (watch.parseJson3(watchStr)) {

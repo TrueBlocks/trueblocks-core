@@ -131,6 +131,7 @@ namespace qblocks {
     extern void optionOn (uint32_t q);
 
     //--------------------------------------------------------------------------------
+    class CToml;
     extern const CToml *getGlobalConfig(const string_q& name = "");
 
     typedef bool (*UINT64VISITFUNC)(uint64_t num, void *data);
@@ -165,5 +166,6 @@ namespace qblocks {
 
     extern const char *STR_DEFAULT_NAMEDATA;
     extern const char *STR_DEFAULT_TOOLNAMES;
+    extern const char *STR_DEFAULT_WHENBLOCKS;
 
 }  // namespace qblocks
