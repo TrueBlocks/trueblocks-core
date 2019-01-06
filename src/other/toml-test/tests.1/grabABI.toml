@@ -1,0 +1,2 @@
+[display]
+format = "[{address}]\t[{encoding}]\t[{type}]\t[{constant}]\t[{name}]\t[{signature}]\t[{input_names}]"

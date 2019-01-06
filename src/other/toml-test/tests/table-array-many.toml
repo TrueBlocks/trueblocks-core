@@ -1,0 +1,13 @@
+version="0.5.5-alpha"
+
+[[people]]
+first_name = "Bruce"
+last_name = "Springsteen"
+
+[[people]]
+first_name = "Eric"
+last_name = "Clapton"
+
+[[people]]
+first_name = "Bob"
+last_name = "Seger"

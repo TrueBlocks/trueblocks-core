@@ -68,6 +68,7 @@ bool visitTransaction(CTransaction& trans, void *data) {
         //queryRawLogs(<#string_q &results#>, <#const address_t &addr#>, <#uint64_t fromBlock#>, <#uint64_t toBlock#>)(raw, trans.getValueByName("hash"));
         raw = substitute(raw,"[{\"jsonrpc\":\"2.0\",\"result\":[", "");
         raw = substitute(raw,"],\"id\":1}\n]", "");
+        raw = substitute(raw,",\"id\":\"1\"}", "");
         opt->rawLogs.push_back(raw);
         return true;
     }
