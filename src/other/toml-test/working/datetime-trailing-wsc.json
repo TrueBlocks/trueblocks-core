@@ -1,0 +1,25 @@
+{
+	"full_t":{"type":"datetime","value":"1987-07-05T17:45:00Z"}, 
+	"full_s":{"type":"datetime","value":"1987-07-05T17:45:00Z"}, 
+	"full_c":{"type":"datetime","value":"1987-07-05T17:45:00Z"}, 
+	"full_tc":{"type":"datetime","value":"1987-07-05T17:45:00Z"},
+	"full_sc":{"type":"datetime","value":"1987-07-05T17:45:00Z"}, 
+	"full_mc":{"type":"datetime","value":"1987-07-05T17:45:00Z"}, 
+	"full_sp":{"type":"datetime","value":"1987-07-05T17:45:00Z"}, 
+
+	"date_t":{"type":"local_date","value":"1987-07-05"}, 
+	"date_s":{"type":"local_date","value":"1987-07-05"}, 
+	"date_c":{"type":"local_date","value":"1987-07-05"}, 
+	"date_tc":{"type":"local_date","value":"1987-07-05"}, 
+	"date_sc":{"type":"local_date","value":"1987-07-05"}, 
+	"date_mc":{"type":"local_date","value":"1987-07-05"}, 
+	"date_sp":{"type":"local_date","value":"1987-07-05"}, 
+
+	"time_t":{"type":"local_time","value":"17:45:00.01"}, 
+	"time_s":{"type":"local_time","value":"17:45:00.01"}, 
+	"time_c":{"type":"local_time","value":"17:45:00.01"}, 
+	"time_tc":{"type":"local_time","value":"17:45:00.01"}, 
+	"time_sc":{"type":"local_time","value":"17:45:00.01"}, 
+	"time_mc":{"type":"local_time","value":"17:45:00.01"}, 
+	"time_sp":{"type":"local_time","value":"17:45:00.01"}
+}

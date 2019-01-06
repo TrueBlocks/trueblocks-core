@@ -1,0 +1,5 @@
+version="0.5.5-alpha"
+
+hex1 = 0xDEADBEEF
+hex2 = 0xdeadbeef
+hex3 = 0xdead_beef

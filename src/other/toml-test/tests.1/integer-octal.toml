@@ -1,0 +1,4 @@
+version="0.5.5-alpha"
+
+oct1 = 0o01234567
+oct2 = 0o755

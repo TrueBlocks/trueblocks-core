@@ -69,5 +69,10 @@ extern string_q getSha3 (const string_q& hexIn);
     extern bool writeBloomArray(const CBloomArray& blooms, const string_q& fileName);
     extern string_q reportBloom(const CBloomArray& blooms);
 
+    //--------------------------------------------------------------------------------
+    extern string_q bloom_2_BitStr(const bloom_t& bl);
+    extern string_q bloom_2_ByteStr(const bloom_t& bl);
+    extern string_q compareBlooms(const bloom_t& b1, const bloom_t& b2);
+
 }  // namespace qblocks
 

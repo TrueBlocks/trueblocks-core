@@ -68,6 +68,7 @@ bool visitTransaction(CTransaction& trans, void *data) {
         queryRawTrace(raw, trans.getValueByName("hash"));
         raw = substitute(raw,"[{\"jsonrpc\":\"2.0\",\"result\":[", "");
         raw = substitute(raw,"],\"id\":1}\n]", "");
+        raw = substitute(raw,"],\"id\":\"1\"}\n]", "");
         opt->rawTraces.push_back(raw);
         return true;
     }

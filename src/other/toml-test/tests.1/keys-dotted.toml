@@ -1,0 +1,8 @@
+version="0.5.5-alpha"
+
+physical.color = "orange"
+physical.shape = "round"
+site."google.com" = true
+
+a.b.c = 1
+a.d = 2

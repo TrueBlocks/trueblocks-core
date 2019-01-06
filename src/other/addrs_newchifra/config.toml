@@ -1,5 +1,5 @@
 [settings]
-name = NAME
+name = "NAME"
 
 [display]
 accounting = false
@@ -11,12 +11,12 @@ autocorrect = false
 parse = false
 
 [fields]
-#hide=CTransaction:traces
-show=CLogEntry:topics,CLogEntry:data
+#hide = "CTransaction:traces"
+show = "CLogEntry:topics,CLogEntry:data"
 
 [formats]
-trans_fmt = [{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{HASH}]
-#trans_fmt = "[{DATE}]","[{FROM}]","[{TO}]","[{ETHER}]"
+trans_fmt = "[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{HASH}]"
+#trans_fmt = " \"[{DATE}]\",\"[{FROM}]\",\"[{TO}]\",\"[{ETHER}]\""
 
 [[watches]]
 list = [

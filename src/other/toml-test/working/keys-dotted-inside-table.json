@@ -1,0 +1,12 @@
+{
+  "a": {
+    "b": {
+      "c": {"type": "integer", "value": "1"},
+      "d": {"type": "integer", "value": "2"},
+      "e": {
+        "f": {"type": "integer", "value": "3"}
+      }
+    },
+    "g": {"type": "bool", "value": "true"}
+  }
+}

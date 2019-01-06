@@ -478,10 +478,6 @@ namespace qblocks {
     //-----------------------------------------------------------------------
     void defaultQuitHandler(int signum) {
         if (quitCount(1) > 2) {
-            if (!isTestMode()) {
-                printf("\e[?25h");
-                fflush(stdout);
-            }
             cleanFileLocks();
             if (signum != -1)
                 exit(EXIT_SUCCESS);
@@ -490,10 +486,6 @@ namespace qblocks {
 
     //-----------------------------------------------------------------------
     void quickQuitHandler(int signum) {
-        if (!isTestMode()) {
-            printf("\e[?25h");
-            fflush(stdout);
-        }
         cleanFileLocks();
         if (signum != -1)
             exit(EXIT_SUCCESS);

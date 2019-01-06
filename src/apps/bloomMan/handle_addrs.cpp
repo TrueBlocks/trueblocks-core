@@ -13,7 +13,7 @@ bool handle_addrs(blknum_t bn, void *data) {
 
     string_q path = substitute(getBinaryFilename(bn), "/blocks/", "/blooms/");
     if (!fileExists(path)) {
-        if (verbose)
+        if (verbose || bn < firstTransaction)
             cerr << "Skipping " << path << endl;
         return !shouldQuit();
     }

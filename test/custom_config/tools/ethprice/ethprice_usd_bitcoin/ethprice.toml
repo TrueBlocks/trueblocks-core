@@ -1,2 +1,2 @@
 [display]
-terse=[{DATE}\t][{CLOSE}]
+terse = "[{DATE}\t][{CLOSE}]"

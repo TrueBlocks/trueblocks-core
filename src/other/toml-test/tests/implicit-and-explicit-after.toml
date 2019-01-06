@@ -1,0 +1,7 @@
+version="0.5.5-alpha"
+
+[a.b.c]
+answer = 42
+
+[a]
+better = 43
