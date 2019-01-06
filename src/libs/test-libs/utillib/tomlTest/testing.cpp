@@ -34,6 +34,19 @@ int main(int argc, const char *argv[]) {
         cout << "version: " << "\t\t" << toml.getConfigStr("version", "version", "0.0.0") << "\n";
         if (!toml.getConfigStr("display", "fmt_whale_field", "").empty())
             cout << "whale: " << "\t\t" << toml.getConfigStr("display", "fmt_whale_field", "") << "\n";
+
+        string_q contents;
+        asciiFileToString(options.filename, contents);
+        cout << endl << "File contents as read" << endl;
+        cout << contents << endl;
+
+        string_q junkFile = options.filename + ".junk";
+        toml.setFilename(junkFile);
+        toml.writeFile();
+        asciiFileToString(junkFile, contents);
+        cout << endl << "File contents after write" << endl;
+        cout << contents << endl;
+        ::remove(junkFile.c_str());
     }
     return 0;
 }

@@ -135,19 +135,61 @@ extern string_q collapseArrays(const string_q& inStr);
     }
 
     //---------------------------------------------------------------------------------------
+    bool is_str(const string_q& str) {
+        if (str.empty())
+            return true;
+        if (startsWith(str, '['))
+            return false;
+        if (isAddress(str))
+            return true;
+        if (isnumber(str[0]))
+            return false;
+        if (str == "true" || str == "false")
+            return false;
+        return true;
+    }
+
+    string_q escape_quotes(const string_q& str) {
+        string_q res;
+        for (auto it = str.begin(); it != str.end(); ++it) {
+            if (*it == '"' )
+                res += "\\";
+            res += *it;
+        }
+        return res;
+    }
+
+    //---------------------------------------------------------------------------------------
     bool CToml::writeFile(void) {
         if (!Lock(m_filename, asciiWriteCreate, LOCK_CREATE)) {
             LockFailure();
             return false;
         }
 
+        if (isBackLevel()) {
+            deleteKey("version", "version");
+            deleteKey("", "version");
+        }
+        setConfigStr("version", "current", getVersionStr());
+
         bool first = true;
         for (auto group : groups) {
             ostringstream os;
             os << (first?"":"\n") << (group.isComment?"#":"");
             os << (group.isArray?"[[":"[") << group.groupName << (group.isArray?"]]":"]") << "\n";
-            for (auto key : group.keys)
-                os << (key.comment ? "#" : "") << key.keyName << " = " << key.value << "\n";
+            for (auto key : group.keys) {
+                if (!key.deleted) {
+                    os << (key.comment ? "#" : "");
+                    os << key.keyName << " = ";
+                    if (group.groupName == "version" || is_str(key.value))
+                        os << "\"";
+                    os << escape_quotes(key.value);
+                    if (group.groupName == "version" || is_str(key.value))
+                        os << "\"";
+                    os << (key.deleted ? " (deleted)" : "");
+                    os << endl;
+                }
+            }
             WriteLine(os.str().c_str());
             first = false;
         }
@@ -156,10 +198,21 @@ extern string_q collapseArrays(const string_q& inStr);
     }
 
     //---------------------------------------------------------------------------------------
+    bool CToml::isBackLevel(void) const {
+        if (getVersion() < getVersionNum(0,6,0))
+            return true;
+        // This is where we would handle future upgrades
+        return false;
+    }
+
+    //---------------------------------------------------------------------------------------
     void CToml::mergeFile(CToml *tomlIn) {
         for (auto group : tomlIn->groups) {
-            for (auto key : group.keys)
+            for (auto key : group.keys) {
                 setConfigStr(group.groupName, key.keyName, key.value);
+                if (key.deleted)
+                    deleteKey(group.groupName, key.keyName);
+            }
         }
     }
 
@@ -190,14 +243,10 @@ extern string_q collapseArrays(const string_q& inStr);
 
     //-------------------------------------------------------------------------
     uint64_t CToml::getVersion(void) const {
-        uint16_t v1 = 0, v2 = 0, v3 = 0;
-        CTomlKey *found = findKey("version", "current");
-        if (found && !found->comment) {
-            string_q value = found->value;
-            v1 = (uint16_t)str_2_Uint(nextTokenClear(value, '.'));
-            v2 = (uint16_t)str_2_Uint(nextTokenClear(value, '.'));
-            v3 = (uint16_t)str_2_Uint(nextTokenClear(value, '.'));
-        }
+        string_q value = getConfigStr("version", "current", getConfigStr("", "version", "0.0.0"));
+        uint16_t v1 = (uint16_t)str_2_Uint(nextTokenClear(value, '.'));
+        uint16_t v2 = (uint16_t)str_2_Uint(nextTokenClear(value, '.'));
+        uint16_t v3 = (uint16_t)str_2_Uint(nextTokenClear(value, '.'));
         return getVersionNum(v1, v2, v3);
     }
 
@@ -264,17 +313,18 @@ extern string_q collapseArrays(const string_q& inStr);
         for (auto group : tomlIn.groups) {
             bool isEmpty = group.groupName == "empty-group";
             if (!isEmpty) {
-                os << (group.isArray?"[[":"[");
+                os << (group.isComment ? "#" : "");
+                os << (group.isArray ? "[[" : "[");
                 os << group.groupName;
-                os << (group.isComment?":comment ":"");
-                os << (group.isArray?"]]":"]");
-                os << "\n";
+                os << (group.isArray ? "]]" : "]");
+                os << endl;
             }
             for (auto key : group.keys) {
-                string_q val = key.value;
-                if (contains(val, ",") && !contains(val, ", "))
-                    val = substitute(val, ",", ", ");
-                os << (isEmpty ? "" : "\t") << key.keyName << (key.comment?":comment":"") << " = " << val << "\n";
+                os << (isEmpty ? "" : "\t");
+                os << (key.comment || group.isComment ? "#" : "");
+                os << key.keyName << " = " << key.value;
+                os << (key.deleted ? " (deleted)" : "");
+                os << endl;
             }
         }
         return os;
@@ -287,37 +337,6 @@ extern string_q collapseArrays(const string_q& inStr);
             os << group;
         return os;
     }
-
-    //-------------------------------------------------------------------------
-    ostream& operator<<(ostream& os, const CToml::CTomlGroup& group) {
-        bool isEmpty = group.groupName == "root-level";
-        if (!isEmpty) {
-            os << (group.isArray?"[[":"[");
-            os << group.groupName;
-            os << (group.isComment?":comment ":"");
-            os << (group.isArray?"]]":"]");
-            os << "\n";
-        }
-        for (auto key : group.keys)
-            os << (isEmpty ? "" : "\t") << key;
-        return os;
-    }
-
-    //-------------------------------------------------------------------------
-    ostream& operator<<(ostream& os, const CToml::CTomlKey& key) {
-        string_q val = key.value;
-        if (contains(val, ",") && !contains(val, ", "))
-            val = substitute(val, ",", ", ");
-        os << key.keyName << (key.comment?":comment":"") << " = ";
-        if (val == "true" || val == "false")
-            os << val;
-        else if (contains(val, "["))
-            os << val;
-        else
-            os << "\"" << val << "\"";
-        os << endl;
-        return os;
-    }
 #endif
 
     //-------------------------------------------------------------------------
@@ -325,14 +344,15 @@ extern string_q collapseArrays(const string_q& inStr);
     }
 
     //-------------------------------------------------------------------------
-    CToml::CTomlKey::CTomlKey(const CTomlKey& key) : keyName(key.keyName), value(key.value), comment(key.comment) {
-    }
+    CToml::CTomlKey::CTomlKey(const CTomlKey& key)
+        : keyName(key.keyName), value(key.value), comment(key.comment), deleted(key.deleted) { }
 
     //-------------------------------------------------------------------------
     CToml::CTomlKey& CToml::CTomlKey::operator=(const CTomlKey& key) {
         keyName = key.keyName;
         value = key.value;
         comment = key.comment;
+        deleted = key.deleted;
         return *this;
     }
 
@@ -385,8 +405,16 @@ extern string_q collapseArrays(const string_q& inStr);
         if (startsWith(str, '\"'))
             str = extract(str, 1);
         CTomlKey key(keyName, substitute(substitute(str, "\\\"", "\""), "\\#", "#"), commented);
+        key.deleted = contains(val, "(deleted)");
         keys.push_back(key);
         return;
+    }
+
+    //---------------------------------------------------------------------------------------
+    void CToml::deleteKey(const string_q& group, const string_q& key) {
+        CToml::CTomlKey *kPtr = findKey(group, key);
+        if (kPtr)
+            kPtr->deleted = true;
     }
 
     //---------------------------------------------------------------------------------------
@@ -583,7 +611,7 @@ extern string_q collapseArrays(const string_q& inStr);
 
     //-------------------------------------------------------------------------
     uint64_t CNewToml::getVersion(void) const {
-        string_q value = getConfigStr("version", "current", "0.0.0");
+        string_q value = getConfigStr("version", "current", getConfigStr("", "version", "0.0.0"));
         uint16_t v1 = (uint16_t)str_2_Uint(nextTokenClear(value, '.'));
         uint16_t v2 = (uint16_t)str_2_Uint(nextTokenClear(value, '.'));
         uint16_t v3 = (uint16_t)str_2_Uint(nextTokenClear(value, '.'));

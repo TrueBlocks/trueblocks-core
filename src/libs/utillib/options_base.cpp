@@ -893,7 +893,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
         const CToml *toml = getGlobalConfig("whenBlock");
         specials.clear();
-        string_q specialsStr = toml->getConfigStr("specials", "list", "");
+        string_q specialsStr = toml->getConfigStr("specials", "list", STR_DEFAULT_WHENBLOCKS);
         CKeyValuePair keyVal;
         while (keyVal.parseJson3(specialsStr)) {
             CNameValue pair = make_pair(keyVal.jsonrpc, keyVal.result);

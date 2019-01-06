@@ -154,12 +154,12 @@ COptions::COptions(void) {
     CToml toml(configPath("whenBlock.toml"));
 
     // versions prior to 0.6.0
-    if (toml.getVersion() < getVersionNum(0,5,5)) {
+    if (toml.isBackLevel()) {
         string_q ss = toml.getConfigStr("specials", "list", "");
         if (!contains(ss, "kitties")) {
-            toml.setConfigStr("specials", "list", STR_DEFAULT_WHENBLOCKS);
-            toml.setConfigStr("version", "current", getVersionStr());
+            toml.setConfigArray("specials", "list", STR_DEFAULT_WHENBLOCKS);
             toml.writeFile();
+            getGlobalConfig("whenBlock");
         }
     }
 
