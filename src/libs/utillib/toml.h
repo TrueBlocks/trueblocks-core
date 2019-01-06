@@ -37,6 +37,7 @@ namespace qblocks {
         bool      getConfigBool  (const string_q& group, const string_q& key, bool def) const;
         string_q  getDisplayStr  (bool terse, const string_q& def, const string_q& color = "") const;
         uint64_t getVersion(void) const;
+        void setConfigArray(const string_q& group, const string_q& key, const string_q& value);
         void setConfigStr(const string_q& group, const string_q& key, const string_q& value);
         void setFilename(const string_q& fn);
         bool forEveryGroup(TOMLGROUPFUNC func) const;
@@ -135,6 +136,7 @@ namespace qblocks {
         string_q  getDisplayStr  (bool terse, const string_q& def, const string_q& color = cTeal) const;
         uint64_t  getVersion     (void) const;
 
+        void setConfigArray(const string_q& group, const string_q& key, const string_q& value);
         void setConfigStr  (const string_q& group, const string_q& key, const string_q& value);
         void setConfigInt  (const string_q& group, const string_q& key, uint64_t value);
         void setConfigBool (const string_q& group, const string_q& key, bool value);
