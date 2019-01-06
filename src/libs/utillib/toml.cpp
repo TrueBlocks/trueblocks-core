@@ -142,7 +142,7 @@ extern string_q collapseArrays(const string_q& inStr);
             return false;
         if (isAddress(str))
             return true;
-        if (isnumber(str[0]))
+        if (isdigit(str[0]))
             return false;
         if (str == "true" || str == "false")
             return false;
