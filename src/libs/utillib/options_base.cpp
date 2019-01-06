@@ -822,10 +822,9 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
         string_q toolStr = toml->getConfigStr("tools", "list", "<not_set>");
         if (toolStr == "<not_set>") {
-            string_q fileName = configPath("quickBlocks.toml");
-            string_q contents;
-            asciiFileToString(fileName, contents);
-            stringToAsciiFile(fileName, contents + "\n" + STR_DEFAULT_TOOLNAMES);
+            CToml lToml(configPath("quickBlocks.toml"));
+            lToml.setConfigArray("tools", "list", STR_DEFAULT_TOOLNAMES);
+            lToml.writeFile();
             toml = getGlobalConfig("reload");
             toolStr = toml->getConfigStr("tools", "list", "");
         }
@@ -1023,8 +1022,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
     //-----------------------------------------------------------------------
     const char *STR_DEFAULT_TOOLNAMES =
-    "[[tools]]\n"
-    "list = [\n"
+    "[\n"
     "    { name = \"getBlock\",       value = \"block\"       },\n"
     "    { name = \"getTrans\",       value = \"trans\"       },\n"
     "    { name = \"getReceipt\",     value = \"receipt\"     },\n"

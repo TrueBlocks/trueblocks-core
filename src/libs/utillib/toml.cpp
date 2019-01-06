@@ -87,16 +87,6 @@ namespace qblocks {
         return ((ret == "true" || ret == "1") ? true : false);
     }
 
-    //-------------------------------------------------------------------------
-    void CToml::setConfigInt(const string_q& group, const string_q& key, uint64_t value) {
-        setConfigStr(group, key, int_2_Str((int64_t)value));
-    }
-
-    //-------------------------------------------------------------------------
-    void CToml::setConfigBool(const string_q& group, const string_q& key, bool value) {
-        setConfigStr(group, key, int_2_Str(value));
-    }
-
     //---------------------------------------------------------------------------------------
 extern string_q stripFullLineComments(const string_q& inStr);
 extern string_q collapseArrays(const string_q& inStr);
@@ -157,7 +147,7 @@ extern string_q collapseArrays(const string_q& inStr);
             os << (first?"":"\n") << (group.isComment?"#":"");
             os << (group.isArray?"[[":"[") << group.groupName << (group.isArray?"]]":"]") << "\n";
             for (auto key : group.keys)
-                os << (key.comment ? "#" : "") << key.keyName << "=" << key.value << "\n";
+                os << (key.comment ? "#" : "") << key.keyName << " = " << key.value << "\n";
             WriteLine(os.str().c_str());
             first = false;
         }
@@ -228,6 +218,24 @@ extern string_q collapseArrays(const string_q& inStr);
         ret = substitute(ret, "\\t", "\t");
         ret = substitute(ret, "\\r", "\r");
         return ret;
+    }
+
+    //-------------------------------------------------------------------------
+    void CToml::setConfigInt(const string_q& group, const string_q& key, uint64_t value) {
+        setConfigStr(group, key, int_2_Str((int64_t)value));
+    }
+
+    //-------------------------------------------------------------------------
+    void CToml::setConfigBool(const string_q& group, const string_q& key, bool value) {
+        setConfigStr(group, key, int_2_Str(value));
+    }
+
+    //-------------------------------------------------------------------------
+    void CToml::setConfigArray(const string_q& group, const string_q& key, const string& value) {
+        setConfigStr(group, key, value);
+        CToml::CTomlGroup *grp = findGroup(group);
+        if (grp)
+            grp->isArray = true;
     }
 
     //-------------------------------------------------------------------------
@@ -580,6 +588,10 @@ extern string_q collapseArrays(const string_q& inStr);
         uint16_t v2 = (uint16_t)str_2_Uint(nextTokenClear(value, '.'));
         uint16_t v3 = (uint16_t)str_2_Uint(nextTokenClear(value, '.'));
         return getVersionNum(v1, v2, v3);
+    }
+
+    //-------------------------------------------------------------------------
+    void CNewToml::setConfigArray(const string_q& group, const string_q& key, const string_q& value) {
     }
 
     void CNewToml::setConfigStr(const string_q& group, const string_q& key, const string_q& value) {
