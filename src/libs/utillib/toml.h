@@ -73,14 +73,12 @@ namespace qblocks {
             string_q keyName;
             string_q value;
             bool     comment;
+            bool     deleted;
 
             CTomlKey(void);
-            CTomlKey(const string_q& n, const string_q& v, bool c) : keyName(n), value(v), comment(c) { }
+            CTomlKey(const string_q& n, const string_q& v, bool c) : keyName(n), value(v), comment(c), deleted(false) { }
             CTomlKey(const CTomlKey& key);
             CTomlKey& operator=(const CTomlKey& key);
-//            bool operator<(const CToml::CTomlKey& v2) const {
-//                return keyName < v2.keyName;
-//            }
         };
 
         //-------------------------------------------------------------------------
@@ -101,10 +99,6 @@ namespace qblocks {
             CTomlGroup& operator=(const CTomlGroup& group);
             void addKey(const string_q& keyName, const string_q& val, bool commented);
 
-//            bool operator<(const CToml::CTomlGroup& v2) const {
-//                return groupName < v2.groupName;
-//            }
-//
         private:
             void clear(void);
             void copy(const CTomlGroup& group);
@@ -117,6 +111,7 @@ namespace qblocks {
 
         CTomlGroup *findGroup(const string_q& group) const;
         CTomlKey   *findKey  (const string_q& group, const string_q& key) const;
+        void        deleteKey(const string_q& group, const string_q& key);
 
     public:
         vector<CTomlGroup> groups;
@@ -145,7 +140,7 @@ namespace qblocks {
         bool readFile(const string_q& filename);
         void mergeFile(CToml *tomlIn);
 
-//        bool isBackLevel(void) const;
+        bool isBackLevel(void) const;
 //        bool forEveryGroup(TOMLGROUPFUNC func) const;
 //
         friend ostream& operator<<(ostream& os, const CToml& tomlIn);

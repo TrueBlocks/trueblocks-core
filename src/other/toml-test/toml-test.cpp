@@ -141,13 +141,6 @@ bool CToml::forEveryGroup(TOMLGROUPFUNC func) const {
 }
 
 //----------------------------------------------------------------
-bool CToml::isBackLevel(void) const {
-    string_q cur = getVersionStr();
-    string_q vers = getConfigStr("", "version", "<NOT_SET>");
-    if (vers == "<NOT_SET>")
-        vers = getConfigStr("version", "current", "<NOT_SET>");
-    return vers != cur;
-}
 #endif
 
 //----------------------------------------------------------------

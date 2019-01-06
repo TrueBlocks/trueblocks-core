@@ -1958,35 +1958,6 @@ namespace qblocks {
             endline();
         }
 
-        static string escape_string(const string& str) {
-            string res;
-            for (auto it = str.begin(); it != str.end(); ++it) {
-                if (*it == '\b') {
-                    res += "\\b";
-                } else if (*it == '\t') {
-                    res += "\\t";
-                } else if (*it == '\n') {
-                    res += "\\n";
-                } else if (*it == '\f') {
-                    res += "\\f";
-                } else if (*it == '\r') {
-                    res += "\\r";
-                } else if (*it == '"') {
-                    res += "\\\"";
-                } else if (*it == '\\') {
-                    res += "\\\\";
-                } else if (static_cast<uint32_t>(*it) <= UINT32_C(0x001f)) {
-                    res += "\\u";
-                    stringstream ss;
-                    ss << hex << static_cast<uint32_t>(*it);
-                    res += ss.str();
-                } else {
-                    res += *it;
-                }
-            }
-            return res;
-        }
-
     protected:
         void write(const strval_t& v) {
             write("\"");
