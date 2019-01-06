@@ -148,4 +148,7 @@ namespace qblocks {
     inline string_q padNum7T(int64_t n) { return padLeft(int_2_Str((n)), 7); }
     inline string_q padNum8T(int64_t n) { return padLeft(int_2_Str((n)), 8); }
 
+    //--------------------------------------------------------------------
+    extern string_q escape_string(const string_q& str);
+
 }  // namespace qblocks

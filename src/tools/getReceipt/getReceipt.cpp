@@ -67,6 +67,7 @@ bool visitTransaction(CTransaction& trans, void *data) {
         queryRawReceipt(raw, trans.getValueByName("hash"));
         raw = substitute(raw,"{\"jsonrpc\":\"2.0\",\"result\":", "");
         raw = substitute(raw,",\"id\":1}", "");
+        raw = substitute(raw,",\"id\":\"1\"}", "");
         opt->rawReceipts.push_back(raw);
         return true;
     }

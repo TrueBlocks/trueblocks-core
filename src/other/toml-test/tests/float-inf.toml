@@ -1,0 +1,5 @@
+version="0.5.5-alpha"
+
+sf1 = inf
+sf2 = +inf
+sf3 = -inf

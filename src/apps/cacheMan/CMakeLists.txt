@@ -30,6 +30,14 @@ build_readme(${CMAKE_CURRENT_SOURCE_DIR} ${TOOL_NAME})
 # To run only specific tests we define a test configuration named "test_all"
 add_custom_target(test-all COMMAND ${CMAKE_CTEST_COMMAND} -C test_all)
 
+## To run only specific tests we define a test configuration named "test_state"
+add_custom_target(test-state COMMAND ${CMAKE_CTEST_COMMAND} -C test_state)
+
+# Function to run state test cases
+function(run_state_test testName)
+    run_the_state_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(run_state_test)
+
 # Function to run an special or slow test case
 function(run_special_test testName)
     run_the_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
@@ -61,6 +69,10 @@ run_special_test("cacheMan_merge_import"   "-i"  " merged.acct.bin")
 run_special_test("cacheMan_merge_ilist"    "-l"  " merged.acct.bin")
 run_special_test("cacheMan_extract"        "-e"  " 0" " TipJar.acct.bin" " Duplicate.acct.bin" " --list" " --data")
 run_special_test("cacheMan_extract_list"   "-l"  " extract.acct.bin" " --data")
+
+run_state_test("cacheMan_balanceFail" "cache/0x001d14804b399c6ef80e64576f657660804fabcd.acct.bin" " --cacheBals")
+run_state_test("cacheMan_balanceGet" "cache/0x001d14804b399c6ef80e64576f657660804fec0b.acct.bin" " --cacheBals")
+run_state_test("cacheMan_balances" "cache/0x001d14804b399c6ef80e64576f657660804fec0b.acct.bin" " --balances")
 
 # COption("-truncate:<num>", "truncate the cache at block :n (keeps block 'n' and before, implies --fix)"),
 # COption("@s(k)ip",         "skip value for testing"),

@@ -1,0 +1,923 @@
+--------------------------------------------------------------------------------
+Old toml: tests/acctExport.toml
+[debug]
+	showBlocks = true
+
+<NOT_SET>
+{"debug":{"showBlocks":{"type":"bool","value":"true"}}}
+
+{"debug":{"showBlocks":{"type":"bool","value":"true"}}}
+
+{"debug":{"showBlocks":{"type":"bool","value":"true"}}}
+
+oldGroup:
+[debug]
+	showBlocks = true
+
+--------------------------------------------------------------------------------
+Old toml: tests/blockScrape.toml
+[exclusions]
+	list = "0xe0ca2ec1648f4fc94d5ecaad5caa9fa6799ebb28|0x7c1cf1f9809c527e5a6becaab56bc34fbe6f2023|0x0978b496a1635e4a0b4ff867569cf43ee030e967|0x2213d4738bfec14a2f98df5e428f48ebbde33e12|0x52d77b07e65697551d4b1ade631546b89be6260f|0x92a4406a0bcc70bb92b9c1f2d457dca08ae60627|0x9f58ef5d703973ba98dfa7a9bdecabecf13a0ec3|0x212f10280567e7d74b1e230723607c3bf637b532|0x3898d7580aa5b8ad8a56fcd7f7af690e97112419|0x8a2e29e7d66569952ecffae4ba8acb49c1035b6f|0x9f58ef5d703973ba98dfa7a9bdecabecf13a0ec3|0x8428ce12a1b6aaecfcf2ac5b22d21f3831949da3|0xaa7c4ca548ffc77a42b309aaaea40a1bd477ac70|0x2213d4738bfec14a2f98df5e428f48ebbde33e12|0x7c1cf1f9809c527e5a6becaab56bc34fbe6f2023|0xde21bc367afe7a3705a15255ff46a5ae91e8341c|0x1fa0e1dfa88b371fcedf6225b3d8ad4e3bacef0e|0xd3e32594cedbc102d739142aa70d21f4caea5618|0xfb34db0651ab62d73a237fcf1aa1057ceb1f6229|0x40525ac2fe3befe27a4e73757178d4accfef71da|0xe25e422e3f9e9374a3d8a75451c790d48fb33218|0xb09f8a62c6681b0c739dfde7221bfe8f2da3f128|0x4b8f3b2e935a341929c0a4efe5110314f39dea73|0x0c40cf6dd1b74c6edfc4729021a11f57b31e3c27|0xf9110f7f0191317eb4bcd96e80d86946eb5426c5|0x1dacf33da596a743be75933ce066f9c6e142a460|0xb233cb2f0dce57a56bf732767f45ffc8650186c5|0xb233cb2f0dce57a56bf732767f45ffc8650186c5|0x25612c41773cb96167854ff72b1c2d7dc8973e2f|0xd6a64d7e8c8a94fa5068ca33229d88436a743b14|0x7fc03bd9e44c37bc2d111dc2154da781dbba7c24|0x45faec35e32676568ad827aea17fb7431ef390bc|0x29446e8d2f0ca2e7fd9e46665e80fc2cd55bf262|0xab90c4455d32f1e579152f52377e3cbf9b3cc37b|0x0c40cf6dd1b74c6edfc4729021a11f57b31e3c27|0x6a0a0fc761c612c340a0e98d33b37a75e5268472|0x7c20218efc2e07c8fe2532ff860d4a5d8287cb31|0x10fa9f37f646bb353945fe90d41a44e1c60745fb|0x822f505e0174ef22d2a774cb80a855ffd27ae3bf|0x59493d3fc7a8522253b8be0d168b8ad22ff85177|0xba0577e1419237fd4b8c14a6f49984f6466b5996|0x4943e4bd90d7ff8bafe1bd202e08907903ebdb66|0x3898d7580aa5b8ad8a56fcd7f7af690e97112419|0x316ba6125feaa91fed84e86d7c0f407afb5fd83e|0x8a03b494b3fac3d63bf827bdf78437c35e48abac|0x16035d97f70e8bd620f32ce831ea8bc7d0338ef3|0xabd96a381d4216d80010c0db0704b2fc685fe0bc|0xaaaa9c8834d448fe0e1f95b109ed8be1ef802936|0xfebc9407031590bde22bca8a00736756f3a58007|0xe6481d9fc7f9dd2df6c3289ab66086723cc5c37b|0x0f600992da5dbbe0aebf01ba1da0daef1c912bbf|0xe00c36815fec7ff523cc6442c54e1f9b21ebfc1f|0x03b904c8b912194464ae97eaa0381e5518446d25|0x7b15969d8fddd4ff6cba445924976c54eb5578d7|0x0fc599f7cfe83bf2e9e549212b8aa1b73137fcf0|0x157ddd802ab7831a2e1966baf2cc804bc7f95bd8|0xd49f74b3df4d05fc46fe05312bcdc052ccd57ce5|0x4bf317ca5fdd5f18828e85822c7d75209f5d1eb8|0x68f5b2aa03c6ea72d329e6313cdb43905b486f17|0x991bdd03b0581cb0a2d46ffe0d21855ff83bdeef"
+[settings]
+	writeBlocks = true
+
+<NOT_SET>
+{"exclusions":{"list":{"type":"string","value":"0xe0ca2ec1648f4fc94d5ecaad5caa9fa6799ebb28|0x7c1cf1f9809c527e5a6becaab56bc34fbe6f2023|0x0978b496a1635e4a0b4ff867569cf43ee030e967|0x2213d4738bfec14a2f98df5e428f48ebbde33e12|0x52d77b07e65697551d4b1ade631546b89be6260f|0x92a4406a0bcc70bb92b9c1f2d457dca08ae60627|0x9f58ef5d703973ba98dfa7a9bdecabecf13a0ec3|0x212f10280567e7d74b1e230723607c3bf637b532|0x3898d7580aa5b8ad8a56fcd7f7af690e97112419|0x8a2e29e7d66569952ecffae4ba8acb49c1035b6f|0x9f58ef5d703973ba98dfa7a9bdecabecf13a0ec3|0x8428ce12a1b6aaecfcf2ac5b22d21f3831949da3|0xaa7c4ca548ffc77a42b309aaaea40a1bd477ac70|0x2213d4738bfec14a2f98df5e428f48ebbde33e12|0x7c1cf1f9809c527e5a6becaab56bc34fbe6f2023|0xde21bc367afe7a3705a15255ff46a5ae91e8341c|0x1fa0e1dfa88b371fcedf6225b3d8ad4e3bacef0e|0xd3e32594cedbc102d739142aa70d21f4caea5618|0xfb34db0651ab62d73a237fcf1aa1057ceb1f6229|0x40525ac2fe3befe27a4e73757178d4accfef71da|0xe25e422e3f9e9374a3d8a75451c790d48fb33218|0xb09f8a62c6681b0c739dfde7221bfe8f2da3f128|0x4b8f3b2e935a341929c0a4efe5110314f39dea73|0x0c40cf6dd1b74c6edfc4729021a11f57b31e3c27|0xf9110f7f0191317eb4bcd96e80d86946eb5426c5|0x1dacf33da596a743be75933ce066f9c6e142a460|0xb233cb2f0dce57a56bf732767f45ffc8650186c5|0xb233cb2f0dce57a56bf732767f45ffc8650186c5|0x25612c41773cb96167854ff72b1c2d7dc8973e2f|0xd6a64d7e8c8a94fa5068ca33229d88436a743b14|0x7fc03bd9e44c37bc2d111dc2154da781dbba7c24|0x45faec35e32676568ad827aea17fb7431ef390bc|0x29446e8d2f0ca2e7fd9e46665e80fc2cd55bf262|0xab90c4455d32f1e579152f52377e3cbf9b3cc37b|0x0c40cf6dd1b74c6edfc4729021a11f57b31e3c27|0x6a0a0fc761c612c340a0e98d33b37a75e5268472|0x7c20218efc2e07c8fe2532ff860d4a5d8287cb31|0x10fa9f37f646bb353945fe90d41a44e1c60745fb|0x822f505e0174ef22d2a774cb80a855ffd27ae3bf|0x59493d3fc7a8522253b8be0d168b8ad22ff85177|0xba0577e1419237fd4b8c14a6f49984f6466b5996|0x4943e4bd90d7ff8bafe1bd202e08907903ebdb66|0x3898d7580aa5b8ad8a56fcd7f7af690e97112419|0x316ba6125feaa91fed84e86d7c0f407afb5fd83e|0x8a03b494b3fac3d63bf827bdf78437c35e48abac|0x16035d97f70e8bd620f32ce831ea8bc7d0338ef3|0xabd96a381d4216d80010c0db0704b2fc685fe0bc|0xaaaa9c8834d448fe0e1f95b109ed8be1ef802936|0xfebc9407031590bde22bca8a00736756f3a58007|0xe6481d9fc7f9dd2df6c3289ab66086723cc5c37b|0x0f600992da5dbbe0aebf01ba1da0daef1c912bbf|0xe00c36815fec7ff523cc6442c54e1f9b21ebfc1f|0x03b904c8b912194464ae97eaa0381e5518446d25|0x7b15969d8fddd4ff6cba445924976c54eb5578d7|0x0fc599f7cfe83bf2e9e549212b8aa1b73137fcf0|0x157ddd802ab7831a2e1966baf2cc804bc7f95bd8|0xd49f74b3df4d05fc46fe05312bcdc052ccd57ce5|0x4bf317ca5fdd5f18828e85822c7d75209f5d1eb8|0x68f5b2aa03c6ea72d329e6313cdb43905b486f17|0x991bdd03b0581cb0a2d46ffe0d21855ff83bdeef"}}, "settings":{"writeBlocks":{"type":"bool","value":"true"}}}
+
+{"exclusions":{"list":{"type":"string","value":"0xe0ca2ec1648f4fc94d5ecaad5caa9fa6799ebb28|0x7c1cf1f9809c527e5a6becaab56bc34fbe6f2023|0x0978b496a1635e4a0b4ff867569cf43ee030e967|0x2213d4738bfec14a2f98df5e428f48ebbde33e12|0x52d77b07e65697551d4b1ade631546b89be6260f|0x92a4406a0bcc70bb92b9c1f2d457dca08ae60627|0x9f58ef5d703973ba98dfa7a9bdecabecf13a0ec3|0x212f10280567e7d74b1e230723607c3bf637b532|0x3898d7580aa5b8ad8a56fcd7f7af690e97112419|0x8a2e29e7d66569952ecffae4ba8acb49c1035b6f|0x9f58ef5d703973ba98dfa7a9bdecabecf13a0ec3|0x8428ce12a1b6aaecfcf2ac5b22d21f3831949da3|0xaa7c4ca548ffc77a42b309aaaea40a1bd477ac70|0x2213d4738bfec14a2f98df5e428f48ebbde33e12|0x7c1cf1f9809c527e5a6becaab56bc34fbe6f2023|0xde21bc367afe7a3705a15255ff46a5ae91e8341c|0x1fa0e1dfa88b371fcedf6225b3d8ad4e3bacef0e|0xd3e32594cedbc102d739142aa70d21f4caea5618|0xfb34db0651ab62d73a237fcf1aa1057ceb1f6229|0x40525ac2fe3befe27a4e73757178d4accfef71da|0xe25e422e3f9e9374a3d8a75451c790d48fb33218|0xb09f8a62c6681b0c739dfde7221bfe8f2da3f128|0x4b8f3b2e935a341929c0a4efe5110314f39dea73|0x0c40cf6dd1b74c6edfc4729021a11f57b31e3c27|0xf9110f7f0191317eb4bcd96e80d86946eb5426c5|0x1dacf33da596a743be75933ce066f9c6e142a460|0xb233cb2f0dce57a56bf732767f45ffc8650186c5|0xb233cb2f0dce57a56bf732767f45ffc8650186c5|0x25612c41773cb96167854ff72b1c2d7dc8973e2f|0xd6a64d7e8c8a94fa5068ca33229d88436a743b14|0x7fc03bd9e44c37bc2d111dc2154da781dbba7c24|0x45faec35e32676568ad827aea17fb7431ef390bc|0x29446e8d2f0ca2e7fd9e46665e80fc2cd55bf262|0xab90c4455d32f1e579152f52377e3cbf9b3cc37b|0x0c40cf6dd1b74c6edfc4729021a11f57b31e3c27|0x6a0a0fc761c612c340a0e98d33b37a75e5268472|0x7c20218efc2e07c8fe2532ff860d4a5d8287cb31|0x10fa9f37f646bb353945fe90d41a44e1c60745fb|0x822f505e0174ef22d2a774cb80a855ffd27ae3bf|0x59493d3fc7a8522253b8be0d168b8ad22ff85177|0xba0577e1419237fd4b8c14a6f49984f6466b5996|0x4943e4bd90d7ff8bafe1bd202e08907903ebdb66|0x3898d7580aa5b8ad8a56fcd7f7af690e97112419|0x316ba6125feaa91fed84e86d7c0f407afb5fd83e|0x8a03b494b3fac3d63bf827bdf78437c35e48abac|0x16035d97f70e8bd620f32ce831ea8bc7d0338ef3|0xabd96a381d4216d80010c0db0704b2fc685fe0bc|0xaaaa9c8834d448fe0e1f95b109ed8be1ef802936|0xfebc9407031590bde22bca8a00736756f3a58007|0xe6481d9fc7f9dd2df6c3289ab66086723cc5c37b|0x0f600992da5dbbe0aebf01ba1da0daef1c912bbf|0xe00c36815fec7ff523cc6442c54e1f9b21ebfc1f|0x03b904c8b912194464ae97eaa0381e5518446d25|0x7b15969d8fddd4ff6cba445924976c54eb5578d7|0x0fc599f7cfe83bf2e9e549212b8aa1b73137fcf0|0x157ddd802ab7831a2e1966baf2cc804bc7f95bd8|0xd49f74b3df4d05fc46fe05312bcdc052ccd57ce5|0x4bf317ca5fdd5f18828e85822c7d75209f5d1eb8|0x68f5b2aa03c6ea72d329e6313cdb43905b486f17|0x991bdd03b0581cb0a2d46ffe0d21855ff83bdeef"}}, "settings":{"writeBlocks":{"type":"bool","value":"true"}}}
+
+{"exclusions":{"list":{"type":"string","value":"0xe0ca2ec1648f4fc94d5ecaad5caa9fa6799ebb28|0x7c1cf1f9809c527e5a6becaab56bc34fbe6f2023|0x0978b496a1635e4a0b4ff867569cf43ee030e967|0x2213d4738bfec14a2f98df5e428f48ebbde33e12|0x52d77b07e65697551d4b1ade631546b89be6260f|0x92a4406a0bcc70bb92b9c1f2d457dca08ae60627|0x9f58ef5d703973ba98dfa7a9bdecabecf13a0ec3|0x212f10280567e7d74b1e230723607c3bf637b532|0x3898d7580aa5b8ad8a56fcd7f7af690e97112419|0x8a2e29e7d66569952ecffae4ba8acb49c1035b6f|0x9f58ef5d703973ba98dfa7a9bdecabecf13a0ec3|0x8428ce12a1b6aaecfcf2ac5b22d21f3831949da3|0xaa7c4ca548ffc77a42b309aaaea40a1bd477ac70|0x2213d4738bfec14a2f98df5e428f48ebbde33e12|0x7c1cf1f9809c527e5a6becaab56bc34fbe6f2023|0xde21bc367afe7a3705a15255ff46a5ae91e8341c|0x1fa0e1dfa88b371fcedf6225b3d8ad4e3bacef0e|0xd3e32594cedbc102d739142aa70d21f4caea5618|0xfb34db0651ab62d73a237fcf1aa1057ceb1f6229|0x40525ac2fe3befe27a4e73757178d4accfef71da|0xe25e422e3f9e9374a3d8a75451c790d48fb33218|0xb09f8a62c6681b0c739dfde7221bfe8f2da3f128|0x4b8f3b2e935a341929c0a4efe5110314f39dea73|0x0c40cf6dd1b74c6edfc4729021a11f57b31e3c27|0xf9110f7f0191317eb4bcd96e80d86946eb5426c5|0x1dacf33da596a743be75933ce066f9c6e142a460|0xb233cb2f0dce57a56bf732767f45ffc8650186c5|0xb233cb2f0dce57a56bf732767f45ffc8650186c5|0x25612c41773cb96167854ff72b1c2d7dc8973e2f|0xd6a64d7e8c8a94fa5068ca33229d88436a743b14|0x7fc03bd9e44c37bc2d111dc2154da781dbba7c24|0x45faec35e32676568ad827aea17fb7431ef390bc|0x29446e8d2f0ca2e7fd9e46665e80fc2cd55bf262|0xab90c4455d32f1e579152f52377e3cbf9b3cc37b|0x0c40cf6dd1b74c6edfc4729021a11f57b31e3c27|0x6a0a0fc761c612c340a0e98d33b37a75e5268472|0x7c20218efc2e07c8fe2532ff860d4a5d8287cb31|0x10fa9f37f646bb353945fe90d41a44e1c60745fb|0x822f505e0174ef22d2a774cb80a855ffd27ae3bf|0x59493d3fc7a8522253b8be0d168b8ad22ff85177|0xba0577e1419237fd4b8c14a6f49984f6466b5996|0x4943e4bd90d7ff8bafe1bd202e08907903ebdb66|0x3898d7580aa5b8ad8a56fcd7f7af690e97112419|0x316ba6125feaa91fed84e86d7c0f407afb5fd83e|0x8a03b494b3fac3d63bf827bdf78437c35e48abac|0x16035d97f70e8bd620f32ce831ea8bc7d0338ef3|0xabd96a381d4216d80010c0db0704b2fc685fe0bc|0xaaaa9c8834d448fe0e1f95b109ed8be1ef802936|0xfebc9407031590bde22bca8a00736756f3a58007|0xe6481d9fc7f9dd2df6c3289ab66086723cc5c37b|0x0f600992da5dbbe0aebf01ba1da0daef1c912bbf|0xe00c36815fec7ff523cc6442c54e1f9b21ebfc1f|0x03b904c8b912194464ae97eaa0381e5518446d25|0x7b15969d8fddd4ff6cba445924976c54eb5578d7|0x0fc599f7cfe83bf2e9e549212b8aa1b73137fcf0|0x157ddd802ab7831a2e1966baf2cc804bc7f95bd8|0xd49f74b3df4d05fc46fe05312bcdc052ccd57ce5|0x4bf317ca5fdd5f18828e85822c7d75209f5d1eb8|0x68f5b2aa03c6ea72d329e6313cdb43905b486f17|0x991bdd03b0581cb0a2d46ffe0d21855ff83bdeef"}}, "settings":{"writeBlocks":{"type":"bool","value":"true"}}}
+
+oldGroup:
+[exclusions]
+	list = "0xe0ca2ec1648f4fc94d5ecaad5caa9fa6799ebb28|0x7c1cf1f9809c527e5a6becaab56bc34fbe6f2023|0x0978b496a1635e4a0b4ff867569cf43ee030e967|0x2213d4738bfec14a2f98df5e428f48ebbde33e12|0x52d77b07e65697551d4b1ade631546b89be6260f|0x92a4406a0bcc70bb92b9c1f2d457dca08ae60627|0x9f58ef5d703973ba98dfa7a9bdecabecf13a0ec3|0x212f10280567e7d74b1e230723607c3bf637b532|0x3898d7580aa5b8ad8a56fcd7f7af690e97112419|0x8a2e29e7d66569952ecffae4ba8acb49c1035b6f|0x9f58ef5d703973ba98dfa7a9bdecabecf13a0ec3|0x8428ce12a1b6aaecfcf2ac5b22d21f3831949da3|0xaa7c4ca548ffc77a42b309aaaea40a1bd477ac70|0x2213d4738bfec14a2f98df5e428f48ebbde33e12|0x7c1cf1f9809c527e5a6becaab56bc34fbe6f2023|0xde21bc367afe7a3705a15255ff46a5ae91e8341c|0x1fa0e1dfa88b371fcedf6225b3d8ad4e3bacef0e|0xd3e32594cedbc102d739142aa70d21f4caea5618|0xfb34db0651ab62d73a237fcf1aa1057ceb1f6229|0x40525ac2fe3befe27a4e73757178d4accfef71da|0xe25e422e3f9e9374a3d8a75451c790d48fb33218|0xb09f8a62c6681b0c739dfde7221bfe8f2da3f128|0x4b8f3b2e935a341929c0a4efe5110314f39dea73|0x0c40cf6dd1b74c6edfc4729021a11f57b31e3c27|0xf9110f7f0191317eb4bcd96e80d86946eb5426c5|0x1dacf33da596a743be75933ce066f9c6e142a460|0xb233cb2f0dce57a56bf732767f45ffc8650186c5|0xb233cb2f0dce57a56bf732767f45ffc8650186c5|0x25612c41773cb96167854ff72b1c2d7dc8973e2f|0xd6a64d7e8c8a94fa5068ca33229d88436a743b14|0x7fc03bd9e44c37bc2d111dc2154da781dbba7c24|0x45faec35e32676568ad827aea17fb7431ef390bc|0x29446e8d2f0ca2e7fd9e46665e80fc2cd55bf262|0xab90c4455d32f1e579152f52377e3cbf9b3cc37b|0x0c40cf6dd1b74c6edfc4729021a11f57b31e3c27|0x6a0a0fc761c612c340a0e98d33b37a75e5268472|0x7c20218efc2e07c8fe2532ff860d4a5d8287cb31|0x10fa9f37f646bb353945fe90d41a44e1c60745fb|0x822f505e0174ef22d2a774cb80a855ffd27ae3bf|0x59493d3fc7a8522253b8be0d168b8ad22ff85177|0xba0577e1419237fd4b8c14a6f49984f6466b5996|0x4943e4bd90d7ff8bafe1bd202e08907903ebdb66|0x3898d7580aa5b8ad8a56fcd7f7af690e97112419|0x316ba6125feaa91fed84e86d7c0f407afb5fd83e|0x8a03b494b3fac3d63bf827bdf78437c35e48abac|0x16035d97f70e8bd620f32ce831ea8bc7d0338ef3|0xabd96a381d4216d80010c0db0704b2fc685fe0bc|0xaaaa9c8834d448fe0e1f95b109ed8be1ef802936|0xfebc9407031590bde22bca8a00736756f3a58007|0xe6481d9fc7f9dd2df6c3289ab66086723cc5c37b|0x0f600992da5dbbe0aebf01ba1da0daef1c912bbf|0xe00c36815fec7ff523cc6442c54e1f9b21ebfc1f|0x03b904c8b912194464ae97eaa0381e5518446d25|0x7b15969d8fddd4ff6cba445924976c54eb5578d7|0x0fc599f7cfe83bf2e9e549212b8aa1b73137fcf0|0x157ddd802ab7831a2e1966baf2cc804bc7f95bd8|0xd49f74b3df4d05fc46fe05312bcdc052ccd57ce5|0x4bf317ca5fdd5f18828e85822c7d75209f5d1eb8|0x68f5b2aa03c6ea72d329e6313cdb43905b486f17|0x991bdd03b0581cb0a2d46ffe0d21855ff83bdeef"
+[settings]
+	writeBlocks = true
+
+--------------------------------------------------------------------------------
+Old toml: tests/config.toml
+[display]
+	accounting = true
+	autocorrect = true
+	debug = true
+	logs = true
+	parse = false
+	single = true
+	trace = true
+	width = 24
+[formats]
+	trans_fmt = "[{DATE} ] [{BLOCKNUMBER} ][{TRANSACTIONINDEX} ] [{FROM} ][{TO} ][{ETHER} ][{ISERROR} ] [\r\n\tarticulated:\t{ARTICULATEDTX}] [\r\n\tgas cost:\t{GASCOST}][ (used/price: {GASUSED}][ @ {GASPRICE})]"
+[settings]
+	name = "accts"
+[[watches]]
+	list = [ { address : "0xa92e6abc1156b6ed4948cc962cb60f250d422c68", name : "Main Wallet", firstBlock : 1971529, color : "white_b" },{ address : "0x00a3819199113fc6a6e6ba1298afde7377e2009b", name : "Laptop Wallet", firstBlock : 2867899, color : "magenta_b" },{ address : "0xb97073b754660bb356dfe12f78ae366d77dbc80f", name : "Tip Jar", firstBlock : 1986055, color : "blue_b" },{ address : "0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c", name : "Token Holder", firstBlock : 2420364, color : "green_b" },{ address : "0xf1aa581f353005ba3765b81bf52d6b1c488c2767", name : "One Ether", firstBlock : 1986062, color : "red_b" },{ address : "0xd31f381ad54386895852f311fc3be2008c88cb27", name : "Play Wallet", firstBlock : 2597778, color : "yellow_b" },{ address : "0x654e7f49b474e2f5ac29cc5f2f0d41c8a93d6d0a", name : "MetaMask Wallet", firstBlock : 2972204, color : "teal_b" },{ address : "0x85979379cb90d63fe944763b42b9ec4b49573ea7", name : "Nates Wallet", firstBlock : 2593109, color : "white_c" },{ address : "0x7E02ee81df2b100C3292636e0813d71192D8b071", name : "Bitrex Wallet", firstBlock : 4342440, color : "green_c" },{ address : "0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533", name : "Hacker Camp Wallet", firstBlock : 3189894, color : "magenta_c", lastBlock : 2873699 },{ address : "0x31f54a9d0c9817bb9e6ca1d17ca20d8ea718bc66", name : "Old MEW Wallet", firstBlock : 3900000, color : "blue_c", lastBlock : 3900000 },{ address : "0x00a6ef05a497236a1ea611857f52884593f63f8c", name : "Play Account 2", firstBlock : 3900000, color : "green_c", lastBlock : 3900000 },{ address : "0x9519afbc60719a83c470ceec41e32d3e4b8b262e", name : "GH_DAO_Wallet", firstBlock : 1383378, color : "red_c", lastBlock : 1975800 },{ address : "0xfd23407a31f54413e32043adb7b1ee61a6e04027", name : "OLD_WALLET", firstBlock : 1235820, color : "blue_b", lastBlock : 1434025 },{ address : "0xcb1547417575261c4d84cab3e989acfd9f9ee35c", name : "GH_2_Wallet", firstBlock : 1438181, color : "yellow_c", lastBlock : 1975779 },{ address : "0x3464e758c8372d7cb536eaf9f5a126d3f574f4c3", name : "EtherSlurp", firstBlock : 1559924, color : "teal_c", lastBlock : 2603045 },{ address : "0xe583ac239693c716ee5567c7da61c96647d691e5", name : "Account_4", firstBlock : 1589769, color : "white_b", lastBlock : 1973555 },{ address : "0x77d0967ffddbad3aba301837208392573da29299", name : "NatesOldWallet", firstBlock : 1477483, color : "magenta_b", lastBlock : 1974407 },{ address : "0x10ed2372778da1b9d96782c894b752d8a647deb8", name : "NatesOldWallet2", firstBlock : 1724673, color : "blue_b", lastBlock : 1848186 },{ address : "0x713b73c3994442b533e6a083ec968e40606810ec", name : "EEAR", firstBlock : 1387025, color : "red_c", lastBlock : 1470405 },{ address : "0x2b61CD90B5591604B3D969Ca9eb944D59be6f5A7", name : "Old_EEAR", firstBlock : 1385714, color : "magenta_b", lastBlock : 1386546 },{ address : "0xc430503c9f7cade47eb28958e734ee6255fe143b", name : "GiftOfFriendship", firstBlock : 2694532, color : "yellow_c", lastBlock : 2694564 },{ address : "0x3e575510b9304ff417c2e4d420d1314dc3f13687", name : "Friend_Ar", firstBlock : 1488777, color : "blue_b", lastBlock : 1987505 },{ address : "0x6d343663e55f734781e278b2b41a36c99e0bac40", name : "Friend_A", firstBlock : 2610051, color : "blue_b", lastBlock : 2677451 },{ address : "0x9e5adb4e5c299654c2f0619624f7c9eb7b9a3a1a", name : "Friend_D", firstBlock : 2511426, color : "blue_b", lastBlock : 2511433 },{ address : "0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98", name : "Exch_K1", firstBlock : 1973555, color : "green_c", lastBlock : 1973640 },{ address : "0xbb43f212b7b47bab7164ce74a07bd1d61aef1ee8", name : "Exch_K2", firstBlock : 1925718, color : "green_c", lastBlock : 1956807 },{ address : "0xf6b0b85aa3a40e9d3e821847a65bd37d56ac78c2", name : "Exch_K3", firstBlock : 1447148, color : "green_c", lastBlock : 1915285 },{ address : "0xb3a0f8e3c7e44949011b18cf5a92ebae41923419", name : "Exch_K4", firstBlock : 1973788, color : "green_c", lastBlock : 3359914 },{ address : "0x10821bc0260fe58606d2fd97fda2113d4ab4a1ca", name : "Exch_K5", firstBlock : 1974267, color : "green_c", lastBlock : 1974270 },{ address : "0xa7e1819bb646e0b8c0dd6b5dba91212536e98cc5", name : "Exch_K6", firstBlock : 1342525, color : "green_c", lastBlock : 1973842 },{ address : "0x268e6834d5b40745849157cae0e5715190135f10", name : "Exch_K7", firstBlock : 1974407, color : "green_c", lastBlock : 1974418 },{ address : "0xc0fab372fad6613c3be2bb1378b2857a86c5ad90", name : "Exch_K8", firstBlock : 1975779, color : "green_c", lastBlock : 1975804 },{ address : "0x2eb0056C62ddDd0D5bD29FD51fe795B3Cb0B9be1", name : "QuickNodes node", firstBlock : 4162912, color : "blue_b" },{ address : "0x62428f78fe0118447b9668ae867b4bf6a40c2d9c", name : "Augur Web Wallet", firstBlock : 4402980, color : "white_b" },{ address : "0x48a74e18b38b153c54dd4f7c0c9f9f112a83a4ee", name : "Ledger", firstBlock : 4915357, color : "blue_b" },{ address : "0xdd449471bdc5a4d98f1a7d05e35b4cb55ebed441", name : "Nate Ledger", firstBlock : 4916351, color : "blue_b" },{ address : "0x3b161D57F482cd2dFBB626f0307ef92b3B094Fce", name : "NewMetaMask", firstBlock : 4834045, color : "white_b" }, ]
+	nxxxamed = [ { axddress : "0x314159265dd8dbb310642f98f50c066173c1259b", name : "ENS (Main)" },{ axddress : "0x6090a6e47849629b7245dfa1ca21d94cd15878ef", name : "ENS Registrar" },{ axddress : "0x012233b3c8177f0778d910ed88170b82de3bfe57", name : "Defunct ENS Regist" },{ axddress : "0xbb9bc244d798123fde783fcc1c72d3bb8c189413", name : "The DAO" },{ axddress : "0xbf4ed7b27f1d666546e30d74d50d173d20bca754", name : "DAO_Withdrawl" },{ axddress : "0xc7e165ebdad9eeb8e5f5d94eef3e96ea9739fdb2", name : "Dao.consider.it" },{ axddress : "0xaa1a6e3e6ef20068f7f8d8c835d2d22fd5116444", name : "ReplaySafeSplit" },{ axddress : "0x2910543af39aba0cd09dbb2d50200b3e800a63d2", name : "Kraken_Exch_1" },{ axddress : "0x53d284357ec70ce289d6d64134dfac8e511c8a3d", name : "Kraken_Exch_2" },{ axddress : "0xfa52274dd61e1643d2205169732f29114bc240b3", name : "Kraken_Exch_3" },{ axddress : "0x5f742383b6d1298980030d6af943b76cdd902143", name : "Etherplay" },{ axddress : "0x9ae98746eb8a0aeee5ff2b6b15875313a986f103", name : "Parity SMS Verifier" },{ axddress : "0x7cb57b5a97eabe94205c07890be4c1ad31e486a8", name : "Tip_MyEtherWallet" },{ axddress : "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359", name : "Tip_Ethereum" },{ axddress : "0x7ed1e469fcb3ee19c0366d829e291451be638e59", name : "Philly Meetup" },{ axddress : "0x7cb57b5a97eabe94205c07890be4c1ad31e486a8", name : "Friend_TVO" },{ axddress : "0x8f53781799515e5dc8f5d00c528940cae99ac969", name : "Friend_CP" },{ axddress : "0x5adf43dd006c6c36506e2b2dfa352e60002d22dc", name : "GiveEth" } ]
+
+<NOT_SET>
+{"display":{"accounting":{"type":"bool","value":"true"}, "autocorrect":{"type":"bool","value":"true"}, "debug":{"type":"bool","value":"true"}, "logs":{"type":"bool","value":"true"}, "parse":{"type":"bool","value":"false"}, "single":{"type":"bool","value":"true"}, "trace":{"type":"bool","value":"true"}, "width":{"type":"integer","value":"24"}}, "formats":{"trans_fmt":{"type":"string","value":"[{DATE} ] [{BLOCKNUMBER} ][{TRANSACTIONINDEX} ] [{FROM} ][{TO} ][{ETHER} ][{ISERROR} ] [\r\n\tarticulated:\t{ARTICULATEDTX}] [\r\n\tgas cost:\t{GASCOST}][ (used/price: {GASUSED}][ @ {GASPRICE})]"}}, "settings":{"name":{"type":"string","value":"accts"}}, "watches":[{"list":[{"address":{"type":"string","value":"0xa92e6abc1156b6ed4948cc962cb60f250d422c68"}, "color":{"type":"string","value":"white_b"}, "firstBlock":{"type":"integer","value":"1971529"}, "name":{"type":"string","value":"Main Wallet"}}, {"address":{"type":"string","value":"0x00a3819199113fc6a6e6ba1298afde7377e2009b"}, "color":{"type":"string","value":"magenta_b"}, "firstBlock":{"type":"integer","value":"2867899"}, "name":{"type":"string","value":"Laptop Wallet"}}, {"address":{"type":"string","value":"0xb97073b754660bb356dfe12f78ae366d77dbc80f"}, "color":{"type":"string","value":"blue_b"}, "firstBlock":{"type":"integer","value":"1986055"}, "name":{"type":"string","value":"Tip Jar"}}, {"address":{"type":"string","value":"0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c"}, "color":{"type":"string","value":"green_b"}, "firstBlock":{"type":"integer","value":"2420364"}, "name":{"type":"string","value":"Token Holder"}}, {"address":{"type":"string","value":"0xf1aa581f353005ba3765b81bf52d6b1c488c2767"}, "color":{"type":"string","value":"red_b"}, "firstBlock":{"type":"integer","value":"1986062"}, "name":{"type":"string","value":"One Ether"}}, {"address":{"type":"string","value":"0xd31f381ad54386895852f311fc3be2008c88cb27"}, "color":{"type":"string","value":"yellow_b"}, "firstBlock":{"type":"integer","value":"2597778"}, "name":{"type":"string","value":"Play Wallet"}}, {"address":{"type":"string","value":"0x654e7f49b474e2f5ac29cc5f2f0d41c8a93d6d0a"}, "color":{"type":"string","value":"teal_b"}, "firstBlock":{"type":"integer","value":"2972204"}, "name":{"type":"string","value":"MetaMask Wallet"}}, {"address":{"type":"string","value":"0x85979379cb90d63fe944763b42b9ec4b49573ea7"}, "color":{"type":"string","value":"white_c"}, "firstBlock":{"type":"integer","value":"2593109"}, "name":{"type":"string","value":"Nates Wallet"}}, {"address":{"type":"string","value":"0x7E02ee81df2b100C3292636e0813d71192D8b071"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"4342440"}, "name":{"type":"string","value":"Bitrex Wallet"}}, {"address":{"type":"string","value":"0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533"}, "color":{"type":"string","value":"magenta_c"}, "firstBlock":{"type":"integer","value":"3189894"}, "lastBlock":{"type":"integer","value":"2873699"}, "name":{"type":"string","value":"Hacker Camp Wallet"}}, {"address":{"type":"string","value":"0x31f54a9d0c9817bb9e6ca1d17ca20d8ea718bc66"}, "color":{"type":"string","value":"blue_c"}, "firstBlock":{"type":"integer","value":"3900000"}, "lastBlock":{"type":"integer","value":"3900000"}, "name":{"type":"string","value":"Old MEW Wallet"}}, {"address":{"type":"string","value":"0x00a6ef05a497236a1ea611857f52884593f63f8c"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"3900000"}, "lastBlock":{"type":"integer","value":"3900000"}, "name":{"type":"string","value":"Play Account 2"}}, {"address":{"type":"string","value":"0x9519afbc60719a83c470ceec41e32d3e4b8b262e"}, "color":{"type":"string","value":"red_c"}, "firstBlock":{"type":"integer","value":"1383378"}, "lastBlock":{"type":"integer","value":"1975800"}, "name":{"type":"string","value":"GH_DAO_Wallet"}}, {"address":{"type":"string","value":"0xfd23407a31f54413e32043adb7b1ee61a6e04027"}, "color":{"type":"string","value":"blue_b"}, "firstBlock":{"type":"integer","value":"1235820"}, "lastBlock":{"type":"integer","value":"1434025"}, "name":{"type":"string","value":"OLD_WALLET"}}, {"address":{"type":"string","value":"0xcb1547417575261c4d84cab3e989acfd9f9ee35c"}, "color":{"type":"string","value":"yellow_c"}, "firstBlock":{"type":"integer","value":"1438181"}, "lastBlock":{"type":"integer","value":"1975779"}, "name":{"type":"string","value":"GH_2_Wallet"}}, {"address":{"type":"string","value":"0x3464e758c8372d7cb536eaf9f5a126d3f574f4c3"}, "color":{"type":"string","value":"teal_c"}, "firstBlock":{"type":"integer","value":"1559924"}, "lastBlock":{"type":"integer","value":"2603045"}, "name":{"type":"string","value":"EtherSlurp"}}, {"address":{"type":"string","value":"0xe583ac239693c716ee5567c7da61c96647d691e5"}, "color":{"type":"string","value":"white_b"}, "firstBlock":{"type":"integer","value":"1589769"}, "lastBlock":{"type":"integer","value":"1973555"}, "name":{"type":"string","value":"Account_4"}}, {"address":{"type":"string","value":"0x77d0967ffddbad3aba301837208392573da29299"}, "color":{"type":"string","value":"magenta_b"}, "firstBlock":{"type":"integer","value":"1477483"}, "lastBlock":{"type":"integer","value":"1974407"}, "name":{"type":"string","value":"NatesOldWallet"}}, {"address":{"type":"string","value":"0x10ed2372778da1b9d96782c894b752d8a647deb8"}, "color":{"type":"string","value":"blue_b"}, "firstBlock":{"type":"integer","value":"1724673"}, "lastBlock":{"type":"integer","value":"1848186"}, "name":{"type":"string","value":"NatesOldWallet2"}}, {"address":{"type":"string","value":"0x713b73c3994442b533e6a083ec968e40606810ec"}, "color":{"type":"string","value":"red_c"}, "firstBlock":{"type":"integer","value":"1387025"}, "lastBlock":{"type":"integer","value":"1470405"}, "name":{"type":"string","value":"EEAR"}}, {"address":{"type":"string","value":"0x2b61CD90B5591604B3D969Ca9eb944D59be6f5A7"}, "color":{"type":"string","value":"magenta_b"}, "firstBlock":{"type":"integer","value":"1385714"}, "lastBlock":{"type":"integer","value":"1386546"}, "name":{"type":"string","value":"Old_EEAR"}}, {"address":{"type":"string","value":"0xc430503c9f7cade47eb28958e734ee6255fe143b"}, "color":{"type":"string","value":"yellow_c"}, "firstBlock":{"type":"integer","value":"2694532"}, "lastBlock":{"type":"integer","value":"2694564"}, "name":{"type":"string","value":"GiftOfFriendship"}}, {"address":{"type":"string","value":"0x3e575510b9304ff417c2e4d420d1314dc3f13687"}, "color":{"type":"string","value":"blue_b"}, "firstBlock":{"type":"integer","value":"1488777"}, "lastBlock":{"type":"integer","value":"1987505"}, "name":{"type":"string","value":"Friend_Ar"}}, {"address":{"type":"string","value":"0x6d343663e55f734781e278b2b41a36c99e0bac40"}, "color":{"type":"string","value":"blue_b"}, "firstBlock":{"type":"integer","value":"2610051"}, "lastBlock":{"type":"integer","value":"2677451"}, "name":{"type":"string","value":"Friend_A"}}, {"address":{"type":"string","value":"0x9e5adb4e5c299654c2f0619624f7c9eb7b9a3a1a"}, "color":{"type":"string","value":"blue_b"}, "firstBlock":{"type":"integer","value":"2511426"}, "lastBlock":{"type":"integer","value":"2511433"}, "name":{"type":"string","value":"Friend_D"}}, {"address":{"type":"string","value":"0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"1973555"}, "lastBlock":{"type":"integer","value":"1973640"}, "name":{"type":"string","value":"Exch_K1"}}, {"address":{"type":"string","value":"0xbb43f212b7b47bab7164ce74a07bd1d61aef1ee8"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"1925718"}, "lastBlock":{"type":"integer","value":"1956807"}, "name":{"type":"string","value":"Exch_K2"}}, {"address":{"type":"string","value":"0xf6b0b85aa3a40e9d3e821847a65bd37d56ac78c2"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"1447148"}, "lastBlock":{"type":"integer","value":"1915285"}, "name":{"type":"string","value":"Exch_K3"}}, {"address":{"type":"string","value":"0xb3a0f8e3c7e44949011b18cf5a92ebae41923419"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"1973788"}, "lastBlock":{"type":"integer","value":"3359914"}, "name":{"type":"string","value":"Exch_K4"}}, {"address":{"type":"string","value":"0x10821bc0260fe58606d2fd97fda2113d4ab4a1ca"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"1974267"}, "lastBlock":{"type":"integer","value":"1974270"}, "name":{"type":"string","value":"Exch_K5"}}, {"address":{"type":"string","value":"0xa7e1819bb646e0b8c0dd6b5dba91212536e98cc5"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"1342525"}, "lastBlock":{"type":"integer","value":"1973842"}, "name":{"type":"string","value":"Exch_K6"}}, {"address":{"type":"string","value":"0x268e6834d5b40745849157cae0e5715190135f10"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"1974407"}, "lastBlock":{"type":"integer","value":"1974418"}, "name":{"type":"string","value":"Exch_K7"}}, {"address":{"type":"string","value":"0xc0fab372fad6613c3be2bb1378b2857a86c5ad90"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"1975779"}, "lastBlock":{"type":"integer","value":"1975804"}, "name":{"type":"string","value":"Exch_K8"}}, {"address":{"type":"string","value":"0x2eb0056C62ddDd0D5bD29FD51fe795B3Cb0B9be1"}, "color":{"type":"string","value":"blue_b"}, "firstBlock":{"type":"integer","value":"4162912"}, "name":{"type":"string","value":"QuickNodes node"}}, {"address":{"type":"string","value":"0x62428f78fe0118447b9668ae867b4bf6a40c2d9c"}, "color":{"type":"string","value":"white_b"}, "firstBlock":{"type":"integer","value":"4402980"}, "name":{"type":"string","value":"Augur Web Wallet"}}, {"address":{"type":"string","value":"0x48a74e18b38b153c54dd4f7c0c9f9f112a83a4ee"}, "color":{"type":"string","value":"blue_b"}, "firstBlock":{"type":"integer","value":"4915357"}, "name":{"type":"string","value":"Ledger"}}, {"address":{"type":"string","value":"0xdd449471bdc5a4d98f1a7d05e35b4cb55ebed441"}, "color":{"type":"string","value":"blue_b"}, "firstBlock":{"type":"integer","value":"4916351"}, "name":{"type":"string","value":"Nate Ledger"}}, {"address":{"type":"string","value":"0x3b161D57F482cd2dFBB626f0307ef92b3B094Fce"}, "color":{"type":"string","value":"white_b"}, "firstBlock":{"type":"integer","value":"4834045"}, "name":{"type":"string","value":"NewMetaMask"}}], "nxxxamed":[{"axddress":{"type":"string","value":"0x314159265dd8dbb310642f98f50c066173c1259b"}, "name":{"type":"string","value":"ENS (Main)"}}, {"axddress":{"type":"string","value":"0x6090a6e47849629b7245dfa1ca21d94cd15878ef"}, "name":{"type":"string","value":"ENS Registrar"}}, {"axddress":{"type":"string","value":"0x012233b3c8177f0778d910ed88170b82de3bfe57"}, "name":{"type":"string","value":"Defunct ENS Regist"}}, {"axddress":{"type":"string","value":"0xbb9bc244d798123fde783fcc1c72d3bb8c189413"}, "name":{"type":"string","value":"The DAO"}}, {"axddress":{"type":"string","value":"0xbf4ed7b27f1d666546e30d74d50d173d20bca754"}, "name":{"type":"string","value":"DAO_Withdrawl"}}, {"axddress":{"type":"string","value":"0xc7e165ebdad9eeb8e5f5d94eef3e96ea9739fdb2"}, "name":{"type":"string","value":"Dao.consider.it"}}, {"axddress":{"type":"string","value":"0xaa1a6e3e6ef20068f7f8d8c835d2d22fd5116444"}, "name":{"type":"string","value":"ReplaySafeSplit"}}, {"axddress":{"type":"string","value":"0x2910543af39aba0cd09dbb2d50200b3e800a63d2"}, "name":{"type":"string","value":"Kraken_Exch_1"}}, {"axddress":{"type":"string","value":"0x53d284357ec70ce289d6d64134dfac8e511c8a3d"}, "name":{"type":"string","value":"Kraken_Exch_2"}}, {"axddress":{"type":"string","value":"0xfa52274dd61e1643d2205169732f29114bc240b3"}, "name":{"type":"string","value":"Kraken_Exch_3"}}, {"axddress":{"type":"string","value":"0x5f742383b6d1298980030d6af943b76cdd902143"}, "name":{"type":"string","value":"Etherplay"}}, {"axddress":{"type":"string","value":"0x9ae98746eb8a0aeee5ff2b6b15875313a986f103"}, "name":{"type":"string","value":"Parity SMS Verifier"}}, {"axddress":{"type":"string","value":"0x7cb57b5a97eabe94205c07890be4c1ad31e486a8"}, "name":{"type":"string","value":"Tip_MyEtherWallet"}}, {"axddress":{"type":"string","value":"0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359"}, "name":{"type":"string","value":"Tip_Ethereum"}}, {"axddress":{"type":"string","value":"0x7ed1e469fcb3ee19c0366d829e291451be638e59"}, "name":{"type":"string","value":"Philly Meetup"}}, {"axddress":{"type":"string","value":"0x7cb57b5a97eabe94205c07890be4c1ad31e486a8"}, "name":{"type":"string","value":"Friend_TVO"}}, {"axddress":{"type":"string","value":"0x8f53781799515e5dc8f5d00c528940cae99ac969"}, "name":{"type":"string","value":"Friend_CP"}}, {"axddress":{"type":"string","value":"0x5adf43dd006c6c36506e2b2dfa352e60002d22dc"}, "name":{"type":"string","value":"GiveEth"}}]}]}
+
+<NOT_SET>
+oldGroup:
+[display]
+	accounting = true
+	autocorrect = true
+	debug = true
+	logs = true
+	parse = false
+	single = true
+	trace = true
+	width = 24
+[formats]
+	trans_fmt = "[{DATE} ] [{BLOCKNUMBER} ][{TRANSACTIONINDEX} ] [{FROM} ][{TO} ][{ETHER} ][{ISERROR} ] [\r\n\tarticulated:\t{ARTICULATEDTX}] [\r\n\tgas cost:\t{GASCOST}][ (used/price: {GASUSED}][ @ {GASPRICE})]"
+[settings]
+	name = "accts"
+[[watches]]
+	[[watches.list]]
+		address = "0xa92e6abc1156b6ed4948cc962cb60f250d422c68"
+		color = "white_b"
+		firstBlock = 1971529
+		name = "Main Wallet"
+	[[watches.list]]
+		address = "0x00a3819199113fc6a6e6ba1298afde7377e2009b"
+		color = "magenta_b"
+		firstBlock = 2867899
+		name = "Laptop Wallet"
+	[[watches.list]]
+		address = "0xb97073b754660bb356dfe12f78ae366d77dbc80f"
+		color = "blue_b"
+		firstBlock = 1986055
+		name = "Tip Jar"
+	[[watches.list]]
+		address = "0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c"
+		color = "green_b"
+		firstBlock = 2420364
+		name = "Token Holder"
+	[[watches.list]]
+		address = "0xf1aa581f353005ba3765b81bf52d6b1c488c2767"
+		color = "red_b"
+		firstBlock = 1986062
+		name = "One Ether"
+	[[watches.list]]
+		address = "0xd31f381ad54386895852f311fc3be2008c88cb27"
+		color = "yellow_b"
+		firstBlock = 2597778
+		name = "Play Wallet"
+	[[watches.list]]
+		address = "0x654e7f49b474e2f5ac29cc5f2f0d41c8a93d6d0a"
+		color = "teal_b"
+		firstBlock = 2972204
+		name = "MetaMask Wallet"
+	[[watches.list]]
+		address = "0x85979379cb90d63fe944763b42b9ec4b49573ea7"
+		color = "white_c"
+		firstBlock = 2593109
+		name = "Nates Wallet"
+	[[watches.list]]
+		address = "0x7E02ee81df2b100C3292636e0813d71192D8b071"
+		color = "green_c"
+		firstBlock = 4342440
+		name = "Bitrex Wallet"
+	[[watches.list]]
+		address = "0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533"
+		color = "magenta_c"
+		firstBlock = 3189894
+		lastBlock = 2873699
+		name = "Hacker Camp Wallet"
+	[[watches.list]]
+		address = "0x31f54a9d0c9817bb9e6ca1d17ca20d8ea718bc66"
+		color = "blue_c"
+		firstBlock = 3900000
+		lastBlock = 3900000
+		name = "Old MEW Wallet"
+	[[watches.list]]
+		address = "0x00a6ef05a497236a1ea611857f52884593f63f8c"
+		color = "green_c"
+		firstBlock = 3900000
+		lastBlock = 3900000
+		name = "Play Account 2"
+	[[watches.list]]
+		address = "0x9519afbc60719a83c470ceec41e32d3e4b8b262e"
+		color = "red_c"
+		firstBlock = 1383378
+		lastBlock = 1975800
+		name = "GH_DAO_Wallet"
+	[[watches.list]]
+		address = "0xfd23407a31f54413e32043adb7b1ee61a6e04027"
+		color = "blue_b"
+		firstBlock = 1235820
+		lastBlock = 1434025
+		name = "OLD_WALLET"
+	[[watches.list]]
+		address = "0xcb1547417575261c4d84cab3e989acfd9f9ee35c"
+		color = "yellow_c"
+		firstBlock = 1438181
+		lastBlock = 1975779
+		name = "GH_2_Wallet"
+	[[watches.list]]
+		address = "0x3464e758c8372d7cb536eaf9f5a126d3f574f4c3"
+		color = "teal_c"
+		firstBlock = 1559924
+		lastBlock = 2603045
+		name = "EtherSlurp"
+	[[watches.list]]
+		address = "0xe583ac239693c716ee5567c7da61c96647d691e5"
+		color = "white_b"
+		firstBlock = 1589769
+		lastBlock = 1973555
+		name = "Account_4"
+	[[watches.list]]
+		address = "0x77d0967ffddbad3aba301837208392573da29299"
+		color = "magenta_b"
+		firstBlock = 1477483
+		lastBlock = 1974407
+		name = "NatesOldWallet"
+	[[watches.list]]
+		address = "0x10ed2372778da1b9d96782c894b752d8a647deb8"
+		color = "blue_b"
+		firstBlock = 1724673
+		lastBlock = 1848186
+		name = "NatesOldWallet2"
+	[[watches.list]]
+		address = "0x713b73c3994442b533e6a083ec968e40606810ec"
+		color = "red_c"
+		firstBlock = 1387025
+		lastBlock = 1470405
+		name = "EEAR"
+	[[watches.list]]
+		address = "0x2b61CD90B5591604B3D969Ca9eb944D59be6f5A7"
+		color = "magenta_b"
+		firstBlock = 1385714
+		lastBlock = 1386546
+		name = "Old_EEAR"
+	[[watches.list]]
+		address = "0xc430503c9f7cade47eb28958e734ee6255fe143b"
+		color = "yellow_c"
+		firstBlock = 2694532
+		lastBlock = 2694564
+		name = "GiftOfFriendship"
+	[[watches.list]]
+		address = "0x3e575510b9304ff417c2e4d420d1314dc3f13687"
+		color = "blue_b"
+		firstBlock = 1488777
+		lastBlock = 1987505
+		name = "Friend_Ar"
+	[[watches.list]]
+		address = "0x6d343663e55f734781e278b2b41a36c99e0bac40"
+		color = "blue_b"
+		firstBlock = 2610051
+		lastBlock = 2677451
+		name = "Friend_A"
+	[[watches.list]]
+		address = "0x9e5adb4e5c299654c2f0619624f7c9eb7b9a3a1a"
+		color = "blue_b"
+		firstBlock = 2511426
+		lastBlock = 2511433
+		name = "Friend_D"
+	[[watches.list]]
+		address = "0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98"
+		color = "green_c"
+		firstBlock = 1973555
+		lastBlock = 1973640
+		name = "Exch_K1"
+	[[watches.list]]
+		address = "0xbb43f212b7b47bab7164ce74a07bd1d61aef1ee8"
+		color = "green_c"
+		firstBlock = 1925718
+		lastBlock = 1956807
+		name = "Exch_K2"
+	[[watches.list]]
+		address = "0xf6b0b85aa3a40e9d3e821847a65bd37d56ac78c2"
+		color = "green_c"
+		firstBlock = 1447148
+		lastBlock = 1915285
+		name = "Exch_K3"
+	[[watches.list]]
+		address = "0xb3a0f8e3c7e44949011b18cf5a92ebae41923419"
+		color = "green_c"
+		firstBlock = 1973788
+		lastBlock = 3359914
+		name = "Exch_K4"
+	[[watches.list]]
+		address = "0x10821bc0260fe58606d2fd97fda2113d4ab4a1ca"
+		color = "green_c"
+		firstBlock = 1974267
+		lastBlock = 1974270
+		name = "Exch_K5"
+	[[watches.list]]
+		address = "0xa7e1819bb646e0b8c0dd6b5dba91212536e98cc5"
+		color = "green_c"
+		firstBlock = 1342525
+		lastBlock = 1973842
+		name = "Exch_K6"
+	[[watches.list]]
+		address = "0x268e6834d5b40745849157cae0e5715190135f10"
+		color = "green_c"
+		firstBlock = 1974407
+		lastBlock = 1974418
+		name = "Exch_K7"
+	[[watches.list]]
+		address = "0xc0fab372fad6613c3be2bb1378b2857a86c5ad90"
+		color = "green_c"
+		firstBlock = 1975779
+		lastBlock = 1975804
+		name = "Exch_K8"
+	[[watches.list]]
+		address = "0x2eb0056C62ddDd0D5bD29FD51fe795B3Cb0B9be1"
+		color = "blue_b"
+		firstBlock = 4162912
+		name = "QuickNodes node"
+	[[watches.list]]
+		address = "0x62428f78fe0118447b9668ae867b4bf6a40c2d9c"
+		color = "white_b"
+		firstBlock = 4402980
+		name = "Augur Web Wallet"
+	[[watches.list]]
+		address = "0x48a74e18b38b153c54dd4f7c0c9f9f112a83a4ee"
+		color = "blue_b"
+		firstBlock = 4915357
+		name = "Ledger"
+	[[watches.list]]
+		address = "0xdd449471bdc5a4d98f1a7d05e35b4cb55ebed441"
+		color = "blue_b"
+		firstBlock = 4916351
+		name = "Nate Ledger"
+	[[watches.list]]
+		address = "0x3b161D57F482cd2dFBB626f0307ef92b3B094Fce"
+		color = "white_b"
+		firstBlock = 4834045
+		name = "NewMetaMask"
+	[[watches.nxxxamed]]
+		axddress = "0x314159265dd8dbb310642f98f50c066173c1259b"
+		name = "ENS (Main)"
+	[[watches.nxxxamed]]
+		axddress = "0x6090a6e47849629b7245dfa1ca21d94cd15878ef"
+		name = "ENS Registrar"
+	[[watches.nxxxamed]]
+		axddress = "0x012233b3c8177f0778d910ed88170b82de3bfe57"
+		name = "Defunct ENS Regist"
+	[[watches.nxxxamed]]
+		axddress = "0xbb9bc244d798123fde783fcc1c72d3bb8c189413"
+		name = "The DAO"
+	[[watches.nxxxamed]]
+		axddress = "0xbf4ed7b27f1d666546e30d74d50d173d20bca754"
+		name = "DAO_Withdrawl"
+	[[watches.nxxxamed]]
+		axddress = "0xc7e165ebdad9eeb8e5f5d94eef3e96ea9739fdb2"
+		name = "Dao.consider.it"
+	[[watches.nxxxamed]]
+		axddress = "0xaa1a6e3e6ef20068f7f8d8c835d2d22fd5116444"
+		name = "ReplaySafeSplit"
+	[[watches.nxxxamed]]
+		axddress = "0x2910543af39aba0cd09dbb2d50200b3e800a63d2"
+		name = "Kraken_Exch_1"
+	[[watches.nxxxamed]]
+		axddress = "0x53d284357ec70ce289d6d64134dfac8e511c8a3d"
+		name = "Kraken_Exch_2"
+	[[watches.nxxxamed]]
+		axddress = "0xfa52274dd61e1643d2205169732f29114bc240b3"
+		name = "Kraken_Exch_3"
+	[[watches.nxxxamed]]
+		axddress = "0x5f742383b6d1298980030d6af943b76cdd902143"
+		name = "Etherplay"
+	[[watches.nxxxamed]]
+		axddress = "0x9ae98746eb8a0aeee5ff2b6b15875313a986f103"
+		name = "Parity SMS Verifier"
+	[[watches.nxxxamed]]
+		axddress = "0x7cb57b5a97eabe94205c07890be4c1ad31e486a8"
+		name = "Tip_MyEtherWallet"
+	[[watches.nxxxamed]]
+		axddress = "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359"
+		name = "Tip_Ethereum"
+	[[watches.nxxxamed]]
+		axddress = "0x7ed1e469fcb3ee19c0366d829e291451be638e59"
+		name = "Philly Meetup"
+	[[watches.nxxxamed]]
+		axddress = "0x7cb57b5a97eabe94205c07890be4c1ad31e486a8"
+		name = "Friend_TVO"
+	[[watches.nxxxamed]]
+		axddress = "0x8f53781799515e5dc8f5d00c528940cae99ac969"
+		name = "Friend_CP"
+	[[watches.nxxxamed]]
+		axddress = "0x5adf43dd006c6c36506e2b2dfa352e60002d22dc"
+		name = "GiveEth"
+
+<NOT_SET>
+{"display":{"accounting":{"type":"bool","value":"true"}, "autocorrect":{"type":"bool","value":"true"}, "debug":{"type":"bool","value":"true"}, "logs":{"type":"bool","value":"true"}, "parse":{"type":"bool","value":"false"}, "single":{"type":"bool","value":"true"}, "trace":{"type":"bool","value":"true"}, "width":{"type":"integer","value":"24"}}, "formats":{"trans_fmt":{"type":"string","value":"[{DATE} ] [{BLOCKNUMBER} ][{TRANSACTIONINDEX} ] [{FROM} ][{TO} ][{ETHER} ][{ISERROR} ] [\r\n\tarticulated:\t{ARTICULATEDTX}] [\r\n\tgas cost:\t{GASCOST}][ (used/price: {GASUSED}][ @ {GASPRICE})]"}}, "settings":{"name":{"type":"string","value":"accts"}}, "watches":[{"list":[{"address":{"type":"string","value":"0xa92e6abc1156b6ed4948cc962cb60f250d422c68"}, "color":{"type":"string","value":"white_b"}, "firstBlock":{"type":"integer","value":"1971529"}, "name":{"type":"string","value":"Main Wallet"}}, {"address":{"type":"string","value":"0x00a3819199113fc6a6e6ba1298afde7377e2009b"}, "color":{"type":"string","value":"magenta_b"}, "firstBlock":{"type":"integer","value":"2867899"}, "name":{"type":"string","value":"Laptop Wallet"}}, {"address":{"type":"string","value":"0xb97073b754660bb356dfe12f78ae366d77dbc80f"}, "color":{"type":"string","value":"blue_b"}, "firstBlock":{"type":"integer","value":"1986055"}, "name":{"type":"string","value":"Tip Jar"}}, {"address":{"type":"string","value":"0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c"}, "color":{"type":"string","value":"green_b"}, "firstBlock":{"type":"integer","value":"2420364"}, "name":{"type":"string","value":"Token Holder"}}, {"address":{"type":"string","value":"0xf1aa581f353005ba3765b81bf52d6b1c488c2767"}, "color":{"type":"string","value":"red_b"}, "firstBlock":{"type":"integer","value":"1986062"}, "name":{"type":"string","value":"One Ether"}}, {"address":{"type":"string","value":"0xd31f381ad54386895852f311fc3be2008c88cb27"}, "color":{"type":"string","value":"yellow_b"}, "firstBlock":{"type":"integer","value":"2597778"}, "name":{"type":"string","value":"Play Wallet"}}, {"address":{"type":"string","value":"0x654e7f49b474e2f5ac29cc5f2f0d41c8a93d6d0a"}, "color":{"type":"string","value":"teal_b"}, "firstBlock":{"type":"integer","value":"2972204"}, "name":{"type":"string","value":"MetaMask Wallet"}}, {"address":{"type":"string","value":"0x85979379cb90d63fe944763b42b9ec4b49573ea7"}, "color":{"type":"string","value":"white_c"}, "firstBlock":{"type":"integer","value":"2593109"}, "name":{"type":"string","value":"Nates Wallet"}}, {"address":{"type":"string","value":"0x7E02ee81df2b100C3292636e0813d71192D8b071"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"4342440"}, "name":{"type":"string","value":"Bitrex Wallet"}}, {"address":{"type":"string","value":"0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533"}, "color":{"type":"string","value":"magenta_c"}, "firstBlock":{"type":"integer","value":"3189894"}, "lastBlock":{"type":"integer","value":"2873699"}, "name":{"type":"string","value":"Hacker Camp Wallet"}}, {"address":{"type":"string","value":"0x31f54a9d0c9817bb9e6ca1d17ca20d8ea718bc66"}, "color":{"type":"string","value":"blue_c"}, "firstBlock":{"type":"integer","value":"3900000"}, "lastBlock":{"type":"integer","value":"3900000"}, "name":{"type":"string","value":"Old MEW Wallet"}}, {"address":{"type":"string","value":"0x00a6ef05a497236a1ea611857f52884593f63f8c"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"3900000"}, "lastBlock":{"type":"integer","value":"3900000"}, "name":{"type":"string","value":"Play Account 2"}}, {"address":{"type":"string","value":"0x9519afbc60719a83c470ceec41e32d3e4b8b262e"}, "color":{"type":"string","value":"red_c"}, "firstBlock":{"type":"integer","value":"1383378"}, "lastBlock":{"type":"integer","value":"1975800"}, "name":{"type":"string","value":"GH_DAO_Wallet"}}, {"address":{"type":"string","value":"0xfd23407a31f54413e32043adb7b1ee61a6e04027"}, "color":{"type":"string","value":"blue_b"}, "firstBlock":{"type":"integer","value":"1235820"}, "lastBlock":{"type":"integer","value":"1434025"}, "name":{"type":"string","value":"OLD_WALLET"}}, {"address":{"type":"string","value":"0xcb1547417575261c4d84cab3e989acfd9f9ee35c"}, "color":{"type":"string","value":"yellow_c"}, "firstBlock":{"type":"integer","value":"1438181"}, "lastBlock":{"type":"integer","value":"1975779"}, "name":{"type":"string","value":"GH_2_Wallet"}}, {"address":{"type":"string","value":"0x3464e758c8372d7cb536eaf9f5a126d3f574f4c3"}, "color":{"type":"string","value":"teal_c"}, "firstBlock":{"type":"integer","value":"1559924"}, "lastBlock":{"type":"integer","value":"2603045"}, "name":{"type":"string","value":"EtherSlurp"}}, {"address":{"type":"string","value":"0xe583ac239693c716ee5567c7da61c96647d691e5"}, "color":{"type":"string","value":"white_b"}, "firstBlock":{"type":"integer","value":"1589769"}, "lastBlock":{"type":"integer","value":"1973555"}, "name":{"type":"string","value":"Account_4"}}, {"address":{"type":"string","value":"0x77d0967ffddbad3aba301837208392573da29299"}, "color":{"type":"string","value":"magenta_b"}, "firstBlock":{"type":"integer","value":"1477483"}, "lastBlock":{"type":"integer","value":"1974407"}, "name":{"type":"string","value":"NatesOldWallet"}}, {"address":{"type":"string","value":"0x10ed2372778da1b9d96782c894b752d8a647deb8"}, "color":{"type":"string","value":"blue_b"}, "firstBlock":{"type":"integer","value":"1724673"}, "lastBlock":{"type":"integer","value":"1848186"}, "name":{"type":"string","value":"NatesOldWallet2"}}, {"address":{"type":"string","value":"0x713b73c3994442b533e6a083ec968e40606810ec"}, "color":{"type":"string","value":"red_c"}, "firstBlock":{"type":"integer","value":"1387025"}, "lastBlock":{"type":"integer","value":"1470405"}, "name":{"type":"string","value":"EEAR"}}, {"address":{"type":"string","value":"0x2b61CD90B5591604B3D969Ca9eb944D59be6f5A7"}, "color":{"type":"string","value":"magenta_b"}, "firstBlock":{"type":"integer","value":"1385714"}, "lastBlock":{"type":"integer","value":"1386546"}, "name":{"type":"string","value":"Old_EEAR"}}, {"address":{"type":"string","value":"0xc430503c9f7cade47eb28958e734ee6255fe143b"}, "color":{"type":"string","value":"yellow_c"}, "firstBlock":{"type":"integer","value":"2694532"}, "lastBlock":{"type":"integer","value":"2694564"}, "name":{"type":"string","value":"GiftOfFriendship"}}, {"address":{"type":"string","value":"0x3e575510b9304ff417c2e4d420d1314dc3f13687"}, "color":{"type":"string","value":"blue_b"}, "firstBlock":{"type":"integer","value":"1488777"}, "lastBlock":{"type":"integer","value":"1987505"}, "name":{"type":"string","value":"Friend_Ar"}}, {"address":{"type":"string","value":"0x6d343663e55f734781e278b2b41a36c99e0bac40"}, "color":{"type":"string","value":"blue_b"}, "firstBlock":{"type":"integer","value":"2610051"}, "lastBlock":{"type":"integer","value":"2677451"}, "name":{"type":"string","value":"Friend_A"}}, {"address":{"type":"string","value":"0x9e5adb4e5c299654c2f0619624f7c9eb7b9a3a1a"}, "color":{"type":"string","value":"blue_b"}, "firstBlock":{"type":"integer","value":"2511426"}, "lastBlock":{"type":"integer","value":"2511433"}, "name":{"type":"string","value":"Friend_D"}}, {"address":{"type":"string","value":"0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"1973555"}, "lastBlock":{"type":"integer","value":"1973640"}, "name":{"type":"string","value":"Exch_K1"}}, {"address":{"type":"string","value":"0xbb43f212b7b47bab7164ce74a07bd1d61aef1ee8"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"1925718"}, "lastBlock":{"type":"integer","value":"1956807"}, "name":{"type":"string","value":"Exch_K2"}}, {"address":{"type":"string","value":"0xf6b0b85aa3a40e9d3e821847a65bd37d56ac78c2"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"1447148"}, "lastBlock":{"type":"integer","value":"1915285"}, "name":{"type":"string","value":"Exch_K3"}}, {"address":{"type":"string","value":"0xb3a0f8e3c7e44949011b18cf5a92ebae41923419"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"1973788"}, "lastBlock":{"type":"integer","value":"3359914"}, "name":{"type":"string","value":"Exch_K4"}}, {"address":{"type":"string","value":"0x10821bc0260fe58606d2fd97fda2113d4ab4a1ca"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"1974267"}, "lastBlock":{"type":"integer","value":"1974270"}, "name":{"type":"string","value":"Exch_K5"}}, {"address":{"type":"string","value":"0xa7e1819bb646e0b8c0dd6b5dba91212536e98cc5"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"1342525"}, "lastBlock":{"type":"integer","value":"1973842"}, "name":{"type":"string","value":"Exch_K6"}}, {"address":{"type":"string","value":"0x268e6834d5b40745849157cae0e5715190135f10"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"1974407"}, "lastBlock":{"type":"integer","value":"1974418"}, "name":{"type":"string","value":"Exch_K7"}}, {"address":{"type":"string","value":"0xc0fab372fad6613c3be2bb1378b2857a86c5ad90"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"1975779"}, "lastBlock":{"type":"integer","value":"1975804"}, "name":{"type":"string","value":"Exch_K8"}}, {"address":{"type":"string","value":"0x2eb0056C62ddDd0D5bD29FD51fe795B3Cb0B9be1"}, "color":{"type":"string","value":"blue_b"}, "firstBlock":{"type":"integer","value":"4162912"}, "name":{"type":"string","value":"QuickNodes node"}}, {"address":{"type":"string","value":"0x62428f78fe0118447b9668ae867b4bf6a40c2d9c"}, "color":{"type":"string","value":"white_b"}, "firstBlock":{"type":"integer","value":"4402980"}, "name":{"type":"string","value":"Augur Web Wallet"}}, {"address":{"type":"string","value":"0x48a74e18b38b153c54dd4f7c0c9f9f112a83a4ee"}, "color":{"type":"string","value":"blue_b"}, "firstBlock":{"type":"integer","value":"4915357"}, "name":{"type":"string","value":"Ledger"}}, {"address":{"type":"string","value":"0xdd449471bdc5a4d98f1a7d05e35b4cb55ebed441"}, "color":{"type":"string","value":"blue_b"}, "firstBlock":{"type":"integer","value":"4916351"}, "name":{"type":"string","value":"Nate Ledger"}}, {"address":{"type":"string","value":"0x3b161D57F482cd2dFBB626f0307ef92b3B094Fce"}, "color":{"type":"string","value":"white_b"}, "firstBlock":{"type":"integer","value":"4834045"}, "name":{"type":"string","value":"NewMetaMask"}}], "nxxxamed":[{"axddress":{"type":"string","value":"0x314159265dd8dbb310642f98f50c066173c1259b"}, "name":{"type":"string","value":"ENS (Main)"}}, {"axddress":{"type":"string","value":"0x6090a6e47849629b7245dfa1ca21d94cd15878ef"}, "name":{"type":"string","value":"ENS Registrar"}}, {"axddress":{"type":"string","value":"0x012233b3c8177f0778d910ed88170b82de3bfe57"}, "name":{"type":"string","value":"Defunct ENS Regist"}}, {"axddress":{"type":"string","value":"0xbb9bc244d798123fde783fcc1c72d3bb8c189413"}, "name":{"type":"string","value":"The DAO"}}, {"axddress":{"type":"string","value":"0xbf4ed7b27f1d666546e30d74d50d173d20bca754"}, "name":{"type":"string","value":"DAO_Withdrawl"}}, {"axddress":{"type":"string","value":"0xc7e165ebdad9eeb8e5f5d94eef3e96ea9739fdb2"}, "name":{"type":"string","value":"Dao.consider.it"}}, {"axddress":{"type":"string","value":"0xaa1a6e3e6ef20068f7f8d8c835d2d22fd5116444"}, "name":{"type":"string","value":"ReplaySafeSplit"}}, {"axddress":{"type":"string","value":"0x2910543af39aba0cd09dbb2d50200b3e800a63d2"}, "name":{"type":"string","value":"Kraken_Exch_1"}}, {"axddress":{"type":"string","value":"0x53d284357ec70ce289d6d64134dfac8e511c8a3d"}, "name":{"type":"string","value":"Kraken_Exch_2"}}, {"axddress":{"type":"string","value":"0xfa52274dd61e1643d2205169732f29114bc240b3"}, "name":{"type":"string","value":"Kraken_Exch_3"}}, {"axddress":{"type":"string","value":"0x5f742383b6d1298980030d6af943b76cdd902143"}, "name":{"type":"string","value":"Etherplay"}}, {"axddress":{"type":"string","value":"0x9ae98746eb8a0aeee5ff2b6b15875313a986f103"}, "name":{"type":"string","value":"Parity SMS Verifier"}}, {"axddress":{"type":"string","value":"0x7cb57b5a97eabe94205c07890be4c1ad31e486a8"}, "name":{"type":"string","value":"Tip_MyEtherWallet"}}, {"axddress":{"type":"string","value":"0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359"}, "name":{"type":"string","value":"Tip_Ethereum"}}, {"axddress":{"type":"string","value":"0x7ed1e469fcb3ee19c0366d829e291451be638e59"}, "name":{"type":"string","value":"Philly Meetup"}}, {"axddress":{"type":"string","value":"0x7cb57b5a97eabe94205c07890be4c1ad31e486a8"}, "name":{"type":"string","value":"Friend_TVO"}}, {"axddress":{"type":"string","value":"0x8f53781799515e5dc8f5d00c528940cae99ac969"}, "name":{"type":"string","value":"Friend_CP"}}, {"axddress":{"type":"string","value":"0x5adf43dd006c6c36506e2b2dfa352e60002d22dc"}, "name":{"type":"string","value":"GiveEth"}}]}]}
+
+{"display":{"accounting":{"type":"bool","value":"true"}, "autocorrect":{"type":"bool","value":"true"}, "debug":{"type":"bool","value":"true"}, "logs":{"type":"bool","value":"true"}, "parse":{"type":"bool","value":"false"}, "single":{"type":"bool","value":"true"}, "trace":{"type":"bool","value":"true"}, "width":{"type":"integer","value":"24"}}, "formats":{"trans_fmt":{"type":"string","value":"[{DATE} ] [{BLOCKNUMBER} ][{TRANSACTIONINDEX} ] [{FROM} ][{TO} ][{ETHER} ][{ISERROR} ] [\r\n\tarticulated:\t{ARTICULATEDTX}] [\r\n\tgas cost:\t{GASCOST}][ (used/price: {GASUSED}][ @ {GASPRICE})]"}}, "settings":{"name":{"type":"string","value":"accts"}}, "watches":[{"list":[{"address":{"type":"string","value":"0xa92e6abc1156b6ed4948cc962cb60f250d422c68"}, "color":{"type":"string","value":"white_b"}, "firstBlock":{"type":"integer","value":"1971529"}, "name":{"type":"string","value":"Main Wallet"}}, {"address":{"type":"string","value":"0x00a3819199113fc6a6e6ba1298afde7377e2009b"}, "color":{"type":"string","value":"magenta_b"}, "firstBlock":{"type":"integer","value":"2867899"}, "name":{"type":"string","value":"Laptop Wallet"}}, {"address":{"type":"string","value":"0xb97073b754660bb356dfe12f78ae366d77dbc80f"}, "color":{"type":"string","value":"blue_b"}, "firstBlock":{"type":"integer","value":"1986055"}, "name":{"type":"string","value":"Tip Jar"}}, {"address":{"type":"string","value":"0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c"}, "color":{"type":"string","value":"green_b"}, "firstBlock":{"type":"integer","value":"2420364"}, "name":{"type":"string","value":"Token Holder"}}, {"address":{"type":"string","value":"0xf1aa581f353005ba3765b81bf52d6b1c488c2767"}, "color":{"type":"string","value":"red_b"}, "firstBlock":{"type":"integer","value":"1986062"}, "name":{"type":"string","value":"One Ether"}}, {"address":{"type":"string","value":"0xd31f381ad54386895852f311fc3be2008c88cb27"}, "color":{"type":"string","value":"yellow_b"}, "firstBlock":{"type":"integer","value":"2597778"}, "name":{"type":"string","value":"Play Wallet"}}, {"address":{"type":"string","value":"0x654e7f49b474e2f5ac29cc5f2f0d41c8a93d6d0a"}, "color":{"type":"string","value":"teal_b"}, "firstBlock":{"type":"integer","value":"2972204"}, "name":{"type":"string","value":"MetaMask Wallet"}}, {"address":{"type":"string","value":"0x85979379cb90d63fe944763b42b9ec4b49573ea7"}, "color":{"type":"string","value":"white_c"}, "firstBlock":{"type":"integer","value":"2593109"}, "name":{"type":"string","value":"Nates Wallet"}}, {"address":{"type":"string","value":"0x7E02ee81df2b100C3292636e0813d71192D8b071"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"4342440"}, "name":{"type":"string","value":"Bitrex Wallet"}}, {"address":{"type":"string","value":"0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533"}, "color":{"type":"string","value":"magenta_c"}, "firstBlock":{"type":"integer","value":"3189894"}, "lastBlock":{"type":"integer","value":"2873699"}, "name":{"type":"string","value":"Hacker Camp Wallet"}}, {"address":{"type":"string","value":"0x31f54a9d0c9817bb9e6ca1d17ca20d8ea718bc66"}, "color":{"type":"string","value":"blue_c"}, "firstBlock":{"type":"integer","value":"3900000"}, "lastBlock":{"type":"integer","value":"3900000"}, "name":{"type":"string","value":"Old MEW Wallet"}}, {"address":{"type":"string","value":"0x00a6ef05a497236a1ea611857f52884593f63f8c"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"3900000"}, "lastBlock":{"type":"integer","value":"3900000"}, "name":{"type":"string","value":"Play Account 2"}}, {"address":{"type":"string","value":"0x9519afbc60719a83c470ceec41e32d3e4b8b262e"}, "color":{"type":"string","value":"red_c"}, "firstBlock":{"type":"integer","value":"1383378"}, "lastBlock":{"type":"integer","value":"1975800"}, "name":{"type":"string","value":"GH_DAO_Wallet"}}, {"address":{"type":"string","value":"0xfd23407a31f54413e32043adb7b1ee61a6e04027"}, "color":{"type":"string","value":"blue_b"}, "firstBlock":{"type":"integer","value":"1235820"}, "lastBlock":{"type":"integer","value":"1434025"}, "name":{"type":"string","value":"OLD_WALLET"}}, {"address":{"type":"string","value":"0xcb1547417575261c4d84cab3e989acfd9f9ee35c"}, "color":{"type":"string","value":"yellow_c"}, "firstBlock":{"type":"integer","value":"1438181"}, "lastBlock":{"type":"integer","value":"1975779"}, "name":{"type":"string","value":"GH_2_Wallet"}}, {"address":{"type":"string","value":"0x3464e758c8372d7cb536eaf9f5a126d3f574f4c3"}, "color":{"type":"string","value":"teal_c"}, "firstBlock":{"type":"integer","value":"1559924"}, "lastBlock":{"type":"integer","value":"2603045"}, "name":{"type":"string","value":"EtherSlurp"}}, {"address":{"type":"string","value":"0xe583ac239693c716ee5567c7da61c96647d691e5"}, "color":{"type":"string","value":"white_b"}, "firstBlock":{"type":"integer","value":"1589769"}, "lastBlock":{"type":"integer","value":"1973555"}, "name":{"type":"string","value":"Account_4"}}, {"address":{"type":"string","value":"0x77d0967ffddbad3aba301837208392573da29299"}, "color":{"type":"string","value":"magenta_b"}, "firstBlock":{"type":"integer","value":"1477483"}, "lastBlock":{"type":"integer","value":"1974407"}, "name":{"type":"string","value":"NatesOldWallet"}}, {"address":{"type":"string","value":"0x10ed2372778da1b9d96782c894b752d8a647deb8"}, "color":{"type":"string","value":"blue_b"}, "firstBlock":{"type":"integer","value":"1724673"}, "lastBlock":{"type":"integer","value":"1848186"}, "name":{"type":"string","value":"NatesOldWallet2"}}, {"address":{"type":"string","value":"0x713b73c3994442b533e6a083ec968e40606810ec"}, "color":{"type":"string","value":"red_c"}, "firstBlock":{"type":"integer","value":"1387025"}, "lastBlock":{"type":"integer","value":"1470405"}, "name":{"type":"string","value":"EEAR"}}, {"address":{"type":"string","value":"0x2b61CD90B5591604B3D969Ca9eb944D59be6f5A7"}, "color":{"type":"string","value":"magenta_b"}, "firstBlock":{"type":"integer","value":"1385714"}, "lastBlock":{"type":"integer","value":"1386546"}, "name":{"type":"string","value":"Old_EEAR"}}, {"address":{"type":"string","value":"0xc430503c9f7cade47eb28958e734ee6255fe143b"}, "color":{"type":"string","value":"yellow_c"}, "firstBlock":{"type":"integer","value":"2694532"}, "lastBlock":{"type":"integer","value":"2694564"}, "name":{"type":"string","value":"GiftOfFriendship"}}, {"address":{"type":"string","value":"0x3e575510b9304ff417c2e4d420d1314dc3f13687"}, "color":{"type":"string","value":"blue_b"}, "firstBlock":{"type":"integer","value":"1488777"}, "lastBlock":{"type":"integer","value":"1987505"}, "name":{"type":"string","value":"Friend_Ar"}}, {"address":{"type":"string","value":"0x6d343663e55f734781e278b2b41a36c99e0bac40"}, "color":{"type":"string","value":"blue_b"}, "firstBlock":{"type":"integer","value":"2610051"}, "lastBlock":{"type":"integer","value":"2677451"}, "name":{"type":"string","value":"Friend_A"}}, {"address":{"type":"string","value":"0x9e5adb4e5c299654c2f0619624f7c9eb7b9a3a1a"}, "color":{"type":"string","value":"blue_b"}, "firstBlock":{"type":"integer","value":"2511426"}, "lastBlock":{"type":"integer","value":"2511433"}, "name":{"type":"string","value":"Friend_D"}}, {"address":{"type":"string","value":"0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"1973555"}, "lastBlock":{"type":"integer","value":"1973640"}, "name":{"type":"string","value":"Exch_K1"}}, {"address":{"type":"string","value":"0xbb43f212b7b47bab7164ce74a07bd1d61aef1ee8"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"1925718"}, "lastBlock":{"type":"integer","value":"1956807"}, "name":{"type":"string","value":"Exch_K2"}}, {"address":{"type":"string","value":"0xf6b0b85aa3a40e9d3e821847a65bd37d56ac78c2"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"1447148"}, "lastBlock":{"type":"integer","value":"1915285"}, "name":{"type":"string","value":"Exch_K3"}}, {"address":{"type":"string","value":"0xb3a0f8e3c7e44949011b18cf5a92ebae41923419"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"1973788"}, "lastBlock":{"type":"integer","value":"3359914"}, "name":{"type":"string","value":"Exch_K4"}}, {"address":{"type":"string","value":"0x10821bc0260fe58606d2fd97fda2113d4ab4a1ca"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"1974267"}, "lastBlock":{"type":"integer","value":"1974270"}, "name":{"type":"string","value":"Exch_K5"}}, {"address":{"type":"string","value":"0xa7e1819bb646e0b8c0dd6b5dba91212536e98cc5"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"1342525"}, "lastBlock":{"type":"integer","value":"1973842"}, "name":{"type":"string","value":"Exch_K6"}}, {"address":{"type":"string","value":"0x268e6834d5b40745849157cae0e5715190135f10"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"1974407"}, "lastBlock":{"type":"integer","value":"1974418"}, "name":{"type":"string","value":"Exch_K7"}}, {"address":{"type":"string","value":"0xc0fab372fad6613c3be2bb1378b2857a86c5ad90"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"1975779"}, "lastBlock":{"type":"integer","value":"1975804"}, "name":{"type":"string","value":"Exch_K8"}}, {"address":{"type":"string","value":"0x2eb0056C62ddDd0D5bD29FD51fe795B3Cb0B9be1"}, "color":{"type":"string","value":"blue_b"}, "firstBlock":{"type":"integer","value":"4162912"}, "name":{"type":"string","value":"QuickNodes node"}}, {"address":{"type":"string","value":"0x62428f78fe0118447b9668ae867b4bf6a40c2d9c"}, "color":{"type":"string","value":"white_b"}, "firstBlock":{"type":"integer","value":"4402980"}, "name":{"type":"string","value":"Augur Web Wallet"}}, {"address":{"type":"string","value":"0x48a74e18b38b153c54dd4f7c0c9f9f112a83a4ee"}, "color":{"type":"string","value":"blue_b"}, "firstBlock":{"type":"integer","value":"4915357"}, "name":{"type":"string","value":"Ledger"}}, {"address":{"type":"string","value":"0xdd449471bdc5a4d98f1a7d05e35b4cb55ebed441"}, "color":{"type":"string","value":"blue_b"}, "firstBlock":{"type":"integer","value":"4916351"}, "name":{"type":"string","value":"Nate Ledger"}}, {"address":{"type":"string","value":"0x3b161D57F482cd2dFBB626f0307ef92b3B094Fce"}, "color":{"type":"string","value":"white_b"}, "firstBlock":{"type":"integer","value":"4834045"}, "name":{"type":"string","value":"NewMetaMask"}}], "nxxxamed":[{"axddress":{"type":"string","value":"0x314159265dd8dbb310642f98f50c066173c1259b"}, "name":{"type":"string","value":"ENS (Main)"}}, {"axddress":{"type":"string","value":"0x6090a6e47849629b7245dfa1ca21d94cd15878ef"}, "name":{"type":"string","value":"ENS Registrar"}}, {"axddress":{"type":"string","value":"0x012233b3c8177f0778d910ed88170b82de3bfe57"}, "name":{"type":"string","value":"Defunct ENS Regist"}}, {"axddress":{"type":"string","value":"0xbb9bc244d798123fde783fcc1c72d3bb8c189413"}, "name":{"type":"string","value":"The DAO"}}, {"axddress":{"type":"string","value":"0xbf4ed7b27f1d666546e30d74d50d173d20bca754"}, "name":{"type":"string","value":"DAO_Withdrawl"}}, {"axddress":{"type":"string","value":"0xc7e165ebdad9eeb8e5f5d94eef3e96ea9739fdb2"}, "name":{"type":"string","value":"Dao.consider.it"}}, {"axddress":{"type":"string","value":"0xaa1a6e3e6ef20068f7f8d8c835d2d22fd5116444"}, "name":{"type":"string","value":"ReplaySafeSplit"}}, {"axddress":{"type":"string","value":"0x2910543af39aba0cd09dbb2d50200b3e800a63d2"}, "name":{"type":"string","value":"Kraken_Exch_1"}}, {"axddress":{"type":"string","value":"0x53d284357ec70ce289d6d64134dfac8e511c8a3d"}, "name":{"type":"string","value":"Kraken_Exch_2"}}, {"axddress":{"type":"string","value":"0xfa52274dd61e1643d2205169732f29114bc240b3"}, "name":{"type":"string","value":"Kraken_Exch_3"}}, {"axddress":{"type":"string","value":"0x5f742383b6d1298980030d6af943b76cdd902143"}, "name":{"type":"string","value":"Etherplay"}}, {"axddress":{"type":"string","value":"0x9ae98746eb8a0aeee5ff2b6b15875313a986f103"}, "name":{"type":"string","value":"Parity SMS Verifier"}}, {"axddress":{"type":"string","value":"0x7cb57b5a97eabe94205c07890be4c1ad31e486a8"}, "name":{"type":"string","value":"Tip_MyEtherWallet"}}, {"axddress":{"type":"string","value":"0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359"}, "name":{"type":"string","value":"Tip_Ethereum"}}, {"axddress":{"type":"string","value":"0x7ed1e469fcb3ee19c0366d829e291451be638e59"}, "name":{"type":"string","value":"Philly Meetup"}}, {"axddress":{"type":"string","value":"0x7cb57b5a97eabe94205c07890be4c1ad31e486a8"}, "name":{"type":"string","value":"Friend_TVO"}}, {"axddress":{"type":"string","value":"0x8f53781799515e5dc8f5d00c528940cae99ac969"}, "name":{"type":"string","value":"Friend_CP"}}, {"axddress":{"type":"string","value":"0x5adf43dd006c6c36506e2b2dfa352e60002d22dc"}, "name":{"type":"string","value":"GiveEth"}}]}]}
+
+{"display":{"accounting":{"type":"bool","value":"true"}, "autocorrect":{"type":"bool","value":"true"}, "debug":{"type":"bool","value":"true"}, "logs":{"type":"bool","value":"true"}, "parse":{"type":"bool","value":"false"}, "single":{"type":"bool","value":"true"}, "trace":{"type":"bool","value":"true"}, "width":{"type":"integer","value":"24"}}, "formats":{"trans_fmt":{"type":"string","value":"[{DATE} ] [{BLOCKNUMBER} ][{TRANSACTIONINDEX} ] [{FROM} ][{TO} ][{ETHER} ][{ISERROR} ] [\r\n\tarticulated:\t{ARTICULATEDTX}] [\r\n\tgas cost:\t{GASCOST}][ (used/price: {GASUSED}][ @ {GASPRICE})]"}}, "settings":{"name":{"type":"string","value":"accts"}}, "watches":[{"list":[{"address":{"type":"string","value":"0xa92e6abc1156b6ed4948cc962cb60f250d422c68"}, "color":{"type":"string","value":"white_b"}, "firstBlock":{"type":"integer","value":"1971529"}, "name":{"type":"string","value":"Main Wallet"}}, {"address":{"type":"string","value":"0x00a3819199113fc6a6e6ba1298afde7377e2009b"}, "color":{"type":"string","value":"magenta_b"}, "firstBlock":{"type":"integer","value":"2867899"}, "name":{"type":"string","value":"Laptop Wallet"}}, {"address":{"type":"string","value":"0xb97073b754660bb356dfe12f78ae366d77dbc80f"}, "color":{"type":"string","value":"blue_b"}, "firstBlock":{"type":"integer","value":"1986055"}, "name":{"type":"string","value":"Tip Jar"}}, {"address":{"type":"string","value":"0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c"}, "color":{"type":"string","value":"green_b"}, "firstBlock":{"type":"integer","value":"2420364"}, "name":{"type":"string","value":"Token Holder"}}, {"address":{"type":"string","value":"0xf1aa581f353005ba3765b81bf52d6b1c488c2767"}, "color":{"type":"string","value":"red_b"}, "firstBlock":{"type":"integer","value":"1986062"}, "name":{"type":"string","value":"One Ether"}}, {"address":{"type":"string","value":"0xd31f381ad54386895852f311fc3be2008c88cb27"}, "color":{"type":"string","value":"yellow_b"}, "firstBlock":{"type":"integer","value":"2597778"}, "name":{"type":"string","value":"Play Wallet"}}, {"address":{"type":"string","value":"0x654e7f49b474e2f5ac29cc5f2f0d41c8a93d6d0a"}, "color":{"type":"string","value":"teal_b"}, "firstBlock":{"type":"integer","value":"2972204"}, "name":{"type":"string","value":"MetaMask Wallet"}}, {"address":{"type":"string","value":"0x85979379cb90d63fe944763b42b9ec4b49573ea7"}, "color":{"type":"string","value":"white_c"}, "firstBlock":{"type":"integer","value":"2593109"}, "name":{"type":"string","value":"Nates Wallet"}}, {"address":{"type":"string","value":"0x7E02ee81df2b100C3292636e0813d71192D8b071"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"4342440"}, "name":{"type":"string","value":"Bitrex Wallet"}}, {"address":{"type":"string","value":"0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533"}, "color":{"type":"string","value":"magenta_c"}, "firstBlock":{"type":"integer","value":"3189894"}, "lastBlock":{"type":"integer","value":"2873699"}, "name":{"type":"string","value":"Hacker Camp Wallet"}}, {"address":{"type":"string","value":"0x31f54a9d0c9817bb9e6ca1d17ca20d8ea718bc66"}, "color":{"type":"string","value":"blue_c"}, "firstBlock":{"type":"integer","value":"3900000"}, "lastBlock":{"type":"integer","value":"3900000"}, "name":{"type":"string","value":"Old MEW Wallet"}}, {"address":{"type":"string","value":"0x00a6ef05a497236a1ea611857f52884593f63f8c"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"3900000"}, "lastBlock":{"type":"integer","value":"3900000"}, "name":{"type":"string","value":"Play Account 2"}}, {"address":{"type":"string","value":"0x9519afbc60719a83c470ceec41e32d3e4b8b262e"}, "color":{"type":"string","value":"red_c"}, "firstBlock":{"type":"integer","value":"1383378"}, "lastBlock":{"type":"integer","value":"1975800"}, "name":{"type":"string","value":"GH_DAO_Wallet"}}, {"address":{"type":"string","value":"0xfd23407a31f54413e32043adb7b1ee61a6e04027"}, "color":{"type":"string","value":"blue_b"}, "firstBlock":{"type":"integer","value":"1235820"}, "lastBlock":{"type":"integer","value":"1434025"}, "name":{"type":"string","value":"OLD_WALLET"}}, {"address":{"type":"string","value":"0xcb1547417575261c4d84cab3e989acfd9f9ee35c"}, "color":{"type":"string","value":"yellow_c"}, "firstBlock":{"type":"integer","value":"1438181"}, "lastBlock":{"type":"integer","value":"1975779"}, "name":{"type":"string","value":"GH_2_Wallet"}}, {"address":{"type":"string","value":"0x3464e758c8372d7cb536eaf9f5a126d3f574f4c3"}, "color":{"type":"string","value":"teal_c"}, "firstBlock":{"type":"integer","value":"1559924"}, "lastBlock":{"type":"integer","value":"2603045"}, "name":{"type":"string","value":"EtherSlurp"}}, {"address":{"type":"string","value":"0xe583ac239693c716ee5567c7da61c96647d691e5"}, "color":{"type":"string","value":"white_b"}, "firstBlock":{"type":"integer","value":"1589769"}, "lastBlock":{"type":"integer","value":"1973555"}, "name":{"type":"string","value":"Account_4"}}, {"address":{"type":"string","value":"0x77d0967ffddbad3aba301837208392573da29299"}, "color":{"type":"string","value":"magenta_b"}, "firstBlock":{"type":"integer","value":"1477483"}, "lastBlock":{"type":"integer","value":"1974407"}, "name":{"type":"string","value":"NatesOldWallet"}}, {"address":{"type":"string","value":"0x10ed2372778da1b9d96782c894b752d8a647deb8"}, "color":{"type":"string","value":"blue_b"}, "firstBlock":{"type":"integer","value":"1724673"}, "lastBlock":{"type":"integer","value":"1848186"}, "name":{"type":"string","value":"NatesOldWallet2"}}, {"address":{"type":"string","value":"0x713b73c3994442b533e6a083ec968e40606810ec"}, "color":{"type":"string","value":"red_c"}, "firstBlock":{"type":"integer","value":"1387025"}, "lastBlock":{"type":"integer","value":"1470405"}, "name":{"type":"string","value":"EEAR"}}, {"address":{"type":"string","value":"0x2b61CD90B5591604B3D969Ca9eb944D59be6f5A7"}, "color":{"type":"string","value":"magenta_b"}, "firstBlock":{"type":"integer","value":"1385714"}, "lastBlock":{"type":"integer","value":"1386546"}, "name":{"type":"string","value":"Old_EEAR"}}, {"address":{"type":"string","value":"0xc430503c9f7cade47eb28958e734ee6255fe143b"}, "color":{"type":"string","value":"yellow_c"}, "firstBlock":{"type":"integer","value":"2694532"}, "lastBlock":{"type":"integer","value":"2694564"}, "name":{"type":"string","value":"GiftOfFriendship"}}, {"address":{"type":"string","value":"0x3e575510b9304ff417c2e4d420d1314dc3f13687"}, "color":{"type":"string","value":"blue_b"}, "firstBlock":{"type":"integer","value":"1488777"}, "lastBlock":{"type":"integer","value":"1987505"}, "name":{"type":"string","value":"Friend_Ar"}}, {"address":{"type":"string","value":"0x6d343663e55f734781e278b2b41a36c99e0bac40"}, "color":{"type":"string","value":"blue_b"}, "firstBlock":{"type":"integer","value":"2610051"}, "lastBlock":{"type":"integer","value":"2677451"}, "name":{"type":"string","value":"Friend_A"}}, {"address":{"type":"string","value":"0x9e5adb4e5c299654c2f0619624f7c9eb7b9a3a1a"}, "color":{"type":"string","value":"blue_b"}, "firstBlock":{"type":"integer","value":"2511426"}, "lastBlock":{"type":"integer","value":"2511433"}, "name":{"type":"string","value":"Friend_D"}}, {"address":{"type":"string","value":"0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"1973555"}, "lastBlock":{"type":"integer","value":"1973640"}, "name":{"type":"string","value":"Exch_K1"}}, {"address":{"type":"string","value":"0xbb43f212b7b47bab7164ce74a07bd1d61aef1ee8"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"1925718"}, "lastBlock":{"type":"integer","value":"1956807"}, "name":{"type":"string","value":"Exch_K2"}}, {"address":{"type":"string","value":"0xf6b0b85aa3a40e9d3e821847a65bd37d56ac78c2"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"1447148"}, "lastBlock":{"type":"integer","value":"1915285"}, "name":{"type":"string","value":"Exch_K3"}}, {"address":{"type":"string","value":"0xb3a0f8e3c7e44949011b18cf5a92ebae41923419"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"1973788"}, "lastBlock":{"type":"integer","value":"3359914"}, "name":{"type":"string","value":"Exch_K4"}}, {"address":{"type":"string","value":"0x10821bc0260fe58606d2fd97fda2113d4ab4a1ca"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"1974267"}, "lastBlock":{"type":"integer","value":"1974270"}, "name":{"type":"string","value":"Exch_K5"}}, {"address":{"type":"string","value":"0xa7e1819bb646e0b8c0dd6b5dba91212536e98cc5"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"1342525"}, "lastBlock":{"type":"integer","value":"1973842"}, "name":{"type":"string","value":"Exch_K6"}}, {"address":{"type":"string","value":"0x268e6834d5b40745849157cae0e5715190135f10"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"1974407"}, "lastBlock":{"type":"integer","value":"1974418"}, "name":{"type":"string","value":"Exch_K7"}}, {"address":{"type":"string","value":"0xc0fab372fad6613c3be2bb1378b2857a86c5ad90"}, "color":{"type":"string","value":"green_c"}, "firstBlock":{"type":"integer","value":"1975779"}, "lastBlock":{"type":"integer","value":"1975804"}, "name":{"type":"string","value":"Exch_K8"}}, {"address":{"type":"string","value":"0x2eb0056C62ddDd0D5bD29FD51fe795B3Cb0B9be1"}, "color":{"type":"string","value":"blue_b"}, "firstBlock":{"type":"integer","value":"4162912"}, "name":{"type":"string","value":"QuickNodes node"}}, {"address":{"type":"string","value":"0x62428f78fe0118447b9668ae867b4bf6a40c2d9c"}, "color":{"type":"string","value":"white_b"}, "firstBlock":{"type":"integer","value":"4402980"}, "name":{"type":"string","value":"Augur Web Wallet"}}, {"address":{"type":"string","value":"0x48a74e18b38b153c54dd4f7c0c9f9f112a83a4ee"}, "color":{"type":"string","value":"blue_b"}, "firstBlock":{"type":"integer","value":"4915357"}, "name":{"type":"string","value":"Ledger"}}, {"address":{"type":"string","value":"0xdd449471bdc5a4d98f1a7d05e35b4cb55ebed441"}, "color":{"type":"string","value":"blue_b"}, "firstBlock":{"type":"integer","value":"4916351"}, "name":{"type":"string","value":"Nate Ledger"}}, {"address":{"type":"string","value":"0x3b161D57F482cd2dFBB626f0307ef92b3B094Fce"}, "color":{"type":"string","value":"white_b"}, "firstBlock":{"type":"integer","value":"4834045"}, "name":{"type":"string","value":"NewMetaMask"}}], "nxxxamed":[{"axddress":{"type":"string","value":"0x314159265dd8dbb310642f98f50c066173c1259b"}, "name":{"type":"string","value":"ENS (Main)"}}, {"axddress":{"type":"string","value":"0x6090a6e47849629b7245dfa1ca21d94cd15878ef"}, "name":{"type":"string","value":"ENS Registrar"}}, {"axddress":{"type":"string","value":"0x012233b3c8177f0778d910ed88170b82de3bfe57"}, "name":{"type":"string","value":"Defunct ENS Regist"}}, {"axddress":{"type":"string","value":"0xbb9bc244d798123fde783fcc1c72d3bb8c189413"}, "name":{"type":"string","value":"The DAO"}}, {"axddress":{"type":"string","value":"0xbf4ed7b27f1d666546e30d74d50d173d20bca754"}, "name":{"type":"string","value":"DAO_Withdrawl"}}, {"axddress":{"type":"string","value":"0xc7e165ebdad9eeb8e5f5d94eef3e96ea9739fdb2"}, "name":{"type":"string","value":"Dao.consider.it"}}, {"axddress":{"type":"string","value":"0xaa1a6e3e6ef20068f7f8d8c835d2d22fd5116444"}, "name":{"type":"string","value":"ReplaySafeSplit"}}, {"axddress":{"type":"string","value":"0x2910543af39aba0cd09dbb2d50200b3e800a63d2"}, "name":{"type":"string","value":"Kraken_Exch_1"}}, {"axddress":{"type":"string","value":"0x53d284357ec70ce289d6d64134dfac8e511c8a3d"}, "name":{"type":"string","value":"Kraken_Exch_2"}}, {"axddress":{"type":"string","value":"0xfa52274dd61e1643d2205169732f29114bc240b3"}, "name":{"type":"string","value":"Kraken_Exch_3"}}, {"axddress":{"type":"string","value":"0x5f742383b6d1298980030d6af943b76cdd902143"}, "name":{"type":"string","value":"Etherplay"}}, {"axddress":{"type":"string","value":"0x9ae98746eb8a0aeee5ff2b6b15875313a986f103"}, "name":{"type":"string","value":"Parity SMS Verifier"}}, {"axddress":{"type":"string","value":"0x7cb57b5a97eabe94205c07890be4c1ad31e486a8"}, "name":{"type":"string","value":"Tip_MyEtherWallet"}}, {"axddress":{"type":"string","value":"0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359"}, "name":{"type":"string","value":"Tip_Ethereum"}}, {"axddress":{"type":"string","value":"0x7ed1e469fcb3ee19c0366d829e291451be638e59"}, "name":{"type":"string","value":"Philly Meetup"}}, {"axddress":{"type":"string","value":"0x7cb57b5a97eabe94205c07890be4c1ad31e486a8"}, "name":{"type":"string","value":"Friend_TVO"}}, {"axddress":{"type":"string","value":"0x8f53781799515e5dc8f5d00c528940cae99ac969"}, "name":{"type":"string","value":"Friend_CP"}}, {"axddress":{"type":"string","value":"0x5adf43dd006c6c36506e2b2dfa352e60002d22dc"}, "name":{"type":"string","value":"GiveEth"}}]}]}
+
+oldGroup:
+[display]
+	accounting = true
+	autocorrect = true
+	debug = true
+	logs = true
+	parse = false
+	single = true
+	trace = true
+	width = 24
+[formats]
+	trans_fmt = "[{DATE} ] [{BLOCKNUMBER} ][{TRANSACTIONINDEX} ] [{FROM} ][{TO} ][{ETHER} ][{ISERROR} ] [\r\n\tarticulated:\t{ARTICULATEDTX}] [\r\n\tgas cost:\t{GASCOST}][ (used/price: {GASUSED}][ @ {GASPRICE})]"
+[settings]
+	name = "accts"
+[[watches]]
+	[[watches.list]]
+		address = "0xa92e6abc1156b6ed4948cc962cb60f250d422c68"
+		color = "white_b"
+		firstBlock = 1971529
+		name = "Main Wallet"
+	[[watches.list]]
+		address = "0x00a3819199113fc6a6e6ba1298afde7377e2009b"
+		color = "magenta_b"
+		firstBlock = 2867899
+		name = "Laptop Wallet"
+	[[watches.list]]
+		address = "0xb97073b754660bb356dfe12f78ae366d77dbc80f"
+		color = "blue_b"
+		firstBlock = 1986055
+		name = "Tip Jar"
+	[[watches.list]]
+		address = "0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c"
+		color = "green_b"
+		firstBlock = 2420364
+		name = "Token Holder"
+	[[watches.list]]
+		address = "0xf1aa581f353005ba3765b81bf52d6b1c488c2767"
+		color = "red_b"
+		firstBlock = 1986062
+		name = "One Ether"
+	[[watches.list]]
+		address = "0xd31f381ad54386895852f311fc3be2008c88cb27"
+		color = "yellow_b"
+		firstBlock = 2597778
+		name = "Play Wallet"
+	[[watches.list]]
+		address = "0x654e7f49b474e2f5ac29cc5f2f0d41c8a93d6d0a"
+		color = "teal_b"
+		firstBlock = 2972204
+		name = "MetaMask Wallet"
+	[[watches.list]]
+		address = "0x85979379cb90d63fe944763b42b9ec4b49573ea7"
+		color = "white_c"
+		firstBlock = 2593109
+		name = "Nates Wallet"
+	[[watches.list]]
+		address = "0x7E02ee81df2b100C3292636e0813d71192D8b071"
+		color = "green_c"
+		firstBlock = 4342440
+		name = "Bitrex Wallet"
+	[[watches.list]]
+		address = "0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533"
+		color = "magenta_c"
+		firstBlock = 3189894
+		lastBlock = 2873699
+		name = "Hacker Camp Wallet"
+	[[watches.list]]
+		address = "0x31f54a9d0c9817bb9e6ca1d17ca20d8ea718bc66"
+		color = "blue_c"
+		firstBlock = 3900000
+		lastBlock = 3900000
+		name = "Old MEW Wallet"
+	[[watches.list]]
+		address = "0x00a6ef05a497236a1ea611857f52884593f63f8c"
+		color = "green_c"
+		firstBlock = 3900000
+		lastBlock = 3900000
+		name = "Play Account 2"
+	[[watches.list]]
+		address = "0x9519afbc60719a83c470ceec41e32d3e4b8b262e"
+		color = "red_c"
+		firstBlock = 1383378
+		lastBlock = 1975800
+		name = "GH_DAO_Wallet"
+	[[watches.list]]
+		address = "0xfd23407a31f54413e32043adb7b1ee61a6e04027"
+		color = "blue_b"
+		firstBlock = 1235820
+		lastBlock = 1434025
+		name = "OLD_WALLET"
+	[[watches.list]]
+		address = "0xcb1547417575261c4d84cab3e989acfd9f9ee35c"
+		color = "yellow_c"
+		firstBlock = 1438181
+		lastBlock = 1975779
+		name = "GH_2_Wallet"
+	[[watches.list]]
+		address = "0x3464e758c8372d7cb536eaf9f5a126d3f574f4c3"
+		color = "teal_c"
+		firstBlock = 1559924
+		lastBlock = 2603045
+		name = "EtherSlurp"
+	[[watches.list]]
+		address = "0xe583ac239693c716ee5567c7da61c96647d691e5"
+		color = "white_b"
+		firstBlock = 1589769
+		lastBlock = 1973555
+		name = "Account_4"
+	[[watches.list]]
+		address = "0x77d0967ffddbad3aba301837208392573da29299"
+		color = "magenta_b"
+		firstBlock = 1477483
+		lastBlock = 1974407
+		name = "NatesOldWallet"
+	[[watches.list]]
+		address = "0x10ed2372778da1b9d96782c894b752d8a647deb8"
+		color = "blue_b"
+		firstBlock = 1724673
+		lastBlock = 1848186
+		name = "NatesOldWallet2"
+	[[watches.list]]
+		address = "0x713b73c3994442b533e6a083ec968e40606810ec"
+		color = "red_c"
+		firstBlock = 1387025
+		lastBlock = 1470405
+		name = "EEAR"
+	[[watches.list]]
+		address = "0x2b61CD90B5591604B3D969Ca9eb944D59be6f5A7"
+		color = "magenta_b"
+		firstBlock = 1385714
+		lastBlock = 1386546
+		name = "Old_EEAR"
+	[[watches.list]]
+		address = "0xc430503c9f7cade47eb28958e734ee6255fe143b"
+		color = "yellow_c"
+		firstBlock = 2694532
+		lastBlock = 2694564
+		name = "GiftOfFriendship"
+	[[watches.list]]
+		address = "0x3e575510b9304ff417c2e4d420d1314dc3f13687"
+		color = "blue_b"
+		firstBlock = 1488777
+		lastBlock = 1987505
+		name = "Friend_Ar"
+	[[watches.list]]
+		address = "0x6d343663e55f734781e278b2b41a36c99e0bac40"
+		color = "blue_b"
+		firstBlock = 2610051
+		lastBlock = 2677451
+		name = "Friend_A"
+	[[watches.list]]
+		address = "0x9e5adb4e5c299654c2f0619624f7c9eb7b9a3a1a"
+		color = "blue_b"
+		firstBlock = 2511426
+		lastBlock = 2511433
+		name = "Friend_D"
+	[[watches.list]]
+		address = "0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98"
+		color = "green_c"
+		firstBlock = 1973555
+		lastBlock = 1973640
+		name = "Exch_K1"
+	[[watches.list]]
+		address = "0xbb43f212b7b47bab7164ce74a07bd1d61aef1ee8"
+		color = "green_c"
+		firstBlock = 1925718
+		lastBlock = 1956807
+		name = "Exch_K2"
+	[[watches.list]]
+		address = "0xf6b0b85aa3a40e9d3e821847a65bd37d56ac78c2"
+		color = "green_c"
+		firstBlock = 1447148
+		lastBlock = 1915285
+		name = "Exch_K3"
+	[[watches.list]]
+		address = "0xb3a0f8e3c7e44949011b18cf5a92ebae41923419"
+		color = "green_c"
+		firstBlock = 1973788
+		lastBlock = 3359914
+		name = "Exch_K4"
+	[[watches.list]]
+		address = "0x10821bc0260fe58606d2fd97fda2113d4ab4a1ca"
+		color = "green_c"
+		firstBlock = 1974267
+		lastBlock = 1974270
+		name = "Exch_K5"
+	[[watches.list]]
+		address = "0xa7e1819bb646e0b8c0dd6b5dba91212536e98cc5"
+		color = "green_c"
+		firstBlock = 1342525
+		lastBlock = 1973842
+		name = "Exch_K6"
+	[[watches.list]]
+		address = "0x268e6834d5b40745849157cae0e5715190135f10"
+		color = "green_c"
+		firstBlock = 1974407
+		lastBlock = 1974418
+		name = "Exch_K7"
+	[[watches.list]]
+		address = "0xc0fab372fad6613c3be2bb1378b2857a86c5ad90"
+		color = "green_c"
+		firstBlock = 1975779
+		lastBlock = 1975804
+		name = "Exch_K8"
+	[[watches.list]]
+		address = "0x2eb0056C62ddDd0D5bD29FD51fe795B3Cb0B9be1"
+		color = "blue_b"
+		firstBlock = 4162912
+		name = "QuickNodes node"
+	[[watches.list]]
+		address = "0x62428f78fe0118447b9668ae867b4bf6a40c2d9c"
+		color = "white_b"
+		firstBlock = 4402980
+		name = "Augur Web Wallet"
+	[[watches.list]]
+		address = "0x48a74e18b38b153c54dd4f7c0c9f9f112a83a4ee"
+		color = "blue_b"
+		firstBlock = 4915357
+		name = "Ledger"
+	[[watches.list]]
+		address = "0xdd449471bdc5a4d98f1a7d05e35b4cb55ebed441"
+		color = "blue_b"
+		firstBlock = 4916351
+		name = "Nate Ledger"
+	[[watches.list]]
+		address = "0x3b161D57F482cd2dFBB626f0307ef92b3B094Fce"
+		color = "white_b"
+		firstBlock = 4834045
+		name = "NewMetaMask"
+	[[watches.nxxxamed]]
+		axddress = "0x314159265dd8dbb310642f98f50c066173c1259b"
+		name = "ENS (Main)"
+	[[watches.nxxxamed]]
+		axddress = "0x6090a6e47849629b7245dfa1ca21d94cd15878ef"
+		name = "ENS Registrar"
+	[[watches.nxxxamed]]
+		axddress = "0x012233b3c8177f0778d910ed88170b82de3bfe57"
+		name = "Defunct ENS Regist"
+	[[watches.nxxxamed]]
+		axddress = "0xbb9bc244d798123fde783fcc1c72d3bb8c189413"
+		name = "The DAO"
+	[[watches.nxxxamed]]
+		axddress = "0xbf4ed7b27f1d666546e30d74d50d173d20bca754"
+		name = "DAO_Withdrawl"
+	[[watches.nxxxamed]]
+		axddress = "0xc7e165ebdad9eeb8e5f5d94eef3e96ea9739fdb2"
+		name = "Dao.consider.it"
+	[[watches.nxxxamed]]
+		axddress = "0xaa1a6e3e6ef20068f7f8d8c835d2d22fd5116444"
+		name = "ReplaySafeSplit"
+	[[watches.nxxxamed]]
+		axddress = "0x2910543af39aba0cd09dbb2d50200b3e800a63d2"
+		name = "Kraken_Exch_1"
+	[[watches.nxxxamed]]
+		axddress = "0x53d284357ec70ce289d6d64134dfac8e511c8a3d"
+		name = "Kraken_Exch_2"
+	[[watches.nxxxamed]]
+		axddress = "0xfa52274dd61e1643d2205169732f29114bc240b3"
+		name = "Kraken_Exch_3"
+	[[watches.nxxxamed]]
+		axddress = "0x5f742383b6d1298980030d6af943b76cdd902143"
+		name = "Etherplay"
+	[[watches.nxxxamed]]
+		axddress = "0x9ae98746eb8a0aeee5ff2b6b15875313a986f103"
+		name = "Parity SMS Verifier"
+	[[watches.nxxxamed]]
+		axddress = "0x7cb57b5a97eabe94205c07890be4c1ad31e486a8"
+		name = "Tip_MyEtherWallet"
+	[[watches.nxxxamed]]
+		axddress = "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359"
+		name = "Tip_Ethereum"
+	[[watches.nxxxamed]]
+		axddress = "0x7ed1e469fcb3ee19c0366d829e291451be638e59"
+		name = "Philly Meetup"
+	[[watches.nxxxamed]]
+		axddress = "0x7cb57b5a97eabe94205c07890be4c1ad31e486a8"
+		name = "Friend_TVO"
+	[[watches.nxxxamed]]
+		axddress = "0x8f53781799515e5dc8f5d00c528940cae99ac969"
+		name = "Friend_CP"
+	[[watches.nxxxamed]]
+		axddress = "0x5adf43dd006c6c36506e2b2dfa352e60002d22dc"
+		name = "GiveEth"
+
+--------------------------------------------------------------------------------
+Old toml: tests/ethslurp.toml
+[display]
+	fmt_csv_field = "[\"{FIELD}\"],"
+	fmt_csv_file = "[{HEADER}]\n[{RECORDS}]"
+	fmt_csv_record = "[{FIELDS}]\n"
+	fmt_custom_field = "fmt_txt_field"
+	fmt_custom_file = "file:custom.txt"
+	fmt_custom_record = "fmt_txt_record"
+	fmt_ethscan_field = "\t[{FIELD}]"
+	fmt_ethscan_fieldList = "blockNumber|transactionIndex"
+	fmt_ethscan_file = "[{HEADER}]\n[{RECORDS}]"
+	fmt_ethscan_record = "[{FIELDS}]\n"
+	fmt_fieldList = ""
+	fmt_html_field = "\t\t<td>[{FIELD}]</td>\n"
+	fmt_html_file = "<table>\n[{HEADER}]\n[{RECORDS}]</table>\n"
+	fmt_html_record = "\t<tr>\n[{FIELDS}]</tr>\n"
+	fmt_json_field = " \"[{p:FIELD}]\":\"[{FIELD}]\","
+	fmt_json_file = "[{RECORDS}]\n"
+	fmt_json_record = "\n        {\n[{FIELDS}]        },"
+	fmt_txt_field = "\t[{FIELD}]"
+	fmt_txt_file = "[{HEADER}]\n[{RECORDS}]"
+	fmt_txt_record = "[{FIELDS}]\n"
+[settings]
+	api_key = "68E1BQYW85ETVNHKWV27B8N5HYICEHEPH1"
+	api_provider = "EtherScan"
+	api_url = "http://etherscan.io/apis"
+	rerun = "0x48a74e18b38b153c54dd4f7c0c9f9f112a83a4ee"
+[version]
+	current = "0.2.0"
+
+<NOT_SET>
+{"display":{"fmt_csv_field":{"type":"string","value":"[\"{FIELD}\"],"}, "fmt_csv_file":{"type":"string","value":"[{HEADER}]\n[{RECORDS}]"}, "fmt_csv_record":{"type":"string","value":"[{FIELDS}]\n"}, "fmt_custom_field":{"type":"string","value":"fmt_txt_field"}, "fmt_custom_file":{"type":"string","value":"file:custom.txt"}, "fmt_custom_record":{"type":"string","value":"fmt_txt_record"}, "fmt_ethscan_field":{"type":"string","value":"\t[{FIELD}]"}, "fmt_ethscan_fieldList":{"type":"string","value":"blockNumber|transactionIndex"}, "fmt_ethscan_file":{"type":"string","value":"[{HEADER}]\n[{RECORDS}]"}, "fmt_ethscan_record":{"type":"string","value":"[{FIELDS}]\n"}, "fmt_fieldList":{"type":"string","value":""}, "fmt_html_field":{"type":"string","value":"\t\t<td>[{FIELD}]</td>\n"}, "fmt_html_file":{"type":"string","value":"<table>\n[{HEADER}]\n[{RECORDS}]</table>\n"}, "fmt_html_record":{"type":"string","value":"\t<tr>\n[{FIELDS}]</tr>\n"}, "fmt_json_field":{"type":"string","value":" \"[{p:FIELD}]\":\"[{FIELD}]\","}, "fmt_json_file":{"type":"string","value":"[{RECORDS}]\n"}, "fmt_json_record":{"type":"string","value":"\n        {\n[{FIELDS}]        },"}, "fmt_txt_field":{"type":"string","value":"\t[{FIELD}]"}, "fmt_txt_file":{"type":"string","value":"[{HEADER}]\n[{RECORDS}]"}, "fmt_txt_record":{"type":"string","value":"[{FIELDS}]\n"}}, "settings":{"api_key":{"type":"string","value":"68E1BQYW85ETVNHKWV27B8N5HYICEHEPH1"}, "api_provider":{"type":"string","value":"EtherScan"}, "api_url":{"type":"string","value":"http://etherscan.io/apis"}, "rerun":{"type":"string","value":"0x48a74e18b38b153c54dd4f7c0c9f9f112a83a4ee"}}, "version":{"current":{"type":"string","value":"0.2.0"}}}
+
+{"display":{"fmt_csv_field":{"type":"string","value":"[\"{FIELD}\"],"}, "fmt_csv_file":{"type":"string","value":"[{HEADER}]\n[{RECORDS}]"}, "fmt_csv_record":{"type":"string","value":"[{FIELDS}]\n"}, "fmt_custom_field":{"type":"string","value":"fmt_txt_field"}, "fmt_custom_file":{"type":"string","value":"file:custom.txt"}, "fmt_custom_record":{"type":"string","value":"fmt_txt_record"}, "fmt_ethscan_field":{"type":"string","value":"\t[{FIELD}]"}, "fmt_ethscan_fieldList":{"type":"string","value":"blockNumber|transactionIndex"}, "fmt_ethscan_file":{"type":"string","value":"[{HEADER}]\n[{RECORDS}]"}, "fmt_ethscan_record":{"type":"string","value":"[{FIELDS}]\n"}, "fmt_fieldList":{"type":"string","value":""}, "fmt_html_field":{"type":"string","value":"\t\t<td>[{FIELD}]</td>\n"}, "fmt_html_file":{"type":"string","value":"<table>\n[{HEADER}]\n[{RECORDS}]</table>\n"}, "fmt_html_record":{"type":"string","value":"\t<tr>\n[{FIELDS}]</tr>\n"}, "fmt_json_field":{"type":"string","value":" \"[{p:FIELD}]\":\"[{FIELD}]\","}, "fmt_json_file":{"type":"string","value":"[{RECORDS}]\n"}, "fmt_json_record":{"type":"string","value":"\n        {\n[{FIELDS}]        },"}, "fmt_txt_field":{"type":"string","value":"\t[{FIELD}]"}, "fmt_txt_file":{"type":"string","value":"[{HEADER}]\n[{RECORDS}]"}, "fmt_txt_record":{"type":"string","value":"[{FIELDS}]\n"}}, "settings":{"api_key":{"type":"string","value":"68E1BQYW85ETVNHKWV27B8N5HYICEHEPH1"}, "api_provider":{"type":"string","value":"EtherScan"}, "api_url":{"type":"string","value":"http://etherscan.io/apis"}, "rerun":{"type":"string","value":"0x48a74e18b38b153c54dd4f7c0c9f9f112a83a4ee"}}, "version":{"current":{"type":"string","value":"0.2.0"}}}
+
+{"display":{"fmt_csv_field":{"type":"string","value":"[\"{FIELD}\"],"}, "fmt_csv_file":{"type":"string","value":"[{HEADER}]\n[{RECORDS}]"}, "fmt_csv_record":{"type":"string","value":"[{FIELDS}]\n"}, "fmt_custom_field":{"type":"string","value":"fmt_txt_field"}, "fmt_custom_file":{"type":"string","value":"file:custom.txt"}, "fmt_custom_record":{"type":"string","value":"fmt_txt_record"}, "fmt_ethscan_field":{"type":"string","value":"\t[{FIELD}]"}, "fmt_ethscan_fieldList":{"type":"string","value":"blockNumber|transactionIndex"}, "fmt_ethscan_file":{"type":"string","value":"[{HEADER}]\n[{RECORDS}]"}, "fmt_ethscan_record":{"type":"string","value":"[{FIELDS}]\n"}, "fmt_fieldList":{"type":"string","value":""}, "fmt_html_field":{"type":"string","value":"\t\t<td>[{FIELD}]</td>\n"}, "fmt_html_file":{"type":"string","value":"<table>\n[{HEADER}]\n[{RECORDS}]</table>\n"}, "fmt_html_record":{"type":"string","value":"\t<tr>\n[{FIELDS}]</tr>\n"}, "fmt_json_field":{"type":"string","value":" \"[{p:FIELD}]\":\"[{FIELD}]\","}, "fmt_json_file":{"type":"string","value":"[{RECORDS}]\n"}, "fmt_json_record":{"type":"string","value":"\n        {\n[{FIELDS}]        },"}, "fmt_txt_field":{"type":"string","value":"\t[{FIELD}]"}, "fmt_txt_file":{"type":"string","value":"[{HEADER}]\n[{RECORDS}]"}, "fmt_txt_record":{"type":"string","value":"[{FIELDS}]\n"}}, "settings":{"api_key":{"type":"string","value":"68E1BQYW85ETVNHKWV27B8N5HYICEHEPH1"}, "api_provider":{"type":"string","value":"EtherScan"}, "api_url":{"type":"string","value":"http://etherscan.io/apis"}, "rerun":{"type":"string","value":"0x48a74e18b38b153c54dd4f7c0c9f9f112a83a4ee"}}, "version":{"current":{"type":"string","value":"0.2.0"}}}
+
+["{FIELD}"],
+[{HEADER}]
+[{RECORDS}]
+[{FIELDS}]
+
+fmt_txt_field
+file:custom.txt
+fmt_txt_record
+	[{FIELD}]
+blockNumber|transactionIndex
+[{HEADER}]
+[{RECORDS}]
+[{FIELDS}]
+
+
+		<td>[{FIELD}]</td>
+
+<table>
+[{HEADER}]
+[{RECORDS}]</table>
+
+	<tr>
+[{FIELDS}]</tr>
+
+ "[{p:FIELD}]":"[{FIELD}]",
+[{RECORDS}]
+
+
+        {
+[{FIELDS}]        },
+	[{FIELD}]
+[{HEADER}]
+[{RECORDS}]
+[{FIELDS}]
+
+oldGroup:
+[display]
+	fmt_csv_field = "[\"{FIELD}\"],"
+	fmt_csv_file = "[{HEADER}]\n[{RECORDS}]"
+	fmt_csv_record = "[{FIELDS}]\n"
+	fmt_custom_field = "fmt_txt_field"
+	fmt_custom_file = "file:custom.txt"
+	fmt_custom_record = "fmt_txt_record"
+	fmt_ethscan_field = "\t[{FIELD}]"
+	fmt_ethscan_fieldList = "blockNumber|transactionIndex"
+	fmt_ethscan_file = "[{HEADER}]\n[{RECORDS}]"
+	fmt_ethscan_record = "[{FIELDS}]\n"
+	fmt_fieldList = ""
+	fmt_html_field = "\t\t<td>[{FIELD}]</td>\n"
+	fmt_html_file = "<table>\n[{HEADER}]\n[{RECORDS}]</table>\n"
+	fmt_html_record = "\t<tr>\n[{FIELDS}]</tr>\n"
+	fmt_json_field = " \"[{p:FIELD}]\":\"[{FIELD}]\","
+	fmt_json_file = "[{RECORDS}]\n"
+	fmt_json_record = "\n        {\n[{FIELDS}]        },"
+	fmt_txt_field = "\t[{FIELD}]"
+	fmt_txt_file = "[{HEADER}]\n[{RECORDS}]"
+	fmt_txt_record = "[{FIELDS}]\n"
+[settings]
+	api_key = "68E1BQYW85ETVNHKWV27B8N5HYICEHEPH1"
+	api_provider = "EtherScan"
+	api_url = "http://etherscan.io/apis"
+	rerun = "0x48a74e18b38b153c54dd4f7c0c9f9f112a83a4ee"
+[version]
+	current = "0.2.0"
+
+--------------------------------------------------------------------------------
+Old toml: tests/getAccounts.toml
+[extra_accounts]
+	ea_0 = "0x48a74e18b38b153c54dd4f7c0c9f9f112a83a4ee"
+	ea_1 = "0xdd449471bdc5a4d98f1a7d05e35b4cb55ebed441"
+	ea_2 = "0x3b161D57F482cd2dFBB626f0307ef92b3B094Fce"
+	n = 3
+
+<NOT_SET>
+{"extra_accounts":{"ea_0":{"type":"string","value":"0x48a74e18b38b153c54dd4f7c0c9f9f112a83a4ee"}, "ea_1":{"type":"string","value":"0xdd449471bdc5a4d98f1a7d05e35b4cb55ebed441"}, "ea_2":{"type":"string","value":"0x3b161D57F482cd2dFBB626f0307ef92b3B094Fce"}, "n":{"type":"integer","value":"3"}}}
+
+{"extra_accounts":{"ea_0":{"type":"string","value":"0x48a74e18b38b153c54dd4f7c0c9f9f112a83a4ee"}, "ea_1":{"type":"string","value":"0xdd449471bdc5a4d98f1a7d05e35b4cb55ebed441"}, "ea_2":{"type":"string","value":"0x3b161D57F482cd2dFBB626f0307ef92b3B094Fce"}, "n":{"type":"integer","value":"3"}}}
+
+{"extra_accounts":{"ea_0":{"type":"string","value":"0x48a74e18b38b153c54dd4f7c0c9f9f112a83a4ee"}, "ea_1":{"type":"string","value":"0xdd449471bdc5a4d98f1a7d05e35b4cb55ebed441"}, "ea_2":{"type":"string","value":"0x3b161D57F482cd2dFBB626f0307ef92b3B094Fce"}, "n":{"type":"integer","value":"3"}}}
+
+oldGroup:
+[extra_accounts]
+	ea_0 = "0x48a74e18b38b153c54dd4f7c0c9f9f112a83a4ee"
+	ea_1 = "0xdd449471bdc5a4d98f1a7d05e35b4cb55ebed441"
+	ea_2 = "0x3b161D57F482cd2dFBB626f0307ef92b3B094Fce"
+	n = 3
+
+--------------------------------------------------------------------------------
+Old toml: tests/getTrans.toml
+[display]
+	format = "[{EVENTS}]"
+
+<NOT_SET>
+{"display":{"format":{"type":"string","value":"[{EVENTS}]"}}}
+
+{"display":{"format":{"type":"string","value":"[{EVENTS}]"}}}
+
+{"display":{"format":{"type":"string","value":"[{EVENTS}]"}}}
+
+oldGroup:
+[display]
+	format = "[{EVENTS}]"
+
+--------------------------------------------------------------------------------
+Old toml: tests/grabABI.toml
+[display]
+	format = "[{address}]\t[{encoding}]\t[{type}]\t[{constant}]\t[{name}]\t[{signature}]\t[{input_names}]"
+
+<NOT_SET>
+{"display":{"format":{"type":"string","value":"[{address}]\t[{encoding}]\t[{type}]\t[{constant}]\t[{name}]\t[{signature}]\t[{input_names}]"}}}
+
+{"display":{"format":{"type":"string","value":"[{address}]\t[{encoding}]\t[{type}]\t[{constant}]\t[{name}]\t[{signature}]\t[{input_names}]"}}}
+
+{"display":{"format":{"type":"string","value":"[{address}]\t[{encoding}]\t[{type}]\t[{constant}]\t[{name}]\t[{signature}]\t[{input_names}]"}}}
+
+oldGroup:
+[display]
+	format = "[{address}]\t[{encoding}]\t[{type}]\t[{constant}]\t[{name}]\t[{signature}]\t[{input_names}]"
+
+--------------------------------------------------------------------------------
+Old toml: tests/miniBlocks.toml
+[settings]
+	maxBlocks = 50000
+
+<NOT_SET>
+{"settings":{"maxBlocks":{"type":"integer","value":"50000"}}}
+
+{"settings":{"maxBlocks":{"type":"integer","value":"50000"}}}
+
+{"settings":{"maxBlocks":{"type":"integer","value":"50000"}}}
+
+oldGroup:
+[settings]
+	maxBlocks = 50000
+
+--------------------------------------------------------------------------------
+Old toml: tests/quickBlocks.toml
+[settings]
+	blockCachePath = "/Volumes/Samsung_T7/scraper/"
+	bxlockCachePath = "/Users/jrush/.quickBlocks/cache/"
+[[tools]]
+	[[tools.list]]
+		name = "getBlock"
+		value = "block"
+	[[tools.list]]
+		name = "getTrans"
+		value = "trans"
+	[[tools.list]]
+		name = "getReceipt"
+		value = "receipt"
+	[[tools.list]]
+		name = "getLogs"
+		value = "logs"
+	[[tools.list]]
+		name = "getTrace"
+		value = "trace"
+	[[tools.list]]
+		name = "getBloom"
+		value = "bloom"
+	[[tools.list]]
+		name = "getAccounts"
+		value = "accounts"
+	[[tools.list]]
+		name = "getBalance"
+		value = "balance"
+	[[tools.list]]
+		name = "getTokenInfo"
+		value = "tokeninfo"
+	[[tools.list]]
+		name = "getAccountInfo"
+		value = "accountinfo"
+	[[tools.list]]
+		name = "ethslurp"
+		value = "slurp"
+	[[tools.list]]
+		name = "grabABI"
+		value = "grab"
+	[[tools.list]]
+		name = "ethprice"
+		value = "price"
+	[[tools.list]]
+		name = "ethName"
+		value = "name"
+	[[tools.list]]
+		name = "whenBlock"
+		value = "when"
+	[[tools.list]]
+		name = "whereBlock"
+		value = "where"
+
+<NOT_SET>
+{"settings":{"blockCachePath":{"type":"string","value":"/Volumes/Samsung_T7/scraper/"}, "bxlockCachePath":{"type":"string","value":"/Users/jrush/.quickBlocks/cache/"}}, "tools":[{"list":[{"name":{"type":"string","value":"getBlock"}, "value":{"type":"string","value":"block"}}, {"name":{"type":"string","value":"getTrans"}, "value":{"type":"string","value":"trans"}}, {"name":{"type":"string","value":"getReceipt"}, "value":{"type":"string","value":"receipt"}}, {"name":{"type":"string","value":"getLogs"}, "value":{"type":"string","value":"logs"}}, {"name":{"type":"string","value":"getTrace"}, "value":{"type":"string","value":"trace"}}, {"name":{"type":"string","value":"getBloom"}, "value":{"type":"string","value":"bloom"}}, {"name":{"type":"string","value":"getAccounts"}, "value":{"type":"string","value":"accounts"}}, {"name":{"type":"string","value":"getBalance"}, "value":{"type":"string","value":"balance"}}, {"name":{"type":"string","value":"getTokenInfo"}, "value":{"type":"string","value":"tokeninfo"}}, {"name":{"type":"string","value":"getAccountInfo"}, "value":{"type":"string","value":"accountinfo"}}, {"name":{"type":"string","value":"ethslurp"}, "value":{"type":"string","value":"slurp"}}, {"name":{"type":"string","value":"grabABI"}, "value":{"type":"string","value":"grab"}}, {"name":{"type":"string","value":"ethprice"}, "value":{"type":"string","value":"price"}}, {"name":{"type":"string","value":"ethName"}, "value":{"type":"string","value":"name"}}, {"name":{"type":"string","value":"whenBlock"}, "value":{"type":"string","value":"when"}}, {"name":{"type":"string","value":"whereBlock"}, "value":{"type":"string","value":"where"}}]}]}
+
+{"settings":{"blockCachePath":{"type":"string","value":"/Volumes/Samsung_T7/scraper/"}, "bxlockCachePath":{"type":"string","value":"/Users/jrush/.quickBlocks/cache/"}}, "tools":[{"list":[{"name":{"type":"string","value":"getBlock"}, "value":{"type":"string","value":"block"}}, {"name":{"type":"string","value":"getTrans"}, "value":{"type":"string","value":"trans"}}, {"name":{"type":"string","value":"getReceipt"}, "value":{"type":"string","value":"receipt"}}, {"name":{"type":"string","value":"getLogs"}, "value":{"type":"string","value":"logs"}}, {"name":{"type":"string","value":"getTrace"}, "value":{"type":"string","value":"trace"}}, {"name":{"type":"string","value":"getBloom"}, "value":{"type":"string","value":"bloom"}}, {"name":{"type":"string","value":"getAccounts"}, "value":{"type":"string","value":"accounts"}}, {"name":{"type":"string","value":"getBalance"}, "value":{"type":"string","value":"balance"}}, {"name":{"type":"string","value":"getTokenInfo"}, "value":{"type":"string","value":"tokeninfo"}}, {"name":{"type":"string","value":"getAccountInfo"}, "value":{"type":"string","value":"accountinfo"}}, {"name":{"type":"string","value":"ethslurp"}, "value":{"type":"string","value":"slurp"}}, {"name":{"type":"string","value":"grabABI"}, "value":{"type":"string","value":"grab"}}, {"name":{"type":"string","value":"ethprice"}, "value":{"type":"string","value":"price"}}, {"name":{"type":"string","value":"ethName"}, "value":{"type":"string","value":"name"}}, {"name":{"type":"string","value":"whenBlock"}, "value":{"type":"string","value":"when"}}, {"name":{"type":"string","value":"whereBlock"}, "value":{"type":"string","value":"where"}}]}]}
+
+{"settings":{"blockCachePath":{"type":"string","value":"/Volumes/Samsung_T7/scraper/"}, "bxlockCachePath":{"type":"string","value":"/Users/jrush/.quickBlocks/cache/"}}, "tools":[{"list":[{"name":{"type":"string","value":"getBlock"}, "value":{"type":"string","value":"block"}}, {"name":{"type":"string","value":"getTrans"}, "value":{"type":"string","value":"trans"}}, {"name":{"type":"string","value":"getReceipt"}, "value":{"type":"string","value":"receipt"}}, {"name":{"type":"string","value":"getLogs"}, "value":{"type":"string","value":"logs"}}, {"name":{"type":"string","value":"getTrace"}, "value":{"type":"string","value":"trace"}}, {"name":{"type":"string","value":"getBloom"}, "value":{"type":"string","value":"bloom"}}, {"name":{"type":"string","value":"getAccounts"}, "value":{"type":"string","value":"accounts"}}, {"name":{"type":"string","value":"getBalance"}, "value":{"type":"string","value":"balance"}}, {"name":{"type":"string","value":"getTokenInfo"}, "value":{"type":"string","value":"tokeninfo"}}, {"name":{"type":"string","value":"getAccountInfo"}, "value":{"type":"string","value":"accountinfo"}}, {"name":{"type":"string","value":"ethslurp"}, "value":{"type":"string","value":"slurp"}}, {"name":{"type":"string","value":"grabABI"}, "value":{"type":"string","value":"grab"}}, {"name":{"type":"string","value":"ethprice"}, "value":{"type":"string","value":"price"}}, {"name":{"type":"string","value":"ethName"}, "value":{"type":"string","value":"name"}}, {"name":{"type":"string","value":"whenBlock"}, "value":{"type":"string","value":"when"}}, {"name":{"type":"string","value":"whereBlock"}, "value":{"type":"string","value":"where"}}]}]}
+
+oldGroup:
+[settings]
+	blockCachePath = "/Volumes/Samsung_T7/scraper/"
+	bxlockCachePath = "/Users/jrush/.quickBlocks/cache/"
+[[tools]]
+	[[tools.list]]
+		name = "getBlock"
+		value = "block"
+	[[tools.list]]
+		name = "getTrans"
+		value = "trans"
+	[[tools.list]]
+		name = "getReceipt"
+		value = "receipt"
+	[[tools.list]]
+		name = "getLogs"
+		value = "logs"
+	[[tools.list]]
+		name = "getTrace"
+		value = "trace"
+	[[tools.list]]
+		name = "getBloom"
+		value = "bloom"
+	[[tools.list]]
+		name = "getAccounts"
+		value = "accounts"
+	[[tools.list]]
+		name = "getBalance"
+		value = "balance"
+	[[tools.list]]
+		name = "getTokenInfo"
+		value = "tokeninfo"
+	[[tools.list]]
+		name = "getAccountInfo"
+		value = "accountinfo"
+	[[tools.list]]
+		name = "ethslurp"
+		value = "slurp"
+	[[tools.list]]
+		name = "grabABI"
+		value = "grab"
+	[[tools.list]]
+		name = "ethprice"
+		value = "price"
+	[[tools.list]]
+		name = "ethName"
+		value = "name"
+	[[tools.list]]
+		name = "whenBlock"
+		value = "when"
+	[[tools.list]]
+		name = "whereBlock"
+		value = "where"
+

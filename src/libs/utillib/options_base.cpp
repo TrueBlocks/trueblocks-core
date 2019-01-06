@@ -822,10 +822,9 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
         string_q toolStr = toml->getConfigStr("tools", "list", "<not_set>");
         if (toolStr == "<not_set>") {
-            string_q fileName = configPath("quickBlocks.toml");
-            string_q contents;
-            asciiFileToString(fileName, contents);
-            stringToAsciiFile(fileName, contents + "\n" + STR_DEFAULT_TOOLNAMES);
+            CToml lToml(configPath("quickBlocks.toml"));
+            lToml.setConfigArray("tools", "list", STR_DEFAULT_TOOLNAMES);
+            lToml.writeFile();
             toml = getGlobalConfig("reload");
             toolStr = toml->getConfigStr("tools", "list", "");
         }
@@ -894,7 +893,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
         const CToml *toml = getGlobalConfig("whenBlock");
         specials.clear();
-        string_q specialsStr = toml->getConfigStr("specials", "list", "");
+        string_q specialsStr = toml->getConfigStr("specials", "list", STR_DEFAULT_WHENBLOCKS);
         CKeyValuePair keyVal;
         while (keyVal.parseJson3(specialsStr)) {
             CNameValue pair = make_pair(keyVal.jsonrpc, keyVal.result);
@@ -1023,8 +1022,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
     //-----------------------------------------------------------------------
     const char *STR_DEFAULT_TOOLNAMES =
-    "[[tools]]\n"
-    "list = [\n"
+    "[\n"
     "    { name = \"getBlock\",       value = \"block\"       },\n"
     "    { name = \"getTrans\",       value = \"trans\"       },\n"
     "    { name = \"getReceipt\",     value = \"receipt\"     },\n"
@@ -1045,4 +1043,27 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     //   Tools not added included for searching: makeClass, acctExport, acctScrape,
     //   blockMan, bloomMan, cacheMan, blockScrape, chifra, miniBlocks
 
+    const char *STR_DEFAULT_WHENBLOCKS =
+    "[\n"
+	"    { name : \"first\",          value : \"0\"       },\n"
+	"    { name : \"iceage\",         value : \"200000\"  },\n"
+	"    { name : \"devcon1\",        value : \"543626\"  },\n"
+	"    { name : \"homestead\",      value : \"1150000\" },\n"
+	"    { name : \"daofund\",        value : \"1428756\" },\n"
+	"    { name : \"daohack\",        value : \"1718497\" },\n"
+	"    { name : \"daofork\",        value : \"1920000\" },\n"
+	"    { name : \"devcon2\",        value : \"2286910\" },\n"
+	"    { name : \"tangerine\",      value : \"2463000\" },\n"
+	"    { name : \"spurious\",       value : \"2675000\" },\n"
+	"    { name : \"stateclear\",     value : \"2717576\" },\n"
+	"    { name : \"eea\",            value : \"3265360\" },\n"
+	"    { name : \"ens2\",           value : \"3327417\" },\n"
+	"    { name : \"parityhack1\",    value : \"4041179\" },\n"
+	"    { name : \"byzantium\",      value : \"4370000\" },\n"
+	"    { name : \"devcon3\",        value : \"4469339\" },\n"
+	"    { name : \"parityhack2\",    value : \"4501969\" },\n"
+	"    { name : \"kitties\",        value : \"4605167\" },\n"
+	"    { name : \"constantinople\", value : \"7080000\" },\n"
+	"    { name : \"latest\",         value : \"\"        }\n"
+    "]";
 }  // namespace qblocks
