@@ -19,13 +19,14 @@ int main(int argc, const char *argv[]) {
 
     COptions options; ASSERT(isEnabled(OPT_RUNONCE));
     if (!options.prepareArguments(argc, argv))
-        return 1;
+        return 0;
 
-    cerr << bBlack << Now().Format(FMT_JSON) << cOff << ": Monitoring " << cYellow << getCWD() << cOff << "             \n";
+    if (!isTestMode())
+        cerr << bBlack << Now().Format(FMT_JSON) << cOff << ": Monitoring " << cYellow << getCWD() << cOff << "             \n";
 
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
-            return 1;
+            return 0;
 
         if (!isParity() || !nodeHasTraces()) {
             cerr << "This tool only runs against Parity and only if --tracing is enabled. Quitting..." << endl;
