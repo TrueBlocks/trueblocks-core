@@ -108,7 +108,8 @@ namespace qblocks {
             ((CSharedResource*)this)->m_ownsLock = true;  // NOLINT
             ((CSharedResource*)this)->Release();          // NOLINT
             ((CSharedResource*)this)->m_ownsLock = owns;  // NOLINT
-            cerr << "Lock cleared...\n";
+            if (!isTestMode())
+                cerr << "Lock cleared...\n";
             return true;
         }
 

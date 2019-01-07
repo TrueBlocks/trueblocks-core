@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-#
-# See grepAll script for details
-
-grepAll "$@"

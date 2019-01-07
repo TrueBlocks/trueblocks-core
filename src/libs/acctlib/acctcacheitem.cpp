@@ -245,6 +245,7 @@ CAcctCacheItem::CAcctCacheItem(string_q& line) {
     transIndex = str_2_Uint(nextTokenClear(line, '\t'));
 }
 
+//---------------------------------------------------------------------------
 string_q getTransCachePath(const string_q& part) {
     if (isAddress(part))
         return "./cache/" + part + ".acct.bin";

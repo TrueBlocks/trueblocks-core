@@ -1,3 +1,0 @@
-rm -i `NO_COLOR=true whereBlock "$@" -v | grep Volum | cut -f2 -d: | xargs`
-getBlock --force "$@"
-whereBlock "$@"
