@@ -36,7 +36,7 @@ bytesUsed
 buildAll
 cacheMan
 chifra
-clearCacheEntry.py
+clearCache.py
 colorEcho
 colordiff
 cpTest
