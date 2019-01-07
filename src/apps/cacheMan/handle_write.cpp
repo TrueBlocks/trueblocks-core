@@ -18,7 +18,7 @@ bool COptions::handleWrite(const string_q& outputFilename, const CAcctCacheItemA
     cerr << "\tWriting...";
 
     string_q contents;
-    asciiFileToString("./cache/lastBlock.txt", contents);
+    asciiFileToString(getTransCachePath("lastBlock.txt"), contents);
     blknum_t currentLastItem = str_2_Uint(contents);
 
     CArchive txCache(WRITING_ARCHIVE);
