@@ -22,15 +22,15 @@ Here is a screen shot of an interaction with Chifra building a smart contract mo
 
 #### Usage
 
-`Usage:`    chifra [-s|-v|-h] folder addrs  
-`Purpose:`  Interactively creates a QBlocks project to monitor an Ethereum address.
+`Usage:`    chifra [-s|-v|-h] folder address_list  
+`Purpose:`  Interactively creates a QBlocks monitor for the given address.
              
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | folder | name of the folder into which to store the monitor |
-|  | addrs | a list of one or more addresses to monitor (must start with '0x') |
+|  | folder | name of the monitor (also the ./folder for the source code) |
+|  | address_list | a list of one or more addresses to monitor (must start with '0x') |
 | -s | --silent | suppress all output from chifra (normally chifra is quite verbose) |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
