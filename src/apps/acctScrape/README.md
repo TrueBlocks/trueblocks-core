@@ -1,12 +1,14 @@
 ## acctScrape
 
-***
-**Note:** This tool is available through [our website](http://quickblocks.io). Contact us at [sales@greathill.com](mailto:sales@greathill.com) for more information.
-***
+This folder contains a QBlocks monitor. QBlocks monitors pull transactions from the Ethereum blockchain for a given (or a series of) Ethereum addresses.
+
+Below we present the command line interface to this tool, although the tool itself is not available under open source. While the tool is in active development, QBlocks monitors already produce very useful results. For example, we use QBlocks monitors to account for and analyze all transactions on a given smart contract. We present [this example](http://dao.quickblocks.io).
+
+Please contact us at [sales@greathill.com](mailto:sales@greathill.com) for more information.
 
 #### Usage
 
-`Usage:`    acctScrape [-m|-o|-n|-w|-v|-h]  
+`Usage:`    acctScrape [-m|-o|-n|-w|-m|-s|-v|-h]  
 `Purpose:`  Index transactions for a given Ethereum address (or series of addresses).
              
 `Where:`  
@@ -17,6 +19,8 @@
 | -o | --oneBlock val | check if the block would be a hit |
 | -n | --oneTrans val | check if the block and transaction would be a hit |
 | -w | --writeBlocks | write binary blocks to cache (default: do not write blocks) |
+| -m | --maxBlocks val | scan at most --maxBlocks blocks ('all' implies scan to end of chain) |
+| -s | --noBlooms | do not use adaptive enhanced blooms (much faster if you use them) |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
