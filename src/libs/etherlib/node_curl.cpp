@@ -126,7 +126,7 @@ PRINT("postData: " + postData);
             curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
 
             if (getCurlContext()->provider == "remote") {
-                curl_easy_setopt(curl, CURLOPT_URL, "https://pmainnet.infura.io/");
+                curl_easy_setopt(curl, CURLOPT_URL, "https://mainnet.infura.io/");
 
             } else if (getCurlContext()->provider == "ropsten") {
                 curl_easy_setopt(curl, CURLOPT_URL, "https://testnet.infura.io/");
