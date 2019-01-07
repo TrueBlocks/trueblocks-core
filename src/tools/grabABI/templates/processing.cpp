@@ -17,7 +17,7 @@
 bool COptions::displayFromCache(uint64_t startBlock) {
 
     // Make sure we have a cache file...
-    string_q cacheFileName = "./cache/" + watches[0].address + ".acct.bin";
+    string_q cacheFileName = getTransCachePath(watches[0].address);
     if (!fileExists(cacheFileName))
         return false;
 
