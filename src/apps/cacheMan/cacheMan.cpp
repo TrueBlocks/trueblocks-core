@@ -199,7 +199,7 @@ int sortByBlock(const void *v1, const void *v2) {
 void writeLastBlock(blknum_t bn) {
     if (isTestMode())
         return;
-    stringToAsciiFile("./cache/lastBlock.txt", uint_2_Str(bn) + "\n");
+    stringToAsciiFile(getTransCachePath("lastBlock.txt"), uint_2_Str(bn) + "\n");
 }
 
 //-------------------------------------------------------------------------
