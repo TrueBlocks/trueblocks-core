@@ -244,6 +244,13 @@ CAcctCacheItem::CAcctCacheItem(string_q& line) {
     blockNum   = str_2_Uint(nextTokenClear(line, '\t'));
     transIndex = str_2_Uint(nextTokenClear(line, '\t'));
 }
+
+string_q getTransCachePath(const string_q& part) {
+    if (isAddress(part))
+        return "./cache/" + part + ".acct.bin";
+    return "./cache/" + part;
+}
+
 // EXISTING_CODE
 }  // namespace qblocks
 

@@ -41,13 +41,13 @@ int main(int argc, const char *argv[]) {
         if (!options.loadMonitors(config))
             return 1;
 
-        if (!folderExists("./cache")) {
-            cerr << "The cache folder (./cache/) does not exist. Quitting" << endl;
+        if (!folderExists(getTransCachePath(""))) {
+            cerr << "The cache folder " << getTransCachePath("") << " does not exist. Quitting" << endl;
             return 1;
         }
 
-        string_q cacheFileName = "./cache/" + options.monitors[0].address + ".acct.bin";
-        if (fileExists(cacheFileName+".lck") || fileExists("./cache/lastBlock.txt.lck")) {
+        string_q cacheFileName = getTransCachePath(options.monitors[0].address);
+        if (fileExists(cacheFileName+".lck") || fileExists(getTransCachePath("lastBlock.txt.lck"))) {
             cerr << "The cache is locked. acctScrape cannot run. Quitting..." << endl;
             return 1;
         }
@@ -69,7 +69,7 @@ int main(int argc, const char *argv[]) {
 
         } else {
             string_q results;
-            asciiFileToString("./cache/lastBlock.txt", results);
+            asciiFileToString(getTransCachePath("lastBlock.txt"), results);
             uint64_t blockNum = max(options.minWatchBlock - 1, str_2_Uint(results));
             if (blockNum <= getLatestBlockFromCache()) {  // the cache may be behind the acct db, so don't scrape
                 options.lastBlock = min(getLatestBlockFromCache(), options.maxWatchBlock);
@@ -524,7 +524,7 @@ bool COptions::loadMonitors(const CToml& config) {
 //-------------------------------------------------------------------------
 void writeLastBlock(blknum_t bn) {
     if (!isTestMode())
-        stringToAsciiFile("./cache/lastBlock.txt", uint_2_Str(bn) + "\n");
+        stringToAsciiFile(getTransCachePath("lastBlock.txt"), uint_2_Str(bn) + "\n");
     else
         cerr << "Would have written lastBlock.txt file: " << bn << endl;
 }
