@@ -63,6 +63,7 @@ set (BASE_INCLUDE
 # ----------------------------------------------------------------------------------------
 # Folders for various purposes
 set (SCRIPTS_DEST_PATH "${CMAKE_SOURCE_DIR}/../bin")
+set (BUILD_DEST_PATH "${CMAKE_SOURCE_DIR}/../bin/test")
 
 # ----------------------------------------------------------------------------------------
 # Enable testing
