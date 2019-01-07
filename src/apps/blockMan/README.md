@@ -11,16 +11,20 @@ Using operating system tools such as Linux's `cron` you can easily maintain a  c
 
 #### Usage
 
-`Usage:`    blockMan [-c|-l|-r|-d|-e|-n|-i|-v|-h] mode  
-`Purpose:`  Indexes non-emtpy blocks (i.e. one or more transactions). Alternatively, lists non-empty blocks or checks for correctness.
+`Usage:`    blockMan [-l|-c|-s|-e|-f|-r|-p|-v|-h]  
+`Purpose:`  Show stats or check the block cache.
              
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | mode | one of 'check,' 'list |
-| -c | --check val | check that empty blocks are empty, and visa versa. Optionally start at :block |
-| -l | --list | list all non-empty block numbers |
+| -l | --list | list all blocks in the index (non-empty blocks only by default) |
+| -c | --check | verify the block index (both empty and non-empty by default) |
+| -s | --stats | show statistics for the block index (the default) |
+| -e | --empty | check or list only empty blocks |
+| -f | --full | check or list only full blocks |
+| -r | --start val | optionally start at block 'num' |
+| -p | --stop val | optionally stop at block 'num' |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
