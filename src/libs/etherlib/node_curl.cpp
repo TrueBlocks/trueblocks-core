@@ -22,7 +22,6 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     CCurlContext::CCurlContext(void) {
-        CToml toml(configPath("quickBlocks.toml"));
         headers      = "Content-Type: application/json\n";
         baseURL      = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
         callBackFunc = writeCallback;
