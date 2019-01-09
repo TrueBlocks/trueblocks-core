@@ -23,7 +23,7 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     CCurlContext::CCurlContext(void) {
         headers      = "Content-Type: application/json\n";
-        baseURL      = "http://localhost:8545";
+        baseURL      = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
         callBackFunc = writeCallback;
         curlNoteFunc = NULL;
         theID        = 1;
