@@ -11,6 +11,7 @@ getTrans 3648669.24 -avt
   "value": 10000000000000000,
   "gas": 900000,
   "gasPrice": 20343286631,
+  "input": "0xfebefd610000000000000000000000000000000000000000000000000000000000000040cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb898110000000000000000000000000000000000000000000000000000000000000003000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573",
   "isError": 0,
   "receipt": {
     "contractAddress": "0x0",
@@ -19,6 +20,10 @@ getTrans 3648669.24 -avt
       {
         "address": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
         "logIndex": 4,
+        "topics": [
+          "0x87e97e825a1d1fa0c54e1d36c7506c1dea8b1efd451fe68b000cf96f7cf40003",
+          "0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c"
+        ],
         "articulatedLog": {
           "name": "AuctionStarted",
           "inputs": [
@@ -36,6 +41,10 @@ getTrans 3648669.24 -avt
       {
         "address": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
         "logIndex": 5,
+        "topics": [
+          "0x87e97e825a1d1fa0c54e1d36c7506c1dea8b1efd451fe68b000cf96f7cf40003",
+          "0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc"
+        ],
         "articulatedLog": {
           "name": "AuctionStarted",
           "inputs": [
@@ -53,6 +62,10 @@ getTrans 3648669.24 -avt
       {
         "address": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
         "logIndex": 6,
+        "topics": [
+          "0x87e97e825a1d1fa0c54e1d36c7506c1dea8b1efd451fe68b000cf96f7cf40003",
+          "0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573"
+        ],
         "articulatedLog": {
           "name": "AuctionStarted",
           "inputs": [
@@ -70,6 +83,11 @@ getTrans 3648669.24 -avt
       {
         "address": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
         "logIndex": 7,
+        "topics": [
+          "0xb556ff269c1b6714f432c36431e2041d28436a73b6c3f19c021827bbdc6bfc29",
+          "0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811",
+          "0x000000000000000000000000d1220a0cf47c7b9be7a2e6ba89f429762e7b9adb"
+        ],
         "articulatedLog": {
           "name": "NewBid",
           "inputs": [
