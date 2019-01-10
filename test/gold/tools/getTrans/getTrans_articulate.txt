@@ -11,6 +11,7 @@ getTrans -a -v -t 6687987.11 6513870.62 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7e
   "value": 0,
   "gas": 200000,
   "gasPrice": 50000000000,
+  "input": "0x0a3120f20000000000000000000000000000000000000000000000000000000000000001",
   "isError": 0,
   "receipt": {
     "contractAddress": "0x0",
@@ -19,6 +20,10 @@ getTrans -a -v -t 6687987.11 6513870.62 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7e
       {
         "address": "0x159cf1e9ae58211b588f5e3bf1d7e423952d959b",
         "logIndex": 4,
+        "topics": [
+          "0xc08c07687f5dc22e00846ec2d0afff7fb5d509f6fc5c60ad9f70fdeb0ab6a5c7",
+          "0x000000000000000000000000752c71a68e4e0ea308c6e4209b7802d135c49292"
+        ],
         "articulatedLog": {
           "name": "CancelRequest",
           "inputs": [
@@ -99,6 +104,7 @@ getTrans -a -v -t 6687987.11 6513870.62 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7e
   "value": 0,
   "gas": 3000000,
   "gasPrice": 2000000000,
+  "input": "0x23b872dd000000000000000000000000bb9bc244d798123fde783fcc1c72d3bb8c189413000000000000000000000000713fa27cb26b5902ea398b04d21e6018bba3a2f100000000000000000000000000000000000000000000000072ae557d778bd174",
   "isError": 1,
   "receipt": {
     "contractAddress": "0x0",
@@ -189,6 +195,7 @@ getTrans -a -v -t 6687987.11 6513870.62 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7e
   "value": 4569662960000000000,
   "gas": 100000,
   "gasPrice": 100000000000,
+  "input": "0x0f2c9329000000000000000000000000167a9333bf582556f35bd4d16a7e80e191aa6476000000000000000000000000571b7b69829ce2568b9bc3d32eaf7405dab76b21",
   "isError": 0,
   "receipt": {
     "contractAddress": "0x0",
