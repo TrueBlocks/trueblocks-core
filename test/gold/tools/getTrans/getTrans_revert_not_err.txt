@@ -11,6 +11,7 @@ getTrans 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c -a -
   "value": 0,
   "gas": 7990029,
   "gasPrice": 21000000000,
+  "input": "0xa78caf19000000000000000000000000cd565ca18f06e2e4d251b55dc49a4fe456c7205232353030663935653661396438336439380000000000000000000000000000006d3666666e574245453978595178726d32000000000000000000000000000000",
   "isError": 0,
   "receipt": {
     "contractAddress": "0x0",
@@ -19,6 +20,11 @@ getTrans 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c -a -
       {
         "address": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a",
         "logIndex": 0,
+        "topics": [
+          "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+          "0x000000000000000000000000e81a6c6b733d52df5d6aa863d75aab78147a0f28",
+          "0x0000000000000000000000008ca1fec705f7060aaa3d8c6757e34d1e7cc61021"
+        ],
         "articulatedLog": {
           "name": "Transfer",
           "inputs": [
@@ -40,6 +46,9 @@ getTrans 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c -a -
       {
         "address": "0x2428e9af9bc3d66e4ee9604da681c6e5493f8454",
         "logIndex": 1,
+        "topics": [
+          "0x0456067687d27fcf6d3db141acb08cedd0fa786fdc7d672a7ed802514669b2e0"
+        ],
         "articulatedLog": {
           "name": "",
           "inputs": [],

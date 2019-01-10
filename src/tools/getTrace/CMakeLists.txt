@@ -45,7 +45,7 @@ run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrace_preload" ${EXECUTABLE_OUTPUT_PA
 
 # Enter one line for each individual test
 
-# Note: infura does not support tracing, so these 'help display' and 'error checking' are the only tests we can run regularly
+# Note: Full nodes do not support tracing, so help and error conditions are the only test run by default (i.e. non-special)
 run_test("getTrace_README"            "-th")
 run_test("getTrace_help"               "-h")
 run_test("getTrace_help_long"          "--help")
