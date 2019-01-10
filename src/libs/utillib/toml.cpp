@@ -15,6 +15,7 @@
 #include "toml.h"
 #include "conversions.h"
 #include "version.h"
+#include "sfstring.h"
 
 namespace qblocks {
 
@@ -231,6 +232,9 @@ extern string_q collapseArrays(const string_q& inStr);
 
     //---------------------------------------------------------------------------------------
     string_q CToml::getConfigStr(const string_q& group, const string_q& key, const string_q& def) const {
+        string_q env = getEnvStr(toUpper(group + "_" + key));
+        if (!env.empty())
+            return env;
         CTomlKey *found = findKey(group, key);
         if (found && !found->comment)
             return found->value;
@@ -498,6 +502,9 @@ extern string_q collapseArrays(const string_q& inStr);
     }
 
     string_q CNewToml::getConfigStr(const string_q& group, const string_q& key, const string_q& def) const {
+        string_q env = getEnvStr(toUpper(group + "_" + key));
+        if (!env.empty())
+            return env;
         auto val = (group.empty() ? toml->get_as<string>(key) : toml->get_qualified_as<string>(group+"."+key));
         if (val)
             return *val;
@@ -569,6 +576,9 @@ extern string_q collapseArrays(const string_q& inStr);
     };
 
     string_q CNewToml::getConfigJson(const string_q& group, const string_q& key, const string_q& def) const {
+        string_q env = getEnvStr(toUpper(group + "_" + key));
+        if (!env.empty())
+            return env;
         ostringstream os;
         toml_test_writer writer{os};
         toml->accept(writer);
@@ -577,6 +587,9 @@ extern string_q collapseArrays(const string_q& inStr);
     }
 
     uint64_t CNewToml::getConfigInt(const string_q& group, const string_q& key, uint64_t def) const {
+        string_q env = getEnvStr(toUpper(group + "_" + key));
+        if (!env.empty())
+            return str_2_Uint(env);
         string_q search = (group.empty() ? key : group + "." + key);
         auto val = toml->get_as<uint64_t>(search);
         if (val)
@@ -585,6 +598,9 @@ extern string_q collapseArrays(const string_q& inStr);
     }
 
     bool CNewToml::getConfigBool(const string_q& group, const string_q& key, bool def) const {
+        string_q env = getEnvStr(toUpper(group + "_" + key));
+        if (!env.empty())
+            return str_2_Bool(env);
         string_q search = (group.empty() ? key : group + "." + key);
         auto val = toml->get_as<bool>(search);
         if (val)
