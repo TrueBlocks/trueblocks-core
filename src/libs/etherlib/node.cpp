@@ -21,8 +21,8 @@ namespace qblocks {
 
         if (getCurlContext()->nodeRequired && !isNodeRunning()) {
             cerr << endl;
-            cerr << "\t" << cTeal << "Warning: " << cOff << "This program requires a running Ethereum node. Please start your " << endl;
-            cerr << "\tnode or configure the rpcProvider configuration file setting before running this command. Quitting..." << endl;
+            cerr << "\t" << cTeal << "Warning: " << cOff << "This program requires a running Ethereum node. Please start your node or " << endl;
+            cerr << "\tconfigure the 'rpcProvider' setting before running this command. Quitting..." << endl;
             cerr << endl;
             quickQuitHandler(EXIT_FAILURE);
         }
