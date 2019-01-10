@@ -49,13 +49,11 @@ int main(int argc, const char *argv[]) {
                 path = "--";
             if (isTestMode())
                 vers = "--";
-            string_q fallback = getEnvStr("FALLBACK");
-            bool running_node = isNodeRunning();
 
+            bool running_node = isNodeRunning();
             cout << "\t" << options.mode << " " << cTeal << padLeft(uint_2_Str(bn), 9) << cOff << " ";
             if (exists)            cout << "found at cache:  " << cTeal << path << cOff << "\n";
             else if (running_node)      cout << "found at node:   " << vers << "\n";
-            else if (!fallback.empty()) cout << "found at remote: " << fallback << "\n";
             else                        cout << "was not found\n";
         }
     }

@@ -43,7 +43,6 @@ int x = 0;
 #define PRINT(msg) \
 cerr << string_q(120, '-') << "\n" << ++x << "." << msg << "\n"; \
 cerr << "\tresult: \t[" << substitute(getCurlContext()->result, "\n", " ") << "]\n"; \
-cerr << "\tfallBack:\t" << getEnvStr("FALLBACK") << "\n"; \
 cerr << "\tearlyAbort:\t" << getCurlContext()->earlyAbort << "\n"; \
 cerr << "\tcurlID: \t" << getCurlContext()->getCurlID() << "\n";
 #define PRINTQ(msg) \
@@ -168,47 +167,12 @@ PRINTL("callRPC:\n\tmethod:\t\t" + method + params + "\n\tsource:\t\t" + getCurl
         CURLcode res = curl_easy_perform(getCurl());
         if (res != CURLE_OK && !getCurlContext()->earlyAbort) {
 PRINT("CURL returned an error: ! CURLE_OK")
-            string_q currentSource = getCurlContext()->provider;
-            string_q fallBack = getEnvStr("FALLBACK");
-            if (!fallBack.empty() && currentSource != fallBack) {
-                if (fallBack != "infura") {
-                    cerr << cYellow;
-                    cerr << "\n";
-                    cerr << "\tWarning: " << cOff << "Only the 'infura' fallback is supported.\n";
-                    cerr << "\tIt is impossible for QBlocks to proceed. Quitting...\n";
-                    cerr << "\n";
-PRINT("res != CURLE_OK --> fallBack != infura --> quiting")
-                    quickQuitHandler(0);
-                }
-
-                if (fallBack == "infura" && startsWith(method, "trace_")) {
-                    cerr << cYellow;
-                    cerr << "\n";
-                    cerr << "\tWarning: " << cOff << "A trace request was made to the fallback\n";
-                    cerr << "\tnode. " << fallBack << " does not support tracing. It ";
-                    cerr << "is impossible\n\tfor QBlocks to proceed. Quitting...\n";
-                    cerr << "\n";
-PRINT("res != CURLE_OK --> fallBack == infura but tracing --> quiting")
-                    quickQuitHandler(0);
-                }
-                getCurlContext()->theID--;
-                getCurlContext()->provider = "remote";
-                // reset curl
-                getCurl(true); getCurl();
-                // since we failed, we leave the new provider, otherwise we would have to save
-                // the results and reset it here.
-PRINT("res != CURLE_OK --> fallBack == infura --> calling back in to Infura")
-                return callRPC(method, params, raw);
-            }
-
-            cerr << cYellow;
             cerr << "\n";
-            cerr << "\tWarning: " << cOff << "The request to the Ethereum node ";
+            cerr << cYellow << "\tWarning: " << cOff << "The request to the Ethereum node ";
             cerr << "resulted in\n\tfollowing error message: ";
             cerr << bTeal << curl_easy_strerror(res) << cOff << ".\n";
             cerr << "\tIt is impossible for QBlocks to proceed. Quitting...\n";
             cerr << "\n";
-PRINT("fallback didn't work. Quitting")
             quickQuitHandler(0);
         }
 
@@ -217,7 +181,7 @@ PRINT("CURL returned CURLE_OK")
         if (getCurlContext()->result.empty()) {
             cerr << cYellow;
             cerr << "\n";
-            cerr << "\tWarning:" << cOff << "The Ethereum node  resulted in an empty\n";
+            cerr << "\tWarning:" << cOff << "The Ethereum node resulted in an empty\n";
             cerr << "\tresponse. It is impossible for QBlocks to proceed. Quitting...\n";
             cerr << "\n";
             exit(0);
