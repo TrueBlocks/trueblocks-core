@@ -126,12 +126,15 @@ PRINT("postData: " + postData);
 
             if (getCurlContext()->provider == "remote") {
                 curl_easy_setopt(curl, CURLOPT_URL, "https://mainnet.infura.io/");
+PRINT("getCurl::provider: " + getCurlContext()->provider);
 
             } else if (getCurlContext()->provider == "ropsten") {
                 curl_easy_setopt(curl, CURLOPT_URL, "https://testnet.infura.io/");
+PRINT("getCurl::provider: " + getCurlContext()->provider);
 
             } else {
                 curl_easy_setopt(curl, CURLOPT_URL, getCurlContext()->baseURL.c_str());
+PRINT("getCurl::provider: " + getCurlContext()->provider);
             }
 
         } else if (cleanup) {

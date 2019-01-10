@@ -109,6 +109,7 @@ namespace qblocks {
         char *sss = getenv(name);
         return ( sss ? string_q(sss) : string_q(""));
     }
+    inline string_q getEnvStr(const string_q& name) { return getEnvStr(name.c_str()); }
 
     // formatting only
     extern string_q uint_2_Str(uint64_t i);
