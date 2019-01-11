@@ -73,6 +73,7 @@ run_test("getTrans_verbose_blk_idx2"   "--verbose" " 0x0f1217b92276cd17608d42128
 run_test("getTrans_verbose_blk_idx3"   "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3" " -v" " -t")
 run_test("getTrans_articulate"         "-a" " -v" " -t" " 6687987.11" " 6513870.62" " 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12")
 run_test("getTrans_articulate_2"       "3648669.24" " -avt")
+#run_test("getTrans_articulate_arrays"  "6711969.2" " -vta")
 run_test("getTrans_by_blk_hash_good"   "0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55" " --verbose")
 # this test case should fail, but it doesn't. It calls for a transaction (#155) that does not exist since this block only has 94 transactions
 #run_test("getTrans_by_blk_hash_bad"    "0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.155" " -v")

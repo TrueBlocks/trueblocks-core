@@ -131,7 +131,6 @@ inline void CTraceAction::duplicate(const CTraceAction& tr) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    finishParse();
 }
 
 //--------------------------------------------------------------------------

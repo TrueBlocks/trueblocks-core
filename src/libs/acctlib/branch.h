@@ -124,7 +124,6 @@ inline void CBranch::duplicate(const CBranch& br) {
         if (br.nodes[i])
             *nodes[i] = *br.nodes[i];
     // EXISTING_CODE
-    finishParse();
 }
 
 //--------------------------------------------------------------------------

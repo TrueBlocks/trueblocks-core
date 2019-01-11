@@ -118,7 +118,6 @@ inline void CAccount::duplicate(const CAccount& ac) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    finishParse();
 }
 
 //--------------------------------------------------------------------------

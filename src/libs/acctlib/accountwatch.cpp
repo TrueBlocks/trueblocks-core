@@ -67,6 +67,9 @@ bool CAccountWatch::setValueByName(const string_q& fieldName, const string_q& fi
         statement.endBal = statement.begBal = str_2_Wei(fieldValue);
         return true;
     }
+    if (fieldName % "address") {
+        bloom = makeBloom(fieldValue);
+    }
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {

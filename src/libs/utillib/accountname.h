@@ -119,7 +119,6 @@ inline void CAccountName::duplicate(const CAccountName& ac) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    finishParse();
 }
 
 //--------------------------------------------------------------------------

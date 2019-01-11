@@ -113,7 +113,6 @@ inline void CTraceResult::duplicate(const CTraceResult& tr) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    finishParse();
 }
 
 //--------------------------------------------------------------------------

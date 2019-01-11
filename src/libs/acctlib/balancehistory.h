@@ -106,7 +106,6 @@ inline void CBalanceHistory::duplicate(const CBalanceHistory& ba) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    finishParse();
 }
 
 //--------------------------------------------------------------------------

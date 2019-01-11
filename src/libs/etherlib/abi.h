@@ -123,7 +123,6 @@ inline void CAbi::duplicate(const CAbi& ab) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    finishParse();
 }
 
 //--------------------------------------------------------------------------

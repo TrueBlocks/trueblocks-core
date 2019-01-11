@@ -120,7 +120,6 @@ inline void CTokenInfo::duplicate(const CTokenInfo& to) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    finishParse();
 }
 
 //--------------------------------------------------------------------------
