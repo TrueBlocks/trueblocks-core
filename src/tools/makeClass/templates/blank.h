@@ -99,7 +99,6 @@ inline void [{CLASS_NAME}]::duplicate(const [{CLASS_NAME}]& [{SHORT}]) {
 [FIELD_COPY]
     // EXISTING_CODE
     // EXISTING_CODE
-    finishParse();
 }
 
 //--------------------------------------------------------------------------

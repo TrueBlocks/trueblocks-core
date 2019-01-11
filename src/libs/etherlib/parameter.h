@@ -150,7 +150,6 @@ inline void CParameter::duplicate(const CParameter& pa) {
     // EXISTING_CODE
     noWrite = pa.noWrite;
     // EXISTING_CODE
-    finishParse();
 }
 
 //--------------------------------------------------------------------------

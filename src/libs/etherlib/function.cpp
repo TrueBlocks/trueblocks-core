@@ -129,8 +129,6 @@ bool CFunction::setValueByName(const string_q& fieldName, const string_q& fieldV
 //---------------------------------------------------------------------------------------------------
 void CFunction::finishParse() {
     // EXISTING_CODE
-    for (size_t i = 0 ; i < inputs.size() ; i++)
-        hasAddrs |= (inputs[i].type == "address");
     signature = getSignature(SIG_CANONICAL);
     encoding = encodeItem();
     // The input parameters need to have a name. If not, we provide one
@@ -269,10 +267,6 @@ string_q nextFunctionChunk_custom(const string_q& fieldIn, const void *dataPtr) 
                     ret += ")";
                     replace(ret, ",)", ")");
                     return (ret + "\t" + chr_2_HexStr(ret));
-
-                } else if ( fieldIn % "hasAddrs" ) {
-                    return int_2_Str(fun->hasAddrs);
-
                 }
                 break;
             case 'i':
@@ -467,6 +461,8 @@ string_q CFunction::getSignature(uint64_t parts) const {
 string_q CFunction::encodeItem(void) const {
     if (encoding == "()")  // optimization
         return "0x861731d5";
+//    if (!encoding.empty())
+//        return encoding;
 extern string_q getSha3(const string_q& hexIn);
     string_q ret = getSha3(chr_2_HexStr(signature));
     return (type == "event" ? ret : extract(ret, 0, 10));

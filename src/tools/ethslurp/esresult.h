@@ -109,7 +109,6 @@ inline void CESResult::duplicate(const CESResult& es) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    finishParse();
 }
 
 //--------------------------------------------------------------------------

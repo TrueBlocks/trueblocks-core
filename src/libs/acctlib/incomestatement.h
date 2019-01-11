@@ -124,7 +124,6 @@ inline void CIncomeStatement::duplicate(const CIncomeStatement& in) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    finishParse();
 }
 
 //--------------------------------------------------------------------------
