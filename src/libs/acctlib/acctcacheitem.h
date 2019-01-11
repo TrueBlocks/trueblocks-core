@@ -108,7 +108,6 @@ inline void CAcctCacheItem::duplicate(const CAcctCacheItem& ac) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    finishParse();
 }
 
 //--------------------------------------------------------------------------

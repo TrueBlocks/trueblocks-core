@@ -53,7 +53,6 @@ public:
     bool showOutput;
     bool isBuiltIn;
     string_q origName;
-    bool hasAddrs;
     explicit CFunction(const string_q& n) : name(n), anonymous(false), constant(false), payable(false) { }
     string_q getSignature(uint64_t parts) const;
     string_q encodeItem(void) const;
@@ -126,7 +125,6 @@ inline void CFunction::initialize(void) {
 
     // EXISTING_CODE
     showOutput = true;
-    hasAddrs = false;
     isBuiltIn = false;
     origName = "";
     // EXISTING_CODE
@@ -150,11 +148,9 @@ inline void CFunction::duplicate(const CFunction& fu) {
 
     // EXISTING_CODE
     showOutput = fu.showOutput;
-    hasAddrs = fu.hasAddrs;
     isBuiltIn = fu.isBuiltIn;
     origName = fu.origName;
     // EXISTING_CODE
-    finishParse();
 }
 
 //--------------------------------------------------------------------------

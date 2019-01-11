@@ -93,6 +93,7 @@ bool testDisplayStr(COptions& options) {
 
         CLogEntry le;
         le.articulatedLog = CFunction("artLog");
+        le.articulatedLog.encoding = "0xde8bc9f4";
 
         CReceipt r;
         r.contractAddress = "0x1234567890123456789012345678901234567890";
@@ -102,7 +103,7 @@ bool testDisplayStr(COptions& options) {
 
         CTransaction t;
         SHOW_FIELD(CTransaction, "articulatedTx");
-        t.articulatedTx.encoding = "0x12345";
+        t.articulatedTx.encoding = "0x861731d5";
         t.receipt = r;
         t.traces.push_back(tra);
         b.transactions.push_back(t);
