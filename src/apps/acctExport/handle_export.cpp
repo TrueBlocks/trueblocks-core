@@ -218,7 +218,7 @@ bool COptions::loadWatches(const CToml& toml) {
 
 //-----------------------------------------------------------------------
 bool loadData(COptions& options) {
-    string_q fileName = "./cache/" + options.watches[0].address + ".acct.bin";
+    string_q fileName = getTransCachePath(options.watches[0].address);
 
     // If we've already upgraded the file, we've deleted it and we're done...
     if (!fileExists(fileName))

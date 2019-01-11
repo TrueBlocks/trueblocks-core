@@ -140,8 +140,8 @@ inline void CBlock::duplicate(const CBlock& bl) {
     transactions = bl.transactions;
 
     // EXISTING_CODE
-    // EXISTING_CODE
     finishParse();
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------

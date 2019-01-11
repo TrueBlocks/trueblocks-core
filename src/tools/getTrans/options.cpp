@@ -73,9 +73,13 @@ bool COptions::parseArguments(string_q& command) {
         // show certain fields and hide others
         manageFields(defHide, false);
         manageFields(defShow, true);
-        manageFields("CParameter:strDefault", false);
-        manageFields("CTransaction:price", false);
-        manageFields("CFunction:outputs", true);
+        manageFields("CParameter:strDefault", false);  // hide
+        manageFields("CTransaction:price", false);  // hide
+        manageFields("CFunction:outputs", true);  // show
+        if (verbose) {
+            manageFields("CTransaction:input", true);  // show
+            manageFields("CLogEntry:topics", true);  // show
+        }
 
         //    manageFields(toml.getConfigStr("fields", "hide", ""), false);
         //    manageFields(toml.getConfigStr("fields", "show", ""), true );
@@ -137,7 +141,7 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
         ret += "[{trans_list}] is one or more space-separated identifiers which may be either a transaction hash,|"
                 "a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.\n";
         ret += "This tool checks for valid input syntax, but does not check that the transaction requested exists.\n";
-        ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if configured "
+        ret += "This tool retrieves information from the local node or rpcProvider if configured "
                     "(see documentation).\n";
         ret += "If the queried node does not store historical state, the results may be undefined.\n";
         return ret;

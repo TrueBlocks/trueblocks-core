@@ -314,12 +314,14 @@ namespace qblocks {
         return str;
     }
 
+    //--------------------------------------------------------------------
     string_q extract(const string_q& haystack, size_t pos, size_t len) {
         if (pos >= haystack.length())
             return "";
         return haystack.substr(pos, len);
     }
 
+    //--------------------------------------------------------------------
     string_q escape_string(const string_q& str) {
         string_q res;
         for (auto it = str.begin(); it != str.end(); ++it) {

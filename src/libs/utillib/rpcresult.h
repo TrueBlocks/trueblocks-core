@@ -111,7 +111,6 @@ inline void CRPCResult::duplicate(const CRPCResult& rp) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    finishParse();
 }
 
 //--------------------------------------------------------------------------

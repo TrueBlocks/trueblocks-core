@@ -40,22 +40,22 @@ Terminology
 Methodology
 -----------
 
-QuickBlocks is old school. We abhor JSON data, which in our estimation, is literally the worst way to deliver data imaginable (although one could add random strings of arbitrary meaningless data just to make it more terrible--why does every record carry every field name--JSON data--the format endorsed by the Department of Redundancy Department!). JSON is wonderful and useful *if you're transferring data across a wire and if the receiver of the data doesn't know the data's format and if the each record may follow a different format*, but none of these things is true for the Ethereum data. In the case where the data is remote (for example if you're using Infura), then you have to receive the data in a wire-neutral format, but there's no reason to keep it that way (thus QuickBlocks caching mechanism). Here's some example code for visiting every block on the chain and printing its hash:
+QuickBlocks is old school. We abhor JSON data, which in our estimation, is literally the worst way to deliver data imaginable (although one could add random strings of arbitrary meaningless data just to make it more terrible--why does every record carry every field name--JSON data--the format endorsed by the Department of Redundancy Department!). JSON is wonderful and useful *if you're transferring data across a wire and if the receiver of the data doesn't know the data's format and if the each record may follow a different format*, but none of these things is true for the Ethereum data. In the case where the data is remote, then you have to receive the data in a wire-neutral format, but there's no reason to keep it that way (thus QuickBlocks caching mechanism). Here's some example code for visiting every block on the chain and printing its hash:
 
 ::
 
     /*-------------------------------------------------------------------------
      * Name:    Simple
      * Purpose: To provide the easiest introduction to the QuickBlocks library.
-     *          Simply request a block from Infura and print it to the screen.
+     *          Simply request a block from the node and print it to the screen.
      *------------------------------------------------------------------------*/
     #include "etherlib.h"
     int main(int argc, const char *argv[]) {
 
         // Initialize the system and tell it where to find the blockchain data.
-        etherlib_init("infura");
+        etherlib_init("binary");
 
-        // Request the 3,500,000th block from Infura. Store it in 'block'
+        // Request the 3,500,000th block from the node. Store it in 'block'
         CBlock block;
         getBlock(block, 3500000);
 

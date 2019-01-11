@@ -108,7 +108,6 @@ inline void CAcctCacheItem::duplicate(const CAcctCacheItem& ac) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    finishParse();
 }
 
 //--------------------------------------------------------------------------
@@ -142,6 +141,7 @@ extern CArchive& operator<<(CArchive& archive, const CAcctCacheItemArray& array)
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+string_q getTransCachePath(const string_q& part);
 // EXISTING_CODE
 }  // namespace qblocks
 

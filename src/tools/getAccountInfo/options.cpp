@@ -141,7 +141,7 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
         ret += "[{addresses}] must start with '0x' and be forty characters long.\n";
         ret += "[{block_list}] may be a space-separated list of values, a start-end range, a "
                 "[{special}], or any combination.\n";
-        ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if configured.\n";
+        ret += "This tool retrieves information from the local node or rpcProvider if configured.\n";
         ret += "If the queried node does not store historical state, the results are undefined.\n";
         ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + ".\n";
         return ret;

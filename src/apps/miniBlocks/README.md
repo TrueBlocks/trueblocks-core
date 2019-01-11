@@ -9,7 +9,7 @@
 The tool is intended primarily as a demonstration of how fast QBlocks can be depending on what data one is interesting in. The source code for this tool is well documented and may serve as a teaching aid while learning to program with QBlocks.
 #### Usage
 
-`Usage:`    miniBlocks [-c|-l|-f|-r|-d|-v|-h] mode  
+`Usage:`    miniBlocks [-c|-l|-f|-r|-m|-d|-v|-h] mode  
 `Purpose:`  Freshen or check the miniBlock database.
              
 `Where:`  
@@ -21,6 +21,7 @@ The tool is intended primarily as a demonstration of how fast QBlocks can be dep
 | -l | --list | list all non-empty block numbers |
 | -f | --freshen | starting from the most recently visited block, append any new, non-empty block numbers to the index |
 | -r | --refreshen | remove the full-block index and re-create it |
+| -m | --maxBlocks val | number of blocks to process (defaults to 20000) |
 | -d | --deep | when doing 'check', do a deep check |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
