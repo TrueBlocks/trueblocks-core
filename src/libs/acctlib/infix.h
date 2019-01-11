@@ -118,7 +118,6 @@ inline void CInfix::duplicate(const CInfix& in) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    finishParse();
 }
 
 //--------------------------------------------------------------------------

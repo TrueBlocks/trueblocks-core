@@ -1,26 +1,26 @@
 ## blockMan
 
-***
-**Note:** This tool is available through [our website](http://quickblocks.io). Contact us at [sales@greathill.com](mailto:sales@greathill.com) for more information.
-***
-
-The `blockMan` app queries your local node (or the ${FALLBACK} node if configured) using the RPC interface reading each block from any EVM-based blockchain. After extensive optimizations to the data, including <img width=500px align="right" src="docs/image.png"> determining each transaction's error status and expanding internal message calls, the blocks are stored in a speed-optimized database for fast retrieval. By doing as much work as possible prior to storage, QBlocks is able to achieve significant increases in speed of retrieval over the node.
-
+The `blockMan` app queries the rpcProvider you specify (or your local node if none) using the RPC interface reading each block from any EVM-based blockchain. After extensive optimizations to the data, including 
+<img width=500px align="right" src="docs/image.png"> determining each transaction's error status and expanding internal message calls, the blocks are stored in a speed-optimized database for fast retrieval. By doing as much work as possible prior to storage, QBlocks is able to achieve significant increases in speed of retrieval over the node.
 
 Using operating system tools such as Linux's `cron` you can easily maintain a  constantly fresh QBlocks database. Using QBlocks `display strings` technology, it is even easy to populate a regular web 2.0 database and from there a full featured website representing the full state of your smart contract.
 
 #### Usage
 
-`Usage:`    blockMan [-c|-l|-r|-d|-e|-n|-i|-v|-h] mode  
-`Purpose:`  Indexes non-emtpy blocks (i.e. one or more transactions). Alternatively, lists non-empty blocks or checks for correctness.
+`Usage:`    blockMan [-l|-c|-s|-e|-f|-r|-p|-v|-h]  
+`Purpose:`  Show stats or check the block cache.
              
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | mode | one of 'check,' 'list |
-| -c | --check val | check that empty blocks are empty, and visa versa. Optionally start at :block |
-| -l | --list | list all non-empty block numbers |
+| -l | --list | list all blocks in the index (non-empty blocks only by default) |
+| -c | --check | verify the block index (both empty and non-empty by default) |
+| -s | --stats | show statistics for the block index (the default) |
+| -e | --empty | check or list only empty blocks |
+| -f | --full | check or list only full blocks |
+| -r | --start val | optionally start at block 'num' |
+| -p | --stop val | optionally stop at block 'num' |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

@@ -165,8 +165,8 @@ inline void CTransaction::duplicate(const CTransaction& tr) {
     // EXISTING_CODE
     pBlock = tr.pBlock;  // no deep copy, we don't own it
     traces = tr.traces;
-    // EXISTING_CODE
     finishParse();
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------

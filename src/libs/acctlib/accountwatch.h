@@ -152,7 +152,6 @@ inline void CAccountWatch::duplicate(const CAccountWatch& ac) {
     bloom = ac.bloom;
     inBlock = ac.inBlock;
     // EXISTING_CODE
-    finishParse();
 }
 
 //--------------------------------------------------------------------------

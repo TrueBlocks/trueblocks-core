@@ -112,7 +112,6 @@ inline void CApiSpec::duplicate(const CApiSpec& ap) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    finishParse();
 }
 
 //--------------------------------------------------------------------------

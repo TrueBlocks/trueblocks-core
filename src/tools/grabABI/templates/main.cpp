@@ -56,7 +56,7 @@ int main(int argc, const char *argv[]) {
         }
 
         if (visitor.debugger_on) {
-            remove("./cache/debug");
+            remove(getTransCachePath("debug"));
             initscr();
             raw();
             keypad(stdscr, true);
@@ -122,7 +122,7 @@ int main(int argc, const char *argv[]) {
 //-----------------------------------------------------------------------
 void myQuitHandler(int s) {
     quickQuitHandler(-1);
-    remove("./cache/debug");
+    remove(getTransCachePath("debug"));
     if (!isendwin()) {
         endwin();
     }

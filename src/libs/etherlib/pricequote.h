@@ -108,8 +108,8 @@ inline void CPriceQuote::duplicate(const CPriceQuote& pr) {
 
     // EXISTING_CODE
     date = pr.date;
-    // EXISTING_CODE
     finishParse();
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------

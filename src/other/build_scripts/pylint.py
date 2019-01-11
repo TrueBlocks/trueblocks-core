@@ -837,7 +837,7 @@ class _IncludeState(object):
       if self._section <= self._MY_H_SECTION:
         self._section = self._MY_H_SECTION
       else:
-        # This will always be the fallback because we're not sure
+        # This will always be the fall back because we're not sure
         # enough that the header is associated with this file.
         self._section = self._OTHER_H_SECTION
     else:

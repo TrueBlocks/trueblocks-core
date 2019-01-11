@@ -122,8 +122,8 @@ inline void CLogEntry::duplicate(const CLogEntry& lo) {
     // EXISTING_CODE
     // no deep copy because it's const
     pReceipt = lo.pReceipt;
-    // EXISTING_CODE
     finishParse();
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
