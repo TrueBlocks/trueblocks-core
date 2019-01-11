@@ -120,8 +120,8 @@ inline void CReceipt::duplicate(const CReceipt& re) {
 
     // EXISTING_CODE
     pTrans = re.pTrans;  // no deep copy becuase it's const
-    // EXISTING_CODE
     finishParse();
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------

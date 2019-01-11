@@ -335,7 +335,7 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
         string_q ret;
         ret += "[{block_list}] is a space-separated list of values, a start-end range, a [{special}], "
                     "or any combination.\n";
-        ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if configured "
+        ret += "This tool retrieves information from the local node or rpcProvider if configured "
                     "(see documentation).\n";
         ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + ".\n";
         return ret;

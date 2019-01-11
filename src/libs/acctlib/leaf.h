@@ -117,7 +117,6 @@ inline void CLeaf::duplicate(const CLeaf& le) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    finishParse();
 }
 
 //--------------------------------------------------------------------------
