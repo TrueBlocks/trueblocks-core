@@ -44,6 +44,8 @@ int main(int argc, const char *argv[]) {
 bool visitBlock(uint64_t bn, void *data) {
 
     COptions *options = (COptions*)data;
+    if (bn < options->oldestBlock)
+        options->oldestBlock = bn;
     for (auto const& addr : options->addrs) {
 
         string_q code1 = getCodeAt(addr, bn);
