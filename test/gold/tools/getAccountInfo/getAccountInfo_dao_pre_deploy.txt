@@ -1,0 +1,4 @@
+getAccountInfo argc: 4 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:--bytes] [3:1428756] 
+getAccountInfo 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 --bytes 1428756 
+Code at address: 0xbb9bc244d798123fde783fcc1c72d3bb8c189413:
+0x
