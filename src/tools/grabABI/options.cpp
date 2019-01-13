@@ -20,10 +20,11 @@ static COption params[] = {
     COption("-generate",  "generate C++ code into the current folder for all functions and events found in the ABI"),
     COption("-data",      "export the display as data"),
     COption("-encode",    "generate the encodings for the functions / events in the ABI"),
+    COption("-json",      "print the ABI to the screen as json"),
     COption("-noconst",   "generate encodings for non-constant functions and events only (always true when generating)"), // NOLINT
     COption("-open",      "open the ABI file for editing, download if not already present"),
+    COption("-so(l)",     "create the ABI file from a .sol file in the local directory"),
     COption("-raw",       "force retrieval of ABI from etherscan (ignoring cache)"),
-    COption("@json",      "print the ABI to the screen as json"),
     COption("@silent",    "if ABI cannot be acquired, fail silently (useful for scripting)"),
     COption("@nodec",     "do not decorate duplicate names"),
     COption("@known",     "load common 'known' ABIs from cache"),
@@ -41,7 +42,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     Init();
-    bool asJson = false, isOpen = false;
+    bool asJson = false, isOpen = false, fromSol = false;
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (arg == "-g" || arg == "--gen" || arg == "--generate") {
@@ -82,6 +83,9 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-r" || arg == "--raw") {
             raw = true;
 
+        } else if (arg == "-l" || arg == "--sol") {
+            fromSol = true;
+
         } else if (arg == "-o" || arg == "--open") {
             isOpen = true;
 
@@ -113,9 +117,40 @@ bool COptions::parseArguments(string_q& command) {
     if (isGenerate && asData)
         return usage("Incompatible options --generate and --data. Quitting...");
 
+    if (fromSol) {
+        for (auto addr : addrs) {
+            CAbi abi;
+            if (!convertSolToABI(abi, addr))
+                return usage("Could not find solidity file in order to convert to ABI. Quitting...");
+            bool first = true;
+            expContext().spcs = 4;
+            ostringstream os;
+            os << "[" << endl;
+            incIndent();
+            for (auto func : abi.interfaces) {
+                if (!first)
+                    os << ",";
+                os << endl;
+                os << "\n    " << func;
+                first = false;
+            }
+            decIndent();
+            os << endl << "]" << endl;
+
+            ::remove((addr + ".json").c_str());
+            stringToAsciiFile(addr + ".json", os.str());
+            asJson = false;
+        }
+    }
+
     if (asJson) {
         for (auto addr : addrs) {
             string_q fileName = blockCachePath("abis/" + addr + ".json");
+            string_q localFile("./" + addr + ".json");
+            if (fileExists(localFile)) {
+                cerr << "Local file found\n";
+                fileName = localFile;
+            }
             if (!fileExists(fileName)) {
                 cerr << "ABI for '" + addr + "' not found. Quitting...\n";
                 return false;
@@ -253,6 +288,7 @@ bool visitABIs(const string_q& path, void *dataPtr) {
 //    }
 //}
 
+//-----------------------------------------------------------------------
 bool sortByFuncName(const CFunction& f1, const CFunction& f2) {
     string_q s1 = (f1.type == "event" ? "zzzevent" : f1.type) + f1.name + f1.encoding;
     for (auto f : f1.inputs) s1 += f.name;

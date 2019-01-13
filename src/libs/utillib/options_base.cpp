@@ -40,47 +40,6 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    void cleanContents(string_q& str) {
-        size_t pos = 0;
-        typedef enum { OUT, INDASH, INSPACE, INNL } StateThing;
-        StateThing state = OUT;
-        for (auto ch : str) {
-            switch (state) {
-                case OUT:
-                    switch (ch) {
-                        case '\t':                  break; // skip it
-                        case ' ' : state = INSPACE; break;
-                        case '-' : state = INDASH;  break;
-                        case '\\': state = INNL;    break;
-                        default: str[pos++] = ch;
-                    }
-                    break;
-                case INSPACE:
-                    switch (ch) {
-                        case ' ':                                                 break; // skip it
-                        default : str[pos++] = ' '; str[pos++] = ch; state = OUT; break;
-                    }
-                    break;
-                case INDASH:
-                    switch (ch) {
-                        case 'v':
-                        case 'h':                                                 break; // skip it
-                        default : str[pos++] = '-'; str[pos++] = ch; state = OUT; break;
-                    }
-                    break;
-                case INNL:
-                    switch (ch) {
-                        case '\n':                                                 break; // skip it
-                        default : str[pos++] = '\\'; str[pos++] = ch; state = OUT; break;
-                    }
-                    break;
-            }
-        }
-        str[pos] = '\0';
-        str.resize(pos);
-    }
-
-    //--------------------------------------------------------------------------------
     bool COptionsBase::prepareArguments(int argc, const char *argv[]) {
 
         string_q env = getEnvStr("NO_COLOR");
@@ -218,7 +177,7 @@ namespace qblocks {
             // The command line also has a --file in it, so add these commands as well
             string_q contents;
             asciiFileToString(cmdFileName, contents);
-            cleanContents(contents);
+            cleanString(contents, false);
             if (contents.empty())
                 return usage("Command file '" + cmdFileName + "' is empty. Quitting...");
             if (startsWith(contents, "NOPARSE\n")) {

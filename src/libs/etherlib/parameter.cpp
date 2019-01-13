@@ -233,10 +233,10 @@ string_q CParameter::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'i':
-            if ( fieldName % "indexed" ) return int_2_Str(indexed);
-            if ( fieldName % "isPointer" ) return int_2_Str(isPointer);
-            if ( fieldName % "isArray" ) return int_2_Str(isArray);
-            if ( fieldName % "isObject" ) return int_2_Str(isObject);
+            if ( fieldName % "indexed" ) return bool_2_Str_t(indexed);
+            if ( fieldName % "isPointer" ) return bool_2_Str_t(isPointer);
+            if ( fieldName % "isArray" ) return bool_2_Str_t(isArray);
+            if ( fieldName % "isObject" ) return bool_2_Str_t(isObject);
             break;
         case 'n':
             if ( fieldName % "name" ) return name;

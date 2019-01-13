@@ -338,10 +338,10 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "anonymous" ) return int_2_Str(anonymous);
+            if ( fieldName % "anonymous" ) return bool_2_Str_t(anonymous);
             break;
         case 'c':
-            if ( fieldName % "constant" ) return int_2_Str(constant);
+            if ( fieldName % "constant" ) return bool_2_Str_t(constant);
             break;
         case 'e':
             if ( fieldName % "encoding" ) return encoding;
@@ -381,7 +381,7 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'p':
-            if ( fieldName % "payable" ) return int_2_Str(payable);
+            if ( fieldName % "payable" ) return bool_2_Str_t(payable);
             break;
         case 's':
             if ( fieldName % "signature" ) return signature;
@@ -404,7 +404,6 @@ ostream& operator<<(ostream& os, const CFunction& item) {
     // EXISTING_CODE
 
     item.Format(os, "", nullptr);
-    os << "\n";
     return os;
 }
 

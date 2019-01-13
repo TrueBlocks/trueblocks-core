@@ -71,6 +71,8 @@ def set_custom_config(goldPath):
             qbConfig  = QBLOCKS_PATH + file
             if file == 'config.toml':
                 qbConfig = gold_path + file
+            if file == '0x1234567812345678123456781234567812345678.json':
+                qbConfig = gold_path + file
             #printe("Custom:\t",  srcConfig)
             #printe("Orig:  \t",  qbConfig)
 
@@ -94,6 +96,8 @@ def restore_qblocks_config():
     for file in CUSTOM_FILES:
         qbConfig = QBLOCKS_PATH + file
         if file == 'config.toml':
+            qbConfig = gold_path + file
+        if file == '0x1234567812345678123456781234567812345678.json':
             qbConfig = gold_path + file
 
         #printe("qbConfig:\t",  qbConfig)
@@ -138,7 +142,7 @@ def clear_cache(addr):
 #-------------------------------------------------------
 
 # We define here the array of files that we can customize, add more to this array in the future
-CUSTOM_FILES = [ 'whenBlock.toml', 'ethprice.toml', 'names.txt', 'config.toml' ]
+CUSTOM_FILES = [ 'whenBlock.toml', 'ethprice.toml', 'names.txt', 'config.toml', '0x1234567812345678123456781234567812345678.json' ]
 
 # Cache path
 QBLOCKS_PATH = os.environ['HOME'] + '/.quickBlocks/'

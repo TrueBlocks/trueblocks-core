@@ -21,7 +21,7 @@ convert 4
 	000.017 addr_2_Str2                      ==> passed 'addr_2_Str("")' is equal to '"0x0"'
 	000.018 bnu_2_Hex1                       ==> passed 'bnu_2_Hex(a * a * a * a * a * a * a * a)' is equal to '"100000000000000000000000000000000"'
 	000.019 bni_2_Str1                       ==> passed 'bni_2_Str(a * a * a * a * a * a * a * a)' is equal to '"340282366920938463463374607431768211456"'
-	000.020 bool_2_Str1                      ==> passed 'bool_2_Str(true)' is equal to '"1"'
+	000.020 bool_2_Str1                      ==> passed 'bool_2_Str(true)' is equal to '"true"'
 	000.021 exp_2_BigUint1                   ==> passed 'exp_2_BigUint("1e30")' is equal to 'biguint_t(c * c * c * c * c * c)'
 	000.022 hex_2_Uint641                    ==> passed 'hex_2_Uint64("0x39fab")' is equal to '237483'
 	000.023 int_2_Str_1                      ==> passed 'int_2_Str(141)' is equal to '"141"'
