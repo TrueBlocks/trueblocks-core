@@ -1005,6 +1005,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     const char *STR_DEFAULT_WHENBLOCKS =
     "[\n"
 	"    { name : \"first\",          value : \"0\"       },\n"
+	"    { name : \"firstTrans\",     value : \"46147\"   },\n"
 	"    { name : \"iceage\",         value : \"200000\"  },\n"
 	"    { name : \"devcon1\",        value : \"543626\"  },\n"
 	"    { name : \"homestead\",      value : \"1150000\" },\n"
@@ -1022,6 +1023,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 	"    { name : \"devcon3\",        value : \"4469339\" },\n"
 	"    { name : \"parityhack2\",    value : \"4501969\" },\n"
 	"    { name : \"kitties\",        value : \"4605167\" },\n"
+    "    { name : \"devcon4\",        value : \"6610279\" },\n"
 	"    { name : \"constantinople\", value : \"7080000\" },\n"
 	"    { name : \"latest\",         value : \"\"        }\n"
     "]";

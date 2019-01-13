@@ -3,6 +3,7 @@ whenBlock -l
 
   Blocks:
       - first                  0
+      - firstTrans         46147
       - iceage            200000
       - devcon1           543626
       - homestead        1150000
@@ -20,5 +21,6 @@ whenBlock -l
       - devcon3          4469339
       - parityhack2      4501969
       - kitties          4605167
+      - devcon4          6610279
       - constantinople   7080000
       - latest                  
