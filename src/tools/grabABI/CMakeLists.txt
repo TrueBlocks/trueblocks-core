@@ -70,6 +70,7 @@ run_test("grabABI_known_contracts"               "--known" " -e")
 run_test("grabABI_asJson"                        "0x1234567812345678123456781234567812345678" " --json")
 run_test("grabABI_fromSolidity_fail"             "0x2234567812345678123456781234567812345678" " --sol")
 run_test("grabABI_fromSolidity"                  "0x1234567812345678123456781234567812345678" " --sol" " --json")
+run_test("grabABI_not_a_contract"                "0xf1aa581f353005ba3765b81bf52d6b1c488c2101")
 
 run_special_test("grabABI_known_prev_bug3"       "0x6090a6e47849629b7245dfa1ca21d94cd15878ef" " --raw")
 run_special_test("grabABI_known_prev_bug4"       "0x6810e776880c02933d47db1b9fc05908e5386b96" " --raw")
