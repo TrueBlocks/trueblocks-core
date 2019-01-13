@@ -155,8 +155,6 @@ traces              	1032	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
     "status": null
   },
   "articulatedTx": {
-    "constant": 0,
-    "payable": 0,
     "inputs": [],
     "outputs": []
   },

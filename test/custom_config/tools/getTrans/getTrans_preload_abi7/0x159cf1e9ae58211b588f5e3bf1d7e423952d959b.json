@@ -1,0 +1,1327 @@
+[
+    {
+        "inputs": [
+            {
+                "name": "a",
+                "type": "uint256"
+            },
+            {
+                "name": "b",
+                "type": "uint256"
+            }
+        ],
+        "name": "add",
+        "outputs": [
+            {
+                "name": "c",
+                "type": "uint256"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "a",
+                "type": "uint256"
+            },
+            {
+                "name": "b",
+                "type": "uint256"
+            }
+        ],
+        "name": "sub",
+        "outputs": [
+            {
+                "name": "c",
+                "type": "uint256"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "a",
+                "type": "uint256"
+            },
+            {
+                "name": "b",
+                "type": "uint256"
+            }
+        ],
+        "name": "mul",
+        "outputs": [
+            {
+                "name": "c",
+                "type": "uint256"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "a",
+                "type": "uint256"
+            },
+            {
+                "name": "b",
+                "type": "uint256"
+            }
+        ],
+        "name": "div",
+        "outputs": [
+            {
+                "name": "c",
+                "type": "uint256"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "constant": true,
+        "inputs": [
+            {
+                "name": "_id",
+                "type": "uint256"
+            }
+        ],
+        "name": "ETH",
+        "outputs": [
+            {
+                "name": "ret_0",
+                "type": "uint256"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "constant": true,
+        "inputs": [
+            {
+                "name": "_id",
+                "type": "uint256"
+            }
+        ],
+        "name": "USD",
+        "outputs": [
+            {
+                "name": "ret_0",
+                "type": "uint256"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "constant": true,
+        "inputs": [
+            {
+                "name": "_id",
+                "type": "uint256"
+            }
+        ],
+        "name": "EUR",
+        "outputs": [
+            {
+                "name": "ret_0",
+                "type": "uint256"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "constant": true,
+        "inputs": [
+            {
+                "name": "_id",
+                "type": "uint256"
+            }
+        ],
+        "name": "GBP",
+        "outputs": [
+            {
+                "name": "ret_0",
+                "type": "uint256"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "constant": true,
+        "inputs": [
+            {
+                "name": "_id",
+                "type": "uint256"
+            }
+        ],
+        "name": "updatedAt",
+        "outputs": [
+            {
+                "name": "ret_0",
+                "type": "uint256"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "_account",
+                "type": "address"
+            }
+        ],
+        "name": "affirmStatusAsAccreditedInvestor",
+        "outputs": [
+            {
+                "name": "success",
+                "type": "bool"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "_account",
+                "type": "address"
+            },
+            {
+                "name": "_verifyMetaData",
+                "type": "string"
+            }
+        ],
+        "name": "verifyStatusAsAccreditedInvestor",
+        "outputs": [
+            {
+                "name": "success",
+                "type": "bool"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "_dollarPrice",
+                "type": "uint256"
+            }
+        ],
+        "name": "priceOkay",
+        "outputs": [
+            {
+                "name": "ret_0",
+                "type": "bool"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "constant": true,
+        "inputs": [
+            {
+                "name": "_to",
+                "type": "address"
+            }
+        ],
+        "name": "permitTransfer",
+        "outputs": [],
+        "type": "function"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "_account",
+                "type": "address"
+            },
+            {
+                "name": "_amount",
+                "type": "uint256"
+            }
+        ],
+        "name": "sufficientBalance",
+        "outputs": [
+            {
+                "name": "ret_0",
+                "type": "bool"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "_to",
+                "type": "address"
+            },
+            {
+                "name": "_amount",
+                "type": "uint256"
+            },
+            {
+                "name": "_transferMetaData",
+                "type": "string"
+            }
+        ],
+        "name": "transferX",
+        "outputs": [
+            {
+                "name": "success",
+                "type": "bool"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "_to",
+                "type": "address"
+            },
+            {
+                "name": "_amount",
+                "type": "uint256"
+            }
+        ],
+        "name": "transfer",
+        "outputs": [
+            {
+                "name": "success",
+                "type": "bool"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "_spender",
+                "type": "address"
+            },
+            {
+                "name": "_amount",
+                "type": "uint256"
+            }
+        ],
+        "name": "approve",
+        "outputs": [
+            {
+                "name": "success",
+                "type": "bool"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "_from",
+                "type": "address"
+            },
+            {
+                "name": "_to",
+                "type": "address"
+            },
+            {
+                "name": "_amount",
+                "type": "uint256"
+            }
+        ],
+        "name": "transferFrom",
+        "outputs": [
+            {
+                "name": "success",
+                "type": "bool"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "constant": true,
+        "inputs": [
+            {
+                "name": "_owner",
+                "type": "address"
+            },
+            {
+                "name": "_spender",
+                "type": "address"
+            }
+        ],
+        "name": "allowance",
+        "outputs": [
+            {
+                "name": "remaining",
+                "type": "uint256"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "_tokenAmount",
+                "type": "uint256"
+            },
+            {
+                "name": "_dollarPrice",
+                "type": "uint256"
+            }
+        ],
+        "name": "makeNewAskRequestToSELL",
+        "outputs": [],
+        "type": "function"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "_tokenAmount",
+                "type": "uint256"
+            },
+            {
+                "name": "_dollarPrice",
+                "type": "uint256"
+            }
+        ],
+        "name": "makeNewBidRequestToBUY",
+        "outputs": [],
+        "type": "function"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "_tokenAmount",
+                "type": "uint256"
+            },
+            {
+                "name": "_dollarPrice",
+                "type": "uint256"
+            },
+            {
+                "name": "_deposit",
+                "type": "uint256"
+            },
+            {
+                "name": "_requestType",
+                "type": "uint8"
+            },
+            {
+                "name": "_requester",
+                "type": "address"
+            }
+        ],
+        "name": "createRequest",
+        "outputs": [],
+        "type": "function"
+    },
+
+    {
+        "inputs": [],
+        "name": "depositPayment",
+        "outputs": [
+            {
+                "name": "ret_0",
+                "type": "bool"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "constant": true,
+        "inputs": [
+            {
+                "name": "_dollarPrice",
+                "type": "uint256"
+            },
+            {
+                "name": "_tokenAmount",
+                "type": "uint256"
+            }
+        ],
+        "name": "etherEquivalent",
+        "outputs": [
+            {
+                "name": "ret_0",
+                "type": "uint256"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "_key",
+                "type": "uint256"
+            }
+        ],
+        "name": "cancelExistingRequest",
+        "outputs": [],
+        "type": "function"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "_keys",
+                "type": "uint256[]"
+            },
+            {
+                "name": "_tokenAmounts",
+                "type": "uint256[]"
+            },
+            {
+                "name": "_dollarPrices",
+                "type": "uint256[]"
+            }
+        ],
+        "name": "acceptTheseAskRequestsAndBUY",
+        "outputs": [],
+        "type": "function"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "_keys",
+                "type": "uint256[]"
+            },
+            {
+                "name": "_tokenAmounts",
+                "type": "uint256[]"
+            },
+            {
+                "name": "_dollarPrices",
+                "type": "uint256[]"
+            }
+        ],
+        "name": "acceptTheseBidRequestsAndSELL",
+        "outputs": [],
+        "type": "function"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "_key",
+                "type": "uint256"
+            }
+        ],
+        "name": "isRequestOpen",
+        "outputs": [
+            {
+                "name": "ret_0",
+                "type": "bool"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "_key",
+                "type": "uint256"
+            },
+            {
+                "name": "_tokenAmount",
+                "type": "uint256"
+            },
+            {
+                "name": "_dollarPrice",
+                "type": "uint256"
+            },
+            {
+                "name": "_requestType",
+                "type": "RequestType"
+            }
+        ],
+        "name": "doesRequestMatch",
+        "outputs": [
+            {
+                "name": "ret_0",
+                "type": "bool"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "_tokenAmount",
+                "type": "uint256"
+            },
+            {
+                "name": "_requester",
+                "type": "address"
+            }
+        ],
+        "name": "releaseCommitment",
+        "outputs": [],
+        "type": "function"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "_payment",
+                "type": "uint256"
+            },
+            {
+                "name": "_deposit",
+                "type": "uint256"
+            },
+            {
+                "name": "_buyer",
+                "type": "address"
+            },
+            {
+                "name": "_seller",
+                "type": "address"
+            }
+        ],
+        "name": "splitEther",
+        "outputs": [],
+        "type": "function"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "_deposit",
+                "type": "uint256"
+            }
+        ],
+        "name": "makeDepositDue",
+        "outputs": [],
+        "type": "function"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "_key",
+                "type": "uint256"
+            },
+            {
+                "name": "_etherAmount",
+                "type": "uint256"
+            },
+            {
+                "name": "_acceptor",
+                "type": "address"
+            }
+        ],
+        "name": "acceptRequest",
+        "outputs": [],
+        "type": "function"
+    },
+
+    {
+        "inputs": [],
+        "name": "withdrawPayment",
+        "outputs": [
+            {
+                "name": "paymentMade",
+                "type": "uint256"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "totalSupply",
+        "outputs": [
+            {
+                "name": "ret_0",
+                "type": "uint256"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "constant": true,
+        "inputs": [
+            {
+                "name": "tokenOwner",
+                "type": "address"
+            }
+        ],
+        "name": "balanceOf",
+        "outputs": [
+            {
+                "name": "balance",
+                "type": "uint256"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "getHolders",
+        "outputs": [
+            {
+                "name": "ret_0",
+                "type": "address[]"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "constant": true,
+        "inputs": [
+            {
+                "name": "_address",
+                "type": "address"
+            }
+        ],
+        "name": "getHolderInfo",
+        "outputs": [
+            {
+                "name": "ret_0",
+                "type": "uint256"
+            },
+            {
+                "name": "ret_1",
+                "type": "uint256"
+            },
+            {
+                "name": "ret_2",
+                "type": "uint256"
+            },
+            {
+                "name": "ret_3",
+                "type": "uint256"
+            },
+            {
+                "name": "ret_4",
+                "type": "string"
+            },
+            {
+                "name": "ret_5",
+                "type": "bool"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "getRequestKeys",
+        "outputs": [
+            {
+                "name": "ret_0",
+                "type": "uint256[]"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "constant": true,
+        "inputs": [
+            {
+                "name": "_key",
+                "type": "uint256"
+            }
+        ],
+        "name": "getRequest",
+        "outputs": [
+            {
+                "name": "ret_0",
+                "type": "uint256"
+            },
+            {
+                "name": "ret_1",
+                "type": "uint256"
+            },
+            {
+                "name": "ret_2",
+                "type": "uint256"
+            },
+            {
+                "name": "ret_3",
+                "type": "uint256"
+            },
+            {
+                "name": "ret_4",
+                "type": "address"
+            },
+            {
+                "name": "ret_5",
+                "type": "bool"
+            },
+            {
+                "name": "ret_6",
+                "type": "uint256"
+            },
+            {
+                "name": "ret_7",
+                "type": "address"
+            },
+            {
+                "name": "ret_8",
+                "type": "uint8"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "constant": true,
+        "inputs": [
+            {
+                "name": "_setting",
+                "type": "uint8"
+            }
+        ],
+        "name": "contractSetting",
+        "outputs": [
+            {
+                "name": "ret_0",
+                "type": "uint256"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "_amount",
+                "type": "uint256"
+            }
+        ],
+        "name": "mintTokens",
+        "outputs": [
+            {
+                "name": "success",
+                "type": "bool"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "_amount",
+                "type": "uint256"
+            }
+        ],
+        "name": "burnTokens",
+        "outputs": [
+            {
+                "name": "success",
+                "type": "bool"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "_account",
+                "type": "address"
+            }
+        ],
+        "name": "reclaimMisplacedTokens",
+        "outputs": [
+            {
+                "name": "success",
+                "type": "bool"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "_verifier",
+                "type": "address"
+            }
+        ],
+        "name": "toggleTrustedVerifier",
+        "outputs": [
+            {
+                "name": "success",
+                "type": "bool"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "_setting",
+                "type": "uint8"
+            },
+            {
+                "name": "_value",
+                "type": "uint256"
+            }
+        ],
+        "name": "changeSetting",
+        "outputs": [
+            {
+                "name": "success",
+                "type": "bool"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "_address",
+                "type": "address"
+            }
+        ],
+        "name": "setAdminAddress",
+        "outputs": [
+            {
+                "name": "success",
+                "type": "bool"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "_address",
+                "type": "address"
+            }
+        ],
+        "name": "setOwnerAddress",
+        "outputs": [
+            {
+                "name": "success",
+                "type": "bool"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "_address",
+                "type": "address"
+            }
+        ],
+        "name": "setFiatContractAddress",
+        "outputs": [
+            {
+                "name": "success",
+                "type": "bool"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "_tokenAddress",
+                "type": "address"
+            },
+            {
+                "name": "_tokens",
+                "type": "uint256"
+            }
+        ],
+        "name": "transferAnyERC20Token",
+        "outputs": [
+            {
+                "name": "success",
+                "type": "bool"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "inputs": [],
+        "name": "withdrawExcessEther",
+        "outputs": [
+            {
+                "name": "amount",
+                "type": "uint256"
+            }
+        ],
+        "type": "function"
+    },
+
+    {
+        "inputs": [],
+        "name": "togglePause",
+        "outputs": [],
+        "type": "function"
+    },
+
+    {
+        "inputs": [
+            {
+                "indexed": true,
+                "name": "_sender",
+                "type": "address"
+            },
+            {
+                "indexed": true,
+                "name": "_account",
+                "type": "address"
+            },
+            {
+                "name": "_affirmDate",
+                "type": "uint256"
+            },
+            {
+                "name": "_value",
+                "type": "uint256"
+            }
+        ],
+        "name": "AffirmStatus",
+        "outputs": [],
+        "type": "event"
+    },
+
+    {
+        "inputs": [
+            {
+                "indexed": true,
+                "name": "_verifier",
+                "type": "address"
+            },
+            {
+                "indexed": true,
+                "name": "_account",
+                "type": "address"
+            },
+            {
+                "name": "_verifyDate",
+                "type": "uint256"
+            },
+            {
+                "name": "_verifyMetaData",
+                "type": "string"
+            }
+        ],
+        "name": "VerifyStatus",
+        "outputs": [],
+        "type": "event"
+    },
+
+    {
+        "inputs": [
+            {
+                "indexed": true,
+                "name": "_from",
+                "type": "address"
+            },
+            {
+                "indexed": true,
+                "name": "_to",
+                "type": "address"
+            },
+            {
+                "name": "_value",
+                "type": "uint256"
+            }
+        ],
+        "name": "Transfer",
+        "outputs": [],
+        "type": "event"
+    },
+
+    {
+        "inputs": [
+            {
+                "indexed": true,
+                "name": "_from",
+                "type": "address"
+            },
+            {
+                "indexed": true,
+                "name": "_to",
+                "type": "address"
+            },
+            {
+                "name": "_value",
+                "type": "uint256"
+            },
+            {
+                "name": "_transferMetaData",
+                "type": "string"
+            }
+        ],
+        "name": "TransferX",
+        "outputs": [],
+        "type": "event"
+    },
+
+    {
+        "inputs": [
+            {
+                "indexed": true,
+                "name": "_owner",
+                "type": "address"
+            },
+            {
+                "indexed": true,
+                "name": "_spender",
+                "type": "address"
+            },
+            {
+                "name": "_value",
+                "type": "uint256"
+            }
+        ],
+        "name": "Approval",
+        "outputs": [],
+        "type": "event"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "_key",
+                "type": "uint256"
+            },
+            {
+                "name": "_date",
+                "type": "uint256"
+            },
+            {
+                "name": "_tokenAmount",
+                "type": "uint256"
+            },
+            {
+                "name": "_dollarPrice",
+                "type": "uint256"
+            },
+            {
+                "name": "_requestType",
+                "type": "uint8"
+            },
+            {
+                "indexed": true,
+                "name": "_requester",
+                "type": "address"
+            }
+        ],
+        "name": "MakeRequest",
+        "outputs": [],
+        "type": "event"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "_key",
+                "type": "uint256"
+            },
+            {
+                "indexed": true,
+                "name": "_sender",
+                "type": "address"
+            },
+            {
+                "name": "_deposit",
+                "type": "uint256"
+            },
+            {
+                "name": "_amount",
+                "type": "uint256"
+            }
+        ],
+        "name": "CancelRequest",
+        "outputs": [],
+        "type": "event"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "_key",
+                "type": "uint256"
+            },
+            {
+                "name": "_etherAmount",
+                "type": "uint256"
+            },
+            {
+                "name": "_tokenAmount",
+                "type": "uint256"
+            },
+            {
+                "name": "_dollarPrice",
+                "type": "uint256"
+            },
+            {
+                "indexed": true,
+                "name": "_acceptor",
+                "type": "address"
+            }
+        ],
+        "name": "AcceptRequest",
+        "outputs": [],
+        "type": "event"
+    },
+
+    {
+        "inputs": [
+            {
+                "indexed": true,
+                "name": "_account",
+                "type": "address"
+            },
+            {
+                "name": "_payment",
+                "type": "uint256"
+            }
+        ],
+        "name": "WithdrawPayment",
+        "outputs": [],
+        "type": "event"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "_value",
+                "type": "uint256"
+            },
+            {
+                "name": "_balance",
+                "type": "uint256"
+            }
+        ],
+        "name": "MintTokens",
+        "outputs": [],
+        "type": "event"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "_value",
+                "type": "uint256"
+            },
+            {
+                "name": "_balance",
+                "type": "uint256"
+            }
+        ],
+        "name": "BurnTokens",
+        "outputs": [],
+        "type": "event"
+    },
+
+    {
+        "inputs": [
+            {
+                "indexed": true,
+                "name": "_from",
+                "type": "address"
+            },
+            {
+                "name": "_tokenAmount",
+                "type": "uint256"
+            }
+        ],
+        "name": "ReclaimMisplacedTokens",
+        "outputs": [],
+        "type": "event"
+    },
+
+    {
+        "inputs": [
+            {
+                "indexed": true,
+                "name": "_verifier",
+                "type": "address"
+            },
+            {
+                "name": "_isTrustedVerifier",
+                "type": "bool"
+            }
+        ],
+        "name": "ToggleTrustedVerifier",
+        "outputs": [],
+        "type": "event"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "_admin",
+                "type": "address"
+            },
+            {
+                "name": "_setting",
+                "type": "uint8"
+            },
+            {
+                "name": "_value",
+                "type": "uint256"
+            }
+        ],
+        "name": "SettingChange",
+        "outputs": [],
+        "type": "event"
+    },
+
+    {
+        "inputs": [
+            {
+                "name": "fName",
+                "type": "string"
+            },
+            {
+                "name": "message",
+                "type": "string"
+            }
+        ],
+        "name": "Message",
+        "outputs": [],
+        "type": "event"
+    },
+
+]
+

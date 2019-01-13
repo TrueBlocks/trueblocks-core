@@ -203,7 +203,7 @@ TEST_F(CThisTest, TestConverts_4) {
         bigint_t b = 65536;
         ASSERT_EQ("bnu_2_Hex1", bnu_2_Hex(a * a * a * a * a * a * a * a), "100000000000000000000000000000000")
         ASSERT_EQ("bni_2_Str1", bni_2_Str(a * a * a * a * a * a * a * a), "340282366920938463463374607431768211456")
-        ASSERT_EQ("bool_2_Str1", bool_2_Str(true), "1")
+        ASSERT_EQ("bool_2_Str1", bool_2_Str(true), "true")
         biguint_t c = 100000;
         ASSERT_EQ("exp_2_BigUint1", exp_2_BigUint("1e30"), biguint_t(c * c * c * c * c * c))
 

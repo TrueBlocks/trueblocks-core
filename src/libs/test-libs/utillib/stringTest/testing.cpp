@@ -222,6 +222,20 @@ TEST_F(CThisTest, TestExtract) {
     return true;
 }}
 
+//------------------------------------------------------------------------
+TEST_F(CThisTest, TestClear) {
+
+    string_q code;
+    asciiFileToString("./solidity_code.sol", code);
+    cout << TESTID("code", 15) << code << endl;
+
+    string_q code1 = code, code2 = code;
+//    cleanString(code1, false); cout << TESTID("code1", 15) << code1 << endl;
+    cleanString(code2, true); cout << TESTID("code2", 15) << code2 << endl;
+
+    return true;
+}}
+
 #include "options.h"
 //------------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
@@ -240,6 +254,7 @@ int main(int argc, const char *argv[]) {
             case 2: LOAD_TEST(TestAssignment); break;
             case 3: LOAD_TEST(TestCStr);       break;
             case 4: LOAD_TEST(TestExtract);    break;
+            case 5: LOAD_TEST(TestClear);      break;
         }
     }
 
