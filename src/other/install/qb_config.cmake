@@ -23,13 +23,6 @@ if (NOT EXISTS "${QUICKBLOCKS_TOML_FILE}")
 endif()
 
 # Create toml file only if it does not exist
-#set(QUICKBLOCKS_TOML_FILE "${QUICKBLOCKS_HOME}/whenBlock.toml")
-#if (NOT EXISTS "${QUICKBLOCKS_TOML_FILE}")
-#    message(STATUS "Copying custom configuration file ${QUICKBLOCKS_TOML_FILE}")
-#    file(COPY "${CMAKE_SOURCE_DIR}/../../../src/other/install/whenBlock.toml" DESTINATION "${QUICKBLOCKS_HOME}" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
-#endif()
-
-# Create toml file only if it does not exist
 set(QUICKBLOCKS_TOML_FILE "${QUICKBLOCKS_HOME}/ethslurp.toml")
 if (NOT EXISTS "${QUICKBLOCKS_TOML_FILE}")
     message(STATUS "Copying custom configuration file ${QUICKBLOCKS_TOML_FILE}")
