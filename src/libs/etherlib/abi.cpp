@@ -354,7 +354,7 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
         string_q fileName = blockCachePath("abis/" + addr + ".json");
 
         string_q localFile("./" + addr + ".json");
-        if (fileExists(localFile)) {
+        if (fileExists(localFile) && localFile != fileName) {
             cerr << "Local file copied to cache\n";
             copyFile(localFile, fileName);
         }
