@@ -7,8 +7,6 @@ Testing of already sorted JSON
   "interfaces": [
     {
       "name": "a",
-      "constant": 0,
-      "payable": 0,
       "signature": "a()",
       "encoding": "0x0dbe671f",
       "inputs": [],
@@ -16,8 +14,6 @@ Testing of already sorted JSON
     },
     {
       "name": "c",
-      "constant": 0,
-      "payable": 0,
       "signature": "c()",
       "encoding": "0xc3da42b8",
       "inputs": [],
@@ -25,8 +21,6 @@ Testing of already sorted JSON
     },
     {
       "name": "d",
-      "constant": 0,
-      "payable": 0,
       "signature": "d()",
       "encoding": "0x8a054ac2",
       "inputs": [],
@@ -34,8 +28,6 @@ Testing of already sorted JSON
     },
     {
       "name": "e",
-      "constant": 0,
-      "payable": 0,
       "signature": "e()",
       "encoding": "0xffae15ba",
       "inputs": [],
@@ -43,8 +35,6 @@ Testing of already sorted JSON
     },
     {
       "name": "m",
-      "constant": 0,
-      "payable": 0,
       "signature": "m()",
       "encoding": "0x5a2ee019",
       "inputs": [],
@@ -58,8 +48,6 @@ Testing of already sorted JSON
   "interfaces": [
     {
       "name": "a",
-      "constant": 0,
-      "payable": 0,
       "signature": "a()",
       "encoding": "0x0dbe671f",
       "inputs": [],
@@ -67,8 +55,6 @@ Testing of already sorted JSON
     },
     {
       "name": "m",
-      "constant": 0,
-      "payable": 0,
       "signature": "m()",
       "encoding": "0x5a2ee019",
       "inputs": [],
@@ -76,8 +62,6 @@ Testing of already sorted JSON
     },
     {
       "name": "d",
-      "constant": 0,
-      "payable": 0,
       "signature": "d()",
       "encoding": "0x8a054ac2",
       "inputs": [],
@@ -85,8 +69,6 @@ Testing of already sorted JSON
     },
     {
       "name": "c",
-      "constant": 0,
-      "payable": 0,
       "signature": "c()",
       "encoding": "0xc3da42b8",
       "inputs": [],
@@ -94,8 +76,6 @@ Testing of already sorted JSON
     },
     {
       "name": "e",
-      "constant": 0,
-      "payable": 0,
       "signature": "e()",
       "encoding": "0xffae15ba",
       "inputs": [],
@@ -110,8 +90,6 @@ Testing of not sorted JSON
   "interfaces": [
     {
       "name": "a",
-      "constant": 0,
-      "payable": 0,
       "signature": "a()",
       "encoding": "0x0dbe671f",
       "inputs": [],
@@ -119,8 +97,6 @@ Testing of not sorted JSON
     },
     {
       "name": "aa1",
-      "constant": 0,
-      "payable": 0,
       "signature": "aa1()",
       "encoding": "0x74d0d855",
       "inputs": [],
@@ -128,8 +104,6 @@ Testing of not sorted JSON
     },
     {
       "name": "az",
-      "constant": 0,
-      "payable": 0,
       "signature": "az()",
       "encoding": "0x73fc24ec",
       "inputs": [],
@@ -137,8 +111,6 @@ Testing of not sorted JSON
     },
     {
       "name": "b",
-      "constant": 0,
-      "payable": 0,
       "signature": "b()",
       "encoding": "0x4df7e3d0",
       "inputs": [],
@@ -146,8 +118,6 @@ Testing of not sorted JSON
     },
     {
       "name": "ba1",
-      "constant": 0,
-      "payable": 0,
       "signature": "ba1()",
       "encoding": "0x53241b65",
       "inputs": [],
@@ -155,8 +125,6 @@ Testing of not sorted JSON
     },
     {
       "name": "bz",
-      "constant": 0,
-      "payable": 0,
       "signature": "bz()",
       "encoding": "0x3c7df70c",
       "inputs": [],
@@ -164,8 +132,6 @@ Testing of not sorted JSON
     },
     {
       "name": "z",
-      "constant": 0,
-      "payable": 0,
       "signature": "z()",
       "encoding": "0xc5d7802e",
       "inputs": [],
@@ -173,8 +139,6 @@ Testing of not sorted JSON
     },
     {
       "name": "za1",
-      "constant": 0,
-      "payable": 0,
       "signature": "za1()",
       "encoding": "0xb7938cb5",
       "inputs": [],
@@ -182,8 +146,6 @@ Testing of not sorted JSON
     },
     {
       "name": "zz",
-      "constant": 0,
-      "payable": 0,
       "signature": "zz()",
       "encoding": "0xfa14c2df",
       "inputs": [],
@@ -197,8 +159,6 @@ Testing of not sorted JSON
   "interfaces": [
     {
       "name": "a",
-      "constant": 0,
-      "payable": 0,
       "signature": "a()",
       "encoding": "0x0dbe671f",
       "inputs": [],
@@ -206,8 +166,6 @@ Testing of not sorted JSON
     },
     {
       "name": "bz",
-      "constant": 0,
-      "payable": 0,
       "signature": "bz()",
       "encoding": "0x3c7df70c",
       "inputs": [],
@@ -215,8 +173,6 @@ Testing of not sorted JSON
     },
     {
       "name": "b",
-      "constant": 0,
-      "payable": 0,
       "signature": "b()",
       "encoding": "0x4df7e3d0",
       "inputs": [],
@@ -224,8 +180,6 @@ Testing of not sorted JSON
     },
     {
       "name": "ba1",
-      "constant": 0,
-      "payable": 0,
       "signature": "ba1()",
       "encoding": "0x53241b65",
       "inputs": [],
@@ -233,8 +187,6 @@ Testing of not sorted JSON
     },
     {
       "name": "az",
-      "constant": 0,
-      "payable": 0,
       "signature": "az()",
       "encoding": "0x73fc24ec",
       "inputs": [],
@@ -242,8 +194,6 @@ Testing of not sorted JSON
     },
     {
       "name": "aa1",
-      "constant": 0,
-      "payable": 0,
       "signature": "aa1()",
       "encoding": "0x74d0d855",
       "inputs": [],
@@ -251,8 +201,6 @@ Testing of not sorted JSON
     },
     {
       "name": "za1",
-      "constant": 0,
-      "payable": 0,
       "signature": "za1()",
       "encoding": "0xb7938cb5",
       "inputs": [],
@@ -260,8 +208,6 @@ Testing of not sorted JSON
     },
     {
       "name": "z",
-      "constant": 0,
-      "payable": 0,
       "signature": "z()",
       "encoding": "0xc5d7802e",
       "inputs": [],
@@ -269,8 +215,6 @@ Testing of not sorted JSON
     },
     {
       "name": "zz",
-      "constant": 0,
-      "payable": 0,
       "signature": "zz()",
       "encoding": "0xfa14c2df",
       "inputs": [],

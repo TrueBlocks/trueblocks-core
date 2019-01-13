@@ -114,7 +114,7 @@ getTrans 3648669.24 -avt
     "inputs": [
       {
         "name": "hashes",
-        "value": "0x000bf9"
+        "value": "0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573"
       },
       {
         "name": "sealedBid",
@@ -135,7 +135,7 @@ getTrans 3648669.24 -avt
         "inputs": [
           {
             "name": "hashes",
-            "value": "0x000bf9"
+            "value": "0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573"
           },
           {
             "name": "sealedBid",

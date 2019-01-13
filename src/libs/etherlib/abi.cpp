@@ -352,8 +352,9 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
 
         string_q results;
         string_q fileName = blockCachePath("abis/" + addr + ".json");
+
         string_q localFile("./" + addr + ".json");
-        if (fileExists(localFile)) {
+        if (fileExists(localFile) && localFile != fileName) {
             cerr << "Local file copied to cache\n";
             copyFile(localFile, fileName);
         }
@@ -393,14 +394,22 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
             } else if (contains(toLower(results), "source code not verified")) {
 
                 if (!silent) {
-                    cerr << "\n";
-                    cerr << cRed << "Warning: " << cOff;
-                    cerr << "Failed to grab the ABI. Etherscan returned:\n\n\t";
-                    cerr << cTeal << results << cOff << "\n\n";
-                    cerr << "However, the ABI may actually be present on EtherScan. QBlocks will use it if\n";
-                    cerr << "you copy and paste the ABI json to this file:\n\n\t";
-                    cerr << cTeal << localFile << cOff << "\n\n";
-                    quickQuitHandler(0);
+                    if (isContractAt(addr)) {
+                        cerr << "\n";
+                        cerr << cRed << "Warning: " << cOff;
+                        cerr << "Failed to grab the ABI. Etherscan returned:\n\n\t";
+                        cerr << cTeal << results << cOff << "\n\n";
+                        cerr << "However, the ABI may actually be present on EtherScan. QBlocks will use it if\n";
+                        cerr << "you copy and paste the ABI json to this file:\n\n\t";
+                        cerr << cTeal << localFile << cOff << "\n\n";
+                        quickQuitHandler(0);
+                    } else {
+                        cerr << "\n";
+                        cerr << cRed << "Warning: " << cOff;
+                        cerr << "The address your specified (" << addr << ") does not\n";
+                        cerr << "\t does not appear to be a smart contract, therefore there is no ABI. Quitting...\n\n";
+                        quickQuitHandler(0);
+                    }
                 }
 
             } else {
@@ -488,7 +497,13 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
                     ss2 = substitute(ss2, "\"", "\\\"");
                     val += ss2;
                 } else {
-                    val = "0x" + extract(params, (start+1) * 64, len * 2);
+                    size_t x = len * 2;
+                    if (contains(types[item], "[]"))
+                        x = (len * 64);
+                    size_t s = start + 1;
+                    s *= 64;
+                    string_q ss = "0x" + extract(params, s, x);
+                    val = ss;
                 }
             }
             ret += ("|" + val);

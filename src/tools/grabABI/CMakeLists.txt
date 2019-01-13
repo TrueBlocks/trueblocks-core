@@ -30,9 +30,6 @@ build_readme(${CMAKE_CURRENT_SOURCE_DIR} ${TOOL_NAME})
 # To run only specific tests we define a test configuration named "test_all"
 add_custom_target(test-all COMMAND ${CMAKE_CTEST_COMMAND} -C test_all)
 
-# Copy a test file we need for the case where the ABI is a local file
-file(COPY "data/0x314159265dd8dbb310642f98f50c066173c1259c.json" DESTINATION "${GOLD_PATH}" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
-
 # Function to run an special or slow test case
 function(run_special_test testName)
     run_the_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
@@ -65,11 +62,15 @@ run_test("grabABI_known_prev_bug1"               "0x5901deb2c898d5dbe5923e05e510
 run_test("grabABI_known_prev_bug2"               "0x5f742383b6d1298980030d6af943b76cdd902143" " --raw")
 run_test("grabABI_known_prev_json_bug1"          "0x5901deb2c898d5dbe5923e05e510e95968a35067" " --json")
 run_test("grabABI_known_prev_json_bug2"          "0x5f742383b6d1298980030d6af943b76cdd902143" " --json")
-#run_test("grabABI_local_fail"                    "0x314159265dd8dbb310642f98f50c066173c1259b")
-run_test("grabABI_local_file"                    "0x314159265dd8dbb310642f98f50c066173c1259c")
+#run_test("grabABI_local_fail"                    "0x1234567812345678123456781234567812345678")
+run_test("grabABI_local_file"                    "0x1234567812345678123456781234567812345678")
 run_test("grabABI_etherTip"                      "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " --known" " -e")
 run_test("grabABI_underbar_functions"            "0xdac17f958d2ee523a2206206994597c13d831ec7")
 run_test("grabABI_known_contracts"               "--known" " -e")
+run_test("grabABI_asJson"                        "0x1234567812345678123456781234567812345678" " --json")
+run_test("grabABI_fromSolidity_fail"             "0x2234567812345678123456781234567812345678" " --sol")
+run_test("grabABI_fromSolidity"                  "0x1234567812345678123456781234567812345678" " --sol" " --json")
+run_test("grabABI_not_a_contract"                "0xf1aa581f353005ba3765b81bf52d6b1c488c2101")
 
 run_special_test("grabABI_known_prev_bug3"       "0x6090a6e47849629b7245dfa1ca21d94cd15878ef" " --raw")
 run_special_test("grabABI_known_prev_bug4"       "0x6810e776880c02933d47db1b9fc05908e5386b96" " --raw")

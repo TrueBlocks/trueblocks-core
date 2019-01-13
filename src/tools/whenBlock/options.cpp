@@ -267,6 +267,7 @@ string_q COptions::listSpecials(bool terse) const {
             }
         }
 
+#define N_PER_LINE 4
         if (alone && !terse) {
             if (!contains(bn, "tbd"))
                 os << bn << " ";
@@ -274,7 +275,7 @@ string_q COptions::listSpecials(bool terse) const {
             if (terse) {
                 os << name;
                 os << " (" << cTeal << bn << extra << cOff << ")";
-                if (!((i+1)%4)) {
+                if (!((i+1) % N_PER_LINE)) {
                     if (i < specials.size()-1)
                         os << "\n  ";
                 } else if (i < specials.size()-1) {
@@ -297,7 +298,7 @@ string_q COptions::listSpecials(bool terse) const {
         }
     }
     if (terse) {
-        if (specials.size() % 4)
+        if (specials.size() % N_PER_LINE)
             os << "\n";
     } else {
         os << "\n";

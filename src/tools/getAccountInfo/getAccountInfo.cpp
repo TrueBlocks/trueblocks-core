@@ -14,6 +14,7 @@
 #include "options.h"
 
 extern blknum_t whenDeployed(const address_t& addr);
+bool visitBlock(uint64_t num, void *data);
 //-------------------------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
@@ -28,41 +29,57 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        for (auto const& addr : options.addrs) {
+        options.blocks.forEveryBlockNumber(visitBlock, &options);
+    }
 
-            string_q code1 = getCodeAt(addr);
-            bool hasCode   = isContractAt(addr);
+    if (!options.hasHistory()) {
+        cerr << cRed << "    Warning: " << cOff;
+        cerr << "Your node does not have historical balances. Historical information is incorrect.\n";
+    }
 
-            if (options.diff) {
-                address_t addr2 = *(&addr+1);
-                string_q code2 = getCodeAt(addr2);
-                cout << "Code at address '" << addr << "' and '" << addr2 + "' are "
-                        << (code1 == code2 ? "identical" : "different") << "\n";
-                break;
+    return 0;
+}
 
-            } else if (options.showBytes) {
+//-------------------------------------------------------------------------------------
+bool visitBlock(uint64_t bn, void *data) {
 
-                cout << "Code at address: " << addr << ":\n";
+    COptions *options = (COptions*)data;
+    if (bn < options->oldestBlock)
+        options->oldestBlock = bn;
+    for (auto const& addr : options->addrs) {
+
+        string_q code1 = getCodeAt(addr, bn);
+        bool hasCode   = isContractAt(addr, bn);
+
+        if (options->diff) {
+            address_t addr2 = *(&addr+1);
+            string_q code2 = getCodeAt(addr2, bn);
+            cout << "Code at address '" << addr << "' and '" << addr2 + "' are "
+            << (code1 == code2 ? "identical" : "different") << "\n";
+            break;
+
+        } else if (options->showBytes) {
+
+            cout << "Code at address: " << addr << ":\n";
+            cout << code1 << "\n";
+
+        } else if (options->asData) {
+            cout << addr << "\t" << (hasCode ? "true" : "false") << (options->when ? "\t" + uint_2_Str(whenDeployed(addr)) : "") << "\n";
+
+        } else if (options->when) {
+            ASSERT(hasCode);
+            cout << "whenDeployed(" << addr << "): " << whenDeployed(addr) << "\n";
+
+        } else {
+            cout << "getAccountInfo(" << addr << "): " << (hasCode ? "true" : "false") << "\n";
+            if (verbose)
                 cout << code1 << "\n";
-
-            } else if (options.asData) {
-                cout << addr << "\t" << (hasCode ? "true" : "false") << (options.when ? "\t" + uint_2_Str(whenDeployed(addr)) : "") << "\n";
-
-            } else if (options.when) {
-                ASSERT(hasCode);
-                cout << "whenDeployed(" << addr << "): " << whenDeployed(addr) << "\n";
-
-            } else {
-                cout << "getAccountInfo(" << addr << "): " << (hasCode ? "true" : "false") << "\n";
-                if (verbose)
-                    cout << code1 << "\n";
 //#error
 //                if (verbose)
 //                    cout << getStorageAt(addr, 0) << " " << getNonceAt(addr) << "\n";
-            }
         }
     }
-    return 0;
+    return true;
 }
 
 //--------------------------------------------------------------
