@@ -61,6 +61,7 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     extern string_q    bool_2_Str   (bool num);
+    extern string_q    bool_2_Str_t (bool num);
     extern string_q    int_2_Str    (int64_t num);
     extern string_q    uint_2_Str   (uint64_t num);
     extern string_q    gas_2_Str    (const gas_t& gas);

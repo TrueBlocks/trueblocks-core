@@ -352,6 +352,7 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
 
         string_q results;
         string_q fileName = blockCachePath("abis/" + addr + ".json");
+
         string_q localFile("./" + addr + ".json");
         if (fileExists(localFile)) {
             cerr << "Local file copied to cache\n";
@@ -488,7 +489,13 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
                     ss2 = substitute(ss2, "\"", "\\\"");
                     val += ss2;
                 } else {
-                    val = "0x" + extract(params, (start+1) * 64, len * 2);
+                    size_t x = len * 2;
+                    if (contains(types[item], "[]"))
+                        x = (len * 64);
+                    size_t s = start + 1;
+                    s *= 64;
+                    string_q ss = "0x" + extract(params, s, x);
+                    val = ss;
                 }
             }
             ret += ("|" + val);
