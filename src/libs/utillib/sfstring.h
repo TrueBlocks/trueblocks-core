@@ -151,5 +151,6 @@ namespace qblocks {
 
     //--------------------------------------------------------------------
     extern string_q escape_string(const string_q& str);
+    extern void cleanString(string_q& str, bool isCode);
 
 }  // namespace qblocks

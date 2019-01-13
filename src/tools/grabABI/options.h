@@ -44,3 +44,4 @@ public:
 
 //-----------------------------------------------------------------------
 extern string_q getPrefix (const string_q& in);
+extern bool convertSolToABI(CAbi& abi, const string_q& solFile);

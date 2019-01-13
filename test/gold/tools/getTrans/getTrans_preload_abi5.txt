@@ -1,6 +1,5 @@
 grabABI argc: 2 [1:0x314159265dd8dbb310642f98f50c066173c1259b] 
 grabABI 0x314159265dd8dbb310642f98f50c066173c1259b 
-Local file copied to cache
 ABI for address 0x314159265dd8dbb310642f98f50c066173c1259b
 	function owner                      (bytes32 node)
 	function resolver                   (bytes32 node)

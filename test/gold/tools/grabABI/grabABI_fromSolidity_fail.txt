@@ -1,8 +1,7 @@
-grabABI argc: 7 [1:0xdac17f958d2ee523a2206206994597c13d831ec7] [2:-v] [3:-n] [4:-e] [5:-g] [6:code] 
-grabABI 0xdac17f958d2ee523a2206206994597c13d831ec7 -v -n -e -g code 
+grabABI argc: 3 [1:0x2234567812345678123456781234567812345678] [2:--sol] 
+grabABI 0x2234567812345678123456781234567812345678 --sol 
 
-  Invalid address 'code'. Length (4) is not equal to 40 characters (20 bytes).
-
+  Could not find solidity file in order to convert to ABI. Quitting...
 
   Usage:    grabABI [-c|-g|-d|-e|-j|-n|-o|-l|-r|-v|-h] addr  
   Purpose:  Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
@@ -27,8 +26,5 @@ grabABI 0xdac17f958d2ee523a2206206994597c13d831ec7 -v -n -e -g code
 
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
-
-  Notes:  
-	- Use the --silent option, which displays fewer messages, for scripting.
 
   Powered by QBlocks
