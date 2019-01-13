@@ -34,6 +34,7 @@ bool COptions::parseArguments(string_q& command) {
     blknum_t latestBlock = getLatestBlockFromClient();
     Init();
     explode(arguments, command, ' ');
+    bool hasExplicitBlocks = false;
     for (auto arg : arguments) {
         if (arg == "-n" || arg == "--nodiff") {
             diff = true;
@@ -77,8 +78,12 @@ bool COptions::parseArguments(string_q& command) {
             } else if (!ret.empty()) {
                 return usage(ret);
             }
+            hasExplicitBlocks = true;
         }
     }
+
+    if (!blocks.hasBlocks())
+        blocks.parseBlockList("latest", latestBlock);
 
     if (addrs.size() == 0)
         return usage("Please supply valid Ethereum addresses.\n");
@@ -92,6 +97,9 @@ bool COptions::parseArguments(string_q& command) {
     if (when) {
         if (!nodeHasBalances())
             return usage("--whenDep option requires a full archive node. Quitting...");
+        if (hasExplicitBlocks)
+            return usage("You may not use the block_list option when using --whenBlock. Quitting...");
+
         // check to make sure all the addresses have code first
         for (auto addr : addrs) {
             if (!isContractAt(addr))
