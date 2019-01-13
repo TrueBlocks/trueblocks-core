@@ -14,7 +14,7 @@
 #include "etherlib.h"
 
 //-----------------------------------------------------------------------------
-class COptions : public CBlockOptions {
+class COptions : public CHistoryOptions {
 public:
     CAddressArray addrs;
     bool diff;
