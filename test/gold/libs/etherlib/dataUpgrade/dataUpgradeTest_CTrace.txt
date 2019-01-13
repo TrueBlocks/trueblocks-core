@@ -91,8 +91,6 @@ result              	1015	0	1048651	T_OBJECT TS_OBJECT
   "transactionHash": "0x0",
   "transactionPosition": 0,
   "articulatedTrace": {
-    "constant": 0,
-    "payable": 0,
     "inputs": [],
     "outputs": []
   },

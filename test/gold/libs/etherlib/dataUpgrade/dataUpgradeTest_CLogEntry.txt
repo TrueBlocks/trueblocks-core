@@ -54,8 +54,6 @@ articulatedLog      	1009	0	1048651	T_OBJECT TS_OBJECT
   "logIndex": 0,
   "topics": [],
   "articulatedLog": {
-    "constant": 0,
-    "payable": 0,
     "inputs": [],
     "outputs": []
   }

@@ -386,7 +386,7 @@ bool processTransaction(const CBlock& block, const CTransaction *trans, COptions
                         if (trans->traces.size() == 0)
                             getTraces(((CTransaction*)trans)->traces, trans->hash);
                         acct->abi_spec.articulateTransaction((CTransaction*)trans);
-                        if (!trans->articulatedTx.message.empty())
+                        if (!trans->articulatedTx.message.empty() && !contains(trans->articulatedTx.message, "\"HTTPStatusCode\": 200"))
                             SHOW_FIELD(CFunction, "message");
                         ((CAccountWatch*)acct)->api_spec.sendData(trans->Format());
                         ((CAccountWatch*)acct)->api_spec.sendData("cleanup");

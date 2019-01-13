@@ -85,6 +85,10 @@ run_test("getAccountInfo_combined_options_1"          "0x26c4e381ffbdc825be9b986
 run_test("getAccountInfo_combined_options_2"          "0x26c4e381ffbdc825be9b986c3ba40525f0771e8d" " 0x26c4e381ffbdc825be9b986c3ba40525f0771e8d" " --verbose" " --bytes")
 run_test("getAccountInfo_combined_options_3"          "0x26c4e381ffbdc825be9b986c3ba40525f0771e8d" " 0x26c4e381ffbdc825be9b986c3ba40525f0771e8d" "-bn")
 
+run_test("getAccountInfo_dao_now"                     "0xbb9bc244d798123fde783fcc1c72d3bb8c189413" " --bytes")
+run_state_test("getAccountInfo_dao_pre_deploy"              "0xbb9bc244d798123fde783fcc1c72d3bb8c189413" " --bytes" " 1428756")
+run_state_test("getAccountInfo_dao_post_deploy"             "0xbb9bc244d798123fde783fcc1c72d3bb8c189413" " --bytes" " 1428757")
+
 run_test("getAccountInfo_dash_d_2"            "0x01d04122aeccab138a47103b500f7b3d3b356a27" " -b")
 run_test("getAccountInfo_three_addrs"         "0x1267895780369b48a02781eb08d353e426e5f256" " 0x1492cdd605d91658f228eab14d8444b60e6da8df" " 0x17f8e4bd5a79f095d7b680317de6a617d202b235")
 run_test("getAccountInfo_no_options_1"        "0x1b725d9bcbd26765fe4836d850631037dfb37e0a")
