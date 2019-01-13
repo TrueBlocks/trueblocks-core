@@ -354,7 +354,7 @@ namespace qblocks {
                 case OUT:
                     switch (ch) {
                         case '\t': break; // skip it
-                        case '\r': if (isCode)  str[pos++] = ' ';   else str[pos++] = ch; break;
+                        case '\r': if (!isCode) str[pos++] = ch;    break;
                         case '\n': if (isCode)  str[pos++] = ' ';   else str[pos++] = ch; break;
                         case ' ' :              state = IN_SPACE;   break;
                         case '-' : if (!isCode) state = IN_DASH;    else str[pos++] = ch; break;
