@@ -27,6 +27,7 @@ static COption params[] = {
 };
 static size_t nParams = sizeof(params) / sizeof(COption);
 
+extern bool isTokenContract(const address_t& addr);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
@@ -147,6 +148,11 @@ bool COptions::parseArguments(string_q& command) {
         holders.push_back(lastItem);
     }
 
+    for (auto watch : watches) {
+        if (!isTokenContract(watch.address))
+            return usage("Address '" + watch.address + "' does not appear to be a token smart contract. Quitting...");
+    }
+
     if (!blocks.hasBlocks())
         blocks.numList.push_back(newestBlock);  // use 'latest'
 
@@ -212,4 +218,11 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
         return ret;
     }
     return str;
+}
+
+//--------------------------------------------------------------------------------
+bool isTokenContract(const address_t& addr) {
+    if (!isContractAt(addr))
+        return false;
+    return true;
 }
