@@ -17,7 +17,7 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     extern size_t writeCallback(char *ptr, size_t size, size_t nmemb, void *userdata);
-    extern size_t traceCallback(char *ptr, size_t size, size_t nmemb, void *userdata);
+    extern size_t errorCallback(char *ptr, size_t size, size_t nmemb, void *userdata);
     extern size_t nullCallback(char *ptr, size_t size, size_t nmemb, void *userdata);
 
     //-------------------------------------------------------------------------
@@ -236,7 +236,7 @@ PRINTQ("data->result ==> " + string_q(s));
     }
 
     //-------------------------------------------------------------------------
-    size_t traceCallback(char *ptr, size_t size, size_t nmemb, void *userdata) {
+    size_t errorCallback(char *ptr, size_t size, size_t nmemb, void *userdata) {
         // Curl does not close the string, so we have to
         ptr[size*nmemb-1] = '\0';
         CCurlContext *data = (CCurlContext*)userdata;  // NOLINT
