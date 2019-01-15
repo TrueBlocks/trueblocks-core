@@ -206,7 +206,7 @@ namespace qblocks {
             } else if (needTrace && trans->gas == receipt.gasUsed) {
 
                 string_q unused;
-                CURLCALLBACKFUNC prev = getCurlContext()->setCurlCallback(traceCallback);
+                CURLCALLBACKFUNC prev = getCurlContext()->setCurlCallback(errorCallback);
                 getCurlContext()->is_error = false;
                 queryRawTrace(unused, trans->hash);
                 trans->isError = getCurlContext()->is_error;
