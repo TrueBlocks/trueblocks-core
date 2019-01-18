@@ -513,7 +513,7 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
     }
 
     //---------------------------------------------------------------------------
-    inline string_q decodeRLP(const string_q& name, const string_q& input, size_t nItems, string_q *items) {
+    string_q decodeRLP(const string_q& name, const string_q& input, size_t nItems, string_q *items) {
         string_q quote = "\"";
         string_q params = input;
         string_q result = parseTheInput(params, nItems, items);
