@@ -14,8 +14,9 @@
 
 //---------------------------------------------------------------------------------------------------
 static COption params[] = {
-    COption("~mode", "Mode of operation. One or more of 'encoding' or 'generation'.\n"),
-    COption("",      "Simple program to illustrate how to encode function and event signatures.\n"),
+    COption("~mode",      "Mode of operation. One or more of 'encoding' or 'generation'.\n"),
+    COption("-sub:<num>", "sub mode"),
+    COption("",           "Simple program to illustrate how to encode function and event signatures.\n"),
 };
 static size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -32,8 +33,15 @@ bool COptions::parseArguments(string_q& command) {
             arg == "generation" ||
             arg == "old_bug" ||
             arg == "func_assign" ||
-            arg == "evt_assign") {
+            arg == "evt_assign" ||
+            arg == "eth_test") {
             mode += (arg + "|");
+        } else if (startsWith(arg, "-s:") || startsWith(arg, "--sub:")) {
+            arg = substitute(substitute(arg, "-s:", ""), "--sub:","");
+            if (!isUnsigned(arg))
+                return usage("--sub must be a non-negative number. Quitting...");
+            sub = str_2_Uint(arg);
+
         } else {
             return usage("Invalid argument " + arg + ". Please enter either 'encoding' or 'generation'. Quitting...");
         }
@@ -50,6 +58,7 @@ void COptions::Init(void) {
     nParamsRef = nParams;
 
     mode = "";
+    sub = 0;
     minArgs = 0;
 }
 
