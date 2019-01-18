@@ -120,7 +120,7 @@ bool COptions::parseArguments(string_q& command) {
     if (fromSol) {
         for (auto addr : addrs) {
             CAbi abi;
-            if (!convertSolToABI(abi, addr))
+            if (!sol_2_Abi(abi, addr))
                 return usage("Could not find solidity file in order to convert to ABI. Quitting...");
             bool first = true;
             expContext().spcs = 4;
