@@ -1,0 +1,6 @@
+abiTest argc: 4 [1:eth_test] [2:-s] [3:4] 
+abiTest eth_test -s 4 
+ethereum test box test...
+0. 	000.000 test_0                           ==> failed 'func.doTest(line)' is false
+...failed
+

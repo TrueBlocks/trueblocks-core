@@ -62,6 +62,7 @@ public:
     bool showEmptyField(const string_q& fn) const override {
         return (showOutput || fn != "outputs");
     }
+    bool fromDefinition(const string_q& lineIn);
     // EXISTING_CODE
     bool operator==(const CFunction& item) const;
     bool operator!=(const CFunction& item) const { return !operator==(item); }
