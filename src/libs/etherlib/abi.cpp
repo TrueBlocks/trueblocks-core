@@ -458,68 +458,49 @@ inline string_q hex_2_Str(const string_q& inHex) {
     return ret;
 }
 
-//------------------------------------------------------------------------------
-#define old_grabPart(a, b)       trimLeading(extract((a), 64*(b), 64), '0')
-#define old_grabBigNum(a, b)     strtoull(old_grabPart(a, b).c_str(), NULL, 16)
-#define old_toBigNum3(a, b)      padNum3(strtoull(old_grabPart(a, b).c_str(), NULL, 16))
-#define old_toBigNum4(a, b)      uint_2_Str(strtoull(old_grabPart(a, b).c_str(), NULL, 16))
-#define old_toBigNum4i(a, b)     int_2_Str(strtol(old_grabPart(a, b).c_str(), NULL, 16))
-#define old_toBoolean(a, b)      (strtoull(old_grabPart(a, b).c_str(), NULL, 16) ? "true" : "false")
-#define old_toBytes(a, b)        extract((a), 64*(b), 64)
-
-//---------------------------------------------------------------------------
-inline bool isInt(const string_q& type) {
-    return contains(type, "int");
-}
-
-//---------------------------------------------------------------------------
-inline bool isUint(const string_q& type) {
-    return contains(type, "uint");
-}
-
 //---------------------------------------------------------------------------
 // intN, intN[n], uintN, uintN[n]
-inline void parseType(const string_q& type, uint64_t& nBits, uint64_t& nItems) {
-    nItems = 1; // not an array
-    nBits = str_2_Uint(substitute(substitute(type,"uint",""),"int",""));
+inline void parseType(const string_q& type, uint64_t& size, uint64_t& count, uint64_t& l, uint64_t& s) {
+    count = 1; // not an array
+    size = str_2_Uint(substitute(substitute(substitute(substitute(type,"uint",""),"int",""),"bytes",""),"address",""));
     if (contains(type, "[")) {
         string_q t = type;
         nextTokenClear(t, '[');
-        nItems = str_2_Uint(t);
+        count = str_2_Uint(t);
     }
+    double ratio = (size / 256.);
+    l = (uint64_t)(64 * ratio);
+    s = 64 - l;
+    if (isTestMode() && (getEnvStr("ABI") == "true"))
+        cout << type << " bits: " << size << " count: " << count << " pos: " << s << "-" << l << "-" << (s+l) << endl;
 }
+
+//------------------------------------------------------------------------------
+#define old_grabPart(a, b)       trimLeading(extract((a), 64*(b), 64), '0')
 
 //---------------------------------------------------------------------------
 string_q parseFixedType(const string_q& type, const string_q& params, size_t& offset) {
 
-    uint64_t size = 0;
-    uint64_t count = NOPOS;
     string_q ret;
-
-    if ( startsWith(type, "address")) {
-        parseType(type, size, count);
-        for (uint64_t i = 0 ; i < count ; i++) {
-            size_t g = offset + i;
-            string_q xxx;
-            xxx = parseFixedType("uint160", params, g);
+    uint64_t size = 0;
+    uint64_t count = NOPOS, l = NOPOS, s = NOPOS;
+    parseType(type, size, count, l, s);
+    for (uint64_t i = 0 ; i < count ; i++) {
+        size_t g = offset + i;
+        if ( startsWith(type, "address")) {
+            string_q xxx = parseFixedType("uint160", params, g); // get one of them
             xxx = bnu_2_Hex(str_2_BigUint(xxx)).substr(0,40);
             if (!ret.empty())
                 ret += ", ";
             ret += "0x" + toLower(padLeft(trimLeading(xxx, '0'), 40, '0'));
-        }
-        offset += (count - 1);
 
-    } else if ( type == "bool") {
-        ret = old_toBoolean  (params, offset);
+        } else if ( type == "bool") {
+#define old_toBoolean(a, b) (strtoull(old_grabPart(a, b).c_str(), NULL, 16) ? "true" : "false")
+            ret = old_toBoolean  (params, g);
 
-    } else if ( isUint(type) ) {
-        parseType(type, size, count);
-        for (uint64_t i = 0 ; i < count ; i++) {
-            string_q xx = extract(params, 64 * offset + (i * 64), 64);
-            double ratio = (size / 256.);
-            uint64_t l = (uint64_t)(64 * ratio);
-            uint64_t s = 64 - l;
-            xx = "0x" + string_q(s, '0') + extract(xx, s, l);
+        } else if ( startsWith(type, "uint") ) {
+            string_q zz = extract(params, 64 * g, 64);
+            string_q xx = "0x" + string_q(s, '0') + extract(zz, s, l);
             if (size <= 64) {
                 uint64_t w = str_2_Uint(xx);
                 string_q yy = uint_2_Str(w).c_str();
@@ -533,17 +514,10 @@ string_q parseFixedType(const string_q& type, const string_q& params, size_t& of
                     ret += ", ";
                 ret += yy;
             }
-        }
-        offset += (count - 1);
-    } else if ( isInt(type) ) {
-        parseType(type, size, count);
-        for (uint64_t i = 0 ; i < count ; i++) {
-            string_q xx = extract(params, 64 * offset + (i * 64), 64);
-            bool neg = startsWith(xx, "f");
-            double ratio = (size / 256.);
-            uint64_t l = (uint64_t)(64 * ratio);
-            uint64_t s = 64 - l;
-            xx = "0x" + (neg ? string_q(s, 'f') : string_q(s, '0')) + extract(xx, s, l);
+        } else if ( startsWith(type, "int") ) {
+            string_q zz = extract(params, 64 * g, 64);
+            bool neg = startsWith(zz, "f");
+            string_q xx = "0x" + (neg ? string_q(s, 'f') : string_q(s, '0')) + extract(zz, s, l);
             if (size <= 64) {
                 int64_t w = str_2_Int(xx);
                 string_q yy = int_2_Str(w).c_str();
@@ -557,16 +531,17 @@ string_q parseFixedType(const string_q& type, const string_q& params, size_t& of
                     ret += ", ";
                 ret += yy;
             }
+
+        } else if ( startsWith(type, "bytes")) {
+            if (!ret.empty())
+                ret += ", ";
+            ret += "0x" + extract(params, 64 * g, 64);
+
+        } else {
+            ret = "unknown type: " + type;
         }
-        offset += (count - 1);
-
-    } else if ( contains(type, "bytes")) {
-        ret = old_toBytes(params, offset);
-
-    } else {
-        ret = "unknown type: " + type;
     }
-
+    offset += (count - 1);
     if (contains(ret, ","))
         ret = "[" + ret + "]";
 
@@ -574,7 +549,8 @@ string_q parseFixedType(const string_q& type, const string_q& params, size_t& of
 }
 
 inline string_q parseDynamicType(const string_q& type, const string_q& params, size_t& offset) {
-#define old_toBigNum2(a, b)      string_q(bnu_2_Str(str_2_Wei("0x" + old_grabPart(a, b))).c_str())
+#define old_toBigNum2(a, b) string_q(bnu_2_Str(str_2_Wei("0x" + old_grabPart(a, b))).c_str())
+#define old_grabBigNum(a, b) strtoull(old_grabPart(a, b).c_str(), NULL, 16)
     size_t start = str_2_Uint(old_toBigNum2(params, offset)) / (size_t)32;
     size_t len = old_grabBigNum(params, start);
     if (len == NOPOS)
@@ -582,21 +558,37 @@ inline string_q parseDynamicType(const string_q& type, const string_q& params, s
 
     string_q ret;
     if (type == "string") {
-        string_q ss1 = extract(params, (start+1) * 64, len * 2);
+        string_q ss1 = extract(params, (start + 1) * 64, len * 2);
         string_q ss2 = hex_2_Str(ss1);
         ss2 = substitute(ss2, "\n", "\\n");
         ss2 = substitute(ss2, "\r", "");
         ss2 = substitute(ss2, "\"", "\\\"");
         ret += ss2;
 
+    } else if (startsWith(type,"bytes")) {
+        uint64_t size = 0;
+        uint64_t count = NOPOS, l = NOPOS, s = NOPOS;
+        parseType(type, size, count, l, s);
+        string_q ss = extract(params, (start + 1) * 64, (len * 2));
+        if (contains(type, "[]"))
+            ss = extract(params, (start + 1) * 64, (len * 2) * 32);
+        while (ss.length() > 0) {
+            string_q xxx = ss.substr(0, 32 * 2);
+            replace(ss, xxx, "");
+            if (!ret.empty())
+                ret += ", ";
+            size_t xxxx = 0;
+            ret += parseFixedType("bytes32", xxx, xxxx);
+        }
+
     } else {
         if (startsWith(type,"address")) {
             size_t x = len * 2;
             if (contains(type, "[]"))
                 x = (len * 64);
-            size_t s = start + 1;
-            s *= 64;
-            string_q ss = extract(params, s, x);
+            size_t sx = start + 1;
+            sx *= 64;
+            string_q ss = extract(params, sx, x);
             while (ss.length() >= 64) {
                 string_q xxx = ss.substr(0,64);
                 replace(ss, xxx, "");
@@ -610,9 +602,9 @@ inline string_q parseDynamicType(const string_q& type, const string_q& params, s
             size_t x = len * 2;
             if (contains(type, "[]"))
                 x = (len * 64);
-            size_t s = start + 1;
-            s *= 64;
-            string_q ss = extract(params, s, x);
+            size_t sx = start + 1;
+            sx *= 64;
+            string_q ss = extract(params, sx, x);
             while (ss.length() >= 64) {
                 string_q xxx = ss.substr(0,64);
                 replace(ss, xxx, "");
@@ -621,16 +613,18 @@ inline string_q parseDynamicType(const string_q& type, const string_q& params, s
                 size_t xxxx = 0;
                 ret += parseFixedType("uint256", xxx, xxxx);
             }
+
         } else {
             size_t x = len * 2;
             if (contains(type, "[]"))
                 x = (len * 64);
-            size_t s = start + 1;
-            s *= 64;
-            string_q ss = extract(params, s, x);
+            size_t sx = start + 1;
+            sx *= 64;
+            string_q ss = extract(params, sx, x);
             ret = "0x" + ss;
         }
     }
+
     if (type != "string" && type != "bytes")
         return "[" + ret + "]";
 
