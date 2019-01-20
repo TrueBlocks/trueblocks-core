@@ -347,7 +347,11 @@ class CFunctionTester : public CFunction {
 public:
     bool doTest(const string_q& line1) {
 
+#if 0
+        string_q line = "decode|decoding int array|function baz(int[3])|0x000000000000000000000000000000000000000000000000000000000000002afffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffdfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffb|[42, -3, -5]";
+#else
         string_q line = line1;
+#endif
         string_q expected, result;
         CStringArray parts;
         explode(parts, line, '|');
@@ -362,6 +366,7 @@ public:
             return false;
         }
 
+        cout << endl;
         cout << "line: "      << line << endl;
         cout << "testType: "  << parts[0] << endl;
         cout << "testName: "  << parts[1] << endl;
