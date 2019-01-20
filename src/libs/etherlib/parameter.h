@@ -69,6 +69,7 @@ public:
     string_q getFunctionAssign(uint64_t which) const;
     string_q getEventAssign(uint64_t which, uint64_t nIndexed = NOPOS) const;
     bool fromDefinition(const string_q& input);
+    bool isValid(void) const;
     bool noWrite;
     // EXISTING_CODE
     bool operator==(const CParameter& item) const;

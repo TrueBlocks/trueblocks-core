@@ -457,6 +457,15 @@ string_q CFunction::getSignature(uint64_t parts) const {
 }
 
 //-----------------------------------------------------------------------
+bool CFunction::checkTypes(void) const {
+    for (auto input : inputs) {
+        if (!input.isValid())
+            return false;
+    }
+    return true;
+}
+
+//-----------------------------------------------------------------------
 string_q CFunction::encodeItem(void) const {
     if (encoding == "()")  // optimization
         return "0x861731d5";
@@ -475,7 +484,13 @@ bool CFunction::fromDefinition(const string_q& lineIn) {
 
     uint64_t iCnt = 0, oCnt = 0;
 
-    string_q line = substitute(substitute(substitute(substitute(lineIn,"(","|"),")","|"),", ",","),"\t","");
+    string_q line = lineIn;
+    line = substitute(line,"(","|");  // clean up
+    line = substitute(line,")","|");  // clean up
+    line = substitute(line,", ",","); // clean up
+    line = substitute(line,"\t","");  // clean up
+    while (contains(line, " [")) replace(line, " [", "[");  // clean up
+    while (contains(line, " ]")) replace(line, " ]", "]");  // clean up
     this->constant = (contains(line, "constant") || contains(line, "view"));
     this->type = trim(nextTokenClear(line,' '));
     this->name = trim(nextTokenClear(line,'|'));
