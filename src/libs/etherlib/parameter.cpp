@@ -427,5 +427,18 @@ bool CParameter::fromDefinition(const string_q &strIn) {
     return true;
 }
 
+//-----------------------------------------------------------------------
+bool CParameter::isValid(void) const {
+    // TODO(tjayrush): not exhaustive
+    if (!(startsWith(type, "address") || startsWith(type, "bool") || startsWith(type, "string") || startsWith(type, "bytes") ||
+          startsWith(type, "fixed") || startsWith(type, "uint")  || startsWith(type, "int")))
+        return false;
+    if (startsWith(type, "bytes") && type != "bytes") {
+        uint64_t n = str_2_Uint(substitute(type,"bytes",""));
+        return n > 0 && n <= 32;
+    }
+    return true;
+}
+
 // EXISTING_CODE
 }  // namespace qblocks
