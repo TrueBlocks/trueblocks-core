@@ -61,6 +61,7 @@ int main(int argc, const char *argv[]) {
                 cout << (test_evt_assign() ? "...passed" : "...failed") << "\n";
                 cout << "\n";
             } else if (mode == "eth_test") {
+                setenv("ABI", "true", true);
                 cout << "ethereum test box test...\n";
                 cout << (test_eth_tests(options.sub) ? "...passed" : "...failed") << "\n";
                 cout << "\n";
@@ -348,7 +349,8 @@ public:
     bool doTest(const string_q& line1) {
 
 #if 0
-        string_q line = "decode|decoding int array|function baz(int[3])|0x000000000000000000000000000000000000000000000000000000000000002afffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffdfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffb|[42, -3, -5]";
+        string_q line;
+        line = "decode|decoding bytes8[]|function baz(bytes8[])|0x0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000368656c6c6f20776f726c64646400000000000000012000001212121212121212|[0x68656c6c6f20776f, 0x726c646464000000, 0x0000000001200000]";
 #else
         string_q line = line1;
 #endif
@@ -395,6 +397,8 @@ public:
             result = substitute(decodeRLP(name, parts[3], types), "\"", "");
             nextTokenClear(result,',');
             result = trim(result);
+            cout << "expected: "  << expected << " : " << result << endl;
+            return true; // debugging
 
         } else {
             return false;
