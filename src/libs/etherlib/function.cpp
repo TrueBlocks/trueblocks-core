@@ -457,6 +457,15 @@ string_q CFunction::getSignature(uint64_t parts) const {
 }
 
 //-----------------------------------------------------------------------
+bool CFunction::checkTypes(void) const {
+    for (auto input : inputs) {
+        if (!input.isValid())
+            return false;
+    }
+    return true;
+}
+
+//-----------------------------------------------------------------------
 string_q CFunction::encodeItem(void) const {
     if (encoding == "()")  // optimization
         return "0x861731d5";
@@ -465,6 +474,54 @@ string_q CFunction::encodeItem(void) const {
 extern string_q getSha3(const string_q& hexIn);
     string_q ret = getSha3(chr_2_HexStr(signature));
     return (type == "event" ? ret : extract(ret, 0, 10));
+}
+
+//-----------------------------------------------------------------------
+bool CFunction::fromDefinition(const string_q& lineIn) {
+
+    if (lineIn.empty())
+        return false;
+
+    uint64_t iCnt = 0, oCnt = 0;
+
+    string_q line = lineIn;
+    line = substitute(line,"(","|");  // clean up
+    line = substitute(line,")","|");  // clean up
+    line = substitute(line,", ",","); // clean up
+    line = substitute(line,"\t","");  // clean up
+    while (contains(line, " [")) replace(line, " [", "[");  // clean up
+    while (contains(line, " ]")) replace(line, " ]", "]");  // clean up
+    this->constant = (contains(line, "constant") || contains(line, "view"));
+    this->type = trim(nextTokenClear(line,' '));
+    this->name = trim(nextTokenClear(line,'|'));
+
+    string_q inputStr = trim(nextTokenClear(line, '|'));
+    CStringArray inputArray;
+    explode(inputArray, inputStr, ',');
+    for (auto input : inputArray) {
+        CParameter param;
+        param.fromDefinition(input);
+        if (param.name.empty())
+            param.name = "val_" + uint_2_Str(iCnt++);
+        this->inputs.push_back(param);
+    }
+
+    CStringArray parts;
+    explode(parts, line, '|');
+    if (parts.size()>1 && contains(parts[0], "returns")) {
+        string_q outputStr = trim(nextTokenClear(parts[1], '|'));
+        CStringArray outputArray;
+        explode(outputArray, outputStr, ',');
+        for (auto output : outputArray) {
+            CParameter param;
+            param.fromDefinition(output);
+            if (param.name.empty())
+                param.name = "ret_" + uint_2_Str(oCnt++);
+            outputs.push_back(param);
+        }
+    }
+    finishParse();
+    return true;
 }
 // EXISTING_CODE
 }  // namespace qblocks
