@@ -45,5 +45,5 @@ namespace qblocks {
     extern string_q      callRPC         (const string_q& method, const string_q& params, bool raw);
     extern CCurlContext *getCurlContext  (void);
     extern size_t        writeCallback   (char *ptr, size_t size, size_t nmemb, void *userdata);
-    extern size_t        traceCallback   (char *ptr, size_t size, size_t nmemb, void *userdata);
+    extern size_t        errorCallback   (char *ptr, size_t size, size_t nmemb, void *userdata);
 }  // namespace qblocks

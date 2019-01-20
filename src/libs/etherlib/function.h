@@ -50,6 +50,7 @@ public:
     const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
+    bool checkTypes(void) const;
     bool showOutput;
     bool isBuiltIn;
     string_q origName;
@@ -62,6 +63,7 @@ public:
     bool showEmptyField(const string_q& fn) const override {
         return (showOutput || fn != "outputs");
     }
+    bool fromDefinition(const string_q& lineIn);
     // EXISTING_CODE
     bool operator==(const CFunction& item) const;
     bool operator!=(const CFunction& item) const { return !operator==(item); }
