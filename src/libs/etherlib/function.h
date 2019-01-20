@@ -50,6 +50,7 @@ public:
     const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
+    bool checkTypes(void) const;
     bool showOutput;
     bool isBuiltIn;
     string_q origName;

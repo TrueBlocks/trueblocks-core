@@ -160,8 +160,7 @@ extern CArchive& operator>>(CArchive& archive, CAbi& abi);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern string_q decodeRLP(const string_q& name, const string_q& input, size_t nItems, string_q *items);
-extern string_q decodeRLP(const CFunction *func, const string_q& input);
+extern string_q decodeRLP(const string_q& name, const string_q& input, const CStringArray& types);
 // EXISTING_CODE
 }  // namespace qblocks
 
