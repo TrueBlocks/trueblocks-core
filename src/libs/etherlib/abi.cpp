@@ -551,8 +551,6 @@ string_q parseFixedType(const string_q& type, const string_q& params, size_t& of
                     ret += ", ";
                 ret += yy;
             } else {
-                if (type == "int256[3]")
-                    printf("");
                 bigint_t w = str_2_BigInt(xx);
                 string_q yy = bni_2_Str(w).c_str();
                 if (!ret.empty())
