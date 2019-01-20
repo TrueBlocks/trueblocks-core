@@ -45,6 +45,7 @@ while True:
             command = command + 'cd .. >/dev/null'
             os.system(command)
 #            print(command)
+            time.sleep(0.25)
         f.close()
     os.system('rm -f `clearLocks`')
     print("Hit Ctrl+C to quit...                                                                                     ");

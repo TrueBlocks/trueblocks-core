@@ -16,7 +16,7 @@
 //TODO(tjayrush): This is terrible code
 extern void snagSignatures(string_q& str);
 //-----------------------------------------------------------------------
-bool convertSolToABI(CAbi& abi, const string_q& addr) {
+bool sol_2_Abi(CAbi& abi, const string_q& addr) {
     string_q solFile = addr + ".sol";
     if (!fileExists(solFile))
         return false;
@@ -32,52 +32,8 @@ bool convertSolToABI(CAbi& abi, const string_q& addr) {
     explode(lines, contents, '\n');
     for (auto line : lines) {
         replaceAll(line, "  ", " ");
-
         CFunction func;
-        replaceAll(line, "(", "|");
-        replaceAll(line, ")", "|");
-
-        func.constant = (contains(line, "constant") || contains(line, "view"));
-        func.type = trim(nextTokenClear(line, ' '));
-        func.name = trim(nextTokenClear(line, '|'));
-
-        string_q inputs = trim(substitute(substitute(nextTokenClear(line, '|'), ", ", ","), "\t", ""));
-        CStringArray ins;
-        explode(ins, inputs, ',');
-        uint64_t cnt = 0;
-        for (auto input : ins) {
-            CParameter param;
-            param.indexed = contains(input, "indexed"); replace(input, "indexed ", "");
-            param.type = trim(nextTokenClear(input, ' '));
-            if (param.type == "uint")
-                param.type = "uint256";
-            if (param.type == "uint[]")
-                param.type = "uint256[]";
-            param.name = trim(nextTokenClear(input, ' '));
-            if (param.name.empty())
-                param.name = "val_" + uint_2_Str(cnt++);
-            func.inputs.push_back(param);
-        }
-        CStringArray parts;
-        explode(parts, line, '|');
-        cnt = 0;
-        if (parts.size()>1 && contains(parts[0], "returns")) {
-            string_q outputs = trim(substitute(substitute(nextTokenClear(parts[1], '|'), ", ", ","), "\t", ""));
-            CStringArray rets;
-            explode(rets, outputs, ',');
-            for (auto ret : rets) {
-                CParameter param;
-                param.type = trim(nextTokenClear(ret, ' '));
-                if (param.type == "uint")
-                    param.type = "uint256";
-                if (param.type == "uint[]")
-                    param.type = "uint256[]";
-                param.name = trim(nextTokenClear(ret, ' '));
-                if (param.name.empty())
-                    param.name = "ret_" + uint_2_Str(cnt++);
-                func.outputs.push_back(param);
-            }
-        }
+        func.fromDefinition(line);
         abi.interfaces.push_back(func);
     }
     return true;

@@ -83,13 +83,13 @@ void COptions::handle_generate(void) {
                 for (size_t j = 0 ; j < interface.inputs.size() ; j++) {
                     fields   += interface.inputs[j].Format("[{TYPE}][ {NAME}]|");
                     assigns1 += interface.inputs[j].Format(interface.inputs[j].getFunctionAssign(j));
-                    items1   += "\t\t\titems[nItems++] = \"" + interface.inputs[j].type + "\";\n";
+                    items1   += "\t\t\ttypes.push_back(\"" + interface.inputs[j].type + "\");\n";
                     nIndexed += interface.inputs[j].indexed;
                     string_q res = interface.inputs[j].Format(interface.inputs[j].getEventAssign(j+1, nIndexed));
                     replace(res, "++", "[");
                     replace(res, "++", "]");
                     assigns2 += res;
-                    items2   += "\t\t\titems[nItems++] = \"" + interface.inputs[j].type + "\";\n";
+                    items2   += "\t\t\ttypes.push_back(\"" + interface.inputs[j].type + "\");\n";
                 }
 
                 string_q base = (interface.type == "event" ? "LogEntry" : "Transaction");
@@ -120,7 +120,7 @@ void COptions::handle_generate(void) {
                         replaceAll(f1, "[{LOWER}]", fName);
                     replaceAll(f1, "[{ASSIGNS1}]", assigns1);
                     replaceAll(f1, "[{ITEMS1}]", items1);
-                    string_q parseIt = "decodeRLP(\"" + fName + "\", params, nItems, items)";
+                    string_q parseIt = "decodeRLP(\"" + fName + "\", params, types)";
                     replaceAll(f1, "[{PARSEIT}]", parseIt);
                     replaceAll(f1, "[{BASE}]", base);
                     replaceAll(f1, "[{SIGNATURE}]",
@@ -140,7 +140,7 @@ void COptions::handle_generate(void) {
                                     substitute(string_q(STR_FACTORY2), "[{CLASS}]", theClass), "[{LOWER}]", fName);
                     replace(f2, "[{ASSIGNS2}]", assigns2);
                     replace(f2, "[{ITEMS2}]", items2);
-                    string_q parseIt = "decodeRLP(\"" + fName + "\", params, nItems, items)";
+                    string_q parseIt = "decodeRLP(\"" + fName + "\", params, types)";
                     replace(f2, "[{PARSEIT}]", parseIt);
                     replace(f2, "[{BASE}]", base);
                     replace(f2, "[{SIGNATURE}]",
@@ -419,16 +419,14 @@ const char* STR_BLOCK_PATH = "\n\tetherlib_init(\"binary\", qh);";
 
 //-----------------------------------------------------------------------
 const char* STR_ITEMS =
-"\t\tstring_q items[256];\n"
-"\t\tsize_t nItems = 0;\n"
+"\t\tCStringArray types;\n"
 "\n"
 "\t\tstring_q encoding = extract(p->input, 0, 10);\n"
 "\t\tstring_q params   = extract(p->input, 10);\n";
 
 //-----------------------------------------------------------------------
 const char* STR_ITEMS2 =
-"\t\tstring_q items[256];\n"
-"\t\tsize_t nItems = 0;\n"
+"\t\tCStringArray types;\n"
 "\t\tstring_q data = extract(p->data, 2);\n"
 "\t\tstring_q params;\n"
 "\t\tbool first = true;\n"

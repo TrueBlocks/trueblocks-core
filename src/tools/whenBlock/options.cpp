@@ -108,10 +108,12 @@ bool COptions::parseArguments(string_q& command) {
                 }
 
                 // Now we transfer the list of blocks to the requests array
-                string_q blockList = getBlockNumList();
-                blocks.Init();
-                while (!blockList.empty()) {
-                    requests.push_back("block:" + nextTokenClear(blockList, '|'));
+                string_q blockList = getBlockNumList();  // get the list from blocks
+                blocks.Init();  // clear out blocks
+                CStringArray blks;
+                explode(blks, blockList, '|');
+                for (auto blk : blks) {
+                    requests.push_back("block:" + blk);
                     foundOne = true;
                 }
             }
