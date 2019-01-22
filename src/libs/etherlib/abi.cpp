@@ -460,7 +460,9 @@ inline string_q hex_2_Str(const string_q& inHex) {
 
 //---------------------------------------------------------------------------
 // intN, intN[n], uintN, uintN[n]
-inline void parseType(const string_q& type, uint64_t& size, uint64_t& count, uint64_t& l, uint64_t& s) {
+inline void parseType(const string_q& type, string_q& baseType, uint64_t& size, uint64_t& count, uint64_t& l, uint64_t& s) {
+    baseType = type;
+    baseType = nextTokenClear(baseType, '[');
     count = 1; // not an array
     size = str_2_Uint(substitute(substitute(substitute(substitute(type,"uint",""),"int",""),"bytes",""),"address",""));
     if (contains(type, "[")) {
@@ -478,25 +480,79 @@ inline void parseType(const string_q& type, uint64_t& size, uint64_t& count, uin
 //------------------------------------------------------------------------------
 #define old_grabPart(a, b)       trimLeading(extract((a), 64*(b), 64), '0')
 
+static const bigint_t max256Int = str_2_BigInt("115792089237316195423570985008687907853269984665640564039457584007913129639935");
 //---------------------------------------------------------------------------
-string_q parseFixedType(const string_q& type, const string_q& params, size_t& offset) {
+inline string_q parseFixedType(const string_q& type, const string_q& params, size_t offset) {
+
+    string_q ret;
+    uint64_t size = 0;
+    uint64_t unused = NOPOS, l = NOPOS, s = NOPOS;
+    string_q baseType;
+    parseType(type, baseType, size, unused, l, s);
+    string_q word = extract(params, 64 * offset, 64);
+
+    if ( startsWith(type, "uint") ) {
+        string_q xx = "0x" + string_q(s, '0') + extract(word, s, l);
+        if (size <= 64) {
+            uint64_t w = str_2_Uint(xx);
+            string_q yy = uint_2_Str(w).c_str();
+            ret = yy;
+        } else {
+            wei_t w = str_2_Wei(xx);
+            string_q yy = bnu_2_Str(w).c_str();
+            ret = yy;
+        }
+
+    } else if ( startsWith(type, "int") ) {
+        bool neg = startsWith(word, "f");
+        string_q xx = "0x" + (neg ? string_q(s, 'f') : string_q(s, '0')) + extract(word, s, l);
+        if (size <= 64) {
+            int64_t w = str_2_Int(xx);
+            string_q yy = int_2_Str(w).c_str();
+            ret = yy;
+        } else {
+            bigint_t w = str_2_BigInt(xx);
+            if (w >= (max256Int/2))
+                w = w - max256Int - 1; // wrap if larger than max int256
+            string_q yy = bni_2_Str(w).c_str();
+            ret = yy;
+        }
+
+    } else if ( type == "bool") {
+        ret = bool_2_Str(str_2_Uint(trimLeading(word, '0')));
+
+    } else if ( startsWith(type, "address") ) {
+        string_q tmp = parseFixedType("uint160", params, offset);
+        ret = "0x" + toLower(bnu_2_Hex(str_2_BigUint(tmp)).substr(0,40));
+
+    } else if ( startsWith(type, "bytes") ) {
+        ret = "0x" + word;
+
+    } else {
+        ret = "unknown type: " + type;
+
+    }
+
+    return ret;
+}
+
+//---------------------------------------------------------------------------
+inline string_q parseFixedArray(const string_q& type, const string_q& params, size_t& offset) {
 
     string_q ret;
     uint64_t size = 0;
     uint64_t count = NOPOS, l = NOPOS, s = NOPOS;
-    parseType(type, size, count, l, s);
+    string_q baseType;
+    parseType(type, baseType, size, count, l, s);
     for (uint64_t i = 0 ; i < count ; i++) {
         size_t g = offset + i;
-        if ( startsWith(type, "address")) {
-            string_q xxx = parseFixedType("uint160", params, g); // get one of them
-            xxx = bnu_2_Hex(str_2_BigUint(xxx)).substr(0,40);
-            if (!ret.empty())
-                ret += ", ";
-            ret += "0x" + toLower(padLeft(trimLeading(xxx, '0'), 40, '0'));
+        if (!ret.empty())
+            ret += ", ";
+        if ( startsWith( type, "address" ) ) {
+            ret += parseFixedType(baseType, params, g);
 
-        } else if ( type == "bool") {
-#define old_toBoolean(a, b) (strtoull(old_grabPart(a, b).c_str(), NULL, 16) ? "true" : "false")
-            ret = old_toBoolean  (params, g);
+        } else if ( startsWith( type, "bool" ) ) {
+            ret += parseFixedType(baseType, params, g);
 
         } else if ( startsWith(type, "uint") ) {
             string_q zz = extract(params, 64 * g, 64);
@@ -504,14 +560,10 @@ string_q parseFixedType(const string_q& type, const string_q& params, size_t& of
             if (size <= 64) {
                 uint64_t w = str_2_Uint(xx);
                 string_q yy = uint_2_Str(w).c_str();
-                if (!ret.empty())
-                    ret += ", ";
                 ret += yy;
             } else {
                 wei_t w = str_2_Wei(xx);
                 string_q yy = bnu_2_Str(w).c_str();
-                if (!ret.empty())
-                    ret += ", ";
                 ret += yy;
             }
         } else if ( startsWith(type, "int") ) {
@@ -521,20 +573,16 @@ string_q parseFixedType(const string_q& type, const string_q& params, size_t& of
             if (size <= 64) {
                 int64_t w = str_2_Int(xx);
                 string_q yy = int_2_Str(w).c_str();
-                if (!ret.empty())
-                    ret += ", ";
                 ret += yy;
             } else {
                 bigint_t w = str_2_BigInt(xx);
+                if (w >= (max256Int/2))
+                    w = w - max256Int - 1; // wrap if larger than max int256
                 string_q yy = bni_2_Str(w).c_str();
-                if (!ret.empty())
-                    ret += ", ";
                 ret += yy;
             }
 
         } else if ( startsWith(type, "bytes")) {
-            if (!ret.empty())
-                ret += ", ";
             ret += "0x" + extract(params, 64 * g, 64);
 
         } else {
@@ -548,6 +596,7 @@ string_q parseFixedType(const string_q& type, const string_q& params, size_t& of
     return ret;
 }
 
+//---------------------------------------------------------------------------
 inline string_q parseDynamicType(const string_q& type, const string_q& params, size_t& offset) {
 #define old_toBigNum2(a, b) string_q(bnu_2_Str(str_2_Wei("0x" + old_grabPart(a, b))).c_str())
 #define old_grabBigNum(a, b) strtoull(old_grabPart(a, b).c_str(), NULL, 16)
@@ -556,9 +605,18 @@ inline string_q parseDynamicType(const string_q& type, const string_q& params, s
     if (len == NOPOS)
         len = params.length()-start;
 
+    uint64_t size = 0;
+    uint64_t count = NOPOS, l = NOPOS, s = NOPOS;
+    string_q baseType;
+    parseType(type, baseType, size, count, l, s);
+
+    size_t   x  = ((2 * 32) * len);
+    size_t   sx = ((2 * 32) * (start + 1));
+    string_q data = extract(params, sx, x);
+
     string_q ret;
     if (type == "string") {
-        string_q ss1 = extract(params, (start + 1) * 64, len * 2);
+        string_q ss1 = extract(params, sx, len * 2);
         string_q ss2 = hex_2_Str(ss1);
         ss2 = substitute(ss2, "\n", "\\n");
         ss2 = substitute(ss2, "\r", "");
@@ -566,62 +624,37 @@ inline string_q parseDynamicType(const string_q& type, const string_q& params, s
         ret += ss2;
 
     } else if (startsWith(type,"bytes")) {
-        uint64_t size = 0;
-        uint64_t count = NOPOS, l = NOPOS, s = NOPOS;
-        parseType(type, size, count, l, s);
-        string_q ss = extract(params, (start + 1) * 64, (len * 2));
-        if (contains(type, "[]"))
-            ss = extract(params, (start + 1) * 64, (len * 2) * 32);
-        while (ss.length() > 0) {
-            string_q xxx = ss.substr(0, 32 * 2);
-            replace(ss, xxx, "");
+        if (!contains(type, "[]"))
+            data = extract(params, sx, (len * 2));
+        while (data.length() > 0) {
             if (!ret.empty())
                 ret += ", ";
-            size_t xxxx = 0;
-            ret += parseFixedType("bytes32", xxx, xxxx);
+            string_q word = data.substr(0, 64);
+            replace(data, word, ""); // consumes data
+            ret += parseFixedType(baseType, word, 0);
         }
 
     } else {
-        if (startsWith(type,"address")) {
-            size_t x = len * 2;
-            if (contains(type, "[]"))
-                x = (len * 64);
-            size_t sx = start + 1;
-            sx *= 64;
-            string_q ss = extract(params, sx, x);
-            while (ss.length() >= 64) {
-                string_q xxx = ss.substr(0,64);
-                replace(ss, xxx, "");
-                if (!ret.empty())
-                    ret += ", ";
-                size_t xxxx = 0;
-                ret += parseFixedType("address", xxx, xxxx);
-            }
+        while (data.length() > 0) {
+            if (!ret.empty())
+                ret += ", ";
+            string_q word = data.substr(0, 64);
+            replace(data, word, ""); // consumes data
+            //if (startsWith(type,"address")) {
+                ret += parseFixedType(baseType, word, 0);
 
-        } else if (startsWith(type,"uint")) {
-            size_t x = len * 2;
-            if (contains(type, "[]"))
-                x = (len * 64);
-            size_t sx = start + 1;
-            sx *= 64;
-            string_q ss = extract(params, sx, x);
-            while (ss.length() >= 64) {
-                string_q xxx = ss.substr(0,64);
-                replace(ss, xxx, "");
-                if (!ret.empty())
-                    ret += ", ";
-                size_t xxxx = 0;
-                ret += parseFixedType("uint256", xxx, xxxx);
-            }
+            //} else if (startsWith(type,"bool")) {
+                //ret += parseFixedType(baseType, word, 0);
 
-        } else {
-            size_t x = len * 2;
-            if (contains(type, "[]"))
-                x = (len * 64);
-            size_t sx = start + 1;
-            sx *= 64;
-            string_q ss = extract(params, sx, x);
-            ret = "0x" + ss;
+            //} else if (startsWith(type,"uint")) {
+                //ret += parseFixedType(baseType, word, 0);
+
+            //} else if (startsWith(type,"int")) {
+                //ret += parseFixedType(baseType, word, 0);
+
+            //} else {
+                //ret = "0x" + data;
+            //}
         }
     }
 
@@ -632,12 +665,20 @@ inline string_q parseDynamicType(const string_q& type, const string_q& params, s
 }
 
 //---------------------------------------------------------------------------
+inline string_q parseArrayMulti(const string_q& type, const string_q& params, size_t& offset) {
+    return parseFixedArray(type, params, offset);
+}
+
+//---------------------------------------------------------------------------
 inline string_q parseTheInput(const string_q& params, const CStringArray& types) {
     string_q ret; size_t offset=0;
     for (auto type : types) {
         bool isDynamic = (type == "string" || type == "bytes" || contains(type, "[]"));
-        if (isDynamic) ret += ("|" + parseDynamicType(type, substitute(params, "0x", ""), offset));
-        else           ret += ("|" + parseFixedType  (type, substitute(params, "0x", ""), offset));
+        size_t brackets  = countOf(type, '[');
+             if (brackets > 1) ret += ("|" + parseArrayMulti (type, substitute(params, "0x", ""), offset));
+        else if (isDynamic)    ret += ("|" + parseDynamicType(type, substitute(params, "0x", ""), offset));
+        else if (brackets)     ret += ("|" + parseFixedArray (type, substitute(params, "0x", ""), offset));
+        else                   ret += ("|" + parseFixedType  (type, substitute(params, "0x", ""), offset));
         offset++;
     }
     return "\"" + trim(ret, '|') + "\"";
@@ -724,6 +765,18 @@ bool CAbi::articulateTransaction(CTransaction *p) const {
 }
 
 //-----------------------------------------------------------------------
+inline bool sortByPosition(const CParameter& v1, const CParameter& v2) {
+    return v1.pos < v2.pos;
+}
+
+//-----------------------------------------------------------------------
+inline bool sortByIndexedPosition(const CParameter& v1, const CParameter& v2) {
+    uint64_t val1 = (v1.indexed ? 0 : 10000) + v1.pos;
+    uint64_t val2 = (v2.indexed ? 0 : 10000) + v2.pos;
+    return val1 < val2;
+}
+
+//-----------------------------------------------------------------------
 bool CAbi::articulateLog(CLogEntry *p) const {
 
     if (!p)
@@ -741,13 +794,21 @@ bool CAbi::articulateLog(CLogEntry *p) const {
         }
         params += data;
 
-        for (auto interface : interfaces) {
-            if (topic_2_Str(p->topics[0]) % interface.encoding) {
-                p->articulatedLog = CFunction(interface);
+        bool ret = false;
+        CAbi *ncABI = (CAbi*)this;
+        for (size_t i = 0 ; i < ncABI->interfaces.size() ; i++) {
+            CFunction *intf = &ncABI->interfaces[i];
+            if (topic_2_Str(p->topics[0]) % intf->encoding) {
+                p->articulatedLog = CFunction(*intf);
                 p->articulatedLog.showOutput = false;
-                return decodeRLP2(interface.name, p->articulatedLog.inputs, params);
+                for (size_t j = 0 ; j < p->articulatedLog.inputs.size(); j++)
+                    p->articulatedLog.inputs[j].pos = j;
+                sort(p->articulatedLog.inputs.begin(), p->articulatedLog.inputs.end(), sortByIndexedPosition);
+                ret = decodeRLP2(intf->name, p->articulatedLog.inputs, params);
+                sort(p->articulatedLog.inputs.begin(), p->articulatedLog.inputs.end(), sortByPosition);
             }
         }
+        return ret;
     }
     return false;
 }

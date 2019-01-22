@@ -39,3 +39,4 @@ expected: fail : fail
 passed 'func.doTest(line)' is true
 ...passed
 
+Done...
