@@ -59,6 +59,11 @@ int main(int argc, const char *argv[]) {
             return 1;
         }
 
+        if (options.ignoreBlockCache) {
+            cerr << "switching to local node, ignoring binary block cache" << endl;
+            getCurlContext()->provider = "local";
+        }
+
         double startTime = qbNow();
         if (options.oneBlock) {
             options.firstBlock = options.oneBlock;
@@ -375,7 +380,7 @@ bool processTransaction(const CBlock& block, const CTransaction *trans, COptions
                 if (options->debugging)
                     cerr << "Would have written record at " << block.blockNumber << " " << trans->transactionIndex << endl;
 
-                if (!isTestMode()) {
+                if (!isTestMode() && !options->oneBlock) {
                     // We found something...write it to the cache...
                     lockSection(true);
                     options->txCache << block.blockNumber << trans->transactionIndex;
