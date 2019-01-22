@@ -39,32 +39,33 @@ int main(int argc, const char *argv[]) {
             if (mode == "encoding") {
                 cout << "Encodings test...\n";
                 cout << (test_encodings() ? "...passed" : "...failed") << "\n";
-                cout << "\n";
+                cout << "\nDone...\n";
 
             } else if (mode == "generation") {
                 cout << "Generation test...\n";
                 cout << (test_generation() ? "...passed" : "...failed") << "\n";
-                cout << "\n";
+                cout << "\nDone...\n";
 
             } else if (mode == "old_bug") {
                 cout << "Old bug test...\n";
                 cout << (test_old_bug() ? "...passed" : "...failed") << "\n";
-                cout << "\n";
+                cout << "\nDone...\n";
 
             } else if (mode == "func_assign") {
                 cout << "function assignment test...\n";
                 cout << (test_func_assign() ? "...passed" : "...failed") << "\n";
-                cout << "\n";
+                cout << "\nDone...\n";
 
             } else if (mode == "evt_assign") {
                 cout << "event assignment test...\n";
                 cout << (test_evt_assign() ? "...passed" : "...failed") << "\n";
-                cout << "\n";
+                cout << "\nDone...\n";
+
             } else if (mode == "eth_test") {
                 setenv("ABI", "true", true);
                 cout << "ethereum test box test...\n";
                 cout << (test_eth_tests(options.sub) ? "...passed" : "...failed") << "\n";
-                cout << "\n";
+                cout << "\nDone...\n";
             }
         }
     }
@@ -350,7 +351,7 @@ public:
 
 #if 0
         string_q line;
-        line = "decode|decoding bytes8[]|function baz(bytes8[])|0x0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000368656c6c6f20776f726c64646400000000000000012000001212121212121212|[0x68656c6c6f20776f, 0x726c646464000000, 0x0000000001200000]";
+        line = "decode|decoding (uint[2][2])|function baz(uint[2][2])|0x0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000008|[[1, 2], [4, 8]]";
 #else
         string_q line = line1;
 #endif

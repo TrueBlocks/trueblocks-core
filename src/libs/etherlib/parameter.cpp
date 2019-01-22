@@ -202,6 +202,8 @@ string_q nextParameterChunk_custom(const string_q& fieldIn, const void *dataPtr)
                 if ( fieldIn % "parsed" )
                     return nextBasenodeChunk(fieldIn, par);
                 // EXISTING_CODE
+                else if ( fieldIn % "pos" )
+                    return uint_2_Str(par->pos);
                 // EXISTING_CODE
                 break;
 

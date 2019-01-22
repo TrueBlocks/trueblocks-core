@@ -28,6 +28,7 @@ public:
     timestamp_t        lastTimestamp;
     bool               checkAddrs;
     bool               ignoreBlooms;
+    bool               ignoreBlockCache;
     bool               writeBlocks;
     string_q           exclusions;
     blknum_t           firstBlock;
