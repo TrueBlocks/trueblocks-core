@@ -295,10 +295,11 @@ bool processBlock(blknum_t bn, COptions *options) {
         }
 
     } else {
-        // Could not read block, or it had zero transactions. This is a bug. Skip over it next time
         writeLastBlock(bn);
-        cerr << "Block " << bn << " had no transactions but a non-zero bloom. This is a bug. Quitting..." << endl;
-        return false; // end the search
+// This used to be a bug alert, but since we started handling miners we need a bloom at every block
+//TODO(tjayrush): This code will not find transactions for miners
+//        cerr << "Block " << bn << " had no transactions but a non-zero bloom. This is a bug. Quitting..." << endl;
+//        return false; // end the search
     }
 
     return !shouldQuit();
