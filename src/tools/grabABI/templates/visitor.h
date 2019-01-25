@@ -28,11 +28,11 @@ public:
     blknum_t minWatchBlock;
     blknum_t maxWatchBlock;
     CBlockStats(void) :
-        nBlocks(0),
-        firstBlock(0),
-        lastBlock(0),
-        minWatchBlock(0),
-        maxWatchBlock(UINT32_MAX)
+    nBlocks(0),
+    firstBlock(0),
+    lastBlock(0),
+    minWatchBlock(0),
+    maxWatchBlock(UINT32_MAX)
     {  }
 };
 
@@ -42,8 +42,8 @@ public:
     uint64_t nAccountedFor;
     uint64_t nDisplayed;
     CTransStats(void) :
-        nAccountedFor(0),
-        nDisplayed(0)
+    nAccountedFor(0),
+    nDisplayed(0)
     {  }
 };
 
@@ -63,6 +63,7 @@ public:
     bool report_bals;
     blknum_t kBlock;
     blknum_t offset;
+    uint64_t theWidth;
     bool parseArguments(string_q& command);
     void Init(void);
 

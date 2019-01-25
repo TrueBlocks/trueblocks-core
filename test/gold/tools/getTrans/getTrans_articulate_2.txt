@@ -29,7 +29,7 @@ getTrans 3648669.24 -avt
           "inputs": [
             {
               "name": "hash",
-              "value": "000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c"
+              "value": "0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c"
             },
             {
               "name": "registrationDate",
@@ -50,7 +50,7 @@ getTrans 3648669.24 -avt
           "inputs": [
             {
               "name": "hash",
-              "value": "0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc"
+              "value": "0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc"
             },
             {
               "name": "registrationDate",
@@ -71,7 +71,7 @@ getTrans 3648669.24 -avt
           "inputs": [
             {
               "name": "hash",
-              "value": "00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573"
+              "value": "0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573"
             },
             {
               "name": "registrationDate",
@@ -93,7 +93,7 @@ getTrans 3648669.24 -avt
           "inputs": [
             {
               "name": "hash",
-              "value": "cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811"
+              "value": "0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811"
             },
             {
               "name": "bidder",
@@ -114,11 +114,11 @@ getTrans 3648669.24 -avt
     "inputs": [
       {
         "name": "hashes",
-        "value": "[0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573]"
+        "value": "[0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573]"
       },
       {
         "name": "sealedBid",
-        "value": "cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811"
+        "value": "0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811"
       }
     ]
   },
@@ -135,11 +135,11 @@ getTrans 3648669.24 -avt
         "inputs": [
           {
             "name": "hashes",
-            "value": "[0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573]"
+            "value": "[0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573]"
           },
           {
             "name": "sealedBid",
-            "value": "cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811"
+            "value": "0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811"
           }
         ]
       },
@@ -168,7 +168,7 @@ getTrans 3648669.24 -avt
         "inputs": [
           {
             "name": "node",
-            "value": "93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae"
+            "value": "0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae"
           }
         ],
         "outputs": [
@@ -203,7 +203,7 @@ getTrans 3648669.24 -avt
         "inputs": [
           {
             "name": "node",
-            "value": "93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae"
+            "value": "0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae"
           }
         ],
         "outputs": [
@@ -238,7 +238,7 @@ getTrans 3648669.24 -avt
         "inputs": [
           {
             "name": "node",
-            "value": "93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae"
+            "value": "0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae"
           }
         ],
         "outputs": [

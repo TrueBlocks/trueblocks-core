@@ -289,6 +289,7 @@ string_q nextFunctionChunk_custom(const string_q& fieldIn, const void *dataPtr) 
                     return fun->origName;
                 }
                 break;
+
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type

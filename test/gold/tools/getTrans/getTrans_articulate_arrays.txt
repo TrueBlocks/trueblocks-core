@@ -29,23 +29,23 @@ getTrans 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f -vta
           "inputs": [
             {
               "name": "_key",
-              "value": "1216100263984912675186431615169631751661518408323"
-            },
-            {
-              "name": "_etherAmount",
               "value": "6"
             },
             {
-              "name": "_tokenAmount",
+              "name": "_etherAmount",
               "value": "236159796400000000"
             },
             {
-              "name": "_dollarPrice",
+              "name": "_tokenAmount",
               "value": "25000000000000000000"
             },
             {
+              "name": "_dollarPrice",
+              "value": "2000000000000000000"
+            },
+            {
               "name": "_acceptor",
-              "value": "0x0000000000000000000000001bc16d674ec80000"
+              "value": "0xd503d263de9092232d28492d60c5a956ad754a83"
             }
           ]
         }
@@ -62,23 +62,23 @@ getTrans 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f -vta
           "inputs": [
             {
               "name": "_key",
-              "value": "1216100263984912675186431615169631751661518408323"
-            },
-            {
-              "name": "_etherAmount",
               "value": "5"
             },
             {
-              "name": "_tokenAmount",
+              "name": "_etherAmount",
               "value": "236159796400000000"
             },
             {
-              "name": "_dollarPrice",
+              "name": "_tokenAmount",
               "value": "25000000000000000000"
             },
             {
+              "name": "_dollarPrice",
+              "value": "2000000000000000000"
+            },
+            {
               "name": "_acceptor",
-              "value": "0x0000000000000000000000001bc16d674ec80000"
+              "value": "0xd503d263de9092232d28492d60c5a956ad754a83"
             }
           ]
         }
