@@ -100,8 +100,6 @@ extern string_q collapseArrays(const string_q& inStr);
         replaceAll(contents, "\\\n ", "\\\n");  // if ends with '\' + '\n' + space, make it just '\' + '\n'
         replaceAll(contents, "\\\n", "");       // if ends with '\' + '\n', its a continuation, so fold in
         replaceAll(contents, "\\\r\n", "");     // same for \r\n
-//        replaceAll(contents, "[ ", "[");        //
-//        replaceAll(contents, ",]", "]");        //
         contents = collapseArrays(stripFullLineComments(contents));
         while (!contents.empty()) {
             string_q value = trimWhitespace(nextTokenClear(contents, '\n'));
@@ -111,7 +109,7 @@ extern string_q collapseArrays(const string_q& inStr);
             if (!value.empty()) {
                 bool isArray = contains(value, "[[");
                 if (startsWith(value, '[')) {  // it's a group
-                    value = trimWhitespace(substitute(substitute(value, "[", ""), "]", ""));
+                    value = trim(trimWhitespace(substitute(substitute(value, "[", ""), "]", "")),'\"');
                     addGroup(value, comment, isArray);
                     curGroup = value;
 
@@ -122,8 +120,8 @@ extern string_q collapseArrays(const string_q& inStr);
                         curGroup = group;
                     }
                     string_q key = nextTokenClear(value, '=');  // value may be empty, but not whitespace
-                    key   = trimWhitespace(key);
-                    value = trimWhitespace(value);
+                    key   = trim(trimWhitespace(key), '\"');
+                    value = trim(trimWhitespace(value), '\"');
                     addKey(curGroup, key, value, comment);
                 }
             }
