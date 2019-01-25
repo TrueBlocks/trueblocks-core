@@ -130,6 +130,7 @@ bool COptions::parseArguments(string_q& command) {
     CToml toml("./config.toml");
     if (!loadWatches(toml))
         return false;
+    theWidth = toml.getConfigInt("display", "width", theWidth);
 
     accounting_on  =          toml.getConfigBool("display", "accounting",  false) || accounting_on;
     logs_on        =          toml.getConfigBool("display", "logs",        false) || logs_on;
@@ -175,14 +176,15 @@ void COptions::Init(void) {
     kBlock = 0;
     offset = 0;
     minArgs = 0;
+    theWidth = 23;
 }
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) : transStats(), blockStats(),
 #ifdef DEBUGGER_ON
-    tBuffer(),
+tBuffer(),
 #endif
-    transFmt(""), traceFmt(""), esc_hit(false) {
+transFmt(""), traceFmt(""), esc_hit(false) {
     Init();
     barLen(80);
 }
