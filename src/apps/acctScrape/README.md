@@ -6,7 +6,7 @@
 
 #### Usage
 
-`Usage:`    acctScrape [-m|-o|-n|-w|-m|-s|-v|-h]  
+`Usage:`    acctScrape [-m|-o|-n|-w|-m|-v|-h]  
 `Purpose:`  Index transactions for a given Ethereum address (or series of addresses).
              
 `Where:`  
@@ -18,7 +18,6 @@
 | -n | --oneTrans val | check if the block and transaction would be a hit |
 | -w | --writeBlocks | write binary blocks to cache (default: do not write blocks) |
 | -m | --maxBlocks val | scan at most --maxBlocks blocks ('all' implies scan to end of chain) |
-| -s | --noBlooms | do not use adaptive enhanced blooms (much faster if you use them) |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
