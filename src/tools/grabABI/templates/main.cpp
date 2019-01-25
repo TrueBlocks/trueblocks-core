@@ -18,7 +18,7 @@
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    parselib_init(myQuitHandler);
+    parselib_init("binary", myQuitHandler);
     if (argc < 2)
         verbose = true;
     cerr << "Starting monitor...\r";
@@ -35,7 +35,7 @@ int main(int argc, const char *argv[]) {
         return 0;
     }
 
-    for (auto command : options.commandLines) {
+    for (auto command : visitor.commandLines) {
         if (!visitor.parseArguments(command)) {
             etherlib_cleanup();
             return 0;
@@ -51,7 +51,7 @@ int main(int argc, const char *argv[]) {
         if (visitor.kBlock) {
             // we're not starting at the beginning
             for (uint32_t i = 0 ; i < visitor.watches.size() ; i++) {
-                visitor.watches.at(i).statment.endBal = getNodeBal(visitor.watches.at(i).balanceHistory, visitor.watches.at(i).address, blockNum);
+                visitor.watches.at(i).statement.endBal = getNodeBal(visitor.watches.at(i).balanceHistory, visitor.watches.at(i).address, blockNum);
             }
         }
 
@@ -74,6 +74,8 @@ int main(int argc, const char *argv[]) {
             UNHIDE_FIELD(CTransaction, "articulated");
             UNHIDE_FIELD(CTransaction, "traces");
             UNHIDE_FIELD(CTransaction, "isError");
+            UNHIDE_FIELD(CTransaction, "date");
+            UNHIDE_FIELD(CTransaction, "ether");
             HIDE_FIELD  (CTransaction, "gasUsed");
 
             UNHIDE_FIELD(CLogEntry,    "cname");
