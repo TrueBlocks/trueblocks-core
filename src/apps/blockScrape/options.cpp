@@ -7,10 +7,10 @@
 
 //---------------------------------------------------------------------------------------------------
 static COption params[] = {
-    COption("-noWrite",         "do not write binary blocks to disc (default: write the blocks)"),
     COption("-start:<num>",     "first block to visit (default: last visited block + 1)"),
     COption("-end:<num>",       "last block to visit (required if --start supplied)"),
     COption("-maxBlocks:<num>", "maximum number of blocks to process (defaults to 5000)"),
+    COption("@noWrite",         "do not write binary blocks to disc (default: write the blocks)"),
     COption("@addrIndex",       "index addresses per block in addition to building bloom filters"),
     COption("@consolidate",     "sort and finalize growing address index (if over 50MB)"),
     COption("",                 "Decentralized blockchain scraper and block cache.\n"),
