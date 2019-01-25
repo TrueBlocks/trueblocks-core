@@ -71,6 +71,12 @@ public:
     bool fromDefinition(const string_q& input);
     bool isValid(void) const;
     bool noWrite;
+    uint64_t pos;
+    bool isDyn(void) const;
+    bool isMulti(void) const;
+    size_t parseFixedType(string_q& input);
+    size_t parseFixedArray(string_q& input);
+    size_t parseDynamicType(string_q& input);
     // EXISTING_CODE
     bool operator==(const CParameter& item) const;
     bool operator!=(const CParameter& item) const { return !operator==(item); }
@@ -132,6 +138,7 @@ inline void CParameter::initialize(void) {
 
     // EXISTING_CODE
     noWrite = false;
+    pos = 0;
     // EXISTING_CODE
 }
 
@@ -151,6 +158,7 @@ inline void CParameter::duplicate(const CParameter& pa) {
 
     // EXISTING_CODE
     noWrite = pa.noWrite;
+    pos = pa.pos;
     // EXISTING_CODE
 }
 
@@ -187,4 +195,3 @@ extern CArchive& operator<<(CArchive& archive, const CParameterArray& array);
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

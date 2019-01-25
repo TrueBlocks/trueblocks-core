@@ -59,6 +59,11 @@ int main(int argc, const char *argv[]) {
             return 1;
         }
 
+        if (options.ignoreBlockCache) {
+            cerr << "switching to local node, ignoring binary block cache" << endl;
+            getCurlContext()->provider = "local";
+        }
+
         double startTime = qbNow();
         if (options.oneBlock) {
             options.firstBlock = options.oneBlock;
@@ -290,10 +295,11 @@ bool processBlock(blknum_t bn, COptions *options) {
         }
 
     } else {
-        // Could not read block, or it had zero transactions. This is a bug. Skip over it next time
         writeLastBlock(bn);
-        cerr << "Block " << bn << " had no transactions but a non-zero bloom. This is a bug. Quitting..." << endl;
-        return false; // end the search
+// This used to be a bug alert, but since we started handling miners we need a bloom at every block
+//TODO(tjayrush): This code will not find transactions for miners
+//        cerr << "Block " << bn << " had no transactions but a non-zero bloom. This is a bug. Quitting..." << endl;
+//        return false; // end the search
     }
 
     return !shouldQuit();
@@ -375,7 +381,7 @@ bool processTransaction(const CBlock& block, const CTransaction *trans, COptions
                 if (options->debugging)
                     cerr << "Would have written record at " << block.blockNumber << " " << trans->transactionIndex << endl;
 
-                if (!isTestMode()) {
+                if (!isTestMode() && !options->oneBlock) {
                     // We found something...write it to the cache...
                     lockSection(true);
                     options->txCache << block.blockNumber << trans->transactionIndex;

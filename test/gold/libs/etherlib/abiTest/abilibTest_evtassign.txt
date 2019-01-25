@@ -42,3 +42,4 @@ uint64				a->_val = str_2_Uint("0x" + extract(data, 0*64, 64));
 wei				a->_val = "0x" + extract(data, 0*64, 64);
 ...passed
 
+Done...

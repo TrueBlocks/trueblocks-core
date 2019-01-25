@@ -202,6 +202,8 @@ string_q nextParameterChunk_custom(const string_q& fieldIn, const void *dataPtr)
                 if ( fieldIn % "parsed" )
                     return nextBasenodeChunk(fieldIn, par);
                 // EXISTING_CODE
+                else if ( fieldIn % "pos" )
+                    return uint_2_Str(par->pos);
                 // EXISTING_CODE
                 break;
 
@@ -423,6 +425,7 @@ bool CParameter::fromDefinition(const string_q &strIn) {
     indexed = contains(str, "indexed");
     str = trim(substitute(str, "indexed ", ""));  // should be of form 'type name'
     type = elementaryName(nextTokenClear(str, ' '));
+    isArray = contains(type, '[');
     name = str;
     return true;
 }
@@ -438,6 +441,16 @@ bool CParameter::isValid(void) const {
         return n > 0 && n <= 32;
     }
     return true;
+}
+
+//-----------------------------------------------------------------------
+bool CParameter::isDyn(void) const {
+    return (type == "string" || type == "bytes" || contains(type, "[]"));
+}
+
+//-----------------------------------------------------------------------
+bool CParameter::isMulti(void) const {
+    return (countOf(type, '[') > 1);
 }
 
 // EXISTING_CODE

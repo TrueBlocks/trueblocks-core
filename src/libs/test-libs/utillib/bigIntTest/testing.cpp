@@ -287,6 +287,26 @@ int main(int argc, const char *argv[]) {
                      9,
                      uint64_t(10000000000)), "1000000000000000000");
 
+#if 0
+        cout << "18446744073709551615" << ": ";
+        cout << (str_2_Uint("0xffffffffffffffffffffffffffffffff")) << endl;
+        cout << "1" << ": ";
+        cout << (str_2_Uint("0xffffffffffffffffffffffffffffffff")+2) << endl;
+        cout << "115792089237316195423570985008687907853269984665640564039457584007913129639935" << ": ";
+        cout << (str_2_BigUint("0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")) << endl;
+        cout << "1" << ": ";
+        cout << (str_2_BigUint("0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")+2) << endl;
+
+        cout << "-1" << ": ";
+        cout << (str_2_Int ("0xffffffffffffffffffffffffffffffff")) << endl;
+        cout << "1" << ": ";
+        cout << (str_2_Int ("0xffffffffffffffffffffffffffffffff")+2) << endl;
+        cout << "-1" << ": ";
+        cout << (str_2_BigInt ("0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")) << endl;
+        cout << "1" << ": ";
+        cout << (str_2_BigInt ("0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")+2) << endl;
+#endif
+
     } catch (char const* err) {
         cout << "The library threw an exception: " << err << endl;
     }
