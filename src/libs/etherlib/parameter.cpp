@@ -425,6 +425,7 @@ bool CParameter::fromDefinition(const string_q &strIn) {
     indexed = contains(str, "indexed");
     str = trim(substitute(str, "indexed ", ""));  // should be of form 'type name'
     type = elementaryName(nextTokenClear(str, ' '));
+    isArray = contains(type, '[');
     name = str;
     return true;
 }
@@ -440,6 +441,16 @@ bool CParameter::isValid(void) const {
         return n > 0 && n <= 32;
     }
     return true;
+}
+
+//-----------------------------------------------------------------------
+bool CParameter::isDyn(void) const {
+    return (type == "string" || type == "bytes" || contains(type, "[]"));
+}
+
+//-----------------------------------------------------------------------
+bool CParameter::isMulti(void) const {
+    return (countOf(type, '[') > 1);
 }
 
 // EXISTING_CODE
