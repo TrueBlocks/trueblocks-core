@@ -104,6 +104,31 @@ namespace qblocks {
     extern size_t   explode              (CStringArray& result, const string& input, char ch);
     extern size_t   forEveryExplodedItem (const string& input, char ch, APPLYFUNC func, void *data);
 
+    //---------------------------------------------------------------------------
+    template<typename T>
+    string_q join(const T begin, const T end, const string_q& separator, const string_q& concluder) {
+        stringstream ss;
+        for (T iter = begin; iter != end; iter++) {
+            if (!ss.str().empty())
+                ss << separator;
+            ss << *iter;
+        }
+        ss << concluder;
+        return ss.str();
+    }
+
+    //---------------------------------------------------------------------------
+    template<typename T>
+    string_q join(T begin, T end, string_q separator) {
+        return join(begin, end, separator, "");
+    }
+
+    //---------------------------------------------------------------------------
+    template<typename T>
+    string_q join(T begin, T end) {
+        return join(begin, end, ", ");
+    }
+
     //---------------------------------------------------------------------------------------
     inline string_q getEnvStr(const char* name) {
         char *sss = getenv(name);
