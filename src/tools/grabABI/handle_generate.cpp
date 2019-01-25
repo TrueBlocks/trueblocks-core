@@ -120,7 +120,7 @@ void COptions::handle_generate(void) {
                         replaceAll(f1, "[{LOWER}]", fName);
                     replaceAll(f1, "[{ASSIGNS1}]", assigns1);
                     replaceAll(f1, "[{ITEMS1}]", items1);
-                    string_q parseIt = "decodeRLP(\"" + fName + "\", params, types)";
+                    string_q parseIt = "";
                     replaceAll(f1, "[{PARSEIT}]", parseIt);
                     replaceAll(f1, "[{BASE}]", base);
                     replaceAll(f1, "[{SIGNATURE}]",
@@ -140,7 +140,7 @@ void COptions::handle_generate(void) {
                                     substitute(string_q(STR_FACTORY2), "[{CLASS}]", theClass), "[{LOWER}]", fName);
                     replace(f2, "[{ASSIGNS2}]", assigns2);
                     replace(f2, "[{ITEMS2}]", items2);
-                    string_q parseIt = "decodeRLP(\"" + fName + "\", params, types)";
+                    string_q parseIt = "";
                     replace(f2, "[{PARSEIT}]", parseIt);
                     replace(f2, "[{BASE}]", base);
                     replace(f2, "[{SIGNATURE}]",
@@ -184,9 +184,9 @@ void COptions::handle_generate(void) {
 
     // The library header file
     if (!isBuiltIn())
-        headers += ("#include \"processing.h\"\n");
+        headers += ("#include \"visitor.h\"\n");
     string_q headerCode = substitute(string_q(STR_HEADERFILE), "[{HEADERS}]", headers);
-    string_q parseInit = "parselib_init(QUITHANDLER qh=defaultQuitHandler)";
+    string_q parseInit = "parselib_init(const string_q& mode, QUITHANDLER qh=defaultQuitHandler)";
     if (!isBuiltIn())
         replaceAll(headerCode, "[{PREFIX}]_init(void)", parseInit);
     //replaceAll(headerCode, "[{ADDR}]", substitute(primaryAddr, "0x", ""));
@@ -219,9 +219,9 @@ void COptions::handle_generate(void) {
 
     string_q sourceCode;
     asciiFileToString(templateFolder + "parselib.cpp", sourceCode);
-    parseInit = "parselib_init(QUITHANDLER qh)";
+    parseInit = "parselib_init(\"binary\", QUITHANDLER qh)";
     if (!isBuiltIn())
-        replaceAll(sourceCode, "[{PREFIX}]_init(void)", parseInit);
+        replaceAll(sourceCode, "[{PREFIX}]_init(const string_q& mode, QUITHANDLER qh)", parseInit);
     if (isToken()) {
         replace(sourceCode, "return promoteToToken(p);", "return promoteToWallet(p);");
         replace(sourceCode, "return promoteToTokenEvent(p);", "return promoteToWalletEvent(p);");
@@ -237,7 +237,7 @@ void COptions::handle_generate(void) {
     replaceAll(sourceCode, "[{ABI}]", ""); //theABI);
     replaceAll(sourceCode, "[{REGISTERS}]", registers);
     string_q chainInit = (isToken() ?
-                          "\twalletlib_init();\n" :
+                          "\twalletlib_init(mode, qh);\n" :
                           (isWallet() ? "" : "\ttokenlib_init(mode, qh);\n"));
     replaceAll(sourceCode, "[{CHAINLIB}]",   chainInit);
     replaceAll(sourceCode, "[{FACTORY1}]",   factory1.empty() ? "\t\t{\n\t\t\t// No functions\n" : factory1);
@@ -310,7 +310,6 @@ const char* STR_FACTORY1 =
 "\t\t\ta->C[{BASE}]::operator=(*p);\n"
 "[{ASSIGNS1}]"
 "[{ITEMS1}]"
-"\t\t\t/""/a->articulatedTx.push_back([{PARSEIT}]);\n"
 "\t\t\treturn a;\n"
 "\n";
 
@@ -323,7 +322,6 @@ const char* STR_FACTORY2 =
 "\t\t\ta->C[{BASE}]::operator=(*p);\n"
 "[{ASSIGNS2}]"
 "[{ITEMS2}]"
-"\t\t\ta->articulatedLog.push_back([{PARSEIT}]);\n"
 "\t\t\treturn a;\n"
 "\n";
 
