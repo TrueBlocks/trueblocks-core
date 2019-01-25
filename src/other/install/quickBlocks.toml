@@ -2,5 +2,5 @@
 current = "0.2.0"
 
 [settings]
-rpcProvider=http://localhost:8545
-blockCachePath=<NOT_SET>
+rpcProvider = "http://localhost:8545"
+blockCachePath = "<NOT_SET>"

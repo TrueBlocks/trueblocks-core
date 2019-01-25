@@ -24,6 +24,7 @@ This simple program may be used to query an Ethereum address to determine if it 
 
 - `addresses` must start with '0x' and be forty characters long.
 - `block_list` may be a space-separated list of values, a start-end range, a `special`, or any combination.
+- This tool retrieves information from the local node or rpcProvider if configured.
 - If the queried node does not store historical state, the results are undefined.
 - `special` blocks are detailed under `whenBlock --list`.
 
