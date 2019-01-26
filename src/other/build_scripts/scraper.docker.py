@@ -20,7 +20,7 @@ timeout = 5
 while True:
     os.system('clear')
 
-    os.system('blockScrape --maxBlock 50000')
+    os.system('blockScrape --maxBlocks 50000')
     print("")
 
 #    os.system('miniBlocks --freshen')
