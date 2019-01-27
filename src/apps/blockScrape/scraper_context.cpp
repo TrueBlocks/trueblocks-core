@@ -29,8 +29,10 @@ bool CScraperContext::scrape(CBlock& block) {
 
     if (!block.transactions.size()) {
         if (block.blockNumber < 50000) { // otherwise it appears to be hung
-            cerr << "skipping empty block " << block.blockNumber << "\r";
-            cerr.flush();
+            if (!opts->silent) {
+                cerr << "skipping empty block " << block.blockNumber << "\r";
+                cerr.flush();
+            }
         }
         // TODO: we do not account for miners of zero transaction blocks, we can
         // do it here by writing the miner's address to a file
