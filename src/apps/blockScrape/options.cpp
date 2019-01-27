@@ -87,7 +87,7 @@ cout << "startBlock: " << startBlock << endl;
 cout << "endBlock: " << endBlock << endl;
 }
 
-    if (startBlock == 0 && forceStart > startBlock)
+    if ((startBlock == 0 || startBlock == NOPOS) && forceStart > startBlock)
         startBlock = forceStart;
 
 if (silent) {
