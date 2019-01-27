@@ -20,6 +20,7 @@ public:
     bool        addrIndex;
     bool        consolidate;
     uint64_t    maxIdxSize;
+    bool        silent;
 
     COptions(void);
     ~COptions(void);

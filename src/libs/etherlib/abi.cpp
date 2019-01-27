@@ -288,7 +288,7 @@ bool visitABI(const qblocks::string_q& path, void *data) {
 //---------------------------------------------------------------------------
 bool CAbi::loadAbiKnown(const string_q& which) {
     if (which == "all")
-        return forEveryFileInFolder(configPath("known_abis/*"), visitABI, this);
+        return forEveryFileInFolder(configPath("known_abis/""*"), visitABI, this);
     return loadAbiFromFile(configPath("known_abis/" + which + ".json"), true);
 }
 
@@ -441,7 +441,7 @@ bool CAbi::loadAbiAndCache(const address_t& addr, bool raw, bool silent, bool de
 //----------------------------------------------------------------------------
 inline unsigned char hex_2_Ascii(char *str) {
     unsigned char c;
-    c =  (unsigned char)((str[0] >= 'A' ? ((str[0]&0xDF)-'A')+10 : (str[0]-'0')));
+    c =  (unsigned char)((str[0] >= 'A' ? ((str[0] & 0xDF) - 'A') + 10 : (str[0] - '0')));
     c *= 16;
     c = (unsigned char)(c + (str[1] >= 'A' ? ((str[1]&0xDF)-'A')+10 : (str[1]-'0')));
     return c;
