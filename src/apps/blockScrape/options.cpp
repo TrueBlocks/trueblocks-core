@@ -78,24 +78,6 @@ bool COptions::parseArguments(string_q& command) {
     // 'to' addresses (if any) to ignore (helps exclude dDos transactions)
     exclusionList = toLower(getGlobalConfig("blockScrape")->getConfigStr ("exclusions", "list", ""));
 
-    // pick up forceStartBlock
-    uint64_t forceStart = getGlobalConfig("blockScrape")->getConfigInt("settings", "forceStartBlock", 0);
-
-if (silent) {
-cout << "forceStart: " << forceStart << endl;
-cout << "startBlock: " << startBlock << endl;
-cout << "endBlock: " << endBlock << endl;
-}
-
-    if (startBlock == 0 && forceStart > startBlock)
-        startBlock = forceStart;
-
-if (silent) {
-cout << "forceStart: " << forceStart << endl;
-cout << "startBlock: " << startBlock << endl;
-cout << "endBlock: " << endBlock << endl;
-}
-
     // Make sure the full block index exists. If not, rebuild it
     establishBlockIndex();
 
@@ -134,15 +116,26 @@ cout << "endBlock: " << endBlock << endl;
 
     }
 
+    // If we're at the beginning, and we've been told explicitly where to start, start there...
+    uint64_t forceStart = getGlobalConfig("blockScrape")->getConfigInt("settings", "forceStartBlock", NOPOS);
+//if (silent) {
+//    cout << "forceStart: " << forceStart << endl;
+//    cout << "startBlock: " << startBlock << endl;
+//    cout << "endBlock: " << endBlock << endl;
+//}
+    if (startBlock == 1 && forceStart != NOPOS) {
+        startBlock = forceStart;
+        endBlock = max(startBlock + 1, client);
+    }
+
     // No more than maxBlocks after start
     endBlock = min(endBlock, startBlock + maxBlocks);
 
-if (silent) {
-cout << "forceStart: " << forceStart << endl;
-cout << "startBlock: " << startBlock << endl;
-cout << "endBlock: " << endBlock << endl;
-return false;
-}
+//if (silent) {
+//    cout << "forceStart: " << forceStart << endl;
+//    cout << "startBlock: " << startBlock << endl;
+//    cout << "endBlock: " << endBlock << endl;
+//}
 
     if (!isParity() || !nodeHasTraces())
         return usage("This tool will only run if it is running against a Parity node that has tracing enabled. Quitting...");
