@@ -123,8 +123,10 @@ if (silent) {
     cout << "startBlock: " << startBlock << endl;
     cout << "endBlock: " << endBlock << endl;
 }
-    if (startBlock == 1 && forceStart != NOPOS)
+    if (startBlock == 1 && forceStart != NOPOS) {
         startBlock = forceStart;
+        endBlock = max(startBlock + 1, client);
+    }
 
     // No more than maxBlocks after start
     endBlock = min(endBlock, startBlock + maxBlocks);
