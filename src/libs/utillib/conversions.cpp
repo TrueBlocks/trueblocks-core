@@ -277,11 +277,11 @@ namespace qblocks {
 
         stringstream stream;
         stream << fixed << setprecision((int)nDecimals) << f;
-        std::string str = stream.str();
+        string_q str = stream.str();
         if(truncate) {
-            str.erase(str.find_last_not_of('0') + 1, std::string::npos);
+            str.erase(str.find_last_not_of('0') + 1, string_q::npos);
             // if all decimals gone, truncate period
-            str.erase(str.find_last_not_of('.') + 1, std::string::npos);
+            str.erase(str.find_last_not_of('.') + 1, string_q::npos);
         }
         return str;
     }
