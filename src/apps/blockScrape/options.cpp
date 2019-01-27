@@ -141,7 +141,7 @@ if (silent) {
 cout << "forceStart: " << forceStart << endl;
 cout << "startBlock: " << startBlock << endl;
 cout << "endBlock: " << endBlock << endl;
-return false;
+//return false;
 }
 
     if (!isParity() || !nodeHasTraces())
