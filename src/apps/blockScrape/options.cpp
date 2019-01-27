@@ -80,8 +80,17 @@ bool COptions::parseArguments(string_q& command) {
 
     // pick up forceStartBlock
     uint64_t forceStart = getGlobalConfig("blockScrape")->getConfigInt("settings", "forceStartBlock", 0);
+
+cout << "forceStart: " << forceStart << endl;
+cout << "startBlock: " << startBlock << endl;
+cout << "endBlock: " << endBlock << endl;
+
     if (startBlock == 0 && forceStart > startBlock)
         startBlock = forceStart;
+
+cout << "forceStart: " << forceStart << endl;
+cout << "startBlock: " << startBlock << endl;
+cout << "endBlock: " << endBlock << endl;
 
     // Make sure the full block index exists. If not, rebuild it
     establishBlockIndex();
@@ -123,6 +132,10 @@ bool COptions::parseArguments(string_q& command) {
 
     // No more than maxBlocks after start
     endBlock = min(endBlock, startBlock + maxBlocks);
+
+cout << "forceStart: " << forceStart << endl;
+cout << "startBlock: " << startBlock << endl;
+cout << "endBlock: " << endBlock << endl;
 
     if (!isParity() || !nodeHasTraces())
         return usage("This tool will only run if it is running against a Parity node that has tracing enabled. Quitting...");
