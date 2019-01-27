@@ -13,6 +13,7 @@ static COption params[] = {
     COption("@noWrite",         "do not write binary blocks to disc (default: write the blocks)"),
     COption("@addrIndex",       "index addresses per block in addition to building bloom filters"),
     COption("@consolidate",     "sort and finalize growing address index (if over 50MB)"),
+    COption("@silent",          "run in silent mode (less status) for docker for example"),
     COption("",                 "Decentralized blockchain scraper and block cache.\n"),
 };
 static size_t nParams = sizeof(params) / sizeof(COption);
@@ -34,6 +35,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-c" || arg == "--consolidate") {
             consolidate = true;
+
+        } else if (arg == "-l" || arg == "--silent") {
+            silent = true;
 
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--start:")) {
             arg = substitute(substitute(arg, "-s:", ""), "--start:","");
@@ -144,6 +148,7 @@ void COptions::Init(void) {
     writeBlocks = true;
     addrIndex   = false;
     consolidate = false;
+    silent      = false;
     minArgs     = 0;
     bitBound    = 200;
     maxIdxSize  = 50000000;  // 50 MB
