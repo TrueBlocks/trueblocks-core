@@ -1,0 +1,5 @@
+[version]
+current = "0.2.0"
+
+[settings]
+forceBlockStart = 5500000
