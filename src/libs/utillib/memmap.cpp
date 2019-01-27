@@ -23,12 +23,12 @@
 CMemMapFile::CMemMapFile()
 : _file(0), _filename(), _filesize(0), _hint(Normal), _mappedBytes(0), _mappedView(NULL) { }
 
-CMemMapFile::CMemMapFile(const std::string& filename)
+CMemMapFile::CMemMapFile(const string_q& filename)
 : _file(0), _filename(filename), _filesize(0), _hint(Normal), _mappedBytes(WholeFile), _mappedView(NULL) {
     open(filename, _mappedBytes, _hint);
 }
 
-CMemMapFile::CMemMapFile(const std::string& filename, size_t mappedBytes, CacheHint hint)
+CMemMapFile::CMemMapFile(const string_q& filename, size_t mappedBytes, CacheHint hint)
 : _file(0), _filename(filename), _filesize(0), _hint(hint), _mappedBytes(mappedBytes), _mappedView(NULL) {
     open(filename, mappedBytes, hint);
 }
@@ -37,7 +37,7 @@ CMemMapFile::~CMemMapFile() {
     close();
 }
 
-bool CMemMapFile::open(const std::string& filename, size_t mappedBytes, CacheHint hint) {
+bool CMemMapFile::open(const string_q& filename, size_t mappedBytes, CacheHint hint) {
     if (isValid())
         return false;
 
