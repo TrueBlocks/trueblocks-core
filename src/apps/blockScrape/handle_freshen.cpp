@@ -13,6 +13,8 @@ bool handle_freshen(COptions& options) {
     // We open this at the start of the scrape and keep it open until the end of the scrape. Normally,
     // we'd rather open and shut the file, we're protected with lockSection and we flush every file
     // write and the file gets cleaned up on exit, so it's all good.
+    if (options.silent)
+        ::remove((fullBlockIndex + ".lck").c_str());
     CArchive fullBlockCache(WRITING_ARCHIVE);
     if (!fullBlockCache.Lock(fullBlockIndex, "a+", LOCK_WAIT)) {
         cerr << "Could not open fullBlock index: " << fullBlockCache.LockFailure() << "\n";
