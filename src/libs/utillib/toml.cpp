@@ -512,7 +512,7 @@ extern string_q collapseArrays(const string_q& inStr);
     class toml_test_writer {
     public:
         toml_test_writer(std::ostream& s) : stream_(s) { }
-        void visit(const tomlvalue_t<std::string>& v) {
+        void visit(const tomlvalue_t<string_q>& v) {
             stream_ << "{\"type\":\"string\",\"value\":\"" << CTomlWriter::escape_string(v.get()) << "\"}";
         }
         void visit(const tomlvalue_t<int64_t>& v) {
