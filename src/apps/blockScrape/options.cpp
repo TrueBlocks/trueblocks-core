@@ -76,7 +76,12 @@ bool COptions::parseArguments(string_q& command) {
         writeBlocks = getGlobalConfig("blockScrape")->getConfigBool("settings", "writeBlocks", true);
 
     // 'to' addresses (if any) to ignore (helps exclude dDos transactions)
-    exclusionList = toLower(getGlobalConfig("blockScrape")->getConfigStr ("exclusions", "list",      ""));
+    exclusionList = toLower(getGlobalConfig("blockScrape")->getConfigStr ("exclusions", "list", ""));
+
+    // pick up forceStartBlock
+    uint64_t forceStart = getGlobalConfig("blockScrape")->getConfigInt("settings", "forceStartBlock", 0);
+    if (startBlock == 0 && forceStart > startBlock)
+        startBlock = forceStart;
 
     // Make sure the full block index exists. If not, rebuild it
     establishBlockIndex();
