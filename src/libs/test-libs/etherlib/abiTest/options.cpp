@@ -53,9 +53,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    arguments.clear();
-    paramsPtr = params;
-    nParamsRef = nParams;
+    registerOptions(nParams, params);
 
     mode = "";
     sub = 0;

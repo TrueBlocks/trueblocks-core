@@ -141,6 +141,7 @@ namespace qblocks {
         CSharedResource& operator=(const CSharedResource& l);
 
         // Turns on and off file locking for machines that do not allow file delete such as my ISP
+        //TODO(tjayrush): global data
         static bool g_locking;  // = true;
     };
 

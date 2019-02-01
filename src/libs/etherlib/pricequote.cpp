@@ -273,6 +273,7 @@ uint64_t indexFromTimeStamp(const CPriceQuoteArray& quotes, timestamp_t ts) {
 string_q wei_2_Dollars(timestamp_t ts, biguint_t weiIn) {
     if (weiIn == 0)
         return "";
+    //TODO(tjayrush): global data
     static CPriceQuoteArray quotes;
     if (!quotes.size()) {
         string_q message;

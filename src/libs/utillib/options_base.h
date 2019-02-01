@@ -37,9 +37,11 @@
 
 namespace qblocks {
 
+    class COption;
     class COptionsBase {
     public:
         CStringArray arguments;
+        //TODO(tjayrush): global data
         static uint32_t enableBits;
         static bool needsOption;
         static bool isReadme;
@@ -78,6 +80,7 @@ namespace qblocks {
         bool getNamedAccount(CAccountName& acct, const string_q& addr) const;
 
     protected:
+        void registerOptions(size_t nParams, COption const *pParams);
         virtual void Init(void) = 0;
     };
 
@@ -120,11 +123,6 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     extern void     editFile  (const string_q& fileName);
     extern string_q configPath(const string_q& part);
-
-    //--------------------------------------------------------------------------------
-    extern COption *paramsPtr;
-    extern size_t& nParamsRef;
-    extern COptionsBase *pOptions;
 
     extern bool isEnabled(uint32_t q);
     extern void optionOff(uint32_t q);

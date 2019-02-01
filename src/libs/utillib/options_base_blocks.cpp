@@ -16,6 +16,7 @@
 
 namespace qblocks {
 
+    extern COptionsBase *pOptions;
     //--------------------------------------------------------------------------------
     blknum_t COptionsBlockList::parseBlockOption(string_q& msg, blknum_t lastBlock) const {
 

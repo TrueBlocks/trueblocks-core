@@ -140,6 +140,7 @@ bool writeRecord(const char *line, void *data) {
     thing->fileSize += len;
     thing->prevBlock = bn;
 
+    //TODO(tjayrush): global data
     static uint64_t counter = 0;
     if (strstr(line, "0x") == line) {
         thing->output->WriteLine(line);

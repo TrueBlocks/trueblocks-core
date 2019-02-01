@@ -251,6 +251,7 @@ ostream& operator<<(ostream& os, const CApiSpec& item) {
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 bool CApiSpec::sendData(const string_q& data) {
+    //TODO(tjayrush): global data
     static CURL *curl_handle = NULL;
     static struct curl_slist *curl_headers = NULL;
     if (data == "cleanup") {

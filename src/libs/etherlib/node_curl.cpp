@@ -92,6 +92,7 @@ PRINT("postData: " + postData);
     }
 
     //-------------------------------------------------------------------------
+    //TODO(tjayrush): global data
     static CCurlContext theCurlContext;
 
     //-------------------------------------------------------------------------
@@ -108,6 +109,7 @@ PRINT("postData: " + postData);
 
     //-------------------------------------------------------------------------
     CURL *getCurl(bool cleanup) {
+        //TODO(tjayrush): global data
         static CURL *curl = NULL;
         static struct curl_slist *headers = NULL;
         if (!curl && !cleanup) {

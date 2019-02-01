@@ -229,7 +229,7 @@ namespace qblocks {
     //---------------------------------------------------------------------------
     size_t dotDot(char *ptr, size_t size, size_t nmemb, void *userdata) {
         if (!isTestMode()) {
-            static int cnt = 0;
+            thread_local int cnt = 0;
             if (!(++cnt % 25)) {
                 cerr << ".";
                 cerr.flush();

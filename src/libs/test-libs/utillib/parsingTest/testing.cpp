@@ -17,7 +17,7 @@
 //--------------------------------------------------------------
 extern void testNative(void);
 extern void testNextToken(void);
-static string_q sep(120, '-');
+static const string_q sep(120, '-');
 
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {

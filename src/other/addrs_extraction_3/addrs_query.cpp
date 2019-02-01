@@ -64,6 +64,7 @@ bool visitFiles(const string_q& path, void *data) {
     } else {
 
         if (endsWith(path, ".txt")) {
+            //TODO(tjayrush): global data
             static int cnt = 0;
             if (!(++cnt%13)) {
                 cerr << "Scanning " << path << "             \r";
