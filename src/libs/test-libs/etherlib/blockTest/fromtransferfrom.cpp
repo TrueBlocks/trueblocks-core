@@ -136,9 +136,8 @@ CArchive& operator<<(CArchive& archive, const QFromTransferFromArray& array) {
 
 //---------------------------------------------------------------------------
 void QFromTransferFrom::registerClass(void) {
-    static bool been_here = false;
-    if (been_here) return;
-    been_here = true;
+    // only do this once
+    if (HAS_FIELD(QFromTransferFrom, "schema")) return;
 
     QTransferFrom::registerClass();
 

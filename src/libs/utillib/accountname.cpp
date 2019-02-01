@@ -149,9 +149,8 @@ CArchive& operator<<(CArchive& archive, const CAccountNameArray& array) {
 
 //---------------------------------------------------------------------------
 void CAccountName::registerClass(void) {
-    static bool been_here = false;
-    if (been_here) return;
-    been_here = true;
+    // only do this once
+    if (HAS_FIELD(CAccountName, "schema")) return;
 
     size_t fieldNum = 1000;
     ADD_FIELD(CAccountName, "schema",  T_NUMBER, ++fieldNum);

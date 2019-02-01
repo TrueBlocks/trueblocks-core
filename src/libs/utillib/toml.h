@@ -17,6 +17,7 @@
 #include <vector>
 #include "database.h"
 #include "biglib.h"
+#include "colors.h"
 //#include "toml_new.h"
 
 namespace qblocks {
@@ -57,7 +58,6 @@ namespace qblocks {
 //#ifdef NEW_TOML
 //#define CToml CNewToml
 //#else
-    extern string_q cTeal, cOff;
     //-------------------------------------------------------------------------
     class CToml : public CSharedResource {
     private:

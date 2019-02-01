@@ -175,9 +175,8 @@ CArchive& operator<<(CArchive& archive, const CTraceActionArray& array) {
 
 //---------------------------------------------------------------------------
 void CTraceAction::registerClass(void) {
-    static bool been_here = false;
-    if (been_here) return;
-    been_here = true;
+    // only do this once
+    if (HAS_FIELD(CTraceAction, "schema")) return;
 
     size_t fieldNum = 1000;
     ADD_FIELD(CTraceAction, "schema",  T_NUMBER, ++fieldNum);

@@ -146,9 +146,8 @@ CArchive& operator<<(CArchive& archive, const CAbiArray& array) {
 
 //---------------------------------------------------------------------------
 void CAbi::registerClass(void) {
-    static bool been_here = false;
-    if (been_here) return;
-    been_here = true;
+    // only do this once
+    if (HAS_FIELD(CAbi, "schema")) return;
 
     size_t fieldNum = 1000;
     ADD_FIELD(CAbi, "schema",  T_NUMBER, ++fieldNum);
