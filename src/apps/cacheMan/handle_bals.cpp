@@ -10,12 +10,12 @@ const string_q clearStr(20, ' ');
 bool handleCacheBals(COptions& options) {
 
     if (!fileExists("./config.toml"))
-        return usage("Could not open file: ./config.toml. Quitting.");
+        return options.usage("Could not open file: ./config.toml. Quitting.");
     CToml toml("./config.toml");
     options.loadWatches(toml);
 
     if (!nodeHasBalances())
-        return usage("Cannot cache balances on a machine that doesn't have balances. Quitting...");
+        return options.usage("Cannot cache balances on a machine that doesn't have balances. Quitting...");
 
     CAcctCacheItemArray dataArray;
 
@@ -56,7 +56,7 @@ bool handleCacheBals(COptions& options) {
         cerr << clearStr << clearStr << "\r";
         cerr.flush();
     } else {
-        return usage("Could not open file: " + options.filenames[0] + ". Quitting.");
+        return options.usage("Could not open file: " + options.filenames[0] + ". Quitting.");
     }
     sort(dataArray.begin(), dataArray.end());
 
@@ -66,7 +66,7 @@ bool handleCacheBals(COptions& options) {
         string_q binaryFilename = "./balances/" + watch.address + ".bals.bin";
         CArchive balCache(WRITING_ARCHIVE);
         if (!balCache.Lock(binaryFilename, binaryWriteCreate, LOCK_WAIT))
-            return usage("Cannot open file " + binaryFilename + ". Quitting...");
+            return options.usage("Cannot open file " + binaryFilename + ". Quitting...");
 
         uint64_t nWritten = 0;
         biguint_t lastBal = biguint_t((uint64_t)NOPOS);
@@ -103,7 +103,7 @@ bool handleCacheBals(COptions& options) {
 bool listBalances(COptions& options) {
 
     if (!fileExists("./config.toml"))
-        return usage("Could not open file: ./config.toml. Quitting.");
+        return options.usage("Could not open file: ./config.toml. Quitting.");
     CToml toml("./config.toml");
     options.loadWatches(toml);
 
@@ -111,7 +111,7 @@ bool listBalances(COptions& options) {
 
         string_q binaryFilename = "./balances/" + watch.address + ".bals.bin";
         if (!fileExists(binaryFilename))
-            return usage("Cannot find file " + binaryFilename + ". Quitting...");
+            return options.usage("Cannot find file " + binaryFilename + ". Quitting...");
 
         if (fileSize(binaryFilename) > 0) {
 

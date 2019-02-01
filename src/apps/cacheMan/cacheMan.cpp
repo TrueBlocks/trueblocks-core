@@ -110,7 +110,7 @@ int main(int argc, const char *argv[]) {
                                 }
 
                             } else {
-                                return usage("Unknown mode: " + mode + ". Quitting...\n");
+                                return options.usage("Unknown mode: " + mode + ". Quitting...\n");
                             }
                         }
                     }

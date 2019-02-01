@@ -226,14 +226,14 @@ bool loadData(COptions& options) {
 
     // If the file is locked, we need to tell the user.
     if (fileExists(fileName + ".lck"))
-        return usage("The cache lock file is present. The program is either already "
+        return options.usage("The cache lock file is present. The program is either already "
                      "running or it did not end cleanly the\n\tlast time it ran. "
                      "Quit the already running program or, if it is not running, "
                      "remove the lock\n\tfile: " + fileName + ".lck'. Quitting...");
 
     uint64_t nRecords = (fileSize(fileName) / (sizeof(uint64_t) * 2));
     if (!nRecords)
-        return usage("Old style cache file is present, but empty. Remove it to continue.");
+        return options.usage("Old style cache file is present, but empty. Remove it to continue.");
 
     uint64_t *buffer = new uint64_t[nRecords * 2];
     bzero(buffer, nRecords * 2);
@@ -243,7 +243,7 @@ bool loadData(COptions& options) {
         txCache.Read(buffer, sizeof(uint64_t) * 2, nRecords);
         txCache.Release();
     } else {
-        return usage("Could not open old style cache file. Quiting...");
+        return options.usage("Could not open old style cache file. Quiting...");
     }
 
     for (size_t i = 0 ; i < nRecords ; i++)

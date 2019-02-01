@@ -34,7 +34,7 @@ int main(int argc, const char *argv[]) {
             editFile(options.namesFile.getFullPath());
 
         } else if (!loaded) {
-            usage(options.namesFile.getFullPath() + " is empty. Use ethName -e to add some names. Quitting...");
+            options.usage(options.namesFile.getFullPath() + " is empty. Use ethName -e to add some names. Quitting...");
 
         } else if (options.list) {
             if (options.count)
