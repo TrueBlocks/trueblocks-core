@@ -7,6 +7,18 @@
 #include "options.h"
 
 //--------------------------------------------------------------
+static CQuestion questions[] = {
+    CQuestion("\n\t[{Welcome to Chifra, an Ethereum Smart Contract Monitoring System}]\n", false, cYellow),
+    CQuestion("\tDo you want to install a monitor in the '[{FOLDER}]' folder?",            true,  cWhite),
+    CQuestion("\n\tBuilding monitor...",                                                   false, bBlue, createFolders),
+    CQuestion("\tCreating chifra rebuild command...",                                      false, bBlue, createRebuild),
+    CQuestion("\tCreating configuration file...",                                          false, bBlue, createConfig ),
+    CQuestion("\tCreating monitor cache...",                                               false, bBlue, createCache  ),
+    CQuestion("\tAdding make command do cmake file...",                                    false, bBlue, editMakeLists),
+};
+static uint64_t nQuestions = sizeof(questions) / sizeof(CQuestion);
+
+//--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
     etherlib_init("binary", quickQuitHandler);
@@ -215,16 +227,3 @@ bool CQuestion::getResponse(void) {
     cout << cOff;
     return true;
 }
-
-//--------------------------------------------------------------
-CQuestion questions[] = {
-    CQuestion("\n\t[{Welcome to Chifra, an Ethereum Smart Contract Monitoring System}]\n", false, cYellow),
-    CQuestion("\tDo you want to install a monitor in the '[{FOLDER}]' folder?",            true,  cWhite),
-    CQuestion("\n\tBuilding monitor...",                                                   false, bBlue, createFolders),
-    CQuestion("\tCreating chifra rebuild command...",                                      false, bBlue, createRebuild),
-    CQuestion("\tCreating configuration file...",                                          false, bBlue, createConfig ),
-    CQuestion("\tCreating monitor cache...",                                               false, bBlue, createCache  ),
-    CQuestion("\tAdding make command do cmake file...",                                    false, bBlue, editMakeLists),
-};
-uint64_t nQuestions = sizeof(questions) / sizeof(CQuestion);
-

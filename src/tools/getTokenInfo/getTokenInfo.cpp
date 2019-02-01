@@ -26,6 +26,7 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
+    size_t cnt = 0;
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
@@ -39,8 +40,6 @@ int main(int argc, const char *argv[]) {
                 while (!blocks.empty()) {
                     blknum_t blockNum = str_2_Uint(nextTokenClear(blocks, '|'));
                     cout << getTokenInfo(options.tokenInfo, watch, holder, blockNum) << "\n";
-                    //TODO(tjayrush): global data
-                    static size_t cnt=0;
                     if (cnt++ < options.watches.size() - 1)
                         cout << ",";
                     cout << "\n";
