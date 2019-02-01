@@ -359,11 +359,11 @@ const char* STR_HEADERFILE =
 //-----------------------------------------------------------------------
 const char* STR_HEADER_SIGS =
 "\n\n//-----------------------------------------------------------------------------\n"
-"extern string_q sigs[];\n"
-"extern string_q topics[];\n"
+"extern const string_q sigs[];\n"
+"extern const string_q topics[];\n"
 "\n"
-"extern size_t nSigs;\n"
-"extern size_t nTopics;";
+"extern const size_t nSigs;\n"
+"extern const size_t nTopics;";
 
 //-----------------------------------------------------------------------
 const char* STR_CODE_SIGS =
@@ -391,7 +391,7 @@ const char* STR_CODE_SIGS =
 "size_t nSigs = sizeof(sigs) / sizeof(string_q);\n"
 "\n"
 "//-----------------------------------------------------------------------------\n"
-"string_q topics[] = {\n"
+"const string_q topics[] = {\n"
 "\t// Token support\n"
 "\tevt_Transfer_qb,\n"
 "\tevt_Approval_qb,\n"
@@ -409,7 +409,7 @@ const char* STR_CODE_SIGS =
 "\t// Contract support\n"
 "[{EVTS}]"
 "};\n"
-"size_t nTopics = sizeof(topics) / sizeof(string_q);\n"
+"const size_t nTopics = sizeof(topics) / sizeof(string_q);\n"
 "\n";
 
 //-----------------------------------------------------------------------

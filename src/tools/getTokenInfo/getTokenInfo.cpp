@@ -255,7 +255,7 @@ bool isValidInfo(const string_q which, string_q& encoding) {
 }
 
 //-------------------------------------------------------------------------
-CStringArray infoOptions = {
+const CStringArray infoOptions = {
     "name|0x06fdde03",
     "totalSupply|0x18160ddd",
     "balanceOf|0x70a08231",
