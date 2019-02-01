@@ -6,7 +6,7 @@
 
 #ifdef DEBUGGER_ON
 //---------------------------------------------------------------------
-static COption debugCmds[] = {
+static const COption debugCmds[] = {
     COption("-(c)orrect",     "Correct the current imbalance and continue to the next imbalance"),
     COption("-(a)utocorrect", "Turn on or off autocorrect (allows pressing enter to correct)"),
     COption("-(e)thscan",     "Open a block, account, or transaction in http://ethscan.io"),
@@ -22,7 +22,7 @@ static COption debugCmds[] = {
     COption("-(h)elp",        "Display this screen"),
     COption("",               "Press enter to continue without correction, up or down arrows to recall commands"),
 };
-static size_t nDebugCmds = sizeof(debugCmds) / sizeof(COption);
+static const size_t nDebugCmds = sizeof(debugCmds) / sizeof(COption);
 
 //---------------------------------------------------------------------
 #define isdelim(cc) ((cc) == ':' || (cc) == '.' || (cc) == ' ')

@@ -46,7 +46,3 @@ extern bool createRebuild(const COptions& options, CQuestion *q);
 extern bool createConfig (const COptions& options, CQuestion *q);
 extern bool createCache  (const COptions& options, CQuestion *q);
 extern bool editMakeLists(const COptions& options, CQuestion *q);
-
-//--------------------------------------------------------------
-extern CQuestion questions[];
-extern uint64_t  nQuestions;
