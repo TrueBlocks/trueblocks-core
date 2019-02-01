@@ -1029,7 +1029,9 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------
-    biguint_t weiPerEther = (modexp(10, 9, uint64_t(10000000000)) * modexp(10, 9, uint64_t(10000000000)));
+    biguint_t weiPerEther(void) {
+        return (modexp(10, 9, uint64_t(10000000000)) * modexp(10, 9, uint64_t(10000000000)));
+    }
 
     //-----------------------------------------------------------------------
     void manageFields(const string_q& listIn, bool show) {
