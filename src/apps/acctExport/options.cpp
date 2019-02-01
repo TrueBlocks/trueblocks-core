@@ -9,14 +9,14 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("-fmt:<fmt>",       "export format (one of [json|txt|csv]"),
     COption("-fi(l)ter:<addr>", "show results for this address (you may specify more than one filter)"),
     COption("-useBlooms",       "use bloom filters to decide whether or not to re-check the cache"),
     COption("-ignoreDdos",      "ignore apparent dDos transactions."),
     COption("",                 "Export transactions for one or more Ethereum addresses.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

@@ -13,7 +13,7 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("~address_list", "two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported"),
     COption("~!block_list",  "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
     COption("-byAcct",       "consider each address an ERC20 token except the last, whose balance is reported for each token"),
@@ -25,7 +25,7 @@ static COption params[] = {
     COption("",              "Retrieve the token balance(s) for one or more addresses at the given (or "
                                 "latest) block(s).\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 extern bool isTokenContract(const address_t& addr);
 //---------------------------------------------------------------------------------------------------

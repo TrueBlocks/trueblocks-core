@@ -13,7 +13,7 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("~block_list",  "a space-separated list of one or more blocks for which to retrieve blooms"),
     COption("-raw",         "pull the bloom filter directly from the running node (the default)"),
     COption("-eab",         "pull the enhanced adaptive blooms from QBlocks cache"),
@@ -27,7 +27,7 @@ static COption params[] = {
     COption("@force",       "force a re-write of the bloom to the cache"),
     COption("",             "Returns bloom filter(s) from running node (the default) or as EAB from QBlocks.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

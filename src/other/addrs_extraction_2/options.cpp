@@ -5,10 +5,10 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("", "Move address appearances into sorted 50 MB files.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

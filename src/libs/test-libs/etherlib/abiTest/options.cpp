@@ -13,12 +13,12 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("~mode",      "Mode of operation. One or more of 'encoding' or 'generation'.\n"),
     COption("-sub:<num>", "sub mode"),
     COption("",           "Simple program to illustrate how to encode function and event signatures.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

@@ -13,12 +13,12 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("-startBlock", "block number of where to start the test"),
     COption("-thing",   "option two"),
     COption("",         "Performs various speed tests againt Infrua, Parity, and QBlocks.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

@@ -6,7 +6,7 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("-start:<num>",     "first block to visit (default: last visited block + 1)"),
     COption("-end:<num>",       "last block to visit (required if --start supplied)"),
     COption("-maxBlocks:<num>", "maximum number of blocks to process (defaults to 5000)"),
@@ -16,7 +16,7 @@ static COption params[] = {
     COption("@silent",          "run in silent mode (less status) for docker for example"),
     COption("",                 "Decentralized blockchain scraper and block cache.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

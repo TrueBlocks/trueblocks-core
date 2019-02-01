@@ -13,7 +13,7 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("~address_list", "one or more addresses (0x...) from which to retrieve balances"),
     COption("~!block_list",  "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
     COption("-data",         "display results as data (addr <tab> is_contract)"),
@@ -23,7 +23,7 @@ static COption params[] = {
         COption("",              "Returns 'true' or 'false' if the given address(es) holds byte code "
                              "(optionally displays the code).\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
