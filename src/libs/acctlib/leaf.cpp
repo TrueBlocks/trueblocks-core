@@ -146,9 +146,8 @@ CArchive& operator<<(CArchive& archive, const CLeafArray& array) {
 
 //---------------------------------------------------------------------------
 void CLeaf::registerClass(void) {
-    static bool been_here = false;
-    if (been_here) return;
-    been_here = true;
+    // only do this once
+    if (HAS_FIELD(CLeaf, "schema")) return;
 
     CTreeNode::registerClass();
 

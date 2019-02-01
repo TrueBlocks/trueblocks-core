@@ -155,9 +155,8 @@ CArchive& operator<<(CArchive& archive, const CIncomeStatementArray& array) {
 
 //---------------------------------------------------------------------------
 void CIncomeStatement::registerClass(void) {
-    static bool been_here = false;
-    if (been_here) return;
-    been_here = true;
+    // only do this once
+    if (HAS_FIELD(CIncomeStatement, "schema")) return;
 
     size_t fieldNum = 1000;
     ADD_FIELD(CIncomeStatement, "schema",  T_NUMBER, ++fieldNum);

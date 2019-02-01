@@ -157,9 +157,8 @@ CArchive& operator<<(CArchive& archive, const CNewReceiptArray& array) {
 
 //---------------------------------------------------------------------------
 void CNewReceipt::registerClass(void) {
-    static bool been_here = false;
-    if (been_here) return;
-    been_here = true;
+    // only do this once
+    if (HAS_FIELD(CNewReceipt, "schema")) return;
 
     size_t fieldNum = 1000;
     ADD_FIELD(CNewReceipt, "schema",  T_NUMBER, ++fieldNum);

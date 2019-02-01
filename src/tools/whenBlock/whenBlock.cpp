@@ -89,6 +89,7 @@ int main(int argc, const char *argv[]) {
 }
 
 //---------------------------------------------------------------
+//TODO(tjayrush): Would be better to remove these globals
 static CMiniBlock *blocks = NULL;
 static uint64_t nBlocks = 0;
 static blknum_t lower = ULONG_MAX;

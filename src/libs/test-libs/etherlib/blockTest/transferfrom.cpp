@@ -139,9 +139,8 @@ CArchive& operator<<(CArchive& archive, const QTransferFromArray& array) {
 
 //---------------------------------------------------------------------------
 void QTransferFrom::registerClass(void) {
-    static bool been_here = false;
-    if (been_here) return;
-    been_here = true;
+    // only do this once
+    if (HAS_FIELD(QTransferFrom, "schema")) return;
 
     CTransaction::registerClass();
 
