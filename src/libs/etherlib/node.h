@@ -130,8 +130,11 @@ namespace qblocks {
 #endif
     #define blockFolder    (blockCachePath("blocks/"))
     #define bloomFolder    (blockCachePath("blooms/"))
-    extern biguint_t weiPerEther;
 
+    //-------------------------------------------------------------------------
+    extern biguint_t weiPerEther(void);
+
+    //-------------------------------------------------------------------------
     extern void manageFields(const string_q& listIn, bool show);
     extern string_q defHide;
     extern string_q defShow;
