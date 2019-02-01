@@ -22,24 +22,11 @@
 namespace qblocks {
 
     //--------------------------------------------------------------------------------
-    //TODO(tjayrush): global data
-    static const size_t nP = 0;
-    static const COption ps[] = { };
-    static const CDefaultOptions defOpts;
-
-    //--------------------------------------------------------------------------------
-    //TODO(tjayrush): global data
-    size_t nParamsRef = nP;
-    COption const *paramsPtr  = &ps[0];
-    COptionsBase const *pOptions = &defOpts;
-
-    //--------------------------------------------------------------------------------
-    void COptionsBase::registerOptions(size_t nParams, COption const *pParams) {
+    void COptionsBase::registerOptions(size_t nP, COption const *pP) {
         //TODO(tjayrush): global data
         arguments.clear();
-        nParamsRef = nParams;
-        paramsPtr = pParams;
-        pOptions = this;
+        cntParams = nP;
+        pParams = pP;
     }
 
     //--------------------------------------------------------------------------------
@@ -151,10 +138,10 @@ namespace qblocks {
         for (size_t i = 0 ; i < nArgs ; i++) {
             string_q arg = args[i];
             bool combine = false;
-            for (size_t j = 0 ; j < nParamsRef && !combine ; j++) {
-                if (!paramsPtr[j].permitted.empty()) {
-                    string_q shortName = paramsPtr[j].shortName;
-                    string_q longName  = paramsPtr[j].longName;
+            for (size_t j = 0 ; j < cntParams && !combine ; j++) {
+                if (!pParams[j].permitted.empty()) {
+                    string_q shortName = pParams[j].shortName;
+                    string_q longName  = pParams[j].longName;
                     if (shortName == arg || startsWith(longName, arg)) {
                         // We want to pull the next parameter into this one since it's a ':' param
                         combine = true;
@@ -394,15 +381,16 @@ namespace qblocks {
     static string_q sep2 = "";
 
     //--------------------------------------------------------------------------------
-    int usage(const string_q& errMsg) {
+    bool COptionsBase::usage(const string_q& errMsg) const {
         cerr << usageStr(errMsg);
         return false;
     }
 
-    string_q usageStr(const string_q& errMsg) {
+    //--------------------------------------------------------------------------------
+    string_q COptionsBase::usageStr(const string_q& errMsg) const {
 
         ostringstream os;
-        if (COptionsBase::isReadme) {
+        if (isReadme) {
             sep = sep2 = "`";
             colorsOff();
             os << "#### Usage\n";
@@ -415,57 +403,55 @@ namespace qblocks {
         os << purpose();
         os << descriptions() << "\n";
         os << notes();
-        if (!COptionsBase::isReadme) {
+        if (!isReadme) {
             os << bBlue << "  Powered by QBlocks";
             os << (isTestMode() ? "" : " (" + getVersionStr() + ")") << "\n" << cOff;
         }
         string_q ret = os.str().c_str();
-        ASSERT(pOptions);
-        return pOptions->postProcess("usage", ret);
+        return postProcess("usage", ret);
     }
 
     //--------------------------------------------------------------------------------
-    string_q options(void) {
+    string_q COptionsBase::options(void) const {
         string_q required;
 
         ostringstream os;
-        if (!COptionsBase::needsOption)
+        if (!needsOption)
             os << "[";
-        for (uint64_t i = 0 ; i < nParamsRef ; i++) {
-            if (paramsPtr[i].mode) {
-                required += (" " + paramsPtr[i].longName);
+        for (uint64_t i = 0 ; i < cntParams ; i++) {
+            if (pParams[i].mode) {
+                required += (" " + pParams[i].longName);
 
-            } else if (paramsPtr[i].hidden) {
+            } else if (pParams[i].hidden) {
                 // invisible option
 
-            } else if (!paramsPtr[i].shortName.empty()) {
-                os << paramsPtr[i].shortName << "|";
+            } else if (!pParams[i].shortName.empty()) {
+                os << pParams[i].shortName << "|";
 
-            } else if (!paramsPtr[i].shortName.empty()) {
-                os << paramsPtr[i].shortName << "|";
+            } else if (!pParams[i].shortName.empty()) {
+                os << pParams[i].shortName << "|";
             }
         }
         if (isEnabled(OPT_VERBOSE))
             os << "-v|";
         if (isEnabled(OPT_HELP))
             os << "-h";
-        if (!COptionsBase::needsOption)
+        if (!needsOption)
             os << "]";
         os << required;
 
-        ASSERT(pOptions);
-        string_q ret = pOptions->postProcess("options", os.str().c_str());
-        if (COptionsBase::isReadme)
+        string_q ret = postProcess("options", os.str().c_str());
+        if (isReadme)
             ret = substitute(substitute(ret, "<", "&lt;"), ">", "&gt;");
         return ret;
     }
 
     //--------------------------------------------------------------------------------
-    string_q purpose(void) {
+    string_q COptionsBase::purpose(void) const {
         string_q purpose;
-        for (uint64_t i = 0 ; i < nParamsRef ; i++)
-            if (paramsPtr[i].shortName.empty())
-                purpose += ("\n           " + paramsPtr[i].description);
+        for (uint64_t i = 0 ; i < cntParams ; i++)
+            if (pParams[i].shortName.empty())
+                purpose += ("\n           " + pParams[i].description);
 
         ostringstream os;
         if (!purpose.empty()) {
@@ -481,16 +467,15 @@ namespace qblocks {
             os << xxx;
             os << "  \n";
         }
-        ASSERT(pOptions);
-        return pOptions->postProcess("purpose", os.str().c_str());
+        return postProcess("purpose", os.str().c_str());
     }
 
     //--------------------------------------------------------------------------------
 const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
-    string_q oneDescription(const string_q& sN, const string_q& lN, const string_q& d, bool isMode, bool required) {
+    string_q COptionsBase::oneDescription(const string_q& sN, const string_q& lN, const string_q& d, bool isMode, bool required) const {
         ostringstream os;
-        if (COptionsBase::isReadme) {
+        if (isReadme) {
 
             // When we are writing the readme file...
             string_q line = STR_ONE_LINE;
@@ -512,22 +497,20 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             replace(line, "{D}", d + (required && isMode ? " (required)" : ""));
             os << line;
         }
-        ASSERT(pOptions);
-        return pOptions->postProcess("oneDescription", os.str().c_str());
+        return postProcess("oneDescription", os.str().c_str());
     }
 
     //--------------------------------------------------------------------------------
-    string_q notes(void) {
+    string_q COptionsBase::notes(void) const {
 
         ostringstream os;
-        ASSERT(pOptions);
-        string_q ret = pOptions->postProcess("notes", "");
+        string_q ret = postProcess("notes", "");
         if (!ret.empty()) {
             string_q tick = "- ";
             string_q lead = "\t";
             string_q trail = "\n";
             string_q sepy1 = cTeal, sepy2 = cOff;
-            if (COptionsBase::isReadme) {
+            if (isReadme) {
                 sepy1 = sepy2 = "`";
                 lead = "";
                 trail = "\n";
@@ -536,7 +519,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             replaceAll(ret, "}]", sepy2);
 
             os << bYellow << sep << "Notes:" << sep << cOff << "\n";
-            os << (COptionsBase::isReadme ? "\n" : "");
+            os << (isReadme ? "\n" : "");
             while (!ret.empty()) {
                 string_q line = substitute(nextTokenClear(ret, '\n'), "|", "\n" + lead + "  ");
                 os << lead << tick << line << "\n";
@@ -549,45 +532,45 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     }
 
     //--------------------------------------------------------------------------------
-    string_q descriptions(void) {
+    string_q COptionsBase::descriptions(void) const {
 
         ostringstream os;
         os << bYellow << sep << "Where:" << sep << cOff << "  \n";
-        if (COptionsBase::isReadme) {
+        if (isReadme) {
             os << "\n";
             os << "| Short Cut | Option | Description |\n";
             os << "| -------: | :------- | :------- |\n";
         }
 
         size_t nHidden = 0;
-        for (uint64_t i = 0 ; i < nParamsRef ; i++) {
-            string_q sName = paramsPtr[i].shortName;
-            string_q lName = paramsPtr[i].longName;
-            string_q descr = trim(paramsPtr[i].description);
-            bool isMode = paramsPtr[i].mode;
-            if (!paramsPtr[i].hidden && !sName.empty()) {
-                bool isReq = !paramsPtr[i].optional;
+        for (uint64_t i = 0 ; i < cntParams ; i++) {
+            string_q sName = pParams[i].shortName;
+            string_q lName = pParams[i].longName;
+            string_q descr = trim(pParams[i].description);
+            bool isMode = pParams[i].mode;
+            if (!pParams[i].hidden && !sName.empty()) {
+                bool isReq = !pParams[i].optional;
                 sName = (isMode ? "" : sName);
                 lName = substitute(substitute((isMode ? substitute(lName, "-", "") : lName), "!", ""), "~", "");
                 os << oneDescription(sName, lName, descr, isMode, isReq);
             }
-            if (paramsPtr[i].hidden)
+            if (pParams[i].hidden)
                 nHidden++;
         }
 
         // For testing purposes, we show the hidden options
         if (isTestMode() && nHidden) {
             os << "\n#### Hidden options (shown during testing only)\n";
-            for (uint64_t i = 0 ; i < nParamsRef ; i++) {
-                string_q sName = paramsPtr[i].shortName;
-                string_q lName = paramsPtr[i].longName;
-                string_q descr = trim(paramsPtr[i].description);
-                bool isMode = paramsPtr[i].mode;
-                if (paramsPtr[i].hidden && !sName.empty()) {
-                    bool isReq = !paramsPtr[i].optional;
+            for (uint64_t i = 0 ; i < cntParams ; i++) {
+                string_q sName = pParams[i].shortName;
+                string_q lName = pParams[i].longName;
+                string_q descr = trim(pParams[i].description);
+                bool isMode = pParams[i].mode;
+                if (pParams[i].hidden && !sName.empty()) {
+                    bool isReq = !pParams[i].optional;
                     lName = substitute(substitute((isMode ? substitute(lName, "-", "") : lName), "!", ""), "~", "");
                     lName = substitute(lName, "@-", "");
-                    sName = (isMode ? "" : paramsPtr[i].shortName);
+                    sName = (isMode ? "" : pParams[i].shortName);
                     os << oneDescription(sName, lName, descr, isMode, isReq);
                 }
             }
@@ -599,19 +582,18 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
                     "set verbose level. Either -v, --verbose or -v:n where 'n' is level", false, false);
         if (isEnabled(OPT_HELP))
             os << oneDescription("-h", "--help", "display this help screen", false, false);
-        ASSERT(pOptions);
-        return pOptions->postProcess("description", os.str().c_str());
+        return postProcess("description", os.str().c_str());
     }
 
     //--------------------------------------------------------------------------------
-    string_q expandOption(string_q& arg) {
+    string_q COptionsBase::expandOption(string_q& arg) {
 
         string_q ret = arg;
 
         // Check that we don't have a regular command with a single dash, which
         // should report an error in client code
-        for (uint64_t i = 0 ; i < nParamsRef ; i++) {
-            if (paramsPtr[i].longName == arg) {
+        for (uint64_t i = 0 ; i < cntParams ; i++) {
+            if (pParams[i].longName == arg) {
                 arg = "";
                 return ret;
             }
@@ -637,7 +619,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
         // Special case
         if (arg == "-th" || arg == "-ht") {
-            COptionsBase::isReadme = true;
+            isReadme = true;
             arg = "";
             replaceAll(ret, "-th", "");
             replaceAll(ret, "-ht", "");
@@ -677,11 +659,6 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     }
 
     //--------------------------------------------------------------------------------
-    uint32_t COptionsBase::enableBits = OPT_DEFAULT;
-    bool COptionsBase::isReadme = false;
-    bool COptionsBase::needsOption = false;
-
-    //--------------------------------------------------------------------------------
     uint64_t verbose = false;
 
     //---------------------------------------------------------------------------------------------------
@@ -715,16 +692,16 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     }
 
     //-------------------------------------------------------------------------
-    bool isEnabled(uint32_t q) {
-        return COptionsBase::enableBits & q;
+    bool COptionsBase::isEnabled(uint32_t q) const {
+        return (enableBits & q);
     }
 
-    void optionOff(uint32_t q) {
-        COptionsBase::enableBits &= (~q);
+    void COptionsBase::optionOff(uint32_t q) {
+        enableBits &= (~q);
     }
 
-    void optionOn (uint32_t q) {
-        COptionsBase::enableBits |= q;
+    void COptionsBase::optionOn (uint32_t q) {
+        enableBits |= q;
     }
 
     //--------------------------------------------------------------------------------
@@ -859,6 +836,10 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     }
 
     //-----------------------------------------------------------------------
+    //TODO(tjayrush): global data
+    CNameValueArray COptionsBase::specials;
+
+    //-----------------------------------------------------------------------
     void COptionsBase::loadSpecials(void) {
 
         const CToml *toml = getGlobalConfig("whenBlock");
@@ -875,9 +856,9 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     }
 
     //--------------------------------------------------------------------------------
-    bool COptionsBase::findSpecial(CNameValue& pair, const string_q& arg) const {
+    bool COptionsBase::findSpecial(CNameValue& pair, const string_q& arg) {
         if (specials.size() == 0)
-            ((COptionsBase*)this)->loadSpecials();  // NOLINT
+            loadSpecials();
         for (auto special : specials) {
             if (arg == special.first) {
                 pair = special;
@@ -892,6 +873,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         minArgs = 1;
         isReadme = false;
         needsOption = false;
+        enableBits = OPT_DEFAULT;
         for (int i = 0 ; i < 5 ; i++)
             sorts[i] = NULL;
     }

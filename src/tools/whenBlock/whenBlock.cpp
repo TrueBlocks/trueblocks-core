@@ -14,7 +14,7 @@
 #include "options.h"
 
 //---------------------------------------------------------------
-extern bool lookupDate(CBlock& block, const time_q& date);
+extern bool lookupDate(const COptions *options, CBlock& block, const time_q& date);
 extern void unloadCache(void);
 
 //---------------------------------------------------------------
@@ -58,7 +58,7 @@ int main(int argc, const char *argv[]) {
 
                 } else {
                     time_q date = ts_2_Date((timestamp_t)str_2_Uint(value));
-                    bool found = lookupDate(block, date);
+                    bool found = lookupDate(&options, block, date);
                     if (!found) {
                         unloadCache();
                         return 0;
@@ -132,12 +132,12 @@ bool lookCloser(CBlock& block, void *data) {
 }
 
 //---------------------------------------------------------------
-bool lookupDate(CBlock& block, const time_q& date) {
+bool lookupDate(const COptions *options, CBlock& block, const time_q& date) {
     if (!blocks) {
         nBlocks = fileSize(miniBlockCache) / sizeof(CMiniBlock);
         blocks = new CMiniBlock[nBlocks];
         if (!blocks)
-            return usage("Could not allocate memory for the blocks (size needed: " + uint_2_Str(nBlocks) + ").\n");
+            return options->usage("Could not allocate memory for the blocks (size needed: " + uint_2_Str(nBlocks) + ").\n");
         bzero(blocks, sizeof(CMiniBlock)*(nBlocks));
         if (verbose)
             cerr << "Allocated room for " << nBlocks << " miniBlocks.\n";
@@ -145,12 +145,12 @@ bool lookupDate(CBlock& block, const time_q& date) {
         // Next, we try to open the mini-block database (caller will cleanup)
         FILE *fpBlocks = fopen(miniBlockCache.c_str(), binaryReadOnly);
         if (!fpBlocks)
-            return usage("Could not open the mini-block database: " + miniBlockCache + ".\n");
+            return options->usage("Could not open the mini-block database: " + miniBlockCache + ".\n");
 
         // Read the entire mini-block database into memory in one chunk
         size_t nRead = fread(blocks, sizeof(CMiniBlock), nBlocks, fpBlocks);
         if (nRead != nBlocks)
-            return usage("Error encountered reading mini-blocks database.\n Quitting...");
+            return options->usage("Error encountered reading mini-blocks database.\n Quitting...");
         if (verbose)
             cerr << "Read " << nRead << " miniBlocks into memory.\n";
     }

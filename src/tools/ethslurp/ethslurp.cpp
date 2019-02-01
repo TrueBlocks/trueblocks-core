@@ -37,7 +37,7 @@ int main(int argc, const char * argv[]) {
                 cerr << cRed << "\t" << message << cOff << "\n";
                 return 0;
             } else {
-                return usage(message);
+                return options.usage(message);
             }
         }
 

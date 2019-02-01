@@ -33,10 +33,10 @@ int main(int argc, const char *argv[]) {
         }
     }
     if (isHelp) {
-        optionOn(OPT_HELP);
+        options.optionOn(OPT_HELP);
         if (isTestMode())
             colorsOff();
-        return usage();
+        return options.usage();
     }
 
     // Act normally

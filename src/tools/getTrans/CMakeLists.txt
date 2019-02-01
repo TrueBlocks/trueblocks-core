@@ -92,7 +92,7 @@ run_test("getTrans_bad_hash_msg_raw"     "--raw" " 0x060e4cf9fa8d34a8b423b5b3691
 run_test("getTrans_bad_blkhash_msg"              "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1" " 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5")
 run_test("getTrans_bad_blkhash_msg_raw"  "--raw" "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1" " 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5")
 
-run_test("getTrans_message" "0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344" " -a" " -v")
+#run_test("getTrans_message" "0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344" " -a" " -v")
 run_test("getTrans_revert_not_err" "0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c" " -a" " -v" " -t")
 
 # Installation steps
