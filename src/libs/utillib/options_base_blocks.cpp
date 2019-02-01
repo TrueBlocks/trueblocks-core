@@ -16,7 +16,6 @@
 
 namespace qblocks {
 
-    extern COptionsBase *pOptions;
     //--------------------------------------------------------------------------------
     blknum_t COptionsBlockList::parseBlockOption(string_q& msg, blknum_t lastBlock) const {
 
@@ -32,7 +31,7 @@ namespace qblocks {
         } else {
             // if it's not a number, it better be a special value, and we better be able to find it
             CNameValue spec;
-            if (pOptions && pOptions->findSpecial(spec, arg)) {
+            if (COptionsBase::findSpecial(spec, arg)) {
                 if (spec.first == "latest") {
                     ret = lastBlock;
                 } else {

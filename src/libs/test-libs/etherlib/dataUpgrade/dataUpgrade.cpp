@@ -42,7 +42,7 @@ int main(int argc, const char *argv[]) {
 
     if (!fileExists("./oldFmt.cache")) {
         CFilename fileName("./oldFmt.cache");
-        return usage("File '" + fileName.getFullPath() + "' not found. All tests will fail without that file.");
+        return options.usage("File '" + fileName.getFullPath() + "' not found. All tests will fail without that file.");
     }
 
     for (auto command : options.commandLines) {

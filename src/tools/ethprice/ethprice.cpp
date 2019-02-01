@@ -69,7 +69,7 @@ int main(int argc, const char* argv[]) {
             }
 
         } else {
-            return usage(message);
+            return options.usage(message);
 
         }
     }

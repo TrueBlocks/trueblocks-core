@@ -89,12 +89,12 @@ int main(int argc, const char *argv[]) {
 
                 string_q openMode = (fileExists(miniBlockCache) ? "a+" : binaryWriteCreate);
                 if (!reporter.miniB.Lock(miniBlockCache, openMode, LOCK_WAIT))
-                    return usage(reporter.miniB.LockFailure());
+                    return options.usage(reporter.miniB.LockFailure());
 
 #ifdef MINI_TRANS
                 openMode = (fileExists(miniTransCache) ? "a+" : binaryWriteCreate);
                 if (!reporter.miniT.Lock(miniTransCache, openMode, LOCK_WAIT))
-                    return usage(reporter.miniT.LockFailure());
+                    return options.usage(reporter.miniT.LockFailure());
 #endif
 
                 if (openMode == "a+")

@@ -43,7 +43,7 @@ int main(int argc, const char *argv[]) {
             string_q className = nextTokenClear(options.classNames, '|');
             string_q fileName = "./classDefinitions/" + toLower(className) + ".txt";
             if (!fileExists(fileName)) {
-                return usage("No class definition file found at " + fileName + "\n");
+                return options.usage("No class definition file found at " + fileName + "\n");
 
             } else {
                 CToml toml(fileName);
@@ -70,7 +70,7 @@ int main(int argc, const char *argv[]) {
                         // This does not work on purpose
                         cout << "Are you sure you want to remove " << className
                                 << ".cpp and " << className << ".h? (y=remove files, otherwise ignore): ";
-                        return usage("Files not removed. Quitting...");
+                        return options.usage("Files not removed. Quitting...");
                     }
                 } else {
                     if (isTestMode())

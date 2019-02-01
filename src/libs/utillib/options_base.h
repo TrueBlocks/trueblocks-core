@@ -42,9 +42,9 @@ namespace qblocks {
     public:
         CStringArray arguments;
         //TODO(tjayrush): global data
-        static uint32_t enableBits;
-        static bool needsOption;
-        static bool isReadme;
+        uint32_t enableBits;
+        bool needsOption;
+        bool isReadme;
 
         CStringArray commandLines;
         uint64_t minArgs;
@@ -59,12 +59,11 @@ namespace qblocks {
         virtual bool parseArguments(string_q& command) = 0;
         bool builtInCmd(const string_q& arg);
         bool standardOptions(string_q& cmdLine);
-        virtual string_q postProcess(const string_q& which, const string_q& str) const { return str; }
 
         // supporting special block names
-        CNameValueArray specials;
-        void     loadSpecials(void);
-        bool     findSpecial(CNameValue& pair, const string_q& arg) const;
+        static CNameValueArray specials;
+        static void loadSpecials(void);
+        static bool findSpecial(CNameValue& pair, const string_q& arg);
 
         // supporting tools
         CNameValueArray tools;
@@ -79,9 +78,26 @@ namespace qblocks {
         bool loadNames(void);
         bool getNamedAccount(CAccountName& acct, const string_q& addr) const;
 
-    protected:
-        void registerOptions(size_t nParams, COption const *pParams);
+        // enabling options
+        bool isEnabled(uint32_t q) const;
+        void optionOff(uint32_t q);
+        void optionOn (uint32_t q);
+
+        string_q expandOption(string_q& arg);
+        bool     usage(const string_q& errMsg = "") const;
+        string_q usageStr(const string_q& errMsg = "") const;
+        string_q purpose(void) const;
+        string_q options(void) const;
+        string_q descriptions(void) const;
+        string_q oneDescription(const string_q& sN, const string_q& lN, const string_q& d, bool isMode, bool required) const;
+        string_q notes(void) const;
+        virtual string_q postProcess(const string_q& which, const string_q& str) const { return str; }
+
+protected:
+        void registerOptions(size_t nP, COption const *pP);
         virtual void Init(void) = 0;
+        const COption *pParams;
+        size_t cntParams;
     };
 
     //--------------------------------------------------------------------------------
@@ -106,16 +122,7 @@ namespace qblocks {
     };
 
     //--------------------------------------------------------------------------------
-    extern int usage(const string_q& errMsg = "");
-    extern string_q usageStr(const string_q& errMsg = "");
-    extern string_q options(void);
-    extern string_q descriptions(void);
-    extern string_q notes(void);
-    extern string_q purpose(void);
-
-    //--------------------------------------------------------------------------------
     extern int sortParams(const void *c1, const void *c2);
-    extern string_q expandOption(string_q& arg);
 
     //--------------------------------------------------------------------------------
     extern uint64_t verbose;
@@ -123,10 +130,6 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     extern void     editFile  (const string_q& fileName);
     extern string_q configPath(const string_q& part);
-
-    extern bool isEnabled(uint32_t q);
-    extern void optionOff(uint32_t q);
-    extern void optionOn (uint32_t q);
 
     //--------------------------------------------------------------------------------
     class CToml;
