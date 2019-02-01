@@ -15,6 +15,7 @@
 
 //TODO(tjayrush): This is terrible code
 extern void snagSignatures(string_q& str);
+extern void removeComments(string_q& code);
 //-----------------------------------------------------------------------
 bool sol_2_Abi(CAbi& abi, const string_q& addr) {
     string_q solFile = addr + ".sol";
@@ -22,6 +23,7 @@ bool sol_2_Abi(CAbi& abi, const string_q& addr) {
         return false;
     string_q contents;
     asciiFileToString(solFile, contents);
+    removeComments(contents);
     replaceAll(contents, "\r", "\n");
     replaceAll(contents, "function ", "~function ");
     replaceAll(contents, "event ", "~event ");
@@ -62,3 +64,53 @@ void snagSignatures(string_q& str) {
     str[pos] = '\0';
     str.resize(pos);
 }
+
+//-----------------------------------------------------------------------
+void removeComments(string_q& code) {
+    replaceAll(code, "`", ""); // easier
+    replaceAll(code, "*/", "`"); // easier
+    string_q ret;
+    char endChar = '\0';
+    typedef enum { OUT, START, STOP, IN } State;
+    State state = OUT;
+    for (auto ch : code) {
+        switch (state) {
+            case OUT:
+                switch (ch) {
+                    case '/':
+                        state = START;
+                        break;
+                    default:
+                        ret += ch;
+                        break;
+                }
+                break;
+            case START:
+                switch (ch) {
+                    case '*':
+                        state = IN;
+                        endChar = '`'; // easier
+                        break;
+                    case '/':
+                        state = IN;
+                        endChar = '\n';
+                        break;
+                    default:
+                        ret += '/';
+                        state = OUT;
+                        break;
+                }
+                break;
+            case IN:
+                if (ch == endChar) {
+                    state = OUT;
+                }
+                break;
+            default:
+                ASSERT(0);
+                return;
+        }
+    }
+    code = substitute(substitute(ret, "\t", " "), "  ", " ");
+}
+
