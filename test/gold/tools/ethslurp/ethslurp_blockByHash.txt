@@ -7,7 +7,7 @@ Processing: 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 --block:0xd19bc98080cd709
   Usage:    ethslurp [-b|-t|-f|-b|-s|-v|-h] addrs  
   Purpose:  Fetches data from EtherScan for an arbitrary address. Formats the output to your specification.
              
-  Where:    
+  Where:  
 	addrs                 one or more addresses to slurp (required)
 	-b  (--blocks range)  an optional range of blocks to slurp
 	-t  (--type val)      extract either [ ext | int | token | miner | all ] type of transactions

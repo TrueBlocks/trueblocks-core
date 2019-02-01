@@ -3,7 +3,7 @@ getTrans --help
 
   Usage:    getTrans [-r|-t|-a|-v|-h] <transID> [transID...]  
   Purpose:  Retrieve an Ethereum transaction from the local cache or a running node.  
-  Where:    
+  Where:  
 	trans_list            a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)
 	-r  (--raw)           retrieve raw transaction directly from the running node
 	-t  (--trace)         display the transaction's trace

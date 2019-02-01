@@ -1065,7 +1065,7 @@ namespace qblocks {
     }
 
     //-----------------------------------------------------------------------
-    string_q defHide =
+    const string_q defHide =
         "CTransaction: nonce, input"
     "|" "CLogEntry: data, topics"
     "|" "CTrace: blockHash, blockNumber, transactionHash, transactionPosition, traceAddress, subtraces"
@@ -1074,7 +1074,7 @@ namespace qblocks {
     "|" "CFunction: constant, payable, signature, encoding, type, articulate_str"
     "|" "CParameter: type, indexed, isPointer, isArray, isObject";
 
-    string_q defShow =
+    const string_q defShow =
         "CTransaction: price, gasCost, articulatedTx, traces, isError, date, ether"
     "|" "CLogEntry: articulatedLog"
     "|" "CTrace: articulatedTrace"

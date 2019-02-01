@@ -6,7 +6,7 @@ blockMan --thing
   Usage:    blockMan [-l|-c|-s|-e|-f|-r|-p|-v|-h]  
   Purpose:  Show stats or check the block cache.
              
-  Where:    
+  Where:  
 	-l  (--list)          list all blocks in the index (non-empty blocks only by default)
 	-c  (--check)         verify the block index (both empty and non-empty by default)
 	-s  (--stats)         show statistics for the block index (the default)

@@ -94,9 +94,6 @@ namespace qblocks {
         string_q getFilename(void) const { return m_filename; }
         void setFilename(const string_q& fn) { m_filename = fn; }
 
-        // Use only for cases where file deletion does not work
-        static bool setLocking(bool val);
-
         bool isAscii(void) const {
             return m_isascii;
         }
@@ -139,10 +136,6 @@ namespace qblocks {
 
         CSharedResource(const CSharedResource& l);
         CSharedResource& operator=(const CSharedResource& l);
-
-        // Turns on and off file locking for machines that do not allow file delete such as my ISP
-        //TODO(tjayrush): global data
-        static bool g_locking;  // = true;
     };
 
     //----------------------------------------------------------------------

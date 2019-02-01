@@ -29,20 +29,9 @@ namespace qblocks {
     //----------------------------------------------------------------------
     extern string_q manageRemoveList(const string_q& filename = "");
     extern size_t quitCount(size_t s = 0);
-    bool CSharedResource::g_locking = true;
-
-    //----------------------------------------------------------------------
-    bool CSharedResource::setLocking(bool val) {
-        bool ret = g_locking;
-        g_locking = val;
-        return ret;
-    }
 
     //----------------------------------------------------------------------
     bool CSharedResource::createLockFile(const string_q& lockfilename) {
-        if (!g_locking)
-            return true;
-
         m_ownsLock = false;
         FILE *fp = fopen(lockfilename.c_str(), asciiWriteCreate);
         if (fp) {
@@ -59,9 +48,6 @@ namespace qblocks {
 
     //----------------------------------------------------------------------
     bool CSharedResource::createLock(bool createOnFail) {
-        if (!g_locking)
-            return true;
-
         string_q lockFilename = m_filename + ".lck";
 
         int i = 0;
@@ -85,9 +71,6 @@ namespace qblocks {
 
     //----------------------------------------------------------------------
     bool CSharedResource::waitOnLock(bool deleteOnFail) const {
-        if (!g_locking)
-            return true;
-
         string_q lockFilename = m_filename + ".lck";
 
         if (fileExists(lockFilename) && !isTestMode())
@@ -195,7 +178,7 @@ namespace qblocks {
     void CSharedResource::Release(void) {
         Close();
 
-        if (g_locking && m_ownsLock) {
+        if (m_ownsLock) {
             string_q lockFilename = m_filename + ".lck";
             bool ret = remove(lockFilename.c_str());
             manageRemoveList("r:"+lockFilename);
@@ -448,11 +431,13 @@ namespace qblocks {
     //-----------------------------------------------------------------------
     size_t quitCount(size_t s) {
         //TODO(tjayrush): global data
-        static size_t cnt = 0;
-        if (cnt && sectionLocked)  // ignore if we're locked
+        // This is global data, and therefore not thread safe, but it's okay since
+        // we want to count a quit request no matter which thread it's from.
+        static size_t g_QuitCount = 0;
+        if (g_QuitCount && sectionLocked)  // ignore if we're locked
             return false;
-        cnt += s;
-        return cnt;
+        g_QuitCount += s;
+        return g_QuitCount;
     }
 
     //-----------------------------------------------------------------------

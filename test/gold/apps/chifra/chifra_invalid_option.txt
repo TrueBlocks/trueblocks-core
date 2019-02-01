@@ -6,7 +6,7 @@ chifra -s 1001001
   Usage:    chifra [-s|-v|-h] folder <address> [address...]  
   Purpose:  Interactively creates a QBlocks monitor for the given address.
              
-  Where:    
+  Where:  
 	folder                name of the monitor (also the ./folder for the source code) (required)
 	address_list          a list of one or more addresses to monitor (must start with '0x') (required)
 	-s  (--silent)        suppress all output from chifra (normally chifra is quite verbose)

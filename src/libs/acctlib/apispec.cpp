@@ -251,39 +251,28 @@ ostream& operator<<(ostream& os, const CApiSpec& item) {
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 bool CApiSpec::sendData(const string_q& data) {
-    //TODO(tjayrush): global data
-    static CURL *curl_handle = NULL;
-    static struct curl_slist *curl_headers = NULL;
-    if (data == "cleanup") {
-        if (curl_headers)
-            curl_slist_free_all(curl_headers);
-        if (curl_handle)
-            curl_easy_cleanup(curl_handle);
-        curl_headers = NULL;
-        curl_handle = NULL;
-        return true;
-    }
 
-    //cout << *this << "\n";
-
-    if (curl_handle == NULL) {
-        curl_handle = curl_easy_init();
-        curl_easy_setopt(curl_handle, CURLOPT_CUSTOMREQUEST, (const char*)method.c_str());
-        curl_easy_setopt(curl_handle, CURLOPT_URL, (const char*)uri.c_str());
-        curl_headers = curl_slist_append(curl_headers, "Postman-Token: a80abd88-cbb5-43b1-b4a2-574f66baae53");
+    CURLcode ret = CURLE_SEND_ERROR;
+    CURL *curl_handle = curl_easy_init();
+    if (curl_handle) {
+        curl_easy_setopt(curl_handle, CURLOPT_CUSTOMREQUEST, method.c_str());
+        curl_easy_setopt(curl_handle, CURLOPT_URL, uri.c_str());
+        struct curl_slist *curl_headers = NULL;
         curl_headers = curl_slist_append(curl_headers, "cache-control: no-cache");
-        curl_headers = curl_slist_append(curl_headers, "Content-Type: application/json");
-        string_q head = headers;
-        while (!head.empty()) {
-            string_q h = nextTokenClear(head, '|');
-            curl_headers = curl_slist_append(curl_headers, (const char*)h.c_str());
-        }
-        curl_easy_setopt(curl_handle, CURLOPT_HTTPHEADER, curl_headers);
-    }
+        if (curl_headers) {
+            CStringArray heads;
+            explode(heads, headers, '|');
+            for (auto header : heads)
+                curl_headers = curl_slist_append(curl_headers, header.c_str());
+            curl_easy_setopt(curl_handle, CURLOPT_HTTPHEADER, curl_headers);
+            curl_easy_setopt(curl_handle, CURLOPT_POSTFIELDS, data.c_str());
 
-    curl_easy_setopt(curl_handle, CURLOPT_POSTFIELDS, (const char*)data.c_str());
-    CURLcode ret = curl_easy_perform(curl_handle);
-    return ret == CURLE_OK;
+            ret = curl_easy_perform(curl_handle);
+            curl_slist_free_all(curl_headers);
+        }
+        curl_easy_cleanup(curl_handle);
+    }
+    return (ret == CURLE_OK);
 }
 
 //---------------------------------------------------------------------------
