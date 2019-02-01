@@ -27,10 +27,9 @@ extern const char* STR_ITEMS2;
 extern const char* STR_FORMAT_FUNCDATA;
 
 //-----------------------------------------------------------------------
-static void     makeTheCode(const string_q& fn, const string_q& addr);
-static string_q projectName(void);
+static void     makeTheCode(const string_q& fn, const string_q& addr, const string_q& projName, const string_q& pathIn);
+static string_q projectName(const string_q& pathIn);
 static string_q templateFolder = configPath("grabABI/");
-static string_q classDir;
 
 //-----------------------------------------------------------------------
 void COptions::handle_generate(void) {
@@ -47,139 +46,139 @@ void COptions::handle_generate(void) {
     string_q sources = "src= \\\n", registers, factory1, factory2;
 
     for (auto abi : abi_specs) {
-    for (auto interface : abi.interfaces) {
-        if (!interface.isBuiltIn) {
-            string_q name = interface.Format("[{NAME}]") + (interface.type == "event" ? "Event" : "");
-            if (name == "eventEvent")
-                name = "logEntry";
-            if (startsWith(name, '_'))
-                name = extract(name, 1);
-            char ch = static_cast<char>(toupper(name[0]));
-            string_q fixed;
-            fixed = ch;
-            name = fixed + extract(name, 1);
-            string_q theClass = (isBuiltIn() ? "Q" : "C") + name;
-            bool isConst = interface.constant;
-            bool isEmpty = name.empty() || interface.type.empty();
-            bool isLog = contains(toLower(name), "logentry");
-            if (!isEmpty && !isLog) {
-                if (name != "DefFunction") {
-                    if (interface.type == "event") {
-                        evtExterns += interface.Format("extern const string_q evt_[{NAME}]{QB};\n");
-                        string_q decl = "const string_q evt_[{NAME}]{QB} = \"" + interface.encoding + "\";\n";
-                        evtDecls += interface.Format(decl);
-                        if (!isBuiltIn())
-                            evts += interface.Format("\tevt_[{NAME}],\n");
-                    } else {
-                        funcExterns += interface.Format("extern const string_q func_[{NAME}]{QB};\n");
-                        string_q decl = "const string_q func_[{NAME}]{QB} = \"" + interface.encoding + "\";\n";
-                        funcDecls += interface.Format(decl);
-                        if (!isBuiltIn())
-                            sigs += interface.Format("\tfunc_[{NAME}],\n");
+        for (auto interface : abi.interfaces) {
+            if (!interface.isBuiltIn) {
+                string_q name = interface.Format("[{NAME}]") + (interface.type == "event" ? "Event" : "");
+                if (name == "eventEvent")
+                    name = "logEntry";
+                if (startsWith(name, '_'))
+                    name = extract(name, 1);
+                char ch = static_cast<char>(toupper(name[0]));
+                string_q fixed;
+                fixed = ch;
+                name = fixed + extract(name, 1);
+                string_q theClass = (isBuiltIn() ? "Q" : "C") + name;
+                bool isConst = interface.constant;
+                bool isEmpty = name.empty() || interface.type.empty();
+                bool isLog = contains(toLower(name), "logentry");
+                if (!isEmpty && !isLog) {
+                    if (name != "DefFunction") {
+                        if (interface.type == "event") {
+                            evtExterns += interface.Format("extern const string_q evt_[{NAME}]{QB};\n");
+                            string_q decl = "const string_q evt_[{NAME}]{QB} = \"" + interface.encoding + "\";\n";
+                            evtDecls += interface.Format(decl);
+                            if (!isBuiltIn())
+                                evts += interface.Format("\tevt_[{NAME}],\n");
+                        } else {
+                            funcExterns += interface.Format("extern const string_q func_[{NAME}]{QB};\n");
+                            string_q decl = "const string_q func_[{NAME}]{QB} = \"" + interface.encoding + "\";\n";
+                            funcDecls += interface.Format(decl);
+                            if (!isBuiltIn())
+                                sigs += interface.Format("\tfunc_[{NAME}],\n");
+                        }
                     }
-                }
-                string_q fields, assigns1, assigns2, items1, items2;
-                uint64_t nIndexed = 0;
-                for (size_t j = 0 ; j < interface.inputs.size() ; j++) {
-                    fields   += interface.inputs[j].Format("[{TYPE}][ {NAME}]|");
-                    assigns1 += interface.inputs[j].Format(interface.inputs[j].getFunctionAssign(j));
-                    items1   += "\t\t\ttypes.push_back(\"" + interface.inputs[j].type + "\");\n";
-                    nIndexed += interface.inputs[j].indexed;
-                    string_q res = interface.inputs[j].Format(interface.inputs[j].getEventAssign(j+1, nIndexed));
-                    replace(res, "++", "[");
-                    replace(res, "++", "]");
-                    assigns2 += res;
-                    items2   += "\t\t\ttypes.push_back(\"" + interface.inputs[j].type + "\");\n";
-                }
-
-                string_q base = (interface.type == "event" ? "LogEntry" : "Transaction");
-                if (name == "LogEntry")
-                    base = "LogEntry";
-
-                string_q out = STR_CLASSDEF;
-                replace(out, "[{DIR}]", substitute(classDir, getHomeFolder(), "~/"));
-                replace(out, "[{CLASS}]", theClass);
-                replace(out, "[{FIELDS}]", fields);
-                replace(out, "[{BASE}]", base);
-                replace(out, "[{BASE_LOWER}]", toLower(base));
-
-                string_q fileName = toLower(name)+".txt";
-                if (!isConst) {
-                    headers += ("#include \"" + substitute(fileName, ".txt", ".h") + "\"\n");
-                    registers += "\t" + theClass + "::registerClass();\n";
-                }
-                sources += substitute(fileName, ".txt", ".cpp") + " \\\n";
-                if (base == "Transaction") {
-                    string_q f1, fName = interface.Format("[{NAME}]");
-                    f1 = string_q(STR_FACTORY1);
-                    replaceAll(f1, "[{CLASS}]", theClass);
-                    replaceAll(f1, "[{NAME}]", fName);
-                    if (fName == "defFunction")
-                        replaceAll(f1, "encoding == func_[{LOWER}]", "encoding.length() < 10");
-                    else
-                        replaceAll(f1, "[{LOWER}]", fName);
-                    replaceAll(f1, "[{ASSIGNS1}]", assigns1);
-                    replaceAll(f1, "[{ITEMS1}]", items1);
-                    string_q parseIt = "";
-                    replaceAll(f1, "[{PARSEIT}]", parseIt);
-                    replaceAll(f1, "[{BASE}]", base);
-                    replaceAll(f1, "[{SIGNATURE}]",
-                               substitute(
-                                          substitute(
-                                                     substitute(
-                                                                substitute(interface.getSignature(SIG_DEFAULT), "\t", ""),
-                                                                "  ", " "), " (", "("), ",", ", "));
-                    replace(f1, "[{ENCODING}]", interface.getSignature(SIG_ENCODE));
-                    replace(f1, " defFunction(string)", "()");
-                    if (!isConst)
-                        factory1 += f1;
-
-                } else if (name != "LogEntry") {
-                    string_q f2, fName = interface.Format("[{NAME}]");
-                    f2 = substitute(
-                                    substitute(string_q(STR_FACTORY2), "[{CLASS}]", theClass), "[{LOWER}]", fName);
-                    replace(f2, "[{ASSIGNS2}]", assigns2);
-                    replace(f2, "[{ITEMS2}]", items2);
-                    string_q parseIt = "";
-                    replace(f2, "[{PARSEIT}]", parseIt);
-                    replace(f2, "[{BASE}]", base);
-                    replace(f2, "[{SIGNATURE}]",
-                            substitute(
-                                       substitute(
-                                                  substitute(
-                                                             substitute(interface.getSignature(SIG_DEFAULT|SIG_IINDEXED), "\t", ""),
-                                                             "  ", " "), " (", "("), ",", ", "));
-                    replace(f2, "[{ENCODING}]", interface.getSignature(SIG_ENCODE));
-                    if (!isConst)
-                        factory2 += f2;
-                }
-
-                if (name != "logEntry" && !isConst) {
-                    // hack warning
-                    replaceAll(out, "bytes32[]", "CStringArray");
-                    replaceAll(out, "uint256[]", "CBigUintArray");  // order matters
-                    replaceAll(out, "int256[]",  "CBigIntArray");
-                    replaceAll(out, "uint32[]",  "CUintArray");  // order matters
-                    replaceAll(out, "int32[]",   "CIntArray");
-                    stringToAsciiFile(classDefs+fileName, out);
-                    if (interface.type == "event")
-                        cout << "Generating class for derived event type: '" << theClass << "'\n";
-                    else
-                        cout << "Generating class for derived transaction type: '" << theClass << "'\n";
-
-                    string_q makeClass = configPath("makeClass/makeClass");
-                    if (!fileExists(makeClass)) {
-                        cerr << makeClass << " was not found. This executable is required "
-                        "to run grabABI. Quitting...\n";
-                        exit(0);
+                    string_q fields, assigns1, assigns2, items1, items2;
+                    uint64_t nIndexed = 0;
+                    for (size_t j = 0 ; j < interface.inputs.size() ; j++) {
+                        fields   += interface.inputs[j].Format("[{TYPE}][ {NAME}]|");
+                        assigns1 += interface.inputs[j].Format(interface.inputs[j].getFunctionAssign(j));
+                        items1   += "\t\t\ttypes.push_back(\"" + interface.inputs[j].type + "\");\n";
+                        nIndexed += interface.inputs[j].indexed;
+                        string_q res = interface.inputs[j].Format(interface.inputs[j].getEventAssign(j+1, nIndexed));
+                        replace(res, "++", "[");
+                        replace(res, "++", "]");
+                        assigns2 += res;
+                        items2   += "\t\t\ttypes.push_back(\"" + interface.inputs[j].type + "\");\n";
                     }
-                    string_q res = doCommand(makeClass + " -r " + toLower(name));
-                    if (!res.empty())
-                        cout << "\t" << res << "\n";
+
+                    string_q base = (interface.type == "event" ? "LogEntry" : "Transaction");
+                    if (name == "LogEntry")
+                        base = "LogEntry";
+
+                    string_q out = STR_CLASSDEF;
+                    replace(out, "[{DIR}]", substitute(classDir, getHomeFolder(), "~/"));
+                    replace(out, "[{CLASS}]", theClass);
+                    replace(out, "[{FIELDS}]", fields);
+                    replace(out, "[{BASE}]", base);
+                    replace(out, "[{BASE_LOWER}]", toLower(base));
+
+                    string_q fileName = toLower(name)+".txt";
+                    if (!isConst) {
+                        headers += ("#include \"" + substitute(fileName, ".txt", ".h") + "\"\n");
+                        registers += "\t" + theClass + "::registerClass();\n";
+                    }
+                    sources += substitute(fileName, ".txt", ".cpp") + " \\\n";
+                    if (base == "Transaction") {
+                        string_q f1, fName = interface.Format("[{NAME}]");
+                        f1 = string_q(STR_FACTORY1);
+                        replaceAll(f1, "[{CLASS}]", theClass);
+                        replaceAll(f1, "[{NAME}]", fName);
+                        if (fName == "defFunction")
+                            replaceAll(f1, "encoding == func_[{LOWER}]", "encoding.length() < 10");
+                        else
+                            replaceAll(f1, "[{LOWER}]", fName);
+                        replaceAll(f1, "[{ASSIGNS1}]", assigns1);
+                        replaceAll(f1, "[{ITEMS1}]", items1);
+                        string_q parseIt = "";
+                        replaceAll(f1, "[{PARSEIT}]", parseIt);
+                        replaceAll(f1, "[{BASE}]", base);
+                        replaceAll(f1, "[{SIGNATURE}]",
+                                   substitute(
+                                              substitute(
+                                                         substitute(
+                                                                    substitute(interface.getSignature(SIG_DEFAULT), "\t", ""),
+                                                                    "  ", " "), " (", "("), ",", ", "));
+                        replace(f1, "[{ENCODING}]", interface.getSignature(SIG_ENCODE));
+                        replace(f1, " defFunction(string)", "()");
+                        if (!isConst)
+                            factory1 += f1;
+
+                    } else if (name != "LogEntry") {
+                        string_q f2, fName = interface.Format("[{NAME}]");
+                        f2 = substitute(
+                                        substitute(string_q(STR_FACTORY2), "[{CLASS}]", theClass), "[{LOWER}]", fName);
+                        replace(f2, "[{ASSIGNS2}]", assigns2);
+                        replace(f2, "[{ITEMS2}]", items2);
+                        string_q parseIt = "";
+                        replace(f2, "[{PARSEIT}]", parseIt);
+                        replace(f2, "[{BASE}]", base);
+                        replace(f2, "[{SIGNATURE}]",
+                                substitute(
+                                           substitute(
+                                                      substitute(
+                                                                 substitute(interface.getSignature(SIG_DEFAULT|SIG_IINDEXED), "\t", ""),
+                                                                 "  ", " "), " (", "("), ",", ", "));
+                        replace(f2, "[{ENCODING}]", interface.getSignature(SIG_ENCODE));
+                        if (!isConst)
+                            factory2 += f2;
+                    }
+
+                    if (name != "logEntry" && !isConst) {
+                        // hack warning
+                        replaceAll(out, "bytes32[]", "CStringArray");
+                        replaceAll(out, "uint256[]", "CBigUintArray");  // order matters
+                        replaceAll(out, "int256[]",  "CBigIntArray");
+                        replaceAll(out, "uint32[]",  "CUintArray");  // order matters
+                        replaceAll(out, "int32[]",   "CIntArray");
+                        stringToAsciiFile(classDefs+fileName, out);
+                        if (interface.type == "event")
+                            cout << "Generating class for derived event type: '" << theClass << "'\n";
+                        else
+                            cout << "Generating class for derived transaction type: '" << theClass << "'\n";
+
+                        string_q makeClass = configPath("makeClass/makeClass");
+                        if (!fileExists(makeClass)) {
+                            cerr << makeClass << " was not found. This executable is required "
+                            "to run grabABI. Quitting...\n";
+                            exit(0);
+                        }
+                        string_q res = doCommand(makeClass + " -r " + toLower(name));
+                        if (!res.empty())
+                            cout << "\t" << res << "\n";
+                    }
                 }
             }
         }
-    }
     }
 
     // The library header file
@@ -207,7 +206,7 @@ void COptions::handle_generate(void) {
     if (!isBuiltIn()) {
         string_q makefile;
         asciiFileToString(templateFolder + "CMakeLists.txt", makefile);
-        replaceAll(makefile, "[{PROJECT_NAME}]", projectName());
+        replaceAll(makefile, "[{PROJECT_NAME}]", projectName(classDir));
         writeTheCode(classDir + "CMakeLists.txt", makefile);
     }
 
@@ -261,44 +260,44 @@ void COptions::handle_generate(void) {
     sourceCode = substitute(sourceCode, "{QB}", (isBuiltIn() ? "_qb" : ""));
     writeTheCode(classDir + prefix + ".cpp", sourceCode);
 
+    string_q primaryAddr = "";
     // The code
     if (!isBuiltIn()) {
         string_q addrList;
         for (auto addr : addrs)
             addrList += (addr + "");
-        makeTheCode("rebuild",        trim(addrList));
-        makeTheCode("CMakeLists.txt", ""); //primaryAddr);
-        makeTheCode("debug.h",        ""); //primaryAddr);
-        makeTheCode("debug.cpp",      ""); //primaryAddr);
-        makeTheCode("options.cpp",    ""); //primaryAddr);
-        makeTheCode("options.h",      ""); //primaryAddr);
-        makeTheCode("main.cpp",       ""); //primaryAddr);
-        makeTheCode("main.h",         ""); //primaryAddr);
-        makeTheCode("visitor.cpp",    ""); //primaryAddr);
-        makeTheCode("visitor.h",      ""); //primaryAddr);
-        makeTheCode("accounting.cpp", ""); //primaryAddr);
-        makeTheCode("display.cpp",    ""); //primaryAddr);
-        makeTheCode("processing.cpp", ""); //primaryAddr);
-        makeTheCode("processing.h",   ""); //primaryAddr);
+        makeTheCode("rebuild",        trim(addrList), projectName(classDir), classDir);
+        makeTheCode("CMakeLists.txt", primaryAddr, projectName(classDir), classDir);
+        makeTheCode("debug.h",        primaryAddr, projectName(classDir), classDir);
+        makeTheCode("debug.cpp",      primaryAddr, projectName(classDir), classDir);
+        makeTheCode("options.cpp",    primaryAddr, projectName(classDir), classDir);
+        makeTheCode("options.h",      primaryAddr, projectName(classDir), classDir);
+        makeTheCode("main.cpp",       primaryAddr, projectName(classDir), classDir);
+        makeTheCode("main.h",         primaryAddr, projectName(classDir), classDir);
+        makeTheCode("visitor.cpp",    primaryAddr, projectName(classDir), classDir);
+        makeTheCode("visitor.h",      primaryAddr, projectName(classDir), classDir);
+        makeTheCode("accounting.cpp", primaryAddr, projectName(classDir), classDir);
+        makeTheCode("display.cpp",    primaryAddr, projectName(classDir), classDir);
+        makeTheCode("processing.cpp", primaryAddr, projectName(classDir), classDir);
+        makeTheCode("processing.h",   primaryAddr, projectName(classDir), classDir);
     }
 }
 
 //-----------------------------------------------------------------------
-static string_q projectName(void) {
-    CFilename fn(classDir+"tmp");
-    string_q ret = substitute(substitute(substitute(fn.getPath(), "", ""), "", ""), "//", "");
-    nextTokenClearReverse(ret, '/');
-    ret = nextTokenClearReverse(ret, '/');
-    return ret;
+static string_q projectName(const string_q& pathIn) {
+    // pick off the last part of the path
+    CStringArray parts;
+    explode(parts, substitute(pathIn, "//", "/"), '/');
+    return parts[parts.size()-1];
 }
 
 //-----------------------------------------------------------------------
-static void makeTheCode(const string_q& fn, const string_q& addr) {
+static void makeTheCode(const string_q& fn, const string_q& addr, const string_q& projName, const string_q& pathIn) {
     string_q theCode;
     asciiFileToString(templateFolder + fn, theCode);
     replaceAll(theCode, "[{ADDR}]", addr);
-    replaceAll(theCode, "[{PROJECT_NAME}]", projectName());
-    writeTheCode(classDir + "../" + fn, theCode, "", fn != "CMakeFile.txt");
+    replaceAll(theCode, "[{PROJECT_NAME}]", projName);
+    writeTheCode(pathIn + "../" + fn, theCode, "", fn != "CMakeFile.txt");
 }
 
 //-----------------------------------------------------------------------
