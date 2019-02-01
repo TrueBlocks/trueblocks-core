@@ -1017,7 +1017,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     "    { name : \"parityhack2\",    value : \"4501969\" },\n"
     "    { name : \"kitties\",        value : \"4605167\" },\n"
     "    { name : \"devcon4\",        value : \"6610279\" },\n"
-    "    { name : \"constantinople\", value : \"7080000\" },\n"
+    "    { name : \"constantinople\", value : \"7280000\" },\n"
     "    { name : \"latest\",         value : \"\"        }\n"
     "]";
 }  // namespace qblocks
