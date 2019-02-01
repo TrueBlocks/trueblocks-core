@@ -6,14 +6,14 @@ chifra folder 0x123
   Usage:    chifra [-s|-v|-h] folder <address> [address...]  
   Purpose:  Interactively creates a QBlocks monitor for the given address.
              
-  Where:    
+  Where:  
 	folder                name of the monitor (also the ./folder for the source code) (required)
 	address_list          a list of one or more addresses to monitor (must start with '0x') (required)
 	-s  (--silent)        suppress all output from chifra (normally chifra is quite verbose)
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 
-  Notes:  
+  Notes:
 	- addresses must start with '0x' and be forty characters long.
 
   Powered by QBlocks

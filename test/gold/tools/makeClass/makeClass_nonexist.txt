@@ -7,7 +7,7 @@ makeClass -e x
   Usage:    makeClass [-o|-r|-f|-l|-h|-c|-n|-s|-a|-v|-h] className  
   Purpose:  Creates C++ code based on definition file at ./classDefinition/<className>.
              
-  Where:    
+  Where:  
 	className             name of C++ class(es) to process (required)
 	-o  (--open)          edit <className(s)> definition file in local folder
 	-r  (--run)           run the class maker on associated <className(s)>

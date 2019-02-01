@@ -136,8 +136,8 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     extern void manageFields(const string_q& listIn, bool show);
-    extern string_q defHide;
-    extern string_q defShow;
+    extern const string_q defHide;
+    extern const string_q defShow;
 
 }  // namespace qblocks
 

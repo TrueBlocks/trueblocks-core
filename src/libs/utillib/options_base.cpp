@@ -377,9 +377,6 @@ namespace qblocks {
         }
     }
 
-    static string_q sep = "  ";
-    static string_q sep2 = "";
-
     //--------------------------------------------------------------------------------
     bool COptionsBase::usage(const string_q& errMsg) const {
         cerr << usageStr(errMsg);
@@ -391,7 +388,6 @@ namespace qblocks {
 
         ostringstream os;
         if (isReadme) {
-            sep = sep2 = "`";
             colorsOff();
             os << "#### Usage\n";
         }
@@ -399,7 +395,7 @@ namespace qblocks {
         os << "\n";
         if (!errMsg.empty())
             os << cRed << "  " << errMsg << "\n\n";
-        os << bYellow << sep << "Usage:" << sep2 << "    " << cOff << programName << " " << options() << "  \n";
+        os << hiUp1 << "Usage:" << hiDown << "    " << programName << " " << options() << "  \n";
         os << purpose();
         os << descriptions() << "\n";
         os << notes();
@@ -458,12 +454,7 @@ namespace qblocks {
             replace(purpose, "\n           ", "");
             string_q xxx;
             xxx = substitute(purpose, "\n", "\n           ");
-            os << bYellow;
-            os << sep;
-            os << "Purpose:";
-            os << sep2;
-            os << "  ";
-            os << cOff;
+            os << hiUp1 << "Purpose:" << hiDown << "  ";
             os << xxx;
             os << "  \n";
         }
@@ -509,16 +500,14 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             string_q tick = "- ";
             string_q lead = "\t";
             string_q trail = "\n";
-            string_q sepy1 = cTeal, sepy2 = cOff;
             if (isReadme) {
-                sepy1 = sepy2 = "`";
                 lead = "";
                 trail = "\n";
             }
-            replaceAll(ret, "[{", sepy1);
-            replaceAll(ret, "}]", sepy2);
+            replaceAll(ret, "[{", hiUp2);
+            replaceAll(ret, "}]", hiDown);
 
-            os << bYellow << sep << "Notes:" << sep << cOff << "\n";
+            os << hiUp1 << "Notes:" << hiDown << "\n";
             os << (isReadme ? "\n" : "");
             while (!ret.empty()) {
                 string_q line = substitute(nextTokenClear(ret, '\n'), "|", "\n" + lead + "  ");
@@ -535,7 +524,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     string_q COptionsBase::descriptions(void) const {
 
         ostringstream os;
-        os << bYellow << sep << "Where:" << sep << cOff << "  \n";
+        os << hiUp1 << "Where:" << hiDown << "  \n";
         if (isReadme) {
             os << "\n";
             os << "| Short Cut | Option | Description |\n";
@@ -620,6 +609,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         // Special case
         if (arg == "-th" || arg == "-ht") {
             isReadme = true;
+            hiUp1 = hiUp2 = hiDown = '`';
             arg = "";
             replaceAll(ret, "-th", "");
             replaceAll(ret, "-ht", "");
@@ -876,6 +866,9 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         enableBits = OPT_DEFAULT;
         for (int i = 0 ; i < 5 ; i++)
             sorts[i] = NULL;
+        hiUp1  = (isTestMode() ? "" : cYellow) + "  ";
+        hiUp2  = (isTestMode() ? "" : cTeal);
+        hiDown = (isTestMode() ? "" : cOff);
     }
 
     //-----------------------------------------------------------------------

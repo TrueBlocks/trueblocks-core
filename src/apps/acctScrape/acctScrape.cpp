@@ -395,7 +395,6 @@ bool processTransaction(const CBlock& block, const CTransaction *trans, COptions
                         if (!trans->articulatedTx.message.empty())
                             SHOW_FIELD(CFunction, "message");
                         ((CAccountWatch*)acct)->api_spec.sendData(trans->Format());
-                        ((CAccountWatch*)acct)->api_spec.sendData("cleanup");
                         HIDE_FIELD(CFunction, "message");
                         cout << "\n";
                         cout.flush();
