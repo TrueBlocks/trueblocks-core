@@ -216,9 +216,8 @@ CArchive& operator<<(CArchive& archive, const CBlockArray& array) {
 
 //---------------------------------------------------------------------------
 void CBlock::registerClass(void) {
-    static bool been_here = false;
-    if (been_here) return;
-    been_here = true;
+    // only do this once
+    if (HAS_FIELD(CBlock, "schema")) return;
 
     size_t fieldNum = 1000;
     ADD_FIELD(CBlock, "schema",  T_NUMBER, ++fieldNum);

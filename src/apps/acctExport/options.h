@@ -46,10 +46,6 @@ extern string_q cleanFmt    (const string_q& str);
 extern string_q defTransFmt;
 
 //-----------------------------------------------------------------------------
-extern CStringArray signatures;
-extern CStringArray topics;
-
-//-----------------------------------------------------------------------------
 enum export_t {
     JSON = 1,
     TXT = 2,

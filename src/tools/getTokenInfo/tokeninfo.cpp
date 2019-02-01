@@ -165,9 +165,8 @@ CArchive& operator<<(CArchive& archive, const CTokenInfoArray& array) {
 
 //---------------------------------------------------------------------------
 void CTokenInfo::registerClass(void) {
-    static bool been_here = false;
-    if (been_here) return;
-    been_here = true;
+    // only do this once
+    if (HAS_FIELD(CTokenInfo, "schema")) return;
 
     CAccountWatch::registerClass();
 

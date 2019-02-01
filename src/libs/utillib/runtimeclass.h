@@ -106,6 +106,9 @@ public: \
     toUpper(string_q(a)) + "::" + toUpper(string_q(sf)) + "}\"" + (b ? ", ]" : "]")
 
 //------------------------------------------------------------
+#define HAS_FIELD(CLASS_NAME, FIELD_NAME) (GETRUNTIME_CLASS(CLASS_NAME)->findField(FIELD_NAME) != NULL)
+
+//------------------------------------------------------------
 #define HIDE_FIELD(CLASS_NAME, FIELD_NAME) { \
     CFieldData *f = GETRUNTIME_CLASS(CLASS_NAME)->findField(FIELD_NAME); \
     if (f) \

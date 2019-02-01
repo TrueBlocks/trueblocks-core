@@ -84,10 +84,10 @@ int main(int argc, char *argv[]) {
 void CCounter::countOne(const CBlock &block) {
 
 #ifdef SUBTOTAL_EVERY_X_BLOCKS
-    static blknum_t last = startBlock;
+    thread_local blknum_t last = startBlock;
     blknum_t thisOne = (block.blockNumber / 10000) * 10000;
 #else
-    static time_q last = earliestDate;
+    thread_local time_q last = earliestDate;
 #ifdef SUBTOTAL_BY_FIVE_MINS
     time_q thisOne = ts_2_Date(block.timestamp);
     thisOne = time_q(thisOne.GetYear(),

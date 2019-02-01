@@ -160,9 +160,8 @@ CArchive& operator<<(CArchive& archive, const CParameterArray& array) {
 
 //---------------------------------------------------------------------------
 void CParameter::registerClass(void) {
-    static bool been_here = false;
-    if (been_here) return;
-    been_here = true;
+    // only do this once
+    if (HAS_FIELD(CParameter, "schema")) return;
 
     size_t fieldNum = 1000;
     ADD_FIELD(CParameter, "schema",  T_NUMBER, ++fieldNum);

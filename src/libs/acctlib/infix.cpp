@@ -157,9 +157,8 @@ CArchive& operator<<(CArchive& archive, const CInfixArray& array) {
 
 //---------------------------------------------------------------------------
 void CInfix::registerClass(void) {
-    static bool been_here = false;
-    if (been_here) return;
-    been_here = true;
+    // only do this once
+    if (HAS_FIELD(CInfix, "schema")) return;
 
     CTreeNode::registerClass();
 

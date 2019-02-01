@@ -213,9 +213,8 @@ CArchive& operator<<(CArchive& archive, const CFunctionArray& array) {
 
 //---------------------------------------------------------------------------
 void CFunction::registerClass(void) {
-    static bool been_here = false;
-    if (been_here) return;
-    been_here = true;
+    // only do this once
+    if (HAS_FIELD(CFunction, "schema")) return;
 
     size_t fieldNum = 1000;
     ADD_FIELD(CFunction, "schema",  T_NUMBER, ++fieldNum);

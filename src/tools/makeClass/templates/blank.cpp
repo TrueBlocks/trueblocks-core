@@ -123,9 +123,8 @@ CArchive& operator<<(CArchive& archive, const [{CLASS_NAME}]Array& array) {
 
 //---------------------------------------------------------------------------
 void [{CLASS_NAME}]::registerClass(void) {
-    static bool been_here = false;
-    if (been_here) return;
-    been_here = true;
+    // only do this once
+    if (HAS_FIELD([{CLASS_NAME}], "schema")) return;
 
     [{PARENT_REG}]size_t fieldNum = 1000;
     ADD_FIELD([{CLASS_NAME}], "schema",  T_NUMBER, ++fieldNum);

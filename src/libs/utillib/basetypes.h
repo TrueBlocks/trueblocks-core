@@ -43,6 +43,7 @@
 #include <tuple>
 #include <chrono>
 #include <iomanip>
+#include <thread>
 
 //-------------------------------------------------------------------------
 using namespace std;  // NOLINT

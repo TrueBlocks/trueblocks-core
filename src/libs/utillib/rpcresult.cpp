@@ -146,9 +146,8 @@ CArchive& operator<<(CArchive& archive, const CRPCResultArray& array) {
 
 //---------------------------------------------------------------------------
 void CRPCResult::registerClass(void) {
-    static bool been_here = false;
-    if (been_here) return;
-    been_here = true;
+    // only do this once
+    if (HAS_FIELD(CRPCResult, "schema")) return;
 
     size_t fieldNum = 1000;
     ADD_FIELD(CRPCResult, "schema",  T_NUMBER, ++fieldNum);
