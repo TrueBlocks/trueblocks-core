@@ -6,7 +6,7 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("~filenames",        "path(s) of files to check, merge, fix or display (default=display)"),
     COption("-check",            "check for duplicates and other problems in the cache"),
     COption("-data",             "in 'list' mode, render results as data (i.e export mode)"),
@@ -23,7 +23,7 @@ static COption params[] = {
     COption("@s(k)ip",           "skip value for testing"),
     COption("",                  "Show the contents of an account cache and/or fix it by removing duplicate records.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

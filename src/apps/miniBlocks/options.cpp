@@ -6,7 +6,7 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("~mode",            "one of 'check,' 'list,' 'freshen,' or 'refreshen'"),
     COption("-check:<blk>",     "check that empty blocks are empty, and visa versa. Optionally start at :block"),
     COption("-list",            "list all non-empty block numbers"),
@@ -17,7 +17,7 @@ static COption params[] = {
     COption("@skip",            "export once every 5,000 lines (applies only to --verbose --list mode - used for testing)"),
     COption("",                 "Freshen or check the miniBlock database.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

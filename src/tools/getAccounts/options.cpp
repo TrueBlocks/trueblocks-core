@@ -14,13 +14,13 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("-prefund",  "Show addresses from the list of prefunded addresses"),
     COption("-named",    "Show addresses from named accounts as per ethName"),
     COption("-scraper",  "Show addresses from scraper config.toml (if found in current folder"),
     COption("",          "Show the list of Ethereum accounts known to the local node or named accounts."),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

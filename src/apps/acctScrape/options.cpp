@@ -6,7 +6,7 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("-maxBlocks:<val>",  "the maximum number of blocks to visit during this run"),
     COption("-oneBlock:<val>",   "check if the block would be a hit"),
     COption("-oneTra(n)s:<val>", "check if the block and transaction would be a hit"),
@@ -18,7 +18,7 @@ static COption params[] = {
     COption("@logLevel:<val>",   "specify the log level (default 1)"),
     COption("",                  "Index transactions for a given Ethereum address (or series of addresses).\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

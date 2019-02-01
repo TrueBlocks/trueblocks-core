@@ -14,7 +14,7 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("~terms",       "a space separated list of one or more search terms"),
     COption("-addr",        "export only the associated address (may be used in scripting)"),
     COption("-count",       "print only the count of the number of matches"),
@@ -25,7 +25,7 @@ static COption params[] = {
     COption("-source",      "search 'source' field as well name and address (the default)"),
     COption("",             "Query Ethereum addresses and/or names making it easy to remember accounts.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

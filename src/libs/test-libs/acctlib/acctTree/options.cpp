@@ -13,7 +13,7 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("-all",            "process all transactions from start of chain to latest block"),
     COption("-start:<uint>",   "the first block to process"),
     COption("-end:<uint>",     "the last block (less one) to process"),
@@ -21,7 +21,7 @@ static COption params[] = {
     COption("",                "Build an account tree listing first transaction, latest transaction, and "
                                "node balance for each account.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

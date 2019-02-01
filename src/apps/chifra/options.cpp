@@ -6,13 +6,13 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("~folder",       "name of the monitor (also the ./folder for the source code)"),
     COption("~address_list", "a list of one or more addresses to monitor (must start with '0x')"),
     COption("-silent",       "suppress all output from chifra (normally chifra is quite verbose)"),
     COption("",              "Interactively creates a QBlocks monitor for the given address.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
