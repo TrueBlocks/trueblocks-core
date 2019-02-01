@@ -3,7 +3,7 @@ getAccounts --help
 
   Usage:    getAccounts [-p|-n|-s|-v|-h]  
   Purpose:  Show the list of Ethereum accounts known to the local node or named accounts.  
-  Where:    
+  Where:  
 	-p  (--prefund)       Show addresses from the list of prefunded addresses
 	-n  (--named)         Show addresses from named accounts as per ethName
 	-s  (--scraper)       Show addresses from scraper config.toml (if found in current folder

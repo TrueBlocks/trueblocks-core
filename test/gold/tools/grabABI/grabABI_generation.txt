@@ -7,7 +7,7 @@ grabABI 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -v -n -e -g code
   Usage:    grabABI [-c|-g|-d|-e|-j|-n|-o|-l|-r|-v|-h] addr  
   Purpose:  Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
              
-  Where:    
+  Where:  
 	addr                  the address(es) of the smart contract(s) to grab (required)
 	-c  (--canonical)     convert all types to their canonical represenation and remove all spaces from display
 	-g  (--generate)      generate C++ code into the current folder for all functions and events found in the ABI
@@ -28,7 +28,7 @@ grabABI 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -v -n -e -g code
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 
-  Notes:  
+  Notes:
 	- Use the --silent option, which displays fewer messages, for scripting.
 
   Powered by QBlocks

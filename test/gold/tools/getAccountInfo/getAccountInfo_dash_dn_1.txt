@@ -7,7 +7,7 @@ getAccountInfo 0x6d805b5de59d3f1779e4180b8547bcf728ff91ea -bn
   Usage:    getAccountInfo [-d|-b|-n|-w|-v|-h] <address> [address...] [block...]  
   Purpose:  Returns 'true' or 'false' if the given address(es) holds byte code (optionally displays the code).
              
-  Where:    
+  Where:  
 	address_list          one or more addresses (0x...) from which to retrieve balances (required)
 	block_list            an optional list of one or more blocks at which to report balances, defaults to 'latest'
 	-d  (--data)          display results as data (addr <tab> is_contract)

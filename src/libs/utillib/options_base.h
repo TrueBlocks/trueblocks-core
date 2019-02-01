@@ -98,6 +98,9 @@ protected:
         virtual void Init(void) = 0;
         const COption *pParams;
         size_t cntParams;
+        string_q hiUp1;
+        string_q hiUp2;
+        string_q hiDown;
     };
 
     //--------------------------------------------------------------------------------
