@@ -14,7 +14,7 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("~!block", "one or more block numbers (or a 'special' block), or..."),
     COption("~!date",  "one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]"),
     COption("-data",   "display the result as data (tab delimited; useful for scripting)"),
@@ -22,7 +22,7 @@ static COption params[] = {
     COption("",        "Finds the nearest block prior to a date, or the nearest date prior to a block.\n"
                        " Alternatively, search for one of special 'named' blocks.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 extern time_q grabDate(const string_q& strIn);
 extern bool containsAny(const string_q& haystack, const string_q& needle);

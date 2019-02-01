@@ -14,7 +14,7 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("~addr",      "the address(es) of the smart contract(s) to grab"),
     COption("-canonical", "convert all types to their canonical represenation and remove all spaces from display"),
     COption("-generate",  "generate C++ code into the current folder for all functions and events found in the ABI"),
@@ -32,7 +32,7 @@ static COption params[] = {
     COption("",           "Fetches the ABI for a smart contract. Optionally generates C++ source code "
                           "representing that ABI.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 extern bool sortByFuncName(const CFunction& f1, const CFunction& f2);
 //---------------------------------------------------------------------------------------------------

@@ -13,7 +13,7 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("~block_list",         "a space-separated list of one or more blocks to retrieve"),
     COption("-raw",                "pull the block data from the running Ethereum node (no cache)"),
     COption("-hash_o(n)ly",        "display only transaction hashes, default is to display full transaction detail"),
@@ -38,7 +38,7 @@ static COption params[] = {
                                     "results (testing)"),
     COption("",                    "Returns block(s) from local cache or directly from a running node.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

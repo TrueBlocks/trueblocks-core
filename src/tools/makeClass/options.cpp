@@ -13,7 +13,7 @@
 #include "utillib.h"
 #include "options.h"
 
-static COption params[] = {
+static const COption params[] = {
     COption("~className",          "name of C++ class(es) to process"),
     COption("-open",               "edit <className(s)> definition file in local folder"),
     COption("-run",                "run the class maker on associated <className(s)>"),
@@ -27,7 +27,7 @@ static COption params[] = {
     COption("@edit",               "edit <className(s)> definition file in local folder"),
     COption("",                    "Creates C++ code based on definition file at ./classDefinition/<className>.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

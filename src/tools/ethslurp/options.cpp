@@ -13,7 +13,7 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("~addrs",           "one or more addresses to slurp"),
     COption("-blocks:<range>",   "an optional range of blocks to slurp"),
     COption("-type:<tx_type>",  "extract either [ ext | int | token | miner | all ] type of transactions"),
@@ -23,7 +23,7 @@ static COption params[] = {
     COption("",                 "Fetches data from EtherScan for an arbitrary address. Formats "
                                     "the output to your specification.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

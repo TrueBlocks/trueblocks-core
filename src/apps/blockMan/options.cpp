@@ -8,7 +8,7 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("-list",          "list all blocks in the index (non-empty blocks only by default)"),
     COption("-check",         "verify the block index (both empty and non-empty by default)"),
     COption("-stats",         "show statistics for the block index (the default)"),
@@ -20,7 +20,7 @@ static COption params[] = {
 //    COption("@fix",           "fix the database by removing duplicates (if any)"),
     COption("",               "Show stats or check the block cache.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
