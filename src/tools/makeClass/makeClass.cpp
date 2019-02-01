@@ -171,7 +171,7 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
     string_q className  = toml.getConfigStr ("settings", "class", "");
     string_q baseClass  = toml.getConfigStr ("settings", "baseClass", "CBaseNode");
     string_q otherIncs  = substitute(toml.getConfigStr ("settings", "cIncs", ""), "|", "\n");
-    string_q scope      = toml.getConfigStr ("settings", "scope", "static");
+    string_q scope      = toml.getConfigStr ("settings", "scope", "static");     //TODO(tjayrush): global data
     string_q hIncludes  = toml.getConfigStr ("settings", "includes", "");
     bool     serialize  = toml.getConfigBool("settings", "serialize", false);
 

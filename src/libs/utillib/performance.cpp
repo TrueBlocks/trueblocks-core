@@ -16,6 +16,7 @@
 
 namespace qblocks {
 
+    //TODO(tjayrush): global data
     static timepoint_t t1 = qbNow2();
     void resetClock(void) { t1 = qbNow2(); }
     string_q TIC(void) {

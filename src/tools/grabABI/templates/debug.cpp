@@ -51,6 +51,7 @@ string_q completeCommand(const string_q& cmd) {
 bool COptions::enterDebugger(const CBlock& block) {
 
 #ifdef DEBUGGER_ON
+    //TODO(tjayrush): global data
     static CStringArray cmds;
     string_q curCmd;
     size_t cursor=0;

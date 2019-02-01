@@ -20,6 +20,7 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     CURL *getCurl_internal(bool cleanup = false) {
+        //TODO(tjayrush): global data
         static CURL *curl = NULL;
         if (!curl) {
 
@@ -39,6 +40,7 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------------------
+    //TODO(tjayrush): global data
     static CURLCALLBACKFUNC curlNoteFunc = NULL;
     void setCurlNoteFunc(CURLCALLBACKFUNC func) {
         curlNoteFunc = func;
@@ -102,6 +104,7 @@ namespace qblocks {
     };
 
     // destructor gets called on pragram end to clear curl handle
+    //TODO(tjayrush): global data
     static Cleanup cleanUp;
 
 }  // namespace qblocks

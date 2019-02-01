@@ -15,6 +15,7 @@
 
 namespace qblocks {
 
+    //TODO(tjayrush): global data
     static QUITHANDLER theQuitHandler = NULL;
     //-------------------------------------------------------------------------
     void etherlib_init(const string_q& sourceIn, QUITHANDLER qh) {
@@ -1002,6 +1003,7 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     string_q blockCachePath(const string_q& _part) {
 
+        //TODO(tjayrush): global data
         static string_q blockCache;
         if (blockCache.empty()) {
             CToml toml(configPath("quickBlocks.toml"));

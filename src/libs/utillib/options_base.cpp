@@ -22,14 +22,25 @@
 namespace qblocks {
 
     //--------------------------------------------------------------------------------
-    static size_t nP = 0;
-    static COption ps[] = { };
-    static CDefaultOptions defOpts;
+    //TODO(tjayrush): global data
+    static const size_t nP = 0;
+    static const COption ps[] = { };
+    static const CDefaultOptions defOpts;
 
     //--------------------------------------------------------------------------------
-    size_t& nParamsRef = nP;
-    COption *paramsPtr  = &ps[0];
-    COptionsBase *pOptions = &defOpts;
+    //TODO(tjayrush): global data
+    size_t nParamsRef = nP;
+    COption const *paramsPtr  = &ps[0];
+    COptionsBase const *pOptions = &defOpts;
+
+    //--------------------------------------------------------------------------------
+    void COptionsBase::registerOptions(size_t nParams, COption const *pParams) {
+        //TODO(tjayrush): global data
+        arguments.clear();
+        nParamsRef = nParams;
+        paramsPtr = pParams;
+        pOptions = this;
+    }
 
     //--------------------------------------------------------------------------------
     static string_q programName = "quickBlocks";

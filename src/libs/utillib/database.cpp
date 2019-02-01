@@ -439,6 +439,7 @@ namespace qblocks {
     }
 
     //-----------------------------------------------------------------------
+    //TODO(tjayrush): global data
     static bool sectionLocked = false;
     void lockSection(bool lock) {
         sectionLocked = lock;
@@ -446,6 +447,7 @@ namespace qblocks {
 
     //-----------------------------------------------------------------------
     size_t quitCount(size_t s) {
+        //TODO(tjayrush): global data
         static size_t cnt = 0;
         if (cnt && sectionLocked)  // ignore if we're locked
             return false;
@@ -505,6 +507,7 @@ namespace qblocks {
 
     //-----------------------------------------------------------------------
     string_q manageRemoveList(const string_q& filename) {
+        //TODO(tjayrush): global data
         static string_q theList;
         if (filename == "clear") {
             theList = "";
