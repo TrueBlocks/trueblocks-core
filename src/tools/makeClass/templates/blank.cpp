@@ -23,6 +23,7 @@ IMPLEMENT_NODE([{CLASS_NAME}], [{BASE_CLASS}]);
 
 //---------------------------------------------------------------------------
 [{SCOPE}] string_q next[{PROPER}]Chunk(const string_q& fieldIn, const void *dataPtr);
+//TODO(tjayrush): global data
 static string_q next[{PROPER}]Chunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------

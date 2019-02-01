@@ -29,6 +29,7 @@ extern const char* STR_FORMAT_FUNCDATA;
 //-----------------------------------------------------------------------
 static void     makeTheCode(const string_q& fn, const string_q& addr, const string_q& projName, const string_q& pathIn);
 static string_q projectName(const string_q& pathIn);
+//TODO(tjayrush): global data
 static string_q templateFolder = configPath("grabABI/");
 
 //-----------------------------------------------------------------------

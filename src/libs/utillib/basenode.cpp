@@ -22,6 +22,7 @@
 namespace qblocks {
 
     //--------------------------------------------------------------------------------
+    //TODO(tjayrush): global data
     CRuntimeClass CBaseNode::classCBaseNode;
     static CBuiltIn _biBaseNode(&CBaseNode::classCBaseNode, "CBaseNode", sizeof(CBaseNode), NULL, NULL);
     vector<CBuiltIn> builtIns;  // Keeps track of all the classes that have beebn registered
@@ -350,6 +351,7 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------
+    //TODO(tjayrush): global data
     static CExportOptions expC;
     CExportOptions& expContext(void) {
         return expC;
@@ -734,6 +736,7 @@ extern string_q reformat1(const string_q& in, size_t len);
 
     //---------------------------------------------------------------------------------------------------
     CBaseNode *createObjectOfType(const string_q& className) {
+        //TODO(tjayrush): global data
         static bool isSorted = false;
         if (!isSorted) {
             sort(builtIns.begin(), builtIns.end());

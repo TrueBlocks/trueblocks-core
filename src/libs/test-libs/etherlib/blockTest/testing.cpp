@@ -23,7 +23,7 @@ extern void everyUniqueAddressPerTx(CBlock& block);
 extern void everySortedUniqueAddress(CBlock& block);
 extern void everySortedUniqueAddressPerTx(CBlock& block);
 extern void testFormatting(CBlock& block);
-static string_q sep(120, '-');
+static const string_q sep(120, '-');
 
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {

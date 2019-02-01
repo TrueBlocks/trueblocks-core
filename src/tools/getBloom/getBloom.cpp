@@ -50,6 +50,7 @@ int main(int argc, const char * argv[]) {
 typedef string_q (*BLOOMTOSTRFUNC)(const bloom_t& bloom, void *data);
 //-------------------------------------------------------------------------------------
 // SEARCH FOR 'BIT_TWIDDLE_AMT 200'
+//TODO(tjayrush): global data
 static uint64_t bitBound = 200;
 string_q pctBar(const bloom_t& bloom, void *data) { uint64_t div = (uint64_t)data; return string_q(bitsTwiddled(bloom) * bitBound / div, '-'); }
 string_q bitBar(const bloom_t& bloom, void *data) { return string_q(bitsTwiddled(bloom), '-');              }

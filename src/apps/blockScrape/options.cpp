@@ -155,9 +155,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    arguments.clear();
-    paramsPtr = params;
-    nParamsRef = nParams;
+    registerOptions(nParams, params);
     optionOn(OPT_RUNONCE);
 
     startBlock  = NOPOS;
