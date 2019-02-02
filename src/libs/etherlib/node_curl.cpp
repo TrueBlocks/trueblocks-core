@@ -22,7 +22,7 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     CCurlContext::CCurlContext(void) {
-        headers      = "Content-Type: application/json\n";
+        headerStr    = "Content-Type: application/json\n";
         baseURL      = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
         callBackFunc = writeCallback;
         curlNoteFunc = NULL;
@@ -119,7 +119,7 @@ PRINT("postData: " + postData);
                 exit(0);
             }
 
-            string_q head = getCurlContext()->headers;
+            string_q head = getCurlContext()->headerStr;
             while (!head.empty()) {
                 string_q next = nextTokenClear(head, '\n');
                 headers = curl_slist_append(headers, (char*)next.c_str());  // NOLINT
@@ -128,15 +128,12 @@ PRINT("postData: " + postData);
 
             if (getCurlContext()->provider == "remote") {
                 curl_easy_setopt(curl, CURLOPT_URL, "https://mainnet.infura.io/");
-PRINT("getCurl::provider: " + getCurlContext()->provider);
 
             } else if (getCurlContext()->provider == "ropsten") {
                 curl_easy_setopt(curl, CURLOPT_URL, "https://testnet.infura.io/");
-PRINT("getCurl::provider: " + getCurlContext()->provider);
 
             } else {
                 curl_easy_setopt(curl, CURLOPT_URL, getCurlContext()->baseURL.c_str());
-PRINT("getCurl::provider: " + getCurlContext()->provider);
             }
 
         } else if (cleanup) {
