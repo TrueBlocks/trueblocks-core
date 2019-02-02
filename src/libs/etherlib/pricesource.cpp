@@ -131,9 +131,7 @@ namespace qblocks {
                     cerr << "Fetching: " << url << "\n";
 
                 // Ask Poloniex for the latest data
-                setCurlNoteFunc(dotDot);
-                string_q response = urlToString(url);
-                setCurlNoteFunc(NULL);
+                string_q response = urlToString(url, dotDot);
                 cerr << "\r";
 
                 // Figure out how many new records there are
