@@ -44,6 +44,7 @@
 #include <chrono>
 #include <iomanip>
 #include <thread>
+#include <mutex>
 
 //-------------------------------------------------------------------------
 using namespace std;  // NOLINT
