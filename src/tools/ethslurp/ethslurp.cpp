@@ -16,7 +16,7 @@
 
 extern void findInternalTxIndex(CTransaction& trans);
 //--------------------------------------------------------------------------------
-int main(int argc, const char * argv[]) {
+int main(int argc, const char *argv[]) {
 
     etherlib_init("binary", defaultQuitHandler);
 

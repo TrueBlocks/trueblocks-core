@@ -245,8 +245,7 @@ Here is the code (very minimalist, should be much improved for real applications
 #include <gzstream.h>
 using namespace std;
 
-int main (int argc, char ** argv)
-{
+int main(int argc, const char *argv[]) {
   cout << "START" << endl;
 
   igzstream in(argv[1]);
