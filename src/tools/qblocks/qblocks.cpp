@@ -20,7 +20,7 @@ int main(int argc, const char *argv[]) {
     etherlib_init("binary", quickQuitHandler);
 
     COptions options;
-    options.setProgramName(basename((char*)argv[0]));
+    options.setProgName(basename((char*)argv[0]));
 
     // Handle help on this tool's command line for this tool only if there are not enough args or if
     // --help is the first item in the command list. Otherwise, we need to pass it to subcommand
