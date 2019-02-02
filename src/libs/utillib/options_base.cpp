@@ -30,11 +30,17 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    static string_q programName = "quickBlocks";
+    //TODO(tjayrush): global data - but okay, a program only has one name
+    static string_q COptionsBase::g_programName = "quickBlocks";
 
     //--------------------------------------------------------------------------------
-    void COptionsBase::setProgramName(const string_q& name) {
-        programName = name;
+    void COptionsBase::setProgName(const string_q& name) {
+        g_programName = name;
+    }
+
+    //--------------------------------------------------------------------------------
+    string_q COptionsBase::getProgName(void) const {
+        return g_programName;
     }
 
     //--------------------------------------------------------------------------------
@@ -44,17 +50,17 @@ namespace qblocks {
         if (string_q(env) == "true")
             colorsOff();
 
-        programName = basename((char*)argv[0]);  // NOLINT
+        setProgName(basename((char*)argv[0]));  // NOLINT
         if (isTestMode()) {
             // we present the data once for clarity...
-            cout << programName << " argc: " << argc << " ";
+            cout << getProgName() << " argc: " << argc << " ";
             for (int i = 1 ; i < argc ; i++) {
                 string_q str = argv[i];
                 cout << "[" << i << ":" << trim(str) << "] ";
             }
             cout << "\n";
             // ... and once to use as a command line for copy/paste
-            cout << programName << " ";
+            cout << getProgName() << " ";
             for (int i = 1 ; i < argc ; i++) {
                 string_q str = argv[i];
                 cout << trim(str) << " ";
@@ -215,7 +221,7 @@ namespace qblocks {
         }
 
         if (contains(cmdLine, "--version ")) {
-            cerr << programName << " (quickBlocks) " << getVersionStr() << "\n";
+            cerr << getProgName() << " (quickBlocks) " << getVersionStr() << "\n";
             exit(0);
         }
 
@@ -227,8 +233,8 @@ namespace qblocks {
         if (contains(cmdLine, "--qblocks ")) {
             replaceAll(cmdLine, "--qblocks ", "");
             CNameValue toolName;
-            findToolNickname(toolName, programName);
-            programName = "qblocks " + toolName.second;
+            findToolNickname(toolName, getProgName());
+            setProgName("qblocks " + toolName.second);
 
         }
 
@@ -287,10 +293,10 @@ namespace qblocks {
             if (commandLines.size() > 1)
                 return usage("You may not use the --file with this application. Quitting...");
             // protect ourselves from running twice over
-            string_q cmd = "ps -ef | grep -i " + programName + " | grep -v grep | grep -v \"sh -c \" | wc -l";
+            string_q cmd = "ps -ef | grep -i " + getProgName() + " | grep -v grep | grep -v \"sh -c \" | wc -l";
             uint64_t cnt = str_2_Uint(doCommand(cmd));
             if (cnt > 1)  // it is running itself, so if two or more, quit
-                return usage("Warning: the command " + programName + " is already running. Quitting...");
+                return usage("Warning: the command " + getProgName() + " is already running. Quitting...");
         }
 
         cmdLine = trim(cmdLine);
@@ -395,7 +401,7 @@ namespace qblocks {
         os << "\n";
         if (!errMsg.empty())
             os << cRed << "  " << errMsg << "\n\n";
-        os << hiUp1 << "Usage:" << hiDown << "    " << programName << " " << options() << "  \n";
+        os << hiUp1 << "Usage:" << hiDown << "    " << getProgName() << " " << options() << "  \n";
         os << purpose();
         os << descriptions() << "\n";
         os << notes();
@@ -731,9 +737,9 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             toml = &theToml;
 
             // Always load the program's custom config if it exists
-            string_q fileName = configPath(programName+".toml");
-            if (fileExists(fileName) && !contains(components, programName+"|")) {
-                components += programName+"|";
+            string_q fileName = configPath(COptionsBase::g_programName + ".toml");
+            if (fileExists(fileName) && !contains(components, COptionsBase::g_programName + "|")) {
+                components += COptionsBase::g_programName + "|";
                 CToml custom(fileName);
                 toml->mergeFile(&custom);
             }
