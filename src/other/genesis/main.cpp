@@ -29,8 +29,7 @@ inline string_q wei_2_Ether(const string_q& _value)
         return ether;
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, const char *argv[]) {
     string_q contents;
     asciiFileToString("file.txt", contents);
 	while (!contents.empty())

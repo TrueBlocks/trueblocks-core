@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //----------------------------------------------------------------
-int main(int argc, char *argv[]) {
+int main(int argc, const char *argv[]) {
 
     // Initialize the library
     etherlib_init("binary", quickQuitHandler);
