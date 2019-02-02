@@ -31,16 +31,16 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     //TODO(tjayrush): global data - but okay, a program only has one name
-    static string_q COptionsBase::g_programName = "quickBlocks";
+    string_q COptionsBase::g_progName = "quickBlocks";
 
     //--------------------------------------------------------------------------------
     void COptionsBase::setProgName(const string_q& name) {
-        g_programName = name;
+        g_progName = name;
     }
 
     //--------------------------------------------------------------------------------
     string_q COptionsBase::getProgName(void) const {
-        return g_programName;
+        return g_progName;
     }
 
     //--------------------------------------------------------------------------------
@@ -737,9 +737,9 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             toml = &theToml;
 
             // Always load the program's custom config if it exists
-            string_q fileName = configPath(COptionsBase::g_programName + ".toml");
-            if (fileExists(fileName) && !contains(components, COptionsBase::g_programName + "|")) {
-                components += COptionsBase::g_programName + "|";
+            string_q fileName = configPath(COptionsBase::g_progName + ".toml");
+            if (fileExists(fileName) && !contains(components, COptionsBase::g_progName + "|")) {
+                components += COptionsBase::g_progName + "|";
                 CToml custom(fileName);
                 toml->mergeFile(&custom);
             }
