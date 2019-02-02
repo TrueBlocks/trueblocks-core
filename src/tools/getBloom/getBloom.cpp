@@ -16,7 +16,7 @@
 extern const char *STR_FMT_BLOOMS_OUT;
 extern string_q doOneBloom(uint64_t num, const COptions& opt);
 //-------------------------------------------------------------------------------------
-int main(int argc, const char * argv[]) {
+int main(int argc, const char *argv[]) {
 
     etherlib_init("binary", quickQuitHandler);
 

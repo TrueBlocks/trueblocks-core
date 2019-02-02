@@ -48,7 +48,7 @@ public:
 };
 
 //-------------------------------------------------------------------------
-int main(int argc, char *argv[]) {
+int main(int argc, const char *argv[]) {
     etherlib_init("binary", quickQuitHandler);
 
     cout << "blockNum" << sep

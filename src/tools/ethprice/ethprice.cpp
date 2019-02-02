@@ -15,7 +15,7 @@
 #include "sftime.h"
 
 //-----------------------------------------------------------------------------------
-int main(int argc, const char* argv[]) {
+int main(int argc, const char *argv[]) {
 
     etherlib_init("binary", defaultQuitHandler);
 

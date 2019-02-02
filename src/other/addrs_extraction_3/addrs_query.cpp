@@ -23,8 +23,7 @@ public:
 
 extern bool visitFiles(const string_q& path, void *data);
 //----------------------------------------------------------------
-int main(int argc, char *argv[])
-{
+int main(int argc, const char *argv[]) {
     colorsOff();
     if (argc != 3) {
         cerr << "You must provide an address and a starting block number. Quitting...\n";
