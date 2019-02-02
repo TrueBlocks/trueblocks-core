@@ -607,13 +607,13 @@ namespace qblocks {
 
     //-----------------------------------------------------------------------
     bool writeBlockToBinary(const CBlock& block, const string_q& fileName) {
-        // CArchive blockCache(READING_ARCHIVE);  -- so search hits
+        // CArchive g_blockCache(READING_ARCHIVE);  -- so search hits
         return writeNodeToBinary(block, fileName);
     }
 
     //-----------------------------------------------------------------------
     bool readBlockFromBinary(CBlock& block, const string_q& fileName) {
-        // CArchive blockCache(READING_ARCHIVE);  -- so search hits
+        // CArchive g_blockCache(READING_ARCHIVE);  -- so search hits
         return readNodeFromBinary(block, fileName);
     }
 
@@ -1004,28 +1004,40 @@ namespace qblocks {
     string_q blockCachePath(const string_q& _part) {
 
         //TODO(tjayrush): global data
-        static string_q blockCache;
-        if (blockCache.empty()) {
-            CToml toml(configPath("quickBlocks.toml"));
-            string_q path = toml.getConfigStr("settings", "blockCachePath", "<NOT_SET>");
-            // cout << path << "\n";
-            if (path == "<NOT_SET>") {
-                path = configPath("cache/");
-                toml.setConfigStr("settings", "blockCachePath", path);
-                toml.writeFile();
-            }
-            CFilename folder(path);
-            if (!folderExists(folder.getFullPath()))
-                establishFolder(folder.getFullPath());
-            if (!folder.isValid()) {
-                cerr << "Invalid path (" << folder.getFullPath() << ") in config file. Quitting...\n";
-                exit(0);
-            }
-            blockCache = folder.getFullPath();
-            if (!endsWith(blockCache, "/"))
-                blockCache += "/";
+        static string_q g_blockCachePath;
+        if (!g_blockCachePath.empty()) // leave early if we can
+            return substitute((g_blockCachePath + _part), "//", "/");
+
+        // Wait until any other thread is finished filling the value.
+        mutex theMutex;
+        lock_guard<mutex> lock(theMutex);
+
+        // Can be only one value, so if some other thread filled it, use that
+        if (!g_blockCachePath.empty())
+            return substitute((g_blockCachePath + _part), "//", "/");
+
+        // Otherwise, fill the value
+        CToml toml(configPath("quickBlocks.toml"));
+        string_q path = toml.getConfigStr("settings", "blockCachePath", "<NOT_SET>");
+        if (path == "<NOT_SET>") {
+            path = configPath("cache/");
+            toml.setConfigStr("settings", "blockCachePath", path);
+            toml.writeFile();
         }
-        return substitute((blockCache + _part), "//", "/");
+
+        CFilename folder(path);
+        if (!folderExists(folder.getFullPath()))
+            establishFolder(folder.getFullPath());
+
+        if (!folder.isValid()) {
+            cerr << "Invalid path (" << folder.getFullPath() << ") in config file. Quitting...\n";
+            quickQuitHandler(EXIT_FAILURE);
+        }
+        g_blockCachePath = folder.getFullPath();
+        if (!endsWith(g_blockCachePath, "/"))
+            g_blockCachePath += "/";
+
+        return substitute((g_blockCachePath + _part), "//", "/");
     }
 
     //--------------------------------------------------------------------------

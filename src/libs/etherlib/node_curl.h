@@ -18,7 +18,7 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     class CCurlContext {
     public:
-        string_q         headers;
+        string_q         headerStr;
         string_q         baseURL;
         CURLCALLBACKFUNC callBackFunc;
         CURLCALLBACKFUNC curlNoteFunc;
