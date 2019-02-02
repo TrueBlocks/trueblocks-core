@@ -54,7 +54,9 @@ namespace qblocks {
         virtual ~COptionsBase(void) { }
 
         //--------------------------------------------------------------------------------
-        void setProgramName(const string_q& name);
+        static string_q g_progName;
+        void setProgName(const string_q& name);
+        string_q getProgName(void) const;
         bool prepareArguments(int argc, const char *argv[]);
         virtual bool parseArguments(string_q& command) = 0;
         bool builtInCmd(const string_q& arg);
