@@ -28,7 +28,13 @@ namespace qblocks {
         curlNoteFunc = NULL;
         theID        = 1;
         nodeRequired = true;
-        Clear();
+        earlyAbort   = false;
+        is_error     = false;
+        postData     = "";
+        result       = "";
+        curlHandle   = NULL;
+        headerPtr    = NULL;
+//      source       = "binary";
     }
 
     //-------------------------------------------------------------------------
@@ -59,12 +65,12 @@ PRINT(msg);
 
     //-------------------------------------------------------------------------
     void CCurlContext::setPostData(const string_q& method, const string_q& params) {
-        Clear();
+        clear();
         postData  = "{";
         postData +=  quote("jsonrpc") + ":"  + quote("2.0")  + ",";
         postData +=  quote("method")  + ":"  + quote(method) + ",";
         postData +=  quote("params")  + ":"  + params + ",";
-        postData +=  quote("id")      + ":"  + quote(getCurlID());
+        postData +=  quote("id")      + ":"  + quote(getCurlContext()->getCurlID());
         postData += "}";
 #ifdef PROVING
         if (expContext().proving) {
@@ -76,19 +82,18 @@ PRINT(msg);
 
 PRINT("postData: " + postData);
 
-        curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDS,    postData.c_str());
-        curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDSIZE, postData.length());
-        curl_easy_setopt(getCurl(), CURLOPT_WRITEDATA,     this);
-        curl_easy_setopt(getCurl(), CURLOPT_WRITEFUNCTION, callBackFunc);
+        curl_easy_setopt(getCurlContext()->getCurl(), CURLOPT_POSTFIELDS,    postData.c_str());
+        curl_easy_setopt(getCurlContext()->getCurl(), CURLOPT_POSTFIELDSIZE, postData.length());
+        curl_easy_setopt(getCurlContext()->getCurl(), CURLOPT_WRITEDATA,     this);
+        curl_easy_setopt(getCurlContext()->getCurl(), CURLOPT_WRITEFUNCTION, callBackFunc);
     }
 
     //-------------------------------------------------------------------------
-    void CCurlContext::Clear(void) {
+    void CCurlContext::clear(void) {
         earlyAbort   = false;
         is_error     = false;
         postData     = "";
         result       = "";
-//      source       = "binary";
     }
 
     //-------------------------------------------------------------------------
@@ -108,13 +113,11 @@ PRINT("postData: " + postData);
     }
 
     //-------------------------------------------------------------------------
-    CURL *getCurl(bool cleanup) {
+    CURL *CCurlContext::getCurl(void) {
         //TODO(tjayrush): global data
-        static CURL *curl = NULL;
-        static struct curl_slist *headers = NULL;
-        if (!curl && !cleanup) {
-            curl = curl_easy_init();
-            if (!curl) {
+        if (!curlHandle) {
+            curlHandle = curl_easy_init();
+            if (!curlHandle) {
                 fprintf(stderr, "Curl failed to initialize. Quitting...\n");
                 exit(0);
             }
@@ -122,44 +125,40 @@ PRINT("postData: " + postData);
             string_q head = getCurlContext()->headerStr;
             while (!head.empty()) {
                 string_q next = nextTokenClear(head, '\n');
-                headers = curl_slist_append(headers, (char*)next.c_str());  // NOLINT
+                headerPtr = curl_slist_append(headerPtr, (char*)next.c_str());  // NOLINT
             }
-            curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+            curl_easy_setopt(curlHandle, CURLOPT_HTTPHEADER, headerPtr);
 
             if (getCurlContext()->provider == "remote") {
-                curl_easy_setopt(curl, CURLOPT_URL, "https://mainnet.infura.io/");
+                curl_easy_setopt(curlHandle, CURLOPT_URL, "https://mainnet.infura.io/");
 
             } else if (getCurlContext()->provider == "ropsten") {
-                curl_easy_setopt(curl, CURLOPT_URL, "https://testnet.infura.io/");
+                curl_easy_setopt(curlHandle, CURLOPT_URL, "https://testnet.infura.io/");
 
             } else {
-                curl_easy_setopt(curl, CURLOPT_URL, getCurlContext()->baseURL.c_str());
+                curl_easy_setopt(curlHandle, CURLOPT_URL, getCurlContext()->baseURL.c_str());
             }
-
-        } else if (cleanup) {
-
-            if (headers)
-                curl_slist_free_all(headers);
-            if (curl)
-                curl_easy_cleanup(curl);
-            headers = NULL;
-            curl = NULL;
-            return NULL;
         }
 
-        return curl;
+        return curlHandle;
     }
 
     //-------------------------------------------------------------------------
-    void cleanupCurl(void) {
-        getCurl(true);
+    void CCurlContext::cleanupCurl(void) {
+        if (headerPtr)
+            curl_slist_free_all(headerPtr);
+        headerPtr = NULL;
+
+        if (curlHandle)
+            curl_easy_cleanup(curlHandle);
+        curlHandle = NULL;
     }
 
     //-------------------------------------------------------------------------
     bool isNodeRunning(void) {
         CURLCALLBACKFUNC prev = getCurlContext()->setCurlCallback(nullCallback);
         getCurlContext()->setPostData("web3_clientVersion", "[]");
-        CURLcode res = curl_easy_perform(getCurl());
+        CURLcode res = curl_easy_perform(getCurlContext()->getCurl());
         getCurlContext()->setCurlCallback(prev);
         return (res == CURLE_OK);
     }
@@ -171,7 +170,7 @@ PRINTL("callRPC:\n\tmethod:\t\t" + method + params + "\n\tsource:\t\t" + getCurl
 
         // getCurlContext()->callBackFunc = writeCallback;
         getCurlContext()->setPostData(method, params);
-        CURLcode res = curl_easy_perform(getCurl());
+        CURLcode res = curl_easy_perform(getCurlContext()->getCurl());
         if (res != CURLE_OK && !getCurlContext()->earlyAbort) {
 PRINT("CURL returned an error: ! CURLE_OK")
             cerr << "\n";

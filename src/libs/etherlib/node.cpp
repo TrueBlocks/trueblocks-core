@@ -70,9 +70,9 @@ namespace qblocks {
             getCurlContext()->provider = sourceIn;
 
         // if curl has already been initialized, we want to clear it out
-        cleanupCurl();
+        getCurlContext()->cleanupCurl();
         // initialize curl
-        getCurl();
+        getCurlContext()->getCurl();
 
         establishFolder(configPath(""));
     }
@@ -103,7 +103,7 @@ namespace qblocks {
             }
         }
 
-        cleanupCurl();
+        getCurlContext()->cleanupCurl();
         clearInMemoryCache();
         if (theQuitHandler)
             (*theQuitHandler)(-1);
