@@ -453,9 +453,14 @@ namespace qblocks {
 
     //-----------------------------------------------------------------------
     void cleanFileLocks(void) {
+        // We want to clean the list entirely, once we start
+        mutex aMutex;
+        lock_guard<mutex> lock(aMutex);
+
         string_q list = manageRemoveList();
-        while (!list.empty()) {
-            string_q file = nextTokenClear(list, '|');
+        CStringArray files;
+        explode(files, list, '|');
+        for (auto file : files) {
             remove(file.c_str());
             cerr << "Removing file: " << file << "\n";
             cerr.flush();
@@ -492,6 +497,12 @@ namespace qblocks {
 
     //-----------------------------------------------------------------------
     string_q manageRemoveList(const string_q& filename) {
+
+        // We want to protect this so it doesn't get messed up. We don't
+        // add the same string twice, so it's all good
+        mutex aMutex;
+        lock_guard<mutex> lock(aMutex);
+
         //TODO(tjayrush): global data
         static string_q theList;
         if (filename == "clear") {
