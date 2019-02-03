@@ -15,10 +15,11 @@ public:
 //----------------------------------------------------------------
 class Options {
 public:
+    uint64_t cnt;
     address_t queryAddr;
     blknum_t  startBlock;
     CAcctCacheItemArray items;
-    Options(void) { queryAddr = ""; startBlock = 0; }
+    Options(void) { queryAddr = ""; startBlock = 0; cnt = 0; }
 };
 
 extern bool visitFiles(const string_q& path, void *data);
@@ -63,15 +64,13 @@ bool visitFiles(const string_q& path, void *data) {
     } else {
 
         if (endsWith(path, ".txt")) {
-            //TODO(tjayrush): global data
-            static int cnt = 0;
-            if (!(++cnt%13)) {
+            Options *opt = (Options*)data;
+            if (!(++opt->cnt%13)) {
                 cerr << "Scanning " << path << "             \r";
                 cerr.flush();
             }
 
             blknum_t bn = bnFromPath(path);
-            Options *opt = (Options*)data;
             if (bn >= opt->startBlock) {
                 address_t addr = opt->queryAddr;
                 CMemMapFile blockFile(path, CMemMapFile::WholeFile, CMemMapFile::RandomAccess);

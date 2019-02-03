@@ -20,6 +20,19 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     void etherlib_init(const string_q& sourceIn, QUITHANDLER qh) {
 
+        {
+            // Keep the frame
+            mutex aMutex;
+            lock_guard<mutex> lock(aMutex);
+            // This global is okay to be program-wide (as opposed to thread wide)
+            // since we should only ever init curl once for any number of threads.
+            static bool been_here = false;
+            if (!been_here) {
+                curl_global_init(CURL_GLOBAL_ALL);
+                been_here = true;
+            }
+        }
+
         if (getCurlContext()->nodeRequired && !isNodeRunning()) {
             cerr << endl;
             cerr << "\t" << cTeal << "Warning: " << cOff << "This program requires a running Ethereum node. Please start your node or " << endl;
@@ -30,8 +43,7 @@ namespace qblocks {
 
         establishFolder(blockCachePath(""));
 
-        // In case we create any lock files, so
-        // they get cleaned up
+        // If we create any lock files, we need to clean them up
         if (theQuitHandler == NULL || qh != defaultQuitHandler) {
             // Set this once, unless it's non-default
             theQuitHandler = qh;
@@ -58,7 +70,7 @@ namespace qblocks {
             getCurlContext()->provider = sourceIn;
 
         // if curl has already been initialized, we want to clear it out
-        getCurl(true);
+        cleanupCurl();
         // initialize curl
         getCurl();
 
@@ -77,7 +89,21 @@ namespace qblocks {
             cout.flush();
         }
 #endif
-        getCurl(true);
+
+        {
+            // Keep the frame
+            mutex aMutex;
+            lock_guard<mutex> lock(aMutex);
+            // This global is okay to be program-wide (as opposed to thread wide)
+            // since we should only ever init curl once for any number of threads.
+            static bool been_here = false;
+            if (!been_here) {
+                curl_global_cleanup();
+                been_here = true;
+            }
+        }
+
+        cleanupCurl();
         clearInMemoryCache();
         if (theQuitHandler)
             (*theQuitHandler)(-1);
@@ -1008,34 +1034,36 @@ namespace qblocks {
         if (!g_blockCachePath.empty()) // leave early if we can
             return substitute((g_blockCachePath + _part), "//", "/");
 
-        // Wait until any other thread is finished filling the value.
-        mutex theMutex;
-        lock_guard<mutex> lock(theMutex);
+        { // give ourselves a frame - always enters - forces creation in the frame
+            // Wait until any other thread is finished filling the value.
+            mutex aMutex;
+            lock_guard<mutex> lock(aMutex);
 
-        // Can be only one value, so if some other thread filled it, use that
-        if (!g_blockCachePath.empty())
-            return substitute((g_blockCachePath + _part), "//", "/");
+            // Another thread may have filled the data while we were waiting
+            if (!g_blockCachePath.empty())
+                return substitute((g_blockCachePath + _part), "//", "/");
 
-        // Otherwise, fill the value
-        CToml toml(configPath("quickBlocks.toml"));
-        string_q path = toml.getConfigStr("settings", "blockCachePath", "<NOT_SET>");
-        if (path == "<NOT_SET>") {
-            path = configPath("cache/");
-            toml.setConfigStr("settings", "blockCachePath", path);
-            toml.writeFile();
+            // Otherwise, fill the value
+            CToml toml(configPath("quickBlocks.toml"));
+            string_q path = toml.getConfigStr("settings", "blockCachePath", "<NOT_SET>");
+            if (path == "<NOT_SET>") {
+                path = configPath("cache/");
+                toml.setConfigStr("settings", "blockCachePath", path);
+                toml.writeFile();
+            }
+
+            CFilename folder(path);
+            if (!folderExists(folder.getFullPath()))
+                establishFolder(folder.getFullPath());
+
+            if (!folder.isValid()) {
+                cerr << "Invalid path (" << folder.getFullPath() << ") in config file. Quitting...\n";
+                quickQuitHandler(EXIT_FAILURE);
+            }
+            g_blockCachePath = folder.getFullPath();
+            if (!endsWith(g_blockCachePath, "/"))
+                g_blockCachePath += "/";
         }
-
-        CFilename folder(path);
-        if (!folderExists(folder.getFullPath()))
-            establishFolder(folder.getFullPath());
-
-        if (!folder.isValid()) {
-            cerr << "Invalid path (" << folder.getFullPath() << ") in config file. Quitting...\n";
-            quickQuitHandler(EXIT_FAILURE);
-        }
-        g_blockCachePath = folder.getFullPath();
-        if (!endsWith(g_blockCachePath, "/"))
-            g_blockCachePath += "/";
 
         return substitute((g_blockCachePath + _part), "//", "/");
     }

@@ -38,6 +38,7 @@ namespace qblocks {
     };
 
     extern CURL         *getCurl         (bool cleanup = false);
+    extern void          cleanupCurl     (void);
     extern bool          isNodeRunning   (void);
     extern bool          nodeHasBalances (void);
     extern bool          nodeHasTraces   (void);
