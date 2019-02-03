@@ -15,7 +15,7 @@
 #define ONE(a) cout << "[" << a << " " << #a << " " << cOff << "] ";
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-    etherlib_init("binary", quickQuitHandler);
+//    etherlib_init("binary", quickQuitHandler);
 
     CDefaultOptions options;
     options.minArgs = 0;
