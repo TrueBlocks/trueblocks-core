@@ -1079,7 +1079,7 @@ namespace qblocks {
         while (!list.empty()) {
             string_q fields = nextTokenClear(list, '|');
             string_q cl = nextTokenClear(fields, ':');
-            CBaseNode *item =  createObjectOfType(cl);
+            CBaseNode *item = createObjectOfType(cl);
             while (item && !fields.empty()) {
                 string_q fieldName = nextTokenClear(fields, ',');
                 if (fieldName == "all") {
