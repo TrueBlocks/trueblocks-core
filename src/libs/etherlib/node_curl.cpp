@@ -151,6 +151,11 @@ PRINT("postData: " + postData);
     }
 
     //-------------------------------------------------------------------------
+    void cleanupCurl(void) {
+        getCurl(true);
+    }
+
+    //-------------------------------------------------------------------------
     bool isNodeRunning(void) {
         CURLCALLBACKFUNC prev = getCurlContext()->setCurlCallback(nullCallback);
         getCurlContext()->setPostData("web3_clientVersion", "[]");
