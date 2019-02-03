@@ -18,27 +18,30 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     class CCurlContext {
     public:
-        string_q         headerStr;
-        string_q         baseURL;
-        CURLCALLBACKFUNC callBackFunc;
-        CURLCALLBACKFUNC curlNoteFunc;
-        bool             earlyAbort;
-        string_q         postData;
-        string_q         result;
-        string_q         provider;
-        bool             nodeRequired;
-        bool             is_error;
-        size_t           theID;
+        string_q          headerStr;
+        string_q          baseURL;
+        CURLCALLBACKFUNC  callBackFunc;
+        CURLCALLBACKFUNC  curlNoteFunc;
+        bool              earlyAbort;
+        string_q          postData;
+        string_q          result;
+        string_q          provider;
+        bool              nodeRequired;
+        bool              is_error;
+        size_t            theID;
+        CURL              *curlHandle;
+        struct curl_slist *headerPtr;
 
         CCurlContext(void);
-        string_q getCurlID(void);
-        void setPostData(const string_q& method, const string_q& params);
-        void Clear(void);
+
+        CURL    *getCurl    (void);
+        void     cleanupCurl(void);
+        void     setPostData(const string_q& method, const string_q& params);
+        string_q getCurlID  (void);
+        void     clear      (void);
         CURLCALLBACKFUNC setCurlCallback(CURLCALLBACKFUNC func);
     };
 
-    extern CURL         *getCurl         (bool cleanup = false);
-    extern void          cleanupCurl     (void);
     extern bool          isNodeRunning   (void);
     extern bool          nodeHasBalances (void);
     extern bool          nodeHasTraces   (void);
