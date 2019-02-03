@@ -16,7 +16,6 @@
 extern void readCustomAddrs(CAddressArray& array);
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-
     getCurlContext()->nodeRequired = false;  // --named option runs without a node
     acctlib_init("binary", quickQuitHandler);
 

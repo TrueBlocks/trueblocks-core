@@ -14,7 +14,6 @@ extern void writeLastBlock     (blknum_t bn);
 extern string_q report         (const COptions& options, double start, double stop);
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-
     acctlib_init("binary", defaultQuitHandler);
 
     COptions options; ASSERT(isEnabled(OPT_RUNONCE));

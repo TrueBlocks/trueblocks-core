@@ -15,6 +15,7 @@
 //----------------------------------------------------------------
 int main(int argc, const char *argv[]) {
     etherlib_init("binary", quickQuitHandler);
+
     forEveryFileInFolder("tests/", visitFile, NULL);
     return 1;
 }

@@ -18,7 +18,6 @@ void reportByAccount(COptions& options);
 extern string_q getTokenInfo(const string_q& which, CTokenInfo& w, const address_t& h, blknum_t b);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-
     acctlib_init("binary", quickQuitHandler);
 
     // Parse command line, allowing for command files

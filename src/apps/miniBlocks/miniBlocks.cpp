@@ -14,7 +14,6 @@ extern bool checkMiniBlocks(CMiniBlock& block, void *data);
 #endif
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-
     etherlib_init("binary", defaultQuitHandler);
 
     // Parse command line, allowing for command files

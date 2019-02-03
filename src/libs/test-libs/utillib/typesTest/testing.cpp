@@ -51,6 +51,7 @@ TEST_F(CThisTest, Test01) {
 #include "options.h"
 //------------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
+    etherlib_init("binary", quickQuitHandler);
 
     COptions options;
     options.minArgs = 0;

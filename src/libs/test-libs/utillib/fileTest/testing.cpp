@@ -14,7 +14,6 @@
 
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-
     etherlib_init("binary", quickQuitHandler);
 
     CStringArray files;

@@ -8,7 +8,6 @@
 
 //----------------------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-
     etherlib_init("local",  defaultQuitHandler);
 
     COptions options;

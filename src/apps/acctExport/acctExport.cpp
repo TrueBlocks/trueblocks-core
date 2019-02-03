@@ -8,7 +8,6 @@
 
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-
     etherlib_init("binary", quickQuitHandler);
 
     // Parse command line, allowing for command files
