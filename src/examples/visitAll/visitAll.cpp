@@ -14,7 +14,6 @@
 
 //----------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-
     // Initialize the library
     etherlib_init("binary", quickQuitHandler);
 

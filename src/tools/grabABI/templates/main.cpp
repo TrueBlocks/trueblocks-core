@@ -17,8 +17,8 @@
 
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-
     parselib_init("binary", myQuitHandler);
+
     if (argc < 2)
         verbose = true;
     cerr << "Starting monitor...\r";

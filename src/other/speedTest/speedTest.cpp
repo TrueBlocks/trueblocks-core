@@ -20,7 +20,6 @@ extern bool visitMini(CMiniBlock& block, const CMiniTrans *trans, void *data);
 extern bool visitBlock(CBlock& block, void *data);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-
     etherlib_init("binary", quickQuitHandler);
 
     // Parse command line, allowing for command files
