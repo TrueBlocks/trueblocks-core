@@ -19,6 +19,8 @@ public:
 
 //-----------------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
+    etherlib_init("binary", quickQuitHandler);
+
     colorsOff();
     CSortHolder thing;
     forEveryFileInFolder(blockCachePath("addr_index/unsorted_by_block_temp"), cutFiles, &thing);

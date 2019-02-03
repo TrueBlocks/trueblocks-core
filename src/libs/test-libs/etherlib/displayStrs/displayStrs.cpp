@@ -17,7 +17,6 @@
 bool testDisplayStr(COptions& options);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-
     acctlib_init("binary", quickQuitHandler);
 
     COptions options;

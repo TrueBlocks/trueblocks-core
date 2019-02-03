@@ -49,6 +49,8 @@ extern const bigint_t&  check(const bigint_t& x);
 
 //----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
+    etherlib_init("binary", quickQuitHandler);
+
     CDefaultOptions options;
     options.minArgs = 0;
     options.prepareArguments(argc, argv);

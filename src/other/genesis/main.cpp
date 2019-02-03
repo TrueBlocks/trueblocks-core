@@ -30,6 +30,8 @@ inline string_q wei_2_Ether(const string_q& _value)
 }
 
 int main(int argc, const char *argv[]) {
+    etherlib_init("binary", quickQuitHandler);
+
     string_q contents;
     asciiFileToString("file.txt", contents);
 	while (!contents.empty())
