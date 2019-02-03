@@ -737,10 +737,14 @@ extern string_q reformat1(const string_q& in, size_t len);
     //---------------------------------------------------------------------------------------------------
     CBaseNode *createObjectOfType(const string_q& className) {
         //TODO(tjayrush): global data
-        static bool isSorted = false;
-        if (!isSorted) {
-            sort(builtIns.begin(), builtIns.end());
-            isSorted = true;
+        { // keep the frame
+            mutex aMutex;
+            lock_guard<mutex> lock(aMutex);
+            static bool isSorted = false;
+            if (!isSorted) {
+                sort(builtIns.begin(), builtIns.end());
+                isSorted = true;
+            }
         }
 
         CRuntimeClass *pClass = &CBaseNode::classCBaseNode;
