@@ -22,7 +22,6 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     CCurlContext::CCurlContext(void) {
-        headerStr    = "Content-Type: application/json\n";
         baseURL      = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
         callBackFunc = writeCallback;
         curlNoteFunc = NULL;
@@ -48,12 +47,12 @@ namespace qblocks {
 int x = 0;
 #define PRINT(msg) \
 cerr << string_q(120, '-') << "\n" << ++x << "." << msg << "\n"; \
-cerr << "\tresult: \t[" << substitute(getCurlContext()->result, "\n", " ") << "]\n"; \
-cerr << "\tearlyAbort:\t" << getCurlContext()->earlyAbort << "\n"; \
-cerr << "\tcurlID: \t" << getCurlContext()->getCurlID() << "\n";
+cerr << "\tresult: \t[" << substitute(result, "\n", " ") << "]\n"; \
+cerr << "\tearlyAbort:\t" << earlyAbort << "\n"; \
+cerr << "\tcurlID: \t" << getCurlID() << "\n";
 #define PRINTQ(msg) \
 cerr << string_q(120, '-') << "\n" << ++x << "." << msg << "\n"; \
-cerr << "\tcurlID: \t" << getCurlContext()->getCurlID() << "\n";
+cerr << "\tcurlID: \t" << getCurlID() << "\n";
 #define PRINTL(msg) \
 cerr << string_q(120,'-') << "\n"; \
 PRINT(msg);
@@ -107,8 +106,8 @@ PRINT("postData: " + postData);
 
     //--------------------------------------------------------------------------
     CURLCALLBACKFUNC CCurlContext::setCurlCallback(CURLCALLBACKFUNC func) {
-        CURLCALLBACKFUNC prev = getCurlContext()->callBackFunc;
-        getCurlContext()->callBackFunc = func;
+        CURLCALLBACKFUNC prev = callBackFunc;
+        callBackFunc = func;
         return prev;
     }
 
@@ -122,13 +121,13 @@ PRINT("postData: " + postData);
                 exit(0);
             }
 
-            string_q head = getCurlContext()->headerStr;
-            while (!head.empty()) {
-                string_q next = nextTokenClear(head, '\n');
-                headerPtr = curl_slist_append(headerPtr, (char*)next.c_str());  // NOLINT
-            }
+            // curl_slist_append makes a copy of the string
+            CStringArray heads;
+            explode(heads, "Content-Type: application/json\n", '\n');
+            for (auto head : heads)
+                headerPtr = curl_slist_append(headerPtr, (char*)head.c_str());
             curl_easy_setopt(curlHandle, CURLOPT_HTTPHEADER, headerPtr);
-            curl_easy_setopt(curlHandle, CURLOPT_URL, getCurlContext()->baseURL.c_str());
+            curl_easy_setopt(curlHandle, CURLOPT_URL, baseURL.c_str());
         }
 
         return curlHandle;
@@ -174,52 +173,67 @@ extern size_t nullCallback(char *ptr, size_t size, size_t nmemb, void *userdata)
 #endif
     }
 
+//-------------------------------------------------------------------------
+static const char *STR_CURLERROR =
+"\t[{Warning:}] The request to the Ethereum node resulted in\n"
+"\tfollowing error message: [{[VAL]}].\n"
+"\tIt is impossible to proceed. Quitting...\n";
+
+//-------------------------------------------------------------------------
+static const char *STR_CURLRESEMPTY =
+"\t[{Warning:}] The Ethereum node returned an empty response.\n"
+"\tIt is impossible to proceed. Quitting...\n";
+
+    //-------------------------------------------------------------------------
+    string_q displayCurlError(const string_q& msg, const string_q& val) {
+        ostringstream os;
+        os << "\n";
+        os << substitute(substitute(substitute(msg, "[{", cTeal), "}]", cOff), "[VAL]", val);
+        os << "\n";
+        return os.str();
+    }
+
     //-------------------------------------------------------------------------
     string_q callRPC(const string_q& method, const string_q& params, bool raw) {
+        return getCurlContext()->perform(method, params, raw);
+    }
 
-PRINTL("callRPC:\n\tmethod:\t\t" + method + params + "\n\tsource:\t\t" + getCurlContext()->provider);
+    //-------------------------------------------------------------------------
+    string_q CCurlContext::perform(const string_q& method, const string_q& params, bool raw) {
 
-        // getCurlContext()->callBackFunc = writeCallback;
+PRINTL("perform:\n\tmethod:\t\t" + method + params + "\n\tsource:\t\t" + provider);
+
         getCurlContext()->setPostData(method, params);
-        CURLcode res = curl_easy_perform(getCurlContext()->getCurl());
-        if (res != CURLE_OK && !getCurlContext()->earlyAbort) {
-PRINT("CURL returned an error: ! CURLE_OK")
-            cerr << "\n";
-            cerr << cYellow << "\tWarning: " << cOff << "The request to the Ethereum node ";
-            cerr << "resulted in\n\tfollowing error message: ";
-            cerr << bTeal << curl_easy_strerror(res) << cOff << ".\n";
-            cerr << "\tIt is impossible for QBlocks to proceed. Quitting...\n";
-            cerr << "\n";
+        CURLcode res = curl_easy_perform(curlHandle);
+        if (res != CURLE_OK && !earlyAbort) {
+            PRINT("CURL returned an error: ! CURLE_OK")
+            cerr << displayCurlError(STR_CURLERROR, curl_easy_strerror(res));
             quickQuitHandler(0);
         }
 
 PRINT("CURL returned CURLE_OK")
+        if (result.empty()) {
+            cerr << displayCurlError(STR_CURLRESEMPTY, "");
+            quickQuitHandler(0);
 
-        if (getCurlContext()->result.empty()) {
-            cerr << cYellow;
-            cerr << "\n";
-            cerr << "\tWarning:" << cOff << "The Ethereum node resulted in an empty\n";
-            cerr << "\tresponse. It is impossible for QBlocks to proceed. Quitting...\n";
-            cerr << "\n";
-            exit(0);
-        } else if (contains(getCurlContext()->result, "error")) {
+        } else if (contains(result, "error")) {
 #ifndef DEBUG_RPC
             if (verbose > 1)
 #endif
             {
-                cerr << getCurlContext()->result;
-                cerr << getCurlContext()->postData << "\n";
+                cerr << result;
+                cerr << postData << "\n";
             }
         }
 
-PRINTL("Received: " + getCurlContext()->result);
+PRINTL("Received: " + result);
 #ifdef DEBUG_RPC
 x = 0;
 #endif
         if (raw)
-            return getCurlContext()->result;
+            return result;
         CRPCResult generic;
-        generic.parseJson3(getCurlContext()->result);
+        generic.parseJson3(result);
         return generic.result;
     }
 
