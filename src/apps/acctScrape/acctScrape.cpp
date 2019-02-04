@@ -14,7 +14,7 @@ extern void writeLastBlock     (blknum_t bn);
 extern string_q report         (const COptions& options, double start, double stop);
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-    acctlib_init("binary", defaultQuitHandler);
+    acctlib_init(defaultQuitHandler);
 
     COptions options; ASSERT(isEnabled(OPT_RUNONCE));
     if (!options.prepareArguments(argc, argv))
@@ -60,7 +60,7 @@ int main(int argc, const char *argv[]) {
 
         if (options.ignoreBlockCache) {
             cerr << "switching to local node, ignoring binary block cache" << endl;
-            getCurlContext()->provider = "local";
+            setDataSource("local");
         }
 
         double startTime = qbNow();

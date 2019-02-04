@@ -15,8 +15,8 @@
 extern const char* STR_NAME_DATA;
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-    getCurlContext()->nodeRequired = false;  // This will run without a node
-    etherlib_init("binary", quickQuitHandler);
+    nodeNotRequired(); // This command will run without a node
+    etherlib_init(quickQuitHandler);
 
     COptions options;
     options.setProgName(basename((char*)argv[0]));

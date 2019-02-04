@@ -22,7 +22,7 @@ extern bool test_evt_assign (void);
 extern bool test_eth_tests  (uint64_t sub);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-    etherlib_init("binary", quickQuitHandler);
+    etherlib_init(quickQuitHandler);
 
     COptions options;
     if (!options.prepareArguments(argc, argv))

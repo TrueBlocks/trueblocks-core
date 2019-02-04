@@ -25,7 +25,7 @@ public:
 extern bool visitFiles(const string_q& path, void *data);
 //----------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-    etherlib_init("binary", quickQuitHandler);
+    etherlib_init(quickQuitHandler);
 
     colorsOff();
     if (argc != 3) {

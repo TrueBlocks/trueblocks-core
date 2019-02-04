@@ -310,12 +310,11 @@ bool CBlock::readBackLevel(CArchive& archive) {
         archive >> timestamp;
         archive >> transactions;
         // TODO(tjayrush): technically we should re-read these values from the node
-        string_q save = getCurlContext()->provider;
-        getCurlContext()->provider = "local";
         CBlock upgrade;
         size_t unused;
+        string_q prev = setDataSource("local");
         queryBlock(upgrade, uint_2_Str(blockNumber), false, false, unused);
-        getCurlContext()->provider = save;
+        setDataSource(prev);
         miner = upgrade.miner;
         difficulty = upgrade.difficulty;
         price = 0.0;
