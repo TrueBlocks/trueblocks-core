@@ -18,7 +18,6 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     class CCurlContext {
     public:
-        string_q          headerStr;
         string_q          baseURL;
         bool              nodeRequired;
         CURLCALLBACKFUNC  callBackFunc;
@@ -37,6 +36,7 @@ namespace qblocks {
         CURL    *getCurl    (void);
         void     releaseCurl(void);
         void     setPostData(const string_q& method, const string_q& params);
+        string_q perform    (const string_q& method, const string_q& params, bool raw);
         string_q getCurlID  (void);
         void     clear      (void);
         CURLCALLBACKFUNC setCurlCallback(CURLCALLBACKFUNC func);
