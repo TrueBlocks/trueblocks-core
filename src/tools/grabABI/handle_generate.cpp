@@ -186,7 +186,7 @@ void COptions::handle_generate(void) {
     if (!isBuiltIn())
         headers += ("#include \"visitor.h\"\n");
     string_q headerCode = substitute(string_q(STR_HEADERFILE), "[{HEADERS}]", headers);
-    string_q parseInit = "parselib_init(const string_q& mode, QUITHANDLER qh=defaultQuitHandler)";
+    string_q parseInit = "parselib_init(QUITHANDLER qh)";
     if (!isBuiltIn())
         replaceAll(headerCode, "[{PREFIX}]_init(void)", parseInit);
     //replaceAll(headerCode, "[{ADDR}]", substitute(primaryAddr, "0x", ""));
@@ -219,9 +219,9 @@ void COptions::handle_generate(void) {
 
     string_q sourceCode;
     asciiFileToString(templateFolder + "parselib.cpp", sourceCode);
-    parseInit = "parselib_init(\"binary\", QUITHANDLER qh)";
+    parseInit = "parselib_init(QUITHANDLER qh)";
     if (!isBuiltIn())
-        replaceAll(sourceCode, "[{PREFIX}]_init(const string_q& mode, QUITHANDLER qh)", parseInit);
+        replaceAll(sourceCode, "[{PREFIX}]_init(QUITHANDLER qh)", parseInit);
     if (isToken()) {
         replace(sourceCode, "return promoteToToken(p);", "return promoteToWallet(p);");
         replace(sourceCode, "return promoteToTokenEvent(p);", "return promoteToWalletEvent(p);");
@@ -237,8 +237,8 @@ void COptions::handle_generate(void) {
     replaceAll(sourceCode, "[{ABI}]", ""); //theABI);
     replaceAll(sourceCode, "[{REGISTERS}]", registers);
     string_q chainInit = (isToken() ?
-                          "\twalletlib_init(mode, qh);\n" :
-                          (isWallet() ? "" : "\ttokenlib_init(mode, qh);\n"));
+                          "\twalletlib_init(qh);\n" :
+                          (isWallet() ? "" : "\ttokenlib_init(qh);\n"));
     replaceAll(sourceCode, "[{CHAINLIB}]",   chainInit);
     replaceAll(sourceCode, "[{FACTORY1}]",   factory1.empty() ? "\t\t{\n\t\t\t// No functions\n" : factory1);
     replaceAll(sourceCode, "[{INIT_CODE}]",  factory1.empty() ? "" : STR_ITEMS);
@@ -413,7 +413,7 @@ const char* STR_CODE_SIGS =
 "\n";
 
 //-----------------------------------------------------------------------
-const char* STR_BLOCK_PATH = "\n\tetherlib_init(\"binary\", qh);";
+const char* STR_BLOCK_PATH = "\n\tetherlib_init(qh);";
 
 //-----------------------------------------------------------------------
 const char* STR_ITEMS =

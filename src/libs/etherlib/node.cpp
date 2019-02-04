@@ -33,6 +33,13 @@ namespace qblocks {
             }
         }
 
+        getCurlContext()->provider = ((sourceIn == "local") ? "local" : "binary");
+
+        // if curl has already been initialized, we want to clear it out
+        getCurlContext()->releaseCurl();
+        // initialize curl
+        getCurlContext()->getCurl();
+
         if (getCurlContext()->nodeRequired && !isNodeRunning()) {
             cerr << endl;
             cerr << "\t" << cTeal << "Warning: " << cOff << "This program requires a running Ethereum node. Please start your node or " << endl;
@@ -64,16 +71,6 @@ namespace qblocks {
         CRPCResult::registerClass();
         CAccountName::registerClass();
 
-        if (sourceIn != "remote" && sourceIn != "local" && sourceIn != "ropsten")
-            getCurlContext()->provider = "binary";
-        else
-            getCurlContext()->provider = sourceIn;
-
-        // if curl has already been initialized, we want to clear it out
-        getCurlContext()->cleanupCurl();
-        // initialize curl
-        getCurlContext()->getCurl();
-
         establishFolder(configPath(""));
     }
 
@@ -103,12 +100,18 @@ namespace qblocks {
             }
         }
 
-        getCurlContext()->cleanupCurl();
+        getCurlContext()->releaseCurl();
         clearInMemoryCache();
         if (theQuitHandler)
             (*theQuitHandler)(-1);
         else
             cleanFileLocks();
+    }
+
+    //-------------------------------------------------------------------------
+    bool getObjectViaRPC(CBaseNode &node, const string_q& method, const string_q& params) {
+        string_q str = callRPC(method, params, false);
+        return node.parseJson3(str);
     }
 
     //-------------------------------------------------------------------------

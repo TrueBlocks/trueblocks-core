@@ -40,7 +40,7 @@ bool COptions::parseArguments(string_q& command) {
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (arg == "-o" || arg == "--force") {
-            etherlib_init("binary", defaultQuitHandler);
+            etherlib_init(defaultQuitHandler);
             force = true;
 
         } else if (arg == "-r" || arg == "--raw") {

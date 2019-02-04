@@ -128,23 +128,14 @@ PRINT("postData: " + postData);
                 headerPtr = curl_slist_append(headerPtr, (char*)next.c_str());  // NOLINT
             }
             curl_easy_setopt(curlHandle, CURLOPT_HTTPHEADER, headerPtr);
-
-            if (getCurlContext()->provider == "remote") {
-                curl_easy_setopt(curlHandle, CURLOPT_URL, "https://mainnet.infura.io/");
-
-            } else if (getCurlContext()->provider == "ropsten") {
-                curl_easy_setopt(curlHandle, CURLOPT_URL, "https://testnet.infura.io/");
-
-            } else {
-                curl_easy_setopt(curlHandle, CURLOPT_URL, getCurlContext()->baseURL.c_str());
-            }
+            curl_easy_setopt(curlHandle, CURLOPT_URL, getCurlContext()->baseURL.c_str());
         }
 
         return curlHandle;
     }
 
     //-------------------------------------------------------------------------
-    void CCurlContext::cleanupCurl(void) {
+    void CCurlContext::releaseCurl(void) {
         if (headerPtr)
             curl_slist_free_all(headerPtr);
         headerPtr = NULL;
@@ -154,13 +145,33 @@ PRINT("postData: " + postData);
         curlHandle = NULL;
     }
 
+#define OLD_CODE
     //-------------------------------------------------------------------------
     bool isNodeRunning(void) {
+#ifdef OLD_CODE
         CURLCALLBACKFUNC prev = getCurlContext()->setCurlCallback(nullCallback);
         getCurlContext()->setPostData("web3_clientVersion", "[]");
         CURLcode res = curl_easy_perform(getCurlContext()->getCurl());
         getCurlContext()->setCurlCallback(prev);
         return (res == CURLE_OK);
+#else
+        getCurlContext()->clear();
+        string_q postData;
+        postData = "{";
+        postData +=  quote("jsonrpc") + ":"  + quote("2.0")  + ",";
+        postData +=  quote("method")  + ":"  + quote("web3_clientVersion") + ",";
+        postData +=  quote("params")  + ":"  + "[]" + ",";
+        postData +=  quote("id")      + ":"  + quote(getCurlContext()->getCurlID());
+        postData += "}";
+extern size_t nullCallback(char *ptr, size_t size, size_t nmemb, void *userdata);
+        CURLcode ret;
+        ret = curl_easy_setopt(getCurlContext()->curlHandle, CURLOPT_POSTFIELDS,    postData.c_str());
+        ret = curl_easy_setopt(getCurlContext()->curlHandle, CURLOPT_POSTFIELDSIZE, postData.length());
+        ret = curl_easy_setopt(getCurlContext()->curlHandle, CURLOPT_WRITEDATA,     NULL);
+        ret = curl_easy_setopt(getCurlContext()->curlHandle, CURLOPT_WRITEFUNCTION, nullCallback);
+        CURLcode res = curl_easy_perform(getCurlContext()->curlHandle);
+        return (res == CURLE_OK);
+#endif
     }
 
     //-------------------------------------------------------------------------
@@ -213,9 +224,16 @@ x = 0;
     }
 
     //-------------------------------------------------------------------------
-    bool getObjectViaRPC(CBaseNode &node, const string_q& method, const string_q& params) {
-        string_q str = callRPC(method, params, false);
-        return node.parseJson3(str);
+    void nodeNotRequired(void) {
+        getCurlContext()->nodeRequired = false;
+    }
+
+    //-------------------------------------------------------------------------
+    string_q setDataSource(const string_q& newSrc) {
+        string_q old = getCurlContext()->provider;
+        if (newSrc == "local" || newSrc == "binary")
+            getCurlContext()->provider = newSrc;
+        return old;
     }
 
     //-------------------------------------------------------------------------
@@ -234,7 +252,6 @@ PRINTQ("data->result ==> " + string_q(s));
         if (data && data->curlNoteFunc)
             if (!(*data->curlNoteFunc)(ptr, size, nmemb, userdata))  // returns zero if it wants us to stop
                 return 0;
-
         return size * nmemb;
     }
 
@@ -246,8 +263,8 @@ PRINTQ("data->result ==> " + string_q(s));
         data->result = "ok";
         if (strstr(ptr, "erro") != NULL) {
             data->result = "error";
-            getCurlContext()->is_error = true;
-            getCurlContext()->earlyAbort = true;
+            data->is_error = true;
+            data->earlyAbort = true;
             return 0;
         }
 

@@ -7,7 +7,7 @@
 
 //-------------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-    etherlib_init("binary", defaultQuitHandler);
+    etherlib_init(defaultQuitHandler);
 
     // Parse command line, allowing for command files
     COptions options;

@@ -20,13 +20,13 @@ namespace qblocks {
     public:
         string_q          headerStr;
         string_q          baseURL;
+        bool              nodeRequired;
         CURLCALLBACKFUNC  callBackFunc;
         CURLCALLBACKFUNC  curlNoteFunc;
         bool              earlyAbort;
         string_q          postData;
         string_q          result;
         string_q          provider;
-        bool              nodeRequired;
         bool              is_error;
         size_t            theID;
         CURL              *curlHandle;
@@ -35,19 +35,24 @@ namespace qblocks {
         CCurlContext(void);
 
         CURL    *getCurl    (void);
-        void     cleanupCurl(void);
+        void     releaseCurl(void);
         void     setPostData(const string_q& method, const string_q& params);
         string_q getCurlID  (void);
         void     clear      (void);
         CURLCALLBACKFUNC setCurlCallback(CURLCALLBACKFUNC func);
     };
 
+    extern CCurlContext *getCurlContext  (void);
+
+    extern void          nodeNotRequired (void);
     extern bool          isNodeRunning   (void);
     extern bool          nodeHasBalances (void);
     extern bool          nodeHasTraces   (void);
-    extern bool          getObjectViaRPC (CBaseNode &node, const string_q& method, const string_q& params);
+    extern string_q      setDataSource   (const string_q& newSrc);
+
     extern string_q      callRPC         (const string_q& method, const string_q& params, bool raw);
-    extern CCurlContext *getCurlContext  (void);
+    extern bool          getObjectViaRPC (CBaseNode &node, const string_q& method, const string_q& params);
+
     extern size_t        writeCallback   (char *ptr, size_t size, size_t nmemb, void *userdata);
     extern size_t        errorCallback   (char *ptr, size_t size, size_t nmemb, void *userdata);
 }  // namespace qblocks

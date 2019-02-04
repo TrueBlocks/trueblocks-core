@@ -17,7 +17,7 @@
 
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-    parselib_init("binary", myQuitHandler);
+    parselib_init(myQuitHandler);
 
     if (argc < 2)
         verbose = true;

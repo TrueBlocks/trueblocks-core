@@ -25,7 +25,7 @@ namespace qblocks {
 };
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-    acctlib_init("binary", quickQuitHandler);
+    acctlib_init(quickQuitHandler);
 
     CNewBlock::registerClass();
     CNewReceipt::registerClass();

@@ -20,7 +20,7 @@ extern bool visitMini(CMiniBlock& block, const CMiniTrans *trans, void *data);
 extern bool visitBlock(CBlock& block, void *data);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-    etherlib_init("binary", quickQuitHandler);
+    etherlib_init(quickQuitHandler);
 
     // Parse command line, allowing for command files
     COptions options;
@@ -54,17 +54,17 @@ int main(int argc, const char *argv[]) {
         int cnt=0;
 
         endMsg(msgs[cnt++]);
-        { etherlib_init("remote", quickQuitHandler); CSpeedTest rep("remote", options.startBlock,N_BLOCKS / 20);   forEveryBlockFromClient    (visitBlock, &rep); rep.finalReport(msgs[cnt++]); }
-        { etherlib_init("local",  quickQuitHandler); CSpeedTest rep("local",  options.startBlock,N_BLOCKS / 20);   forEveryBlockFromClient    (visitBlock, &rep); rep.finalReport(msgs[cnt++]); }
-        { etherlib_init("binary", quickQuitHandler); CSpeedTest rep("binary", options.startBlock,N_BLOCKS / 20);   forEveryBlockFromClient    (visitBlock, &rep); rep.finalReport(msgs[cnt++]); }
-        { etherlib_init("remote", quickQuitHandler); CSpeedTest rep("remote", options.startBlock,N_BLOCKS);        forEveryBlockFromClient    (visitBlock, &rep); rep.finalReport(msgs[cnt++]); }
-        { etherlib_init("local",  quickQuitHandler); CSpeedTest rep("local",  options.startBlock,N_BLOCKS);        forEveryBlockFromClient    (visitBlock, &rep); rep.finalReport(msgs[cnt++]); }
-        { etherlib_init("binary", quickQuitHandler); CSpeedTest rep("binary", options.startBlock,N_BLOCKS);        forEveryBlockOnDisc        (visitBlock, &rep); rep.finalReport(msgs[cnt++]); }
-        { etherlib_init("local",  quickQuitHandler); CSpeedTest rep("local",  options.startBlock,N_BLOCKS * 10);   forEveryBlockFromClient    (visitBlock, &rep); rep.finalReport(msgs[cnt++]); }
-        { etherlib_init("binary", quickQuitHandler); CSpeedTest rep("binary", options.startBlock,N_BLOCKS * 10);   forEveryBlockOnDisc        (visitBlock, &rep); rep.finalReport(msgs[cnt++]); }
-        { etherlib_init("binary", quickQuitHandler); CSpeedTest rep("binary", options.startBlock,N_BLOCKS * 10);   forEveryNonEmptyBlockOnDisc(visitBlock, &rep); rep.finalReport(msgs[cnt++]); }
-        { etherlib_init("binary", quickQuitHandler); CSpeedTest rep("binary", options.startBlock,N_BLOCKS * 10);   forEveryMiniBlockInMemory  (visitMini,  &rep); rep.finalReport(msgs[cnt++]); }
-        { etherlib_init("binary", quickQuitHandler); CSpeedTest rep("binary", options.startBlock,N_BLOCKS * 100);  forEveryMiniBlockInMemory  (visitMini,  &rep); rep.finalReport( ); }
+//        { etherlib_ini t("r emote", quickQuitHandler); CSpeedTest rep("r emote", options.startBlock,N_BLOCKS / 20);   forEveryBlockFromClient    (visitBlock, &rep); rep.finalReport(msgs[cnt++]); }
+//        { etherlib_ini t("local",  quickQuitHandler); CSpeedTest rep("local",  options.startBlock,N_BLOCKS / 20);   forEveryBlockFromClient    (visitBlock, &rep); rep.finalReport(msgs[cnt++]); }
+//        { etherlib_ini t("binary", quickQuitHandler); CSpeedTest rep("binary", options.startBlock,N_BLOCKS / 20);   forEveryBlockFromClient    (visitBlock, &rep); rep.finalReport(msgs[cnt++]); }
+//        { etherlib_ini t("r emote", quickQuitHandler); CSpeedTest rep("r emote", options.startBlock,N_BLOCKS);        forEveryBlockFromClient    (visitBlock, &rep); rep.finalReport(msgs[cnt++]); }
+//        { etherlib_ini t("local",  quickQuitHandler); CSpeedTest rep("local",  options.startBlock,N_BLOCKS);        forEveryBlockFromClient    (visitBlock, &rep); rep.finalReport(msgs[cnt++]); }
+//        { etherlib_ini t("binary", quickQuitHandler); CSpeedTest rep("binary", options.startBlock,N_BLOCKS);        forEveryBlockOnDisc        (visitBlock, &rep); rep.finalReport(msgs[cnt++]); }
+//        { etherlib_ini t("local",  quickQuitHandler); CSpeedTest rep("local",  options.startBlock,N_BLOCKS * 10);   forEveryBlockFromClient    (visitBlock, &rep); rep.finalReport(msgs[cnt++]); }
+//        { etherlib_ini t("binary", quickQuitHandler); CSpeedTest rep("binary", options.startBlock,N_BLOCKS * 10);   forEveryBlockOnDisc        (visitBlock, &rep); rep.finalReport(msgs[cnt++]); }
+//        { etherlib_ini t("binary", quickQuitHandler); CSpeedTest rep("binary", options.startBlock,N_BLOCKS * 10);   forEveryNonEmptyBlockOnDisc(visitBlock, &rep); rep.finalReport(msgs[cnt++]); }
+//        { etherlib_ini t("binary", quickQuitHandler); CSpeedTest rep("binary", options.startBlock,N_BLOCKS * 10);   forEveryMiniBlockInMemory  (visitMini,  &rep); rep.finalReport(msgs[cnt++]); }
+//        { etherlib_ini t("binary", quickQuitHandler); CSpeedTest rep("binary", options.startBlock,N_BLOCKS * 100);  forEveryMiniBlockInMemory  (visitMini,  &rep); rep.finalReport( ); }
     }
 
     etherlib_cleanup();
