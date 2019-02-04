@@ -17,7 +17,7 @@
 bool testDisplayStr(COptions& options);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-    acctlib_init("binary", quickQuitHandler);
+    acctlib_init(quickQuitHandler);
 
     COptions options;
     if (!options.prepareArguments(argc, argv))

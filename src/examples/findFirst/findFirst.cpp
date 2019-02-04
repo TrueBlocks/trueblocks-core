@@ -15,7 +15,7 @@
 extern bool visitAddress(const CAddressAppearance& item, void *data);
 //-----------------------------------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-    etherlib_init("binary", quickQuitHandler);
+    etherlib_init(quickQuitHandler);
 
     address_t search("0xbb9bc244d798123fde783fcc1c72d3bb8c189413");
     blknum_t start = 1428000;

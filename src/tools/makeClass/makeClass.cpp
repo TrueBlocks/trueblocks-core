@@ -24,7 +24,7 @@ extern string_q convertTypes  (const string_q& inStr);
 
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-    etherlib_init("binary", quickQuitHandler);
+    etherlib_init(quickQuitHandler);
 
     CParameter::registerClass();
 

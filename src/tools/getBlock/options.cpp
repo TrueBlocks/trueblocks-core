@@ -75,7 +75,7 @@ bool COptions::parseArguments(string_q& command) {
             filters.push_back(str_2_Addr(toLower(arg)));
 
         } else if (arg == "-o" || arg == "--force") {
-            etherlib_init("binary", defaultQuitHandler);
+            etherlib_init(defaultQuitHandler);
             force = true;
 
         } else if (arg == "--normalize") {
@@ -116,9 +116,6 @@ bool COptions::parseArguments(string_q& command) {
 
             } else if (mode == "c" || mode == "cache") {
                 isCache = true;
-
-            } else if (mode == "r" || mode == "remote") {
-                etherlib_init("remote", defaultQuitHandler);
 
             } else {
                 return usage("Invalide source. Must be either '(r)aw' or '(c)ache'. Quitting...");

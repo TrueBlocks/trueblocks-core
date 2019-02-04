@@ -19,7 +19,7 @@
  *------------------------------------------------------------------------*/
 int main(int argc, const char *argv[]) {
     // Initialize the system and tell it where to find the blockchain data.
-    etherlib_init("binary", quickQuitHandler);
+    etherlib_init(quickQuitHandler);
 
     // Request the 3,500,000th block from Infura. Store it in 'block'...
     CBlock block;

@@ -442,13 +442,12 @@ namespace qblocks {
 
     //-----------------------------------------------------------------------
     bool shouldQuit(void) {
-        bool ret = quitCount() > 1;
-        if (ret) {
-            cout << "\nFinishing work...Hit Cntl+C again to quit...\n";
-            cleanFileLocks();
-            cout.flush();
-        }
-        return ret;
+        if (quitCount() == 0)
+            return false;
+        cout << "\nFinishing work...\n";
+        cleanFileLocks();
+        cout.flush();
+        return true;
     }
 
     //-----------------------------------------------------------------------

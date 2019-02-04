@@ -11,7 +11,7 @@
  */
 [{HEADERS}]
 //-----------------------------------------------------------------------
-void [{PREFIX}]_init(const string_q& mode, QUITHANDLER qh) {[{BLKPATH}]
+void [{PREFIX}]_init(QUITHANDLER qh) {[{BLKPATH}]
 [{REGISTERS}][{CHAINLIB}]
 }
 
