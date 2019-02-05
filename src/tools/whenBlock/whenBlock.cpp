@@ -72,7 +72,7 @@ int main(int argc, const char *argv[]) {
             string_q def = (options.alone ?
                                     "[{BLOCKNUMBER}\\t][{DATE}]\\n" :
                                     "block #[{BLOCKNUMBER}][ : {TIMESTAMP}][ : {DATE}]\\n");
-            string_q fmt = getGlobalConfig()->getDisplayStr(options.alone, def);
+            string_q fmt = getGlobalConfig("whenBlock")->getDisplayStr(options.alone, def);
             // we never want to print JSON
             if (fmt.empty()) fmt = substitute(def, "\\n" , "\n");
             if (verbose && !special.empty()) {

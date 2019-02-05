@@ -82,9 +82,9 @@ int main(int argc, const char *argv[]) {
 
 //-----------------------------------------------------------------------
 void readCustomAddrs(CAddressArray& array) {
-    size_t n = getGlobalConfig()->getConfigInt("extra_accounts", "n", 0);
+    size_t n = getGlobalConfig("getAccounts")->getConfigInt("extra_accounts", "n", 0);
     for (size_t i = 0 ; i < n ; i++) {
-        string_q addr = getGlobalConfig()->getConfigStr("extra_accounts", "ea_" + uint_2_Str(i), "");
+        string_q addr = getGlobalConfig("getAccounts")->getConfigStr("extra_accounts", "ea_" + uint_2_Str(i), "");
         if (!isZeroAddr(addr))
             array.push_back(addr);
     }

@@ -90,7 +90,7 @@ bool COptions::parseArguments(string_q& command) {
         return usage("Please specify at least one transaction identifier.");
 
 extern const char* STR_DISPLAY_FORMAT;
-    format = getGlobalConfig()->getDisplayStr(!verbose, (verbose ? "" : STR_DISPLAY_FORMAT));
+    format = getGlobalConfig("getTrans")->getDisplayStr(!verbose, (verbose ? "" : STR_DISPLAY_FORMAT));
 
     return true;
 }

@@ -261,12 +261,12 @@ bool COptions::parseArguments(string_q& command) {
     if (!blocks.hasBlocks())
         return usage("You must specify at least one block. Quitting...");
 
-    format = getGlobalConfig()->getDisplayStr(false, "");
+    format = getGlobalConfig("getBlock")->getDisplayStr(false, "");
     if (contains(format, "{PRICE:CLOSE}")) {
 //        priceBlocks = true;
     }
 
-    showZeroTrace = getGlobalConfig()->getConfigBool("display", "showZeroTrace", false);
+    showZeroTrace = getGlobalConfig("getBlock")->getConfigBool("display", "showZeroTrace", false);
     return true;
 }
 
