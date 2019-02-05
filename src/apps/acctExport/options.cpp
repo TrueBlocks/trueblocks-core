@@ -99,7 +99,7 @@ void COptions::Init(void) {
     transFmt = "";
     blk_minWatchBlock = 0;
     blk_maxWatchBlock = UINT32_MAX;
-    showProgress = getGlobalConfig()->getConfigBool("debug", "showProgress", false);
+    showProgress = getGlobalConfig("acctExport")->getConfigBool("debug", "showProgress", false);
     useBloom = false;
     ignoreDdos = true;
     needsArt = false;

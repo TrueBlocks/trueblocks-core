@@ -20,7 +20,7 @@ int main(int argc, const char *argv[]) {
 
         blknum_t latest = getLatestBlockFromCache();
         string_q def = (options.asData ? STR_DATA_DISPLAY : STR_DEFAULT_DISPLAY);
-        string_q fmtStr = getGlobalConfig()->getDisplayStr(options.asData, def);
+        string_q fmtStr = getGlobalConfig("cacheMan")->getDisplayStr(options.asData, def);
 
         // Handle the various modes (there may be more than one)
         CStringArray modes;

@@ -18,7 +18,7 @@ extern const char* STR_FORMAT_FUNCDATA;
 //-----------------------------------------------------------------------
 void COptions::handle_display(void) {
 
-    string_q format = getGlobalConfig()->getDisplayStr(false, STR_FORMAT_FUNCDATA);
+    string_q format = getGlobalConfig("grabABI")->getDisplayStr(false, STR_FORMAT_FUNCDATA);
     string_q header = substitute(substitute(format, "[{", ""), "}]", "");
     if (asData)
         cout << header << "\n";
