@@ -40,15 +40,14 @@ namespace qblocks {
         // initialize curl
         getCurlContext()->getCurl();
 
+static const char *STR_ERROR_NODEREQUIRED =
+"\t[{Warning:}] This program requires a running Ethereum node. Please start your node or\n"
+"\tconfigure the 'rpcProvider' setting before running this command. Quitting...";
+
         if (getCurlContext()->nodeRequired && !isNodeRunning()) {
-            cerr << endl;
-            cerr << "\t" << cTeal << "Warning: " << cOff << "This program requires a running Ethereum node. Please start your node or " << endl;
-            cerr << "\tconfigure the 'rpcProvider' setting before running this command. Quitting..." << endl;
-            cerr << endl;
+            cerr << displayCurlError(STR_ERROR_NODEREQUIRED);
             quickQuitHandler(EXIT_FAILURE);
         }
-
-        establishFolder(blockCachePath(""));
 
         // If we create any lock files, we need to clean them up
         if (theQuitHandler == NULL || qh != defaultQuitHandler) {
@@ -72,6 +71,7 @@ namespace qblocks {
         CAccountName::registerClass();
 
         establishFolder(configPath(""));
+        establishFolder(blockCachePath(""));
     }
 
     //-------------------------------------------------------------------------
