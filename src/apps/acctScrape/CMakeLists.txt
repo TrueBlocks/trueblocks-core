@@ -42,7 +42,7 @@ endfunction(run_test)
 
 # Enter one line for each individual test
 run_test("acctScrape_no_params")
-run_test("acctScrape_help"      "-th")
+run_test("acctScrape_help" "-th")
 
 # Installation steps, this tool is renamed at installation
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

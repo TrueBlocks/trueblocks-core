@@ -14,8 +14,9 @@ static const COption params[] = {
     COption("-maxBlocks:<val>",  "scan at most --maxBlocks blocks ('all' implies scan to end of chain)"),
     COption("@noBloom(s)",       "do not use adaptive enhanced blooms (much faster if you use them)"),
     COption("@noBloc(k)s",       "do not use binary block cache (much faster if you use them)"),
-    COption("@checkAddrs",       "use the per-block address lists (disabled)"),
     COption("@logLevel:<val>",   "specify the log level (default 1)"),
+    COption("@useIndex",         "search for transactions using the address index"),
+    COption("@l(i)st",           "ignore all other options and export tab delimited bn.txid records"),
     COption("",                  "Index transactions for a given Ethereum address (or series of addresses).\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -64,11 +65,15 @@ bool COptions::parseArguments(string_q& command) {
             else
                 return usage("Please provide an integer value for --logLevel. Quitting...");
 
-        } else if (arg == "-c" || arg == "--checkAddrs") {
-            checkAddrs = true;
-
         } else if (arg == "-s" || arg == "--noBlooms") {
             ignoreBlooms = true;
+
+        } else if (arg == "-i" || arg == "--list") {
+            isList = true;
+            useIndex = true;
+
+        } else if (arg == "-u" || arg == "--useIndex") {
+            useIndex = true;
 
         } else if (arg == "-k" || arg == "--noBlocks") {
             ignoreBlockCache = true;
@@ -94,16 +99,9 @@ bool COptions::parseArguments(string_q& command) {
 #endif
 #endif
 
-    if (!fileExists("./config.toml"))
-        return usage("The config.toml file was not found. Are you in the right folder? Quitting...\n");
-
     // show certain fields and hide others
     manageFields(defHide, false);
     manageFields(defShow, true);
-
-    CToml toml("./config.toml");
-    manageFields(toml.getConfigStr("fields", "hide", ""), false);
-    manageFields(toml.getConfigStr("fields", "show", ""), true );
 
     if (oneTrans && !oneBlock)
         return usage("If you specify oneTrans, you must specify oneBlock. Quitting...");
@@ -129,8 +127,41 @@ bool COptions::parseArguments(string_q& command) {
     // Exclusions are always picked up from the blockScraper
     exclusions = toLower(getGlobalConfig("blockScrape")->getConfigStr("exclusions", "list", ""));
 
+    if (!toml || !fileExists(toml->getFilename()))
+        return usage("Cannot read toml file './config.toml'. Are you in the right folder? Quitting...\n");
+
+    manageFields(toml->getConfigStr("fields", "hide", ""), false);
+    manageFields(toml->getConfigStr("fields", "show", ""), true );
+
     if (!isParity() || !nodeHasTraces())
         return usage("This tool will only run if it is running against a Parity node that has tracing enabled. Quitting...");
+
+    if (!folderExists(getTransCachePath(""))) {
+        cerr << "The cache folder '" << getTransCachePath("") << "' not found. Trying to create it." << endl;
+        establishFolder(getTransCachePath(""));
+        if (!folderExists(getTransCachePath("")))
+            return usage("The cache folder '" + getTransCachePath("") + "' not created. Quiting...");
+    }
+
+    if (!loadMonitors())
+        return false;
+
+    cacheFilename = getTransCachePath(monitors[0].address);
+    if (fileExists(cacheFilename+".lck") || fileExists(getTransCachePath("lastBlock.txt.lck")))
+        return usage("The cache file '" + (cacheFilename+".lck") + "' is locked. Quitting...");
+
+    string_q bloomPath = blockCachePath("/blooms/");
+    if (!useIndex && !folderExists(bloomPath))
+        return usage("The bloom file cache '" + bloomPath + "' was not found. Quitting...");
+
+    addrIndexPath = blockCachePath("addr_index/sorted_by_addr/");
+    if (useIndex && !folderExists(addrIndexPath))
+        return usage("Address index path `" + addrIndexPath + "' not found. Quitting...");
+
+    if (ignoreBlockCache) {
+        cerr << "Switching to local node, ignoring binary block cache" << endl;
+        setDataSource("local");
+    }
 
     return true;
 }
@@ -148,21 +179,26 @@ void COptions::Init(void) {
     oneTrans      = 0;
     lastTimestamp = 0;
     writeBlocks   = false;
-    checkAddrs    = false;
     ignoreBlooms  = false;
+    useIndex      = false;
+    isList        = false;
     ignoreBlockCache = false;
     firstBlock    = 0;
     nBlocks       = 0;
     blockCounted  = false;
     debugging     = 0;
     logLevel      = 1;
+//    addrIndexPath = "";
 }
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) : blkStats(), addrStats(), transStats(), traceStats(), txCache(WRITING_ARCHIVE) {
     Init();
+    toml = new CToml("./config.toml");
 }
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+    if (toml)
+        delete toml;
 }
