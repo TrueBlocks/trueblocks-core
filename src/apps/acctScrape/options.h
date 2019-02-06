@@ -26,10 +26,11 @@ public:
     blknum_t           oneBlock;
     blknum_t           oneTrans;
     timestamp_t        lastTimestamp;
-    bool               checkAddrs;
     bool               ignoreBlooms;
     bool               ignoreBlockCache;
     bool               writeBlocks;
+    bool               useIndex;
+    bool               isList;
     string_q           exclusions;
     blknum_t           firstBlock;
     blknum_t           nBlocks;
@@ -43,6 +44,9 @@ public:
     string_q           name;
     uint64_t           debugging;
     uint64_t           logLevel;
+    CToml             *toml;
+    string_q           cacheFilename;
+    string_q           addrIndexPath;
 
     COptions(void);
     ~COptions(void);
@@ -50,11 +54,12 @@ public:
     bool parseArguments(string_q& command);
     void Init(void);
     bool isExcluded(const address_t& addr) { return contains(exclusions, addr); }
-    bool loadMonitors(const CToml& toml);
+    bool loadMonitors(void);
     friend ostream& operator<<(ostream& os, const COptions& item);
     string_q finalReport(double timing, bool header) const;
 };
 
 //-----------------------------------------------------------------------
+extern bool visitIndexFiles  (const string_q& path, void *data);
 extern bool visitBloomFilters(const string_q& path, void *data);
 extern void myQuitHandler    (int s);
