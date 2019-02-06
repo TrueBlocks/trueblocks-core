@@ -600,9 +600,17 @@ extern string_q parseArrayMulti(CParameter& p, string_q& input);
 //---------------------------------------------------------------------------
 void extractParts(CParameterArray& interfaces, const string_q& input, string_q& fPart, string_q& dPart) {
     bool hasDynamic = false;
-    for (auto i : interfaces)
-        if (i.isDyn())
-            hasDynamic = true;
+
+    // TODO: If I remove the test for bytes, acctExport core dumps. If I put it back in some abi tests fail
+    if (false) { //isTestMode()) {
+        for (auto i : interfaces)
+            if (i.isDyn())
+                hasDynamic = true;
+    } else {
+        for (auto i : interfaces)
+            if (i.isDyn() && i.type != "bytes")
+                hasDynamic = true;
+    }
 
     if (hasDynamic) {
         uint64_t dStart = str_2_BigUint("0x" + extract(input, 0, 64)).to_ulong() * 2;
