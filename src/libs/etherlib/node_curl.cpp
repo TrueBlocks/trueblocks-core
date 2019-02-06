@@ -96,12 +96,20 @@ PRINT("postData: " + postData);
     }
 
     //-------------------------------------------------------------------------
-    //TODO(tjayrush): global data
-    static CCurlContext theCurlContext;
+    typedef map<__thread_id, CCurlContext*> CCurlThreadMap;
 
     //-------------------------------------------------------------------------
     CCurlContext *getCurlContext(void) {
-        return &theCurlContext;
+        static CCurlThreadMap g_threadMap;
+        __thread_id threadID = this_thread::get_id();
+        if (g_threadMap[threadID])
+            return g_threadMap[threadID];
+        // TODO(tjayrush): this memory is never released
+        CCurlContext *cntx = new CCurlContext;
+        g_threadMap[threadID] = cntx;
+        if (verbose)
+            cout << "Created curl context `" << cntx << " for thread " << threadID << endl;
+        return cntx;
     }
 
     //--------------------------------------------------------------------------
@@ -144,33 +152,13 @@ PRINT("postData: " + postData);
         curlHandle = NULL;
     }
 
-#define OLD_CODE
     //-------------------------------------------------------------------------
     bool isNodeRunning(void) {
-#ifdef OLD_CODE
         CURLCALLBACKFUNC prev = getCurlContext()->setCurlCallback(nullCallback);
         getCurlContext()->setPostData("web3_clientVersion", "[]");
         CURLcode res = curl_easy_perform(getCurlContext()->getCurl());
         getCurlContext()->setCurlCallback(prev);
         return (res == CURLE_OK);
-#else
-        getCurlContext()->clear();
-        string_q postData;
-        postData = "{";
-        postData +=  quote("jsonrpc") + ":"  + quote("2.0")  + ",";
-        postData +=  quote("method")  + ":"  + quote("web3_clientVersion") + ",";
-        postData +=  quote("params")  + ":"  + "[]" + ",";
-        postData +=  quote("id")      + ":"  + quote(getCurlContext()->getCurlID());
-        postData += "}";
-extern size_t nullCallback(char *ptr, size_t size, size_t nmemb, void *userdata);
-        CURLcode ret;
-        ret = curl_easy_setopt(getCurlContext()->curlHandle, CURLOPT_POSTFIELDS,    postData.c_str());
-        ret = curl_easy_setopt(getCurlContext()->curlHandle, CURLOPT_POSTFIELDSIZE, postData.length());
-        ret = curl_easy_setopt(getCurlContext()->curlHandle, CURLOPT_WRITEDATA,     NULL);
-        ret = curl_easy_setopt(getCurlContext()->curlHandle, CURLOPT_WRITEFUNCTION, nullCallback);
-        CURLcode res = curl_easy_perform(getCurlContext()->curlHandle);
-        return (res == CURLE_OK);
-#endif
     }
 
 //-------------------------------------------------------------------------
@@ -213,7 +201,7 @@ PRINTL("perform:\n\tmethod:\t\t" + method + params + "\n\tsource:\t\t" + provide
 
 PRINT("CURL returned CURLE_OK")
         if (result.empty()) {
-            cerr << displayCurlError(STR_CURLRESEMPTY, "");
+            cerr << displayCurlError(STR_CURLRESEMPTY);
             quickQuitHandler(0);
 
         } else if (contains(result, "error")) {
