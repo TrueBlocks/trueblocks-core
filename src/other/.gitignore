@@ -1,6 +1,5 @@
 *decoder*
 abi_js
-threads2
 bloomBits
 openmp
 bloomScan
@@ -107,7 +106,6 @@ sortShit
 #speedTest
 sql
 sqlite_example
-threads
 toWei
 tokenCounter
 tokenFactory
