@@ -1,7 +1,7 @@
 acctScrape argc: 1 
 acctScrape 
 
-  The config.toml file was not found. Are you in the right folder? Quitting...
+  Cannot read toml file './config.toml'. Are you in the right folder? Quitting...
 
 
   Usage:    acctScrape [-m|-o|-n|-w|-m|-v|-h]  
@@ -17,8 +17,9 @@ acctScrape
 #### Hidden options (shown during testing only)
 	-s  (--noBlooms)      do not use adaptive enhanced blooms (much faster if you use them)
 	-k  (--noBlocks)      do not use binary block cache (much faster if you use them)
-	-c  (--checkAddrs)    use the per-block address lists (disabled)
 	-l  (--logLevel val)  specify the log level (default 1)
+	-u  (--useIndex)      search for transactions using the address index
+	-i  (--list)          ignore all other options and export tab delimited bn.txid records
 #### Hidden options (shown during testing only)
 
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level

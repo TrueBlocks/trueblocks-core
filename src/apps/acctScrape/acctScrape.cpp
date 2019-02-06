@@ -16,9 +16,10 @@ extern string_q report         (const COptions& options, double start, double st
 int main(int argc, const char *argv[]) {
     acctlib_init(defaultQuitHandler);
 
-    COptions options; ASSERT(isEnabled(OPT_RUNONCE));
+    COptions options;
     if (!options.prepareArguments(argc, argv))
         return 0;
+    ASSERT(isEnabled(OPT_RUNONCE));
 
     if (!isTestMode())
         cerr << bBlack << Now().Format(FMT_JSON) << cOff << ": Monitoring " << cYellow << getCWD() << cOff << "             \n";
@@ -26,42 +27,6 @@ int main(int argc, const char *argv[]) {
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
-
-        if (!isParity() || !nodeHasTraces()) {
-            cerr << "This tool only runs against Parity and only if --tracing is enabled. Quitting..." << endl;
-            return 1;
-        }
-
-        CToml config("./config.toml");
-        if (!fileExists(config.getFilename())) {
-            cerr << "Configuration file '" << config.getFilename() << " not found. Quitting." << endl;
-            return 1;
-        }
-
-        if (!options.loadMonitors(config))
-            return 1;
-
-        if (!folderExists(getTransCachePath(""))) {
-            cerr << "The cache folder " << getTransCachePath("") << " does not exist. Quitting" << endl;
-            return 1;
-        }
-
-        string_q cacheFileName = getTransCachePath(options.monitors[0].address);
-        if (fileExists(cacheFileName+".lck") || fileExists(getTransCachePath("lastBlock.txt.lck"))) {
-            cerr << "The cache is locked. acctScrape cannot run. Quitting..." << endl;
-            return 1;
-        }
-
-        string_q bloomPath = blockCachePath("/blooms/");
-        if (!folderExists(bloomPath)) {
-            cerr << "The bloom file cache '" << bloomPath << " was not found. acctScrape cannot run. Quitting..." << endl;
-            return 1;
-        }
-
-        if (options.ignoreBlockCache) {
-            cerr << "switching to local node, ignoring binary block cache" << endl;
-            setDataSource("local");
-        }
 
         double startTime = qbNow();
         if (options.oneBlock) {
@@ -73,45 +38,59 @@ int main(int argc, const char *argv[]) {
             visitBloomFilters(fileName, &options);
 
         } else {
-            string_q results;
+            string_q results = "0";
             asciiFileToString(getTransCachePath("lastBlock.txt"), results);
-            uint64_t blockNum = max(options.minWatchBlock - 1, str_2_Uint(results));
+            uint64_t blockNum = str_2_Uint(results);
+            if (options.minWatchBlock > 0)
+                blockNum = max(options.minWatchBlock - 1, str_2_Uint(results));
             if (blockNum <= getLatestBlockFromCache()) {  // the cache may be behind the acct db, so don't scrape
                 options.lastBlock = min(getLatestBlockFromCache(), options.maxWatchBlock);
                 options.firstBlock = min(blockNum, options.lastBlock);
                 options.nBlocks = min(options.lastBlock - options.firstBlock, options.maxBlocks);
+                if (options.useIndex)
+                    options.nBlocks = 10000000;  // TODO(tjayrush): Not right
                 if (verbose) {
                     cerr << "Visiting blooms between " << options.firstBlock << " and ";
                     cerr << options.firstBlock + options.nBlocks << endl;
                 }
 
-                //if (options.useAddressIndex) {
-                // THIS IS WHERE WE CAN READ THE ADDRESS INDEX WHICH GIVES US A LIST OF BLOCKS
-                // AND CALL processBlock(bn, options) DIRECTLY
-                //  blocks = for each watch, get the list of blocks
-                //  for (auto const& bn : blocks) {
-                //      options->blkStats.nSeen++;
-                //      processBlock(bn, &options);
-                //  }
-                //} else
-                {
-                    if (options.txCache.Lock(cacheFileName, "a+", LOCK_WAIT)) {
+                if (options.txCache.Lock(options.cacheFilename, "a+", LOCK_WAIT)) {
+                    if (options.useIndex) {
+                        forEveryFileInFolder(options.addrIndexPath, visitIndexFiles, &options);
+                    } else {
                         forEveryBloomFile(visitBloomFilters, &options, options.firstBlock, options.nBlocks);
-                        options.txCache.Release();
                     }
+                    options.txCache.Release();
+                } else {
+                    return options.usage("Cannot open transaction cache '" + options.cacheFilename + "'. Quitting...");
                 }
             }
         }
 
-        cerr << options.name << " bn: " << options.firstBlock + options.nBlocks << options << "\r";
-        cerr.flush();
+        if (options.isList) {
+            CArchive cache(READING_ARCHIVE);
+            if (!cache.Lock(options.cacheFilename, binaryReadOnly, LOCK_NOWAIT))
+                return options.usage("Could not open file: " + options.cacheFilename + ". Quitting.");
+            while (!cache.Eof() && !shouldQuit()) {
+                CAcctCacheItem item;
+                cache >> item.blockNum >> item.transIndex;
+                if (item.blockNum > 0)
+                    cout << item.blockNum << "\t" << item.transIndex << endl;
+            }
+            cache.Release();
 
-        if (options.blkStats.nSeen && options.logLevel > 0) {
-            string_q logFile = blockCachePath("logs/acct-scrape.log");
-            if (!fileExists(logFile))
-                appendToAsciiFile(logFile, options.finalReport(startTime, true));
-            if (options.logLevel >= 2 || options.blkStats.nSeen > 1000)
-                appendToAsciiFile(logFile, options.finalReport(startTime, false));
+        } else {
+
+            cerr << options.name << " bn: " << options.firstBlock + options.nBlocks << options << "\r";
+            cerr.flush();
+
+            if (options.blkStats.nSeen && options.logLevel > 0) {
+                string_q logFile = blockCachePath("logs/acct-scrape.log");
+                if (!fileExists(logFile))
+                    appendToAsciiFile(logFile, options.finalReport(startTime, true));
+                if (options.logLevel >= 2 || options.blkStats.nSeen > 1000)
+                    appendToAsciiFile(logFile, options.finalReport(startTime, false));
+            }
         }
     }
     etherlib_cleanup();
@@ -194,55 +173,6 @@ bool visitBloomFilters(const string_q& path, void *data) {
                         }
                     }
                     if (options->debugging) { cerr << ")\n"; }
-                }
-            }
-
-            // If we hit one or more blooms...we first want to scan the per-block accounts cache
-            // to see if we need to descend into the actual block
-            if (options->checkAddrs && hasPotential) {
-                string_q acctFile = substitute(path, "/blooms/", "/accounts/");
-                options->addrStats.nSeen++;
-                if (fileExists(acctFile)) {
-                    hasPotential = false;
-                    CAddressArray addrs;
-                    CArchive acctCache(READING_ARCHIVE);
-                    if (acctCache.Lock(acctFile, binaryReadOnly, LOCK_NOWAIT)) {
-                        acctCache >> addrs;
-                        acctCache.Release();
-
-                        if (verbose > 1) {
-                            cerr << "Addresses in block:\n";
-                            for (size_t a = 0 ; a < addrs.size() ; a++) {
-                                cerr << "\t" << addrs[a] << "\n";
-                            }
-                        }
-
-                        for (size_t ac = 0 ; ac < options->monitors.size() && !hasPotential ; ac++) {
-                            address_t addr = options->monitors[ac].address;
-                            vector<address_t>::iterator it = find(addrs.begin(), addrs.end(), addr);
-                            if (it != addrs.end()) {
-                                if (verbose)
-                                    cerr << "\tSearching...found " << addr << endl;
-                                hasPotential = true;
-                            } else {
-                                if (verbose)
-                                    cerr << "\tSearching...not found " << addr << endl;
-                                hasPotential = false;
-                            }
-                        }
-                        if (hasPotential)
-                            options->addrStats.nHit++;
-                        else
-                            options->addrStats.nSkipped++;
-                    } else {
-                        if (verbose)
-                            cerr << "Could not open file " << acctFile << endl;
-                        options->addrStats.nSkipped++;
-                    }
-                } else {
-                    if (verbose)
-                        cerr << "File " << acctFile << " does not exist." << endl;
-                    options->addrStats.nSkipped++;
                 }
             }
 
@@ -475,16 +405,14 @@ bool processTraces(const CBlock& block, const CTransaction *trans, const CAccoun
 }
 
 //-----------------------------------------------------------------------
-bool COptions::loadMonitors(const CToml& config) {
+bool COptions::loadMonitors(void) {
 
     minWatchBlock = UINT32_MAX;
     maxWatchBlock = 0;
 
-    string_q watchStr = config.getConfigJson("watches", "list", "");
-    if (watchStr.empty()) {
-        cerr << "Empty list of watches. Quitting." << endl;
-        return false;
-    }
+    string_q watchStr = toml->getConfigJson("watches", "list", "");
+    if (watchStr.empty())
+        return usage("Empty list of watches. Quitting.");
 
     CAccountWatch watch;
     while (watch.parseJson3(watchStr)) {
@@ -492,9 +420,9 @@ bool COptions::loadMonitors(const CToml& config) {
         watch.color   = convertColor(watch.color);
         watch.address = str_2_Addr(toLower(watch.address));
         watch.nodeBal = getBalanceAt(watch.address, watch.firstBlock-1);
-        watch.api_spec.method = config.getConfigStr("api_spec", "method", "");
-        watch.api_spec.uri = config.getConfigStr("api_spec", "uri", "");
-        watch.api_spec.headers = config.getConfigStr("api_spec", "headers", "");
+        watch.api_spec.method = toml->getConfigStr("api_spec", "method", "");
+        watch.api_spec.uri = toml->getConfigStr("api_spec", "uri", "");
+        watch.api_spec.headers = toml->getConfigStr("api_spec", "headers", "");
         if (!watch.api_spec.uri.empty()) {
             watch.abi_spec.loadAbiByAddress(watch.address);
             watch.abi_spec.loadAbiKnown("all");
@@ -510,18 +438,19 @@ bool COptions::loadMonitors(const CToml& config) {
             msg += "no name " + watch.name;
         }
 
+        // add to array or return error
         if (msg.empty()) {
             minWatchBlock = min(minWatchBlock, watch.firstBlock);
             maxWatchBlock = max(maxWatchBlock, watch.lastBlock);
             monitors.push_back(watch);
 
         } else {
-            cerr << msg << endl;
-            return false;
+            return usage(msg);
+
         }
         watch = CAccountWatch();  // reset
     }
-    name = config.getConfigStr("settings", "name", monitors[0].name);
+    name = toml->getConfigStr("settings", "name", monitors[0].name);
 
     return true;
 }
