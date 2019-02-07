@@ -47,6 +47,7 @@ public:
     CToml             *toml;
     string_q           cacheFilename;
     string_q           addrIndexPath;
+    address_t          monitorAddr;
 
     COptions(void);
     ~COptions(void);

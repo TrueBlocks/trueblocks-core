@@ -88,7 +88,7 @@ bool visitIndexFiles(const string_q& path, void *data) {
                         bzero(ad, 43);
                         strncpy(ad, found[i].addr, 42);
                         if (!strncmp(acct->address.c_str(), found[i].addr, 42)) {
-//                            cout << bl << "\t" << tx << endl;
+                            cout << bl << "\t" << tx << endl;
 //                            CAcctCacheItem item(str_2_Uint(bl), str_2_Uint(tx));
 //                            lockSection(true);
 //                            // We found something...write it to the cache...
@@ -99,7 +99,9 @@ bool visitIndexFiles(const string_q& path, void *data) {
                             options->addrStats.nHit++;
                             static int rep = 0;
                             if (!(++rep%9801)) {
-                                cerr << "    Searched ";
+                                cerr << "    By block #";
+                                cerr << bn;
+                                cerr << " searched ";
                                 cerr << options->addrStats.nSeen;
                                 cerr << " records. Found ";
                                 cerr << options->addrStats.nHit;
