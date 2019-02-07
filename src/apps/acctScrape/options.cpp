@@ -21,6 +21,7 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
+extern bool makeMonitorFolder(const address_t& monitorAddr);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
@@ -81,6 +82,14 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-w" || arg == "--writeBlocks") {
             writeBlocks = true;
 
+        } else if (startsWith(arg, "0x")) {
+
+            if (!isAddress(arg))
+                return usage(arg + " does not appear to be a valid Ethereum address. Quitting...");
+            if (!monitorAddr.empty())
+                return usage("Please provide only a single address. Quitting...");
+            monitorAddr = toLower(arg);
+
         } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
@@ -126,6 +135,24 @@ bool COptions::parseArguments(string_q& command) {
 
     // Exclusions are always picked up from the blockScraper
     exclusions = toLower(getGlobalConfig("blockScrape")->getConfigStr("exclusions", "list", ""));
+
+    // If we're doing listing, we need a config file.
+    if (isList) {
+        if (!monitorAddr.empty()) {
+            // the user wants to create a new monitor, so accomodate him.
+            if (!makeMonitorFolder(monitorAddr))
+                return usage("Could not create monitor folder. Quitting...");
+            if (isTestMode())
+                return false;
+            if (toml) {
+                delete toml;
+            }
+            toml = new CToml("./config.toml");
+        }
+    } else {
+        if (!monitorAddr.empty())
+            return usage("You may provide an address only with the --list option. Quitting...");
+    }
 
     if (!toml || !fileExists(toml->getFilename()))
         return usage("Cannot read toml file './config.toml'. Are you in the right folder? Quitting...\n");
@@ -189,6 +216,7 @@ void COptions::Init(void) {
     debugging     = 0;
     logLevel      = 1;
 //    addrIndexPath = "";
+//    monitorAddr = "";
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -201,4 +229,44 @@ COptions::COptions(void) : blkStats(), addrStats(), transStats(), traceStats(), 
 COptions::~COptions(void) {
     if (toml)
         delete toml;
+}
+
+//--------------------------------------------------------------------------------
+static const char *STR_CONFIG_FILE =
+"[settings]\n"
+"name = NAME\n"
+"\n"
+"[display]\n"
+"accounting = false\n"
+"logs = false\n"
+"trace = false\n"
+"single = false\n"
+"parse = false\n"
+"json = true\n"
+"\n"
+"[formats]\n"
+"trans_fmt = [{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{ISERROR}]\t[{EVENTS}]\t[{TRACES}]\n"
+"\n"
+"[[watches]]\n"
+"    list = [ { address = \"ADDR\", name = \"NAME\", firstBlock = 0 }\n"
+"]\n";
+
+//--------------------------------------------------------------------------------
+bool makeMonitorFolder(const address_t& addr) {
+    string_q name = toUpper(addr.substr(2,4) + "..." + addr.substr(addr.length()-4,4));
+    string_q path = "./" + toLower("99_" + name) + "/";
+    establishFolder(path);
+    establishFolder(path + "cache/");
+    if (!chdir(path.c_str())) {
+        string_q config = STR_CONFIG_FILE;
+        config = substitute(config, "NAME", name);
+        config = substitute(config, "ADDR", addr);
+        stringToAsciiFile("./config.toml", config);
+        if (isTestMode()) {
+            cout << getCWD() << "config.toml: " << fileExists("config.toml") << endl;
+            cout << config << endl;
+        }
+        return true;
+    }
+    return false;
 }
