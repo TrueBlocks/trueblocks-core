@@ -96,12 +96,12 @@ PRINT("postData: " + postData);
     }
 
     //-------------------------------------------------------------------------
-    typedef map<__thread_id, CCurlContext*> CCurlThreadMap;
+    typedef map<thread::id, CCurlContext*> CCurlThreadMap;
 
     //-------------------------------------------------------------------------
     CCurlContext *getCurlContext(void) {
         static CCurlThreadMap g_threadMap;
-        __thread_id threadID = this_thread::get_id();
+        thread::id threadID = this_thread::get_id();
         if (g_threadMap[threadID])
             return g_threadMap[threadID];
         // TODO(tjayrush): this memory is never released
