@@ -15,6 +15,7 @@ extern string_q report         (const COptions& options, double start, double st
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
     acctlib_init(defaultQuitHandler);
+    colorsOff();
 
     COptions options;
     if (!options.prepareArguments(argc, argv))
