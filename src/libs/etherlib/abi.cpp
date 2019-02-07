@@ -1,4 +1,3 @@
-
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
@@ -602,20 +601,109 @@ void extractParts(CParameterArray& interfaces, const string_q& input, string_q& 
     bool hasDynamic = false;
 
     // TODO: If I remove the test for bytes, acctExport core dumps. If I put it back in some abi tests fail
-    if (false) { //isTestMode()) {
+    // TODO: SEARCH FOR ISSUE #1013
+    //
+    // The data has three fixed length items followed by a dynamic length string. The code below assumes that, if there is
+    // any dynamic data in the input, the start of the dynamic data is at the start of the input data. Not true, aparently.
+    // But then why does the test case (following the JSON) seem to be different (it has a fixed len bool followed by a dynamic array)
+    // and it passes (this test case comes from some GitHub repo. (The JSON below is from a real, live mainnet contract -- the test
+    // case may have incorrect test data)
+    //
+    //{
+    //1848         "address": "0x159cf1e9ae58211b588f5e3bf1d7e423952d959b",
+    //1849         "data": "
+    //1850          0x
+    //1851          0000000000000000000000000000000000000000000000190b89b83816780000
+    //1852          0000000000000000000000000000000000000000000000000000000000000040
+    //1853          0000000000000000000000000000000000000000000000000000000000000025
+    //1854          486920426f6220476c617365722d2d20486572652061726520796f757220746f
+    //1855          6b656e7321
+    //1850         "logIndex": 3,
+    //1851         "topics": [
+    //1852           "0xc620c23091c77c537ae2f7deb703ecdea8b2cb3df9053ac018b281ffa1a9cae4",
+    //1853           "0x000000000000000000000000f3c9c5719eb4f26a3ab45cb86771827629f9a999",
+    //1854           "0x00000000000000000000000071d402ac181de4a8739a15f5a56141f64fc522f8"
+    //1855         ],
+    //1856         "articulatedLog": {
+    //1857           "name": "TransferX",
+    //1858           "inputs": [
+    //1859             {
+    //1860               "name": "_from",
+    //1861               "type": "address",
+    //1862               "value": "0xf3c9c5719eb4f26a3ab45cb86771827629f9a999"
+    //1863             },
+    //1864             {
+    //1865               "name": "_to",
+    //1866               "type": "address",
+    //1867               "value": "0x71d402ac181de4a8739a15f5a56141f64fc522f8"
+    //1868             },
+    //1869             {
+    //1870               "name": "_value",
+    //1871               "type": "uint256",
+    //1872               "value": "462000000000000000000"
+    //1873             },
+    //1874             {
+    //1875               "name": "_transferMetaData",
+    //1876               "type": "string"
+    //1877             }
+    //1878           ],
+    //1879           "outputs": []
+    //1880         }
+    //
+    // Test data from ./test/gold/libs/etherlib/abiTest/decode.txt
+    //
+    // THIS TEST CASE HAS A FIXED LEN DATA FOLLOWED BY DYNAMIC LEN ARRAY, BUT THE LENGHT PARAM IS FIRST UNLIKE ABOVE DATA
+    // decode|decoding bool, uint256[]|function bz(bool, uint256[])|\
+    // 0x\
+    // 0000000000000000000000000000000000000000000000000000000000000040\
+    // 0000000000000000000000000000000000000000000000000000000000000001\
+    // 0000000000000000000000000000000000000000000000000000000000000001\
+    // 000000000000000000000000000000000000000000000000000000000000002a\
+    // |true, [42]
+    //
+    //
+    // THIS TEST CASE CAPTURES THE CORE DUMP IF WE REMOVE THE TRY/CATCH BELOW
+    // decode|decoding address,address,uint256,string|function baz(address,address,uint256,string)|
+    // 0x
+    // 000000000000000000000000f3c9c5719eb4f26a3ab45cb86771827629f9a999
+    // 00000000000000000000000071d402ac181de4a8739a15f5a56141f64fc522f8
+    // 0000000000000000000000000000000000000000000000190b89b83816780000
+    // 0000000000000000000000000000000000000000000000000000000000000040
+    // 0000000000000000000000000000000000000000000000000000000000000025
+    // 486920426f6220476c617365722d2d20486572652061726520796f757220746f
+    // 6b656e7321|
+    // 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999,71d402ac181de4a8739a15f5a56141f64fc522f8,462000000000000000000,_transferX
+    //
+    // Remove the next test, and uncomment the above test case in ../test/gold/libs/etherlib/abiTest/decode.txt, and you
+    // will have a test case that fails to ease debugging
+    //
+    // There is also testing data in ../quickBlocks-monitors/clients/88_NthRound/ (note that you must have a file called
+    // 'debug' in the local folder otherwise the data gets sent to the end user!!!)
+    if (isTestMode()) {
         for (auto i : interfaces)
             if (i.isDyn())
                 hasDynamic = true;
     } else {
-        for (auto i : interfaces)
-            if (i.isDyn() && i.type != "bytes")
+        bool first = true;
+        for (auto i : interfaces) {
+            if (i.isDyn() && first) {
                 hasDynamic = true;
+            }
+            first = false;
+        }
     }
 
     if (hasDynamic) {
-        uint64_t dStart = str_2_BigUint("0x" + extract(input, 0, 64)).to_ulong() * 2;
-        fPart = input.substr(64, dStart - 64);
-        dPart = input.substr(dStart);
+        // TODO: SEARCH FOR ISSUE #1013
+        try {
+            string_q e = extract(input, 0, 64);
+            uint64_t dStart = str_2_BigUint("0x" + e).to_ulong() * 2;
+            fPart = input.substr(64, dStart - 64);
+            dPart = input.substr(dStart);
+        } catch (const char *err) {
+            fPart = input;
+            dPart = "";
+        }
     } else {
         fPart = input;
         dPart = "";
@@ -875,6 +963,12 @@ bool CAbi::articulateLog(CLogEntry *p) const {
     if (!p)
         return false;
 
+// TODO: SEARCH FOR ISSUE #1013
+// The way I do this is a bug.
+// See above. In the code that follows, I build a 'phony' input data string that does not get properly
+// parsed (and forces me to use the 'try catch' crap above. Instead, I may have to separately articulate
+// the data and the topics in a better way (or build the input data better by rebuilding the dynamic data
+// location. Summary: it's a mess
     size_t nTops = p->topics.size();
     if (nTops > 0) {  // the '0'th topic is the event signature
         string_q data = extract(p->data, 2);
