@@ -57,8 +57,6 @@ bool visitIndexFiles(const string_q& path, void *data) {
             CMemMapFile blockFile(path, CMemMapFile::WholeFile, CMemMapFile::RandomAccess);
             CIndexRecord *records = (CIndexRecord *)(blockFile.getData());  // NOLINT
 
-//            CAcctCacheItemArray items;
-//            items.reserve(2000000);
             for (size_t ac = 0 ; ac < options->monitors.size() && !shouldQuit() ; ac++) {
                 const CAccountWatch *acct = &options->monitors[ac];
                 CIndexRecord t;

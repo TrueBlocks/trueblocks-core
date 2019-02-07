@@ -17,6 +17,7 @@ bool handle_freshen(COptions& options) {
 //    if (options.silent)
     ::remove((fullBlockIndex + ".lck").c_str());
     ::remove("/root/.quickBlocks/cache/fullBlocks.bin.lck");
+// TODO: SEE ISSUE #1014
 
     CArchive fullBlockCache(WRITING_ARCHIVE);
     if (!fullBlockCache.Lock(fullBlockIndex, "a+", LOCK_WAIT)) {
