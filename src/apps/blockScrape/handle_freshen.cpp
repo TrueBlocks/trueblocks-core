@@ -14,8 +14,10 @@ bool handle_freshen(COptions& options) {
     // we'd rather open and shut the file, we're protected with lockSection and we flush every file
     // write and the file gets cleaned up on exit, so it's all good.
 //TODO(tjayrush): Did this as part of the dAppNode docker hack. Otherwise, blockScrape gets stuck if dAppNode kills us
-    if (options.silent)
-        ::remove((fullBlockIndex + ".lck").c_str());
+//    if (options.silent)
+    ::remove((fullBlockIndex + ".lck").c_str());
+    ::remove("/root/.quickBlocks/cache/fullBlocks.bin.lck");
+
     CArchive fullBlockCache(WRITING_ARCHIVE);
     if (!fullBlockCache.Lock(fullBlockIndex, "a+", LOCK_WAIT)) {
         cerr << "Could not open fullBlock index: " << fullBlockCache.LockFailure() << "\n";
