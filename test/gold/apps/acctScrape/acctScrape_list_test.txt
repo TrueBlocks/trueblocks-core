@@ -1,0 +1,21 @@
+acctScrape argc: 3 [1:--list] [2:0x1234567890123456789012345678901234567890] 
+acctScrape --list 0x1234567890123456789012345678901234567890 
+/Users/jrush/src.GitHub/quickBlocks/test/gold/apps/acctScrape/99_1234...7890/config.toml: 1
+[settings]
+name = 1234...7890
+
+[display]
+accounting = false
+logs = false
+trace = false
+single = false
+parse = false
+json = true
+
+[formats]
+trans_fmt = [{BLOCKNUMBER}]	[{TRANSACTIONINDEX}]	[{ISERROR}]	[{EVENTS}]	[{TRACES}]
+
+[[watches]]
+    list = [ { address = "0x1234567890123456789012345678901234567890", name = "1234...7890", firstBlock = 0 }
+]
+
