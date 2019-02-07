@@ -323,7 +323,14 @@ bool processTransaction(const CBlock& block, const CTransaction *trans, COptions
                         acct->abi_spec.articulateTransaction((CTransaction*)trans);
                         if (!trans->articulatedTx.message.empty())
                             SHOW_FIELD(CFunction, "message");
-                        ((CAccountWatch*)acct)->api_spec.sendData(trans->Format());
+                        if (!fileExists("./debug")) {
+                            ((CAccountWatch*)acct)->api_spec.sendData(trans->Format());
+                        } else {
+                            SHOW_FIELD(CLogEntry, "data");
+                            SHOW_FIELD(CLogEntry, "topics");
+                            SHOW_FIELD(CParameter, "type");
+                            cout << trans->Format();
+                        }
                         HIDE_FIELD(CFunction, "message");
                         cout << "\n";
                         cout.flush();
