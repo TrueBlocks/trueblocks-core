@@ -200,7 +200,7 @@ void CTrace::registerClass(void) {
     ADD_FIELD(CTrace, "blockHash", T_HASH, ++fieldNum);
     ADD_FIELD(CTrace, "blockNumber", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTrace, "subtraces", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTrace, "traceAddress", T_TEXT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CTrace, "traceAddress", T_TEXT, ++fieldNum);
     ADD_FIELD(CTrace, "transactionHash", T_HASH, ++fieldNum);
     ADD_FIELD(CTrace, "transactionPosition", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTrace, "type", T_TEXT, ++fieldNum);
@@ -231,7 +231,7 @@ string_q nextTraceChunk_custom(const string_q& fieldIn, const void *dataPtr) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'd':
-                if (pTrans) {
+                if (tra->pTrans) {
                     if (fieldIn % "date" || fieldIn % "datesh")
                         return nextTraceChunk(fieldIn, tra->pTrans);
                 }
@@ -301,7 +301,7 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
                     retS += traceAddress[i];
                 }
                 if (retS.empty())
-                    retS = "0";
+                    retS = "null";
                 return retS;
             }
             if ( fieldName % "transactionHash" ) return hash_2_Str(transactionHash);
