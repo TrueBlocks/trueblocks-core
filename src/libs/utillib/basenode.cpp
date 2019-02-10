@@ -483,7 +483,10 @@ namespace qblocks {
                     ret += val;
 
                 } else {
-                    ret += "\"" + val + "\"";
+                    if (val == "null")
+                        ret += val;
+                    else
+                        ret += "\"" + val + "\"";
                 }
             }
             decIndent();

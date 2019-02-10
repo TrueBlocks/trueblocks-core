@@ -8,7 +8,7 @@ getTrace 2001002.0 --qblocks
   "blockHash": "0xcd4dbd459893241b0c21c91d64b445b1eb0579f7341afd17e7b797795a7f1d7e",
   "blockNumber": 2001002,
   "subtraces": 2,
-  "traceAddress": [],
+  "traceAddress": null,
   "transactionHash": "0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12",
   "transactionPosition": 0,
   "type": "call",
@@ -35,9 +35,7 @@ getTrace 2001002.0 --qblocks
   "blockHash": "0xcd4dbd459893241b0c21c91d64b445b1eb0579f7341afd17e7b797795a7f1d7e",
   "blockNumber": 2001002,
   "subtraces": 0,
-  "traceAddress": [
-    "0"
-  ],
+  "traceAddress": "0",
   "transactionHash": "0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12",
   "transactionPosition": 0,
   "type": "call",
@@ -64,9 +62,7 @@ getTrace 2001002.0 --qblocks
   "blockHash": "0xcd4dbd459893241b0c21c91d64b445b1eb0579f7341afd17e7b797795a7f1d7e",
   "blockNumber": 2001002,
   "subtraces": 0,
-  "traceAddress": [
-    "1"
-  ],
+  "traceAddress": "1",
   "transactionHash": "0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12",
   "transactionPosition": 0,
   "type": "call",
