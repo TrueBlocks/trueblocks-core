@@ -22,7 +22,7 @@ Here is a screen shot of an interaction with Chifra building a smart contract mo
 
 #### Usage
 
-`Usage:`    chifra [-s|-v|-h] folder address_list  
+`Usage:`    chifra [-s|-v|-h] folder &lt;address&gt; [address...]  
 `Purpose:`  Interactively creates a QBlocks monitor for the given address.
              
 `Where:`  
@@ -34,6 +34,10 @@ Here is a screen shot of an interaction with Chifra building a smart contract mo
 | -s | --silent | suppress all output from chifra (normally chifra is quite verbose) |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
+
+`Notes:`
+
+- `addresses` must start with '0x' and be forty characters long.
 
 
 #### Other Options

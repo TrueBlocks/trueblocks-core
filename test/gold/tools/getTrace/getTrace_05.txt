@@ -4,7 +4,7 @@ getTrace 0x409141e962166ceb967fa8cf8cded2394af088d6d270f1a0642c9bbfaf416348
   "blockHash": "0x4dbea4c9096fa8ab389ceae28c821edab8fdca6df99b3fa4c315526a420694ba",
   "blockNumber": 2224943,
   "subtraces": 0,
-  "traceAddress": [],
+  "traceAddress": null,
   "transactionHash": "0x409141e962166ceb967fa8cf8cded2394af088d6d270f1a0642c9bbfaf416348",
   "transactionPosition": 1,
   "type": "create",
