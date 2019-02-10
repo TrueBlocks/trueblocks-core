@@ -30,6 +30,7 @@ namespace qblocks {
         bool asDollars;
         bool asWei;
         bool isParity;
+        CNameValueMap fmtMap;
 #ifndef PROVING
         CExportOptions(void) {
 #else
