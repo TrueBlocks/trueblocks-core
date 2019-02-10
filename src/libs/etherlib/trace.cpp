@@ -16,6 +16,7 @@
  */
 #include <algorithm>
 #include "trace.h"
+#include "transaction.h"
 
 namespace qblocks {
 
@@ -31,12 +32,12 @@ void CTrace::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
-    if (fmtIn.empty()) {
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["trace_fmt"] : fmtIn);
+    if (fmt.empty()) {
         ctx << toJson();
         return;
     }
 
-    string_q fmt = fmtIn;
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -66,6 +67,9 @@ bool CTrace::setValueByName(const string_q& fieldName, const string_q& fieldValu
         string_q str = fieldValue;
         return result.parseJson3(str);
     }
+    if (pTrans)
+        if (((CTransaction*)pTrans)->setValueByName(fieldName, fieldValue))  // NOLINT
+            return true;
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
@@ -205,6 +209,8 @@ void CTrace::registerClass(void) {
     HIDE_FIELD(CTrace, "articulatedTrace");
     ADD_FIELD(CTrace, "action", T_OBJECT, ++fieldNum);
     ADD_FIELD(CTrace, "result", T_OBJECT, ++fieldNum);
+    ADD_FIELD(CTrace, "date", T_DATE, ++fieldNum);
+    HIDE_FIELD(CTrace, "date");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTrace, "schema");
@@ -224,6 +230,10 @@ string_q nextTraceChunk_custom(const string_q& fieldIn, const void *dataPtr) {
     if (tra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'd':
+                if (fieldIn % "date" || fieldIn % "datesh")
+                    return nextTraceChunk(fieldIn, tra->pTrans);
+                break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
@@ -281,13 +291,18 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "traceAddress" || fieldName % "traceAddressCnt" ) {
                 size_t cnt = traceAddress.size();
                 if (endsWith(fieldName, "Cnt"))
-                    return uint_2_Str(cnt);
-                if (!cnt) return "";
+                    return uint_2_Str(max((size_t)1, cnt));
+                //if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {
-                    retS += ("\"" + traceAddress[i] + "\"");
-                    retS += ((i < cnt - 1) ? ",\n" + indent() : "\n");
+//                    retS += ("\"" + traceAddress[i] + "\"");
+//                    retS += ((i < cnt - 1) ? ",\n" + indent() : "\n");
+                    if (!retS.empty())
+                        retS += "-";
+                    retS += traceAddress[i];
                 }
+                if (retS.empty())
+                    retS = "0";
                 return retS;
             }
             if ( fieldName % "transactionHash" ) return hash_2_Str(transactionHash);

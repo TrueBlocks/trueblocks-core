@@ -12,7 +12,6 @@ class COptions : public COptionsBase {
 public:
     blknum_t blk_minWatchBlock;
     blknum_t blk_maxWatchBlock;
-    string_q transFmt;
     CAccountWatchArray watches;
     CAccountWatchArray named;
     CAcctCacheItemArray items;
@@ -40,10 +39,6 @@ public:
 //------------------------------------------------------------------------
 extern bool loadData(COptions& options);
 extern bool exportData(COptions& options);
-
-//------------------------------------------------------------------------
-extern string_q cleanFmt    (const string_q& str);
-extern string_q defTransFmt;
 
 //-----------------------------------------------------------------------------
 enum export_t {

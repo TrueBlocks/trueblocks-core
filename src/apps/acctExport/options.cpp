@@ -18,6 +18,7 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
+extern string_q cleanFmt(const string_q& str, export_t fmt);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
@@ -79,14 +80,16 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    transFmt = "";  // empty string gets us JSON output
+    string_q format = toml.getConfigStr("formats", "trans_fmt", "");
+    if (format.empty())
+        return usage("Non-json export requires 'trans_fmt' string in config.toml. Quitting...");
+
     if (fmt != JSON) {
-        string_q format = toml.getConfigStr("formats", "trans_fmt", "");
-        if (format.empty())
-            return usage("Non-json export requires 'trans_fmt' string in config.toml. Quitting...");
-        transFmt = cleanFmt(format);
-        if (fmt == CSV)
-            transFmt = "\"" + substitute(transFmt, "\t", "\",\"") + "\"";
+        expContext().fmtMap["trans_fmt"] = cleanFmt(format, fmt);
+        format = toml.getConfigStr("formats", "trace_fmt", "{TRACES}");
+        expContext().fmtMap["trace_fmt"] = cleanFmt(format, fmt);
+        format = toml.getConfigStr("formats", "logentry_fmt", "{LOGS}");
+        expContext().fmtMap["logentry_fmt"] = cleanFmt(format, fmt);
     }
 
     return true;
@@ -96,7 +99,6 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     registerOptions(nParams, params);
 
-    transFmt = "";
     blk_minWatchBlock = 0;
     blk_maxWatchBlock = UINT32_MAX;
     showProgress = getGlobalConfig("acctExport")->getConfigBool("debug", "showProgress", false);
@@ -118,6 +120,9 @@ COptions::~COptions(void) {
 }
 
 //-----------------------------------------------------------------------
-string_q cleanFmt(const string_q& str) {
-    return (substitute(substitute(substitute(str, "\n", ""), "\\n", "\n"), "\\t", "\t"));
+string_q cleanFmt(const string_q& str, export_t fmt) {
+    string_q ret = (substitute(substitute(substitute(str, "\n", ""), "\\n", "\n"), "\\t", "\t"));
+    if (fmt == CSV)
+        ret = "\"" + substitute(ret, "\t", "\",\"") + "\"";
+    return ret;
 }

@@ -20,7 +20,8 @@ inline bool isInRange(blknum_t ref, blknum_t start, blknum_t end) {
 //-----------------------------------------------------------------------
 bool exportData(COptions& options) {
 
-    string_q header = toLower(options.transFmt);
+    string_q transFmt = expContext().fmtMap["trans_fmt"];
+    string_q header = toLower(transFmt);
     for (uint32_t i = 0 ; i < 10 ; i++) {
         string_q str = "w:" + uint_2_Str(i);
         header = substitute(header, str, "");
@@ -32,17 +33,17 @@ bool exportData(COptions& options) {
 
     // We want to articulate if we're producing JSON or if we're producing text and the format includes the fields
     options.needsArt =
-        (options.transFmt.empty() ||
-            contains(toLower(options.transFmt), "articulate") ||
-            contains(toLower(options.transFmt), "function") ||
-            contains(toLower(options.transFmt), "events"));
+        (transFmt.empty() ||
+            contains(toLower(transFmt), "articulate") ||
+            contains(toLower(transFmt), "function") ||
+            contains(toLower(transFmt), "events"));
 
     // We need traces if traces are not hidden, or we're doing JSON, or we're doing text and the format includes traces
     options.needsTrace = !IS_HIDDEN(CTransaction, "traces");
     if (options.needsTrace)
-        options.needsTrace = (options.transFmt.empty() || contains(toLower(options.transFmt), "traces"));
+        options.needsTrace = (transFmt.empty() || contains(toLower(transFmt), "traces"));
 
-    if (options.transFmt.empty())
+    if (transFmt.empty())
         cout << "[";
 
     bool first = true;
@@ -58,7 +59,7 @@ bool exportData(COptions& options) {
         }
     }
 
-    if (options.transFmt.empty())
+    if (transFmt.empty())
         cout << "]";
 
     return true;
@@ -67,6 +68,7 @@ bool exportData(COptions& options) {
 //-----------------------------------------------------------------------
 bool exportTransaction(COptions& options, const CAcctCacheItem *item, bool first) {
 
+    string_q transFmt = expContext().fmtMap["trans_fmt"];
     // If we've found a new block...
     if (item->blockNum > options.curBlock.blockNumber) {
 
@@ -90,8 +92,11 @@ bool exportTransaction(COptions& options, const CAcctCacheItem *item, bool first
         // If we need the traces, get them before we scan through the watches. Only get them
         // if we don't already have them.
         CTransaction *trans = &options.curBlock.transactions[item->transIndex];
-        if (options.shouldTrace(trans))
+        if (options.shouldTrace(trans)) {
             getTraces(trans->traces, trans->hash);
+            for (size_t i = 0 ; i < trans->traces.size() ; i++)
+                trans->traces[i].pTrans = trans;
+        }
 
         // We show a transaction only once even if it was involved from more than one watch perspective
         bool found = false;
@@ -115,25 +120,26 @@ bool exportTransaction(COptions& options, const CAcctCacheItem *item, bool first
                 ostringstream os;
 
                 // We're exporting JSON, so we need commas
-                if (options.transFmt.empty() && !first)
+                if (transFmt.empty() && !first)
                     os << ",";
-                os << trans->Format(options.transFmt);
+                os << trans->Format(transFmt);
                 os << endl;
 
                 cout << options.annotate(substitute(os.str(),"++WATCH++",watch->address));
                 cout.flush();
 
             } else {
-                cerr << "\t" << cTeal << "skipping: " << *item << cOff << endl;
+                if (verbose)
+                    cerr << cTeal << "skipping: " << *item << cOff << "  \r";
             }
             HIDE_FIELD(CFunction, "message");
         }
 
     } else {
         // TODO(tjayrush): This should never happen
-        cerr << "Invalid data at cache item: " << item->blockNum << "." << item->transIndex << "\n";
-        cerr.flush();
-        exit(0);
+//        cerr << "Invalid data at cache item: " << item->blockNum << "." << item->transIndex << "\n";
+//        cerr.flush();
+//        exit(0);
     }
 
     return true;
@@ -153,6 +159,7 @@ bool COptions::shouldTrace(const CTransaction *trans) const {
 
 //-----------------------------------------------------------------------
 void COptions::renameItems(string_q& str, const CAccountWatchArray& watchArray) const {
+    string_q transFmt = expContext().fmtMap["trans_fmt"];
     for (auto const& watch : watchArray) {
         if (transFmt.empty()) {
             CStringArray fields = { "to", "from", "address", "contractAddress" };
@@ -160,6 +167,9 @@ void COptions::renameItems(string_q& str, const CAccountWatchArray& watchArray) 
                 string_q target = "\"" + field + "\": \"" + watch.address + "\"";
                 str = substitute(str, target, target + ", \"" + field + "Name\": \"" + watch.name + "\"");
             }
+        } else {
+            string_q rep = watch.color + watch.displayName(false, true) + cOff;
+            str = substitute(str, watch.address, rep);
         }
     }
 }
