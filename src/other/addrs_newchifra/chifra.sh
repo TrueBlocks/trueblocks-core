@@ -26,7 +26,7 @@ cat $base_path/config.toml | sed 's/ADDR/'$address'/' | sed 's/NAME/'$name'/' >c
 
 colorEcho -c green -t "Scanning chain for appearances of $address..."
 echo $address
-acctScrape --list >import.txt
+acctScrape --list -v >import.txt
 cacheMan -i | grep -v "^$"
 rm -f import.bak
 

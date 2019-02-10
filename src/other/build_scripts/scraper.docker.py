@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# scraper.py
+# scraper.docker.py
 #
 import sys
 import subprocess
@@ -16,22 +16,8 @@ def signal_handler(signal, frame):
 signal.signal(signal.SIGINT, signal_handler)
 
 timeout = 5
-
 while True:
-    os.system('clear')
-
-    os.system('blockScrape --maxBlocks 50000 --silent')
-    print("")
-
-#    os.system('miniBlocks --freshen')
-#    print("")
-
+    os.system('blockScrape --silent --consolidate --addrIndex')
     os.system('getBlock --latest')
     print("")
-
-#    os.system("echo 'index size: \c' ; cut -f3 /Volumes/Samsung_T7/scraper/addr_index/unsorted_by_block/counts.txt | awk '{s+=$1}END{print s/1024/1024 \" MB\"}'")
-#    print("")
-
-    print("Hit Ctrl+C to quit...");
-
     time.sleep(float(timeout))
