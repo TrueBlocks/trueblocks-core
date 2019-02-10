@@ -62,6 +62,7 @@ public:
 
     // EXISTING_CODE
     bool isError(void) const;
+    const CTransaction *pTrans;
     // EXISTING_CODE
     bool operator==(const CTrace& item) const;
     bool operator!=(const CTrace& item) const { return !operator==(item); }
@@ -125,6 +126,7 @@ inline void CTrace::initialize(void) {
     result.initialize();
 
     // EXISTING_CODE
+    pTrans = NULL;
     // EXISTING_CODE
 }
 
@@ -146,6 +148,7 @@ inline void CTrace::duplicate(const CTrace& tr) {
     result = tr.result;
 
     // EXISTING_CODE
+    pTrans = tr.pTrans;  // no deep copy, we don't own it
     // EXISTING_CODE
 }
 

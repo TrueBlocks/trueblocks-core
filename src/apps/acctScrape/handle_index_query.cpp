@@ -86,22 +86,23 @@ bool visitIndexFiles(const string_q& path, void *data) {
                         bzero(ad, 43);
                         strncpy(ad, found[i].addr, 42);
                         if (!strncmp(acct->address.c_str(), found[i].addr, 42)) {
-                            cout << bl << "\t" << tx << endl;
-//                            CAcctCacheItem item(str_2_Uint(bl), str_2_Uint(tx));
-//                            lockSection(true);
+                            if (options->isList)
+                                cout << bl << "\t" << tx << endl;
+                            CAcctCacheItem item(str_2_Uint(bl), str_2_Uint(tx));
+                            lockSection(true);
 //                            // We found something...write it to the cache...
-//                            options->txCache << item.blockNum << item.transIndex;
-//                            options->txCache.flush();
-//                            writeLastBlock(item.blockNum);
-//                            lockSection(false);
+                            options->txCache << item.blockNum << item.transIndex;
+                            options->txCache.flush();
+                            writeLastBlock(item.blockNum);
+                            lockSection(false);
                             options->addrStats.nHit++;
                             static int rep = 0;
-                            if (!(++rep%9801)) {
-                                cerr << "    By block #";
+                            if (!(++rep%1801)) {
+                                cerr << "    At block #";
                                 cerr << bn;
-                                cerr << " searched ";
+                                cerr << " we've searched ";
                                 cerr << options->addrStats.nSeen;
-                                cerr << " records. Found ";
+                                cerr << " records and found ";
                                 cerr << options->addrStats.nHit;
                                 cerr << " hits" << string_q(80, ' ') << endl;
 //                                cerr << "        " << acct->displayName(false,true,true,8)
@@ -110,8 +111,10 @@ bool visitIndexFiles(const string_q& path, void *data) {
 //                                    << "                    " << endl;
                             }
                         } else {
-                            cerr << options->name << " bn: " << bn << *options << "\r";
-                            cerr.flush();
+                            if (verbose) {
+                                cerr << options->name << " bn: " << bn << *options << "\r";
+                                cerr.flush();
+                            }
                         }
                         if (strncmp(ad, acct->address.c_str(), 42) > 0)
                             done = true;
