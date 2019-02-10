@@ -231,8 +231,10 @@ string_q nextTraceChunk_custom(const string_q& fieldIn, const void *dataPtr) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'd':
-                if (fieldIn % "date" || fieldIn % "datesh")
-                    return nextTraceChunk(fieldIn, tra->pTrans);
+                if (pTrans) {
+                    if (fieldIn % "date" || fieldIn % "datesh")
+                        return nextTraceChunk(fieldIn, tra->pTrans);
+                }
                 break;
             // EXISTING_CODE
             case 'p':
@@ -292,11 +294,8 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
                 size_t cnt = traceAddress.size();
                 if (endsWith(fieldName, "Cnt"))
                     return uint_2_Str(max((size_t)1, cnt));
-                //if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {
-//                    retS += ("\"" + traceAddress[i] + "\"");
-//                    retS += ((i < cnt - 1) ? ",\n" + indent() : "\n");
                     if (!retS.empty())
                         retS += "-";
                     retS += traceAddress[i];
