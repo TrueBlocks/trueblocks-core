@@ -80,11 +80,10 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    string_q format = toml.getConfigStr("formats", "trans_fmt", "");
-    if (format.empty())
-        return usage("Non-json export requires 'trans_fmt' string in config.toml. Quitting...");
-
     if (fmt != JSON) {
+        string_q format = toml.getConfigStr("formats", "trans_fmt", "");
+        if (format.empty())
+            return usage("Non-json export requires 'trans_fmt' string in config.toml. Quitting...");
         expContext().fmtMap["trans_fmt"] = cleanFmt(format, fmt);
         format = toml.getConfigStr("formats", "trace_fmt", "{TRACES}");
         expContext().fmtMap["trace_fmt"] = cleanFmt(format, fmt);
