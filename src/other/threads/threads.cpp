@@ -16,7 +16,7 @@
 class COptions : public CDefaultOptions {
 public:
     int64_t maxBlock = 50000000;
-    int64_t startBlock = 0;
+    int64_t startBlock = 5500000;
 };
 COptions options;
 
@@ -68,9 +68,9 @@ void scanBackward(CBlockScraper *scraper) {
     sleep(1.0);
     cout << "back - pid: " << getpid() << " tpid: " << this_thread::get_id() << endl;
     for (int64_t i = scraper->start ; i > scraper->stop && !shouldQuit() ; i = i - STEP) {
-        //        CBlock block;
-        //        getBlock(block, (uint64_t)i);
-        //        if (block.transactions.size()) {
+//        CBlock block;
+//        getBlock(block, (uint64_t)i);
+//        if (block.transactions.size()) {
         if (true) {
             *scraper << i;
             scraper->flush();
@@ -151,7 +151,7 @@ int main(int argc, const char *argv[]) {
 
     CArchive fullBlocks(READING_ARCHIVE);
     if (!fileExists("fullBlocks.bin")) {
-        forward.start = options.startBlock;
+        forward.start = (argc == 2 ? str_2_Int(argv[1]) : options.startBlock);
         backward.start = forward.start - 1;
     } else {
         if (!fullBlocks.Lock("fullBlocks.bin", binaryReadOnly, LOCK_NOWAIT))
