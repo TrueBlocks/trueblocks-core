@@ -86,18 +86,18 @@ bool visitIndexFiles(const string_q& path, void *data) {
                         bzero(ad, 43);
                         strncpy(ad, found[i].addr, 42);
                         if (!strncmp(acct->address.c_str(), found[i].addr, 42)) {
-                            if (options->isList)
+                            if (true) //options->isList)
                                 cout << bl << "\t" << tx << endl;
                             CAcctCacheItem item(str_2_Uint(bl), str_2_Uint(tx));
-                            lockSection(true);
-//                            // We found something...write it to the cache...
-                            options->txCache << item.blockNum << item.transIndex;
-                            options->txCache.flush();
-                            writeLastBlock(item.blockNum);
-                            lockSection(false);
+//                            lockSection(true);
+                            // We found something...write it to the cache...
+//                            options->txCache << item.blockNum << item.transIndex;
+//                            options->txCache.flush();
+//                            writeLastBlock(item.blockNum);
+//                            lockSection(false);
                             options->addrStats.nHit++;
                             static int rep = 0;
-                            if (!(++rep%1801)) {
+                            if (!(++rep%2081)) {
                                 cerr << "    At block #";
                                 cerr << bn;
                                 cerr << " we've searched ";

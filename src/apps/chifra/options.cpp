@@ -4,29 +4,28 @@
  * All Rights Reserved
  *------------------------------------------------------------------------*/
 #include "options.h"
+#include "question.h"
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("~folder",       "name of the monitor (also the ./folder for the source code)"),
-    COption("~address_list", "a list of one or more addresses to monitor (must start with '0x')"),
-    COption("-silent",       "suppress all output from chifra (normally chifra is quite verbose)"),
-    COption("",              "Interactively creates a QBlocks monitor for the given address.\n"),
+    COption("~command", "one of [ init | import | export ]"),
+    COption("",         "Create a TrueBlocks monitor configuration.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
+extern bool visitIndexFiles(const string_q& path, void *data);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
 
+    bool exists = fileExists("./config.toml");
+
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if (arg == "-s" || arg == "--silent") {
-            verbose = 0;
-
-        } else if (startsWith(arg, '-')) {
+        if (startsWith(arg, '-')) {
 
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
@@ -34,36 +33,111 @@ bool COptions::parseArguments(string_q& command) {
 
         } else {
 
-            if (startsWith(arg, "0x")) {
-                if (!isAddress(arg))
-                    return usage("Address '" + arg + "' does not appear to be a valid Ethereum adddress. Quitting...");
-                addrList += arg + "|";
+            if ((isInit || isImport || isExport) && !isAddress(arg))
+                return usage("Please only one of init, import, or export. Quitting...");
+
+            if (arg == "init") {
+                if (exists)
+                    return usage("This folder has already been initialized. Quitting...");
+                isInit = true;
 
             } else {
-                if (!sourceFolder.empty())
-                    return usage("Extranious value '" + arg + ". Specify only a single folder or addresses starting with '0x'. Quitting...");
-                CPath path(makeValidName(arg));
-                sourceFolder = path.getFullPath();
-                if (folderExists(sourceFolder))
-                    return usage("Folder '" + sourceFolder + "' exists. Please remove it or use a different folder name. Quitting...");
-                monitorName = arg;
+
+                if (!exists && !isAddress(arg))
+                    return usage("Please initialize this folder with " + g_progName + " init before proceeding. Quitting...");
+
+                if (arg == "import") {
+                    isImport = true;
+
+                } else if (arg == "export") {
+                    system("acctExport --fmt txt");
+                    return false;
+
+                } else {
+
+                    if (startsWith(arg, "0x")) {
+                        if (!isAddress(arg))
+                            return usage("Address '" + arg + "' does not appear to be a valid Ethereum adddress. Quitting...");
+                        CAccountWatch watch;
+                        watch.address = arg;
+                        watches.push_back(watch);
+
+                    } else {
+                        return usage("Invalid command '" + arg + ". Quitting...");
+                    }
+                }
             }
         }
     }
 
-    if (sourceFolder.empty()) {
-        return usage("You must supply a folder into which to place the monitor.");
-
-    } else {
-        // TODO(tjayrush): make this configurable
-        CPath path(sourceFolder);
-        monitorFolder = substitute(path.getFullPath(), "/src/monitors/", "/monitors/");
-        if (verbose)
-            cerr << "Monitor folder " << substitute(monitorFolder, getHomeFolder(), "~/") << "\n";
+    if (fileExists("./config.toml")) {
+        CToml toml("./config.toml");
+        loadMonitors(toml);
     }
 
-    if (addrList.empty())
-        return usage("You must supply at least one Ethereum address to monitor.");
+    if (watches.size() > 0) {
+        if (isInit)
+            return usage("Please include an address only with the 'init' subcommand. Quitting...");
+        cout << watches.size() << endl;
+        getchar();
+        if (isImport) {
+            txCache.Lock("./" + watches[0].address, "a+", LOCK_WAIT);
+            forEveryFileInFolder(blockCachePath("addr_index/sorted_by_addr/"), visitIndexFiles, this);
+            txCache.Release();
+            return false;
+        }
+    } else {
+        namesFile = CFilename(configPath("names/names.txt"));
+        loadNames();
+        CQuestion addrs("Enter one or more Ethereum addresses (empty line when finished)", true, bGreen, NULL);
+        while (addrs.answer.empty()) {
+            addrs.getResponse();
+            if (isAddress(addrs.answer)) {
+                string_q name;
+                for (auto item : namedAccounts)
+                    if (addrs.answer == item.addr)
+                        name = item.name;
+                if (name.empty()) {
+                    CQuestion nameQ("\tWhat do you want to name this address?", true, bGreen, NULL);
+                    while (nameQ.answer.empty())
+                        nameQ.getResponse();
+                    name = nameQ.answer;
+                }
+                CAccountWatch watch;
+                watch.address = addrs.answer;
+                watch.name = name;
+                watch.color = convertColor(colors[watches.size() % nColors]);
+                watches.push_back(watch);
+                cout << "\tAdded " << watch.color << watch.address << cOff << " " << watch.name << endl;
+                addrs.answer = "";
+            } else if (addrs.answer == "n" || addrs.answer == "name") {
+                for (size_t i = 0 ; i < namedAccounts.size() ; i++) {
+                    if (!(i%2) && i != 0)
+                        cout << endl;
+                    cout << namedAccounts[i].addr << " " << padRight(namedAccounts[i].name,25) << "  ";
+                }
+                if (!(namedAccounts.size()%2))
+                    cout << endl;
+                addrs.answer = "";
+            } else {
+                if (!addrs.answer.empty())
+                    return usage("Please enter a valid Ethereum address. Quitting...");
+                addrs.answer = "done";
+            }
+        }
+    }
+
+    if (watches.size() == 0)
+        return usage("You must add at least one address. Quitting...");
+
+    for (auto watch : watches) {
+        watch.color = "";
+        cout << watch << endl;
+    }
+
+extern bool createConfig (const COptions& options, CQuestion *q);
+    CQuestion qq("\tCreating configuration file...", false, bBlue, createConfig);
+    createConfig(*this, &qq);
 
     return true;
 }
@@ -72,14 +146,14 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     registerOptions(nParams, params);
 
-    verbose = 1;
-    sourceFolder = "";
-    monitorFolder = "";
-    addrList = "";
+    isInit   = false;
+    isImport = false;
+    isExport = false;
+    minArgs = 0;
 }
 
 //---------------------------------------------------------------------------------------------------
-COptions::COptions(void) {
+COptions::COptions(void) : txCache(WRITING_ARCHIVE) {
     Init();
 }
 
@@ -88,14 +162,239 @@ COptions::~COptions(void) {
 }
 
 //--------------------------------------------------------------------------------
-string_q COptions::postProcess(const string_q& which, const string_q& str) const {
+string_q colors[] = {
+    "green_c", "blue_c", "red_c", "magenta_c", "yellow_c", "teal_c", "white_b",
+    "green_b", "blue_b", "red_b", "magenta_b", "yellow_b", "teal_b", "black_b",
+};
+uint64_t nColors = sizeof(colors) / sizeof(string_q);
 
-    if (which == "options") {
-        return substitute(str, "address_list", "<address> [address...]");
+//-----------------------------------------------------------------------
+bool COptions::loadMonitors(CToml& toml) {
 
-    } else if (which == "notes" && (verbose || COptions::isReadme)) {
-        return "[{addresses}] must start with '0x' and be forty characters long.\n";
+    minWatchBlock = UINT32_MAX;
+    maxWatchBlock = 0;
 
+    string_q watchStr = toml.getConfigJson("watches", "list", "");
+    if (watchStr.empty())
+        return usage("Empty list of watches. Quitting.");
+
+    CAccountWatch watch;
+    while (watch.parseJson3(watchStr)) {
+        // cleanup and report on errors
+        watch.color   = convertColor(watch.color);
+        watch.address = str_2_Addr(toLower(watch.address));
+        watch.nodeBal = getBalanceAt(watch.address, watch.firstBlock-1);
+        watch.api_spec.method = toml.getConfigStr("api_spec", "method", "");
+        watch.api_spec.uri = toml.getConfigStr("api_spec", "uri", "");
+        watch.api_spec.headers = toml.getConfigStr("api_spec", "headers", "");
+        if (!watch.api_spec.uri.empty()) {
+            watch.abi_spec.loadAbiByAddress(watch.address);
+            watch.abi_spec.loadAbiKnown("all");
+        }
+
+        string_q msg;
+        if (!isAddress(watch.address)) {
+            msg = "invalid address " + watch.address;
+        }
+        if (watch.name.empty()) {
+            if (!msg.empty())
+                msg += ", ";
+            msg += "no name " + watch.name;
+        }
+
+        // add to array or return error
+        if (msg.empty()) {
+            minWatchBlock = min(minWatchBlock, watch.firstBlock);
+            maxWatchBlock = max(maxWatchBlock, watch.lastBlock);
+            watches.push_back(watch);
+
+        } else {
+            return usage(msg);
+
+        }
+        watch = CAccountWatch();  // reset
     }
-    return str;
+    monitorName = toml.getConfigStr("settings", "name", watches[0].name);
+    return true;
+}
+
+/*-------------------------------------------------------------------------
+ * This source code is confidential proprietary information which is
+ * Copyright (c) 2017 by Great Hill Corporation.
+ * All Rights Reserved
+ *------------------------------------------------------------------------*/
+#include "acctlib.h"
+#include "options.h"
+
+//----------------------------------------------------------------
+struct CIndexRecord {
+public:
+    char addr  [43];  // '0x' + 40 chars + \t
+    char block [10];  // less than 1,000,000,000 + \t
+    char txid  [6];   // less than 100000 + \n
+};
+
+//---------------------------------------------------------------
+int findFunc(const void *v1, const void *v2) {
+    const CIndexRecord *t1 = (const CIndexRecord *)v1;
+    const CIndexRecord *t2 = (const CIndexRecord *)v2;
+    return strncmp(t1->addr, t2->addr, 42);
+}
+
+extern void writeLastBlock(blknum_t bn);
+//---------------------------------------------------------------
+bool visitIndexFiles(const string_q& path, void *data) {
+
+    COptions *options = reinterpret_cast<COptions*>(data);
+    if (endsWith(path, "/")) {
+        forEveryFileInFolder(path + "*", visitIndexFiles, data);
+
+    } else {
+
+        if (endsWith(path, ".txt")) {
+
+            blknum_t bn = bnFromPath(path);
+            uint64_t size = fileSize(path);
+            uint64_t nRecords = size / sizeof(CIndexRecord);
+//            options->addrStats.nSeen += nRecords;
+//
+//            if (bn < options->firstBlock) {
+//               // We may be too early...
+//                options->addrStats.nSkipped += nRecords;
+//                return true;
+//
+//            } else if (bn >= (options->firstBlock + options->nBlocks)) {
+//                // If we're too late....don't contiue...
+//                options->addrStats.nSkipped += nRecords;
+//                writeLastBlock(bn);
+//                return false;
+//            }
+
+            //            if (options->debugging) { cerr << "Opening index file " << path << "\n"; }
+            cerr << options->monitorName << " bn: " << bn << "\r"; // << *options << "\r";
+            cerr.flush();
+
+            CMemMapFile blockFile(path, CMemMapFile::WholeFile, CMemMapFile::RandomAccess);
+            CIndexRecord *records = (CIndexRecord *)(blockFile.getData());  // NOLINT
+
+            for (size_t ac = 0 ; ac < options->watches.size() && !shouldQuit() ; ac++) {
+                const CAccountWatch *acct = &options->watches[ac];
+                CIndexRecord t;
+                strncpy(t.addr, acct->address.c_str(), 42);
+                CIndexRecord *found = reinterpret_cast<CIndexRecord*>(bsearch(&t, records, nRecords, sizeof(CIndexRecord), findFunc));
+                if (found) {
+                    bool done = false;
+                    while (found > records && !done) {
+                        --found;
+                        if (strncmp(found->addr, acct->address.c_str(), 42)) {
+                            done = true;
+                            found++;
+                        }
+                    }
+                    uint64_t pRecords = (uint64_t)records;
+                    uint64_t pFound   = (uint64_t)found;
+                    uint64_t remains  = (pFound - pRecords) / sizeof(CIndexRecord);
+                    done = false;
+                    for (uint64_t i = 0 ; i < remains && !done && !shouldQuit() ; i++) {
+                        char bl[10];
+                        bzero(bl, 10);
+                        strncpy(bl, found[i].block, 9);
+                        char tx[6];
+                        bzero(tx, 6);
+                        strncpy(tx, found[i].txid, 5);
+                        char ad[43];
+                        bzero(ad, 43);
+                        strncpy(ad, found[i].addr, 42);
+                        if (!strncmp(acct->address.c_str(), found[i].addr, 42)) {
+//                            if (options->isList)
+//                                cout << bl << "\t" << tx << endl;
+                            CAcctCacheItem item(str_2_Uint(bl), str_2_Uint(tx));
+                            lockSection(true);
+                            //                            // We found something...write it to the cache...
+                            options->txCache << item.blockNum << item.transIndex;
+                            options->txCache.flush();
+                            writeLastBlock(item.blockNum);
+                            lockSection(false);
+//                            options->addrStats.nHit++;
+                            static int rep = 0;
+                            if (!(++rep%1801)) {
+                                cerr << "    At block #";
+                                cerr << bn;
+                                cerr << " we've searched ";
+//                                cerr << options->addrStats.nSeen;
+                                cerr << " records and found ";
+//                                cerr << options->addrStats.nHit;
+                                cerr << " hits" << string_q(80, ' ') << endl;
+                                //                                cerr << "        " << acct->displayName(false,true,true,8)
+                                //                                    << ": blk: " << bl << " tx: " << tx
+                                //                                    << " (" << options->blkStats.nSeen << " of " << options->nBlocks << ") "
+                                //                                    << "                    " << endl;
+                            }
+                        } else {
+                            if (verbose) {
+                                cerr << options->monitorName << " bn: " << bn << "\r"; // << *options << "\r";
+                                cerr.flush();
+                            }
+                        }
+                        if (strncmp(ad, acct->address.c_str(), 42) > 0)
+                            done = true;
+                    }
+                }
+            }
+            blockFile.close();
+
+            //            lockSection(true);
+            //            for (auto item : items) {
+            //                // We found something...write it to the cache...
+            //                options->txCache << item.blockNum << item.transIndex;
+            //                options->txCache.flush();
+            //                writeLastBlock(item.blockNum);
+#if 0
+            //TODO
+            //
+            // stats issue
+            // api issue
+            // write blocks issue
+            // what is the 'blockCounted = false' issue?
+            // is there a options->blkStats.nHit++ or options->transStats.nHit++ issue?
+            // can we remove the oneBlock issue
+            //
+            // Send the data to an api if we have one
+            if (!acct->api_spec.uri.empty()) {
+                if (trans->traces.size() == 0)
+                    getTraces(((CTransaction*)trans)->traces, trans->hash);
+                acct->abi_spec.articulateTransaction((CTransaction*)trans);
+                if (!trans->articulatedTx.message.empty())
+                    SHOW_FIELD(CFunction, "message");
+                ((CAccountWatch*)acct)->api_spec.sendData(trans->Format());
+                HIDE_FIELD(CFunction, "message");
+                cout << "\n";
+                cout.flush();
+            }
+            // Also, we optionally write blocks if we're told to do so
+            if (options->writeBlocks) {
+                string_q fn = getBinaryFilename(block.blockNumber);
+                if (!fileExists(fn)) {
+                    CBlock *pBlock = (CBlock*)&block;
+                    pBlock->finalized = isBlockFinal(block.timestamp, options->lastTimestamp, (60 * 4));
+                    writeBlockToBinary(block, fn);
+                }
+            }
+#endif
+            //            }
+            //            lockSection(false);
+
+        } else {
+            // silently skip case where file name does not end with .bin
+        }
+    }
+    return !shouldQuit();
+}
+
+//-------------------------------------------------------------------------
+void writeLastBlock(blknum_t bn) {
+    if (!isTestMode())
+        stringToAsciiFile(getTransCachePath("lastBlock.txt"), uint_2_Str(bn) + "\n");
+    else
+        cerr << "Would have written lastBlock.txt file: " << bn << endl;
 }
