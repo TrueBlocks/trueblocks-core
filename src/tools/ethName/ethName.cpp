@@ -29,6 +29,9 @@ int main(int argc, const char *argv[]) {
             return 0;
 
         string_q fmt = (options.addrOnly ? "[{ADDR}]" : (options.data ? STR_NAME_DATA : ""));
+        if (options.data && options.list)
+            fmt = "[{ADDR}]\t[{NAME}]";
+
         if (options.isEdit) {
             editFile(options.namesFile.getFullPath());
 
@@ -38,8 +41,8 @@ int main(int argc, const char *argv[]) {
         } else if (options.list) {
             if (options.count)
                 cout << options.namedAccounts.size() << " items\n";
-            for (size_t i = 0 ; i < options.namedAccounts.size() ; i++)
-                cout << substitute(substitute(options.namedAccounts[i].Format(fmt), "\n", " "), "  ", " ") << "\n";
+            for (auto name : options.namedAccounts)
+                cout << substitute(substitute(name.Format(fmt), "\n", " "), "  ", " ") << endl;
 
         } else {
             string_q ret = options.showMatches();

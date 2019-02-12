@@ -10,13 +10,12 @@
 class COptions : public COptionsBase {
 public:
     CAccountWatchArray watches;
-    bool isInit;
-    bool isImport;
-    bool isExport;
+    string_q mode;
     blknum_t minWatchBlock;
     blknum_t maxWatchBlock;
     string_q monitorName;
     CArchive txCache;
+    string_q remainder;
 
     COptions(void);
     ~COptions(void);
@@ -24,6 +23,14 @@ public:
     bool parseArguments(string_q& command);
     void Init(void);
     bool loadMonitors(CToml& toml);
+
+    bool handle_init(void);
+    bool handle_freshen(const string_q& pathForce="");
+    bool handle_daemon(void);
+    bool handle_export(void);
+    bool handle_help(void);
+    bool handle_names(void);
+    bool handle_list(void);
 };
 
 //--------------------------------------------------------------------------------
