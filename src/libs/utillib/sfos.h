@@ -20,6 +20,7 @@ namespace qblocks {
     extern void listFilesInFolder(CStringArray& files, const string_q& mask);
 
     extern int copyFile(const string_q& from, const string_q& to);
+    extern int moveFile(const string_q& from, const string_q& to);
 
     extern bool folderExists(const string_q& path);
     extern bool fileExists(const string_q& file);

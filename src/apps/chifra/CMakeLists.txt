@@ -41,13 +41,12 @@ function(run_test testName)
 endfunction(run_test)
 
 # Enter one line for each individual test
-run_test("chifra_README"         "-th")
-run_test("chifra_no_params")
-run_test("chifra_invalid_option" "-s" " 1001001")
-run_test("chifra_two_folders"    "folder" " folder2")
-run_test("chifra_no_addrs"       "folder")
-run_test("chifra_malformed"      "folder" " 0x123")
-#run_test("chifra_valid"          "0xbb9bc244d798123fde783fcc1c72d3bb8c189413" "folder")
+#run_test("chifra_README"           "-th")
+#run_test("chifra_no_params")
+#run_test("chifra_invalid_option"   "not_a_mode")
+#run_test("chifra_not_initialized1" "freshen")
+#run_test("chifra_not_initialized2" "export")
+#run_test("chifra_initialized"      "init")
 
 # Installation steps, this tool is renamed at installation
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

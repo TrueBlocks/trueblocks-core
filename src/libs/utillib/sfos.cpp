@@ -41,6 +41,18 @@ namespace qblocks {
         return 0;
     }
 
+
+    //------------------------------------------------------------------
+    int moveFile(const string_q& from, const string_q& to) {
+        if (from % to)
+            return true;
+        if (copyFile(from, to)) {
+            int ret = ::remove(from.c_str()); // remove file returns '0' on success
+            return !ret;
+        }
+        return false;
+    }
+
     //------------------------------------------------------------------
     int copyFile(const string_q& fromIn, const string_q& toIn) {
         string_q from = escapePath(fromIn);

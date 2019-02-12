@@ -1,0 +1,20 @@
+acctExport argc: 1 
+acctExport 
+
+  The config.toml file was not found. Are you in the right folder? Quitting...
+
+
+  Usage:    acctExport [-f|-l|-u|-i|-v|-h]  
+  Purpose:  Export transactions for one or more Ethereum addresses.
+             
+  Where:  
+	-f  (--fmt val)       export format (one of [json|txt|csv]
+	-l  (--filter val)    show results for this address (you may specify more than one filter)
+	-u  (--useBlooms)     use bloom filters to decide whether or not to re-check the cache
+	-i  (--ignoreDdos)    ignore apparent dDos transactions.
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Powered by QBlocks
+chifra argc: 2 [1:export] 
+chifra export 
