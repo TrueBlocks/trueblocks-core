@@ -26,7 +26,7 @@ getTokenInfo -th
 
 `Notes:`
 
-- `addresses` must start with '0x' and be forty characters long.
+- `addresses` must start with '0x' and be forty two characters long.
 - `block_list` may be a space-separated list of values, a start-end range, a `special`, or any combination.
 - This tool retrieves information from the local node or rpcProvider if configured (see documentation).
 - If the token contract(s) from which you request balances are not ERC20 compliant, the results are undefined.

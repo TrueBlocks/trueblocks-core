@@ -1,19 +1,14 @@
 chifra argc: 1 
 chifra 
 
-  Not enough arguments presented.
+  Please specify one of [ init | freshen | export | list | daemon ]. Quitting...
 
-  Usage:    chifra [-s|-v|-h] folder <address> [address...]  
-  Purpose:  Interactively creates a QBlocks monitor for the given address.
+  Usage:    chifra [-v|-h] command  
+  Purpose:  Create a TrueBlocks monitor configuration.
              
   Where:  
-	folder                name of the monitor (also the ./folder for the source code) (required)
-	address_list          a list of one or more addresses to monitor (must start with '0x') (required)
-	-s  (--silent)        suppress all output from chifra (normally chifra is quite verbose)
+	command               one of [ init | freshen | export | list | daemon ] (required)
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
-
-  Notes:
-	- addresses must start with '0x' and be forty characters long.
 
   Powered by QBlocks

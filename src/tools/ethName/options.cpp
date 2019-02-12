@@ -76,8 +76,11 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (addr.empty() && name.empty() && !list && !isEdit)
+    if (addr.empty() && name.empty() && !list && !isEdit && !data)
         return usage("You must supply at least one of 'addr,' or 'name.' Quitting...");
+
+    if (addr.empty() && name.empty() && data && !list)
+        list = true;
 
     return true;
 }
