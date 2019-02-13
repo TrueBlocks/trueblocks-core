@@ -17,7 +17,7 @@ def signal_handler(signal, frame):
 # Define a signals handler to capture at least Ctrl+C
 signal.signal(signal.SIGINT, signal_handler)
 
-timeout = 2
+timeout = 5
 while True:
     os.system('ls | grep -v staging | grep -v "^file" | sort -uf >./file')
     with open('./file') as f:
