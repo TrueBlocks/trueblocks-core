@@ -9,59 +9,71 @@
 //------------------------------------------------------------------------------------------------
 extern bool moveToProduction(const string_q& str, void *data);
 #define toProduction(a) substitute(a, "/staging/", "/")
+extern string_q colors[];
+extern uint64_t nColors;
 bool COptions::handle_init(void) {
 
     if (isTestMode())
         return true;
 
-    if (watches.size() > 0)
-        return usage("This folder has already been initialized. Quitting...");
+    if (!remainder.empty()) {
+        if (!startsWith(remainder, "0x"))
+            return usage("The init command accepts an address/name pair. Quitting...");
+        CAccountWatch watch;
+        watch.address = nextTokenClear(remainder, '|');
+        watch.name = trim(remainder, '|');
+        watch.color = convertColor(colors[watches.size()%nColors]);
+        watches.push_back(watch);
+        monitorName = watch.name;
+        cerr << cGreen << cOff << "\tAdded watch: " << watch.color << watch.address << cOff << " (" << watch.name << ")" << endl;
 
-    extern string_q colors[];
-extern uint64_t nColors;
-    CQuestion prompt("Enter '<address> <name>' pairs ('q' to quit, 'n' for names, 'h' for help)", true, cTeal, NULL);
-    prompt.getResponse();
-//#define DEBUGY
-#ifdef DEBUGY
-    prompt.answer = "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 Swarm";
-#endif
-    while (!prompt.answer.empty()) {
-        if (prompt.answer == "h" || prompt.answer == "help") {
-            handle_help();
-            prompt.answer = "cont";
-        } else if (prompt.answer == "n" || prompt.answer == "names") {
-            handle_names();
-            prompt.answer = "cont";
-        } else if (prompt.answer == "q" || prompt.answer == "quit" || prompt.answer == "exit") {
-            prompt.answer = "";
-        } else {
-            CAccountWatch watch;
-            replaceAll(prompt.answer,"\t"," ");
-            replaceAll(prompt.answer,"  "," ");
-            watch.address = nextTokenClear(prompt.answer, ' ');
-            if (!isAddress(watch.address)) {
-                cerr << cRed << "\tError: " << cOff << "Invalid ethereum address. Please try again..." << endl;
-                prompt.answer = "cont";
-            } else if (prompt.answer.empty()) {
-                cerr << cRed << "\tError: " << cOff << "You must provide a name and an address. Please try again..." << endl;
-                prompt.answer = "cont";
-            } else {
-                watch.name = nextTokenClear(prompt.answer, ' ');
-                if (monitorName.empty())
-                    monitorName = watch.name;
-                watch.color = convertColor(colors[watches.size()%nColors]);
-                watches.push_back(watch);
-                cerr << cGreen << cOff << "\tAdded watch: " << watch.color << watch.address << cOff << " (" << watch.name << ")" << endl;
-            }
-        }
-#ifdef DEBUGY
+    } else {
+        if (watches.size() > 0)
+            return usage("This folder has already been initialized. Quitting...");
+
+        CQuestion prompt("Enter '<address> <name>' pairs ('q' to quit, 'n' for names, 'h' for help)", true, cTeal, NULL);
         prompt.getResponse();
+        //#define DEBUGY
+#ifdef DEBUGY
+        prompt.answer = "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 Swarm";
 #endif
-    }
-
-    if (watches.size() == 0) {
-        cerr << "\tQuitting without create a monitor" << endl;
-        return false;
+        while (!prompt.answer.empty()) {
+            if (prompt.answer == "h" || prompt.answer == "help") {
+                handle_help();
+                prompt.answer = "cont";
+            } else if (prompt.answer == "n" || prompt.answer == "names") {
+                handle_names();
+                prompt.answer = "cont";
+            } else if (prompt.answer == "q" || prompt.answer == "quit" || prompt.answer == "exit") {
+                prompt.answer = "";
+            } else {
+                CAccountWatch watch;
+                replaceAll(prompt.answer,"\t"," ");
+                replaceAll(prompt.answer,"  "," ");
+                watch.address = nextTokenClear(prompt.answer, ' ');
+                if (!isAddress(watch.address)) {
+                    cerr << cRed << "\tError: " << cOff << "Invalid ethereum address. Please try again..." << endl;
+                    prompt.answer = "cont";
+                } else if (prompt.answer.empty()) {
+                    cerr << cRed << "\tError: " << cOff << "You must provide a name and an address. Please try again..." << endl;
+                    prompt.answer = "cont";
+                } else {
+                    watch.name = nextTokenClear(prompt.answer, ' ');
+                    if (monitorName.empty())
+                        monitorName = watch.name;
+                    watch.color = convertColor(colors[watches.size()%nColors]);
+                    watches.push_back(watch);
+                    cerr << cGreen << cOff << "\tAdded watch: " << watch.color << watch.address << cOff << " (" << watch.name << ")" << endl;
+                }
+            }
+#ifdef DEBUGY
+            prompt.getResponse();
+#endif
+        }
+        if (watches.size() == 0) {
+            cerr << "\tQuitting without create a monitor" << endl;
+            return false;
+        }
     }
 
 const char* STR_WATCH2 =
@@ -70,6 +82,8 @@ const char* STR_WATCH2 =
     string_q stagingPath = blockCachePath("monitors/staging/" + toLower(monitorName) + "/");
     establishFolder(stagingPath + "cache/");
     string_q fileName = stagingPath + "config.toml";
+    if (fileExists(fileName) || fileExists(toProduction(fileName)))
+        return usage("This monitor already exists. Quitting...");
     cerr << cTeal << "Creating configuration file: " << fileName << endl;
 
     string_q config;

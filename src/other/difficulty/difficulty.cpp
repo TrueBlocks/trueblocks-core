@@ -29,7 +29,7 @@ int main(int argc, const char *argv[]) {
             return 0;
 
         blknum_t last = getLatestBlockFromClient();
-        for (blknum_t bn = 7105057 ; bn <= last ; bn++) {
+        for (blknum_t bn = 7210814 ; bn <= last ; bn++) {
             CBlock block;
             getBlock(block, bn);
             cerr << bGreen << (last - block.blockNumber) << ": " << cOff; cerr.flush();
