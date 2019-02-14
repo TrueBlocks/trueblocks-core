@@ -178,12 +178,10 @@ extern CArchive& operator>>(CArchive& archive, CBlock& blo);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
+extern blknum_t bnFromPath(const string_q& path, blknum_t& endOut);
 inline blknum_t bnFromPath(const string_q& path) {
-    string_q p = substitute(substitute(path, ".bin", ""), ".txt", "");
-    reverse(p);
-    p = nextTokenClear(p, '/');
-    reverse(p);
-    return str_2_Uint(p);
+    blknum_t unused = NOPOS;
+    return bnFromPath(path, unused);
 }
 
 //---------------------------------------------------------------------------
