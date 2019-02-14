@@ -26,6 +26,8 @@ int main(int argc, const char *argv[]) {
             return options.handle_freshen();
         else if (options.mode == "daemon")
             return options.handle_daemon();
+        else if (options.mode == "scrape")
+            return options.handle_scrape();
         else if (options.mode == "export")
             return options.handle_export();
         else if (options.mode == "list")
