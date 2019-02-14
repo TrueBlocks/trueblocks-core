@@ -10,6 +10,6 @@
 bool COptions::handle_scrape(void) {
     ostringstream os;
     os << "scraper.py";
-    system (os.str().c_str());
+    if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
     return true;
 }

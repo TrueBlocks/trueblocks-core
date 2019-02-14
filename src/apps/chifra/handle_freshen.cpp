@@ -20,7 +20,7 @@ bool COptions::handle_freshen(const string_q& pathForce) {
             os << "acctScrape --useIndex >import.txt ; cacheMan -i ; acctScrape --maxBlocks 50000";
         }
     }
-    system (os.str().c_str());
+    if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
     return true;
 }
 
