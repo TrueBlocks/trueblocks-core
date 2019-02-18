@@ -1,4 +1,3 @@
-
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
@@ -12,14 +11,49 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
+#include "testing.h"
+
+//------------------------------------------------------------------------
+class CThisTest : public testing::Test {
+public:
+                 CThisTest(void) : Test() {}
+    virtual void SetUp    (void) {}
+    virtual void TearDown (void) {}
+};
+
+//------------------------------------------------------------------------
+TEST_F(CThisTest, GeneralTest1) {
+
+    string_q files[] = {
+        "1010101.txt",
+        "2020202.thing",
+        "junk.txt",
+        "junk-12.txt",
+        "1010101-2010101.txt"
+    };
+    blknum_t nums[] = {
+        1010101, NOPOS,
+        2020202, NOPOS,
+        NOPOS, NOPOS,
+        NOPOS, 12,
+        1010101, 2010101
+    };
+    size_t nFiles = sizeof(files) / sizeof(string_q);
+
+    for (size_t i = 0 ; i < nFiles ; i++) {
+        blknum_t first, second;
+        first = bnFromPath(files[i], second);
+        ASSERT_EQ(files[i], first,  nums[(i*2)]);
+        ASSERT_EQ(files[i], second, nums[(i*2)+1]);
+    }
+    return true;
+}}
+
 #include "options.h"
-
-//--------------------------------------------------------------
-
+//------------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
     etherlib_init(quickQuitHandler);
 
-    // Parse command line, allowing for command files
     COptions options;
     if (!options.prepareArguments(argc, argv))
         return 0;
@@ -27,14 +61,8 @@ int main(int argc, const char *argv[]) {
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
-
-        blknum_t last = getLatestBlockFromClient();
-        for (blknum_t bn = 7210814 ; bn <= last ; bn++) {
-            CBlock block;
-            getBlock(block, bn);
-            cerr << bGreen << (last - block.blockNumber) << ": " << cOff; cerr.flush();
-            cout << block.blockNumber << "," << block.timestamp << "," << block.difficulty << endl;
-        }
+        LOAD_TEST(GeneralTest1);
     }
-    return 0;
+
+    return testing::RUN_ALL_TESTS();
 }

@@ -11,6 +11,6 @@ bool COptions::handle_export(void) {
     ostringstream os;
     os << "cd " << blockCachePath("monitors/" + monitor + "/") << " ; ";
     os << "acctExport" << " " << substitute(remainder, "|", " ");
-    system (os.str().c_str());
+    if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
     return true;
 }

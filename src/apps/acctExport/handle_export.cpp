@@ -21,6 +21,7 @@ inline bool isInRange(blknum_t ref, blknum_t start, blknum_t end) {
 bool exportData(COptions& options) {
 
     string_q transFmt = expContext().fmtMap["trans_fmt"];
+    string_q traceFmt = expContext().fmtMap["trace_fmt"];
     string_q header = toLower(transFmt);
     for (uint32_t i = 0 ; i < 10 ; i++) {
         string_q str = "w:" + uint_2_Str(i);
@@ -37,6 +38,13 @@ bool exportData(COptions& options) {
             contains(toLower(transFmt), "articulate") ||
             contains(toLower(transFmt), "function") ||
             contains(toLower(transFmt), "events"));
+    if (!options.needsArt) {
+        options.needsArt =
+            (traceFmt.empty() ||
+                contains(toLower(traceFmt), "articulate") ||
+                contains(toLower(traceFmt), "function") ||
+                contains(toLower(traceFmt), "events"));
+    }
 
     // We need traces if traces are not hidden, or we're doing JSON, or we're doing text and the format includes traces
     options.needsTrace = !IS_HIDDEN(CTransaction, "traces");
@@ -69,6 +77,7 @@ bool exportData(COptions& options) {
 bool exportTransaction(COptions& options, const CAcctCacheItem *item, bool first) {
 
     string_q transFmt = expContext().fmtMap["trans_fmt"];
+//    string_q traceFmt = expContext().fmtMap["trace_fmt"];
     // If we've found a new block...
     if (item->blockNum > options.curBlock.blockNumber) {
 
@@ -160,6 +169,8 @@ bool COptions::shouldTrace(const CTransaction *trans) const {
 //-----------------------------------------------------------------------
 void COptions::renameItems(string_q& str, const CAccountWatchArray& watchArray) const {
     string_q transFmt = expContext().fmtMap["trans_fmt"];
+//    string_q traceFmt = expContext().fmtMap["trace_fmt"];
+
     for (auto const& watch : watchArray) {
         if (transFmt.empty()) {
             CStringArray fields = { "to", "from", "address", "contractAddress" };

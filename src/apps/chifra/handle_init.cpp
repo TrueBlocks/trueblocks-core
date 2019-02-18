@@ -9,6 +9,8 @@
 //------------------------------------------------------------------------------------------------
 extern bool moveToProduction(const string_q& str, void *data);
 #define toProduction(a) substitute(a, "/staging/", "/")
+extern string_q colors[];
+extern uint64_t nColors;
 bool COptions::handle_init(void) {
 
     if (isTestMode())
@@ -17,9 +19,21 @@ bool COptions::handle_init(void) {
     if (watches.size() > 0)
         return usage("This folder has already been initialized. Quitting...");
 
-    if (remainder.empty()) {
-        extern string_q colors[];
-        extern uint64_t nColors;
+    if (!remainder.empty()) {
+        if (!startsWith(remainder, "0x"))
+            return usage("The init command accepts an address/name pair. Quitting...");
+        while (!remainder.empty()) {
+            CAccountWatch watch;
+            watch.address = nextTokenClear(remainder, '|');
+            watch.name = trim(remainder, '|');
+            watch.color = convertColor(colors[watches.size()%nColors]);
+            watches.push_back(watch);
+            if (monitorName.empty())
+                monitorName = watch.name;
+            cerr << cGreen << cOff << "\tAdded watch: " << watch.color << watch.address << cOff << " (" << watch.name << ")" << endl;
+        }
+
+    } else {
         CQuestion prompt("Enter '<address> <name>' pairs ('q' to quit, 'n' for names, 'h' for help)", true, cTeal, NULL);
         prompt.getResponse();
 //#define DEBUGY
@@ -59,16 +73,6 @@ bool COptions::handle_init(void) {
             prompt.getResponse();
 #endif
         }
-    } else {
-        while (!remainder.empty()) {
-            CAccountWatch watch;
-            watch.address = nextTokenClear(remainder, '|');
-            watch.name    = nextTokenClear(remainder, '|');
-            watches.push_back(watch);
-            if (monitorName.empty())
-                monitorName = watch.name;
-            cerr << cGreen << cOff << "\tAdded watch: " << watch.color << watch.address << cOff << " (" << watch.name << ")" << endl;
-        }
     }
 
     if (watches.size() == 0) {
@@ -82,6 +86,8 @@ const char* STR_WATCH2 =
     string_q stagingPath = blockCachePath("monitors/staging/" + toLower(monitorName) + "/");
     establishFolder(stagingPath + "cache/");
     string_q fileName = stagingPath + "config.toml";
+    if (fileExists(fileName) || fileExists(toProduction(fileName)))
+        return usage("This monitor already exists. Quitting...");
     cerr << cTeal << "Creating configuration file: " << fileName << endl;
 
     string_q config;

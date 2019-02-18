@@ -33,7 +33,9 @@ bool visitIndexFiles(const string_q& path, void *data) {
 
         if (endsWith(path, ".txt")) {
 
-            blknum_t bn = bnFromPath(path);
+            blknum_t late;
+            blknum_t bn = bnFromPath(path, late);
+//            cout << "Searching from block " << bn << " to " << late << endl;
             uint64_t size = fileSize(path);
             uint64_t nRecords = size / sizeof(CIndexRecord);
             options->addrStats.nSeen += nRecords;
@@ -121,6 +123,7 @@ bool visitIndexFiles(const string_q& path, void *data) {
                 }
             }
             blockFile.close();
+            writeLastBlock(late);
 
 //            lockSection(true);
 //            for (auto item : items) {
