@@ -17,46 +17,58 @@ bool COptions::handle_init(void) {
     if (watches.size() > 0)
         return usage("This folder has already been initialized. Quitting...");
 
-    extern string_q colors[];
-extern uint64_t nColors;
-    CQuestion prompt("Enter '<address> <name>' pairs ('q' to quit, 'n' for names, 'h' for help)", true, cTeal, NULL);
-    prompt.getResponse();
+    if (remainder.empty()) {
+        extern string_q colors[];
+        extern uint64_t nColors;
+        CQuestion prompt("Enter '<address> <name>' pairs ('q' to quit, 'n' for names, 'h' for help)", true, cTeal, NULL);
+        prompt.getResponse();
 //#define DEBUGY
 #ifdef DEBUGY
-    prompt.answer = "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 Swarm";
+        prompt.answer = "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 Swarm";
 #endif
-    while (!prompt.answer.empty()) {
-        if (prompt.answer == "h" || prompt.answer == "help") {
-            handle_help();
-            prompt.answer = "cont";
-        } else if (prompt.answer == "n" || prompt.answer == "names") {
-            handle_names();
-            prompt.answer = "cont";
-        } else if (prompt.answer == "q" || prompt.answer == "quit" || prompt.answer == "exit") {
-            prompt.answer = "";
-        } else {
-            CAccountWatch watch;
-            replaceAll(prompt.answer,"\t"," ");
-            replaceAll(prompt.answer,"  "," ");
-            watch.address = nextTokenClear(prompt.answer, ' ');
-            if (!isAddress(watch.address)) {
-                cerr << cRed << "\tError: " << cOff << "Invalid ethereum address. Please try again..." << endl;
+        while (!prompt.answer.empty()) {
+            if (prompt.answer == "h" || prompt.answer == "help") {
+                handle_help();
                 prompt.answer = "cont";
-            } else if (prompt.answer.empty()) {
-                cerr << cRed << "\tError: " << cOff << "You must provide a name and an address. Please try again..." << endl;
+            } else if (prompt.answer == "n" || prompt.answer == "names") {
+                handle_names();
                 prompt.answer = "cont";
+            } else if (prompt.answer == "q" || prompt.answer == "quit" || prompt.answer == "exit") {
+                prompt.answer = "";
             } else {
-                watch.name = nextTokenClear(prompt.answer, ' ');
-                if (monitorName.empty())
-                    monitorName = watch.name;
-                watch.color = convertColor(colors[watches.size()%nColors]);
-                watches.push_back(watch);
-                cerr << cGreen << cOff << "\tAdded watch: " << watch.color << watch.address << cOff << " (" << watch.name << ")" << endl;
+                CAccountWatch watch;
+                replaceAll(prompt.answer,"\t"," ");
+                replaceAll(prompt.answer,"  "," ");
+                watch.address = nextTokenClear(prompt.answer, ' ');
+                if (!isAddress(watch.address)) {
+                    cerr << cRed << "\tError: " << cOff << "Invalid ethereum address. Please try again..." << endl;
+                    prompt.answer = "cont";
+                } else if (prompt.answer.empty()) {
+                    cerr << cRed << "\tError: " << cOff << "You must provide a name and an address. Please try again..." << endl;
+                    prompt.answer = "cont";
+                } else {
+                    watch.name = nextTokenClear(prompt.answer, ' ');
+                    if (monitorName.empty())
+                        monitorName = watch.name;
+                    watch.color = convertColor(colors[watches.size()%nColors]);
+                    watches.push_back(watch);
+                    cerr << cGreen << cOff << "\tAdded watch: " << watch.color << watch.address << cOff << " (" << watch.name << ")" << endl;
+                }
             }
-        }
 #ifdef DEBUGY
-        prompt.getResponse();
+            prompt.getResponse();
 #endif
+        }
+    } else {
+        while (!remainder.empty()) {
+            CAccountWatch watch;
+            watch.address = nextTokenClear(remainder, '|');
+            watch.name    = nextTokenClear(remainder, '|');
+            watches.push_back(watch);
+            if (monitorName.empty())
+                monitorName = watch.name;
+            cerr << cGreen << cOff << "\tAdded watch: " << watch.color << watch.address << cOff << " (" << watch.name << ")" << endl;
+        }
     }
 
     if (watches.size() == 0) {
