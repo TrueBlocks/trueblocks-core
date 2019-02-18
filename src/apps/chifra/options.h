@@ -27,6 +27,7 @@ public:
     bool handle_init(void);
     bool handle_freshen(const string_q& pathForce="");
     bool handle_daemon(void);
+    bool handle_scrape(void);
     bool handle_export(void);
     bool handle_help(void);
     bool handle_names(void);

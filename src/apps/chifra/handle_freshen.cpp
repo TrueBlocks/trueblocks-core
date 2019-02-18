@@ -11,13 +11,13 @@ bool COptions::handle_freshen(const string_q& pathForce) {
     ostringstream os;
     if (!pathForce.empty()) {
         os << "cd " << pathForce << " ; ";
-        os << "acctScrape --useIndex >import.txt ; cacheMan -i";
+        os << "acctScrape --useIndex >import.txt ; cacheMan -i ; acctScrape --maxBlocks 10000000";
     } else {
         CStringArray monitors;
         explode(monitors, remainder, '|');
         for (auto monitor : monitors) {
             os << "cd " << blockCachePath("monitors/" + monitor + "/") << " ; ";
-            os << "acctScrape --useIndex >import.txt ; cacheMan -i ; cacheMan";
+            os << "acctScrape --useIndex >import.txt ; cacheMan -i ; acctScrape --maxBlocks 10000000";
         }
     }
     system (os.str().c_str());
