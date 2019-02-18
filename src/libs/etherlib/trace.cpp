@@ -233,7 +233,19 @@ string_q nextTraceChunk_custom(const string_q& fieldIn, const void *dataPtr) {
             case 'd':
                 if (tra->pTrans) {
                     if (fieldIn % "date" || fieldIn % "datesh")
-                        return nextTraceChunk(fieldIn, tra->pTrans);
+                        return nextTransactionChunk(fieldIn, tra->pTrans);
+                }
+                break;
+            case 'f':
+                if (tra->pTrans) {
+                    if (fieldIn % "function") {
+                        string_q ret = tra->Format("[{ARTICULATEDTRACE}]");
+                        if (ret.empty())
+                            return "";
+                        CFunction func;
+                        func.parseJson3(ret);
+                        return func.name;
+                    }
                 }
                 break;
             // EXISTING_CODE

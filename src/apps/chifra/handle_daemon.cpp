@@ -11,6 +11,6 @@ bool COptions::handle_daemon(void) {
     ostringstream os;
     os << "cd " << blockCachePath("monitors/") << " ; ";
     os << "chifraDaemon.py";
-    system (os.str().c_str());
+    if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
     return true;
 }

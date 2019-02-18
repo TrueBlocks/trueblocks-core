@@ -1,4 +1,4 @@
-
+#pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
@@ -12,29 +12,13 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
-#include "options.h"
 
-//--------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class COptions : public COptionsBase {
+public:
+    COptions(void);
+    ~COptions(void);
 
-int main(int argc, const char *argv[]) {
-    etherlib_init(quickQuitHandler);
-
-    // Parse command line, allowing for command files
-    COptions options;
-    if (!options.prepareArguments(argc, argv))
-        return 0;
-
-    for (auto command : options.commandLines) {
-        if (!options.parseArguments(command))
-            return 0;
-
-        blknum_t last = getLatestBlockFromClient();
-        for (blknum_t bn = 7210814 ; bn <= last ; bn++) {
-            CBlock block;
-            getBlock(block, bn);
-            cerr << bGreen << (last - block.blockNumber) << ": " << cOff; cerr.flush();
-            cout << block.blockNumber << "," << block.timestamp << "," << block.difficulty << endl;
-        }
-    }
-    return 0;
-}
+    bool parseArguments(string_q& command);
+    void Init(void);
+};
