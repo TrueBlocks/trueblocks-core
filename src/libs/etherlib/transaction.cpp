@@ -105,14 +105,12 @@ bool CTransaction::setValueByName(const string_q& fieldName, const string_q& fie
             if ( fieldName % "blockHash" ) { blockHash = str_2_Hash(fieldValue); return true; }
             if ( fieldName % "blockNumber" ) { blockNumber = str_2_Uint(fieldValue); return true; }
             break;
-        case 'c':
-            if ( fieldName % "color" ) { color = fieldValue; return true; }
-            break;
         case 'e':
             if ( fieldName % "extra_data" ) { extra_data = fieldValue; return true; }
             break;
         case 'f':
             if ( fieldName % "from" ) { from = str_2_Addr(fieldValue); return true; }
+            if ( fieldName % "finalized" ) { finalized = str_2_Bool(fieldValue); return true; }
             break;
         case 'g':
             if ( fieldName % "gas" ) { gas = str_2_Gas(fieldValue); return true; }
@@ -184,7 +182,7 @@ bool CTransaction::Serialize(CArchive& archive) {
     archive >> receipt;
 //    archive >> articulatedTx;
 //    archive >> extra_data;
-//    archive >> color;
+//    archive >> finalized;
     finishParse();
     return true;
 }
@@ -214,7 +212,7 @@ bool CTransaction::SerializeC(CArchive& archive) const {
     archive << receipt;
 //    archive << articulatedTx;
 //    archive << extra_data;
-//    archive << color;
+//    archive << finalized;
 
     return true;
 }
@@ -269,8 +267,8 @@ void CTransaction::registerClass(void) {
     HIDE_FIELD(CTransaction, "articulatedTx");
     ADD_FIELD(CTransaction, "extra_data", T_TEXT, ++fieldNum);
     HIDE_FIELD(CTransaction, "extra_data");
-    ADD_FIELD(CTransaction, "color", T_TEXT, ++fieldNum);
-    HIDE_FIELD(CTransaction, "color");
+    ADD_FIELD(CTransaction, "finalized", T_BOOL, ++fieldNum);
+    HIDE_FIELD(CTransaction, "finalized");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTransaction, "schema");
@@ -480,14 +478,12 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "blockHash" ) return hash_2_Str(blockHash);
             if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
             break;
-        case 'c':
-            if ( fieldName % "color" ) return color;
-            break;
         case 'e':
             if ( fieldName % "extra_data" ) return extra_data;
             break;
         case 'f':
             if ( fieldName % "from" ) return addr_2_Str(from);
+            if ( fieldName % "finalized" ) return int_2_Str(finalized);
             break;
         case 'g':
             if ( fieldName % "gas" ) return gas_2_Str(gas);

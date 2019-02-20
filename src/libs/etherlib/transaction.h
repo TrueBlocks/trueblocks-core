@@ -48,7 +48,7 @@ public:
     CReceipt receipt;
     CFunction articulatedTx;
     string_q extra_data;
-    string_q color;
+    bool finalized;
 
 public:
     CTransaction(void);
@@ -134,7 +134,7 @@ inline void CTransaction::initialize(void) {
     receipt = CReceipt();
     articulatedTx = CFunction();
     extra_data = "";
-    color = "";
+    finalized = 0;
 
     // EXISTING_CODE
     pBlock = NULL;
@@ -164,7 +164,7 @@ inline void CTransaction::duplicate(const CTransaction& tr) {
     receipt = tr.receipt;
     articulatedTx = tr.articulatedTx;
     extra_data = tr.extra_data;
-    color = tr.color;
+    finalized = tr.finalized;
 
     // EXISTING_CODE
     pBlock = tr.pBlock;  // no deep copy, we don't own it

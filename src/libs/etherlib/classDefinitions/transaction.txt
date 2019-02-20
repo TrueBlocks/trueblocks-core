@@ -1,6 +1,6 @@
 [settings]
 class     = CTransaction
-fields    = hash hash|hash blockHash|blknum blockNumber|uint64 transactionIndex|uint64 nonce|timestamp timestamp|address from|address to|wei value|gas gas|gas gasPrice|string input|uint64 isError|uint64 isInternal|CReceipt receipt|CFunction articulatedTx (nowrite)|string extra_data (nowrite)|string color (nowrite)
+fields    = hash hash|hash blockHash|blknum blockNumber|uint64 transactionIndex|uint64 nonce|timestamp timestamp|address from|address to|wei value|gas gas|gas gasPrice|string input|uint64 isError|uint64 isInternal|CReceipt receipt|CFunction articulatedTx (nowrite)|string extra_data (nowrite)|bool finalized (nowrite)
 backfields1 = hash hash|hash blockHash|blknum blockNumber|uint64 transactionIndex|uint64 nonce|timestamp timestamp|address from|address to|wei value|gas gas|gas gasPrice|wei cumulativeGasUsed|string input|uint64 isError|uint64 isInternalTx|CReceipt receipt
 includes  = abilib.h|receipt.h|trace.h
 cIncs     = etherlib.h

@@ -132,6 +132,7 @@ bool visitIndexFiles(const string_q& path, void *data) {
 //                options->txCache.flush();
 //                writeLastBlock(item.blockNum);
 #if 0
+/*
 //TODO
                 //
                 // stats issue
@@ -163,6 +164,7 @@ bool visitIndexFiles(const string_q& path, void *data) {
                             writeBlockToBinary(block, fn);
                         }
                     }
+*/
 #endif
 //            }
 //            lockSection(false);
