@@ -26,7 +26,7 @@ bool COptions::handle_init(void) {
             CAccountWatch watch;
             watch.address = nextTokenClear(remainder, '|');
             watch.name = trim(remainder, '|');
-            watch.color = convertColor(colors[watches.size()%nColors]);
+            watch.color = colors[watches.size()%nColors];
             watches.push_back(watch);
             if (monitorName.empty())
                 monitorName = watch.name;
@@ -64,7 +64,7 @@ bool COptions::handle_init(void) {
                     watch.name = nextTokenClear(prompt.answer, ' ');
                     if (monitorName.empty())
                         monitorName = watch.name;
-                    watch.color = convertColor(colors[watches.size()%nColors]);
+                    watch.color = colors[watches.size()%nColors];
                     watches.push_back(watch);
                     cerr << cGreen << cOff << "\tAdded watch: " << watch.color << watch.address << cOff << " (" << watch.name << ")" << endl;
                 }
