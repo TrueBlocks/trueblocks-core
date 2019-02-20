@@ -264,10 +264,8 @@ bool makeMonitorFolder(const address_t& addr) {
         config = substitute(config, "NAME", name);
         config = substitute(config, "ADDR", addr);
         stringToAsciiFile("./config.toml", config);
-        if (isTestMode()) {
-            //cout << getCWD() << "config.toml: " << fileExists("config.toml") << endl;
+        if (isTestMode())
             cout << config << endl;
-        }
         return true;
     }
     return false;
