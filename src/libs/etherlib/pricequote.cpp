@@ -15,9 +15,8 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <algorithm>
-#include "pricequote.h"
-#include "etherlib.h"
 #include "pricesource.h"
+#include "pricequote.h"
 
 namespace qblocks {
 

@@ -2,5 +2,5 @@
 class     = CTraceResult
 fields    = address address|string code|gas gasUsed|string output
 includes  = abilib.h
-cIncs     = #include "trace.h"
+cIncs     = trace.h
 serialize = true

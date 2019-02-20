@@ -16,7 +16,6 @@
  */
 #include <algorithm>
 #include "apispec.h"
-#include "utillib.h"
 
 namespace qblocks {
 

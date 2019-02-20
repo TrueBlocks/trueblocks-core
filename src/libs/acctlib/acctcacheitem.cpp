@@ -137,7 +137,7 @@ CArchive& operator<<(CArchive& archive, const CAcctCacheItemArray& array) {
 //---------------------------------------------------------------------------
 void CAcctCacheItem::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CAbi, "schema")) return;
+    if (HAS_FIELD(CAcctCacheItem, "schema")) return;
 
     size_t fieldNum = 1000;
     ADD_FIELD(CAcctCacheItem, "schema",  T_NUMBER, ++fieldNum);
@@ -250,7 +250,6 @@ string_q getTransCachePath(const string_q& part) {
         return "./cache/" + part + ".acct.bin";
     return "./cache/" + part;
 }
-
 // EXISTING_CODE
 }  // namespace qblocks
 

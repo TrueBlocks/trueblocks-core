@@ -105,6 +105,12 @@ bool CTransaction::setValueByName(const string_q& fieldName, const string_q& fie
             if ( fieldName % "blockHash" ) { blockHash = str_2_Hash(fieldValue); return true; }
             if ( fieldName % "blockNumber" ) { blockNumber = str_2_Uint(fieldValue); return true; }
             break;
+        case 'c':
+            if ( fieldName % "color" ) { color = fieldValue; return true; }
+            break;
+        case 'e':
+            if ( fieldName % "extra_data" ) { extra_data = fieldValue; return true; }
+            break;
         case 'f':
             if ( fieldName % "from" ) { from = str_2_Addr(fieldValue); return true; }
             break;
@@ -177,6 +183,8 @@ bool CTransaction::Serialize(CArchive& archive) {
     archive >> isInternal;
     archive >> receipt;
 //    archive >> articulatedTx;
+//    archive >> extra_data;
+//    archive >> color;
     finishParse();
     return true;
 }
@@ -205,6 +213,8 @@ bool CTransaction::SerializeC(CArchive& archive) const {
     archive << isInternal;
     archive << receipt;
 //    archive << articulatedTx;
+//    archive << extra_data;
+//    archive << color;
 
     return true;
 }
@@ -257,6 +267,10 @@ void CTransaction::registerClass(void) {
     ADD_FIELD(CTransaction, "receipt", T_OBJECT, ++fieldNum);
     ADD_FIELD(CTransaction, "articulatedTx", T_OBJECT, ++fieldNum);
     HIDE_FIELD(CTransaction, "articulatedTx");
+    ADD_FIELD(CTransaction, "extra_data", T_TEXT, ++fieldNum);
+    HIDE_FIELD(CTransaction, "extra_data");
+    ADD_FIELD(CTransaction, "color", T_TEXT, ++fieldNum);
+    HIDE_FIELD(CTransaction, "color");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTransaction, "schema");
@@ -465,6 +479,12 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
         case 'b':
             if ( fieldName % "blockHash" ) return hash_2_Str(blockHash);
             if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
+            break;
+        case 'c':
+            if ( fieldName % "color" ) return color;
+            break;
+        case 'e':
+            if ( fieldName % "extra_data" ) return extra_data;
             break;
         case 'f':
             if ( fieldName % "from" ) return addr_2_Str(from);

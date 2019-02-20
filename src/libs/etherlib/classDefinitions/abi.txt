@@ -2,5 +2,5 @@
 class     = CAbi
 fields    = address address|CFunctionArray interfaces
 includes  = function.h|parameter.h
-cIncs     = #include "node.h"
+cIncs     = node.h
 serialize = true

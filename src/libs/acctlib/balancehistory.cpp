@@ -16,7 +16,6 @@
  */
 #include <algorithm>
 #include "balancehistory.h"
-#include "etherlib.h"
 
 namespace qblocks {
 
