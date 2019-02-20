@@ -210,7 +210,7 @@ void writeLastBlock(blknum_t bn) {
  CAccountWatch watch;
  watch.address = addrs.answer;
  watch.name = name;
- watch.color = convertColor(colors[watches.size() % nColors]);
+ watch.color = c onvertColor(colors[watches.size() % nColors]);
  watches.push_back(watch);
  cout << "\tAdded " << watch.color << watch.address << cOff << " " << watch.name << endl;
  addrs.answer = "";
