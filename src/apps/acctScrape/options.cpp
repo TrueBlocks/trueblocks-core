@@ -196,6 +196,8 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
+// We want to be able to run this more than once
+// optionOn(OPT_RUNONCE);
 
     lastBlock     = 0;
     minWatchBlock = 0;
