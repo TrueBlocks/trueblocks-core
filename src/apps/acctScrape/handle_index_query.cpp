@@ -148,7 +148,8 @@ bool visitIndexFiles(const string_q& path, void *data) {
                         acct->abi_spec.articulateTransaction((CTransaction*)trans);
                         if (!trans->articulatedTx.message.empty())
                             SHOW_FIELD(CFunction, "message");
-                        ((CAccountWatch*)acct)->api_spec.sendData(trans->Format());
+                        string_q data = trans->Format();
+                        ((CAccountWatch*)acct)->api_spec.sendData(data);
                         HIDE_FIELD(CFunction, "message");
                         cout << "\n";
                         cout.flush();

@@ -326,7 +326,8 @@ bool processTransaction(const CBlock& block, const CTransaction *trans, COptions
                         if (!trans->articulatedTx.message.empty())
                             SHOW_FIELD(CFunction, "message");
                         if (!fileExists("./debug")) {
-                            ((CAccountWatch*)acct)->api_spec.sendData(trans->Format());
+                            string_q data = trans->Format();
+                            ((CAccountWatch*)acct)->api_spec.sendData(data);
                         } else {
                             SHOW_FIELD(CLogEntry, "data");
                             SHOW_FIELD(CLogEntry, "topics");

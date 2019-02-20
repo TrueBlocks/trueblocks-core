@@ -193,3 +193,4 @@ extern CArchive& operator<<(CArchive& archive, const CParameterArray& array);
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
+

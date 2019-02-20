@@ -250,8 +250,8 @@ ostream& operator<<(ostream& os, const CLeaf& item) {
 }
 
 //---------------------------------------------------------------------------
-const string_q CLeaf::getStringAt(const string_q& name, size_t i) const {
-    if ( name % "blocks" && i < blocks.size() )
+const string_q CLeaf::getStringAt(const string_q& fieldName, size_t i) const {
+    if ( fieldName % "blocks" && i < blocks.size() )
         return uint_2_Str(blocks[i]);
     return "";
 }

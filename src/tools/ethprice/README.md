@@ -21,7 +21,10 @@ The `ethprice` tool provides Ethereum price data to various **QBlocks** tools or
 
 `Notes:`
 
-- Valid pairs include any pair from the public Poloniex's API here: https://poloniex.com/public?command=returnCurrencies.
+- Valid pairs include any pair from the public Poloniex's API here:
+  https://poloniex.com/public?command=returnCurrencies.
+- `Note`: Due to restrictions from Poloniex, this tool retrieves only 30 days of data
+  at a time. You must repeatedly run this command until the data is up-to-date.
 
 #### Other Options
 

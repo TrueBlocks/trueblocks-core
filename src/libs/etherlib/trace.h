@@ -121,9 +121,9 @@ inline void CTrace::initialize(void) {
     transactionPosition = 0;
     type = "";
     error = "";
-    articulatedTrace.initialize();
-    action.initialize();
-    result.initialize();
+    articulatedTrace = CFunction();
+    action = CTraceAction();
+    result = CTraceResult();
 
     // EXISTING_CODE
     pTrans = NULL;

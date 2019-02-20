@@ -451,6 +451,6 @@ bool CParameter::isDyn(void) const {
 bool CParameter::isMulti(void) const {
     return (countOf(type, '[') > 1);
 }
-
 // EXISTING_CODE
 }  // namespace qblocks
+

@@ -21,6 +21,7 @@ extern string_q short3        (const string_q& in);
 extern string_q short2        (const string_q& in);
 extern string_q checkType     (const string_q& typeIn);
 extern string_q convertTypes  (const string_q& inStr);
+extern string_q fixIncs       (const string_q& inStr);
 
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
@@ -171,7 +172,7 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
     //------------------------------------------------------------------------------------------------
     string_q className  = toml.getConfigStr ("settings", "class", "");
     string_q baseClass  = toml.getConfigStr ("settings", "baseClass", "CBaseNode");
-    string_q otherIncs  = substitute(toml.getConfigStr ("settings", "cIncs", ""), "|", "\n");
+    string_q otherIncs  = toml.getConfigStr ("settings", "cIncs", "");
     string_q scope      = toml.getConfigStr ("settings", "scope", "static");     //TODO(tjayrush): global data
     string_q hIncludes  = toml.getConfigStr ("settings", "includes", "");
     bool     serialize  = toml.getConfigBool("settings", "serialize", false);
@@ -434,7 +435,7 @@ string_q writeFmt = "\tarchive << [{NAME}];\n";
     replaceAll(srcSource, "[{OPERATORS}]",       operatorC);
     replaceAll(srcSource, "[REGISTER_FIELDS]",   fieldReg);
     replaceAll(srcSource, "[{FIELD_CASE}]",      fieldStr);
-    replaceAll(srcSource, "[OTHER_INCS]",        otherIncs);
+    replaceAll(srcSource, "[OTHER_INCS]",        fixIncs(otherIncs));
     replaceAll(srcSource, "[FIELD_SETCASE]",     caseSetCodeStr);
     replaceAll(srcSource, "[{SUBCLASS_FLDS}]",   subClsCodeStr);
     replaceAll(srcSource, "[{PARENT_SER2}]",     parSer2);
@@ -822,7 +823,7 @@ const char *STR_GETSTR_HEAD =
 
 //------------------------------------------------------------------------------------------------------------
 const char *STR_GETSTR_CODE_FIELD =
-"\tif ( name % \"[{FIELD}]\" && i < [{FIELD}].size() )\n"
+"\tif ( fieldName % \"[{FIELD}]\" && i < [{FIELD}].size() )\n"
 "\t\treturn THING([{FIELD}][i]);\n";
 
 //------------------------------------------------------------------------------------------------------------
@@ -889,4 +890,17 @@ string_q checkType(const string_q& typeIn) {
     }
     cerr << "Invalid type: " << typeIn << ". Quitting...(hit enter)" << endl;
     return "";
+}
+
+//-----------------------------------------------------------------------
+string_q fixIncs(const string_q& inStr) {
+    if (inStr.empty())
+        return "";
+
+    CStringArray incs;
+    explode(incs, inStr, '|');
+    string_q ret;
+    for (auto inc : incs)
+        ret += "#include \"" + inc + "\"\n";
+    return ret;
 }
