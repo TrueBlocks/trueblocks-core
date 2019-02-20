@@ -15,9 +15,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include <vector>
-#include <map>
-#include "abilib.h"
+#include "etherlib.h"
 #include "logentry.h"
 
 // EXISTING_CODE
@@ -117,7 +115,6 @@ inline void CNewReceipt::duplicate(const CNewReceipt& ne) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    finishParse();
 }
 
 //--------------------------------------------------------------------------

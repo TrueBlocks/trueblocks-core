@@ -3,4 +3,4 @@ class     = CInfix
 baseClass = CTreeNode
 fields    = CTreeNode *next
 includes  = etherlib.h|treenode.h
-cIncs     = #include "treeroot.h"
+cIncs     = treeroot.h

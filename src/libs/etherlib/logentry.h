@@ -99,7 +99,7 @@ inline void CLogEntry::initialize(void) {
     data = "";
     logIndex = 0;
     topics.clear();
-    articulatedLog.initialize();
+    articulatedLog = CFunction();
 
     // EXISTING_CODE
     pReceipt = NULL;

@@ -16,7 +16,6 @@
  */
 #include <algorithm>
 #include "incomestatement.h"
-#include "etherlib.h"
 
 namespace qblocks {
 

@@ -47,6 +47,8 @@ public:
     uint64_t isInternal;
     CReceipt receipt;
     CFunction articulatedTx;
+    string_q extra_data;
+    string_q color;
 
 public:
     CTransaction(void);
@@ -129,8 +131,10 @@ inline void CTransaction::initialize(void) {
     input = "";
     isError = 0;
     isInternal = 0;
-    receipt.initialize();
-    articulatedTx.initialize();
+    receipt = CReceipt();
+    articulatedTx = CFunction();
+    extra_data = "";
+    color = "";
 
     // EXISTING_CODE
     pBlock = NULL;
@@ -159,6 +163,8 @@ inline void CTransaction::duplicate(const CTransaction& tr) {
     isInternal = tr.isInternal;
     receipt = tr.receipt;
     articulatedTx = tr.articulatedTx;
+    extra_data = tr.extra_data;
+    color = tr.color;
 
     // EXISTING_CODE
     pBlock = tr.pBlock;  // no deep copy, we don't own it

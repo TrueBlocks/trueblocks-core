@@ -16,7 +16,6 @@
  */
 #include <algorithm>
 #include "accountwatch.h"
-#include "etherlib.h"
 
 namespace qblocks {
 

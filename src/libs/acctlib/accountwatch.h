@@ -15,9 +15,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include <vector>
-#include <map>
-#include "abilib.h"
+#include "etherlib.h"
 #include "transaction.h"
 #include "incomestatement.h"
 #include "balancehistory.h"
@@ -116,12 +114,12 @@ inline void CAccountWatch::initialize(void) {
     color = "";
     firstBlock = 0;
     lastBlock = 0;
-    statement.initialize();
+    statement = CIncomeStatement();
     balanceHistory.clear();
     nodeBal = 0;
     enabled = true;
-    api_spec.initialize();
-    abi_spec.initialize();
+    api_spec = CApiSpec();
+    abi_spec = CAbi();
 
     // EXISTING_CODE
     lastBlock = UINT_MAX;
