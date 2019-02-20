@@ -115,6 +115,9 @@ namespace qblocks {
                 timestamp_t start = date_2_Ts(nextRead);
                 // Polinex will give us as much as it has on the following day. Do this to account for time zones
                 timestamp_t end   = date_2_Ts(EOD(BOND(now)));
+                timestamp_t thirtyDays = (30 * 24 * 60 * 60);
+                if (end > start + thirtyDays)
+                    end = start + thirtyDays;
 
                 if (verbose > 1) {
                     cerr << "start: " << ts_2_Date(start) << "\n";
