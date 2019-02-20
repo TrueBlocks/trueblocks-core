@@ -405,7 +405,7 @@ bool CAbi::loadAbiAndCache(const address_t& addr, bool raw, bool silent, bool de
                 } else {
                     cerr << "\n";
                     cerr << cRed << "Warning: " << cOff;
-                    cerr << "The address your specified (" << addr << ") does not\n";
+                    cerr << "The address you specified (" << addr << ") does not\n";
                     cerr << "\t does not appear to be a smart contract, therefore there is no ABI. Quitting...\n\n";
                     quickQuitHandler(0);
                 }
