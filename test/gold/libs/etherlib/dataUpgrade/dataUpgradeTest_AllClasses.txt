@@ -919,7 +919,7 @@ isInternal          	1018	1	65561	T_NUMBER TS_NUMERAL
 receipt             	1019	0	1048651	T_OBJECT TS_OBJECT
 articulatedTx       	1020	1	1048651	T_OBJECT TS_OBJECT
 extra_data          	1021	1	131122	T_TEXT TS_STRING
-color               	1022	1	131122	T_TEXT TS_STRING
+finalized           	1022	1	65556	T_BOOL TS_NUMERAL
 confirmations       	1023	1	65561	T_NUMBER TS_NUMERAL
 gasCost             	1024	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 function            	1025	1	131122	T_TEXT TS_STRING
@@ -982,7 +982,7 @@ isInternal          	1018	1	65561	T_NUMBER TS_NUMERAL
 receipt             	1019	1	1048651	T_OBJECT TS_OBJECT
 articulatedTx       	1020	1	1048651	T_OBJECT TS_OBJECT
 extra_data          	1021	1	131122	T_TEXT TS_STRING
-color               	1022	1	131122	T_TEXT TS_STRING
+finalized           	1022	1	65556	T_BOOL TS_NUMERAL
 confirmations       	1023	1	65561	T_NUMBER TS_NUMERAL
 gasCost             	1024	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 function            	1025	1	131122	T_TEXT TS_STRING
@@ -1022,7 +1022,7 @@ isInternal          	1018	0	65561	T_NUMBER TS_NUMERAL
 receipt             	1019	0	1048651	T_OBJECT TS_OBJECT
 articulatedTx       	1020	0	1048651	T_OBJECT TS_OBJECT
 extra_data          	1021	0	131122	T_TEXT TS_STRING
-color               	1022	0	131122	T_TEXT TS_STRING
+finalized           	1022	0	65556	T_BOOL TS_NUMERAL
 confirmations       	1023	0	65561	T_NUMBER TS_NUMERAL
 gasCost             	1024	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 function            	1025	0	131122	T_TEXT TS_STRING
@@ -1071,6 +1071,7 @@ traces              	1034	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
     "inputs": [],
     "outputs": []
   },
+  "finalized": 0,
   "gasCost": 0,
   "price": "1.400000000000000000",
   "gasUsed": 0,

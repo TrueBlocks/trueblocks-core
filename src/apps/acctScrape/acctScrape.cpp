@@ -15,13 +15,10 @@ extern string_q report         (const COptions& options, double start, double st
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
     acctlib_init(defaultQuitHandler);
-//TODO: remove this line and figure out how to turn this off for docker
-//    colorsOff();
 
     COptions options;
     if (!options.prepareArguments(argc, argv))
         return 0;
-    ASSERT(isEnabled(OPT_RUNONCE));
 
     if (!isTestMode())
         cerr << bBlack << Now().Format(FMT_JSON) << cOff << ": Monitoring " << cYellow << getCWD() << cOff << "             \n";
@@ -248,6 +245,8 @@ bool processTransaction(const CBlock& block, const CTransaction *trans, COptions
     // As soon as we have a hit on any account, we're done since we only want to write a transaction once...
     for (size_t ac = 0 ; ac < options->monitors.size() && !hit ; ac++) {
 
+        string_q ex_data = options->name + "_" + options->monitors[0].address;
+
         // For each account we're monitoring...
         const CAccountWatch *acct = &options->monitors[ac];
         if (acct->inBlock) {
@@ -318,6 +317,10 @@ bool processTransaction(const CBlock& block, const CTransaction *trans, COptions
                     options->txCache << block.blockNumber << trans->transactionIndex;
                     options->txCache.flush();
                     writeLastBlock(block.blockNumber);
+
+                    CBlock *pBlock = (CBlock*)&block;
+                    pBlock->finalized = isBlockFinal(block.timestamp, options->lastTimestamp, (60 * 4));
+
                     // Send the data to an api if we have one
                     if (!acct->api_spec.uri.empty()) {
                         if (trans->traces.size() == 0)
@@ -325,6 +328,10 @@ bool processTransaction(const CBlock& block, const CTransaction *trans, COptions
                         acct->abi_spec.articulateTransaction((CTransaction*)trans);
                         if (!trans->articulatedTx.message.empty())
                             SHOW_FIELD(CFunction, "message");
+                        SHOW_FIELD(CTransaction, "extra_data");
+                        SHOW_FIELD(CTransaction, "finalized");
+                        ((CTransaction*)trans)->extra_data = ex_data;
+                        ((CTransaction*)trans)->finalized = pBlock->finalized;
                         if (!fileExists("./debug")) {
                             string_q data = trans->Format();
                             ((CAccountWatch*)acct)->api_spec.sendData(data);
@@ -332,20 +339,19 @@ bool processTransaction(const CBlock& block, const CTransaction *trans, COptions
                             SHOW_FIELD(CLogEntry, "data");
                             SHOW_FIELD(CLogEntry, "topics");
                             SHOW_FIELD(CParameter, "type");
-                            cout << trans->Format();
+                            cout << trans->Format() << endl;
                         }
+                        HIDE_FIELD(CTransaction, "extra_data");
+                        HIDE_FIELD(CTransaction, "finalized");
                         HIDE_FIELD(CFunction, "message");
-                        cout << "\n";
-                        cout.flush();
                     }
+
                     // Also, we optionally write blocks if we're told to do so
                     if (options->writeBlocks) {
+                        // pBlock->finalized is used here too
                         string_q fn = getBinaryFilename(block.blockNumber);
-                        if (!fileExists(fn)) {
-                            CBlock *pBlock = (CBlock*)&block;
-                            pBlock->finalized = isBlockFinal(block.timestamp, options->lastTimestamp, (60 * 4));
+                        if (!fileExists(fn))
                             writeBlockToBinary(block, fn);
-                        }
                     }
                     lockSection(false);
                 }
