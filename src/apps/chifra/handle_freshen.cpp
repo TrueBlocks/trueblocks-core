@@ -224,7 +224,7 @@ bool COptions::handle_freshen(const string_q& pathForce) {
  CAccountWatch watch;
  watch.address = addrs.answer;
  watch.name = name;
- watch.color = convertColor(colors[watches.size() % nColors]);
+ watch.color = con vertColor(colors[watches.size() % nColors]);
  watches.push_back(watch);
  cout << "\tAdded " << watch.color << watch.address << cOff << " " << watch.name << endl;
  addrs.answer = "";

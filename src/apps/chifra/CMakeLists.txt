@@ -47,6 +47,7 @@ endfunction(run_test)
 #run_test("chifra_not_initialized1" "freshen")
 #run_test("chifra_not_initialized2" "export")
 #run_test("chifra_initialized"      "init")
+#run_test("chifra_edit_config"      "config")
 
 # Installation steps, this tool is renamed at installation
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)
