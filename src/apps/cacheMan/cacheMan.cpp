@@ -151,7 +151,7 @@ int main(int argc, const char *argv[]) {
                     if (!isTestMode()) {
                         remove(options.filenames[fn].c_str());
                         CArchive txCache2(WRITING_ARCHIVE);
-                        if (txCache2.Lock(options.filenames[fn], "wb", LOCK_NOWAIT)) {
+                        if (txCache2.Lock(options.filenames[fn], binaryWriteCreate, LOCK_NOWAIT)) {
                             for (size_t i=0 ; i < fixed.size() ; i++) {
                                 txCache2 << fixed[i].blockNum << fixed[i].transIndex;
                                 lastBlock = fixed[i].blockNum;

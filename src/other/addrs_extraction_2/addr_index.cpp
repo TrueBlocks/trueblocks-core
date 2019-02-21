@@ -41,7 +41,7 @@ bool cutFiles(const string_q& path, void *data) {
             forEveryLineInAsciiFile(path, writeRecord, data);
             CArchive output(READING_ARCHIVE);
             string_q filename = substitute(path, indexFolder_stage, indexFolder_prod);
-            if (!output.Lock(filename, asciiWriteCreate, LOCK_NOWAIT))
+            if (!output.Lock(filename, binaryWriteCreate, LOCK_NOWAIT))
                 return false;
             cerr << "\nSorting...";
             sort(thing->lines.begin(), thing->lines.end());
@@ -131,7 +131,7 @@ bool writeRecord(const char *line, void *data) {
                 return false;
             }
             cerr << "\tOpening file " << thing->outputFilename << "\n";
-            if (!thing->output->Lock(thing->outputFilename, asciiWriteCreate, LOCK_NOWAIT)) {
+            if (!thing->output->Lock(thing->outputFilename, binaryWriteCreate, LOCK_NOWAIT)) {
                 cerr << "Could not open file " << thing->outputFilename << "\n";
                 return false;
             }
