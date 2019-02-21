@@ -86,17 +86,17 @@ int main(int argc, const char *argv[]) {
 
             } else if (mode == "freshen") {
 
-                string_q openMode = (fileExists(miniBlockCache) ? "a+" : binaryWriteCreate);
+                string_q openMode = (fileExists(miniBlockCache) ? binaryWriteAppend : binaryWriteCreate);
                 if (!reporter.miniB.Lock(miniBlockCache, openMode, LOCK_WAIT))
                     return options.usage(reporter.miniB.LockFailure());
 
 #ifdef MINI_TRANS
-                openMode = (fileExists(miniTransCache) ? "a+" : binaryWriteCreate);
+                openMode = (fileExists(miniTransCache) ? binaryWriteAppend : binaryWriteCreate);
                 if (!reporter.miniT.Lock(miniTransCache, openMode, LOCK_WAIT))
                     return options.usage(reporter.miniT.LockFailure());
 #endif
 
-                if (openMode == "a+")
+                if (openMode == binaryWriteAppend)
                     reporter.getLastBlock(options.maxBlocks);
                 forEveryNonEmptyBlockOnDisc(buildMiniBlock, &reporter, reporter.firstBlock(), reporter.size());
                 reporter.miniB.Release();

@@ -33,7 +33,7 @@ int main(int argc, const char *argv[]) {
             if (options.useIndex)
                 options.nBlocks = 10000000;  // TODO(tjayrush): Not right
 
-            if (options.txCache.Lock(options.cacheFilename, "a+", LOCK_WAIT)) {
+            if (options.txCache.Lock(options.cacheFilename, binaryWriteAppend, LOCK_WAIT)) {
 
                 if (options.useIndex) {
                     forEveryFileInFolder(indexFolder_prod, visitIndexFiles, &options);
