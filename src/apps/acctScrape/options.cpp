@@ -7,15 +7,12 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("-maxBlocks:<val>",  "the maximum number of blocks to visit during this run"),
-    COption("-oneBlock:<val>",   "check if the block would be a hit"),
-    COption("-oneTra(n)s:<val>", "check if the block and transaction would be a hit"),
-    COption("-writeBlocks",      "write binary blocks to cache (default: do not write blocks)"),
+    COption("-useIndex",         "search for transactions using the address index"),
     COption("-maxBlocks:<val>",  "scan at most --maxBlocks blocks ('all' implies scan to end of chain)"),
+    COption("-writeBlocks",      "write binary blocks to cache (default: do not write blocks)"),
+    COption("-logLevel:<val>",   "specify the log level (default 1)"),
     COption("@noBloom(s)",       "do not use adaptive enhanced blooms (much faster if you use them)"),
     COption("@noBloc(k)s",       "do not use binary block cache (much faster if you use them)"),
-    COption("@logLevel:<val>",   "specify the log level (default 1)"),
-    COption("@useIndex",         "search for transactions using the address index"),
     COption("@l(i)st",           "ignore all other options and export tab delimited bn.txid records"),
     COption("",                  "Index transactions for a given Ethereum address (or series of addresses).\n"),
 };
@@ -34,6 +31,7 @@ bool COptions::parseArguments(string_q& command) {
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (arg == "--all" || arg == "-a") arg = "--maxBlocks:all";
+
         if (startsWith(arg, "-m:") || startsWith(arg, "--maxBlocks:")) {
             arg = substitute(substitute(arg, "-m:", ""), "--maxBlocks:", "");
             if (arg == "all") {
@@ -44,20 +42,6 @@ bool COptions::parseArguments(string_q& command) {
                 else
                     return usage("Please provide an integer value of maxBlocks. Quitting...");
             }
-
-        } else if (startsWith(arg, "-o:") || startsWith(arg, "--oneBlock:")) {
-            arg = substitute(substitute(arg, "-o:", ""), "--oneBlock:", "");
-            if (isUnsigned(arg))
-                oneBlock = str_2_Uint(arg);
-            else
-                return usage("Please provide an integer value for oneBlock. Quitting...");
-
-        } else if (startsWith(arg, "-n:") || startsWith(arg, "--oneTrans:")) {
-            arg = substitute(substitute(arg, "-n:", ""), "--oneTrans:", "");
-            if (isUnsigned(arg))
-                oneTrans = str_2_Uint(arg);
-            else
-                return usage("Please provide an integer value for oneTrans. Quitting...");
 
         } else if (startsWith(arg, "-l:") || startsWith(arg, "--level:")) {
             arg = substitute(substitute(arg, "-l:", ""), "--level:", "");
@@ -77,7 +61,7 @@ bool COptions::parseArguments(string_q& command) {
             useIndex = true;
 
         } else if (arg == "-k" || arg == "--noBlocks") {
-            ignoreBlockCache = true;
+            ignoreBlkCache = true;
 
         } else if (arg == "-w" || arg == "--writeBlocks") {
             writeBlocks = true;
@@ -99,24 +83,9 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-//#define WHICH_BLOCK 4759050
-//#define WHICH_TRANS 199
-#ifdef WHICH_BLOCK
-    visitor.opts.oneBlock = WHICH_BLOCK;
-#ifdef WHICH_TRANS
-    visitor.opts.oneTrans = WHICH_TRANS;
-#endif
-#endif
-
     // show certain fields and hide others
     manageFields(defHide, false);
     manageFields(defShow, true);
-
-    if (oneTrans && !oneBlock)
-        return usage("If you specify oneTrans, you must specify oneBlock. Quitting...");
-
-    if (isAll && oneBlock)
-        return usage("Choose either --all or --oneBlock, not both. Quitting...");
 
     CBlock latest;
     getBlock(latest, "latest");
@@ -181,14 +150,16 @@ bool COptions::parseArguments(string_q& command) {
     if (!useIndex && !folderExists(bloomPath))
         return usage("The bloom file cache '" + bloomPath + "' was not found. Quitting...");
 
-    addrIndexPath = blockCachePath("addr_index/sorted_by_addr/");
-    if (useIndex && !folderExists(addrIndexPath))
-        return usage("Address index path `" + addrIndexPath + "' not found. Quitting...");
+    if (useIndex && !folderExists(indexFolder_prod))
+        return usage("Address index path `" + indexFolder_prod + "' not found. Quitting...");
 
-    if (ignoreBlockCache) {
+    if (ignoreBlkCache) {
         cerr << "Switching to local node, ignoring binary block cache" << endl;
         setDataSource("local");
     }
+
+    if (!isTestMode())
+        cerr << bBlack << Now().Format(FMT_JSON) << cOff << ": Monitoring " << cYellow << getCWD() << cOff << "             \n";
 
     return true;
 }
@@ -196,29 +167,25 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
-// We want to be able to run this more than once
-// optionOn(OPT_RUNONCE);
+    // We want to be able to run this more than once
+    // optionOn(OPT_RUNONCE);
 
-    lastBlock     = 0;
-    minWatchBlock = 0;
-    maxWatchBlock = UINT32_MAX;
-    maxBlocks     = 10000;
-    minArgs       = 0;
-    oneBlock      = 0;
-    oneTrans      = 0;
-    lastTimestamp = 0;
-    writeBlocks   = false;
-    ignoreBlooms  = false;
-    useIndex      = false;
-    isList        = false;
-    ignoreBlockCache = false;
-    firstBlock    = 0;
-    nBlocks       = 0;
-    blockCounted  = false;
-    debugging     = 0;
-    logLevel      = 1;
-//    addrIndexPath = "";
-//    monitorAddr = "";
+    lastBlock      = 0;
+    minWatchBlock  = 0;
+    maxWatchBlock  = UINT32_MAX;
+    maxBlocks      = 10000;
+    minArgs        = 0;
+    lastTimestamp  = 0;
+    writeBlocks    = false;
+    ignoreBlooms   = false;
+    useIndex       = false;
+    isList         = false;
+    ignoreBlkCache = false;
+    firstBlock     = 0;
+    nBlocks        = 0;
+    blockCounted   = false;
+    logLevel       = 1;
+    monitorAddr    = "";
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -269,4 +236,54 @@ bool makeMonitorFolder(const address_t& addr) {
         return true;
     }
     return false;
+}
+
+//-------------------------------------------------------------------------
+ostream& operator<<(ostream& os, const COptions& item) {
+    os << bBlack
+        << " (bh.bq.bs.nb: "  << item.blkStats.nHit << "/" << item.blkStats.nQueried << "/" << item.blkStats.nSeen << "/" << item.nBlocks
+        << ", ah.anh.as: "    << item.addrStats.nHit  << "/" << item.addrStats.nSkipped   << "/" << item.addrStats.nSeen
+        << ", th.ts: "        << item.transStats.nHit  << "/" << item.transStats.nSeen
+        << ", trh.trsk.trs: " << item.traceStats.nHit << "/" << item.traceStats.nSkipped << "/" << item.traceStats.nSeen << ")" << cOff;
+    return os;
+}
+
+//-----------------------------------------------------------------------
+string_q COptions::finalReport(double startTime, bool header) const {
+    colorsOff();
+    ostringstream os;
+    if (header) {
+        os << "date\t";
+        os << "name\t";
+        os << "address\t";
+        os << "n-accts\t";
+        os << "timing\t";
+        os << "firstBlock\t";
+        os << "nBlocks\t";
+        os << "blksHit\t";
+        os << "blksQueried\t";
+        os << "blksSeen\t";
+        os << "transHit\t";
+        os << "transSeen\t";
+        os << "tracesHit\t";
+        os << "tracesSkipped\t";
+        os << "tracesSeen\n";
+    } else {
+        os << substitute(Now().Format(FMT_JSON), " UTC", "") << "\t";
+        os << monitors[0].name.substr(0,15) << "\t";
+        os << monitors[0].address << "\t";
+        os << monitors.size() << "\t";
+        os << double_2_Str(max(0.0, qbNow() - startTime), 4) << "\t";
+        os << firstBlock << "\t";
+        os << nBlocks << "\t";
+        os << blkStats.nHit << "\t";
+        os << blkStats.nQueried << "\t";
+        os << blkStats.nSeen << "\t";
+        os << transStats.nHit << "\t";
+        os << transStats.nSeen << "\t";
+        os << traceStats.nHit << "\t";
+        os << traceStats.nSkipped << "\t";
+        os << traceStats.nSeen << "\n";
+    }
+    return os.str();
 }

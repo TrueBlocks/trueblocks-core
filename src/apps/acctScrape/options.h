@@ -23,11 +23,9 @@ public:
     blknum_t           minWatchBlock;
     blknum_t           maxWatchBlock;
     blknum_t           maxBlocks;
-    blknum_t           oneBlock;
-    blknum_t           oneTrans;
     timestamp_t        lastTimestamp;
     bool               ignoreBlooms;
-    bool               ignoreBlockCache;
+    bool               ignoreBlkCache;
     bool               writeBlocks;
     bool               useIndex;
     bool               isList;
@@ -42,11 +40,9 @@ public:
     CAccountWatchArray monitors;
     CArchive           txCache;
     string_q           name;
-    uint64_t           debugging;
     uint64_t           logLevel;
     CToml             *toml;
     string_q           cacheFilename;
-    string_q           addrIndexPath;
     address_t          monitorAddr;
 
     COptions(void);
@@ -61,6 +57,11 @@ public:
 };
 
 //-----------------------------------------------------------------------
+extern void writeLastBlock(blknum_t bn);
+extern bool processBlock  (blknum_t bn, COptions *options);
+extern bool processTrans  (const CBlock& block, const CTransaction *trans, COptions *options);
+extern bool processTraces (const CBlock& block, const CTransaction *trans, const CAccountWatch *acct, COptions *options);
+
+//-----------------------------------------------------------------------
 extern bool visitIndexFiles  (const string_q& path, void *data);
 extern bool visitBloomFilters(const string_q& path, void *data);
-extern void myQuitHandler    (int s);

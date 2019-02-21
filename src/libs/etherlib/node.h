@@ -123,14 +123,17 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     extern string_q blockCachePath(const string_q& _part);
 
-    #define fullBlockIndex (blockCachePath("fullBlocks.bin"))
-    #define accountIndex   (blockCachePath("accountTree.bin"))
-    #define miniBlockCache (blockCachePath("miniBlocks.bin"))
+    #define fullBlockIndex     (blockCachePath("fullBlocks.bin"))
+    #define blockFolder        (blockCachePath("blocks/"))
+    #define bloomFolder        (blockCachePath("blooms/"))
+
+    #define indexFolder_prod   (blockCachePath("addr_index/sorted_by_addr/"))
+    #define indexFolder_stage  (blockCachePath("addr_index/unsorted_by_block/"))
+
+    #define miniBlockCache     (blockCachePath("miniBlocks.bin"))
 #ifdef MINI_TRANS
-    #define miniTransCache (blockCachePath("miniTrans.bin"))
+    #define miniTransCache     (blockCachePath("miniTrans.bin"))
 #endif
-    #define blockFolder    (blockCachePath("blocks/"))
-    #define bloomFolder    (blockCachePath("blooms/"))
 
     //-------------------------------------------------------------------------
     extern biguint_t weiPerEther(void);

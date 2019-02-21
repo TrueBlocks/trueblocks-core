@@ -37,12 +37,11 @@ int main(int argc, const char *argv[]) {
     options.queryAddr = toLower(argv[1]);
     options.startBlock = str_2_Uint(argv[2]);
 
-    string_q path = blockCachePath("addr_index/sorted_by_addr/");
-    if (!folderExists(path)) {
-        cerr << "Path for indexes (" << path << ") not found. Quitting..." << endl;
+    if (!folderExists(indexFolder_prod)) {
+        cerr << "Path for indexes (" << indexFolder_prod << ") not found. Quitting..." << endl;
         return 1;
     }
-    forEveryFileInFolder(path, visitFiles, &options);
+    forEveryFileInFolder(indexFolder_prod, visitFiles, &options);
     cerr << "Found " << options.items.size() << " transactions for account " << options.queryAddr << string_q(20, ' ') << "\n";
     for (auto const& item : options.items)
         cout << item << "\n";

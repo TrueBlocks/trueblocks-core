@@ -89,8 +89,8 @@ namespace qblocks {
         time_q now       = Now();
         time_q nextRead  = (lastRead == time_q(2015, 1, 1, 0, 0, 0) ? firstDate : lastRead + 5*60);  // 5 minutes
 
-// #define DEBUGGING
-#ifdef DEBUGGING
+// #define DEBUG
+#ifdef DEBUG
         cerr << "firstDate: " << firstDate << "\n";
         cerr << "now: " << now << "\n";
         cerr << "nextRead: " << nextRead << "\n";
@@ -167,7 +167,7 @@ namespace qblocks {
                         // First entry should be on a two hour mark so we hit midnight in default two hour case
                         if (quotes.size() || (quote.date.onTheHour() && (!quote.date.GetHour()%2))) {
                             quotes.push_back(quote);
-#ifdef DEBUGGING
+#ifdef DEBUG
                             cerr << quote.Format() << "\n";
 #endif
                             lastRead = ts_2_Date((timestamp_t)quote.timestamp);

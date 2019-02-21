@@ -675,7 +675,7 @@ void extractParts(CParameterArray& interfaces, const string_q& input, string_q& 
     // 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999,71d402ac181de4a8739a15f5a56141f64fc522f8,462000000000000000000,_transferX
     //
     // Remove the next test, and uncomment the above test case in ../test/gold/libs/etherlib/abiTest/decode.txt, and you
-    // will have a test case that fails to ease debugging
+    // will have a test case that fails to ease debuggi ng
     //
     // There is also testing data in ../quickBlocks-monitors/clients/88_NthRound/ (note that you must have a file called
     // 'debug' in the local folder otherwise the data gets sent to the end user!!!)
