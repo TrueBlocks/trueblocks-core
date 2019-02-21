@@ -347,7 +347,7 @@ const string_q CLeaf::getStringAt(const string_q& fieldName, size_t i) const {
         uint64_t save = vd->type;
         vd->counter = counter;
         vd->type = T_LEAF;
-        vd->strs = vd->strs + "+" + (cMagenta+prefixS + cOff + "|" + cBlue + at(prefixS) + cOff);
+        vd->strs = vd->strs + "+" + (cMagenta + prefixS + cOff + "|" + cBlue + at(prefixS) + cOff);
         (*func)(this, data);
         nextTokenClearReverse(vd->strs, '+');
         vd->type = save;
