@@ -89,7 +89,7 @@ bool appendFileToArray1(CUintArray& array, const string_q& fn) {
     CArchive file(READING_ARCHIVE);
     if (fileExists(fn) && fileSize(fn) > 0) {
         if (!file.Lock(fn, binaryReadOnly, LOCK_NOWAIT))
-            return options.usage("Cannot open file fullblocks.bin. Quitting...");
+            return options.usage("Cannot open " + fn + ". Quitting...");
         file >> array;
         file.Release();
     }
@@ -101,7 +101,7 @@ bool appendFileToArray2(CUintArray& array, const string_q& fn) {
     CArchive file(READING_ARCHIVE);
     if (fileExists(fn) && fileSize(fn) > 0) {
         if (!file.Lock(fn, binaryReadOnly, LOCK_NOWAIT))
-            return options.usage("Cannot open file fullblocks.bin. Quitting...");
+            return options.usage("Cannot open " + fn + ". Quitting...");
         uint64_t val;
         size_t s = file.Read(val);
         while (s) {
@@ -122,7 +122,7 @@ bool postProcess(void) {
     ASSERT(fileExists("forward.bin"));
 
     CUintArray array;
-    if (!appendFileToArray1(array, "fullBlocks.bin"))
+    if (!appendFileToArray1(array, "output.bin"))
         return false;
     if (!appendFileToArray2(array, "backward.bin"))
         return false;
@@ -131,11 +131,11 @@ bool postProcess(void) {
 
     sort(array.begin(), array.end());
 
-    CArchive fullBlocks(WRITING_ARCHIVE);
-    if (!fullBlocks.Lock("fullBlocks.bin", binaryWriteCreate, LOCK_NOWAIT))
-        return options.usage("Could not open fullBlocks.bin. Quitting...");
-    fullBlocks << array;
-    fullBlocks.Release();
+    CArchive outputCache(WRITING_ARCHIVE);
+    if (!outputCache.Lock("output.bin", binaryWriteCreate, LOCK_NOWAIT))
+        return options.usage("Could not open output.bin. Quitting...");
+    outputCache << array;
+    outputCache.Release();
     ::remove("backward.bin");
     ::remove("forward.bin");
 
@@ -149,18 +149,18 @@ int main(int argc, const char *argv[]) {
     CBlockScraper backward(progress);
     CBlockScraper forward(progress);
 
-    CArchive fullBlocks(READING_ARCHIVE);
-    if (!fileExists("fullBlocks.bin")) {
+    CArchive outputCache(READING_ARCHIVE);
+    if (!fileExists("output.bin")) {
         forward.start = (argc == 2 ? str_2_Int(argv[1]) : options.startBlock);
         backward.start = forward.start - 1;
     } else {
-        if (!fullBlocks.Lock("fullBlocks.bin", binaryReadOnly, LOCK_NOWAIT))
-            return options.usage("Could not open fullBlocks.bin. Quitting...");
+        if (!outputCache.Lock("output.bin", binaryReadOnly, LOCK_NOWAIT))
+            return options.usage("Could not open output.bin. Quitting...");
         CUintArray array;
-        fullBlocks >> array;
+        outputCache >> array;
         backward.start = max(0LL, (int64_t)array[0] - 1);
         forward.start = (int64_t)array[array.size()-1] + 1;
-        fullBlocks.Release(); // we don't need it until the processing is done, so close it.
+        outputCache.Release(); // we don't need it until the processing is done, so close it.
     }
     backward.stop = backward.start - options.maxBlock;
     if (backward.stop < 0)
@@ -187,9 +187,9 @@ int main(int argc, const char *argv[]) {
 
     postProcess();
 
-    fullBlocks.Lock("fullBlocks.bin", binaryReadOnly, LOCK_NOWAIT);
+    outputCache.Lock("output.bin", binaryReadOnly, LOCK_NOWAIT);
     CUintArray array;
-    fullBlocks >> array;
+    outputCache >> array;
     cout << endl;
     cout << "backward: " << backward.start << "-" << backward.stop << endl;
     cout << "forward: " << forward.start << "-" << forward.stop << endl;
