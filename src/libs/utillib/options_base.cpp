@@ -683,7 +683,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             asciiFileToString(fileName, contents);
             cout << contents << "\n";
         } else {
-            doCommand(cmd);
+            if (system(cmd.c_str())) { }  // Don't remove. Silences compiler warnings
         }
     }
 

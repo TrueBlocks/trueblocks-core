@@ -8,13 +8,27 @@
 
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_config(void) {
-    string_q monitor = toLower(nextTokenClear(remainder, '|'));
-    ostringstream os;
-    os << "cd " << blockCachePath("monitors/" + monitor + "/") << " ; ";
-    if (contains(remainder, "edit"))
-        os << "nano config.toml";
-    else
-        os << "cat config.toml";
-    if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+
+    string_q subCmd = toLower(nextTokenClear(remainder, '|'));
+    if (subCmd != "edit" && subCmd != "show")
+        return usage("config mode must be either 'edit' or 'show'. Quitting...");
+
+    while (!remainder.empty()) {
+        string_q monitor = toLower(nextTokenClear(remainder, '|'));
+        string_q path = blockCachePath("monitors/" + monitor + "/config.toml");
+        if (!fileExists(path))
+            return usage("File '" + path + "' not found. Quitting...");
+
+        if (subCmd == "edit") {
+            editFile(path);
+
+        } else {
+            ASSERT(subCmd == "show");
+            ostringstream os;
+            os << "cat " << path;
+            if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+        }
+    }
+
     return true;
 }
