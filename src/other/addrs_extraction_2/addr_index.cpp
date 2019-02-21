@@ -23,7 +23,7 @@ int main(int argc, const char *argv[]) {
 
     colorsOff();
     CSortHolder thing;
-    forEveryFileInFolder(blockCachePath("addr_index/unsorted_by_block_temp"), cutFiles, &thing);
+    forEveryFileInFolder(indexFolder_stage, cutFiles, &thing);
     return 0;
 }
 
@@ -40,7 +40,7 @@ bool cutFiles(const string_q& path, void *data) {
             cerr << "Visiting " << path << "...";
             forEveryLineInAsciiFile(path, writeRecord, data);
             CArchive output(READING_ARCHIVE);
-            string_q filename = substitute(path, "/unsorted_by_block_temp", "/sorted_by_addr");
+            string_q filename = substitute(path, indexFolder_stage, indexFolder_prod);
             if (!output.Lock(filename, asciiWriteCreate, LOCK_NOWAIT))
                 return false;
             cerr << "\nSorting...";
@@ -89,7 +89,7 @@ public:
 int main(int argc, const char *argv[]) {
     colorsOff();
     CFileSplitter thing;
-    forEveryFileInFolder(blockCachePath("addr_index/unsorted_by_block"), cutFiles, &thing);
+    forEveryFileInFolder(indexFolder_stage, cutFiles, &thing);
     return 0;
 }
 
@@ -117,7 +117,7 @@ bool writeRecord(const char *line, void *data) {
 
     blknum_t bn = str_2_Uint(line);
     if (!thing->output || thing->isFileFull(bn)) {
-        string_q newPath = blockCachePath("addr_index/unsorted_by_block_temp/") + padLeft(uint_2_Str(bn), 9, '0') + ".txt";
+        string_q newPath = indexFolder_stage + padLeft(uint_2_Str(bn), 9, '0') + ".txt";
         if (!thing->output || newPath != thing->outputFilename) {
             thing->outputFilename = newPath;
             if (thing->output) {

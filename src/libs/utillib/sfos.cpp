@@ -16,7 +16,8 @@
 #include "basetypes.h"
 #include "sfos.h"
 #include "sftime.h"
-#include "string.h"
+#include "sfstring.h"
+#include "database.h"
 #include "filenames.h"
 
 namespace qblocks {
@@ -163,7 +164,6 @@ namespace qblocks {
 
         // Check twice for existance since the previous command creates the file but may take some time
         waitForCreate(filename);
-extern size_t asciiFileToString(const string_q& filename, string& contents);
         string_q ret;
         asciiFileToString(filename, ret);
         remove(filename.c_str());

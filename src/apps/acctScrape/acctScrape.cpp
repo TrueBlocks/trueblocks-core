@@ -6,12 +6,6 @@
 #include "etherlib.h"
 #include "options.h"
 
-extern const string_q fmt;
-extern bool processBlock       (blknum_t bn, COptions *options);
-extern bool processTransaction (const CBlock& block, const CTransaction *trans, COptions *options);
-extern bool processTraces      (const CBlock& block, const CTransaction *trans, const CAccountWatch *acct, COptions *options);
-extern void writeLastBlock     (blknum_t bn);
-extern string_q report         (const COptions& options, double start, double stop);
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
     acctlib_init(defaultQuitHandler);
@@ -20,79 +14,71 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    if (!isTestMode())
-        cerr << bBlack << Now().Format(FMT_JSON) << cOff << ": Monitoring " << cYellow << getCWD() << cOff << "             \n";
-
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
 
-        double startTime = qbNow();
-        if (options.oneBlock) {
-            options.firstBlock = options.oneBlock;
-            options.nBlocks    = 1;
-            string_q fileName = substitute(getBinaryFilename(options.oneBlock), "/blocks/", "/blooms/");
-            setenv("TEST_MODE", "true", true);
-            options.debugging = (verbose ? 2 : 1);
-            visitBloomFilters(fileName, &options);
+        blknum_t lastInCache = getLatestBlockFromCache();
+        blknum_t lastVisited = str_2_Uint(asciiFileToString(getTransCachePath("lastBlock.txt")));
 
-        } else {
-            string_q results = "0";
-            asciiFileToString(getTransCachePath("lastBlock.txt"), results);
-            uint64_t blockNum = str_2_Uint(results);
-            if (options.minWatchBlock > 0)
-                blockNum = max(options.minWatchBlock - 1, str_2_Uint(results));
-            if (blockNum <= getLatestBlockFromCache()) {  // the cache may be behind the acct db, so don't scrape
-                options.lastBlock = min(getLatestBlockFromCache(), options.maxWatchBlock);
-                options.firstBlock = min(blockNum, options.lastBlock);
-                options.nBlocks = min(options.lastBlock - options.firstBlock, options.maxBlocks);
-                if (options.useIndex)
-                    options.nBlocks = 10000000;  // TODO(tjayrush): Not right
-                if (verbose) {
-                    cerr << "Visiting blooms between " << options.firstBlock << " and ";
-                    cerr << options.firstBlock + options.nBlocks << endl;
-                }
+        if (options.minWatchBlock > 0)
+            lastVisited = max(options.minWatchBlock - 1, lastVisited);
 
-                if (options.txCache.Lock(options.cacheFilename, "a+", LOCK_WAIT)) {
-                    if (options.useIndex) {
-                        forEveryFileInFolder(options.addrIndexPath, visitIndexFiles, &options);
-                    } else {
-                        forEveryBloomFile(visitBloomFilters, &options, options.firstBlock, options.nBlocks);
-                    }
-                    options.txCache.Release();
+        // Only scrape if the transaction cache is behind the index
+        if (lastVisited <= lastInCache) {
+
+            options.lastBlock  = min(lastInCache, options.maxWatchBlock);
+            options.firstBlock = min(lastVisited, options.lastBlock);
+            options.nBlocks    = min(options.lastBlock - options.firstBlock, options.maxBlocks);
+            if (options.useIndex)
+                options.nBlocks = 10000000;  // TODO(tjayrush): Not right
+
+            if (options.txCache.Lock(options.cacheFilename, "a+", LOCK_WAIT)) {
+
+                if (options.useIndex) {
+                    forEveryFileInFolder(indexFolder_prod, visitIndexFiles, &options);
+
                 } else {
-                    return options.usage("Cannot open transaction cache '" + options.cacheFilename + "'. Quitting...");
+                    forEveryBloomFile(visitBloomFilters, &options, options.firstBlock, options.nBlocks);
+
                 }
-            }
-        }
+                options.txCache.Release();
 
-        if (options.isList) {
-            CArchive cache(READING_ARCHIVE);
-            if (!cache.Lock(options.cacheFilename, binaryReadOnly, LOCK_NOWAIT))
-                return options.usage("Could not open file: " + options.cacheFilename + ". Quitting.");
-            while (!cache.Eof() && !shouldQuit()) {
-                CAcctCacheItem item;
-                cache >> item.blockNum >> item.transIndex;
-                if (item.blockNum > 0)
-                    cout << item.blockNum << "\t" << item.transIndex << endl;
-            }
-            cache.Release();
+            } else {
+                return options.usage("Cannot open transaction cache '" + options.cacheFilename + "'. Quitting...");
 
-        } else {
-
-            cerr << options.name << " bn: " << options.firstBlock + options.nBlocks << options << "\r";
-            cerr.flush();
-
-            if (options.blkStats.nSeen && options.logLevel > 0) {
-                string_q logFile = blockCachePath("logs/acct-scrape.log");
-                if (!fileExists(logFile))
-                    appendToAsciiFile(logFile, options.finalReport(startTime, true));
-                if (options.logLevel >= 2 || options.blkStats.nSeen > 1000)
-                    appendToAsciiFile(logFile, options.finalReport(startTime, false));
             }
         }
     }
-    etherlib_cleanup();
+
+    if (options.isList) {
+        CArchive cache(READING_ARCHIVE);
+        if (!cache.Lock(options.cacheFilename, binaryReadOnly, LOCK_NOWAIT))
+            return options.usage("Could not open file: " + options.cacheFilename + ". Quitting.");
+        while (!cache.Eof() && !shouldQuit()) {
+            CAcctCacheItem item;
+            cache >> item.blockNum >> item.transIndex;
+            if (item.blockNum > 0)
+                cout << item.blockNum << "\t" << item.transIndex << endl;
+        }
+        cache.Release();
+
+    } else {
+
+        cerr << options.name << " bn: " << options.firstBlock + options.nBlocks << options << "\r";
+        cerr.flush();
+
+        if (options.blkStats.nSeen && options.logLevel > 0) {
+            string_q logFile = blockCachePath("logs/acct-scrape.log");
+            double startTime = qbNow();
+            if (!fileExists(logFile))
+                appendToAsciiFile(logFile, options.finalReport(startTime, true));
+            if (options.logLevel >= 2 || options.blkStats.nSeen > 1000)
+                appendToAsciiFile(logFile, options.finalReport(startTime, false));
+        }
+    }
+
+    acctlib_cleanup();
     return 0;
 }
 
@@ -121,9 +107,6 @@ bool visitBloomFilters(const string_q& path, void *data) {
             }
 
             options->blkStats.nSeen++;
-            if (options->debugging)
-                cerr << "Opening bloom file " << path << "\n";
-
             CBloomArray blooms;
             bool hasPotential = false;
             if (options->ignoreBlooms) {
@@ -152,7 +135,6 @@ bool visitBloomFilters(const string_q& path, void *data) {
 
                 // Visit every account...
                 for (size_t ac = 0 ; ac < options->monitors.size() ; ac++) {
-                    if (options->debugging) { cerr << "Account " << ac << " ("; }
 
                     // Visit each bloom until either there is a hit or we've checked all blooms
                     options->monitors.at(ac).inBlock = false;
@@ -162,16 +144,7 @@ bool visitBloomFilters(const string_q& path, void *data) {
                             options->monitors.at(ac).inBlock = true;
                             hasPotential = true;
                         }
-
-                        // do a little reporting if told to
-                        if (options->debugging) {
-                            cerr << "bl: " << bl << "-" << (hit ? greenCheck : redX);
-                            if (bl < blooms.size()-1)
-                                cerr << ",";
-                            cerr.flush();
-                        }
                     }
-                    if (options->debugging) { cerr << ")\n"; }
                 }
             }
 
@@ -197,47 +170,34 @@ bool visitBloomFilters(const string_q& path, void *data) {
 //-----------------------------------------------------------------------
 bool processBlock(blknum_t bn, COptions *options) {
 
-    if (options->debugging)
-        cerr << "At least one bloom hit on block " << bn << ". Fetching block." << endl;
-
     options->blkStats.nQueried++;
     options->blockCounted = false;
     CBlock block;
     if (queryBlock(block, uint_2_Str(bn), false, false)) {
 
         // Check each transaction for actual involvement.
-        if (options->oneTrans && options->oneTrans < block.transactions.size()) {
+        for (size_t tr = 0; tr < block.transactions.size() ; tr++) {
             // ignore the return, so we can cleanup and write the last block
-            processTransaction(block, &block.transactions[options->oneTrans], options);
-
-        } else {
-            for (size_t tr = 0; tr < block.transactions.size() ; tr++) {
-                // ignore the return, so we can cleanup and write the last block
-                bool ret = processTransaction(block, &block.transactions[tr], options);
-                if (!ret) {
-                    // May be redunant, but it's okay since we're writing a single value
-                    writeLastBlock(bn);
-                    return false;
-                }
+            bool ret = processTrans(block, &block.transactions[tr], options);
+            if (!ret) {
+                // May be redunant, but it's okay since we're writing a single value
+                writeLastBlock(bn);
+                return false;
             }
         }
 
     } else {
+        // TODO(tjayrush): This is a bug. We should be writing the miner's record
         writeLastBlock(bn);
-// This used to be a bug alert, but since we started handling miners we need a bloom at every block
-//TODO(tjayrush): This code will not find transactions for miners
-//        cerr << "Block " << bn << " had no transactions but a non-zero bloom. This is a bug. Quitting..." << endl;
-//        return false; // end the search
     }
 
     return !shouldQuit();
 }
 
-#define REP(n, v) if (options->debugging) { cerr << "\t" << padRight(n,8) << ": " << (v) << endl; }
-#define DEBUG_PRINT1(a)   if (options->debugging > 1) { cerr << (a) << endl; }
-#define DEBUG_PRINT2(a,b) if (options->debugging > 1) { cerr << (a) << (b) << endl; }
 //-----------------------------------------------------------------------
-bool processTransaction(const CBlock& block, const CTransaction *trans, COptions *options) {
+const string_q fmt = "[{BLOCKNUMBER} ][{w:5:TRANSACTIONINDEX} ][{w:10:DATE} ][{ETHER}]";
+//-----------------------------------------------------------------------
+bool processTrans(const CBlock& block, const CTransaction *trans, COptions *options) {
 
     options->transStats.nSeen++;
     bool hit = false;
@@ -245,7 +205,7 @@ bool processTransaction(const CBlock& block, const CTransaction *trans, COptions
     // As soon as we have a hit on any account, we're done since we only want to write a transaction once...
     for (size_t ac = 0 ; ac < options->monitors.size() && !hit ; ac++) {
 
-        string_q ex_data = options->name + "_" + options->monitors[0].address;
+        string_q ex_data = toLower("chifra/v0.0.1: " + options->name + "_" + options->monitors[0].address);
 
         // For each account we're monitoring...
         const CAccountWatch *acct = &options->monitors[ac];
@@ -262,16 +222,15 @@ bool processTransaction(const CBlock& block, const CTransaction *trans, COptions
             // First, we check the simple, top-level data... (following variable is for clarity only)
             address_t contrAddr = trans->receipt.contractAddress;
 
-                 if (block.miner % watched) { hit = true; REP("miner",    block.miner); }
-            else if (trans->to   % watched) { hit = true; REP("to",       trans->to  ); }
-            else if (trans->from % watched) { hit = true; REP("to",       trans->from); }
-            else if (contrAddr   % watched) { hit = true; REP("contract", contrAddr);   }
+                 if (block.miner % watched) { hit = true; }
+            else if (trans->to   % watched) { hit = true; }
+            else if (trans->from % watched) { hit = true; }
+            else if (contrAddr   % watched) { hit = true; }
 
             if (!hit) {
                 // If we did not find a hit, dig deeper
                 if (containsI(trans->input, extended)) {
                     hit = true;
-                    REP("input", "..." + extract(trans->input, toLower(trans->input).find(toLower(extended))));
 
                 } else {
 
@@ -281,21 +240,19 @@ bool processTransaction(const CBlock& block, const CTransaction *trans, COptions
                     for (size_t lg = 0 ; lg < trans->receipt.logs.size() && !hit ; lg++) {
 
                         const CLogEntry *l = &trans->receipt.logs[lg];
-                             if (l->address % watched       ) { hit = true; REP("l->addr", l->address); }
-                        else if (containsI(l->data, extended)) { hit = true; REP("l->data", "..." + extract(l->data, toLower(l->data).find(toLower(extended))))
-                        }
+                             if (l->address % watched        ) { hit = true; }
+                        else if (containsI(l->data, extended)) { hit = true; }
 
                         // Or if we find it as one of the topics. Note, won't spin if we've already hit.
                         for (size_t tp = 1 ; tp < l->topics.size() && !hit ; tp++) {
                             string_q topic = topic_2_Str(l->topics[tp]);
-                            if (topic % extended)             { hit = true; REP("l->topic", "..." + extract(topic, toLower(topic).find(toLower(extended)))); }
+                            if (topic % extended) { hit = true; }
                         }
                     }
                 }
 
                 // If we are still not hit, we must decend into the traces. Sorry...but we must be thourough...
                 if (!hit) {
-                    DEBUG_PRINT1("Decending into traces");
                     hit = processTraces(block, trans, acct, options);
                 }
             }
@@ -308,10 +265,7 @@ bool processTransaction(const CBlock& block, const CTransaction *trans, COptions
                 }
                 options->transStats.nHit++;
 
-                if (options->debugging)
-                    cerr << "Would have written record at " << block.blockNumber << " " << trans->transactionIndex << endl;
-
-                if (!isTestMode() && !options->oneBlock) {
+                if (!isTestMode()) {
                     // We found something...write it to the cache...
                     lockSection(true);
                     options->txCache << block.blockNumber << trans->transactionIndex;
@@ -364,8 +318,6 @@ bool processTransaction(const CBlock& block, const CTransaction *trans, COptions
 
             } else {
                 cerr << options->name << " bn: " << block.blockNumber << *options << "\r";
-                if (options->debugging)
-                    cerr << "\n";
                 cerr.flush();
             }
         }
@@ -382,10 +334,7 @@ bool processTraces(const CBlock& block, const CTransaction *trans, const CAccoun
     bool isDDos    = ddos && nTraces > 250;
     bool isExcl    = ddos && options->isExcluded(trans->to);
 
-//cout << block.blockNumber << ": " << ddos << ": " << isDDos << ": " << isExcl << ": " << trans->to << "                                                     " << endl;
-
     if (isDDos || isExcl) {
-        DEBUG_PRINT1("Early exist for dDos");
         options->traceStats.nSeen    += nTraces;
         options->traceStats.nSkipped += nTraces;
         return false;
@@ -394,7 +343,6 @@ bool processTraces(const CBlock& block, const CTransaction *trans, const CAccoun
     CTraceArray traces;
     getTraces(traces, trans->hash); // This call right here is very slow
 
-    DEBUG_PRINT2("nTraces: ", traces.size());
     address_t watched = acct->address;
     for (size_t tc = 0 ; tc < traces.size() ; tc++) {
         options->traceStats.nSeen++;
@@ -403,20 +351,18 @@ bool processTraces(const CBlock& block, const CTransaction *trans, const CAccoun
         const CTraceResult *result = &traces[tc].result;
 
         bool hit = false;
-             if (action->to            % watched) { REP("action->to",   action->to           ); hit = true; }
-        else if (action->from          % watched) { REP("action->from", action->from         ); hit = true; }
-        else if (action->address       % watched) { REP("action->addr", action->address      ); hit = true; }
-        else if (action->refundAddress % watched) { REP("action->ref",  action->refundAddress); hit = true; }
-        else if (result->address       % watched) { REP("result->addr", result->address      ); hit = true; }
+             if (action->to            % watched) { hit = true; }
+        else if (action->from          % watched) { hit = true; }
+        else if (action->address       % watched) { hit = true; }
+        else if (action->refundAddress % watched) { hit = true; }
+        else if (result->address       % watched) { hit = true; }
 
         if (hit) {
-            DEBUG_PRINT1("Trace hit");
             options->traceStats.nHit++;
             return true;
         }
     }
 
-    DEBUG_PRINT1("Trace not hit");
     return false;
 }
 
@@ -477,57 +423,4 @@ void writeLastBlock(blknum_t bn) {
         stringToAsciiFile(getTransCachePath("lastBlock.txt"), uint_2_Str(bn) + "\n");
     else
         cerr << "Would have written lastBlock.txt file: " << bn << endl;
-}
-
-//-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const COptions& item) {
-    os << bBlack
-        << " (bh.bq.bs.nb: "  << item.blkStats.nHit << "/" << item.blkStats.nQueried << "/" << item.blkStats.nSeen << "/" << item.nBlocks
-        << ", ah.anh.as: "    << item.addrStats.nHit  << "/" << item.addrStats.nSkipped   << "/" << item.addrStats.nSeen
-        << ", th.ts: "        << item.transStats.nHit  << "/" << item.transStats.nSeen
-        << ", trh.trsk.trs: " << item.traceStats.nHit << "/" << item.traceStats.nSkipped << "/" << item.traceStats.nSeen << ")" << cOff;
-    return os;
-}
-
-//-----------------------------------------------------------------------
-const string_q fmt = "[{BLOCKNUMBER} ][{w:5:TRANSACTIONINDEX} ][{w:10:DATE} ][{ETHER}]";
-
-//-----------------------------------------------------------------------
-string_q COptions::finalReport(double startTime, bool header) const {
-    colorsOff();
-    ostringstream os;
-    if (header) {
-        os << "date\t";
-        os << "name\t";
-        os << "address\t";
-        os << "n-accts\t";
-        os << "timing\t";
-        os << "firstBlock\t";
-        os << "nBlocks\t";
-        os << "blksHit\t";
-        os << "blksQueried\t";
-        os << "blksSeen\t";
-        os << "transHit\t";
-        os << "transSeen\t";
-        os << "tracesHit\t";
-        os << "tracesSkipped\t";
-        os << "tracesSeen\n";
-    } else {
-        os << substitute(Now().Format(FMT_JSON), " UTC", "") << "\t";
-        os << monitors[0].name.substr(0,15) << "\t";
-        os << monitors[0].address << "\t";
-        os << monitors.size() << "\t";
-        os << double_2_Str(max(0.0, qbNow() - startTime), 4) << "\t";
-        os << firstBlock << "\t";
-        os << nBlocks << "\t";
-        os << blkStats.nHit << "\t";
-        os << blkStats.nQueried << "\t";
-        os << blkStats.nSeen << "\t";
-        os << transStats.nHit << "\t";
-        os << transStats.nSeen << "\t";
-        os << traceStats.nHit << "\t";
-        os << traceStats.nSkipped << "\t";
-        os << traceStats.nSeen << "\n";
-    }
-    return os.str();
 }

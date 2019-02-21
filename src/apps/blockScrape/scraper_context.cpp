@@ -184,8 +184,8 @@ void CScraperContext::updateAddrIndex(void) {
         return;
 
     ASSERT(pBlock);
-    string_q indexFilename = blockCachePath("/addr_index/unsorted_by_block/" + uint_2_Str(pBlock->blockNumber) + ".txt");
-    string_q countFile     = blockCachePath("/addr_index/unsorted_by_block/counts.txt");
+    string_q indexFilename = indexFolder_stage + uint_2_Str(pBlock->blockNumber) + ".txt";
+    string_q countFile     = indexFolder_stage + "counts.txt";
 
     // Note: we are inside the lockSection
 

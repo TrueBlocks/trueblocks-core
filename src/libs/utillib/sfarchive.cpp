@@ -249,6 +249,13 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
+    string_q asciiFileToString(const string_q& filename) {
+        string_q ret;
+        asciiFileToString(filename, ret);
+        return ret;
+    }
+
+    //----------------------------------------------------------------------
     uint64_t appendToAsciiFile(const string_q& fileName, const string_q& addContents) {
         CArchive asciiCache(WRITING_ARCHIVE);
         if (asciiCache.Lock(fileName, asciiWriteAppend, LOCK_NOWAIT)) {
