@@ -10,9 +10,7 @@ single = false
 parse = false
 
 [formats]
-trans_fmt = "[{TIMESTAMP}]\t[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{FROM}]\t[{TO}]\t[{VALUE}]\t[{GAS}]\t[{GASPRICE}]\t[{GASUSED}]\t[{ISERROR}]\t[{ENCODING}]\t[{FUNCTION}]"
+trans_fmt = "[{DATE}]\t[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{FROM}]\t[{TO}]\t[{VALUE}]\t[{GAS}]\t[{GASPRICE}]\t[{GASUSED}]\t[{ISERROR}]\t[{ENCODING}]\t[{FUNCTION}]"
 
 [[watches]]
 [{JSON_WATCH}]
-
-# make sure to always put arrays at the end of the file

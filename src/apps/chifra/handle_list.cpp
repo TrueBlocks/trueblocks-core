@@ -8,14 +8,34 @@
 
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_list(void) {
-    ostringstream os;
-    os << "cd " << blockCachePath("monitors/") << " ; ls";
-    cout << cGreen << "Current monitors:" << endl;
-    string_q result = substitute(doCommand(os.str().c_str()), "\n", "\t");
+
+    ostringstream cmd;
+    cmd << "cd " << blockCachePath("monitors/") << " ; ls";
+
+    string_q result = doCommand(cmd.str());
+
     CStringArray files;
-    explode(files, result, '\t');
+    explode(files, result, '\n');
+    sort(files.begin(), files.end());
+
+    size_t widest = 0;
     for (auto file : files)
-        if (file != "file")
-            cout << cTeal << "\t" << file << cOff << endl;
+        if (file.length() > widest)
+            widest = file.length();
+    size_t nWide = (90 / widest);
+
+    cout << widest << endl;
+    cout << cGreen << "Current monitors:" << cOff << endl << "    ";
+    cout << cTeal;
+    size_t cnt = 0;
+    for (auto file : files) {
+        if (file != "file") {
+            cout << padRight(file, widest + 1);
+            if (!(++cnt % nWide))
+                cout << endl << "    ";
+        }
+    }
+    cout << endl;
+
     return true;
 }
