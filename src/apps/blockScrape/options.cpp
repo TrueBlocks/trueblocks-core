@@ -148,7 +148,7 @@ bool COptions::parseArguments(string_q& command) {
     getBlock(latest, "latest");
     latestBlockTs = latest.timestamp;
 
-    establishFolder(blockCachePath("addr_index/unsorted_by_block/"));
+    establishFolder(indexFolder_stage);
 
     return true;
 }

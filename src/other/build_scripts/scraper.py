@@ -36,9 +36,6 @@ while True:
     os.system('getBlock --latest')
     print("")
 
-#    os.system("echo 'index size: \c' ; cut -f3 /Volumes/Samsung_T7/scraper/addr_index/unsorted_by_block/counts.txt | awk '{s+=$1}END{print s/1024/1024 \" MB\"}'")
-#    print("")
-
     print("Hit Ctrl+C to quit...");
 
     time.sleep(float(timeout))

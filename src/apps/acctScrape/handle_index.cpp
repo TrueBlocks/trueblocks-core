@@ -52,7 +52,6 @@ bool visitIndexFiles(const string_q& path, void *data) {
                 return false;
             }
 
-//            if (options->debugging) { cerr << "Opening index file " << path << "\n"; }
             cerr << options->name << " bn: " << bn << *options << "\r";
             cerr.flush();
 
@@ -112,11 +111,10 @@ bool visitIndexFiles(const string_q& path, void *data) {
 //                                    << "                    " << endl;
                             }
                         } else {
-//                            if (verbose) {
-                                cerr << options->name << " bn: " << bn << *options << "\r";
-                                cerr.flush();
-//                            }
+                            cerr << options->name << " bn: " << bn << *options << "\r";
+                            cerr.flush();
                         }
+
                         if (strncmp(ad, acct->address.c_str(), 42) > 0)
                             done = true;
                     }
@@ -140,7 +138,6 @@ bool visitIndexFiles(const string_q& path, void *data) {
                 // write blocks issue
                 // what is the 'blockCounted = false' issue?
                 // is there a options->blkStats.nHit++ or options->transStats.nHit++ issue?
-                // can we remove the oneBlock issue
                 //
                 // Send the data to an api if we have one
                 if (!acct->api_spec.uri.empty()) {

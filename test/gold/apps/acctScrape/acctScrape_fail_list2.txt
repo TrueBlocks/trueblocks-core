@@ -3,21 +3,18 @@ acctScrape 0x1234567890123456789012345678901234567890
 
   You may provide an address only with the --list option. Quitting...
 
-  Usage:    acctScrape [-m|-o|-n|-w|-m|-v|-h]  
+  Usage:    acctScrape [-u|-m|-w|-l|-v|-h]  
   Purpose:  Index transactions for a given Ethereum address (or series of addresses).
              
   Where:  
-	-m  (--maxBlocks val) the maximum number of blocks to visit during this run
-	-o  (--oneBlock val)  check if the block would be a hit
-	-n  (--oneTrans val)  check if the block and transaction would be a hit
-	-w  (--writeBlocks)   write binary blocks to cache (default: do not write blocks)
+	-u  (--useIndex)      search for transactions using the address index
 	-m  (--maxBlocks val) scan at most --maxBlocks blocks ('all' implies scan to end of chain)
+	-w  (--writeBlocks)   write binary blocks to cache (default: do not write blocks)
+	-l  (--logLevel val)  specify the log level (default 1)
 
 #### Hidden options (shown during testing only)
 	-s  (--noBlooms)      do not use adaptive enhanced blooms (much faster if you use them)
 	-k  (--noBlocks)      do not use binary block cache (much faster if you use them)
-	-l  (--logLevel val)  specify the log level (default 1)
-	-u  (--useIndex)      search for transactions using the address index
 	-i  (--list)          ignore all other options and export tab delimited bn.txid records
 #### Hidden options (shown during testing only)
 
