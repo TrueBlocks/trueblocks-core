@@ -20,15 +20,10 @@ namespace qblocks {
     #define READ_EOF 2
     #define READ_BAD 3
 
-    #define asciiReadOnly     "r"    // ascii read - fails if not present
-    #define asciiReadWrite    "r+"   // ascii read-write (file must exist)
-    #define asciiWriteCreate  "w"    // ascii writing - destroys previous contents or creates
-    #define asciiWriteAppend  "a+"   // ascii read/writing - appends
-
-    #define binaryReadOnly    "rb"   // binary read - fails if not present
-    #define binaryReadWrite   "rb+"  // binary read/write - fails if not present
-    #define binaryWriteCreate "wb"   // binary write - destroys previous contents or creates
-    #define binaryWriteAppend "a+"   // binary read/writing - appends
+    #define modeReadOnly     "r"    // read only - fails if not present
+    #define modeReadWrite    "r+"   // read-write (file must exist)
+    #define modeWriteCreate  "w"    // writing - destroys previous contents or creates
+    #define modeWriteAppend  "a+"   // read/writing - appends
 
     #define LOCK_NOWAIT       1      // read only - do not even check for a lock
     #define LOCK_WAIT         2      // Wait for lock to release return true - if wait too long return false
@@ -45,7 +40,6 @@ namespace qblocks {
         size_t   m_error;
         bool     m_ownsLock;
         string_q m_lockingUser;
-        bool     m_isascii;
 
     protected:
         string_q m_filename;
@@ -60,7 +54,6 @@ namespace qblocks {
             // m_lockingUser = "";
             // m_mode = "";
             // m_errorMsg = "";
-            m_isascii  = false;
         }
 
         virtual ~CSharedResource(void) {
@@ -93,10 +86,6 @@ namespace qblocks {
 
         string_q getFilename(void) const { return m_filename; }
         void setFilename(const string_q& fn) { m_filename = fn; }
-
-        bool isAscii(void) const {
-            return m_isascii;
-        }
 
     public:
         size_t Read(bool& val);

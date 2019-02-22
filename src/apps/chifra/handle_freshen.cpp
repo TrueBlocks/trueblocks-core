@@ -36,7 +36,7 @@ bool COptions::handle_freshen(const string_q& pathForce) {
  return !shouldQuit();
 
  if (isFreshen) {
- txCache.Lock("./" + watches[0].address, binaryWriteAppend, LOCK_WAIT);
+ txCache.Lock("./" + watches[0].address, modeWriteAppend, LOCK_WAIT);
  forEveryFileInFolder(indexFolder_prod, visitIndexFiles, this);
  txCache.Release();
  return false;

@@ -33,7 +33,7 @@ namespace qblocks {
     //----------------------------------------------------------------------
     bool CSharedResource::createLockFile(const string_q& lockfilename) {
         m_ownsLock = false;
-        FILE *fp = fopen(lockfilename.c_str(), asciiWriteCreate);
+        FILE *fp = fopen(lockfilename.c_str(), modeWriteCreate);
         if (fp) {
             fprintf(fp, "%s\n", m_lockingUser.c_str());
             fclose(fp);
@@ -100,14 +100,6 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    static bool isAscii(const string_q& mode) {
-        return (mode % asciiReadOnly ||
-                mode % asciiReadWrite ||
-                mode % asciiWriteCreate ||
-                mode % asciiWriteAppend);
-    }
-
-    //----------------------------------------------------------------------
     bool CSharedResource::ReLock(const string_q& mode) {
         ASSERT(isOpen());
         ASSERT(m_ownsLock);
@@ -115,7 +107,6 @@ namespace qblocks {
         // Close and re-open the file without relinqishing the lock
         Close();
         m_fp = fopen(m_filename.c_str(), mode.c_str());
-        m_isascii = qblocks::isAscii(mode);
 
         return isOpen();
     }
@@ -131,16 +122,14 @@ namespace qblocks {
         // If the file we are trying to lock does not exist but we are not trying to open
         // it under one of the create modes then do not create a lock, do not open the file,
         // and let the user know.
-        if (!fileExists(m_filename) &&
-            (m_mode != asciiWriteCreate && m_mode != asciiWriteAppend && m_mode != binaryWriteCreate)
-            ) {
+        if (!fileExists(m_filename) && (m_mode != modeWriteCreate && m_mode != modeWriteAppend)) {
             m_error = LK_FILE_NOT_EXIST;
             m_errorMsg = "File does not exist: " + m_filename;
             return false;
         }
 
         bool openIt = true;
-        if (m_mode == binaryReadOnly || m_mode == asciiReadOnly) {
+        if (m_mode == modeReadOnly) {
 
             // Wait for lock to clear...
             if (lockType == LOCK_WAIT)
@@ -149,9 +138,7 @@ namespace qblocks {
             // ... proceed even if it doesn't....
             openIt = true;
 
-        } else if (m_mode == binaryReadWrite || m_mode == binaryWriteCreate ||
-                   m_mode == asciiReadWrite  || m_mode == asciiWriteAppend  ||
-                   m_mode == asciiWriteCreate) {
+        } else if (m_mode == modeReadWrite || m_mode == modeWriteAppend || m_mode == modeWriteCreate) {
 
             ASSERT(lockType == LOCK_CREATE || lockType == LOCK_WAIT);
             openIt = createLock(lockType != LOCK_WAIT);
@@ -168,7 +155,6 @@ namespace qblocks {
 
         if (openIt) {
             m_fp = fopen(m_filename.c_str(), m_mode.c_str());  // operator on event database
-            m_isascii = qblocks::isAscii(m_mode);
         }
 
         return isOpen();
@@ -201,7 +187,6 @@ namespace qblocks {
             fclose(m_fp);
         }
         m_fp = NULL;
-        m_isascii = false;
     }
 
     //----------------------------------------------------------------------
@@ -251,7 +236,6 @@ namespace qblocks {
     //----------------------------------------------------------------------
     size_t CSharedResource::Read(string_q& str) {
         ASSERT(isOpen());
-        ASSERT(!isAscii());
 
         unsigned long len;  // NOLINT
         Read(&len, sizeof(unsigned long), 1);  // NOLINT
@@ -275,7 +259,6 @@ namespace qblocks {
     //----------------------------------------------------------------------
     char *CSharedResource::ReadLine(char *buff, size_t maxBuff) {
         ASSERT(isOpen());
-        ASSERT(isAscii());
         return fgets(buff, static_cast<int>(maxBuff), m_fp);
     }
 
@@ -300,7 +283,6 @@ namespace qblocks {
     //----------------------------------------------------------------------
     size_t CSharedResource::Write(const string_q& val) const {
         ASSERT(isOpen());
-        ASSERT(!isAscii());
 
         unsigned long len = val.length();  // NOLINT
         size_t ret = Write(&len, sizeof(unsigned long), 1);  // NOLINT
@@ -310,7 +292,6 @@ namespace qblocks {
     //----------------------------------------------------------------------
     void CSharedResource::WriteLine(const string_q& str) {
         ASSERT(isOpen());
-        ASSERT(isAscii());
         fprintf(m_fp, "%s", str.c_str());
     }
 
@@ -357,7 +338,7 @@ namespace qblocks {
     //----------------------------------------------------------------------
     size_t stringToAsciiFile(const string_q& fileName, const string_q& contents) {
         CAsciiFile lock;
-        if (lock.Lock(fileName, asciiWriteCreate, LOCK_WAIT)) {
+        if (lock.Lock(fileName, modeWriteCreate, LOCK_WAIT)) {
             lock.WriteLine(contents.c_str());
             lock.Release();
         } else {

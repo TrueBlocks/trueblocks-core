@@ -39,7 +39,7 @@ int main(int argc, const char *argv[]) {
                 {  // creates a stack frame, do not remove
                     uint64_t cnt = 0;
                     CArchive miniBlkCache(READING_ARCHIVE);  // we only ever read the current cache
-                    if (miniBlkCache.Lock(miniBlockCache, binaryReadOnly, LOCK_NOWAIT)) {
+                    if (miniBlkCache.Lock(miniBlockCache, modeReadOnly, LOCK_NOWAIT)) {
                         bool done = false;
                         while (!done && !miniBlkCache.Eof()) {
                             CMiniBlock block;
@@ -65,7 +65,7 @@ int main(int argc, const char *argv[]) {
 #error
                     uint64_t cnt = 0;
                     CArchive miniTxCache(READING_ARCHIVE);  // we only ever read the current cache
-                    if (miniTxCache.Lock(miniTransCache, binaryReadOnly, LOCK_NOWAIT)) {
+                    if (miniTxCache.Lock(miniTransCache, modeReadOnly, LOCK_NOWAIT)) {
                         bool done = false;
                         while (!done && !miniTxCache.Eof()) {
                             CMiniTrans trans;
@@ -86,17 +86,17 @@ int main(int argc, const char *argv[]) {
 
             } else if (mode == "freshen") {
 
-                string_q openMode = (fileExists(miniBlockCache) ? binaryWriteAppend : binaryWriteCreate);
+                string_q openMode = (fileExists(miniBlockCache) ? modeWriteAppend : modeWriteCreate);
                 if (!reporter.miniB.Lock(miniBlockCache, openMode, LOCK_WAIT))
                     return options.usage(reporter.miniB.LockFailure());
 
 #ifdef MINI_TRANS
-                openMode = (fileExists(miniTransCache) ? binaryWriteAppend : binaryWriteCreate);
+                openMode = (fileExists(miniTransCache) ? modeWriteAppend : modeWriteCreate);
                 if (!reporter.miniT.Lock(miniTransCache, openMode, LOCK_WAIT))
                     return options.usage(reporter.miniT.LockFailure());
 #endif
 
-                if (openMode == binaryWriteAppend)
+                if (openMode == modeWriteAppend)
                     reporter.getLastBlock(options.maxBlocks);
                 forEveryNonEmptyBlockOnDisc(buildMiniBlock, &reporter, reporter.firstBlock(), reporter.size());
                 reporter.miniB.Release();

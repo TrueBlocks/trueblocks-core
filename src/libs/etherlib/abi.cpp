@@ -436,27 +436,6 @@ bool CAbi::loadAbiAndCache(const address_t& addr, bool raw, bool silent, bool de
     return !os.str().empty();
 }
 
-//----------------------------------------------------------------------------
-inline unsigned char hex_2_Ascii(char *str) {
-    unsigned char c;
-    c =  (unsigned char)((str[0] >= 'A' ? ((str[0] & 0xDF) - 'A') + 10 : (str[0] - '0')));
-    c *= 16;
-    c = (unsigned char)(c + (str[1] >= 'A' ? ((str[1]&0xDF)-'A')+10 : (str[1]-'0')));
-    return c;
-}
-
-//----------------------------------------------------------------------------
-inline string_q hex_2_Str(const string_q& inHex) {
-    string_q ret, in = substitute((startsWith(inHex, "0x") ? extract(inHex, 2) : inHex), "2019", "27");
-    while (!in.empty()) {
-        string_q nibble = extract(in, 0, 2);
-        in = extract(in, 2);
-        char ch = (char)hex_2_Ascii((char*)nibble.c_str());  // NOLINT
-        ret += (char)ch;
-    }
-    return ret;
-}
-
 //---------------------------------------------------------------------------
 inline string_q getBaseType(const string_q& type) {
     return type.substr(0, type.find('['));
@@ -477,7 +456,6 @@ inline void parseType(const string_q& type, string_q& baseType, uint64_t& size, 
     remains = 64 - nBits;
 }
 
-static const bigint_t max256Int = str_2_BigInt("115792089237316195423570985008687907853269984665640564039457584007913129639935");
 //---------------------------------------------------------------------------
 size_t CParameter::parseFixedType(string_q& input) {
 
@@ -500,6 +478,7 @@ size_t CParameter::parseFixedType(string_q& input) {
         if (size <= 64) {
             value = int_2_Str(str_2_Int(xx));
         } else {
+            static const bigint_t max256Int = str_2_BigInt("115792089237316195423570985008687907853269984665640564039457584007913129639935");
             bigint_t w = str_2_BigInt(xx);
             if (w >= (max256Int/2))
                 w = w - max256Int - 1; // wrap if larger than max int256
@@ -565,8 +544,7 @@ size_t CParameter::parseDynamicType(string_q& input) {
     if (type == "string") {
         string_q data = extract(input, 0, nn);
         replace(input, data, "");
-        data = extract(data, 0, nItems * 2);
-        value += hex_2_Str(data);
+        value += hex_2_Str(data, nItems);
 
     } else if (type == "bytes") {
         string_q data = extract(input, 0, nn);
@@ -888,18 +866,7 @@ inline string_q parseArrayMulti(CParameter& p, string_q& input) {
 }
 
 //----------------------------------------------------------------------------
-inline string_q hex_2_Str_old(const string_q& inHex) {
-    string_q ret, in = (startsWith(inHex, "0x") ? extract(inHex, 2) : inHex);
-    while (!in.empty()) {
-        string_q nibble = extract(in, 0, 2);
-        in = extract(in, 2);
-        char ch = (char)hex_2_Ascii((char*)nibble.c_str());  // NOLINT
-        if (!isprint(ch))
-            return "";
-        ret += (char)ch;
-    }
-    return ret;
-}
+extern string_q hex_2_Str_old(const string_q& inHex);
 
 //-----------------------------------------------------------------------
 bool CAbi::articulateTransaction(CTransaction *p) const {

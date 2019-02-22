@@ -260,7 +260,7 @@ bool loadData(COptions& options) {
     bzero(buffer, nRecords * 2);
 
     CArchive txCache(READING_ARCHIVE);
-    if (txCache.Lock(fileName, binaryReadOnly, LOCK_NOWAIT)) {
+    if (txCache.Lock(fileName, modeReadOnly, LOCK_NOWAIT)) {
         txCache.Read(buffer, sizeof(uint64_t) * 2, nRecords);
         txCache.Release();
     } else {
@@ -322,7 +322,7 @@ bool checkBloom(COptions& options, const CAcctCacheItem *item) {
     // Check to see if any of the enabled watched accounts are in the bloom
     CBloomArray blooms;
     CArchive bloomCache(READING_ARCHIVE);
-    if (bloomCache.Lock(bloomFilename, binaryReadOnly, LOCK_NOWAIT)) {
+    if (bloomCache.Lock(bloomFilename, modeReadOnly, LOCK_NOWAIT)) {
         bloomCache >> blooms;
         bloomCache.Release();
     }

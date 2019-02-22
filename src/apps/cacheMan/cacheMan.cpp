@@ -34,7 +34,7 @@ int main(int argc, const char *argv[]) {
 
                 // Read from the current cache
                 CArchive txCache(READING_ARCHIVE);
-                if (txCache.Lock(options.filenames[fn], binaryReadOnly, LOCK_NOWAIT)) {
+                if (txCache.Lock(options.filenames[fn], modeReadOnly, LOCK_NOWAIT)) {
 
                     if (!options.asData)
                         cout << toProper(mode)+"ing cache: " << options.filenames[fn] << "\n";
@@ -151,7 +151,7 @@ int main(int argc, const char *argv[]) {
                     if (!isTestMode()) {
                         remove(options.filenames[fn].c_str());
                         CArchive txCache2(WRITING_ARCHIVE);
-                        if (txCache2.Lock(options.filenames[fn], binaryWriteCreate, LOCK_NOWAIT)) {
+                        if (txCache2.Lock(options.filenames[fn], modeWriteCreate, LOCK_NOWAIT)) {
                             for (size_t i=0 ; i < fixed.size() ; i++) {
                                 txCache2 << fixed[i].blockNum << fixed[i].transIndex;
                                 lastBlock = fixed[i].blockNum;

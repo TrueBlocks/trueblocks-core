@@ -354,7 +354,7 @@ static const char *STR_ERROR_NODEREQUIRED =
     uint64_t getLatestBlockFromCache(void) {
 
         CArchive fullBlockCache(READING_ARCHIVE);
-        if (!fullBlockCache.Lock(fullBlockIndex, binaryReadOnly, LOCK_NOWAIT)) {
+        if (!fullBlockCache.Lock(fullBlockIndex, modeReadOnly, LOCK_NOWAIT)) {
             if (!isTestMode())
                 cerr << "getLatestBlockFromCache failed: " << fullBlockCache.LockFailure() << "\n";
             return 0;
@@ -613,7 +613,7 @@ static const char *STR_ERROR_NODEREQUIRED =
             if (!created.empty() && !isTestMode())
                 cerr << "mkdir(" << created << ")" << string_q(75, ' ') << "\n";
             CArchive nodeCache(WRITING_ARCHIVE);
-            if (nodeCache.Lock(fileName, binaryWriteCreate, LOCK_CREATE)) {
+            if (nodeCache.Lock(fileName, modeWriteCreate, LOCK_CREATE)) {
                 node.SerializeC(nodeCache);
                 nodeCache.Close();
                 return true;
@@ -626,7 +626,7 @@ static const char *STR_ERROR_NODEREQUIRED =
     bool readNodeFromBinary(CBaseNode& item, const string_q& fileName) {
         // Assumes that the item is clear, so no Init
         CArchive nodeCache(READING_ARCHIVE);
-        if (nodeCache.Lock(fileName, binaryReadOnly, LOCK_NOWAIT)) {
+        if (nodeCache.Lock(fileName, modeReadOnly, LOCK_NOWAIT)) {
             item.Serialize(nodeCache);
             nodeCache.Close();
             return true;
@@ -650,7 +650,7 @@ static const char *STR_ERROR_NODEREQUIRED =
     bool readBloomArray(CBloomArray& blooms, const string_q& fileName) {
         blooms.clear();
         CArchive bloomCache(READING_ARCHIVE);
-        if (bloomCache.Lock(fileName, binaryReadOnly, LOCK_NOWAIT)) {
+        if (bloomCache.Lock(fileName, modeReadOnly, LOCK_NOWAIT)) {
             bloomCache >> blooms;
             bloomCache.Close();
             return true;
@@ -668,7 +668,7 @@ static const char *STR_ERROR_NODEREQUIRED =
             if (!created.empty() && !isTestMode())
                 cerr << "mkdir(" << created << ")" << string_q(75, ' ') << "\n";
             CArchive bloomCache(WRITING_ARCHIVE);
-            if (bloomCache.Lock(fileName, binaryWriteCreate, LOCK_CREATE)) {
+            if (bloomCache.Lock(fileName, modeWriteCreate, LOCK_CREATE)) {
                 bloomCache << blooms;
                 bloomCache.Close();
                 return true;
@@ -763,7 +763,7 @@ static const char *STR_ERROR_NODEREQUIRED =
             return false;
 
         CArchive fullBlockCache(READING_ARCHIVE);
-        if (!fullBlockCache.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT)) {
+        if (!fullBlockCache.Lock(fullBlockIndex, modeReadOnly, LOCK_WAIT)) {
             cerr << "forEveryNonEmptyBlockOnDisc failed: " << fullBlockCache.LockFailure() << "\n";
             return false;
         }
@@ -801,7 +801,7 @@ static const char *STR_ERROR_NODEREQUIRED =
             return false;
 
         CArchive fullBlockCache(READING_ARCHIVE);
-        if (!fullBlockCache.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT)) {
+        if (!fullBlockCache.Lock(fullBlockIndex, modeReadOnly, LOCK_WAIT)) {
             cerr << "forEveryEmptyBlockOnDisc failed: " << fullBlockCache.LockFailure() << "\n";
             return false;
         }

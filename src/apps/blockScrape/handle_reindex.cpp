@@ -48,7 +48,7 @@ bool establishBlockIndex(void) {
 
     // Otherwise we rebuild it from scratch by visiting each binary block
     CArchive fullBlockCache(WRITING_ARCHIVE);
-    if (fullBlockCache.Lock(fullBlockIndex, binaryWriteCreate, LOCK_WAIT)) {
+    if (fullBlockCache.Lock(fullBlockIndex, modeWriteCreate, LOCK_WAIT)) {
         ASSERT(fullBlockCache.isOpen());
         bool finished = forEveryFileInFolder(bloomFolder, markFullBlocks, &fullBlockCache);
         fullBlockCache.Release();

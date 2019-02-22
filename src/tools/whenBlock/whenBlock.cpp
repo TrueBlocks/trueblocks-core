@@ -142,7 +142,7 @@ bool lookupDate(const COptions *options, CBlock& block, const time_q& date) {
             cerr << "Allocated room for " << g_nBlocks << " miniBlocks.\n";
 
         // Next, we try to open the mini-block database (caller will cleanup)
-        FILE *fpBlocks = fopen(miniBlockCache.c_str(), binaryReadOnly);
+        FILE *fpBlocks = fopen(miniBlockCache.c_str(), modeReadOnly);
         if (!fpBlocks)
             return options->usage("Could not open the mini-block database: " + miniBlockCache + ".\n");
 

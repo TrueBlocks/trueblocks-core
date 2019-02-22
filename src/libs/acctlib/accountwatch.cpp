@@ -408,7 +408,7 @@ biguint_t getNodeBal(CBalanceHistoryArray& history, const address_t& addr, blknu
     if (history.size() == 0 && fileExists(binaryFilename) && fileSize(binaryFilename) > 0) {
 
         CArchive balCache(READING_ARCHIVE);
-        if (balCache.Lock(binaryFilename, binaryReadOnly, LOCK_NOWAIT)) {
+        if (balCache.Lock(binaryFilename, modeReadOnly, LOCK_NOWAIT)) {
             blknum_t last = NOPOS;
             address_t lastA;
             do {

@@ -40,7 +40,7 @@ bool handleCacheBals(COptions& options) {
     }
 
     CArchive txCache(READING_ARCHIVE);
-    if (txCache.Lock(options.filenames[0], binaryReadOnly, LOCK_NOWAIT)) {
+    if (txCache.Lock(options.filenames[0], modeReadOnly, LOCK_NOWAIT)) {
         CAcctCacheItem last;
         while (!txCache.Eof()) {
             CAcctCacheItem item;
@@ -65,7 +65,7 @@ bool handleCacheBals(COptions& options) {
 
         string_q binaryFilename = "./balances/" + watch.address + ".bals.bin";
         CArchive balCache(WRITING_ARCHIVE);
-        if (!balCache.Lock(binaryFilename, binaryWriteCreate, LOCK_WAIT))
+        if (!balCache.Lock(binaryFilename, modeWriteCreate, LOCK_WAIT))
             return options.usage("Cannot open file " + binaryFilename + ". Quitting...");
 
         uint64_t nWritten = 0;
@@ -118,7 +118,7 @@ bool listBalances(COptions& options) {
             address_t lastAddr;
             // If the binary file exists, we use that
             CArchive balCache(READING_ARCHIVE);
-            if (balCache.Lock(binaryFilename, binaryReadOnly, LOCK_NOWAIT)) {
+            if (balCache.Lock(binaryFilename, modeReadOnly, LOCK_NOWAIT)) {
 
                 do {
 
