@@ -1,7 +1,7 @@
 acctScrape argc: 1 
 acctScrape 
 
-  Cannot read toml file './config.toml'. Are you in the right folder? Quitting...
+  Cannot read toml file ./config.toml. Are you in the right folder? Quitting...
 
 
   Usage:    acctScrape [-u|-m|-w|-l|-v|-h]  

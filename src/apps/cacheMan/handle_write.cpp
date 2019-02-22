@@ -22,7 +22,7 @@ bool COptions::handleWrite(const string_q& outputFilename, const CAcctCacheItemA
     blknum_t currentLastItem = str_2_Uint(contents);
 
     CArchive txCache(WRITING_ARCHIVE);
-    if (!txCache.Lock(outputFilename, binaryWriteCreate, LOCK_WAIT))
+    if (!txCache.Lock(outputFilename, modeWriteCreate, LOCK_WAIT))
         return usage("Could not open merge file: " + outputFilename + ". Quitting.");
 
     // Now that we know we can write to the file, we can make a write array. We do this for two reasons: filtering

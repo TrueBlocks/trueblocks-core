@@ -50,7 +50,7 @@ int main(int argc, const char *argv[]) {
         cout.flush();
 
         CArchive out(WRITING_ARCHIVE);
-        if (out.Lock("./file.bin", binaryWriteCreate, LOCK_WAIT)) {
+        if (out.Lock("./file.bin", modeWriteCreate, LOCK_WAIT)) {
             leader.Serialize(out);
             out.Release();
         }
@@ -65,7 +65,7 @@ int main(int argc, const char *argv[]) {
         cout.flush();
 
         CArchive in(READING_ARCHIVE);
-        if (in.Lock("./file.bin", binaryReadOnly, LOCK_WAIT)) {
+        if (in.Lock("./file.bin", modeReadOnly, LOCK_WAIT)) {
             leader.Serialize(in);
             in.Release();
         }

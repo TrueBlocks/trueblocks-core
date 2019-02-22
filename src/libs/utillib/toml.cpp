@@ -158,7 +158,7 @@ extern string_q collapseArrays(const string_q& inStr);
 
     //---------------------------------------------------------------------------------------
     bool CToml::writeFile(void) {
-        if (!Lock(m_filename, asciiWriteCreate, LOCK_CREATE)) {
+        if (!Lock(m_filename, modeWriteCreate, LOCK_CREATE)) {
             LockFailure();
             return false;
         }

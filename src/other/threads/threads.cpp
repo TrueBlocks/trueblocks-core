@@ -88,7 +88,7 @@ void scanBackward(CBlockScraper *scraper) {
 bool appendFileToArray1(CUintArray& array, const string_q& fn) {
     CArchive file(READING_ARCHIVE);
     if (fileExists(fn) && fileSize(fn) > 0) {
-        if (!file.Lock(fn, binaryReadOnly, LOCK_NOWAIT))
+        if (!file.Lock(fn, modeReadOnly, LOCK_NOWAIT))
             return options.usage("Cannot open " + fn + ". Quitting...");
         file >> array;
         file.Release();
@@ -100,7 +100,7 @@ bool appendFileToArray1(CUintArray& array, const string_q& fn) {
 bool appendFileToArray2(CUintArray& array, const string_q& fn) {
     CArchive file(READING_ARCHIVE);
     if (fileExists(fn) && fileSize(fn) > 0) {
-        if (!file.Lock(fn, binaryReadOnly, LOCK_NOWAIT))
+        if (!file.Lock(fn, modeReadOnly, LOCK_NOWAIT))
             return options.usage("Cannot open " + fn + ". Quitting...");
         uint64_t val;
         size_t s = file.Read(val);
@@ -132,7 +132,7 @@ bool postProcess(void) {
     sort(array.begin(), array.end());
 
     CArchive outputCache(WRITING_ARCHIVE);
-    if (!outputCache.Lock("output.bin", binaryWriteCreate, LOCK_NOWAIT))
+    if (!outputCache.Lock("output.bin", modeWriteCreate, LOCK_NOWAIT))
         return options.usage("Could not open output.bin. Quitting...");
     outputCache << array;
     outputCache.Release();
@@ -154,7 +154,7 @@ int main(int argc, const char *argv[]) {
         forward.start = (argc == 2 ? str_2_Int(argv[1]) : options.startBlock);
         backward.start = forward.start - 1;
     } else {
-        if (!outputCache.Lock("output.bin", binaryReadOnly, LOCK_NOWAIT))
+        if (!outputCache.Lock("output.bin", modeReadOnly, LOCK_NOWAIT))
             return options.usage("Could not open output.bin. Quitting...");
         CUintArray array;
         outputCache >> array;
@@ -175,9 +175,9 @@ int main(int argc, const char *argv[]) {
     if (fileExists("backward.bin") || fileExists("forward.bin"))
         postProcess();
 
-    if (!backward.Lock("backward.bin", binaryWriteCreate, LOCK_NOWAIT))
+    if (!backward.Lock("backward.bin", modeWriteCreate, LOCK_NOWAIT))
         return options.usage("Could not created backward.bin. Quitting...");
-    if (!forward.Lock("forward.bin", binaryWriteCreate, LOCK_NOWAIT))
+    if (!forward.Lock("forward.bin", modeWriteCreate, LOCK_NOWAIT))
         return options.usage("Could not created forward.bin. Quitting...");
 
     thread first(scanForward, &forward); forward.thread = &first;
@@ -187,7 +187,7 @@ int main(int argc, const char *argv[]) {
 
     postProcess();
 
-    outputCache.Lock("output.bin", binaryReadOnly, LOCK_NOWAIT);
+    outputCache.Lock("output.bin", modeReadOnly, LOCK_NOWAIT);
     CUintArray array;
     outputCache >> array;
     cout << endl;

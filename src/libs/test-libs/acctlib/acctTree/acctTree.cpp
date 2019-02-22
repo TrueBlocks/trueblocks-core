@@ -50,7 +50,7 @@ int main(int argc, const char *argv[]) {
             reporter.startTimer(msg);
             if (exists) {
                 CArchive archive(READING_ARCHIVE);
-                if (archive.Lock(fn.getFullPath(), binaryReadOnly, LOCK_WAIT)) {
+                if (archive.Lock(fn.getFullPath(), modeReadOnly, LOCK_WAIT)) {
                     reporter.tree->Serialize(archive);
                     archive >> reporter.nBlocksVisited;
                     archive >> reporter.nTransVisited;
@@ -61,7 +61,7 @@ int main(int argc, const char *argv[]) {
             } else {
                 forEveryBlockOnDisc(buildTree, &reporter, options.startBlock, options.nBlocks);
                 CArchive archive(WRITING_ARCHIVE);
-                if (archive.Lock(fn.getFullPath(), binaryWriteCreate, LOCK_WAIT)) {
+                if (archive.Lock(fn.getFullPath(), modeWriteCreate, LOCK_WAIT)) {
                     reporter.tree->Serialize(archive);
                     archive << reporter.nBlocksVisited;
                     archive << reporter.nTransVisited;

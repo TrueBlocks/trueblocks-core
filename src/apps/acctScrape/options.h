@@ -44,6 +44,9 @@ public:
     CToml             *toml;
     string_q           cacheFilename;
     address_t          monitorAddr;
+    blknum_t           lastInCache;
+    blknum_t           lastVisited;
+    string_q           ex_data;
 
     COptions(void);
     ~COptions(void);
@@ -54,10 +57,13 @@ public:
     bool loadMonitors(void);
     friend ostream& operator<<(ostream& os, const COptions& item);
     string_q finalReport(double timing, bool header) const;
+    bool shouldScrape(void) const;
+    bool finalReport(void) const;
+    bool foundOne(const CAccountWatch *acct, const CBlock& block, const CTransaction *trans);
+    void writeLastBlock(blknum_t bn);
 };
 
 //-----------------------------------------------------------------------
-extern void writeLastBlock(blknum_t bn);
 extern bool processBlock  (blknum_t bn, COptions *options);
 extern bool processTrans  (const CBlock& block, const CTransaction *trans, COptions *options);
 extern bool processTraces (const CBlock& block, const CTransaction *trans, const CAccountWatch *acct, COptions *options);

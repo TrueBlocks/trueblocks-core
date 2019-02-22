@@ -279,7 +279,7 @@ bool visitABIs(const string_q& path, void *dataPtr) {
 //    }
 //    sort(funcArray.begin(), funcArray.end());
 //    CArchive funcCache(WRITING_ARCHIVE);
-//    if (funcCache.Lock(abiPath+"abis.bin", binaryWriteCreate, LOCK_CREATE)) {
+//    if (funcCache.Lock(abiPath+"abis.bin", modeWriteCreate, LOCK_CREATE)) {
 //        funcCache << funcArray;
 //        funcCache.Release();
 //    }
