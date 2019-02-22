@@ -478,4 +478,45 @@ namespace qblocks {
         str = s;
     }
 
+    //----------------------------------------------------------------------------
+    typedef unsigned char uchar_t;
+    inline uchar_t hex_2_Ascii(const char * const str) {
+        uchar_t c;
+        c =  (uchar_t)((str[0] >= 'A' ? ((str[0] & 0xDF) - 'A') + 10 : (str[0] - '0')));
+        c *= 16;
+        c = (uchar_t)(c + (str[1] >= 'A' ? ((str[1]&0xDF)-'A')+10 : (str[1]-'0')));
+        return c;
+    }
+
+    //----------------------------------------------------------------------------
+    string_q hex_2_Str(const string_q& inHex, size_t nBytes) {
+        string_q in = (startsWith(inHex, "0x") ? extract(inHex, 2) : inHex);
+        in = in.substr(0, nBytes * 2);
+        // TODO(tjayrush): what is this substitute for? Some weird test case? Try to remove it
+        in = substitute(in, "2019", "27");
+
+        string_q ret;
+        while (!in.empty()) {
+            string_q nibble = extract(in, 0, 2);
+            in = extract(in, 2);
+            char ch = (char)hex_2_Ascii((char*)nibble.c_str());  // NOLINT
+            ret += (char)ch;
+        }
+        return ret;
+    }
+
+    //----------------------------------------------------------------------------
+    string_q hex_2_Str_old(const string_q& inHex) {
+        string_q ret, in = (startsWith(inHex, "0x") ? extract(inHex, 2) : inHex);
+        while (!in.empty()) {
+            string_q nibble = extract(in, 0, 2);
+            in = extract(in, 2);
+            char ch = (char)hex_2_Ascii((char*)nibble.c_str());  // NOLINT
+            if (!isprint(ch))
+                return "";
+            ret += (char)ch;
+        }
+        return ret;
+    }
+
 }  // namespace qblocks

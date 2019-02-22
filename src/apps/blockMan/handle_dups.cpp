@@ -18,7 +18,7 @@ void handle_remove_dups(COptions& options) {
 #if 0
     cerr << "Opening\n";
     CArchive fullBlockCache(READING_ARCHIVE);
-    if (!fullBlockCache.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT)) {
+    if (!fullBlockCache.Lock(fullBlockIndex, modeReadOnly, LOCK_WAIT)) {
         cerr << "handle_remove_dups failed: " << fullBlockCache.LockFailure() << "\n";
         return;
     }
@@ -60,7 +60,7 @@ void handle_remove_dups(COptions& options) {
 #if 0
     cerr << "Reopening\n";
     CArchive fullBlockCache1(WRITING_ARCHIVE);
-    if (!fullBlockCache1.Lock(fullBlockIndex, binaryWriteCreate, LOCK_WAIT)) {
+    if (!fullBlockCache1.Lock(fullBlockIndex, modeWriteCreate, LOCK_WAIT)) {
         cerr << "handle_remove_dups failed: " << fullBlockCache1.LockFailure() << "\n";
         return;
     }

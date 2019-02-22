@@ -20,7 +20,7 @@ bool handle_freshen(COptions& options) {
 // TODO: SEE ISSUE #1014
 
     CArchive fullBlockCache(WRITING_ARCHIVE);
-    if (!fullBlockCache.Lock(fullBlockIndex, binaryWriteAppend, LOCK_WAIT)) {
+    if (!fullBlockCache.Lock(fullBlockIndex, modeWriteAppend, LOCK_WAIT)) {
         cerr << "Could not open fullBlock index: " << fullBlockCache.LockFailure() << "\n";
         return false;
     }

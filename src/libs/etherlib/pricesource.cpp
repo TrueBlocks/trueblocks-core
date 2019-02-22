@@ -58,7 +58,7 @@ namespace qblocks {
             if (!isTestMode())
                 cerr << "Updating prices...\r";
             CArchive priceCache(READING_ARCHIVE);
-            if (priceCache.Lock(cacheFile, binaryReadOnly, LOCK_NOWAIT)) {
+            if (priceCache.Lock(cacheFile, modeReadOnly, LOCK_NOWAIT)) {
                 priceCache.readHeader();  // we read the header even though it may not be the current version...
                 priceCache >> lastRead.m_nSeconds;
                 priceCache >> quotes;
@@ -180,7 +180,7 @@ namespace qblocks {
             // Write the database to the cache
             if (prevLast != lastRead && freshen) {
                 CArchive priceCache(WRITING_ARCHIVE);
-                if (!priceCache.Lock(cacheFile, binaryWriteCreate, LOCK_WAIT)) {
+                if (!priceCache.Lock(cacheFile, modeWriteCreate, LOCK_WAIT)) {
                     message = "Could not open cache file for writing: '" + cacheFile + "'";
                     return false;
                 }

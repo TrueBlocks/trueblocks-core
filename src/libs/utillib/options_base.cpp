@@ -913,7 +913,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
         if (binDate > txtDate) {
             CArchive nameCache(READING_ARCHIVE);
-            if (nameCache.Lock(binFile, binaryReadOnly, LOCK_NOWAIT)) {
+            if (nameCache.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
                 if (verbose && !isTestMode())
                     cout << "Reading from binary cache\n";
                 nameCache >> namedAccounts;
@@ -948,7 +948,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         }
 
         CArchive nameCache(WRITING_ARCHIVE);
-        if (nameCache.Lock(binFile, binaryWriteCreate, LOCK_CREATE)) {
+        if (nameCache.Lock(binFile, modeWriteCreate, LOCK_CREATE)) {
             if (verbose && !isTestMode())
                 cout << "Writing binary cache\n";
             nameCache << namedAccounts;

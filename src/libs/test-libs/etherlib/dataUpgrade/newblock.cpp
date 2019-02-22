@@ -407,7 +407,7 @@ CNewBlock::CNewBlock(const CBlock& block) {
 bool readOneNewBlock_fromBinary(CNewBlock& block, const string_q& fileName) {
     block = CNewBlock();  // reset
     CArchive archive(READING_ARCHIVE);
-    if (archive.Lock(fileName, binaryReadOnly, LOCK_NOWAIT)) {
+    if (archive.Lock(fileName, modeReadOnly, LOCK_NOWAIT)) {
         block.Serialize(archive);
         archive.Close();
         return block.blockNumber;

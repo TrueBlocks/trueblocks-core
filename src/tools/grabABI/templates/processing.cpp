@@ -41,7 +41,7 @@ bool COptions::displayFromCache(uint64_t startBlock) {
     uint64_t endBlock = NOPOS;
 
     CArchive txCache(READING_ARCHIVE);
-    if (txCache.Lock(cacheFileName, binaryReadOnly, LOCK_NOWAIT)) {
+    if (txCache.Lock(cacheFileName, modeReadOnly, LOCK_NOWAIT)) {
 
         txCache.Seek( (-1 * (long)(2*sizeof(uint64_t))), SEEK_END);  // NOLINT
         txCache.Read(endBlock);

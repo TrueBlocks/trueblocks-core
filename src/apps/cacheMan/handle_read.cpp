@@ -12,7 +12,7 @@ bool COptions::handleRead(const string_q& msg, size_t filesToUse, CAcctCacheItem
     for (uint32_t i = 0 ; i < filesToUse ; i++) {
         cerr << "\t" << msg << " cache: " << cTeal << filenames[i] << cOff << "...";
         CArchive txCache(READING_ARCHIVE);
-        if (!txCache.Lock(filenames[i], binaryReadOnly, LOCK_NOWAIT))
+        if (!txCache.Lock(filenames[i], modeReadOnly, LOCK_NOWAIT))
             return usage("Could not open file: " + filenames[i] + ". Quitting.");
         uint64_t nRead = 0;
         while (!txCache.Eof() && !shouldQuit()) {
