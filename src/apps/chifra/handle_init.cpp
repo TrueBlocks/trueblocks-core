@@ -26,6 +26,8 @@ bool COptions::handle_init(void) {
             CAccountWatch watch;
             watch.address = nextTokenClear(remainder, '|');
             watch.name = trim(remainder, '|');
+            if (watch.name.empty())
+                watch.name = watch.address;
             watch.color = colors[watches.size()%nColors];
             watches.push_back(watch);
             if (monitorName.empty())
