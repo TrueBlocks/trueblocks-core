@@ -436,28 +436,46 @@ bool CAbi::loadAbiAndCache(const address_t& addr, bool raw, bool silent, bool de
     return !os.str().empty();
 }
 
-//------------------------------------------------------------------------------------------------
-string_q decodeParams(const CStringArray& typeArray, const CStringArray& dataArray, size_t& readHead) {
-
-    string ret = "";
-    for (auto type : typeArray) {
-
+//-----------------------------------------------------------------------------------------
+inline string_q params_2_Str(CParameterArray& interfaces) {
+    string_q ret;
+    for (auto p : interfaces) {
         if (!ret.empty())
             ret += ", ";
+        ret += p.value;
+    }
+    return trim(ret);
+}
+
+//------------------------------------------------------------------------------------------------
+size_t goodDecoder(CParameterArray& interfaces, const CStringArray& dataArray, size_t& readHead) {
+
+    for (size_t q = 0 ; q < interfaces.size() ; q++) {
+
+        CParameter *pPtr = &interfaces[q];
+        string_q type = pPtr->type;
 
         bool isArray = (type.find("[") != string::npos);
         if (!isArray) {
 
             if (type.find("bool") != string::npos) {
-                CStringArray array;
-                array.push_back("uint256");
-                string_q rr = decodeParams(array, dataArray, readHead);
-                ret += ((rr == "1") ? "true" : "false");
+                CParameterArray array;
+                CParameter p;
+                p.type = "uint256";
+                array.push_back(p);
+                goodDecoder(array, dataArray, readHead);
+                string_q val = array[0].value;
+                pPtr->value = ((val == "1") ? "true" : "false");
 
             } else if (type.find("address") != string::npos) {
-                CStringArray array;
-                array.push_back("uint160");
-                ret += "0x" + padLeft(toLower(bnu_2_Hex(str_2_BigUint(decodeParams(array, dataArray, readHead)))), 40, '0');
+
+                CParameterArray array;
+                CParameter p;
+                p.type = "uint160";
+                array.push_back(p);
+                goodDecoder(array, dataArray, readHead);
+                string_q val = array[0].value;
+                pPtr->value = "0x" + padLeft(toLower(bnu_2_Hex(str_2_BigUint(val))), 40, '0');
 
             } else if (type.find("uint") != string::npos) {
 
@@ -465,7 +483,7 @@ string_q decodeParams(const CStringArray& typeArray, const CStringArray& dataArr
                 size_t bits = str_2_Uint(substitute(type,"uint",""));
                 dataItem = "0x" + dataItem;
                 biguint_t value = str_2_BigUint(dataItem, bits);
-                ret += bnu_2_Str(value);
+                pPtr->value = bnu_2_Str(value);
                 readHead++;
 
             } else if (type.find("int") != string::npos) {
@@ -473,50 +491,54 @@ string_q decodeParams(const CStringArray& typeArray, const CStringArray& dataArr
                 string dataItem = dataArray[readHead];
                 size_t bits = str_2_Uint(substitute(type,"int",""));
                 dataItem = "0x" + dataItem;
-
                 bigint_t value = str_2_BigInt(dataItem, bits);
-                ret += bni_2_Str(value);
+                pPtr->value = bni_2_Str(value);
                 readHead++;
 
             } else if (type.find("string") != string::npos) {
 
                 string_q result;
-                uint64_t strStart = (str_2_Uint("0x" + dataArray[readHead]) / 32);
-                uint64_t stringLen = str_2_Uint("0x" + dataArray[strStart]);
-                size_t nWords = (stringLen / 32) + 1;
+                uint64_t dataStart = (str_2_Uint("0x" + dataArray[readHead]) / 32);
+                uint64_t len =  str_2_Uint("0x" + dataArray[dataStart]);
+                size_t nWords = (len / 32) + 1;
                 if (nWords <= dataArray.size()) { // some of the data sent in may be bogus, so we protext ourselves
                     for (size_t w = 0 ; w < nWords ; w++) {
-                        size_t pos = strStart + 1 + w;
+                        size_t pos = dataStart + 1 + w;
                         if (pos < dataArray.size())
-                            result += dataArray[pos].substr(0, stringLen*2);
-                        stringLen -= 32;
+                            result += dataArray[pos].substr(0, len * 2);  // at most 64
+                        len -= 32;
                     }
                 }
-                ret += hex_2_Str("0x" + result, 10000);
+                pPtr->value = hex_2_Str("0x" + result);
                 readHead++;
 
             } else if (type == "bytes") {
 
-                uint64_t dataOffset = str_2_Uint("0x" + dataArray[readHead++]);
-                size_t tPtr = dataOffset / 32;
-                uint64_t byteLength = str_2_Uint("0x" + dataArray[tPtr++]);
                 string_q result;
-                size_t nWords = (byteLength / 32) + 1;
-                for (size_t i = 0 ; i < nWords ; i++) {
-                    result += dataArray[tPtr++].substr(0, min(uint64_t(32*2), byteLength * 2));
-                    byteLength -= (32 * 2);
+                uint64_t dataStart = (str_2_Uint("0x" + dataArray[readHead]) / 32);
+                uint64_t len = str_2_Uint("0x" + dataArray[dataStart]);
+                size_t nWords = (len / 32) + 1;
+                if (nWords <= dataArray.size()) { // some of the data sent in may be bogus, so we protext ourselves
+                    for (size_t w = 0 ; w < nWords ; w++) {
+                        size_t pos = dataStart + 1 + w;
+                        if (pos < dataArray.size())
+                            result += dataArray[pos].substr(0, len * 2);  // at most 64
+                        len -= (32 * 2);
+                    }
                 }
-                ret = "0x" + result;
+                pPtr->value = "0x" + result;
+                readHead++;
 
             } else if (type.find("bytes") != string::npos) {
 
                 string dataItem = "0x" + dataArray[readHead];
-                ret += dataItem;
+                pPtr->value = dataItem;
                 readHead++;
 
             }
 
         } else {
+
             ASSERT(isArray);
             if (type.find("]") == type.find("[") + 1) {
 
@@ -525,22 +547,28 @@ string_q decodeParams(const CStringArray& typeArray, const CStringArray& dataArr
                 tPtr = arrOffset / 32;
                 uint64_t elementNum = str_2_Uint("0x" + dataArray[tPtr++]);
 
-                CStringArray tmpArray;
+                CParameterArray tmpArray;
                 size_t firstBracePos = type.find('[');
                 string paramType = type.substr(0, firstBracePos);
                 if (paramType == "bytes")
                     paramType = "bytes32";
-                if(firstBracePos + 2 != type.size())
+                if (firstBracePos + 2 != type.size())
                     paramType += type.substr(firstBracePos + 2);
-                for (size_t i = 0; i < elementNum; i++)
-                    tmpArray.push_back(paramType);
-                ret += "[" + decodeParams(tmpArray, dataArray, tPtr) + "]";
+
+                for (size_t i = 0; i < elementNum; i++) {
+                    CParameter p;
+                    p.type = paramType;
+                    tmpArray.push_back(p);
+                }
+
+                goodDecoder(tmpArray, dataArray, tPtr);
+                pPtr->value = "[" + params_2_Str(tmpArray) + "]";
 
             } else if (type.find("]") != string::npos) {
 
                 //int tempPointer;
                 /*
-                 if(typeArray.size() != 1) {
+                 if(interfaces.size() != 1) {
                  // Find offset pointing to "real values" of dynamic array
                  uint64_t arrOffset = str_2_Uint(dataArray[readHead]);
                  tempPointer = arrOffset / 32;
@@ -549,206 +577,38 @@ string_q decodeParams(const CStringArray& typeArray, const CStringArray& dataArr
                  }
                  */
                 int elementNum = stoi(type.substr(type.find('[')+1, type.find(']')));
-                CStringArray arrParams;
+                CParameterArray tmpArray;
                 size_t firstLBracePos = type.find('[');
                 size_t firstRBracePos = type.find(']');
                 string paramType = type.substr(0, firstLBracePos);
                 if (firstRBracePos + 1 != type.size())
                     paramType += type.substr(firstRBracePos + 1);
-                for (int i = 0; i < elementNum; i++)
-                    arrParams.push_back(paramType);
-                ret += "[" + decodeParams(arrParams, dataArray, readHead) + "]";
+                for (int i = 0; i < elementNum; i++) {
+                    CParameter p;
+                    p.type = paramType;
+                    tmpArray.push_back(p);
+                }
+                goodDecoder(tmpArray, dataArray, readHead);
+                pPtr->value = "[" + params_2_Str(tmpArray) + "]";
                 //readHead++;
             }
         }
     }
-    return trim(ret);
-}
-
-    //------------------------------------------------------------------------------------------------
-    size_t decodeParams2(CParameterArray& typeArray, const CStringArray& dataArray, size_t& readHead) {
-
-        for (size_t q = 0 ; q < typeArray.size() ; q++) {
-            CParameter *pPtr = &typeArray[q];
-            string_q type = pPtr->type;
-
-            bool isArray = (type.find("[") != string::npos);
-            if (!isArray) {
-
-                if (type.find("bool") != string::npos) {
-                    CParameterArray array;
-                    CParameter p;
-                    p.type = "uint256";
-                    array.push_back(p);
-                    decodeParams2(array, dataArray, readHead);
-                    string_q val = array[0].value;
-                    pPtr->value = ((val == "1") ? "true" : "false");
-
-                } else if (type.find("address") != string::npos) {
-
-                    CParameterArray array;
-                    CParameter p;
-                    p.type = "uint160";
-                    array.push_back(p);
-                    decodeParams2(array, dataArray, readHead);
-                    string_q val = array[0].value;
-                    pPtr->value = "0x" + padLeft(toLower(bnu_2_Hex(str_2_BigUint(val))), 40, '0');
-
-                } else if (type.find("uint") != string::npos) {
-
-                    string dataItem = dataArray[readHead];
-                    size_t bits = str_2_Uint(substitute(type,"uint",""));
-                    dataItem = "0x" + dataItem;
-                    biguint_t value = str_2_BigUint(dataItem, bits);
-                    pPtr->value = bnu_2_Str(value);
-                    readHead++;
-
-                } else if (type.find("int") != string::npos) {
-
-                    string dataItem = dataArray[readHead];
-                    size_t bits = str_2_Uint(substitute(type,"int",""));
-                    dataItem = "0x" + dataItem;
-
-                    bigint_t value = str_2_BigInt(dataItem, bits);
-                    pPtr->value = bni_2_Str(value);
-                    readHead++;
-
-                } else if (type.find("string") != string::npos) {
-
-                    string_q result;
-                    uint64_t strStart = (str_2_Uint("0x" + dataArray[readHead]) / 32);
-                    uint64_t stringLen = str_2_Uint("0x" + dataArray[strStart]);
-                    size_t nWords = (stringLen / 32) + 1;
-                    if (nWords <= dataArray.size()) { // some of the data sent in may be bogus, so we protext ourselves
-                        for (size_t w = 0 ; w < nWords ; w++) {
-                            size_t pos = strStart + 1 + w;
-                            if (pos < dataArray.size())
-                                result += dataArray[pos].substr(0, stringLen*2);
-                            stringLen -= 32;
-                        }
-                    }
-                    pPtr->value = hex_2_Str("0x" + result, 10000);
-                    readHead++;
-
-                } else if (type == "bytes") {
-
-                    uint64_t dataOffset = str_2_Uint("0x" + dataArray[readHead++]);
-                    size_t tPtr = dataOffset / 32;
-                    uint64_t byteLength = str_2_Uint("0x" + dataArray[tPtr++]);
-                    string_q result;
-                    size_t nWords = (byteLength / 32) + 1;
-                    for (size_t i = 0 ; i < nWords ; i++) {
-                        result += dataArray[tPtr++].substr(0, min(uint64_t(32*2), byteLength * 2));
-                        byteLength -= (32 * 2);
-                    }
-                    pPtr->value = "0x" + result;
-
-                } else if (type.find("bytes") != string::npos) {
-
-                    string dataItem = "0x" + dataArray[readHead];
-                    pPtr->value = dataItem;
-                    readHead++;
-
-                }
-
-            } else {
-                ASSERT(isArray);
-                if (type.find("]") == type.find("[") + 1) {
-
-                    size_t tPtr = readHead++;
-                    uint64_t arrOffset = str_2_Uint("0x" + dataArray[tPtr]);
-                    tPtr = arrOffset / 32;
-                    uint64_t elementNum = str_2_Uint("0x" + dataArray[tPtr++]);
-
-                    CParameterArray tmpArray;
-                    size_t firstBracePos = type.find('[');
-                    string paramType = type.substr(0, firstBracePos);
-                    if (paramType == "bytes")
-                        paramType = "bytes32";
-                    if(firstBracePos + 2 != type.size())
-                        paramType += type.substr(firstBracePos + 2);
-
-                    for (size_t i = 0; i < elementNum; i++) {
-                        CParameter p;
-                        p.type = paramType;
-                        tmpArray.push_back(p);
-                    }
-
-                    decodeParams2(tmpArray, dataArray, tPtr);
-                    string_q val;
-                    for (auto pppp : tmpArray) {
-                        if (!val.empty())
-                            val += ", ";
-                        val += pppp.value;
-                    }
-                    pPtr->value = "[" + val + "]";
-
-                } else if (type.find("]") != string::npos) {
-
-                    //int tempPointer;
-                    /*
-                     if(typeArray.size() != 1) {
-                     // Find offset pointing to "real values" of dynamic array
-                     uint64_t arrOffset = str_2_Uint(dataArray[readHead]);
-                     tempPointer = arrOffset / 32;
-                     } else {
-                     tempPointer = readHead;
-                     }
-                     */
-                    int elementNum = stoi(type.substr(type.find('[')+1, type.find(']')));
-                    CParameterArray tmpArray;
-                    size_t firstLBracePos = type.find('[');
-                    size_t firstRBracePos = type.find(']');
-                    string paramType = type.substr(0, firstLBracePos);
-                    if (firstRBracePos + 1 != type.size())
-                        paramType += type.substr(firstRBracePos + 1);
-                    for (int i = 0; i < elementNum; i++) {
-                        CParameter p;
-                        p.type = paramType;
-                        tmpArray.push_back(p);
-                    }
-                    decodeParams2(tmpArray, dataArray, readHead);
-                    string_q val;
-                    for (auto pppp : tmpArray) {
-                        if (!val.empty())
-                            val += ", ";
-                        val += pppp.value;
-                    }
-                    pPtr->value = "[" + val + "]";
-                    //readHead++;
-                }
-            }
-        }
-        return 1;
-    }
-
-
-//-----------------------------------------------------------------------------------------
-size_t parseTheData(CStringArray& dataArray, const string_q& dataStr) {
-
-    string_q str = trim(substitute(dataStr, "0x", ""), ' ');
-    ASSERT(!(str.size() % 64));
-    while (!str.empty()) {
-        string_q item = str.substr(0,64);
-        ASSERT(items.size() == 64);
-        replace(str, item, "");
-        dataArray.push_back(item);
-    }
-    return dataArray.size();
+    return 1;
 }
 
 //-----------------------------------------------------------------------------------------
-size_t extractParams(CStringArray& paramArray, const string_q& paramStr) {
+size_t extractParams(CParameterArray& paramArray, const string_q& paramStr) {
 
     string_q str = substitute(substitute(paramStr, "(", "|"), ")", "|");
 
     CStringArray parts;
     explode(parts, str, '|');
 
-    explode(paramArray, parts[1], ',');
+    CStringArray strArray;
+    explode(strArray, parts[1], ',');
 
-    size_t cnt = 0;
-    for (auto p : paramArray) {
+    for (auto p : strArray) {
 
         // remove extraneous spaces or tabs
         string type = trim(substitute(p, "\t", " "), ' ');
@@ -771,55 +631,48 @@ size_t extractParams(CStringArray& paramArray, const string_q& paramStr) {
         if (startsWith(type, "fixed[")) type = substitute(type, "fixed[", "fixed128x128[");
         if (startsWith(type, "ufixed[")) type = substitute(type, "ufixed[", "ufixed128x128[");
 
-        paramArray[cnt++] = type;
+        CParameter t;
+        t.type = type;
+        paramArray.push_back(t);
     }
     return paramArray.size();
 }
 
-//-----------------------------------------------------------------------------------------
-string_q decode(const string_q& function, const string_q& inputStr) {
-    CStringArray params;
-    extractParams(params, function);
-    if (verbose > 1) {
-        for (auto param : params)
-            cout << param << endl;
-    }
-
-    CStringArray inputs;
-    parseTheData(inputs, inputStr);
-    if (verbose > 1) {
-        for (auto input : inputs)
-            cout << input << endl;
-    }
-
-    size_t offset = 0;
-    return decodeParams(params, inputs, offset);
-}
-
 //---------------------------------------------------------------------------
-bool decodeRLP(CParameterArray& interfaces, const string_q& inputIn) {
+bool decodeRLP(CParameterArray& interfaces, const string_q& inputStr) {
 
+    // Clean up the input to work with the provided interfaces - one input row per 32 bytes
     CStringArray inputs;
-    if (inputIn.empty() || inputIn == "0x") {
+    if (inputStr.empty() || inputStr == "0x") {
+        // In the case where the input is empty, we fill up all the fixed sized slots with zero bytes
         for (auto i : interfaces)
             inputs.push_back(string_q(64, '0'));
     } else {
-        parseTheData(inputs, inputIn);
+        // Put each 32-byte segment into it's own string in the array
+        string_q str = trim(substitute(inputStr, "0x", ""), ' ');
+        ASSERT(!(str.size() % 64));
+        while (!str.empty()) {
+            string_q item = str.substr(0,64);
+            ASSERT(items.size() == 64);
+            replace(str, item, "");
+            inputs.push_back(item);
+        }
     }
 
-//    SHOW_FIELD(CParameter, "type");
-//    for (auto i : interfaces)
-//        cout << i << endl;
-//    for (auto ii : inputs)
-//        cout << ii << endl;
-
     size_t offset = 0;
-    return decodeParams2(interfaces, inputs, offset);
+    return goodDecoder(interfaces, inputs, offset);
 }
 
-//----------------------------------------------------------------------------
-extern string_q hex_2_Str_old(const string_q& inHex);
+//-----------------------------------------------------------------------------------------
+string_q decode(const string_q& function, const string_q& inputStr) {
 
+    CParameterArray interfaces;
+    extractParams(interfaces, function);
+    decodeRLP(interfaces, inputStr);
+    return params_2_Str(interfaces);
+}
+
+extern bool isPrintable(const string_q& inHex);
 //-----------------------------------------------------------------------
 bool CAbi::articulateTransaction(CTransaction *p) const {
 
@@ -852,7 +705,8 @@ bool CAbi::articulateTransaction(CTransaction *p) const {
                 return (ret1 || ret2);
             }
         }
-        p->articulatedTx.message = hex_2_Str_old(p->input);
+        if (isPrintable(p->input))
+            p->articulatedTx.message = hex_2_Str(p->input);
     }
     return false;
 }
@@ -860,13 +714,6 @@ bool CAbi::articulateTransaction(CTransaction *p) const {
 //-----------------------------------------------------------------------
 inline bool sortByPosition(const CParameter& v1, const CParameter& v2) {
     return v1.pos < v2.pos;
-}
-
-//-----------------------------------------------------------------------
-inline bool sortByIndexedPosition(const CParameter& v1, const CParameter& v2) {
-    uint64_t val1 = (v1.indexed ? 0 : 10000) + v1.pos;
-    uint64_t val2 = (v2.indexed ? 0 : 10000) + v2.pos;
-    return val1 < val2;
 }
 
 //-----------------------------------------------------------------------
@@ -886,11 +733,11 @@ bool CAbi::articulateLog(CLogEntry *p) const {
     // indexed). Developers may overcome this tradeoff and achieve both efficient search and arbitrary legibility
     // by defining events with two arguments — one indexed, one not — intended to hold the same value.
     //
-    // Upshot: Topics are always fixed length. Data needs to be parsed as RLP encoded. Since the indexed event
-    // args and the non-indexed event args can be interleaved, we need to decode them separately
+    // Upshot: Topics are always fixed length. They can be parsed as fixed length. The data field needs to be parsed
+    // as potentially variable length RLP encoded. Since the indexed event args and the non-indexed event args can
+    // be interleaved in the function interface, we need to decode them separately
     // TODO: SEARCH FOR ISSUE #1013
 
-//    bool ret = false;
     CAbi *ncABI = (CAbi*)this;
     for (size_t i = 0 ; i < ncABI->interfaces.size() ; i++) {
         CFunction *intf = &ncABI->interfaces[i];
@@ -912,35 +759,21 @@ bool CAbi::articulateLog(CLogEntry *p) const {
                     data.push_back(in);
                 }
             }
-//            SHOW_FIELD(CParameter, "pos");
-//            SHOW_FIELD(CParameter, "type");
-//            SHOW_FIELD(CParameter, "value");
-//            SHOW_FIELD(CParameter, "indexed");
-//            for (auto a : topics)
-//                cout << a << endl;
-//            for (auto a : data)
-//                cout << a << endl;
 
-            decodeRLP(topics, topicStr);
-            decodeRLP(data, p->data);
+            // decode each separately
+            bool ret1 = decodeRLP(topics, topicStr);
+            bool ret2 = decodeRLP(data, p->data);
 
-//            for (auto a : p->articulatedLog.inputs)
-//                cout << a << endl;
+            // put them back together in the right order and we're done
             p->articulatedLog.inputs.clear();
-            for (auto a : topics) {
+            for (auto a : topics)
                 p->articulatedLog.inputs.push_back(a);
-//                cout << a << endl;
-            }
-            for (auto a : data) {
+            for (auto a : data)
                 p->articulatedLog.inputs.push_back(a);
-//                cout << a << endl;
-            }
             sort(p->articulatedLog.inputs.begin(), p->articulatedLog.inputs.end(), sortByPosition);
-//            for (auto a : p->articulatedLog.inputs)
-//                cout << a << endl;
+            return (ret1 || ret2);
         }
     }
-
     return false;
 }
 
@@ -979,175 +812,3 @@ bool CAbi::articulateOutputs(const string_q& encoding, const string_q& output, C
 }
 // EXISTING_CODE
 }  // namespace qblocks
-
-#if 0
- //---------------------------------------------------------------------------
- inline string_q getBaseType(const string_q& type) {
- return type.substr(0, type.find('['));
- }
-
- //---------------------------------------------------------------------------
- inline void parseType(const string_q& type, string_q& baseType, uint64_t& size, uint64_t& count, uint64_t& nBits, uint64_t& remains) {
- baseType = getBaseType(type);
- count = 1; // not an array
- size = str_2_Uint(substitute(substitute(substitute(substitute(type,"uint",""),"int",""),"bytes",""),"address",""));
- if (contains(type, "[")) {
- string_q t = type;
- nextTokenClear(t, '[');
- count = str_2_Uint(t);
- }
- double ratio = (size / 256.);
- nBits = (uint64_t)(64 * ratio);
- remains = 64 - nBits;
- }
-
- twice uint[2]               uint[2][2]
- 0000000000000000000000000000000000000000000000000000000000000001\
- 0000000000000000000000000000000000000000000000000000000000000002\
-
- 0000000000000000000000000000000000000000000000000000000000000004\
- 0000000000000000000000000000000000000000000000000000000000000008\
- | [ [ 1, 2 ], [ 4, 8 ] ]
-
- twice uint128[3]            uint128[2][3], uint
- 0000000000000000000000000000000000000000000000000000000000000001\
- 0000000000000000000000000000000000000000000000000000000000000002\
- 0000000000000000000000000000000000000000000000000000000000000003\
-
- 0000000000000000000000000000000000000000000000000000000000000004\
- 0000000000000000000000000000000000000000000000000000000000000005\
- 0000000000000000000000000000000000000000000000000000000000000006\
- 000000000000000000000000000000000000000000000000000000000000000a\
- | [ [ 1, 2, 3 ], [ 4, 5, 6 ] ], 10
-
- twice three times uint[2]   uint128[2][3][2], uint
- 0000000000000000000000000000000000000000000000000000000000000001\
- 0000000000000000000000000000000000000000000000000000000000000002\
-
- 0000000000000000000000000000000000000000000000000000000000000003\
- 0000000000000000000000000000000000000000000000000000000000000004\
-
- 0000000000000000000000000000000000000000000000000000000000000005\
- 0000000000000000000000000000000000000000000000000000000000000006\
-
- 0000000000000000000000000000000000000000000000000000000000000001\
- 0000000000000000000000000000000000000000000000000000000000000002\
-
- 0000000000000000000000000000000000000000000000000000000000000003\
- 0000000000000000000000000000000000000000000000000000000000000004\
-
- 0000000000000000000000000000000000000000000000000000000000000005\
- 0000000000000000000000000000000000000000000000000000000000000006\
-
- 000000000000000000000000000000000000000000000000000000000000000a\
- |[[[1, 2], [3, 4], [5, 6]], [[1, 2], [3, 4], [5, 6]]], 10
-
- three times unknown         uint[3][], uint
- 0000000000000000000000000000000000000000000000000000000000000040\   skip 2
- 000000000000000000000000000000000000000000000000000000000000000a\   10
-
- 0000000000000000000000000000000000000000000000000000000000000002\
-
- 0000000000000000000000000000000000000000000000000000000000000001\
- 0000000000000000000000000000000000000000000000000000000000000002\
-
- 0000000000000000000000000000000000000000000000000000000000000003\
- 0000000000000000000000000000000000000000000000000000000000000004\
-
- 0000000000000000000000000000000000000000000000000000000000000005\
- 0000000000000000000000000000000000000000000000000000000000000006\
- |[[1, 2], [3, 4], [5, 6]], 10
-
- unknown times three         uint[][3], uint
- 0000000000000000000000000000000000000000000000000000000000000080\   skip 4
- 00000000000000000000000000000000000000000000000000000000000000e0\   skip 7
- 0000000000000000000000000000000000000000000000000000000000000140\   skip 10
- 000000000000000000000000000000000000000000000000000000000000000a\
-
- 0000000000000000000000000000000000000000000000000000000000000002\
- 0000000000000000000000000000000000000000000000000000000000000001\
- 0000000000000000000000000000000000000000000000000000000000000002\
-
- 0000000000000000000000000000000000000000000000000000000000000002\
- 0000000000000000000000000000000000000000000000000000000000000003\
- 0000000000000000000000000000000000000000000000000000000000000004\
-
- 0000000000000000000000000000000000000000000000000000000000000002\
- 0000000000000000000000000000000000000000000000000000000000000005\
- 0000000000000000000000000000000000000000000000000000000000000006\
- |[[1, 2], [3, 4], [5, 6]], 10
-#endif
-
-// TODO: If I remove the test for bytes, acctExport core dumps. If I put it back in some abi tests fail
-// TODO: SEARCH FOR ISSUE #1013
-//{
-//1848         "address": "0x159cf1e9ae58211b588f5e3bf1d7e423952d959b",
-//1849         "data": "
-//1850          0x
-//1851          0000000000000000000000000000000000000000000000190b89b83816780000
-//1852          0000000000000000000000000000000000000000000000000000000000000040
-//1853          0000000000000000000000000000000000000000000000000000000000000025
-//1854          486920426f6220476c617365722d2d20486572652061726520796f757220746f
-//1855          6b656e7321
-//1850         "logIndex": 3,
-//1851         "topics": [
-//1852           "0xc620c23091c77c537ae2f7deb703ecdea8b2cb3df9053ac018b281ffa1a9cae4",
-//1853           "0x000000000000000000000000f3c9c5719eb4f26a3ab45cb86771827629f9a999",
-//1854           "0x00000000000000000000000071d402ac181de4a8739a15f5a56141f64fc522f8"
-//1855         ],
-//1856         "articulatedLog": {
-//1857           "name": "TransferX",
-//1858           "inputs": [
-//1859             {
-//1860               "name": "_from",
-//1861               "type": "address",
-//1862               "value": "0xf3c9c5719eb4f26a3ab45cb86771827629f9a999"
-//1863             },
-//1864             {
-//1865               "name": "_to",
-//1866               "type": "address",
-//1867               "value": "0x71d402ac181de4a8739a15f5a56141f64fc522f8"
-//1868             },
-//1869             {
-//1870               "name": "_value",
-//1871               "type": "uint256",
-//1872               "value": "462000000000000000000"
-//1873             },
-//1874             {
-//1875               "name": "_transferMetaData",
-//1876               "type": "string"
-//1877             }
-//1878           ],
-//1879           "outputs": []
-//1880         }
-//
-// Test data from ./test/gold/libs/etherlib/abiTest/decode.txt
-//
-// THIS TEST CASE HAS A FIXED LEN DATA FOLLOWED BY DYNAMIC LEN ARRAY, BUT THE LENGHT PARAM IS FIRST UNLIKE ABOVE DATA
-// decode|decoding bool, uint256[]|function bz(bool, uint256[])|
-// 0x
-// 0000000000000000000000000000000000000000000000000000000000000001
-// 0000000000000000000000000000000000000000000000000000000000000040
-// 0000000000000000000000000000000000000000000000000000000000000001
-// 000000000000000000000000000000000000000000000000000000000000002a
-// |true, [42]
-//
-//
-// THIS TEST CASE CAPTURES THE CORE DUMP IF WE REMOVE THE TRY/CATCH BELOW
-// decode|decoding address,address,uint256,string|function baz(address,address,uint256,string)|
-// 0x
-// 000000000000000000000000f3c9c5719eb4f26a3ab45cb86771827629f9a999
-// 00000000000000000000000071d402ac181de4a8739a15f5a56141f64fc522f8
-// 0000000000000000000000000000000000000000000000190b89b83816780000
-// 0000000000000000000000000000000000000000000000000000000000000040
-// 0000000000000000000000000000000000000000000000000000000000000025
-// 486920426f6220476c617365722d2d20486572652061726520796f757220746f
-// 6b656e7321|
-// 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999,71d402ac181de4a8739a15f5a56141f64fc522f8,462000000000000000000,_transferX
-//
-// Remove the next test, and uncomment the above test case in ../test/gold/libs/etherlib/abiTest/decode.txt, and you
-// will have a test case that fails to ease debuggi ng
-//
-// There is also testing data in ../quickBlocks-monitors/clients/88_NthRound/ (note that you must have a file called
-// 'debug' in the local folder otherwise the data gets sent to the end user!!!)
-// TODO: SEARCH FOR ISSUE #1013

@@ -76,7 +76,7 @@ namespace qblocks {
     extern string_q    ts_2_Str     (timestamp_t ts);
 
     //----------------------------------------------------------------------------
-    extern string_q    hex_2_Str      (const string_q& inHex, size_t nBytes);
+    extern string_q    hex_2_Str      (const string_q& inHex, size_t nBytes=NOPOS);
 
     //-------------------------------------------------------------------------
     extern string_q    chr_2_HexStr   (const string_q& str);
