@@ -1,14 +1,6 @@
 #include <stdio.h>
 #include "etherlib.h"
-#include "tests.h"
-
-//-----------------------------------------------------------------------------------------
-class COptions : public COptionsBase {
-public:
-    COptions(void) {}
-    bool parseArguments(string_q& command) { return true; };
-    void Init(void) { minArgs = 0; };
-};
+#include "options.h"
 
 //-----------------------------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
