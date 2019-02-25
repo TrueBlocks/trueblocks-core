@@ -90,25 +90,23 @@ bool visitIndexFiles(const string_q& path, void *data) {
                         if (!strncmp(acct->address.c_str(), found[i].addr, 42)) {
 
                             // write to the screen (or redirected file)
-                            cout << bl << "\t" << tx << endl;
+                            //cout << bl << "\t" << tx << endl;
 
                             // write to the cache (probably don't need the screen print above)
-
-                            // CAcctCacheItem item(str_2_Uint(bl), str_2_Uint(tx));
-                            // lockSection(true);
-                            //// We found something...write it to the cache...
-                            // options->txCache << item.blockNum << item.transIndex;
-                            // options->txCache.flush();
-                            // options->writeLastBlock(item.blockNum);
-                            // lockSection(false);
+                            CAcctCacheItem item(str_2_Uint(bl), str_2_Uint(tx));
+                            lockSection(true);
+                            // We found something...write it to the cache...
+                            options->txCache << item.blockNum << item.transIndex;
+                            options->txCache.flush();
+                            options->writeLastBlock(item.blockNum);
+                            lockSection(false);
 
 // TODO(tjayrush)
 // stats issue
-// api issue
+// the send to api issue
 // write blocks issue
 // what is the 'blockCounted = false' issue?
 // is there a options->blkStats.nHit++ or options->transStats.nHit++ issue?
-// Send the data to an api if we have one
 
                             options->addrStats.nHit++;
                             static int rep = 0;
