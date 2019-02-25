@@ -484,15 +484,14 @@ string_q decodeParams(const CStringArray& typeArray, const CStringArray& dataArr
                 uint64_t strStart = (str_2_Uint("0x" + dataArray[readHead]) / 32);
                 uint64_t stringLen = str_2_Uint("0x" + dataArray[strStart]);
                 size_t nWords = (stringLen / 32) + 1;
-                if (nWords <= dataArray.size())
-                //{ // some of the data sent in may be bogus, so we protext ourselves
+                if (nWords <= dataArray.size()) { // some of the data sent in may be bogus, so we protext ourselves
                     for (size_t w = 0 ; w < nWords ; w++) {
                         size_t pos = strStart + 1 + w;
-                //        if (pos < dataArray.size())
+                        if (pos < dataArray.size())
                             result += dataArray[pos].substr(0, stringLen*2);
                         stringLen -= 32;
                     }
-//                }
+                }
                 ret += hex_2_Str("0x" + result, 10000);
                 readHead++;
 
@@ -620,11 +619,10 @@ string_q decodeParams(const CStringArray& typeArray, const CStringArray& dataArr
                     uint64_t strStart = (str_2_Uint("0x" + dataArray[readHead]) / 32);
                     uint64_t stringLen = str_2_Uint("0x" + dataArray[strStart]);
                     size_t nWords = (stringLen / 32) + 1;
-                    //if (nWords <= dataArray.size())
-                    { // some of the data sent in may be bogus, so we protext ourselves
+                    if (nWords <= dataArray.size()) { // some of the data sent in may be bogus, so we protext ourselves
                         for (size_t w = 0 ; w < nWords ; w++) {
                             size_t pos = strStart + 1 + w;
-//                            if (pos < dataArray.size())
+                            if (pos < dataArray.size())
                                 result += dataArray[pos].substr(0, stringLen*2);
                             stringLen -= 32;
                         }
