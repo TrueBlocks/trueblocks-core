@@ -441,16 +441,6 @@ bool CParameter::isValid(void) const {
     }
     return true;
 }
-
-//-----------------------------------------------------------------------
-bool CParameter::isDyn(void) const {
-    return (type == "string" || type == "bytes" || contains(type, "[]"));
-}
-
-//-----------------------------------------------------------------------
-bool CParameter::isMulti(void) const {
-    return (countOf(type, '[') > 1);
-}
 // EXISTING_CODE
 }  // namespace qblocks
 

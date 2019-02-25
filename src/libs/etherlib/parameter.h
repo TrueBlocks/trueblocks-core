@@ -70,11 +70,6 @@ public:
     bool isValid(void) const;
     bool noWrite;
     uint64_t pos;
-    bool isDyn(void) const;
-    bool isMulti(void) const;
-    size_t parseFixedType(string_q& input);
-    size_t parseFixedArray(string_q& input);
-    size_t parseDynamicType(string_q& input);
     // EXISTING_CODE
     bool operator==(const CParameter& item) const;
     bool operator!=(const CParameter& item) const { return !operator==(item); }
