@@ -177,17 +177,158 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    bigint_t str_2_BigInt(const string_q& s) {
-        return (s[0] == '-') ? bigint_t(str_2_BigUint(extract(s, 1, s.length() - 1)), -1)
-        : (s[0] == '+') ? bigint_t(str_2_BigUint(extract(s, 1, s.length() - 1)))
-        : bigint_t(str_2_BigUint(s));
+    inline bigint_t str_2_BigInt_nonhex(const string_q& s) {
+        biguint_t val;
+        if (s[0] == '-') {
+            string_q ss = s.substr(1,s.length());
+            val = str_2_BigUint(ss);
+            return bigint_t(val, -1);
+        } else if (s[0] == '+') {
+            string_q ss = s.substr(1,s.length());
+            val = str_2_BigUint(ss);
+            return bigint_t(val, 1);
+        }
+        return str_2_BigUint(s);
     }
 
     //--------------------------------------------------------------------------------
-    biguint_t str_2_BigUint(const string_q& str) {
-        if (isHexStr(str))
-            return str_2_Wei(str);
-        return biguint_t(BigUnsignedInABase(str, 10));
+    inline string_q getMax(size_t bits) {
+        typedef map<size_t, string_q> sizeMap;
+        static sizeMap map;
+        if (map.size() == 0) {
+            map[256] = "115792089237316195423570985008687907853269984665640564039457584007913129639935";
+            map[248] = "452312848583266388373324160190187140051835877600158453279131187530910662655";
+            map[240] = "1766847064778384329583297500742918515827483896875618958121606201292619775";
+            map[232] = "6901746346790563787434755862277025452451108972170386555162524223799295";
+            map[224] = "26959946667150639794667015087019630673637144422540572481103610249215";
+            map[216] = "105312291668557186697918027683670432318895095400549111254310977535";
+            map[208] = "411376139330301510538742295639337626245683966408394965837152255";
+            map[200] = "1606938044258990275541962092341162602522202993782792835301375";
+            map[192] = "6277101735386680763835789423207666416102355444464034512895";
+            map[184] = "24519928653854221733733552434404946937899825954937634815";
+            map[176] = "95780971304118053647396689196894323976171195136475135";
+            map[168] = "374144419156711147060143317175368453031918731001855";
+            map[160] = "1461501637330902918203684832716283019655932542975";
+            map[152] = "5708990770823839524233143877797980545530986495";
+            map[144] = "22300745198530623141535718272648361505980415";
+            map[136] = "87112285931760246646623899502532662132735";
+            map[128] = "340282366920938463463374607431768211455";
+            map[120] = "1329227995784915872903807060280344575";
+            map[112] = "5192296858534827628530496329220095";
+            map[104] = "20282409603651670423947251286015";
+            map[ 96] = "79228162514264337593543950335";
+            map[ 88] = "309485009821345068724781055";
+            map[ 80] = "1208925819614629174706175";
+            map[ 72] = "4722366482869645213695";
+            map[ 64] = "18446744073709551615";
+            map[ 56] = "72057594037927935";
+            map[ 48] = "281474976710655";
+            map[ 40] = "1099511627775";
+            map[ 32] = "4294967295";
+            map[ 24] = "16777215";
+            map[ 16] = "65535";
+            map[  8] = "255";
+        }
+        return map[bits];
+    }
+
+    //--------------------------------------------------------------------------------
+    bigint_t str_2_BigInt(const string_q& s, size_t bits) {
+        if (s.empty() || s == "0x")
+            return 0;
+
+        if (!isHexStr(s))
+            return str_2_BigInt_nonhex(s);
+
+        biguint_t uValIn = str_2_BigUint(s);
+
+        string_q ss = substitute(s, "0x", "");
+        ss = trimLeading(ss, '0');
+        size_t len = ss.length();
+
+extern uint64_t verbose;
+if (verbose > 1) {
+    cout << "bits:         " << bits << endl;
+    cout << "len:          " << len << endl;
+    cout << "l*4:          " << len * 4 << endl;
+    cout << "b/4:          " << (bits / 4) << endl;
+}
+
+        if (bits != 257 && len < bits / 4)
+            ss = padLeft(ss, bits / 4, '0');
+        else
+            bits = min((size_t)256, len * 4);
+
+if (verbose > 1)
+    cout << "s:            " << s << endl;
+
+        string_q maxStr = getMax(bits);
+        if (maxStr.empty())
+            return uValIn;
+        bigint_t maxInt = bigint_t(str_2_BigUint(maxStr), 1);
+
+if (verbose > 1) {
+    cout << "maxStr:       " << maxStr << endl;
+    cout << "maxInt:       " << maxInt << endl;
+}
+
+        bigint_t sVal = bigint_t(uValIn, 1);
+if (verbose > 1) {
+    cout << "sVal:         " << sVal << endl;
+    cout << "(maxInt / 2): " << (maxInt / 2) << endl;
+}
+
+        if (sVal > (maxInt / 2)) // If it's bigger than half, we have to wrap
+            sVal = sVal - maxInt - 1; // wrap if larger than half of max int256
+
+if (verbose > 1) {
+    cout << "sVal2:        " << sVal << endl;
+}
+
+        return sVal;
+    }
+
+    //--------------------------------------------------------------------------------
+    biguint_t str_2_BigUint(const string_q& str, size_t bits) {
+        if (str.empty() || str == "0x")
+            return 0;
+
+        string_q ss = substitute(str, "0x", "");
+        ss = trimLeading(ss, '0');
+
+        biguint_t ret;
+        if (isHexStr(str)) {
+            size_t lenInBits = ss.length() * 4;
+            if (lenInBits > bits && bits != 257) {
+                reverse(ss);
+                ss = ss.substr(0,bits/4);
+                reverse(ss);
+            }
+            ret = str_2_Wei("0x" + ss);
+        } else {
+            ret = biguint_t(BigUnsignedInABase(ss, 10));
+        }
+
+        if (bits == 257)
+            return ret;
+
+        string_q maxStr = getMax(bits);
+        if (maxStr.empty())
+            return ret;
+        biguint_t maxInt = biguint_t(BigUnsignedInABase(maxStr, 10));
+
+extern uint64_t verbose;
+if (verbose > 1) {
+    cout << "bits:         " << bits << endl;
+    cout << "maxStr:       " << maxStr << endl;
+    cout << "maxInt:       " << maxInt << endl;
+    cout << "ret:          " << ret << endl;
+}
+
+        if (ret > maxInt) // If it's bigger than the max size, we have to wrap
+            ret = (ret % maxInt);
+
+        return ret;
     }
 
     //--------------------------------------------------------------------------------
