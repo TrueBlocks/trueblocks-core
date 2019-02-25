@@ -3,6 +3,8 @@ decode_abi -th
 #### Usage
 
 `Usage:`    decode_abi [-v|-h]  
+`Purpose:`  Test abi decoding.
+             
 `Where:`  
 
 | Short Cut | Option | Description |
