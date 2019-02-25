@@ -800,7 +800,7 @@ string_q decode(const string_q& function, const string_q& inputStr) {
 bool decodeRLP(CParameterArray& interfaces, const string_q& inputIn) {
 
     CStringArray inputs;
-    if (inputIn.empty()) {
+    if (inputIn.empty() || inputIn == "0x") {
         for (auto i : interfaces)
             inputs.push_back(string_q(64, '0'));
     } else {
