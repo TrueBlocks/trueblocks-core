@@ -504,7 +504,7 @@ string_q decodeParams(const CStringArray& typeArray, const CStringArray& dataArr
                 string_q result;
                 size_t nWords = (byteLength / 32) + 1;
                 for (size_t i = 0 ; i < nWords ; i++) {
-                    result += dataArray[tPtr++].substr(0, min((32ULL * 2), byteLength * 2));
+                    result += dataArray[tPtr++].substr(0, min(uint64_t(32*2), byteLength * 2));
                     byteLength -= (32 * 2);
                 }
                 ret = "0x" + result;
@@ -640,7 +640,7 @@ string_q decodeParams(const CStringArray& typeArray, const CStringArray& dataArr
                     string_q result;
                     size_t nWords = (byteLength / 32) + 1;
                     for (size_t i = 0 ; i < nWords ; i++) {
-                        result += dataArray[tPtr++].substr(0, min((32ULL * 2), byteLength * 2));
+                        result += dataArray[tPtr++].substr(0, min(uint64_t(32*2), byteLength * 2));
                         byteLength -= (32 * 2);
                     }
                     pPtr->value = "0x" + result;
@@ -983,7 +983,6 @@ bool CAbi::articulateOutputs(const string_q& encoding, const string_q& output, C
 }  // namespace qblocks
 
 #if 0
-/*
  //---------------------------------------------------------------------------
  inline string_q getBaseType(const string_q& type) {
  return type.substr(0, type.find('['));
@@ -1004,10 +1003,6 @@ bool CAbi::articulateOutputs(const string_q& encoding, const string_q& output, C
  remains = 64 - nBits;
  }
 
-#endif
-
-#if 0
-/*
  twice uint[2]               uint[2][2]
  0000000000000000000000000000000000000000000000000000000000000001\
  0000000000000000000000000000000000000000000000000000000000000002\
@@ -1083,7 +1078,6 @@ bool CAbi::articulateOutputs(const string_q& encoding, const string_q& output, C
  0000000000000000000000000000000000000000000000000000000000000005\
  0000000000000000000000000000000000000000000000000000000000000006\
  |[[1, 2], [3, 4], [5, 6]], 10
- */
 #endif
 
 // TODO: If I remove the test for bytes, acctExport core dumps. If I put it back in some abi tests fail
