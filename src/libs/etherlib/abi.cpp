@@ -448,101 +448,99 @@ inline string_q params_2_Str(CParameterArray& interfaces) {
 }
 
 //------------------------------------------------------------------------------------------------
-size_t goodDecoder(CParameterArray& interfaces, const CStringArray& dataArray, size_t& readHead) {
+void loadType(CParameterArray& ar, const string_q& type) {
+    CParameter p;
+    p.type = type;
+    ar.push_back(p);
+}
+
+//------------------------------------------------------------------------------------------------
+size_t decodeTheData(CParameterArray& interfaces, const CStringArray& dataArray, size_t& readIndex) {
 
     for (size_t q = 0 ; q < interfaces.size() ; q++) {
 
         CParameter *pPtr = &interfaces[q];
         string_q type = pPtr->type;
 
-        bool isArray = (type.find("[") != string::npos);
-        if (!isArray) {
+        bool isBaseType = (type.find("[") != string::npos);
+        if (!isBaseType) {
 
             if (type.find("bool") != string::npos) {
-                CParameterArray array;
-                CParameter p;
-                p.type = "uint256";
-                array.push_back(p);
-                goodDecoder(array, dataArray, readHead);
-                string_q val = array[0].value;
-                pPtr->value = ((val == "1") ? "true" : "false");
+
+                // sugar
+                CParameterArray tmp;
+                loadType(tmp, "uint256");
+                decodeTheData(tmp, dataArray, readIndex);
+                pPtr->value = ((tmp[0].value == "1") ? "true" : "false");
 
             } else if (type.find("address") != string::npos) {
 
-                CParameterArray array;
-                CParameter p;
-                p.type = "uint160";
-                array.push_back(p);
-                goodDecoder(array, dataArray, readHead);
-                string_q val = array[0].value;
-                pPtr->value = "0x" + padLeft(toLower(bnu_2_Hex(str_2_BigUint(val))), 40, '0');
+                // sugar
+                CParameterArray tmp;
+                loadType(tmp, "uint160");
+                decodeTheData(tmp, dataArray, readIndex);
+                pPtr->value = "0x" + padLeft(toLower(bnu_2_Hex(str_2_BigUint(tmp[0].value))), 40, '0');
 
             } else if (type.find("uint") != string::npos) {
 
-                string dataItem = dataArray[readHead];
-                size_t bits = str_2_Uint(substitute(type,"uint",""));
-                dataItem = "0x" + dataItem;
-                biguint_t value = str_2_BigUint(dataItem, bits);
-                pPtr->value = bnu_2_Str(value);
-                readHead++;
+                size_t bits = str_2_Uint(substitute(type, "uint", ""));
+                pPtr->value = bnu_2_Str(str_2_BigUint("0x" + dataArray[readIndex++], bits));
 
             } else if (type.find("int") != string::npos) {
 
-                string dataItem = dataArray[readHead];
-                size_t bits = str_2_Uint(substitute(type,"int",""));
-                dataItem = "0x" + dataItem;
-                bigint_t value = str_2_BigInt(dataItem, bits);
-                pPtr->value = bni_2_Str(value);
-                readHead++;
+                size_t bits = str_2_Uint(substitute(type, "int", ""));
+                pPtr->value = bni_2_Str(str_2_BigInt("0x" + dataArray[readIndex++], bits));
 
             } else if (type.find("string") != string::npos) {
 
+                // Strings are dynamic sized. The fixed size part resides at readIndex and points to
+                // start of string. Start of string is length of string. Start of string + 1 is the string
                 string_q result;
-                uint64_t dataStart = (str_2_Uint("0x" + dataArray[readHead]) / 32);
-                uint64_t len =  str_2_Uint("0x" + dataArray[dataStart]);
-                size_t nWords = (len / 32) + 1;
+                uint64_t dataStart = (str_2_Uint("0x" + dataArray[readIndex]) / 32);
+                uint64_t nBytes =  str_2_Uint("0x" + dataArray[dataStart]);
+                size_t nWords = (nBytes / 32) + 1;
                 if (nWords <= dataArray.size()) { // some of the data sent in may be bogus, so we protext ourselves
                     for (size_t w = 0 ; w < nWords ; w++) {
                         size_t pos = dataStart + 1 + w;
                         if (pos < dataArray.size())
-                            result += dataArray[pos].substr(0, len * 2);  // at most 64
-                        len -= 32;
+                            result += dataArray[pos].substr(0, nBytes * 2);  // at most 64
+                        nBytes -= 32;
                     }
                 }
                 pPtr->value = hex_2_Str("0x" + result);
-                readHead++;
+                readIndex++;
 
             } else if (type == "bytes") {
 
                 string_q result;
-                uint64_t dataStart = (str_2_Uint("0x" + dataArray[readHead]) / 32);
-                uint64_t len = str_2_Uint("0x" + dataArray[dataStart]);
-                size_t nWords = (len / 32) + 1;
+                uint64_t dataStart = (str_2_Uint("0x" + dataArray[readIndex]) / 32);
+                uint64_t nBytes = str_2_Uint("0x" + dataArray[dataStart]);
+                size_t nWords = (nBytes / 32) + 1;
                 if (nWords <= dataArray.size()) { // some of the data sent in may be bogus, so we protext ourselves
                     for (size_t w = 0 ; w < nWords ; w++) {
                         size_t pos = dataStart + 1 + w;
                         if (pos < dataArray.size())
-                            result += dataArray[pos].substr(0, len * 2);  // at most 64
-                        len -= (32 * 2);
+                            result += dataArray[pos].substr(0, nBytes * 2);  // at most 64
+                        nBytes -= (32 * 2);
                     }
                 }
                 pPtr->value = "0x" + result;
-                readHead++;
+                readIndex++;
 
             } else if (type.find("bytes") != string::npos) {
 
-                string dataItem = "0x" + dataArray[readHead];
+                string dataItem = "0x" + dataArray[readIndex];
                 pPtr->value = dataItem;
-                readHead++;
+                readIndex++;
 
             }
 
         } else {
 
-            ASSERT(isArray);
+            ASSERT(isBaseType);
             if (type.find("]") == type.find("[") + 1) {
 
-                size_t tPtr = readHead++;
+                size_t tPtr = readIndex++;
                 uint64_t arrOffset = str_2_Uint("0x" + dataArray[tPtr]);
                 tPtr = arrOffset / 32;
                 uint64_t elementNum = str_2_Uint("0x" + dataArray[tPtr++]);
@@ -561,7 +559,7 @@ size_t goodDecoder(CParameterArray& interfaces, const CStringArray& dataArray, s
                     tmpArray.push_back(p);
                 }
 
-                goodDecoder(tmpArray, dataArray, tPtr);
+                decodeTheData(tmpArray, dataArray, tPtr);
                 pPtr->value = "[" + params_2_Str(tmpArray) + "]";
 
             } else if (type.find("]") != string::npos) {
@@ -570,10 +568,10 @@ size_t goodDecoder(CParameterArray& interfaces, const CStringArray& dataArray, s
                 /*
                  if(interfaces.size() != 1) {
                  // Find offset pointing to "real values" of dynamic array
-                 uint64_t arrOffset = str_2_Uint(dataArray[readHead]);
+                 uint64_t arrOffset = str_2_Uint(dataArray[readIndex]);
                  tempPointer = arrOffset / 32;
                  } else {
-                 tempPointer = readHead;
+                 tempPointer = readIndex;
                  }
                  */
                 int elementNum = stoi(type.substr(type.find('[')+1, type.find(']')));
@@ -588,9 +586,9 @@ size_t goodDecoder(CParameterArray& interfaces, const CStringArray& dataArray, s
                     p.type = paramType;
                     tmpArray.push_back(p);
                 }
-                goodDecoder(tmpArray, dataArray, readHead);
+                decodeTheData(tmpArray, dataArray, readIndex);
                 pPtr->value = "[" + params_2_Str(tmpArray) + "]";
-                //readHead++;
+                //readIndex++;
             }
         }
     }
@@ -660,7 +658,7 @@ bool decodeRLP(CParameterArray& interfaces, const string_q& inputStr) {
     }
 
     size_t offset = 0;
-    return goodDecoder(interfaces, inputs, offset);
+    return decodeTheData(interfaces, inputs, offset);
 }
 
 //-----------------------------------------------------------------------------------------
