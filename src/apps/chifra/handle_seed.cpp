@@ -11,8 +11,9 @@ bool COptions::handle_seed(void) {
 
     string_q source = configPath("chifra/ipfs_get.sh");
     string_q dest = indexFolder_prod;
-    cout << "source: " << source << endl;
-    cout << "dest: " << dest << endl;
+//    cout << "source: " << source << endl;
+//    cout << "dest: " << dest << endl;
+    establishFolder(dest);
 
     string_q contents;
     asciiFileToString(source, contents);
