@@ -21,6 +21,12 @@ int main(int argc, const char *argv[]) {
 }
 
 //-----------------------------------------------------------------------------------------
+namespace qblocks {
+    extern size_t extractParams(CParameterArray& paramArray, const string_q& paramStr);
+    extern string_q params_2_Str(CParameterArray& interfaces);
+}
+
+//-----------------------------------------------------------------------------------------
 void decodeTest(void) {
     cout << cTeal << "decodeTest2:" << cOff << endl;
     string_q contents;
@@ -39,7 +45,10 @@ void decodeTest(void) {
             test.desc = parts[2];
             test.input = parts[3];
             test.expected = parts[4];
-            cout << test.check(decode(test.desc, test.input));
+            CParameterArray interfaces;
+            extractParams(interfaces, test.desc);
+            decodeRLP(interfaces, test.input);
+            cout << test.check(params_2_Str(interfaces));
         } else if (startsWith(testcase, "#end"))
             return;
     }
