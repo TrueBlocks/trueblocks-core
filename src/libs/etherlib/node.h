@@ -127,8 +127,10 @@ namespace qblocks {
     #define blockFolder        (blockCachePath("blocks/"))
     #define bloomFolder        (blockCachePath("blooms/"))
 
-    #define indexFolder_prod   (blockCachePath("addr_index/sorted_by_addr/"))
-    #define indexFolder_stage  (blockCachePath("addr_index/unsorted_by_block/"))
+    #define indexFolder        (blockCachePath("addr_index/"))
+    #define indexFolder_prod   (indexFolder + "sorted_by_addr/")
+    #define indexFolder_stage  (indexFolder + "unsorted_by_block/")
+    #define indexFolder_zips   (indexFolder + "zips/")
 
     #define miniBlockCache     (blockCachePath("miniBlocks.bin"))
 #ifdef MINI_TRANS
