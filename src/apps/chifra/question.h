@@ -21,6 +21,6 @@ public:
     bool wantsInput;
     bool nl;
 
-         CQuestion  (const string_q& q,bool h, const string_q& c, QUESTIONFUNC f = NULL);
+         CQuestion  (const string_q& q, bool h, const string_q& c, QUESTIONFUNC f = NULL);
     bool getResponse(void);
 };
