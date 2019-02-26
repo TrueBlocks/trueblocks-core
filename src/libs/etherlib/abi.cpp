@@ -437,7 +437,7 @@ bool CAbi::loadAbiAndCache(const address_t& addr, bool raw, bool silent, bool de
 }
 
 //-----------------------------------------------------------------------------------------
-inline string_q params_2_Str(CParameterArray& interfaces) {
+string_q params_2_Str(CParameterArray& interfaces) {
     string_q ret;
     for (auto p : interfaces) {
         if (!ret.empty())
@@ -462,8 +462,8 @@ size_t decodeTheData(CParameterArray& interfaces, const CStringArray& dataArray,
         CParameter *pPtr = &interfaces[q];
         string_q type = pPtr->type;
 
-        bool isBaseType = (type.find("[") != string::npos);
-        if (!isBaseType) {
+        bool isBaseType = (type.find("[") == string::npos);
+        if (isBaseType) {
 
             if (type.find("bool") != string::npos) {
 
@@ -491,13 +491,13 @@ size_t decodeTheData(CParameterArray& interfaces, const CStringArray& dataArray,
                 size_t bits = str_2_Uint(substitute(type, "int", ""));
                 pPtr->value = bni_2_Str(str_2_BigInt("0x" + dataArray[readIndex++], bits));
 
-            } else if (type.find("string") != string::npos) {
+            } else if (type == "string" || type == "bytes") {
 
-                // Strings are dynamic sized. The fixed size part resides at readIndex and points to
+                // Strings and bytes are dynamic sized. The fixed size part resides at readIndex and points to
                 // start of string. Start of string is length of string. Start of string + 1 is the string
                 string_q result;
-                uint64_t dataStart = (str_2_Uint("0x" + dataArray[readIndex]) / 32);
-                uint64_t nBytes =  str_2_Uint("0x" + dataArray[dataStart]);
+                uint64_t dataStart = (str_2_Uint("0x" + dataArray[readIndex++]) / 32);
+                uint64_t nBytes = str_2_Uint("0x" + dataArray[dataStart]);
                 size_t nWords = (nBytes / 32) + 1;
                 if (nWords <= dataArray.size()) { // some of the data sent in may be bogus, so we protext ourselves
                     for (size_t w = 0 ; w < nWords ; w++) {
@@ -507,60 +507,40 @@ size_t decodeTheData(CParameterArray& interfaces, const CStringArray& dataArray,
                         nBytes -= 32;
                     }
                 }
-                pPtr->value = hex_2_Str("0x" + result);
-                readIndex++;
-
-            } else if (type == "bytes") {
-
-                string_q result;
-                uint64_t dataStart = (str_2_Uint("0x" + dataArray[readIndex]) / 32);
-                uint64_t nBytes = str_2_Uint("0x" + dataArray[dataStart]);
-                size_t nWords = (nBytes / 32) + 1;
-                if (nWords <= dataArray.size()) { // some of the data sent in may be bogus, so we protext ourselves
-                    for (size_t w = 0 ; w < nWords ; w++) {
-                        size_t pos = dataStart + 1 + w;
-                        if (pos < dataArray.size())
-                            result += dataArray[pos].substr(0, nBytes * 2);  // at most 64
-                        nBytes -= (32 * 2);
-                    }
-                }
-                pPtr->value = "0x" + result;
-                readIndex++;
+                pPtr->value = (type == "string" ? hex_2_Str("0x" + result) : "0x" + result);
 
             } else if (type.find("bytes") != string::npos) {
 
-                string dataItem = "0x" + dataArray[readIndex];
-                pPtr->value = dataItem;
-                readIndex++;
+                // bytes1 through bytes32 are fixed length
+                pPtr->value = "0x" + dataArray[readIndex++];
+
+            } else {
+
+                cerr << "Unknown type: " << type << " in decodeTheData" << endl;
 
             }
 
         } else {
 
-            ASSERT(isBaseType);
-            if (type.find("]") == type.find("[") + 1) {
+            ASSERT(!isBaseType);
+            if (type.find("[") == type.find("[]")) { // the first bracket is a dynamic array
 
-                size_t tPtr = readIndex++;
-                uint64_t arrOffset = str_2_Uint("0x" + dataArray[tPtr]);
-                tPtr = arrOffset / 32;
-                uint64_t elementNum = str_2_Uint("0x" + dataArray[tPtr++]);
+                size_t found = type.find('[');
+                string baseType = type.substr(0, found);
+                if (baseType == "bytes") baseType = "bytes32";
+                if (found + 2 != type.size())
+                    baseType += type.substr(found + 2);
 
-                CParameterArray tmpArray;
-                size_t firstBracePos = type.find('[');
-                string paramType = type.substr(0, firstBracePos);
-                if (paramType == "bytes")
-                    paramType = "bytes32";
-                if (firstBracePos + 2 != type.size())
-                    paramType += type.substr(firstBracePos + 2);
+                uint64_t dataStart = (str_2_Uint("0x" + dataArray[readIndex++]) / 32);
+                uint64_t nItems = str_2_Uint("0x" + dataArray[dataStart]);
 
-                for (size_t i = 0; i < elementNum; i++) {
-                    CParameter p;
-                    p.type = paramType;
-                    tmpArray.push_back(p);
-                }
+                CParameterArray tmp;
+                for (size_t i = 0; i < nItems; i++)
+                    loadType(tmp, baseType);
 
-                decodeTheData(tmpArray, dataArray, tPtr);
-                pPtr->value = "[" + params_2_Str(tmpArray) + "]";
+                size_t tPtr = dataStart + 1;
+                decodeTheData(tmp, dataArray, tPtr);
+                pPtr->value = "[" + params_2_Str(tmp) + "]";
 
             } else if (type.find("]") != string::npos) {
 
@@ -568,26 +548,24 @@ size_t decodeTheData(CParameterArray& interfaces, const CStringArray& dataArray,
                 /*
                  if(interfaces.size() != 1) {
                  // Find offset pointing to "real values" of dynamic array
-                 uint64_t arrOffset = str_2_Uint(dataArray[readIndex]);
-                 tempPointer = arrOffset / 32;
+                 uint64_t dataStart = str_2_Uint(dataArray[readIndex]);
+                 tempPointer = dataStart / 32;
                  } else {
                  tempPointer = readIndex;
                  }
                  */
-                int elementNum = stoi(type.substr(type.find('[')+1, type.find(']')));
-                CParameterArray tmpArray;
-                size_t firstLBracePos = type.find('[');
-                size_t firstRBracePos = type.find(']');
-                string paramType = type.substr(0, firstLBracePos);
-                if (firstRBracePos + 1 != type.size())
-                    paramType += type.substr(firstRBracePos + 1);
-                for (int i = 0; i < elementNum; i++) {
-                    CParameter p;
-                    p.type = paramType;
-                    tmpArray.push_back(p);
-                }
-                decodeTheData(tmpArray, dataArray, readIndex);
-                pPtr->value = "[" + params_2_Str(tmpArray) + "]";
+                size_t found1 = type.find('[');
+                size_t found2 = type.find(']');
+                string subType = type.substr(0, found1);
+                if (found2 + 1 != type.size())
+                    subType += type.substr(found2 + 1);
+
+                int nBytes = stoi(type.substr(type.find('[')+1, type.find(']')));
+                CParameterArray tmp;
+                for (int i = 0; i < nBytes; i++)
+                    loadType(tmp, subType);
+                decodeTheData(tmp, dataArray, readIndex);
+                pPtr->value = "[" + params_2_Str(tmp) + "]";
                 //readIndex++;
             }
         }
@@ -629,9 +607,7 @@ size_t extractParams(CParameterArray& paramArray, const string_q& paramStr) {
         if (startsWith(type, "fixed[")) type = substitute(type, "fixed[", "fixed128x128[");
         if (startsWith(type, "ufixed[")) type = substitute(type, "ufixed[", "ufixed128x128[");
 
-        CParameter t;
-        t.type = type;
-        paramArray.push_back(t);
+        loadType(paramArray, type);
     }
     return paramArray.size();
 }
@@ -661,16 +637,6 @@ bool decodeRLP(CParameterArray& interfaces, const string_q& inputStr) {
     return decodeTheData(interfaces, inputs, offset);
 }
 
-//-----------------------------------------------------------------------------------------
-string_q decode(const string_q& function, const string_q& inputStr) {
-
-    CParameterArray interfaces;
-    extractParams(interfaces, function);
-    decodeRLP(interfaces, inputStr);
-    return params_2_Str(interfaces);
-}
-
-extern bool isPrintable(const string_q& inHex);
 //-----------------------------------------------------------------------
 bool CAbi::articulateTransaction(CTransaction *p) const {
 
@@ -703,6 +669,8 @@ bool CAbi::articulateTransaction(CTransaction *p) const {
                 return (ret1 || ret2);
             }
         }
+
+extern bool isPrintable(const string_q& inHex);
         if (isPrintable(p->input))
             p->articulatedTx.message = hex_2_Str(p->input);
     }
