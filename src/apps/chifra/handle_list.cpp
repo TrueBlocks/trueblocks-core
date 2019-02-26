@@ -9,35 +9,20 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_list(void) {
 
-    ostringstream cmd;
-
-    cout << cGreen << "Monitor path: " << cWhite << blockCachePath("monitors/") << endl;
-    cmd << "cd " << blockCachePath("monitors/") << " ; ls";
-
-    string_q result = doCommand(cmd.str());
-
-    CStringArray files;
-    explode(files, result, '\n');
-    sort(files.begin(), files.end());
-
-    size_t widest = 0;
-    for (auto file : files)
-        if (file.length() > widest)
-            widest = file.length();
-    size_t nWide = (90 / widest);
-
-    cout << widest << endl;
-    cout << cGreen << "Current monitors:" << cOff << endl << "    ";
-    cout << cTeal;
-    size_t cnt = 0;
-    for (auto file : files) {
-        if (file != "file") {
-            cout << padRight(file, widest + 1);
-            if (!(++cnt % nWide))
-                cout << endl << "    ";
-        }
+    remainder = substitute(remainder,"|","");
+    if (!isAddress(remainder))
+        return usage(remainder + " does not appear to be an address. Quitting...");
+    CAccountWatch watch;
+    watch.address = remainder;
+    watch.name = trim(remainder, '|');
+    watch.color = colors[watches.size()%nColors];
+    watches.push_back(watch);
+    if (monitorName.empty())
+        monitorName = watch.name;
+    cerr << cGreen << cOff << "\tAdded watch: " << watch.color << watch.address << cOff << " (" << watch.name << ")" << endl;
+    if (!makeNewMonitor()) {
+        remainder = watches[0].address;
+        return handle_freshen();
     }
-    cout << endl;
-
     return true;
 }
