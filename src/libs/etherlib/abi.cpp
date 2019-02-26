@@ -716,7 +716,7 @@ bool CAbi::articulateLog(CLogEntry *p) const {
             string_q topicStr; size_t which = 1, pos = 0;
             CParameterArray topics, data;
             for (auto in : p->articulatedLog.inputs) {
-                if (in.indexed) {
+                if (in.indexed && which < p->topics.size()) {
                     in.pos = pos++;
                     topics.push_back(in);
                     topicStr += topic_2_Str(p->topics[which++]);
