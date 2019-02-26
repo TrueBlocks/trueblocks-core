@@ -28,6 +28,8 @@ int main(int argc, const char *argv[]) {
             return options.handle_config();
         else if (options.mode == "seed")
             return options.handle_seed();
+        else if (options.mode == "list")
+            return options.handle_list();
         else if (options.mode == "daemon")
             return options.handle_daemon();
         else if (options.mode == "scrape")
@@ -35,7 +37,7 @@ int main(int argc, const char *argv[]) {
         else if (options.mode == "export")
             return options.handle_export();
         else if (options.mode == "ls")
-            return options.handle_list();
+            return options.handle_ls();
         else
             cerr << "Should not happen.";
     }

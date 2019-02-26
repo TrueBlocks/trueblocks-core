@@ -82,8 +82,28 @@ bool COptions::handle_init(void) {
         return false;
     }
 
-const char* STR_WATCH2 =
-"    { address = \"{ADDR}\", name = \"{NAME}\", firstBlock = {FB}, color = \"{COLOR}\" },\n";
+    return makeNewMonitor();
+}
+
+//----------------------------------------------------------------
+bool moveToProduction(const string_q& path, void *data) {
+//    COptions *options = reinterpret_cast<COptions*>(data);
+    if (endsWith(path, "/")) {
+        forEveryFileInFolder(path + "*", moveToProduction, data);
+    } else {
+        if (endsWith(path, ".toml") ||
+            endsWith(path, ".txt") ||
+            endsWith(path, ".acct.bin") ||
+            endsWith(path, ".bak"))
+            moveFile(path, toProduction(path));
+    }
+    return true;
+}
+
+//----------------------------------------------------------------
+bool COptions::makeNewMonitor(void) {
+    const char* STR_WATCH2 =
+    "    { address = \"{ADDR}\", name = \"{NAME}\", firstBlock = {FB}, color = \"{COLOR}\" },\n";
 
     string_q stagingPath = blockCachePath("monitors/staging/" + toLower(monitorName) + "/");
     establishFolder(stagingPath + "cache/");
@@ -123,22 +143,6 @@ const char* STR_WATCH2 =
         forEveryFileInFolder(stagingPath, moveToProduction, this);
         ::rmdir((stagingPath + "cache/").c_str());
         ::rmdir(stagingPath.c_str());
-    }
-
-    return true;
-}
-
-//----------------------------------------------------------------
-bool moveToProduction(const string_q& path, void *data) {
-//    COptions *options = reinterpret_cast<COptions*>(data);
-    if (endsWith(path, "/")) {
-        forEveryFileInFolder(path + "*", moveToProduction, data);
-    } else {
-        if (endsWith(path, ".toml") ||
-            endsWith(path, ".txt") ||
-            endsWith(path, ".acct.bin") ||
-            endsWith(path, ".bak"))
-            moveFile(path, toProduction(path));
     }
     return true;
 }
