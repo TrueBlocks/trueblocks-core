@@ -26,6 +26,8 @@ int main(int argc, const char *argv[]) {
             return options.handle_freshen();
         else if (options.mode == "config")
             return options.handle_config();
+        else if (options.mode == "seed")
+            return options.handle_seed();
         else if (options.mode == "daemon")
             return options.handle_daemon();
         else if (options.mode == "scrape")
