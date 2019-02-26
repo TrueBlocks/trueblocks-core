@@ -6,7 +6,7 @@
 #include "question.h"
 
 //---------------------------------------------------------------------
-CQuestion::CQuestion(const string_q& q,bool h, const string_q& c, QUESTIONFUNC f)
+CQuestion::CQuestion(const string_q& q, bool h, const string_q& c, QUESTIONFUNC f)
   : question(q), answer(""), color(c), func(f), wantsInput(h), nl(false) {
 }
 
