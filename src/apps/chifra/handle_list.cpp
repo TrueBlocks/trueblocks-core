@@ -10,6 +10,8 @@
 bool COptions::handle_list(void) {
 
     ostringstream cmd;
+
+    cout << cGreen << "Monitor path: " << cWhite << blockCachePath("monitors/") << endl;
     cmd << "cd " << blockCachePath("monitors/") << " ; ls";
 
     string_q result = doCommand(cmd.str());
