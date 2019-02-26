@@ -127,7 +127,7 @@ bool processTrans(const CBlock& block, const CTransaction *trans, COptions *opti
     // As soon as we have a hit on any account, we're done since we only want to write a transaction once...
     for (size_t ac = 0 ; ac < options->monitors.size() && !hit ; ac++) {
 
-        options->ex_data = toLower("chifra/v0.0.1: " + options->name + "_" + options->monitors[0].address);
+        options->ex_data = toLower("chifra/" + getVersionStr() + ": " + options->name + "_" + options->monitors[0].address);
 
         // For each account we're monitoring...
         const CAccountWatch *acct = &options->monitors[ac];
