@@ -45,6 +45,7 @@ bool COptions::parseArguments(string_q& command) {
 
     if (mode.empty())
         return usage("Please specify " + params[0].description + ". Quitting...");
+    remainder = trim(remainder, '|');
 
     return true;
 }
