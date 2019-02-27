@@ -29,6 +29,5 @@ bool COptions::handle_config(void) {
             if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
         }
     }
-
     return true;
 }
