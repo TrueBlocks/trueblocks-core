@@ -61,11 +61,14 @@ bool COptions::handle_seed(void) {
             // copy the new zip locally and unzip it
             os << "cp -p \"" << zipFile << "\" \"" << indexFolder_prod << parts[4] << "\" ; ";
             os << "gunzip \"" << parts[4] << "\" ; cd -";
-            cerr << "Seeding " << cTeal << textFile << cOff << endl;
-            if (isTestMode())
+
+            if (isTestMode()) {
+                cerr << "Seeding " << cTeal << substitute(textFile, blockCachePath(""), "$BLOCK_CACHE/") << cOff << endl;
                 cout << substitute(os.str(), blockCachePath(""), "$BLOCK_CACHE/") << endl;
-            else
+            } else {
+                cerr << "Seeding " << cTeal << textFile << cOff << endl;
                 if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+            }
         } else {
             if (verbose)
                 cout << "Index file " << cTeal << textFile << cOff << " exists." << endl;
