@@ -173,6 +173,19 @@ bool COptions::parseArguments(string_q& command) {
 
     }
 
+    if (watches.empty()) {
+        for (auto file : filenames) {
+            if (contains(file, ".acct.bin")) {
+                file = substitute(file, ".acct.bin", "");
+                CAccountWatch watch;
+                watch.address = file;
+                watch.name = file;
+                watch.color = cBlue; //convertColor(watch.color);
+                watches.push_back(watch);
+            }
+        }
+    }
+
     return true;
 }
 

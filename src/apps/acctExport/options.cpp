@@ -85,7 +85,7 @@ bool COptions::parseArguments(string_q& command) {
         CAccountWatch watch;
         watch.address = forceAddr;
         watch.name = forceAddr;
-        watch.color = convertColor(watch.color);
+        watch.color = cBlue; //convertColor(watch.color);
         watches.push_back(watch);
     } else {
         if (!loadWatches(toml))
