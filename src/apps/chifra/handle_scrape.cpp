@@ -18,6 +18,6 @@ bool COptions::handle_scrape(void) {
         cout << os.str();
     else
         if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
-    return true;
 
+    return true;
 }

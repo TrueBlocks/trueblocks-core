@@ -18,7 +18,8 @@ bool COptions::handleWrite(const string_q& outputFilename, const CAcctCacheItemA
     cerr << "\tWriting...";
 
     string_q contents;
-    asciiFileToString(getTransCacheLast(watches[0].address), contents);
+    if (watches.size() > 0)
+        asciiFileToString(getTransCacheLast(watches[0].address), contents);
     blknum_t currentLastItem = str_2_Uint(contents);
 
     CArchive txCache(WRITING_ARCHIVE);
