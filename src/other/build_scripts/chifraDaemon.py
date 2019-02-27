@@ -14,7 +14,10 @@ def signal_handler(signal, frame):
 # Define a signals handler to capture at least Ctrl+C
 signal.signal(signal.SIGINT, signal_handler)
 
-timeout = 5
+timeout = 14
+if len(sys.argv) > 1:
+    timeout = sys.argv[1]
+
 while True:
     os.system('ls 0x*.acct.bin | sed "s/\.acct\.bin//" >./file')
     with open('./file') as f:

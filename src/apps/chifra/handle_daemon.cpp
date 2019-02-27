@@ -12,7 +12,7 @@ bool COptions::handle_daemon(void) {
 
     ostringstream os;
     os << "cd " << monitorsPath << " ; ";
-    os << "chifraDaemon.py";
+    os << "chifraDaemon.py " << flags;
     if (isTestMode())
         cout << substitute(os.str(), blockCachePath(""), "$BLOCK_CACHE/") << endl;
     else {

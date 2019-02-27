@@ -138,7 +138,7 @@ bool COptions::makeNewMonitor(void) {
     "    { address = \"{ADDR}\", name = \"{NAME}\", firstBlock = {FB}, color = \"{COLOR}\" },\n";
 
     string_q stagingPath = blockCachePath("monitors/staging/" + toLower(monitorName) + "/");
-    establishFolder(stagingPath + "cache/");
+    establishFolder(stagingPath + "c ache/");
     string_q fileName = stagingPath + "config.toml";
     if (fileExists(fileName) || fileExists(toProduction(fileName)))
         return usage("This monitor already exists. Quitting...");
@@ -171,9 +171,9 @@ bool COptions::makeNewMonitor(void) {
         if (verbose > 1)
             cout << config << endl;
         handle_freshen(stagingPath);
-        establishFolder(toProduction(stagingPath + "cache/"));
+        establishFolder(toProduction(stagingPath + "c ache/"));
         forEveryFileInFolder(stagingPath, moveToProduction, this);
-        ::rmdir((stagingPath + "cache/").c_str());
+        ::rmdir((stagingPath + "c ache/").c_str());
         ::rmdir(stagingPath.c_str());
     }
 

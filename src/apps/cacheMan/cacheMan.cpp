@@ -198,7 +198,8 @@ int sortByBlock(const void *v1, const void *v2) {
 void COptions::writeLastBlock(blknum_t bn) {
     if (isTestMode())
         return;
-    stringToAsciiFile(getTransCacheLast(watches[0].address), uint_2_Str(bn) + "\n");
+    if (watches.size() > 0)
+        stringToAsciiFile(getTransCacheLast(watches[0].address), uint_2_Str(bn) + "\n");
 }
 
 //-------------------------------------------------------------------------
