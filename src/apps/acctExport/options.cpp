@@ -80,8 +80,8 @@ bool COptions::parseArguments(string_q& command) {
     manageFields(toml.getConfigStr("fields", "show", ""), true );
 
     if (!forceAddr.empty()) {
-        minWatchBlock = 0;
-        maxWatchBlock = UINT32_MAX;
+//        minWatchBlock = 0;
+//        maxWatchBlock = UINT32_MAX;
         CAccountWatch watch;
         watch.address = forceAddr;
         watch.name = forceAddr;
