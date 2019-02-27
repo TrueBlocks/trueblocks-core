@@ -16,12 +16,11 @@ signal.signal(signal.SIGINT, signal_handler)
 
 timeout = 5
 while True:
-    os.system('ls 0x*.acct.bin >./file')
+    os.system('ls 0x*.acct.bin | sed "s/\.acct\.bin//" >./file')
     with open('./file') as f:
         addrs = f.read().splitlines()
         for addr in addrs:
-            command = command + 'acctScrape --for_addr ' + addr + ' -l 1 -m 50000 ; '
-            os.system(command)
+            os.system('chifra freshen ' + addr)
             time.sleep(0.1)
         f.close()
     print("{}".format(datetime.now().strftime("%Y/%m/%d:%H:%M:%S")) + ": sleeping " + str(timeout) + " seconds (Ctrl+C to quit...)")

@@ -9,6 +9,11 @@ acctExport -h
 	-l  (--filter val)    show results for this address (you may specify more than one filter)
 	-u  (--useBlooms)     use bloom filters to decide whether or not to re-check the cache
 	-i  (--ignoreDdos)    ignore apparent dDos transactions.
+
+#### Hidden options (shown during testing only)
+	-f  (--for_addr val)  force a scrape on the given account
+#### Hidden options (shown during testing only)
+
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 
