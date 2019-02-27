@@ -18,7 +18,7 @@ bool COptions::handleWrite(const string_q& outputFilename, const CAcctCacheItemA
     cerr << "\tWriting...";
 
     string_q contents;
-    asciiFileToString(getTransCachePath("lastBlock.txt"), contents);
+    asciiFileToString(getTransCacheLast(watches[0].address), contents);
     blknum_t currentLastItem = str_2_Uint(contents);
 
     CArchive txCache(WRITING_ARCHIVE);
@@ -46,7 +46,7 @@ bool COptions::handleWrite(const string_q& outputFilename, const CAcctCacheItemA
         lockSection(true);
         txCache.Write(writeArray.data(), sizeof(CWriteItem), writeArray.size());
         if (!filterFunc)  // we only write the last block marker if we're not removing records
-            writeLastBlock(newLastItem);
+            ((COptions*)this)->writeLastBlock(newLastItem);
         lockSection(false);
         cerr << cYellow << writeArray.size() << cOff << " records written, ";
         cerr << cYellow << (dataArray.size() - writeArray.size()) << cOff << " records " << (filterFunc ? "removed" : "ignored") << ".\n";

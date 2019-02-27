@@ -159,7 +159,7 @@ int main(int argc, const char *argv[]) {
                             txCache2.Release();
                             // write the last block to file
                             if (lastBlock > prevLastBlock || options.stats.nTruncs)
-                                writeLastBlock(lastBlock);
+                                options.writeLastBlock(lastBlock);
                         } else {
                             cerr << "Could not create corrected file `" << options.filenames[fn] << ". Quitting...";
                             return 1;
@@ -172,7 +172,7 @@ int main(int argc, const char *argv[]) {
                     // write the last block to file
                     if (!isTestMode()) {
                         if (lastItem.blockNum > prevLastBlock || options.stats.nTruncs)
-                            writeLastBlock(lastItem.blockNum);
+                            options.writeLastBlock(lastItem.blockNum);
                     }
                 }
             }
@@ -195,10 +195,10 @@ int sortByBlock(const void *v1, const void *v2) {
 }
 
 //-------------------------------------------------------------------------
-void writeLastBlock(blknum_t bn) {
+void COptions::writeLastBlock(blknum_t bn) {
     if (isTestMode())
         return;
-    stringToAsciiFile(getTransCachePath("lastBlock.txt"), uint_2_Str(bn) + "\n");
+    stringToAsciiFile(getTransCacheLast(watches[0].address), uint_2_Str(bn) + "\n");
 }
 
 //-------------------------------------------------------------------------

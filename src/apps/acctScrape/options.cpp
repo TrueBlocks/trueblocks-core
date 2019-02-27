@@ -14,6 +14,7 @@ static const COption params[] = {
     COption("@noBloom(s)",       "do not use adaptive enhanced blooms (much faster if you use them)"),
     COption("@noBloc(k)s",       "do not use binary block cache (much faster if you use them)"),
     COption("@l(i)st",           "ignore all other options and export tab delimited bn.txid records"),
+    COption("@for_addr:<val>",   "force a scrape on the given account"),
     COption("",                  "Index transactions for a given Ethereum address (or series of addresses).\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -26,6 +27,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     bool isAll = false;
+    address_t forceAddr;
 
     Init();
     explode(arguments, command, ' ');
@@ -52,6 +54,12 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-s" || arg == "--noBlooms") {
             ignoreBlooms = true;
+
+        } else if (startsWith(arg, "-f:") || startsWith(arg, "--for_addr:")) {
+            arg = substitute(substitute(arg, "-f:", ""), "--for_addr:", "");
+            if (!isAddress(arg))
+                return usage(arg + " does not appear to be a valid address. Quitting...");
+            forceAddr = arg;
 
         } else if (arg == "-i" || arg == "--list") {
             isList = true;
@@ -123,27 +131,42 @@ bool COptions::parseArguments(string_q& command) {
             return usage("You may provide an address only with the --list option. Quitting...");
     }
 
-    if (!toml || !fileExists(toml->getFilename()))
-        return usage("Cannot read toml file " + toml->getFilename() + ". Are you in the right folder? Quitting...\n");
+    if (forceAddr.empty()) {
+        if (!toml || !fileExists(toml->getFilename()))
+            return usage("Cannot read toml file " + toml->getFilename() + ". Are you in the right folder? Quitting...\n");
 
-    manageFields(toml->getConfigStr("fields", "hide", ""), false);
-    manageFields(toml->getConfigStr("fields", "show", ""), true );
+        manageFields(toml->getConfigStr("fields", "hide", ""), false);
+        manageFields(toml->getConfigStr("fields", "show", ""), true );
+    }
 
     if (!isParity() || !nodeHasTraces())
         return usage("This tool will only run if it is running against a Parity node that has tracing enabled. Quitting...");
 
-    if (!folderExists(getTransCachePath(""))) {
-        cerr << "The cache folder '" << getTransCachePath("") << "' not found. Trying to create it." << endl;
-        establishFolder(getTransCachePath(""));
-        if (!folderExists(getTransCachePath("")))
-            return usage("The cache folder '" + getTransCachePath("") + "' not created. Quiting...");
+    string_q transCachePath = getTransCachePath("");
+    if (!folderExists(transCachePath)) {
+        cerr << "The cache folder '" << transCachePath << "' not found. Trying to create it." << endl;
+        establishFolder(transCachePath);
+        if (!folderExists(transCachePath))
+            return usage("The cache folder '" + transCachePath + "' not created. Quiting...");
     }
 
-    if (!loadMonitors())
-        return false;
+    if (!forceAddr.empty()) {
+        minWatchBlock = 0;
+        maxWatchBlock = UINT32_MAX;
+        CAccountWatch watch;
+        watch.address = forceAddr;
+        watch.name = forceAddr;
+        watch.color = convertColor(watch.color);
+        monitors.push_back(watch);
+
+    } else {
+        if (!loadMonitors())
+            return false;
+    }
 
     cacheFilename = getTransCachePath(monitors[0].address);
-    if (fileExists(cacheFilename+".lck") || fileExists(getTransCachePath("lastBlock.txt.lck")))
+    string_q lb   = getTransCacheLast(monitors[0].address);
+    if (fileExists(cacheFilename+".lck") || fileExists(lb + ".lck"))
         return usage("The cache file '" + (cacheFilename+".lck") + "' is locked. Quitting...");
 
     string_q bloomPath = blockCachePath("/blooms/");
@@ -159,10 +182,10 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (!isTestMode())
-        cerr << bBlack << Now().Format(FMT_JSON) << cOff << ": Monitoring " << cYellow << getCWD() << cOff << "             \n";
+        cerr << bBlack << Now().Format(FMT_JSON) << cOff << ": Monitoring " << cYellow << cacheFilename << cOff << "             \n";
 
     lastInCache = getLatestBlockFromCache();
-    lastVisited = str_2_Uint(asciiFileToString(getTransCachePath("lastBlock.txt")));
+    lastVisited = str_2_Uint(asciiFileToString(getTransCacheLast(monitors[0].address)));
     if (minWatchBlock > 0)
         lastVisited = max(minWatchBlock - 1, lastVisited);
 
@@ -393,7 +416,7 @@ bool COptions::loadMonitors(void) {
 //-------------------------------------------------------------------------
 void COptions::writeLastBlock(blknum_t bn) {
     if (!isTestMode())
-        stringToAsciiFile(getTransCachePath("lastBlock.txt"), uint_2_Str(bn) + "\n");
+        stringToAsciiFile(getTransCacheLast(monitors[0].address), uint_2_Str(bn) + "\n");
     else
         cerr << "Would have written lastBlock.txt file: " << bn << endl;
 }

@@ -14,6 +14,7 @@ static const COption params[] = {
     COption("-fi(l)ter:<addr>", "show results for this address (you may specify more than one filter)"),
     COption("-useBlooms",       "use bloom filters to decide whether or not to re-check the cache"),
     COption("-ignoreDdos",      "ignore apparent dDos transactions."),
+    COption("@for_addr:<val>",  "force a scrape on the given account"),
     COption("",                 "Export transactions for one or more Ethereum addresses.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -28,6 +29,8 @@ bool COptions::parseArguments(string_q& command) {
     CStringArray filters;
     if (!standardOptions(command))
         return false;
+
+    address_t forceAddr;
 
     Init();
     explode(arguments, command, ' ');
@@ -44,6 +47,12 @@ bool COptions::parseArguments(string_q& command) {
             arg = substitute(substitute(arg, "-l:", ""), "--filter:", "");
             filters.push_back(arg);
 
+        } else if (startsWith(arg, "-f:") || startsWith(arg, "--for_addr:")) {
+            arg = substitute(substitute(arg, "-f:", ""), "--for_addr:", "");
+            if (!isAddress(arg))
+                return usage(arg + " does not appear to be a valid address. Quitting...");
+            forceAddr = arg;
+
         } else if (arg == "-i" || arg == "--ignoreDdos") {
             ignoreDdos = true;
 
@@ -57,8 +66,10 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (!fileExists("./config.toml"))
-        return usage("The config.toml file was not found. Are you in the right folder? Quitting...\n");
+    if (forceAddr.empty()) {
+        if (!fileExists("./config.toml"))
+            return usage("The config.toml file was not found. Are you in the right folder? Quitting...\n");
+    }
 
     // show certain fields and hide others
     manageFields(defHide, false);
@@ -68,8 +79,31 @@ bool COptions::parseArguments(string_q& command) {
     manageFields(toml.getConfigStr("fields", "hide", ""), false);
     manageFields(toml.getConfigStr("fields", "show", ""), true );
 
-    if (!loadWatches(toml))
-        return false;
+    if (!forceAddr.empty()) {
+        minWatchBlock = 0;
+        maxWatchBlock = UINT32_MAX;
+        CAccountWatch watch;
+        watch.address = forceAddr;
+        watch.name = forceAddr;
+        watch.color = convertColor(watch.color);
+        watches.push_back(watch);
+    } else {
+        if (!loadWatches(toml))
+            return false;
+    }
+
+    // Try to articulate the watched addresses
+    for (size_t i = 0 ; i < watches.size() ; i++) {
+        CAccountWatch *watch = &watches[i];
+        watch->abi_spec.loadAbiByAddress(watch->address);
+        watch->abi_spec.loadAbiKnown("all");
+        // We may as well articulate the named contracts while we're at it
+        for (size_t n = 0 ; n < named.size() ; n++) {
+            CAccountWatch *alt = &named.at(n);
+            //if (alt->enabled)
+            watch->abi_spec.loadAbiByAddress(alt->address);
+        }
+    }
 
     if (filters.size() > 0) {
         for (CAccountWatch& watch : watches) {
@@ -81,7 +115,8 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (fmt != JSON) {
-        string_q format = toml.getConfigStr("formats", "trans_fmt", "");
+        string_q defFmt = "[{DATE}]\t[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{FROM}]\t[{TO}]\t[{VALUE}]\t[{ISERROR}]\t[{EVENTS}]";
+        string_q format = toml.getConfigStr("formats", "trans_fmt", defFmt);
         if (format.empty())
             return usage("Non-json export requires 'trans_fmt' string in config.toml. Quitting...");
         expContext().fmtMap["trans_fmt"] = cleanFmt(format, fmt);

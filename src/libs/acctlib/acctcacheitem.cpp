@@ -245,10 +245,18 @@ CAcctCacheItem::CAcctCacheItem(string_q& line) {
 }
 
 //---------------------------------------------------------------------------
-string_q getTransCachePath(const string_q& part) {
-    if (isAddress(part))
-        return "./cache/" + part + ".acct.bin";
-    return "./cache/" + part;
+string_q getTransCacheLast(const string_q& addr) {
+    if (!isAddress(addr)) {
+        cerr << "Not an address: " << addr << endl;
+        quickQuitHandler(0);
+    }
+    return addr + ".last.txt";
+}
+//---------------------------------------------------------------------------
+string_q getTransCachePath(const string_q& addr) {
+    if (!isAddress(addr))
+        return "./" + addr;
+    return addr + ".acct.bin";
 }
 // EXISTING_CODE
 }  // namespace qblocks

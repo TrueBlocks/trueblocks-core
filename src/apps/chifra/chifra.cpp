@@ -20,13 +20,13 @@ int main(int argc, const char *argv[]) {
             return 0;
 
              if (options.mode == "freshen") return options.handle_freshen();
+        else if (options.mode == "list")    return options.handle_list();
         else if (options.mode == "export")  return options.handle_export();
         else if (options.mode == "seed")    return options.handle_seed();
         else if (options.mode == "daemon")  return options.handle_daemon();
         else if (options.mode == "scrape")  return options.handle_scrape();
         else if (options.mode == "ls")      return options.handle_ls();
         else if (options.mode == "config")  return options.handle_config();
-        else if (options.mode == "init")    return options.handle_init();
         else cerr << "Should not happen.";
     }
 

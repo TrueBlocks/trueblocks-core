@@ -14,9 +14,10 @@ public:
     blknum_t minWatchBlock;
     blknum_t maxWatchBlock;
     string_q monitorsPath;
-    string_q monitorName;
+//    string_q monitorName;
     CArchive txCache;
-    string_q remainder;
+    string_q flags;
+    string_q address;
 
     COptions(void);
     ~COptions(void);
@@ -26,15 +27,15 @@ public:
     bool loadMonitors(CToml& toml);
     bool makeNewMonitor(void);
 
-    bool handle_config (void);
-    bool handle_daemon (void);
+    bool handle_freshen(void);
     bool handle_export (void);
-    bool handle_freshen(const string_q& pathForce="");
-    bool handle_help   (void);
-    bool handle_init   (void);
-    bool handle_ls     (void);
-    bool handle_scrape (void);
+    bool handle_list   (void);
     bool handle_seed   (void);
+    bool handle_daemon (void);
+    bool handle_scrape (void);
+    bool handle_ls     (void);
+    bool handle_config (void);
+    bool handle_help   (void);
 };
 
 //--------------------------------------------------------------------------------

@@ -7,32 +7,44 @@
 #include "question.h"
 
 //------------------------------------------------------------------------------------------------
-bool COptions::handle_freshen(const string_q& pathForce) {
+#define toProduction(a) substitute(a, "/staging/", "/")
+extern bool moveToProduction(const string_q& str, void *data);
+//extern string_q colors[];
+//extern uint64_t nColors;
+//------------------------------------------------------------------------------------------------
+bool COptions::handle_freshen(void) {
 
-#if 0
-    remainder = substitute(remainder,"|","");
-    if (!isAddress(remainder))
-        return usage(remainder + " does not appear to be an address. Quitting...");
-    CAccountWatch watch;
-    watch.address = remainder;
-    watch.name = trim(remainder, '|');
-    watch.color = colors[watches.size()%nColors];
-    watches.push_back(watch);
-    if (monitorName.empty())
-        monitorName = watch.name;
-    cerr << cGreen << cOff << "\tAdded watch: " << watch.color << watch.address << cOff << " (" << watch.name << ")" << endl;
-    if (!makeNewMonitor()) {
-        remainder = watches[0].address;
-        return handle_freshen();
-    }
-    return true;
-#endif
-
+    if (address.empty())
+        return usage("This function requires an address. Quitting...");
 
     ostringstream os;
+    //string_q fileName = monitorsPath + address + ".acct.bin";
+    os << "cd " << monitorsPath << " ; ";
+    os << "acctScrape --for_addr " + address + " --useIndex ;";
+    os << "acctScrape --for_addr " + address + " --maxBlocks 10000000";
+    if (isTestMode())
+        cout << substitute(os.str(), blockCachePath(""), "$BLOCK_CACHE/") << endl;
+    else
+        if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+    return true;
+
+#if 0
+    if (
+        CAccountWatch watch;
+        watch.address = watch.name = toLower(remainder);
+        watch.color = colors[watches.size()%nColors];
+        watches.push_back(watch);
+        if (monitorName.empty())
+        monitorName = watch.name;
+
+        cerr << cGreen << cOff << "\tAdding watch: " << watch.color << watch.address << cOff << " (" << watch.name << ")" << endl;
+        if (!makeNewMonitor()) {
+            remainder = watches[0].address;
+            return handle_freshen();
+        }
+        return true;
+    ostringstream os;
     if (!pathForce.empty()) {
-        os << "cd " << pathForce << " ; ";
-        os << "acctScrape --useIndex >import.txt ; cacheMan -i ; acctScrape --maxBlocks 10000000";
     } else {
         CStringArray monitors;
         explode(monitors, remainder, '|');
@@ -41,16 +53,6 @@ bool COptions::handle_freshen(const string_q& pathForce) {
             os << "acctScrape --useIndex >import.txt ; cacheMan -i ; acctScrape --maxBlocks 10000000";
         }
     }
-    if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
-    return true;
-}
-
-//------------------------------------------------------------------------------------------------
-extern bool moveToProduction(const string_q& str, void *data);
-#define toProduction(a) substitute(a, "/staging/", "/")
-extern string_q colors[];
-extern uint64_t nColors;
-bool COptions::handle_init(void) {
 
     if (isTestMode())
         return true;
@@ -112,8 +114,9 @@ bool COptions::handle_init(void) {
     }
 
     return makeNewMonitor();
+#endif
 }
-
+#if 0
 //----------------------------------------------------------------
 bool moveToProduction(const string_q& path, void *data) {
     //    COptions *options = reinterpret_cast<COptions*>(data);
@@ -173,5 +176,7 @@ bool COptions::makeNewMonitor(void) {
         ::rmdir((stagingPath + "cache/").c_str());
         ::rmdir(stagingPath.c_str());
     }
+
     return true;
 }
+#endif

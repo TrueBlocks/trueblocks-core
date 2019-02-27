@@ -482,4 +482,3 @@ void loadWatchList(const CToml& toml, CAccountWatchArray& watches, const string_
 }
 // EXISTING_CODE
 }  // namespace qblocks
-

@@ -9,12 +9,12 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_config(void) {
 
-    string_q subCmd = toLower(nextTokenClear(remainder, '|'));
+    string_q subCmd = toLower(nextTokenClear(flags, ' '));
     if (subCmd != "edit" && subCmd != "show")
         return usage("config mode must be either 'edit' or 'show'. Quitting...");
 
-    while (!remainder.empty()) {
-        string_q monitor = toLower(nextTokenClear(remainder, '|'));
+    while (!flags.empty()) {
+        string_q monitor = toLower(nextTokenClear(flags, ' '));
         string_q path = blockCachePath("monitors/" + monitor + "/config.toml");
         if (!fileExists(path))
             return usage("File '" + path + "' not found. Quitting...");

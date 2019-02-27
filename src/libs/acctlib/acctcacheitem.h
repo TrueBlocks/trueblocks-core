@@ -139,7 +139,8 @@ extern CArchive& operator<<(CArchive& archive, const CAcctCacheItemArray& array)
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-string_q getTransCachePath(const string_q& part);
+string_q getTransCachePath(const string_q& addr);
+string_q getTransCacheLast(const string_q& addr);
 // EXISTING_CODE
 }  // namespace qblocks
 
