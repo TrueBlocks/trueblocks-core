@@ -8,7 +8,7 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("~command", "one of [ freshen | export | seed | daemon | scrape | ls | config ]"),
+    COption("~command", "one of [ freshen | export | list | seed | daemon | scrape | ls | config ]"),
     COption("",         "Create a TrueBlocks monitor configuration.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -24,9 +24,6 @@ bool COptions::parseArguments(string_q& command) {
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
 
-        if (arg == "list")
-            arg = "freshen";
-
         if (mode.empty() && startsWith(arg, '-')) {
 
             if (!builtInCmd(arg)) {
@@ -40,8 +37,12 @@ bool COptions::parseArguments(string_q& command) {
                     return usage("Please specify " + params[0].description + ". Quitting...");
                 mode = arg;
 
+            } else if (isAddress(arg)) {
+                address = toLower(arg);
+
             } else {
-                remainder += (arg + "|");
+                flags += (arg + " ");
+
             }
         }
     }
@@ -50,7 +51,7 @@ bool COptions::parseArguments(string_q& command) {
         return usage("Please specify " + params[0].description + ". Quitting...");
     monitorsPath = blockCachePath("monitors/");
     establishFolder(monitorsPath);
-    remainder = trim(remainder, '|');
+    flags = trim(flags, ' ');
 
     return true;
 }
@@ -59,9 +60,10 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     registerOptions(nParams, params);
 
-    remainder = "";
-    mode      = "";
-    minArgs   = 0;
+    flags    = "";
+    address  = "";
+    mode     = "";
+    minArgs  = 0;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -102,14 +104,6 @@ bool COptions::loadMonitors(CToml& toml) {
         // cleanup and report on errors
         watch.color   = convertColor(watch.color);
         watch.address = str_2_Addr(toLower(watch.address));
-        watch.nodeBal = getBalanceAt(watch.address, watch.firstBlock-1);
-        watch.api_spec.method = toml.getConfigStr("api_spec", "method", "");
-        watch.api_spec.uri = toml.getConfigStr("api_spec", "uri", "");
-        watch.api_spec.headers = toml.getConfigStr("api_spec", "headers", "");
-        if (!watch.api_spec.uri.empty()) {
-            watch.abi_spec.loadAbiByAddress(watch.address);
-            watch.abi_spec.loadAbiKnown("all");
-        }
 
         string_q msg;
         if (!isAddress(watch.address)) {
@@ -123,8 +117,6 @@ bool COptions::loadMonitors(CToml& toml) {
 
         // add to array or return error
         if (msg.empty()) {
-            minWatchBlock = min(minWatchBlock, watch.firstBlock);
-            maxWatchBlock = max(maxWatchBlock, watch.lastBlock);
             watches.push_back(watch);
 
         } else {
@@ -133,6 +125,6 @@ bool COptions::loadMonitors(CToml& toml) {
         }
         watch = CAccountWatch();  // reset
     }
-    monitorName = toml.getConfigStr("settings", "name", watches[0].name);
+    //monitorName = toml.getConfigStr("settings", "name", watches[0].name);
     return true;
 }

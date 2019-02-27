@@ -10,7 +10,7 @@ bool COptions::handle_scrape(void) {
 
     ostringstream os;
     // Note: The docker build actually moves scraper.docker.py to scraper.py, so this is only for testing
-    if (remainder == "docker")
+    if (flags == "docker")
         os << "scraper.docker.py";
     else
         os << "scraper.py";

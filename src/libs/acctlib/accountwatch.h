@@ -187,4 +187,3 @@ extern biguint_t getNodeBal(CBalanceHistoryArray& history, const address_t& addr
 extern void loadWatchList(const CToml& toml, CAccountWatchArray& watches, const string_q& key);
 // EXISTING_CODE
 }  // namespace qblocks
-

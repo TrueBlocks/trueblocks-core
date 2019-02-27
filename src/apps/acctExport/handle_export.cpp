@@ -219,18 +219,8 @@ bool COptions::loadWatches(const CToml& toml) {
             return usage("Empty watch name " + watch->name + "\n");
 
         watch->nodeBal = getNodeBal(watch->balanceHistory, watch->address, watch->firstBlock-1);
-
         blk_minWatchBlock = min(blk_minWatchBlock, watch->firstBlock);
         blk_maxWatchBlock = max(blk_maxWatchBlock, watch->lastBlock);
-
-        watch->abi_spec.loadAbiByAddress(watch->address);
-        watch->abi_spec.loadAbiKnown("all");
-        // We may as well articulate the named contracts while we're at it
-        for (size_t n = 0 ; n < named.size() ; n++) {
-            CAccountWatch *alt = &named.at(n);
-            if (alt->enabled)
-                watch->abi_spec.loadAbiByAddress(alt->address);
-        }
     }
 
     watches.push_back(CAccountWatch("Others", "Other Accts", 0, UINT32_MAX, ""));

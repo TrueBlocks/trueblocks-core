@@ -16,16 +16,13 @@ signal.signal(signal.SIGINT, signal_handler)
 
 timeout = 5
 while True:
-    os.system('ls | grep -v staging | grep -v "^file" | sort -uf >./file')
+    os.system('ls 0x*.acct.bin >./file')
     with open('./file') as f:
-        contracts = f.read().splitlines()
-        for contract in contracts:
-            command = 'cd ' + contract + ' ; '
-            command = command + 'acctScrape -l 1 -m 50000 ; '
-            command = command + 'cd .. >/dev/null'
+        addrs = f.read().splitlines()
+        for addr in addrs:
+            command = command + 'acctScrape --for_addr ' + addr + ' -l 1 -m 50000 ; '
             os.system(command)
             time.sleep(0.1)
         f.close()
-#        os.system('clear')
     print("{}".format(datetime.now().strftime("%Y/%m/%d:%H:%M:%S")) + ": sleeping " + str(timeout) + " seconds (Ctrl+C to quit...)")
     time.sleep(float(timeout))
