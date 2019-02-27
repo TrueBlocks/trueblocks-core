@@ -1,7 +1,5 @@
 #!/usr/bin/python
-#
 # scraper.py
-#
 import sys
 import subprocess
 import os
@@ -20,14 +18,10 @@ timeout = 14
 if len(sys.argv) > 1:
     timeout = sys.argv[1]
 
-option = ""
-if len(sys.argv) > 2:
-    option = "--" + sys.argv[2]
-
 while True:
     os.system('clear')
 
-    os.system('blockScrape ' + option)
+    os.system('blockScrape --silent --consolidate --addrIndex')
     print("")
 
     os.system('miniBlocks --freshen')

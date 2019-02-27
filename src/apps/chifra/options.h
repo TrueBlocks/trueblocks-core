@@ -13,6 +13,7 @@ public:
     string_q mode;
     blknum_t minWatchBlock;
     blknum_t maxWatchBlock;
+    string_q monitorsPath;
     string_q monitorName;
     CArchive txCache;
     string_q remainder;
@@ -31,9 +32,7 @@ public:
     bool handle_freshen(const string_q& pathForce="");
     bool handle_help   (void);
     bool handle_init   (void);
-    bool handle_list   (void);
     bool handle_ls     (void);
-    bool handle_names  (void);
     bool handle_scrape (void);
     bool handle_seed   (void);
 };

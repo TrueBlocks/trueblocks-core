@@ -9,35 +9,38 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_ls(void) {
 
-    ostringstream cmd;
-
-    cout << cGreen << "Monitor path: " << cWhite << blockCachePath("monitors/") << endl;
-    cmd << "cd " << blockCachePath("monitors/") << " ; ls";
-
-    string_q result = doCommand(cmd.str());
+    ostringstream os;
+    os << cGreen << "Monitor path: " << cWhite << monitorsPath << endl;
 
     CStringArray files;
-    explode(files, result, '\n');
+    listFilesInFolder(files, monitorsPath);
     sort(files.begin(), files.end());
 
-    size_t widest = 0;
-    for (auto file : files)
-        if (file.length() > widest)
-            widest = file.length();
-    size_t nWide = (90 / widest);
-
-    cout << widest << endl;
-    cout << cGreen << "Current monitors:" << cOff << endl << "    ";
-    cout << cTeal;
-    size_t cnt = 0;
+    CAccountNameArray accounts;
     for (auto file : files) {
-        if (file != "file") {
-            cout << padRight(file, widest + 1);
-            if (!(++cnt % nWide))
-                cout << endl << "    ";
+        if (file != "d-monitors" && startsWith(file, "d-")) {
+            CAccountName item;
+            item.addr = substitute(file.substr(0, file.find(".")), "d-", "");
+            getNamedAccount(item, item.addr);
+            accounts.push_back(item);
         }
     }
-    cout << endl;
+    if (accounts.size() == 0) {
+        CAccountName item;
+        item.addr = "none";
+        accounts.push_back(item);
+    }
+
+    os << cGreen << "Current monitors:" << cOff << endl << "    ";
+    os << cTeal;
+    for (auto acct : accounts)
+        os << acct.addr << "\t" << padLeft(acct.name, 20) << endl;
+    os << cOff << endl;
+
+    if (isTestMode())
+        cout << substitute(os.str(), blockCachePath(""), "$BLOCK_CACHE/");
+    else
+        cout << os.str();
 
     return true;
 }

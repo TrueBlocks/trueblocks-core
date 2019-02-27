@@ -5,11 +5,11 @@
  * of the original Big Integer Library, waive my copyright to it, placing it
  * in the public domain.  The library comes with absolutely no warranty.
  *------------------------------------------------------------------------*/
-#include "options.h"
+#include "utillib.h"
 
 //-----------------------------------------------------------------------------
 class CQuestion;
-typedef bool (*QUESTIONFUNC)(const COptions& options, CQuestion *q);
+typedef bool (*QUESTIONFUNC)(CQuestion *q, void *data);
 
 //-----------------------------------------------------------------------------
 class CQuestion {

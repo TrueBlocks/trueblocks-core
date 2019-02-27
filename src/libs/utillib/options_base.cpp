@@ -882,6 +882,8 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         if (namedAccounts.size() == 0) {
             uint64_t save = verbose;
             verbose = false;
+            if (!contains(namesFile.getFullPath(), "names.txt"))
+                ((COptionsBase*)this)->namesFile = CFilename(configPath("names/names.txt"));
             ((COptionsBase*)this)->loadNames();  // NOLINT
             verbose = save;
         }
@@ -907,7 +909,6 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
         time_q txtDate = fileLastModifyDate(textFile);
         time_q binDate = fileLastModifyDate(binFile);
-
         if (verbose && !isTestMode())
             cout << "txtDate: " << txtDate << " binDate: " << binDate << "\n";
 
