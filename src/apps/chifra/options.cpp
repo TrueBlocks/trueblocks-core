@@ -8,7 +8,7 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("~command", "one of [ init | freshen | export | list | ls | seed | daemon | scrape | config ]"),
+    COption("~command", "one of [ freshen | export | seed | daemon | scrape | ls | config ]"),
     COption("",         "Create a TrueBlocks monitor configuration.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -23,6 +23,9 @@ bool COptions::parseArguments(string_q& command) {
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
+
+        if (arg == "list")
+            arg = "freshen";
 
         if (mode.empty() && startsWith(arg, '-')) {
 
@@ -45,6 +48,8 @@ bool COptions::parseArguments(string_q& command) {
 
     if (mode.empty())
         return usage("Please specify " + params[0].description + ". Quitting...");
+    monitorsPath = blockCachePath("monitors/");
+    establishFolder(monitorsPath);
     remainder = trim(remainder, '|');
 
     return true;
@@ -57,11 +62,6 @@ void COptions::Init(void) {
     remainder = "";
     mode      = "";
     minArgs   = 0;
-    watches.clear();
-    if (fileExists("./config.toml")) {
-        CToml toml("./config.toml");
-        loadMonitors(toml);
-    }
 }
 
 //---------------------------------------------------------------------------------------------------

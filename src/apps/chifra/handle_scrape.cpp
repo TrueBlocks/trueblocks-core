@@ -4,12 +4,20 @@
  * All Rights Reserved
  *------------------------------------------------------------------------*/
 #include "options.h"
-#include "question.h"
 
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_scrape(void) {
+
     ostringstream os;
-    os << "scraper.py";
-    if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+    // Note: The docker build actually moves scraper.docker.py to scraper.py, so this is only for testing
+    if (remainder == "docker")
+        os << "scraper.docker.py";
+    else
+        os << "scraper.py";
+    if (isTestMode())
+        cout << os.str();
+    else
+        if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
     return true;
+
 }

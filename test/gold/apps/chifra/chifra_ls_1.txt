@@ -1,0 +1,6 @@
+chifra argc: 2 [1:ls] 
+chifra ls 
+Monitor path: $BLOCK_CACHE/monitors/
+Current monitors:
+    none	                    
+

@@ -7,10 +7,13 @@
 
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_export(void) {
+
     string_q monitor = toLower(nextTokenClear(remainder, '|'));
+
     ostringstream os;
     os << "cd " << blockCachePath("monitors/" + monitor + "/") << " ; ";
     os << "acctExport" << " " << substitute(remainder, "|", " ");
+
     if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
     return true;
 }

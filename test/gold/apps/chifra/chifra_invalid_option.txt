@@ -1,13 +1,13 @@
 chifra argc: 2 [1:not_a_mode] 
 chifra not_a_mode 
 
-  Please specify one of [ init | freshen | export | list | daemon ]. Quitting...
+  Please specify one of [ freshen | export | seed | daemon | scrape | ls | config ]. Quitting...
 
   Usage:    chifra [-v|-h] command  
   Purpose:  Create a TrueBlocks monitor configuration.
              
   Where:  
-	command               one of [ init | freshen | export | list | daemon ] (required)
+	command               one of [ freshen | export | seed | daemon | scrape | ls | config ] (required)
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 

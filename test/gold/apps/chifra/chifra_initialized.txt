@@ -1,2 +1,0 @@
-chifra argc: 2 [1:init] 
-chifra init 
