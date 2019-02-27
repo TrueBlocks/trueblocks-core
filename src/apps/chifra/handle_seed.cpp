@@ -33,7 +33,10 @@ bool COptions::handle_seed(void) {
         string_q zipFile = indexFolder_zips + parts[4];
         string_q textFile = substitute(indexFolder_prod + parts[4], ".gz", "");
 
+        if (fileExists(zipFile)) {
+
         if (isTestMode()) cout << endl;
+
         if (!fileExists(zipFile) || isTestMode()) {
             ostringstream os;
 
@@ -72,6 +75,7 @@ bool COptions::handle_seed(void) {
         } else {
             if (verbose)
                 cout << "Index file " << cTeal << textFile << cOff << " exists." << endl;
+        }
         }
     }
     cerr << cGreen << "Index cache has been seeded." << cOff << endl;
