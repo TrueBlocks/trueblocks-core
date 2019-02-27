@@ -18,6 +18,6 @@ signal.signal(signal.SIGINT, signal_handler)
 timeout = 5
 while True:
     os.system('NO_COLOR=true blockScrape --silent --consolidate --addrIndex')
-    os.system('getBlock --latest')
+#    os.system('getBlock --latest')
     print("")
     time.sleep(float(timeout))

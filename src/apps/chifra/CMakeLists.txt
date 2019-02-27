@@ -41,12 +41,13 @@ function(run_test testName)
 endfunction(run_test)
 
 # Enter one line for each individual test
-#run_test("chifra_README"           "-th")
-#run_test("chifra_no_params")
-#run_test("chifra_invalid_option"   "not_a_mode")
-#run_test("chifra_not_initialized1" "freshen")
-#run_test("chifra_not_initialized2" "export")
-#run_test("chifra_initialized"      "init")
+run_test("chifra_README"           "-th")
+run_test("chifra_no_params")
+run_test("chifra_invalid_option"   "not_a_mode")
+run_test("chifra_scrape"           "scrape")
+run_test("chifra_daemon"           "daemon")
+run_test("chifra_ls_1"             "ls")
+run_test("chifra_seed"             "seed" " --verbose")
 #run_test("chifra_edit_config"      "config")
 
 # Installation steps, this tool is renamed at installation

@@ -4,13 +4,20 @@
  * All Rights Reserved
  *------------------------------------------------------------------------*/
 #include "options.h"
-#include "question.h"
 
 //------------------------------------------------------------------------------------------------
+// Run the scraper to build (or keep fresh) the address index
+//------------------------------------------------------------------------------------------------
 bool COptions::handle_daemon(void) {
+
     ostringstream os;
-    os << "cd " << blockCachePath("monitors/") << " ; ";
+    os << "cd " << monitorsPath << " ; ";
     os << "chifraDaemon.py";
-    if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+    if (isTestMode())
+        cout << substitute(os.str(), blockCachePath(""), "$BLOCK_CACHE/");
+    else {
+        if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+    }
     return true;
+
 }

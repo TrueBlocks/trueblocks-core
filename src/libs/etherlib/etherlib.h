@@ -26,5 +26,6 @@
 #include "node.h"
 #include "blooms.h"
 #include "blockoptions.h"
+#include "question.h"
 
 using namespace qblocks;  // NOLINT

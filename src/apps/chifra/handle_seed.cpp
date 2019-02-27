@@ -33,31 +33,44 @@ bool COptions::handle_seed(void) {
         string_q zipFile = indexFolder_zips + parts[4];
         string_q textFile = substitute(indexFolder_prod + parts[4], ".gz", "");
 
-        if (!fileExists(zipFile) || !fileExists(textFile)) {
+        if (isTestMode()) cout << endl;
+        if (!fileExists(zipFile) || isTestMode()) {
             ostringstream os;
 
             // go to the zips folder
             os << "cd \"" << indexFolder_zips << "\" ; ";
 
-            // get the zip file from the cache
-            os << "rm -f \"" << zipFile << "\" ; ";
+            // get the zip file from the IPFS cache
             os << ipfs_cmd.str() << " \"" << zipFile << "\" ; ";
+            if (isTestMode())
+                cout << substitute(os.str(), blockCachePath(""), "$BLOCK_CACHE/") << endl;
+            else
+                if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+
+        } else {
+            if (verbose)
+                cout << "Zip file " << cTeal << zipFile << cOff << " is up to date." << endl;
+        }
+
+        if (!fileExists(textFile) || isTestMode()) {
+            ostringstream os;
 
             // go to the production folder
             os << "cd \"" << indexFolder_prod << "\" ; ";
 
             // copy the new zip locally and unzip it
-            os << "rm -f \"" << textFile << "\" ; ";
             os << "cp -p \"" << zipFile << "\" \"" << indexFolder_prod << parts[4] << "\" ; ";
             os << "gunzip \"" << parts[4] << "\" ; cd -";
             cerr << "Seeding " << cTeal << textFile << cOff << endl;
-            if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+            if (isTestMode())
+                cout << substitute(os.str(), blockCachePath(""), "$BLOCK_CACHE/") << endl;
+            else
+                if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
         } else {
             if (verbose)
                 cout << "Index file " << cTeal << textFile << cOff << " exists." << endl;
         }
     }
     cerr << cGreen << "Index cache has been seeded." << cOff << endl;
-
     return true;
 }

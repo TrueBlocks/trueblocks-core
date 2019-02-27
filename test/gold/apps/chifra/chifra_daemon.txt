@@ -1,0 +1,3 @@
+chifra argc: 2 [1:daemon] 
+chifra daemon 
+cd $BLOCK_CACHE/monitors/ ; chifraDaemon.py
