@@ -8,12 +8,19 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_export(void) {
 
-    string_q monitor = toLower(nextTokenClear(remainder, '|'));
+    if (address.empty())
+        return usage("This function requires an address. Quitting...");
+
+    handle_freshen();
 
     ostringstream os;
-    os << "cd " << blockCachePath("monitors/" + monitor + "/") << " ; ";
-    os << "acctExport" << " " << substitute(remainder, "|", " ");
+    os << "cd " << monitorsPath << " ; ";
+    os << "grabABI " << address << " ; ";
+    os << "acctExport" << " --for_addr " << address << " " << flags;
 
-    if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+    if (isTestMode())
+        cout << substitute(os.str(), blockCachePath(""), "$BLOCK_CACHE/") << endl;
+    else
+        if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
     return true;
 }

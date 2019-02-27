@@ -6,18 +6,20 @@
 #include "options.h"
 
 //------------------------------------------------------------------------------------------------
-// Run the scraper to build (or keep fresh) the address index
-//------------------------------------------------------------------------------------------------
-bool COptions::handle_daemon(void) {
+bool COptions::handle_list(void) {
+
+    if (address.empty())
+        return usage("This function requires an address. Quitting...");
+
+    handle_freshen();
 
     ostringstream os;
     os << "cd " << monitorsPath << " ; ";
-    os << "chifraDaemon.py";
+    os << "cacheMan -d " << address << ".acct.bin ; ";
+
     if (isTestMode())
         cout << substitute(os.str(), blockCachePath(""), "$BLOCK_CACHE/") << endl;
-    else {
+    else
         if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
-    }
     return true;
-
 }

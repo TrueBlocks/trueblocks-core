@@ -51,6 +51,7 @@ public:
 
     bool parseArguments(string_q& command);
     void Init(void);
+    void writeLastBlock(blknum_t bn);
 };
 
 //-------------------------------------------------------------------------
@@ -59,7 +60,6 @@ extern bool handleFix       (COptions& options);
 extern bool handleCacheBals (COptions& options);
 extern bool listBalances    (COptions& options);
 extern int  sortByBlock     (const void *v1, const void *v2);
-extern void writeLastBlock  (blknum_t bn);
 
 //-------------------------------------------------------------------------
 extern const char *STR_DEFAULT_DISPLAY;

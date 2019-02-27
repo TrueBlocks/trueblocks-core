@@ -42,6 +42,7 @@ bool visitIndexFiles(const string_q& path, void *data) {
             if (bn < options->firstBlock) {
                 // We may be too early...
                 options->addrStats.nSkipped += nRecords;
+                options->addrStats.nHit = fileSize(options->txCache.getFilename()) / (sizeof(uint64_t)*2);
                 return true;
 
             } else if (bn >= (options->firstBlock + options->nBlocks)) {
@@ -110,15 +111,22 @@ bool visitIndexFiles(const string_q& path, void *data) {
 
                             options->addrStats.nHit++;
                             static int rep = 0;
-                            if (!(++rep%9801)) {
+                            if (!(++rep%3813)) {
                                 cerr << "    At block #";
-                                cerr << bn;
+                                cerr << item.blockNum;
                                 cerr << " we've searched ";
                                 cerr << options->addrStats.nSeen;
                                 cerr << " records and found ";
                                 cerr << options->addrStats.nHit;
                                 cerr << " hits" << string_q(80, ' ') << endl;
+                                cerr << options->name << " bn: " << item.blockNum << *options << "\r";
+                                cerr.flush();
                             }
+                            if (!(++rep%1329)) {
+                                cerr << options->name << " bn: " << item.blockNum << *options << "\r";
+                                cerr.flush();
+                            }
+
 
                         } else {
                             cerr << options->name << " bn: " << bn << *options << "\r";
