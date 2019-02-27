@@ -132,8 +132,9 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (forceAddr.empty()) {
-        if (!toml || !fileExists(toml->getFilename()))
-            return usage("Cannot read toml file " + toml->getFilename() + ". Are you in the right folder? Quitting...\n");
+        if (!toml || !fileExists(toml->getFilename())) {
+            return usage("Cannot read toml file " + toml->getFilename() + " folder: " + getCWD() + ". Quitting...\n");
+        }
 
         manageFields(toml->getConfigStr("fields", "hide", ""), false);
         manageFields(toml->getConfigStr("fields", "show", ""), true );
