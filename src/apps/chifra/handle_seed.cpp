@@ -45,10 +45,12 @@ bool COptions::handle_seed(void) {
 
             // get the zip file from the IPFS cache
             os << ipfs_cmd.str() << " \"" << zipFile << "\" ; ";
-            if (isTestMode())
+            if (isTestMode()) {
                 cout << substitute(os.str(), blockCachePath(""), "$BLOCK_CACHE/") << endl;
-            else
+            } else {
                 if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+                usleep(500000); // so Ctrl+C works
+            }
 
         } else {
             if (verbose)
@@ -71,6 +73,7 @@ bool COptions::handle_seed(void) {
             } else {
                 cerr << "Seeding " << cTeal << textFile << cOff << endl;
                 if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+                usleep(500000); // so Ctrl+C works
             }
         } else {
             if (verbose)

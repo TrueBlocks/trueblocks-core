@@ -30,7 +30,7 @@ bool visitIndexFiles(const string_q& path, void *data) {
 
     } else {
 
-        if (startsWith(path, "0") && contains(path, "-") && endsWith(path, ".txt")) {
+        if (contains(path, "/0") && contains(path, "-") && endsWith(path, ".txt")) {
 
             blknum_t late;
             blknum_t bn = bnFromPath(path, late);
