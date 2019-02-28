@@ -7,28 +7,36 @@
 #include "question.h"
 
 //------------------------------------------------------------------------------------------------
-#define toProduction(a) substitute(a, "/staging/", "/")
-extern bool moveToProduction(const string_q& str, void *data);
-//extern string_q colors[];
-//extern uint64_t nColors;
-//------------------------------------------------------------------------------------------------
 bool COptions::handle_freshen(void) {
 
     if (address.empty())
         return usage("This function requires an address. Quitting...");
+    return freshen_internal(BOTH);
+}
 
-    ostringstream os;
-    //string_q fileName = monitorsPath + address + ".acct.bin";
-    os << "cd " << monitorsPath << " ; ";
-    os << "acctScrape --for_addr " + address + " --useIndex " + flags + ";";
-    os << "acctScrape --for_addr " + address + " --maxBlocks 10000000 " + flags + ";";
-    if (isTestMode())
-        cout << substitute(os.str(), blockCachePath(""), "$BLOCK_CACHE/") << endl;
-    else
-        if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+//------------------------------------------------------------------------------------------------
+bool COptions::freshen_internal(FreshenMode fMode) {
+
+    if (fMode & INDEX || fMode & BLOOM) {
+        ostringstream os;
+        //string_q fileName = monitorsPath + address + ".acct.bin";
+        os << "cd " << monitorsPath << " ; ";
+        if (fMode & INDEX)
+            os << "acctScrape --for_addr " + address + " --useIndex " + flags + ";";
+        if (fMode & BLOOM)
+            os << "acctScrape --for_addr " + address + " --maxBlocks 10000000 " + flags + ";";
+        if (isTestMode())
+            cout << substitute(os.str(), blockCachePath(""), "$BLOCK_CACHE/") << endl;
+        else
+            if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+    }
     return true;
+}
 
 #if 0
+//------------------------------------------------------------------------------------------------
+#define toProduction(a) substitute(a, "/staging/", "/")
+extern bool moveToProduction(const string_q& str, void *data);
     if (
         CAccountWatch watch;
         watch.address = watch.name = toLower(remainder);
@@ -114,8 +122,10 @@ bool COptions::handle_freshen(void) {
     }
 
     return makeNewMonitor();
-#endif
 }
+#endif
+
+
 #if 0
 //----------------------------------------------------------------
 bool moveToProduction(const string_q& path, void *data) {
