@@ -28,10 +28,17 @@ bool COptions::handle_seed(void) {
         CStringArray parts;
         explode(parts, cmd, ' ');
         ostringstream ipfs_cmd;
-        ipfs_cmd << parts[0] << " " << parts[1] << " " << parts[2] << " " << parts[3] << " ";
+        string_q filename;
+        if (parts[0] == "curl") {
+            ipfs_cmd << parts[0] << " " << parts[1] << " " << parts[2] << " ";
+            filename = parts[3];
+        } else {
+            ipfs_cmd << parts[0] << " " << parts[1] << " " << parts[2] << " " << parts[3] << " ";
+            filename = parts[4];
+        }
 
-        string_q zipFile = indexFolder_zips + parts[4];
-        string_q textFile = substitute(indexFolder_prod + parts[4], ".gz", "");
+        string_q zipFile = indexFolder_zips + filename;
+        string_q textFile = substitute(indexFolder_prod + filename, ".gz", "");
 
         if (isTestMode()) cout << endl;
         if (!fileExists(zipFile) || isTestMode()) {
@@ -61,8 +68,8 @@ bool COptions::handle_seed(void) {
             os << "cd \"" << indexFolder_prod << "\" ; ";
 
             // copy the new zip locally and unzip it
-            os << "cp -p \"" << zipFile << "\" \"" << indexFolder_prod << parts[4] << "\" ; ";
-            os << "gunzip \"" << parts[4] << "\" ; cd -";
+            os << "cp -p \"" << zipFile << "\" \"" << indexFolder_prod << filename << "\" ; ";
+            os << "gunzip \"" << filename << "\" ; cd -";
 
             if (isTestMode()) {
                 cerr << "Seeding " << cTeal << substitute(textFile, blockCachePath(""), "$BLOCK_CACHE/") << cOff << endl;
