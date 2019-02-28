@@ -37,6 +37,7 @@ if (NOT EXISTS "${QUICKBLOCKS_NAMES_FILE}")
 endif()
 
 # Create names file only if it does not exist
+message(STATUS "Copying price databased to ${QUICKBLOCKS_HOME}/cache/prices/")
 set(QUICKBLOCKS_PRICES_FILE "${QUICKBLOCKS_HOME}/cache/prices/poloniex_USDT_ETH.bin.gz")
 if (NOT EXISTS "${QUICKBLOCKS_PRICES_FILE}")
     set(QUICKBLOCKS_PRICES_SOURCE "${CMAKE_SOURCE_DIR}/../../../src/other/install/prices/poloniex_USDT_ETH.bin.gz")
@@ -52,6 +53,7 @@ if (NOT EXISTS "${QUICKBLOCKS_PREFUND_FILE}")
 endif()
 
 # makeClass content
+message(STATUS "Copying makeClass templates to ${QUICKBLOCKS_HOME}/makeClass/")
 file(COPY "${CMAKE_SOURCE_DIR}/../../../bin/makeClass" DESTINATION "${QUICKBLOCKS_HOME}/makeClass")
 file(GLOB TARGET_FILES "${CMAKE_SOURCE_DIR}/../../../src/apps/makeClass/templates/blank*")
 foreach(FILE ${TARGET_FILES} )
@@ -59,18 +61,21 @@ foreach(FILE ${TARGET_FILES} )
 endforeach( FILE )
 
 # grabABI content
+message(STATUS "Copying grabABI templates to ${QUICKBLOCKS_HOME}/grabABI/")
 file(GLOB TARGET_FILES "${CMAKE_SOURCE_DIR}/../../../src/apps/grabABI/templates/*")
 foreach(FILE ${TARGET_FILES} )
 	file(COPY "${FILE}" DESTINATION "${QUICKBLOCKS_HOME}/grabABI")
 endforeach( FILE )
 
 # chifra content
+message(STATUS "Copying chifra templates to ${QUICKBLOCKS_HOME}/chifra/")
 file(GLOB TARGET_FILES "${CMAKE_SOURCE_DIR}/../../../src/apps/chifra/templates/*")
 foreach(FILE ${TARGET_FILES} )
       file(COPY "${FILE}" DESTINATION "${QUICKBLOCKS_HOME}/chifra")
 endforeach( FILE )
 
 # known abis
+message(STATUS "Copying known abis to ${QUICKBLOCKS_HOME}/known_abis/")
 file(GLOB TARGET_FILES "${CMAKE_SOURCE_DIR}/../../../src/other/install/known_abis/*")
 foreach(FILE ${TARGET_FILES} )
       file(COPY "${FILE}" DESTINATION "${QUICKBLOCKS_HOME}/known_abis")
