@@ -34,6 +34,7 @@ bool visitIndexFiles(const string_q& path, void *data) {
 
             blknum_t late;
             blknum_t bn = bnFromPath(path, late);
+            if (verbose) cerr << path << ": " << bn << " to " << late << endl;
 
             uint64_t size = fileSize(path);
             uint64_t nRecords = size / sizeof(CIndexRecord);

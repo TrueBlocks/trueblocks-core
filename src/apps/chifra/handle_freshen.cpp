@@ -20,8 +20,8 @@ bool COptions::handle_freshen(void) {
     ostringstream os;
     //string_q fileName = monitorsPath + address + ".acct.bin";
     os << "cd " << monitorsPath << " ; ";
-    os << "acctScrape --for_addr " + address + " --useIndex ;";
-    os << "acctScrape --for_addr " + address + " --maxBlocks 10000000";
+    os << "acctScrape --for_addr " + address + " --useIndex " + flags + ";";
+    os << "acctScrape --for_addr " + address + " --maxBlocks 10000000 " + flags + ";";
     if (isTestMode())
         cout << substitute(os.str(), blockCachePath(""), "$BLOCK_CACHE/") << endl;
     else
