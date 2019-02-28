@@ -6,6 +6,7 @@
  *------------------------------------------------------------------------*/
 #include "acctlib.h"
 
+typedef enum { NONE = 0, INDEX = (1<<0), BLOOM = (1<<1), BOTH = (INDEX | BLOOM) } FreshenMode;
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
@@ -36,6 +37,9 @@ public:
     bool handle_ls     (void);
     bool handle_config (void);
     bool handle_help   (void);
+
+private:
+    bool freshen_internal(FreshenMode mode);
 };
 
 //--------------------------------------------------------------------------------

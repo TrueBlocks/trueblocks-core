@@ -11,7 +11,7 @@ bool COptions::handle_export(void) {
     if (address.empty())
         return usage("This function requires an address. Quitting...");
 
-    handle_freshen();
+    freshen_internal(INDEX);
 
     ostringstream os;
     os << "cd " << monitorsPath << " ; ";
