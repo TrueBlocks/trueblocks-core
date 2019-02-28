@@ -372,6 +372,8 @@ string_q CAccountWatch::displayName(bool expand, bool useColor, bool terse, size
     if (address == "others") {
         return padRight(name, w1 + w2 + 1);
     }
+    if (name == address)
+        return name;
 
     if (terse) {
         uint64_t len = name.length();
