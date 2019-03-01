@@ -156,9 +156,10 @@ bool COptions::parseArguments(string_q& command) {
         minWatchBlock = 0;
         maxWatchBlock = UINT32_MAX;
         CAccountWatch watch;
-        watch.address = forceAddr;
-        watch.name = forceAddr;
+        watch.setValueByName("address", forceAddr); // don't change, sets bloom value also
+        watch.setValueByName("name", forceAddr);
         watch.color = cBlue; //convertColor(watch.color);
+        watch.finishParse();
         monitors.push_back(watch);
 
     } else {
