@@ -647,7 +647,7 @@ static const char *STR_ERROR_NODEREQUIRED =
     }
 
     //----------------------------------------------------------------------------------
-    bool readBloomArray(CBloomArray& blooms, const string_q& fileName) {
+    bool readBloomFromBinary(CBloomArray& blooms, const string_q& fileName) {
         blooms.clear();
         CArchive bloomCache(READING_ARCHIVE);
         if (bloomCache.Lock(fileName, modeReadOnly, LOCK_NOWAIT)) {
