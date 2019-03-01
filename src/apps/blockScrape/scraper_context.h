@@ -10,7 +10,7 @@ class COptions;
 //-------------------------------------------------------------------------
 class CScraperContext {
 public:
-    COptions     *opts;
+    COptions     *options;
     CBlock       *pBlock;
     CTransaction *pTrans;
     CBloomArray   bloomList;

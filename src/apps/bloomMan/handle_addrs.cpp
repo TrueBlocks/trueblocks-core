@@ -26,7 +26,7 @@ bool handle_addrs(blknum_t bn, void *data) {
     }
 
     CBloomArray blooms;
-    readBloomArray(blooms, path);
+    readBloomFromBinary(blooms, path);
 
     CAddressArray addrs;
     explode(addrs, options->address_list, '|');
