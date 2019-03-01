@@ -4,4 +4,18 @@
  * All Rights Reserved
  *------------------------------------------------------------------------*/
 #include "options.h"
-#include "question.h"
+
+//------------------------------------------------------------------------------------------------
+bool COptions::handle_init(void) {
+    if (addrs.empty())
+        return usage("This function requires an address. Quitting...");
+
+    string_q f = flags; flags = "";
+    if (contains(f, "--force"))
+        freshen_internal(BOTH);
+    else
+        freshen_internal(INDEX);
+    flags = f;
+
+    return true;
+}
