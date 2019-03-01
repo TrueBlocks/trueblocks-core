@@ -13,7 +13,6 @@ static const COption params[] = {
     COption("@noWrite",         "do not write binary blocks to disc (default: write the blocks)"),
     COption("@addrIndex",       "index addresses per block in addition to building bloom filters"),
     COption("@consolidate",     "sort and finalize growing address index (if over 50MB)"),
-    COption("@silent",          "run in silent mode (less status) for docker for example"),
     COption("",                 "Decentralized blockchain scraper and block cache.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -35,9 +34,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-c" || arg == "--consolidate") {
             consolidate = true;
-
-        } else if (arg == "-l" || arg == "--silent") {
-            silent = true;
 
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--start:")) {
             arg = substitute(substitute(arg, "-s:", ""), "--start:","");
@@ -118,11 +114,6 @@ bool COptions::parseArguments(string_q& command) {
 
     // If we're at the beginning, and we've been told explicitly where to start, start there...
     uint64_t forceStart = getGlobalConfig("blockScrape")->getConfigInt("settings", "forceStartBlock", NOPOS);
-//if (silent) {
-//    cout << "forceStart: " << forceStart << endl;
-//    cout << "startBlock: " << startBlock << endl;
-//    cout << "endBlock: " << endBlock << endl;
-//}
     if (startBlock == 1 && forceStart != NOPOS) {
         startBlock = forceStart;
         endBlock = max(startBlock + 1, client);
@@ -131,18 +122,12 @@ bool COptions::parseArguments(string_q& command) {
     // No more than maxBlocks after start
     endBlock = min(endBlock, startBlock + maxBlocks);
 
-//if (silent) {
-//    cout << "forceStart: " << forceStart << endl;
-//    cout << "startBlock: " << startBlock << endl;
-//    cout << "endBlock: " << endBlock << endl;
-//}
-
     if (!isParity() || !nodeHasTraces())
         return usage("This tool will only run if it is running against a Parity node that has tracing enabled. Quitting...");
 
     // SEARCH FOR 'BIT_TWIDDLE_AMT 200'
-    bitBound   = getGlobalConfig("blockScrape")->getConfigInt("settings", "bitBound", 200);
-    maxIdxSize = getGlobalConfig("blockScrape")->getConfigInt("settings", "maxIndexBytes", maxIdxSize);
+    bitBound = getGlobalConfig("blockScrape")->getConfigInt("settings", "bitBound", 200);
+    maxIndexBytes = getGlobalConfig("blockScrape")->getConfigInt("settings", "maxIndexBytes", maxIndexBytes);
 
     CBlock latest;
     getBlock(latest, "latest");
@@ -158,16 +143,15 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOn(OPT_RUNONCE);
 
-    startBlock  = NOPOS;
-    endBlock    = NOPOS;
-    maxBlocks   = 5000;
-    writeBlocks = true;
-    addrIndex   = false;
-    consolidate = false;
-    silent      = false;
-    minArgs     = 0;
-    bitBound    = 200;
-    maxIdxSize  = 50000000;  // 50 MB
+    startBlock    = NOPOS;
+    endBlock      = NOPOS;
+    maxBlocks     = 5000;
+    writeBlocks   = true;
+    addrIndex     = false;
+    consolidate   = false;
+    minArgs       = 0;
+    bitBound      = 200;
+    maxIndexBytes = 50000000;  // 50 MB
 }
 
 //---------------------------------------------------------------------------------------------------

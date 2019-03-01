@@ -14,7 +14,7 @@ bool handle_stats(blknum_t bn, void *data) {
     string_q path = substitute(getBinaryFilename(bn), "/blocks/", "/blooms/");
     if (fileExists(path)) {
         CBloomArray blooms;
-        readBloomArray(blooms, path);
+        readBloomFromBinary(blooms, path);
         stats->nFiles  += 1;
         stats->nBlooms += blooms.size();
         stats->nBytes  += fileSize(path);

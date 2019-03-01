@@ -8,7 +8,7 @@
 
 //----------------------------------------------------------------------------------
 CScraperContext::CScraperContext(COptions *o, CBlock *b)
-    : opts(o), pBlock(b), pTrans(NULL), addrList(NULL, NULL, true), traceCount(0), maxTraceDepth(0),
+    : options(o), pBlock(b), pTrans(NULL), addrList(NULL, NULL, true), traceCount(0), maxTraceDepth(0),
       reported(false), nAddrsInBloom(0), nAddrsInBlock(0),
       blockOkay(false), bloomOkay(false)
 {
@@ -29,10 +29,8 @@ bool CScraperContext::scrape(CBlock& block) {
 
     if (!block.transactions.size()) {
         if (block.blockNumber < 50000) { // otherwise it appears to be hung
-            if (!opts->silent) {
-                cerr << "skipping empty block " << block.blockNumber << "\r";
-                cerr.flush();
-            }
+            cerr << "skipping empty block " << block.blockNumber << "\r";
+            cerr.flush();
         }
         // TODO: we do not account for miners of zero transaction blocks, we can
         // do it here by writing the miner's address to a file
@@ -92,7 +90,7 @@ bool visitTransaction(CTransaction& trans, void *data) {
     uint64_t nTraces = getTraceCount(trans.hash);
     bool ddos        = ddosRange(sCtx->pBlock->blockNumber);
     bool isDDos      = ddos && nTraces > 250;
-    bool isExcl      = ddos && (sCtx->opts->isExcluded(trans.from) || sCtx->opts->isExcluded(trans.to));
+    bool isExcl      = ddos && (sCtx->options->isExcluded(trans.from) || sCtx->options->isExcluded(trans.to));
     if (!isDDos && !isExcl) {
         // We can use forEveryTrace... here because we don't need to save any data on the trace. It's okay to use a copy
         sCtx->potList = "";
@@ -143,17 +141,17 @@ void CScraperContext::addToBloom(const address_t& addr) {
     addToAddrIndex(addr);
 
     // SEARCH FOR 'BIT_TWIDDLE_AMT 200'
-    if (addAddrToBloom(addr, bloomList, opts->bitBound))
+    if (addAddrToBloom(addr, bloomList, options->bitBound))
         nAddrsInBloom = 0;
 }
 
 //----------------------------------------------------------------------------------
 void CScraperContext::addToAddrIndex(const address_t& addr) {
 
-    if (!opts->addrIndex)
+    if (!options->addrIndex)
         return;
 
-    ASSERT(opts && sCtx.addrList.addrTxMap);
+    ASSERT(options && sCtx.addrList.addrTxMap);
     CAddressAppearance app;
     app.addr = addr;
     app.bn = pBlock->blockNumber;
@@ -180,7 +178,7 @@ public:
 //--------------------------------------------------------------------------
 void CScraperContext::updateAddrIndex(void) {
 
-    if (!opts->addrIndex)
+    if (!options->addrIndex)
         return;
 
     ASSERT(pBlock);
@@ -206,7 +204,7 @@ void CScraperContext::updateAddrIndex(void) {
     os2 << pBlock->blockNumber << "\t" << addrList.addrTxMap->size() << "\t" << fileSize(indexFilename) << "\n";
     appendToAsciiFile(countFile, os2.str());
 
-    if (opts->consolidate) {
+    if (options->consolidate) {
         string_q contents;
         asciiFileToString(countFile, contents);
         CStringArray lines;
@@ -218,7 +216,7 @@ void CScraperContext::updateAddrIndex(void) {
             counters.push_back(counter);
             size += counter.size;
         }
-        if (size > opts->maxIdxSize) {
+        if (size > options->maxIndexBytes) {
 //cout << "Here: " << size << " counters: " << counters.size() << endl;
 //getchar();
             CStringArray apps;

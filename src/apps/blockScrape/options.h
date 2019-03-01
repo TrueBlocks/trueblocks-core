@@ -19,8 +19,7 @@ public:
     timestamp_t latestBlockTs;
     bool        addrIndex;
     bool        consolidate;
-    uint64_t    maxIdxSize;
-    bool        silent;
+    uint64_t    maxIndexBytes;
 
     COptions(void);
     ~COptions(void);
