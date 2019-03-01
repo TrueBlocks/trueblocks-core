@@ -76,6 +76,9 @@ bool visitIndexFiles(const string_q& path, void *data) {
                     uint64_t pFound   = (uint64_t)found;
                     uint64_t remains  = (pFound - pRecords) / sizeof(CIndexRecord);
 
+                    CAcctCacheItemArray array;
+                    array.reserve(300000);
+
                     // now we scan until we hit non-matching record
                     done = false;
                     for (uint64_t i = 0 ; i < remains && !done && !shouldQuit() ; i++) {
@@ -90,12 +93,13 @@ bool visitIndexFiles(const string_q& path, void *data) {
 
                             // write to the cache (probably don't need the screen print above)
                             CAcctCacheItem item(str_2_Uint(bl), str_2_Uint(tx));
-                            lockSection(true);
-                            // We found something...write it to the cache...
-                            options->txCache << item.blockNum << item.transIndex;
-                            options->txCache.flush();
-                            options->writeLastBlock(item.blockNum);
-                            lockSection(false);
+                            array.push_back(item);
+//                            lockSection(true);
+//                            // We found something...write it to the cache...
+//                            options->txCache << item.blockNum << item.transIndex;
+//                            options->txCache.flush();
+//                            options->writeLastBlock(item.blockNum);
+//                            lockSection(false);
 
 // TODO(tjayrush)
 // stats issue
@@ -131,6 +135,18 @@ bool visitIndexFiles(const string_q& path, void *data) {
                         // are we done?
                         if (strncmp(ad, acct->address.c_str(), 42) > 0)
                             done = true;
+                    }
+
+                    if (array.size()) {
+                        lockSection(true);
+                        blknum_t mx = 0;
+                        for (const CAcctCacheItem& item : array) {
+                            options->txCache << item.blockNum << item.transIndex;
+                            mx = max(item.blockNum, mx);
+                        }
+                        options->txCache.flush();
+                        options->writeLastBlock(mx);
+                        lockSection(false);
                     }
 
                 } else {
