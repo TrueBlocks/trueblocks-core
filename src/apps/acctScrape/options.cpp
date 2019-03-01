@@ -187,15 +187,22 @@ bool COptions::parseArguments(string_q& command) {
         cerr << bBlack << Now().Format(FMT_JSON) << cOff << ": Monitoring " << cYellow << cacheFilename << cOff << "             \n";
 
     lastInCache = getLatestBlockFromCache();
+//cout << "1: " << lastInCache << " " << lastVisited << " " << lastBlock << " " << firstBlock << " " << nBlocks << endl;
     lastVisited = str_2_Uint(asciiFileToString(getTransCacheLast(monitors[0].address)));
+//cout << "2: " << lastInCache << " " << lastVisited << " " << lastBlock << " " << firstBlock << " " << nBlocks << endl;
     if (minWatchBlock > 0)
         lastVisited = max(minWatchBlock - 1, lastVisited);
+//cout << "3: " << lastInCache << " " << lastVisited << " " << lastBlock << " " << firstBlock << " " << nBlocks << endl;
 
     lastBlock  = min(lastInCache, maxWatchBlock);
+//cout << "4: " << lastInCache << " " << lastVisited << " " << lastBlock << " " << firstBlock << " " << nBlocks << endl;
     firstBlock = min(lastVisited, lastBlock);
+//cout << "5: " << lastInCache << " " << lastVisited << " " << lastBlock << " " << firstBlock << " " << nBlocks << endl;
     nBlocks    = min(lastBlock - firstBlock, maxBlocks);
+//cout << "6: " << lastInCache << " " << lastVisited << " " << lastBlock << " " << firstBlock << " " << nBlocks << endl;
     if (useIndex)
         nBlocks = 10000000;  // TODO(tjayrush): Not right
+//cout << "7: " << lastInCache << " " << lastVisited << " " << lastBlock << " " << firstBlock << " " << nBlocks << endl;
 
     return true;
 }
