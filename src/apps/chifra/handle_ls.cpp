@@ -35,7 +35,7 @@ bool COptions::handle_ls(void) {
     os  << "    " << cGreen << "Current monitors:" << cOff << endl << "    ";
     for (auto acct : accounts) {
         os << cTeal << acct.addr;
-        os << (acct.name.empty() ? "" : " (" + italic + acct.name + cTeal + ")") << endl;
+        os << (acct.name.empty() ? "" : " (" + acct.name + ")") << endl;
         os  << "    ";
     }
     os << cOff << endl;
