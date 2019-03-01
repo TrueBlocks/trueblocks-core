@@ -21,7 +21,7 @@ if len(sys.argv) > 1:
 while True:
     os.system('clear')
 
-    os.system('blockScrape --silent --consolidate --addrIndex')
+    os.system('blockScrape --consolidate --addrIndex')
     print("")
 
     os.system('miniBlocks --freshen')
