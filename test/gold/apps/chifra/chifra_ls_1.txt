@@ -1,6 +1,24 @@
 chifra argc: 2 [1:ls] 
 chifra ls 
-Monitor path: $BLOCK_CACHE/monitors/
-Current monitors:
-    none	                    
 
+Monitor path: $BLOCK_CACHE/monitors/
+    Current monitors:
+    0x38e7f9f19f4c1d03929176e01ad75b6eb3ce22ff
+    0x3f8c7f7e0020abbb346a5c77df98ec6fd9591f44
+    0x41e5560054824ea6b0732e656e3ad64e20e94e45 (Civic)
+    0x5894110995b8c8401bd38262ba0c8ee41d4e4658
+    0x6810e776880c02933d47db1b9fc05908e5386b96 (Gnosis Token)
+    0x744d70fdbe2ba4cf95131626614a1763df805b9e (Status Network Token)
+    0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0 (EOS)
+    0x888666ca69e0f178ded6d75b5726cee99a87d698 (ICONOMI)
+    0x9a642d6b3368ddc662ca244badf32cda716005bc (Qtum)
+    0xa74476443119a942de498590fe1f2454d7d4ac0d (Golem Network Token)
+    0xb97048628db6b661d4c2aa833e95dbe1a905b280 (TenX Pay Token)
+    0xbb9bc244d798123fde783fcc1c72d3bb8c189413 (The DAO)
+    0xc66ea802717bfb9833400264dd12c2bceaa34a6d (Maker)
+    0xd0d6d6c5fe4a677d343cc433536bb717bae167dd (AdToken)
+    0xd26114cd6ee289accf82350c8d8487fedb8a0c07 (OmisiGo)
+    0xe94327d07fc17907b4db788e5adf2ed424addff6 (Augur (Reputation))
+    0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 (Etherum Tip Jar)
+    0xffffe0493d3dbc04a95648c8681f561b718b4c34
+    
