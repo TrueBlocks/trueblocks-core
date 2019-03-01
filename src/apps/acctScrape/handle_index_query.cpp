@@ -44,27 +44,11 @@ bool visitIndexFiles(const string_q& path, void *data) {
                 // The file is too early, so we skip it...
                 options->addrStats.nSkipped += nRecords;
                 options->addrStats.nHit = fileSize(options->txCache.getFilename()) / (sizeof(uint64_t)*2);
-//cout << "1: " << bn << " " << options->firstBlock << " " << (bn < options->firstBlock) << " " << late << endl;
-//getchar();
-
                 return true;
-
-//            } else if (options->bn >= (options->firstBlock + options->nBlocks)) {
-//                // If we're too late....don't continue...
-//                options->addrStats.nSkipped += nRecords;
-//                options->writeLastBlock(bn);
-//
-//cout << "2: " << bn << " " << options->firstBlock << " " << options->nBlocks << " " << late << endl;
-//getchar();
-//
-//                return false;
             }
 
             cerr << options->name << " bn: " << bn << *options << "\r";
             cerr.flush();
-
-//cout << "3: " << bn << " " << options->firstBlock << " " << options->nBlocks << " " << late << endl;
-//getchar();
 
             CMemMapFile blockFile(path, CMemMapFile::WholeFile, CMemMapFile::RandomAccess);
             CIndexRecord *records = (CIndexRecord *)(blockFile.getData());  // NOLINT
