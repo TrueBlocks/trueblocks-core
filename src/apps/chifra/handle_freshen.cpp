@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_freshen(void) {
 
-    if (address.empty())
+    if (addrs.empty())
         return usage("This function requires an address. Quitting...");
     return freshen_internal(BOTH);
 }
@@ -22,9 +22,9 @@ bool COptions::freshen_internal(FreshenMode fMode) {
         //string_q fileName = monitorsPath + address + ".acct.bin";
         os << "cd " << monitorsPath << " ; ";
         if (fMode & INDEX)
-            os << "acctScrape --for_addr " + address + " --useIndex " + flags + ";";
+            os << "acctScrape --for_addr " + addrs[0] + " --useIndex " + flags + ";";
         if (fMode & BLOOM)
-            os << "acctScrape --for_addr " + address + " --maxBlocks 10000000 " + flags + ";";
+            os << "acctScrape --for_addr " + addrs[0] + " --maxBlocks 10000000 " + flags + ";";
         if (isTestMode())
             cout << substitute(os.str(), blockCachePath(""), "$BLOCK_CACHE/") << endl;
         else

@@ -8,15 +8,17 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_export(void) {
 
-    if (address.empty())
+    if (addrs.empty())
         return usage("This function requires an address. Quitting...");
 
+    string_q f = flags; flags = "";
     freshen_internal(INDEX);
+    flags = f;
 
     ostringstream os;
     os << "cd " << monitorsPath << " ; ";
-    os << "grabABI " << address << " ; ";
-    os << "acctExport" << " --for_addr " << address << " " << flags;
+    os << "grabABI " << addrs[0] << " ; ";
+    os << "acctExport" << " --for_addr " << addrs[0] << " " << flags;
 
     if (isTestMode())
         cout << substitute(os.str(), blockCachePath(""), "$BLOCK_CACHE/") << endl;
