@@ -21,9 +21,11 @@ void handle_list(COptions& options) {
     }
 
     if (options.modes & OP_STATS) {
-        cout << "full blocks:\t"  << cYellow << stats.fullCnt  << cOff << "\n";
-        cout << "empty blocks:\t" << cYellow << stats.emptyCnt << cOff << "\n";
-        cout << "total blocks:\t" << cYellow << stats.visited  << cOff << "\n";
+        cout << "  full blocks:\t"  << cYellow << stats.fullCnt;
+            cout << " (" << double_2_Str(100. * (double)stats.fullCnt/double(stats.visited),1) << "%)" << cOff << "\n";
+        cout << "  empty blocks:\t" << cYellow << stats.emptyCnt;
+            cout << " (" << double_2_Str(100. * (double)stats.emptyCnt/double(stats.visited),1) << "%)" << cOff << "\n";
+        cout << "  total blocks:\t" << cYellow << stats.visited  << cOff << "\n";
     }
 }
 
