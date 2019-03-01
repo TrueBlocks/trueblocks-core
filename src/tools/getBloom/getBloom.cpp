@@ -117,7 +117,7 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
     } else {
 
         string_q fileName = substitute(getBinaryFilename(num), "/blocks/", "/blooms/");
-        readBloomArray(blooms, fileName);
+        readBloomFromBinary(blooms, fileName);
              if (opt.asBars)    return showBloom(num, opt.bitBound, blooms, bars);
         else if (opt.asBitBars) return showBloom(num, opt.bitBound, blooms, bitBar);
         else if (opt.asPctBars) {

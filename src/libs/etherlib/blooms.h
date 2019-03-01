@@ -65,7 +65,7 @@ extern string_q getSha3 (const string_q& hexIn);
     extern bool addAddrToBloom(const address_t& addr, CBloomArray& blooms, size_t maxBits);
 
     //----------------------------------------------------------------------------------
-    extern bool readBloomArray (      CBloomArray& blooms, const string_q& fileName);
+    extern bool readBloomFromBinary(  CBloomArray& blooms, const string_q& fileName);
     extern bool writeBloomArray(const CBloomArray& blooms, const string_q& fileName);
     extern string_q reportBloom(const CBloomArray& blooms);
 
