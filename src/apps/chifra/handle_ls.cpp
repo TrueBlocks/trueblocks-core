@@ -10,17 +10,18 @@
 bool COptions::handle_ls(void) {
 
     ostringstream os;
-    os << cGreen << "Monitor path: " << cWhite << monitorsPath << endl;
+    os << endl << cGreen << "Monitor path: " << cWhite << monitorsPath << endl;
 
     CStringArray files;
-    listFilesInFolder(files, monitorsPath);
+    listFilesInFolder(files, monitorsPath + "*.*");
     sort(files.begin(), files.end());
 
     CAccountNameArray accounts;
     for (auto file : files) {
-        if (file != "d-monitors" && startsWith(file, "d-")) {
+        string_q type = nextTokenClear(file, '-');
+        if (type == "f" && contains(file, ".acct.bin")) {
             CAccountName item;
-            item.addr = substitute(file.substr(0, file.find(".")), "d-", "");
+            item.addr = nextTokenClear(file, '.');
             getNamedAccount(item, item.addr);
             accounts.push_back(item);
         }
@@ -31,10 +32,12 @@ bool COptions::handle_ls(void) {
         accounts.push_back(item);
     }
 
-    os << cGreen << "Current monitors:" << cOff << endl << "    ";
-    os << cTeal;
-    for (auto acct : accounts)
-        os << acct.addr << "\t" << padLeft(acct.name, 20) << endl;
+    os  << "    " << cGreen << "Current monitors:" << cOff << endl << "    ";
+    for (auto acct : accounts) {
+        os << cTeal << acct.addr;
+        os << (acct.name.empty() ? "" : " (" + italic + acct.name + cTeal + ")") << endl;
+        os  << "    ";
+    }
     os << cOff << endl;
 
     if (isTestMode())
