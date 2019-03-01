@@ -18,7 +18,7 @@ public:
 //    string_q monitorName;
     CArchive txCache;
     string_q flags;
-    string_q address;
+    CAddressArray addrs;
 
     COptions(void);
     ~COptions(void);
@@ -30,6 +30,7 @@ public:
 
     bool handle_freshen(void);
     bool handle_export (void);
+    bool handle_init   (void);
     bool handle_list   (void);
     bool handle_seed   (void);
     bool handle_daemon (void);
