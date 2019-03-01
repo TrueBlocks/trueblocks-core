@@ -51,6 +51,7 @@ run_test("chifra_seed"             "seed" " --verbose")
 run_test("chifra_freshen"          "freshen" " 0x1234567812345678123456781234567812345678")
 run_test("chifra_list"             "list" " 0x1234567812345678123456781234567812345678")
 run_test("chifra_export"           "export" " 0x1234567812345678123456781234567812345678")
+run_test("chifra_init"             "init" " 0x1234567812345678123456781234567812345678")
 ##run_test("chifra_edit_config"      "config")
 
 # Installation steps, this tool is renamed at installation

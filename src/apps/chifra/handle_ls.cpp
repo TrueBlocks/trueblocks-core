@@ -19,7 +19,7 @@ bool COptions::handle_ls(void) {
     CAccountNameArray accounts;
     for (auto file : files) {
         string_q type = nextTokenClear(file, '-');
-        if (type == "f" && contains(file, ".acct.bin")) {
+        if (type == "f" && contains(file, ".acct.bin") && !contains(file, ".lck")) {
             CAccountName item;
             item.addr = nextTokenClear(file, '.');
             getNamedAccount(item, item.addr);
