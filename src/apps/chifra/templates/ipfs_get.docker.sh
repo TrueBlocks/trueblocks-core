@@ -1,3 +1,4 @@
+curl http://my.ipfs.dnp.dappnode.eth:8080/ipfs/Qmcfmv6AP8dMdxNMatpSj2s4iAknZ8uy49HS2YcKysr2XW -o 007281264-007283893.txt.gz
 curl http://my.ipfs.dnp.dappnode.eth:8080/ipfs/QmdMPFruxu6iQr6P6XRdKLh17Eduu1VvMaLZ66ER51Z2H8 -o 007278796-007281264.txt.gz
 curl http://my.ipfs.dnp.dappnode.eth:8080/ipfs/QmNSU3curjvCxBh7JcMFrwjBLeZJTh8ezmPLMMkzsDtwAe -o 007276542-007278796.txt.gz
 curl http://my.ipfs.dnp.dappnode.eth:8080/ipfs/QmNW6Fkfnz64n8gL8YjTn4JPYNoPeT7coHGjPNcB2eAfA3 -o 007274319-007276542.txt.gz
