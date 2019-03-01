@@ -183,9 +183,6 @@ bool COptions::parseArguments(string_q& command) {
         setDataSource("local");
     }
 
-    if (!isTestMode())
-        cerr << bBlack << Now().Format(FMT_JSON) << cOff << ": Monitoring " << cYellow << cacheFilename << cOff << "             \n";
-
     lastInCache = getLatestBlockFromCache();
 //cout << "1: " << lastInCache << " " << lastVisited << " " << lastBlock << " " << firstBlock << " " << nBlocks << endl;
     lastVisited = str_2_Uint(asciiFileToString(getTransCacheLast(monitors[0].address)));
@@ -203,6 +200,16 @@ bool COptions::parseArguments(string_q& command) {
     if (useIndex)
         nBlocks = 10000000;  // TODO(tjayrush): Not right
 //cout << "7: " << lastInCache << " " << lastVisited << " " << lastBlock << " " << firstBlock << " " << nBlocks << endl;
+
+    if (!isTestMode()) {
+        cerr << bBlack << Now().Format(FMT_JSON) << cOff;
+        cerr << ": Monitoring ";
+        cerr << cYellow << cacheFilename << cOff;
+        cerr << " (start: " << cTeal << firstBlock << cOff;
+        cerr << " end: " + cTeal << uint_2_Str(lastBlock) << cOff;
+        cerr << " n: " + cTeal << uint_2_Str(lastBlock-firstBlock) << cOff;
+        cerr << ")                    \n";
+    }
 
     return true;
 }
