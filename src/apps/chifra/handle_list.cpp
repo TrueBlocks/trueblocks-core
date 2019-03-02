@@ -11,17 +11,17 @@ bool COptions::handle_list(void) {
     if (addrs.empty())
         return usage("This function requires an address. Quitting...");
 
-    string_q f = flags; flags = "";
-    freshen_internal(INDEX);
-    flags = f;
+    for (auto addr : addrs) {
+        if (!freshen_internal(monitorsPath, addr, "", INDEX))
+            return false;
+        ostringstream os;
+        os << "cd " << monitorsPath << " ; ";
+        os << "cacheMan -d " << addr << ".acct.bin ; ";
+        if (isTestMode())
+            cout << substitute(os.str(), blockCachePath(""), "$BLOCK_CACHE/") << endl;
+        else
+            if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+    }
 
-    ostringstream os;
-    os << "cd " << monitorsPath << " ; ";
-    os << "cacheMan -d " << addrs[0] << ".acct.bin ; ";
-
-    if (isTestMode())
-        cout << substitute(os.str(), blockCachePath(""), "$BLOCK_CACHE/") << endl;
-    else
-        if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
     return true;
 }

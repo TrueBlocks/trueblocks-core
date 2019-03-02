@@ -125,6 +125,5 @@ bool COptions::loadMonitors(CToml& toml) {
         }
         watch = CAccountWatch();  // reset
     }
-    //monitorName = toml.getConfigStr("settings", "name", watches[0].name);
     return true;
 }
