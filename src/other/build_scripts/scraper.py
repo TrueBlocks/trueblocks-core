@@ -5,6 +5,7 @@ import subprocess
 import os
 import time
 import signal
+from datetime import datetime
 
 def signal_handler(signal, frame):
     print('You pressed Ctrl+C!')
@@ -30,6 +31,5 @@ while True:
     os.system('getBlock --latest')
     print("")
 
-    print("Hit Ctrl+C to quit...");
-
+    print("{}".format(datetime.now().strftime("%Y/%m/%d:%H:%M:%S")) + ": sleeping " + str(timeout) + " seconds (Ctrl+C to quit...)")
     time.sleep(float(timeout))
