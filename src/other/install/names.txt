@@ -1,24 +1,22 @@
+#---------------------------------------------------------------------------------------------------------------					
 #  This is the ethName database. Format records as tab seperated lines with the following format:					
 #					
 #      Optional Symbol <tab> Name <tab> Address <tab> Source of the data <tab> Description <newline>					
-#					
 #---------------------------------------------------------------------------------------------------------------					
 # Address.  Symbol.          Name                    Source        Description					
-#---------------------------------------------------------------------------------------------------------------	0x0000000000085d4780B73119b644AE5ecd22b376	TUSD	TrueUSD	Etherscan.io	The only regulated, exchange-independent stablecoin backed 1-for-1 with US Dollars	/token/images/trueusdtoken_28.png
+#---------------------------------------------------------------------------------------------------------------
+0x0000000000085d4780B73119b644AE5ecd22b376	TUSD	TrueUSD	Etherscan.io	The only regulated, exchange-independent stablecoin backed 1-for-1 with US Dollars	/token/images/trueusdtoken_28.png
 0x054c64741dbafdc19784505494029823d89c3b13	XET	ETERNAL TOKEN	Etherscan.io	The Eternal Project is an undertaking for the rapid spread of Eternal Wallet and Eternal Coin around the world, by utilizing the skills and infrastructures of global corporations and individuals.	/token/images/eternaltoken_28.png
 0x056fd409e1d7a124bd7017459dfea2f387b6d5cd	GUSD	Gemini dollar	Etherscan.io	Gemini dollar combines the creditworthiness and price stability of the U.S. dollar with blockchain technology and the oversight of U.S. regulators.	/token/images/gemini_28.png
 0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27	ZIL	Zilliqa	Etherscan.io	Zilliqa is a high-throughput public blockchain platform - designed to scale to thousands ‚Äö√Ñ√£of transactions per second.	/token/images/zilliqa_28_2.png
 0x06012c8cf97BEaD5deAe237070F9587f8E7A266d	CK	CryptoKitties	Etherscan.io	The famous first ERC721 token	
 0x07e3c70653548b04f0a75970c1f81b4cbbfb606f	DLT	Delta	Etherscan.io	Legally Binding Smart Contracts, Powered by AI.	/token/images/agrello_delta_28.png
-0x08711D3B02C8758F2FB3ab4e80228418a7F8e39c	EDG	Edgeless	Etherscan.io	The Ethereum smart contract-based that offers a 0% house edge and solves the transparency question once and for all	
 0x08711d3b02c8758f2fb3ab4e80228418a7f8e39c	EDG	Edgeless	Etherscan.io	The Ethereum smart contract-based that offers a 0% house edge and solves the transparency question once and for all.	/token/images/edgeless.png
 0x08d32b0da63e2C3bcF8019c9c5d849d7a9d791e6	Dentacoin	Dentacoin	Etherscan.io	Aims to be the blockchain solution for the global dental industry.	/token/images/Dentacoin.png
 0x08f5a9235b08173b7569f83645d2c7fb55e8ccd8	TNT	Tierion Network Token	Etherscan.io	Tierion creates software to reduce the cost and complexity of trust. Anchoring data to the blockchain and generating a timestamp proof.	/token/images/tierion_28.png
-0x0AbdAce70D3790235af448C88547603b945604ea	DNT	district0x Token	Etherscan.io	A network of decentralized markets and communities. Create, operate, and govern. Powered by Ethereum, Aragon, and IPFS	
-0x0abdace70d3790235af448c88547603b945604ea	DNT	district0x	Etherscan.io	A network of decentralized markets and communities. Create, operate, and govern. Powered by Ethereum, Aragon, and IPFS.	/token/images/district0x.png
+0x0abdace70d3790235af448c88547603b945604ea	DNT	district0x Token	Etherscan.io	A network of decentralized markets and communities. Create, operate, and govern. Powered by Ethereum, Aragon, and IPFS.	/token/images/district0x.png
 0x0cf0ee63788a0849fe5297f3407f701e122cc023	DATA	DATAcoin	Etherscan.io	Streamr is building the world‚Äö√Ñ√¥s leading Marketplace and decentralised Network for real-time data.	/token/images/streamr2_28.png
-0x0D8775F648430679A709E98d2b0Cb6250d2887EF	BAT	Basic Attention Token	Etherscan.io	The Basic Attention Token is the new token for the digital advertising industry	
-0x0d8775f648430679a709e98d2b0cb6250d2887ef	BAT	BAT	Etherscan.io	The Basic Attention Token is the new token for the digital advertising industry.	/token/images/bat.png
+0x0d8775f648430679a709e98d2b0cb6250d2887ef	BAT	Basic Attention Token	Etherscan.io	The Basic Attention Token is the new token for the digital advertising industry.	/token/images/bat.png
 0x0e0989b1f9b8a38983c2ba8053269ca62ec9b195	POE	Po.et	Etherscan.io	Po.et aims to reclaim value for content creators, publishers and consumers.	/token/images/poet_28_2.png
 0x0f5d2fb29fb7d3cfee444a200298f468908cc942	MANA	Decentraland	Etherscan.io	Decentraland is a virtual reality platform powered by the Ethereum blockchain. Users can create, experience, and monetize content and applications	/token/images/decentraland_28.png?v=1
 0x1014613e2b3cbc4d575054d4982e580d9b99d7b1	BCV	BitCapitalVendorToken	Etherscan.io	/token/images/bitcapital_28.png	
@@ -37,8 +35,7 @@
 0x1b793e49237758dbd8b752afc9eb4b329d5da016	VITE	ViteToken	Etherscan.io	High-performance Decentralized Application Platform	/token/images/vite_28.png
 0x1c83501478f1320977047008496dacbd60bb15ef	DGTX	DigitexFutures	Etherscan.io	The DGTX Token is a protocol token that has real world utility and value. Its value derives directly from its utility as a vehicle for the commission-free trading of liquid futures contracts on the price of Bitcoin, Ethereum and Litecoin against the US Dollar.	/token/images/digitextoken_28.png
 0x1cb3209d45b2a60b7fbca1ccdbf87f674237a4aa	THR	ThoreCoin	Etherscan.io	THR represents a basket of top-traded high-demand coins Simply put, it‚Äö√Ñ√¥s a Basket of Multiple cryptocurrencies in which you can invest by buying tokens	/token/images/thorecoin_28.png
-0x1F573D6Fb3F13d689FF844B4cE37794d79a7FF1C	BNT	Bancor Network Token	Etherscan.io	Bancor Protocol is a standard for a new generation of cryptocurrencies called Smart Tokens	
-0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c	BNT	Bancor	Etherscan.io	Bancor Protocol is a standard for a new generation of cryptocurrencies called Smart Tokens	/token/images/bancor.png
+0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c	BNT	Bancor Network Token	Etherscan.io	Bancor Protocol is a standard for a new generation of cryptocurrencies called Smart Tokens	/token/images/bancor.png
 0x226bb599a12c826476e3a771454697ea52e9e220	PRO	Propy	Etherscan.io	Property Transactions Secured Through Blockchain.	/token/images/propy_28.png
 0x24dcc881e7dd730546834452f21872d5cb4b5293	SCRL	SCRL	Etherscan.io	Scroll is a data storage, management and logistics platform that uses blockchain technology to add better cryptography and more transparency to the Internet of Information.	/token/images/scrollnetwork2_28.png
 0x255aa6df07540cb5d3d297f0d0d4d84cb52bc8e6	RDN	Raiden	Etherscan.io	The Raiden Network is an off-chain scaling solution, enabling near-instant, low-fee and scalable payments. It‚Äö√Ñ√¥s complementary to the Ethereum blockchain and works with any ERC20 compatible token.	/token/images/raiden28.png
@@ -62,9 +59,7 @@
 0x4092678e4e78230f46a1534c0fbc8fa39780892b	OCN	OCoin	Etherscan.io	ODYSSEY‚Äö√Ñ√¥s mission is to build the next-generation decentralized sharing economy & Peer to Peer Ecosystem.	/token/images/odyssey_28.png
 0x4156D3342D5c385a87D264F90653733592000581	SALT	Salt	Etherscan.io	SALT lets you leverage your blockchain assets to secure cash loans. We make it easy to get money without having to sell your favorite investment.	/token/images/salt_28.png
 0x419c4db4b9e25d6db2ad9691ccb832c8d9fda05e	DRGN	Dragon	Etherscan.io	Dragonchain simplifies the integration of real business applications onto a blockchain.	/token/images/dragonchain_28.png
-0x419D0d8BdD9aF5e606Ae2232ed285Aff190E711b	FUN	FunFair	Etherscan.io	FunFair is a decentralised gaming platform powered by Ethereum smart contracts	
 0x419d0d8bdd9af5e606ae2232ed285aff190e711b	FUN	FunFair	Etherscan.io	FunFair is a decentralised gaming platform powered by Ethereum smart contracts	/token/images/FunFair.png
-0x41e5560054824eA6B0732E656E3Ad64E20e94E45	CVC	Civic	Etherscan.io	Giving businesses and individuals the tools to control and protect identities	
 0x41e5560054824ea6b0732e656e3ad64e20e94e45	CVC	Civic	Etherscan.io	Giving businesses and individuals the tools to control and protect identities	/token/images/civic_28_2.png
 0x4470BB87d77b963A013DB939BE332f927f2b992e	ADX	AdEx	Etherscan.io	Decentralized Ad Network	/token/images/adex_28_2.png
 0x4672bad527107471cb5067a887f4656d585a8a31	DROP	Dropil	Etherscan.io	Dropil focuses on innovative technologies for autonomous & intelligent trading, reporting and storage in the cryptocurrency world.	/token/images/dropil_28.png
@@ -88,7 +83,6 @@
 0x5732046a883704404f284ce41ffadd5b007fd668	BLZ	Bluzelle	Etherscan.io	Aims to be the next-gen database protocol for the decentralized internet.	/token/images/bluzelle28.png
 0x574f84108a98c575794f75483d801d1d5dc861a5	ROX	Robotina token	Etherscan.io	Internet of things, artificial intelligence and blockchain empowering energy consumers	/token/images/robotina_28.png
 0x595832f8fc6bf59c85c527fec3740a1b7a361269	POWR	PowerLedger	Etherscan.io	Power Ledger is a peer-to-peer marketplace for renewable energy.	/token/images/powerledger_28_2.png
-0x5Af2Be193a6ABCa9c8817001F45744777Db30756	BQX	Bitquence	Etherscan.io	People-powered cryptocurrency services for the blockchain	
 0x5af2be193a6abca9c8817001f45744777db30756	ETHOS	Ethos	Etherscan.io	People-powered cryptocurrency services for the blockchain	/token/images/ethos_28.png
 0x5b2e4a700dfbc560061e957edec8f6eeeb74a320	INS	Insolar	Etherscan.io	INS is developing a platform to enable direct interaction between brands and people in the consumer sector.	/token/images/insolar_28_2.png
 0x5c543e7AE0A1104f78406C340E9C64FD9fCE5170	vSlice	vSlice Token	Etherscan.io	An Ethereum Gaming Platform Token	
@@ -103,8 +97,7 @@
 0x6531f133e6DeeBe7F2dcE5A0441aA7ef330B4e53	TIME	ChronoBank (Time Token)	Etherscan.io	ChronoBank.io is a wide-ranging blockchain project, aimed at disrupting the HR/recruitment/finance industries	
 0x66186008C1050627F979d464eABb258860563dbE	MDS	MediShares	Etherscan.io	Mutual Aid Marketplace On BlockChain	/token/images/medishares28.png
 0x667088b212ce3d06a1b553a7221E1fD19000d9aF	WINGS	Wings	Etherscan.io	A decentralized platform to create, join and manage projects	
-0x6810e776880C02933D47DB1b9fc05908e5386b96	GNO	Gnosis Token	Etherscan.io	Crowd Sourced Wisdom - The next generation blockchain network. Speculate on anything with an easy-to-use prediction market	
-0x6810e776880c02933d47db1b9fc05908e5386b96	GNO	Gnosis	Etherscan.io	Crowd Sourced Wisdom - The next generation blockchain network. Speculate on anything with an easy-to-use prediction market	/token/images/gnosis.png
+0x6810e776880c02933d47db1b9fc05908e5386b96	GNO	Gnosis Token	Etherscan.io	Crowd Sourced Wisdom - The next generation blockchain network. Speculate on anything with an easy-to-use prediction market	/token/images/gnosis.png
 0x68909e586eeac8f47315e84b4c9788dd54ef65bb	EVN	EvenCoin	Etherscan.io	EvenCoin is a new self-mining smart contract where no hardware is required to mine EvenCoin but it gets mining in parallel to even numbers of Ethereum blocks with ERC20 compliant with a total supply of 100 Million coins.	/token/images/evencoin_28_2.png
 0x68d57c9a1c35f63e2c83ee8e49a64e9d70528d25	SRN	SIRIN	Etherscan.io	SIRIN LABS‚Äö√Ñ√¥ aims to become the world‚Äö√Ñ√¥s leader in secure open source consumer electronics, bridging the gap between the mass market and the blockchain econom	/token/images/sirin_28.png
 0x697beac28b09e122c4332d163985e8a73121b97f	QRL	QRL	Etherscan.io	The Quantum Resistant Ledger (QRL) aims to be a future-proof post-quantum value store and decentralized communication layer which tackles the threat Quantum Computing will pose to cryptocurrencies.	/token/images/qrl_28.png
@@ -115,11 +108,9 @@
 0x70a72833d6bf7f508c8224ce59ea1ef3d0ea3a38	UTK	UTRUST	Etherscan.io	Aims to be a safe payment platform in the world for buyers and sellers.	/token/images/utrust_28_2.png
 0x713b73c3994442b533e6a083ec968e40606810ec	EEAR	Eth Early Adoption Reg	quickBlocks.io	An early, known-dead address useful for testing	
 0x722f2f3eac7e9597c73a593f7cf3de33fbfc3308	CNUS	CoinUs	Etherscan.io	CoinUs is a integrated business platform with focus on individual's value and experience to provide Human-to-Blockchain Interface.	/token/images/coinus_28.png
-0x744d70FDBE2Ba4CF95131626614a1763DF805B9E	SNT	Status Network Token	Etherscan.io	Status is an open source messaging platform and mobile browser to interact with decentralized applications	
-0x744d70fdbe2ba4cf95131626614a1763df805b9e	SNT	StatusNetwork	Etherscan.io	Status is an open source messaging platform and mobile browser to interact with decentralized applications that run on the Ethereum Network.	/token/images/status.png
+0x744d70fdbe2ba4cf95131626614a1763df805b9e	SNT	Status Network Token	Etherscan.io	Status is an open source messaging platform and mobile browser to interact with decentralized applications that run on the Ethereum Network.	/token/images/status.png
 0x7728dFEF5aBd468669EB7f9b48A7f70a501eD29D	PRG	PRG	Etherscan.io	/token/images/prg_28_2.png	
-0x7C5A0CE9267ED19B22F8cae653F198e3E8daf098	SAN	SANtiment Network Token	Etherscan.io	A Better Way to Trade Crypto-Markets - Market Datafeeds, Newswires, and Crowd Sentiment Insights for the Blockchain World	
-0x7c5a0ce9267ed19b22f8cae653f198e3e8daf098	SAN	SAN	Etherscan.io	A Better Way to Trade Crypto-Markets - Market Datafeeds, Newswires, and Crowd Sentiment Insights for the Blockchain World	/token/images/santiment_28_2.png
+0x7c5a0ce9267ed19b22f8cae653f198e3e8daf098	SAN	SANtiment Network Token	Etherscan.io	A Better Way to Trade Crypto-Markets - Market Datafeeds, Newswires, and Crowd Sentiment Insights for the Blockchain World	/token/images/santiment_28_2.png
 0x809826cceab68c387726af962713b64cb5cb3cca	nCash	NucleusVision	Etherscan.io	Founded at Harvard University, Nucleus Vision is an IoT-based, contactless identification system that empowers retailers to identify and better serve their customers.	/token/images/nucleus-vision_28.png
 0x80a7e048f37a50500351c204cb407766fa3bae7f	CRPT	Crypterium	Etherscan.io	Cryptobank for Cryptopeople.	/token/images/crypterium_28_2.png
 0x80fB784B7eD66730e8b1DBd9820aFD29931aab03	LEND	EthLend	Etherscan.io	Decentralized and secure financial marketplace for peer to peer lending agreements using Blockchain and Smart Contracts.	/token/images/ethlend_28.png
@@ -128,7 +119,6 @@
 0x846c66cf71c43f80403b51fe3906b3599d63336f	PMA	PumaPay	Etherscan.io	PumaPay's open-source Pull Payment Protocol is a comprehensive blockchain solution which offers robust payment mechanisms far more credible, efficient, flexible, cost-effective, and scalable than current implementations (credit cards).	/token/images/pumapay_28.png
 0x85e076361cc813a908ff672f9bad1541474402b2	TEL	Telcoin	Etherscan.io	A cryptocurrency distributed by your mobile operator and accepted everywhere.	/token/images/telcoin_28.png
 0x86Fa049857E0209aa7D9e616F7eb3b3B78ECfdb0	EOS	EOS	Etherscan.io	Infrastructure for Decentralized Applications	
-0x888666CA69E0f178DED6D75b5726Cee99A87D698	ICN	ICONOMI	Etherscan.io	Digital Assets Management platform enables simple access to a variety of digital assets and combined Digital Asset Arrays	
 0x888666CA69E0f178DED6D75b5726Cee99A87D698	ICN	ICONOMI	Etherscan.io	ICONOMI Digital Assets Management platform enables simple access to a variety of digital assets and combined Digital Asset Arrays	/token/images/iconomi_28_2.png
 0x88d50b466be55222019d71f9e8fae17f5f45fca1	CPT	Cryptaur	Etherscan.io	Cryptaur is a decentralized applications store with a mission to transform and ultimately allow for the implementation of a reinvented shared economic system.	/token/images/cryptaur1_28.png
 0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7	UNI	Unicorns	Ethereum.org	Ethereum tip jar unicorn tokens	
@@ -162,27 +152,22 @@
 0xa66daa57432024023db65477ba87d4e7f5f95213	HPT	HuobiPoolToken	Etherscan.io	/token/images/huobi_28_2.png	
 0xa74476443119A942dE498590Fe1f2454d7D4aC0d	GNT	Golem Network Token	Etherscan.io	Golem is going to create the first decentralized global market for computing power	/token/images/golem_28.png?v=2
 0xa974c709cfb4566686553a20790685a47aceaa33	XIN	Mixin	Etherscan.io	A TEE powered BFT-DAG network that connects all existing blockchains	/token/images/mixin_28.png
-0xaAAf91D9b90dF800Df4F55c205fd6989c977E73a	TKN	Monolith TKN	Etherscan.io	The All Powerful Smart Contract Powered Debit Card	
 0xaaaf91d9b90df800df4f55c205fd6989c977e73a	TKN	TokenCard	Etherscan.io	The All Powerful Smart Contract Powered Debit Card	/token/images/tokencard_28_3.png
 0xaad54c9f27b876d2538455dda69207279ff673a5	DAC	Davinci coin	Etherscan.io	Blockchain ecosystem for building and deploying decentralized application	/token/images/davinci_28.png
-0xaeC2E87E0A235266D9C5ADc9DEb4b2E29b54D009	SNGLS	SingularDTV	Etherscan.io	A Blockchain Entertainment Studio, Smart Contract Rights Management Platform and Video On-Demand Portal	
-0xaec2e87e0a235266d9c5adc9deb4b2e29b54d009	SNGLS	SNGLS	Etherscan.io	A Blockchain Entertainment Studio, Smart Contract Rights Management Platform and Video On-Demand Portal	/token/images/sngls2.PNG
+0xaec2e87e0a235266d9c5adc9deb4b2e29b54d009	SNGLS	SingularDTV	Etherscan.io	A Blockchain Entertainment Studio, Smart Contract Rights Management Platform and Video On-Demand Portal	/token/images/sngls2.PNG
 0xAf30D2a7E90d7DC361c8C4585e9BB7D2F6f15bc7	1ST	FirstBlood Token	Etherscan.io	FirstBlood.io is a decentralized Esports gaming platform that is powered by the blockchain	
 0xb0514a5b4aa58ac6e954f537598dd42a71916581	HUM	HUMToken	Etherscan.io	Solution to Incurable Diseases by Curating Personal Health Data	/token/images/humanscape2_28.png
 0xb052f8a33d8bb068414eade06af6955199f9f010	ECOREAL	EcoRealEstate	Etherscan.io	Real Estate Investment through Ecoreal Ethereum Token. Capital markets are becoming Global, Real Estates are no exception. This establishes the need for a new decentralized solution to capitalize this potential.	/token/images/ecoreal_28_3.png
 0xb3104b4b9da82025e8b9f8fb28b3553ce2f67069	BIX	BIX Token	Etherscan.io	AI Enhanced Encrypted Digital Asset Exchange.	/token/images/bix_28.png
 0xb5a5f22694352c15b00323844ad545abb2b11028	ICX	ICON	Etherscan.io	The ICON Network is comprised of various institutions ranging from:	/token/images/iconfoundation_28_2.png
 0xb62132e35a6c13ee1ee0f84dc5d40bad8d815206	NEXO	Nexo	Etherscan.io	Instant Crypto-backed Loans	/token/images/nexo_28.png
-0xB63B606Ac810a52cCa15e44bB630fd42D8d1d83d	MCO	Monaco	Etherscan.io	Monaco is a cryptocurrency card. Spend and send money globally at interbank exchange rates	
 0xb63b606ac810a52cca15e44bb630fd42d8d1d83d	MCO	Crypto.com	Etherscan.io	Crypto.com, the pioneering payments and cryptocurrency platform, seeks to accelerate the world‚Äö√Ñ√¥s transition to cryptocurrency.	/token/images/cryptocom_28.png
-0xB64ef51C888972c908CFacf59B47C1AfBC0Ab8aC	STORJ	StorjToken	Etherscan.io	Blockchain-based, end-to-end encrypted, distributed object storage, where only you have access to your data	
-0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac	STORJ	Storj	Etherscan.io	Blockchain-based, end-to-end encrypted, distributed object storage, where only you have access to your data	/token/images/storj2.png
+0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac	STORJ	StorjToken	Etherscan.io	Blockchain-based, end-to-end encrypted, distributed object storage, where only you have access to your data	/token/images/storj2.png
 0xB70835D7822eBB9426B56543E391846C107bd32C	GTC	Game.com Token	Etherscan.io	Game.com is focused on creating a global gaming platform for blockchain digital currencies.	/token/images/gamecom_28_2.png
 0xb7cb1c96db6b22b0d3d9536e0108d062bd488f74	WTC	Walton	Etherscan.io	Value Internet of Things (VIoT) constructs a perfect commercial ecosystem via the integration of the real world and the blockchain.	/token/images/walton_28_2.png
 0xB8c77482e45F1F44dE1745F52C74426C631bDD52	BNB	BNB	Etherscan.io	Binance aims to build a world-class crypto exchange, powering the future	/token/images/bnb_28_2.png
 0xb91318f35bdb262e9423bc7c7c2a3a93dd93c92c	NULS	Nuls	Etherscan.io	NULS is a global blockchain open-source project which is a highly customizable modular blockchain infrastructure consisting of a microkernel and functional modules.	/token/images/nuls28.png
-0xB97048628DB6B661D4C2aA833e95Dbe1A905B280	PAY	TenX Pay Token	Etherscan.io	TenX connects your blockchain assets for everyday use.	
-0xB97048628DB6B661D4C2aA833e95Dbe1A905B280	PAY	TenXPay	Etherscan.io	TenX connects your blockchain assets for everyday use. TenX‚Äö√Ñ√¥s debit card and banking licence will allow us to be a hub for the blockchain ecosystem to connect for real-world use cases.	/token/images/tenx_28.png
+0xB97048628DB6B661D4C2aA833e95Dbe1A905B280	PAY	TenX Pay Token	Etherscan.io	TenX connects your blockchain assets for everyday use. TenX‚Äö√Ñ√¥s debit card and banking licence will allow us to be a hub for the blockchain ecosystem to connect for real-world use cases.	/token/images/tenx_28.png
 0xb98d4c97425d9908e66e53a6fdf673acca0be986	ABT	ArcBlock	Etherscan.io	An open source protocol that provides an abstract layer for accessing underlying blockchains, enabling your application to work on different blockchains.	/token/images/arcblock_28.png
 0xB9e7F8568e08d5659f5D29C4997173d84CdF2607	SWT	Swarm City Token	Etherscan.io	Swarm City is a decentralized peer to peer sharing economy	
 0xbb9bc244d798123fde783fcc1c72d3bb8c189413	DAO	The DAO	Etherscan.io	The infamous DAO smart contract	
@@ -205,7 +190,6 @@
 0xd0352a019e9ab9d757776f532377aaebd36fd541	FSN	Fusion	Etherscan.io	FUSION is a public blockchain devoting itself to creating an inclusive cryptofinancial platform by providing cross-chain, cross-organization, and cross-datasource smart contracts.	/token/images/fusion_28.png
 0xd0a4b8946cb52f0661273bfbc6fd0e0c75fc6433	STORM	Storm	Etherscan.io	Storm Market aims to make it easier for members to find new ways to earn, engage, and advance with their gamified micro-task platform for STORM tokens.	/token/images/stormx_28.png
 0xD0D6D6C5Fe4a677D343cC433536BB717bAe167dD		AdToken	Etherscan.io	adChain is a browser agnostic solution for digital advertising that integrates with pre-existing programmatic standards	
-0xd26114cd6EE289AccF82350c8d8487fedB8A0C07	OMG	OmisiGo	Etherscan.io	A public Ethereum-based financial technology for use in mainstream digital wallets	
 0xd26114cd6EE289AccF82350c8d8487fedB8A0C07	OMG	OmiseGO	Etherscan.io	OmiseGO (OMG) is a public Ethereum-based financial technology for use in mainstream digital wallets	/token/images/omise.png
 0xd45247c07379d94904e0a87b4481f0a1ddfa0c64	BCZERO	Buggyra Coin Zero	Etherscan.io	BCZERO will act as the payment platform for racing series in China, India, Europe, South America and for Sponsorships and Fans.	/token/images/nuggyratoken_28.png
 0xd4c435f5b09f855c3317c8524cb1f586e42795fa	CND	Cindicator	Etherscan.io	Hybrid Intelligence for effective asset management.	/token/images/cindicatortoken_28.png
@@ -218,8 +202,7 @@
 0xdd974d5c2e2928dea5f71b9825b8b646686bd200	KNC	KyberNetwork	Etherscan.io	KyberNetwork is a new system which allows the exchange and conversion of digital assets.	/token/images/kyber2_28.png
 0xde2f7766c8bf14ca67193128535e5c7454f8387c	META	Metadium	Etherscan.io	Metadium is the next-generation identiy protocol layer of the internet, powered by blockchain with trustless trust.	/token/images/metadium_28_2.png
 0xdf2c7238198ad8b389666574f2d8bc411a4b7428	MFT	Mainframe Token	Etherscan.io	A decentralized network for censorship-resistant message routing.	/token/images/mainframe_28.png
-0xE0B7927c4aF23765Cb51314A0E0521A9645F0E2A	DGD	Digix Global	Etherscan.io	Every asset represents a unique bullion bar sitting in designated securitised custodial vaults	
-0xe0b7927c4af23765cb51314a0e0521a9645f0e2a	DGD	DGD	Etherscan.io	DigixDAO is a decentralized voting / utility token that allows users to submit and manage proposals that relate to the growth of the Digix ecosystem and platform.	/token/images/digix_dgd_28.png
+0xe0b7927c4af23765cb51314a0e0521a9645f0e2a	DGD	Digix Global	Etherscan.io	DigixDAO is a decentralized voting / utility token that allows users to submit and manage proposals that relate to the growth of the Digix ecosystem and platform.	/token/images/digix_dgd_28.png
 0xe12128d653b62f08fbed56bdeb65db729b6691c3	BRZC	BreezeCoin	Etherscan.io	BreezeCoin is linked to real estate assets. Coin holders benefit from monthly interest payments. It will become a medium of exchange in real estate projects done by Breeze de Mar.	/token/images/breezecoin_28_2.png
 0xe1aee98495365fc179699c1bb3e761fa716bee62	BZNT	BezantToken	Etherscan.io	A decentralized payment platform enabling the creation of robust applications	/token/images/bezant1_28.png
 0xe25bcec5d3801ce3a794079bf94adf1b8ccd802d	MAN	MATRIX AI Network	Etherscan.io	Aims to be an open source public intelligent blockchain platform	/token/images/matrix_ai_28.png
