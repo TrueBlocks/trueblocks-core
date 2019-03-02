@@ -38,15 +38,16 @@ bool COptions::handle_ls(void) {
 #ifdef TIOCGSIZE
     struct ttysize ts;
     ioctl(STDIN_FILENO, TIOCGSIZE, &ts);
+    size_t ncols = ts.ts_cols;
 #elif defined(TIOCGWINSZ)
     struct winsize ts;
     ioctl(STDIN_FILENO, TIOCGWINSZ, &ts);
+    size_t ncols = ts.ws_col;
 #endif /* TIOCGSIZE */
 
     size_t mx = 0;
     for (auto acct : accounts)
         mx = max(mx, acct.addr.length() + 20 + 3);
-    os << ts.ts_cols << " " << mx << " " << (ts.ts_cols / mx) << endl;
 
     uint64_t cnt = 0;
     os << "  " << cGreen << "Current monitors:" << cOff << endl;
@@ -54,7 +55,7 @@ bool COptions::handle_ls(void) {
         os << "    " << cTeal << acct.addr;
         string_q nm = acct.name.empty() ? "" : " (" + acct.name.substr(0,20) + ")";
         os << padRight(nm, 22);
-        if (!(++cnt % (ts.ts_cols / mx)))
+        if (!(++cnt % (ncols / mx)))
             os << endl;
     }
     os << cOff << endl;
