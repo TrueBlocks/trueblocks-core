@@ -30,8 +30,10 @@ bool freshen_internal(const string_q& path, const address_t& addr, const string_
 
     if (isTestMode())
         cout << substitute(os.str(), blockCachePath(""), "$BLOCK_CACHE/") << endl;
-    else
+    else {
         if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+        usleep(500000);
+    }
 
     return true;
 }

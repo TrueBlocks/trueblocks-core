@@ -52,7 +52,7 @@ bool COptions::handle_ls(void) {
     os << "  " << cGreen << "Current monitors:" << cOff << endl;
     for (auto acct : accounts) {
         os << "    " << cTeal << acct.addr;
-        string_q nm = acct.name.empty() ? "" : "(" + acct.name.substr(0,20) + ")";
+        string_q nm = acct.name.empty() ? "" : " (" + acct.name.substr(0,20) + ")";
         os << padRight(nm, 22);
         if (!(++cnt % (ts.ts_cols / mx)))
             os << endl;
