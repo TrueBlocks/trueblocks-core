@@ -15,7 +15,6 @@ public:
     blknum_t minWatchBlock;
     blknum_t maxWatchBlock;
     string_q monitorsPath;
-//    string_q monitorName;
     CArchive txCache;
     string_q flags;
     CAddressArray addrs;
@@ -38,10 +37,10 @@ public:
     bool handle_ls     (void);
     bool handle_config (void);
     bool handle_help   (void);
-
-private:
-    bool freshen_internal(FreshenMode mode);
 };
+
+//--------------------------------------------------------------------------------
+extern bool freshen_internal(const string_q& path, const address_t& addr, const string_q& flags, FreshenMode mode);
 
 //--------------------------------------------------------------------------------
 extern string_q colors[];

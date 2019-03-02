@@ -67,12 +67,18 @@ bool CAccountName::setValueByName(const string_q& fieldName, const string_q& fie
         case 'd':
             if ( fieldName % "description" ) { description = fieldValue; return true; }
             break;
+        case 'l':
+            if ( fieldName % "logo" ) { logo = fieldValue; return true; }
+            break;
         case 'n':
             if ( fieldName % "name" ) { name = fieldValue; return true; }
             break;
         case 's':
             if ( fieldName % "symbol" ) { symbol = fieldValue; return true; }
             if ( fieldName % "source" ) { source = fieldValue; return true; }
+            break;
+        case 'v':
+            if ( fieldName % "visible" ) { visible = str_2_Bool(fieldValue); return true; }
             break;
         default:
             break;
@@ -100,11 +106,13 @@ bool CAccountName::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
+    archive >> addr;
     archive >> symbol;
     archive >> name;
-    archive >> addr;
     archive >> source;
     archive >> description;
+    archive >> logo;
+    archive >> visible;
     finishParse();
     return true;
 }
@@ -117,11 +125,13 @@ bool CAccountName::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
+    archive << addr;
     archive << symbol;
     archive << name;
-    archive << addr;
     archive << source;
     archive << description;
+    archive << logo;
+    archive << visible;
 
     return true;
 }
@@ -157,11 +167,13 @@ void CAccountName::registerClass(void) {
     ADD_FIELD(CAccountName, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CAccountName, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CAccountName, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CAccountName, "addr", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "symbol", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "name", T_TEXT, ++fieldNum);
-    ADD_FIELD(CAccountName, "addr", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "source", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "description", T_TEXT, ++fieldNum);
+    ADD_FIELD(CAccountName, "logo", T_TEXT, ++fieldNum);
+    ADD_FIELD(CAccountName, "visible", T_BOOL, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAccountName, "schema");
@@ -223,12 +235,18 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
         case 'd':
             if ( fieldName % "description" ) return description;
             break;
+        case 'l':
+            if ( fieldName % "logo" ) return logo;
+            break;
         case 'n':
             if ( fieldName % "name" ) return name;
             break;
         case 's':
             if ( fieldName % "symbol" ) return symbol;
             if ( fieldName % "source" ) return source;
+            break;
+        case 'v':
+            if ( fieldName % "visible" ) return bool_2_Str(visible);
             break;
     }
 
@@ -258,11 +276,13 @@ CAccountName::CAccountName(string_q& strIn) {
         addr = toLower(nextTokenClear(source, '\t'));
         name = nextTokenClear(source, '\t');
     } else {
-        description = strIn;
-        symbol = nextTokenClear(description, '\t');
-        name = nextTokenClear(description, '\t');
-        addr = toLower(nextTokenClear(description, '\t'));
-        source = nextTokenClear(description, '\t');
+        logo = substitute(substitute(trim(strIn, '\t'), "\n", ""), "\r", "");
+        addr = toLower(nextTokenClear(logo, '\t'));
+        symbol = nextTokenClear(logo, '\t');
+        name = nextTokenClear(logo, '\t');
+        source = nextTokenClear(logo, '\t');
+        description = nextTokenClear(logo, '\t');
+        visible = true;
     }
 }
 

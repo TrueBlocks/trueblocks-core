@@ -41,8 +41,17 @@ int main(int argc, const char *argv[]) {
         } else if (options.list) {
             if (options.count)
                 cout << options.namedAccounts.size() << " items\n";
-            for (auto name : options.namedAccounts)
-                cout << substitute(substitute(name.Format(fmt), "\n", " "), "  ", " ") << endl;
+            ostringstream os;
+            if (!options.data)
+                os << "[\n";
+            for (auto name : options.namedAccounts) {
+                if (!options.data && os.str() != "[\n")
+                    os << ",";
+                os << substitute(substitute(name.Format(fmt), "\n", " "), "  ", " ") << endl;
+            }
+            if (!options.data)
+                os << "]";
+            cout << os.str();
 
         } else {
             string_q ret = options.showMatches();
