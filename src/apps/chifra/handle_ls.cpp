@@ -3,6 +3,9 @@
  * Copyright (c) 2017 by Great Hill Corporation.
  * All Rights Reserved
  *------------------------------------------------------------------------*/
+#include <sys/ioctl.h>
+#include <stdio.h>
+#include <unistd.h>
 #include "options.h"
 #include "question.h"
 
@@ -14,7 +17,6 @@ bool COptions::handle_ls(void) {
 
     CStringArray files;
     listFilesInFolder(files, monitorsPath + "*.*");
-    sort(files.begin(), files.end());
 
     CAccountNameArray accounts;
     for (auto file : files) {
@@ -22,7 +24,7 @@ bool COptions::handle_ls(void) {
         if (type == "f" && contains(file, ".acct.bin") && !contains(file, ".lck")) {
             CAccountName item;
             item.addr = nextTokenClear(file, '.');
-            getNamedAccount(item, item.addr);
+            getNamedAccount(item, item.addr); item.name = substitute(substitute(item.name, "(", ""), ")", "");
             accounts.push_back(item);
         }
     }
@@ -31,12 +33,29 @@ bool COptions::handle_ls(void) {
         item.addr = "none";
         accounts.push_back(item);
     }
+    sort(accounts.begin(), accounts.end());
 
-    os  << "    " << cGreen << "Current monitors:" << cOff << endl << "    ";
+#ifdef TIOCGSIZE
+    struct ttysize ts;
+    ioctl(STDIN_FILENO, TIOCGSIZE, &ts);
+#elif defined(TIOCGWINSZ)
+    struct winsize ts;
+    ioctl(STDIN_FILENO, TIOCGWINSZ, &ts);
+#endif /* TIOCGSIZE */
+
+    size_t mx = 0;
+    for (auto acct : accounts)
+        mx = max(mx, acct.addr.length() + 20 + 3);
+    os << ts.ts_cols << " " << mx << " " << (ts.ts_cols / mx) << endl;
+
+    uint64_t cnt = 0;
+    os << "  " << cGreen << "Current monitors:" << cOff << endl;
     for (auto acct : accounts) {
-        os << cTeal << acct.addr;
-        os << (acct.name.empty() ? "" : " (" + acct.name + ")") << endl;
-        os  << "    ";
+        os << "    " << cTeal << acct.addr;
+        string_q nm = acct.name.empty() ? "" : "(" + acct.name.substr(0,20) + ")";
+        os << padRight(nm, 22);
+        if (!(++cnt % (ts.ts_cols / mx)))
+            os << endl;
     }
     os << cOff << endl;
 
