@@ -104,11 +104,8 @@ bool COptions::parseArguments(string_q& command) {
 
      } else {
 
-        startBlock = cache + 1;
-        if (startBlock < 47000)
-            endBlock = 47001;
-        else
-            endBlock = max(startBlock + 1, client);
+         startBlock = cache + 1;
+         endBlock = max(startBlock + 1, client);
 
     }
 
@@ -121,6 +118,8 @@ bool COptions::parseArguments(string_q& command) {
 
     // No more than maxBlocks after start
     endBlock = min(endBlock, startBlock + maxBlocks);
+    if (endBlock < firstTransaction)
+        endBlock = firstTransaction + 1;
 
     if (!isParity() || !nodeHasTraces())
         return usage("This tool will only run if it is running against a Parity node that has tracing enabled. Quitting...");
