@@ -37,11 +37,11 @@ if (NOT EXISTS "${QUICKBLOCKS_NAMES_FILE}")
 endif()
 
 # Create names file only if it does not exist
-message(STATUS "Copying price databased to ${QUICKBLOCKS_HOME}/cache/prices/")
+message(STATUS "Copying price database to ${QUICKBLOCKS_HOME}/cache/prices/")
 set(QUICKBLOCKS_PRICES_FILE "${QUICKBLOCKS_HOME}/cache/prices/poloniex_USDT_ETH.bin.gz")
 if (NOT EXISTS "${QUICKBLOCKS_PRICES_FILE}")
     set(QUICKBLOCKS_PRICES_SOURCE "${CMAKE_SOURCE_DIR}/../../../src/other/install/prices/poloniex_USDT_ETH.bin.gz")
-    message(STATUS "Copying price data to ${QUICKBLOCKS_HOME}/cache/prices")
+    message(STATUS "  Copied file to ${QUICKBLOCKS_HOME}/cache/prices/")
     file(COPY "${QUICKBLOCKS_PRICES_SOURCE}" DESTINATION "${QUICKBLOCKS_HOME}/cache/prices" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 endif()
 
@@ -55,14 +55,15 @@ endif()
 # makeClass content
 message(STATUS "Copying makeClass templates to ${QUICKBLOCKS_HOME}/makeClass/")
 file(COPY "${CMAKE_SOURCE_DIR}/../../../bin/makeClass" DESTINATION "${QUICKBLOCKS_HOME}/makeClass")
-file(GLOB TARGET_FILES "${CMAKE_SOURCE_DIR}/../../../src/apps/makeClass/templates/blank*")
+file(GLOB TARGET_FILES "${CMAKE_SOURCE_DIR}/../../../src/tools/makeClass/templates/blank*")
 foreach(FILE ${TARGET_FILES} )
-	file(COPY "${FILE}" DESTINATION "${QUICKBLOCKS_HOME}/makeClass")
+    message(STATUS "  Copied file to ${QUICKBLOCKS_HOME}/makeClass/")
+	file(COPY "${FILE}" DESTINATION "${QUICKBLOCKS_HOME}/makeClass/")
 endforeach( FILE )
 
 # grabABI content
 message(STATUS "Copying grabABI templates to ${QUICKBLOCKS_HOME}/grabABI/")
-file(GLOB TARGET_FILES "${CMAKE_SOURCE_DIR}/../../../src/apps/grabABI/templates/*")
+file(GLOB TARGET_FILES "${CMAKE_SOURCE_DIR}/../../../src/tools/grabABI/templates/*")
 foreach(FILE ${TARGET_FILES} )
 	file(COPY "${FILE}" DESTINATION "${QUICKBLOCKS_HOME}/grabABI")
 endforeach( FILE )
