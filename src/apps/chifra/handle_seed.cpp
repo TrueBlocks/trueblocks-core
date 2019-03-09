@@ -69,7 +69,7 @@ bool COptions::handle_seed(void) {
 
             // copy the new zip locally and unzip it
             os << "cp -p \"" << zipFile << "\" \"" << indexFolder_prod << filename << "\" ; ";
-            os << "gunzip \"" << filename << "\" ; cd -";
+            os << "gunzip \"" << filename << "\" ; cd - >/dev/null";
 
             if (isTestMode()) {
                 cerr << "Seeding " << cTeal << substitute(textFile, blockCachePath(""), "$BLOCK_CACHE/") << cOff << endl;
