@@ -10,22 +10,6 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_daemon(void) {
 
-    CStringArray files;
-    listFilesInFolder(files, monitorsPath + "*.*");
-
-    CAccountNameArray accounts;
-    for (auto file : files) {
-        string_q type = nextTokenClear(file, '-');
-        if (type == "f" && contains(file, ".acct.bin") && !contains(file, ".lck")) {
-            CAccountName item;
-            item.addr = nextTokenClear(file, '.');
-            getNamedAccount(item, item.addr); item.name = substitute(substitute(item.name, "(", ""), ")", "");
-            accounts.push_back(item);
-        }
-    }
-    if (accounts.size() == 0)
-        return usage("Nothing to monitor. Quitting...");
-
     size_t sleep = 14;
     CStringArray commands, filters;
     explode(commands, flags, ' ');
@@ -46,9 +30,29 @@ bool COptions::handle_daemon(void) {
     if (filters.empty())
         filters.push_back("0x");
 
+    // Run until we're told not to
     size_t maxRuns = (isTestMode() ? 1 : UINT64_MAX);
     size_t nRuns = 0;
     while (nRuns++ < maxRuns && !shouldQuit()) {
+
+        CStringArray files;
+        listFilesInFolder(files, monitorsPath + "*.*");
+
+        CAccountNameArray accounts;
+        for (auto file : files) {
+            string_q type = nextTokenClear(file, '-');
+            if (type == "f" && contains(file, ".acct.bin") && !contains(file, ".lck")) {
+                CAccountName item;
+                item.addr = nextTokenClear(file, '.');
+                getNamedAccount(item, item.addr); item.name = substitute(substitute(item.name, "(", ""), ")", "");
+                accounts.push_back(item);
+            }
+        }
+
+        // We want to be able to run even if there's nothing to monitor
+        if (accounts.size() == 0)
+            cerr << cTeal << "\tnothing to monitor" << cOff << endl;
+
         for (auto acct : accounts) {
             bool run = false;
             for (auto filter : filters)
@@ -57,6 +61,7 @@ bool COptions::handle_daemon(void) {
             if (run)
                 freshen_internal(monitorsPath, acct.addr, "", BOTH);
         }
+
         cerr << "Sleeping for " << sleep << " seconds" << endl;
         if (!isTestMode())
             usleep((unsigned int)sleep * 1000000);
