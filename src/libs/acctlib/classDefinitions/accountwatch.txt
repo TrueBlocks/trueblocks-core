@@ -1,4 +1,4 @@
 [settings]
 class     = CAccountWatch
-fields    = address address|string name|string color|blknum firstBlock|blknum lastBlock|CIncomeStatement statement|CBalanceHistoryArray balanceHistory|wei nodeBal|bool enabled=true|CApiSpec api_spec|CAbi abi_spec (nowrite)
-includes  = etherlib.h|transaction.h|incomestatement.h|balancehistory.h|apispec.h
+fields    = address address|string name|string color|blknum firstBlock|blknum lastBlock|CIncomeStatement statement|CBalanceHistoryArray balanceHistory|wei nodeBal|bool enabled=true|CAbi abi_spec (nowrite)
+includes  = etherlib.h|transaction.h|incomestatement.h|balancehistory.h

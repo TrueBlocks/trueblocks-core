@@ -262,7 +262,7 @@ bool COptions::foundAHit(const CAccountWatch *acct, const CBlock& block, const C
     }
 
     // Send the data to an api if we have one
-    if (!acct->api_spec.uri.empty()) {
+    if (!api_spec.uri.empty()) {
         ((CTransaction*)trans)->extra_data = acct->extra_data;
         ((CTransaction*)trans)->finalized = pBlock->finalized;
 
@@ -279,7 +279,7 @@ bool COptions::foundAHit(const CAccountWatch *acct, const CBlock& block, const C
             SHOW_FIELD(CParameter, "type");
             cout << trans->Format() << endl;
         } else {
-            ((CAccountWatch*)acct)->api_spec.sendData(trans->Format());
+            api_spec.sendData(trans->Format());
         }
         HIDE_FIELD(CTransaction, "extra_data");
         HIDE_FIELD(CTransaction, "finalized");

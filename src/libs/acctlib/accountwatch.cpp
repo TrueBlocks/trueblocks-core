@@ -17,7 +17,6 @@
 #include <algorithm>
 #include "accountwatch.h"
 #include "acctcacheitem.h"
-
 namespace qblocks {
 
 //---------------------------------------------------------------------------
@@ -75,7 +74,6 @@ bool CAccountWatch::setValueByName(const string_q& fieldName, const string_q& fi
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "address" ) { address = str_2_Addr(fieldValue); return true; }
-            if ( fieldName % "api_spec" ) { /* api_spec = fieldValue; */ return false; }
             if ( fieldName % "abi_spec" ) { /* abi_spec = fieldValue; */ return false; }
             break;
         case 'b':
@@ -144,7 +142,6 @@ bool CAccountWatch::Serialize(CArchive& archive) {
     archive >> balanceHistory;
     archive >> nodeBal;
     archive >> enabled;
-    archive >> api_spec;
 //    archive >> abi_spec;
     finishParse();
     return true;
@@ -167,7 +164,6 @@ bool CAccountWatch::SerializeC(CArchive& archive) const {
     archive << balanceHistory;
     archive << nodeBal;
     archive << enabled;
-    archive << api_spec;
 //    archive << abi_spec;
 
     return true;
@@ -213,7 +209,6 @@ void CAccountWatch::registerClass(void) {
     ADD_FIELD(CAccountWatch, "balanceHistory", T_OBJECT|TS_ARRAY, ++fieldNum);
     ADD_FIELD(CAccountWatch, "nodeBal", T_WEI, ++fieldNum);
     ADD_FIELD(CAccountWatch, "enabled", T_BOOL, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "api_spec", T_OBJECT, ++fieldNum);
     ADD_FIELD(CAccountWatch, "abi_spec", T_OBJECT, ++fieldNum);
     HIDE_FIELD(CAccountWatch, "abi_spec");
 
@@ -273,7 +268,6 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "address" ) return addr_2_Str(address);
-            if ( fieldName % "api_spec" ) { expContext().noFrst=true; return api_spec.Format(); }
             if ( fieldName % "abi_spec" ) { expContext().noFrst=true; return abi_spec.Format(); }
             break;
         case 'b':
@@ -323,14 +317,6 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
         return f;
     }
 
-    s = toUpper(string_q("api_spec")) + "::";
-    if (contains(fieldName, s)) {
-        string_q f = fieldName;
-        replaceAll(f, s, "");
-        f = api_spec.getValueByName(f);
-        return f;
-    }
-
     s = toUpper(string_q("abi_spec")) + "::";
     if (contains(fieldName, s)) {
         string_q f = fieldName;
@@ -359,8 +345,6 @@ const CBaseNode *CAccountWatch::getObjectAt(const string_q& fieldName, size_t in
         return &statement;
     if ( fieldName % "balanceHistory" && index < balanceHistory.size() )
         return &balanceHistory[index];
-    if ( fieldName % "api_spec" )
-        return &api_spec;
     if ( fieldName % "abi_spec" )
         return &abi_spec;
     return NULL;

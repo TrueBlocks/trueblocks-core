@@ -20,6 +20,7 @@ public:
 class COptions : public COptionsBase {
 public:
 
+    CApiSpec           api_spec;
     blknum_t           startScrape;
     blknum_t           scrapeCnt;
 
@@ -48,7 +49,6 @@ public:
     bool parseArguments(string_q& command);
     void Init(void);
     bool isExcluded(const address_t& addr) { return contains(exclusions, addr); }
-    bool loadMonitors(void);
     friend ostream& operator<<(ostream& os, const COptions& item);
     string_q finalReport(double timing, bool header) const;
     bool finalReport(void) const;

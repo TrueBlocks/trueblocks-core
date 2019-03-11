@@ -19,7 +19,6 @@
 #include "transaction.h"
 #include "incomestatement.h"
 #include "balancehistory.h"
-#include "apispec.h"
 
 namespace qblocks {
 
@@ -38,7 +37,6 @@ public:
     CBalanceHistoryArray balanceHistory;
     wei_t nodeBal;
     bool enabled;
-    CApiSpec api_spec;
     CAbi abi_spec;
 
 public:
@@ -151,7 +149,6 @@ inline void CAccountWatch::initialize(void) {
     balanceHistory.clear();
     nodeBal = 0;
     enabled = true;
-    api_spec = CApiSpec();
     abi_spec = CAbi();
 
     // EXISTING_CODE
@@ -178,7 +175,6 @@ inline void CAccountWatch::duplicate(const CAccountWatch& ac) {
     balanceHistory = ac.balanceHistory;
     nodeBal = ac.nodeBal;
     enabled = ac.enabled;
-    api_spec = ac.api_spec;
     abi_spec = ac.abi_spec;
 
     // EXISTING_CODE
