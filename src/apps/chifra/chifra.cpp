@@ -27,6 +27,7 @@ int main(int argc, const char *argv[]) {
         else if (options.mode == "daemon")  return !options.handle_daemon();
         else if (options.mode == "scrape")  return !options.handle_scrape();
         else if (options.mode == "ls")      return !options.handle_ls();
+        else if (options.mode == "name")    return !options.handle_name();
         else if (options.mode == "config")  return !options.handle_config();
         else cerr << "Should not happen.";
     }
