@@ -109,8 +109,8 @@ bool exportTransaction(COptions& options, const CAcctCacheItem *item, bool first
 
         // We show a transaction only once even if it was involved from more than one watch perspective
         bool found = false;
-        for (size_t w = 0 ; w < options.watches.size() && !found ; w++) {
-            CAccountWatch *watch = &options.watches[w];
+        for (size_t w = 0 ; w < options.monitors.size() && !found ; w++) {
+            CAccountWatch *watch = &options.monitors[w];
 
             // Note: we do this outside of the check for enablement becuase even disabled watches can
             // be useful when articulating data
@@ -188,7 +188,7 @@ void COptions::renameItems(string_q& str, const CAccountWatchArray& watchArray) 
 //-----------------------------------------------------------------------
 string_q COptions::annotate(const string_q& strIn) const {
     string_q ret = strIn;
-    renameItems(ret, watches);
+    renameItems(ret, monitors);
     renameItems(ret, named);
     return ret;
 }
@@ -200,18 +200,18 @@ bool COptions::loadWatches(const CToml& toml) {
     loadWatchList(toml, named, "named");
 
     // not okay if it's empty
-    loadWatchList(toml, watches, "list");
+    loadWatchList(toml, monitors, "list");
 
-    if (watches.size() == 0)
+    if (monitors.size() == 0)
         return usage("Empty list of watches. Quitting...\n");
 
     blk_minWatchBlock = UINT32_MAX;
     blk_maxWatchBlock = 0;
 
     // Check the watches for validity
-    for (size_t w = 0 ; w < watches.size() ; w++) {
+    for (size_t w = 0 ; w < monitors.size() ; w++) {
 
-        CAccountWatch *watch = &watches.at(w);
+        CAccountWatch *watch = &monitors.at(w);
         if (!isAddress(watch->address))
             return usage("Invalid watch address " + watch->address + "\n");
 
@@ -223,13 +223,13 @@ bool COptions::loadWatches(const CToml& toml) {
         blk_maxWatchBlock = max(blk_maxWatchBlock, watch->lastBlock);
     }
 
-    watches.push_back(CAccountWatch("Others", "Other Accts", 0, UINT32_MAX, ""));
+    monitors.push_back(CAccountWatch("Others", "Other Accts", 0, UINT32_MAX, ""));
     return true;
 }
 
 //-----------------------------------------------------------------------
 bool loadData(COptions& options) {
-    string_q fileName = getTransCachePath(options.watches[0].address);
+    string_q fileName = getTransCachePath(options.monitors[0].address);
 
     // If we've already upgraded the file, we've deleted it and we're done...
     if (!fileExists(fileName))
@@ -318,7 +318,7 @@ bool checkBloom(COptions& options, const CAcctCacheItem *item) {
     }
 
     for (auto const& bloom : blooms)
-        for (auto const& watch : options.watches)
+        for (auto const& watch : options.monitors)
             if (watch.enabled)
                 if (isBloomHit(makeBloom(watch.address), bloom))
                     return true;

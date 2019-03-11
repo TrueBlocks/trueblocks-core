@@ -12,7 +12,7 @@ class COptions : public COptionsBase {
 public:
     blknum_t blk_minWatchBlock;
     blknum_t blk_maxWatchBlock;
-    CAccountWatchArray watches;
+    CAccountWatchArray monitors;
     CAccountWatchArray named;
     CAcctCacheItemArray items;
     CBlock curBlock;
