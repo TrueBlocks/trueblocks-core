@@ -626,7 +626,7 @@
 0xadf8b8050639b6236915f7516d69de714672f0bf	SWC	Etherscan	Scanetchain	scanetchain_28.png	SCANETCHAIN is the commercial dApp built on the NEM platform Developed for Blockchain Commercialization. Using augmented reality & hybrid blockchain to ensure interoperability of on-offline advertising, shopping, SNS services.	1
 0xae4f56f072c34c0a65b3ae3e4db797d831439d93	GIM	Etherscan	Gimli	gimli2_28.png	Live stream crypto betting for gamers.	1
 0xae73b38d1c9a8b274127ec30160a4927c4d71824	STK	Etherscan	STK	stktoken_28.png	Cryptocurrency Payments straight from your smartphone.	1
-0xaec2e87e0a235266d9c5adc9deb4b2e29b54d009	SNGLS	Etherscan	SNGLS	sngls2.PNG	A Blockchain Entertainment Studio, Smart Contract Rights Management Platform and Video On-Demand Portal	1
+0xaec2e87e0a235266d9c5adc9deb4b2e29b54d009	SNGLS	Etherscan	SingularDTV	sngls2.PNG	A Blockchain Entertainment Studio, Smart Contract Rights Management Platform and Video On-Demand Portal	1
 0xaec98a708810414878c3bcdf46aad31ded4a4557	300	Etherscan	300 Token	300token_28.png	300 Token	1
 0xaef38fbfbf932d1aef3b808bc8fbd8cd8e1f8bc5	CRB	Etherscan	CreditBIT	creditbit.png	The main goal of this project is to develop and maintain crypto currency ecosystem, based on token, that is built on top of Ethereum Blockchain.	1
 0xaf4dce16da2877f8c9e00544c93b62ac40631f16	MTH	Etherscan	Monetha	monetha_28.png?v=3	Trusted ecommerce.	1

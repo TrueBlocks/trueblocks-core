@@ -44,10 +44,12 @@ bool COptions::handle_ls(void) {
     ioctl(STDIN_FILENO, TIOCGWINSZ, &ts);
     size_t ncols = ts.ws_col;
 #endif /* TIOCGSIZE */
+    ncols = max(ncols, (size_t)1);
 
     size_t mx = 0;
     for (auto acct : accounts)
         mx = max(mx, acct.addr.length() + 20 + 3);
+    mx = max(mx, (size_t)50);
 
     uint64_t cnt = 0;
     os << "  " << cGreen << "Current monitors:" << cOff << endl;
@@ -55,7 +57,7 @@ bool COptions::handle_ls(void) {
         os << "    " << cTeal << acct.addr;
         string_q nm = acct.name.empty() ? "" : " (" + acct.name.substr(0,20) + ")";
         os << padRight(nm, 22);
-        if (!(++cnt % (ncols / mx)))
+        if (ncols == 1 || !(++cnt % (ncols / mx)))
             os << endl;
     }
     os << cOff << endl;

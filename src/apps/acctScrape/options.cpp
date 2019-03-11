@@ -104,10 +104,12 @@ bool COptions::parseArguments(string_q& command) {
     exclusions = toLower(getGlobalConfig("blockScrape")->getConfigStr("exclusions", "list", ""));
 
     if (forceAddr.empty()) {
-        if (!monitors[0].toml || !fileExists(monitors[0].toml->getFilename())) {
-            string_q curDir = (isTestMode() ? "$DIR/" : getCWD());
-            return usage("Cannot read toml file " + monitors[0].toml->getFilename() + " folder: " + curDir + ". Quitting...\n");
-        }
+        string_q curDir = (isTestMode() ? "$DIR/" : getCWD());
+        if (!fileExists("./config.toml"))
+            return usage("Cannot read toml file ./config.toml in " + curDir + ". Quitting...");
+
+        if (!monitors[0].toml || !fileExists(monitors[0].toml->getFilename()))
+            return usage("Cannot read toml file " + monitors[0].toml->getFilename() + " folder: " + curDir + ". Quitting...");
 
         manageFields(monitors[0].toml->getConfigStr("fields", "hide", ""), false);
         manageFields(monitors[0].toml->getConfigStr("fields", "show", ""), true );
