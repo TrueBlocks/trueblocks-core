@@ -23,12 +23,20 @@ bool COptions::handle_init(void) {
                 return false;
            if (verbose)
                 cerr << "Moving " << cTeal << stageName << cOff << " to " << cTeal << prodName << cOff << endl;
-            moveFile(stageName, prodName);
+            if (!isTestMode())
+                moveFile(stageName, prodName);
+            else
+                cerr << "Would have moved " << stageName << " to " << prodName << endl;
+
             stageName = stagingPath + addr + ".last.txt";
             prodName = monitorsPath + addr + ".last.txt";
             if (verbose)
                 cerr << "Moving " << cTeal << stageName << cOff << " to " << cTeal << prodName << cOff << endl;
-            moveFile(stageName, prodName);
+            if (!isTestMode())
+                moveFile(stageName, prodName);
+            else
+                cerr << "Would have moved " << stageName << " to " << prodName << endl;
+
         } else {
             cerr << "The file ";
             cerr << cTeal << "./" << addr << ".acct.bin" << cOff;
