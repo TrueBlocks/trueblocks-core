@@ -1,4 +1,4 @@
-cacheMan argc: 3 [1:-c] [2:TipJar.acct.bin] 
-cacheMan -c TipJar.acct.bin 
-Checking cache: TipJar.acct.bin
-	No problems found (n: 6 / bn: 1332455).               
+cacheMan argc: 3 [1:-c] [2:0x5555533333555553333355555333335555533333.acct.bin] 
+cacheMan -c 0x5555533333555553333355555333335555533333.acct.bin 
+Checking cache: 0x5555533333555553333355555333335555533333.acct.bin
+	No problems found (n: 9 / bn: 5001001).               

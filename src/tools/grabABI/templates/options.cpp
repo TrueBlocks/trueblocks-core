@@ -91,7 +91,7 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-l" || arg == "--list") {
             colorsOff();
-            CToml toml("./config.toml");
+            CToml toml("./con fig.toml");
             COptions visitor;
             if (!visitor.loadWatches(toml))
                 return false;
@@ -124,10 +124,10 @@ bool COptions::parseArguments(string_q& command) {
     if (debugger_on && !accounting_on)
         return usage("If you want to use the debugger, you must use the --accounting option as well.");
 
-    if (!fileExists("./config.toml"))
-        return usage("The config.toml file was not found. Are you in the right folder? Quitting...\n");
+    if (!fileExists("./con fig.toml"))
+        return usage("The con fig.toml file was not found. Are you in the right folder? Quitting...\n");
 
-    CToml toml("./config.toml");
+    CToml toml("./con fig.toml");
     if (!loadWatches(toml))
         return false;
     theWidth = toml.getConfigInt("display", "width", theWidth);
