@@ -34,10 +34,10 @@ else:
     print('You must set $QB_MONITORS                         ')
     sys.exit(0)
 
-os.system('ls | grep -v CONFIG | grep -v staging | grep -v README | grep -v "^file" | grep -v final | grep -v test_cases | sort -uf >./file')
+os.system('ls | grep -v CONFIG | grep -v staging | grep -v README | grep -v "^file" | grep -v final | grep -v test_cases | grep -v 0x | sort -uf >./file')
 while True:
     with open('./file') as f:
-        os.system('clear')
+#        os.system('clear')
         contracts = f.read().splitlines()
         for contract in contracts:
             command = 'cd ' + contract + ' ; '
