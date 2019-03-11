@@ -86,15 +86,15 @@ bool COptions::parseArguments(string_q& command) {
         watch.address = forceAddr;
         watch.name = forceAddr;
         watch.color = cBlue; //convertColor(watch.color);
-        watches.push_back(watch);
+        monitors.push_back(watch);
     } else {
         if (!loadWatches(toml))
             return false;
     }
 
     // Try to articulate the watched addresses
-    for (size_t i = 0 ; i < watches.size() ; i++) {
-        CAccountWatch *watch = &watches[i];
+    for (size_t i = 0 ; i < monitors.size() ; i++) {
+        CAccountWatch *watch = &monitors[i];
         watch->abi_spec.loadAbiByAddress(watch->address);
         watch->abi_spec.loadAbiKnown("all");
         // We may as well articulate the named contracts while we're at it
@@ -106,7 +106,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (filters.size() > 0) {
-        for (CAccountWatch& watch : watches) {
+        for (CAccountWatch& watch : monitors) {
             watch.enabled = false;
             for (auto const& addr : filters)
                 if (addr % watch.address)
