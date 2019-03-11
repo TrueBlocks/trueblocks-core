@@ -10,8 +10,6 @@
 //-----------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    blknum_t blk_minWatchBlock;
-    blknum_t blk_maxWatchBlock;
     CAccountWatchArray monitors;
     CAccountWatchArray named;
     CAcctCacheItemArray items;
@@ -27,8 +25,8 @@ public:
 
     bool parseArguments(string_q& command);
     void Init(void);
+    string_q postProcess(const string_q& which, const string_q& str) const;
 
-    bool     loadWatches    (const CToml& toml);
     string_q annotate       (const string_q& strIn) const;
     bool     shouldTrace    (const CTransaction *trans) const;
 

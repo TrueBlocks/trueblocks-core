@@ -61,10 +61,8 @@ bool exportData(COptions& options) {
             cerr << "bn: " << item->blockNum << " tx: " << item->transIndex << "\r";
             cerr.flush();
         }
-        if (isInRange(item->blockNum, options.blk_minWatchBlock, options.blk_maxWatchBlock)) {
-            exportTransaction(options, item, first);
-            first = false;
-        }
+        exportTransaction(options, item, first);
+        first = false;
     }
 
     if (transFmt.empty())
@@ -191,40 +189,6 @@ string_q COptions::annotate(const string_q& strIn) const {
     renameItems(ret, monitors);
     renameItems(ret, named);
     return ret;
-}
-
-//-----------------------------------------------------------------------
-bool COptions::loadWatches(const CToml& toml) {
-
-    // okay if it's empty
-    loadWatchList(toml, named, "named");
-
-    // not okay if it's empty
-    loadWatchList(toml, monitors, "list");
-
-    if (monitors.size() == 0)
-        return usage("Empty list of watches. Quitting...\n");
-
-    blk_minWatchBlock = UINT32_MAX;
-    blk_maxWatchBlock = 0;
-
-    // Check the watches for validity
-    for (size_t w = 0 ; w < monitors.size() ; w++) {
-
-        CAccountWatch *watch = &monitors.at(w);
-        if (!isAddress(watch->address))
-            return usage("Invalid watch address " + watch->address + "\n");
-
-        if (watch->name.empty())
-            return usage("Empty watch name " + watch->name + "\n");
-
-        watch->nodeBal = getNodeBal(watch->balanceHistory, watch->address, watch->firstBlock-1);
-        blk_minWatchBlock = min(blk_minWatchBlock, watch->firstBlock);
-        blk_maxWatchBlock = max(blk_maxWatchBlock, watch->lastBlock);
-    }
-
-    monitors.push_back(CAccountWatch("Others", "Other Accts", 0, UINT32_MAX, ""));
-    return true;
 }
 
 //-----------------------------------------------------------------------
