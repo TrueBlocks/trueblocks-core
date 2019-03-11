@@ -370,11 +370,3 @@ bool COptions::loadMonitors(void) {
 
     return true;
 }
-
-//-------------------------------------------------------------------------
-void CAccountWatch::writeLastBlock(blknum_t bn) const {
-    if (!isTestMode())
-        stringToAsciiFile(getTransCacheLast(address), uint_2_Str(bn) + "\n");
-    else
-        cerr << "Would have written " << getTransCacheLast(address) << ": " << bn << endl;
-}
