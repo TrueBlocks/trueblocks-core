@@ -54,10 +54,6 @@ bool testDisplayStr(COptions& options) {
         abi.interfaces.push_back(func);
         watch.abi_spec = abi;
 
-        CApiSpec api;
-        api.method = "POST";
-        watch.api_spec = api;
-
         CBalanceHistory bh;
         bh.balance = str_2_Wei("6000000000000000000");
         watch.balanceHistory.push_back(bh);
@@ -67,8 +63,6 @@ bool testDisplayStr(COptions& options) {
         watch.statement = is;
 
         cout << watch.Format("[{p:STATEMENT::INFLOW}]: [{STATEMENT::INFLOW}]") << endl;
-        cout << watch.Format("[{p:API_SPEC::METHOD}]: [{API_SPEC::METHOD}]") << endl;
-        cout << watch.Format("[{p:ABI_SPEC::ADDRESS}]: [{ABI_SPEC::ADDRESS}]") << endl;
         // TODO(tjayrush): To address elements of array it should look like this:
         //      watch.Format("[{ABI_SPEC::INTERFACES[0]::NAME}]" name of specific element
         // or

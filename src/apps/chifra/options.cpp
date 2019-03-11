@@ -69,13 +69,6 @@ void COptions::Init(void) {
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) : txCache(WRITING_ARCHIVE) {
     Init();
-    HIDE_FIELD(CAccountWatch, "statement");
-    HIDE_FIELD(CAccountWatch, "balanceHistory");
-    HIDE_FIELD(CAccountWatch, "nodeBal");
-    SHOW_FIELD(CAccountWatch, "api_spec");
-    SHOW_FIELD(CApiSpec,      "method");
-    SHOW_FIELD(CApiSpec,      "uri");
-    SHOW_FIELD(CApiSpec,      "headers");
 }
 
 //--------------------------------------------------------------------------------

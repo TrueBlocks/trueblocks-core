@@ -53,8 +53,11 @@ bool COptions::parseArguments(string_q& command) {
             if (!isAddress(arg))
                 return usage(arg + " does not appear to be a valid address. Quitting...");
             CAccountWatch watch;
-            watch.address = toLower(arg);
-            watch.name = toLower(arg);
+            watch.setValueByName("address", toLower(arg)); // don't change, sets bloom value also
+            watch.setValueByName("name", toLower(arg));
+            watch.extra_data = toLower("chifra/" + getVersionStr() + ": " + watch.address);
+            watch.color = cBlue;
+            watch.finishParse();
             monitors.push_back(watch);
 
         } else if (startsWith(arg, '-')) {  // do not collapse

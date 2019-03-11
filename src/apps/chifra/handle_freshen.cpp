@@ -24,9 +24,9 @@ bool freshen_internal(const string_q& path, const address_t& addr, const string_
     os << "cd " << path << " ; ";
 
     if (fMode & INDEX)
-        os << "acctScrape " << flagsIn << " --for_addr " << addr << " --useIndex ; ";
+        os << "acctScrape " << flagsIn << " " << addr << " --useIndex ; ";
     if (fMode & BLOOM)
-        os << "acctScrape " << flagsIn << " --for_addr " << addr << " --maxBlocks 50000 ; ";
+        os << "acctScrape " << flagsIn << " " << addr << " --maxBlocks 50000 ; ";
 
     if (isTestMode())
         cout << substitute(os.str(), blockCachePath(""), "$BLOCK_CACHE/") << endl;
