@@ -19,34 +19,28 @@ public:
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    blknum_t           lastBlock;
-    blknum_t           minWatchBlock;
-    blknum_t           maxWatchBlock;
-    blknum_t           maxBlocks;
+
+    blknum_t           startScrape;
+    blknum_t           scrapeCnt;
+
     timestamp_t        lastTimestamp;
+
+    uint64_t           logLevel;
     bool               ignoreBlooms;
     bool               ignoreBlkCache;
     bool               writeBlocks;
     bool               useIndex;
-    bool               isList;
+
     string_q           exclusions;
-    blknum_t           firstBlock;
-    blknum_t           nBlocks;
+
     CStats             blkStats;
     CStats             addrStats;
     CStats             transStats;
     CStats             traceStats;
-    bool               blockCounted;
+
     CAccountWatchArray monitors;
-    CArchive           txCache;
-    string_q           name;
-    uint64_t           logLevel;
-    CToml             *toml;
-    string_q           cacheFilename;
-    address_t          monitorAddr;
-    blknum_t           lastInCache;
-    blknum_t           lastVisited;
-    string_q           ex_data;
+
+    bool               blockCounted;
 
     COptions(void);
     ~COptions(void);
@@ -57,10 +51,8 @@ public:
     bool loadMonitors(void);
     friend ostream& operator<<(ostream& os, const COptions& item);
     string_q finalReport(double timing, bool header) const;
-    bool shouldScrape(void) const;
     bool finalReport(void) const;
-    bool foundOne(const CAccountWatch *acct, const CBlock& block, const CTransaction *trans);
-    void writeLastBlock(blknum_t bn);
+    bool foundAHit(const CAccountWatch *acct, const CBlock& block, const CTransaction *trans);
 };
 
 //-----------------------------------------------------------------------

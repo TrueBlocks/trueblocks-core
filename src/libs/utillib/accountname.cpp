@@ -276,13 +276,14 @@ CAccountName::CAccountName(string_q& strIn) {
         addr = toLower(nextTokenClear(source, '\t'));
         name = nextTokenClear(source, '\t');
     } else {
-        logo = substitute(substitute(trim(strIn, '\t'), "\n", ""), "\r", "");
-        addr = toLower(nextTokenClear(logo, '\t'));
-        symbol = nextTokenClear(logo, '\t');
-        name = nextTokenClear(logo, '\t');
-        source = nextTokenClear(logo, '\t');
-        description = nextTokenClear(logo, '\t');
-        visible = true;
+        string str = substitute(substitute(trim(strIn, '\t'), "\n", ""), "\r", "");
+        addr = toLower(nextTokenClear(str, '\t'));
+        symbol = nextTokenClear(str, '\t');
+        source = nextTokenClear(str, '\t');
+        name = nextTokenClear(str, '\t');
+        logo = nextTokenClear(str, '\t');
+        description = nextTokenClear(str, '\t');
+        visible = str_2_Bool(str);
     }
 }
 

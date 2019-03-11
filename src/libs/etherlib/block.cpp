@@ -539,14 +539,15 @@ bool isBlockFinal(timestamp_t ts_block, timestamp_t ts_chain, timestamp_t second
     return ((ts_chain - ts_block) > seconds);
 }
 
+    //---------------------------------------------------------------------------
 blknum_t bnFromPath(const string_q& path, blknum_t& endOut) {
     // comes in of the form first_blk-last_blk.X or blknum.X
     CStringArray parts;
     explode(parts, path, '/');
-    string_q n1 = nextTokenClear(parts[parts.size()-1], '.');
-    string_q n2 = nextTokenClear(n1, '-');
-    endOut = (n1.empty() || !isNumeral(n1) ? NOPOS : str_2_Uint(n1));
-    return (n2.empty() || !isNumeral(n2) ? NOPOS : str_2_Uint(n2));
+    string_q e = nextTokenClear(parts[parts.size()-1], '.');
+    string_q b = nextTokenClear(e, '-');
+    endOut = (e.empty() || !isNumeral(e) ? NOPOS : str_2_Uint(e));
+    return (b.empty() || !isNumeral(b) ? NOPOS : str_2_Uint(b));
 }
 // EXISTING_CODE
 }  // namespace qblocks

@@ -18,20 +18,21 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        if (options.shouldScrape()) {
+        if (options.monitors[0].txCache == NULL)
+            options.monitors[0].txCache = new CArchive(WRITING_ARCHIVE);
 
-            if (options.txCache.Lock(options.cacheFilename, modeWriteAppend, LOCK_WAIT)) {
+        if (options.monitors[0].txCache &&
+            options.monitors[0].txCache->Lock(getTransCachePath(options.monitors[0].address), modeWriteAppend, LOCK_WAIT)) {
 
-                if (options.useIndex)
-                    forEveryFileInFolder(indexFolder_prod, visitIndexFiles, &options);
-                else
-                    forEveryBloomFile(visitBloomFilters, &options, options.firstBlock, options.nBlocks);
+            if (options.useIndex)
+                forEveryFileInFolder(indexFolder_prod, visitIndexFiles, &options);
+            else
+                forEveryBloomFile(visitBloomFilters, &options, options.startScrape, options.scrapeCnt);
 
-                options.txCache.Release();
+            options.monitors[0].txCache->Release();
 
-            } else {
-                return options.usage("Cannot open transaction cache '" + options.cacheFilename + "'. Quitting...");
-            }
+        } else {
+            return options.usage("Cannot open transaction cache '" + getTransCachePath(options.monitors[0].address) + "'. Quitting...");
         }
     }
 

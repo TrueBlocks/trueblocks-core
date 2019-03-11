@@ -9,83 +9,87 @@
 //-----------------------------------------------------------------------
 bool visitBloomFilters(const string_q& path, void *data) {
 
-    COptions *options = reinterpret_cast<COptions*>(data);
     if (endsWith(path, "/")) {
-        forEveryFileInFolder(path + "*", visitBloomFilters, data);
+        // Descend into subfolders if there are any
+        return forEveryFileInFolder(path + "*", visitBloomFilters, data);
 
     } else {
 
-        if (endsWith(path, ".bin")) {
+        // The context that we're working with...
+        COptions *options = reinterpret_cast<COptions*>(data);
 
-            blknum_t bn = bnFromPath(path);
-            if (bn < options->firstBlock) {
-                // We may be too early since the forEveryBloom function starts with entire
-                // folders, so we must check and possibly break out early...
-                return true;
+        // Silently skip unknown files (such as shell scripts for example).
+        if (!endsWith(path, ".bin"))
+            return !shouldQuit();
 
-            } else if (bn >= options->firstBlock + options->nBlocks) {
-                // If we're not too late....don't contiue...
-                options->writeLastBlock(bn);
-                options->blkStats.nSeen++;
-                return false;
+        // Which block are we working with?
+        blknum_t bn = bnFromPath(path);
+
+        // Are we too early? (`forEveryBloom` starts with entire folders, so we have to check...
+        if (bn < options->startScrape)
+            return !shouldQuit();
+
+        // If we're past the end of our search, quit searching. The user tells us to start at x and scan for y
+        // files (as an example, start at '0' scan for '1') therfore, we use >= so we don't overscan
+        options->blkStats.nSeen++;
+        if (bn >= options->startScrape + options->scrapeCnt) {
+            // We're done searching all the monitors...
+            for (auto monitor : options->monitors)
+                monitor.writeLastBlock(bn);
+            return false;
+        }
+
+        CBloomArray blooms;
+        bool hasPotential = false;
+        if (options->ignoreBlooms) {
+            hasPotential = true;
+            for (size_t ac = 0 ; ac < options->monitors.size() ; ac++)
+                options->monitors.at(ac).inBlock = true;
+
+        } else {
+            // For each bloom filter, we identify which accounts are 'possibly in' the block. Once we decide this,
+            // we can thereafter ignore any accounts that don't hit one of the bloom filters.
+            CArchive bloomCache(READING_ARCHIVE);
+            if (!bloomCache.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
+                // If we can't read the bloom, we want to skip over it next time, so write last block
+                options->monitors[0].writeLastBlock(bn);
+                cerr << "Could not open file " << path << ". Quitting search." << endl;
+                return false; // end the search
             }
 
-            options->blkStats.nSeen++;
-            CBloomArray blooms;
-            bool hasPotential = false;
-            if (options->ignoreBlooms) {
-                hasPotential = true;
-                for (size_t ac = 0 ; ac < options->monitors.size() ; ac++)
-                    options->monitors.at(ac).inBlock = true;
+            // First, we need to read the bloom into memory...
+            bloomCache >> blooms;
+            bloomCache.Release();
 
-            } else {
-                // For each bloom filter, we identify which accounts are 'possibly in' the block. Once we decide this,
-                // we can thereafter ignore any accounts that don't hit one of the bloom filters.
-                CArchive bloomCache(READING_ARCHIVE);
-                if (!bloomCache.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
-                    // If we can't read the bloom, we want to skip over it next time, so write last block
-                    options->writeLastBlock(bn);
-                    cerr << "Could not open file " << path << ". Quitting search." << endl;
-                    return false; // end the search
-                }
+            // For each account we look at each bloom to see if that account is 'of possible interest'. Note
+            // accounts may hit the bloom filter, but not be 'of interest' because blooms sometimes report
+            // false positives. So as to not produce duplicates we look at every transaction
 
-                // First, we need to read the bloom into memory...
-                bloomCache >> blooms;
-                bloomCache.Release();
+            // Visit every account...
+            for (size_t ac = 0 ; ac < options->monitors.size() ; ac++) {
 
-                // For each account we look at each bloom to see if that account is 'of possible interest'. Note
-                // accounts may hit the bloom filter, but not be 'of interest' because blooms sometimes report
-                // false positives. So as to not produce duplicates we look at every transaction
-
-                // Visit every account...
-                for (size_t ac = 0 ; ac < options->monitors.size() ; ac++) {
-
-                    // Visit each bloom until either there is a hit or we've checked all blooms
-                    options->monitors.at(ac).inBlock = false;
-                    for (size_t bl = 0 ; bl < blooms.size() && !options->monitors[ac].inBlock ; bl++) {
-                        bool hit = isBloomHit(options->monitors[ac].bloom, blooms[bl]);
-                        if (hit) {
-                            options->monitors.at(ac).inBlock = true;
-                            hasPotential = true;
-                        }
+                // Visit each bloom until either there is a hit or we've checked all blooms
+                options->monitors.at(ac).inBlock = false;
+                for (size_t bl = 0 ; bl < blooms.size() && !options->monitors[ac].inBlock ; bl++) {
+                    bool hit = isBloomHit(options->monitors[ac].bloom, blooms[bl]);
+                    if (hit) {
+                        options->monitors.at(ac).inBlock = true;
+                        hasPotential = true;
                     }
                 }
             }
+        }
 
-            if (hasPotential) {
-                processBlock(bn, options);
-
-            } else {
-                cerr << options->name << " bn: " << bn << *options << "\r";
-                cerr.flush();
-            }
-
-            // May be redunant, but it's okay since we're writing a single value
-            options->writeLastBlock(bn);
+        if (hasPotential) {
+            processBlock(bn, options);
 
         } else {
-            // silently skip case where file name does not end with .bin
+            cerr << " bn: " << bn << *options << "\r";
+            cerr.flush();
         }
+
+        // May be redunant, but it's okay since we're writing a single value
+        options->monitors[0].writeLastBlock(bn);
     }
 
     return !shouldQuit(); // continue if we should not quit
@@ -105,14 +109,14 @@ bool processBlock(blknum_t bn, COptions *options) {
             bool ret = processTrans(block, &block.transactions[tr], options);
             if (!ret) {
                 // May be redunant, but it's okay since we're writing a single value
-                options->writeLastBlock(bn);
+                options->monitors[0].writeLastBlock(bn);
                 return false;
             }
         }
 
     } else {
         // TODO(tjayrush): This is a bug. We should be writing the miner's record
-        options->writeLastBlock(bn);
+        options->monitors[0].writeLastBlock(bn);
     }
 
     return !shouldQuit();
@@ -126,8 +130,6 @@ bool processTrans(const CBlock& block, const CTransaction *trans, COptions *opti
 
     // As soon as we have a hit on any account, we're done since we only want to write a transaction once...
     for (size_t ac = 0 ; ac < options->monitors.size() && !hit ; ac++) {
-
-        options->ex_data = toLower("chifra/" + getVersionStr() + ": " + options->name + "_" + options->monitors[0].address);
 
         // For each account we're monitoring...
         const CAccountWatch *acct = &options->monitors[ac];
@@ -144,7 +146,7 @@ bool processTrans(const CBlock& block, const CTransaction *trans, COptions *opti
             // First, we check the simple, top-level data... (following variable is for clarity only)
             address_t contrAddr = trans->receipt.contractAddress;
 
-                 if (block.miner % watched) { hit = true; }
+            if (block.miner % watched) { hit = true; }
             else if (trans->to   % watched) { hit = true; }
             else if (trans->from % watched) { hit = true; }
             else if (contrAddr   % watched) { hit = true; }
@@ -162,7 +164,7 @@ bool processTrans(const CBlock& block, const CTransaction *trans, COptions *opti
                     for (size_t lg = 0 ; lg < trans->receipt.logs.size() && !hit ; lg++) {
 
                         const CLogEntry *l = &trans->receipt.logs[lg];
-                             if (l->address % watched        ) { hit = true; }
+                        if (l->address % watched        ) { hit = true; }
                         else if (containsI(l->data, extended)) { hit = true; }
 
                         // Or if we find it as one of the topics. Note, won't spin if we've already hit.
@@ -180,10 +182,10 @@ bool processTrans(const CBlock& block, const CTransaction *trans, COptions *opti
             }
 
             if (hit) {
-                options->foundOne(acct, block, trans);
+                options->foundAHit(acct, block, trans);
 
             } else {
-                cerr << options->name << " bn: " << block.blockNumber << *options << "\r";
+                cerr << " bn: " << block.blockNumber << *options << "\r";
                 cerr.flush();
             }
         }
@@ -217,7 +219,7 @@ bool processTraces(const CBlock& block, const CTransaction *trans, const CAccoun
         const CTraceResult *result = &traces[tc].result;
 
         bool hit = false;
-             if (action->to            % watched) { hit = true; }
+        if (action->to            % watched) { hit = true; }
         else if (action->from          % watched) { hit = true; }
         else if (action->address       % watched) { hit = true; }
         else if (action->refundAddress % watched) { hit = true; }
@@ -230,4 +232,63 @@ bool processTraces(const CBlock& block, const CTransaction *trans, const CAccoun
     }
 
     return false;
+}
+
+//-----------------------------------------------------------------------
+const string_q fmt = "[{BLOCKNUMBER} ][{w:5:TRANSACTIONINDEX} ][{w:10:DATE} ][{ETHER}]";
+//-------------------------------------------------------------------------
+bool COptions::foundAHit(const CAccountWatch *acct, const CBlock& block, const CTransaction *trans) {
+    if (!blockCounted) {
+        blockCounted = true;
+        blkStats.nHit++; // only count the block once per block
+    }
+    transStats.nHit++;
+
+    CBlock *pBlock = (CBlock*)&block;
+    pBlock->finalized = isBlockFinal(block.timestamp, lastTimestamp, (60 * 4));
+
+    lockSection(true);
+    if (!isTestMode()) {
+        // We found something...write it to the cache...
+        *monitors[0].txCache << block.blockNumber << trans->transactionIndex;
+        monitors[0].txCache->flush();
+        monitors[0].writeLastBlock(block.blockNumber);
+        if (writeBlocks) {
+            // pBlock->finalized is implicit here don't remove it above
+            string_q fn = getBinaryFilename(block.blockNumber);
+            if (!fileExists(fn))
+                writeBlockToBinary(block, fn);
+        }
+    }
+
+    // Send the data to an api if we have one
+    if (!acct->api_spec.uri.empty()) {
+        ((CTransaction*)trans)->extra_data = acct->extra_data;
+        ((CTransaction*)trans)->finalized = pBlock->finalized;
+
+        if (trans->traces.size() == 0)
+            getTraces(((CTransaction*)trans)->traces, trans->hash);
+        acct->abi_spec.articulateTransaction((CTransaction*)trans);
+
+        SHOW_FIELD(CFunction,    "message");
+        SHOW_FIELD(CTransaction, "extra_data");
+        SHOW_FIELD(CTransaction, "finalized");
+        if (isTestMode() || fileExists("./debug")) {
+            SHOW_FIELD(CLogEntry,  "data");
+            SHOW_FIELD(CLogEntry,  "topics");
+            SHOW_FIELD(CParameter, "type");
+            cout << trans->Format() << endl;
+        } else {
+            ((CAccountWatch*)acct)->api_spec.sendData(trans->Format());
+        }
+        HIDE_FIELD(CTransaction, "extra_data");
+        HIDE_FIELD(CTransaction, "finalized");
+        HIDE_FIELD(CFunction,    "message");
+    }
+    lockSection(false);
+
+    cerr << string_q(4,' ') << acct->displayName(false,true,true,8) << ": ";
+    cerr << trans->Format(fmt) << " (" << blkStats.nSeen << " of " << scrapeCnt << ")" << string_q(15,' ') << endl;
+
+    return true;
 }
