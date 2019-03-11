@@ -1,7 +1,7 @@
-cacheMan argc: 3 [1:cache/0x001d14804b399c6ef80e64576f657660804fabcd.acct.bin] [2:--cacheBals] 
-cacheMan cache/0x001d14804b399c6ef80e64576f657660804fabcd.acct.bin --cacheBals 
+cacheMan argc: 3 [1:0x001d14804b399c6ef80e64576f657660804fabcd.acct.bin] [2:--cacheBals] 
+cacheMan 0x001d14804b399c6ef80e64576f657660804fabcd.acct.bin --cacheBals 
 
-  Cannot open file: cache/0x001d14804b399c6ef80e64576f657660804fabcd.acct.bin. Quitting.
+  Cannot open monitor file for '0x001d14804b399c6ef80e64576f657660804fabcd.acct.bin'. Quitting.
 
   Usage:    cacheMan [-c|-d|-s|-f|-l|-a|-b|-i|-r|-t|-k|-m|-v|-h] filenames  
   Purpose:  Show the contents of an account cache and/or fix it by removing duplicate records.
