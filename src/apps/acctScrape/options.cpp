@@ -103,18 +103,6 @@ bool COptions::parseArguments(string_q& command) {
     // Exclusions are always picked up from the blockScraper
     exclusions = toLower(getGlobalConfig("blockScrape")->getConfigStr("exclusions", "list", ""));
 
-    if (forceAddr.empty()) {
-        string_q curDir = (isTestMode() ? "$DIR/" : getCWD());
-        if (!fileExists("./config.toml"))
-            return usage("Cannot read toml file ./config.toml in " + curDir + ". Quitting...");
-
-        if (!monitors[0].toml || !fileExists(monitors[0].toml->getFilename()))
-            return usage("Cannot read toml file " + monitors[0].toml->getFilename() + " folder: " + curDir + ". Quitting...");
-
-        manageFields(monitors[0].toml->getConfigStr("fields", "hide", ""), false);
-        manageFields(monitors[0].toml->getConfigStr("fields", "show", ""), true );
-    }
-
     if (!isParity() || !nodeHasTraces())
         return usage("This tool will only run if it is running against a Parity node that has tracing enabled. Quitting...");
 
@@ -138,6 +126,19 @@ bool COptions::parseArguments(string_q& command) {
     } else {
         if (!loadMonitors())
             return false;
+
+        string_q curDir = (isTestMode() ? "$DIR/" : getCWD());
+        if (!fileExists("./config.toml"))
+            return usage("Cannot read toml file ./config.toml in " + curDir + ". Quitting...");
+
+        if (monitors.size() == 0)
+            return usage("Cannot read toml file in folder: " + curDir + ". Quitting...");
+
+        if (!monitors[0].toml || !fileExists(monitors[0].toml->getFilename()))
+            return usage("Cannot read toml file " + monitors[0].toml->getFilename() + " folder: " + curDir + ". Quitting...");
+
+        manageFields(monitors[0].toml->getConfigStr("fields", "hide", ""), false);
+        manageFields(monitors[0].toml->getConfigStr("fields", "show", ""), true );
     }
 
     string_q lb   = getTransCacheLast(monitors[0].address);
@@ -315,7 +316,18 @@ string_q COptions::finalReport(double startTime, bool header) const {
 //-----------------------------------------------------------------------
 bool COptions::loadMonitors(void) {
 
-    string_q watchStr = monitors[0].toml->getConfigJson("watches", "list", "");
+    string_q curDir = (isTestMode() ? "$DIR/" : getCWD());
+    if (!fileExists("./config.toml"))
+        return usage("Cannot read toml file ./config.toml in " + curDir + ". Quitting...");
+
+    CToml *toml = new CToml("./config.toml");
+    if (!toml)
+        return usage("Cannot read toml file in folder: " + curDir + ". Quitting...");
+
+    manageFields(toml->getConfigStr("fields", "hide", ""), false);
+    manageFields(toml->getConfigStr("fields", "show", ""), true );
+
+    string_q watchStr = toml->getConfigJson("watches", "list", "");
     if (watchStr.empty())
         return usage("Empty list of watches. Quitting.");
 
@@ -326,9 +338,9 @@ bool COptions::loadMonitors(void) {
         watch.address = str_2_Addr(toLower(watch.address));
         watch.extra_data = toLower("chifra/" + getVersionStr() + ": " + watch.address);
         watch.nodeBal = getBalanceAt(watch.address, watch.firstBlock-1);
-        watch.api_spec.method = monitors[0].toml->getConfigStr("api_spec", "method", "");
-        watch.api_spec.uri = monitors[0].toml->getConfigStr("api_spec", "uri", "");
-        watch.api_spec.headers = monitors[0].toml->getConfigStr("api_spec", "headers", "");
+        watch.api_spec.method = toml->getConfigStr("api_spec", "method", "");
+        watch.api_spec.uri = toml->getConfigStr("api_spec", "uri", "");
+        watch.api_spec.headers = toml->getConfigStr("api_spec", "headers", "");
         if (!watch.api_spec.uri.empty()) {
             watch.abi_spec.loadAbiByAddress(watch.address);
             watch.abi_spec.loadAbiKnown("all");
@@ -347,8 +359,7 @@ bool COptions::loadMonitors(void) {
         // add to array or return error
         if (msg.empty()) {
             monitors.push_back(watch);
-            if (monitors.size() == 1)
-                monitors[0].toml = new CToml("./config.toml");
+            monitors[0].toml = toml;
 
         } else {
             return usage(msg);
