@@ -42,14 +42,14 @@ int main(int argc, const char *argv[]) {
             if (options.count)
                 cout << options.namedAccounts.size() << " items\n";
             ostringstream os;
-            if (!options.data)
+            if (!options.data && !options.addrOnly)
                 os << "[\n";
             for (auto name : options.namedAccounts) {
-                if (!options.data && os.str() != "[\n")
+                if (!options.data && !options.addrOnly && os.str() != "[\n")
                     os << ",";
                 os << substitute(substitute(name.Format(fmt), "\n", " "), "  ", " ") << endl;
             }
-            if (!options.data)
+            if (!options.data && !options.addrOnly)
                 os << "]";
             cout << os.str();
 
