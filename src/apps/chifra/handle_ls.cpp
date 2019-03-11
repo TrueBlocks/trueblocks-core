@@ -24,7 +24,8 @@ bool COptions::handle_ls(void) {
         if (type == "f" && contains(file, ".acct.bin") && !contains(file, ".lck")) {
             CAccountName item;
             item.addr = nextTokenClear(file, '.');
-            getNamedAccount(item, item.addr); item.name = substitute(substitute(item.name, "(", ""), ")", "");
+            getNamedAccount(item, item.addr);
+            item.name = substitute(substitute(item.name, "(", ""), ")", "");
             accounts.push_back(item);
         }
     }
