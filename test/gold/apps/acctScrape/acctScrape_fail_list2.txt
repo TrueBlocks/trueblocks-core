@@ -1,7 +1,7 @@
 acctScrape argc: 2 [1:0x1234567890123456789012345678901234567890] 
 acctScrape 0x1234567890123456789012345678901234567890 
 
-  You may provide an address only with the --list option. Quitting...
+  Invalid option: 0x1234567890123456789012345678901234567890
 
   Usage:    acctScrape [-u|-m|-w|-l|-v|-h]  
   Purpose:  Index transactions for a given Ethereum address (or series of addresses).
@@ -15,7 +15,6 @@ acctScrape 0x1234567890123456789012345678901234567890
 #### Hidden options (shown during testing only)
 	-s  (--noBlooms)      do not use adaptive enhanced blooms (much faster if you use them)
 	-k  (--noBlocks)      do not use binary block cache (much faster if you use them)
-	-i  (--list)          ignore all other options and export tab delimited bn.txid records
 	-f  (--for_addr val)  force a scrape on the given account
 #### Hidden options (shown during testing only)
 

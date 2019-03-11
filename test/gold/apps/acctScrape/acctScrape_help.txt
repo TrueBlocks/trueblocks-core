@@ -17,7 +17,6 @@ acctScrape -th
 #### Hidden options (shown during testing only)
 | -s | --noBlooms | do not use adaptive enhanced blooms (much faster if you use them) |
 | -k | --noBlocks | do not use binary block cache (much faster if you use them) |
-| -i | --list | ignore all other options and export tab delimited bn.txid records |
 | -f | --for_addr val | force a scrape on the given account |
 #### Hidden options (shown during testing only)
 
