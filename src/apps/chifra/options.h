@@ -35,6 +35,7 @@ public:
     bool handle_daemon (void);
     bool handle_scrape (void);
     bool handle_ls     (void);
+    bool handle_name   (void);
     bool handle_config (void);
     bool handle_help   (void);
 };
