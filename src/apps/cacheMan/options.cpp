@@ -124,21 +124,26 @@ bool COptions::parseArguments(string_q& command) {
 
         } else {
             string_q path = arg;
-            filenames.push_back(path);
+            if (!endsWith(path, ".acct.bin"))
+                path += ".acct.bin";
             if (!fileExists(path))
-                return usage("Cannot open file: " + path + ". Quitting.");
-            if (!contains(path, ".acct.bin"))
-                return usage("cacheMan app only processes .acct.bin files. Quitting.");
+                return usage("Cannot open monitor file for '" + arg + "'. Quitting.");
+            address_t addr = substitute(path, ".acct.bin", "");
+            if (contains(addr, "0x") && !startsWith(addr, "0x"))
+                addr = addr.substr(addr.find("0x"));
+            if (!isTestMode() && !isAddress(addr))
+                return usage("Filename '" + arg + "' does not appear to contain an Ethereum address. Quitting...");
+            monitors.push_back(CAccountWatch(addr, path));
         }
     }
 
-    if (!isBals && filenames.size() == 0 && !isImport)
+    if (!isBals && monitors.size() == 0 && !isImport)
         return usage("You must provide at least one filename. Quitting.");
     if (mode.empty())
         mode = "list|";
-    if (isMerge && filenames.size() < 2)
+    if (isMerge && monitors.size() < 2)
         return usage("Merge command needs at least two filenames. Quitting.");
-    if ((isSort || isRemove || isCacheBal) && filenames.size() != 1)
+    if ((isSort || isRemove || isCacheBal) && monitors.size() != 1)
         return usage("Command requires a single filename. Quitting.");
 
     if (isBals) {
@@ -158,12 +163,8 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     } else if (isImport) {
-        if (!fileExists("./config.toml"))
-            return usage("Could not open file: ./config.toml. Quitting.");
-        CToml toml("./config.toml");
-        loadWatches(toml);
-        if (filenames.empty())
-            filenames.push_back("cache/" + watches[0].address + ".acct.bin");
+        if (monitors.empty() || monitors.size() > 1)
+            return usage("Please provide a single address for this import. Quitting...");
         handleImport();
         return false;
 
@@ -173,19 +174,6 @@ bool COptions::parseArguments(string_q& command) {
 
     }
 
-    if (watches.empty()) {
-        for (auto file : filenames) {
-            if (contains(file, ".acct.bin")) {
-                file = substitute(file, ".acct.bin", "");
-                CAccountWatch watch;
-                watch.address = file;
-                watch.name = file;
-                watch.color = cBlue; //convertColor(watch.color);
-                watches.push_back(watch);
-            }
-        }
-    }
-
     return true;
 }
 
@@ -193,7 +181,7 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     registerOptions(nParams, params);
 
-    filenames.clear();
+    monitors.clear();
     mode = "";
     trunc = 0;
     asData = false;
@@ -210,26 +198,4 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-}
-
-//-----------------------------------------------------------------------
-bool COptions::loadWatches(const CToml& toml) {
-
-    // Note: this call does no checks on the data
-    loadWatchList(toml, watches, "list");
-
-    if (watches.size() == 0)
-        return usage("Empty list of watches. Quitting...\n");
-
-    // Check the watches for validity and pick up balance if possible
-    for (uint32_t i = 0 ; i < watches.size() ; i++) {
-
-        const CAccountWatch *watch = &watches[i];
-        if (!isAddress(watch->address))
-            return usage("Invalid watch address " + watch->address + "\n");
-
-        if (watch->name.empty())
-            return usage("Empty watch name " + watch->name + "\n");
-    }
-    return true;
 }

@@ -26,7 +26,10 @@ int main(int argc, const char *argv[]) {
         CStringArray modes;
         explode(modes, options.mode, '|');
         for (auto mode: modes) {
-            for (size_t fn = 0 ; fn < options.filenames.size() ; fn++) {
+            for (size_t fn = 0 ; fn < options.monitors.size() ; fn++) {
+
+                CAccountWatch *watch = &options.monitors[fn];
+
                 options.stats = CStats(); // reset
                 CAcctCacheItem lastItem(0,0);
                 CAcctCacheItemArray fixed;
@@ -34,10 +37,10 @@ int main(int argc, const char *argv[]) {
 
                 // Read from the current cache
                 CArchive txCache(READING_ARCHIVE);
-                if (txCache.Lock(options.filenames[fn], modeReadOnly, LOCK_NOWAIT)) {
+                if (txCache.Lock(watch->name, modeReadOnly, LOCK_NOWAIT)) {
 
                     if (!options.asData)
-                        cout << toProper(mode)+"ing cache: " << options.filenames[fn] << "\n";
+                        cout << toProper(mode)+"ing cache: " << watch->name << "\n";
                     while (!txCache.Eof()) {
 
                         CAcctCacheItem item;
@@ -116,7 +119,7 @@ int main(int argc, const char *argv[]) {
                     txCache.Release();
 
                 } else {
-                    cout << "Could not open file: " << options.filenames[fn] << "\n";
+                    cout << "Could not open file: " << watch->name << "\n";
                 }
 
                 if (options.stats.nDups) {
@@ -129,15 +132,15 @@ int main(int argc, const char *argv[]) {
                 }
 
                 blknum_t lastBlock = 0;
-                CFilename lbFn(options.filenames[fn]);
+                CFilename lbFn(watch->name);
                 string_q lbFileName = lbFn.getPath() + "lastBlock.txt";
                 string_q contents;
                 asciiFileToString(lbFileName, contents);
                 blknum_t prevLastBlock = str_2_Uint(contents);
                 if (options.stats.nFixed || options.stats.nTruncs) {
                     if (!isTestMode()) {
-                        string_q backFile = options.filenames[fn]+".bak";
-                        copyFile(options.filenames[fn], backFile);
+                        string_q backFile = watch->name+".bak";
+                        copyFile(watch->name, backFile);
                         usleep(1000000); // wait a second, just in case
                         if (!fileExists(backFile)) {
                             cerr << "Could not create backup file `" << backFile << ". Quitting...";
@@ -146,22 +149,25 @@ int main(int argc, const char *argv[]) {
                     }
                     cout << "\tRe-writing " << cYellow << fixed.size() << cOff
                             << " of " << options.stats.nRecords << " records to cache: "
-                            << cYellow << options.filenames[fn] << cOff << " (" << options.stats.nTruncs << " truncated)\n";
+                            << cYellow << watch->name << cOff << " (" << options.stats.nTruncs << " truncated)\n";
 
                     if (!isTestMode()) {
-                        remove(options.filenames[fn].c_str());
+                        remove(watch->name.c_str());
                         CArchive txCache2(WRITING_ARCHIVE);
-                        if (txCache2.Lock(options.filenames[fn], modeWriteCreate, LOCK_NOWAIT)) {
+                        if (txCache2.Lock(watch->name, modeWriteCreate, LOCK_NOWAIT)) {
                             for (size_t i=0 ; i < fixed.size() ; i++) {
                                 txCache2 << fixed[i].blockNum << fixed[i].transIndex;
                                 lastBlock = fixed[i].blockNum;
                             }
                             txCache2.Release();
                             // write the last block to file
-                            if (lastBlock > prevLastBlock || options.stats.nTruncs)
-                                options.writeLastBlock(lastBlock);
+                            if (lastBlock > prevLastBlock || options.stats.nTruncs) {
+                                CAccountWatch monitor;
+                                monitor.address = watch->address;
+                                monitor.writeLastBlock(lastBlock);
+                            }
                         } else {
-                            cerr << "Could not create corrected file `" << options.filenames[fn] << ". Quitting...";
+                            cerr << "Could not create corrected file `" << watch->name << ". Quitting...";
                             return 1;
                         }
                     }
@@ -171,8 +177,11 @@ int main(int argc, const char *argv[]) {
                     cout << cMagenta << "\tThere was nothing to fix (" << lastItem.blockNum << ").\n" << cOff;
                     // write the last block to file
                     if (!isTestMode()) {
-                        if (lastItem.blockNum > prevLastBlock || options.stats.nTruncs)
-                            options.writeLastBlock(lastItem.blockNum);
+                        if (lastItem.blockNum > prevLastBlock || options.stats.nTruncs) {
+                            CAccountWatch monitor;
+                            monitor.address = watch->address;
+                            monitor.writeLastBlock(lastItem.blockNum);
+                        }
                     }
                 }
             }
@@ -192,14 +201,6 @@ int sortByBlock(const void *v1, const void *v2) {
     if ( c1->blockNum   > c2->blockNum   ) return  1;
     if ( c1->blockNum   < c2->blockNum   ) return -1;
     return (int)((int64_t)c1->transIndex - (int64_t)c2->transIndex);
-}
-
-//-------------------------------------------------------------------------
-void COptions::writeLastBlock(blknum_t bn) {
-    if (isTestMode())
-        return;
-    if (watches.size() > 0)
-        stringToAsciiFile(getTransCacheLast(watches[0].address), uint_2_Str(bn) + "\n");
 }
 
 //-------------------------------------------------------------------------
