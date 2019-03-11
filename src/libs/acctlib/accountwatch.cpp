@@ -16,6 +16,7 @@
  */
 #include <algorithm>
 #include "accountwatch.h"
+#include "acctcacheitem.h"
 
 namespace qblocks {
 
@@ -468,7 +469,7 @@ biguint_t getNodeBal(CBalanceHistoryArray& history, const address_t& addr, blknu
 
 //-----------------------------------------------------------------------
 // This assumes there are valid watches. Caller is expected to check
-void loadWatchList(const CToml& toml, CAccountWatchArray& watches, const string_q& key) {
+void loadWatchList(const CToml& toml, CAccountWatchArray& monitors, const string_q& key) {
 
     string_q watchStr = toml.getConfigJson("watches", key, "");
 
@@ -477,10 +478,19 @@ void loadWatchList(const CToml& toml, CAccountWatchArray& watches, const string_
         // cleanup and add to list of watches
         watch.address = str_2_Addr(toLower(watch.address));
         watch.color   = convertColor(watch.color);
-        watches.push_back(watch);
+        monitors.push_back(watch);
         watch = CAccountWatch();  // reset
     }
     return;
+}
+
+//-------------------------------------------------------------------------
+void CAccountWatch::writeLastBlock(blknum_t bn) const {
+    if (!isTestMode())
+        stringToAsciiFile(getTransCacheLast(address), uint_2_Str(bn) + "\n");
+    else
+        if (address != "./merged.bin")
+            cerr << "Would have written " << getTransCacheLast(address) << ": " << bn << endl;
 }
 // EXISTING_CODE
 }  // namespace qblocks

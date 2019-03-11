@@ -904,6 +904,14 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     }
 
     //-----------------------------------------------------------------------
+    string_q COptionsBase::getNamedAccount(const string_q& addr) const {
+        CAccountName item;
+        item.addr = addr;
+        getNamedAccount(item, item.addr);
+        return substitute(substitute(item.name, "(", ""), ")", "");
+    }
+
+    //-----------------------------------------------------------------------
     bool COptionsBase::loadNames(void) {
 
         // If we're already loaded or editing, return

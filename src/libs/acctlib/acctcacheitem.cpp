@@ -246,7 +246,7 @@ CAcctCacheItem::CAcctCacheItem(string_q& line) {
 
 //---------------------------------------------------------------------------
 string_q getTransCacheLast(const string_q& addr) {
-    if (!isAddress(addr)) {
+    if (!isTestMode() && !isAddress(addr)) {
         cerr << "Not an address: " << addr << endl;
         quickQuitHandler(0);
     }

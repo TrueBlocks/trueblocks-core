@@ -28,21 +28,7 @@ int main(int argc, const char *argv[]) {
             return 0;
 
         CAddressArray addrs;
-        if (options.fromScraper) {
-            CToml toml("./config.toml");
-            //            cout << toml << "\n";
-            CAccountWatchArray watches;
-            loadWatchList(toml, watches, "list");
-            for (auto watch : watches)
-                addrs.push_back(toLower(watch.address));
-            if (options.fromNamed) {
-                watches.clear();
-                loadWatchList(toml, watches, "named");
-                for (auto watch : watches)
-                    addrs.push_back(toLower(watch.address));
-            }
-
-        } else if (options.fromNamed) {
+        if (options.fromNamed) {
             for (size_t i = 0 ; i < options.namedAccounts.size() ; i++)
                 addrs.push_back(toLower(options.namedAccounts[i].addr));
 
