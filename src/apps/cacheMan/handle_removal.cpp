@@ -10,7 +10,7 @@ bool filterForRemove(CAcctCacheItemArray& dataArray, const CAcctCacheItem& item)
 bool COptions::handleRemove(void) const {
 
     ASSERT(fileExists("./remove.txt"));
-    ASSERT(removals.size());
+    ASSERT(removals.size() == 1);
 
     CAcctCacheItemArray dataArray;
     if (!handleRead("Reading", 1, dataArray))
@@ -24,7 +24,7 @@ bool COptions::handleRemove(void) const {
         if (removals[i].blockNum > 0)
             cerr << "\tWill remove item " << removals[i] << " if found\n";
 
-    if (!handleWrite(filenames[0], dataArray, filterForRemove))
+    if (!handleWrite(monitors[0].name, dataArray, filterForRemove))
         return false;
 
     return true;

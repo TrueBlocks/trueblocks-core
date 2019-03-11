@@ -17,10 +17,8 @@ bool COptions::handleWrite(const string_q& outputFilename, const CAcctCacheItemA
 
     cerr << "\tWriting...";
 
-    string_q contents;
-    if (watches.size() > 0)
-        asciiFileToString(getTransCacheLast(watches[0].address), contents);
-    blknum_t currentLastItem = str_2_Uint(contents);
+    address_t address = substitute(outputFilename, ".acct.bin", "");
+    blknum_t currentLastItem = str_2_Uint(asciiFileToString(getTransCacheLast(address)));
 
     CArchive txCache(WRITING_ARCHIVE);
     if (!txCache.Lock(outputFilename, modeWriteCreate, LOCK_WAIT))
@@ -46,8 +44,11 @@ bool COptions::handleWrite(const string_q& outputFilename, const CAcctCacheItemA
     if (!shouldQuit()) {
         lockSection(true);
         txCache.Write(writeArray.data(), sizeof(CWriteItem), writeArray.size());
-        if (!filterFunc)  // we only write the last block marker if we're not removing records
-            ((COptions*)this)->writeLastBlock(newLastItem);
+        if (!filterFunc) { // we only write the last block marker if we're not removing records
+            CAccountWatch monitor;
+            monitor.address = address;
+            monitor.writeLastBlock(newLastItem);
+        }
         lockSection(false);
         cerr << cYellow << writeArray.size() << cOff << " records written, ";
         cerr << cYellow << (dataArray.size() - writeArray.size()) << cOff << " records " << (filterFunc ? "removed" : "ignored") << ".\n";
