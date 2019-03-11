@@ -9,10 +9,7 @@ const string_q clearStr(20, ' ');
 //------------------------------------------------------------------------
 bool handleCacheBals(COptions& options) {
 
-    if (!fileExists("./config.toml"))
-        return options.usage("Could not open file: ./config.toml. Quitting.");
-    CToml toml("./config.toml");
-    options.loadWatches(toml);
+    ASSERT(filenames.size() == 1);
 
     if (!nodeHasBalances())
         return options.usage("Cannot cache balances on a machine that doesn't have balances. Quitting...");
@@ -24,7 +21,7 @@ bool handleCacheBals(COptions& options) {
     asciiFileToString(configPath("prefunds.txt"), contents);
     CStringArray prefunds;
     explode(prefunds, contents, '\n');
-    for (auto const& watch : options.watches) {
+    for (auto const& watch : options.monitors) {
         for (auto prefund : prefunds) {
             address_t account = nextTokenClear(prefund, '\t');
             if (account == watch.address) {
@@ -40,7 +37,7 @@ bool handleCacheBals(COptions& options) {
     }
 
     CArchive txCache(READING_ARCHIVE);
-    if (txCache.Lock(options.filenames[0], modeReadOnly, LOCK_NOWAIT)) {
+    if (txCache.Lock(options.monitors[0].name, modeReadOnly, LOCK_NOWAIT)) {
         CAcctCacheItem last;
         while (!txCache.Eof()) {
             CAcctCacheItem item;
@@ -56,12 +53,12 @@ bool handleCacheBals(COptions& options) {
         cerr << clearStr << clearStr << "\r";
         cerr.flush();
     } else {
-        return options.usage("Could not open file: " + options.filenames[0] + ". Quitting.");
+        return options.usage("Could not open file: " + options.monitors[0].name + ". Quitting.");
     }
     sort(dataArray.begin(), dataArray.end());
 
     establishFolder("./balances/");
-    for (auto const& watch : options.watches) {
+    for (auto const& watch : options.monitors) {
 
         string_q binaryFilename = "./balances/" + watch.address + ".bals.bin";
         CArchive balCache(WRITING_ARCHIVE);
@@ -102,12 +99,9 @@ bool handleCacheBals(COptions& options) {
 //------------------------------------------------------------------------
 bool listBalances(COptions& options) {
 
-    if (!fileExists("./config.toml"))
-        return options.usage("Could not open file: ./config.toml. Quitting.");
-    CToml toml("./config.toml");
-    options.loadWatches(toml);
+    ASSERT(monitors.size() > 0);
 
-    for (auto const& watch : options.watches) {
+    for (auto const& watch : options.monitors) {
 
         string_q binaryFilename = "./balances/" + watch.address + ".bals.bin";
         if (!fileExists(binaryFilename))

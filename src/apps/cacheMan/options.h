@@ -27,7 +27,7 @@ typedef bool (*CACHEFILTERFUNC)(CAcctCacheItemArray& dataArray, const CAcctCache
 class COptions : public COptionsBase {
 public:
     CStats stats;
-    CStringArray filenames;
+    CAccountWatchArray monitors;
     string_q mode;
     blknum_t trunc;
     blknum_t maxBlock;
@@ -36,7 +36,6 @@ public:
     bool isImport;
     bool isRemove;
     CAcctCacheItemArray removals;
-    CAccountWatchArray watches;
 
     COptions(void);
     ~COptions(void);
@@ -47,11 +46,9 @@ public:
     bool handleRemove   (void) const;
     bool handleRead     (const string_q& mode, size_t filesToUse, CAcctCacheItemArray& dataArray) const;
     bool handleWrite    (const string_q& outputFilename, const CAcctCacheItemArray& dataArray, CACHEFILTERFUNC filterFunc) const;
-    bool loadWatches     (const CToml& toml);
 
     bool parseArguments(string_q& command);
     void Init(void);
-    void writeLastBlock(blknum_t bn);
 };
 
 //-------------------------------------------------------------------------
