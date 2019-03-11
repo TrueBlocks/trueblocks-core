@@ -72,9 +72,9 @@ run_special_test("cacheMan_merge_ilist"    "-l"  " merged.acct.bin")
 #run_special_test("cacheMan_extract"        "-e"  " 0" " 0x5555533333555553333355555333335555533333.acct.bin" " 0x9876543210987654321098765432109876543210.acct.bin" " --list" " --data")
 #run_special_test("cacheMan_extract_list"   "-l"  " extract.acct.bin" " --data")
 
-run_state_test("cacheMan_balanceFail" "cache/0x001d14804b399c6ef80e64576f657660804fabcd.acct.bin" " --cacheBals")
-run_state_test("cacheMan_balanceGet" "cache/0x001d14804b399c6ef80e64576f657660804fec0b.acct.bin" " --cacheBals")
-run_state_test("cacheMan_balances" "cache/0x001d14804b399c6ef80e64576f657660804fec0b.acct.bin" " --balances")
+run_state_test("cacheMan_balanceFail" "0x001d14804b399c6ef80e64576f657660804fabcd.acct.bin" " --cacheBals")
+run_state_test("cacheMan_balanceGet" "0x001d14804b399c6ef80e64576f657660804fec0b.acct.bin" " --cacheBals")
+run_state_test("cacheMan_balances" "0x001d14804b399c6ef80e64576f657660804fec0b.acct.bin" " --balances")
 
 # COption("-truncate:<num>", "truncate the cache at block :n (keeps block 'n' and before, implies --fix)"),
 # COption("@s(k)ip",         "skip value for testing"),
