@@ -16,8 +16,8 @@ bool COptions::handle_export(void) {
             return false;
         ostringstream os;
         os << "cd " << monitorsPath << " ; ";
-        os << "grabABI " << addr << " ; ";
-        os << "acctExport" << " --for_addr " << addr << " " << flags;
+        os << "grabABI " << addr << " 1>/dev/null 2>&1; ";
+        os << "acctExport " << addr << " " << flags;
         if (isTestMode())
             cout << substitute(os.str(), blockCachePath(""), "$BLOCK_CACHE/") << endl;
         else
