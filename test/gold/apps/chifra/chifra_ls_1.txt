@@ -4,6 +4,7 @@ chifra ls
 Monitor path: $BLOCK_CACHE/monitors/
   Current monitors:
     0x0000000000085d4780b73119b644ae5ecd22b376 (TrueUSD)            
+    0x001d14804b399c6ef80e64576f657660804fec0b                      
     0x001f0aa5da15585e5b2305dbab2bac425ea71007 (IPSX)               
     0x006bea43baa3f7a6f765f14f10a1a1b08334ef45 (Stox)               
     0x009e864923b49263c7f10d19b7f8ab7a9a5aad33 (Knoxstertoken)      
