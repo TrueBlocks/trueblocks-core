@@ -59,6 +59,10 @@ public:
     string_q displayName(bool expand, bool useColor, bool terse, size_t w1 = 20, size_t w2 = 8) const;
     bloom_t bloom;
     bool inBlock;
+    CToml *toml;
+    CArchive *txCache;
+    string_q extra_data;
+    void writeLastBlock(blknum_t bn) const;
     // EXISTING_CODE
     bool operator==(const CAccountWatch& item) const;
     bool operator!=(const CAccountWatch& item) const { return !operator==(item); }
@@ -85,6 +89,8 @@ inline CAccountWatch::CAccountWatch(void) {
 //--------------------------------------------------------------------------
 inline CAccountWatch::CAccountWatch(const CAccountWatch& ac) {
     // EXISTING_CODE
+    toml = NULL;
+    txCache = NULL;
     // EXISTING_CODE
     duplicate(ac);
 }
@@ -102,6 +108,14 @@ inline CAccountWatch::~CAccountWatch(void) {
 //--------------------------------------------------------------------------
 inline void CAccountWatch::clear(void) {
     // EXISTING_CODE
+    if (toml)
+        delete toml;
+    toml = NULL;
+    if (txCache) {
+        txCache->Release();
+        delete txCache;
+    }
+    txCache = NULL;
     // EXISTING_CODE
 }
 
@@ -125,6 +139,9 @@ inline void CAccountWatch::initialize(void) {
     lastBlock = UINT_MAX;
     bloom = 0;
     inBlock = false;
+    toml = NULL;
+    txCache = NULL;
+    extra_data = "";
     // EXISTING_CODE
 }
 
@@ -149,6 +166,9 @@ inline void CAccountWatch::duplicate(const CAccountWatch& ac) {
     lastBlock = ac.lastBlock;
     bloom = ac.bloom;
     inBlock = ac.inBlock;
+    toml = NULL; // we do not copy the toml
+    txCache = NULL; // we do not copy the txCache
+    extra_data = ac.extra_data;
     // EXISTING_CODE
 }
 

@@ -13,13 +13,12 @@ static const COption params[] = {
     COption("-logLevel:<val>",   "specify the log level (default 1)"),
     COption("@noBloom(s)",       "do not use adaptive enhanced blooms (much faster if you use them)"),
     COption("@noBloc(k)s",       "do not use binary block cache (much faster if you use them)"),
-    COption("@l(i)st",           "ignore all other options and export tab delimited bn.txid records"),
     COption("@for_addr:<val>",   "force a scrape on the given account"),
     COption("",                  "Index transactions for a given Ethereum address (or series of addresses).\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-extern bool makeMonitorFolder(const address_t& monitorAddr);
+//extern bool makeMonitorFolder(const address_t& addr);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
@@ -28,6 +27,9 @@ bool COptions::parseArguments(string_q& command) {
 
     bool isAll = false;
     address_t forceAddr;
+    blknum_t maxBlocks = 10000;
+    blknum_t lastInCache = NOPOS;
+    blknum_t lastVisited = NOPOS;
 
     Init();
     explode(arguments, command, ' ');
@@ -61,10 +63,6 @@ bool COptions::parseArguments(string_q& command) {
                 return usage(arg + " does not appear to be a valid address. Quitting...");
             forceAddr = arg;
 
-        } else if (arg == "-i" || arg == "--list") {
-            isList = true;
-            useIndex = true;
-
         } else if (arg == "-u" || arg == "--useIndex") {
             useIndex = true;
 
@@ -73,14 +71,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-w" || arg == "--writeBlocks") {
             writeBlocks = true;
-
-        } else if (startsWith(arg, "0x")) {
-
-            if (!isAddress(arg))
-                return usage(arg + " does not appear to be a valid Ethereum address. Quitting...");
-            if (!monitorAddr.empty())
-                return usage("Please provide only a single address. Quitting...");
-            monitorAddr = toLower(arg);
 
         } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
@@ -113,32 +103,14 @@ bool COptions::parseArguments(string_q& command) {
     // Exclusions are always picked up from the blockScraper
     exclusions = toLower(getGlobalConfig("blockScrape")->getConfigStr("exclusions", "list", ""));
 
-    // If we're doing listing, we need a config file.
-    if (isList) {
-        if (!monitorAddr.empty()) {
-            // the user wants to create a new monitor, so accomodate him.
-            if (!makeMonitorFolder(monitorAddr))
-                return usage("Could not create monitor folder. Quitting...");
-            if (isTestMode())
-                return false;
-            if (toml) {
-                delete toml;
-            }
-            toml = new CToml("./config.toml");
-        }
-    } else {
-        if (!monitorAddr.empty())
-            return usage("You may provide an address only with the --list option. Quitting...");
-    }
-
     if (forceAddr.empty()) {
-        if (!toml || !fileExists(toml->getFilename())) {
+        if (!monitors[0].toml || !fileExists(monitors[0].toml->getFilename())) {
             string_q curDir = (isTestMode() ? "$DIR/" : getCWD());
-            return usage("Cannot read toml file " + toml->getFilename() + " folder: " + curDir + ". Quitting...\n");
+            return usage("Cannot read toml file " + monitors[0].toml->getFilename() + " folder: " + curDir + ". Quitting...\n");
         }
 
-        manageFields(toml->getConfigStr("fields", "hide", ""), false);
-        manageFields(toml->getConfigStr("fields", "show", ""), true );
+        manageFields(monitors[0].toml->getConfigStr("fields", "hide", ""), false);
+        manageFields(monitors[0].toml->getConfigStr("fields", "show", ""), true );
     }
 
     if (!isParity() || !nodeHasTraces())
@@ -153,11 +125,10 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (!forceAddr.empty()) {
-        minWatchBlock = 0;
-        maxWatchBlock = UINT32_MAX;
         CAccountWatch watch;
         watch.setValueByName("address", forceAddr); // don't change, sets bloom value also
         watch.setValueByName("name", forceAddr);
+        watch.extra_data = toLower("chifra/" + getVersionStr() + ": " + watch.address);
         watch.color = cBlue; //convertColor(watch.color);
         watch.finishParse();
         monitors.push_back(watch);
@@ -167,10 +138,9 @@ bool COptions::parseArguments(string_q& command) {
             return false;
     }
 
-    cacheFilename = getTransCachePath(monitors[0].address);
     string_q lb   = getTransCacheLast(monitors[0].address);
-    if (fileExists(cacheFilename+".lck") || fileExists(lb + ".lck"))
-        return usage("The cache file '" + (cacheFilename+".lck") + "' is locked. Quitting...");
+    if (fileExists(getTransCachePath(monitors[0].address)+".lck") || fileExists(lb + ".lck"))
+        return usage("The cache file '" + (getTransCachePath(monitors[0].address)+".lck") + "' is locked. Quitting...");
 
     string_q bloomPath = blockCachePath("/blooms/");
     if (!useIndex && !folderExists(bloomPath))
@@ -185,34 +155,24 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     lastInCache = getLatestBlockFromCache();
-//cout << "1: " << lastInCache << " " << lastVisited << " " << lastBlock << " " << firstBlock << " " << nBlocks << endl;
     lastVisited = str_2_Uint(asciiFileToString(getTransCacheLast(monitors[0].address)));
-//cout << "2: " << lastInCache << " " << lastVisited << " " << lastBlock << " " << firstBlock << " " << nBlocks << endl;
-    if (minWatchBlock > 0)
-        lastVisited = max(minWatchBlock - 1, lastVisited);
-//cout << "3: " << lastInCache << " " << lastVisited << " " << lastBlock << " " << firstBlock << " " << nBlocks << endl;
-
-    lastBlock  = min(lastInCache, maxWatchBlock);
-//cout << "4: " << lastInCache << " " << lastVisited << " " << lastBlock << " " << firstBlock << " " << nBlocks << endl;
-    firstBlock = min(lastVisited, lastBlock);
-//cout << "5: " << lastInCache << " " << lastVisited << " " << lastBlock << " " << firstBlock << " " << nBlocks << endl;
-    nBlocks    = min(lastBlock - firstBlock, maxBlocks);
-//cout << "6: " << lastInCache << " " << lastVisited << " " << lastBlock << " " << firstBlock << " " << nBlocks << endl;
-    if (useIndex)
-        nBlocks = 10000000;  // TODO(tjayrush): Not right
-//cout << "7: " << lastInCache << " " << lastVisited << " " << lastBlock << " " << firstBlock << " " << nBlocks << endl;
+    startScrape = min(lastVisited, lastInCache);
+    scrapeCnt   = min(lastInCache - startScrape, maxBlocks);
 
     if (!isTestMode()) {
         cerr << bBlack << Now().Format(FMT_JSON) << cOff;
         cerr << ": Monitoring ";
-        cerr << cYellow << cacheFilename << cOff;
-        cerr << " (start: " << cTeal << firstBlock << cOff;
-        cerr << " end: " + cTeal << uint_2_Str(lastBlock) << cOff;
-        cerr << " n: " + cTeal << uint_2_Str(lastBlock-firstBlock) << cOff;
+        cerr << cYellow << getTransCachePath(monitors[0].address) << cOff;
+        cerr << " (start: " << cTeal << startScrape << cOff;
+        cerr << " end: " + cTeal << uint_2_Str(lastInCache) << cOff;
+        if (!useIndex)
+            cerr << " n: " + cTeal << uint_2_Str(scrapeCnt) << cOff;
         cerr << ")                    \n";
     }
+    if (useIndex)
+        scrapeCnt = 10000000;  // TODO(tjayrush): Not right
 
-    return true;
+    return (lastVisited <= lastInCache);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -221,76 +181,45 @@ void COptions::Init(void) {
     // We want to be able to run this more than once
     // optionOn(OPT_RUNONCE);
 
-    lastBlock      = 0;
-    minWatchBlock  = 0;
-    maxWatchBlock  = UINT32_MAX;
-    maxBlocks      = 10000;
     minArgs        = 0;
     lastTimestamp  = 0;
     writeBlocks    = false;
     ignoreBlooms   = false;
     useIndex       = false;
-    isList         = false;
     ignoreBlkCache = false;
-    firstBlock     = 0;
-    nBlocks        = 0;
+    startScrape    = 0;
+    scrapeCnt      = 0;
     blockCounted   = false;
     logLevel       = 1;
-    monitorAddr    = "";
-    lastInCache    = NOPOS;
-    lastVisited    = NOPOS;
-    ex_data        = "";
 }
 
 //---------------------------------------------------------------------------------------------------
-COptions::COptions(void) : blkStats(), addrStats(), transStats(), traceStats(), txCache(WRITING_ARCHIVE) {
+COptions::COptions(void) : blkStats(), addrStats(), transStats(), traceStats() {
     Init();
-    toml = new CToml("./config.toml");
 }
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-    if (toml)
-        delete toml;
-}
-
-//--------------------------------------------------------------------------------
-bool COptions::shouldScrape(void) const {
-    return (lastVisited <= lastInCache);
 }
 
 //--------------------------------------------------------------------------------
 bool COptions::finalReport(void) const {
 
-    if (isList) {
-        CArchive cache(READING_ARCHIVE);
-        if (!cache.Lock(cacheFilename, modeReadOnly, LOCK_NOWAIT))
-            return usage("Could not open file: " + cacheFilename + ". Quitting.");
-        while (!cache.Eof() && !shouldQuit()) {
-            CAcctCacheItem item;
-            cache >> item.blockNum >> item.transIndex;
-            if (item.blockNum > 0)
-                cout << item.blockNum << "\t" << item.transIndex << endl;
-        }
-        cache.Release();
+    cerr << " bn: " << startScrape + scrapeCnt << *this << "\r";
+    cerr.flush();
 
-    } else {
-
-        cerr << name << " bn: " << firstBlock + nBlocks << *this << "\r";
-        cerr.flush();
-
-        if (blkStats.nSeen && logLevel > 0) {
-            string_q logFile = blockCachePath("logs/acct-scrape.log");
-            double startTime = qbNow();
-            if (!fileExists(logFile))
-                appendToAsciiFile(logFile, finalReport(startTime, true));
-            if (logLevel >= 2 || blkStats.nSeen > 1000)
-                appendToAsciiFile(logFile, finalReport(startTime, false));
-        }
+    if (blkStats.nSeen && logLevel > 0) {
+        string_q logFile = blockCachePath("logs/acct-scrape.log");
+        double startTime = qbNow();
+        if (!fileExists(logFile))
+            appendToAsciiFile(logFile, finalReport(startTime, true));
+        if (logLevel >= 2 || blkStats.nSeen > 1000)
+            appendToAsciiFile(logFile, finalReport(startTime, false));
     }
     return true;
 }
 
+/*
 //--------------------------------------------------------------------------------
 static const char *STR_CONFIG_FILE =
 "[settings]\n"
@@ -328,14 +257,16 @@ bool makeMonitorFolder(const address_t& addr) {
     }
     return false;
 }
+*/
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const COptions& item) {
-    os << bBlack
-        << " (bh.bq.bs.nb: "  << item.blkStats.nHit << "/" << item.blkStats.nQueried << "/" << item.blkStats.nSeen << "/" << item.nBlocks
-        << ", ah.anh.as: "    << item.addrStats.nHit  << "/" << item.addrStats.nSkipped   << "/" << item.addrStats.nSeen
-        << ", th.ts: "        << item.transStats.nHit  << "/" << item.transStats.nSeen
-        << ", trh.trsk.trs: " << item.traceStats.nHit << "/" << item.traceStats.nSkipped << "/" << item.traceStats.nSeen << ")" << cOff;
+    os << bBlack;
+    os << " (bh.bq.bs.nb: "  << item.blkStats.nHit << "/" << item.blkStats.nQueried << "/" << item.blkStats.nSeen << "/" << item.scrapeCnt;
+    os << ", ah.anh.as: "    << item.addrStats.nHit  << "/" << item.addrStats.nSkipped   << "/" << item.addrStats.nSeen;
+    os << ", th.ts: "        << item.transStats.nHit  << "/" << item.transStats.nSeen;
+    os << ", trh.trsk.trs: " << item.traceStats.nHit << "/" << item.traceStats.nSkipped << "/" << item.traceStats.nSeen << ")";
+    os << cOff;
     return os;
 }
 
@@ -350,7 +281,7 @@ string_q COptions::finalReport(double startTime, bool header) const {
         os << "n-accts\t";
         os << "timing\t";
         os << "firstBlock\t";
-        os << "nBlocks\t";
+        os << "scrapeCnt\t";
         os << "blksHit\t";
         os << "blksQueried\t";
         os << "blksSeen\t";
@@ -365,8 +296,8 @@ string_q COptions::finalReport(double startTime, bool header) const {
         os << monitors[0].address << "\t";
         os << monitors.size() << "\t";
         os << double_2_Str(max(0.0, qbNow() - startTime), 4) << "\t";
-        os << firstBlock << "\t";
-        os << nBlocks << "\t";
+        os << startScrape << "\t";
+        os << scrapeCnt << "\t";
         os << blkStats.nHit << "\t";
         os << blkStats.nQueried << "\t";
         os << blkStats.nSeen << "\t";
@@ -382,10 +313,7 @@ string_q COptions::finalReport(double startTime, bool header) const {
 //-----------------------------------------------------------------------
 bool COptions::loadMonitors(void) {
 
-    minWatchBlock = UINT32_MAX;
-    maxWatchBlock = 0;
-
-    string_q watchStr = toml->getConfigJson("watches", "list", "");
+    string_q watchStr = monitors[0].toml->getConfigJson("watches", "list", "");
     if (watchStr.empty())
         return usage("Empty list of watches. Quitting.");
 
@@ -394,10 +322,11 @@ bool COptions::loadMonitors(void) {
         // cleanup and report on errors
         watch.color   = convertColor(watch.color);
         watch.address = str_2_Addr(toLower(watch.address));
+        watch.extra_data = toLower("chifra/" + getVersionStr() + ": " + watch.address);
         watch.nodeBal = getBalanceAt(watch.address, watch.firstBlock-1);
-        watch.api_spec.method = toml->getConfigStr("api_spec", "method", "");
-        watch.api_spec.uri = toml->getConfigStr("api_spec", "uri", "");
-        watch.api_spec.headers = toml->getConfigStr("api_spec", "headers", "");
+        watch.api_spec.method = monitors[0].toml->getConfigStr("api_spec", "method", "");
+        watch.api_spec.uri = monitors[0].toml->getConfigStr("api_spec", "uri", "");
+        watch.api_spec.headers = monitors[0].toml->getConfigStr("api_spec", "headers", "");
         if (!watch.api_spec.uri.empty()) {
             watch.abi_spec.loadAbiByAddress(watch.address);
             watch.abi_spec.loadAbiKnown("all");
@@ -415,9 +344,9 @@ bool COptions::loadMonitors(void) {
 
         // add to array or return error
         if (msg.empty()) {
-            minWatchBlock = min(minWatchBlock, watch.firstBlock);
-            maxWatchBlock = max(maxWatchBlock, watch.lastBlock);
             monitors.push_back(watch);
+            if (monitors.size() == 1)
+                monitors[0].toml = new CToml("./config.toml");
 
         } else {
             return usage(msg);
@@ -425,74 +354,14 @@ bool COptions::loadMonitors(void) {
         }
         watch = CAccountWatch();  // reset
     }
-    name = toml->getConfigStr("settings", "name", monitors[0].name);
 
     return true;
 }
 
 //-------------------------------------------------------------------------
-void COptions::writeLastBlock(blknum_t bn) {
+void CAccountWatch::writeLastBlock(blknum_t bn) const {
     if (!isTestMode())
-        stringToAsciiFile(getTransCacheLast(monitors[0].address), uint_2_Str(bn) + "\n");
+        stringToAsciiFile(getTransCacheLast(address), uint_2_Str(bn) + "\n");
     else
-        cerr << "Would have written lastBlock.txt file: " << bn << endl;
-}
-
-//-----------------------------------------------------------------------
-const string_q fmt = "[{BLOCKNUMBER} ][{w:5:TRANSACTIONINDEX} ][{w:10:DATE} ][{ETHER}]";
-//-------------------------------------------------------------------------
-bool COptions::foundOne(const CAccountWatch *acct, const CBlock& block, const CTransaction *trans) {
-    if (!blockCounted) {
-        blockCounted = true;
-        blkStats.nHit++; // only count the block once per block
-    }
-    transStats.nHit++;
-
-    CBlock *pBlock = (CBlock*)&block;
-    pBlock->finalized = isBlockFinal(block.timestamp, lastTimestamp, (60 * 4));
-
-    lockSection(true);
-    if (!isTestMode()) {
-        // We found something...write it to the cache...
-        txCache << block.blockNumber << trans->transactionIndex;
-        txCache.flush();
-        writeLastBlock(block.blockNumber);
-        if (writeBlocks) {
-            // pBlock->finalized is implicit here don't remove it above
-            string_q fn = getBinaryFilename(block.blockNumber);
-            if (!fileExists(fn))
-                writeBlockToBinary(block, fn);
-        }
-    }
-
-    // Send the data to an api if we have one
-    if (!acct->api_spec.uri.empty()) {
-        ((CTransaction*)trans)->extra_data = ex_data;
-        ((CTransaction*)trans)->finalized = pBlock->finalized;
-
-        if (trans->traces.size() == 0)
-            getTraces(((CTransaction*)trans)->traces, trans->hash);
-        acct->abi_spec.articulateTransaction((CTransaction*)trans);
-
-        SHOW_FIELD(CFunction,    "message");
-        SHOW_FIELD(CTransaction, "extra_data");
-        SHOW_FIELD(CTransaction, "finalized");
-        if (isTestMode() || fileExists("./debug")) {
-            SHOW_FIELD(CLogEntry,  "data");
-            SHOW_FIELD(CLogEntry,  "topics");
-            SHOW_FIELD(CParameter, "type");
-            cout << trans->Format() << endl;
-        } else {
-            ((CAccountWatch*)acct)->api_spec.sendData(trans->Format());
-        }
-        HIDE_FIELD(CTransaction, "extra_data");
-        HIDE_FIELD(CTransaction, "finalized");
-        HIDE_FIELD(CFunction,    "message");
-    }
-    lockSection(false);
-
-    cerr << string_q(4,' ') << acct->displayName(false,true,true,8) << ": ";
-    cerr << trans->Format(fmt) << " (" << blkStats.nSeen << " of " << nBlocks << ")" << string_q(15,' ') << endl;
-
-    return true;
+        cerr << "Would have written " << getTransCacheLast(address) << ": " << bn << endl;
 }
