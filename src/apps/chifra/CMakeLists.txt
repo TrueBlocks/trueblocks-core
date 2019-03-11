@@ -52,7 +52,8 @@ run_test("chifra_freshen"          "freshen" " 0x1234567812345678123456781234567
 run_test("chifra_list"             "list" " 0x1234567812345678123456781234567812345678")
 run_test("chifra_export"           "export" " 0x1234567812345678123456781234567812345678")
 run_test("chifra_init"             "init" " 0x1234567812345678123456781234567812345678")
-##run_test("chifra_edit_config"      "config")
+run_test("chifra_name"             "name" " -d")
+#run_test("chifra_edit_config"      "config")
 
 # Installation steps, this tool is renamed at installation
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)
