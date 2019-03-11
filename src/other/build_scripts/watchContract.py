@@ -37,7 +37,6 @@ else:
 os.system('ls | grep -v CONFIG | grep -v staging | grep -v README | grep -v "^file" | grep -v final | grep -v test_cases | grep -v 0x | sort -uf >./file')
 while True:
     with open('./file') as f:
-#        os.system('clear')
         contracts = f.read().splitlines()
         for contract in contracts:
             command = 'cd ' + contract + ' ; '

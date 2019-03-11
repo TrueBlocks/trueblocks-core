@@ -26,7 +26,6 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     bool isAll = false;
-    address_t forceAddr;
     blknum_t maxBlocks = 10000;
     blknum_t lastInCache = NOPOS;
     blknum_t lastVisited = NOPOS;
@@ -57,11 +56,16 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-s" || arg == "--noBlooms") {
             ignoreBlooms = true;
 
-        } else if (startsWith(arg, "-f:") || startsWith(arg, "--for_addr:")) {
-            arg = substitute(substitute(arg, "-f:", ""), "--for_addr:", "");
+        } else if (startsWith(arg, "0x")) {
             if (!isAddress(arg))
                 return usage(arg + " does not appear to be a valid address. Quitting...");
-            forceAddr = arg;
+            CAccountWatch watch;
+            watch.setValueByName("address", toLower(arg)); // don't change, sets bloom value also
+            watch.setValueByName("name", toLower(arg));
+            watch.extra_data = toLower("chifra/" + getVersionStr() + ": " + watch.address);
+            watch.color = cBlue;
+            watch.finishParse();
+            monitors.push_back(watch);
 
         } else if (arg == "-u" || arg == "--useIndex") {
             useIndex = true;
@@ -81,9 +85,27 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    if (monitors.size() == 0)
+        return usage("You must provide at least one Ethereum address. Quitting...");
+
     // show certain fields and hide others
     manageFields(defHide, false);
     manageFields(defShow, true);
+    if (fileExists("./" + monitors[0].address + ".toml")) {
+        CToml *toml = new CToml("./" + monitors[0].address + ".toml");
+        monitors[0].toml = toml;  // watch descructor will clean this up
+        manageFields(toml->getConfigStr("fields", "hide", ""), false);
+        manageFields(toml->getConfigStr("fields", "show", ""), true );
+        api_spec.method = toml->getConfigStr("api_spec", "method", "");
+        api_spec.uri = toml->getConfigStr("api_spec", "uri", "");
+        api_spec.headers = toml->getConfigStr("api_spec", "headers", "");
+        if (!api_spec.uri.empty()) {
+            for (size_t i = 0 ; i < monitors.size() ; i++) {
+                monitors[i].abi_spec.loadAbiByAddress(monitors[i].address);
+                monitors[i].abi_spec.loadAbiKnown("all");
+            }
+        }
+    }
 
     CBlock latest;
     getBlock(latest, "latest");
@@ -114,34 +136,7 @@ bool COptions::parseArguments(string_q& command) {
             return usage("The cache folder '" + transCachePath + "' not created. Quiting...");
     }
 
-    if (!forceAddr.empty()) {
-        CAccountWatch watch;
-        watch.setValueByName("address", forceAddr); // don't change, sets bloom value also
-        watch.setValueByName("name", forceAddr);
-        watch.extra_data = toLower("chifra/" + getVersionStr() + ": " + watch.address);
-        watch.color = cBlue; //convertColor(watch.color);
-        watch.finishParse();
-        monitors.push_back(watch);
-
-    } else {
-        if (!loadMonitors())
-            return false;
-
-        string_q curDir = (isTestMode() ? "$DIR/" : getCWD());
-        if (!fileExists("./config.toml"))
-            return usage("Cannot read toml file ./config.toml in " + curDir + ". Quitting...");
-
-        if (monitors.size() == 0)
-            return usage("Cannot read toml file in folder: " + curDir + ". Quitting...");
-
-        if (!monitors[0].toml || !fileExists(monitors[0].toml->getFilename()))
-            return usage("Cannot read toml file " + monitors[0].toml->getFilename() + " folder: " + curDir + ". Quitting...");
-
-        manageFields(monitors[0].toml->getConfigStr("fields", "hide", ""), false);
-        manageFields(monitors[0].toml->getConfigStr("fields", "show", ""), true );
-    }
-
-    string_q lb   = getTransCacheLast(monitors[0].address);
+    string_q lb = getTransCacheLast(monitors[0].address);
     if (fileExists(getTransCachePath(monitors[0].address)+".lck") || fileExists(lb + ".lck"))
         return usage("The cache file '" + (getTransCachePath(monitors[0].address)+".lck") + "' is locked. Quitting...");
 
@@ -222,46 +217,6 @@ bool COptions::finalReport(void) const {
     return true;
 }
 
-/*
-//--------------------------------------------------------------------------------
-static const char *STR_CONFIG_FILE =
-"[settings]\n"
-"name = NAME\n"
-"\n"
-"[display]\n"
-"accounting = false\n"
-"logs = false\n"
-"trace = false\n"
-"single = false\n"
-"parse = false\n"
-"json = true\n"
-"\n"
-"[formats]\n"
-"trans_fmt = [{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{ISERROR}]\t[{EVENTS}]\t[{TRACES}]\n"
-"\n"
-"[[watches]]\n"
-"    list = [ { address = \"ADDR\", name = \"NAME\", firstBlock = 0 }\n"
-"]\n";
-
-//--------------------------------------------------------------------------------
-bool makeMonitorFolder(const address_t& addr) {
-    string_q name = toUpper(addr.substr(2,4) + "..." + addr.substr(addr.length()-4,4));
-    string_q path = "./" + toLower("99_" + name) + "/";
-    establishFolder(path);
-    establishFolder(path + "cache/");
-    if (!chdir(path.c_str())) {
-        string_q config = STR_CONFIG_FILE;
-        config = substitute(config, "NAME", name);
-        config = substitute(config, "ADDR", addr);
-        stringToAsciiFile("./config.toml", config);
-        if (isTestMode())
-            cout << config << endl;
-        return true;
-    }
-    return false;
-}
-*/
-
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const COptions& item) {
     os << bBlack;
@@ -311,62 +266,4 @@ string_q COptions::finalReport(double startTime, bool header) const {
         os << traceStats.nSeen << "\n";
     }
     return os.str();
-}
-
-//-----------------------------------------------------------------------
-bool COptions::loadMonitors(void) {
-
-    string_q curDir = (isTestMode() ? "$DIR/" : getCWD());
-    if (!fileExists("./config.toml"))
-        return usage("Cannot read toml file ./config.toml in " + curDir + ". Quitting...");
-
-    CToml *toml = new CToml("./config.toml");
-    if (!toml)
-        return usage("Cannot read toml file in folder: " + curDir + ". Quitting...");
-
-    manageFields(toml->getConfigStr("fields", "hide", ""), false);
-    manageFields(toml->getConfigStr("fields", "show", ""), true );
-
-    string_q watchStr = toml->getConfigJson("watches", "list", "");
-    if (watchStr.empty())
-        return usage("Empty list of watches. Quitting.");
-
-    CAccountWatch watch;
-    while (watch.parseJson3(watchStr)) {
-        // cleanup and report on errors
-        watch.color   = convertColor(watch.color);
-        watch.address = str_2_Addr(toLower(watch.address));
-        watch.extra_data = toLower("chifra/" + getVersionStr() + ": " + watch.address);
-        watch.nodeBal = getBalanceAt(watch.address, watch.firstBlock-1);
-        watch.api_spec.method = toml->getConfigStr("api_spec", "method", "");
-        watch.api_spec.uri = toml->getConfigStr("api_spec", "uri", "");
-        watch.api_spec.headers = toml->getConfigStr("api_spec", "headers", "");
-        if (!watch.api_spec.uri.empty()) {
-            watch.abi_spec.loadAbiByAddress(watch.address);
-            watch.abi_spec.loadAbiKnown("all");
-        }
-
-        string_q msg;
-        if (!isAddress(watch.address)) {
-            msg = "invalid address " + watch.address;
-        }
-        if (watch.name.empty()) {
-            if (!msg.empty())
-                msg += ", ";
-            msg += "no name " + watch.name;
-        }
-
-        // add to array or return error
-        if (msg.empty()) {
-            monitors.push_back(watch);
-            monitors[0].toml = toml;
-
-        } else {
-            return usage(msg);
-
-        }
-        watch = CAccountWatch();  // reset
-    }
-
-    return true;
 }
