@@ -1,20 +1,24 @@
 acctScrape argc: 3 [1:--list] [2:0x1234567890123456789012345678901234567890] 
 acctScrape --list 0x1234567890123456789012345678901234567890 
-[settings]
-name = 1234...7890
 
-[display]
-accounting = false
-logs = false
-trace = false
-single = false
-parse = false
-json = true
+  Invalid option: --list
 
-[formats]
-trans_fmt = [{BLOCKNUMBER}]	[{TRANSACTIONINDEX}]	[{ISERROR}]	[{EVENTS}]	[{TRACES}]
+  Usage:    acctScrape [-u|-m|-w|-l|-v|-h]  
+  Purpose:  Index transactions for a given Ethereum address (or series of addresses).
+             
+  Where:  
+	-u  (--useIndex)      search for transactions using the address index
+	-m  (--maxBlocks val) scan at most --maxBlocks blocks ('all' implies scan to end of chain)
+	-w  (--writeBlocks)   write binary blocks to cache (default: do not write blocks)
+	-l  (--logLevel val)  specify the log level (default 1)
 
-[[watches]]
-    list = [ { address = "0x1234567890123456789012345678901234567890", name = "1234...7890", firstBlock = 0 }
-]
+#### Hidden options (shown during testing only)
+	-s  (--noBlooms)      do not use adaptive enhanced blooms (much faster if you use them)
+	-k  (--noBlocks)      do not use binary block cache (much faster if you use them)
+	-f  (--for_addr val)  force a scrape on the given account
+#### Hidden options (shown during testing only)
 
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Powered by QBlocks
