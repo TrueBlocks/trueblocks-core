@@ -171,7 +171,7 @@ bool COptions::enterDebugger(const CBlock& block) {
 
                 } else if (curCmd == "g" || curCmd == "config") {
                     history(curCmd);
-                    editFile("./config.toml");
+                    editFile("./con fig.toml");
 
                 } else if (startsWith(curCmd, "e ") || startsWith(curCmd, "e:") || startsWith(curCmd, "ethscan")) {
                     history(curCmd);

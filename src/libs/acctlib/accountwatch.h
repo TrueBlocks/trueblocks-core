@@ -52,8 +52,8 @@ public:
     const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    CAccountWatch(const string_q& _addr, const string_q& _name, blknum_t fB, blknum_t lB, const string_q& _color)
-    : address(toLower(_addr)), name(_name), color(_color), firstBlock(fB), lastBlock(lB) {}
+    CAccountWatch(const string_q& _addr, const string_q& _name, blknum_t fB, blknum_t lB, const string_q& _color);
+    CAccountWatch(const address_t& _addr, const string_q& _name);
     string_q displayName(bool expand, bool terse, size_t w1 = 20, size_t w2 = 8) const
         { return displayName(expand, true, terse, w1, w2); }
     string_q displayName(bool expand, bool useColor, bool terse, size_t w1 = 20, size_t w2 = 8) const;
@@ -96,6 +96,25 @@ inline CAccountWatch::CAccountWatch(const CAccountWatch& ac) {
 }
 
 // EXISTING_CODE
+//--------------------------------------------------------------------------
+inline CAccountWatch::CAccountWatch(const string_q& _addr, const string_q& _name, blknum_t fB, blknum_t lB, const string_q& _color) {
+    initialize();
+    address = toLower(_addr);
+    name = _name;
+    color = _color;
+    firstBlock = fB;
+    lastBlock = lB;
+}
+
+//--------------------------------------------------------------------------
+inline CAccountWatch::CAccountWatch(const address_t& _addr, const string_q& _name) {
+    initialize();
+    address = toLower(_addr);
+    name = _name;
+    color = cBlue;
+    firstBlock = 0;
+    lastBlock = 0;
+}
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -204,6 +223,6 @@ extern CArchive& operator<<(CArchive& archive, const CAccountWatchArray& array);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 extern biguint_t getNodeBal(CBalanceHistoryArray& history, const address_t& addr, blknum_t blockNum);
-extern void loadWatchList(const CToml& toml, CAccountWatchArray& watches, const string_q& key);
+extern void loadWatchList(const CToml& toml, CAccountWatchArray& monitors, const string_q& key);
 // EXISTING_CODE
 }  // namespace qblocks

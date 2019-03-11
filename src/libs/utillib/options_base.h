@@ -79,6 +79,7 @@ namespace qblocks {
         CFilename namesFile;
         bool loadNames(void);
         bool getNamedAccount(CAccountName& acct, const string_q& addr) const;
+        string_q getNamedAccount(const string_q& addr) const;
 
         // enabling options
         bool isEnabled(uint32_t q) const;
