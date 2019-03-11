@@ -1,6 +1,4 @@
-//IT SHOULD NOT START IF IT CANNOT FIND THE FILE.
-//I REMOVED AN ADDRESS ENTRY, THE FIRST, WHICH CHANGED THE NAME OF THE FILE
-//SHOULD DISALLOW WEIRD COMMAND LINE options
+//TODO: This used to work: watch->nodeBal = getNodeBal(watch->balanceHistory, watch->address, watch->firstBlock-1);
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
  * Copyright (c) 2017 by Great Hill Corporation.
@@ -10,11 +8,11 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
+    COption("~address_list",    "one or more addresses (0x...) to export"),
     COption("-fmt:<fmt>",       "export format (one of [json|txt|csv]"),
     COption("-fi(l)ter:<addr>", "show results for this address (you may specify more than one filter)"),
     COption("-useBlooms",       "use bloom filters to decide whether or not to re-check the cache"),
     COption("-ignoreDdos",      "ignore apparent dDos transactions."),
-    COption("@for_addr:<val>",  "force a scrape on the given account"),
     COption("",                 "Export transactions for one or more Ethereum addresses.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -29,8 +27,6 @@ bool COptions::parseArguments(string_q& command) {
     CStringArray filters;
     if (!standardOptions(command))
         return false;
-
-    address_t forceAddr;
 
     Init();
     explode(arguments, command, ' ');
@@ -47,17 +43,19 @@ bool COptions::parseArguments(string_q& command) {
             arg = substitute(substitute(arg, "-l:", ""), "--filter:", "");
             filters.push_back(arg);
 
-        } else if (startsWith(arg, "-f:") || startsWith(arg, "--for_addr:")) {
-            arg = substitute(substitute(arg, "-f:", ""), "--for_addr:", "");
-            if (!isAddress(arg))
-                return usage(arg + " does not appear to be a valid address. Quitting...");
-            forceAddr = arg;
-
         } else if (arg == "-i" || arg == "--ignoreDdos") {
             ignoreDdos = true;
 
         } else if ((arg == "-u") || (arg == "--useBlooms")) {
             useBloom = true;
+
+        } else if (startsWith(arg, "0x")) {
+            if (!isAddress(arg))
+                return usage(arg + " does not appear to be a valid address. Quitting...");
+            CAccountWatch watch;
+            watch.address = toLower(arg);
+            watch.name = toLower(arg);
+            monitors.push_back(watch);
 
         } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
@@ -66,31 +64,16 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (forceAddr.empty()) {
-        if (!fileExists("./config.toml"))
-            return usage("The config.toml file was not found. Are you in the right folder? Quitting...\n");
-    }
+    if (monitors.size() == 0)
+        return usage("You must provide at least one Ethereum address. Quitting...");
 
     // show certain fields and hide others
     manageFields(defHide, false);
     manageFields(defShow, true);
 
-    CToml toml("./config.toml");
+    CToml toml(monitors[0].address + ".toml");
     manageFields(toml.getConfigStr("fields", "hide", ""), false);
     manageFields(toml.getConfigStr("fields", "show", ""), true );
-
-    if (!forceAddr.empty()) {
-//        minWatchBlock = 0;
-//        maxWatchBlock = UINT32_MAX;
-        CAccountWatch watch;
-        watch.address = forceAddr;
-        watch.name = forceAddr;
-        watch.color = cBlue; //convertColor(watch.color);
-        monitors.push_back(watch);
-    } else {
-        if (!loadWatches(toml))
-            return false;
-    }
 
     // Try to articulate the watched addresses
     for (size_t i = 0 ; i < monitors.size() ; i++) {
@@ -118,7 +101,7 @@ bool COptions::parseArguments(string_q& command) {
         string_q defFmt = "[{DATE}]\t[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{FROM}]\t[{TO}]\t[{VALUE}]\t[{ISERROR}]\t[{EVENTS}]";
         string_q format = toml.getConfigStr("formats", "trans_fmt", defFmt);
         if (format.empty())
-            return usage("Non-json export requires 'trans_fmt' string in config.toml. Quitting...");
+            return usage("For non-json export a 'trans_fmt' string is required. Check your config file. Quitting...");
         expContext().fmtMap["trans_fmt"] = cleanFmt(format, fmt);
         format = toml.getConfigStr("formats", "trace_fmt", "{TRACES}");
         expContext().fmtMap["trace_fmt"] = cleanFmt(format, fmt);
@@ -133,8 +116,7 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     registerOptions(nParams, params);
 
-    blk_minWatchBlock = 0;
-    blk_maxWatchBlock = UINT32_MAX;
+    monitors.clear();
     showProgress = getGlobalConfig("acctExport")->getConfigBool("debug", "showProgress", false);
     useBloom = false;
     ignoreDdos = true;
@@ -151,6 +133,21 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+}
+
+//--------------------------------------------------------------------------------
+string_q COptions::postProcess(const string_q& which, const string_q& str) const {
+
+    if (which == "options") {
+        return substitute(str, "address_list", "<address> [address...]");
+
+    } else if (which == "notes" && (verbose || COptions::isReadme)) {
+
+        string_q ret;
+        ret += "[{addresses}] must start with '0x' and be forty two characters long.\n";
+        return ret;
+    }
+    return str;
 }
 
 //-----------------------------------------------------------------------
