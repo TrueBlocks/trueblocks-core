@@ -29,14 +29,16 @@ if (NOT EXISTS "${QUICKBLOCKS_TOML_FILE}")
     file(COPY "${CMAKE_SOURCE_DIR}/../../../src/other/install/ethslurp.toml" DESTINATION "${QUICKBLOCKS_HOME}" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 endif()
 
-# Create names file only if it does not exist
-set(QUICKBLOCKS_NAMES_FILE "${QUICKBLOCKS_HOME}/names/names.txt")
-if (NOT EXISTS "${QUICKBLOCKS_NAMES_FILE}")
-    message(STATUS "Copying names file ${QUICKBLOCKS_NAMES_FILE}")
-    file(COPY "${CMAKE_SOURCE_DIR}/../../../src/other/install/names.txt" DESTINATION "${QUICKBLOCKS_HOME}/names" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
-endif()
+# copy the names json file which replaces the .txt file
+message(STATUS "Copying supporting names files to ${QUICKBLOCKS_HOME}/names/")
+set(NAMES_TXT "${CMAKE_SOURCE_DIR}/../../../src/other/install/names.txt")
+file(COPY ${NAMES_TXT} DESTINATION "${QUICKBLOCKS_HOME}/names/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+# set(NAMES_JSON "${CMAKE_SOURCE_DIR}/../../../src/other/install/names.json")
+# file(COPY ${NAMES_JSON} DESTINATION "${QUICKBLOCKS_HOME}/names/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+set(NAMES_LOGOS "${CMAKE_SOURCE_DIR}/../../../src/other/install/names_logos.tar.gz")
+file(COPY ${NAMES_LOGOS} DESTINATION "${QUICKBLOCKS_HOME}/names/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 
-# Create names file only if it does not exist
+# Copy the prices files
 message(STATUS "Copying price database to ${QUICKBLOCKS_HOME}/cache/prices/")
 set(QUICKBLOCKS_PRICES_FILE "${QUICKBLOCKS_HOME}/cache/prices/poloniex_USDT_ETH.bin.gz")
 if (NOT EXISTS "${QUICKBLOCKS_PRICES_FILE}")
