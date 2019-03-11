@@ -69,7 +69,7 @@ bool COptions::displayFromCache(uint64_t startBlock) {
                     if (!ret) {
                         // ... if we failed to read from some reason, try to pick it up from the node
                         getBlock(block, blockNum);
-                        block.finalized = isBlockFinal(block.timestamp, latest.timestamp, (60 * 4));
+                        block.finalized = is BlockFinal(block.timestamp, latest.timestamp, (6 0 * 4));
                         writeBlockToBinary(block, getBinaryFilename(blockNum));
                         if (!fileExists(getBinaryFilename(blockNum))) {
                             cerr << "Read of block " << blockNum << " failed. Quitting cache read\r\n";
