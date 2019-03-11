@@ -10,7 +10,7 @@ typedef enum { NONE = 0, INDEX = (1<<0), BLOOM = (1<<1), BOTH = (INDEX | BLOOM) 
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    CAccountWatchArray watches;
+    CAccountWatchArray monitors;
     string_q mode;
     blknum_t minWatchBlock;
     blknum_t maxWatchBlock;
@@ -24,8 +24,7 @@ public:
 
     bool parseArguments(string_q& command);
     void Init(void);
-    bool loadMonitors(CToml& toml);
-    bool makeNewMonitor(void);
+    bool createConfigFile(const address_t& addr);
 
     bool handle_freshen(void);
     bool handle_export (void);
