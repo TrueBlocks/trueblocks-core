@@ -21,3 +21,5 @@ add_subdirectory(miniBlocks)
 
 add_subdirectory(blockMan)
 add_subdirectory(bloomMan)
+
+#add_subdirectory(new_blockScrape)
