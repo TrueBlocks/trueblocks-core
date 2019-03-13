@@ -18,26 +18,29 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        if (options.monitors[0].txCache == NULL)
-            options.monitors[0].txCache = new CArchive(WRITING_ARCHIVE);
+        options.showBanner();
+        if (options.useIndex)
+            options.scrapeCnt = 10000000;  // TODO(tjayrush): Not right
 
-        if (options.monitors[0].txCache &&
-            options.monitors[0].txCache->Lock(getTransCachePath(options.monitors[0].address), modeWriteAppend, LOCK_WAIT)) {
+        if (options.useIndex)
+            forEveryFileInFolder(indexFolder_prod, visitIndexFiles, &options);
+        else
+            forEveryBloomFile(visitBloomFilters, &options, options.startScrape, options.scrapeCnt);
 
-            if (options.useIndex)
-                forEveryFileInFolder(indexFolder_prod, visitIndexFiles, &options);
-            else
-                forEveryBloomFile(visitBloomFilters, &options, options.startScrape, options.scrapeCnt);
-
-            options.monitors[0].txCache->Release();
-
-        } else {
-            return options.usage("Cannot open transaction cache '" + getTransCachePath(options.monitors[0].address) + "'. Quitting...");
-        }
     }
-
     options.finalReport();
-
     acctlib_cleanup();
+
     return 0;
+}
+
+void COptions::showBanner(void) const {
+    if (isTestMode())
+        return;
+
+    cerr << bBlack << Now().Format(FMT_JSON) << cOff;
+    cerr << ": Monitoring " << cYellow << getTransCachePath(primary.address) << cOff;
+    cerr << " (start: " << cTeal << startScrape << cOff;
+    cerr << " end: " + cTeal << (startScrape + scrapeCnt) << cOff;
+    cerr << (useIndex ? "" : (" n: " + cTeal + uint_2_Str(scrapeCnt))) << cOff << ")           \n";
 }

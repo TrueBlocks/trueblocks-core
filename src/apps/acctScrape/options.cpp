@@ -27,8 +27,6 @@ bool COptions::parseArguments(string_q& command) {
 
     bool isAll = false;
     blknum_t maxBlocks = 10000;
-    blknum_t lastInCache = NOPOS;
-    blknum_t lastVisited = NOPOS;
 
     Init();
     explode(arguments, command, ' ');
@@ -91,19 +89,23 @@ bool COptions::parseArguments(string_q& command) {
     // show certain fields and hide others
     manageFields(defHide, false);
     manageFields(defShow, true);
-    if (fileExists("./" + monitors[0].address + ".toml")) {
-        CToml *toml = new CToml("./" + monitors[0].address + ".toml");
-        monitors[0].toml = toml;  // watch descructor will clean this up
-        manageFields(toml->getConfigStr("fields", "hide", ""), false);
-        manageFields(toml->getConfigStr("fields", "show", ""), true );
-        api_spec.method = toml->getConfigStr("api_spec", "method", "");
-        api_spec.uri = toml->getConfigStr("api_spec", "uri", "");
-        api_spec.headers = toml->getConfigStr("api_spec", "headers", "");
-        if (!api_spec.uri.empty()) {
-            for (size_t i = 0 ; i < monitors.size() ; i++) {
-                monitors[i].abi_spec.loadAbiByAddress(monitors[i].address);
-                monitors[i].abi_spec.loadAbiKnown("all");
+    primary = monitors[0];
+    string_q configFile = "./" + primary.address + ".toml";
+    if (fileExists(configFile)) {
+        CToml *toml = new CToml(configFile);
+        if (toml) {
+            manageFields(toml->getConfigStr("fields", "hide", ""), false);
+            manageFields(toml->getConfigStr("fields", "show", ""), true );
+            api_spec.method = toml->getConfigStr("api_spec", "method", "");
+            api_spec.uri = toml->getConfigStr("api_spec", "uri", "");
+            api_spec.headers = toml->getConfigStr("api_spec", "headers", "");
+            if (!api_spec.uri.empty()) {
+                for (size_t i = 0 ; i < monitors.size() ; i++) {
+                    monitors[i].abi_spec.loadAbiByAddress(monitors[i].address);
+                    monitors[i].abi_spec.loadAbiKnown("all");
+                }
             }
+            delete toml;
         }
     }
 
@@ -136,9 +138,15 @@ bool COptions::parseArguments(string_q& command) {
             return usage("The cache folder '" + transCachePath + "' not created. Quiting...");
     }
 
-    string_q lb = getTransCacheLast(monitors[0].address);
-    if (fileExists(getTransCachePath(monitors[0].address)+".lck") || fileExists(lb + ".lck"))
-        return usage("The cache file '" + (getTransCachePath(monitors[0].address)+".lck") + "' is locked. Quitting...");
+    for (auto monitor : monitors) {
+        string_q fn = getTransCachePath(monitor.address);
+        if (fileExists(fn + ".lck"))
+            return usage("The cache file '" + fn + "' is locked. Quitting...");
+
+        fn = getTransCacheLast(monitor.address);
+        if (fileExists(fn + ".lck"))
+            return usage("The last block file '" + fn + "' is locked. Quitting...");
+    }
 
     string_q bloomPath = blockCachePath("/blooms/");
     if (!useIndex && !folderExists(bloomPath))
@@ -152,23 +160,10 @@ bool COptions::parseArguments(string_q& command) {
         setDataSource("local");
     }
 
-    lastInCache = getLatestBlockFromCache();
-    lastVisited = str_2_Uint(asciiFileToString(getTransCacheLast(monitors[0].address)));
+    blknum_t lastInCache = getLatestBlockFromCache();
+    blknum_t lastVisited = str_2_Uint(asciiFileToString(getTransCacheLast(primary.address)));
     startScrape = min(lastVisited, lastInCache);
     scrapeCnt   = min(lastInCache - startScrape, maxBlocks);
-
-    if (!isTestMode()) {
-        cerr << bBlack << Now().Format(FMT_JSON) << cOff;
-        cerr << ": Monitoring ";
-        cerr << cYellow << getTransCachePath(monitors[0].address) << cOff;
-        cerr << " (start: " << cTeal << startScrape << cOff;
-        cerr << " end: " + cTeal << uint_2_Str(lastInCache) << cOff;
-        if (!useIndex)
-            cerr << " n: " + cTeal << uint_2_Str(scrapeCnt) << cOff;
-        cerr << ")                    \n";
-    }
-    if (useIndex)
-        scrapeCnt = 10000000;  // TODO(tjayrush): Not right
 
     return (lastVisited <= lastInCache);
 }
@@ -250,8 +245,8 @@ string_q COptions::finalReport(double startTime, bool header) const {
         os << "tracesSeen\n";
     } else {
         os << substitute(Now().Format(FMT_JSON), " UTC", "") << "\t";
-        os << monitors[0].name.substr(0,15) << "\t";
-        os << monitors[0].address << "\t";
+        os << primary.name.substr(0,15) << "\t";
+        os << primary.address << "\t";
         os << monitors.size() << "\t";
         os << double_2_Str(max(0.0, qbNow() - startTime), 4) << "\t";
         os << startScrape << "\t";

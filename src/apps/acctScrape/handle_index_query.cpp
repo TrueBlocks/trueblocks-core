@@ -46,19 +46,22 @@ bool visitIndexFiles(const string_q& path, void *data) {
         // Figure out the range of the record contained in this file (Note: index filenames references one more
         // than the last block contained in the file, so we subtract one).
         blknum_t lastBlockInFile;
-        blknum_t firstBlockInFile = bnFromPath(path, lastBlockInFile); if (lastBlockInFile > 0) lastBlockInFile--;
+        blknum_t firstBlockInFile = bnFromPath(path, lastBlockInFile);
+        if (lastBlockInFile > 0)
+            lastBlockInFile--;
 
         options->addrStats.nSeen += nRecords;
         if (options->startScrape > lastBlockInFile) {
-            // If the file is too early for this scrape, skip it.
+            // If the file is too early for this scrape, record some stats, then silently proceed if not told to quit
             options->addrStats.nSkipped += nRecords;
-            // We pick up the number of already found records to keep the stats meaningful (note that this is an
-            // assignment not an accumulation)
-            //options->addrStats.nHit = 0;
-            //for (auto monitor : options->monitors)
-            //    options->addrStats.nHit += fileSize(monitor.txCache->getFilename()) / (sizeof(uint64_t) * 2);
-            options->addrStats.nHit = fileSize(options->monitors[0].txCache->getFilename()) / (sizeof(uint64_t) * 2);
-            // Silently proceed if not told to quit
+            // Pick up the number of already found records (do this only once)
+            if (options->addrStats.nHit == 0) {
+                for (auto monitor : options->monitors) {
+                    string_q fn = getTransCachePath(monitor.address);
+                    if (fileExists(fn))
+                        options->addrStats.nHit += fileSize(fn) / (sizeof(uint64_t) * 2);
+                }
+            }
             return !shouldQuit();
         }
 
@@ -73,6 +76,9 @@ bool visitIndexFiles(const string_q& path, void *data) {
             return !shouldQuit();
         }
 
+        if (contains(path, "007341667-007345394"))
+            printf("");
+
         // ...and see if we can get a pointer to its data...
         CIndexRecord *records = (CIndexRecord *)(blockFile.getData());  // NOLINT
         if (!records) {
@@ -81,9 +87,15 @@ bool visitIndexFiles(const string_q& path, void *data) {
             return !shouldQuit();
         }
 
+//        CIndexRecord *end = records + (sizeof(CIndexRecord) * nRecords);
+
         // ...and now we can search through it
         for (size_t ac = 0 ; ac < options->monitors.size() && !shouldQuit() ; ac++) {
-            const CAccountWatch *acct = &options->monitors[ac];
+            CAccountWatch *acct = &options->monitors[ac];
+            if (!acct->openCacheFile1()) {
+                cerr << "Could not open transaction cache file " << getTransCachePath(acct->address) << ". Quitting...";
+                return false;
+            }
 
             CIndexRecord search;
             strncpy(search.addr, acct->address.c_str(), 42);
@@ -102,31 +114,27 @@ bool visitIndexFiles(const string_q& path, void *data) {
                     }
                 }
 
-                // Figure out where we are in the file and how much of the file remains (pointer arithmatic)
-                uint64_t pRecords = (uint64_t)records;
-                uint64_t pFound   = (uint64_t)found;
-                uint64_t remains  = (pFound - pRecords) / sizeof(CIndexRecord);
-
                 // We know where to start and we know how much remains in the file, so now we spin through the
                 // found records writing them to an array for later writing to the hard drive. We want to use
                 // an array (with plenty of space) because we want to write the entire memory in one operation.
-                CAcctCacheItemArray array;
-                array.reserve(300000);
+                CAcctCacheItemArray items;
+                items.reserve(300000);
 
-                // Scan until we hit non-matching record...
+                // Figure out where we are in the file and how much of the file remains (pointer arithmatic)
                 done = false;
-                for (uint64_t i = 0 ; i < remains && !done && !shouldQuit() ; i++) {
+                uint64_t recordID = ((uint64_t)found - (uint64_t)records) / sizeof(CIndexRecord);
+                for (uint64_t i = recordID ; i < nRecords && !done && !shouldQuit() ; i++) {
 
-                    char ad[43]; bzero(ad, sizeof(ad)); strncpy(ad, found[i].addr, 42);
-                    char bl[10]; bzero(bl, sizeof(bl)); strncpy(bl, found[i].block, 9);
-                    char tx[ 6]; bzero(tx, sizeof(tx)); strncpy(tx, found[i].txid,  5);
-                    if (!strncmp(found[i].addr, acct->address.c_str(), 42)) {
+                    char ad[43]; bzero(ad, sizeof(ad)); strncpy(ad, records[i].addr, 42);
+                    char bl[10]; bzero(bl, sizeof(bl)); strncpy(bl, records[i].block, 9);
+                    char tx[ 6]; bzero(tx, sizeof(tx)); strncpy(tx, records[i].txid,  5);
+                    if (!strncmp(ad, acct->address.c_str(), 42)) {
 
                         options->addrStats.nHit++;
 
                         // We found a hit. Save it into an array for later writing to the hard drive
                         CAcctCacheItem item(str_2_Uint(bl), str_2_Uint(tx));
-                        array.push_back(item);
+                        items.push_back(item);
 
                         // TODO(tjayrush)
                         // stats issue
@@ -160,17 +168,15 @@ bool visitIndexFiles(const string_q& path, void *data) {
                     }
 
                     // Are we done looking?
-                    if (strncmp(ad, acct->address.c_str(), 42) > 0)
+                    if (strncmp(ad, acct->address.c_str(), 42) != 0)
                         done = true;
                 }
 
                 // If we found any records, we want to write them to the monitor's cache and record the starting point
                 // for the next scrape of this address
-                if (array.size()) {
+                if (items.size()) {
                     lockSection(true);
-                    for (const CAcctCacheItem& item : array)
-                        *acct->txCache << item.blockNum << item.transIndex;
-                    acct->txCache->flush();
+                    acct->writeAnArray(items);
                     acct->writeLastBlock(lastBlockInFile + 1); // where to start our next search
                     lockSection(false);
                 }

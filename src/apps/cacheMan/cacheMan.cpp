@@ -207,4 +207,4 @@ int sortByBlock(const void *v1, const void *v2) {
 const char *STR_DEFAULT_DISPLAY = "blockNum: [{r:10:BLOCKNUM}] transID: [{r:7:TRANSINDEX}]\\n";
 
 //-------------------------------------------------------------------------
-const char *STR_DATA_DISPLAY = "[{BLOCKNUM}]\t[{TRANSINDEX}]\\n";
+const char *STR_DATA_DISPLAY = "[{z:9:BLOCKNUM}]\t[{z:5:TRANSINDEX}]\\n";

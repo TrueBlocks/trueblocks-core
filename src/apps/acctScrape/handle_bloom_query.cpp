@@ -51,8 +51,9 @@ bool visitBloomFilters(const string_q& path, void *data) {
             // we can thereafter ignore any accounts that don't hit one of the bloom filters.
             CArchive bloomCache(READING_ARCHIVE);
             if (!bloomCache.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
-                // If we can't read the bloom, we want to skip over it next time, so write last block
-                options->monitors[0].writeLastBlock(bn);
+                // If we can't read the bloom, we want to skip over this block the next time, so write last block
+                for (auto monitor : options->monitors)
+                    monitor.writeLastBlock(bn);
                 cerr << "Could not open file " << path << ". Quitting search." << endl;
                 return false; // end the search
             }
@@ -67,7 +68,6 @@ bool visitBloomFilters(const string_q& path, void *data) {
 
             // Visit every account...
             for (size_t ac = 0 ; ac < options->monitors.size() ; ac++) {
-
                 // Visit each bloom until either there is a hit or we've checked all blooms
                 options->monitors.at(ac).inBlock = false;
                 for (size_t bl = 0 ; bl < blooms.size() && !options->monitors[ac].inBlock ; bl++) {
@@ -89,7 +89,8 @@ bool visitBloomFilters(const string_q& path, void *data) {
         }
 
         // May be redunant, but it's okay since we're writing a single value
-        options->monitors[0].writeLastBlock(bn);
+        for (auto monitor : options->monitors)
+            monitor.writeLastBlock(bn);
     }
 
     return !shouldQuit(); // continue if we should not quit
@@ -109,14 +110,16 @@ bool processBlock(blknum_t bn, COptions *options) {
             bool ret = processTrans(block, &block.transactions[tr], options);
             if (!ret) {
                 // May be redunant, but it's okay since we're writing a single value
-                options->monitors[0].writeLastBlock(bn);
+                for (auto monitor : options->monitors)
+                    monitor.writeLastBlock(bn);
                 return false;
             }
         }
 
     } else {
         // TODO(tjayrush): This is a bug. We should be writing the miner's record
-        options->monitors[0].writeLastBlock(bn);
+        for (auto monitor : options->monitors)
+            monitor.writeLastBlock(bn);
     }
 
     return !shouldQuit();
@@ -250,9 +253,8 @@ bool COptions::foundAHit(const CAccountWatch *acct, const CBlock& block, const C
     lockSection(true);
     if (!isTestMode()) {
         // We found something...write it to the cache...
-        *monitors[0].txCache << block.blockNumber << trans->transactionIndex;
-        monitors[0].txCache->flush();
-        monitors[0].writeLastBlock(block.blockNumber);
+        ((CAccountWatch*)acct)->writeARecord(block.blockNumber, trans->transactionIndex);
+        ((CAccountWatch*)acct)->writeLastBlock(block.blockNumber);
         if (writeBlocks) {
             // pBlock->finalized is implicit here don't remove it above
             string_q fn = getBinaryFilename(block.blockNumber);
