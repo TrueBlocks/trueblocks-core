@@ -17,6 +17,7 @@
 #include <algorithm>
 #include "accountwatch.h"
 #include "acctcacheitem.h"
+
 namespace qblocks {
 
 //---------------------------------------------------------------------------
@@ -469,12 +470,42 @@ void loadWatchList(const CToml& toml, CAccountWatchArray& monitors, const string
 }
 
 //-------------------------------------------------------------------------
-void CAccountWatch::writeLastBlock(blknum_t bn) const {
+bool CAccountWatch::openCacheFile1(void) {
+    if (tx_cache != NULL)
+        return true;
+    tx_cache = new CArchive(WRITING_ARCHIVE);
+    if (tx_cache == NULL)
+        return false;
+    return tx_cache->Lock(getTransCachePath(address), modeWriteAppend, LOCK_WAIT);
+}
+
+//-------------------------------------------------------------------------
+void CAccountWatch::writeLastBlock(blknum_t bn) {
     if (!isTestMode())
         stringToAsciiFile(getTransCacheLast(address), uint_2_Str(bn) + "\n");
     else
         if (address != "./merged.bin")
             cerr << "Would have written " << getTransCacheLast(address) << ": " << bn << endl;
+}
+
+//-------------------------------------------------------------------------
+void CAccountWatch::writeARecord(blknum_t bn, blknum_t tx_id) {
+    if (tx_cache == NULL)
+        return;
+    *tx_cache << bn << tx_id;
+    tx_cache->flush();
+}
+
+//-------------------------------------------------------------------------
+void CAccountWatch::writeAnArray(const CAcctCacheItemArray& items) {
+    if (tx_cache == NULL)
+        return;
+    for (auto item : items) {
+        if (item.blockNum == 7344158)
+            cout << item << endl;
+        *tx_cache << item.blockNum << item.transIndex;
+    }
+    tx_cache->flush();
 }
 // EXISTING_CODE
 }  // namespace qblocks

@@ -19,6 +19,7 @@
 #include "transaction.h"
 #include "incomestatement.h"
 #include "balancehistory.h"
+#include "acctcacheitem.h"
 
 namespace qblocks {
 
@@ -57,10 +58,12 @@ public:
     string_q displayName(bool expand, bool useColor, bool terse, size_t w1 = 20, size_t w2 = 8) const;
     bloom_t bloom;
     bool inBlock;
-    CToml *toml;
-    CArchive *txCache;
+    CArchive *tx_cache;
     string_q extra_data;
-    void writeLastBlock(blknum_t bn) const;
+    void writeLastBlock(blknum_t bn);
+    void writeAnArray(const CAcctCacheItemArray& array);
+    void writeARecord(blknum_t bn, blknum_t tx_id);
+    bool openCacheFile1(void);
     // EXISTING_CODE
     bool operator==(const CAccountWatch& item) const;
     bool operator!=(const CAccountWatch& item) const { return !operator==(item); }
@@ -87,8 +90,7 @@ inline CAccountWatch::CAccountWatch(void) {
 //--------------------------------------------------------------------------
 inline CAccountWatch::CAccountWatch(const CAccountWatch& ac) {
     // EXISTING_CODE
-    toml = NULL;
-    txCache = NULL;
+    tx_cache = NULL;
     // EXISTING_CODE
     duplicate(ac);
 }
@@ -125,14 +127,11 @@ inline CAccountWatch::~CAccountWatch(void) {
 //--------------------------------------------------------------------------
 inline void CAccountWatch::clear(void) {
     // EXISTING_CODE
-    if (toml)
-        delete toml;
-    toml = NULL;
-    if (txCache) {
-        txCache->Release();
-        delete txCache;
+    if (tx_cache) {
+        tx_cache->Release();
+        delete tx_cache;
     }
-    txCache = NULL;
+    tx_cache = NULL;
     // EXISTING_CODE
 }
 
@@ -155,8 +154,7 @@ inline void CAccountWatch::initialize(void) {
     lastBlock = UINT_MAX;
     bloom = 0;
     inBlock = false;
-    toml = NULL;
-    txCache = NULL;
+    tx_cache = NULL;
     extra_data = "";
     // EXISTING_CODE
 }
@@ -181,8 +179,7 @@ inline void CAccountWatch::duplicate(const CAccountWatch& ac) {
     lastBlock = ac.lastBlock;
     bloom = ac.bloom;
     inBlock = ac.inBlock;
-    toml = NULL; // we do not copy the toml
-    txCache = NULL; // we do not copy the txCache
+    tx_cache = NULL; // we do not copy the tx_cache
     extra_data = ac.extra_data;
     // EXISTING_CODE
 }

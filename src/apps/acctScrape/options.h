@@ -40,6 +40,7 @@ public:
     CStats             traceStats;
 
     CAccountWatchArray monitors;
+    CAccountWatch      primary;
 
     bool               blockCounted;
 
@@ -50,6 +51,7 @@ public:
     void Init(void);
     bool isExcluded(const address_t& addr) { return contains(exclusions, addr); }
     friend ostream& operator<<(ostream& os, const COptions& item);
+    void showBanner(void) const;
     string_q finalReport(double timing, bool header) const;
     bool finalReport(void) const;
     bool foundAHit(const CAccountWatch *acct, const CBlock& block, const CTransaction *trans);

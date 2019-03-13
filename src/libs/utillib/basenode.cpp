@@ -680,7 +680,7 @@ namespace qblocks {
         }
 
         size_t maxWidth = 0xdeadbeef, lineWidth = 0xdeadbeef;
-        bool rightJust = false, lineJust = false;
+        bool rightJust = false, lineJust = false, zeroJust = false;
         if (contains(fieldName, "w:")) {
             ASSERT(extract(fieldName, 0, 2) % "w:");  // must be first modifier in the string
             replace(fieldName, "w:", "");   // get rid of the 'w:'
@@ -692,6 +692,12 @@ namespace qblocks {
             maxWidth = str_2_Uint(fieldName);   // grab the width
             nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
             rightJust = true;
+        } else if (contains(fieldName, "z:")) {
+            ASSERT(extract(fieldName, 0, 2) % "z:");  // must be first modifier in the string
+            replace(fieldName, "z:", "");   // get rid of the 'w:'
+            maxWidth = str_2_Uint(fieldName);   // grab the width
+            nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
+            zeroJust = true;
         } else if (contains(fieldName, "l:")) {
             ASSERT(extract(fieldName, 0, 2) % "l:");  // must be first modifier in the string
             replace(fieldName, "l:", "");   // get rid of the 'w:'
@@ -714,6 +720,8 @@ namespace qblocks {
             fieldValue = "";
         if (rightJust) {
             fieldValue = truncPadR(fieldValue, maxWidth);  // pad or truncate
+        } if (zeroJust) {
+            fieldValue = padLeft(fieldValue, maxWidth, '0'); // pad
         } else {
             fieldValue = truncPad(fieldValue, maxWidth);  // pad or truncate
         }
