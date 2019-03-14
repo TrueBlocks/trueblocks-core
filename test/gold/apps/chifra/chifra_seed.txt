@@ -1,6 +1,26 @@
 chifra argc: 3 [1:seed] [2:--verbose] 
 chifra seed --verbose 
 
+cd "$BLOCK_CACHE/addr_index/zips/" ; ipfs get QmQVJqsTrqU4afuAFMhqBAnx45yo21dffxXQjNofVJy65a -o  "$BLOCK_CACHE/addr_index/zips/007354467-007357780.txt.gz" ; 
+Seeding $BLOCK_CACHE/addr_index/sorted_by_addr/007354467-007357780.txt
+cd "$BLOCK_CACHE/addr_index/sorted_by_addr/" ; cp -p "$BLOCK_CACHE/addr_index/zips/007354467-007357780.txt.gz" "$BLOCK_CACHE/addr_index/sorted_by_addr/007354467-007357780.txt.gz" ; gunzip "007354467-007357780.txt.gz" ; cd - >/dev/null
+
+cd "$BLOCK_CACHE/addr_index/zips/" ; ipfs get QmPJYdMRj1sTmWs5LipkyhqtohmGA6xvYSoiMGu7P9dyjX -o  "$BLOCK_CACHE/addr_index/zips/007351750-007354467.txt.gz" ; 
+Seeding $BLOCK_CACHE/addr_index/sorted_by_addr/007351750-007354467.txt
+cd "$BLOCK_CACHE/addr_index/sorted_by_addr/" ; cp -p "$BLOCK_CACHE/addr_index/zips/007351750-007354467.txt.gz" "$BLOCK_CACHE/addr_index/sorted_by_addr/007351750-007354467.txt.gz" ; gunzip "007351750-007354467.txt.gz" ; cd - >/dev/null
+
+cd "$BLOCK_CACHE/addr_index/zips/" ; ipfs get QmV5wthDA83iRyJgd7TrTLaZEntQcpm8hij5Yeor9eeQqm -o  "$BLOCK_CACHE/addr_index/zips/007348380-007351750.txt.gz" ; 
+Seeding $BLOCK_CACHE/addr_index/sorted_by_addr/007348380-007351750.txt
+cd "$BLOCK_CACHE/addr_index/sorted_by_addr/" ; cp -p "$BLOCK_CACHE/addr_index/zips/007348380-007351750.txt.gz" "$BLOCK_CACHE/addr_index/sorted_by_addr/007348380-007351750.txt.gz" ; gunzip "007348380-007351750.txt.gz" ; cd - >/dev/null
+
+cd "$BLOCK_CACHE/addr_index/zips/" ; ipfs get QmUE5n7yTNDPSBEZn5xd3riyYUai6GuU9ndEbwZFKNi8Am -o  "$BLOCK_CACHE/addr_index/zips/007345394-007348380.txt.gz" ; 
+Seeding $BLOCK_CACHE/addr_index/sorted_by_addr/007345394-007348380.txt
+cd "$BLOCK_CACHE/addr_index/sorted_by_addr/" ; cp -p "$BLOCK_CACHE/addr_index/zips/007345394-007348380.txt.gz" "$BLOCK_CACHE/addr_index/sorted_by_addr/007345394-007348380.txt.gz" ; gunzip "007345394-007348380.txt.gz" ; cd - >/dev/null
+
+cd "$BLOCK_CACHE/addr_index/zips/" ; ipfs get QmRJMZpz6hoHVXg76XR4QD1juY7ByhjyWPcB7pJ1HP7fS4 -o  "$BLOCK_CACHE/addr_index/zips/007341667-007345394.txt.gz" ; 
+Seeding $BLOCK_CACHE/addr_index/sorted_by_addr/007341667-007345394.txt
+cd "$BLOCK_CACHE/addr_index/sorted_by_addr/" ; cp -p "$BLOCK_CACHE/addr_index/zips/007341667-007345394.txt.gz" "$BLOCK_CACHE/addr_index/sorted_by_addr/007341667-007345394.txt.gz" ; gunzip "007341667-007345394.txt.gz" ; cd - >/dev/null
+
 cd "$BLOCK_CACHE/addr_index/zips/" ; ipfs get QmfGq5x3668WWRbA83Arnwf7DR19ei3aM6kdNNp9eGWBmR -o  "$BLOCK_CACHE/addr_index/zips/007338440-007341667.txt.gz" ; 
 Seeding $BLOCK_CACHE/addr_index/sorted_by_addr/007338440-007341667.txt
 cd "$BLOCK_CACHE/addr_index/sorted_by_addr/" ; cp -p "$BLOCK_CACHE/addr_index/zips/007338440-007341667.txt.gz" "$BLOCK_CACHE/addr_index/sorted_by_addr/007338440-007341667.txt.gz" ; gunzip "007338440-007341667.txt.gz" ; cd - >/dev/null

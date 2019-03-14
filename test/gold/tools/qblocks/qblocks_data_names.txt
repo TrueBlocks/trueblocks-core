@@ -4,5 +4,5 @@ calling: ethName sing  --qblocks
 
 ethName argc: 3 [1:sing] [2:--qblocks] 
 ethName sing --qblocks 
-{ "addr": "0x8eb24319393716668d768dcec29356ae9cffe285", "symbol": "AGI", "name": "SingularityNET", "source": "Etherscan", "description": "Decentralized Marketplace for AI.", "logo": "singularitynet_28.png", "visible": true }
-{ "addr": "0xaec2e87e0a235266d9c5adc9deb4b2e29b54d009", "symbol": "SNGLS", "name": "SingularDTV", "source": "Etherscan", "description": "A Blockchain Entertainment Studio, Smart Contract Rights Management Platform and Video On-Demand Portal", "logo": "sngls2.PNG", "visible": true }
+{ "addr": "0x8eb24319393716668d768dcec29356ae9cffe285", "symbol": "AGI", "name": "SingularityNET", "source": "Etherscan.io", "description": "Decentralized Marketplace for AI.", "logo": "singularitynet_28.png", "visible": true }
+{ "addr": "0xaec2e87e0a235266d9c5adc9deb4b2e29b54d009", "symbol": "SNGLS", "name": "SingularDTV", "source": "Etherscan.io", "description": "A Blockchain Entertainment Studio, Smart Contract Rights Management Platform and Video On-Demand Portal", "logo": "sngls2.PNG", "visible": true }
