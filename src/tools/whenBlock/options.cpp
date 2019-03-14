@@ -47,7 +47,7 @@ bool COptions::parseArguments(string_q& command) {
             isList = true;
 
         } else if (arg == "-d" || arg == "--data") {
-            alone = true;
+            asData = true;
             colorsOff();
 
         } else if (startsWith(arg, '-')) {  // do not collapse
@@ -138,7 +138,7 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
 
     requests.clear();
-    alone = false;
+    asData = false;
     optionOff(OPT_DENOM);
 }
 
@@ -167,6 +167,8 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+extern void unloadCache(void);
+    unloadCache();
 }
 
 //--------------------------------------------------------------------------------
@@ -242,7 +244,7 @@ string_q COptions::listSpecials(bool terse) const {
         ((COptionsBase *)this)->loadSpecials();  // NOLINT
 
     ostringstream os;
-    if (!alone) {
+    if (!asData) {
         if (terse) {
             os << "Use the following names to represent `special` blocks:\n  ";
         } else {
@@ -267,7 +269,7 @@ string_q COptions::listSpecials(bool terse) const {
         }
 
 #define N_PER_LINE 4
-        if (alone && !terse) {
+        if (asData && !terse) {
             if (!contains(bn, "tbd"))
                 os << bn << " ";
         } else {
