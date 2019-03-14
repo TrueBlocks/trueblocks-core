@@ -8,19 +8,24 @@ Please contact us at [sales@greathill.com](mailto:sales@greathill.com) for more 
 
 #### Usage
 
-`Usage:`    acctExport [-f|-l|-u|-i|-v|-h]  
+`Usage:`    acctExport [-f|-l|-u|-i|-v|-h] &lt;address&gt; [address...]  
 `Purpose:`  Export transactions for one or more Ethereum addresses.
              
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
+|  | address_list | one or more addresses (0x...) to export |
 | -f | --fmt val | export format (one of [json&#124;txt&#124;csv] |
 | -l | --filter val | show results for this address (you may specify more than one filter) |
 | -u | --useBlooms | use bloom filters to decide whether or not to re-check the cache |
 | -i | --ignoreDdos | ignore apparent dDos transactions. |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
+
+`Notes:`
+
+- `addresses` must start with '0x' and be forty two characters long.
 
 #### Other Options
 
