@@ -16,7 +16,7 @@
 
 double rate1 = 1.0;
 double rate2 = 1.0;
-extern bool visitMini(CMiniBlock& block, const CMiniTrans *trans, void *data);
+extern bool visitM ini(CM iniBlock& block, const CM iniTrans *trans, void *data);
 extern bool visitBlock(CBlock& block, void *data);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
@@ -33,7 +33,7 @@ int main(int argc, const char *argv[]) {
 
         // Load the cache first so it doesn't effect timing
         verbose = true;
-        forEveryMiniBlockInMemory(NULL, NULL, 0, 1);
+        forEveryM iniBlockInMemory(NULL, NULL, 0, 1);
         cOff = cTeal;
         cerr << "\n" << cOff;
         verbose = false;
@@ -63,8 +63,8 @@ int main(int argc, const char *argv[]) {
 //        { etherlib_ini t("local",  quickQuitHandler); CSpeedTest rep("local",  options.startBlock,N_BLOCKS * 10);   forEveryBlockFromClient    (visitBlock, &rep); rep.finalReport(msgs[cnt++]); }
 //        { etherlib_ini t("binary", quickQuitHandler); CSpeedTest rep("binary", options.startBlock,N_BLOCKS * 10);   forEveryBlockOnDisc        (visitBlock, &rep); rep.finalReport(msgs[cnt++]); }
 //        { etherlib_ini t("binary", quickQuitHandler); CSpeedTest rep("binary", options.startBlock,N_BLOCKS * 10);   forEveryNonEmptyBlockOnDisc(visitBlock, &rep); rep.finalReport(msgs[cnt++]); }
-//        { etherlib_ini t("binary", quickQuitHandler); CSpeedTest rep("binary", options.startBlock,N_BLOCKS * 10);   forEveryMiniBlockInMemory  (visitMini,  &rep); rep.finalReport(msgs[cnt++]); }
-//        { etherlib_ini t("binary", quickQuitHandler); CSpeedTest rep("binary", options.startBlock,N_BLOCKS * 100);  forEveryMiniBlockInMemory  (visitMini,  &rep); rep.finalReport( ); }
+//        { etherlib_ini t("binary", quickQuitHandler); CSpeedTest rep("binary", options.startBlock,N_BLOCKS * 10);   forEveryM iniBlockInMemory  (visitM ini,  &rep); rep.finalReport(msgs[cnt++]); }
+//        { etherlib_ini t("binary", quickQuitHandler); CSpeedTest rep("binary", options.startBlock,N_BLOCKS * 100);  forEveryM iniBlockInMemory  (visitM ini,  &rep); rep.finalReport( ); }
     }
 
     etherlib_cleanup();
@@ -87,16 +87,16 @@ bool visitBlock(CBlock& block, void *data) {
 }
 
 //-----------------------------------------------------------------------
-bool visitMini(CMiniBlock& block, const CMiniTrans *trans, void *data) {
+bool visitM ini(CM iniBlock& block, const CM iniTrans *trans, void *data) {
     CSpeedTest *reporter = reinterpret_cast<CSpeedTest*>(data);
 
     ASSERT(trans);
     reporter->nBlocksVisited++;
     for (uint32_t tr = (uint32_t)block.firstTrans; tr < block.firstTrans+block.nTrans; tr++) {
-        const CMiniTrans *mini = &trans[tr];
+        const CM iniTrans *m ini = &trans[tr];
         reporter->nTransVisited++;
-        reporter->totalWei += str_2_Wei(mini->value);
-        reporter->totalGasUsed += biguint_t(mini->gasUsed);
+        reporter->totalWei += str_2_Wei(m ini->value);
+        reporter->totalGasUsed += biguint_t(m ini->gasUsed);
     }
     reporter->interumReport(block.blockNumber, block.nTrans);
 

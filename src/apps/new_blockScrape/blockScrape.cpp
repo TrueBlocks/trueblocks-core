@@ -55,39 +55,6 @@ int main(int argc, const char *argv[]) {
     output.Release();
 
 #if 0
-    string_q minis = "./miniBlocks.bin";
-    CMemMapFile mb(minis);
-    CMiniBlock *mbs = (CMiniBlock *)mb.getData();
-    size_t nRecords = fileSize(minis) / sizeof(CMiniBlock);
-    for (size_t i = 0 ; i < nRecords ; i++) {
-        CMiniBlock *ptr = &mbs[i];
-        cout << ptr->blockNumber << "\t" << ptr->timestamp << "\t" << ptr->nTrans << endl;
-    }
-//    if (!mb.Lock(minis, modeReadOnly, LOCK_NOWAIT))
-//        return 0;
-//
-//    string_q fulls = "./fullBlocks.bin";
-//    CArchive fb(READING_ARCHIVE);
-//    if (!fb.Lock(fulls, modeReadOnly, LOCK_NOWAIT))
-//        return 0;
-#endif
-
-#if 0
-    string_q path = "./000000001-000316073.txt";
-    string_q contents;
-
-    asciiFileToString(path, contents);
-    size_t nRecords = fileSize(path) / 59;
-
-    CStringArray lines;
-    lines.reserve(nRecords+100);
-    explode(lines, contents, '\n');
-    sort(lines.begin(), lines.end(), sortByBlockNum);
-    for (auto line : lines) {
-        cout << line << endl;
-    }
-#else
-#if 0
     COptions options;
     if (!options.prepareArguments(argc, argv))
         return 0;
@@ -101,7 +68,6 @@ int main(int argc, const char *argv[]) {
             cerr << "\tThe tool ended with an error.";
         cerr << bGreen << "...done\n" << cOff;
     }
-#endif
 #endif
 
     etherlib_cleanup();
