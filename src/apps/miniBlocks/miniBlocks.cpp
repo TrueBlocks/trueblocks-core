@@ -50,10 +50,10 @@ int main(int argc, const char *argv[]) {
 
                             if (!done && !(cnt++ % options.skip)) {
                                 if (isTestMode())
-                                    cerr << block.blockNumber << "\t" << block.firstTrans << "\n";
+                                    cout << block.blockNumber << "\t" << block.timestamp << "\t" << block.nTrans << "\n";
                                 else
-                                    cerr << (cnt-1) << " : " << block.Format() << "\n";
-                                cerr.flush();
+                                    cout << (cnt-1) << " : " << block.Format() << "\n";
+                                cout.flush();
                             }
                         }
                         miniBlkCache.Release();

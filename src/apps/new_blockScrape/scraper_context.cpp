@@ -30,6 +30,7 @@ bool CScraperContext::scrape(CBlock& block) {
     if (!block.transactions.size()) {
         if (block.blockNumber < 50000) { // otherwise it appears to be hung
             cerr << "skipping empty block " << block.blockNumber << "\r";
+            cout << report(options->endBlock) << endl;
             cerr.flush();
         }
         // TODO: we do not account for miners of zero transaction blocks, we can
@@ -39,10 +40,13 @@ bool CScraperContext::scrape(CBlock& block) {
 
     // We can't use forEveryTrans... because it uses copies. We need to visit the actual transaction so we can write it
     for (uint32_t i = 0 ; i < block.transactions.size() ; i++) {
-        if (!visitTransaction(block.transactions.at(i), this))
+        if (!visitTransaction(block.transactions.at(i), this)) {
+            cout << report(options->endBlock) << endl;
             return false;
+        }
     }
 
+    cout << report(options->endBlock) << endl;
     return true;
 }
 

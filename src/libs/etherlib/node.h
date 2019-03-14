@@ -13,6 +13,7 @@
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
 #include "node_curl.h"
+#include "blockindexitem.h"
 
 namespace qblocks {
 
@@ -124,6 +125,7 @@ namespace qblocks {
     extern string_q blockCachePath(const string_q& _part);
 
     #define fullBlockIndex     (blockCachePath("fullBlocks.bin"))
+    #define fullBlockIndexTest (substitute(blockCachePath("fullBlocks.bin"),"/scraper/","/scraper_testing/"))
     #define blockFolder        (blockCachePath("blocks/"))
     #define bloomFolder        (blockCachePath("blooms/"))
 

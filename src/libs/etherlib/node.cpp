@@ -350,9 +350,11 @@ static const char *STR_ERROR_NODEREQUIRED =
         return retN;
     }
 
+#define OLD_FULL_BLOCKS
     //--------------------------------------------------------------------------
     uint64_t getLatestBlockFromCache(void) {
 
+#ifdef OLD_FULL_BLOCKS
         CArchive fullBlockCache(READING_ARCHIVE);
         if (!fullBlockCache.Lock(fullBlockIndex, modeReadOnly, LOCK_NOWAIT)) {
             if (!isTestMode())
@@ -366,6 +368,21 @@ static const char *STR_ERROR_NODEREQUIRED =
         fullBlockCache.Read(ret);
         fullBlockCache.Release();
         return ret;
+#else
+        CArchive fullBlockCache(READING_ARCHIVE);
+        if (!fullBlockCache.Lock(fullBlockIndexTest, modeReadOnly, LOCK_NOWAIT)) {
+            if (!isTestMode())
+                cerr << "getLatestBlockFromCache failed: " << fullBlockCache.LockFailure() << "\n";
+            return 0;
+        }
+        ASSERT(fullBlockCache.isOpen());
+
+        uint32_t ret;
+        fullBlockCache.Seek( (-1 * (long)sizeof(CBlockIndexItem)), SEEK_END);  // NOLINT
+        fullBlockCache >> ret;
+        fullBlockCache.Release();
+        return ret;
+#endif
     }
 
     //--------------------------------------------------------------------------
@@ -762,6 +779,7 @@ static const char *STR_ERROR_NODEREQUIRED =
         if (!func)
             return false;
 
+#ifdef OLD_FULL_BLOCKS
         CArchive fullBlockCache(READING_ARCHIVE);
         if (!fullBlockCache.Lock(fullBlockIndex, modeReadOnly, LOCK_WAIT)) {
             cerr << "forEveryNonEmptyBlockOnDisc failed: " << fullBlockCache.LockFailure() << "\n";
@@ -793,6 +811,39 @@ static const char *STR_ERROR_NODEREQUIRED =
             delete [] items;
         }
         return true;
+#else
+        CArchive fullBlockCache(READING_ARCHIVE);
+        if (!fullBlockCache.Lock(fullBlockIndexTest, modeReadOnly, LOCK_WAIT)) {
+            cerr << "forEveryNonEmptyBlockOnDisc failed: " << fullBlockCache.LockFailure() << "\n";
+            return false;
+        }
+        ASSERT(fullBlockCache.isOpen());
+
+        uint64_t nItems = fileSize(fullBlockIndexTest) / sizeof(CBlockIndexItem);
+        CBlockIndexItem *items = new CBlockIndexItem[nItems];
+        if (items) {
+            // read the entire full block index
+            fullBlockCache.Read(items, sizeof(CBlockIndexItem), nItems);
+            fullBlockCache.Release();  // release it since we don't need it any longer
+
+            for (uint64_t i = 0 ; i < nItems ; i = i + skip) {
+                // TODO(tjayrush): This should be a binary search not a scan. This is why it appears to wait
+                uint64_t bn = items[i].bn;
+                if (items[i].tx && inRange(bn, start, start + count - 1)) {
+                    bool ret = (*func)(bn, data);
+                    if (!ret) {
+                        // Cleanup and return if user tells us to
+                        delete [] items;
+                        return false;
+                    }
+                } else {
+                    // do nothing
+                }
+            }
+            delete [] items;
+        }
+        return true;
+#endif
     }
 
     //-------------------------------------------------------------------------
@@ -800,6 +851,7 @@ static const char *STR_ERROR_NODEREQUIRED =
         if (!func)
             return false;
 
+#ifdef OLD_FULL_BLOCKS
         CArchive fullBlockCache(READING_ARCHIVE);
         if (!fullBlockCache.Lock(fullBlockIndex, modeReadOnly, LOCK_WAIT)) {
             cerr << "forEveryEmptyBlockOnDisc failed: " << fullBlockCache.LockFailure() << "\n";
@@ -850,6 +902,41 @@ static const char *STR_ERROR_NODEREQUIRED =
         if (items)
             delete [] items;
         return true;
+#else
+        CArchive fullBlockCache(READING_ARCHIVE);
+        if (!fullBlockCache.Lock(fullBlockIndexTest, modeReadOnly, LOCK_WAIT)) {
+            cerr << "forEveryEmptyBlockOnDisc failed: " << fullBlockCache.LockFailure() << "\n";
+            return false;
+        }
+        ASSERT(fullBlockCache.isOpen());
+
+        uint64_t nItems = fileSize(fullBlockIndexTest) / sizeof(CBlockIndexItem) + 1;
+        CBlockIndexItem *items = new CBlockIndexItem[nItems+2];
+        if (!items) {
+            cerr << "forEveryEmptyBlockOnDisc failed: could not allocate memory\n";
+            return false;
+        }
+
+        fullBlockCache.Read(&items[0], sizeof(CBlockIndexItem), nItems);
+        fullBlockCache.Release();
+
+        for (uint64_t i = 0 ; i < nItems ; i = i + skip) {
+            // TODO(tjayrush): This should be a binary search not a scan. This is why it appears to wait
+            uint64_t bn = items[i].bn;
+            if (!items[i].tx && inRange(bn, start, start + count - 1)) {
+                bool ret = (*func)(bn, data);
+                if (!ret) {
+                    // Cleanup and return if user tells us to
+                    delete [] items;
+                    return false;
+                }
+            } else {
+                // do nothing
+            }
+        }
+
+        return true;
+#endif
     }
 
     //-------------------------------------------------------------------------

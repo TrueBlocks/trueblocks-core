@@ -9,6 +9,32 @@
 //--------------------------------------------------------------------------
 bool handle_freshen(COptions& options) {
 
+#if 0
+    class CAddressRecord {
+    public:
+        address_t address;
+        size_t    offset;
+        size_t    nRecs;
+        CAddressRecord(void) : address(""), offset(NOPOS), nRecs(NOPOS) { }
+    };
+    typedef vector<CAddressRecord> CAddressRecordArray;
+
+    class CAppearRecord {
+    public:
+        blknum_t bn;
+        blknum_t tx_id;
+        CAppearRecord(void) : bn(NOPOS), tx_id(NOPOS) { }
+    };
+    typedef vector<CAppearRecord> CAppearRecordArray;
+
+    class CIndexFile {
+    public:
+        CAddressRecordArray addrs;
+        CAppearRecordArray  appears;
+    };
+#endif
+
+#if 0
     // Open the file at the start of the scrape and keep it open until the end of the scrape.
     // Normally, we'd rather open and close the file with each write, but we're protected with
     // lockSection here and we flush on every write. Plus the open file gets closed when
@@ -24,16 +50,18 @@ bool handle_freshen(COptions& options) {
 //        cerr << "\t";
 //        cout << "block-date\trun-date\tduration\tblockNum\tnTxs\tnTrcs\ttrcDepth\tnAddrs\tstatus\tblooms\n";
 //    }
+#endif
 
     // 'startBlock' is the most recent block written to the fullBlockIndex. 'lastBlock' is the
     // front of the chain. Block numbers only get written to the fullBlockIndex if they are
     // final. This means we revisit blocks until they are final (unless we shouldQuit)
     for (blknum_t num = options.startBlock ; num < options.endBlock && !shouldQuit() ; num++) {
 
+ #if 0
         CBlock block;
         block.blockNumber = num;
         CScraperContext sCtx(&options, &block);
-
+        sCtx.scrape(block);
         // We need to be aware of re-orgs, so we only write to the fullBlock index if we're never
         // going to revisit this block again (we can't be 100% certain, but we choose a value).
         // In this way, each time we start a scan we start from the block after the most recent
@@ -119,13 +147,14 @@ bool handle_freshen(COptions& options) {
         // we write blooms in either case
         ASSERT(( block.transactions.size() && ( sCtx.blockOkay && sCtx.bloomOkay)) ||
                (!block.transactions.size() && (!sCtx.blockOkay && sCtx.bloomOkay)));
+#endif
 
-        // report on this block
-        cout << sCtx.report(options.endBlock) << endl;
+//        // report on this block
+//        cout << sCtx.report(options.endBlock) << endl;
     }
 
-    if (fullBlockCache.isOpen())
-        fullBlockCache.Release();
+//    if (fullBlockCache.isOpen())
+//        fullBlockCache.Release();
 
     return true;
 }
