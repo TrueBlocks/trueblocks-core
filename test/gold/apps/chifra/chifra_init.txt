@@ -1,3 +1,5 @@
 chifra argc: 3 [1:init] [2:0x1234567812345678123456781234567812345678] 
 chifra init 0x1234567812345678123456781234567812345678 
-The file ./0x1234567812345678123456781234567812345678.acct.bin already exists. Quitting...
+cd $BLOCK_CACHE/monitors/staging/ ; acctScrape  0x1234567812345678123456781234567812345678 --useIndex ; 
+Would have moved /Volumes/Samsung_T7/scraper/monitors/staging/0x1234567812345678123456781234567812345678.acct.bin to /Volumes/Samsung_T7/scraper/monitors/0x1234567812345678123456781234567812345678.acct.bin
+Would have moved /Volumes/Samsung_T7/scraper/monitors/staging/0x1234567812345678123456781234567812345678.last.txt to /Volumes/Samsung_T7/scraper/monitors/0x1234567812345678123456781234567812345678.last.txt
