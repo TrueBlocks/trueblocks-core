@@ -17,7 +17,6 @@ static const COption params[] = {
     COption("-sta(r)t:<num>", "optionally start at block 'num'"),
     COption("-sto(p):<num>",  "optionally stop at block 'num'"),
     COption("@s(k)ip:<num>",  "export once every 5,000 lines"),
-//    COption("@fix",           "fix the database by removing duplicates (if any)"),
     COption("",               "Show stats or check the block cache.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -68,33 +67,20 @@ bool COptions::parseArguments(string_q& command) {
                 return usage(arg + " does not appear to be a valid number. Quitting...\n");
             skip = str_2_Uint(arg);
 
-        } else if (arg == "--fix") {
-
-            return usage("The --fix option is disabled.\n");
-#if 0
-            if (fileExists(fullBlockIndex + ".lck"))
-                return usage("fullBlockIndex is locked. Quitting...");
-
-            if (fileExists(fullBlockIndex)) {
-                cerr << "Are you sure you want to fix the fullBlock index? (y=yes)\n> ";
-                int ch = getchar();
-                if (ch == 'y' || ch == 'Y') {
-                    handle_remove_dups(*this);
-                } else {
-                    cerr << "Not removed. Quitting.\n";
-                }
-            }
-            return false;
-#endif
-
         } else {
             if (!builtInCmd(arg))
                 return usage("Invalid option: " + arg);
         }
     }
 
+#define OLD_FULL_BLOCKS
+#ifdef OLD_FULL_BLOCKS
     if (!fileExists(fullBlockIndex))
         return usage("Could not open file '" + fullBlockIndex + "'. Quitting...");
+#else
+    if (!fileExists(fullBlockIndexTest))
+        return usage("Could not open file '" + fullBlockIndexTest + "'. Quitting...");
+#endif
 
     if (stopBlock <= startBlock)
         return usage("--startBlock must preceed --stopBlock. Quitting...");
