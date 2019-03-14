@@ -25,9 +25,6 @@ while True:
     os.system('blockScrape --consolidate --addrIndex')
     print("")
 
-    os.system('miniBlocks --freshen')
-    print("")
-
     os.system('getBlock --latest')
     print("")
 

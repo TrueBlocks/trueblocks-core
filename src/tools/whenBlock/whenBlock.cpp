@@ -51,17 +51,11 @@ int main(int argc, const char *argv[]) {
                 queryBlock(block, value, false, false);
 
             } else if (mode == "date") {
-                if (!fileExists(miniBlockCache)) {
-                    cerr << "Looking up blocks by date is not supported without a miniBlock ";
-                    cerr << "database, which is an advanced feature.\n";
-
-                } else {
-                    time_q date = ts_2_Date((timestamp_t)str_2_Uint(value));
-                    bool found = lookupDate(&options, block, date);
-                    if (!found) {
-                        unloadCache();
-                        return 0;
-                    }
+                time_q date = ts_2_Date((timestamp_t)str_2_Uint(value));
+                bool found = lookupDate(&options, block, date);
+                if (!found) {
+                    unloadCache();
+                    return 0;
                 }
             }
 
@@ -92,23 +86,15 @@ int main(int argc, const char *argv[]) {
 // This global data is fine since this program is not threaded.
 static blknum_t    g_lower = ULONG_MAX;
 static blknum_t    g_higher = 0;
-static CMiniBlock *g_miniBlocks = NULL;
+static CBlockIndexItem *g_dataPtr = NULL;
 static uint64_t    g_nBlocks = 0;
 //---------------------------------------------------------------
 int findFunc(const void *v1, const void *v2) {
-    const CMiniBlock *m1 = (const CMiniBlock *)v1;
-    const CMiniBlock *m2 = (const CMiniBlock *)v2;
-    g_lower  = (m1->timestamp > m2->timestamp ? m2->blockNumber : g_lower);
-    g_higher = (m1->timestamp < m2->timestamp ? m2->blockNumber : g_higher);
-//cout << " b1: " << m1->blockNumber;
-//cout << " (" << m1->timestamp << " - " << ts_2_Date(m1->timestamp);
-//cout << ") b2: " << m2->blockNumber;
-//cout << " (" << m2->timestamp << " - " << ts_2_Date(m2->timestamp);
-//cout << ") d: " << (m1->timestamp - m2->timestamp);
-//cout << " l: " << g_lower;
-//cout << " h: " << g_higher << "\n";
-//cout.flush();
-    return static_cast<int>(m1->timestamp - m2->timestamp);
+    const CBlockIndexItem *m1 = (const CBlockIndexItem *)v1;
+    const CBlockIndexItem *m2 = (const CBlockIndexItem *)v2;
+    g_lower  = (m1->ts > m2->ts ? m2->bn : g_lower);
+    g_higher = (m1->ts < m2->ts ? m2->bn : g_higher);
+    return static_cast<int>(m1->ts - m2->ts);
 }
 
 //---------------------------------------------------------------
@@ -132,12 +118,13 @@ bool lookCloser(CBlock& block, void *data) {
 
 //---------------------------------------------------------------
 bool lookupDate(const COptions *options, CBlock& block, const time_q& date) {
-    if (!g_miniBlocks) {
-        g_nBlocks = fileSize(miniBlockCache) / sizeof(CMiniBlock);
-        g_miniBlocks = new CMiniBlock[g_nBlocks];
-        if (!g_miniBlocks)
+    if (!g_dataPtr) {
+#define miniBlockCache blockCachePath("fullBlocks_new.bin")
+        g_nBlocks = fileSize(miniBlockCache) / sizeof(CBlockIndexItem);
+        g_dataPtr = new CBlockIndexItem[g_nBlocks];
+        if (!g_dataPtr)
             return options->usage("Could not allocate memory for the blocks (size needed: " + uint_2_Str(g_nBlocks) + ").\n");
-        bzero(g_miniBlocks, sizeof(CMiniBlock)*(g_nBlocks));
+        bzero(g_dataPtr, sizeof(CBlockIndexItem)*(g_nBlocks));
         if (verbose)
             cerr << "Allocated room for " << g_nBlocks << " miniBlocks.\n";
 
@@ -145,25 +132,23 @@ bool lookupDate(const COptions *options, CBlock& block, const time_q& date) {
         FILE *fpBlocks = fopen(miniBlockCache.c_str(), modeReadOnly);
         if (!fpBlocks)
             return options->usage("Could not open the mini-block database: " + miniBlockCache + ".\n");
-
         // Read the entire mini-block database into memory in one chunk
-        size_t nRead = fread(g_miniBlocks, sizeof(CMiniBlock), g_nBlocks, fpBlocks);
+        size_t nRead = fread(g_dataPtr, sizeof(CBlockIndexItem), g_nBlocks, fpBlocks);
         if (nRead != g_nBlocks)
             return options->usage("Error encountered reading mini-blocks database.\n Quitting...");
         if (verbose)
             cerr << "Read " << nRead << " miniBlocks into memory.\n";
     }
 
-    CMiniBlock mini;
-    mini.timestamp = date_2_Ts(date);
-    CMiniBlock *found = reinterpret_cast<CMiniBlock*>(bsearch(&mini, g_miniBlocks, g_nBlocks, sizeof(CMiniBlock), findFunc));
+    CBlockIndexItem mini;
+    mini.ts = (uint32_t)date_2_Ts(date);
+    CBlockIndexItem *found = reinterpret_cast<CBlockIndexItem*>(bsearch(&mini, g_dataPtr, g_nBlocks, sizeof(CBlockIndexItem), findFunc));
     if (found) {
-        queryBlock(block, uint_2_Str(found->blockNumber), false, false);
+        queryBlock(block, uint_2_Str(found->bn), false, false);
         return true;
     }
-
-//cout << mini.timestamp << " is somewhere between " << g_lower << " and " << g_higher << "\n";
-    CBlockFinder finder(mini.timestamp);
+    //cout << mini.timestamp << " is somewhere between " << g_lower << " and " << g_higher << "\n";
+    CBlockFinder finder(mini.ts);
     forEveryBlockOnDisc(lookCloser, &finder, g_lower, g_higher-g_lower);
     queryBlock(block, uint_2_Str(finder.found), false, false);
     return true;
@@ -171,8 +156,8 @@ bool lookupDate(const COptions *options, CBlock& block, const time_q& date) {
 
 //---------------------------------------------------------------
 void unloadCache(void) {
-    if (g_miniBlocks) {
-        delete [] g_miniBlocks;
-        g_miniBlocks = NULL;
+    if (g_dataPtr) {
+        delete [] g_dataPtr;
+        g_dataPtr = NULL;
     }
 }
