@@ -59,5 +59,5 @@ inline void forEveryBlockFromClient    (BLOCKVISITFUNC     func, CBlockVisitor *
 inline void forEveryBlockOnDisc        (BLOCKVISITFUNC     func, CBlockVisitor *bv) { forEveryBlockOnDisc        (func, bv, bv->firstBlock(), bv->size()); }
 inline void forEveryNonEmptyBlockOnDisc(BLOCKVISITFUNC     func, CBlockVisitor *bv) { forEveryNonEmptyBlockOnDisc(func, bv, bv->firstBlock(), bv->size()); }
 //inline void forEveryFullBlockInMemory  (BLOCKVISITFUNC     func, CBlockVisitor *bv) { forEveryFullBlockInMemory  (func, bv, bv->firstBlock(), bv->size()); }
-inline void forEveryMiniBlockInMemory  (MINIBLOCKVISITFUNC func, CBlockVisitor *bv) { forEveryMiniBlockInMemory  (func, bv, bv->firstBlock(), bv->size()); }
+inline void forEveryM iniBlockInMemory  (M INIBLOCKVISITFUNC func, CBlockVisitor *bv) { forEveryM iniBlockInMemory  (func, bv, bv->firstBlock(), bv->size()); }
 extern void endMsg(const string_q& msg="Hit enter to continue...");

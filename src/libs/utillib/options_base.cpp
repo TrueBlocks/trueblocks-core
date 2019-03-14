@@ -1040,8 +1040,8 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     "    { name = \"whenBlock\",      value = \"when\"        },\n"
     "    { name = \"whereBlock\",     value = \"where\"       },\n"
     "]";
-    //   Tools not added included for searching: makeClass, acctExport, acctScrape,
-    //   blockMan, bloomMan, cacheMan, blockScrape, chifra, miniBlocks
+    //   Tools not added included for searching: makeClass, acctExport,
+    //   acctScrape, blockMan, bloomMan, cacheMan, blockScrape, chifra
 
     const char *STR_DEFAULT_WHENBLOCKS =
     "[\n"

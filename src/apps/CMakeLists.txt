@@ -17,7 +17,6 @@ add_subdirectory(cacheMan)
 add_subdirectory(blockScrape)
 add_subdirectory(acctScrape)
 add_subdirectory(chifra)
-add_subdirectory(miniBlocks)
 
 add_subdirectory(blockMan)
 add_subdirectory(bloomMan)

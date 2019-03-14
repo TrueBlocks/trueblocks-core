@@ -101,7 +101,6 @@ static const char *STR_ERROR_NODEREQUIRED =
         }
 
         getCurlContext()->releaseCurl();
-        clearInMemoryCache();
         if (theQuitHandler)
             (*theQuitHandler)(-1);
         else

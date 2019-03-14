@@ -134,11 +134,6 @@ namespace qblocks {
     #define indexFolder_stage  (indexFolder + "unsorted_by_block/")
     #define indexFolder_zips   (indexFolder + "zips/")
 
-    #define miniBlockCache     (blockCachePath("miniBlocks.bin"))
-#ifdef MINI_TRANS
-    #define miniTransCache     (blockCachePath("miniTrans.bin"))
-#endif
-
     //-------------------------------------------------------------------------
     extern biguint_t weiPerEther(void);
 
