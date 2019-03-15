@@ -1,6 +1,0 @@
-version="0.5.5-alpha"
-
-['a']
-[a.'b']
-[a.'b'.c]
-answer = 42 

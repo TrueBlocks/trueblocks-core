@@ -20,6 +20,7 @@ public:
     uint32_t bn;
     uint32_t ts;
     uint16_t tx;
+    CBlockIndexItem(void) { bn = ts = 0; tx = 0; }
 };
 typedef vector<CBlockIndexItem> CBlockIndex;
 
