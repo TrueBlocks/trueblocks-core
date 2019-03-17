@@ -47,8 +47,12 @@ namespace qblocks {
     typedef bool (*FILEVISITOR)(const string_q& str, void *data);
 
     //------------------------------------------------------------------
+    extern size_t listFilesInFolder(CStringArray& files, const string_q& mask, bool recurse);
     extern bool forEveryFileInFolder(const string_q& mask, FILEVISITOR func, void *data);
     extern string_q getHomeFolder(void);
+
+    //-------------------------------------------------------------------------
+    #define ANY_FILETYPE -1
 
     //-------------------------------------------------------------------------
     #define quote(a) (string_q("\"") + a + "\"")

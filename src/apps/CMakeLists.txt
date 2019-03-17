@@ -20,5 +20,3 @@ add_subdirectory(chifra)
 
 add_subdirectory(blockMan)
 add_subdirectory(bloomMan)
-
-#add_subdirectory(new_blockScrape)

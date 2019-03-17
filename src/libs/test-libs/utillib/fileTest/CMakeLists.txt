@@ -46,3 +46,4 @@ endfunction(run_test)
 #   PARTICULAR MEANING. I JUST COLLECTED THEM
 #
 run_test("fileTest_test00" "")
+run_test("fileTest_test01" "recurse")
