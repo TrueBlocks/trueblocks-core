@@ -2,17 +2,17 @@
 cmake_minimum_required (VERSION 2.6)
 
 # application project
-project (blockScrape)
+project (lastBlockTest)
 
 # The sources to be used
 file(GLOB SOURCE_FILES "*.cpp")
 
 # Output
-set(EXECUTABLE_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/../bin")
+set(EXECUTABLE_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/../bin/test")
 
 # Define the executable to be generated
-set(TOOL_NAME "blockScrape")
-set(PROJ_NAME "apps")
+set(TOOL_NAME "lastBlockTest")
+set(PROJ_NAME "libs/etherlib")
 add_executable(${TOOL_NAME} ${SOURCE_FILES})
 
 # Add the project static libs at linking
@@ -37,10 +37,13 @@ endfunction(run_special_test)
 
 # Function to run an individual test case
 function(run_test testName)
-    run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+     run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
 endfunction(run_test)
 
 # Enter one line for each individual test
-
-# Installation steps, this tool is renamed at installation
-install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)
+#
+#   NOTE: OTHER THAN EMPTY.TOML, THESE FILES HAVE NO
+#   PARTICULAR MEANING. I JUST COLLECTED THEM
+#
+run_test("lastBlock_test00" "")
+run_test("lastBlock_test01" "recurse")

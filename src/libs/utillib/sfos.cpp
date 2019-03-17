@@ -22,7 +22,6 @@
 
 namespace qblocks {
 
-    #define ANY_FILETYPE -1
     #define remove unlink
 
     //------------------------------------------------------------------
@@ -208,23 +207,6 @@ namespace qblocks {
         }
 
         return (nFiles > 0);
-    }
-
-    //------------------------------------------------------------------
-    void listFilesInFolder(CStringArray& items, const string_q& folder) {
-        size_t nItems = 0;
-        doGlob(nItems, NULL, folder, ANY_FILETYPE);
-        if (!nItems)
-            return;
-
-        string_q *ptr = new string_q[nItems];
-        if (!ptr)
-            return;
-
-        doGlob(nItems, ptr, folder, ANY_FILETYPE);
-        for (size_t i = 0 ; i < nItems ; i++)
-            items.push_back(ptr[i]);
-        delete [] ptr;
     }
 
     //------------------------------------------------------------------
