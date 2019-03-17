@@ -11,25 +11,21 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+#include "etherlib.h"
 
-namespace qblocks {
+//-----------------------------------------------------------------------------
+class COptions : public COptionsBase {
+public:
+    bool option1;
+    bool option2;
 
-    //-------------------------------------------------------------------------------
-    extern uint64_t fileSize(const string_q& file);
+    COptions(void);
+    ~COptions(void);
 
-    extern int copyFile(const string_q& from, const string_q& to);
-    extern int moveFile(const string_q& from, const string_q& to);
+    bool parseArguments(string_q& command);
+    void Init(void);
+};
 
-    extern bool folderExists(const string_q& path);
-    extern bool fileExists(const string_q& file);
-
-    extern bool establishFolder(const string_q& path, string_q& created);
-    inline bool establishFolder(const string_q& path) { string_q unused; return establishFolder(path, unused); }
-
-    extern string_q getCWD(const string_q& filename = "");
-    extern string_q doCommand(const string_q& cmd);
-
-    extern string_q makeValidName(const string_q& inOut);
-
-    #define kMaxPathSize _POSIX_PATH_MAX
-}  // namespace qblocks
+//-----------------------------------------------------------------------------
+extern bool visitNonEmptyBlock(CBlock& node, void *data);
+extern bool visitEmptyBlock(CBlock& node, void *data);

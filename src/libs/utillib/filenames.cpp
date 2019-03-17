@@ -41,6 +41,37 @@ namespace qblocks {
         return forAllFiles(mask, func, data);
     }
 
+    //----------------------------------------------------------------------------------
+    namespace filename_local {
+        class CFileListState {
+        public:
+            string_q top;
+            CStringArray& list;
+            bool recurse;
+            CFileListState(const string_q& t, CStringArray& l, bool r) : top(t), list(l), recurse(r) { }
+        };
+        bool visitFile(const string_q& path, void *data) {
+            CFileListState *state = (CFileListState *)data;
+            if (endsWith(path, '/')) {
+                if (path == state->top || state->recurse) {
+                    return forEveryFileInFolder(path + "*", visitFile, data);
+                } else {
+                    state->list.push_back(path);
+                }
+                return true;
+            }
+            state->list.push_back(path);
+            return true;
+        }
+    }; // namespace filename_local
+
+    //------------------------------------------------------------------
+    size_t listFilesInFolder(CStringArray& items, const string_q& folder, bool recurse) {
+        filename_local::CFileListState state(folder, items, recurse);
+        forEveryFileInFolder(folder, filename_local::visitFile, &state);
+        return items.size();
+    }
+
     //--------------------------------------------------------------------------------
     string_q getHomeFolder(void) {
         struct passwd pd;
