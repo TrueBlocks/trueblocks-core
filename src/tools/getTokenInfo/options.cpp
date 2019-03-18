@@ -174,7 +174,7 @@ void COptions::Init(void) {
     tokenInfo = "";
     blocks.Init();
     CHistoryOptions::Init();
-    newestBlock = oldestBlock = getLatestBlockFromClient();
+    newestBlock = oldestBlock = getLastBlock_client();
 }
 
 //---------------------------------------------------------------------------------------------------

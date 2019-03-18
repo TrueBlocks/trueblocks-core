@@ -125,7 +125,7 @@ void COptions::Init(void) {
     changes = false;
     blocks.Init();
     CHistoryOptions::Init();
-    newestBlock = oldestBlock = getLatestBlockFromClient();
+    newestBlock = oldestBlock = getLastBlock_client();
 }
 
 //---------------------------------------------------------------------------------------------------

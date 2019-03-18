@@ -24,9 +24,8 @@ int main(int argc, const char *argv[]) {
     cerr << "Starting monitor...\r";
     cerr.flush();
 
-    blknum_t clientHeight;
-    uint64_t cacheHeight;
-    getLatestBlocks(cacheHeight, clientHeight);
+    blknum_t staging, finalized, client;
+    getLastBlocks(staging, finalized, client);
 
     // Parse command line, allowing for command files
     COptions visitor;

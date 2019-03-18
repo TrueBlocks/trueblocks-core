@@ -9,10 +9,10 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_seed(void) {
 
-    establishFolder(indexFolder);
-    establishFolder(indexFolder_prod);
-    establishFolder(indexFolder_stage);
-    establishFolder(indexFolder_zips);
+    establishFolder(indexFolder_v2);
+    establishFolder(indexFolder_sorted_v2);
+    establishFolder(indexFolder_staging_v2);
+    establishFolder(indexFolder_zips_v2);
 
     string_q contents;
     string_q source = configPath("chifra/ipfs_get.sh");
@@ -37,20 +37,20 @@ bool COptions::handle_seed(void) {
             filename = parts[4];
         }
 
-        string_q zipFile = indexFolder_zips + filename;
-        string_q textFile = substitute(indexFolder_prod + filename, ".gz", "");
+        string_q zipFile = indexFolder_zips_v2 + filename;
+        string_q textFile = substitute(indexFolder_sorted_v2 + filename, ".gz", "");
 
         if (isTestMode()) cout << endl;
         if (!fileExists(zipFile) || isTestMode()) {
             ostringstream os;
 
             // go to the zips folder
-            os << "cd \"" << indexFolder_zips << "\" ; ";
+            os << "cd \"" << indexFolder_zips_v2 << "\" ; ";
 
             // get the zip file from the IPFS cache
             os << ipfs_cmd.str() << " \"" << zipFile << "\" ; ";
             if (isTestMode()) {
-                cout << substitute(os.str(), blockCachePath(""), "$BLOCK_CACHE/") << endl;
+                cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
             } else {
                 if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
                 usleep(500000); // so Ctrl+C works
@@ -58,22 +58,22 @@ bool COptions::handle_seed(void) {
 
         } else {
             if (verbose)
-                cout << "Zip file " << cTeal << zipFile << cOff << " is up to date." << endl;
+                cout << "File " << cTeal << zipFile << cOff << " " << greenCheck << endl;
         }
 
         if (!fileExists(textFile) || isTestMode()) {
             ostringstream os;
 
             // go to the production folder
-            os << "cd \"" << indexFolder_prod << "\" ; ";
+            os << "cd \"" << indexFolder_sorted_v2 << "\" ; ";
 
             // copy the new zip locally and unzip it
-            os << "cp -p \"" << zipFile << "\" \"" << indexFolder_prod << filename << "\" ; ";
+            os << "cp -p \"" << zipFile << "\" \"" << indexFolder_sorted_v2 << filename << "\" ; ";
             os << "gunzip \"" << filename << "\" ; cd - >/dev/null";
 
             if (isTestMode()) {
-                cerr << "Seeding " << cTeal << substitute(textFile, blockCachePath(""), "$BLOCK_CACHE/") << cOff << endl;
-                cout << substitute(os.str(), blockCachePath(""), "$BLOCK_CACHE/") << endl;
+                cerr << "Seeding " << cTeal << substitute(textFile, getCachePath(""), "$BLOCK_CACHE/") << cOff << endl;
+                cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
             } else {
                 cerr << "Seeding " << cTeal << textFile << cOff << endl;
                 if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
@@ -81,7 +81,7 @@ bool COptions::handle_seed(void) {
             }
         } else {
             if (verbose)
-                cout << "Index file " << cTeal << textFile << cOff << " exists." << endl;
+                cout << "File " << cTeal << textFile << cOff << " " << greenCheck << endl;
         }
     }
     cerr << cGreen << "Index cache has been seeded." << cOff << endl;

@@ -72,6 +72,22 @@ namespace qblocks {
         return items.size();
     }
 
+    //--------------------------------------------------------------
+    string_q getFirstFileInFolder(const string_q& folder, bool recurse) {
+        CStringArray files;
+        listFilesInFolder(files, folder, recurse);
+        sort(files.begin(), files.end());
+        return (files.size() ? files[0] : "");
+    }
+
+    //--------------------------------------------------------------
+    string_q getLastFileInFolder(const string_q& folder, bool recurse) {
+        CStringArray files;
+        listFilesInFolder(files, folder, recurse);
+        sort(files.begin(), files.end());
+        return (files.size() ? files[files.size()-1] : "");
+    }
+
     //--------------------------------------------------------------------------------
     string_q getHomeFolder(void) {
         struct passwd pd;

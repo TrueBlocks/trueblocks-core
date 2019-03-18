@@ -31,7 +31,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-    blknum_t latestBlock = getLatestBlockFromClient();
+    blknum_t latestBlock = getLastBlock_client();
     Init();
     explode(arguments, command, ' ');
     bool hasExplicitBlocks = false;

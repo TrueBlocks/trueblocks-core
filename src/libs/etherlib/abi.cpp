@@ -295,7 +295,7 @@ bool CAbi::loadAbiByAddress(address_t addrIn) {
     if (isZeroAddr(addrIn))
         return false;
     string_q addr = toLower(addrIn);
-    string_q fileName = blockCachePath("abis/" + addr + ".json");
+    string_q fileName = getCachePath("abis/" + addr + ".json");
     return loadAbiFromFile(fileName, false);
 }
 
@@ -350,7 +350,7 @@ bool CAbi::loadAbiAndCache(const address_t& addr, bool raw, bool silent, bool de
         return false;
 
     string_q results;
-    string_q fileName = blockCachePath("abis/" + addr + ".json");
+    string_q fileName = getCachePath("abis/" + addr + ".json");
 
     string_q localFile("./" + addr + ".json");
     if (fileExists(localFile) && localFile != fileName) {
@@ -358,7 +358,7 @@ bool CAbi::loadAbiAndCache(const address_t& addr, bool raw, bool silent, bool de
         copyFile(localFile, fileName);
     }
 
-    string_q dispName = substitute(fileName, blockCachePath(""), "$CACHE/");
+    string_q dispName = substitute(fileName, getCachePath(""), "$BLOCK_CACHE/");
     if (fileExists(fileName) && !raw) {
 
         if (verbose) {

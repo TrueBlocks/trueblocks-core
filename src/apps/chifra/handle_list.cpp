@@ -18,7 +18,7 @@ bool COptions::handle_list(void) {
         os << "cd " << monitorsPath << " ; ";
         os << "cacheMan -d " << addr << ".acct.bin ; ";
         if (isTestMode())
-            cout << substitute(os.str(), blockCachePath(""), "$BLOCK_CACHE/") << endl;
+            cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
         else
             if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
     }

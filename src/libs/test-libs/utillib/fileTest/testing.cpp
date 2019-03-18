@@ -20,17 +20,29 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    size_t recurse = (argc == 2 && string_q(argv[1]) == "recurse");
+    size_t recurse = (argc == 2 && contains(string_q(argv[1]), "recurse"));
+    size_t first   = (argc == 2 && contains(string_q(argv[1]), "first"));
+    size_t last    = (argc == 2 && contains(string_q(argv[1]), "last"));
 
-    string_q tests[] = { "Non-recursive", "Recursive" };
-    bool vals[] = { false, true };
+    if (last) {
+        string_q lastFile = getLastFileInFolder("../", recurse);
+        cout << "Last file in folder: " << lastFile << endl;
 
-    cout << tests[recurse] << " from ../" << endl;
-    CStringArray files;
-    size_t found = listFilesInFolder(files, "../", vals[recurse]);
-    cout << "Found " << found << " (" << files.size() << ") files" << endl;
-    for (auto file : files)
-        cout << file << endl;
+    } else if (first) {
+        string_q firstFile = getFirstFileInFolder("../", recurse);
+        cout << "First file in folder: " << firstFile << endl;
+
+    } else {
+        string_q tests[] = { "Non-recursive", "Recursive" };
+        bool vals[] = { false, true };
+
+        cout << tests[recurse] << " from ../" << endl;
+        CStringArray files;
+        size_t found = listFilesInFolder(files, "../", vals[recurse]);
+        cout << "Found " << found << " (" << files.size() << ") files" << endl;
+        for (auto file : files)
+            cout << file << endl;
+    }
 
     return 0;
 }

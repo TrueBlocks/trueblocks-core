@@ -49,7 +49,7 @@ bool COptions::parseArguments(string_q& command) {
 
     if (mode.empty())
         return usage("Please specify " + params[0].description + ". Quitting...");
-    monitorsPath = blockCachePath("monitors/");
+    monitorsPath = getCachePath("monitors/");
     establishFolder(monitorsPath);
     flags = trim(flags, ' ');
 

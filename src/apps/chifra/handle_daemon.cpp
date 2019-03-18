@@ -36,12 +36,12 @@ bool COptions::handle_daemon(void) {
     while (nRuns++ < maxRuns && !shouldQuit()) {
 
         CStringArray files;
-        listFilesInFolder(files, monitorsPath + "*.*");
+        listFilesInFolder(files, monitorsPath + "*.*", false);
 
         CAccountNameArray accounts;
         for (auto file : files) {
-            string_q type = nextTokenClear(file, '-');
-            if (type == "f" && contains(file, ".acct.bin") && !contains(file, ".lck")) {
+            if (contains(file, ".acct.bin") && !contains(file, ".lck")) {
+                replace(file, monitorsPath, "");
                 CAccountName item;
                 item.addr = nextTokenClear(file, '.');
                 getNamedAccount(item, item.addr);

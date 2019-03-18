@@ -47,3 +47,7 @@ endfunction(run_test)
 #
 run_test("fileTest_test00" "")
 run_test("fileTest_test01" "recurse")
+run_test("fileTest_test02" "first")
+run_test("fileTest_test03" "last")
+run_test("fileTest_test04" "first-recurse")
+run_test("fileTest_test05" "last-recurse")
