@@ -29,7 +29,7 @@ bool COptions::parseArguments(string_q& command) {
 
     Init();
     // This tool does not fail if the node is not running
-    blknum_t latestBlock = isNodeRunning() ? getLatestBlockFromClient() : NOPOS;
+    blknum_t latestBlock = isNodeRunning() ? getLastBlock_client() : NOPOS;
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         string_q orig = arg;

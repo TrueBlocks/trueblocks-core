@@ -1,3 +1,4 @@
 chifra argc: 2 [1:scrape] 
 chifra scrape 
-scraper.py 
+blockScrape  ; getBlock --latest
+Sleeping for 14 seconds

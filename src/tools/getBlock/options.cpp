@@ -86,22 +86,23 @@ bool COptions::parseArguments(string_q& command) {
             string_q contents;
             asciiFileToString(tmpStore, contents);
             uint64_t lastUpdate = str_2_Uint(contents);
-            uint64_t cache = NOPOS, client = NOPOS;
-            getLatestBlocks(cache, client);
-            uint64_t diff = cache > client ? 0 : client - cache;
+            uint64_t staging = NOPOS, finalized = NOPOS, client = NOPOS;
+            getLastBlocks(staging, finalized, client);
+            uint64_t diff = finalized > client ? 0 : client - finalized;
             stringToAsciiFile(tmpStore, uint_2_Str(diff));  // for next time
 
             char hostname[HOST_NAME_MAX];  gethostname(hostname, HOST_NAME_MAX);
             char username[LOGIN_NAME_MAX]; getlogin_r(username, LOGIN_NAME_MAX);
 
-            cout << cGreen << "Hostname:                " << cYellow << (isTestMode() ? "--hostname--"  : string_q(hostname)) << cOff << "\n";
-            cout << cGreen << "User:                    " << cYellow << (isTestMode() ? "--username--"  : string_q(username)) << cOff << "\n";
-            cout << cGreen << "QB Version:              " << cYellow <<                                   getVersionStr() << cOff << "\n";
-            cout << cGreen << "Client Version:          " << cYellow << (isTestMode() ? "--version--"   : getVersionFromClient()) << cOff << "\n";
-            cout << cGreen << "Location of cache:       " << cYellow << (isTestMode() ? "--cache_dir--" : blockCachePath("")) << cOff << "\n";
-            cout << cGreen << "Latest block in cache:  "  << cYellow << (isTestMode() ? "--cache--"     : padNum8T(cache))  << cOff << "\n";
-            cout << cGreen << "Latest block at client: "  << cYellow << (isTestMode() ? "--client--"    : padNum8T(client)) << cOff << "\n";
-            cout << cGreen << "Behind head (catchup):  "  << cYellow << (isTestMode() ? "--diff--"      : padNum8T(diff));
+            cout << cGreen << "Hostname:               " << cYellow << (isTestMode() ? "--hostname--"  : string_q(hostname)) << cOff << "\n";
+            cout << cGreen << "User:                   " << cYellow << (isTestMode() ? "--username--"  : string_q(username)) << cOff << "\n";
+            cout << cGreen << "QB Version:             " << cYellow <<                                   getVersionStr() << cOff << "\n";
+            cout << cGreen << "Client Version:         " << cYellow << (isTestMode() ? "--version--"   : getVersionFromClient()) << cOff << "\n";
+            cout << cGreen << "Location of cache:      " << cYellow << (isTestMode() ? "--cache_dir--" : getCachePath("")) << cOff << "\n";
+            cout << cGreen << "Latest final in cache:  "  << cYellow << (isTestMode() ? "--final--"    : padNum8T(finalized))  << cOff << "\n";
+            cout << cGreen << "Latest staged in cache: "  << cYellow << (isTestMode() ? "--staged--"   : padNum8T(staging))  << cOff << "\n";
+            cout << cGreen << "Latest block at client: "  << cYellow << (isTestMode() ? "--client--"   : padNum8T(client)) << cOff << "\n";
+            cout << cGreen << "Behind head (catchup):  "  << cYellow << (isTestMode() ? "--diff--"     : padNum8T(diff));
             if (!isTestMode() && lastUpdate) {
                 uint64_t diffDiff = (diff > lastUpdate ? 0 : lastUpdate - diff);
                 cout << " (+" << diffDiff << ")";

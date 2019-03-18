@@ -80,7 +80,7 @@ bool Slurp(CAccount& theAccount, COptions& options, string_q& message) {
     theAccount.addr = options.addrs[0];
     cerr << "\t" << "Slurping " << theAccount.addr << "\n";
 
-    string_q cacheFilename = blockCachePath("slurps/" + theAccount.addr + (options.type == "ext" || options.type.empty() ? "" : "."+options.type) + ".bin");
+    string_q cacheFilename = getCachePath("slurps/" + theAccount.addr + (options.type == "ext" || options.type.empty() ? "" : "."+options.type) + ".bin");
     CArchive inArchive(READING_ARCHIVE);
     if (fileExists(cacheFilename)) {
         if (!inArchive.Lock(cacheFilename, modeReadOnly, LOCK_NOWAIT)) {

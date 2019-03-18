@@ -16,8 +16,8 @@
 int main(int argc, const char *argv[]) {
     etherlib_init(quickQuitHandler);
 
-    forEveryFileInFolder(blockCachePath("traces/"), visitFile, NULL);
-    forEveryBlockOnDisc(visitBlock, NULL, 0, getLatestBlockFromCache());
+    forEveryFileInFolder(getCachePath("traces/"), visitFile, NULL);
+    forEveryBlockOnDisc(visitBlock, NULL, 0, getLastBlock_cache_final());
     return 1;
 }
 

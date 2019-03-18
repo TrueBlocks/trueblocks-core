@@ -41,6 +41,7 @@ function(run_test testName)
 endfunction(run_test)
 
 # Enter one line for each individual test
+run_the_test(${TEST_PATH} ${GOLD_PATH} "acctScrape_preload" ${EXECUTABLE_OUTPUT_PATH}/bloomMan " --rewrite" " 46147")
 run_test("acctScrape_no_params")
 run_test("acctScrape_help" "-th")
 run_test("acctScrape_fail_list1" "--list")

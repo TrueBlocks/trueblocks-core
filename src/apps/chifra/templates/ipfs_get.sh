@@ -1,3 +1,8 @@
+ipfs get QmVzBrC9uC8a8kkuKYb3DeSYB9JtzENjYiYuuNx6EACxMi -o 007389740-007392527.txt.gz
+ipfs get QmaMuz6h4NR1pzi93k38jUaBmwjfGkUus1BBDcAkDkPPg1 -o 007386066-007389739.txt.gz
+ipfs get QmRrL9KiSuAs1tzbLiGLQAxYhArD6jTr1vCsupmg89DmdD -o 007382745-007386066.txt.gz
+ipfs get QmeBJaGiR6FM3RkSSsTy6N9ysN7CRgePJAGv2ViDhCwLWW -o 007379186-007382745.txt.gz
+ipfs get QmVtKKyXYeeeAGW3boeGAe37oxorLDiJ2DghAMNiB84vtQ -o 007375751-007379186.txt.gz
 ipfs get Qmas3E5Tk3itwFc2qA1jgxmbqnrw5KskmfK3UxrGs28nX3 -o 007372746-007375751.txt.gz
 ipfs get QmV3orriktNFgiiUnbhtiuHt4MV4nHUvrPfJqQtza2eWWu -o 007369523-007372746.txt.gz
 ipfs get Qmdr8uA6yX3qusCePN5RDtFuodVKjj8hLpwY6k2ZSndt7f -o 007366479-007369523.txt.gz

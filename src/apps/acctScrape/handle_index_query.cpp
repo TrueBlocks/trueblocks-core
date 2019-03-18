@@ -76,9 +76,6 @@ bool visitIndexFiles(const string_q& path, void *data) {
             return !shouldQuit();
         }
 
-        if (contains(path, "007341667-007345394"))
-            printf("");
-
         // ...and see if we can get a pointer to its data...
         CIndexRecord *records = (CIndexRecord *)(blockFile.getData());  // NOLINT
         if (!records) {
