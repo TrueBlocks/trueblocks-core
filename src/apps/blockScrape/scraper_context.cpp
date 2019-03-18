@@ -7,100 +7,76 @@
 #include "options.h"
 
 //----------------------------------------------------------------------------------
-CScraperContext::CScraperContext(COptions *o, CBlock *b)
-    : options(o), pBlock(b), pTrans(NULL), addrList(NULL, NULL, true), traceCount(0), maxTraceDepth(0),
-      reported(false), nAddrsInBloom(0), nAddrsInBlock(0),
-      blockOkay(false), bloomOkay(false)
+CScraper::CScraper(COptions *o, blknum_t num) :
+    options(o),
+    status(""),
+    addrList(NULL, NULL, true),
+    pTrans(NULL),
+    traceCount(0),
+    curSize(0),
+    maxTraceDepth(0),
+    nAddrsInBlock(0)
 {
     ASSERT(addrList.addrTxMap);
-    bloomList.resize(1);
-    bloomList.at(0) = 0;
+    block.blockNumber = num;
     resetClock();
-//    addrList.reserve(35000); // largest # of addrs during dDos
 }
 
 //-------------------------------------------------------------------------
-bool CScraperContext::scrape(CBlock& block) {
+bool CScraper::scrapeBlock(void) {
 
+    // This queries the node for fresh data on the block
     getObjectViaRPC(block, "eth_getBlockByNumber", "[\"" + uint_2_Hex(block.blockNumber) + "\",true]");
 
-    // Add the miner to the bloom filter
-    addToBloom(block.miner);
+    // Note the miner address
+    noteAddress(block.miner, true);
 
-    if (!block.transactions.size()) {
-        if (block.blockNumber < 50000) { // otherwise it appears to be hung
-            cerr << "skipping empty block " << block.blockNumber << "\r";
-            cerr.flush();
-        }
-        // TODO: we do not account for miners of zero transaction blocks, we can
-        // do it here by writing the miner's address to a file
-        return false;
-    }
-
-    // We can't use forEveryTrans... because it uses copies. We need to visit the actual transaction so we can write it
+    // We do not use forEveryTransaction here because we need the actual transaction so we can mark
+    // pre-byzantium errors by querying traces. forEvery... makes a copy which won't mark the error
     for (uint32_t i = 0 ; i < block.transactions.size() ; i++) {
-        if (!visitTransaction(block.transactions.at(i), this))
+        if (!scrapeTransaction(&block.transactions[i]))
             return false;
     }
-
-    return true;
-}
-
-//-------------------------------------------------------------------------
-bool addPotentialAddr(const CAddressAppearance& item, void *data) {
-    CScraperContext *sCtx = (CScraperContext*)data;
-    sCtx->addToBloom(item.addr);
     return true;
 }
 
 //---------------------------------------------------------------------------
-void foundPot1(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList) {
-    CAddressAppearance item(bn, tx, tc, "", "");
-    potentialAddr(func, data, item, potList);
-}
+bool CScraper::scrapeTransaction(CTransaction *txPtr) {
 
-//-------------------------------------------------------------------------
-// Note: See CBlock::forEveryAddress for a similar algorithm. We can't use that
-// because we are processing transaction error marks here as well.
-bool visitTransaction(CTransaction& trans, void *data) {
+    pTrans = txPtr;
+    pTrans->pBlock = &block;
+    getReceipt(pTrans->receipt, pTrans->hash);
 
-    CScraperContext *sCtx = (CScraperContext*)data;
-    sCtx->pTrans = &trans;
-    trans.pBlock  = sCtx->pBlock;
+    noteAddress(pTrans->from);
+    noteAddress(pTrans->to);
+    noteAddress(pTrans->receipt.contractAddress);
+    foundPotential(notePotential, this, pTrans->blockNumber, pTrans->transactionIndex, 0, extract(pTrans->input, 10));
 
-    getReceipt(trans.receipt, trans.hash);
-    sCtx->addToBloom(trans.from);
-    sCtx->addToBloom(trans.to);
-    sCtx->addToBloom(trans.receipt.contractAddress);
-    foundPot1(addPotentialAddr, sCtx, trans.blockNumber, trans.transactionIndex, 0, extract(trans.input, 10));
-
-    for (uint32_t lg = 0 ; lg < trans.receipt.logs.size() ; lg++) {
-        const CLogEntry *log = &trans.receipt.logs[lg];
-        sCtx->addToBloom(log->address);
-        // Note: Add topics that look like addresses even though they may be redundant.
+    for (uint32_t lg = 0 ; lg < pTrans->receipt.logs.size() ; lg++) {
+        const CLogEntry *log = &pTrans->receipt.logs[lg];
+        noteAddress(log->address);
         string_q addr;
         for (uint32_t tp = 0 ; tp < log->topics.size() ; tp++) {
-            if (isPotentialAddr(log->topics[tp], addr)) {
-                sCtx->addToBloom(addr);
-            }
+            if (isPotentialAddr(log->topics[tp], addr))
+                noteAddress(addr);
         }
-        foundPot1(addPotentialAddr, sCtx, trans.blockNumber, trans.transactionIndex, 0, extract(log->data, 2));
+        foundPotential(notePotential, this, pTrans->blockNumber, pTrans->transactionIndex, 0, extract(log->data, 2));
     }
 
-    uint64_t nTraces = getTraceCount(trans.hash);
-    bool ddos        = ddosRange(sCtx->pBlock->blockNumber);
+    uint64_t nTraces = getTraceCount(pTrans->hash);
+    bool ddos        = ddosRange(block.blockNumber);
     bool isDDos      = ddos && nTraces > 250;
-    bool isExcl      = ddos && (sCtx->options->isExcluded(trans.from) || sCtx->options->isExcluded(trans.to));
+    bool isExcl      = ddos && (options->isExcluded(pTrans->from) || options->isExcluded(pTrans->to));
     if (!isDDos && !isExcl) {
         // We can use forEveryTrace... here because we don't need to save any data on the trace. It's okay to use a copy
-        sCtx->potList = "";
-        forEveryTraceInTransaction(visitTrace, sCtx, trans);
+        potList = "";
+        forEveryTraceInTransaction(visitTrace, this, *pTrans);
         // We handle all the traces potentials here since we don't use trace id anyway
-        foundPot1(addPotentialAddr, sCtx, trans.blockNumber, trans.transactionIndex, 0, sCtx->potList);
+        foundPotential(notePotential, this, pTrans->blockNumber, pTrans->transactionIndex, 0, potList);
     }
 
-    if (trans.pBlock->blockNumber >= byzantiumBlock)
-        trans.isError = (trans.receipt.status == 0); // contains zero on fail
+    if (pTrans->pBlock->blockNumber >= byzantiumBlock)
+        pTrans->isError = (pTrans->receipt.status == 0); // contains zero on fail
 
     return true;
 }
@@ -108,7 +84,7 @@ bool visitTransaction(CTransaction& trans, void *data) {
 //-------------------------------------------------------------------------
 bool visitTrace(CTrace& trace, void *data) {
 
-    CScraperContext *sCtx = (CScraperContext*)data;
+    CScraper *sCtx = (CScraper*)data;
 
     // Note, this is redundant. It is also done in queryBlock. We do it in both places becuase it is
     // possible to create (and write) a new block directly from other programs
@@ -118,12 +94,13 @@ bool visitTrace(CTrace& trace, void *data) {
             ((CTransaction*)sCtx->pTrans)->isError = trace.isError();
     }
 
-    sCtx->addToBloom(trace.action.from);
-    sCtx->addToBloom(trace.action.to);
-    sCtx->addToBloom(trace.action.refundAddress);
-    sCtx->addToBloom(trace.action.address);
-    sCtx->addToBloom(trace.result.address);
+    sCtx->noteAddress(trace.action.from);
+    sCtx->noteAddress(trace.action.to);
+    sCtx->noteAddress(trace.action.refundAddress);
+    sCtx->noteAddress(trace.action.address);
+    sCtx->noteAddress(trace.result.address);
     sCtx->potList += extract(trace.action.input, 10);
+    sCtx->potList += extract(trace.result.output, 2);
     sCtx->traceCount++;
     sCtx->maxTraceDepth = max(sCtx->maxTraceDepth, (uint64_t)trace.traceAddress.size());
 
@@ -131,31 +108,20 @@ bool visitTrace(CTrace& trace, void *data) {
 }
 
 //----------------------------------------------------------------------------------
-void CScraperContext::addToBloom(const address_t& addr) {
+void CScraper::noteAddress(const address_t& addr, bool isMiner) {
 
     if (isZeroAddr(addr))
         return;
 
-    nAddrsInBloom++;
     nAddrsInBlock++;
-    addToAddrIndex(addr);
-
-    // SEARCH FOR 'BIT_TWIDDLE_AMT 200'
-    if (addAddrToBloom(addr, bloomList, options->bitBound))
-        nAddrsInBloom = 0;
-}
-
-//----------------------------------------------------------------------------------
-void CScraperContext::addToAddrIndex(const address_t& addr) {
-
-    if (!options->addrIndex)
-        return;
 
     ASSERT(options && sCtx.addrList.addrTxMap);
     CAddressAppearance app;
     app.addr = addr;
-    app.bn = pBlock->blockNumber;
-    if (pTrans)
+    app.bn = block.blockNumber;
+    if (isMiner)
+        app.tx = 99999;
+    else if (pTrans)
         app.tx = pTrans->transactionIndex;
     addrList.insertUnique(app);
 }
@@ -176,14 +142,11 @@ public:
 };
 
 //--------------------------------------------------------------------------
-void CScraperContext::updateAddrIndex(void) {
-
-    if (!options->addrIndex)
-        return;
+void CScraper::updateAddrIndex(void) {
 
     ASSERT(pBlock);
-    string_q indexFilename = indexFolder_stage + uint_2_Str(pBlock->blockNumber) + ".txt";
-    string_q countFile     = indexFolder_stage + "counts.txt";
+    string_q indexFilename = indexFolder_staging_v2 + padNum9(block.blockNumber) + ".txt";
+    string_q countFile     = indexFolder_staging_v2 + "counts.txt";
 
     // Note: we are inside the lockSection
 
@@ -201,79 +164,98 @@ void CScraperContext::updateAddrIndex(void) {
     stringToAsciiFile(indexFilename, os1.str());
 
     ostringstream os2;
-    os2 << pBlock->blockNumber << "\t" << addrList.addrTxMap->size() << "\t" << fileSize(indexFilename) << "\n";
+    os2 << block.blockNumber << "\t" << addrList.addrTxMap->size() << "\t" << fileSize(indexFilename) << "\n";
     appendToAsciiFile(countFile, os2.str());
 
-    if (options->consolidate) {
+    if (true) { //options->consolidate) {
         string_q contents;
         asciiFileToString(countFile, contents);
         CStringArray lines;
         explode(lines, contents, '\n');
         vector<CCounter> counters;
-        uint64_t size = 0;
+        curSize = 0;
         for (auto line : lines) {
             CCounter counter(line);
             counters.push_back(counter);
-            size += counter.size;
+            curSize += counter.size;
         }
-        if (size > options->maxIndexBytes) {
-//cout << "Here: " << size << " counters: " << counters.size() << endl;
-//getchar();
+        if (curSize > options->maxIndexBytes) {
             CStringArray apps;
             apps.reserve(620000);
             for (auto counter : counters) {
                 string_q theStuff;
-                string_q fn = substitute(countFile, "counts", uint_2_Str(counter.bn));
-//cout << "fn: " << fn << endl;
+                string_q fn = substitute(countFile, "counts", padNum9(counter.bn));
                 asciiFileToString(fn, theStuff);
                 CStringArray lns;
                 explode(lns, theStuff, '\n');
                 for (auto ln : lns) {
                     apps.push_back(ln);
-//cout << ln  << endl;
                 }
             }
-//getchar();
             sort(apps.begin(), apps.end());
-            string_q resFile = substitute(countFile, "counts", uint_2_Str(counters.at(0).bn)+"-sorted");
+            blknum_t first = counters[0].bn;
+            blknum_t last = counters[counters.size()-1].bn;
+            string_q resFile = substitute(countFile, "counts", padNum9(first)+"-"+padNum9(last));
+            resFile = substitute(resFile, "/staging/", "/tmp/");
             for (auto app : apps)
                 appendToAsciiFile(resFile, app + "\n");
-//cout << "File exits, removing older files" << endl;
-//getchar();
             ::remove(countFile.c_str());
             for (auto counter : counters)
-                ::remove(substitute(countFile, "counts", uint_2_Str(counter.bn)).c_str());
+                ::remove(substitute(countFile, "counts", padNum9(counter.bn)).c_str());
             putc(7,stdout);
-//cout << "Done" << endl;
-//getchar();
+
+cout << resFile << endl;
+cout << "Press enter to continue or 'q' to quit" << endl;
+
         }
     }
 }
 
 //--------------------------------------------------------------------------
-string_q CScraperContext::report(uint64_t last) {
+void CScraper::updateIndexes(void) {
 
-    ASSERT(sCtx.addrList.addrTxMap);
+    updateAddrIndex();
 
-    cerr << ((pBlock->finalized ? greenCheck : whiteStar) + " ");
-    cerr << padRight(uint_2_Str(last - pBlock->blockNumber), 4) << ": ";
+    CBlockIndexItem item(block.blockNumber, block.timestamp, block.transactions.size());
+    options->finalBlockCache2 << item.bn << item.ts << item.cnt;
+    options->finalBlockCache2.flush();
+}
+
+//-------------------------------------------------------------------------
+bool notePotential(const CAddressAppearance& item, void *data) {
+    CScraper *sCtx = (CScraper*)data;
+    sCtx->noteAddress(item.addr);
+    return true;
+}
+
+//---------------------------------------------------------------------------
+void foundPotential(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList) {
+    CAddressAppearance item(bn, tx, tc, "", "");
+    potentialAddr(func, data, item, potList);
+}
+
+//--------------------------------------------------------------------------
+string_q CScraper::report(uint64_t last) {
+
+    time_q blkDate = ts_2_Date(block.timestamp);
+
+    cerr << ((block.finalized ? greenCheck : whiteStar) + " ");
+    cerr << padRight(uint_2_Str(last - block.blockNumber), 4) << ": ";
 
     ostringstream os; os.precision(4);
-
-    time_q   blkDate = ts_2_Date(pBlock->timestamp);
-
     os << bBlack;
     os << blkDate.Format(FMT_EXPORT)  << "\t";
     os << Now().Format(FMT_EXPORT)    << "\t";
     os << TIC()                       << "\t" << cYellow;
-    os << pBlock->blockNumber         << "\t";
-    os << pBlock->transactions.size() << "\t";
+    os << block.blockNumber           << "\t";
+    os << block.transactions.size()   << "\t";
     os << traceCount                  << "\t";
     os << maxTraceDepth               << "\t";
     os << nAddrsInBlock               << "\t";
-    os << addrList.addrTxMap->size()  << "\t" << cTeal;
-    os << padRight(status, 9)         << "\t" << cYellow;
-    os << reportBloom(bloomList)      << cOff;
+    os << addrList.addrTxMap->size()  << "\t";
+    os << fixed << setprecision(3);
+    os << (curSize/1024./1024.)       << "\t" << cTeal;
+    os << status                      << cOff;
 
     return os.str();
 }

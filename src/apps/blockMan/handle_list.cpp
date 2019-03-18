@@ -6,18 +6,20 @@
 #include "etherlib.h"
 #include "options.h"
 
-extern bool listEmptyBlocks(blknum_t bn, void *data);
-extern bool listFullBlocks(blknum_t bn, void *data);
+extern bool listEmptyBlocks(CBlockIndexItem& bi, void *data);
+extern bool listNonEmptyBlocks(CBlockIndexItem& bi, void *data);
 //----------------------------------------------------------------------------------
 void handle_list(COptions& options) {
 
     CStatistics stats(&options);
     if (options.incEmpty) {
-        forEveryEmptyBlockByNumber(listEmptyBlocks, &stats, options.startBlock, options.nBlocks, options.skip);
+        if (!forEveryBlockIndexItem(F_EMPTY, listEmptyBlocks, &stats, options.startBlock, options.nBlocks, options.skip))
+            return;
     }
 
     if (options.incFull) {
-        forEveryNonEmptyBlockByNumber(listFullBlocks, &stats, options.startBlock, options.nBlocks, options.skip);
+        if (!forEveryBlockIndexItem(F_FULL, listNonEmptyBlocks, &stats, options.startBlock, options.nBlocks, options.skip))
+            return;
     }
 
     if (options.modes & OP_STATS) {
@@ -30,21 +32,29 @@ void handle_list(COptions& options) {
 }
 
 //----------------------------------------------------------------------------------
-bool listFullBlocks(blknum_t bn, void *data) {
+bool listNonEmptyBlocks(CBlockIndexItem& item, void *data) {
     CStatistics *stats = (CStatistics*)data;
     stats->visited++;
     stats->fullCnt++;
-    if (stats->opt->modes & OP_LIST)
-        cout << bn << "\tf\n";
+    if (stats->opt->modes & OP_LIST) {
+        if (verbose)
+            cout << item.bn << "\t" << item.ts << "\t" << item.cnt << endl;
+        else
+            cout << item.bn << "\tf\n";
+    }
     return true;
 }
 
 //----------------------------------------------------------------------------------
-bool listEmptyBlocks(blknum_t bn, void *data) {
+bool listEmptyBlocks(CBlockIndexItem& item, void *data) {
     CStatistics *stats = (CStatistics*)data;
     stats->visited++;
     stats->emptyCnt++;
-    if (stats->opt->modes & OP_LIST)
-        cout << bn << "\te\n";
+    if (stats->opt->modes & OP_LIST) {
+        if (verbose)
+            cout << item.bn << "\t" << item.ts << "\t" << item.cnt << endl;
+        else
+            cout << item.bn << "\te\n";
+    }
     return true;
 }

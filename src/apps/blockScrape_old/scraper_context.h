@@ -8,32 +8,28 @@
 
 class COptions;
 //-------------------------------------------------------------------------
-class CScraper {
+class CScraperContext {
 public:
     COptions     *options;
-    string_q      status;
-
-    CUniqueState  addrList;
-    CBlock        block;
-
+    CBlock       *pBlock;
     CTransaction *pTrans;
+    CBloomArray   bloomList;
+    CUniqueState  addrList;
     string_q      potList;
     uint64_t      traceCount;
-    uint64_t      curSize;
     uint64_t      maxTraceDepth;
+    bool          reported;
+    uint64_t      nAddrsInBloom;
     uint64_t      nAddrsInBlock;
+    bool          blockOkay;
+    bool          bloomOkay;
+    string_q      status;
 
-    CScraper(COptions *o, blknum_t num);
+    CScraperContext(COptions *o, CBlock *b);
 
-    bool scrapeBlock(void);
-    bool scrapeTransaction(CTransaction *pT);
-    string_q report(uint64_t last);
-
-    void noteAddress(const address_t& addr, bool isMiner=false);
-
-    void updateIndexes(void);
+    void addToBloom(const address_t& addr);
+    bool scrape(CBlock& block);
     void updateAddrIndex(void);
+    void addToAddrIndex(const address_t& addr);
+    string_q report(uint64_t last);
 };
-
-extern bool notePotential(const CAddressAppearance& item, void *data);
-extern void foundPotential(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList);
