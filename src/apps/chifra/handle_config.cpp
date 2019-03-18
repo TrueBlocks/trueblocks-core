@@ -34,7 +34,7 @@ bool COptions::handle_config(void) {
             ostringstream os;
             os << "cat " << path;
             if (isTestMode())
-                cout << substitute(os.str(), blockCachePath(""), "$BLOCK_CACHE/") << endl;
+                cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
             else
                 if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
         }

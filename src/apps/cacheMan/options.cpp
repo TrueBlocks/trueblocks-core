@@ -51,7 +51,7 @@ bool COptions::parseArguments(string_q& command) {
             if (!isNumeral(arg))
                 return usage("You must supply a block number with the --truncate:n command.");
             trunc = str_2_Uint(arg);
-            if (trunc > getLatestBlockFromClient())
+            if (trunc > getLastBlock_client())
                 return usage("You must supply a block number lower than the latest block.");
             if (!contains(mode, "fix"))
                 mode += "fix|";

@@ -34,7 +34,7 @@ int main(int argc, const char *argv[]) {
 
         if (options.all) {
             options.startBlock = 0;
-            options.nBlocks = getLatestBlockFromClient();
+            options.nBlocks = getLastBlock_client();
         }
 
         CFilename fn("accts.bin");

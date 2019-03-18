@@ -145,7 +145,7 @@ bool COptions::parseArguments(string_q& command) {
 
     if (asJson) {
         for (auto addr : addrs) {
-            string_q fileName = blockCachePath("abis/" + addr + ".json");
+            string_q fileName = getCachePath("abis/" + addr + ".json");
             string_q localFile("./" + addr + ".json");
             if (fileExists(localFile)) {
                 cerr << "Local file found\n";
@@ -164,7 +164,7 @@ bool COptions::parseArguments(string_q& command) {
 
     if (isOpen) {
         for (auto addr : addrs) {
-            string_q fileName = blockCachePath("abis/" + addr + ".json");
+            string_q fileName = getCachePath("abis/" + addr + ".json");
             if (!fileExists(fileName)) {
                 cerr << "ABI for '" + addr + "' not found. Quitting...\n";
                 return false;
@@ -184,12 +184,11 @@ bool COptions::parseArguments(string_q& command) {
     if (loadKnown) {
         string_q knownPath = configPath("known_abis/");
         CStringArray files;
-        listFilesInFolder(files, knownPath + "*.*");
+        listFilesInFolder(files, knownPath + "*.*", false);
         for (auto file : files) {
             CAbi abi;
-            file = substitute(file, "f-", "");
-            abi.loadAbiFromFile(knownPath + file, true);
-            abi.address = substitute(file, ".json","");
+            abi.loadAbiFromFile(file, true);
+            abi.address = substitute(substitute(file, ".json",""), configPath("known_abis/"), "");
             sort(abi.interfaces.begin(), abi.interfaces.end(), sortByFuncName);
             abi_specs.push_back(abi);
         }
@@ -261,7 +260,7 @@ bool visitABIs(const string_q& path, void *dataPtr) {
 //void rebuildFourByteDB(void) {
 //
 //    string_q fileList;
-//    string_q abiPath = blockCachePath("abis/");
+//    string_q abiPath = getCachePath("abis/");
 //    cout << abiPath << "\n";
 //    forEveryFileInFolder(abiPath+"*", visitABIs, &fileList);
 //

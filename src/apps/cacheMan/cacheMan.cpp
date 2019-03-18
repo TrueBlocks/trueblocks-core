@@ -18,7 +18,7 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        blknum_t latest = getLatestBlockFromCache();
+        blknum_t latest = getLastBlock_cache_final();
         string_q def = (options.asData ? STR_DATA_DISPLAY : STR_DEFAULT_DISPLAY);
         string_q fmtStr = getGlobalConfig("cacheMan")->getDisplayStr(options.asData, def);
 

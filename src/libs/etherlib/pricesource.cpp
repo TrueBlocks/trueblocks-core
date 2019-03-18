@@ -27,7 +27,7 @@ namespace qblocks {
     string_q CPriceSource::getDatabasePath(string_q& source) const {
         source = substitute(substitute(url, "http://", ""), "https://", "");
         source = nextTokenClear(source, '.');
-        string_q ret = blockCachePath("prices/" + source + "_" + pair + ".bin");
+        string_q ret = getCachePath("prices/" + source + "_" + pair + ".bin");
         establishFolder(ret);
         return ret;
     }
@@ -49,7 +49,7 @@ namespace qblocks {
             string_q zipFile = configPath("cache/prices/") + dataSource + "_" + source.pair + ".bin.gz";
             if (zipFile != cacheFile) {
                 string_q cmd = "cp -f " + zipFile + " " + cacheFile + ".gz";
-                cmd += (" ; cd " + blockCachePath("prices/") + " ; gunzip *.gz");
+                cmd += (" ; cd " + getCachePath("prices/") + " ; gunzip *.gz");
                 doCommand(cmd);
             }
         }

@@ -111,6 +111,7 @@ namespace qblocks {
 
         CTomlGroup *findGroup(const string_q& group) const;
         CTomlKey   *findKey  (const string_q& group, const string_q& key) const;
+    public:
         void        deleteKey(const string_q& group, const string_q& key);
 
     public:

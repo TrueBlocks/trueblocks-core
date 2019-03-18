@@ -26,7 +26,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     Init();
-    blknum_t latestBlock = getLatestBlockFromCache();
+    blknum_t latestBlock = getLastBlock_cache_final();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (arg == "-s" || arg == "--stats") {

@@ -1,10 +1,11 @@
 getBlock argc: 2 [1:--latest] 
 getBlock --latest 
-Hostname:                --hostname--
-User:                    --username--
-QB Version:              0.5.5-alpha
-Client Version:          --version--
-Location of cache:       --cache_dir--
-Latest block in cache:  --cache--
+Hostname:               --hostname--
+User:                   --username--
+QB Version:             0.5.5-alpha
+Client Version:         --version--
+Location of cache:      --cache_dir--
+Latest final in cache:  --final--
+Latest staged in cache: --staged--
 Latest block at client: --client--
 Behind head (catchup):  --diff--

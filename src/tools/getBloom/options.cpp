@@ -36,12 +36,13 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     Init();
-    blknum_t latestBlock = getLatestBlockFromClient();
+    blknum_t latestBlock = getLastBlock_client();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (arg == "-o" || arg == "--force") {
             etherlib_init(defaultQuitHandler);
             force = true;
+            isRaw = false;
 
         } else if (arg == "-r" || arg == "--raw") {
             isRaw = true;  // last in wins

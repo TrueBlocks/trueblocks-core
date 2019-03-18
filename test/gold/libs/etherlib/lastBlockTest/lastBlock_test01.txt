@@ -68,8 +68,6 @@ Found 107 (107) files
 ../dataUpgrade/data_0_1_0/names.conf
 ../dataUpgrade/data_0_1_0/prices_poloniex.bin
 ../dataUpgrade/data_0_1_0/quickBlocks.toml
-../dataUpgrade/data_0_1_0/scraper_fullBlocks.bin
-../dataUpgrade/data_0_1_0/scraper_miniBlocks.bin
 ../dataUpgrade/data_0_1_0/slurp_0x00d479696f37f9e6e63d80d3bf4f646a60e76608.bin
 ../dataUpgrade/oldFmt.cache
 ../decode_abi/decode.txt
@@ -91,6 +89,8 @@ Found 107 (107) files
 ../lastBlockTest/blocks/00/50/005000311.txt
 ../lastBlockTest/blocks/00/71/007100403.txt
 ../lastBlockTest/blocks/00/71/007100501.txt
+../lastBlockTest/lastBlock_test00.txt
+../lastBlockTest/lastBlock_test01.txt
 ../printFloat/printFloat_00.txt
 ../printFloat/printFloat_01.txt
 ../printFloat/printFloat_02.txt

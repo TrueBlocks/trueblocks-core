@@ -23,7 +23,7 @@ int main(int argc, const char *argv[]) {
             options.scrapeCnt = 10000000;  // TODO(tjayrush): Not right
 
         if (options.useIndex)
-            forEveryFileInFolder(indexFolder_prod, visitIndexFiles, &options);
+            forEveryFileInFolder(indexFolder_sorted_v2, visitIndexFiles, &options);
         else
             forEveryBloomFile(visitBloomFilters, &options, options.startScrape, options.scrapeCnt);
 

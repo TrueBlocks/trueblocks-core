@@ -35,7 +35,7 @@ bool COptions::parseArguments(string_q& command) {
     bool isList = false;
     bool foundOne = false;
     Init();
-    blknum_t latestBlock = getLatestBlockFromClient();
+    blknum_t latestBlock = getLastBlock_client();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         string_q orig = arg;
@@ -93,7 +93,7 @@ bool COptions::parseArguments(string_q& command) {
             if (findSpecial(spec, arg)) {
                 string_q val = spec.second;
                 if (spec.first == "latest")
-                    val = uint_2_Str(getLatestBlockFromClient());
+                    val = uint_2_Str(getLastBlock_client());
                 requests.push_back("special:" + spec.first + "|" + val);
                 foundOne = true;
 
@@ -167,8 +167,6 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-extern void unloadCache(void);
-    unloadCache();
 }
 
 //--------------------------------------------------------------------------------
@@ -258,12 +256,12 @@ string_q COptions::listSpecials(bool terse) const {
         string_q name = specials[i].first;
         string_q bn = specials[i].second;
         if (name == "latest") {
-            bn = uint_2_Str(getLatestBlockFromClient());
+            bn = uint_2_Str(getLastBlock_client());
             if (isTestMode()) {
                 bn = "";
             } else if (COptionsBase::isReadme) {
                 bn = "--";
-            } else if (i > 0 && str_2_Uint(specials[i-1].second) >= getLatestBlockFromClient()) {
+            } else if (i > 0 && str_2_Uint(specials[i-1].second) >= getLastBlock_client()) {
                 extra = iWhite + " (syncing)" + cOff;
             }
         }

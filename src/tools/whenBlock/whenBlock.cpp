@@ -14,10 +14,6 @@
 #include "options.h"
 
 //---------------------------------------------------------------
-extern bool lookupDate(const COptions *options, CBlock& block, const time_q& date);
-extern void unloadCache(void);
-
-//---------------------------------------------------------------
 int main(int argc, const char *argv[]) {
     etherlib_init(quickQuitHandler);
 
@@ -36,11 +32,11 @@ int main(int argc, const char *argv[]) {
             if (mode == "special") {
                 mode = "block";
                 special = nextTokenClear(value, '|');
-                if (str_2_Uint(value) > getLatestBlockFromClient()) {
+                if (str_2_Uint(value) > getLastBlock_client()) {
                     cerr << "The block number you requested (";
                     cerr << cTeal << special << ": " << value << cOff;
                     cerr << ") is after the latest block (";
-                    cerr << cTeal << (isTestMode() ? "TESTING" : uint_2_Str(getLatestBlockFromClient())) << cOff;
+                    cerr << cTeal << (isTestMode() ? "TESTING" : uint_2_Str(getLastBlock_client())) << cOff;
                     cerr << "). Quitting...\n";
                     return 0;
                 }
@@ -51,10 +47,11 @@ int main(int argc, const char *argv[]) {
                 queryBlock(block, value, false, false);
 
             } else if (mode == "date") {
-                time_q date = ts_2_Date((timestamp_t)str_2_Uint(value));
-                bool found = lookupDate(&options, block, date);
-                if (!found)
-                    return 0;
+                return options.usage("The searching by date feature has been depreciated. Quitting...");
+//                time_q date = ts_2_Date((timestamp_t)str_2_Uint(value));
+//                bool found = lookupDate(&options, block, date);
+//                if (!found)
+//                    return 0;
             }
 
             // special case for the zero block
@@ -77,6 +74,8 @@ int main(int argc, const char *argv[]) {
     return 0;
 }
 
+#if 0
+/*
 //---------------------------------------------------------------
 //TODO(tjayrush): global data
 // This global data is fine since this program is not threaded.
@@ -115,39 +114,40 @@ bool lookCloser(CBlock& block, void *data) {
 //---------------------------------------------------------------
 bool lookupDate(const COptions *options, CBlock& block, const time_q& date) {
     if (!g_dataPtr) {
-        g_nBlocks = fileSize(fullBlockIndex_new) / sizeof(CBlockIndexItem);
-        g_dataPtr = new CBlockIndexItem[g_nBlocks];  // this allocation gets cleaned up by the options destructor
+        g_nBlocks = fileSize(fi nalBlockIndex_v2) / C BlockIndexItem::sizeOnDisc();
+        g_dataPtr = new C BlockIndexItem[g_nBlocks];  // this allocation gets cleaned up by the options destructor
         if (!g_dataPtr)
             return options->usage("Could not allocate memory for the blocks (size needed: " + uint_2_Str(g_nBlocks) + ").\n");
-        bzero(g_dataPtr, sizeof(CBlockIndexItem)*(g_nBlocks));
+//        bzero(g_dataPtr, C BlockIndexItem::sizeOnDisc()*(g_nBlocks));
         if (verbose)
             cerr << "Allocated room for " << g_nBlocks << " index items.\n";
 
-        // Next, we try to open the fullBlocks index database (caller will cleanup)
-        FILE *fpBlocks = fopen(fullBlockIndex_new.c_str(), modeReadOnly);
+        // Next, we try to open the f inalBlocks index database (caller will cleanup)
+        FILE *fpBlocks = fopen(f inalBlockIndex_v2.c_str(), modeReadOnly);
         if (!fpBlocks)
-            return options->usage("Could not open the fullBlocks index database: " + fullBlockIndex_new + ".\n");
-        // Read the entire fullBlocks index database into memory in one chunk
-        size_t nRead = fread(g_dataPtr, sizeof(CBlockIndexItem), g_nBlocks, fpBlocks);
+            return options->usage("Could not open the f inalBlocks index database: " + f inalBlockIndex_v2 + ".\n");
+        // Read the entire f inalBlocks index database into memory in one chunk
+        size_t nRead = fread(g_dataPtr, C BlockIndexItem::sizeOnDisc(), g_nBlocks, fpBlocks);
         if (nRead != g_nBlocks)
-            return options->usage("Error encountered reading fullBlocks index database. Quitting...");
+            return options->usage("Error encountered reading f inalBlocks index database. Quitting...");
         if (verbose)
-            cerr << "Read " << nRead << " fullBlocks index into memory.\n";
+            cerr << "Read " << nRead << " f inalBlocks index into memory.\n";
     }
 
-    CBlockIndexItem search;
+    C BlockIndexItem search;
     search.ts = (uint32_t)date_2_Ts(date);
-    CBlockIndexItem *found = reinterpret_cast<CBlockIndexItem*>(bsearch(&search, g_dataPtr, g_nBlocks, sizeof(CBlockIndexItem), findFunc));
+    C BlockIndexItem *found = reinterpret_cast<C BlockIndexItem*>(bsearch(&search, g_dataPtr, g_nBlocks, C BlockIndexItem::sizeOnDisc(), findFunc));
     if (found) {
         queryBlock(block, uint_2_Str(found->bn), false, false);
         return true;
     }
     //cout << search.timestamp << " is somewhere between " << g_lower << " and " << g_higher << "\n";
-    CBlockFinder finder(search.ts);
+    C BlockFinder finder(search.ts);
     forEveryBlockOnDisc(lookCloser, &finder, g_lower, g_higher-g_lower);
     queryBlock(block, uint_2_Str(finder.found), false, false);
     return true;
 }
+
 
 //---------------------------------------------------------------
 void unloadCache(void) {
@@ -156,3 +156,5 @@ void unloadCache(void) {
         g_dataPtr = NULL;
     }
 }
+*/
+#endif

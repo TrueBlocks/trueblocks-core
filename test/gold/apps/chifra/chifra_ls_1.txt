@@ -26,6 +26,7 @@ Monitor path: $BLOCK_CACHE/monitors/
     0x05c7065d644096a4e4c3fe24af86e36de021074b (LendConnect)        
     0x05d412ce18f24040bb3fa45cf2c69e506586d8e8 (MFTU)               
     0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27 (Zilliqa)            
+    0x06012c8cf97bead5deae237070f9587f8e7a266d (CryptoKitties)      
     0x06147110022b768ba8f99a8f385df11a151a9cc8 (ACE)                
     0x0707681f344deb24184037fc0228856f2137b02e (FNKOSToken)         
     0x0743392132d1a03a902c477e5a176f256ba3220c (Coimatic 3.0)       
@@ -657,6 +658,7 @@ Monitor path: $BLOCK_CACHE/monitors/
     0xbae235823d7255d9d48635ced4735227244cd583 (Staker)             
     0xbb1fa4fdeb3459733bf67ebc6f893003fa976a82 (Pangea Arbitration T)
     0xbb49a51ee5a66ca3a8cbe529379ba44ba67e6771 (Cryptosolartech)    
+    0xbb9bc244d798123fde783fcc1c72d3bb8c189413 (The DAO)            
     0xbbc2045d335cb224228f1850b29173d9d7d7b989 (HELP)               
     0xbbff862d906e348e9946bfb2132ecb157da3d4b4 (Sharder)            
     0xbc46d9961a3932f7d6b64abfdec80c1816c4b835 (LiteXToken)         
@@ -771,6 +773,7 @@ Monitor path: $BLOCK_CACHE/monitors/
     0xe2fb6529ef566a080e6d23de0bd351311087d567 (Covesting)          
     0xe30e02f049957e2a5907589e06ba646fb2c321ba (DRP Utility)        
     0xe34e1944e776f39b9252790a0527ebda647ae668 (Helbiz)             
+    0xe36a8ea87f1e99e8a2dc1b2608d166667c9dfa01                      
     0xe3818504c1b32bf1557b16c238b2e01fd3149c17 (PILLAR)             
     0xe3f4b4a5d91e5cb9435b947f090a319737036312 (POPCHAIN CASH)      
     0xe41d2489571d322189246dafa5ebde1f4699f498 (ZRX)                

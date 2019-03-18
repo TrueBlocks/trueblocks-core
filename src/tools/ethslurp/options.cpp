@@ -32,7 +32,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     Init();
-    blknum_t latestBlock = getLatestBlockFromClient();
+    blknum_t latestBlock = getLastBlock_client();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         string_q orig = arg;
@@ -85,14 +85,14 @@ bool COptions::parseArguments(string_q& command) {
     if (addrs.empty())
         return usage("You must supply an Ethereum account or contract address. ");
 
-    if (!establishFolder(blockCachePath("slurps/")))
-        return usage("Unable to create data folders at " + blockCachePath("slurps/"));
+    if (!establishFolder(getCachePath("slurps/")))
+        return usage("Unable to create data folders at " + getCachePath("slurps/"));
 
     // Dumps an error message if the fmt_X_file format string is not found.
     getFormatString("file", false);
 
     // Load per address configurations if any
-    string_q customConfig = blockCachePath("slurps/" + addrs[0] + ".toml");
+    string_q customConfig = getCachePath("slurps/" + addrs[0] + ".toml");
     if (fileExists(customConfig)) {
         CToml perAddr("");
         perAddr.setFilename(customConfig);

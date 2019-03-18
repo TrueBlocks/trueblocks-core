@@ -19,7 +19,7 @@ bool COptions::handle_export(void) {
         os << "grabABI " << addr << " 1>/dev/null 2>&1; ";
         os << "acctExport " << addr << " " << flags;
         if (isTestMode())
-            cout << substitute(os.str(), blockCachePath(""), "$BLOCK_CACHE/") << endl;
+            cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
         else
             if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
     }
