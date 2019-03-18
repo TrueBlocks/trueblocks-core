@@ -7,25 +7,21 @@
 #include "options.h"
 
 //--------------------------------------------------------------------------
-bool markNonEmptyBlocks(const string_q& path, void *data) {
+bool markFullBlocks(const string_q& path, void *data) {
 
     if (endsWith(path, "/")) {
-        forEveryFileInFolder(path + "*", markNonEmptyBlocks, data);
+        forEveryFileInFolder(path + "*", markFullBlocks, data);
 
     } else {
 
-        if (endsWith(path, ".txt")) {
+        if (endsWith(path, ".bin") && !endsWith(path, "-e.bin")) {
             CArchive *pRes = (CArchive*)data;
             ASSERT(pRes && pRes->isOpen());
 
             cerr << "\tMarking " << path << "              \r";
-            blknum_t stop = 0;
-            blknum_t start = bnFromPath(path, stop);
             lockSection(true);
-            for (blknum_t bn = start ; bn < stop ; bn++) {
-                *pRes << (uint32_t)bn << (uint32_t)0 << (uint16_t)0;
-                pRes->flush();
-            }
+            pRes->Write(bnFromPath(path));
+            pRes->flush();
             lockSection(false);
 
         } else {
@@ -43,21 +39,19 @@ bool markNonEmptyBlocks(const string_q& path, void *data) {
 bool establishBlockIndex(void) {
 
     // If the full block index already exists, we don't need to re-create it
-    string_q finFile = substitute(finalBlockIndex_v2, ".bin", ".fin");
-    if (fileExists(finFile) && fileSize(finalBlockIndex_v2) > 0)
+    string_q finFile = substitute(fullBlockIndex, ".bin", ".fin");
+    if (fileExists(finFile) && fileSize(fullBlockIndex) > 0)
         return true;
 
     cerr << bGreen << "Rebuilding full block index...\n" << cOff;
     cerr.flush();
 
     // Otherwise we rebuild it from scratch by visiting each binary block
-    CArchive finalBlockCache(WRITING_ARCHIVE);
-    if (finalBlockCache.Lock(finalBlockIndex_v2, modeWriteCreate, LOCK_WAIT)) {
-        ASSERT(finalBlockCache.isOpen());
-
-        bool finished = forEveryFileInFolder(indexFolder_sorted_v2, markNonEmptyBlocks, &finalBlockCache);
-        finalBlockCache.Release();
-
+    CArchive fullBlockCache(WRITING_ARCHIVE);
+    if (fullBlockCache.Lock(fullBlockIndex, modeWriteCreate, LOCK_WAIT)) {
+        ASSERT(fullBlockCache.isOpen());
+        bool finished = forEveryFileInFolder(bloomFolder, markFullBlocks, &fullBlockCache);
+        fullBlockCache.Release();
         if (finished) {
             cerr << bGreen << "Re-indexing completed.\n" << cOff;
             stringToAsciiFile(finFile, "Removing this file will cause the index to rebuild\n");
@@ -68,6 +62,16 @@ bool establishBlockIndex(void) {
         return finished;
     }
 
-    cerr << "establishBlockIndex failed: " << finalBlockCache.LockFailure() << "\n";
+    cerr << "establishBlockIndex failed: " << fullBlockCache.LockFailure() << "\n";
     return false;
+}
+
+//--------------------------------------------------------------------------------
+bool updateIndex(CArchive& fullBlockCache, blknum_t bn) {
+
+    ASSERT(fullBlockCache.isOpen());
+    fullBlockCache.Write(bn);
+    fullBlockCache.flush();
+
+    return true;
 }

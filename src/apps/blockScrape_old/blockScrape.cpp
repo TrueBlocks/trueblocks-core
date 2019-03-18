@@ -6,11 +6,9 @@
 #include "etherlib.h"
 #include "options.h"
 
-extern void handle_check(COptions& options);
-extern void handle_list(COptions& options);
 //----------------------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-    etherlib_init(quickQuitHandler);
+    etherlib_init("local",  defaultQuitHandler);
 
     COptions options;
     if (!options.prepareArguments(argc, argv))
@@ -20,16 +18,12 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        cerr << bGreen << "Starting scan...\n" << cOff;
-
-        if (options.modes & OP_LIST || options.modes & OP_STATS)
-            handle_list(options);
-
-        if (options.modes & OP_CHECK)
-            handle_check(options);
-
+        cerr << bGreen << "Scraping new blocks..." << "\n" << cOff;
+        if (!handle_freshen(options))
+            cerr << "\tThe tool ended with an error.";
         cerr << bGreen << "...done\n" << cOff;
     }
 
     etherlib_cleanup();
+    return 0;
 }

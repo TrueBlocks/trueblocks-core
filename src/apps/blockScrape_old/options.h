@@ -14,19 +14,19 @@ public:
     blknum_t    endBlock;
     blknum_t    maxBlocks;
     string_q    exclusionList;
-    timestamp_t latestBlockTs;
-    uint64_t    maxIndexBytes;
     bool        writeBlocks;
-    //uint64_t    bitBound;
-    //bool        addrIndex;
-    //bool        consolidate;
-    CArchive    finalBlockCache2;
+    uint64_t    bitBound;
+    timestamp_t latestBlockTs;
+    bool        addrIndex;
+    bool        consolidate;
+    uint64_t    maxIndexBytes;
 
     COptions(void);
     ~COptions(void);
 
     bool parseArguments(string_q& command);
     void Init(void);
+    bool updateIndex(blknum_t bn);
     bool isExcluded(const address_t& addr) { return contains(exclusionList, addr); }
 };
 

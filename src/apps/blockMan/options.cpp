@@ -28,7 +28,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     Init();
-    blknum_t stopBlock = getLatestBlockFromClient();
+    blknum_t stopBlock = getLastBlock_client();
     if (isTestMode())
         stopBlock = 4000000;
 
@@ -72,15 +72,6 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
         }
     }
-
-#define OLD_FULL_BLOCKS
-#ifdef OLD_FULL_BLOCKS
-    if (!fileExists(fullBlockIndex))
-        return usage("Could not open file '" + fullBlockIndex + "'. Quitting...");
-#else
-    if (!fileExists(fullBlockIndexTest))
-        return usage("Could not open file '" + fullBlockIndexTest + "'. Quitting...");
-#endif
 
     if (stopBlock <= startBlock)
         return usage("--startBlock must preceed --stopBlock. Quitting...");

@@ -6,17 +6,21 @@
 #include "etherlib.h"
 #include "options.h"
 
+#if 0
 //-----------------------------------------------------------------------------
 extern bool checkDups(blknum_t bn, void *data);
-extern bool checkEmptyBlock(blknum_t bn, void *data);
+extern bool checkEmptyBlock(CBlockIndexItem& bi, void *data);
 extern bool checkEmptyBlock2(CBlock& block, void *data);
 extern bool checkNonEmptyBlock(CBlock& node, void *data);
 extern void report(ostream& os, const string_q& str, blknum_t bn, uint64_t nTx);
+#endif
 //----------------------------------------------------------------------------------
 void handle_check(COptions& options) {
 
+#if 0
     if (options.incEmpty) {
-        forEveryEmptyBlockByNumber(checkEmptyBlock, &options, options.startBlock, options.nBlocks, options.skip);
+        if (!forEveryBlockIndexItem(F_EMPTY, checkEmptyBlock, &options, options.startBlock, options.nBlocks, options.skip))
+            return;
         cout << endl;
     }
 
@@ -27,8 +31,10 @@ void handle_check(COptions& options) {
 
     blknum_t prev = NOPOS;
     forEveryNonEmptyBlockByNumber(checkDups, &prev, options.startBlock, options.nBlocks, options.skip);
+#endif
 }
 
+#if 0
 //----------------------------------------------------------------------------------
 bool checkDups(blknum_t bn, void *data) {
     blknum_t *prev = (blknum_t*)data;
@@ -125,3 +131,4 @@ void report(ostream& os, const string_q& str, blknum_t bn, uint64_t nTx) {
     os << result;
     os.flush();
 }
+#endif
