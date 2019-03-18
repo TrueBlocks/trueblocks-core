@@ -76,6 +76,9 @@ namespace qblocks {
     inline bool     isGeth                  (void) { return contains(toLower(getVersionFromClient()), "geth"); }  // NOLINT
     inline bool     isParity                (void) { return contains(toLower(getVersionFromClient()), "parity"); }  // NOLINT
     extern bool     getAccounts             (CAddressArray& addrs);
+    extern uint64_t getLatestBlockFromClient(void);
+    extern uint64_t getLatestBlockFromCache (void);
+    extern bool     getLatestBlocks         (uint64_t& cache, uint64_t& client);
 
     //-------------------------------------------------------------------------
     uint64_t        addFilter               (address_t addr, const CTopicArray& topics, blknum_t block);
@@ -98,6 +101,10 @@ namespace qblocks {
     extern bool forEveryBlock                (BLOCKVISITFUNC func, void *data, const string_q& block_list);  // NOLINT
     extern bool forEveryBlock                (BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
     extern bool forEveryBlockOnDisc          (BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
+    extern bool forEveryNonEmptyBlockOnDisc  (BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
+    extern bool forEveryNonEmptyBlockByNumber(UINT64VISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
+    extern bool forEveryEmptyBlockOnDisc     (BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
+    extern bool forEveryEmptyBlockByNumber   (UINT64VISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
 
     //-------------------------------------------------------------------------
     // forEvery functions
@@ -115,23 +122,18 @@ namespace qblocks {
     extern bool forEveryLogInBlock           (LOGVISITFUNC func,   void *data, const CBlock& block);
 
     //-------------------------------------------------------------------------
-    extern blknum_t getLastBlock_client     (void);
-    extern blknum_t getLastBlock_cache_final(void);
-    extern blknum_t getLastBlock_cache_stage(void);
-    extern bool     getLastBlocks           (blknum_t& stage, blknum_t& final, blknum_t& client);
+    extern string_q blockCachePath(const string_q& _part);
 
-    //-------------------------------------------------------------------------
-    extern string_q getCachePath            (const string_q& _part);
+    #define fullBlockIndex     (blockCachePath("fullBlocks.bin"))
+    #define fullBlockIndex_new (substitute(fullBlockIndex,".bin","_new.bin"))
+    #define fullBlockIndexTest (substitute(blockCachePath("fullBlocks.bin"),"/scraper/","/scraper_testing/"))
+    #define blockFolder        (blockCachePath("blocks/"))
+    #define bloomFolder        (blockCachePath("blooms/"))
 
-    //-------------------------------------------------------------------------
-    #define finalBlockIndex_v2       (getCachePath("finalBlocks_v2.bin"))
-    #define blockFolder_v2           (getCachePath("blocks/"))
-    #define bloomFolder_v2           (getCachePath("blooms/"))
-
-    #define indexFolder_v2           (getCachePath("addr_index/"))
-    #define indexFolder_sorted_v2    (getCachePath("addr_index/sorted/"))
-    #define indexFolder_staging_v2   (getCachePath("addr_index/staging/"))
-    #define indexFolder_zips_v2      (getCachePath("addr_index/zips/"))
+    #define indexFolder        (blockCachePath("addr_index/"))
+    #define indexFolder_prod   (indexFolder + "sorted_by_addr/")
+    #define indexFolder_stage  (indexFolder + "unsorted_by_block/")
+    #define indexFolder_zips   (indexFolder + "zips/")
 
     //-------------------------------------------------------------------------
     extern biguint_t weiPerEther(void);
