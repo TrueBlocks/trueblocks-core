@@ -189,12 +189,6 @@ static const char *STR_ERROR_NODEREQUIRED =
 
     //-------------------------------------------------------------------------
     bool queryBlock(CBlock& block, const string_q& datIn, bool needTrace, bool byHash) {
-        size_t unused = 0;
-        return queryBlock(block, datIn, needTrace, byHash, unused);
-    }
-
-    //-------------------------------------------------------------------------
-    bool queryBlock(CBlock& block, const string_q& datIn, bool needTrace, bool byHash, size_t& nTraces) {
 
         if (datIn == "latest")
             return queryBlock(block, uint_2_Str(getLastBlock_client()), needTrace, false);
@@ -221,7 +215,6 @@ static const char *STR_ERROR_NODEREQUIRED =
             return false;
 
         // We have the transactions, but we also want the receipts, and we need an error indication
-        nTraces = 0;
         for (size_t i = 0 ; i < block.transactions.size() ; i++) {
             CTransaction *trans = &block.transactions.at(i);  // taking a non-const reference
             trans->pBlock = &block;
@@ -241,7 +234,6 @@ static const char *STR_ERROR_NODEREQUIRED =
                 queryRawTrace(unused, trans->hash);
                 trans->isError = getCurlContext()->is_error;
                 getCurlContext()->setCurlCallback(prev);
-                nTraces++;
             }
         }
 

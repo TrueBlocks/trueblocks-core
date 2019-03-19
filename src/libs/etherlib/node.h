@@ -46,7 +46,6 @@ namespace qblocks {
     extern bool     isContractAt            (const address_t& addr, blknum_t blockNum=NOPOS);
 
     //-------------------------------------------------------------------------
-    extern bool     queryBlock              (CBlock& block,       const string_q& num, bool needTrace, bool byHash, size_t& nTraces);
     extern bool     queryBlock              (CBlock& block,       const string_q& num, bool needTrace, bool byHash);
 
     //-------------------------------------------------------------------------

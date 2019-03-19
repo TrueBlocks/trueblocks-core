@@ -50,22 +50,25 @@ bool handle_freshen(COptions& options) {
             scraper.scrapeBlock();
 
         scraper.block.finalized = isBlockFinal(scraper.block.timestamp, options.latestBlockTs, ageFinal);
-        if (options.writeBlocks && scraper.block.transactions.size()) {
-            // only write blocks with transactions
-            lockSection(true);
-            writeBlockToBinary(scraper.block, getBinaryFilename(num));
-            lockSection(false);
-        }
-
         if (scraper.block.finalized) {
             scraper.status = "final";
             lockSection(true);
+            // Because we haven't scraped this block, but we want to write all its data, we need to re-scrape here.
+            if (!needToScrape)
+                scraper.scrapeBlock();
             scraper.updateIndexes();
             lockSection(false);
+            if (!options.writeBlocks)
+                ::remove(getBinaryFilename(num).c_str());
 
         } else {
-//            scraper.status += "-notfin";
-
+            // We want to avoid rescraping the block if we can, so we store it here. We may delete it when the
+            // block gets finalized if we're not supposed to be writing blocks
+            if (!fileExists(getBinaryFilename(num))) {
+                lockSection(true);
+                writeBlockToBinary(scraper.block, getBinaryFilename(num));
+                lockSection(false);
+            }
         }
 
         cout << scraper.report(options.endBlock) << endl;
