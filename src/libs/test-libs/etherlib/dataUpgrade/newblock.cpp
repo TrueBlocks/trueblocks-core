@@ -288,9 +288,8 @@ bool CNewBlock::readBackLevel(CArchive& archive) {
         archive >> transactions;
         // NOTE: See the real code in CBlock file for note about upgrading
         CBlock upgrade;
-        size_t unused;
         string_q prev = setDataSource("local");
-        queryBlock(upgrade, uint_2_Str(blockNumber), false, false, unused);
+        queryBlock(upgrade, uint_2_Str(blockNumber), false, false);
         setDataSource(prev);
         miner = upgrade.miner;
         difficulty = upgrade.difficulty;
