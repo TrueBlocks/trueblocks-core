@@ -238,14 +238,16 @@ void foundPotential(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blkn
 string_q CScraper::report(uint64_t last) {
 
     time_q blkDate = ts_2_Date(block.timestamp);
+    double age = double(options->latestBlockTs - block.timestamp) / 60.;
 
     cerr << ((block.finalized ? greenCheck : whiteStar) + " ");
     cerr << padRight(uint_2_Str(last - block.blockNumber), 4) << ": ";
 
     ostringstream os; os.precision(4);
+    os << fixed << setprecision(3);
     os << bBlack;
     os << blkDate.Format(FMT_EXPORT)  << "\t";
-    os << Now().Format(FMT_EXPORT)    << "\t";
+    os << age                         << "\t";
     os << TIC()                       << "\t" << cYellow;
     os << block.blockNumber           << "\t";
     os << block.transactions.size()   << "\t";
@@ -253,7 +255,6 @@ string_q CScraper::report(uint64_t last) {
     os << maxTraceDepth               << "\t";
     os << nAddrsInBlock               << "\t";
     os << addrList.addrTxMap->size()  << "\t";
-    os << fixed << setprecision(3);
     os << (curSize/1024./1024.)       << "\t" << cTeal;
     os << status                      << cOff;
 
