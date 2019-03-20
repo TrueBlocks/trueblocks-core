@@ -312,7 +312,7 @@ bool CBlock::readBackLevel(CArchive& archive) {
         // TODO(tjayrush): technically we should re-read these values from the node
         CBlock upgrade;
         string_q prev = setDataSource("local");
-        queryBlock(upgrade, uint_2_Str(blockNumber), false, false);
+        queryBlock(upgrade, uint_2_Str(blockNumber), false);
         setDataSource(prev);
         miner = upgrade.miner;
         difficulty = upgrade.difficulty;

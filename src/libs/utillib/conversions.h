@@ -90,8 +90,9 @@ namespace qblocks {
 
     //--------------------------------------------------------------------
     class time_q;
-    extern timestamp_t date_2_Ts(const time_q&   timeIn);
-    extern time_q      ts_2_Date(timestamp_t tsIn);
+    extern timestamp_t date_2_Ts      (const time_q& timeIn);
+    extern time_q      ts_2_Date      (const timestamp_t& tsIn);
+    extern time_q      str_2_Date     (const string_q& str);
 
     //--------------------------------------------------------------------
     extern bool        isZeroHash   (const hash_t& hash);

@@ -102,7 +102,7 @@ bool processBlock(blknum_t bn, COptions *options) {
     options->blkStats.nQueried++;
     options->blockCounted = false;
     CBlock block;
-    if (queryBlock(block, uint_2_Str(bn), false, false)) {
+    if (queryBlock(block, uint_2_Str(bn), false)) {
 
         // Check each transaction for actual involvement.
         for (size_t tr = 0; tr < block.transactions.size() ; tr++) {

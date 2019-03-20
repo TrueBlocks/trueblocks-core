@@ -167,47 +167,45 @@ void CScraper::updateAddrIndex(void) {
     os2 << block.blockNumber << "\t" << addrList.addrTxMap->size() << "\t" << fileSize(indexFilename) << "\n";
     appendToAsciiFile(countFile, os2.str());
 
-    if (true) { //options->consolidate) {
-        string_q contents;
-        asciiFileToString(countFile, contents);
-        CStringArray lines;
-        explode(lines, contents, '\n');
-        vector<CCounter> counters;
-        curSize = 0;
-        for (auto line : lines) {
-            CCounter counter(line);
-            counters.push_back(counter);
-            curSize += counter.size;
-        }
-        if (curSize > options->maxIndexBytes) {
-            CStringArray apps;
-            apps.reserve(620000);
-            for (auto counter : counters) {
-                string_q theStuff;
-                string_q fn = substitute(countFile, "counts", padNum9(counter.bn));
-                asciiFileToString(fn, theStuff);
-                CStringArray lns;
-                explode(lns, theStuff, '\n');
-                for (auto ln : lns) {
-                    apps.push_back(ln);
-                }
+    string_q contents;
+    asciiFileToString(countFile, contents);
+    CStringArray lines;
+    explode(lines, contents, '\n');
+    vector<CCounter> counters;
+    curSize = 0;
+    for (auto line : lines) {
+        CCounter counter(line);
+        counters.push_back(counter);
+        curSize += counter.size;
+    }
+    if (curSize > options->maxIndexBytes) {
+        CStringArray apps;
+        apps.reserve(620000);
+        for (auto counter : counters) {
+            string_q theStuff;
+            string_q fn = substitute(countFile, "counts", padNum9(counter.bn));
+            asciiFileToString(fn, theStuff);
+            CStringArray lns;
+            explode(lns, theStuff, '\n');
+            for (auto ln : lns) {
+                apps.push_back(ln);
             }
-            sort(apps.begin(), apps.end());
-            blknum_t first = counters[0].bn;
-            blknum_t last = counters[counters.size()-1].bn;
-            string_q resFile = substitute(countFile, "counts", padNum9(first)+"-"+padNum9(last));
-            resFile = substitute(resFile, "/staging/", "/tmp/");
-            for (auto app : apps)
-                appendToAsciiFile(resFile, app + "\n");
-            ::remove(countFile.c_str());
-            for (auto counter : counters)
-                ::remove(substitute(countFile, "counts", padNum9(counter.bn)).c_str());
-            putc(7,stdout);
-
-cout << resFile << endl;
-cout << "Press enter to continue or 'q' to quit" << endl;
-
         }
+        sort(apps.begin(), apps.end());
+        blknum_t first = counters[0].bn;
+        blknum_t last = counters[counters.size()-1].bn;
+        string_q resFile = substitute(countFile, "counts", padNum9(first)+"-"+padNum9(last));
+        resFile = substitute(resFile, "/staging/", "/tmp/");
+        for (auto app : apps)
+            appendToAsciiFile(resFile, app + "\n");
+        ::remove(countFile.c_str());
+        for (auto counter : counters)
+            ::remove(substitute(countFile, "counts", padNum9(counter.bn)).c_str());
+        putc(7,stdout);
+
+        cout << resFile << endl;
+        cout << "Press enter to continue or 'q' to quit" << endl;
+
     }
 }
 

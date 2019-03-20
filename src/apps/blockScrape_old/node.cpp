@@ -116,14 +116,14 @@ static const char *STR_ERROR_NODEREQUIRED =
     //-------------------------------------------------------------------------
     bool getBlock(CBlock& block, blknum_t blockNum) {
         getCurlContext()->provider = fileExists(getBinaryFilename(blockNum)) ? "binary" : "local";
-        bool ret = queryBlock(block, uint_2_Str(blockNum), true, false);
+        bool ret = queryBlock(block, uint_2_Str(blockNum), true);
         getCurlContext()->provider = "binary";
         return ret;
     }
 
     //-------------------------------------------------------------------------
     bool getBlock(CBlock& block, const hash_t& blockHash) {
-        return queryBlock(block, blockHash, true, true);
+        return queryBlock(block, blockHash, true);
     }
 
     //-------------------------------------------------------------------------
@@ -187,16 +187,10 @@ static const char *STR_ERROR_NODEREQUIRED =
     }
 
     //-------------------------------------------------------------------------
-    bool queryBlock(CBlock& block, const string_q& datIn, bool needTrace, bool byHash) {
-        size_t unused = 0;
-        return queryBlock(block, datIn, needTrace, byHash, unused);
-    }
-
-    //-------------------------------------------------------------------------
-    bool queryBlock(CBlock& block, const string_q& datIn, bool needTrace, bool byHash, size_t& nTraces) {
+    bool queryBlock(CBlock& block, const string_q& datIn, bool needTrace) {
 
         if (datIn == "latest")
-            return queryBlock(block, uint_2_Str(getLatestBlockFromClient()), needTrace, false);
+            return queryBlock(block, uint_2_Str(getLatestBlockFromClient()), needTrace);
 
         if (isHash(datIn)) {
             HIDE_FIELD(CTransaction, "receipt");

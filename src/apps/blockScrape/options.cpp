@@ -10,9 +10,6 @@ static const COption params[] = {
     COption("-start:<num>",     "first block to visit (default: last visited block + 1)"),
     COption("-end:<num>",       "last block to visit (required if --start supplied)"),
     COption("-maxBlocks:<num>", "maximum number of blocks to process (defaults to 5000)"),
-    COption("@noWrite",         "do not write binary blocks to disc (default: write the blocks)"),
-//    COption("@addrIndex",       "index addresses per block in addition to building bloom filters"),
-//    COption("@consolidate",     "sort and finalize growing address index (if over 50MB)"),
     COption("",                 "Decentralized blockchain scraper and block cache.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -26,16 +23,6 @@ bool COptions::parseArguments(string_q& command) {
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-//        if (arg == "-n" || arg == "--noWrite") {
-//            writeBlocks = false;
-//
-//        } else if (arg == "-a" || arg == "--addrIndex") {
-//            addrIndex = true;
-//
-//        } else if (arg == "-c" || arg == "--consolidate") {
-//            consolidate = true;
-//
-//        } else
         if (startsWith(arg, "-s:") || startsWith(arg, "--start:")) {
             arg = substitute(substitute(arg, "-s:", ""), "--start:","");
             if (!isUnsigned(arg))
@@ -65,13 +52,24 @@ bool COptions::parseArguments(string_q& command) {
     if (maxBlocks == NOPOS)
         maxBlocks = getGlobalConfig("blockScrape")->getConfigInt("settings", "maxBlocks", 500);
 
+    // Allow the user to tell us that they want to write the block cache
     writeBlocks = getGlobalConfig("blockScrape")->getConfigBool("settings", "writeBlocks", writeBlocks);
 
     // 'to' addresses (if any) to ignore (helps exclude dDos transactions)
-    exclusionList = toLower(getGlobalConfig("blockScrape")->getConfigStr ("exclusions", "list", ""));
+    if (getGlobalConfig("blockScrape")->getConfigBool("exclusions", "enable", false))
+        exclusionList = toLower(getGlobalConfig("blockScrape")->getConfigStr("exclusions", "list", ""));
 
-    // Make sure the full block index exists. If not, rebuild it
-    establishBlockIndex();
+    // Establish the folders that hold the data...
+    establishFolder(indexFolder_sorted_v2);
+    establishFolder(indexFolder_finalized_v2);
+    establishFolder(indexFolder_staging_v2);
+
+    // ...plus the final block index
+    build_final_block_index();
+
+    CBlock latest;
+    getBlock(latest, "latest");
+    latestBlockTs = latest.timestamp;
 
     blknum_t staging, finalized, client;
     getLastBlocks(staging, finalized, client);
@@ -115,16 +113,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!isParity() || !nodeHasTraces())
         return usage("This tool will only run if it is running against a Parity node that has tracing enabled. Quitting...");
 
-    // SEARCH FOR 'BIT_TWIDDLE_AMT 200'
-//    bitBound = getGlobalConfig("blockScrape")->getConfigInt("settings", "bitBound", 200);
     maxIndexBytes = getGlobalConfig("blockScrape")->getConfigInt("settings", "maxIndexBytes", maxIndexBytes);
-
-    CBlock latest;
-    getBlock(latest, "latest");
-    latestBlockTs = latest.timestamp;
-
-    establishFolder(indexFolder_sorted_v2);
-    establishFolder(indexFolder_staging_v2);
 
     //TODO(tjayrush): Part of the dAppNode docker hack. Otherwise, blockScrape gets stuck if dAppNode kills us
     ::remove((finalBlockIndex_v2 + ".lck").c_str());
@@ -132,6 +121,7 @@ bool COptions::parseArguments(string_q& command) {
 
     if (!finalBlockCache2.Lock(finalBlockIndex_v2, modeWriteAppend, LOCK_WAIT))
         return usage("Cannot open finalBlockIndex. Quitting...");
+
     return true;
 }
 
@@ -143,11 +133,8 @@ void COptions::Init(void) {
     startBlock    = NOPOS;
     endBlock      = NOPOS;
     maxBlocks     = NOPOS;
-    writeBlocks   = true;
-    //addrIndex     = false;
-    //consolidate   = false;
+    writeBlocks   = false;
     minArgs       = 0;
-    //bitBound      = 200;
     maxIndexBytes = 50000000;  // 50 MB
 }
 
