@@ -85,24 +85,18 @@ bool findTimestamp_binarySearch(CBlock& block, size_t first, size_t last) {
         CBlock b1, b2;
         getBlock(b1, mid);
         getBlock(b2, mid+1);
-//cout << "binary: " << padNum9((blknum_t)first) << " " << padNum9((blknum_t)mid) << " " << padNum9((blknum_t)last);
-//cout << " | " << ts_2_Date(b1.timestamp) << "<-- " << ts_2_Date(block.timestamp) << " -->" << ts_2_Date(b2.timestamp);
         bool atMid  = (b1.timestamp <= block.timestamp);
         bool atMid1 = (b2.timestamp <= block.timestamp);
         if (atMid && !atMid1) {
-//cout << " found (" << mid << ")" << endl;
             block = b1;
             return true;
         } else if (!atMid) {
             // we're too high, so search below
-//cout << " down (" << first << "," << (mid-1) << ")" << endl;
             return findTimestamp_binarySearch(block, first, mid-1);
         }
         // we're too low, so search above
-//cout << " up" << "(" << (mid+1) << "," << last << ")" << endl;
         return findTimestamp_binarySearch(block, mid+1, last);
     }
-//cout << " hit (" << first << "," << last << ")" << endl;
     getBlock(block, first);
     return true;
 }

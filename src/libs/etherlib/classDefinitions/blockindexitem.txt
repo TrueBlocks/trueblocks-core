@@ -1,4 +1,0 @@
-[settings]
-class       = CBlockIndexItem
-fields      = uint32 bn|uint32 ts|uint16 cnt
-includes    = etherlib.h

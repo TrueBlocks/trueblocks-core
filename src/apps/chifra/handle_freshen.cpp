@@ -12,21 +12,17 @@ bool COptions::handle_freshen(void) {
     if (addrs.empty())
         return usage("This function requires an address. Quitting...");
     for (auto addr : addrs)
-        if (!freshen_internal(monitorsPath, addr, flags, BOTH))
+        if (!freshen_internal(monitorsPath, addr, flags))
             return false;
     return true;
 }
 
 //------------------------------------------------------------------------------------------------
-bool freshen_internal(const string_q& path, const address_t& addr, const string_q& flagsIn, FreshenMode fMode) {
+bool freshen_internal(const string_q& path, const address_t& addr, const string_q& flagsIn) {
 
     ostringstream os;
     os << "cd " << path << " ; ";
-
-    if (fMode & INDEX)
-        os << "acctScrape " << flagsIn << " " << addr << " --useIndex ; ";
-    if (fMode & BLOOM)
-        os << "acctScrape " << flagsIn << " " << addr << " --maxBlocks 50000 ; ";
+    os << "acctScrape " << flagsIn << " " << addr << " --useIndex ; ";
 
     if (isTestMode())
         cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;

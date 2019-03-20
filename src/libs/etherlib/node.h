@@ -13,7 +13,6 @@
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
 #include "node_curl.h"
-#include "blockindexitem.h"
 
 namespace qblocks {
 
@@ -46,7 +45,7 @@ namespace qblocks {
     extern bool     isContractAt            (const address_t& addr, blknum_t blockNum=NOPOS);
 
     //-------------------------------------------------------------------------
-    extern bool     queryBlock              (CBlock& block,       const string_q& num, bool needTrace);
+    extern bool     queryBlock              (CBlock& block, const string_q& num, bool needTrace);
 
     //-------------------------------------------------------------------------
     // lower level access to the node's responses
@@ -123,7 +122,6 @@ namespace qblocks {
     extern string_q getCachePath            (const string_q& _part);
 
     //-------------------------------------------------------------------------
-    #define finalBlockIndex_v2       (getCachePath("finalBlocks_v2.bin"))
     #define blockFolder_v2           (getCachePath("blocks/"))
     #define bloomFolder_v2           (getCachePath("blooms/"))
 

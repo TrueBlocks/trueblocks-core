@@ -1,9 +1,0 @@
-blockMan argc: 5 [1:--list] [2:-e] [3:--skip] [4:50000] 
-blockMan --list -e --skip 50000 
-Starting scan...
-1	e
-50001	e
-100001	e
-150001	e
-250001	e
-...done

@@ -17,7 +17,6 @@ public:
     timestamp_t latestBlockTs;
     uint64_t    maxIndexBytes;
     bool        writeBlocks;
-    CArchive    finalBlockCache2;
 
     COptions(void);
     ~COptions(void);
@@ -28,5 +27,4 @@ public:
 };
 
 //-------------------------------------------------------------------------
-extern bool build_final_block_index(void);
 extern bool handle_freshen(COptions& options);
