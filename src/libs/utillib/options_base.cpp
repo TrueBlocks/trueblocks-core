@@ -875,6 +875,12 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         hiUp1  = (isTestMode() ? "" : cYellow) + "  ";
         hiUp2  = (isTestMode() ? "" : cTeal);
         hiDown = (isTestMode() ? "" : cOff);
+        arguments.clear();
+        commandLines.clear();
+        tools.clear();
+        namedAccounts.clear();
+        pParams = NULL;
+        cntParams = 0;
     }
 
 #define TEXT_NAMES
