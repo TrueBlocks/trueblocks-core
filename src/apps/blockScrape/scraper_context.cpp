@@ -145,8 +145,8 @@ public:
 void CScraper::updateAddrIndex(void) {
 
     ASSERT(pBlock);
-    string_q indexFilename = indexFolder_staging_v2 + padNum9(block.blockNumber) + ".txt";
-    string_q countFile     = indexFolder_staging_v2 + "counts.txt";
+    string_q indexFilename = indexFolder_finalized_v2 + padNum9(block.blockNumber) + ".txt";
+    string_q countFile     = indexFolder_v2 + "tmp/counts.txt";
 
     // Note: we are inside the lockSection
 
@@ -178,45 +178,38 @@ void CScraper::updateAddrIndex(void) {
         counters.push_back(counter);
         curSize += counter.size;
     }
-    if (curSize > options->maxIndexBytes) {
-        CStringArray apps;
-        apps.reserve(620000);
-        for (auto counter : counters) {
-            string_q theStuff;
-            string_q fn = substitute(countFile, "counts", padNum9(counter.bn));
-            asciiFileToString(fn, theStuff);
-            CStringArray lns;
-            explode(lns, theStuff, '\n');
-            for (auto ln : lns) {
-                apps.push_back(ln);
-            }
+
+    if (curSize < options->maxIndexBytes)
+        return;
+
+    CStringArray apps;
+    apps.reserve(620000);
+    for (auto counter : counters) {
+        string_q theStuff;
+        string_q fn = indexFolder_finalized_v2 + padNum9(counter.bn) + ".txt";
+        asciiFileToString(fn, theStuff);
+        CStringArray lns;
+        explode(lns, theStuff, '\n');
+        for (auto ln : lns) {
+            apps.push_back(ln);
         }
-        sort(apps.begin(), apps.end());
-        blknum_t first = counters[0].bn;
-        blknum_t last = counters[counters.size()-1].bn;
-        string_q resFile = substitute(countFile, "counts", padNum9(first)+"-"+padNum9(last));
-        resFile = substitute(resFile, "/staging/", "/tmp/");
-        for (auto app : apps)
-            appendToAsciiFile(resFile, app + "\n");
-        ::remove(countFile.c_str());
-        for (auto counter : counters)
-            ::remove(substitute(countFile, "counts", padNum9(counter.bn)).c_str());
-        putc(7,stdout);
-
-        cout << resFile << endl;
-        cout << "Press enter to continue or 'q' to quit" << endl;
-
     }
-}
+    sort(apps.begin(), apps.end());
+    blknum_t first = counters[0].bn;
+    blknum_t last = counters[counters.size()-1].bn;
 
-//--------------------------------------------------------------------------
-void CScraper::updateIndexes(void) {
+    string_q resFile = indexFolder_sorted_v2 + padNum9(first)+"-"+padNum9(last) + ".txt";
+    for (auto app : apps)
+        appendToAsciiFile(resFile, app + "\n");
+    ::remove(countFile.c_str());
+    for (auto counter : counters) {
+        string_q fn = indexFolder_finalized_v2 + padNum9(counter.bn) + ".txt";
+        ::remove(fn.c_str());
+    }
+    putc(7,stdout);
 
-    updateAddrIndex();
-
-    CBlockIndexItem item(block.blockNumber, block.timestamp, block.transactions.size());
-    options->finalBlockCache2 << item.bn << item.ts << item.cnt;
-    options->finalBlockCache2.flush();
+    //    moveFile(indexFolder_staging_v2   + padNum9(block.blockNumber) + ".txt",
+    //             indexFolder_finalized_v2 + padNum9(block.blockNumber) + ".txt");
 }
 
 //-------------------------------------------------------------------------

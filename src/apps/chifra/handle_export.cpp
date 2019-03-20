@@ -12,7 +12,7 @@ bool COptions::handle_export(void) {
         return usage("This function requires an address. Quitting...");
 
     for (auto addr : addrs) {
-        if (!freshen_internal(monitorsPath, addr, "", INDEX))
+        if (!freshen_internal(monitorsPath, addr, ""))
             return false;
         ostringstream os;
         os << "cd " << monitorsPath << " ; ";

@@ -148,10 +148,6 @@ bool COptions::parseArguments(string_q& command) {
             return usage("The last block file '" + fn + "' is locked. Quitting...");
     }
 
-    string_q bloomPath = getCachePath("/blooms/");
-    if (!useIndex && !folderExists(bloomPath))
-        return usage("The bloom file cache '" + bloomPath + "' was not found. Quitting...");
-
     if (useIndex && !folderExists(indexFolder_sorted_v2))
         return usage("Address index path `" + indexFolder_sorted_v2 + "' not found. Quitting...");
 

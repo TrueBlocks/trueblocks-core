@@ -63,9 +63,7 @@ bool COptions::parseArguments(string_q& command) {
     establishFolder(indexFolder_sorted_v2);
     establishFolder(indexFolder_finalized_v2);
     establishFolder(indexFolder_staging_v2);
-
-    // ...plus the final block index
-    build_final_block_index();
+    establishFolder(indexFolder_v2 + "tmp/");
 
     CBlock latest;
     getBlock(latest, "latest");
@@ -115,13 +113,6 @@ bool COptions::parseArguments(string_q& command) {
 
     maxIndexBytes = getGlobalConfig("blockScrape")->getConfigInt("settings", "maxIndexBytes", maxIndexBytes);
 
-    //TODO(tjayrush): Part of the dAppNode docker hack. Otherwise, blockScrape gets stuck if dAppNode kills us
-    ::remove((finalBlockIndex_v2 + ".lck").c_str());
-    // TODO: SEE ISSUE #1014
-
-    if (!finalBlockCache2.Lock(finalBlockIndex_v2, modeWriteAppend, LOCK_WAIT))
-        return usage("Cannot open finalBlockIndex. Quitting...");
-
     return true;
 }
 
@@ -139,12 +130,10 @@ void COptions::Init(void) {
 }
 
 //---------------------------------------------------------------------------------------------------
-COptions::COptions(void) : finalBlockCache2(WRITING_ARCHIVE) {
+COptions::COptions(void) {
     Init();
 }
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-    if (finalBlockCache2.isOpen())
-        finalBlockCache2.Release();
 }
