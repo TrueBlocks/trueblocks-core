@@ -60,7 +60,7 @@ bool COptions::handle_daemon(void) {
                 if (startsWith(acct.addr, filter))
                     run = true;
             if (run)
-                freshen_internal(monitorsPath, acct.addr, "", BOTH);
+                freshen_internal(monitorsPath, acct.addr, "");
         }
 
         cerr << "Sleeping for " << sleep << " seconds" << endl;

@@ -12,6 +12,7 @@
  *-------------------------------------------------------------------------------------------*/
 #include <string>
 #include "node.h"
+#include "filenames.h"
 
 namespace qblocks {
 
@@ -69,7 +70,6 @@ static const char *STR_ERROR_NODEREQUIRED =
         CParameter::registerClass();
         CRPCResult::registerClass();
         CAccountName::registerClass();
-        CBlockIndexItem::registerClass();
 
         establishFolder(configPath(""));
         establishFolder(getCachePath(""));
@@ -325,47 +325,26 @@ static const char *STR_ERROR_NODEREQUIRED =
         return true;
     }
 
-//#define OLD_FULL_BLOCKS
     //--------------------------------------------------------------------------
     blknum_t getLastBlock_cache_final(void) {
 
-#ifdef OLD_FULL_BLOCKS
-        CArchive fullBlockCache(READING_ARCHIVE);
-        if (!fullBlockCache.Lock(fullBlockIndex, modeReadOnly, LOCK_NOWAIT)) {
-            if (!isTestMode())
-                cerr << "getLatestBlockFromCache failed: " << fullBlockCache.LockFailure() << "\n";
-            return 0;
+        string_q finLast = getLastFileInFolder(indexFolder_finalized_v2, false);
+        if (!finLast.empty())
+            return bnFromPath(finLast);
+        finLast = getLastFileInFolder(indexFolder_sorted_v2, false);
+        if (!finLast.empty()) {
+            blknum_t last;
+            bnFromPath(finLast, last);
+            return last;
         }
-        ASSERT(fullBlockCache.isOpen());
-
-        uint64_t ret = 0;
-        fullBlockCache.Seek( (-1 * (long)sizeof(uint64_t)), SEEK_END);  // NOLINT
-        fullBlockCache.Read(ret);
-        fullBlockCache.Release();
-        return ret;
-#else
-        CArchive finalBlockCache(READING_ARCHIVE);
-        if (!finalBlockCache.Lock(finalBlockIndex_v2, modeReadOnly, LOCK_NOWAIT)) {
-            if (!isTestMode())
-                cerr << "getLastBlock_cache_final failed: " << finalBlockCache.LockFailure() << "\n";
-            return 0;
-        }
-        ASSERT(finalBlockCache.isOpen());
-
-        size_t nRecords = fileSize(finalBlockIndex_v2) / CBlockIndexItem::sizeOnDisc();
-        if (nRecords == 0)
-            return 0;
-        long posLast = (long)((nRecords-1) * CBlockIndexItem::sizeOnDisc());
-        finalBlockCache.Seek(posLast, SEEK_SET);  // NOLINT
-        CBlockIndexItem item;
-        finalBlockCache >> item.bn >> item.ts >> item.cnt;
-        finalBlockCache.Release();
-        return item.bn;
-#endif
+        return 0;
     }
 
     //--------------------------------------------------------------------------
     blknum_t getLastBlock_cache_stage(void) {
+        string_q finStage = getLastFileInFolder(indexFolder_staging_v2, false);
+        if (!finStage.empty())
+            return bnFromPath(indexFolder_staging_v2);
         return getLastBlock_cache_final();
     }
 

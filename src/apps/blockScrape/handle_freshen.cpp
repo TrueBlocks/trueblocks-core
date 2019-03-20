@@ -56,7 +56,7 @@ bool handle_freshen(COptions& options) {
             // Because we haven't scraped this block, but we want to write all its data, we need to re-scrape here.
             if (!needToScrape)
                 scraper.scrapeBlock();
-            scraper.updateIndexes();
+            scraper.updateAddrIndex();
             lockSection(false);
             if (!options.writeBlocks)
                 ::remove(getBinaryFilename(num).c_str());

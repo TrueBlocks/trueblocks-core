@@ -18,5 +18,4 @@ add_subdirectory(blockScrape)
 add_subdirectory(acctScrape)
 add_subdirectory(chifra)
 
-add_subdirectory(blockMan)
 add_subdirectory(bloomMan)

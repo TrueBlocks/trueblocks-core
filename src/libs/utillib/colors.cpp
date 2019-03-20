@@ -34,6 +34,7 @@ namespace qblocks {
     string_q reversed   = "\e[7m";
     string_q strikethru = "\e[7m";
     string_q greenCheck = "\e[0;32m✓\e[0m";
+    string_q yellowCaution = "\e[7m\e[0;33m!!\e[0m";
     string_q redX       = "\e[0;31mX\e[0m";
     string_q whiteStar  = "\e[0;37m✽\e[0m";
 

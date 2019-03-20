@@ -30,8 +30,6 @@ public:
     string_q report(uint64_t last);
 
     void noteAddress(const address_t& addr, bool isMiner=false);
-
-    void updateIndexes(void);
     void updateAddrIndex(void);
 };
 

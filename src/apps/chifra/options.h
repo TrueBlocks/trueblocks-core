@@ -6,7 +6,6 @@
  *------------------------------------------------------------------------*/
 #include "acctlib.h"
 
-typedef enum { NONE = 0, INDEX = (1<<0), BLOOM = (1<<1), BOTH = (INDEX | BLOOM) } FreshenMode;
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
@@ -40,7 +39,7 @@ public:
 };
 
 //--------------------------------------------------------------------------------
-extern bool freshen_internal(const string_q& path, const address_t& addr, const string_q& flags, FreshenMode mode);
+extern bool freshen_internal(const string_q& path, const address_t& addr, const string_q& flags);
 
 //--------------------------------------------------------------------------------
 extern string_q colors[];
