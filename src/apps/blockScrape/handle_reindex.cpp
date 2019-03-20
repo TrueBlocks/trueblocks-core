@@ -40,7 +40,7 @@ bool markNonEmptyBlocks(const string_q& path, void *data) {
 }
 
 //--------------------------------------------------------------------------
-bool establishBlockIndex(void) {
+bool build_final_block_index(void) {
 
     // If the full block index already exists, we don't need to re-create it
     string_q finFile = substitute(finalBlockIndex_v2, ".bin", ".fin");
@@ -68,6 +68,6 @@ bool establishBlockIndex(void) {
         return finished;
     }
 
-    cerr << "establishBlockIndex failed: " << finalBlockCache.LockFailure() << "\n";
+    cerr << "build_final_block_index failed: " << finalBlockCache.LockFailure() << "\n";
     return false;
 }

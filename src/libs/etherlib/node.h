@@ -46,7 +46,7 @@ namespace qblocks {
     extern bool     isContractAt            (const address_t& addr, blknum_t blockNum=NOPOS);
 
     //-------------------------------------------------------------------------
-    extern bool     queryBlock              (CBlock& block,       const string_q& num, bool needTrace, bool byHash);
+    extern bool     queryBlock              (CBlock& block,       const string_q& num, bool needTrace);
 
     //-------------------------------------------------------------------------
     // lower level access to the node's responses
@@ -129,6 +129,7 @@ namespace qblocks {
 
     #define indexFolder_v2           (getCachePath("addr_index/"))
     #define indexFolder_sorted_v2    (getCachePath("addr_index/sorted/"))
+    #define indexFolder_finalized_v2 (getCachePath("addr_index/finalized/"))
     #define indexFolder_staging_v2   (getCachePath("addr_index/staging/"))
     #define indexFolder_zips_v2      (getCachePath("addr_index/zips/"))
 

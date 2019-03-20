@@ -24,7 +24,6 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-extern time_q grabDate(const string_q& strIn);
 extern bool containsAny(const string_q& haystack, const string_q& needle);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -62,7 +61,7 @@ bool COptions::parseArguments(string_q& command) {
             if (isList)
                 return usage("The --list option must appear alone on the line. Quitting...");
 
-            time_q date = grabDate(arg);
+            time_q date = str_2_Date(arg);
             if (date == earliestDate) {
                 return usage("Invalid date: '" + orig + "'. Quitting...");
 
@@ -184,56 +183,6 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
         return ret;
     }
     return str;
-}
-
-//--------------------------------------------------------------------------------
-time_q grabDate(const string_q& strIn) {
-
-    if (strIn.empty()) {
-        return earliestDate;
-    }
-
-// #error
-    string_q str = strIn;
-    replaceAny(str, " -:", ";");
-    replace(str, ";UTC", "");
-    str = nextTokenClear(str, '.');
-
-    // Expects four number year, two number month and day at a minimum. Fields may be separated by '-' or ';'
-    //    YYYYMMDD or YYYY;MM;DD
-    replaceAll(str, ";", "");
-    if (contains(str, "T")) {
-        replace(str, "T", "");
-               if (str.length() == 10) { str += "0000";
-        } else if (str.length() == 12) { str += "00";
-        } else if (str.length() != 14) { cerr << "Bad: " << str << "\n"; return earliestDate;
-        }
-    } else {
-        str += "000000";
-    }
-
-#define NP ((uint32_t)-1)
-#define str_2_Int32u(a) (uint32_t)str_2_Uint((a))
-    uint32_t y, m, d, h, mn, s;
-    y = m = d = h = mn = s = NP;
-    if (isUnsigned(extract(str,  0, 4))) { y  = str_2_Int32u(extract(str,  0, 4)); }
-    if (isUnsigned(extract(str,  4, 2))) { m  = str_2_Int32u(extract(str,  4, 2)); }
-    if (isUnsigned(extract(str,  6, 2))) { d  = str_2_Int32u(extract(str,  6, 2)); }
-    if (isUnsigned(extract(str,  8, 2))) { h  = str_2_Int32u(extract(str,  8, 2)); }
-    if (isUnsigned(extract(str, 10, 2))) { mn = str_2_Int32u(extract(str, 10, 2)); }
-    if (isUnsigned(extract(str, 12, 2))) { s  = str_2_Int32u(extract(str, 12, 2)); }
-
-    // If any of them was not an unsigned int, it's a fail
-    if (y == NP || m == NP || d == NP || h == NP || mn == NP || s == NP)
-        return earliestDate;
-
-    if (m > 12) return earliestDate;
-    if (d > 31) return earliestDate;
-    if (h > 23) return earliestDate;
-    if (mn > 59) return earliestDate;
-    if (s > 59) return earliestDate;
-
-    return time_q(y, m, d, h, mn, s);
 }
 
 //--------------------------------------------------------------------------------

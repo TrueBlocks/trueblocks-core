@@ -13,6 +13,7 @@
 #include "etherlib.h"
 #include "options.h"
 
+extern bool lookupDate(const COptions *options, CBlock& block, const timestamp_t& ts);
 //---------------------------------------------------------------
 int main(int argc, const char *argv[]) {
     etherlib_init(quickQuitHandler);
@@ -44,14 +45,12 @@ int main(int argc, const char *argv[]) {
 
             CBlock block;
             if (mode == "block") {
-                queryBlock(block, value, false, false);
+                queryBlock(block, value, false);
 
             } else if (mode == "date") {
-                return options.usage("The searching by date feature has been depreciated. Quitting...");
-//                time_q date = ts_2_Date((timestamp_t)str_2_Uint(value));
-//                bool found = lookupDate(&options, block, date);
-//                if (!found)
-//                    return 0;
+                bool found = lookupDate(&options, block, (timestamp_t)str_2_Uint(value));
+                if (!found)
+                    return 0;
             }
 
             // special case for the zero block
@@ -75,7 +74,6 @@ int main(int argc, const char *argv[]) {
 }
 
 #if 0
-/*
 //---------------------------------------------------------------
 //TODO(tjayrush): global data
 // This global data is fine since this program is not threaded.
@@ -91,7 +89,6 @@ int findFunc(const void *v1, const void *v2) {
     g_higher = (m1->ts < m2->ts ? m2->bn : g_higher);
     return static_cast<int>(m1->ts - m2->ts);
 }
-
 //---------------------------------------------------------------
 class CBlockFinder {
 public:
@@ -99,10 +96,8 @@ public:
     uint64_t found;
     explicit CBlockFinder(timestamp_t t) : ts(t), found(0) { }
 };
-
 //---------------------------------------------------------------
 bool lookCloser(CBlock& block, void *data) {
-
     CBlockFinder *bf = reinterpret_cast<CBlockFinder*>(data);
     if (block.timestamp <= bf->ts) {
         bf->found = block.blockNumber;
@@ -110,51 +105,60 @@ bool lookCloser(CBlock& block, void *data) {
     }
     return false;
 }
+#endif
 
-//---------------------------------------------------------------
-bool lookupDate(const COptions *options, CBlock& block, const time_q& date) {
-    if (!g_dataPtr) {
-        g_nBlocks = fileSize(fi nalBlockIndex_v2) / C BlockIndexItem::sizeOnDisc();
-        g_dataPtr = new C BlockIndexItem[g_nBlocks];  // this allocation gets cleaned up by the options destructor
-        if (!g_dataPtr)
-            return options->usage("Could not allocate memory for the blocks (size needed: " + uint_2_Str(g_nBlocks) + ").\n");
-//        bzero(g_dataPtr, C BlockIndexItem::sizeOnDisc()*(g_nBlocks));
-        if (verbose)
-            cerr << "Allocated room for " << g_nBlocks << " index items.\n";
+//--------------------------------------------------------------
+bool findTimestamp_binarySearch(CBlock& block, size_t first, size_t last) {
 
-        // Next, we try to open the f inalBlocks index database (caller will cleanup)
-        FILE *fpBlocks = fopen(f inalBlockIndex_v2.c_str(), modeReadOnly);
-        if (!fpBlocks)
-            return options->usage("Could not open the f inalBlocks index database: " + f inalBlockIndex_v2 + ".\n");
-        // Read the entire f inalBlocks index database into memory in one chunk
-        size_t nRead = fread(g_dataPtr, C BlockIndexItem::sizeOnDisc(), g_nBlocks, fpBlocks);
-        if (nRead != g_nBlocks)
-            return options->usage("Error encountered reading f inalBlocks index database. Quitting...");
-        if (verbose)
-            cerr << "Read " << nRead << " f inalBlocks index into memory.\n";
+    string_q t("|/-\\|/-\\");
+    static int i = 0;
+    if (!isTestMode()) { cerr << "\r" << cGreen << t[(i++%8)] << " working" << cOff; cerr.flush(); }
+
+    if (last > first) {
+        size_t mid = first + ((last - first) / 2);
+        CBlock b1, b2;
+        getBlock(b1, mid);
+        getBlock(b2, mid+1);
+//cout << "binary: " << padNum9((blknum_t)first) << " " << padNum9((blknum_t)mid) << " " << padNum9((blknum_t)last);
+//cout << " | " << ts_2_Date(b1.timestamp) << "<-- " << ts_2_Date(block.timestamp) << " -->" << ts_2_Date(b2.timestamp);
+        bool atMid  = (b1.timestamp <= block.timestamp);
+        bool atMid1 = (b2.timestamp <= block.timestamp);
+        if (atMid && !atMid1) {
+//cout << " found (" << mid << ")" << endl;
+            block = b1;
+            return true;
+        } else if (!atMid) {
+            // we're too high, so search below
+//cout << " down (" << first << "," << (mid-1) << ")" << endl;
+            return findTimestamp_binarySearch(block, first, mid-1);
+        }
+        // we're too low, so search above
+//cout << " up" << "(" << (mid+1) << "," << last << ")" << endl;
+        return findTimestamp_binarySearch(block, mid+1, last);
     }
-
-    C BlockIndexItem search;
-    search.ts = (uint32_t)date_2_Ts(date);
-    C BlockIndexItem *found = reinterpret_cast<C BlockIndexItem*>(bsearch(&search, g_dataPtr, g_nBlocks, C BlockIndexItem::sizeOnDisc(), findFunc));
-    if (found) {
-        queryBlock(block, uint_2_Str(found->bn), false, false);
-        return true;
-    }
-    //cout << search.timestamp << " is somewhere between " << g_lower << " and " << g_higher << "\n";
-    C BlockFinder finder(search.ts);
-    forEveryBlockOnDisc(lookCloser, &finder, g_lower, g_higher-g_lower);
-    queryBlock(block, uint_2_Str(finder.found), false, false);
+//cout << " hit (" << first << "," << last << ")" << endl;
+    getBlock(block, first);
     return true;
 }
 
-
 //---------------------------------------------------------------
-void unloadCache(void) {
-    if (g_dataPtr) {
-        delete [] g_dataPtr;
-        g_dataPtr = NULL;
+bool lookupDate(const COptions *options, CBlock& block, const timestamp_t& ts) {
+    time_q date = ts_2_Date(ts);
+
+    // speed up
+    blknum_t start = 1, stop = getLastBlock_client();
+    if (date.GetYear() >= 2019) {
+        start = 6988614;
+    } else if (date.GetYear() >= 2018) {
+        start = 4832685; stop = 6988614;
+    } else if (date.GetYear() >= 2017) {
+        start = 2912406; stop = 4832685;
+    } else if (date.GetYear() >= 2016) {
+        start = 778482; stop = 2912406;
     }
+
+    block.timestamp = ts;
+    bool ret = findTimestamp_binarySearch(block, start, stop);
+    if (!isTestMode()) { cerr << "\r"; cerr.flush(); }
+    return ret;
 }
-*/
-#endif

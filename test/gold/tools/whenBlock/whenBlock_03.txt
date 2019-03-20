@@ -1,27 +1,15 @@
 whenBlock argc: 2 [1:--file:dates.txt] 
 whenBlock --file:dates.txt 
-
-  The searching by date feature has been depreciated. Quitting...
-
-  Usage:    whenBlock [-d|-l|-v|-h] < block | date > [ block... | date... ]  
-  Purpose:  Finds the nearest block prior to a date, or the nearest date prior to a block.
-            Alternatively, search for one of special 'named' blocks.
-             
-  Where:  
-	block                 one or more block numbers (or a 'special' block), or...
-	date                  one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]
-	-d  (--data)          display the result as data (tab delimited; useful for scripting)
-	-l  (--list)          list names and block numbers for special blocks
-	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
-	-h  (--help)          display this help screen
-
-  Notes:
-	- Use the following names to represent `special` blocks:
-	  - first (0), firstTrans (46147), iceage (200000), devcon1 (543626)
-	  - homestead (1150000), daofund (1428756), daohack (1718497), daofork (1920000)
-	  - devcon2 (2286910), tangerine (2463000), spurious (2675000), stateclear (2717576)
-	  - eea (3265360), ens2 (3327417), parityhack1 (4041179), byzantium (4370000)
-	  - devcon3 (4469339), parityhack2 (4501969), kitties (4605167), devcon4 (6610279)
-	  - constantinople (7280000), latest ()
-
-  Powered by QBlocks
+block #250000 : 1442534024 : 2015-09-17 23:53:44 UTC
+block #500000 : 1446832865 : 2015-11-06 18:01:05 UTC
+block #750000 : 1451117502 : 2015-12-26 08:11:42 UTC
+block #1000000 : 1455404053 : 2016-02-13 22:54:13 UTC
+block #1250000 : 1459414781 : 2016-03-31 08:59:41 UTC
+block #1500000 : 1463003133 : 2016-05-11 21:45:33 UTC
+block #1750000 : 1466589708 : 2016-06-22 10:01:48 UTC
+block #2000000 : 1470173578 : 2016-08-02 21:32:58 UTC
+block #2250000 : 1473744452 : 2016-09-13 05:27:32 UTC
+block #2500000 : 1477324790 : 2016-10-24 15:59:50 UTC
+block #2750000 : 1480910316 : 2016-12-05 03:58:36 UTC
+block #3000000 : 1484475035 : 2017-01-15 10:10:35 UTC
+block #3250000 : 1488052050 : 2017-02-25 19:47:30 UTC

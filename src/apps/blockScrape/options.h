@@ -17,9 +17,6 @@ public:
     timestamp_t latestBlockTs;
     uint64_t    maxIndexBytes;
     bool        writeBlocks;
-    //uint64_t    bitBound;
-    //bool        addrIndex;
-    //bool        consolidate;
     CArchive    finalBlockCache2;
 
     COptions(void);
@@ -31,5 +28,5 @@ public:
 };
 
 //-------------------------------------------------------------------------
-extern bool establishBlockIndex(void);
+extern bool build_final_block_index(void);
 extern bool handle_freshen(COptions& options);
