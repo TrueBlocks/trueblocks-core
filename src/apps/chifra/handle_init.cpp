@@ -26,7 +26,9 @@ bool COptions::handle_init(void) {
             if (!isTestMode())
                 moveFile(stageName, prodName);
             else
-                cerr << "Would have moved " << stageName << " to " << prodName << endl;
+                cerr << "Would have moved "
+                        << substitute(stageName, getCachePath(""), "$BLOCK_CACHE/") << " to "
+                        << substitute(prodName, getCachePath(""), "$BLOCK_CACHE/") << endl;
 
             stageName = stagingPath + addr + ".last.txt";
             prodName = monitorsPath + addr + ".last.txt";
@@ -35,7 +37,9 @@ bool COptions::handle_init(void) {
             if (!isTestMode())
                 moveFile(stageName, prodName);
             else
-                cerr << "Would have moved " << stageName << " to " << prodName << endl;
+                cerr << "Would have moved "
+                        << substitute(stageName, getCachePath(""), "$BLOCK_CACHE/") << " to "
+                        << substitute(prodName, getCachePath(""), "$BLOCK_CACHE/") << endl;
 
         } else {
             cerr << "The file ";
