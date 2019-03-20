@@ -122,7 +122,7 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
                 gold.transactions.at(t).timestamp = gold.timestamp;  // .at cannot go past end of vector!
 
         } else {
-            queryBlock(gold, numStr, true, false);
+            queryBlock(gold, numStr, true);
         }
 
         if (opt.force) {  // turn this on to force a write of the block to the disc
@@ -181,7 +181,7 @@ string_q checkOneBlock(uint64_t num, const COptions& opt) {
     // Now get the same block from QBlocks
     string_q fromQblocks;
     CBlock qBlocks;
-    queryBlock(qBlocks, numStr, true, false);
+    queryBlock(qBlocks, numStr, true);
     for (size_t i = 0 ; i < qBlocks.transactions.size() ; i++) {
         // QBlocks pulls the receipt for each transaction, but the RPC does
         // not. Therefore, we must set the transactions' gasUsed and logsBloom

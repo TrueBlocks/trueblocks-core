@@ -117,14 +117,14 @@ static const char *STR_ERROR_NODEREQUIRED =
     //-------------------------------------------------------------------------
     bool getBlock(CBlock& block, blknum_t blockNum) {
         getCurlContext()->provider = fileExists(getBinaryFilename(blockNum)) ? "binary" : "local";
-        bool ret = queryBlock(block, uint_2_Str(blockNum), true, false);
+        bool ret = queryBlock(block, uint_2_Str(blockNum), true);
         getCurlContext()->provider = "binary";
         return ret;
     }
 
     //-------------------------------------------------------------------------
     bool getBlock(CBlock& block, const hash_t& blockHash) {
-        return queryBlock(block, blockHash, true, true);
+        return queryBlock(block, blockHash, true);
     }
 
     //-------------------------------------------------------------------------
@@ -188,10 +188,10 @@ static const char *STR_ERROR_NODEREQUIRED =
     }
 
     //-------------------------------------------------------------------------
-    bool queryBlock(CBlock& block, const string_q& datIn, bool needTrace, bool byHash) {
+    bool queryBlock(CBlock& block, const string_q& datIn, bool needTrace) {
 
         if (datIn == "latest")
-            return queryBlock(block, uint_2_Str(getLastBlock_client()), needTrace, false);
+            return queryBlock(block, uint_2_Str(getLastBlock_client()), needTrace);
 
         if (isHash(datIn)) {
             HIDE_FIELD(CTransaction, "receipt");
@@ -344,7 +344,6 @@ static const char *STR_ERROR_NODEREQUIRED =
         fullBlockCache.Release();
         return ret;
 #else
-
         CArchive finalBlockCache(READING_ARCHIVE);
         if (!finalBlockCache.Lock(finalBlockIndex_v2, modeReadOnly, LOCK_NOWAIT)) {
             if (!isTestMode())
@@ -357,7 +356,7 @@ static const char *STR_ERROR_NODEREQUIRED =
         if (nRecords == 0)
             return 0;
         long posLast = (long)((nRecords-1) * CBlockIndexItem::sizeOnDisc());
-        finalBlockCache.Seek( posLast, SEEK_SET);  // NOLINT
+        finalBlockCache.Seek(posLast, SEEK_SET);  // NOLINT
         CBlockIndexItem item;
         finalBlockCache >> item.bn >> item.ts >> item.cnt;
         finalBlockCache.Release();
