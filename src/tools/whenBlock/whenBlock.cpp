@@ -73,40 +73,6 @@ int main(int argc, const char *argv[]) {
     return 0;
 }
 
-#if 0
-//---------------------------------------------------------------
-//TODO(tjayrush): global data
-// This global data is fine since this program is not threaded.
-static blknum_t         g_lower = ULONG_MAX;
-static blknum_t         g_higher = 0;
-static CBlockIndexItem *g_dataPtr = NULL;
-static uint64_t         g_nBlocks = 0;
-//---------------------------------------------------------------
-int findFunc(const void *v1, const void *v2) {
-    const CBlockIndexItem *m1 = (const CBlockIndexItem *)v1;
-    const CBlockIndexItem *m2 = (const CBlockIndexItem *)v2;
-    g_lower  = (m1->ts > m2->ts ? m2->bn : g_lower);
-    g_higher = (m1->ts < m2->ts ? m2->bn : g_higher);
-    return static_cast<int>(m1->ts - m2->ts);
-}
-//---------------------------------------------------------------
-class CBlockFinder {
-public:
-    timestamp_t ts;
-    uint64_t found;
-    explicit CBlockFinder(timestamp_t t) : ts(t), found(0) { }
-};
-//---------------------------------------------------------------
-bool lookCloser(CBlock& block, void *data) {
-    CBlockFinder *bf = reinterpret_cast<CBlockFinder*>(data);
-    if (block.timestamp <= bf->ts) {
-        bf->found = block.blockNumber;
-        return true;
-    }
-    return false;
-}
-#endif
-
 //--------------------------------------------------------------
 bool findTimestamp_binarySearch(CBlock& block, size_t first, size_t last) {
 
