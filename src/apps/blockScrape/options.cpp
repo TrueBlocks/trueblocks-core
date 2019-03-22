@@ -60,6 +60,8 @@ bool COptions::parseArguments(string_q& command) {
     establishFolder(indexFolder_finalized_v2);
     establishFolder(indexFolder_staging_v2);
     establishFolder(configPath("cache/tmp"));
+    if (writeBlocks)
+        establishFolder(blockFolder_v2);
 
     CBlock latest;
     getBlock(latest, "latest");
