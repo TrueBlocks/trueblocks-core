@@ -233,8 +233,10 @@ bool CScraper::finalizeList(void) {
     bool overLimit = curLines >= options->maxIndexRows;
     bool wayOver = curLines > (options->maxIndexRows + 500);
     bool is10 = !(block.blockNumber % 10);
-    if ((overLimit && is10) || wayOver)
+    if ((overLimit && is10) || wayOver) {
         consolidateIndex();
+        quickQuitHandler(0);
+    }
 
     return true;
 }

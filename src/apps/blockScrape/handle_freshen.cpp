@@ -56,10 +56,10 @@ bool handle_freshen(COptions& options) {
             // We need the block's data, but we haven't re-scraped, so we need to rescrape here.
             if (!needToScrape)
                 scraper.scrapeBlock();
-            scraper.finalizeList();
-            lockSection(false);
             if (!options.writeBlocks)
                 ::remove(getBinaryFilename(num).c_str());
+            scraper.finalizeList();
+            lockSection(false);
 
         } else {
             // We want to avoid rescraping the block if we can, so we store it here. We may delete it when the
