@@ -163,6 +163,16 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
+    bool CBaseNode::parseJson4(string_q& str) {
+        char *p = (char *)str.c_str();  // NOLINT
+        size_t nFields = 0;
+        p = parseJson1(p, nFields);
+        if (p)
+            str = p;
+        return (nFields);
+    }
+
+    //--------------------------------------------------------------------------------
     bool CBaseNode::parseJson3(string_q& str) {
         char *s = (char *)str.c_str();  // NOLINT
         char *p = cleanUpJson(s);

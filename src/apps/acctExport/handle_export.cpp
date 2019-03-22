@@ -208,7 +208,7 @@ bool loadData(COptions& options) {
 
     uint64_t nRecords = (fileSize(fileName) / (sizeof(uint64_t) * 2));
     if (!nRecords)
-        return options.usage("Old style cache file is present, but empty. Remove it to continue.");
+        return options.usage("Nothing to export. Quitting...");
 
     uint64_t *buffer = new uint64_t[nRecords * 2];
     bzero(buffer, nRecords * 2);

@@ -13,7 +13,7 @@ CScraper::CScraper(COptions *o, blknum_t num) :
     addrList(NULL, NULL, true),
     pTrans(NULL),
     traceCount(0),
-    curSize(0),
+    curLines(0),
     maxTraceDepth(0),
     nAddrsInBlock(0)
 {
@@ -31,20 +31,22 @@ bool CScraper::scrapeBlock(void) {
     // Note the miner address
     noteAddress(block.miner, true);
 
-    // We do not use forEveryTransaction here because we need the actual transaction so we can mark
-    // pre-byzantium errors by querying traces. forEvery... makes a copy which won't mark the error
-    for (uint32_t i = 0 ; i < block.transactions.size() ; i++) {
-        if (!scrapeTransaction(&block.transactions[i]))
+    // We do not use forEveryTransaction here because we need the actual transaction so
+    // we can mark pre-byzantium errors by querying traces. forEvery... makes a copy
+    // which won't mark the error
+    for (uint32_t tr = 0 ; tr < block.transactions.size() ; tr++) {
+        pTrans = &block.transactions[tr];
+        pTrans->pBlock = &block;
+        if (!scrapeTransaction())
             return false;
     }
     return true;
 }
 
 //---------------------------------------------------------------------------
-bool CScraper::scrapeTransaction(CTransaction *txPtr) {
+bool CScraper::scrapeTransaction(void) {
 
-    pTrans = txPtr;
-    pTrans->pBlock = &block;
+    ASSERT(pTrans != NULL);
     getReceipt(pTrans->receipt, pTrans->hash);
 
     noteAddress(pTrans->from);
@@ -63,46 +65,88 @@ bool CScraper::scrapeTransaction(CTransaction *txPtr) {
         foundPotential(notePotential, this, pTrans->blockNumber, pTrans->transactionIndex, 0, extract(log->data, 2));
     }
 
-    uint64_t nTraces = getTraceCount(pTrans->hash);
-    bool ddos        = ddosRange(block.blockNumber);
-    bool isDDos      = ddos && nTraces > 250;
-    bool isExcl      = ddos && (options->isExcluded(pTrans->from) || options->isExcluded(pTrans->to));
-    if (!isDDos && !isExcl) {
-        // We can use forEveryTrace... here because we don't need to save any data on the trace. It's okay to use a copy
-        potList = "";
-        forEveryTraceInTransaction(visitTrace, this, *pTrans);
-        // We handle all the traces potentials here since we don't use trace id anyway
-        foundPotential(notePotential, this, pTrans->blockNumber, pTrans->transactionIndex, 0, potList);
+    traceCount += getTraceCount(pTrans->hash);
+
+    string_q traces;
+    queryRawTrace(traces, pTrans->hash);
+
+    // We want to be able to count the entries in the traceAddress array, so we mark them differently...
+    string_q search = "traceAddress";
+    size_t pos = traces.find(search);
+    while(pos != string::npos) {
+        pos += search.size();
+        while (traces[pos] != ']') {
+            if (traces[pos] == ',')
+                traces[pos] = '|';
+            pos++;
+        }
+        pos = traces.find(search, pos + search.size());
     }
 
-    if (pTrans->pBlock->blockNumber >= byzantiumBlock)
-        pTrans->isError = (pTrans->receipt.status == 0); // contains zero on fail
+    // ...before this code which separates fields in the JSON
+    for (char& ch : traces) {
+        if (ch == '\"') ch = ' ';
+        if (ch == ',') ch = '+';
+        if (ch == '{') ch = '+';
+        if (ch == '}') ch = ' ';
+    }
 
-    return true;
+    CStringArray vals;
+    vals.reserve(countOf(traces, '+') + 10); // extra room
+
+    explode(vals, traces, '+');
+    bool hasError = false;
+    for (auto v : vals) {
+        v = trim(v);
+
+#define VV(s) \
+{ \
+    string_q ss(s); \
+    ss += " : "; \
+    if (startsWith(v, ss)) \
+        noteAddress(v.substr(ss.size())); \
 }
 
-//-------------------------------------------------------------------------
-bool visitTrace(CTrace& trace, void *data) {
+        VV("from");
+        VV("to");
+        VV("address"); // both from trace.action and trace.result
+        VV("refundAddress");
 
-    CScraper *sCtx = (CScraper*)data;
+#define VV2(s,n) { \
+    string_q ss(s); \
+    ss += " : "; \
+    if (startsWith(v, ss)) { \
+        size_t sz = min(v.size(), ss.size() + n); \
+        ss = v.substr(sz); \
+        if (!isZeroAddr(ss)) \
+            potList += ss; \
+    } \
+}
 
-    // Note, this is redundant. It is also done in queryBlock. We do it in both places becuase it is
-    // possible to create (and write) a new block directly from other programs
-    if (sCtx->pTrans->pBlock->blockNumber < byzantiumBlock && // if we are before the byzantium hard fork...
-        sCtx->pTrans->gas == sCtx->pTrans->receipt.gasUsed) { // ...and gasUsed == gasLimit...
-        if (!sCtx->pTrans->isError)                           // ...and we're not yet an error...
-            ((CTransaction*)sCtx->pTrans)->isError = trace.isError();
+        potList = "";
+        VV2("input", 10);
+        VV2("output", 2);
+        foundPotential(notePotential, this, pTrans->blockNumber, pTrans->transactionIndex, 0, potList);
+
+        if (startsWith(v, "traceAddress"))
+            maxTraceDepth = max(maxTraceDepth, (uint64_t)(countOf(v, '|') + 1));
+
+        if (startsWith(v, "error"))
+            hasError = true;
+
+        // We ignore 'code' and 'init'
+        // if (startsWith(v, "code") cout << v << endl;
+        // if (startsWith(v, "init") cout << v << endl;
     }
 
-    sCtx->noteAddress(trace.action.from);
-    sCtx->noteAddress(trace.action.to);
-    sCtx->noteAddress(trace.action.refundAddress);
-    sCtx->noteAddress(trace.action.address);
-    sCtx->noteAddress(trace.result.address);
-    sCtx->potList += extract(trace.action.input, 10);
-    sCtx->potList += extract(trace.result.output, 2);
-    sCtx->traceCount++;
-    sCtx->maxTraceDepth = max(sCtx->maxTraceDepth, (uint64_t)trace.traceAddress.size());
+    // If we're writing blocks, we need an error code on the transaction
+    if (options->writeBlocks) {
+        if (block.blockNumber < byzantiumBlock) {
+            pTrans->isError = hasError;
+        } else if (block.blockNumber >= byzantiumBlock) {
+            pTrans->isError = (pTrans->receipt.status == 0); // status contains zero on fail
+        }
+    }
 
     return true;
 }
@@ -115,14 +159,16 @@ void CScraper::noteAddress(const address_t& addr, bool isMiner) {
 
     nAddrsInBlock++;
 
-    ASSERT(options && sCtx.addrList.addrTxMap);
     CAddressAppearance app;
     app.addr = addr;
     app.bn = block.blockNumber;
-    if (isMiner)
+    if (isMiner) {
         app.tx = 99999;
-    else if (pTrans)
+    } else {
+        ASSERT(pTrans);
         app.tx = pTrans->transactionIndex;
+    }
+    ASSERT(addrList.addrTxMap);
     addrList.insertUnique(app);
 }
 
@@ -142,80 +188,100 @@ public:
 };
 
 //--------------------------------------------------------------------------
-void CScraper::updateAddrIndex(void) {
+bool CScraper::writeList(const string_q& toFile, const string_q& removeFile) {
 
-    ASSERT(pBlock);
-    string_q indexFilename = indexFolder_finalized_v2 + padNum9(block.blockNumber) + ".txt";
-    string_q countFile     = indexFolder_v2 + "tmp/counts.txt";
-
-    // Note: we are inside the lockSection
-
-    // We've scanned the block. We have the list of all addresses. We write it here even if it's
-    // not final because the next time we re-visit this block we may not re-scan in which case we
-    // won't have the list. If we do rescan, this list will get re-rewritten.
-    ostringstream os1;
     ASSERT(addrList.addrTxMap);
+
+    ostringstream os;
     CAddressTxAppearanceMap::iterator it;
-    for (it=addrList.addrTxMap->begin(); it!=addrList.addrTxMap->end(); it++ ) {
-        os1 << it->first.addr << "\t";
-        os1 << padNum9(it->first.bn) << "\t";
-        os1 << padNum5(it->first.tx) << "\n";;
+    for (it = addrList.addrTxMap->begin(); it != addrList.addrTxMap->end(); it++ ) {
+        os << it->first.addr << "\t";
+        os << padNum9(it->first.bn) << "\t";
+        os << padNum5(it->first.tx) << "\n";
     }
-    stringToAsciiFile(indexFilename, os1.str());
+    stringToAsciiFile(toFile, os.str());
+    if (!removeFile.empty() && fileExists(removeFile))
+        ::remove(removeFile.c_str());
 
-    ostringstream os2;
-    os2 << block.blockNumber << "\t" << addrList.addrTxMap->size() << "\t" << fileSize(indexFilename) << "\n";
-    appendToAsciiFile(countFile, os2.str());
+    return true;
+}
 
-    string_q contents;
-    asciiFileToString(countFile, contents);
-    CStringArray lines;
-    explode(lines, contents, '\n');
-    vector<CCounter> counters;
-    curSize = 0;
-    for (auto line : lines) {
-        CCounter counter(line);
-        counters.push_back(counter);
-        curSize += counter.size;
-    }
+//--------------------------------------------------------------------------
+bool CScraper::stageList(void) {
+    string_q stagingName = indexFolder_staging_v2 + padNum9(block.blockNumber) + ".txt";
+    return writeList(stagingName, "");
+}
 
-    if (curSize < options->maxIndexBytes)
-        return;
+//--------------------------------------------------------------------------
+bool CScraper::finalizeList(void) {
+
+    //
+    // Write the per-block address list to the finalized folder and keep track of how
+    // many items we've stored so far.
+    //
+    string_q stagingName = indexFolder_staging_v2 + padNum9(block.blockNumber) + ".txt";
+    string_q finalName = indexFolder_finalized_v2 + padNum9(block.blockNumber) + ".txt";
+    if (!writeList(finalName, stagingName))
+        return false;
+
+    //string_q countFile = configPath("cache/tmp/scrape_count.tmp");
+    string_q countFile = indexFolder_v2 + "counts.txt";
+    curLines = str_2_Uint(asciiFileToString(countFile));
+    curLines += addrList.addrTxMap->size();
+    stringToAsciiFile(countFile, uint_2_Str(curLines));
+
+    bool overLimit = curLines >= options->maxIndexRows;
+    bool wayOver = curLines > (options->maxIndexRows + 500);
+    bool is10 = !(block.blockNumber % 10);
+    if ((overLimit && is10) || wayOver)
+        consolidateIndex();
+
+    return true;
+}
+
+//--------------------------------------------------------------------------
+void CScraper::consolidateIndex(void) {
+
+    string_q str;
+    str = substitute(getFirstFileInFolder(indexFolder_finalized_v2, false),indexFolder_finalized_v2,"");
+    blknum_t first = str_2_Uint(str);
+    str = substitute(getLastFileInFolder(indexFolder_finalized_v2, false),indexFolder_finalized_v2,"");
+    blknum_t last = str_2_Uint(str);
+
+    string_q resFile = indexFolder_sorted_v2 + padNum9(first)+"-"+padNum9(last) + ".txt";
 
     CStringArray apps;
-    apps.reserve(620000);
-    for (auto counter : counters) {
+    apps.reserve(options->maxIndexRows + 100);
+
+    for (blknum_t i = first ; i <= last ; i++) {
         string_q theStuff;
-        string_q fn = indexFolder_finalized_v2 + padNum9(counter.bn) + ".txt";
+        string_q fn = indexFolder_finalized_v2 + padNum9(i) + ".txt";
         asciiFileToString(fn, theStuff);
         CStringArray lns;
         explode(lns, theStuff, '\n');
-        for (auto ln : lns) {
+        for (auto ln : lns)
             apps.push_back(ln);
-        }
     }
-    sort(apps.begin(), apps.end());
-    blknum_t first = counters[0].bn;
-    blknum_t last = counters[counters.size()-1].bn;
 
-    string_q resFile = indexFolder_sorted_v2 + padNum9(first)+"-"+padNum9(last) + ".txt";
+    sort(apps.begin(), apps.end());
+    ostringstream os;
     for (auto app : apps)
-        appendToAsciiFile(resFile, app + "\n");
+        os << app << "\n";
+    appendToAsciiFile(resFile, os.str());
+
+    //string_q countFile = configPath("cache/tmp/scrape_count.tmp");
+    string_q countFile = indexFolder_v2 + "counts.txt";
     ::remove(countFile.c_str());
-    for (auto counter : counters) {
-        string_q fn = indexFolder_finalized_v2 + padNum9(counter.bn) + ".txt";
+    for (blknum_t i = first ; i <= last ; i++) {
+        string_q fn = indexFolder_finalized_v2 + padNum9(i) + ".txt";
         ::remove(fn.c_str());
     }
     putc(7,stdout);
-
-    //    moveFile(indexFolder_staging_v2   + padNum9(block.blockNumber) + ".txt",
-    //             indexFolder_finalized_v2 + padNum9(block.blockNumber) + ".txt");
 }
 
 //-------------------------------------------------------------------------
 bool notePotential(const CAddressAppearance& item, void *data) {
-    CScraper *sCtx = (CScraper*)data;
-    sCtx->noteAddress(item.addr);
+    ((CScraper*)data)->noteAddress(item.addr);
     return true;
 }
 
@@ -246,7 +312,7 @@ string_q CScraper::report(uint64_t last) {
     os << maxTraceDepth               << "\t";
     os << nAddrsInBlock               << "\t";
     os << addrList.addrTxMap->size()  << "\t";
-    os << (curSize/1024./1024.)       << "\t" << cTeal;
+    os << padNum6(curLines)           << "\t" << cTeal;
     os << status                      << cOff;
 
     return os.str();

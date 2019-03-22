@@ -180,8 +180,9 @@ static const char *STR_ERROR_NODEREQUIRED =
         CRPCResult generic;
         generic.parseJson3(str);  // pull out the result
 
+        generic.result = cleanUpJson((char*)generic.result.c_str());
         CTrace trace;
-        while (trace.parseJson3(generic.result)) {
+        while (trace.parseJson4(generic.result)) {
             traces.push_back(trace);
             trace = CTrace();  // reset
         }

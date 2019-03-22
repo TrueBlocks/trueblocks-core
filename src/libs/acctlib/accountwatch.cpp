@@ -500,11 +500,8 @@ void CAccountWatch::writeARecord(blknum_t bn, blknum_t tx_id) {
 void CAccountWatch::writeAnArray(const CAcctCacheItemArray& items) {
     if (tx_cache == NULL)
         return;
-    for (auto item : items) {
-        if (item.blockNum == 7344158)
-            cout << item << endl;
+    for (auto item : items)
         *tx_cache << item.blockNum << item.transIndex;
-    }
     tx_cache->flush();
 }
 // EXISTING_CODE

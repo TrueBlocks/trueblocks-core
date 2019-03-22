@@ -13,9 +13,8 @@ public:
     blknum_t    startBlock;
     blknum_t    endBlock;
     blknum_t    maxBlocks;
-    string_q    exclusionList;
     timestamp_t latestBlockTs;
-    uint64_t    maxIndexBytes;
+    uint64_t    maxIndexRows;
     bool        writeBlocks;
 
     COptions(void);
@@ -23,7 +22,6 @@ public:
 
     bool parseArguments(string_q& command);
     void Init(void);
-    bool isExcluded(const address_t& addr) { return contains(exclusionList, addr); }
 };
 
 //-------------------------------------------------------------------------
