@@ -22,7 +22,7 @@ bool freshen_internal(const string_q& path, const address_t& addr, const string_
 
     ostringstream os;
     os << "cd " << path << " ; ";
-    os << "acctScrape " << flagsIn << " " << addr << " --useIndex ; ";
+    os << "acctScrape " << flagsIn << " " << addr << " ; ";
 
     if (isTestMode())
         cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;

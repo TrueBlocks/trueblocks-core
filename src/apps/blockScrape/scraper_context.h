@@ -16,21 +16,27 @@ public:
     CUniqueState  addrList;
     CBlock        block;
 
-    CTransaction *pTrans;
     string_q      potList;
     uint64_t      traceCount;
-    uint64_t      curSize;
+    uint64_t      curLines;
     uint64_t      maxTraceDepth;
     uint64_t      nAddrsInBlock;
+    CTransaction *pTrans;
 
     CScraper(COptions *o, blknum_t num);
 
     bool scrapeBlock(void);
-    bool scrapeTransaction(CTransaction *pT);
+    bool scrapeTransaction(void);
     string_q report(uint64_t last);
 
     void noteAddress(const address_t& addr, bool isMiner=false);
-    void updateAddrIndex(void);
+
+    bool finalizeList(void);
+    bool stageList(void);
+
+protected:
+    bool writeList(const string_q& toFile, const string_q& removeFile);
+    void consolidateIndex(void);
 };
 
 extern bool notePotential(const CAddressAppearance& item, void *data);

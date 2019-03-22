@@ -53,10 +53,10 @@ bool handle_freshen(COptions& options) {
         if (scraper.block.finalized) {
             scraper.status = "final";
             lockSection(true);
-            // Because we haven't scraped this block, but we want to write all its data, we need to re-scrape here.
+            // We need the block's data, but we haven't re-scraped, so we need to rescrape here.
             if (!needToScrape)
                 scraper.scrapeBlock();
-            scraper.updateAddrIndex();
+            scraper.finalizeList();
             lockSection(false);
             if (!options.writeBlocks)
                 ::remove(getBinaryFilename(num).c_str());
@@ -64,6 +64,7 @@ bool handle_freshen(COptions& options) {
         } else {
             // We want to avoid rescraping the block if we can, so we store it here. We may delete it when the
             // block gets finalized if we're not supposed to be writing blocks
+            scraper.stageList();
             if (!fileExists(getBinaryFilename(num))) {
                 lockSection(true);
                 writeBlockToBinary(scraper.block, getBinaryFilename(num));
