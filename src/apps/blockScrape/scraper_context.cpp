@@ -11,11 +11,11 @@ CScraper::CScraper(COptions *o, blknum_t num) :
     options(o),
     status(""),
     addrList(NULL, NULL, true),
-    pTrans(NULL),
     traceCount(0),
     curLines(0),
     maxTraceDepth(0),
-    nAddrsInBlock(0)
+    nAddrsInBlock(0),
+    pTrans(NULL)
 {
     ASSERT(addrList.addrTxMap);
     block.blockNumber = num;
