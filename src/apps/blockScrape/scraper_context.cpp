@@ -231,12 +231,9 @@ bool CScraper::finalizeList(void) {
     stringToAsciiFile(countFile, uint_2_Str(curLines));
 
     bool overLimit = curLines >= options->maxIndexRows;
-    bool wayOver = curLines > (options->maxIndexRows + 500);
-    bool is10 = !(block.blockNumber % 10);
-    if ((overLimit && is10) || wayOver) {
+    bool is50 = !(block.blockNumber % 50);
+    if ((overLimit && is50))
         consolidateIndex();
-        quickQuitHandler(0);
-    }
 
     return true;
 }
