@@ -34,9 +34,10 @@ bool handle_freshen(COptions& options) {
         CScraper scraper(&options, num);
         scraper.status = "scan";
 
+        string_q fn = getBinaryFilename(num);
         bool needToScrape = true;
-        if (fileExists(getBinaryFilename(num))) {
-            readBlockFromBinary(scraper.block, getBinaryFilename(num));
+        if (fileExists(fn)) {
+            readBlockFromBinary(scraper.block, fn);
             if (scraper.block.hash != getRawBlockHash(num)) {
                 needToScrape = true;
                 scraper.status = "rescan";
@@ -56,8 +57,17 @@ bool handle_freshen(COptions& options) {
             // We need the block's data, but we haven't re-scraped, so we need to rescrape here.
             if (!needToScrape)
                 scraper.scrapeBlock();
-            if (!options.writeBlocks)
-                ::remove(getBinaryFilename(num).c_str());
+            // Process the block cache...
+            if (scraper.block.transactions.size() == 0) {
+                // We never keep empty blocks
+                ::remove(fn.c_str());
+            } else if (!options.writeBlocks) {
+                // If we're not writing blocks, remove this one
+                ::remove(fn.c_str());
+            } else if (!fileExists(fn)) {
+                // We may not yet have written this block (it was final the first time we saw it), so write it
+                writeBlockToBinary(scraper.block, fn);
+            }
             scraper.finalizeList();
             lockSection(false);
 
@@ -65,9 +75,9 @@ bool handle_freshen(COptions& options) {
             // We want to avoid rescraping the block if we can, so we store it here. We may delete it when the
             // block gets finalized if we're not supposed to be writing blocks
             scraper.stageList();
-            if (!fileExists(getBinaryFilename(num))) {
+            if (!fileExists(fn)) {
                 lockSection(true);
-                writeBlockToBinary(scraper.block, getBinaryFilename(num));
+                writeBlockToBinary(scraper.block, fn);
                 lockSection(false);
             }
         }
