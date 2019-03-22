@@ -112,6 +112,19 @@ bool COptions::parseArguments(string_q& command) {
 
     maxIndexRows = getGlobalConfig("blockScrape")->getConfigInt("settings", "maxIndexRows", maxIndexRows);
 
+    string_q zeroIndex = indexFolder_sorted_v2 + padNum9((uint64_t)0) + "-" + padNum9((uint64_t)0) + ".txt";
+    if (!fileExists(zeroIndex)) {
+        CStringArray prefunds;
+        asciiFileToLines(configPath("prefunds.txt"), prefunds);
+        ostringstream os;
+        for (auto prefund : prefunds) {
+            CStringArray parts;
+            explode(parts, prefund, '\t');
+            os << parts[0] << "\t" << padNum9((uint64_t)0) << "\t" << padNum5((uint64_t)0) << endl;
+        }
+        stringToAsciiFile(zeroIndex, os.str());
+    }
+
     return true;
 }
 
