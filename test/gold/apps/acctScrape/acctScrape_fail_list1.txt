@@ -3,16 +3,15 @@ acctScrape --list
 
   Invalid option: --list
 
-  Usage:    acctScrape [-u|-m|-w|-l|-v|-h]  
+  Usage:    acctScrape [-m|-l|-v|-h]  
   Purpose:  Index transactions for a given Ethereum address (or series of addresses).
              
   Where:  
-	-u  (--useIndex)      search for transactions using the address index
 	-m  (--maxBlocks val) scan at most --maxBlocks blocks ('all' implies scan to end of chain)
-	-w  (--writeBlocks)   write binary blocks to cache (default: do not write blocks)
 	-l  (--logLevel val)  specify the log level (default 1)
 
 #### Hidden options (shown during testing only)
+	-u  (--useBlooms)     search for transactions using bloom filters instead of address index
 	-s  (--noBlooms)      do not use adaptive enhanced blooms (much faster if you use them)
 	-k  (--noBlocks)      do not use binary block cache (much faster if you use them)
 	-f  (--for_addr val)  force a scrape on the given account
