@@ -29,8 +29,7 @@ public:
     uint64_t           logLevel;
     bool               ignoreBlooms;
     bool               ignoreBlkCache;
-    bool               writeBlocks;
-    bool               useIndex;
+    bool               useBlooms;
 
     string_q           exclusions;
 

@@ -55,15 +55,11 @@ bool COptions::parseArguments(string_q& command) {
     // Allow the user to tell us that they want to write the block cache
     writeBlocks = getGlobalConfig("blockScrape")->getConfigBool("settings", "writeBlocks", writeBlocks);
 
-    // 'to' addresses (if any) to ignore (helps exclude dDos transactions)
-    if (getGlobalConfig("blockScrape")->getConfigBool("exclusions", "enable", false))
-        exclusionList = toLower(getGlobalConfig("blockScrape")->getConfigStr("exclusions", "list", ""));
-
     // Establish the folders that hold the data...
     establishFolder(indexFolder_sorted_v2);
     establishFolder(indexFolder_finalized_v2);
     establishFolder(indexFolder_staging_v2);
-    establishFolder(indexFolder_v2 + "tmp/");
+    establishFolder(configPath("cache/tmp"));
 
     CBlock latest;
     getBlock(latest, "latest");
@@ -75,8 +71,9 @@ bool COptions::parseArguments(string_q& command) {
     // Find out where to start and stop
     if (startBlock == NOPOS && endBlock != NOPOS) {
 
-        // User tried to tell us where to stop, but didn't tell us where to start. Not okay.
-        return usage("You may only specify an --end block if you've given a --start block. Quitting...");
+        startBlock = finalized + 1;
+        if (startBlock >= endBlock)
+            return usage("--start must be before --end. Quitting...");
 
     } else if (startBlock != NOPOS && endBlock != NOPOS) {
 
@@ -111,7 +108,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!isParity() || !nodeHasTraces())
         return usage("This tool will only run if it is running against a Parity node that has tracing enabled. Quitting...");
 
-    maxIndexBytes = getGlobalConfig("blockScrape")->getConfigInt("settings", "maxIndexBytes", maxIndexBytes);
+    maxIndexRows = getGlobalConfig("blockScrape")->getConfigInt("settings", "maxIndexRows", maxIndexRows);
 
     return true;
 }
@@ -121,12 +118,12 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOn(OPT_RUNONCE);
 
-    startBlock    = NOPOS;
-    endBlock      = NOPOS;
-    maxBlocks     = NOPOS;
-    writeBlocks   = false;
-    minArgs       = 0;
-    maxIndexBytes = 50000000;  // 50 MB
+    startBlock   = NOPOS;
+    endBlock     = NOPOS;
+    maxBlocks    = NOPOS;
+    writeBlocks  = false;
+    minArgs      = 0;
+    maxIndexRows = 750000;
 }
 
 //---------------------------------------------------------------------------------------------------

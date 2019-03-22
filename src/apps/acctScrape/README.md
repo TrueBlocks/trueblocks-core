@@ -13,9 +13,7 @@
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-| -u | --useIndex | search for transactions using the address index |
 | -m | --maxBlocks val | scan at most --maxBlocks blocks ('all' implies scan to end of chain) |
-| -w | --writeBlocks | write binary blocks to cache (default: do not write blocks) |
 | -l | --logLevel val | specify the log level (default 1) |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |

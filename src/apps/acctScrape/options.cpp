@@ -7,10 +7,9 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("-useIndex",         "search for transactions using the address index"),
     COption("-maxBlocks:<val>",  "scan at most --maxBlocks blocks ('all' implies scan to end of chain)"),
-    COption("-writeBlocks",      "write binary blocks to cache (default: do not write blocks)"),
     COption("-logLevel:<val>",   "specify the log level (default 1)"),
+    COption("@useBlooms",        "search for transactions using bloom filters instead of address index"),
     COption("@noBloom(s)",       "do not use adaptive enhanced blooms (much faster if you use them)"),
     COption("@noBloc(k)s",       "do not use binary block cache (much faster if you use them)"),
     COption("@for_addr:<val>",   "force a scrape on the given account"),
@@ -65,14 +64,11 @@ bool COptions::parseArguments(string_q& command) {
             watch.finishParse();
             monitors.push_back(watch);
 
-        } else if (arg == "-u" || arg == "--useIndex") {
-            useIndex = true;
+        } else if (arg == "-u" || arg == "--useBlooms") {
+            useBlooms = true;
 
         } else if (arg == "-k" || arg == "--noBlocks") {
             ignoreBlkCache = true;
-
-        } else if (arg == "-w" || arg == "--writeBlocks") {
-            writeBlocks = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
@@ -116,16 +112,9 @@ bool COptions::parseArguments(string_q& command) {
     if (isAll)
         maxBlocks = INT_MAX;
 
-    // Note: Pick up these defaults from the blockScrape application settings.
-
-    // If writeBlocks is true, then the user told us what to do on the command line and we obey them. If it's false
-    // then we check to see if the config file for blockScrape is set to write blocks. If the blockScraper is writing
-    // blocks, we don't have to. If not, then we do want to write blocks here (therefore we negate the config value).
-    if (!writeBlocks)
-        writeBlocks = !getGlobalConfig("blockScrape")->getConfigBool("settings", "writeBlocks", true);
-
     // Exclusions are always picked up from the blockScraper
-    exclusions = toLower(getGlobalConfig("blockScrape")->getConfigStr("exclusions", "list", ""));
+    if (getGlobalConfig("blockScrape")->getConfigBool("exclusions", "enable", false))
+        exclusions = toLower(getGlobalConfig("blockScrape")->getConfigStr("exclusions", "list", ""));
 
     if (!isParity() || !nodeHasTraces())
         return usage("This tool will only run if it is running against a Parity node that has tracing enabled. Quitting...");
@@ -148,8 +137,10 @@ bool COptions::parseArguments(string_q& command) {
             return usage("The last block file '" + fn + "' is locked. Quitting...");
     }
 
-    if (useIndex && !folderExists(indexFolder_sorted_v2))
-        return usage("Address index path `" + indexFolder_sorted_v2 + "' not found. Quitting...");
+    if (!useBlooms && !folderExists(indexFolder_sorted_v2))
+        return usage("Address index path '" + indexFolder_sorted_v2 + "' not found. Quitting...");
+    else if (useBlooms && !folderExists(bloomFolder_v2))
+        return usage("Bloom filter path '" + bloomFolder_v2 + "' not found. Quitting...");
 
     if (ignoreBlkCache) {
         cerr << "Switching to local node, ignoring binary block cache" << endl;
@@ -172,9 +163,8 @@ void COptions::Init(void) {
 
     minArgs        = 0;
     lastTimestamp  = 0;
-    writeBlocks    = false;
     ignoreBlooms   = false;
-    useIndex       = false;
+    useBlooms      = false;
     ignoreBlkCache = false;
     startScrape    = 0;
     scrapeCnt      = 0;

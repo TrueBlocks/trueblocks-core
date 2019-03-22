@@ -255,12 +255,6 @@ bool COptions::foundAHit(const CAccountWatch *acct, const CBlock& block, const C
         // We found something...write it to the cache...
         ((CAccountWatch*)acct)->writeARecord(block.blockNumber, trans->transactionIndex);
         ((CAccountWatch*)acct)->writeLastBlock(block.blockNumber);
-        if (writeBlocks) {
-            // pBlock->finalized is implicit here don't remove it above
-            string_q fn = getBinaryFilename(block.blockNumber);
-            if (!fileExists(fn))
-                writeBlockToBinary(block, fn);
-        }
     }
 
     // Send the data to an api if we have one
