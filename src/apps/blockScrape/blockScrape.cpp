@@ -22,6 +22,7 @@ int main(int argc, const char *argv[]) {
         if (!handle_freshen(options))
             cerr << "\tThe tool ended with an error.";
         cerr << bGreen << "...done\n" << cOff;
+        cout << scraperStatus();
     }
 
     etherlib_cleanup();

@@ -16,6 +16,7 @@
 #include <glob.h>
 #include <inttypes.h>
 #include <libgen.h>
+#include <unistd.h>
 #include <limits.h>
 #include <math.h>
 #include <pwd.h>
@@ -60,6 +61,12 @@ using namespace std;  // NOLINT
 #else
 #define ASSERT(a)
 #define XX(a)
+#endif
+
+//-----------------------------------------------------------------------------
+#ifndef HOST_NAME_MAX
+#define HOST_NAME_MAX 64
+#define LOGIN_NAME_MAX 64
 #endif
 
 //-------------------------------------------------------------------------

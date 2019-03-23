@@ -31,7 +31,7 @@ bool COptions::handle_scrape(void) {
     while (nRuns++ < maxRuns && !shouldQuit()) {
 
         ostringstream os;
-        os << "blockScrape " << flags << " ; getBlock --latest";
+        os << "blockScrape " << flags;
         if (isTestMode())
             cout << os.str() << endl;
         else {
