@@ -483,6 +483,9 @@ bool getTracesAndVisit(const hash_t& hash, CAddressAppearance& item, ADDRESSFUNC
         string_q inpt = extract(trace.action.input, 10);
         if (!inpt.empty())
             if (!foundPot(funcy, data, item.bn, item.tx, traceID+10, inpt, trID + "input")) return false;
+        string_q outpt = extract(trace.result.output, 2);
+        if (!outpt.empty())
+            if (!foundPot(funcy, data, item.bn, item.tx, traceID+10, outpt, trID + "output")) return false;
         traceID++;
         trace = CTrace();  // reset
     }
