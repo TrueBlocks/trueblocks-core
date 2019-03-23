@@ -6,7 +6,7 @@
 
 #### Usage
 
-`Usage:`    acctScrape [-u|-m|-w|-l|-v|-h]  
+`Usage:`    acctScrape [-m|-l|-v|-h]  
 `Purpose:`  Index transactions for a given Ethereum address (or series of addresses).
              
 `Where:`  
