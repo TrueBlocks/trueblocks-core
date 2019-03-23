@@ -18,7 +18,6 @@ static const COption params[] = {
     COption("-raw",                "pull the block data from the running Ethereum node (no cache)"),
     COption("-hash_o(n)ly",        "display only transaction hashes, default is to display full transaction detail"),
     COption("-check",              "compare results between qblocks and Ethereum node, report differences, if any"),
-    COption("-latest",             "display the latest blocks at both the node and the cache"),
     COption("-addrs",              "display all addresses included in the block"),
     COption("-uniq",               "display only uniq addresses found per block"),
     COption("-uniqT(x)",           "display only uniq addresses found per transaction"),
@@ -28,6 +27,7 @@ static const COption params[] = {
 //    COption("-addresses:<val>",  "display addresses included in block as one of: [ all | to | from |\n\t\t\t\t"
 //            "self-destruct | create | log-topic | log-data | input-data |\n\t\t\t\t"
 //            "trace-to | trace-from | trace-data | trace-call ]"),
+    COption("@latest",             "display the latest blocks at both the node and the cache"),
     COption("@f(o)rce",            "force a re-write of the block to the cache"),
     COption("@quiet",              "do not print results to screen, used for speed testing and data checking"),
     COption("@source:[c|r]",       "either :c(a)che or :(r)aw, source for data retrival. (shortcuts "
@@ -82,32 +82,7 @@ bool COptions::parseArguments(string_q& command) {
             normalize = true;
 
         } else if (arg == "-l" || arg == "--latest") {
-            string_q tmpStore = configPath("cache/tmp/getBlock-latest.txt");
-            string_q contents;
-            asciiFileToString(tmpStore, contents);
-            uint64_t lastUpdate = str_2_Uint(contents);
-            uint64_t staging = NOPOS, finalized = NOPOS, client = NOPOS;
-            getLastBlocks(staging, finalized, client);
-            uint64_t diff = finalized > client ? 0 : client - finalized;
-            stringToAsciiFile(tmpStore, uint_2_Str(diff));  // for next time
-
-            char hostname[HOST_NAME_MAX];  gethostname(hostname, HOST_NAME_MAX);
-            char username[LOGIN_NAME_MAX]; getlogin_r(username, LOGIN_NAME_MAX);
-
-            cout << cGreen << "Hostname:               " << cYellow << (isTestMode() ? "--hostname--"  : string_q(hostname)) << cOff << "\n";
-            cout << cGreen << "User:                   " << cYellow << (isTestMode() ? "--username--"  : string_q(username)) << cOff << "\n";
-            cout << cGreen << "QB Version:             " << cYellow <<                                   getVersionStr() << cOff << "\n";
-            cout << cGreen << "Client Version:         " << cYellow << (isTestMode() ? "--version--"   : getVersionFromClient()) << cOff << "\n";
-            cout << cGreen << "Location of cache:      " << cYellow << (isTestMode() ? "--cache_dir--" : getCachePath("")) << cOff << "\n";
-            cout << cGreen << "Latest final in cache:  "  << cYellow << (isTestMode() ? "--final--"    : padNum8T(finalized))  << cOff << "\n";
-            cout << cGreen << "Latest staged in cache: "  << cYellow << (isTestMode() ? "--staged--"   : padNum8T(staging))  << cOff << "\n";
-            cout << cGreen << "Latest block at client: "  << cYellow << (isTestMode() ? "--client--"   : padNum8T(client)) << cOff << "\n";
-            cout << cGreen << "Behind head (catchup):  "  << cYellow << (isTestMode() ? "--diff--"     : padNum8T(diff));
-            if (!isTestMode() && lastUpdate) {
-                uint64_t diffDiff = (diff > lastUpdate ? 0 : lastUpdate - diff);
-                cout << " (+" << diffDiff << ")";
-            }
-            cout << cOff << "\n";
+            cout << scraperStatus();
             return false;
 
         } else if (startsWith(arg, "--source:")) {

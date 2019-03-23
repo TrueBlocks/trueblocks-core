@@ -6,7 +6,7 @@ The tool may also be used to double check that the results produced from the QBl
 
 #### Usage
 
-`Usage:`    getBlock [-r|-n|-c|-l|-a|-u|-x|-m|-l|-v|-h] &lt;block&gt; [block...]  
+`Usage:`    getBlock [-r|-n|-c|-a|-u|-x|-m|-l|-v|-h] &lt;block&gt; [block...]  
 `Purpose:`  Returns block(s) from local cache or directly from a running node.
              
 `Where:`  
@@ -17,7 +17,6 @@ The tool may also be used to double check that the results produced from the QBl
 | -r | --raw | pull the block data from the running Ethereum node (no cache) |
 | -n | --hash_only | display only transaction hashes, default is to display full transaction detail |
 | -c | --check | compare results between qblocks and Ethereum node, report differences, if any |
-| -l | --latest | display the latest blocks at both the node and the cache |
 | -a | --addrs | display all addresses included in the block |
 | -u | --uniq | display only uniq addresses found per block |
 | -x | --uniqTx | display only uniq addresses found per transaction |

@@ -897,6 +897,39 @@ static const char *STR_ERROR_NODEREQUIRED =
     }
 
     //-------------------------------------------------------------------------
+    string_q scraperStatus(void) {
+
+        string_q tmpStore = configPath("cache/tmp/getBlock-latest.txt");
+        string_q contents;
+        asciiFileToString(tmpStore, contents);
+        uint64_t lastUpdate = str_2_Uint(contents);
+        uint64_t staging = NOPOS, finalized = NOPOS, client = NOPOS;
+        getLastBlocks(staging, finalized, client);
+        uint64_t diff = finalized > client ? 0 : client - finalized;
+        stringToAsciiFile(tmpStore, uint_2_Str(diff));  // for next time
+
+        char hostname[HOST_NAME_MAX];  gethostname(hostname, HOST_NAME_MAX);
+        char username[LOGIN_NAME_MAX]; getlogin_r(username, LOGIN_NAME_MAX);
+
+        ostringstream os;
+        os << cGreen << "Hostname:               " << cYellow << (isTestMode() ? "--hostname--"  : string_q(hostname)) << cOff << "\n";
+        os << cGreen << "User:                   " << cYellow << (isTestMode() ? "--username--"  : string_q(username)) << cOff << "\n";
+        os << cGreen << "QB Version:             " << cYellow <<                                   getVersionStr() << cOff << "\n";
+        os << cGreen << "Client Version:         " << cYellow << (isTestMode() ? "--version--"   : getVersionFromClient()) << cOff << "\n";
+        os << cGreen << "Location of cache:      " << cYellow << (isTestMode() ? "--cache_dir--" : getCachePath("")) << cOff << "\n";
+        os << cGreen << "Latest final in cache:  "  << cYellow << (isTestMode() ? "--final--"    : padNum8T(finalized))  << cOff << "\n";
+        os << cGreen << "Latest staged in cache: "  << cYellow << (isTestMode() ? "--staged--"   : padNum8T(staging))  << cOff << "\n";
+        os << cGreen << "Latest block at client: "  << cYellow << (isTestMode() ? "--client--"   : padNum8T(client)) << cOff << "\n";
+        os << cGreen << "Behind head (catchup):  "  << cYellow << (isTestMode() ? "--diff--"     : padNum8T(diff));
+        if (!isTestMode() && lastUpdate) {
+            uint64_t diffDiff = (diff > lastUpdate ? 0 : lastUpdate - diff);
+            os << " (+" << diffDiff << ")";
+        }
+        os << cOff << "\n";
+        return os.str();
+    }
+
+    //-------------------------------------------------------------------------
     string_q getCachePath(const string_q& _part) {
 
         //TODO(tjayrush): global data

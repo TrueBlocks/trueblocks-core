@@ -120,6 +120,7 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     extern string_q getCachePath            (const string_q& _part);
+    extern string_q scraperStatus           (void);
 
     //-------------------------------------------------------------------------
     #define blockFolder_v2           (getCachePath("blocks/"))
