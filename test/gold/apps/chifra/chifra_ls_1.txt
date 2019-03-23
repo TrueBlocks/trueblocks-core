@@ -22,6 +22,7 @@ Monitor path: $BLOCK_CACHE/monitors/
     0x054c64741dbafdc19784505494029823d89c3b13 (ETERNAL TOKEN)      
     0x056fd409e1d7a124bd7017459dfea2f387b6d5cd (Gemini dollar)      
     0x05860d453c7974cbf46508c06cba14e211c629ce (Eden Coin)          
+    0x05a56e2d52c817161883f50c441c3228cfe54d9f                      
     0x05aaaa829afa407d83315cded1d45eb16025910c (SP8DE Token)        
     0x05c7065d644096a4e4c3fe24af86e36de021074b (LendConnect)        
     0x05d412ce18f24040bb3fa45cf2c69e506586d8e8 (MFTU)               
@@ -849,6 +850,7 @@ Monitor path: $BLOCK_CACHE/monitors/
     0xfa456cf55250a839088b27ee32a424d7dacb54ff (blocktrade)         
     0xfae4ee59cdd86e3be9e8b90b53aa866327d7c090 (CPChain)            
     0xfb2f26f266fb2805a387230f2aa0a331b4d96fba (DADI)               
+    0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 (Etherum Tip Jar)    
     0xfc05987bd2be489accf0f509e44b0145d68240f7 (ESSENTIA)           
     0xfc2c4d8f95002c14ed0a7aa65102cac9e5953b5e (Rublix)             
     0xfca47962d45adfdfd1ab2d972315db4ce7ccf094 (iXledger)           
