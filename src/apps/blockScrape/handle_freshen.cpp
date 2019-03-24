@@ -68,7 +68,8 @@ bool handle_freshen(COptions& options) {
                 // We may not yet have written this block (it was final the first time we saw it), so write it
                 writeBlockToBinary(scraper.block, fn);
             }
-            scraper.finalizeList();
+            if (!scraper.finalizeList())
+                return false;
             lockSection(false);
 
         } else {

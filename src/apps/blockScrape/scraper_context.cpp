@@ -232,8 +232,10 @@ bool CScraper::finalizeList(void) {
 
     bool overLimit = curLines >= options->maxIndexRows;
     bool is50 = !(block.blockNumber % 50);
-    if ((overLimit && is50))
+    if ((overLimit && is50)) {
         consolidateIndex();
+//        return false;
+    }
 
     return true;
 }
