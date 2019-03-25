@@ -151,10 +151,19 @@ bool CScraper::scrapeTransaction(void) {
     return true;
 }
 
+#define lastPrecompile address_t("0x0000000000000000000000000000000000000008")
+//----------------------------------------------------------------------------------
+bool isPrecompile(const address_t& addr) {
+    return (addr <= lastPrecompile);
+}
+
 //----------------------------------------------------------------------------------
 void CScraper::noteAddress(const address_t& addr, bool isMiner) {
 
     if (isZeroAddr(addr))
+        return;
+
+    if (isPrecompile(addr))
         return;
 
     nAddrsInBlock++;
