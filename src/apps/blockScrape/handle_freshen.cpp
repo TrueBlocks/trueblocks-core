@@ -28,7 +28,6 @@ bool handle_freshen(COptions& options) {
     //          update the address index
     //          update the final block index
 
-    timestamp_t ageFinal = (60 * 4);
     for (blknum_t num = options.startBlock ; num < options.endBlock && !shouldQuit() ; num++) {
 
         CScraper scraper(&options, num);
@@ -50,7 +49,7 @@ bool handle_freshen(COptions& options) {
         if (needToScrape)
             scraper.scrapeBlock();
 
-        scraper.block.finalized = isBlockFinal(scraper.block.timestamp, options.latestBlockTs, ageFinal);
+        scraper.block.finalized = isBlockFinal(scraper.block.timestamp, options.latestBlockTs);
         if (scraper.block.finalized) {
             scraper.status = "final";
             lockSection(true);
