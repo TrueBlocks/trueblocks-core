@@ -263,28 +263,43 @@ void CScraper::consolidateIndex(void) {
     CStringArray apps;
     apps.reserve(options->maxIndexRows + 100);
 
+    cerr << "Processing index."; cerr.flush();
     for (blknum_t i = first ; i <= last ; i++) {
         string_q theStuff;
         string_q fn = indexFolder_finalized_v2 + padNum9(i) + ".txt";
         asciiFileToString(fn, theStuff);
         CStringArray lns;
         explode(lns, theStuff, '\n');
-        for (auto ln : lns)
+        for (auto ln : lns) {
             apps.push_back(ln);
+            if (!(apps.size() % (options->maxIndexRows / 10))) {
+                cerr << "."; cerr.flush();
+            }
+        }
     }
 
 //    sort(apps.begin(), apps.end());
+    size_t cnt = 0;
     ostringstream os;
-    for (auto app : apps)
+    for (auto app : apps) {
         os << app << "\n";
+        if (!(++cnt % (options->maxIndexRows / 10))) {
+            cerr << "."; cerr.flush();
+        }
+    }
     appendToAsciiFile(resFile, os.str());
 
     //string_q countFile = configPath("cache/tmp/scrape_count.tmp");
     string_q countFile = indexFolder_v2 + "counts.txt";
     ::remove(countFile.c_str());
+    cnt = 0;
+    cerr << "\ncleaning up"; cerr.flush();
     for (blknum_t i = first ; i <= last ; i++) {
         string_q fn = indexFolder_finalized_v2 + padNum9(i) + ".txt";
         ::remove(fn.c_str());
+        if (!(++cnt % (options->maxIndexRows / 10))) {
+            cerr << "."; cerr.flush();
+        }
     }
     putc(7,stdout);
 }
