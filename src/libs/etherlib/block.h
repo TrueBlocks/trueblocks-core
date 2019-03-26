@@ -185,7 +185,7 @@ inline blknum_t bnFromPath(const string_q& path) {
 }
 
 //---------------------------------------------------------------------------
-extern bool isBlockFinal(timestamp_t ts_block, timestamp_t ts_chain, timestamp_t seconds);
+extern bool isBlockFinal(timestamp_t ts_block, timestamp_t ts_chain);
 // EXISTING_CODE
 }  // namespace qblocks
 

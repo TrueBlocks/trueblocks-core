@@ -248,7 +248,7 @@ bool COptions::foundAHit(const CAccountWatch *acct, const CBlock& block, const C
     transStats.nHit++;
 
     CBlock *pBlock = (CBlock*)&block;
-    pBlock->finalized = isBlockFinal(block.timestamp, lastTimestamp, (60 * 4));
+    pBlock->finalized = isBlockFinal(block.timestamp, lastTimestamp);
 
     lockSection(true);
     if (!isTestMode()) {
