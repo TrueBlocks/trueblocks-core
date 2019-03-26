@@ -138,7 +138,7 @@ void COptions::Init(void) {
     maxBlocks    = NOPOS;
     writeBlocks  = false;
     minArgs      = 0;
-    maxIndexRows = 750000;
+    maxIndexRows = 350000;
 }
 
 //---------------------------------------------------------------------------------------------------
