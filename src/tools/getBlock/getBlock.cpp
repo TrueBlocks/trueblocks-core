@@ -106,7 +106,7 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
                 result = generic.result;
                 if (gold.parseJson3(result)) {
                     string_q fileName = getBinaryFilename(num);
-                    gold.finalized = isBlockFinal(gold.timestamp, opt.latest.timestamp, (60 * 4));
+                    gold.finalized = isBlockFinal(gold.timestamp, opt.latest.timestamp);
                     writeBlockToBinary(gold, fileName);
                 }
             }
@@ -126,7 +126,7 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
         }
 
         if (opt.force) {  // turn this on to force a write of the block to the disc
-            gold.finalized = isBlockFinal(gold.timestamp, opt.latest.timestamp, (60 * 4));
+            gold.finalized = isBlockFinal(gold.timestamp, opt.latest.timestamp);
             writeBlockToBinary(gold, fileName);
         }
 

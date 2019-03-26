@@ -273,7 +273,7 @@ void CScraper::consolidateIndex(void) {
             apps.push_back(ln);
     }
 
-    sort(apps.begin(), apps.end());
+//    sort(apps.begin(), apps.end());
     ostringstream os;
     for (auto app : apps)
         os << app << "\n";
