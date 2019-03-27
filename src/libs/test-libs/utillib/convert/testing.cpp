@@ -227,6 +227,21 @@ TEST_F(CThisTest, TestConverts_4) {
         ASSERT_EQ("isZeroHash_1", isZeroHash("0x0"), true)
         ASSERT_EQ("isZeroHash_2", isZeroHash("123"), false)
 
+        ASSERT_EQ("hex_2_Ascii1", hex_2_Ascii('0','1'),  0x1);
+        ASSERT_EQ("hex_2_Ascii2", bnu_2_Hex(hex_2_Ascii('2','3')), "23");
+        ASSERT_EQ("hex_2_Ascii3", hex_2_Ascii(2+'A',3+'A'), 0xCD);
+        ASSERT_EQ("hex_2_Ascii3", hex_2_Ascii(2+'a',3+'a'), 0xCD);
+        ASSERT_EQ("hex_2_Ascii3", hex_2_Ascii('9'-2,'9'-3), 0x76);
+
+        address_t addr = "0xb7cb1c96db6b22b0d3d9536e0108d062bd488f74";
+        bytearray_t bytes = addr_2_Bytes(addr);
+        uint8_t *ptr = bytes.data();
+        ostringstream os;
+        os << "0x";
+        for (size_t i = 0 ; i < bytes.size() ; i++)
+            os << toLower(padLeft(bnu_2_Hex(ptr[i]),2,'0'));
+        ASSERT_EQ("addr_2_Bytes", addr, os.str());
+
         return true;
     }}
 

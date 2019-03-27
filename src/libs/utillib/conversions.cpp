@@ -696,13 +696,21 @@ if (verbose > 1) {
         str = s;
     }
 
+    //----------------------------------------------------------------
+    bytearray_t addr_2_Bytes(const address_t& addrIn) {
+        vector<uint8_t> ret;
+        string_q str = substitute(addrIn, "0x", "");
+        for (size_t i = 0 ; i < str.size() ; i += 2)
+            ret.push_back(hex_2_Ascii(str[i], str[i+1]));
+        return ret;
+    }
+
     //----------------------------------------------------------------------------
-    typedef unsigned char uchar_t;
-    inline uchar_t hex_2_Ascii(const char * const str) {
+    uchar_t hex_2_Ascii(char c1, char c2) {
         uchar_t c;
-        c =  (uchar_t)((str[0] >= 'A' ? ((str[0] & 0xDF) - 'A') + 10 : (str[0] - '0')));
+        c = (uchar_t)(    (c1 >= 'A' ? ((c1 & 0xDF) - 'A') + 10 : (c1 - '0')));
         c *= 16;
-        c = (uchar_t)(c + (str[1] >= 'A' ? ((str[1]&0xDF)-'A')+10 : (str[1]-'0')));
+        c = (uchar_t)(c + (c2 >= 'A' ? ((c2 & 0xDF) - 'A') + 10 : (c2 - '0')));
         return c;
     }
 
@@ -715,7 +723,7 @@ if (verbose > 1) {
         while (!in.empty()) {
             string_q nibble = extract(in, 0, 2);
             in = extract(in, 2);
-            char ch = (char)hex_2_Ascii((char*)nibble.c_str());  // NOLINT
+            char ch = (char)hex_2_Ascii(nibble[0], nibble[1]);  // NOLINT
             ret += (char)ch;
         }
         return ret;
@@ -728,7 +736,7 @@ if (verbose > 1) {
         while (!in.empty()) {
             string_q nibble = extract(in, 0, 2);
             in = extract(in, 2);
-            char ch = (char)hex_2_Ascii((char*)nibble.c_str());  // NOLINT
+            char ch = (char)hex_2_Ascii(nibble[0], nibble[1]);  // NOLINT
             if (!isprint(ch))
                 return false;
         }
