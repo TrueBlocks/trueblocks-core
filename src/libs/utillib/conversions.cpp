@@ -720,7 +720,7 @@ if (verbose > 1) {
         if (nBytes != NOPOS)
             in = in.substr(0, nBytes * 2);
         string_q ret;
-        while (!in.empty()) {
+        while (!in.empty() && in.size() >= 2) {
             string_q nibble = extract(in, 0, 2);
             in = extract(in, 2);
             char ch = (char)hex_2_Ascii(nibble[0], nibble[1]);  // NOLINT
@@ -733,7 +733,7 @@ if (verbose > 1) {
     // If we can reasonably convert this to a string, do so, otherwise bail out
     bool isPrintable(const string_q& inHex) {
         string_q in = substitute(inHex, "0x", "");
-        while (!in.empty()) {
+        while (!in.empty() && in.size() >= 2) {
             string_q nibble = extract(in, 0, 2);
             in = extract(in, 2);
             char ch = (char)hex_2_Ascii(nibble[0], nibble[1]);  // NOLINT
