@@ -30,6 +30,8 @@ namespace qblocks {
     using bloom_t     = biguint_t;
     using wei_t       = biguint_t;
     using topic_t     = biguint_t;
+    using uchar_t     = unsigned char;
+    using bytearray_t = vector<uint8_t>;
 
     //-------------------------------------------------------------------------
     using CStringArray     = vector < string_q   >;
@@ -77,6 +79,8 @@ namespace qblocks {
 
     //----------------------------------------------------------------------------
     extern string_q    hex_2_Str      (const string_q& inHex, size_t nBytes=NOPOS);
+    extern uchar_t     hex_2_Ascii    (char c1, char c2);
+    extern bytearray_t addr_2_Bytes   (const address_t& in);
 
     //-------------------------------------------------------------------------
     extern string_q    chr_2_HexStr   (const string_q& str);
