@@ -182,21 +182,6 @@ void CScraper::noteAddress(const address_t& addr, bool isMiner) {
 }
 
 //--------------------------------------------------------------------------
-class CCounter {
-public:
-    blknum_t bn;
-    blknum_t lines;
-    blknum_t size;
-    CCounter(string_q& line) {
-        CStringArray fields;
-        explode(fields, line, '\t');
-        bn = str_2_Uint(fields[0]);
-        lines = str_2_Uint(fields[1]);
-        size = str_2_Uint(fields[2]);
-    }
-};
-
-//--------------------------------------------------------------------------
 bool CScraper::writeList(const string_q& toFile, const string_q& removeFile) {
 
     ASSERT(addrList.addrTxMap);
