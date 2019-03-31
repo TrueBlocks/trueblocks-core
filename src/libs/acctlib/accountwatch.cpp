@@ -68,7 +68,8 @@ bool CAccountWatch::setValueByName(const string_q& fieldName, const string_q& fi
         return true;
     }
     if (fieldName % "address") {
-        bloom = makeBloom(fieldValue);
+        if (getCurlContext()->nodeRequired)
+            bloom = makeBloom(fieldValue);
     }
     // EXISTING_CODE
 
@@ -116,7 +117,8 @@ bool CAccountWatch::setValueByName(const string_q& fieldName, const string_q& fi
 //---------------------------------------------------------------------------------------------------
 void CAccountWatch::finishParse() {
     // EXISTING_CODE
-    bloom = makeBloom(address);
+    if (getCurlContext()->nodeRequired)
+        bloom = makeBloom(address);
     // EXISTING_CODE
 }
 

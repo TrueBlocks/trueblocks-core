@@ -8,15 +8,8 @@
 
 //----------------------------------------------------------------------------------
 CScraper::CScraper(COptions *o, blknum_t num) :
-    options(o),
-    status(""),
-    addrList(NULL, NULL, true),
-    traceCount(0),
-    curLines(0),
-    maxTraceDepth(0),
-    nAddrsInBlock(0),
-    pTrans(NULL)
-{
+    options(o), status(""), addrList(NULL, NULL, true), traceCount(0), curLines(0),
+    maxTraceDepth(0), nAddrsInBlock(0), pTrans(NULL) {
     ASSERT(addrList.addrTxMap);
     block.blockNumber = num;
     resetClock();
@@ -25,15 +18,15 @@ CScraper::CScraper(COptions *o, blknum_t num) :
 //-------------------------------------------------------------------------
 bool CScraper::scrapeBlock(void) {
 
-    // This queries the node for fresh data on the block
+    // Query the node for fresh block data
     getObjectViaRPC(block, "eth_getBlockByNumber", "[\"" + uint_2_Hex(block.blockNumber) + "\",true]");
 
     // Note the miner address
     noteAddress(block.miner, true);
 
-    // We do not use forEveryTransaction here because we need the actual transaction so
-    // we can mark pre-byzantium errors by querying traces. forEvery... makes a copy
-    // which won't mark the error
+    // Visit each transaction in this block. Note -- do not use forEveryTransaction since
+    // that makes a copy and we may have to write the block to disc. For instance, we
+    // need to mark pre-byzantium errors.
     for (uint32_t tr = 0 ; tr < block.transactions.size() ; tr++) {
         pTrans = &block.transactions[tr];
         pTrans->pBlock = &block;
@@ -52,6 +45,7 @@ bool CScraper::scrapeTransaction(void) {
     noteAddress(pTrans->from);
     noteAddress(pTrans->to);
     noteAddress(pTrans->receipt.contractAddress);
+    // We heuristically try to catch addresses in the function input data
     foundPotential(notePotential, this, pTrans->blockNumber, pTrans->transactionIndex, 0, extract(pTrans->input, 10));
 
     for (uint32_t lg = 0 ; lg < pTrans->receipt.logs.size() ; lg++) {
@@ -59,9 +53,11 @@ bool CScraper::scrapeTransaction(void) {
         noteAddress(log->address);
         string_q addr;
         for (uint32_t tp = 0 ; tp < log->topics.size() ; tp++) {
+            // Heuristacally try to pick up any addresses in the topics
             if (isPotentialAddr(log->topics[tp], addr))
                 noteAddress(addr);
         }
+        // Heuristacally try to pick up any addresses in the log data
         foundPotential(notePotential, this, pTrans->blockNumber, pTrans->transactionIndex, 0, extract(log->data, 2));
     }
 
@@ -70,10 +66,20 @@ bool CScraper::scrapeTransaction(void) {
     string_q traces;
     queryRawTrace(traces, pTrans->hash);
 
-    // We want to be able to count the entries in the traceAddress array, so we mark them differently...
+    //
+    // The following code is very hacky, but it's way faster than parseing every trace, especially for
+    // for the dDos transactions from late-2106.
+    //
+
+    //
+    // queryRawTrace returns all the traces for the transaction directly from the node as JSON. We don't want
+    // to parse all that data since we're not going to store it anyway, so we hackily do string searches for
+    // what we're looking for. We start with the traceAddress arrays since we need to count them for trace depth.
+    // We convert commas into pipes so they don't get tokenized below...
+    //
     string_q search = "traceAddress";
     size_t pos = traces.find(search);
-    while(pos != string::npos) {
+    while (pos != string::npos) {
         pos += search.size();
         while (traces[pos] != ']') {
             if (traces[pos] == ',')
@@ -83,7 +89,7 @@ bool CScraper::scrapeTransaction(void) {
         pos = traces.find(search, pos + search.size());
     }
 
-    // ...before this code which separates fields in the JSON
+    // This code prepares the string for tokenizing the fields in the JSON
     for (char& ch : traces) {
         if (ch == '\"') ch = ' ';
         if (ch == ',') ch = '+';
@@ -91,26 +97,20 @@ bool CScraper::scrapeTransaction(void) {
         if (ch == '}') ch = ' ';
     }
 
-    CStringArray vals;
-    vals.reserve(countOf(traces, '+') + 10); // extra room
+    CStringArray fields;
+    fields.reserve(countOf(traces, '+') + 10); // extra room
 
-    explode(vals, traces, '+');
+    explode(fields, traces, '+');
     bool hasError = false;
-    for (auto v : vals) {
+    for (auto v : fields) {
         v = trim(v);
 
-#define VV(s) \
-{ \
+#define VV(s) { \
     string_q ss(s); \
     ss += " : "; \
     if (startsWith(v, ss)) \
         noteAddress(v.substr(ss.size())); \
 }
-
-        VV("from");
-        VV("to");
-        VV("address"); // both from trace.action and trace.result
-        VV("refundAddress");
 
 #define VV2(s,n) { \
     string_q ss(s); \
@@ -122,6 +122,11 @@ bool CScraper::scrapeTransaction(void) {
             potList += ss; \
     } \
 }
+
+        VV("from");
+        VV("to");
+        VV("address"); // both from trace.action and trace.result
+        VV("refundAddress");
 
         potList = "";
         VV2("input", 10);
@@ -143,7 +148,7 @@ bool CScraper::scrapeTransaction(void) {
     if (options->writeBlocks) {
         if (block.blockNumber < byzantiumBlock) {
             pTrans->isError = hasError;
-        } else if (block.blockNumber >= byzantiumBlock) {
+        } else {
             pTrans->isError = (pTrans->receipt.status == 0); // status contains zero on fail
         }
     }
@@ -160,9 +165,14 @@ bool isPrecompile(const address_t& addr) {
 //----------------------------------------------------------------------------------
 void CScraper::noteAddress(const address_t& addr, bool isMiner) {
 
+    // We don't store zero address since it has special meaning and it appears many, many, many times
+    // all over the place. It would blow up the size of the index and have almost no meaning to query
     if (isZeroAddr(addr))
         return;
 
+    // We don't store pre-compiles for similar reasons, but more importantly because Parity has a bug that
+    // misreports 'calldata' and 'calldelegate' to pre-compile 0x000....004. This eliminates that bug and
+    // save a ton of space in the index. It disallows querying for pre-comile addresses.
     if (isPrecompile(addr))
         return;
 
@@ -237,18 +247,17 @@ bool CScraper::finalizeList(void) {
 //--------------------------------------------------------------------------
 void CScraper::consolidateIndex(void) {
 
-    string_q str;
-    str = substitute(getFirstFileInFolder(indexFolder_finalized_v2, false),indexFolder_finalized_v2,"");
-    blknum_t first = str_2_Uint(str);
-    str = substitute(getLastFileInFolder(indexFolder_finalized_v2, false),indexFolder_finalized_v2,"");
-    blknum_t last = str_2_Uint(str);
+    blknum_t first = str_2_Uint(substitute(getFirstFileInFolder(indexFolder_finalized_v2, false), indexFolder_finalized_v2, ""));
+    blknum_t last  = str_2_Uint(substitute(getLastFileInFolder (indexFolder_finalized_v2, false), indexFolder_finalized_v2, ""));
 
     string_q resFile = indexFolder_sorted_v2 + padNum9(first)+"-"+padNum9(last) + ".txt";
 
     CStringArray apps;
     apps.reserve(options->maxIndexRows + 100);
 
-    cerr << "Processing index."; cerr.flush();
+    cerr << "Processing index.";
+    cerr.flush();
+
     for (blknum_t i = first ; i <= last ; i++) {
         string_q theStuff;
         string_q fn = indexFolder_finalized_v2 + padNum9(i) + ".txt";
@@ -274,7 +283,6 @@ void CScraper::consolidateIndex(void) {
     }
     appendToAsciiFile(resFile, os.str());
 
-    //string_q countFile = configPath("cache/tmp/scrape_count.tmp");
     string_q countFile = indexFolder_v2 + "counts.txt";
     ::remove(countFile.c_str());
     cnt = 0;
