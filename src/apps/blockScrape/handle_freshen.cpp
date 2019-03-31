@@ -10,23 +10,39 @@
 bool handle_freshen(COptions& options) {
 
     //
-    //  The final block index stores finalized blocks
-    //      'startBlock' is first non-final block
-    //      'endBlock' is current front of chain
+    //  Determine most recently finalized block (lastFinal)
+    //      'startBlock' = lastFinal + 1
+    //      'endBlock' is front of chain
     //
-    //  For each non-final block
-    //      Assume we need to scan the block
-    //      If we've scanned the block before (note: if we're not storing blocks, this will not happen
-    //          read the hash and timestamp from a file
-    //          If the hash has not changed
-    //              we do not need to re-scan
+    //  For each block between startBlock and endBlock
+    //      Assume we need to scrape the block
+    //      If block is in binary cache (we've seen it before)
+    //          Read the block from cache (faster than querying the node)
+    //          Query node for block hash only
+    //          If hashes are different
+    //              We need to re-scan this block
+    //      Else
+    //          We need to scan this block
     //
-    //      Scan if we need to
+    //      If we need to scan the block
+    //          Scan the block
     //
-    //      If the block is final
-    //          write the finalized block
-    //          update the address index
-    //          update the final block index
+    //      If the block is final (i.e. four minutes old)
+    //          If we do not have a full block, scrape the block here
+    //          If the block has no transations
+    //              Remove it from the cache
+    //          Else if we are not storing blocks permanantly (default is to not store blocks)
+    //              Remove the block from cache
+    //          Else if the is not in the cache, but we're writing blocks
+    //              Write the block to the cache
+    //          Write the finalized block to the index
+    //          If the index is 'big enough'
+    //              Sort the index
+    //              Compress the index
+    //              Store the index in 'sorted'
+    //      Else
+    //          Write the non-final block to non-final index
+    //          Write the block to the binary cache (it may be removed later)
 
     for (blknum_t num = options.startBlock ; num < options.endBlock && !shouldQuit() ; num++) {
 
@@ -53,7 +69,7 @@ bool handle_freshen(COptions& options) {
         if (scraper.block.finalized) {
             scraper.status = "final";
             lockSection(true);
-            // We need the block's data, but we haven't re-scraped, so we need to rescrape here.
+            // If we haven't scraped yet, we need to scrape it here
             if (!needToScrape)
                 scraper.scrapeBlock();
             // Process the block cache...

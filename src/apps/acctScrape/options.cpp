@@ -105,9 +105,16 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    CBlock latest;
-    getBlock(latest, "latest");
-    lastTimestamp = latest.timestamp;
+    if (getCurlContext()->nodeRequired) {
+        CBlock latest;
+        getBlock(latest, "latest");
+        lastTimestamp = latest.timestamp;
+        if (!isParity() || !nodeHasTraces())
+            return usage("This tool will only run if it is running against a Parity node that has tracing enabled. Quitting...");
+
+    } else {
+        lastTimestamp = date_2_Ts(Now());
+    }
 
     if (isAll)
         maxBlocks = INT_MAX;
@@ -115,9 +122,6 @@ bool COptions::parseArguments(string_q& command) {
     // Exclusions are always picked up from the blockScraper
     if (getGlobalConfig("blockScrape")->getConfigBool("exclusions", "enable", false))
         exclusions = toLower(getGlobalConfig("blockScrape")->getConfigStr("exclusions", "list", ""));
-
-    if (!isParity() || !nodeHasTraces())
-        return usage("This tool will only run if it is running against a Parity node that has tracing enabled. Quitting...");
 
     string_q transCachePath = getTransCachePath("");
     if (!folderExists(transCachePath)) {

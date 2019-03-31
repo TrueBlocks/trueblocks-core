@@ -22,6 +22,6 @@ namespace qblocks {
     typedef std::chrono::duration<double> duration_t;
 #define qbNow2() std::chrono::steady_clock::now()
     extern void resetClock(void);
-    extern string_q TIC(void);
+    extern string_q TIC(double div = 1.);
 
 }  // namespace qblocks
