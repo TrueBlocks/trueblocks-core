@@ -271,7 +271,6 @@ void CScraper::consolidateIndex(void) {
             }
         }
     }
-
     sort(apps.begin(), apps.end());
 
     size_t cnt = 0;
