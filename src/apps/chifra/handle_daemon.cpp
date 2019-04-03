@@ -10,6 +10,9 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_daemon(void) {
 
+    // daemon mode does not need a running node since it's only reading the index
+    nodeNotRequired();
+
     size_t sleep = 14;
     CStringArray commands, filters;
     explode(commands, flags, ' ');

@@ -9,6 +9,9 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_name(void) {
 
+    // name mode does not require a running node
+    nodeNotRequired();
+
     ostringstream os;
     os << "ethName " << flags << " ; ";
     if (isTestMode())

@@ -8,6 +8,9 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_export(void) {
 
+    // export mode requires a running node
+    nodeRequired();
+
     if (addrs.empty())
         return usage("This function requires an address. Quitting...");
 

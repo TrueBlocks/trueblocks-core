@@ -9,6 +9,9 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_config(void) {
 
+    // config node does not require a running node
+    nodeNotRequired();
+
     if (addrs.empty())
         return usage("This function requires an address. Quitting...");
 

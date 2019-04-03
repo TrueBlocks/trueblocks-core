@@ -8,6 +8,9 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_scrape(void) {
 
+    // scrape mode requires a running node
+    nodeRequired();
+
     size_t sleep = 14;
     CStringArray commands;
     explode(commands, flags, ' ');
