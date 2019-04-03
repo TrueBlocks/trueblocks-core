@@ -46,7 +46,7 @@ bool visitIndexFiles(const string_q& path, void *data) {
         // Figure out the range of the record contained in this file (Note: index filenames references one more
         // than the last block contained in the file, so we subtract one).
         blknum_t lastBlockInFile;
-        blknum_t firstBlockInFile = bnFromPath(path, lastBlockInFile);
+        bnFromPath(path, lastBlockInFile);
         if (lastBlockInFile > 0)
             lastBlockInFile--;
 
@@ -66,7 +66,7 @@ bool visitIndexFiles(const string_q& path, void *data) {
         }
 
         // We're scraping the file...
-        cerr << " bn: " << firstBlockInFile << *options << "\r";
+        cerr << "Searching file : " << path << "\r";
         cerr.flush();
 
         // Let's try to open the file...
@@ -95,6 +95,8 @@ bool visitIndexFiles(const string_q& path, void *data) {
             }
 
             CIndexRecord search;
+            size_t sz = sizeof(search);
+            bzero(&search, sz);
             strncpy(search.addr, acct->address.c_str(), 42);
 
             CIndexRecord *found = reinterpret_cast<CIndexRecord*>(bsearch(&search, records, nRecords, sizeof(CIndexRecord), findFunc));

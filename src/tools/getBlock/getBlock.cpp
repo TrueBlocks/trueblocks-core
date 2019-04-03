@@ -134,11 +134,6 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
             string_q format = opt.format;
             if (gold.blockNumber == 0 && gold.timestamp == 0)
                 gold.timestamp = 1438269960;
-//            if (false) { //opt.priceBlocks) {
-//                biguint_t oneWei = str_2_Wei("1000000000000000000");
-//                string_q dollars = "$" + wei_2_Dollars(gold.timestamp, oneWei);
-//                replace(format, "{PRICE:CLOSE}", dollars);
-//            }
             result = gold.Format(format);
             if (opt.hashes) {
                 result = substitute(result, "        {\n            \"hash\":", "       ");
