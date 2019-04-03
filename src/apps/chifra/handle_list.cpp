@@ -8,6 +8,9 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_list(void) {
 
+    // list mode does not require a running node since it only reads the account cache
+    nodeNotRequired();
+
     if (addrs.empty())
         return usage("This function requires an address. Quitting...");
 

@@ -12,6 +12,9 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_ls(void) {
 
+    // ls mode does not require a running node
+    nodeNotRequired();
+
     ostringstream os;
     os << endl << cGreen << "Monitor path: " << cWhite << monitorsPath << endl;
 
@@ -57,7 +60,7 @@ bool COptions::handle_ls(void) {
     for (auto acct : accounts) {
         os << "    " << cTeal << acct.addr;
         string_q nm = acct.name.empty() ? "" : " (" + acct.name.substr(0,20) + ")";
-        os << padRight(nm, 22);
+        os << padRight(nm, 23);
         if (ncols == 1 || !(++cnt % (ncols / mx)))
             os << endl;
     }

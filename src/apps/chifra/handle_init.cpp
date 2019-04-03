@@ -7,6 +7,10 @@
 
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_init(void) {
+
+    // init mode technically does not require a running node since it only reads the index
+    nodeNotRequired();
+
     if (addrs.empty())
         return usage("This function requires an address. Quitting...");
 

@@ -9,6 +9,7 @@
 
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
+    nodeNotRequired(); // not every command needs a node
     acctlib_init(quickQuitHandler);
 
     COptions options;
