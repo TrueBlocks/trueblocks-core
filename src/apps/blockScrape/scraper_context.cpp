@@ -271,8 +271,8 @@ void CScraper::consolidateIndex(void) {
             }
         }
     }
+    sort(apps.begin(), apps.end());
 
-//    sort(apps.begin(), apps.end());
     size_t cnt = 0;
     ostringstream os;
     for (auto app : apps) {
