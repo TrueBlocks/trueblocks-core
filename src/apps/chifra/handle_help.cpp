@@ -9,6 +9,9 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_help(void) {
 
+    // help mode does not require a running node
+    nodeNotRequired();
+
     cerr << cYellow;
     cerr << "\tEnter as many address/name pairs as you wish (space separated)," << endl;
     cerr << "\tor 'n' to show a list of common contract names, or 'h' for help." << endl;

@@ -9,6 +9,9 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_freshen(void) {
 
+    // freshen mode technically does not require a running node since it only reads the index
+    nodeNotRequired();
+
     if (addrs.empty())
         return usage("This function requires an address. Quitting...");
     for (auto addr : addrs)
@@ -19,6 +22,9 @@ bool COptions::handle_freshen(void) {
 
 //------------------------------------------------------------------------------------------------
 bool freshen_internal(const string_q& path, const address_t& addr, const string_q& flagsIn) {
+
+    // freshen mode technically does not require a running node since it only reads the index
+    nodeNotRequired();
 
     ostringstream os;
     os << "cd " << path << " ; ";

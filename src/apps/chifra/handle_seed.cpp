@@ -9,6 +9,10 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_seed(void) {
 
+    // seed mode does not require a running node
+    nodeNotRequired();
+    // TODO(tjayrush): We should check that IPFS is running here (in much the same way we do for the node)
+
     establishFolder(indexFolder_v2);
     establishFolder(indexFolder_sorted_v2);
     establishFolder(indexFolder_staging_v2);
