@@ -41,14 +41,7 @@ namespace qblocks {
         // initialize curl
         getCurlContext()->getCurl();
 
-static const char *STR_ERROR_NODEREQUIRED =
-"\t[{Warning:}] This program requires a running Ethereum node. Please start your node or\n"
-"\tconfigure the 'rpcProvider' setting before running this command. Quitting...";
-
-        if (getCurlContext()->nodeRequired && !isNodeRunning()) {
-            cerr << displayCurlError(STR_ERROR_NODEREQUIRED);
-            quickQuitHandler(EXIT_FAILURE);
-        }
+        checkNodeRequired();
 
         // If we create any lock files, we need to clean them up
         if (theQuitHandler == NULL || qh != defaultQuitHandler) {
