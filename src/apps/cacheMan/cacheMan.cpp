@@ -7,6 +7,7 @@
 
 //-------------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
+    nodeNotRequired();
     etherlib_init(defaultQuitHandler);
 
     // Parse command line, allowing for command files

@@ -14,6 +14,9 @@ bool handleCacheBals(COptions& options) {
     if (!nodeHasBalances())
         return options.usage("Cannot cache balances on a machine that doesn't have balances. Quitting...");
 
+    // The node needs to be there if we want to cache balances
+    nodeRequired();
+
     CAcctCacheItemArray dataArray;
 
     // Check to see if it's one of the pre-funded accounts
