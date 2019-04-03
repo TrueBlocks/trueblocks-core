@@ -231,6 +231,28 @@ x = 0;
     }
 
     //-------------------------------------------------------------------------
+    void nodeRequired(void) {
+        getCurlContext()->nodeRequired = true;
+        checkNodeRequired();
+    }
+
+    //-------------------------------------------------------------------------
+    void checkNodeRequired(void) {
+
+        if (!getCurlContext()->nodeRequired)
+            return;
+
+        if (isNodeRunning())
+            return;
+
+static const char *STR_ERROR_NODEREQUIRED =
+"\t[{Warning:}] This program requires a running Ethereum node. Please start your node or\n"
+"\tconfigure the 'rpcProvider' setting before running this command. Quitting...";
+        cerr << displayCurlError(STR_ERROR_NODEREQUIRED);
+        quickQuitHandler(EXIT_FAILURE);
+    }
+
+    //-------------------------------------------------------------------------
     string_q setDataSource(const string_q& newSrc) {
         string_q old = getCurlContext()->provider;
         if (newSrc == "local" || newSrc == "binary")
