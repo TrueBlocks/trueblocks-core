@@ -273,6 +273,18 @@ namespace qblocks {
         return fileSize(fileName);
     }
 
+    //----------------------------------------------------------------------
+    size_t linesToAsciiFile(const string_q& fileName, const CStringArray& lines) {
+        CArchive asciiCache(WRITING_ARCHIVE);
+        if (asciiCache.Lock(fileName, modeWriteAppend, LOCK_NOWAIT)) {
+            for (auto line : lines)
+                asciiCache.WriteLine(line.c_str());
+            asciiCache.Release();
+        }
+        return fileSize(fileName);
+    }
+
+    //----------------------------------------------------------------------
     void CArchive::writeHeader(void) {
         Seek(0, SEEK_SET);
         m_header.m_lastWritten = date_2_Ts(Now());
