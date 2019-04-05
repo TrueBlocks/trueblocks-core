@@ -235,6 +235,6 @@ bool COptions::enterDebugger(const CBlock& block) {
 #ifdef DEBUGGER_ON
 //-----------------------------------------------------------------------
 bool debugFile(void) {
-    return fileExists(getTransCachePath("debug"));
+    return fileExists(getMonitorPath("debug"));
 }
 #endif

@@ -3,4 +3,6 @@ chifra ls
 
 Monitor path: $BLOCK_CACHE/monitors/
   Current monitors:
-    none                      
+    0x543ff227f64aa17ea132bf9886cab5db55dcaddf (DAOstack)            
+    0x8aa33a7899fcc8ea5fbe6a608a109c3893a1b8b2 (Dao.Casino)          
+
