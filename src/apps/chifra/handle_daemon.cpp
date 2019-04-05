@@ -15,7 +15,7 @@ bool COptions::handle_daemon(void) {
 
     size_t sleep = 14;
     CStringArray commands, filters;
-    explode(commands, flags, ' ');
+    explode(commands, tool_flags, ' ');
     for (size_t i = 0; i < commands.size() ; i++) {
         //COption("-sleep", "number of seconds to sleep between runs"),
         //COption("-filter", "only runs address that start with the filter (default '0x')"),
@@ -63,7 +63,7 @@ bool COptions::handle_daemon(void) {
                 if (startsWith(acct.addr, filter))
                     run = true;
             if (run)
-                freshen_internal(monitorsPath, acct.addr, "");
+                freshen_internal(monitorsPath, acct.addr, "", freshen_flags);
         }
 
         cerr << "Sleeping for " << sleep << " seconds" << endl;

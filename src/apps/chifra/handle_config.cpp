@@ -15,7 +15,7 @@ bool COptions::handle_config(void) {
     if (addrs.empty())
         return usage("This function requires an address. Quitting...");
 
-    string_q cmd = toLower(nextTokenClear(flags, ' '));
+    string_q cmd = toLower(nextTokenClear(tool_flags, ' '));
     if (cmd != "edit" && cmd != "show")
         return usage("chifra config 'mode' must be either 'edit' or 'show'. Quitting...");
 
