@@ -697,12 +697,39 @@ if (verbose > 1) {
     }
 
     //----------------------------------------------------------------
-    bytearray_t addr_2_Bytes(const address_t& addrIn) {
+    hashbytes_t hash_2_Bytes(const hash_t& hashIn) {
+        vector<uint8_t> ret;
+        string_q str = substitute(hashIn, "0x", "");
+        for (size_t i = 0 ; i < str.size() ; i += 2)
+            ret.push_back(hex_2_Ascii(str[i], str[i+1]));
+        return ret;
+    }
+
+    //----------------------------------------------------------------
+    hash_t bytes_2_Hash(uint8_t const bytes[32]) {
+        ostringstream os;
+        os << "0x";
+        for (size_t i = 0 ; i < 32 ; i++)
+            os << toLower(padLeft(bnu_2_Hex(bytes[i]),2,'0'));
+        return os.str();
+    }
+
+    //----------------------------------------------------------------
+    addrbytes_t addr_2_Bytes(const address_t& addrIn) {
         vector<uint8_t> ret;
         string_q str = substitute(addrIn, "0x", "");
         for (size_t i = 0 ; i < str.size() ; i += 2)
             ret.push_back(hex_2_Ascii(str[i], str[i+1]));
         return ret;
+    }
+
+    //----------------------------------------------------------------
+    address_t bytes_2_Addr(uint8_t const bytes[20]) {
+        ostringstream os;
+        os << "0x";
+        for (size_t i = 0 ; i < 20 ; i++)
+            os << toLower(padLeft(bnu_2_Hex(bytes[i]),2,'0'));
+        return os.str();
     }
 
     //----------------------------------------------------------------------------

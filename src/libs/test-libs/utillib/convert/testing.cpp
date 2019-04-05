@@ -234,7 +234,7 @@ TEST_F(CThisTest, TestConverts_4) {
         ASSERT_EQ("hex_2_Ascii3", hex_2_Ascii('9'-2,'9'-3), 0x76);
 
         address_t addr = "0xb7cb1c96db6b22b0d3d9536e0108d062bd488f74";
-        bytearray_t bytes = addr_2_Bytes(addr);
+        addrbytes_t bytes = addr_2_Bytes(addr);
         uint8_t *ptr = bytes.data();
         ostringstream os;
         os << "0x";

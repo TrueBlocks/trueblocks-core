@@ -203,7 +203,7 @@ bool processTraces(const CBlock& block, const CTransaction *trans, const CAccoun
     size_t nTraces = getTraceCount(trans->hash);
     bool ddos      = ddosRange(block.blockNumber);
     bool isDDos    = ddos && nTraces > 250;
-    bool isExcl    = ddos && options->isExcluded(trans->to);
+    bool isExcl    = false; //ddos && options->isExcluded(trans->to);
 
     if (isDDos || isExcl) {
         options->traceStats.nSeen    += nTraces;
