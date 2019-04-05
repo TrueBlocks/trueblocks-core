@@ -13,7 +13,7 @@ bool COptions::handle_scrape(void) {
 
     size_t sleep = 14;
     CStringArray commands;
-    explode(commands, flags, ' ');
+    explode(commands, tool_flags, ' ');
     for (size_t i = 0; i < commands.size() ; i++) {
         //COption("-sleep", "number of seconds to sleep between runs"),
         if (commands[i] == "--sleep" && i < commands.size() - 1) {
@@ -24,9 +24,9 @@ bool COptions::handle_scrape(void) {
     }
 
     // pass through
-    flags = "";
+    tool_flags = "";
     for (auto cmd : commands)
-        flags += (cmd + " ");
+        tool_flags += (cmd + " ");
 
     // Run until we're told not to
     size_t maxRuns = (isTestMode() ? 1 : UINT64_MAX);
@@ -34,7 +34,7 @@ bool COptions::handle_scrape(void) {
     while (nRuns++ < maxRuns && !shouldQuit()) {
 
         ostringstream os;
-        os << "blockScrape " << flags;
+        os << "blockScrape " << tool_flags;
         if (isTestMode())
             cout << os.str() << endl;
         else {

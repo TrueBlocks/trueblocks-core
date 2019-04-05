@@ -23,7 +23,7 @@ bool COptions::handle_init(void) {
         prodName = monitorsPath + addr + ".acct.bin";
 
         if (!fileExists(prodName)) {
-            if (!freshen_internal(stagingPath, addr, ""))
+            if (!freshen_internal(stagingPath, addr, "", freshen_flags))
                 return false;
            if (verbose)
                 cerr << "Moving " << cTeal << stageName << cOff << " to " << cTeal << prodName << cOff << endl;

@@ -13,7 +13,7 @@ bool COptions::handle_name(void) {
     nodeNotRequired();
 
     ostringstream os;
-    os << "ethName " << flags << " ; ";
+    os << "ethName " << tool_flags << " ; ";
     if (isTestMode())
         cout << os.str() << endl;
     else

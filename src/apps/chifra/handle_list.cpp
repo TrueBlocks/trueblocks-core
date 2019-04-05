@@ -15,7 +15,7 @@ bool COptions::handle_list(void) {
         return usage("This function requires an address. Quitting...");
 
     for (auto addr : addrs) {
-        if (!freshen_internal(monitorsPath, addr, ""))
+        if (!freshen_internal(monitorsPath, addr, "", freshen_flags))
             return false;
         ostringstream os;
         os << "cd " << monitorsPath << " ; ";
