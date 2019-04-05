@@ -1,4 +1,3 @@
 chifra argc: 4 [1:daemon] [2:--sleep 10] [3:--filter 0x1,0x2] 
 chifra daemon --sleep 10 --filter 0x1,0x2 
-	nothing to monitor
 Sleeping for 10 seconds

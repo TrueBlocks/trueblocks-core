@@ -478,16 +478,16 @@ bool CAccountWatch::openCacheFile1(void) {
     tx_cache = new CArchive(WRITING_ARCHIVE);
     if (tx_cache == NULL)
         return false;
-    return tx_cache->Lock(getTransCachePath(address), modeWriteAppend, LOCK_WAIT);
+    return tx_cache->Lock(getMonitorPath(address), modeWriteAppend, LOCK_WAIT);
 }
 
 //-------------------------------------------------------------------------
 void CAccountWatch::writeLastBlock(blknum_t bn) {
     if (!isTestMode())
-        stringToAsciiFile(getTransCacheLast(address), uint_2_Str(bn) + "\n");
+        stringToAsciiFile(getMonitorLast(address), uint_2_Str(bn) + "\n");
     else
         if (address != "./merged.bin")
-            cerr << "Would have written " << getTransCacheLast(address) << ": " << bn << endl;
+            cerr << "Would have written " << getMonitorLast(address) << ": " << bn << endl;
 }
 
 //-------------------------------------------------------------------------

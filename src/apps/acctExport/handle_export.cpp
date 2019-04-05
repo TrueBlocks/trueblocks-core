@@ -193,7 +193,7 @@ string_q COptions::annotate(const string_q& strIn) const {
 
 //-----------------------------------------------------------------------
 bool loadData(COptions& options) {
-    string_q fileName = getTransCachePath(options.monitors[0].address);
+    string_q fileName = getMonitorPath(options.monitors[0].address);
 
     // If we've already upgraded the file, we've deleted it and we're done...
     if (!fileExists(fileName))
