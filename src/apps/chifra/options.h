@@ -15,7 +15,9 @@ public:
     blknum_t maxWatchBlock;
     string_q monitorsPath;
     CArchive txCache;
-    string_q flags;
+
+        string_q freshen_flags;
+    string_q tool_flags;
     CAddressArray addrs;
 
     COptions(void);
@@ -39,7 +41,7 @@ public:
 };
 
 //--------------------------------------------------------------------------------
-extern bool freshen_internal(const string_q& path, const address_t& addr, const string_q& flags);
+extern bool freshen_internal(const string_q& path, const address_t& addr, const string_q& tool_flags, const string_q& freshen_flags);
 
 //--------------------------------------------------------------------------------
 extern string_q colors[];

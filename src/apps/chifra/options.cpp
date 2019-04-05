@@ -41,7 +41,10 @@ bool COptions::parseArguments(string_q& command) {
                 addrs.push_back(toLower(arg));
 
             } else {
-                flags += (arg + " ");
+                if (arg == "--new_version")
+                    freshen_flags = (arg + " ");
+                else
+                    tool_flags += (arg + " ");
 
             }
         }
@@ -49,9 +52,10 @@ bool COptions::parseArguments(string_q& command) {
 
     if (mode.empty())
         return usage("Please specify " + params[0].description + ". Quitting...");
-    monitorsPath = getCachePath("monitors/");
+    monitorsPath = getMonitorPath("");
     establishFolder(monitorsPath);
-    flags = trim(flags, ' ');
+    tool_flags = trim(tool_flags, ' ');
+    freshen_flags = trim(freshen_flags, ' ');
 
     return true;
 }
@@ -61,9 +65,10 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
 
     addrs.clear();
-    flags    = "";
-    mode     = "";
-    minArgs  = 0;
+    tool_flags    = "";
+    freshen_flags = "";
+    mode          = "";
+    minArgs       = 0;
 }
 
 //---------------------------------------------------------------------------------------------------

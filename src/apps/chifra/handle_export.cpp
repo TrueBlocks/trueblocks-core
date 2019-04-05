@@ -15,12 +15,12 @@ bool COptions::handle_export(void) {
         return usage("This function requires an address. Quitting...");
 
     for (auto addr : addrs) {
-        if (!freshen_internal(monitorsPath, addr, ""))
+        if (!freshen_internal(monitorsPath, addr, "", freshen_flags))
             return false;
         ostringstream os;
         os << "cd " << monitorsPath << " ; ";
         os << "grabABI " << addr << " 1>/dev/null 2>&1; ";
-        os << "acctExport " << addr << " " << flags;
+        os << "acctExport " << addr << " " << tool_flags;
         if (isTestMode())
             cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
         else
