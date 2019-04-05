@@ -18,7 +18,7 @@ bool COptions::handleWrite(const string_q& outputFilename, const CAcctCacheItemA
     cerr << "\tWriting...";
 
     address_t address = substitute(outputFilename, ".acct.bin", "");
-    blknum_t currentLastItem = str_2_Uint(asciiFileToString(getTransCacheLast(address)));
+    blknum_t currentLastItem = str_2_Uint(asciiFileToString(getMonitorLast(address)));
 
     CArchive txCache(WRITING_ARCHIVE);
     if (!txCache.Lock(outputFilename, modeWriteCreate, LOCK_WAIT))

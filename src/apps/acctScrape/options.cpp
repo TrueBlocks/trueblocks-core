@@ -13,6 +13,7 @@ static const COption params[] = {
     COption("@noBloom(s)",       "do not use adaptive enhanced blooms (much faster if you use them)"),
     COption("@noBloc(k)s",       "do not use binary block cache (much faster if you use them)"),
     COption("@for_addr:<val>",   "force a scrape on the given account"),
+    COption("@new_version",      "use the new version of index query"),
     COption("",                  "Index transactions for a given Ethereum address (or series of addresses).\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -67,6 +68,9 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-u" || arg == "--useBlooms") {
             useBlooms = true;
 
+        } else if (arg == "--new_version") {
+            new_version = true;
+
         } else if (arg == "-k" || arg == "--noBlocks") {
             ignoreBlkCache = true;
 
@@ -119,11 +123,7 @@ bool COptions::parseArguments(string_q& command) {
     if (isAll)
         maxBlocks = INT_MAX;
 
-    // Exclusions are always picked up from the blockScraper
-    if (getGlobalConfig("blockScrape")->getConfigBool("exclusions", "enable", false))
-        exclusions = toLower(getGlobalConfig("blockScrape")->getConfigStr("exclusions", "list", ""));
-
-    string_q transCachePath = getTransCachePath("");
+    string_q transCachePath = getMonitorPath("");
     if (!folderExists(transCachePath)) {
         cerr << "The cache folder '" << transCachePath << "' not found. Trying to create it." << endl;
         establishFolder(transCachePath);
@@ -132,18 +132,24 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     for (auto monitor : monitors) {
-        string_q fn = getTransCachePath(monitor.address);
+        string_q fn = getMonitorPath(monitor.address);
         if (fileExists(fn + ".lck"))
             return usage("The cache file '" + fn + "' is locked. Quitting...");
 
-        fn = getTransCacheLast(monitor.address);
+        fn = getMonitorLast(monitor.address);
         if (fileExists(fn + ".lck"))
             return usage("The last block file '" + fn + "' is locked. Quitting...");
     }
 
-    if (!useBlooms && !folderExists(indexFolder_sorted_v2))
-        return usage("Address index path '" + indexFolder_sorted_v2 + "' not found. Quitting...");
-    else if (useBlooms && !folderExists(bloomFolder_v2))
+    if (!useBlooms) {
+        if (new_version) {
+            if (!folderExists(indexFolder_binary_v2))
+                return usage("Address index path '" + indexFolder_binary_v2 + "' not found. Quitting...");
+        } else {
+            if (!folderExists(indexFolder_sorted_v2))
+                return usage("Address index path '" + indexFolder_sorted_v2 + "' not found. Quitting...");
+        }
+    } else if (useBlooms && !folderExists(bloomFolder_v2))
         return usage("Bloom filter path '" + bloomFolder_v2 + "' not found. Quitting...");
 
     if (ignoreBlkCache) {
@@ -152,11 +158,18 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     blknum_t lastInCache = getLastBlock_cache_final();
-    blknum_t lastVisited = str_2_Uint(asciiFileToString(getTransCacheLast(primary.address)));
+    blknum_t lastVisited = str_2_Uint(asciiFileToString(getMonitorLast(primary.address)));
     startScrape = min(lastVisited, lastInCache);
     scrapeCnt   = min(lastInCache - startScrape, maxBlocks);
 
-    return (lastVisited <= lastInCache);
+    if (lastVisited > lastInCache)
+        cerr << "Nothing to scrape: startBlock (" << uint_2_Str(startScrape) << ") nBlocks (" << uint_2_Str(scrapeCnt) << ")." << endl;
+    else {
+        cerr << " (start: " << cTeal << startScrape << cOff;
+        cerr << " end: " + cTeal << (startScrape + scrapeCnt) << cOff;
+        cerr << (!useBlooms ? "" : (" n: " + cTeal + uint_2_Str(scrapeCnt))) << cOff << ")" << endl;
+    }
+    return true;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -174,6 +187,7 @@ void COptions::Init(void) {
     scrapeCnt      = 0;
     blockCounted   = false;
     logLevel       = 1;
+    new_version    = false;
 }
 
 //---------------------------------------------------------------------------------------------------
