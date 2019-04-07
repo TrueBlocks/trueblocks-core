@@ -8,7 +8,7 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("~command", "one of [ freshen | export | list | init | seed | daemon | scrape | ls | name | config ]"),
+    COption("~command", "one of [ freshen | export | list | init | seed | daemon | scrape | ls | rm | names | config ]"),
     COption("",         "Create a TrueBlocks monitor configuration.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);

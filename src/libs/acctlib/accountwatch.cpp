@@ -16,7 +16,6 @@
  */
 #include <algorithm>
 #include "accountwatch.h"
-#include "acctcacheitem.h"
 
 namespace qblocks {
 
@@ -499,12 +498,13 @@ void CAccountWatch::writeARecord(blknum_t bn, blknum_t tx_id) {
 }
 
 //-------------------------------------------------------------------------
-void CAccountWatch::writeAnArray(const CAcctCacheItemArray& items) {
+void CAccountWatch::writeAnArray(const CAppearanceArray_base& items) {
     if (tx_cache == NULL)
         return;
     for (auto item : items)
-        *tx_cache << item.blockNum << item.transIndex;
+        *tx_cache << item.blk << item.txid;
     tx_cache->flush();
 }
 // EXISTING_CODE
 }  // namespace qblocks
+

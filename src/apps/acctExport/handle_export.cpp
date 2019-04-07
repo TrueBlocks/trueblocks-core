@@ -7,8 +7,8 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------
-extern bool exportTransaction(COptions& options, const CAcctCacheItem *item, bool first);
-extern bool checkBloom(COptions& options, const CAcctCacheItem *item);
+extern bool exportTransaction(COptions& options, const CAppearance_base *item, bool first);
+extern bool checkBloom(COptions& options, const CAppearance_base *item);
 extern bool isInTransaction(CTransaction *trans, const address_t& addr);
 extern bool transFilter(const CTransaction *trans, void *data);
 
@@ -56,9 +56,9 @@ bool exportData(COptions& options) {
 
     bool first = true;
     for (size_t index = 0 ; index < options.items.size() ; index++) {
-        CAcctCacheItem *item = &options.items[index];
+        CAppearance_base *item = &options.items[index];
         if ((options.showProgress && !(index%3)) || index == options.items.size() -1) {
-            cerr << "bn: " << item->blockNum << " tx: " << item->transIndex << "\r";
+            cerr << "bn: " << item->blk << " tx: " << item->txid << "\r";
             cerr.flush();
         }
         exportTransaction(options, item, first);
@@ -72,16 +72,16 @@ bool exportData(COptions& options) {
 }
 
 //-----------------------------------------------------------------------
-bool exportTransaction(COptions& options, const CAcctCacheItem *item, bool first) {
+bool exportTransaction(COptions& options, const CAppearance_base *item, bool first) {
 
     string_q transFmt = expContext().fmtMap["trans_fmt"];
 //    string_q traceFmt = expContext().fmtMap["trace_fmt"];
     // If we've found a new block...
-    if (item->blockNum > options.curBlock.blockNumber) {
+    if (item->blk > options.curBlock.blockNumber) {
 
         // We want to note that we're at a new block (order matters)
         options.curBlock = CBlock();
-        getBlock(options.curBlock, item->blockNum);
+        getBlock(options.curBlock, item->blk);
         // And make sure to note which block is holding the transaction
         for (CTransaction& trans : options.curBlock.transactions)
             trans.pBlock = &options.curBlock;
@@ -94,11 +94,11 @@ bool exportTransaction(COptions& options, const CAcctCacheItem *item, bool first
     }
 
     // TODO(tjayrush): This weird protection should not be needed, but for some reason, it is.
-    if (item->transIndex < options.curBlock.transactions.size()) {
+    if (item->txid < options.curBlock.transactions.size()) {
 
         // If we need the traces, get them before we scan through the watches. Only get them
         // if we don't already have them.
-        CTransaction *trans = &options.curBlock.transactions[item->transIndex];
+        CTransaction *trans = &options.curBlock.transactions[item->txid];
         if (options.shouldTrace(trans)) {
             getTraces(trans->traces, trans->hash);
             for (size_t i = 0 ; i < trans->traces.size() ; i++)
@@ -137,14 +137,14 @@ bool exportTransaction(COptions& options, const CAcctCacheItem *item, bool first
 
             } else {
                 if (verbose)
-                    cerr << cTeal << "skipping: " << *item << cOff << "  \r";
+                    cerr << cTeal << "skipping: " << item->blk << "." << item->txid << cOff << "  \r";
             }
             HIDE_FIELD(CFunction, "message");
         }
 
     } else {
         // TODO(tjayrush): This should never happen
-//        cerr << "Invalid data at cache item: " << item->blockNum << "." << item->transIndex << "\n";
+//        cerr << "Invalid data at cache item: " << item->blk << "." << item->txid << "\n";
 //        cerr.flush();
 //        exit(0);
     }
@@ -206,30 +206,31 @@ bool loadData(COptions& options) {
                      "Quit the already running program or, if it is not running, "
                      "remove the lock\n\tfile: " + fileName + ".lck'. Quitting...");
 
-    uint64_t nRecords = (fileSize(fileName) / (sizeof(uint64_t) * 2));
+    size_t nRecords = (fileSize(fileName) / sizeof(CAppearance_base));
     if (!nRecords)
         return options.usage("Nothing to export. Quitting...");
 
-    uint64_t *buffer = new uint64_t[nRecords * 2];
-    bzero(buffer, nRecords * 2);
+    CAppearance_base *buffer = new CAppearance_base[nRecords];
+    bzero(buffer, nRecords * sizeof(CAppearance_base));
 
     CArchive txCache(READING_ARCHIVE);
     if (txCache.Lock(fileName, modeReadOnly, LOCK_NOWAIT)) {
-        txCache.Read(buffer, sizeof(uint64_t) * 2, nRecords);
+        txCache.Read(buffer, sizeof(CAppearance_base), nRecords);
         txCache.Release();
     } else {
         return options.usage("Could not open old style cache file. Quiting...");
     }
 
-    for (size_t i = 0 ; i < nRecords ; i++)
-        options.items.push_back(CAcctCacheItem(buffer[i*2], buffer[(i*2)+1]));
+    for (size_t i = 0 ; i < nRecords ; i++) {
+        options.items.push_back(buffer[i]);
+    }
 
     return true;
 }
 
 //----------------------------------------------------------------
-bool visitAddrs(const CAddressAppearance& item, void *data) {
-    CAddressAppearanceArray *array = reinterpret_cast<CAddressAppearanceArray*>(data);
+bool visitAddrs(const CAppearance& item, void *data) {
+    CAppearanceArray *array = reinterpret_cast<CAppearanceArray*>(data);
     if (!isZeroAddr(item.addr))
         array->push_back(item);
     return true;
@@ -253,7 +254,7 @@ bool transFilter(const CTransaction *trans, void *data) {
 
 //-----------------------------------------------------------------------
 bool isInTransaction(CTransaction *trans, const address_t& needle) {
-    CAddressAppearanceArray haystack;
+    CAppearanceArray haystack;
     trans->forEveryAddress(visitAddrs, transFilter, &haystack);
     for (auto const& hay : haystack)
         if (hay.addr % needle)
@@ -262,14 +263,14 @@ bool isInTransaction(CTransaction *trans, const address_t& needle) {
 }
 
 //-----------------------------------------------------------------------
-bool checkBloom(COptions& options, const CAcctCacheItem *item) {
+bool checkBloom(COptions& options, const CAppearance_base *item) {
 
     // If we are not checking blooms, assume it's in the block
     if (!options.useBloom)
         return true;
 
     // If the bloom doesn't exist, assume it's in the block
-    string_q bloomFilename = substitute(getBinaryFilename(item->blockNum), "/blocks/", "/blooms/");
+    string_q bloomFilename = substitute(getBinaryFilename(item->blk), "/blocks/", "/blooms/");
     if (!fileExists(bloomFilename))
         return true;
 

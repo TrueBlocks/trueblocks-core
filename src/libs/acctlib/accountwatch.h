@@ -19,7 +19,6 @@
 #include "transaction.h"
 #include "incomestatement.h"
 #include "balancehistory.h"
-#include "acctcacheitem.h"
 
 namespace qblocks {
 
@@ -61,7 +60,7 @@ public:
     CArchive *tx_cache;
     string_q extra_data;
     void writeLastBlock(blknum_t bn);
-    void writeAnArray(const CAcctCacheItemArray& array);
+    void writeAnArray(const CAppearanceArray_base& array);
     void writeARecord(blknum_t bn, blknum_t tx_id);
     bool openCacheFile1(void);
     // EXISTING_CODE
@@ -219,3 +218,4 @@ extern biguint_t getNodeBal(CBalanceHistoryArray& history, const address_t& addr
 extern void loadWatchList(const CToml& toml, CAccountWatchArray& monitors, const string_q& key);
 // EXISTING_CODE
 }  // namespace qblocks
+

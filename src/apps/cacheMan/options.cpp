@@ -88,10 +88,10 @@ bool COptions::parseArguments(string_q& command) {
             CStringArray lines;
             explode(lines, contents, '\n');
             for (auto line : lines) {
-                CAcctCacheItem item(line);
-                if (item.blockNum > 0) {
+                CAppearance_base item(line);
+                if (item.blk > 0) {
                     removals.push_back(item);
-                    cerr << cYellow << "\tremoval instruction: " << cTeal << removals.size() << "-" << item << cOff << "\r";
+                    cerr << cYellow << "\tremoval instruction: " << cTeal << removals.size() << "-" << item.blk << "." << item.txid << cOff << "\r";
                     cerr.flush();
                 }
             }

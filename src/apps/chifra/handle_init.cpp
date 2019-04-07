@@ -14,42 +14,52 @@ bool COptions::handle_init(void) {
     if (addrs.empty())
         return usage("This function requires an address. Quitting...");
 
-    for (auto addr : addrs) {
-        string_q stagingPath = monitorsPath + "staging/";
-        establishFolder(stagingPath);
+    string_q stagingPath = monitorsPath + "staging/";
+    establishFolder(stagingPath);
 
+    CAddressArray runs;
+    for (auto addr : addrs) {
+        string_q prodName;
+        prodName = monitorsPath + addr + ".acct.bin";
+        if (fileExists(prodName)) {
+            cerr << "The file " << cTeal << "./" << addr << ".acct.bin" << cOff;
+            cerr << " already exists." << endl;
+        } else {
+            runs.push_back(addr);
+        }
+    }
+
+    if (!runs.size())
+        return true;
+
+    if (!freshen_internal(stagingPath, runs, "", freshen_flags))
+        return false;
+
+    for (auto addr : runs) {
         string_q stageName, prodName;
         stageName = stagingPath + addr + ".acct.bin";
         prodName = monitorsPath + addr + ".acct.bin";
 
-        if (!fileExists(prodName)) {
-            if (!freshen_internal(stagingPath, addr, "", freshen_flags))
-                return false;
-           if (verbose)
-                cerr << "Moving " << cTeal << stageName << cOff << " to " << cTeal << prodName << cOff << endl;
-            if (!isTestMode())
-                moveFile(stageName, prodName);
-            else
-                cerr << "Would have moved "
-                        << substitute(stageName, getCachePath(""), "$BLOCK_CACHE/") << " to "
-                        << substitute(prodName, getCachePath(""), "$BLOCK_CACHE/") << endl;
+        if (verbose)
+            cerr << "Moving " << cTeal << stageName << cOff << " to " << cTeal << prodName << cOff << endl;
 
-            stageName = stagingPath + addr + ".last.txt";
-            prodName = monitorsPath + addr + ".last.txt";
-            if (verbose)
-                cerr << "Moving " << cTeal << stageName << cOff << " to " << cTeal << prodName << cOff << endl;
-            if (!isTestMode())
-                moveFile(stageName, prodName);
-            else
-                cerr << "Would have moved "
-                        << substitute(stageName, getCachePath(""), "$BLOCK_CACHE/") << " to "
-                        << substitute(prodName, getCachePath(""), "$BLOCK_CACHE/") << endl;
+        if (!isTestMode())
+            moveFile(stageName, prodName);
+        else
+            cerr << "Would have moved "
+                    << substitute(stageName, getCachePath(""), "$BLOCK_CACHE/") << " to "
+                    << substitute(prodName, getCachePath(""), "$BLOCK_CACHE/") << endl;
 
-        } else {
-            cerr << "The file ";
-            cerr << cTeal << "./" << addr << ".acct.bin" << cOff;
-            cerr << " already exists. Quitting..." << endl;
-        }
+        stageName = stagingPath + addr + ".last.txt";
+        prodName = monitorsPath + addr + ".last.txt";
+        if (verbose)
+            cerr << "Moving " << cTeal << stageName << cOff << " to " << cTeal << prodName << cOff << endl;
+        if (!isTestMode())
+            moveFile(stageName, prodName);
+        else
+            cerr << "Would have moved "
+                    << substitute(stageName, getCachePath(""), "$BLOCK_CACHE/") << " to "
+                    << substitute(prodName, getCachePath(""), "$BLOCK_CACHE/") << endl;
     }
 
     return true;

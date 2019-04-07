@@ -17,7 +17,6 @@
  */
 #include "etherlib.h"
 #include "transaction.h"
-#include "addressappearance.h"
 
 namespace qblocks {
 

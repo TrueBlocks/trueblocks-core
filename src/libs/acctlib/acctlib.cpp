@@ -19,7 +19,6 @@ void acctlib_init(QUITHANDLER qh) {
 
     CAccountWatch::registerClass();
     CApiSpec::registerClass();
-    CAcctCacheItem::registerClass();
     CBalanceHistory::registerClass();
     CIncomeStatement::registerClass();
 

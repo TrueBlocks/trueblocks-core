@@ -6,7 +6,7 @@
 #include "options.h"
 
 //-------------------------------------------------------------------------
-bool COptions::handleRead(const string_q& msg, size_t filesToUse, CAcctCacheItemArray& dataArray) const {
+bool COptions::handleRead(const string_q& msg, size_t filesToUse, CAppearanceArray_base& dataArray) const {
 
     dataArray.reserve(2000000); // just a guess, but makes the read very much faster
     for (uint32_t fn = 0 ; fn < filesToUse ; fn++) {
@@ -16,9 +16,9 @@ bool COptions::handleRead(const string_q& msg, size_t filesToUse, CAcctCacheItem
             return usage("Could not open file: " + monitors[fn].name + ". Quitting.");
         uint64_t nRead = 0;
         while (!txCache.Eof() && !shouldQuit()) {
-            CAcctCacheItem item;
-            txCache >> item.blockNum >> item.transIndex;
-            if (item.blockNum > 0) {
+            CAppearance_base item;
+            txCache >> item.blk >> item.txid;
+            if (item.blk > 0) {
                 dataArray.push_back(item);
                 nRead++;
                 cerr << (!(nRead % 10000) ? "." : "");

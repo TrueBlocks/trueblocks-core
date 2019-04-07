@@ -7,9 +7,9 @@
 #include "question.h"
 
 //------------------------------------------------------------------------------------------------
-bool COptions::handle_name(void) {
+bool COptions::handle_names(void) {
 
-    // name mode does not require a running node
+    // names mode does not require a running node
     nodeNotRequired();
 
     ostringstream os;

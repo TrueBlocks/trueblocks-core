@@ -59,5 +59,5 @@ extern bool handle_addrs  (blknum_t bn, void *data);
 extern bool handle_raw    (blknum_t bn, void *data);
 
 //-----------------------------------------------------------------------------
-extern bool accumAddrs (const CAddressAppearance& item, void *data);
+extern bool accumAddrs (const CAppearance& item, void *data);
 extern bool transFilter(const CTransaction *trans, void *data);

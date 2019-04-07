@@ -18,20 +18,9 @@ int main(int argc, const char *argv[]) {
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
-
-        if (!options.useBlooms)
-            options.scrapeCnt = 10000000;  // TODO(tjayrush): Not right
-
-        if (options.useBlooms)
-            forEveryBloomFile(visitBloomFilters, &options, options.startScrape, options.scrapeCnt);
-        else {
-            string_q path = (options.new_version ? indexFolder_binary_v2 : indexFolder_sorted_v2);
-            forEveryFileInFolder(path, visitIndexFiles, &options);
-        }
-
+        forEveryFileInFolder(indexFolder_binary_v2, visitIndexFiles, &options);
     }
-    options.finalReport();
-    acctlib_cleanup();
 
+    acctlib_cleanup();
     return 0;
 }

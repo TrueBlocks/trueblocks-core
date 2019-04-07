@@ -67,7 +67,7 @@ int main(int argc, const char *argv[]) {
 }
 
 //----------------------------------------------------------------
-bool visitAddrs(const CAddressAppearance& item, void *data) {
+bool visitAddrs(const CAppearance& item, void *data) {
     COptions *opt = (COptions*)data;
 
     if (opt->belongs)

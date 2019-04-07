@@ -221,7 +221,7 @@ namespace qblocks {
         }
 
         if (contains(cmdLine, "--version ")) {
-            cerr << getProgName() << " (quickBlocks) " << getVersionStr() << "\n";
+            cerr << getProgName() << getVersionStr(true) << "\n";
             exit(0);
         }
 
@@ -407,7 +407,7 @@ namespace qblocks {
         os << notes();
         if (!isReadme) {
             os << bBlue << "  Powered by QBlocks";
-            os << (isTestMode() ? "" : " (" + getVersionStr() + ")") << "\n" << cOff;
+            os << (isTestMode() ? "" : " (" + getVersionStr(true) + ")") << "\n" << cOff;
         }
         string_q ret = os.str().c_str();
         return postProcess("usage", ret);
