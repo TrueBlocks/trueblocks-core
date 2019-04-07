@@ -16,7 +16,7 @@
  */
 #include <algorithm>
 #include "block.h"
-#include "etherlib.h"
+#include "appearance.h"
 
 namespace qblocks {
 
@@ -430,7 +430,7 @@ const CBaseNode *CBlock::getObjectAt(const string_q& fieldName, size_t index) co
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-extern bool accumulateAddresses(const CAddressAppearance& item, void *data);
+extern bool accumulateAddresses(const CAppearance& item, void *data);
 extern bool foundOne(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const address_t& addr, const string_q& reason); // NOLINT
 extern bool foundPot(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList, const string_q& reason); // NOLINT
 
@@ -464,7 +464,7 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC traceFilter, void *data
 }
 
 //---------------------------------------------------------------------------
-bool getTracesAndVisit(const hash_t& hash, CAddressAppearance& item, ADDRESSFUNC funcy, void *data) {
+bool getTracesAndVisit(const hash_t& hash, CAppearance& item, ADDRESSFUNC funcy, void *data) {
     string_q str;
     queryRawTrace(str, hash);
 
@@ -517,7 +517,7 @@ bool CTransaction::forEveryAddress(ADDRESSFUNC funcy, TRANSFUNC filt, void *data
     // If we're not filtering, or the filter passes, proceed. Note the filter depends on the
     // transaction only, not on any address.
     if (!filt || !filt(this, data)) {  // may look at DDos range and nTraces for example
-        CAddressAppearance item(blockNumber, tr, NOPOS, "", "");
+        CAppearance item(blockNumber, tr, NOPOS, "", "");
         getTracesAndVisit(hash, item, funcy, data);
     }
     return true;

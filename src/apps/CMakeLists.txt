@@ -11,11 +11,9 @@ include_directories(${BASE_INCLUDE})
 # message (WARNING  "*** Entering apps folder ***")
 
 # Compilation order of the src subdirectories
-add_subdirectory(acctExport)
-add_subdirectory(cacheMan)
-
 add_subdirectory(blockScrape)
 add_subdirectory(acctScrape)
+add_subdirectory(acctExport)
+add_subdirectory(cacheMan)
 add_subdirectory(chifra)
-
 add_subdirectory(bloomMan)

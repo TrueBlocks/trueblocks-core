@@ -7,7 +7,7 @@
 #include "options.h"
 
 //-------------------------------------------------------------------------
-bool accumAddrs(const CAddressAppearance& item, void *data) {
+bool accumAddrs(const CAppearance& item, void *data) {
     if (isZeroAddr(item.addr) || !data)
         return true;
     CAddressArray *array = (CAddressArray*)data;

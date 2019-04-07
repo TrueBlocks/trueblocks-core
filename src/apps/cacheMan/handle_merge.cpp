@@ -8,7 +8,7 @@
 //-------------------------------------------------------------------------
 bool COptions::handleMerge(void) const {
 
-    CAcctCacheItemArray dataArray;
+    CAppearanceArray_base dataArray;
     if (!handleRead("Merging", monitors.size(), dataArray))
         return false;
 

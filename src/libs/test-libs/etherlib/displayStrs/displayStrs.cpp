@@ -158,12 +158,6 @@ class    = CTreeRoot
 fields   = CTreeNode *root
 includes = etherlib.h|treenode.h|leaf.h|branch.h|infix.h
 
-class = CAcctCacheItem
-fields = uint64 blockNum|uint64 transIndex
-includes = etherlib.h
-sort = ((v1.blockNum != v2.blockNum) ? v1.blockNum < v2.blockNum : v1.transIndex < v2.transIndex)
-equals = (blockNum == item.blockNum && transIndex == item.transIndex)
-
 class     = CPriceQuote
 fields    = timestamp timestamp|double close
 includes  = abilib.h

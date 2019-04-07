@@ -15,16 +15,20 @@ int main(int argc, const char *argv[]) {
         return 0;
 
     for (auto command : options.commandLines) {
-        if (!options.parseArguments(command))
-            return 0;
+        if (options.parseArguments(command)) {
 
-        cerr << bGreen << "Scraping new blocks..." << "\n" << cOff;
-        if (!handle_freshen(options))
-            cerr << "\tThe tool ended with an error.";
-        cerr << bGreen << "...done\n" << cOff;
-        cout << scraperStatus();
+            cerr << bGreen << "Scraping new blocks..." << "\n" << cOff;
+            if (!handle_freshen(options))
+                cerr << "\tThe tool ended with an error.";
+            cerr << bGreen << "...done\n" << cOff;
+
+        }
     }
 
+    if (verbose)
+        cerr << scraperStatus();
+
     etherlib_cleanup();
+
     return 0;
 }

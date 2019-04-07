@@ -4,12 +4,10 @@ calling: getBlock --latest --qblocks
 
 getBlock argc: 3 [1:--latest] [2:--qblocks] 
 getBlock --latest --qblocks 
-Hostname:               --hostname--
-User:                   --username--
-QB Version:             0.5.5-alpha
-Client Version:         --version--
-Location of cache:      --cache_dir--
-Latest final in cache:  --final--
-Latest staged in cache: --staged--
-Latest block at client: --client--
-Behind head (catchup):  --diff--
+  Client version:     --version--
+  Trueblocks Version: GHC-TrueBlocks0.5.5-alpha
+  Cache location:     --cache_dir--
+  Host (user):        --host (user)--
+  Latest cache:       --final--, --staging--
+  Latest client:      --client--
+  Dist from head:     --diff-- (+24)
