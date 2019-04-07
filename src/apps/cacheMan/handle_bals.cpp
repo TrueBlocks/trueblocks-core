@@ -17,7 +17,7 @@ bool handleCacheBals(COptions& options) {
     // The node needs to be there if we want to cache balances
     nodeRequired();
 
-    CAcctCacheItemArray dataArray;
+    CAppearanceArray_base dataArray;
 
     // Check to see if it's one of the pre-funded accounts
     string_q contents;
@@ -28,11 +28,11 @@ bool handleCacheBals(COptions& options) {
         for (auto prefund : prefunds) {
             address_t account = nextTokenClear(prefund, '\t');
             if (account == watch.address) {
-                CAcctCacheItem item;
-                item.blockNum = 1;
-                item.transIndex = NOPOS;
+                CAppearance_base item;
+                item.blk = 1;
+                item.txid = (uint32_t)-1;
                 dataArray.push_back(item);
-                biguint_t bal = getBalanceAt(watch.address, item.blockNum);
+                biguint_t bal = getBalanceAt(watch.address, item.blk);
 //                cout << account << "\t" << item << "\t" << bal << endl;
                 continue;
             }
@@ -41,13 +41,13 @@ bool handleCacheBals(COptions& options) {
 
     CArchive txCache(READING_ARCHIVE);
     if (txCache.Lock(options.monitors[0].name, modeReadOnly, LOCK_NOWAIT)) {
-        CAcctCacheItem last;
+        CAppearance_base last;
         while (!txCache.Eof()) {
-            CAcctCacheItem item;
-            txCache >> item.blockNum >> item.transIndex;
-            if (item.blockNum > 0 || !last.blockNum) {
+            CAppearance_base item;
+            txCache >> item.blk >> item.txid;
+            if (item.blk > 0 || !last.blk) {
                 dataArray.push_back(item);
-                cerr << "Reading transactions: " << cTeal << item.blockNum << "." << item.transIndex << cOff << clearStr << "\r";
+                cerr << "Reading transactions: " << cTeal << item.blk << "." << item.txid << cOff << clearStr << "\r";
                 cerr.flush();
             }
             last = item;
@@ -74,20 +74,20 @@ bool handleCacheBals(COptions& options) {
         blknum_t lastBlock = NOPOS;
         biguint_t bal = 0;
         for (auto const& item : dataArray) {
-            if (item.blockNum == 1 || item.blockNum >= watch.firstBlock) {
-                bal = getBalanceAt(watch.address, item.blockNum);
-                if (bal != lastBal && item.blockNum != lastBlock) {
-                    balCache << item.blockNum << watch.address << bal;
+            if (item.blk == 1 || item.blk >= watch.firstBlock) {
+                bal = getBalanceAt(watch.address, item.blk);
+                if (bal != lastBal && item.blk != lastBlock) {
+                    balCache << item.blk << watch.address << bal;
                     balCache.flush();
                     nWritten++;
                 }
                 lastBal = bal;
-                lastBlock = item.blockNum;
+                lastBlock = item.blk;
             }
             cout << "\t";
             cout << cTeal << watch.address << cOff;
             cout << " (" << nWritten << "/" << cnt++ << "/" << dataArray.size() << ") ";
-            cout << item.blockNum << " " << bal << clearStr << "\r";
+            cout << item.blk << " " << bal << clearStr << "\r";
             cout.flush();
         }
         cerr << "\tWrote " << padNum5T(nWritten++) << " balances to binary file " << cTeal;
@@ -119,7 +119,7 @@ bool listBalances(COptions& options) {
 
                 do {
 
-                    CAddressAppearance app;
+                    CAppearance app;
                     biguint_t bal;
                     balCache >> app.bn >> app.addr >> bal;
                     if (app.bn > 0) {

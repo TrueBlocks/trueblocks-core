@@ -892,33 +892,37 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     string_q scraperStatus(void) {
 
-        string_q tmpStore = configPath("cache/tmp/getBlock-latest.txt");
-        string_q contents;
-        asciiFileToString(tmpStore, contents);
-        uint64_t lastUpdate = str_2_Uint(contents);
-        uint64_t staging = NOPOS, finalized = NOPOS, client = NOPOS;
-        getLastBlocks(staging, finalized, client);
-        uint64_t diff = finalized > client ? 0 : client - finalized;
-        stringToAsciiFile(tmpStore, uint_2_Str(diff));  // for next time
-
         char hostname[HOST_NAME_MAX];  gethostname(hostname, HOST_NAME_MAX);
         char username[LOGIN_NAME_MAX]; getlogin_r(username, LOGIN_NAME_MAX);
+        string_q hostUser = string_q(hostname) + " (" + username + ")";
+
+        string_q tmpStore = configPath("cache/tmp/scraper-status.txt");
+
+        uint64_t prevDiff = str_2_Uint(asciiFileToString(tmpStore));
+        uint64_t staging, finalized, client;
+        getLastBlocks(staging, finalized, client);
+
+        uint64_t currDiff = finalized > client ? finalized - client : client - finalized;
+        stringToAsciiFile(tmpStore, uint_2_Str(currDiff));  // so we can use it next time
+
+#define showOne(a, b) cYellow << (isTestMode() ? a : b) << cOff
+#define showOne1(a) showOne(a, a)
+        ostringstream cos;
+        cos << showOne("--final--, --staging--", uint_2_Str(finalized)+", "+uint_2_Str(staging));
+
+        ostringstream dos;
+        dos << showOne("--diff--", (currDiff>prevDiff?"-":"+") + uint_2_Str(currDiff));
+        dos << (currDiff > prevDiff ? " (-" + uint_2_Str(currDiff-prevDiff) : " (+"+uint_2_Str(prevDiff-currDiff)) + ")";
 
         ostringstream os;
-        os << cGreen << "Hostname:               " << cYellow << (isTestMode() ? "--hostname--"  : string_q(hostname)) << cOff << "\n";
-        os << cGreen << "User:                   " << cYellow << (isTestMode() ? "--username--"  : string_q(username)) << cOff << "\n";
-        os << cGreen << "QB Version:             " << cYellow <<                                   getVersionStr() << cOff << "\n";
-        os << cGreen << "Client Version:         " << cYellow << (isTestMode() ? "--version--"   : getVersionFromClient()) << cOff << "\n";
-        os << cGreen << "Location of cache:      " << cYellow << (isTestMode() ? "--cache_dir--" : getCachePath("")) << cOff << "\n";
-        os << cGreen << "Latest final in cache:  "  << cYellow << (isTestMode() ? "--final--"    : padNum8T(finalized))  << cOff << "\n";
-        os << cGreen << "Latest staged in cache: "  << cYellow << (isTestMode() ? "--staged--"   : padNum8T(staging))  << cOff << "\n";
-        os << cGreen << "Latest block at client: "  << cYellow << (isTestMode() ? "--client--"   : padNum8T(client)) << cOff << "\n";
-        os << cGreen << "Behind head (catchup):  "  << cYellow << (isTestMode() ? "--diff--"     : padNum8T(diff));
-        if (!isTestMode() && lastUpdate) {
-            uint64_t diffDiff = (diff > lastUpdate ? 0 : lastUpdate - diff);
-            os << " (+" << diffDiff << ")";
-        }
-        os << cOff << "\n";
+        os << cGreen << "  Client version:     " << showOne("--version--", getVersionFromClient())    << endl;
+        os << cGreen << "  Trueblocks Version: " << showOne1(getVersionStr(true))                     << endl;
+        os << cGreen << "  Cache location:     " << showOne("--cache_dir--", getCachePath(""))        << endl;
+        os << cGreen << "  Host (user):        " << showOne("--host (user)--", hostUser)              << endl;
+        os << cGreen << "  Latest cache:       " << cos.str()                                         << endl;
+        os << cGreen << "  Latest client:      " << showOne("--client--", uint_2_Str(client))         << endl;
+        os << cGreen << "  Dist from head:     " << dos.str()                                         << endl;
+
         return os.str();
     }
 

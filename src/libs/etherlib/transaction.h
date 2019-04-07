@@ -23,8 +23,8 @@ namespace qblocks {
 
 // EXISTING_CODE
 class CBlock;
-class CAddressAppearance;
-typedef bool (*ADDRESSFUNC)(const CAddressAppearance& item, void *data);
+class CAppearance;
+typedef bool (*ADDRESSFUNC)(const CAppearance& item, void *data);
 typedef bool (*TRANSFUNC)(const CTransaction *trans, void *data);
 // EXISTING_CODE
 

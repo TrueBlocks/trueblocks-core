@@ -30,8 +30,10 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    string_q getVersionStr(const string_q& sep1, const string_q& sep2) {
-        return uint_2_Str(MAJOR) + sep1 + uint_2_Str(MINOR) + sep1 + uint_2_Str(BUILD) + sep2 + SUBVERS;
+    string_q getVersionStr(bool incProg) {
+        ostringstream os;
+        os << (incProg ? "GHC-TrueBlocks" : "") << MAJOR << "." << MINOR << "." << BUILD << "-" << SUBVERS;
+        return os.str();
     }
 
 }  // namespace qblocks

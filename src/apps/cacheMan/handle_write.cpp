@@ -13,7 +13,7 @@ public:
 };
 typedef vector<CWriteItem> CWriteItemArray;
 //-------------------------------------------------------------------------
-bool COptions::handleWrite(const string_q& outputFilename, const CAcctCacheItemArray& dataArray, CACHEFILTERFUNC filterFunc) const {
+bool COptions::handleWrite(const string_q& outputFilename, const CAppearanceArray_base& dataArray, APPEARANCEFILTERFUNC filterFunc) const {
 
     cerr << "\tWriting...";
 
@@ -31,10 +31,10 @@ bool COptions::handleWrite(const string_q& outputFilename, const CAcctCacheItemA
     for (size_t i = 0 ; i < dataArray.size() && !shouldQuit() ; i++) {
         // filterFunc (if present) returns true if we should include the record
         if (!filterFunc || (*filterFunc)(((COptions*)this)->removals, dataArray[i])) {
-            if (i == 0 || dataArray[i-1] != dataArray[i]) {  // removes dups
-                if (dataArray[i].blockNum > currentLastItem)  // update last item
-                    newLastItem = dataArray[i].blockNum;
-                writeArray.push_back(CWriteItem(dataArray[i].blockNum, dataArray[i].transIndex));
+            if (i == 0 || dataArray[i-1].blk != dataArray[i].blk || dataArray[i-1].txid != dataArray[i].txid) {  // removes dups
+                if (dataArray[i].blk > currentLastItem)  // update last item
+                    newLastItem = dataArray[i].blk;
+                writeArray.push_back(CWriteItem(dataArray[i].blk, dataArray[i].txid));
                 cerr << (!(writeArray.size() % 5000) ? "." : "");
             }
         }

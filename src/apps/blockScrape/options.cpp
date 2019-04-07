@@ -97,9 +97,10 @@ bool COptions::parseArguments(string_q& command) {
 
     }
 
-    // If we're at the beginning, and we've been told explicitly where to start, start there...
+    // The first time we ever run, the user has a chance to tell us where to start
     uint64_t forceStart = getGlobalConfig("blockScrape")->getConfigInt("settings", "forceStartBlock", NOPOS);
     if (startBlock == 1 && forceStart != NOPOS) {
+        // TODO(tjayrush): This should snap to a legit index file start point
         startBlock = forceStart;
         endBlock = max(startBlock + 1, client);
     }
@@ -112,7 +113,7 @@ bool COptions::parseArguments(string_q& command) {
 
     maxIndexRows = getGlobalConfig("blockScrape")->getConfigInt("settings", "maxIndexRows", maxIndexRows);
 
-    string_q zeroIndex = indexFolder_sorted_v2 + padNum9((uint64_t)0) + "-" + padNum9((uint64_t)0) + ".txt";
+    string_q zeroIndex = indexFolder_sorted_v2 + padNum9(0) + "-" + padNum9(0) + ".txt";
     if (!fileExists(zeroIndex)) {
         CStringArray prefunds;
         asciiFileToLines(configPath("prefunds.txt"), prefunds);
@@ -120,12 +121,15 @@ bool COptions::parseArguments(string_q& command) {
         for (auto prefund : prefunds) {
             CStringArray parts;
             explode(parts, prefund, '\t');
-            os << parts[0] << "\t" << padNum9((uint64_t)0) << "\t" << padNum5((uint64_t)0) << endl;
+            os << parts[0] << "\t" << padNum9(0) << "\t" << padNum5(0) << endl;
         }
+        // TODO(tjayrush): This does not make the file binary
         stringToAsciiFile(zeroIndex, os.str());
     }
 
-    return true;
+    if (startBlock > client)
+        cerr << cTeal << "INFO: " << cOff << "The scraper is at the front of the chain." << endl;
+    return startBlock <= client;
 }
 
 //---------------------------------------------------------------------------------------------------

@@ -57,18 +57,19 @@ bool COptions::handle_daemon(void) {
         if (accounts.size() == 0)
             cerr << cTeal << "\tnothing to monitor" << cOff << endl;
 
+        CAddressArray runs;
         for (auto acct : accounts) {
-            bool run = false;
             for (auto filter : filters)
                 if (startsWith(acct.addr, filter))
-                    run = true;
-            if (run)
-                freshen_internal(monitorsPath, acct.addr, "", freshen_flags);
+                    runs.push_back(acct.addr);
         }
+
+        if (runs.size())
+            freshen_internal(monitorsPath, runs, "", freshen_flags);
 
         cerr << "Sleeping for " << sleep << " seconds" << endl;
         if (!isTestMode())
-            usleep((unsigned int)sleep * 1000000);
+            usleep((unsigned int)sleep * 100000);
     }
     return true;
 }

@@ -10,7 +10,7 @@ bool COptions::handleSort(void) const {
 
     ASSERT(filenmes.size() == 1);
 
-    CAcctCacheItemArray dataArray;
+    CAppearanceArray_base dataArray;
     if (!handleRead("Sorting", 1, dataArray))
         return false;
 

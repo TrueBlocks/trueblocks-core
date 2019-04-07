@@ -12,7 +12,7 @@ class COptions : public COptionsBase {
 public:
     CAccountWatchArray monitors;
     CAccountWatchArray named;
-    CAcctCacheItemArray items;
+    CAppearanceArray_base items;
     CBlock curBlock;
     bool useBloom;
     bool needsArt;

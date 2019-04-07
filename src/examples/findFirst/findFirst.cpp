@@ -12,7 +12,7 @@
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
 
-extern bool visitAddress(const CAddressAppearance& item, void *data);
+extern bool visitAddress(const CAppearance& item, void *data);
 //-----------------------------------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
     etherlib_init(quickQuitHandler);
@@ -29,7 +29,7 @@ int main(int argc, const char *argv[]) {
 }
 
 //-----------------------------------------------------------------------------------------------
-bool visitAddress(const CAddressAppearance& item, void *data) {
+bool visitAddress(const CAppearance& item, void *data) {
     if (item.addr == *(address_t *)data) {
         cout << "Found at " << item << "\n";
         return false; // we're done

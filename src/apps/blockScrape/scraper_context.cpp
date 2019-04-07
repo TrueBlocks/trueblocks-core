@@ -178,7 +178,7 @@ void CScraper::noteAddress(const address_t& addr, bool isMiner) {
 
     nAddrsInBlock++;
 
-    CAddressAppearance app;
+    CAppearance app;
     app.addr = addr;
     app.bn = block.blockNumber;
     if (isMiner) {
@@ -298,14 +298,14 @@ void CScraper::consolidateIndex(void) {
 }
 
 //-------------------------------------------------------------------------
-bool notePotential(const CAddressAppearance& item, void *data) {
+bool notePotential(const CAppearance& item, void *data) {
     ((CScraper*)data)->noteAddress(item.addr);
     return true;
 }
 
 //---------------------------------------------------------------------------
 void foundPotential(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList) {
-    CAddressAppearance item(bn, tx, tc, "", "");
+    CAppearance item(bn, tx, tc, "", "");
     potentialAddr(func, data, item, potList);
 }
 

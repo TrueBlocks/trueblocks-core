@@ -5,14 +5,14 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
-bool filterForRemove(CAcctCacheItemArray& dataArray, const CAcctCacheItem& item);
+bool filterForRemove(CAppearanceArray_base& dataArray, const CAppearance_base& item);
 //-----------------------------------------------------------------------
 bool COptions::handleRemove(void) const {
 
     ASSERT(fileExists("./remove.txt"));
     ASSERT(removals.size() == 1);
 
-    CAcctCacheItemArray dataArray;
+    CAppearanceArray_base dataArray;
     if (!handleRead("Reading", 1, dataArray))
         return false;
 
@@ -21,8 +21,8 @@ bool COptions::handleRemove(void) const {
     cerr << "done\n";
 
     for (size_t i = 0 ; i < removals.size() ; i++)
-        if (removals[i].blockNum > 0)
-            cerr << "\tWill remove item " << removals[i] << " if found\n";
+        if (removals[i].blk > 0)
+            cerr << "\tWill remove item " << removals[i].blk << "." << removals[i].txid << " if found\n";
 
     if (!handleWrite(monitors[0].name, dataArray, filterForRemove))
         return false;
@@ -32,7 +32,6 @@ bool COptions::handleRemove(void) const {
 
 //-----------------------------------------------------------------------
 // Return true if we don't find it so we don't filter it (double negative)
-bool filterForRemove(CAcctCacheItemArray& dataArray, const CAcctCacheItem& search) {
-    CAcctCacheItemArray::iterator it = find(dataArray.begin(), dataArray.end(), search);
-    return (it == dataArray.end());
+bool filterForRemove(CAppearanceArray_base& dataArray, const CAppearance_base& search) {
+    return (bsearch(&search, dataArray.data(), dataArray.size(), sizeof(CAppearance_base), findAppearance) == NULL);
 }

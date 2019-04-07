@@ -21,7 +21,7 @@ public:
 
 //-------------------------------------------------------------------------
 class COptions;
-typedef bool (*CACHEFILTERFUNC)(CAcctCacheItemArray& dataArray, const CAcctCacheItem& item);
+typedef bool (*APPEARANCEFILTERFUNC)(CAppearanceArray_base& dataArray, const CAppearance_base& item);
 
 //-------------------------------------------------------------------------
 class COptions : public COptionsBase {
@@ -35,7 +35,7 @@ public:
     uint64_t skip;
     bool isImport;
     bool isRemove;
-    CAcctCacheItemArray removals;
+    CAppearanceArray_base removals;
 
     COptions(void);
     ~COptions(void);
@@ -44,8 +44,8 @@ public:
     bool handleSort     (void) const;
     bool handleImport   (void) const;
     bool handleRemove   (void) const;
-    bool handleRead     (const string_q& mode, size_t filesToUse, CAcctCacheItemArray& dataArray) const;
-    bool handleWrite    (const string_q& outputFilename, const CAcctCacheItemArray& dataArray, CACHEFILTERFUNC filterFunc) const;
+    bool handleRead     (const string_q& mode, size_t filesToUse, CAppearanceArray_base& dataArray) const;
+    bool handleWrite    (const string_q& outputFilename, const CAppearanceArray_base& dataArray, APPEARANCEFILTERFUNC filterFunc) const;
 
     bool parseArguments(string_q& command);
     void Init(void);

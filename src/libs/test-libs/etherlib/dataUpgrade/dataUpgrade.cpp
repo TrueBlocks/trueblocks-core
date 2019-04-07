@@ -31,7 +31,6 @@ int main(int argc, const char *argv[]) {
     CNewReceipt::registerClass();
 //    CAccountWatch::registerClass();
 //    CApiSpec::registerClass();
-//    CAcctCacheItem::registerClass();
 //    CIncomeStatement::registerClass();
     UNHIDE_FIELD(CBaseNode, "cname");
 
