@@ -778,3 +778,4 @@ bool CAbi::articulateOutputs(const string_q& encoding, const string_q& output, C
 }
 // EXISTING_CODE
 }  // namespace qblocks
+
