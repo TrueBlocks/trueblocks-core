@@ -20,8 +20,7 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-             if (options.mode == "freshen") return !options.handle_freshen();
-        else if (options.mode == "list")    return !options.handle_list();
+             if (options.mode == "list")    return !options.handle_list();
         else if (options.mode == "export")  return !options.handle_export();
         else if (options.mode == "init")    return !options.handle_init();
         else if (options.mode == "seed")    return !options.handle_seed();

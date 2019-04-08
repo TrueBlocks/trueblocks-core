@@ -9,13 +9,14 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
+    bool     stats;
     string_q mode;
     blknum_t minWatchBlock;
     blknum_t maxWatchBlock;
     string_q monitorsPath;
     CArchive txCache;
 
-        string_q freshen_flags;
+    string_q freshen_flags;
     string_q tool_flags;
     CAddressArray addrs;
 
@@ -26,7 +27,6 @@ public:
     void Init(void);
     bool createConfigFile(const address_t& addr);
 
-    bool handle_freshen(void);
     bool handle_export (void);
     bool handle_init   (void);
     bool handle_list   (void);
