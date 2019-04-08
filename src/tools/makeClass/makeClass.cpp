@@ -21,7 +21,6 @@ extern string_q short3        (const string_q& in);
 extern string_q short2        (const string_q& in);
 extern string_q checkType     (const string_q& typeIn);
 extern string_q convertTypes  (const string_q& inStr);
-extern string_q fixIncs       (const string_q& inStr);
 
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
@@ -119,52 +118,18 @@ string_q convertTypes(const string_q& inStr) {
     replaceAll(outStr, "gas ",       "gas_t "      );
     replaceAll(outStr, "wei ",       "wei_t "      );
 
-//    replaceAll(outStr, "uint8 ",     "32uint "     );
-//    replaceAll(outStr, "uint16 ",    "32uint "     );
-//    replaceAll(outStr, "uint32 ",    "32uint "     );
-//    replaceAll(outStr, "uint64 ",    "64uint "     );
-//    replaceAll(outStr, "uint256 ",   "biguint_t "   );
-
     replaceAll(outStr, "int8 ",      "int32_t "    );
     replaceAll(outStr, "int16 ",     "int32_t "    );
     replaceAll(outStr, "int32 ",     "int32_t "    );
     replaceAll(outStr, "int64 ",     "int64_t "    );
     replaceAll(outStr, "int256 ",    "bigint_t "   );
-
     replaceAll(outStr, "ubigint_t",  "biguint_t"   );
-//    replaceAll(outStr, "32uint ",    "uint32_t "   );
-//    replaceAll(outStr, "64uint ",    "uint64_t "   );
-//    if (getEnvStr("TRACING") == "true")
-//        cerr << "\tconvert: " << padRight(inStr, 30) << " ==> " << outStr << "\n";
 
     return outStr;
 }
 
 //------------------------------------------------------------------------------------------------------------
-extern const char* STR_COMMENT_LINE;
-extern const char* STR_CLASS_FILE;
-extern const char* STR_CASE_CODE_ARRAY;
-extern const char* STR_CASE_SET_CODE_ARRAY;
-extern const char* STR_CASE_CODE_STRINGARRAY;
-extern const char* STR_OPERATOR_H;
-extern const char* STR_OPERATOR_C;
-extern const char* STR_SUBCLASS;
-extern const char* PTR_SET_CASE;
-extern const char* PTR_GET_CASE;
-extern const char* STR_GETVALUE1;
-extern const char* STR_GETVALUE2;
-extern const char* STR_GETOBJ_CODE;
-extern const char* STR_GETOBJ_CODE_FIELD;
-extern const char* STR_GETSTR_CODE;
-extern const char* STR_GETSTR_CODE_FIELD;
-extern const char* STR_GETOBJ_HEAD;
-extern const char* STR_GETSTR_HEAD;
-extern const char* STR_UPGRADE_CODE;
-extern const char* STR_SORT_COMMENT_1;
-extern const char* STR_SORT_COMMENT_2;
-extern const char* STR_EQUAL_COMMENT_1;
-extern const char* STR_EQUAL_COMMENT_2;
-string_q tab = string_q("\t");
+static string_q tab = string_q("\t");
 
 //------------------------------------------------------------------------------------------------------------
 void generateCode(const COptions& options, CToml& toml, const string_q& dataFile, const string_q& ns) {
@@ -172,9 +137,9 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
     //------------------------------------------------------------------------------------------------
     string_q className  = toml.getConfigStr ("settings", "class", "");
     string_q baseClass  = toml.getConfigStr ("settings", "baseClass", "CBaseNode");
-    string_q otherIncs  = toml.getConfigStr ("settings", "cIncs", "");
     string_q scope      = toml.getConfigStr ("settings", "scope", "static");     //TODO(tjayrush): global data
     string_q hIncludes  = toml.getConfigStr ("settings", "includes", "");
+    string_q sIncludes  = toml.getConfigStr ("settings", "cIncs", "");
     bool     serialize  = toml.getConfigBool("settings", "serialize", false);
 
     //------------------------------------------------------------------------------------------------
@@ -185,14 +150,29 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
     string_q baseUpper  = toUpper(baseName);
 
     //------------------------------------------------------------------------------------------------
-    string_q fieldDec, fieldSet,  fieldClear,  fieldCopy, fieldGetObj, fieldGetStr, fieldArchiveRead;
-    string_q fieldArchiveWrite,   fieldReg,    fieldCase, fieldSubCls, headerIncs;
+    string_q fieldDec, fieldSet,    fieldCopy,   fieldClear, fieldCase;
+    string_q fieldReg, fieldSubCls, fieldGetObj, fieldGetStr;
+    string_q fieldArchiveWrite, fieldArchiveRead;
+    string_q headerIncs, sourceIncs;
 
     //------------------------------------------------------------------------------------------------
-    while (!hIncludes.empty()) {
-        string_q line = nextTokenClear(hIncludes, '|');
-        if (line != "none")
-            headerIncs += "#include \"" + line + "\"\n";
+    if (!hIncludes.empty()) {
+        CStringArray items;
+        explode(items, hIncludes, '|');
+        for (auto item : items) {
+            if (!item.empty() && item != "none")
+                headerIncs += "#include \"" + item + "\"\n";
+        }
+    }
+
+    //------------------------------------------------------------------------------------------------
+    if (!sIncludes.empty()) {
+        CStringArray items;
+        explode(items, sIncludes, '|');
+        for (auto item : items) {
+            if (!item.empty() && item != "none")
+                sourceIncs += "#include \"" + item + "\"\n";
+        }
     }
 
     //------------------------------------------------------------------------------------------------
@@ -223,21 +203,20 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
     //------------------------------------------------------------------------------------------------
     for (auto fld : fieldList) {
 
-        string_q decFmt  = "\t[{TYPE}] *[{NAME}];";
-        if (!fld.isPointer) {
-            replace(decFmt, "*", "");
-        }
-        string_q copyFmt = "\t[{NAME}] = +SHORT+.[{NAME}];\n";
-        if (fld.isPointer)
-            copyFmt = "\tif ([+SHORT+.{NAME}]) {\n\t\t[{NAME}] = new [{TYPE}];\n"
-                        "\t\t*[{NAME}] = *[+SHORT+.{NAME}];\n\t}\n";
-        string_q badSet   = "//\t[{NAME}] = ??; /""* unknown type: [{TYPE}] */\n";
-        string_q setFmt   = "\t[{NAME}]";
-        string_q regFmt   = "\tADD_FIELD(CL_NM, \"[{NAME}]\", T_TEXT, ++fieldNum);\n", regType;
-        string_q regHide  = "\tHIDE_FIELD(CL_NM, \"[{NAME}]\");\n";
-        string_q clearFmt = "\tif ([{NAME}])\n\t\tdelete [{NAME}];\n\t[{NAME}] = NULL;\n";
-        string_q subClsFmt = STR_SUBCLASS;
+        string_q declareFmt = "\t[{TYPE}] *[{NAME}];";
+        string_q copyFmt    = "\t[{NAME}] = +SHORT+.[{NAME}];\n";
+        string_q regFmt     = "\tADD_FIELD(CL_NM, \"[{NAME}]\", T_TEXT, ++fieldNum);\n";
+        string_q regHide    = "\tHIDE_FIELD(CL_NM, \"[{NAME}]\");\n";
 
+        if (fld.isPointer) {
+            copyFmt = "\tif ([+SHORT+.{NAME}]) {\n\t\t[{NAME}] = new [{TYPE}];\n"
+            "\t\t*[{NAME}] = *[+SHORT+.{NAME}];\n\t}\n";
+        } else {
+            replace(declareFmt, "*", "");
+        }
+
+        string_q setFmt = "\t[{NAME}]";
+        string_q regType;
                if (fld.type == "bloom")     { setFmt = "\t[{NAME}] = [{DEF}];\n";    regType = "T_BLOOM";
         } else if (fld.type == "wei")       { setFmt = "\t[{NAME}] = [{DEF}];\n";    regType = "T_WEI";
         } else if (fld.type == "gas")       { setFmt = "\t[{NAME}] = [{DEF}];\n";    regType = "T_GAS";
@@ -262,7 +241,7 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
         } else if (fld.type == "double")    { setFmt = "\t[{NAME}] = [{DEFF}];\n";   regType = "T_DOUBLE";
         } else if (fld.isPointer)           { setFmt = "\t[{NAME}] = [{DEFP}];\n";   regType = "T_POINTER";
         } else if (fld.isObject)            { setFmt = "\t[{NAME}] = [{TYPE}]();\n"; regType = "T_OBJECT";
-        } else                               { setFmt = badSet;                      regType = "T_TEXT"; }
+        } else                              { setFmt = STR_UNKOWNTYPE;               regType = "T_TEXT"; }
 
         if (contains(fld.type, "Array")) {
             setFmt = "\t[{NAME}].clear();\n";
@@ -316,13 +295,17 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
             fieldReg += fld.Format(regHide);
             replaceAll(fieldReg, "CL_NM", "[{CLASS_NAME}]");
         }
+
         fieldCase += fld.Format("[{TYPE}]+[{NAME}]-[{ISPOINTER}]~[{ISOBJECT}]|");
-        fieldDec  += (convertTypes(fld.Format(decFmt)) + "\n");
+        fieldDec  += (convertTypes(fld.Format(declareFmt)) + "\n");
         fieldCopy += substitute(substitute(fld.Format(copyFmt), "+SHORT+", "[{SHORT}]"), "++CLASS++", "[{CLASS_NAME}]");
         fieldSet  += fld.Format(setFmt);
+
+        string_q clearFmt = "\tif ([{NAME}])\n\t\tdelete [{NAME}];\n\t[{NAME}] = NULL;\n";
         fieldClear += (fld.isPointer ? fld.Format(clearFmt) : "");
+
         if (fld.isObject && !fld.isPointer && !contains(fld.type, "Array")) {
-            string_q fmt = subClsFmt;
+            string_q fmt = STR_SUBCLASS;
             replaceAll(fmt, "[FNAME]", fld.name);
             replaceAll(fmt, "[SH3]", short3(baseLower));
             string_q fldStr = fld.Format(fmt);
@@ -333,30 +316,8 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
             fieldSubCls += fldStr;
         }
 
-string_q ptrReadFmt =
-"    [{NAME}] = NULL;\n"
-"    bool has_[{NAME}] = false;\n"
-"    archive >> has_[{NAME}];\n"
-"    if (has_[{NAME}]) {\n"
-"        string_q className;\n"
-"        archive >> className;\n"
-"        [{NAME}] = reinterpret_cast<[{TYPE}] *>(createObjectOfType(className));\n"
-"        if (![{NAME}])\n"
-"            return false;\n"
-"        [{NAME}]->Serialize(archive);\n"
-"    }\n";
-string_q readFmt = "\tarchive >> [{NAME}];\n";
-
-string_q ptrWriteFmt =
-"    archive << ([{NAME}] != NULL);\n"
-"    if ([{NAME}]) {\n"
-"        archive << [{NAME}]->getRuntimeClass()->getClassNamePtr();\n"
-"        [{NAME}]->SerializeC(archive);\n"
-"    }\n";
-string_q writeFmt = "\tarchive << [{NAME}];\n";
-
-        fieldArchiveRead  += ((fld.noWrite ? "//" : "") + fld.Format(fld.isPointer ? ptrReadFmt  : readFmt));
-        fieldArchiveWrite += ((fld.noWrite ? "//" : "") + fld.Format(fld.isPointer ? ptrWriteFmt : writeFmt));
+        fieldArchiveRead  += ((fld.noWrite ? "//" : "") + fld.Format(fld.isPointer ? STR_PRTREADFMT  : STR_READFMT));
+        fieldArchiveWrite += ((fld.noWrite ? "//" : "") + fld.Format(fld.isPointer ? STR_PTRWRITEFMT : STR_WRITEFMT));
     }
 
     //------------------------------------------------------------------------------------------------
@@ -435,7 +396,7 @@ string_q writeFmt = "\tarchive << [{NAME}];\n";
     replaceAll(srcSource, "[{OPERATORS}]",       operatorC);
     replaceAll(srcSource, "[REGISTER_FIELDS]",   fieldReg);
     replaceAll(srcSource, "[{FIELD_CASE}]",      fieldStr);
-    replaceAll(srcSource, "[OTHER_INCS]",        fixIncs(otherIncs));
+    replaceAll(srcSource, "[OTHER_INCS]",        sourceIncs);
     replaceAll(srcSource, "[FIELD_SETCASE]",     caseSetCodeStr);
     replaceAll(srcSource, "[{SUBCLASS_FLDS}]",   subClsCodeStr);
     replaceAll(srcSource, "[{PARENT_SER2}]",     parSer2);
@@ -854,6 +815,37 @@ const char* STR_EQUAL_COMMENT_2 =
 "No default equal operator in class definition, assume none are equal (so find fails)";
 
 //------------------------------------------------------------------------------------------------------------
+const char* STR_PRTREADFMT =
+"    [{NAME}] = NULL;\n"
+"    bool has_[{NAME}] = false;\n"
+"    archive >> has_[{NAME}];\n"
+"    if (has_[{NAME}]) {\n"
+"        string_q className;\n"
+"        archive >> className;\n"
+"        [{NAME}] = reinterpret_cast<[{TYPE}] *>(createObjectOfType(className));\n"
+"        if (![{NAME}])\n"
+"            return false;\n"
+"        [{NAME}]->Serialize(archive);\n"
+"    }\n";
+
+//------------------------------------------------------------------------------------------------------------
+const char* STR_READFMT = "\tarchive >> [{NAME}];\n";
+
+//------------------------------------------------------------------------------------------------------------
+const char* STR_PTRWRITEFMT =
+"    archive << ([{NAME}] != NULL);\n"
+"    if ([{NAME}]) {\n"
+"        archive << [{NAME}]->getRuntimeClass()->getClassNamePtr();\n"
+"        [{NAME}]->SerializeC(archive);\n"
+"    }\n";
+
+//------------------------------------------------------------------------------------------------------------
+const char* STR_WRITEFMT = "\tarchive << [{NAME}];\n";
+
+const char* STR_UNKOWNTYPE =
+"//\t[{NAME}] = ??; /""* unknown type: [{TYPE}] */\n";
+
+//------------------------------------------------------------------------------------------------------------
 string_q short2(const string_q& str) {
     string_q ret = extract(str, 0, 2);
     if (ret == "or")
@@ -890,17 +882,4 @@ string_q checkType(const string_q& typeIn) {
     }
     cerr << "Invalid type: " << typeIn << ". Quitting...(hit enter)" << endl;
     return "";
-}
-
-//-----------------------------------------------------------------------
-string_q fixIncs(const string_q& inStr) {
-    if (inStr.empty())
-        return "";
-
-    CStringArray incs;
-    explode(incs, inStr, '|');
-    string_q ret;
-    for (auto inc : incs)
-        ret += "#include \"" + inc + "\"\n";
-    return ret;
 }

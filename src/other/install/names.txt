@@ -915,3 +915,4 @@
 0xffa93aacf49297d51e211817452839052fdfb961	DCC	Etherscan.io	Distributed Credit Chain	dcc_28.png	Distributed banking public blockchain with a goal to establish a decentralized ecosystem for financial service providers around the world.	1
 0xffe02ee4c69edf1b340fcad64fbd6b37a7b9e265	NANJ	Etherscan.io	NANJCOIN	nanjcoin_28.png	No description	1
 0xffe8196bc259e8dedc544d935786aa4709ec3e64	HDG	Etherscan.io	Hedge	hedge-crypto2_28.png	An investment portal for the ICO and Staking platforms.	1
+0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24	REG	QuickBlocks	1820 Registry		Registration smart contract as described in this EIP: https://eips.ethereum.org/EIPS/eip-1820
