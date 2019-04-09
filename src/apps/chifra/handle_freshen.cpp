@@ -55,7 +55,8 @@ bool freshen_internal(const string_q& path, const CAddressArray& addrs, const st
             cout << substitute(cmd, getCachePath(""), "$BLOCK_CACHE/") << endl;
         else {
             if (system(cmd.c_str())) { }  // Don't remove. Silences compiler warnings
-            usleep(500000); // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
+            if (!addrStr.empty())
+                usleep(500000); // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
         }
     }
 #endif

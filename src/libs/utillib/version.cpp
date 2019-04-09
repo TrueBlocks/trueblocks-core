@@ -19,6 +19,7 @@ namespace qblocks {
 #define MINOR 5
 #define BUILD 5
 #define SUBVERS "alpha"
+#define PRODUCT_NAME "GHC-TrueBlocks "
     //--------------------------------------------------------------------------------
     uint32_t getVersionNum(void) {
         return getVersionNum(MAJOR, MINOR, BUILD);
@@ -32,7 +33,7 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     string_q getVersionStr(bool incProg) {
         ostringstream os;
-        os << (incProg ? "GHC-TrueBlocks" : "") << MAJOR << "." << MINOR << "." << BUILD << "-" << SUBVERS;
+        os << (incProg ? PRODUCT_NAME : "") << MAJOR << "." << MINOR << "." << BUILD << "-" << SUBVERS;
         return os.str();
     }
 
