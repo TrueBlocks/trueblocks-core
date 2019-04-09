@@ -7,8 +7,9 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("-maxBlocks:<val>",  "scan at most --maxBlocks blocks ('all' implies scan to end of chain)"),
-    COption("",                  "Index transactions for a given Ethereum address (or series of addresses).\n"),
+    COption("-maxBlocks:<val>", "scan at most --maxBlocks blocks ('all' implies scan to end of chain)"),
+    COption("@pending",         "visit pending but not yet staged or finalized blocks"),
+    COption("",                 "Index transactions for a given Ethereum address (or series of addresses).\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -36,6 +37,9 @@ bool COptions::parseArguments(string_q& command) {
                 else
                     return usage("Please provide an integer value of maxBlocks. Quitting...");
             }
+
+        } else if (arg == "-p" || arg == "--pending") {
+            visit |= VIS_PENDING;
 
         } else if (startsWith(arg, "0x")) {
             if (!isAddress(arg))
@@ -109,8 +113,8 @@ bool COptions::parseArguments(string_q& command) {
             return usage("The last block file '" + fn + "' is locked. Quitting...");
     }
 
-    if (!folderExists(indexFolder_binary_v2))
-        return usage("Address index path '" + indexFolder_binary_v2 + "' not found. Quitting...");
+    if (!folderExists(indexFolder_finalized_v2))
+        return usage("Address index path '" + indexFolder_finalized_v2 + "' not found. Quitting...");
 
     blknum_t lastInCache = getLastBlock_cache_final();
     startScrape = str_2_Uint(asciiFileToString(getMonitorLast(primary.address)));
@@ -130,9 +134,10 @@ void COptions::Init(void) {
     // We want to be able to run this more than once
     // optionOn(OPT_RUNONCE);
 
-    minArgs        = 0;
-    startScrape    = 0;
-    scrapeCnt      = 0;
+    minArgs     = 0;
+    startScrape = 0;
+    scrapeCnt   = 0;
+    visit       = (VIS_STAGING | VIS_FINAL);
 }
 
 //---------------------------------------------------------------------------------------------------

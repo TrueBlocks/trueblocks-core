@@ -24,8 +24,8 @@ int main(int argc, const char *argv[]) {
     cerr << "Starting monitor...\r";
     cerr.flush();
 
-    blknum_t staging, finalized, client;
-    getLastBlocks(staging, finalized, client);
+    blknum_t pending, staging, finalized, client;
+    getLastBlocks(pending, staging, finalized, client);
 
     // Parse command line, allowing for command files
     COptions visitor;
