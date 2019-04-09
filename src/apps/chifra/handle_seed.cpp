@@ -13,9 +13,9 @@ bool COptions::handle_seed(void) {
     nodeNotRequired();
     // TODO(tjayrush): We should check that IPFS is running here (in much the same way we do for the node)
 
-    establishFolder(indexFolder_v2);
-    establishFolder(indexFolder_sorted_v2);
+    establishFolder(indexFolder_finalized_v2);
     establishFolder(indexFolder_staging_v2);
+    establishFolder(indexFolder_pending_v2);
     establishFolder(indexFolder_zips_v2);
 
     string_q contents;

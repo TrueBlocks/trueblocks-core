@@ -3,7 +3,7 @@
  * Copyright (c) 2017 by Great Hill Corporation.
  * All Rights Reserved
  *------------------------------------------------------------------------*/
-#include "etherlib.h"
+#include "acctlib.h"
 #include "options.h"
 
 //----------------------------------------------------------------------------------
@@ -211,21 +211,21 @@ bool CScraper::writeList(const string_q& toFile, const string_q& removeFile) {
 }
 
 //--------------------------------------------------------------------------
-bool CScraper::stageList(void) {
-    string_q stagingName = indexFolder_staging_v2 + padNum9(block.blockNumber) + ".txt";
-    return writeList(stagingName, "");
+bool CScraper::addToPendingList(void) {
+    string_q pendingName = indexFolder_pending_v2 + padNum9(block.blockNumber) + ".txt";
+    return writeList(pendingName, "");
 }
 
 //--------------------------------------------------------------------------
-bool CScraper::finalizeList(void) {
+bool CScraper::addToStagingList(void) {
 
     //
-    // Write the per-block address list to the finalized folder and keep track of how
+    // Write the per-block address list to the staging folder and keep track of how
     // many items we've stored so far.
     //
+    string_q pendingName = indexFolder_pending_v2 + padNum9(block.blockNumber) + ".txt";
     string_q stagingName = indexFolder_staging_v2 + padNum9(block.blockNumber) + ".txt";
-    string_q finalName = indexFolder_finalized_v2 + padNum9(block.blockNumber) + ".txt";
-    if (!writeList(finalName, stagingName))
+    if (!writeList(stagingName, pendingName))
         return false;
 
     //string_q countFile = configPath("cache/tmp/scrape_count.tmp");
@@ -237,20 +237,21 @@ bool CScraper::finalizeList(void) {
     bool overLimit = curLines >= options->maxIndexRows;
     bool is50 = !(block.blockNumber % 50);
     if ((overLimit && is50)) {
-        consolidateIndex();
-//        return false;
+        finalizeIndexChunk();
+        return false;
     }
 
     return true;
 }
 
 //--------------------------------------------------------------------------
-void CScraper::consolidateIndex(void) {
+void CScraper::finalizeIndexChunk(void) {
 
-    blknum_t first = str_2_Uint(substitute(getFirstFileInFolder(indexFolder_finalized_v2, false), indexFolder_finalized_v2, ""));
-    blknum_t last  = str_2_Uint(substitute(getLastFileInFolder (indexFolder_finalized_v2, false), indexFolder_finalized_v2, ""));
+    blknum_t first = str_2_Uint(substitute(getFirstFileInFolder(indexFolder_staging_v2, false), indexFolder_staging_v2, ""));
+    blknum_t last  = str_2_Uint(substitute(getLastFileInFolder (indexFolder_staging_v2, false), indexFolder_staging_v2, ""));
 
-    string_q resFile = indexFolder_sorted_v2 + padNum9(first)+"-"+padNum9(last) + ".txt";
+    string_q asciiFile = indexFolder_sorted_v2 + padNum9(first)+"-"+padNum9(last) + ".txt";
+    string_q binFile = indexFolder_finalized_v2 + padNum9(first)+"-"+padNum9(last) + ".bin";
 
     CStringArray apps;
     apps.reserve(options->maxIndexRows + 100);
@@ -260,7 +261,7 @@ void CScraper::consolidateIndex(void) {
 
     for (blknum_t i = first ; i <= last ; i++) {
         string_q theStuff;
-        string_q fn = indexFolder_finalized_v2 + padNum9(i) + ".txt";
+        string_q fn = indexFolder_staging_v2 + padNum9(i) + ".txt";
         asciiFileToString(fn, theStuff);
         CStringArray lns;
         explode(lns, theStuff, '\n');
@@ -281,14 +282,15 @@ void CScraper::consolidateIndex(void) {
             cerr << "."; cerr.flush();
         }
     }
-    appendToAsciiFile(resFile, os.str());
+    appendToAsciiFile(asciiFile, os.str());
+    writeIndexAsBinary(binFile, apps);
 
     string_q countFile = indexFolder_v2 + "counts.txt";
     ::remove(countFile.c_str());
     cnt = 0;
     cerr << "\ncleaning up"; cerr.flush();
     for (blknum_t i = first ; i <= last ; i++) {
-        string_q fn = indexFolder_finalized_v2 + padNum9(i) + ".txt";
+        string_q fn = indexFolder_staging_v2 + padNum9(i) + ".txt";
         ::remove(fn.c_str());
         if (!(++cnt % (options->maxIndexRows / 10))) {
             cerr << "."; cerr.flush();

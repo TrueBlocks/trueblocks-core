@@ -113,10 +113,11 @@ namespace qblocks {
     extern bool forEveryLogInBlock           (LOGVISITFUNC func,   void *data, const CBlock& block);
 
     //-------------------------------------------------------------------------
-    extern blknum_t getLastBlock_client     (void);
-    extern blknum_t getLastBlock_cache_final(void);
-    extern blknum_t getLastBlock_cache_stage(void);
-    extern bool     getLastBlocks           (blknum_t& stage, blknum_t& final, blknum_t& client);
+    extern blknum_t getLastBlock_client       (void);
+    extern blknum_t getLastBlock_cache_final  (void);
+    extern blknum_t getLastBlock_cache_staging(void);
+    extern blknum_t getLastBlock_cache_pending(void);
+    extern bool     getLastBlocks             (blknum_t& pending, blknum_t& staging, blknum_t& final, blknum_t& client);
 
     //-------------------------------------------------------------------------
     extern string_q getCachePath            (const string_q& _part);
@@ -128,11 +129,11 @@ namespace qblocks {
     #define monitorsFolder_v2        (getCachePath("monitors/"))
 
     #define indexFolder_v2           (getCachePath("addr_index/"))
-    #define indexFolder_sorted_v2    (getCachePath("addr_index/sorted/"))
-    #define indexFolder_binary_v2    (configPath  ("cache/addr_index/binary/"))
-    #define indexFolder_finalized_v2 (getCachePath("addr_index/finalized/"))
+    #define indexFolder_finalized_v2 (configPath  ("cache/addr_index/finalized/"))
     #define indexFolder_staging_v2   (getCachePath("addr_index/staging/"))
+    #define indexFolder_pending_v2   (getCachePath("addr_index/pending/"))
     #define indexFolder_zips_v2      (getCachePath("addr_index/zips/"))
+//    #define indexFolder_sorted_v2    (getCachePath("addr_index/sorted/"))
 
     //-------------------------------------------------------------------------
     extern biguint_t weiPerEther(void);

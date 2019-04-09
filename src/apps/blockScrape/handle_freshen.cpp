@@ -44,7 +44,8 @@ bool handle_freshen(COptions& options) {
     //          Write the non-final block to non-final index
     //          Write the block to the binary cache (it may be removed later)
 
-    for (blknum_t num = options.startBlock ; num < options.endBlock && !shouldQuit() ; num++) {
+    bool acctScrRunning = isRunning("acctScrape", false);
+    for (blknum_t num = options.startBlock ; num < options.endBlock && !shouldQuit() && !acctScrRunning ; num++) {
 
         CScraper scraper(&options, num);
         scraper.status = "scan";
@@ -78,19 +79,20 @@ bool handle_freshen(COptions& options) {
                 ::remove(fn.c_str());
             } else if (!options.writeBlocks) {
                 // If we're not writing blocks, remove this one
-                ::remove(fn.c_str());
+                if (fileExists(fn.c_str()))
+                    ::remove(fn.c_str());
             } else if (!fileExists(fn)) {
                 // We may not yet have written this block (it was final the first time we saw it), so write it
                 writeBlockToBinary(scraper.block, fn);
             }
-            if (!scraper.finalizeList())
+            if (!scraper.addToStagingList())
                 return false;
             lockSection(false);
 
         } else {
             // We want to avoid rescraping the block if we can, so we store it here. We may delete it when the
             // block gets finalized if we're not supposed to be writing blocks
-            scraper.stageList();
+            scraper.addToPendingList();
             if (!fileExists(fn)) {
                 lockSection(true);
                 writeBlockToBinary(scraper.block, fn);
@@ -99,6 +101,7 @@ bool handle_freshen(COptions& options) {
         }
 
         cout << scraper.report(options.endBlock) << endl;
+        acctScrRunning = isRunning("acctScrape", false);
     }
 
     return true;
