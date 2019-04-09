@@ -16,6 +16,7 @@
  */
 #include <algorithm>
 #include "trace.h"
+#include "transaction.h"
 
 namespace qblocks {
 
@@ -31,12 +32,12 @@ void CTrace::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
-    if (fmtIn.empty()) {
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["trace_fmt"] : fmtIn);
+    if (fmt.empty()) {
         ctx << toJson();
         return;
     }
 
-    string_q fmt = fmtIn;
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -66,6 +67,9 @@ bool CTrace::setValueByName(const string_q& fieldName, const string_q& fieldValu
         string_q str = fieldValue;
         return result.parseJson3(str);
     }
+    if (pTrans)
+        if (((CTransaction*)pTrans)->setValueByName(fieldName, fieldValue))  // NOLINT
+            return true;
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
@@ -185,9 +189,8 @@ CArchive& operator<<(CArchive& archive, const CTraceArray& array) {
 
 //---------------------------------------------------------------------------
 void CTrace::registerClass(void) {
-    static bool been_here = false;
-    if (been_here) return;
-    been_here = true;
+    // only do this once
+    if (HAS_FIELD(CTrace, "schema")) return;
 
     size_t fieldNum = 1000;
     ADD_FIELD(CTrace, "schema",  T_NUMBER, ++fieldNum);
@@ -197,7 +200,7 @@ void CTrace::registerClass(void) {
     ADD_FIELD(CTrace, "blockHash", T_HASH, ++fieldNum);
     ADD_FIELD(CTrace, "blockNumber", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTrace, "subtraces", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTrace, "traceAddress", T_TEXT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CTrace, "traceAddress", T_TEXT, ++fieldNum);
     ADD_FIELD(CTrace, "transactionHash", T_HASH, ++fieldNum);
     ADD_FIELD(CTrace, "transactionPosition", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTrace, "type", T_TEXT, ++fieldNum);
@@ -206,6 +209,8 @@ void CTrace::registerClass(void) {
     HIDE_FIELD(CTrace, "articulatedTrace");
     ADD_FIELD(CTrace, "action", T_OBJECT, ++fieldNum);
     ADD_FIELD(CTrace, "result", T_OBJECT, ++fieldNum);
+    ADD_FIELD(CTrace, "date", T_DATE, ++fieldNum);
+    HIDE_FIELD(CTrace, "date");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTrace, "schema");
@@ -225,6 +230,24 @@ string_q nextTraceChunk_custom(const string_q& fieldIn, const void *dataPtr) {
     if (tra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'd':
+                if (tra->pTrans) {
+                    if (fieldIn % "date" || fieldIn % "datesh")
+                        return nextTransactionChunk(fieldIn, tra->pTrans);
+                }
+                break;
+            case 'f':
+                if (tra->pTrans) {
+                    if (fieldIn % "function") {
+                        string_q ret = tra->Format("[{ARTICULATEDTRACE}]");
+                        if (ret.empty())
+                            return "";
+                        CFunction func;
+                        func.parseJson3(ret);
+                        return func.name;
+                    }
+                }
+                break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
@@ -282,13 +305,15 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "traceAddress" || fieldName % "traceAddressCnt" ) {
                 size_t cnt = traceAddress.size();
                 if (endsWith(fieldName, "Cnt"))
-                    return uint_2_Str(cnt);
-                if (!cnt) return "";
+                    return uint_2_Str(max((size_t)1, cnt));
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {
-                    retS += ("\"" + traceAddress[i] + "\"");
-                    retS += ((i < cnt - 1) ? ",\n" + indent() : "\n");
+                    if (!retS.empty())
+                        retS += "-";
+                    retS += traceAddress[i];
                 }
+                if (retS.empty())
+                    retS = "null";
                 return retS;
             }
             if ( fieldName % "transactionHash" ) return hash_2_Str(transactionHash);

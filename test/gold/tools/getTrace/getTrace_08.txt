@@ -4,7 +4,7 @@ getTrace 0x590c575213aeec61ac15949f65b941ef2fb863479eb28a75d3a190278d88d1e7 --pa
     "blockHash": "0x759de0be90043e350377c7d1be2f639ead0953b06a16c32552265659bd134f2d",
     "blockNumber": "0x22033b",
     "subtraces": "0x1",
-    "traceAddress": [],
+    "traceAddress": null,
     "transactionHash": "0x590c575213aeec61ac15949f65b941ef2fb863479eb28a75d3a190278d88d1e7",
     "transactionPosition": "0x1",
     "type": "call",
@@ -31,9 +31,7 @@ getTrace 0x590c575213aeec61ac15949f65b941ef2fb863479eb28a75d3a190278d88d1e7 --pa
     "blockHash": "0x759de0be90043e350377c7d1be2f639ead0953b06a16c32552265659bd134f2d",
     "blockNumber": "0x22033b",
     "subtraces": "0x0",
-    "traceAddress": [
-        "0"
-    ],
+    "traceAddress": "0",
     "transactionHash": "0x590c575213aeec61ac15949f65b941ef2fb863479eb28a75d3a190278d88d1e7",
     "transactionPosition": "0x1",
     "type": "call",

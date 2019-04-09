@@ -17,7 +17,7 @@
 bool COptions::displayFromCache(uint64_t startBlock) {
 
     // Make sure we have a cache file...
-    string_q cacheFileName = getTransCachePath(watches[0].address);
+    string_q cacheFileName = getMonitorPath(watches[0].address);
     if (!fileExists(cacheFileName))
         return false;
 
@@ -41,7 +41,7 @@ bool COptions::displayFromCache(uint64_t startBlock) {
     uint64_t endBlock = NOPOS;
 
     CArchive txCache(READING_ARCHIVE);
-    if (txCache.Lock(cacheFileName, binaryReadOnly, LOCK_NOWAIT)) {
+    if (txCache.Lock(cacheFileName, modeReadOnly, LOCK_NOWAIT)) {
 
         txCache.Seek( (-1 * (long)(2*sizeof(uint64_t))), SEEK_END);  // NOLINT
         txCache.Read(endBlock);
@@ -69,7 +69,7 @@ bool COptions::displayFromCache(uint64_t startBlock) {
                     if (!ret) {
                         // ... if we failed to read from some reason, try to pick it up from the node
                         getBlock(block, blockNum);
-                        block.finalized = isBlockFinal(block.timestamp, latest.timestamp, (60 * 4));
+                        block.finalized = is BlockFinal(block.timestamp, latest.timestamp, (6 0 * 4));
                         writeBlockToBinary(block, getBinaryFilename(blockNum));
                         if (!fileExists(getBinaryFilename(blockNum))) {
                             cerr << "Read of block " << blockNum << " failed. Quitting cache read\r\n";

@@ -17,7 +17,7 @@ bool handle_visit(blknum_t bn, void *data) {
     }
 
     CBloomArray blooms;
-    readBloomArray(blooms, path);
+    readBloomFromBinary(blooms, path);
 
     cout << "\n" << cYellow << "Visiting block: " << cTeal << bn << cOff << endl;
     if (verbose && !isTestMode()) {

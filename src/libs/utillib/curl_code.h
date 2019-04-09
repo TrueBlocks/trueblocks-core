@@ -16,7 +16,6 @@
 namespace qblocks {
 
     typedef size_t (*CURLCALLBACKFUNC)(char *ptr, size_t size, size_t nmemb, void *userdata);
-    extern string_q urlToString(const string_q& url = "");
-    extern void setCurlNoteFunc(CURLCALLBACKFUNC func);
+    extern string_q urlToString(const string_q& url = "", CURLCALLBACKFUNC noteFunc=NULL);
 
 }  // namespace qblocks

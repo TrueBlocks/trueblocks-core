@@ -18,14 +18,14 @@ void reportByAccount(COptions& options);
 extern string_q getTokenInfo(const string_q& which, CTokenInfo& w, const address_t& h, blknum_t b);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-
-    acctlib_init("binary", quickQuitHandler);
+    acctlib_init(quickQuitHandler);
 
     // Parse command line, allowing for command files
     COptions options;
     if (!options.prepareArguments(argc, argv))
         return 0;
 
+    size_t cnt = 0;
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
@@ -39,7 +39,6 @@ int main(int argc, const char *argv[]) {
                 while (!blocks.empty()) {
                     blknum_t blockNum = str_2_Uint(nextTokenClear(blocks, '|'));
                     cout << getTokenInfo(options.tokenInfo, watch, holder, blockNum) << "\n";
-                    static size_t cnt=0;
                     if (cnt++ < options.watches.size() - 1)
                         cout << ",";
                     cout << "\n";
@@ -254,7 +253,7 @@ bool isValidInfo(const string_q which, string_q& encoding) {
 }
 
 //-------------------------------------------------------------------------
-CStringArray infoOptions = {
+const CStringArray infoOptions = {
     "name|0x06fdde03",
     "totalSupply|0x18160ddd",
     "balanceOf|0x70a08231",

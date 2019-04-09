@@ -10,12 +10,9 @@
 //-----------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    blknum_t blk_minWatchBlock;
-    blknum_t blk_maxWatchBlock;
-    string_q transFmt;
-    CAccountWatchArray watches;
+    CAccountWatchArray monitors;
     CAccountWatchArray named;
-    CAcctCacheItemArray items;
+    CAppearanceArray_base items;
     CBlock curBlock;
     bool useBloom;
     bool needsArt;
@@ -28,8 +25,8 @@ public:
 
     bool parseArguments(string_q& command);
     void Init(void);
+    string_q postProcess(const string_q& which, const string_q& str) const;
 
-    bool     loadWatches    (const CToml& toml);
     string_q annotate       (const string_q& strIn) const;
     bool     shouldTrace    (const CTransaction *trans) const;
 
@@ -40,14 +37,6 @@ public:
 //------------------------------------------------------------------------
 extern bool loadData(COptions& options);
 extern bool exportData(COptions& options);
-
-//------------------------------------------------------------------------
-extern string_q cleanFmt    (const string_q& str);
-extern string_q defTransFmt;
-
-//-----------------------------------------------------------------------------
-extern CStringArray signatures;
-extern CStringArray topics;
 
 //-----------------------------------------------------------------------------
 enum export_t {

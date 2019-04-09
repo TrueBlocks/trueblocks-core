@@ -3,279 +3,337 @@
  * Copyright (c) 2017 by Great Hill Corporation.
  * All Rights Reserved
  *------------------------------------------------------------------------*/
-#include "etherlib.h"
+#include "acctlib.h"
 #include "options.h"
 
 //----------------------------------------------------------------------------------
-CScraperContext::CScraperContext(COptions *o, CBlock *b)
-    : opts(o), pBlock(b), pTrans(NULL), addrList(NULL, NULL, true), traceCount(0), maxTraceDepth(0),
-      reported(false), nAddrsInBloom(0), nAddrsInBlock(0),
-      blockOkay(false), bloomOkay(false)
-{
+CScraper::CScraper(COptions *o, blknum_t num) :
+    options(o), status(""), addrList(NULL, NULL, true), traceCount(0), curLines(0),
+    maxTraceDepth(0), nAddrsInBlock(0), pTrans(NULL) {
     ASSERT(addrList.addrTxMap);
-    bloomList.resize(1);
-    bloomList.at(0) = 0;
+    block.blockNumber = num;
     resetClock();
-//    addrList.reserve(35000); // largest # of addrs during dDos
 }
 
 //-------------------------------------------------------------------------
-bool CScraperContext::scrape(CBlock& block) {
+bool CScraper::scrapeBlock(void) {
 
+    // Query the node for fresh block data
     getObjectViaRPC(block, "eth_getBlockByNumber", "[\"" + uint_2_Hex(block.blockNumber) + "\",true]");
 
-    // Add the miner to the bloom filter
-    addToBloom(block.miner);
+    // Note the miner address
+    noteAddress(block.miner, true);
 
-    if (!block.transactions.size()) {
-        if (block.blockNumber < 50000) { // otherwise it appears to be hung
-            if (!opts->silent) {
-                cerr << "skipping empty block " << block.blockNumber << "\r";
-                cerr.flush();
-            }
-        }
-        // TODO: we do not account for miners of zero transaction blocks, we can
-        // do it here by writing the miner's address to a file
-        return false;
-    }
-
-    // We can't use forEveryTrans... because it uses copies. We need to visit the actual transaction so we can write it
-    for (uint32_t i = 0 ; i < block.transactions.size() ; i++) {
-        if (!visitTransaction(block.transactions.at(i), this))
+    // Visit each transaction in this block. Note -- do not use forEveryTransaction since
+    // that makes a copy and we may have to write the block to disc. For instance, we
+    // need to mark pre-byzantium errors.
+    for (uint32_t tr = 0 ; tr < block.transactions.size() ; tr++) {
+        pTrans = &block.transactions[tr];
+        pTrans->pBlock = &block;
+        if (!scrapeTransaction())
             return false;
     }
-
-    return true;
-}
-
-//-------------------------------------------------------------------------
-bool addPotentialAddr(const CAddressAppearance& item, void *data) {
-    CScraperContext *sCtx = (CScraperContext*)data;
-    sCtx->addToBloom(item.addr);
     return true;
 }
 
 //---------------------------------------------------------------------------
-void foundPot1(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList) {
-    CAddressAppearance item(bn, tx, tc, "", "");
-    potentialAddr(func, data, item, potList);
-}
+bool CScraper::scrapeTransaction(void) {
 
-//-------------------------------------------------------------------------
-// Note: See CBlock::forEveryAddress for a similar algorithm. We can't use that
-// because we are processing transaction error marks here as well.
-bool visitTransaction(CTransaction& trans, void *data) {
+    ASSERT(pTrans != NULL);
+    getReceipt(pTrans->receipt, pTrans->hash);
 
-    CScraperContext *sCtx = (CScraperContext*)data;
-    sCtx->pTrans = &trans;
-    trans.pBlock  = sCtx->pBlock;
+    noteAddress(pTrans->from);
+    noteAddress(pTrans->to);
+    noteAddress(pTrans->receipt.contractAddress);
+    // We heuristically try to catch addresses in the function input data
+    foundPotential(notePotential, this, pTrans->blockNumber, pTrans->transactionIndex, 0, extract(pTrans->input, 10));
 
-    getReceipt(trans.receipt, trans.hash);
-    sCtx->addToBloom(trans.from);
-    sCtx->addToBloom(trans.to);
-    sCtx->addToBloom(trans.receipt.contractAddress);
-    foundPot1(addPotentialAddr, sCtx, trans.blockNumber, trans.transactionIndex, 0, extract(trans.input, 10));
-
-    for (uint32_t lg = 0 ; lg < trans.receipt.logs.size() ; lg++) {
-        const CLogEntry *log = &trans.receipt.logs[lg];
-        sCtx->addToBloom(log->address);
-        // Note: Add topics that look like addresses even though they may be redundant.
+    for (uint32_t lg = 0 ; lg < pTrans->receipt.logs.size() ; lg++) {
+        const CLogEntry *log = &pTrans->receipt.logs[lg];
+        noteAddress(log->address);
         string_q addr;
         for (uint32_t tp = 0 ; tp < log->topics.size() ; tp++) {
-            if (isPotentialAddr(log->topics[tp], addr)) {
-                sCtx->addToBloom(addr);
-            }
+            // Heuristacally try to pick up any addresses in the topics
+            if (isPotentialAddr(log->topics[tp], addr))
+                noteAddress(addr);
         }
-        foundPot1(addPotentialAddr, sCtx, trans.blockNumber, trans.transactionIndex, 0, extract(log->data, 2));
+        // Heuristacally try to pick up any addresses in the log data
+        foundPotential(notePotential, this, pTrans->blockNumber, pTrans->transactionIndex, 0, extract(log->data, 2));
     }
 
-    uint64_t nTraces = getTraceCount(trans.hash);
-    bool ddos        = ddosRange(sCtx->pBlock->blockNumber);
-    bool isDDos      = ddos && nTraces > 250;
-    bool isExcl      = ddos && (sCtx->opts->isExcluded(trans.from) || sCtx->opts->isExcluded(trans.to));
-    if (!isDDos && !isExcl) {
-        // We can use forEveryTrace... here because we don't need to save any data on the trace. It's okay to use a copy
-        sCtx->potList = "";
-        forEveryTraceInTransaction(visitTrace, sCtx, trans);
-        // We handle all the traces potentials here since we don't use trace id anyway
-        foundPot1(addPotentialAddr, sCtx, trans.blockNumber, trans.transactionIndex, 0, sCtx->potList);
+    traceCount += getTraceCount(pTrans->hash);
+
+    string_q traces;
+    queryRawTrace(traces, pTrans->hash);
+
+    //
+    // The following code is very hacky, but it's way faster than parseing every trace, especially for
+    // for the dDos transactions from late-2106.
+    //
+
+    //
+    // queryRawTrace returns all the traces for the transaction directly from the node as JSON. We don't want
+    // to parse all that data since we're not going to store it anyway, so we hackily do string searches for
+    // what we're looking for. We start with the traceAddress arrays since we need to count them for trace depth.
+    // We convert commas into pipes so they don't get tokenized below...
+    //
+    string_q search = "traceAddress";
+    size_t pos = traces.find(search);
+    while (pos != string::npos) {
+        pos += search.size();
+        while (traces[pos] != ']') {
+            if (traces[pos] == ',')
+                traces[pos] = '|';
+            pos++;
+        }
+        pos = traces.find(search, pos + search.size());
     }
 
-    if (trans.pBlock->blockNumber >= byzantiumBlock)
-        trans.isError = (trans.receipt.status == 0); // contains zero on fail
+    // This code prepares the string for tokenizing the fields in the JSON
+    for (char& ch : traces) {
+        if (ch == '\"') ch = ' ';
+        if (ch == ',') ch = '+';
+        if (ch == '{') ch = '+';
+        if (ch == '}') ch = ' ';
+    }
+
+    CStringArray fields;
+    fields.reserve(countOf(traces, '+') + 10); // extra room
+
+    explode(fields, traces, '+');
+    bool hasError = false;
+    for (auto v : fields) {
+        v = trim(v);
+
+#define VV(s) { \
+    string_q ss(s); \
+    ss += " : "; \
+    if (startsWith(v, ss)) \
+        noteAddress(v.substr(ss.size())); \
+}
+
+#define VV2(s,n) { \
+    string_q ss(s); \
+    ss += " : "; \
+    if (startsWith(v, ss)) { \
+        size_t sz = min(v.size(), ss.size() + n); \
+        ss = v.substr(sz); \
+        if (!isZeroAddr(ss)) \
+            potList += ss; \
+    } \
+}
+
+        VV("from");
+        VV("to");
+        VV("address"); // both from trace.action and trace.result
+        VV("refundAddress");
+
+        potList = "";
+        VV2("input", 10);
+        VV2("output", 2);
+        foundPotential(notePotential, this, pTrans->blockNumber, pTrans->transactionIndex, 0, potList);
+
+        if (startsWith(v, "traceAddress"))
+            maxTraceDepth = max(maxTraceDepth, (uint64_t)(countOf(v, '|') + 1));
+
+        if (startsWith(v, "error"))
+            hasError = true;
+
+        // We ignore 'code' and 'init'
+        // if (startsWith(v, "code") cout << v << endl;
+        // if (startsWith(v, "init") cout << v << endl;
+    }
+
+    // If we're writing blocks, we need an error code on the transaction
+    if (options->writeBlocks) {
+        if (block.blockNumber < byzantiumBlock) {
+            pTrans->isError = hasError;
+        } else {
+            pTrans->isError = (pTrans->receipt.status == 0); // status contains zero on fail
+        }
+    }
 
     return true;
 }
 
-//-------------------------------------------------------------------------
-bool visitTrace(CTrace& trace, void *data) {
-
-    CScraperContext *sCtx = (CScraperContext*)data;
-
-    // Note, this is redundant. It is also done in queryBlock. We do it in both places becuase it is
-    // possible to create (and write) a new block directly from other programs
-    if (sCtx->pTrans->pBlock->blockNumber < byzantiumBlock && // if we are before the byzantium hard fork...
-        sCtx->pTrans->gas == sCtx->pTrans->receipt.gasUsed) { // ...and gasUsed == gasLimit...
-        if (!sCtx->pTrans->isError)                           // ...and we're not yet an error...
-            ((CTransaction*)sCtx->pTrans)->isError = trace.isError();
-    }
-
-    sCtx->addToBloom(trace.action.from);
-    sCtx->addToBloom(trace.action.to);
-    sCtx->addToBloom(trace.action.refundAddress);
-    sCtx->addToBloom(trace.action.address);
-    sCtx->addToBloom(trace.result.address);
-    sCtx->potList += extract(trace.action.input, 10);
-    sCtx->traceCount++;
-    sCtx->maxTraceDepth = max(sCtx->maxTraceDepth, (uint64_t)trace.traceAddress.size());
-
-    return true;
+#define lastPrecompile address_t("0x0000000000000000000000000000000000000008")
+//----------------------------------------------------------------------------------
+bool isPrecompile(const address_t& addr) {
+    return (addr <= lastPrecompile);
 }
 
 //----------------------------------------------------------------------------------
-void CScraperContext::addToBloom(const address_t& addr) {
+void CScraper::noteAddress(const address_t& addr, bool isMiner) {
 
+    // We don't store zero address since it has special meaning and it appears many, many, many times
+    // all over the place. It would blow up the size of the index and have almost no meaning to query
     if (isZeroAddr(addr))
         return;
 
-    nAddrsInBloom++;
-    nAddrsInBlock++;
-    addToAddrIndex(addr);
-
-    // SEARCH FOR 'BIT_TWIDDLE_AMT 200'
-    if (addAddrToBloom(addr, bloomList, opts->bitBound))
-        nAddrsInBloom = 0;
-}
-
-//----------------------------------------------------------------------------------
-void CScraperContext::addToAddrIndex(const address_t& addr) {
-
-    if (!opts->addrIndex)
+    // We don't store pre-compiles for similar reasons, but more importantly because Parity has a bug that
+    // misreports 'calldata' and 'calldelegate' to pre-compile 0x000....004. This eliminates that bug and
+    // save a ton of space in the index. It disallows querying for pre-comile addresses.
+    if (isPrecompile(addr))
         return;
 
-    ASSERT(opts && sCtx.addrList.addrTxMap);
-    CAddressAppearance app;
+    nAddrsInBlock++;
+
+    CAppearance app;
     app.addr = addr;
-    app.bn = pBlock->blockNumber;
-    if (pTrans)
+    app.bn = block.blockNumber;
+    if (isMiner) {
+        app.tx = 99999;
+    } else {
+        ASSERT(pTrans);
         app.tx = pTrans->transactionIndex;
+    }
+    ASSERT(addrList.addrTxMap);
     addrList.insertUnique(app);
 }
 
 //--------------------------------------------------------------------------
-class CCounter {
-public:
-    blknum_t bn;
-    blknum_t lines;
-    blknum_t size;
-    CCounter(string_q& line) {
-        CStringArray fields;
-        explode(fields, line, '\t');
-        bn = str_2_Uint(fields[0]);
-        lines = str_2_Uint(fields[1]);
-        size = str_2_Uint(fields[2]);
-    }
-};
+bool CScraper::writeList(const string_q& toFile, const string_q& removeFile) {
 
-//--------------------------------------------------------------------------
-void CScraperContext::updateAddrIndex(void) {
-
-    if (!opts->addrIndex)
-        return;
-
-    ASSERT(pBlock);
-    string_q indexFilename = blockCachePath("/addr_index/unsorted_by_block/" + uint_2_Str(pBlock->blockNumber) + ".txt");
-    string_q countFile     = blockCachePath("/addr_index/unsorted_by_block/counts.txt");
-
-    // Note: we are inside the lockSection
-
-    // We've scanned the block. We have the list of all addresses. We write it here even if it's
-    // not final because the next time we re-visit this block we may not re-scan in which case we
-    // won't have the list. If we do rescan, this list will get re-rewritten.
-    ostringstream os1;
     ASSERT(addrList.addrTxMap);
+
+    ostringstream os;
     CAddressTxAppearanceMap::iterator it;
-    for (it=addrList.addrTxMap->begin(); it!=addrList.addrTxMap->end(); it++ ) {
-        os1 << it->first.addr << "\t";
-        os1 << padNum9(it->first.bn) << "\t";
-        os1 << padNum5(it->first.tx) << "\n";;
+    for (it = addrList.addrTxMap->begin(); it != addrList.addrTxMap->end(); it++ ) {
+        os << it->first.addr << "\t";
+        os << padNum9(it->first.bn) << "\t";
+        os << padNum5(it->first.tx) << "\n";
     }
-    stringToAsciiFile(indexFilename, os1.str());
+    stringToAsciiFile(toFile, os.str());
+    if (!removeFile.empty() && fileExists(removeFile))
+        ::remove(removeFile.c_str());
 
-    ostringstream os2;
-    os2 << pBlock->blockNumber << "\t" << addrList.addrTxMap->size() << "\t" << fileSize(indexFilename) << "\n";
-    appendToAsciiFile(countFile, os2.str());
-
-    if (opts->consolidate) {
-        string_q contents;
-        asciiFileToString(countFile, contents);
-        CStringArray lines;
-        explode(lines, contents, '\n');
-        vector<CCounter> counters;
-        uint64_t size = 0;
-        for (auto line : lines) {
-            CCounter counter(line);
-            counters.push_back(counter);
-            size += counter.size;
-        }
-        if (size > opts->maxIdxSize) {
-//cout << "Here: " << size << " counters: " << counters.size() << endl;
-//getchar();
-            CStringArray apps;
-            apps.reserve(620000);
-            for (auto counter : counters) {
-                string_q theStuff;
-                string_q fn = substitute(countFile, "counts", uint_2_Str(counter.bn));
-//cout << "fn: " << fn << endl;
-                asciiFileToString(fn, theStuff);
-                CStringArray lns;
-                explode(lns, theStuff, '\n');
-                for (auto ln : lns) {
-                    apps.push_back(ln);
-//cout << ln  << endl;
-                }
-            }
-//getchar();
-            sort(apps.begin(), apps.end());
-            string_q resFile = substitute(countFile, "counts", uint_2_Str(counters.at(0).bn)+"-sorted");
-            for (auto app : apps)
-                appendToAsciiFile(resFile, app + "\n");
-//cout << "File exits, removing older files" << endl;
-//getchar();
-            ::remove(countFile.c_str());
-            for (auto counter : counters)
-                ::remove(substitute(countFile, "counts", uint_2_Str(counter.bn)).c_str());
-            putc(7,stdout);
-//cout << "Done" << endl;
-//getchar();
-        }
-    }
+    return true;
 }
 
 //--------------------------------------------------------------------------
-string_q CScraperContext::report(uint64_t last) {
+bool CScraper::addToPendingList(void) {
+    string_q pendingName = indexFolder_pending_v2 + padNum9(block.blockNumber) + ".txt";
+    return writeList(pendingName, "");
+}
 
-    ASSERT(sCtx.addrList.addrTxMap);
+//--------------------------------------------------------------------------
+bool CScraper::addToStagingList(void) {
 
-    cerr << ((pBlock->finalized ? greenCheck : whiteStar) + " ");
-    cerr << padRight(uint_2_Str(last - pBlock->blockNumber), 4) << ": ";
+    //
+    // Write the per-block address list to the staging folder and keep track of how
+    // many items we've stored so far.
+    //
+    string_q pendingName = indexFolder_pending_v2 + padNum9(block.blockNumber) + ".txt";
+    string_q stagingName = indexFolder_staging_v2 + padNum9(block.blockNumber) + ".txt";
+    if (!writeList(stagingName, pendingName))
+        return false;
+
+    //string_q countFile = configPath("cache/tmp/scrape_count.tmp");
+    string_q countFile = indexFolder_v2 + "counts.txt";
+    curLines = str_2_Uint(asciiFileToString(countFile));
+    curLines += addrList.addrTxMap->size();
+    stringToAsciiFile(countFile, uint_2_Str(curLines));
+
+    bool overLimit = curLines >= options->maxIndexRows;
+    bool is50 = !(block.blockNumber % 50);
+    if ((overLimit && is50)) {
+        finalizeIndexChunk();
+//        return false;
+    }
+
+    return true;
+}
+
+//--------------------------------------------------------------------------
+void CScraper::finalizeIndexChunk(void) {
+
+    blknum_t first = str_2_Uint(substitute(getFirstFileInFolder(indexFolder_staging_v2, false), indexFolder_staging_v2, ""));
+    blknum_t last  = str_2_Uint(substitute(getLastFileInFolder (indexFolder_staging_v2, false), indexFolder_staging_v2, ""));
+
+    string_q asciiFile = indexFolder_sorted_v2 + padNum9(first)+"-"+padNum9(last) + ".txt";
+    string_q binFile = indexFolder_finalized_v2 + padNum9(first)+"-"+padNum9(last) + ".bin";
+
+    CStringArray apps;
+    apps.reserve(options->maxIndexRows + 100);
+
+    cerr << "Processing index.";
+    cerr.flush();
+
+    for (blknum_t i = first ; i <= last ; i++) {
+        string_q theStuff;
+        string_q fn = indexFolder_staging_v2 + padNum9(i) + ".txt";
+        asciiFileToString(fn, theStuff);
+        CStringArray lns;
+        explode(lns, theStuff, '\n');
+        for (auto ln : lns) {
+            apps.push_back(ln);
+            if (!(apps.size() % (options->maxIndexRows / 10))) {
+                cerr << "."; cerr.flush();
+            }
+        }
+    }
+    sort(apps.begin(), apps.end());
+
+    size_t cnt = 0;
+    ostringstream os;
+    for (auto app : apps) {
+        os << app << "\n";
+        if (!(++cnt % (options->maxIndexRows / 10))) {
+            cerr << "."; cerr.flush();
+        }
+    }
+    appendToAsciiFile(asciiFile, os.str());
+    writeIndexAsBinary(binFile, apps);
+
+    string_q countFile = indexFolder_v2 + "counts.txt";
+    ::remove(countFile.c_str());
+    cnt = 0;
+    cerr << "\ncleaning up"; cerr.flush();
+    for (blknum_t i = first ; i <= last ; i++) {
+        string_q fn = indexFolder_staging_v2 + padNum9(i) + ".txt";
+        ::remove(fn.c_str());
+        if (!(++cnt % (options->maxIndexRows / 10))) {
+            cerr << "."; cerr.flush();
+        }
+    }
+    putc(7,stdout);
+}
+
+//-------------------------------------------------------------------------
+bool notePotential(const CAppearance& item, void *data) {
+    ((CScraper*)data)->noteAddress(item.addr);
+    return true;
+}
+
+//---------------------------------------------------------------------------
+void foundPotential(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList) {
+    CAppearance item(bn, tx, tc, "", "");
+    potentialAddr(func, data, item, potList);
+}
+
+//--------------------------------------------------------------------------
+string_q CScraper::report(uint64_t last) {
+
+    time_q blkDate = ts_2_Date(block.timestamp);
+    double age = double(options->latestBlockTs - block.timestamp) / 60.;
+
+    cerr << ((block.finalized ? greenCheck : whiteStar) + " ");
+    cerr << padRight(uint_2_Str(last - block.blockNumber), 4) << ": ";
 
     ostringstream os; os.precision(4);
-
-    time_q   blkDate = ts_2_Date(pBlock->timestamp);
-
+    os << fixed << setprecision(3);
     os << bBlack;
     os << blkDate.Format(FMT_EXPORT)  << "\t";
-    os << Now().Format(FMT_EXPORT)    << "\t";
+    os << age                         << "\t";
     os << TIC()                       << "\t" << cYellow;
-    os << pBlock->blockNumber         << "\t";
-    os << pBlock->transactions.size() << "\t";
+    os << block.blockNumber           << "\t";
+    os << block.transactions.size()   << "\t";
     os << traceCount                  << "\t";
     os << maxTraceDepth               << "\t";
     os << nAddrsInBlock               << "\t";
-    os << addrList.addrTxMap->size()  << "\t" << cTeal;
-    os << padRight(status, 9)         << "\t" << cYellow;
-    os << reportBloom(bloomList)      << cOff;
+    os << addrList.addrTxMap->size()  << "\t";
+    os << padNum6(curLines)           << "\t" << cTeal;
+    os << status                      << cOff;
 
     return os.str();
 }

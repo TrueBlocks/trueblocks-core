@@ -15,8 +15,6 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include <vector>
-#include <map>
 #include "abilib.h"
 #include "receipt.h"
 #include "trace.h"
@@ -25,8 +23,8 @@ namespace qblocks {
 
 // EXISTING_CODE
 class CBlock;
-class CAddressAppearance;
-typedef bool (*ADDRESSFUNC)(const CAddressAppearance& item, void *data);
+class CAppearance;
+typedef bool (*ADDRESSFUNC)(const CAppearance& item, void *data);
 typedef bool (*TRANSFUNC)(const CTransaction *trans, void *data);
 // EXISTING_CODE
 
@@ -49,6 +47,8 @@ public:
     uint64_t isInternal;
     CReceipt receipt;
     CFunction articulatedTx;
+    string_q extra_data;
+    bool finalized;
 
 public:
     CTransaction(void);
@@ -131,8 +131,10 @@ inline void CTransaction::initialize(void) {
     input = "";
     isError = 0;
     isInternal = 0;
-    receipt.initialize();
-    articulatedTx.initialize();
+    receipt = CReceipt();
+    articulatedTx = CFunction();
+    extra_data = "";
+    finalized = 0;
 
     // EXISTING_CODE
     pBlock = NULL;
@@ -161,6 +163,8 @@ inline void CTransaction::duplicate(const CTransaction& tr) {
     isInternal = tr.isInternal;
     receipt = tr.receipt;
     articulatedTx = tr.articulatedTx;
+    extra_data = tr.extra_data;
+    finalized = tr.finalized;
 
     // EXISTING_CODE
     pBlock = tr.pBlock;  // no deep copy, we don't own it

@@ -13,24 +13,17 @@ public:
     blknum_t    startBlock;
     blknum_t    endBlock;
     blknum_t    maxBlocks;
-    string_q    exclusionList;
-    bool        writeBlocks;
-    uint64_t    bitBound;
     timestamp_t latestBlockTs;
-    bool        addrIndex;
-    bool        consolidate;
-    uint64_t    maxIdxSize;
-    bool        silent;
+    uint64_t    maxIndexRows;
+    bool        writeBlocks;
 
     COptions(void);
     ~COptions(void);
 
     bool parseArguments(string_q& command);
     void Init(void);
-    bool updateIndex(blknum_t bn);
-    bool isExcluded(const address_t& addr) { return contains(exclusionList, addr); }
 };
 
 //-------------------------------------------------------------------------
-extern bool establishBlockIndex(void);
 extern bool handle_freshen(COptions& options);
+#define indexFolder_sorted_v2    (getCachePath("addr_index/sorted/"))

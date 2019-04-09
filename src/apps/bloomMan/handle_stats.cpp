@@ -14,7 +14,7 @@ bool handle_stats(blknum_t bn, void *data) {
     string_q path = substitute(getBinaryFilename(bn), "/blocks/", "/blooms/");
     if (fileExists(path)) {
         CBloomArray blooms;
-        readBloomArray(blooms, path);
+        readBloomFromBinary(blooms, path);
         stats->nFiles  += 1;
         stats->nBlooms += blooms.size();
         stats->nBytes  += fileSize(path);
@@ -47,7 +47,7 @@ bool handle_stats(blknum_t bn, void *data) {
 string_q CStatistics::report(blknum_t bn) const {
     ostringstream os;
     os << cRed;
-    static bool been_here = false;
+    thread_local bool been_here = false;
     if (!been_here) {
         been_here = true;
         os << string_q(80, ' ') << "\r";

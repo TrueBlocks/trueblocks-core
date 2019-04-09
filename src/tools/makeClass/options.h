@@ -38,3 +38,33 @@ public:
 
 //-------------------------------------------------------------------
 extern bool listClasses(const string_q& path, void *data);
+
+//------------------------------------------------------------------------------------------------------------
+extern const char* STR_COMMENT_LINE;
+extern const char* STR_CLASS_FILE;
+extern const char* STR_CASE_CODE_ARRAY;
+extern const char* STR_CASE_SET_CODE_ARRAY;
+extern const char* STR_CASE_CODE_STRINGARRAY;
+extern const char* STR_OPERATOR_H;
+extern const char* STR_OPERATOR_C;
+extern const char* STR_SUBCLASS;
+extern const char* PTR_SET_CASE;
+extern const char* PTR_GET_CASE;
+extern const char* STR_GETVALUE1;
+extern const char* STR_GETVALUE2;
+extern const char* STR_GETOBJ_CODE;
+extern const char* STR_GETOBJ_CODE_FIELD;
+extern const char* STR_GETSTR_CODE;
+extern const char* STR_GETSTR_CODE_FIELD;
+extern const char* STR_GETOBJ_HEAD;
+extern const char* STR_GETSTR_HEAD;
+extern const char* STR_UPGRADE_CODE;
+extern const char* STR_SORT_COMMENT_1;
+extern const char* STR_SORT_COMMENT_2;
+extern const char* STR_EQUAL_COMMENT_1;
+extern const char* STR_EQUAL_COMMENT_2;
+extern const char* STR_PRTREADFMT;
+extern const char* STR_READFMT;
+extern const char* STR_PTRWRITEFMT;
+extern const char* STR_WRITEFMT;
+extern const char* STR_UNKOWNTYPE;

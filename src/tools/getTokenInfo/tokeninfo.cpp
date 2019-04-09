@@ -31,12 +31,12 @@ void CTokenInfo::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) cons
     if (!m_showing)
         return;
 
-    if (fmtIn.empty()) {
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["tokeninfo_fmt"] : fmtIn);
+    if (fmt.empty()) {
         ctx << toJson();
         return;
     }
 
-    string_q fmt = fmtIn;
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -165,9 +165,8 @@ CArchive& operator<<(CArchive& archive, const CTokenInfoArray& array) {
 
 //---------------------------------------------------------------------------
 void CTokenInfo::registerClass(void) {
-    static bool been_here = false;
-    if (been_here) return;
-    been_here = true;
+    // only do this once
+    if (HAS_FIELD(CTokenInfo, "schema")) return;
 
     CAccountWatch::registerClass();
 
@@ -300,7 +299,7 @@ ostream& operator<<(ostream& os, const CTokenInfo& item) {
 
 //---------------------------------------------------------------------------
 const string_q CTokenInfo::getStringAt(const string_q& fieldName, size_t i) const {
-    if ( name % "holders" && i < holders.size() )
+    if ( fieldName % "holders" && i < holders.size() )
         return (holders[i]);
     return "";
 }

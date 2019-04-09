@@ -84,12 +84,12 @@ run_test("getTokenInfo_info_symbol"      "0xd26114cd6ee289accf82350c8d8487fedb8a
 run_test("getTokenInfo_info_all"         "0xd26114cd6ee289accf82350c8d8487fedb8a0c07" " --info " " all")
 
 run_test("getTokenInfo_info_name2"        "0xd26114cd6ee289accf82350c8d8487fedb8a0c07" " 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " --info " " name")
-run_test("getTokenInfo_info_totalSupply2" "0xd26114cd6ee289accf82350c8d8487fedb8a0c07" " 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " --info " " totalSupply")
 run_test("getTokenInfo_info_decimals2"    "0xd26114cd6ee289accf82350c8d8487fedb8a0c07" " 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " --info " " decimals")
 run_test("getTokenInfo_info_version2"     "0xd26114cd6ee289accf82350c8d8487fedb8a0c07" " 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " --info " " version")
 run_test("getTokenInfo_info_symbol2"      "0xd26114cd6ee289accf82350c8d8487fedb8a0c07" " 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " --info " " symbol")
-run_test("getTokenInfo_info_all2"         "0xd26114cd6ee289accf82350c8d8487fedb8a0c07" " 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " --info " " all")
 
+run_state_test("getTokenInfo_info_totalSupply2" "0xd26114cd6ee289accf82350c8d8487fedb8a0c07" " 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " --info " " totalSupply")
+run_state_test("getTokenInfo_info_all2"         "0xd26114cd6ee289accf82350c8d8487fedb8a0c07" " 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " --info " " all")
 run_state_test("getTokenInfo_info_name3"        "0xd26114cd6ee289accf82350c8d8487fedb8a0c07" " 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " --info " " name" " 4001001-4001002")
 run_state_test("getTokenInfo_info_totalSupply3" "0xd26114cd6ee289accf82350c8d8487fedb8a0c07" " 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " --info " " totalSupply" " 4001001-4001002")
 run_state_test("getTokenInfo_info_decimals3"    "0xd26114cd6ee289accf82350c8d8487fedb8a0c07" " 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607" " --info " " decimals" " 4001001-4001002")

@@ -1,3 +1,4 @@
 ethName argc: 4 [1:88897] [2:torj] [3:scan] 
 ethName 88897 torj scan 
-{ "symbol": "STORJ", "name": "StorjToken", "addr": "0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac", "source": "Etherscan.io", "description": "Blockchain-based, end-to-end encrypted, distributed object storage, where only you have access to your data" }
+{ "addr": "0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac", "symbol": "STORJ", "name": "StorjToken", "source": "Etherscan.io", "description": "true", "logo": "Blockchain-based, end-to-end encrypted, distributed object storage, where only you have access to your data", "visible": false }
+{ "addr": "0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac", "symbol": "STORJ", "name": "Storj", "source": "Etherscan.io", "description": "Blockchain-based, end-to-end encrypted, distributed object storage, where only you have access to your data", "logo": "storj2.png", "visible": true }

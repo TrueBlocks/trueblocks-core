@@ -35,9 +35,9 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     size_t explode(CStringArray& result, const string& input, char needle) {
 
-        string_q buffer{""};
-        result.reserve(countOf(input, needle)+1);
+        result.reserve(result.size() + countOf(input, needle) + 1); // maybe an append
 
+        string_q buffer{""};
         for (auto ch : input) {
             if (ch != needle) {
                 buffer += ch;

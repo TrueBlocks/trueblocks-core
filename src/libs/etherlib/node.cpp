@@ -12,25 +12,38 @@
  *-------------------------------------------------------------------------------------------*/
 #include <string>
 #include "node.h"
+#include "filenames.h"
 
 namespace qblocks {
 
+    //TODO(tjayrush): global data
     static QUITHANDLER theQuitHandler = NULL;
     //-------------------------------------------------------------------------
     void etherlib_init(const string_q& sourceIn, QUITHANDLER qh) {
 
-        if (getCurlContext()->nodeRequired && !isNodeRunning()) {
-            cerr << endl;
-            cerr << "\t" << cTeal << "Warning: " << cOff << "This program requires a running Ethereum node. Please start your node or " << endl;
-            cerr << "\tconfigure the 'rpcProvider' setting before running this command. Quitting..." << endl;
-            cerr << endl;
-            quickQuitHandler(EXIT_FAILURE);
+        {
+            // Keep the frame
+            mutex aMutex;
+            lock_guard<mutex> lock(aMutex);
+            // This global is okay to be program-wide (as opposed to thread wide)
+            // since we should only ever init curl once for any number of threads.
+            static bool been_here = false;
+            if (!been_here) {
+                curl_global_init(CURL_GLOBAL_ALL);
+                been_here = true;
+            }
         }
 
-        establishFolder(blockCachePath(""));
+        getCurlContext()->provider = ((sourceIn == "local") ? "local" : "binary");
 
-        // In case we create any lock files, so
-        // they get cleaned up
+        // if curl has already been initialized, we want to clear it out
+        getCurlContext()->releaseCurl();
+        // initialize curl
+        getCurlContext()->getCurl();
+
+        checkNodeRequired();
+
+        // If we create any lock files, we need to clean them up
         if (theQuitHandler == NULL || qh != defaultQuitHandler) {
             // Set this once, unless it's non-default
             theQuitHandler = qh;
@@ -51,17 +64,8 @@ namespace qblocks {
         CRPCResult::registerClass();
         CAccountName::registerClass();
 
-        if (sourceIn != "remote" && sourceIn != "local" && sourceIn != "ropsten")
-            getCurlContext()->provider = "binary";
-        else
-            getCurlContext()->provider = sourceIn;
-
-        // if curl has already been initialized, we want to clear it out
-        getCurl(true);
-        // initialize curl
-        getCurl();
-
         establishFolder(configPath(""));
+        establishFolder(getCachePath(""));
     }
 
     //-------------------------------------------------------------------------
@@ -76,8 +80,21 @@ namespace qblocks {
             cout.flush();
         }
 #endif
-        getCurl(true);
-        clearInMemoryCache();
+
+        {
+            // Keep the frame
+            mutex aMutex;
+            lock_guard<mutex> lock(aMutex);
+            // This global is okay to be program-wide (as opposed to thread wide)
+            // since we should only ever init curl once for any number of threads.
+            static bool been_here = false;
+            if (!been_here) {
+                curl_global_cleanup();
+                been_here = true;
+            }
+        }
+
+        getCurlContext()->releaseCurl();
         if (theQuitHandler)
             (*theQuitHandler)(-1);
         else
@@ -85,16 +102,22 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
+    bool getObjectViaRPC(CBaseNode &node, const string_q& method, const string_q& params) {
+        string_q str = callRPC(method, params, false);
+        return node.parseJson3(str);
+    }
+
+    //-------------------------------------------------------------------------
     bool getBlock(CBlock& block, blknum_t blockNum) {
         getCurlContext()->provider = fileExists(getBinaryFilename(blockNum)) ? "binary" : "local";
-        bool ret = queryBlock(block, uint_2_Str(blockNum), true, false);
+        bool ret = queryBlock(block, uint_2_Str(blockNum), true);
         getCurlContext()->provider = "binary";
         return ret;
     }
 
     //-------------------------------------------------------------------------
     bool getBlock(CBlock& block, const hash_t& blockHash) {
-        return queryBlock(block, blockHash, true, true);
+        return queryBlock(block, blockHash, true);
     }
 
     //-------------------------------------------------------------------------
@@ -150,24 +173,19 @@ namespace qblocks {
         CRPCResult generic;
         generic.parseJson3(str);  // pull out the result
 
+        generic.result = cleanUpJson((char*)generic.result.c_str());
         CTrace trace;
-        while (trace.parseJson3(generic.result)) {
+        while (trace.parseJson4(generic.result)) {
             traces.push_back(trace);
             trace = CTrace();  // reset
         }
     }
 
     //-------------------------------------------------------------------------
-    bool queryBlock(CBlock& block, const string_q& datIn, bool needTrace, bool byHash) {
-        size_t unused = 0;
-        return queryBlock(block, datIn, needTrace, byHash, unused);
-    }
-
-    //-------------------------------------------------------------------------
-    bool queryBlock(CBlock& block, const string_q& datIn, bool needTrace, bool byHash, size_t& nTraces) {
+    bool queryBlock(CBlock& block, const string_q& datIn, bool needTrace) {
 
         if (datIn == "latest")
-            return queryBlock(block, uint_2_Str(getLatestBlockFromClient()), needTrace, false);
+            return queryBlock(block, uint_2_Str(getLastBlock_client()), needTrace);
 
         if (isHash(datIn)) {
             HIDE_FIELD(CTransaction, "receipt");
@@ -191,7 +209,6 @@ namespace qblocks {
             return false;
 
         // We have the transactions, but we also want the receipts, and we need an error indication
-        nTraces = 0;
         for (size_t i = 0 ; i < block.transactions.size() ; i++) {
             CTransaction *trans = &block.transactions.at(i);  // taking a non-const reference
             trans->pBlock = &block;
@@ -211,7 +228,6 @@ namespace qblocks {
                 queryRawTrace(unused, trans->hash);
                 trans->isError = getCurlContext()->is_error;
                 getCurlContext()->setCurlCallback(prev);
-                nTraces++;
             }
         }
 
@@ -303,8 +319,38 @@ namespace qblocks {
         return true;
     }
 
+    //--------------------------------------------------------------------------
+    blknum_t getLastBlock_cache_final(void) {
+        string_q finLast = getLastFileInFolder(indexFolder_finalized_v2, false);
+        if (!finLast.empty()) {
+            // Files in this folder are n-m.bin
+            blknum_t last;
+            bnFromPath(finLast, last);
+            return last;
+        }
+        return 0;
+    }
+
+    //--------------------------------------------------------------------------
+    blknum_t getLastBlock_cache_staging(void) {
+        string_q stageLast = getLastFileInFolder(indexFolder_staging_v2, false);
+        // Files in this folder are n.txt, if empty, we fall back on finalized folder
+        if (!stageLast.empty())
+            return bnFromPath(stageLast);
+        return getLastBlock_cache_final();
+    }
+
+    //--------------------------------------------------------------------------
+    blknum_t getLastBlock_cache_pending(void) {
+        string_q pendLast = getLastFileInFolder(indexFolder_pending_v2, false);
+        // Files in this folder are n.txt, if empty, we fall back on finalized folder
+        if (!pendLast.empty())
+            return bnFromPath(pendLast);
+        return getLastBlock_cache_staging();
+    }
+
     //-------------------------------------------------------------------------
-    uint64_t getLatestBlockFromClient(void) {
+    blknum_t getLastBlock_client(void) {
         string_q ret = callRPC("eth_blockNumber", "[]", false);
         uint64_t retN = str_2_Uint(ret);
         if (retN == 0) {
@@ -321,34 +367,18 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------
-    uint64_t getLatestBlockFromCache(void) {
-
-        CArchive fullBlockCache(READING_ARCHIVE);
-        if (!fullBlockCache.Lock(fullBlockIndex, binaryReadOnly, LOCK_NOWAIT)) {
-            if (!isTestMode())
-                cerr << "getLatestBlockFromCache failed: " << fullBlockCache.LockFailure() << "\n";
-            return 0;
-        }
-        ASSERT(fullBlockCache.isOpen());
-
-        uint64_t ret = 0;
-        fullBlockCache.Seek( (-1 * (long)sizeof(uint64_t)), SEEK_END);  // NOLINT
-        fullBlockCache.Read(ret);
-        fullBlockCache.Release();
-        return ret;
-    }
-
-    //--------------------------------------------------------------------------
-    bool getLatestBlocks(uint64_t& cache, uint64_t& client) {
-        client = getLatestBlockFromClient();
-        cache  = getLatestBlockFromCache();
+    bool getLastBlocks(blknum_t& pending, blknum_t& staging, blknum_t& finalized, blknum_t& client) {
+        pending   = getLastBlock_cache_pending();
+        staging   = getLastBlock_cache_staging();
+        finalized = getLastBlock_cache_final();
+        client    = getLastBlock_client();
         return true;
     }
 
     //-------------------------------------------------------------------------
     wei_t getBalanceAt(const string_q& addr, blknum_t num) {
         if (num == NOPOS)
-            num = getLatestBlockFromClient();
+            num = getLastBlock_client();
         string_q params = "[\"[{ADDR}]\",\"[{NUM}]\"]";
         replace(params, "[{ADDR}]", str_2_Addr(addr));
         replace(params, "[{NUM}]",  uint_2_Hex(num));
@@ -367,7 +397,7 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     string_q getCodeAt(const string_q& addr, blknum_t num) {
         if (num == NOPOS)
-            num = getLatestBlockFromClient();
+            num = getLastBlock_client();
         string_q params = "[\"[{ADDR}]\",\"[{NUM}]\"]";
         replace(params, "[{ADDR}]", str_2_Addr(addr));
         replace(params, "[{NUM}]",  uint_2_Hex(num));
@@ -382,7 +412,7 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     uint64_t getNonceAt(const address_t& addr, blknum_t num) {
         if (num == NOPOS)
-            num = getLatestBlockFromClient();
+            num = getLastBlock_client();
         string_q params = "[\"[{ADDR}]\",\"[{NUM}]\"]";
         replace(params, "[{ADDR}]", str_2_Addr(addr));
         replace(params, "[{NUM}]",  uint_2_Hex(num));
@@ -392,7 +422,7 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     string_q getStorageAt(const string_q& addr, uint64_t pos, blknum_t num) {
         if (num == NOPOS)
-            num = getLatestBlockFromClient();
+            num = getLastBlock_client();
         string_q params = "[\"[{ADDR}]\",\"[{POS}]\",\"[{NUM}]\"]";
         replace(params, "[{ADDR}]", str_2_Addr(addr));
         replace(params, "[{POS}]",  uint_2_Hex(pos));
@@ -583,7 +613,7 @@ namespace qblocks {
             if (!created.empty() && !isTestMode())
                 cerr << "mkdir(" << created << ")" << string_q(75, ' ') << "\n";
             CArchive nodeCache(WRITING_ARCHIVE);
-            if (nodeCache.Lock(fileName, binaryWriteCreate, LOCK_CREATE)) {
+            if (nodeCache.Lock(fileName, modeWriteCreate, LOCK_CREATE)) {
                 node.SerializeC(nodeCache);
                 nodeCache.Close();
                 return true;
@@ -596,7 +626,7 @@ namespace qblocks {
     bool readNodeFromBinary(CBaseNode& item, const string_q& fileName) {
         // Assumes that the item is clear, so no Init
         CArchive nodeCache(READING_ARCHIVE);
-        if (nodeCache.Lock(fileName, binaryReadOnly, LOCK_NOWAIT)) {
+        if (nodeCache.Lock(fileName, modeReadOnly, LOCK_NOWAIT)) {
             item.Serialize(nodeCache);
             nodeCache.Close();
             return true;
@@ -606,21 +636,21 @@ namespace qblocks {
 
     //-----------------------------------------------------------------------
     bool writeBlockToBinary(const CBlock& block, const string_q& fileName) {
-        // CArchive blockCache(READING_ARCHIVE);  -- so search hits
+        // CArchive g_blockCache(READING_ARCHIVE);  -- so search hits
         return writeNodeToBinary(block, fileName);
     }
 
     //-----------------------------------------------------------------------
     bool readBlockFromBinary(CBlock& block, const string_q& fileName) {
-        // CArchive blockCache(READING_ARCHIVE);  -- so search hits
+        // CArchive g_blockCache(READING_ARCHIVE);  -- so search hits
         return readNodeFromBinary(block, fileName);
     }
 
     //----------------------------------------------------------------------------------
-    bool readBloomArray(CBloomArray& blooms, const string_q& fileName) {
+    bool readBloomFromBinary(CBloomArray& blooms, const string_q& fileName) {
         blooms.clear();
         CArchive bloomCache(READING_ARCHIVE);
-        if (bloomCache.Lock(fileName, binaryReadOnly, LOCK_NOWAIT)) {
+        if (bloomCache.Lock(fileName, modeReadOnly, LOCK_NOWAIT)) {
             bloomCache >> blooms;
             bloomCache.Close();
             return true;
@@ -638,7 +668,7 @@ namespace qblocks {
             if (!created.empty() && !isTestMode())
                 cerr << "mkdir(" << created << ")" << string_q(75, ' ') << "\n";
             CArchive bloomCache(WRITING_ARCHIVE);
-            if (bloomCache.Lock(fileName, binaryWriteCreate, LOCK_CREATE)) {
+            if (bloomCache.Lock(fileName, modeWriteCreate, LOCK_CREATE)) {
                 bloomCache << blooms;
                 bloomCache.Close();
                 return true;
@@ -657,7 +687,7 @@ namespace qblocks {
         string_q fmt = (asPath ? "%s/%s/%s/" : "%s/%s/%s/%s");
         string_q fn  = (asPath ? "" : num + (asJson ? ".json" : ".bin"));
 
-        sprintf(ret, (blockCachePath("") + fmt).c_str(),  // NOLINT
+        sprintf(ret, (getCachePath("") + fmt).c_str(),  // NOLINT
                       extract(num, 0, 2).c_str(), extract(num, 2, 2).c_str(), extract(num, 4, 2).c_str(),
                       fn.c_str());
         return ret;
@@ -728,143 +758,11 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    bool forEveryNonEmptyBlockByNumber(UINT64VISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
-        if (!func)
-            return false;
-
-        CArchive fullBlockCache(READING_ARCHIVE);
-        if (!fullBlockCache.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT)) {
-            cerr << "forEveryNonEmptyBlockOnDisc failed: " << fullBlockCache.LockFailure() << "\n";
-            return false;
-        }
-        ASSERT(fullBlockCache.isOpen());
-
-        uint64_t nItems = fileSize(fullBlockIndex) / sizeof(uint64_t);
-        uint64_t *items = new uint64_t[nItems];
-        if (items) {
-            // read the entire full block index
-            fullBlockCache.Read(items, sizeof(uint64_t), nItems);
-            fullBlockCache.Release();  // release it since we don't need it any longer
-
-            for (uint64_t i = 0 ; i < nItems ; i = i + skip) {
-                // TODO(tjayrush): This should be a binary search not a scan. This is why it appears to wait
-                uint64_t item = items[i];
-                if (inRange(item, start, start + count - 1)) {
-                    bool ret = (*func)(items[i], data);
-                    if (!ret) {
-                        // Cleanup and return if user tells us to
-                        delete [] items;
-                        return false;
-                    }
-                } else {
-                    // do nothing
-                }
-            }
-            delete [] items;
-        }
-        return true;
-    }
-
-    //-------------------------------------------------------------------------
-    bool forEveryEmptyBlockByNumber(UINT64VISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
-        if (!func)
-            return false;
-
-        CArchive fullBlockCache(READING_ARCHIVE);
-        if (!fullBlockCache.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT)) {
-            cerr << "forEveryEmptyBlockOnDisc failed: " << fullBlockCache.LockFailure() << "\n";
-            return false;
-        }
-        ASSERT(fullBlockCache.isOpen());
-
-        uint64_t nItems = fileSize(fullBlockIndex) / sizeof(uint64_t) + 1;
-        uint64_t *items = new uint64_t[nItems+2];
-        if (!items) {
-            cerr << "forEveryEmptyBlockOnDisc failed: could not allocate memory\n";
-            return false;
-        }
-
-        fullBlockCache.Read(&items[0], sizeof(uint64_t), nItems);
-        fullBlockCache.Release();
-
-        CBlockRangeArray ranges;
-        ranges.reserve(nItems * 35 / 100);  // less than 1/3 of blocks are empty
-
-        uint64_t previous = (uint64_t)(start-1);
-        uint64_t end = (start + count);
-        for (size_t i = 0 ; i < nItems ; i++) {
-            uint64_t current = items[i];
-            if (start == 0 || (current >= start-1)) {
-                int64_t diff = ((int64_t)current - (int64_t)previous) - 1;
-                uint64_t udiff = (uint64_t)diff;
-                if ((previous+1) <= (previous+udiff))
-                    ranges.push_back(make_pair(previous+1, min(end, current)));
-            }
-            previous = current;
-            if (current >= end)
-                break;
-        }
-
-        blknum_t next = NOPOS;
-        for (auto range : ranges) {
-            blknum_t st = (next == NOPOS ? range.first : (max(next, range.first)));
-            for (blknum_t bn = st ; bn < range.second ; bn += skip) {
-                if (!(*func)(bn, data)) {
-                    if (items)
-                        delete [] items;
-                    return false;
-                }
-                next = bn + skip;
-            }
-        }
-        if (items)
-            delete [] items;
-        return true;
-    }
-
-    //-------------------------------------------------------------------------
-    class CPassThru {
-    public:
-        BLOCKVISITFUNC origFunc;
-        void *origData;
-    };
-
-    //-------------------------------------------------------------------------
-    bool passThruFunction(uint64_t num, void *data) {
-        CBlock block;
-        getBlock(block, num);
-        CPassThru *passThru = (CPassThru*)data;
-        return passThru->origFunc(block, passThru->origData);
-    }
-
-    //-------------------------------------------------------------------------
-    bool forEveryNonEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
-        CPassThru passThru;
-        passThru.origFunc = func;
-        passThru.origData = data;
-        getCurlContext()->provider = "local";
-        bool ret = forEveryNonEmptyBlockByNumber(passThruFunction, &passThru, start, count, skip);
-        getCurlContext()->provider = "binary";
-        return ret;
-    }
-
-    //-------------------------------------------------------------------------
-    bool forEveryEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
-        CPassThru passThru;
-        passThru.origFunc = func;
-        passThru.origData = data;
-        getCurlContext()->provider = "local";
-        bool ret = forEveryEmptyBlockByNumber(passThruFunction, &passThru, start, count, skip);
-        getCurlContext()->provider = "binary";
-        return ret;
-    }
-
-    //-------------------------------------------------------------------------
     bool forEveryBloomFile(FILEVISITOR func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
 
         // If the caller does not specify start/end block numbers, visit every bloom file
         if (start == 0 || count == (uint64_t)-1)
-            return forEveryFileInFolder(bloomFolder, func, data);
+            return forEveryFileInFolder(bloomFolder_v2, func, data);
 
         // The user is asking for certain files and not others. The bext we can do is limit which folders
         // to visit, which we do here. Caller must protect against too early or too late files by number.
@@ -1000,34 +898,92 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    string_q blockCachePath(const string_q& _part) {
+    string_q scraperStatus(void) {
 
-        static string_q blockCache;
-        if (blockCache.empty()) {
+        char hostname[HOST_NAME_MAX];  gethostname(hostname, HOST_NAME_MAX);
+        char username[LOGIN_NAME_MAX]; getlogin_r(username, LOGIN_NAME_MAX);
+        string_q hostUser = string_q(hostname) + " (" + username + ")";
+
+        string_q tmpStore = configPath("cache/tmp/scraper-status.txt");
+
+        uint64_t prevDiff = str_2_Uint(asciiFileToString(tmpStore));
+        uint64_t pending, staging, finalized, client;
+        getLastBlocks(pending, staging, finalized, client);
+
+        uint64_t currDiff = finalized > client ? finalized - client : client - finalized;
+        stringToAsciiFile(tmpStore, uint_2_Str(currDiff));  // so we can use it next time
+
+#define showOne(a, b) cYellow << (isTestMode() ? a : b) << cOff
+#define showOne1(a) showOne(a, a)
+        ostringstream cos;
+        cos << showOne("--final--, --staging--, --pending--", uint_2_Str(finalized)+", "+uint_2_Str(staging)+", "+uint_2_Str(pending));
+
+        ostringstream dos;
+        dos << showOne("--diff--", (currDiff>prevDiff?"-":"+") + uint_2_Str(currDiff));
+        dos << (currDiff > prevDiff ? " (-" + uint_2_Str(currDiff-prevDiff) : " (+"+uint_2_Str(prevDiff-currDiff)) + ")";
+
+        ostringstream os;
+        os << cGreen << "  Client version:     " << showOne("--version--", getVersionFromClient())    << endl;
+        os << cGreen << "  Trueblocks Version: " << showOne1(getVersionStr(true))                     << endl;
+        os << cGreen << "  Cache location:     " << showOne("--cache_dir--", getCachePath(""))        << endl;
+        os << cGreen << "  Host (user):        " << showOne("--host (user)--", hostUser)              << endl;
+        os << cGreen << "  Latest cache:       " << cos.str()                                         << endl;
+        os << cGreen << "  Latest client:      " << showOne("--client--", uint_2_Str(client))         << endl;
+        os << cGreen << "  Dist from head:     " << dos.str()                                         << endl;
+
+        return os.str();
+    }
+
+    //-------------------------------------------------------------------------
+    string_q getCachePath(const string_q& _part) {
+
+        //TODO(tjayrush): global data
+        static string_q g_cachePath;
+        if (!g_cachePath.empty()) // leave early if we can
+            return substitute((g_cachePath + _part), "//", "/");
+
+        { // give ourselves a frame - always enters - forces creation in the frame
+            // Wait until any other thread is finished filling the value.
+            mutex aMutex;
+            lock_guard<mutex> lock(aMutex);
+
+            // Another thread may have filled the data while we were waiting
+            if (!g_cachePath.empty())
+                return substitute((g_cachePath + _part), "//", "/");
+
+            // Otherwise, fill the value
             CToml toml(configPath("quickBlocks.toml"));
-            string_q path = toml.getConfigStr("settings", "blockCachePath", "<NOT_SET>");
-            // cout << path << "\n";
+            string_q path = toml.getConfigStr("settings", "cachePath", "<NOT_SET>");
             if (path == "<NOT_SET>") {
-                path = configPath("cache/");
-                toml.setConfigStr("settings", "blockCachePath", path);
+                // May have been an old installation, so try to upgrade
+                path = toml.getConfigStr("settings", "blockCachePath", "<NOT_SET>");
+                if (path == "<NOT_SET>")
+                    path = configPath("cache/");
+                toml.setConfigStr("settings", "cachePath", path);
+                toml.deleteKey("settings", "blockCachePath");
                 toml.writeFile();
             }
+
             CFilename folder(path);
             if (!folderExists(folder.getFullPath()))
                 establishFolder(folder.getFullPath());
+
             if (!folder.isValid()) {
                 cerr << "Invalid path (" << folder.getFullPath() << ") in config file. Quitting...\n";
-                exit(0);
+                quickQuitHandler(EXIT_FAILURE);
             }
-            blockCache = folder.getFullPath();
-            if (!endsWith(blockCache, "/"))
-                blockCache += "/";
+            g_cachePath = folder.getFullPath();
+            if (!endsWith(g_cachePath, "/"))
+                g_cachePath += "/";
         }
-        return substitute((blockCache + _part), "//", "/");
+
+        return substitute((g_cachePath + _part), "//", "/");
     }
 
     //--------------------------------------------------------------------------
-    biguint_t weiPerEther = (modexp(10, 9, uint64_t(10000000000)) * modexp(10, 9, uint64_t(10000000000)));
+    biguint_t weiPerEther(void) {
+        return (modexp(10, 9, uint64_t(10000000000)) * modexp(10, 9, uint64_t(10000000000)));
+    }
 
     //-----------------------------------------------------------------------
     void manageFields(const string_q& listIn, bool show) {
@@ -1035,7 +991,7 @@ namespace qblocks {
         while (!list.empty()) {
             string_q fields = nextTokenClear(list, '|');
             string_q cl = nextTokenClear(fields, ':');
-            CBaseNode *item =  createObjectOfType(cl);
+            CBaseNode *item = createObjectOfType(cl);
             while (item && !fields.empty()) {
                 string_q fieldName = nextTokenClear(fields, ',');
                 if (fieldName == "all") {
@@ -1061,7 +1017,7 @@ namespace qblocks {
     }
 
     //-----------------------------------------------------------------------
-    string_q defHide =
+    const string_q defHide =
         "CTransaction: nonce, input"
     "|" "CLogEntry: data, topics"
     "|" "CTrace: blockHash, blockNumber, transactionHash, transactionPosition, traceAddress, subtraces"
@@ -1070,7 +1026,7 @@ namespace qblocks {
     "|" "CFunction: constant, payable, signature, encoding, type, articulate_str"
     "|" "CParameter: type, indexed, isPointer, isArray, isObject";
 
-    string_q defShow =
+    const string_q defShow =
         "CTransaction: price, gasCost, articulatedTx, traces, isError, date, ether"
     "|" "CLogEntry: articulatedLog"
     "|" "CTrace: articulatedTrace"

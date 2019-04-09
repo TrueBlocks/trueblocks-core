@@ -17,6 +17,7 @@ namespace testing {  // NOLINT
     typedef bool (*PF)(uint64_t testID);
     class Test {
     public:
+        //TODO(tjayrush): global data
         static PF funcs[100];
         static uint64_t nFuncs;
         Test(void)  { memset(funcs, '\0', sizeof(funcs)); }

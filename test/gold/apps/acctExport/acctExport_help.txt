@@ -1,10 +1,11 @@
 acctExport argc: 2 [1:-h] 
 acctExport -h 
 
-  Usage:    acctExport [-f|-l|-u|-i|-v|-h]  
+  Usage:    acctExport [-f|-l|-u|-i|-v|-h] <address> [address...]  
   Purpose:  Export transactions for one or more Ethereum addresses.
              
-  Where:    
+  Where:  
+	address_list          one or more addresses (0x...) to export (required)
 	-f  (--fmt val)       export format (one of [json|txt|csv]
 	-l  (--filter val)    show results for this address (you may specify more than one filter)
 	-u  (--useBlooms)     use bloom filters to decide whether or not to re-check the cache

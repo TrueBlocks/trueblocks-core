@@ -16,8 +16,7 @@
 bool visitBlock(uint64_t num, void *data);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-
-    etherlib_init("binary", quickQuitHandler);
+    etherlib_init(quickQuitHandler);
 
     // Parse command line, allowing for command files
     COptions options;
@@ -70,7 +69,7 @@ bool visitBlock(uint64_t blockNum, void *data) {
 
     if (blockNum > options->newestBlock) {
         string_q late = (isTestMode() ? "--" : uint_2_Str(options->newestBlock));
-        return usage("Block " + uint_2_Str(blockNum) + " is later than the last valid block " + late + ". Quitting...");
+        return options->usage("Block " + uint_2_Str(blockNum) + " is later than the last valid block " + late + ". Quitting...");
     }
 
     wei_t bal = getBalanceAt(options->state.curAddr, blockNum);

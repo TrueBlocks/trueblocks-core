@@ -58,6 +58,7 @@ TEST_F(CThisTest, TestInsertion) {
 #include "options.h"
 //------------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
+    etherlib_init(quickQuitHandler);
 
     COptions options;
     if (!options.prepareArguments(argc, argv))

@@ -19,6 +19,7 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     // setup and tear down of the library
     extern void     etherlib_init           (const string_q& primarySource, QUITHANDLER qh);
+    inline void     etherlib_init           (QUITHANDLER qh) { etherlib_init("binary", qh); }
     extern void     etherlib_cleanup        (void);
 
     //-------------------------------------------------------------------------
@@ -44,8 +45,7 @@ namespace qblocks {
     extern bool     isContractAt            (const address_t& addr, blknum_t blockNum=NOPOS);
 
     //-------------------------------------------------------------------------
-    extern bool     queryBlock              (CBlock& block,       const string_q& num, bool needTrace, bool byHash, size_t& nTraces);
-    extern bool     queryBlock              (CBlock& block,       const string_q& num, bool needTrace, bool byHash);
+    extern bool     queryBlock              (CBlock& block, const string_q& num, bool needTrace);
 
     //-------------------------------------------------------------------------
     // lower level access to the node's responses
@@ -74,9 +74,6 @@ namespace qblocks {
     inline bool     isGeth                  (void) { return contains(toLower(getVersionFromClient()), "geth"); }  // NOLINT
     inline bool     isParity                (void) { return contains(toLower(getVersionFromClient()), "parity"); }  // NOLINT
     extern bool     getAccounts             (CAddressArray& addrs);
-    extern uint64_t getLatestBlockFromClient(void);
-    extern uint64_t getLatestBlockFromCache (void);
-    extern bool     getLatestBlocks         (uint64_t& cache, uint64_t& client);
 
     //-------------------------------------------------------------------------
     uint64_t        addFilter               (address_t addr, const CTopicArray& topics, blknum_t block);
@@ -99,10 +96,6 @@ namespace qblocks {
     extern bool forEveryBlock                (BLOCKVISITFUNC func, void *data, const string_q& block_list);  // NOLINT
     extern bool forEveryBlock                (BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
     extern bool forEveryBlockOnDisc          (BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
-    extern bool forEveryNonEmptyBlockOnDisc  (BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
-    extern bool forEveryNonEmptyBlockByNumber(UINT64VISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
-    extern bool forEveryEmptyBlockOnDisc     (BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
-    extern bool forEveryEmptyBlockByNumber   (UINT64VISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
 
     //-------------------------------------------------------------------------
     // forEvery functions
@@ -120,21 +113,35 @@ namespace qblocks {
     extern bool forEveryLogInBlock           (LOGVISITFUNC func,   void *data, const CBlock& block);
 
     //-------------------------------------------------------------------------
-    extern string_q blockCachePath(const string_q& _part);
+    extern blknum_t getLastBlock_client       (void);
+    extern blknum_t getLastBlock_cache_final  (void);
+    extern blknum_t getLastBlock_cache_staging(void);
+    extern blknum_t getLastBlock_cache_pending(void);
+    extern bool     getLastBlocks             (blknum_t& pending, blknum_t& staging, blknum_t& final, blknum_t& client);
 
-    #define fullBlockIndex (blockCachePath("fullBlocks.bin"))
-    #define accountIndex   (blockCachePath("accountTree.bin"))
-    #define miniBlockCache (blockCachePath("miniBlocks.bin"))
-#ifdef MINI_TRANS
-    #define miniTransCache (blockCachePath("miniTrans.bin"))
-#endif
-    #define blockFolder    (blockCachePath("blocks/"))
-    #define bloomFolder    (blockCachePath("blooms/"))
-    extern biguint_t weiPerEther;
+    //-------------------------------------------------------------------------
+    extern string_q getCachePath            (const string_q& _part);
+    extern string_q scraperStatus           (void);
 
+    //-------------------------------------------------------------------------
+    #define blockFolder_v2           (getCachePath("blocks/"))
+    #define bloomFolder_v2           (getCachePath("blooms/"))
+    #define monitorsFolder_v2        (getCachePath("monitors/"))
+
+    #define indexFolder_v2           (getCachePath("addr_index/"))
+    #define indexFolder_finalized_v2 (configPath  ("cache/addr_index/finalized/"))
+    #define indexFolder_staging_v2   (getCachePath("addr_index/staging/"))
+    #define indexFolder_pending_v2   (getCachePath("addr_index/pending/"))
+    #define indexFolder_zips_v2      (getCachePath("addr_index/zips/"))
+//    #define indexFolder_sorted_v2    (getCachePath("addr_index/sorted/"))
+
+    //-------------------------------------------------------------------------
+    extern biguint_t weiPerEther(void);
+
+    //-------------------------------------------------------------------------
     extern void manageFields(const string_q& listIn, bool show);
-    extern string_q defHide;
-    extern string_q defShow;
+    extern const string_q defHide;
+    extern const string_q defShow;
 
 }  // namespace qblocks
 

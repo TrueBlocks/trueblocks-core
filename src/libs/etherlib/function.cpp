@@ -31,12 +31,12 @@ void CFunction::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const
     if (!m_showing)
         return;
 
-    if (fmtIn.empty()) {
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["function_fmt"] : fmtIn);
+    if (fmt.empty()) {
         ctx << toJson();
         return;
     }
 
-    string_q fmt = fmtIn;
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -213,9 +213,8 @@ CArchive& operator<<(CArchive& archive, const CFunctionArray& array) {
 
 //---------------------------------------------------------------------------
 void CFunction::registerClass(void) {
-    static bool been_here = false;
-    if (been_here) return;
-    been_here = true;
+    // only do this once
+    if (HAS_FIELD(CFunction, "schema")) return;
 
     size_t fieldNum = 1000;
     ADD_FIELD(CFunction, "schema",  T_NUMBER, ++fieldNum);
@@ -289,7 +288,6 @@ string_q nextFunctionChunk_custom(const string_q& fieldIn, const void *dataPtr) 
                     return fun->origName;
                 }
                 break;
-
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type

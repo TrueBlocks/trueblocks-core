@@ -58,9 +58,9 @@ run_special_test("ethprice_period_02"       "--period" " 12")
 run_special_test("ethprice_when_00"         "-w" " 14")
 run_special_test("ethprice_verbose_01"      "-v:1")
 run_special_test("ethprice_from_file"       "--file:cmd_file")
-run_special_test("ethprice_bitcoin_eth"     "--pair:BTC_ETH")  # customized
+#run_special_test("ethprice_bitcoin_eth"     "--pair:BTC_ETH")  # customized
 run_special_test("ethprice_usd_bitcoin"     "--pair:USDT_BTC")
-run_special_test("ethprice_usd_litecoin"    "--pair:USDT_LTC")  # customized
+#run_special_test("ethprice_usd_litecoin"    "--pair:USDT_LTC")  # customized
 
 # Installation steps, this tool is renamed at installation
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

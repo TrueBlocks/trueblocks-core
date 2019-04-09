@@ -16,9 +16,8 @@
 extern const char *STR_FMT_BLOOMS_OUT;
 extern string_q doOneBloom(uint64_t num, const COptions& opt);
 //-------------------------------------------------------------------------------------
-int main(int argc, const char * argv[]) {
-
-    etherlib_init("binary", quickQuitHandler);
+int main(int argc, const char *argv[]) {
+    etherlib_init(quickQuitHandler);
 
     // Parse command line, allowing for command files
     COptions options;
@@ -33,6 +32,11 @@ int main(int argc, const char * argv[]) {
         string_q list = options.getBlockNumList();
         while (!list.empty()) {
             blknum_t bn = str_2_Uint(nextTokenClear(list, '|'));
+            if (options.force) {
+                ostringstream os;
+                os << "bloomMan --rewrite " << bn << " >/dev/null";
+                if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+            }
             cout << doOneBloom(bn, options);
             if (!options.asBars && !options.asBitBars && !options.asPctBars) {
                 if (!list.empty())
@@ -47,22 +51,20 @@ int main(int argc, const char * argv[]) {
 }
 
 //-------------------------------------------------------------------------------------
-typedef string_q (*BLOOMTOSTRFUNC)(const bloom_t& bloom, void *data);
+typedef string_q (*BLOOMTOSTRFUNC)(const bloom_t& bloom, uint64_t bitBnd, void *data);
 //-------------------------------------------------------------------------------------
-// SEARCH FOR 'BIT_TWIDDLE_AMT 200'
-static uint64_t bitBound = 200;
-string_q pctBar(const bloom_t& bloom, void *data) { uint64_t div = (uint64_t)data; return string_q(bitsTwiddled(bloom) * bitBound / div, '-'); }
-string_q bitBar(const bloom_t& bloom, void *data) { return string_q(bitsTwiddled(bloom), '-');              }
-string_q bars  (const bloom_t& bloom, void *data) { return bloom_2_Bar(bloom);                              }
+string_q pctBar(const bloom_t& bloom, uint64_t bitBnd, void *data) { uint64_t div = (uint64_t)data; return string_q(bitsTwiddled(bloom) * bitBnd / div, '-'); }
+string_q bitBar(const bloom_t& bloom, uint64_t unused, void *data) { return string_q(bitsTwiddled(bloom), '-');              }
+string_q bars  (const bloom_t& bloom, uint64_t unused, void *data) { return bloom_2_Bar(bloom);                              }
 
 //-------------------------------------------------------------------------------------
-string_q showBloom(blknum_t bn, const CBloomArray& blooms, BLOOMTOSTRFUNC func, void *data=NULL) {
+string_q showBloom(blknum_t bn, uint64_t bitBnd, const CBloomArray& blooms, BLOOMTOSTRFUNC func, void *data=NULL) {
     if (!func)
         return "";
     ostringstream os;
     for (size_t bl = 0 ; bl < blooms.size() ; bl++) {
         string_q head = (bl == 0 ? uint_2_Str(bn) + ": " : "");
-        string_q line = (bitsTwiddled(blooms[bl]) == 0 ? "" : (*func)(blooms[bl], data));
+        string_q line = (bitsTwiddled(blooms[bl]) == 0 ? "" : (*func)(blooms[bl], bitBnd, data));
         if (bl == 0 || !line.empty()) {
             os << padLeft(head, 9);
             if (!line.empty())
@@ -76,8 +78,6 @@ string_q showBloom(blknum_t bn, const CBloomArray& blooms, BLOOMTOSTRFUNC func, 
 #include "bloom_blocks.h"
 //-------------------------------------------------------------------------------------
 string_q doOneBloom(uint64_t num, const COptions& opt) {
-
-    bitBound = opt.bitBound;
 
     CBloomArray blooms;
 
@@ -96,9 +96,9 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
                 blooms.push_back(str_2_BigUint(rawBlock.transactions[i].receipt.logsBloom));
         }
 
-             if (opt.asBars)    return showBloom(num, blooms, bars);
-        else if (opt.asBitBars) return showBloom(num, blooms, bitBar);
-        else if (opt.asPctBars) return showBloom(num, blooms, pctBar, (void*)1024);
+             if (opt.asBars)    return showBloom(num, opt.bitBound, blooms, bars);
+        else if (opt.asBitBars) return showBloom(num, opt.bitBound, blooms, bitBar);
+        else if (opt.asPctBars) return showBloom(num, opt.bitBound, blooms, pctBar, (void*)1024);
         else {
             CBloomTransArray showing;
             if (opt.asBits)
@@ -122,16 +122,16 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
     } else {
 
         string_q fileName = substitute(getBinaryFilename(num), "/blocks/", "/blooms/");
-        readBloomArray(blooms, fileName);
-             if (opt.asBars)    return showBloom(num, blooms, bars);
-        else if (opt.asBitBars) return showBloom(num, blooms, bitBar);
+        readBloomFromBinary(blooms, fileName);
+             if (opt.asBars)    return showBloom(num, opt.bitBound, blooms, bars);
+        else if (opt.asBitBars) return showBloom(num, opt.bitBound, blooms, bitBar);
         else if (opt.asPctBars) {
             bloom_t one_bloom = 0;
             uint64_t n = blooms.size();
             for (size_t i = 0 ; i < blooms.size() ; i++)
                 one_bloom = joinBloom(one_bloom, blooms[i]);
             blooms.clear(); blooms.push_back(one_bloom);
-            return showBloom(num, blooms, pctBar, (void*)(1024 * n));
+            return showBloom(num, opt.bitBound, blooms, pctBar, (void*)(1024 * n));
 
         } else {
 

@@ -32,6 +32,7 @@ namespace qblocks {
     extern string_q reversed;
     extern string_q strikethru;
     extern string_q greenCheck;
+    extern string_q yellowCaution;
     extern string_q redX;
     extern string_q whiteStar;
 

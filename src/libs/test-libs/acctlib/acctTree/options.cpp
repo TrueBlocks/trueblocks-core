@@ -13,7 +13,7 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("-all",            "process all transactions from start of chain to latest block"),
     COption("-start:<uint>",   "the first block to process"),
     COption("-end:<uint>",     "the last block (less one) to process"),
@@ -21,7 +21,7 @@ static COption params[] = {
     COption("",                "Build an account tree listing first transaction, latest transaction, and "
                                "node balance for each account.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -51,7 +51,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-e:") || startsWith(arg, "--end:")) {
             arg = substitute(substitute(orig, "-e:", ""), "--end:", "");
             if (arg == "latest") {
-                endBlock = getLatestBlockFromClient();
+                endBlock = getLastBlock_client();
             } else {
                 endBlock = str_2_Uint(arg);
                 if (!isUnsigned(arg))
@@ -74,9 +74,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    arguments.clear();
-    paramsPtr = params;
-    nParamsRef = nParams;
+    registerOptions(nParams, params);
 
     all = false;
     startBlock = 0;

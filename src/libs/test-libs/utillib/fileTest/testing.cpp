@@ -10,22 +10,39 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "etherlib.h"
+#include "utillib.h"
 
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    etherlib_init("binary", quickQuitHandler);
+    CDefaultOptions options;
+    options.minArgs = 0;
+    if (!options.prepareArguments(argc, argv))
+        return 0;
 
-    CStringArray files;
+    size_t recurse = (argc == 2 && contains(string_q(argv[1]), "recurse"));
+    size_t first   = (argc == 2 && contains(string_q(argv[1]), "first"));
+    size_t last    = (argc == 2 && contains(string_q(argv[1]), "last"));
 
-    cout << "Getting data from: ./folder/*" << endl;
-    listFilesInFolder(files, "./folder/*");
-    cout << "Found " << files.size() << " files" << endl;
+    if (last) {
+        string_q lastFile = getLastFileInFolder("../", recurse);
+        cout << "Last file in folder: " << lastFile << endl;
 
-    for (auto file : files)
-        cout << file << endl;
+    } else if (first) {
+        string_q firstFile = getFirstFileInFolder("../", recurse);
+        cout << "First file in folder: " << firstFile << endl;
 
-    etherlib_cleanup();
+    } else {
+        string_q tests[] = { "Non-recursive", "Recursive" };
+        bool vals[] = { false, true };
+
+        cout << tests[recurse] << " from ../" << endl;
+        CStringArray files;
+        size_t found = listFilesInFolder(files, "../", vals[recurse]);
+        cout << "Found " << found << " (" << files.size() << ") files" << endl;
+        for (auto file : files)
+            cout << file << endl;
+    }
+
     return 0;
 }

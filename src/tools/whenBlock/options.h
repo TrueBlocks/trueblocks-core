@@ -16,8 +16,8 @@
 //-----------------------------------------------------------------------------
 class COptions : public CBlockOptions {
 public:
-    CStringArray     requests;
-    bool             alone;
+    CStringArray requests;
+    bool         asData;
 
     COptions(void);
     ~COptions(void);

@@ -30,6 +30,9 @@ namespace qblocks {
     using bloom_t     = biguint_t;
     using wei_t       = biguint_t;
     using topic_t     = biguint_t;
+    using uchar_t     = unsigned char;
+    using addrbytes_t = vector<uint8_t>;
+    using hashbytes_t = vector<uint8_t>;
 
     //-------------------------------------------------------------------------
     using CStringArray     = vector < string_q   >;
@@ -50,8 +53,8 @@ namespace qblocks {
     extern string_q    str_2_Hex    (const string_q& str);
     extern gas_t       str_2_Gas    (const string_q& str);
     extern double      str_2_Double (const string_q& str);
-    extern bigint_t    str_2_BigInt (const string_q& str);
-    extern biguint_t   str_2_BigUint(const string_q& str);
+    extern bigint_t    str_2_BigInt (const string_q& str, size_t bits = 257);
+    extern biguint_t   str_2_BigUint(const string_q& str, size_t bits = 257);
     extern address_t   str_2_Addr   (const string_q& str);
     extern hash_t      str_2_Hash   (const string_q& str);
     extern biguint_t   str_2_Wei    (const string_q& str);
@@ -75,6 +78,14 @@ namespace qblocks {
     extern string_q    topic_2_Str  (const topic_t& topic);
     extern string_q    ts_2_Str     (timestamp_t ts);
 
+    //----------------------------------------------------------------------------
+    extern string_q    hex_2_Str      (const string_q& inHex, size_t nBytes=NOPOS);
+    extern uchar_t     hex_2_Ascii    (char c1, char c2);
+    extern hashbytes_t hash_2_Bytes   (const hash_t& in);
+    extern addrbytes_t addr_2_Bytes   (const address_t& in);
+    extern hash_t      bytes_2_Hash   (uint8_t const bytes[32]);
+    extern address_t   bytes_2_Addr   (uint8_t const bytes[20]);
+
     //-------------------------------------------------------------------------
     extern string_q    chr_2_HexStr   (const string_q& str);
     extern string_q    bnu_2_Hex      (const biguint_t& bu);
@@ -87,8 +98,9 @@ namespace qblocks {
 
     //--------------------------------------------------------------------
     class time_q;
-    extern timestamp_t date_2_Ts(const time_q&   timeIn);
-    extern time_q      ts_2_Date(timestamp_t tsIn);
+    extern timestamp_t date_2_Ts      (const time_q& timeIn);
+    extern time_q      ts_2_Date      (const timestamp_t& tsIn);
+    extern time_q      str_2_Date     (const string_q& str);
 
     //--------------------------------------------------------------------
     extern bool        isZeroHash   (const hash_t& hash);

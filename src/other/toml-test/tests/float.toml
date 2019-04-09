@@ -1,6 +1,0 @@
-version="0.5.5-alpha"
-
-pi = 3.14
-pospi = +3.14
-negpi = -3.14
-zero-intpart = 0.123

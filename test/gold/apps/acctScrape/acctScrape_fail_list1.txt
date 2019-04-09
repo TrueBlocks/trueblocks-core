@@ -1,0 +1,19 @@
+acctScrape argc: 2 [1:--list] 
+acctScrape --list 
+
+  Invalid option: --list
+
+  Usage:    acctScrape [-m|-v|-h]  
+  Purpose:  Index transactions for a given Ethereum address (or series of addresses).
+             
+  Where:  
+	-m  (--maxBlocks val) scan at most --maxBlocks blocks ('all' implies scan to end of chain)
+
+#### Hidden options (shown during testing only)
+	-l  (--logLevel val)  specify the log level (default 1)
+#### Hidden options (shown during testing only)
+
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Powered by QBlocks

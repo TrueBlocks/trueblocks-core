@@ -16,12 +16,12 @@
 #include "basetypes.h"
 #include "sfos.h"
 #include "sftime.h"
-#include "string.h"
+#include "sfstring.h"
+#include "database.h"
 #include "filenames.h"
 
 namespace qblocks {
 
-    #define ANY_FILETYPE -1
     #define remove unlink
 
     //------------------------------------------------------------------
@@ -41,13 +41,24 @@ namespace qblocks {
         return 0;
     }
 
+
+    //------------------------------------------------------------------
+    int moveFile(const string_q& from, const string_q& to) {
+        if (from % to)
+            return true;
+        if (copyFile(from, to)) {
+            int ret = ::remove(from.c_str()); // remove file returns '0' on success
+            return !ret;
+        }
+        return false;
+    }
+
     //------------------------------------------------------------------
     int copyFile(const string_q& fromIn, const string_q& toIn) {
         string_q from = escapePath(fromIn);
         string_q to   = escapePath(toIn);
 
-        const string_q copyCmd = "cp -f";
-        string_q command = copyCmd + " " + from + " " + to;
+        string_q command = "cp -f " + from + " " + to;
         if (system(command.c_str())) { }  // do not remove. The test just silences compiler warnings
         return static_cast<int>(fileExists(to));
     }
@@ -151,7 +162,6 @@ namespace qblocks {
 
         // Check twice for existance since the previous command creates the file but may take some time
         waitForCreate(filename);
-extern size_t asciiFileToString(const string_q& filename, string& contents);
         string_q ret;
         asciiFileToString(filename, ret);
         remove(filename.c_str());
@@ -199,23 +209,6 @@ extern size_t asciiFileToString(const string_q& filename, string& contents);
     }
 
     //------------------------------------------------------------------
-    void listFilesInFolder(CStringArray& items, const string_q& folder) {
-        size_t nItems = 0;
-        doGlob(nItems, NULL, folder, ANY_FILETYPE);
-        if (!nItems)
-            return;
-
-        string_q *ptr = new string_q[nItems];
-        if (!ptr)
-            return;
-
-        doGlob(nItems, ptr, folder, ANY_FILETYPE);
-        for (size_t i = 0 ; i < nItems ; i++)
-            items.push_back(ptr[i]);
-        delete [] ptr;
-    }
-
-    //------------------------------------------------------------------
     uint64_t fileSize(const string_q& filename) {
         if (!fileExists(filename))
             return 0;
@@ -245,5 +238,13 @@ extern size_t asciiFileToString(const string_q& filename, string& contents);
             }
         }
         return folderExists(targetFolder);
+    }
+
+    //----------------------------------------------------------------------------
+    bool isRunning(const string_q& progName, bool countSelf) {
+        string_q cmd = "ps -ef | grep -i " + progName + " | grep -v grep | grep -v \"sh -c \" | wc -l";
+        uint64_t cnt = str_2_Uint(doCommand(cmd));
+        // should we exclude ourselves?
+        return (countSelf ? cnt > 1 : cnt > 0);
     }
 }  // namespace qblocks

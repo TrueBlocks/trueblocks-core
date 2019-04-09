@@ -16,8 +16,7 @@ statement           	1010	0	1048651	T_OBJECT TS_OBJECT
 balanceHistory      	1011	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 nodeBal             	1012	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 enabled             	1013	0	65556	T_BOOL TS_NUMERAL
-api_spec            	1014	0	1048651	T_OBJECT TS_OBJECT
-abi_spec            	1015	1	1048651	T_OBJECT TS_OBJECT
+abi_spec            	1014	1	1048651	T_OBJECT TS_OBJECT
 {
   "address": "0x0",
   "firstBlock": 0,
@@ -32,9 +31,7 @@ abi_spec            	1015	1	1048651	T_OBJECT TS_OBJECT
   },
   "balanceHistory": [],
   "nodeBal": 0,
-  "enabled": 1,
-  "api_spec": {
-  }
+  "enabled": 1
 }
 
 --------------------------------------------------------------------------------
@@ -53,8 +50,7 @@ statement           	1010	1	1048651	T_OBJECT TS_OBJECT
 balanceHistory      	1011	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 nodeBal             	1012	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 enabled             	1013	1	65556	T_BOOL TS_NUMERAL
-api_spec            	1014	1	1048651	T_OBJECT TS_OBJECT
-abi_spec            	1015	1	1048651	T_OBJECT TS_OBJECT
+abi_spec            	1014	1	1048651	T_OBJECT TS_OBJECT
 {
 }
 
@@ -74,8 +70,7 @@ statement           	1010	0	1048651	T_OBJECT TS_OBJECT
 balanceHistory      	1011	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 nodeBal             	1012	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 enabled             	1013	0	65556	T_BOOL TS_NUMERAL
-api_spec            	1014	0	1048651	T_OBJECT TS_OBJECT
-abi_spec            	1015	0	1048651	T_OBJECT TS_OBJECT
+abi_spec            	1014	0	1048651	T_OBJECT TS_OBJECT
 {
   "schema": 5005,
   "deleted": 0,
@@ -95,8 +90,6 @@ abi_spec            	1015	0	1048651	T_OBJECT TS_OBJECT
   "balanceHistory": [],
   "nodeBal": 0,
   "enabled": 1,
-  "api_spec": {
-  },
   "abi_spec": {
     "address": "0x0",
     "interfaces": []

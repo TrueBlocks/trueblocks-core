@@ -15,9 +15,8 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <algorithm>
-#include "pricequote.h"
-#include "etherlib.h"
 #include "pricesource.h"
+#include "pricequote.h"
 
 namespace qblocks {
 
@@ -33,12 +32,12 @@ void CPriceQuote::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) con
     if (!m_showing)
         return;
 
-    if (fmtIn.empty()) {
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["pricequote_fmt"] : fmtIn);
+    if (fmt.empty()) {
         ctx << toJson();
         return;
     }
 
-    string_q fmt = fmtIn;
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -145,9 +144,8 @@ CArchive& operator<<(CArchive& archive, const CPriceQuoteArray& array) {
 
 //---------------------------------------------------------------------------
 void CPriceQuote::registerClass(void) {
-    static bool been_here = false;
-    if (been_here) return;
-    been_here = true;
+    // only do this once
+    if (HAS_FIELD(CPriceQuote, "schema")) return;
 
     size_t fieldNum = 1000;
     ADD_FIELD(CPriceQuote, "schema",  T_NUMBER, ++fieldNum);
@@ -271,25 +269,38 @@ uint64_t indexFromTimeStamp(const CPriceQuoteArray& quotes, timestamp_t ts) {
 }
 
 //-----------------------------------------------------------------------
+static string_q getWeiQuote(const CPriceQuoteArray& quotes, timestamp_t ts, biguint_t weiIn) {
+    uint64_t index = indexFromTimeStamp(quotes, ts);
+    double price = quotes[index].close * 100.0;
+    weiIn *= ((uint64_t)price);
+    weiIn /= 100;
+    return wei_2_Ether(bnu_2_Str(weiIn));
+}
+
+//-----------------------------------------------------------------------
 string_q wei_2_Dollars(timestamp_t ts, biguint_t weiIn) {
     if (weiIn == 0)
         return "";
+
+    //TODO(tjayrush): global data
     static CPriceQuoteArray quotes;
-    if (!quotes.size()) {
+    if (quotes.size()) // leave early if we can
+        return getWeiQuote(quotes, ts, weiIn);
+
+    { // give ourselves a frame to make the mutex
+        mutex aMutex;
+        lock_guard<mutex> lock(aMutex);
+        if (quotes.size()) // leave early if we can (another thread may have filled the array while we were waiting
+            return getWeiQuote(quotes, ts, weiIn);
+
         string_q message;
         CPriceSource source;
         if (!loadPriceData(source, quotes, false, message, 1)) {
             cerr << "Cannot load price data. Quitting.\n";
-            exit(0);
+            quickQuitHandler(EXIT_FAILURE);
         }
     }
-    uint64_t index = indexFromTimeStamp(quotes, ts);
-    const CPriceQuote *q = &quotes[index];  // taking a non-const reference
-    double price = q->close * 100.0;
-    uint64_t pInt = (uint64_t)price;
-    weiIn *= pInt;
-    weiIn /= 100;
-    return wei_2_Ether(bnu_2_Str(weiIn));
+    return getWeiQuote(quotes, ts, weiIn);
 }
 
 //-----------------------------------------------------------------------

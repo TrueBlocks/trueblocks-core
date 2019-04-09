@@ -48,8 +48,8 @@ public:
 };
 
 //-------------------------------------------------------------------------
-int main(int argc, char *argv[]) {
-    etherlib_init("binary", quickQuitHandler);
+int main(int argc, const char *argv[]) {
+    etherlib_init(quickQuitHandler);
 
     cout << "blockNum" << sep
         << "date" << sep
@@ -63,7 +63,7 @@ int main(int argc, char *argv[]) {
 
     CCounter counter;
     counter.loadFromFile();
-    blknum_t latest = getLatestBlockFromCache();
+    blknum_t latest = getLastBlock_cache_final();
     for (blknum_t i = counter.startBlock-1 ; i < latest ; i++) {
         string_q fileName = getBinaryFilename(i);
         if (fileExists(fileName)) {
@@ -84,10 +84,10 @@ int main(int argc, char *argv[]) {
 void CCounter::countOne(const CBlock &block) {
 
 #ifdef SUBTOTAL_EVERY_X_BLOCKS
-    static blknum_t last = startBlock;
+    thread_local blknum_t last = startBlock;
     blknum_t thisOne = (block.blockNumber / 10000) * 10000;
 #else
-    static time_q last = earliestDate;
+    thread_local time_q last = earliestDate;
 #ifdef SUBTOTAL_BY_FIVE_MINS
     time_q thisOne = ts_2_Date(block.timestamp);
     thisOne = time_q(thisOne.GetYear(),

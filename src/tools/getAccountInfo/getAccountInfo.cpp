@@ -17,8 +17,7 @@ extern blknum_t whenDeployed(const address_t& addr);
 bool visitBlock(uint64_t num, void *data);
 //-------------------------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-
-    etherlib_init("binary", quickQuitHandler);
+    etherlib_init(quickQuitHandler);
 
     // Parse command line, allowing for command files
     COptions options;
@@ -104,6 +103,6 @@ blknum_t findCodeAt_binarySearch(const address_t& addr, blknum_t first, blknum_t
 blknum_t whenDeployed(const address_t& addr) {
     if (!isContractAt(addr))
         return NOPOS;
-    blknum_t num = findCodeAt_binarySearch(addr, 0, getLatestBlockFromClient() - (5 * (60/14)));  // five minutes ago
+    blknum_t num = findCodeAt_binarySearch(addr, 0, getLastBlock_client() - (5 * (60/14)));  // five minutes ago
     return (num ? num+1 : NOPOS);
 }

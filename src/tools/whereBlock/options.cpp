@@ -13,13 +13,13 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("~block_list", "a space-separated list of one or more blocks to search for"),
     COption("-account",    "find an account file, not the block file"),
     COption("-bloom",      "find a bloom file, not the block file"),
     COption("",            "Reports if a block was found in the cache, at a local, or at a remote node.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -28,7 +28,8 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     Init();
-    blknum_t latestBlock = isNodeRunning() ? getLatestBlockFromClient() : 7000000;
+    // This tool does not fail if the node is not running
+    blknum_t latestBlock = isNodeRunning() ? getLastBlock_client() : NOPOS;
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         string_q orig = arg;
@@ -63,10 +64,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    arguments.clear();
-    paramsPtr = params;
-    nParamsRef = nParams;
-    pOptions = this;
+    registerOptions(nParams, params);
 
     mode = "block";
     optionOff(OPT_DENOM);

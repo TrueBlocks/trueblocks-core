@@ -33,5 +33,5 @@ public:
     string_q postProcess(const string_q& which, const string_q& str) const override;
 };
 
-extern CStringArray infoOptions;
+extern const CStringArray infoOptions;
 extern bool isValidInfo(const string_q which, string_q& result);
