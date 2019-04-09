@@ -32,12 +32,12 @@ void CLeaf::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
-    if (fmtIn.empty()) {
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["leaf_fmt"] : fmtIn);
+    if (fmt.empty()) {
         ctx << toJson();
         return;
     }
 
-    string_q fmt = fmtIn;
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -146,9 +146,8 @@ CArchive& operator<<(CArchive& archive, const CLeafArray& array) {
 
 //---------------------------------------------------------------------------
 void CLeaf::registerClass(void) {
-    static bool been_here = false;
-    if (been_here) return;
-    been_here = true;
+    // only do this once
+    if (HAS_FIELD(CLeaf, "schema")) return;
 
     CTreeNode::registerClass();
 
@@ -251,8 +250,8 @@ ostream& operator<<(ostream& os, const CLeaf& item) {
 }
 
 //---------------------------------------------------------------------------
-const string_q CLeaf::getStringAt(const string_q& name, size_t i) const {
-    if ( name % "blocks" && i < blocks.size() )
+const string_q CLeaf::getStringAt(const string_q& fieldName, size_t i) const {
+    if ( fieldName % "blocks" && i < blocks.size() )
         return uint_2_Str(blocks[i]);
     return "";
 }
@@ -348,7 +347,7 @@ const string_q CLeaf::getStringAt(const string_q& name, size_t i) const {
         uint64_t save = vd->type;
         vd->counter = counter;
         vd->type = T_LEAF;
-        vd->strs = vd->strs + "+" + (cMagenta+prefixS + cOff + "|" + cBlue + at(prefixS) + cOff);
+        vd->strs = vd->strs + "+" + (cMagenta + prefixS + cOff + "|" + cBlue + at(prefixS) + cOff);
         (*func)(this, data);
         nextTokenClearReverse(vd->strs, '+');
         vd->type = save;

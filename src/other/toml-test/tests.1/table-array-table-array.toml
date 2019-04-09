@@ -1,9 +1,0 @@
-version="0.5.5-alpha"
-
-[[a]]
-    [[a.b]]
-        [a.b.c]
-            d = "val0"
-    [[a.b]]
-        [a.b.c]
-            d = "val1"

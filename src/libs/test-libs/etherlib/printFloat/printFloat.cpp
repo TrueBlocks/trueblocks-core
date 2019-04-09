@@ -15,8 +15,7 @@
 
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-
-    etherlib_init("binary", quickQuitHandler);
+    etherlib_init(quickQuitHandler);
 
     // Parse command line, allowing for command files
     COptions options;
@@ -41,7 +40,7 @@ int main(int argc, const char *argv[]) {
             cout << "Test " << options.testNum << "\n";
 
         } else {
-            return usage("Unknown test: " + int_2_Str(options.testNum) + "\n");
+            return options.usage("Unknown test: " + int_2_Str(options.testNum) + "\n");
 
         }
     }

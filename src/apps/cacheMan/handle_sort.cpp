@@ -8,7 +8,9 @@
 //-------------------------------------------------------------------------
 bool COptions::handleSort(void) const {
 
-    CAcctCacheItemArray dataArray;
+    ASSERT(filenmes.size() == 1);
+
+    CAppearanceArray_base dataArray;
     if (!handleRead("Sorting", 1, dataArray))
         return false;
 
@@ -16,7 +18,7 @@ bool COptions::handleSort(void) const {
     sort(dataArray.begin(), dataArray.end());
     cerr << "done\n";
 
-    if (!handleWrite(filenames[0], dataArray, NULL))
+    if (!handleWrite(monitors[0].name, dataArray, NULL))
         return false;
 
     return true;

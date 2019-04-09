@@ -13,7 +13,7 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("~address_list", "one or more addresses (0x...) from which to retrieve balances"),
     COption("~!block_list",  "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
     COption("-data",         "display results as data (addr <tab> is_contract)"),
@@ -23,7 +23,7 @@ static COption params[] = {
         COption("",              "Returns 'true' or 'false' if the given address(es) holds byte code "
                              "(optionally displays the code).\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -31,7 +31,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-    blknum_t latestBlock = getLatestBlockFromClient();
+    blknum_t latestBlock = getLastBlock_client();
     Init();
     explode(arguments, command, ' ');
     bool hasExplicitBlocks = false;
@@ -112,10 +112,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    arguments.clear();
-    paramsPtr = params;
-    nParamsRef = nParams;
-    pOptions = this;
+    registerOptions(nParams, params);
 
     addrs.clear();
     diff = false;
@@ -146,7 +143,7 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
         string_q ret;
-        ret += "[{addresses}] must start with '0x' and be forty characters long.\n";
+        ret += "[{addresses}] must start with '0x' and be forty two characters long.\n";
         ret += "[{block_list}] may be a space-separated list of values, a start-end range, a "
                 "[{special}], or any combination.\n";
         ret += "This tool retrieves information from the local node or rpcProvider if configured.\n";

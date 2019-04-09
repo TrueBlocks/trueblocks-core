@@ -19,8 +19,7 @@ extern bool checkBelongs(CTransaction& trans, void *data);
 extern bool checkBelongsDeep(CTransaction& trans, void *data);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-
-    etherlib_init("binary", quickQuitHandler);
+    etherlib_init(quickQuitHandler);
 
     // Parse command line, allowing for command files
     COptions options;
@@ -68,7 +67,7 @@ int main(int argc, const char *argv[]) {
 }
 
 //----------------------------------------------------------------
-bool visitAddrs(const CAddressAppearance& item, void *data) {
+bool visitAddrs(const CAppearance& item, void *data) {
     COptions *opt = (COptions*)data;
 
     if (opt->belongs)

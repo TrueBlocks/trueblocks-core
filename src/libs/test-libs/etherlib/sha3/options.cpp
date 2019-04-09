@@ -13,10 +13,10 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("",  "Testing code for the sha3 functionality of etherlib.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -38,9 +38,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    arguments.clear();
-    paramsPtr = params;
-    nParamsRef = nParams;
+    registerOptions(nParams, params);
 
     minArgs = 0;
 }

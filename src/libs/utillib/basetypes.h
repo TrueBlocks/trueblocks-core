@@ -16,6 +16,7 @@
 #include <glob.h>
 #include <inttypes.h>
 #include <libgen.h>
+#include <unistd.h>
 #include <limits.h>
 #include <math.h>
 #include <pwd.h>
@@ -43,6 +44,8 @@
 #include <tuple>
 #include <chrono>
 #include <iomanip>
+#include <thread>
+#include <mutex>
 
 //-------------------------------------------------------------------------
 using namespace std;  // NOLINT
@@ -60,6 +63,12 @@ using namespace std;  // NOLINT
 #define XX(a)
 #endif
 
+//-----------------------------------------------------------------------------
+#ifndef HOST_NAME_MAX
+#define HOST_NAME_MAX 64
+#define LOGIN_NAME_MAX 64
+#endif
+
 //-------------------------------------------------------------------------
 #include "sfstring.h"
 
@@ -68,6 +77,7 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     typedef pair<string_q, string_q> CNameValue;
     typedef vector<CNameValue> CNameValueArray;
+    typedef map<string_q, string_q> CNameValueMap;
 
     //-------------------------------------------------------------------------
     typedef bool (*APPLYFUNC)     (string_q& line, void *data);

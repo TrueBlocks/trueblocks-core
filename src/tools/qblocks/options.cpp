@@ -14,13 +14,13 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("~cmd",       "one of {cmds}"),
     COption("~option(s)", "options sent to <cmd>. Use 'qblock cmd --help' for help on <cmd>"),
     COption("-info",      "Ignore <cmd> and display info about the QBlocks system"),
     COption("",           "Overarching command for all QBlocks tools.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -51,10 +51,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    arguments.clear();
-    paramsPtr = params;
-    nParamsRef = nParams;
-    pOptions = this;
+    registerOptions(nParams, params);
 
     minArgs = 0;
     optionOff(OPT_VERBOSE|OPT_HELP);

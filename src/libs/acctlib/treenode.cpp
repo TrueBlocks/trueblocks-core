@@ -32,12 +32,12 @@ void CTreeNode::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const
     if (!m_showing)
         return;
 
-    if (fmtIn.empty()) {
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["treenode_fmt"] : fmtIn);
+    if (fmt.empty()) {
         ctx << toJson();
         return;
     }
 
-    string_q fmt = fmtIn;
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -137,9 +137,8 @@ CArchive& operator<<(CArchive& archive, const CTreeNodeArray& array) {
 
 //---------------------------------------------------------------------------
 void CTreeNode::registerClass(void) {
-    static bool been_here = false;
-    if (been_here) return;
-    been_here = true;
+    // only do this once
+    if (HAS_FIELD(CTreeNode, "schema")) return;
 
     size_t fieldNum = 1000;
     ADD_FIELD(CTreeNode, "schema",  T_NUMBER, ++fieldNum);

@@ -16,9 +16,8 @@
 
 extern void findInternalTxIndex(CTransaction& trans);
 //--------------------------------------------------------------------------------
-int main(int argc, const char * argv[]) {
-
-    etherlib_init("binary", defaultQuitHandler);
+int main(int argc, const char *argv[]) {
+    etherlib_init(defaultQuitHandler);
 
     COptions options;
     if (!options.prepareArguments(argc, argv))
@@ -37,7 +36,7 @@ int main(int argc, const char * argv[]) {
                 cerr << cRed << "\t" << message << cOff << "\n";
                 return 0;
             } else {
-                return usage(message);
+                return options.usage(message);
             }
         }
 
@@ -81,10 +80,10 @@ bool Slurp(CAccount& theAccount, COptions& options, string_q& message) {
     theAccount.addr = options.addrs[0];
     cerr << "\t" << "Slurping " << theAccount.addr << "\n";
 
-    string_q cacheFilename = blockCachePath("slurps/" + theAccount.addr + (options.type == "ext" || options.type.empty() ? "" : "."+options.type) + ".bin");
+    string_q cacheFilename = getCachePath("slurps/" + theAccount.addr + (options.type == "ext" || options.type.empty() ? "" : "."+options.type) + ".bin");
     CArchive inArchive(READING_ARCHIVE);
     if (fileExists(cacheFilename)) {
-        if (!inArchive.Lock(cacheFilename, binaryReadOnly, LOCK_NOWAIT)) {
+        if (!inArchive.Lock(cacheFilename, modeReadOnly, LOCK_NOWAIT)) {
             message = "Could not open file: '" + cacheFilename + "'\n";
             return options.fromFile;
         }
@@ -138,7 +137,7 @@ bool Slurp(CAccount& theAccount, COptions& options, string_q& message) {
         if (nAdded) {
             screenMsg("Appending " + uint_2_Str(nAdded) + " new records, total " + uint_2_Str(theAccount.transactions.size()));
             CArchive outArchive(WRITING_ARCHIVE);
-            if (outArchive.Lock(cacheFilename, binaryWriteCreate, LOCK_CREATE)) {
+            if (outArchive.Lock(cacheFilename, modeWriteCreate, LOCK_CREATE)) {
                 lockSection(true);
                 theAccount.Serialize(outArchive);
                 outArchive.Close();

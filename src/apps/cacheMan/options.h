@@ -21,13 +21,13 @@ public:
 
 //-------------------------------------------------------------------------
 class COptions;
-typedef bool (*CACHEFILTERFUNC)(CAcctCacheItemArray& dataArray, const CAcctCacheItem& item);
+typedef bool (*APPEARANCEFILTERFUNC)(CAppearanceArray_base& dataArray, const CAppearance_base& item);
 
 //-------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
     CStats stats;
-    CStringArray filenames;
+    CAccountWatchArray monitors;
     string_q mode;
     blknum_t trunc;
     blknum_t maxBlock;
@@ -35,8 +35,7 @@ public:
     uint64_t skip;
     bool isImport;
     bool isRemove;
-    CAcctCacheItemArray removals;
-    CAccountWatchArray watches;
+    CAppearanceArray_base removals;
 
     COptions(void);
     ~COptions(void);
@@ -45,9 +44,8 @@ public:
     bool handleSort     (void) const;
     bool handleImport   (void) const;
     bool handleRemove   (void) const;
-    bool handleRead     (const string_q& mode, size_t filesToUse, CAcctCacheItemArray& dataArray) const;
-    bool handleWrite    (const string_q& outputFilename, const CAcctCacheItemArray& dataArray, CACHEFILTERFUNC filterFunc) const;
-    bool loadWatches     (const CToml& toml);
+    bool handleRead     (const string_q& mode, size_t filesToUse, CAppearanceArray_base& dataArray) const;
+    bool handleWrite    (const string_q& outputFilename, const CAppearanceArray_base& dataArray, APPEARANCEFILTERFUNC filterFunc) const;
 
     bool parseArguments(string_q& command);
     void Init(void);
@@ -59,7 +57,6 @@ extern bool handleFix       (COptions& options);
 extern bool handleCacheBals (COptions& options);
 extern bool listBalances    (COptions& options);
 extern int  sortByBlock     (const void *v1, const void *v2);
-extern void writeLastBlock  (blknum_t bn);
 
 //-------------------------------------------------------------------------
 extern const char *STR_DEFAULT_DISPLAY;

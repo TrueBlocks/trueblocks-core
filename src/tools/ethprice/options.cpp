@@ -14,7 +14,7 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("-at:<timestamp>",                 "Report the price since nearest five minutes to the given timestamp"),
     COption("-current",                        "Report on the current price (i.e. -at:now)"),
     COption("-data",                           "Export prices as JSON data"),
@@ -23,7 +23,7 @@ static COption params[] = {
     COption("-pair:<val>",                     "Which price pair to freshen or list (see Poloniex)"),
     COption("",                                "Freshen and/or display Ethereum price data and other purposes.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -85,10 +85,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    arguments.clear();
-    paramsPtr = params;
-    nParamsRef = nParams;
-    pOptions = this;
+    registerOptions(nParams, params);
 
     freshen = false;
     freq = 120;
@@ -111,8 +108,10 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 
         string_q ret;
-        ret += "Valid pairs include any pair from the public Poloniex's API here: "
+        ret += "Valid pairs include any pair from the public Poloniex's API here:|"
                 "https://poloniex.com/public?command=returnCurrencies.\n";
+        ret += "[{Note}]: Due to restrictions from Poloniex, this tool retrieves only 30 days of data|"
+                "at a time. You must repeatedly run this command until the data is up-to-date.\n";
         return ret;
     }
     return str;

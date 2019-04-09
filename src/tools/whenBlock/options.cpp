@@ -14,7 +14,7 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("~!block", "one or more block numbers (or a 'special' block), or..."),
     COption("~!date",  "one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]"),
     COption("-data",   "display the result as data (tab delimited; useful for scripting)"),
@@ -22,9 +22,8 @@ static COption params[] = {
     COption("",        "Finds the nearest block prior to a date, or the nearest date prior to a block.\n"
                        " Alternatively, search for one of special 'named' blocks.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
-extern time_q grabDate(const string_q& strIn);
 extern bool containsAny(const string_q& haystack, const string_q& needle);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -35,7 +34,7 @@ bool COptions::parseArguments(string_q& command) {
     bool isList = false;
     bool foundOne = false;
     Init();
-    blknum_t latestBlock = getLatestBlockFromClient();
+    blknum_t latestBlock = getLastBlock_client();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         string_q orig = arg;
@@ -47,7 +46,7 @@ bool COptions::parseArguments(string_q& command) {
             isList = true;
 
         } else if (arg == "-d" || arg == "--data") {
-            alone = true;
+            asData = true;
             colorsOff();
 
         } else if (startsWith(arg, '-')) {  // do not collapse
@@ -62,7 +61,7 @@ bool COptions::parseArguments(string_q& command) {
             if (isList)
                 return usage("The --list option must appear alone on the line. Quitting...");
 
-            time_q date = grabDate(arg);
+            time_q date = str_2_Date(arg);
             if (date == earliestDate) {
                 return usage("Invalid date: '" + orig + "'. Quitting...");
 
@@ -93,7 +92,7 @@ bool COptions::parseArguments(string_q& command) {
             if (findSpecial(spec, arg)) {
                 string_q val = spec.second;
                 if (spec.first == "latest")
-                    val = uint_2_Str(getLatestBlockFromClient());
+                    val = uint_2_Str(getLastBlock_client());
                 requests.push_back("special:" + spec.first + "|" + val);
                 foundOne = true;
 
@@ -135,13 +134,10 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    arguments.clear();
-    paramsPtr  = params;
-    nParamsRef = nParams;
-    pOptions = this;
+    registerOptions(nParams, params);
 
     requests.clear();
-    alone = false;
+    asData = false;
     optionOff(OPT_DENOM);
 }
 
@@ -190,62 +186,12 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
 }
 
 //--------------------------------------------------------------------------------
-time_q grabDate(const string_q& strIn) {
-
-    if (strIn.empty()) {
-        return earliestDate;
-    }
-
-// #error
-    string_q str = strIn;
-    replaceAny(str, " -:", ";");
-    replace(str, ";UTC", "");
-    str = nextTokenClear(str, '.');
-
-    // Expects four number year, two number month and day at a minimum. Fields may be separated by '-' or ';'
-    //    YYYYMMDD or YYYY;MM;DD
-    replaceAll(str, ";", "");
-    if (contains(str, "T")) {
-        replace(str, "T", "");
-               if (str.length() == 10) { str += "0000";
-        } else if (str.length() == 12) { str += "00";
-        } else if (str.length() != 14) { cerr << "Bad: " << str << "\n"; return earliestDate;
-        }
-    } else {
-        str += "000000";
-    }
-
-#define NP ((uint32_t)-1)
-#define str_2_Int32u(a) (uint32_t)str_2_Uint((a))
-    uint32_t y, m, d, h, mn, s;
-    y = m = d = h = mn = s = NP;
-    if (isUnsigned(extract(str,  0, 4))) { y  = str_2_Int32u(extract(str,  0, 4)); }
-    if (isUnsigned(extract(str,  4, 2))) { m  = str_2_Int32u(extract(str,  4, 2)); }
-    if (isUnsigned(extract(str,  6, 2))) { d  = str_2_Int32u(extract(str,  6, 2)); }
-    if (isUnsigned(extract(str,  8, 2))) { h  = str_2_Int32u(extract(str,  8, 2)); }
-    if (isUnsigned(extract(str, 10, 2))) { mn = str_2_Int32u(extract(str, 10, 2)); }
-    if (isUnsigned(extract(str, 12, 2))) { s  = str_2_Int32u(extract(str, 12, 2)); }
-
-    // If any of them was not an unsigned int, it's a fail
-    if (y == NP || m == NP || d == NP || h == NP || mn == NP || s == NP)
-        return earliestDate;
-
-    if (m > 12) return earliestDate;
-    if (d > 31) return earliestDate;
-    if (h > 23) return earliestDate;
-    if (mn > 59) return earliestDate;
-    if (s > 59) return earliestDate;
-
-    return time_q(y, m, d, h, mn, s);
-}
-
-//--------------------------------------------------------------------------------
 string_q COptions::listSpecials(bool terse) const {
     if (specials.size() == 0)
         ((COptionsBase *)this)->loadSpecials();  // NOLINT
 
     ostringstream os;
-    if (!alone) {
+    if (!asData) {
         if (terse) {
             os << "Use the following names to represent `special` blocks:\n  ";
         } else {
@@ -259,18 +205,18 @@ string_q COptions::listSpecials(bool terse) const {
         string_q name = specials[i].first;
         string_q bn = specials[i].second;
         if (name == "latest") {
-            bn = uint_2_Str(getLatestBlockFromClient());
+            bn = uint_2_Str(getLastBlock_client());
             if (isTestMode()) {
                 bn = "";
             } else if (COptionsBase::isReadme) {
                 bn = "--";
-            } else if (i > 0 && str_2_Uint(specials[i-1].second) >= getLatestBlockFromClient()) {
+            } else if (i > 0 && str_2_Uint(specials[i-1].second) >= getLastBlock_client()) {
                 extra = iWhite + " (syncing)" + cOff;
             }
         }
 
 #define N_PER_LINE 4
-        if (alone && !terse) {
+        if (asData && !terse) {
             if (!contains(bn, "tbd"))
                 os << bn << " ";
         } else {

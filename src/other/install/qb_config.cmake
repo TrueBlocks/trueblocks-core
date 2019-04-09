@@ -29,18 +29,21 @@ if (NOT EXISTS "${QUICKBLOCKS_TOML_FILE}")
     file(COPY "${CMAKE_SOURCE_DIR}/../../../src/other/install/ethslurp.toml" DESTINATION "${QUICKBLOCKS_HOME}" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 endif()
 
-# Create names file only if it does not exist
-set(QUICKBLOCKS_NAMES_FILE "${QUICKBLOCKS_HOME}/names/names.txt")
-if (NOT EXISTS "${QUICKBLOCKS_NAMES_FILE}")
-    message(STATUS "Copying names file ${QUICKBLOCKS_NAMES_FILE}")
-    file(COPY "${CMAKE_SOURCE_DIR}/../../../src/other/install/names.txt" DESTINATION "${QUICKBLOCKS_HOME}/names" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
-endif()
+# copy the names json file which replaces the .txt file
+message(STATUS "Copying supporting names files to ${QUICKBLOCKS_HOME}/names/")
+set(NAMES_TXT "${CMAKE_SOURCE_DIR}/../../../src/other/install/names.txt")
+file(COPY ${NAMES_TXT} DESTINATION "${QUICKBLOCKS_HOME}/names/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+# set(NAMES_JSON "${CMAKE_SOURCE_DIR}/../../../src/other/install/names.json")
+# file(COPY ${NAMES_JSON} DESTINATION "${QUICKBLOCKS_HOME}/names/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+set(NAMES_LOGOS "${CMAKE_SOURCE_DIR}/../../../src/other/install/names_logos.tar.gz")
+file(COPY ${NAMES_LOGOS} DESTINATION "${QUICKBLOCKS_HOME}/names/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 
-# Create names file only if it does not exist
+# Copy the prices files
+message(STATUS "Copying price database to ${QUICKBLOCKS_HOME}/cache/prices/")
 set(QUICKBLOCKS_PRICES_FILE "${QUICKBLOCKS_HOME}/cache/prices/poloniex_USDT_ETH.bin.gz")
 if (NOT EXISTS "${QUICKBLOCKS_PRICES_FILE}")
     set(QUICKBLOCKS_PRICES_SOURCE "${CMAKE_SOURCE_DIR}/../../../src/other/install/prices/poloniex_USDT_ETH.bin.gz")
-    message(STATUS "Copying price data to ${QUICKBLOCKS_HOME}/cache/prices")
+    message(STATUS "  Copied file to ${QUICKBLOCKS_HOME}/cache/prices/")
     file(COPY "${QUICKBLOCKS_PRICES_SOURCE}" DESTINATION "${QUICKBLOCKS_HOME}/cache/prices" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 endif()
 
@@ -52,25 +55,30 @@ if (NOT EXISTS "${QUICKBLOCKS_PREFUND_FILE}")
 endif()
 
 # makeClass content
+message(STATUS "Copying makeClass templates to ${QUICKBLOCKS_HOME}/makeClass/")
 file(COPY "${CMAKE_SOURCE_DIR}/../../../bin/makeClass" DESTINATION "${QUICKBLOCKS_HOME}/makeClass")
-file(GLOB TARGET_FILES "${CMAKE_SOURCE_DIR}/../../../src/apps/makeClass/templates/blank*")
+file(GLOB TARGET_FILES "${CMAKE_SOURCE_DIR}/../../../src/tools/makeClass/templates/blank*")
 foreach(FILE ${TARGET_FILES} )
-	file(COPY "${FILE}" DESTINATION "${QUICKBLOCKS_HOME}/makeClass")
+    message(STATUS "  Copied file to ${QUICKBLOCKS_HOME}/makeClass/")
+	file(COPY "${FILE}" DESTINATION "${QUICKBLOCKS_HOME}/makeClass/")
 endforeach( FILE )
 
 # grabABI content
-file(GLOB TARGET_FILES "${CMAKE_SOURCE_DIR}/../../../src/apps/grabABI/templates/*")
+message(STATUS "Copying grabABI templates to ${QUICKBLOCKS_HOME}/grabABI/")
+file(GLOB TARGET_FILES "${CMAKE_SOURCE_DIR}/../../../src/tools/grabABI/templates/*")
 foreach(FILE ${TARGET_FILES} )
 	file(COPY "${FILE}" DESTINATION "${QUICKBLOCKS_HOME}/grabABI")
 endforeach( FILE )
 
 # chifra content
+message(STATUS "Copying chifra templates to ${QUICKBLOCKS_HOME}/chifra/")
 file(GLOB TARGET_FILES "${CMAKE_SOURCE_DIR}/../../../src/apps/chifra/templates/*")
 foreach(FILE ${TARGET_FILES} )
       file(COPY "${FILE}" DESTINATION "${QUICKBLOCKS_HOME}/chifra")
 endforeach( FILE )
 
 # known abis
+message(STATUS "Copying known abis to ${QUICKBLOCKS_HOME}/known_abis/")
 file(GLOB TARGET_FILES "${CMAKE_SOURCE_DIR}/../../../src/other/install/known_abis/*")
 foreach(FILE ${TARGET_FILES} )
       file(COPY "${FILE}" DESTINATION "${QUICKBLOCKS_HOME}/known_abis")

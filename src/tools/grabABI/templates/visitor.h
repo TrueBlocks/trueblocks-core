@@ -73,7 +73,7 @@ public:
     CTransBuffer tBuffer;
 #endif
 
-    CAccountWatchArray watches;
+    CAccountWatchArray monitors;
     CAccountWatchArray named;
 
     string_q transFmt;

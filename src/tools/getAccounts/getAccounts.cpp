@@ -16,9 +16,8 @@
 extern void readCustomAddrs(CAddressArray& array);
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-
-    getCurlContext()->nodeRequired = false;  // --named option runs without a node
-    acctlib_init("binary", quickQuitHandler);
+    nodeNotRequired(); // This command will run without a node
+    acctlib_init(quickQuitHandler);
 
     COptions options;
     if (!options.prepareArguments(argc, argv))
@@ -29,21 +28,7 @@ int main(int argc, const char *argv[]) {
             return 0;
 
         CAddressArray addrs;
-        if (options.fromScraper) {
-            CToml toml("./config.toml");
-            //            cout << toml << "\n";
-            CAccountWatchArray watches;
-            loadWatchList(toml, watches, "list");
-            for (auto watch : watches)
-                addrs.push_back(toLower(watch.address));
-            if (options.fromNamed) {
-                watches.clear();
-                loadWatchList(toml, watches, "named");
-                for (auto watch : watches)
-                    addrs.push_back(toLower(watch.address));
-            }
-
-        } else if (options.fromNamed) {
+        if (options.fromNamed) {
             for (size_t i = 0 ; i < options.namedAccounts.size() ; i++)
                 addrs.push_back(toLower(options.namedAccounts[i].addr));
 
@@ -83,9 +68,9 @@ int main(int argc, const char *argv[]) {
 
 //-----------------------------------------------------------------------
 void readCustomAddrs(CAddressArray& array) {
-    size_t n = getGlobalConfig()->getConfigInt("extra_accounts", "n", 0);
+    size_t n = getGlobalConfig("getAccounts")->getConfigInt("extra_accounts", "n", 0);
     for (size_t i = 0 ; i < n ; i++) {
-        string_q addr = getGlobalConfig()->getConfigStr("extra_accounts", "ea_" + uint_2_Str(i), "");
+        string_q addr = getGlobalConfig("getAccounts")->getConfigStr("extra_accounts", "ea_" + uint_2_Str(i), "");
         if (!isZeroAddr(addr))
             array.push_back(addr);
     }

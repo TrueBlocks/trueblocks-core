@@ -5,7 +5,7 @@ running command: --help -v
   Usage:    getBalance [-d|-l fn|-n|-t|-c|-v|-h] <address> [address...] [block...]  
   Purpose:  Retrieve the balance (in wei) for one or more addresses at the given block(s).
              
-  Where:    
+  Where:  
 	address_list          one or more addresses (0x...) from which to retrieve balances (required)
 	block_list            an optional list of one or more blocks at which to report balances, defaults to 'latest'
 	-d  (--data)          render results as tab delimited data
@@ -16,8 +16,8 @@ running command: --help -v
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 
-  Notes:  
-	- addresses must start with '0x' and be forty characters long.
+  Notes:
+	- addresses must start with '0x' and be forty two characters long.
 	- block_list may be a space-separated list of values, a start-end range, a special, or any combination.
 	- This tool retrieves information from the local node or rpcProvider if configured (see documentation).
 	- If the queried node does not store historical state, the results are undefined.

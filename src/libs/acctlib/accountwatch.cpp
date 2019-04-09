@@ -16,7 +16,6 @@
  */
 #include <algorithm>
 #include "accountwatch.h"
-#include "etherlib.h"
 
 namespace qblocks {
 
@@ -32,12 +31,12 @@ void CAccountWatch::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) c
     if (!m_showing)
         return;
 
-    if (fmtIn.empty()) {
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["accountwatch_fmt"] : fmtIn);
+    if (fmt.empty()) {
         ctx << toJson();
         return;
     }
 
-    string_q fmt = fmtIn;
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -68,14 +67,14 @@ bool CAccountWatch::setValueByName(const string_q& fieldName, const string_q& fi
         return true;
     }
     if (fieldName % "address") {
-        bloom = makeBloom(fieldValue);
+        if (getCurlContext()->nodeRequired)
+            bloom = makeBloom(fieldValue);
     }
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "address" ) { address = str_2_Addr(fieldValue); return true; }
-            if ( fieldName % "api_spec" ) { /* api_spec = fieldValue; */ return false; }
             if ( fieldName % "abi_spec" ) { /* abi_spec = fieldValue; */ return false; }
             break;
         case 'b':
@@ -117,7 +116,8 @@ bool CAccountWatch::setValueByName(const string_q& fieldName, const string_q& fi
 //---------------------------------------------------------------------------------------------------
 void CAccountWatch::finishParse() {
     // EXISTING_CODE
-    bloom = makeBloom(address);
+    if (getCurlContext()->nodeRequired)
+        bloom = makeBloom(address);
     // EXISTING_CODE
 }
 
@@ -144,7 +144,6 @@ bool CAccountWatch::Serialize(CArchive& archive) {
     archive >> balanceHistory;
     archive >> nodeBal;
     archive >> enabled;
-    archive >> api_spec;
 //    archive >> abi_spec;
     finishParse();
     return true;
@@ -167,7 +166,6 @@ bool CAccountWatch::SerializeC(CArchive& archive) const {
     archive << balanceHistory;
     archive << nodeBal;
     archive << enabled;
-    archive << api_spec;
 //    archive << abi_spec;
 
     return true;
@@ -196,9 +194,8 @@ CArchive& operator<<(CArchive& archive, const CAccountWatchArray& array) {
 
 //---------------------------------------------------------------------------
 void CAccountWatch::registerClass(void) {
-    static bool been_here = false;
-    if (been_here) return;
-    been_here = true;
+    // only do this once
+    if (HAS_FIELD(CAccountWatch, "schema")) return;
 
     size_t fieldNum = 1000;
     ADD_FIELD(CAccountWatch, "schema",  T_NUMBER, ++fieldNum);
@@ -214,7 +211,6 @@ void CAccountWatch::registerClass(void) {
     ADD_FIELD(CAccountWatch, "balanceHistory", T_OBJECT|TS_ARRAY, ++fieldNum);
     ADD_FIELD(CAccountWatch, "nodeBal", T_WEI, ++fieldNum);
     ADD_FIELD(CAccountWatch, "enabled", T_BOOL, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "api_spec", T_OBJECT, ++fieldNum);
     ADD_FIELD(CAccountWatch, "abi_spec", T_OBJECT, ++fieldNum);
     HIDE_FIELD(CAccountWatch, "abi_spec");
 
@@ -274,7 +270,6 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "address" ) return addr_2_Str(address);
-            if ( fieldName % "api_spec" ) { expContext().noFrst=true; return api_spec.Format(); }
             if ( fieldName % "abi_spec" ) { expContext().noFrst=true; return abi_spec.Format(); }
             break;
         case 'b':
@@ -324,14 +319,6 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
         return f;
     }
 
-    s = toUpper(string_q("api_spec")) + "::";
-    if (contains(fieldName, s)) {
-        string_q f = fieldName;
-        replaceAll(f, s, "");
-        f = api_spec.getValueByName(f);
-        return f;
-    }
-
     s = toUpper(string_q("abi_spec")) + "::";
     if (contains(fieldName, s)) {
         string_q f = fieldName;
@@ -360,8 +347,6 @@ const CBaseNode *CAccountWatch::getObjectAt(const string_q& fieldName, size_t in
         return &statement;
     if ( fieldName % "balanceHistory" && index < balanceHistory.size() )
         return &balanceHistory[index];
-    if ( fieldName % "api_spec" )
-        return &api_spec;
     if ( fieldName % "abi_spec" )
         return &abi_spec;
     return NULL;
@@ -374,6 +359,8 @@ string_q CAccountWatch::displayName(bool expand, bool useColor, bool terse, size
     if (address == "others") {
         return padRight(name, w1 + w2 + 1);
     }
+    if (name == address)
+        return name;
 
     if (terse) {
         uint64_t len = name.length();
@@ -410,7 +397,7 @@ biguint_t getNodeBal(CBalanceHistoryArray& history, const address_t& addr, blknu
     if (history.size() == 0 && fileExists(binaryFilename) && fileSize(binaryFilename) > 0) {
 
         CArchive balCache(READING_ARCHIVE);
-        if (balCache.Lock(binaryFilename, binaryReadOnly, LOCK_NOWAIT)) {
+        if (balCache.Lock(binaryFilename, modeReadOnly, LOCK_NOWAIT)) {
             blknum_t last = NOPOS;
             address_t lastA;
             do {
@@ -468,7 +455,7 @@ biguint_t getNodeBal(CBalanceHistoryArray& history, const address_t& addr, blknu
 
 //-----------------------------------------------------------------------
 // This assumes there are valid watches. Caller is expected to check
-void loadWatchList(const CToml& toml, CAccountWatchArray& watches, const string_q& key) {
+void loadWatchList(const CToml& toml, CAccountWatchArray& monitors, const string_q& key) {
 
     string_q watchStr = toml.getConfigJson("watches", key, "");
 
@@ -477,10 +464,46 @@ void loadWatchList(const CToml& toml, CAccountWatchArray& watches, const string_
         // cleanup and add to list of watches
         watch.address = str_2_Addr(toLower(watch.address));
         watch.color   = convertColor(watch.color);
-        watches.push_back(watch);
+        monitors.push_back(watch);
         watch = CAccountWatch();  // reset
     }
     return;
+}
+
+//-------------------------------------------------------------------------
+bool CAccountWatch::openCacheFile1(void) {
+    if (tx_cache != NULL)
+        return true;
+    tx_cache = new CArchive(WRITING_ARCHIVE);
+    if (tx_cache == NULL)
+        return false;
+    return tx_cache->Lock(getMonitorPath(address), modeWriteAppend, LOCK_WAIT);
+}
+
+//-------------------------------------------------------------------------
+void CAccountWatch::writeLastBlock(blknum_t bn) {
+    if (!isTestMode())
+        stringToAsciiFile(getMonitorLast(address), uint_2_Str(bn) + "\n");
+    else
+        if (address != "./merged.bin")
+            cerr << "Would have written " << getMonitorLast(address) << ": " << bn << endl;
+}
+
+//-------------------------------------------------------------------------
+void CAccountWatch::writeARecord(blknum_t bn, blknum_t tx_id) {
+    if (tx_cache == NULL)
+        return;
+    *tx_cache << bn << tx_id;
+    tx_cache->flush();
+}
+
+//-------------------------------------------------------------------------
+void CAccountWatch::writeAnArray(const CAppearanceArray_base& items) {
+    if (tx_cache == NULL)
+        return;
+    for (auto item : items)
+        *tx_cache << item.blk << item.txid;
+    tx_cache->flush();
 }
 // EXISTING_CODE
 }  // namespace qblocks

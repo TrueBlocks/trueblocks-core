@@ -1,2 +1,3 @@
 ethName argc: 4 [1:-s] [2:cbCC] [3:Ether] 
 ethName -s cbCC Ether 
+{ "addr": "0x56b6431f45d08eed55f34371386326c739eacbcc", "symbol": "ETHM", "name": "Ethereum Meta", "source": "Etherscan.io", "description": "Ethereum Meta addresses the lack of privacy in Ethereum.", "logo": "ethermeta_28.png", "visible": true }

@@ -15,9 +15,9 @@
 #include "options.h"
 
 //--------------------------------------------------------------
-int main(int argc, const char *argv[]) {
 
-    etherlib_init("binary", quickQuitHandler);
+int main(int argc, const char *argv[]) {
+    etherlib_init(quickQuitHandler);
 
     // Parse command line, allowing for command files
     COptions options;
@@ -28,8 +28,8 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        blknum_t last = getLatestBlockFromClient();
-        for (blknum_t bn = 0 ; bn <= last ; bn++) {
+        blknum_t last = getLastBlock_client();
+        for (blknum_t bn = 7210814 ; bn <= last ; bn++) {
             CBlock block;
             getBlock(block, bn);
             cerr << bGreen << (last - block.blockNumber) << ": " << cOff; cerr.flush();

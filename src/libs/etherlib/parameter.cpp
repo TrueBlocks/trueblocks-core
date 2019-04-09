@@ -31,12 +31,12 @@ void CParameter::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) cons
     if (!m_showing)
         return;
 
-    if (fmtIn.empty()) {
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["parameter_fmt"] : fmtIn);
+    if (fmt.empty()) {
         ctx << toJson();
         return;
     }
 
-    string_q fmt = fmtIn;
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -160,9 +160,8 @@ CArchive& operator<<(CArchive& archive, const CParameterArray& array) {
 
 //---------------------------------------------------------------------------
 void CParameter::registerClass(void) {
-    static bool been_here = false;
-    if (been_here) return;
-    been_here = true;
+    // only do this once
+    if (HAS_FIELD(CParameter, "schema")) return;
 
     size_t fieldNum = 1000;
     ADD_FIELD(CParameter, "schema",  T_NUMBER, ++fieldNum);
@@ -442,16 +441,6 @@ bool CParameter::isValid(void) const {
     }
     return true;
 }
-
-//-----------------------------------------------------------------------
-bool CParameter::isDyn(void) const {
-    return (type == "string" || type == "bytes" || contains(type, "[]"));
-}
-
-//-----------------------------------------------------------------------
-bool CParameter::isMulti(void) const {
-    return (countOf(type, '[') > 1);
-}
-
 // EXISTING_CODE
 }  // namespace qblocks
+

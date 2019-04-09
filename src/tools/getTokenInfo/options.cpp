@@ -13,7 +13,7 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("~address_list", "two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported"),
     COption("~!block_list",  "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
     COption("-byAcct",       "consider each address an ERC20 token except the last, whose balance is reported for each token"),
@@ -25,7 +25,7 @@ static COption params[] = {
     COption("",              "Retrieve the token balance(s) for one or more addresses at the given (or "
                                 "latest) block(s).\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 extern bool isTokenContract(const address_t& addr);
 //---------------------------------------------------------------------------------------------------
@@ -161,10 +161,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    arguments.clear();
-    paramsPtr = params;
-    nParamsRef = nParams;
-    pOptions = this;
+    registerOptions(nParams, params);
 
     watches.clear();
     holders.clear();
@@ -177,7 +174,7 @@ void COptions::Init(void) {
     tokenInfo = "";
     blocks.Init();
     CHistoryOptions::Init();
-    newestBlock = oldestBlock = getLatestBlockFromClient();
+    newestBlock = oldestBlock = getLastBlock_client();
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -206,7 +203,7 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 
         string_q ret;
-        ret += "[{addresses}] must start with '0x' and be forty characters long.\n";
+        ret += "[{addresses}] must start with '0x' and be forty two characters long.\n";
         ret += "[{block_list}] may be a space-separated list of values, a start-end range, a "
                     "[{special}], or any combination.\n";
         ret += "This tool retrieves information from the local node or rpcProvider if "

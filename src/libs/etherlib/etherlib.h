@@ -22,9 +22,10 @@
 #include "trace.h"
 #include "traceaction.h"
 #include "traceresult.h"
-#include "miniblock.h"
 #include "node.h"
 #include "blooms.h"
 #include "blockoptions.h"
+#include "question.h"
+#include "appearance.h"
 
 using namespace qblocks;  // NOLINT

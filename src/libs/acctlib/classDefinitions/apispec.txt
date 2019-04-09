@@ -2,5 +2,4 @@
 class     = CApiSpec
 fields    = string method|string uri|string headers
 includes  = utillib.h
-cIncs     = #include "utillib.h"
 serialize = true

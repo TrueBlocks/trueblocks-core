@@ -13,16 +13,15 @@ public:
 };
 typedef vector<CWriteItem> CWriteItemArray;
 //-------------------------------------------------------------------------
-bool COptions::handleWrite(const string_q& outputFilename, const CAcctCacheItemArray& dataArray, CACHEFILTERFUNC filterFunc) const {
+bool COptions::handleWrite(const string_q& outputFilename, const CAppearanceArray_base& dataArray, APPEARANCEFILTERFUNC filterFunc) const {
 
     cerr << "\tWriting...";
 
-    string_q contents;
-    asciiFileToString(getTransCachePath("lastBlock.txt"), contents);
-    blknum_t currentLastItem = str_2_Uint(contents);
+    address_t address = substitute(outputFilename, ".acct.bin", "");
+    blknum_t currentLastItem = str_2_Uint(asciiFileToString(getMonitorLast(address)));
 
     CArchive txCache(WRITING_ARCHIVE);
-    if (!txCache.Lock(outputFilename, binaryWriteCreate, LOCK_WAIT))
+    if (!txCache.Lock(outputFilename, modeWriteCreate, LOCK_WAIT))
         return usage("Could not open merge file: " + outputFilename + ". Quitting.");
 
     // Now that we know we can write to the file, we can make a write array. We do this for two reasons: filtering
@@ -32,10 +31,10 @@ bool COptions::handleWrite(const string_q& outputFilename, const CAcctCacheItemA
     for (size_t i = 0 ; i < dataArray.size() && !shouldQuit() ; i++) {
         // filterFunc (if present) returns true if we should include the record
         if (!filterFunc || (*filterFunc)(((COptions*)this)->removals, dataArray[i])) {
-            if (i == 0 || dataArray[i-1] != dataArray[i]) {  // removes dups
-                if (dataArray[i].blockNum > currentLastItem)  // update last item
-                    newLastItem = dataArray[i].blockNum;
-                writeArray.push_back(CWriteItem(dataArray[i].blockNum, dataArray[i].transIndex));
+            if (i == 0 || dataArray[i-1].blk != dataArray[i].blk || dataArray[i-1].txid != dataArray[i].txid) {  // removes dups
+                if (dataArray[i].blk > currentLastItem)  // update last item
+                    newLastItem = dataArray[i].blk;
+                writeArray.push_back(CWriteItem(dataArray[i].blk, dataArray[i].txid));
                 cerr << (!(writeArray.size() % 5000) ? "." : "");
             }
         }
@@ -45,8 +44,11 @@ bool COptions::handleWrite(const string_q& outputFilename, const CAcctCacheItemA
     if (!shouldQuit()) {
         lockSection(true);
         txCache.Write(writeArray.data(), sizeof(CWriteItem), writeArray.size());
-        if (!filterFunc)  // we only write the last block marker if we're not removing records
-            writeLastBlock(newLastItem);
+        if (!filterFunc) { // we only write the last block marker if we're not removing records
+            CAccountWatch monitor;
+            monitor.address = address;
+            monitor.writeLastBlock(newLastItem);
+        }
         lockSection(false);
         cerr << cYellow << writeArray.size() << cOff << " records written, ";
         cerr << cYellow << (dataArray.size() - writeArray.size()) << cOff << " records " << (filterFunc ? "removed" : "ignored") << ".\n";

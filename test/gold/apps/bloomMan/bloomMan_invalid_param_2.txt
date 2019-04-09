@@ -5,7 +5,7 @@ bloomMan -s --junk
 
   Usage:    bloomMan [-s|-r|-c|-u|-b|-u|-v|-h] lists  
   Purpose:  Work with EABs, raw blooms and/or present statistics.  
-  Where:    
+  Where:  
 	lists                 list of block_nums or block_nums and addrs (if both, show hit stats for addrs) (required)
 	-s  (--stats)         calculate statistics for blooms in the block range
 	-r  (--rewrite)       re-write the given bloom(s) -- works only with block numbers

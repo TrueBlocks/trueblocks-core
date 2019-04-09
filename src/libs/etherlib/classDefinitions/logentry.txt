@@ -2,6 +2,6 @@
 class     = CLogEntry
 fields    = address address|string data|uint64 logIndex|CTopicArray topics|CFunction articulatedLog (nowrite)
 includes  = abilib.h
-cIncs     = #include "etherlib.h"
+cIncs     = etherlib.h
 scope     = extern
 serialize = true

@@ -22,6 +22,7 @@
 namespace qblocks {
 
     //--------------------------------------------------------------------------------
+    //TODO(tjayrush): global data
     CRuntimeClass CBaseNode::classCBaseNode;
     static CBuiltIn _biBaseNode(&CBaseNode::classCBaseNode, "CBaseNode", sizeof(CBaseNode), NULL, NULL);
     vector<CBuiltIn> builtIns;  // Keeps track of all the classes that have beebn registered
@@ -159,6 +160,16 @@ namespace qblocks {
             this->setValueByName(fields[nFields++], fieldVal);
         finishParse();
         return NULL;
+    }
+
+    //--------------------------------------------------------------------------------
+    bool CBaseNode::parseJson4(string_q& str) {
+        char *p = (char *)str.c_str();  // NOLINT
+        size_t nFields = 0;
+        p = parseJson1(p, nFields);
+        if (p)
+            str = p;
+        return (nFields);
     }
 
     //--------------------------------------------------------------------------------
@@ -350,6 +361,7 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------
+    //TODO(tjayrush): global data
     static CExportOptions expC;
     CExportOptions& expContext(void) {
         return expC;
@@ -481,7 +493,10 @@ namespace qblocks {
                     ret += val;
 
                 } else {
-                    ret += "\"" + val + "\"";
+                    if (val == "null")
+                        ret += val;
+                    else
+                        ret += "\"" + val + "\"";
                 }
             }
             decIndent();
@@ -675,7 +690,7 @@ namespace qblocks {
         }
 
         size_t maxWidth = 0xdeadbeef, lineWidth = 0xdeadbeef;
-        bool rightJust = false, lineJust = false;
+        bool rightJust = false, lineJust = false, zeroJust = false;
         if (contains(fieldName, "w:")) {
             ASSERT(extract(fieldName, 0, 2) % "w:");  // must be first modifier in the string
             replace(fieldName, "w:", "");   // get rid of the 'w:'
@@ -687,6 +702,12 @@ namespace qblocks {
             maxWidth = str_2_Uint(fieldName);   // grab the width
             nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
             rightJust = true;
+        } else if (contains(fieldName, "z:")) {
+            ASSERT(extract(fieldName, 0, 2) % "z:");  // must be first modifier in the string
+            replace(fieldName, "z:", "");   // get rid of the 'w:'
+            maxWidth = str_2_Uint(fieldName);   // grab the width
+            nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
+            zeroJust = true;
         } else if (contains(fieldName, "l:")) {
             ASSERT(extract(fieldName, 0, 2) % "l:");  // must be first modifier in the string
             replace(fieldName, "l:", "");   // get rid of the 'w:'
@@ -709,6 +730,8 @@ namespace qblocks {
             fieldValue = "";
         if (rightJust) {
             fieldValue = truncPadR(fieldValue, maxWidth);  // pad or truncate
+        } if (zeroJust) {
+            fieldValue = padLeft(fieldValue, maxWidth, '0'); // pad
         } else {
             fieldValue = truncPad(fieldValue, maxWidth);  // pad or truncate
         }
@@ -734,10 +757,15 @@ extern string_q reformat1(const string_q& in, size_t len);
 
     //---------------------------------------------------------------------------------------------------
     CBaseNode *createObjectOfType(const string_q& className) {
-        static bool isSorted = false;
-        if (!isSorted) {
-            sort(builtIns.begin(), builtIns.end());
-            isSorted = true;
+        //TODO(tjayrush): global data
+        { // keep the frame
+            mutex aMutex;
+            lock_guard<mutex> lock(aMutex);
+            static bool isSorted = false;
+            if (!isSorted) {
+                sort(builtIns.begin(), builtIns.end());
+                isSorted = true;
+            }
         }
 
         CRuntimeClass *pClass = &CBaseNode::classCBaseNode;

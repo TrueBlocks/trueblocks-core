@@ -177,17 +177,158 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    bigint_t str_2_BigInt(const string_q& s) {
-        return (s[0] == '-') ? bigint_t(str_2_BigUint(extract(s, 1, s.length() - 1)), -1)
-        : (s[0] == '+') ? bigint_t(str_2_BigUint(extract(s, 1, s.length() - 1)))
-        : bigint_t(str_2_BigUint(s));
+    inline bigint_t str_2_BigInt_nonhex(const string_q& s) {
+        biguint_t val;
+        if (s[0] == '-') {
+            string_q ss = s.substr(1,s.length());
+            val = str_2_BigUint(ss);
+            return bigint_t(val, -1);
+        } else if (s[0] == '+') {
+            string_q ss = s.substr(1,s.length());
+            val = str_2_BigUint(ss);
+            return bigint_t(val, 1);
+        }
+        return str_2_BigUint(s);
     }
 
     //--------------------------------------------------------------------------------
-    biguint_t str_2_BigUint(const string_q& str) {
-        if (isHexStr(str))
-            return str_2_Wei(str);
-        return biguint_t(BigUnsignedInABase(str, 10));
+    inline string_q getMax(size_t bits) {
+        typedef map<size_t, string_q> sizeMap;
+        static sizeMap map;
+        if (map.size() == 0) {
+            map[256] = "115792089237316195423570985008687907853269984665640564039457584007913129639935";
+            map[248] = "452312848583266388373324160190187140051835877600158453279131187530910662655";
+            map[240] = "1766847064778384329583297500742918515827483896875618958121606201292619775";
+            map[232] = "6901746346790563787434755862277025452451108972170386555162524223799295";
+            map[224] = "26959946667150639794667015087019630673637144422540572481103610249215";
+            map[216] = "105312291668557186697918027683670432318895095400549111254310977535";
+            map[208] = "411376139330301510538742295639337626245683966408394965837152255";
+            map[200] = "1606938044258990275541962092341162602522202993782792835301375";
+            map[192] = "6277101735386680763835789423207666416102355444464034512895";
+            map[184] = "24519928653854221733733552434404946937899825954937634815";
+            map[176] = "95780971304118053647396689196894323976171195136475135";
+            map[168] = "374144419156711147060143317175368453031918731001855";
+            map[160] = "1461501637330902918203684832716283019655932542975";
+            map[152] = "5708990770823839524233143877797980545530986495";
+            map[144] = "22300745198530623141535718272648361505980415";
+            map[136] = "87112285931760246646623899502532662132735";
+            map[128] = "340282366920938463463374607431768211455";
+            map[120] = "1329227995784915872903807060280344575";
+            map[112] = "5192296858534827628530496329220095";
+            map[104] = "20282409603651670423947251286015";
+            map[ 96] = "79228162514264337593543950335";
+            map[ 88] = "309485009821345068724781055";
+            map[ 80] = "1208925819614629174706175";
+            map[ 72] = "4722366482869645213695";
+            map[ 64] = "18446744073709551615";
+            map[ 56] = "72057594037927935";
+            map[ 48] = "281474976710655";
+            map[ 40] = "1099511627775";
+            map[ 32] = "4294967295";
+            map[ 24] = "16777215";
+            map[ 16] = "65535";
+            map[  8] = "255";
+        }
+        return map[bits];
+    }
+
+    //--------------------------------------------------------------------------------
+    bigint_t str_2_BigInt(const string_q& s, size_t bits) {
+        if (s.empty() || s == "0x")
+            return 0;
+
+        if (!isHexStr(s))
+            return str_2_BigInt_nonhex(s);
+
+        biguint_t uValIn = str_2_BigUint(s);
+
+        string_q ss = substitute(s, "0x", "");
+        ss = trimLeading(ss, '0');
+        size_t len = ss.length();
+
+extern uint64_t verbose;
+if (verbose > 1) {
+    cout << "bits:         " << bits << endl;
+    cout << "len:          " << len << endl;
+    cout << "l*4:          " << len * 4 << endl;
+    cout << "b/4:          " << (bits / 4) << endl;
+}
+
+        if (bits != 257 && len < bits / 4)
+            ss = padLeft(ss, bits / 4, '0');
+        else
+            bits = min((size_t)256, len * 4);
+
+if (verbose > 1)
+    cout << "s:            " << s << endl;
+
+        string_q maxStr = getMax(bits);
+        if (maxStr.empty())
+            return uValIn;
+        bigint_t maxInt = bigint_t(str_2_BigUint(maxStr), 1);
+
+if (verbose > 1) {
+    cout << "maxStr:       " << maxStr << endl;
+    cout << "maxInt:       " << maxInt << endl;
+}
+
+        bigint_t sVal = bigint_t(uValIn, 1);
+if (verbose > 1) {
+    cout << "sVal:         " << sVal << endl;
+    cout << "(maxInt / 2): " << (maxInt / 2) << endl;
+}
+
+        if (sVal > (maxInt / 2)) // If it's bigger than half, we have to wrap
+            sVal = sVal - maxInt - 1; // wrap if larger than half of max int256
+
+if (verbose > 1) {
+    cout << "sVal2:        " << sVal << endl;
+}
+
+        return sVal;
+    }
+
+    //--------------------------------------------------------------------------------
+    biguint_t str_2_BigUint(const string_q& str, size_t bits) {
+        if (str.empty() || str == "0x")
+            return 0;
+
+        string_q ss = substitute(str, "0x", "");
+        ss = trimLeading(ss, '0');
+
+        biguint_t ret;
+        if (isHexStr(str)) {
+            size_t lenInBits = ss.length() * 4;
+            if (lenInBits > bits && bits != 257) {
+                reverse(ss);
+                ss = ss.substr(0,bits/4);
+                reverse(ss);
+            }
+            ret = str_2_Wei("0x" + ss);
+        } else {
+            ret = biguint_t(BigUnsignedInABase(ss, 10));
+        }
+
+        if (bits == 257)
+            return ret;
+
+        string_q maxStr = getMax(bits);
+        if (maxStr.empty())
+            return ret;
+        biguint_t maxInt = biguint_t(BigUnsignedInABase(maxStr, 10));
+
+extern uint64_t verbose;
+if (verbose > 1) {
+    cout << "bits:         " << bits << endl;
+    cout << "maxStr:       " << maxStr << endl;
+    cout << "maxInt:       " << maxInt << endl;
+    cout << "ret:          " << ret << endl;
+}
+
+        if (ret > maxInt) // If it's bigger than the max size, we have to wrap
+            ret = (ret % maxInt);
+
+        return ret;
     }
 
     //--------------------------------------------------------------------------------
@@ -397,7 +538,7 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------------------------------------
-    time_q ts_2_Date(timestamp_t tsIn) {
+    time_q ts_2_Date(const timestamp_t& tsIn) {
         time_t utc = tsIn;
         tm unused;
         struct tm *ret = gmtime_r(&utc, &unused);
@@ -412,6 +553,83 @@ namespace qblocks {
         uint32_t h = (uint32_t)str_2_Uint(nextTokenClear(str, ':'));
         uint32_t mn = (uint32_t)str_2_Uint(nextTokenClear(str, ':'));
         uint32_t s = (uint32_t)str_2_Uint(nextTokenClear(str, ' '));
+        return time_q(y, m, d, h, mn, s);
+    }
+
+    //--------------------------------------------------------------------------------
+    // Date and time values are ordered from the largest to smallest unit of time: year,
+    // month (or week), day, hour, minute, second, and fraction of second. The lexicographical
+    // order of the representation thus corresponds to chronological order, except for date
+    // representations involving negative years. This allows dates to be naturally sorted by,
+    // for example, file systems.
+    //
+    // Each date and time value has a fixed number of digits that must be padded with leading zeros.
+    //
+    // Representations can be done in one of two formats – a basic format with a minimal number
+    // of separators or an extended format with separators added to enhance human readability.
+    // The standard notes that "The basic format should be avoided in plain text."[15] The
+    // separator used between date values (year, month, week, and day) is the hyphen, while
+    // the colon is used as the separator between time values (hours, minutes, and seconds).
+    // For example, the 6th day of the 1st month of the year 2009 may be written as "2009-01-06"
+    // in the extended format or simply as "20090106" in the basic format without ambiguity.
+    //
+    // For reduced accuracy,[16] any number of values may be dropped from any of the date and
+    // time representations, but in the order from the least to the most significant. For
+    // example, "2004-05" is a valid ISO 8601 date, which indicates May (the fifth month)
+    // 2004. This format will never represent the 5th day of an unspecified month in 2004,
+    // nor will it represent a time-span extending from 2004 into 2005.
+    //
+    // If necessary for a particular application, the standard supports the addition of a
+    // decimal fraction to the smallest time value in the representation.
+    //
+    extern time_q str_2_Date(const string_q& strIn);
+    time_q str_2_Date(const string_q& strIn) {
+
+        if (strIn.empty())
+            return earliestDate;
+
+        string_q check = substitute(strIn, "UTC", "");
+        string_q valid = "0123456789T:-";
+        for (auto ch : valid)
+            replaceAll(check, string_q(1, ch), "");
+        if (!check.empty()) {
+            cerr << "str_2_Date: Invalid date string '" << strIn << "'";
+            return earliestDate;
+        }
+
+        string_q str = strIn;
+        replaceAny(str, "T:-", "");
+             if (str.length() ==  4) str += "0101000000"; // YYYY
+        else if (str.length() ==  6) str += "01000000";   // YYYYMM
+        else if (str.length() ==  8) str += "000000";     // YYYYMMDD
+        else if (str.length() == 10) str += "0000";       // YYYYMMDDHH
+        else if (str.length() == 12) str += "00";         // YYYYMMDDHHMM
+        else if (str.length() == 14) str += "";           // YYYYMMDDHHMMSS
+        else {
+            cerr << "str_2_Date: Invalid date string '" << strIn << "'";
+        }
+
+#define NP ((uint32_t)-1)
+#define str_2_Int32u(a) (uint32_t)str_2_Uint((a))
+        uint32_t y, m, d, h, mn, s;
+        y = m = d = h = mn = s = NP;
+        if (isUnsigned(extract(str,  0, 4))) { y  = str_2_Int32u(extract(str,  0, 4)); }
+        if (isUnsigned(extract(str,  4, 2))) { m  = str_2_Int32u(extract(str,  4, 2)); }
+        if (isUnsigned(extract(str,  6, 2))) { d  = str_2_Int32u(extract(str,  6, 2)); }
+        if (isUnsigned(extract(str,  8, 2))) { h  = str_2_Int32u(extract(str,  8, 2)); }
+        if (isUnsigned(extract(str, 10, 2))) { mn = str_2_Int32u(extract(str, 10, 2)); }
+        if (isUnsigned(extract(str, 12, 2))) { s  = str_2_Int32u(extract(str, 12, 2)); }
+        if (y == NP || m == NP || d == NP || h == NP || mn == NP || s == NP) {
+            cerr << "str_2_Date: Invalid date string '" << strIn << "'";
+            return earliestDate;
+        }
+
+        if (m < 1 || m > 12) return earliestDate;
+        if (d < 1 || d > 31) return earliestDate;
+        if (h > 23) return earliestDate;
+        if (mn > 59) return earliestDate;
+        if (s > 59) return earliestDate;
+
         return time_q(y, m, d, h, mn, s);
     }
 
@@ -476,6 +694,80 @@ namespace qblocks {
             s[p] = ((c < 10) ? char('0' + c) : char('A' + c - 10));  // NOLINT
         }
         str = s;
+    }
+
+    //----------------------------------------------------------------
+    hashbytes_t hash_2_Bytes(const hash_t& hashIn) {
+        vector<uint8_t> ret;
+        string_q str = substitute(hashIn, "0x", "");
+        for (size_t i = 0 ; i < str.size() ; i += 2)
+            ret.push_back(hex_2_Ascii(str[i], str[i+1]));
+        return ret;
+    }
+
+    //----------------------------------------------------------------
+    hash_t bytes_2_Hash(uint8_t const bytes[32]) {
+        ostringstream os;
+        os << "0x";
+        for (size_t i = 0 ; i < 32 ; i++)
+            os << toLower(padLeft(bnu_2_Hex(bytes[i]),2,'0'));
+        return os.str();
+    }
+
+    //----------------------------------------------------------------
+    addrbytes_t addr_2_Bytes(const address_t& addrIn) {
+        vector<uint8_t> ret;
+        string_q str = substitute(addrIn, "0x", "");
+        for (size_t i = 0 ; i < str.size() ; i += 2)
+            ret.push_back(hex_2_Ascii(str[i], str[i+1]));
+        return ret;
+    }
+
+    //----------------------------------------------------------------
+    address_t bytes_2_Addr(uint8_t const bytes[20]) {
+        ostringstream os;
+        os << "0x";
+        for (size_t i = 0 ; i < 20 ; i++)
+            os << toLower(padLeft(bnu_2_Hex(bytes[i]),2,'0'));
+        return os.str();
+    }
+
+    //----------------------------------------------------------------------------
+    uchar_t hex_2_Ascii(char c1, char c2) {
+        uchar_t c;
+        c = (uchar_t)(    (c1 >= 'A' ? ((c1 & 0xDF) - 'A') + 10 : (c1 - '0')));
+        c *= 16;
+        c = (uchar_t)(c + (c2 >= 'A' ? ((c2 & 0xDF) - 'A') + 10 : (c2 - '0')));
+        return c;
+    }
+
+    //----------------------------------------------------------------------------
+    string_q hex_2_Str(const string_q& inHex, size_t nBytes) {
+        string_q in = (startsWith(inHex, "0x") ? extract(inHex, 2) : inHex);
+        if (nBytes != NOPOS)
+            in = in.substr(0, nBytes * 2);
+        string_q ret;
+        while (!in.empty() && in.size() >= 2) {
+            string_q nibble = extract(in, 0, 2);
+            in = extract(in, 2);
+            char ch = (char)hex_2_Ascii(nibble[0], nibble[1]);  // NOLINT
+            ret += (char)ch;
+        }
+        return ret;
+    }
+
+    //----------------------------------------------------------------------------
+    // If we can reasonably convert this to a string, do so, otherwise bail out
+    bool isPrintable(const string_q& inHex) {
+        string_q in = substitute(inHex, "0x", "");
+        while (!in.empty() && in.size() >= 2) {
+            string_q nibble = extract(in, 0, 2);
+            in = extract(in, 2);
+            char ch = (char)hex_2_Ascii(nibble[0], nibble[1]);  // NOLINT
+            if (!isprint(ch))
+                return false;
+        }
+        return true;
     }
 
 }  // namespace qblocks

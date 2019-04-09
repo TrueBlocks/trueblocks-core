@@ -15,8 +15,6 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include <vector>
-#include <map>
 #include "abilib.h"
 #include "traceaction.h"
 #include "traceresult.h"
@@ -64,6 +62,7 @@ public:
 
     // EXISTING_CODE
     bool isError(void) const;
+    const CTransaction *pTrans;
     // EXISTING_CODE
     bool operator==(const CTrace& item) const;
     bool operator!=(const CTrace& item) const { return !operator==(item); }
@@ -122,11 +121,12 @@ inline void CTrace::initialize(void) {
     transactionPosition = 0;
     type = "";
     error = "";
-    articulatedTrace.initialize();
-    action.initialize();
-    result.initialize();
+    articulatedTrace = CFunction();
+    action = CTraceAction();
+    result = CTraceResult();
 
     // EXISTING_CODE
+    pTrans = NULL;
     // EXISTING_CODE
 }
 
@@ -148,6 +148,7 @@ inline void CTrace::duplicate(const CTrace& tr) {
     result = tr.result;
 
     // EXISTING_CODE
+    pTrans = tr.pTrans;  // no deep copy, we don't own it
     // EXISTING_CODE
 }
 

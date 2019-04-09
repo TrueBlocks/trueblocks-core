@@ -14,7 +14,7 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("~addr",      "the address(es) of the smart contract(s) to grab"),
     COption("-canonical", "convert all types to their canonical represenation and remove all spaces from display"),
     COption("-generate",  "generate C++ code into the current folder for all functions and events found in the ABI"),
@@ -32,7 +32,7 @@ static COption params[] = {
     COption("",           "Fetches the ABI for a smart contract. Optionally generates C++ source code "
                           "representing that ABI.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 extern bool sortByFuncName(const CFunction& f1, const CFunction& f2);
 //---------------------------------------------------------------------------------------------------
@@ -121,7 +121,7 @@ bool COptions::parseArguments(string_q& command) {
         for (auto addr : addrs) {
             CAbi abi;
             if (!sol_2_Abi(abi, addr))
-                return usage("Could not find solidity file in order to convert to ABI. Quitting...");
+                return usage("Could not find solidity file '" + addr + ".sol' in order to convert to ABI. Quitting...");
             bool first = true;
             expContext().spcs = 4;
             ostringstream os;
@@ -145,7 +145,7 @@ bool COptions::parseArguments(string_q& command) {
 
     if (asJson) {
         for (auto addr : addrs) {
-            string_q fileName = blockCachePath("abis/" + addr + ".json");
+            string_q fileName = getCachePath("abis/" + addr + ".json");
             string_q localFile("./" + addr + ".json");
             if (fileExists(localFile)) {
                 cerr << "Local file found\n";
@@ -164,7 +164,7 @@ bool COptions::parseArguments(string_q& command) {
 
     if (isOpen) {
         for (auto addr : addrs) {
-            string_q fileName = blockCachePath("abis/" + addr + ".json");
+            string_q fileName = getCachePath("abis/" + addr + ".json");
             if (!fileExists(fileName)) {
                 cerr << "ABI for '" + addr + "' not found. Quitting...\n";
                 return false;
@@ -184,12 +184,11 @@ bool COptions::parseArguments(string_q& command) {
     if (loadKnown) {
         string_q knownPath = configPath("known_abis/");
         CStringArray files;
-        listFilesInFolder(files, knownPath + "*.*");
+        listFilesInFolder(files, knownPath + "*.*", false);
         for (auto file : files) {
             CAbi abi;
-            file = substitute(file, "f-", "");
-            abi.loadAbiFromFile(knownPath + file, true);
-            abi.address = substitute(file, ".json","");
+            abi.loadAbiFromFile(file, true);
+            abi.address = substitute(substitute(file, ".json",""), configPath("known_abis/"), "");
             sort(abi.interfaces.begin(), abi.interfaces.end(), sortByFuncName);
             abi_specs.push_back(abi);
         }
@@ -200,10 +199,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    arguments.clear();
-    paramsPtr = params;
-    nParamsRef = nParams;
-    pOptions = this;
+    registerOptions(nParams, params);
 
     parts = SIG_DEFAULT;
     noconst = false;
@@ -264,7 +260,7 @@ bool visitABIs(const string_q& path, void *dataPtr) {
 //void rebuildFourByteDB(void) {
 //
 //    string_q fileList;
-//    string_q abiPath = blockCachePath("abis/");
+//    string_q abiPath = getCachePath("abis/");
 //    cout << abiPath << "\n";
 //    forEveryFileInFolder(abiPath+"*", visitABIs, &fileList);
 //
@@ -282,7 +278,7 @@ bool visitABIs(const string_q& path, void *dataPtr) {
 //    }
 //    sort(funcArray.begin(), funcArray.end());
 //    CArchive funcCache(WRITING_ARCHIVE);
-//    if (funcCache.Lock(abiPath+"abis.bin", binaryWriteCreate, LOCK_CREATE)) {
+//    if (funcCache.Lock(abiPath+"abis.bin", modeWriteCreate, LOCK_CREATE)) {
 //        funcCache << funcArray;
 //        funcCache.Release();
 //    }

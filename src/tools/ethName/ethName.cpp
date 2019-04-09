@@ -15,9 +15,8 @@
 extern const char* STR_NAME_DATA;
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-
-    getCurlContext()->nodeRequired = false;  // This will run without a node
-    etherlib_init("binary", quickQuitHandler);
+    nodeNotRequired(); // This command will run without a node
+    etherlib_init(quickQuitHandler);
 
     COptions options;
     if (!options.prepareArguments(argc, argv))
@@ -30,17 +29,29 @@ int main(int argc, const char *argv[]) {
             return 0;
 
         string_q fmt = (options.addrOnly ? "[{ADDR}]" : (options.data ? STR_NAME_DATA : ""));
+        if (options.data && options.list)
+            fmt = "[{ADDR}]\t[{NAME}]";
+
         if (options.isEdit) {
             editFile(options.namesFile.getFullPath());
 
         } else if (!loaded) {
-            usage(options.namesFile.getFullPath() + " is empty. Use ethName -e to add some names. Quitting...");
+            options.usage(options.namesFile.getFullPath() + " is empty. Use ethName -e to add some names. Quitting...");
 
         } else if (options.list) {
             if (options.count)
                 cout << options.namedAccounts.size() << " items\n";
-            for (size_t i = 0 ; i < options.namedAccounts.size() ; i++)
-                cout << substitute(substitute(options.namedAccounts[i].Format(fmt), "\n", " "), "  ", " ") << "\n";
+            ostringstream os;
+            if (!options.data && !options.addrOnly)
+                os << "[\n";
+            for (auto name : options.namedAccounts) {
+                if (!options.data && !options.addrOnly && os.str() != "[\n")
+                    os << ",";
+                os << substitute(substitute(name.Format(fmt), "\n", " "), "  ", " ") << endl;
+            }
+            if (!options.data && !options.addrOnly)
+                os << "]";
+            cout << os.str();
 
         } else {
             string_q ret = options.showMatches();

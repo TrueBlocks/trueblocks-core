@@ -27,7 +27,7 @@ namespace qblocks {
     string_q CPriceSource::getDatabasePath(string_q& source) const {
         source = substitute(substitute(url, "http://", ""), "https://", "");
         source = nextTokenClear(source, '.');
-        string_q ret = blockCachePath("prices/" + source + "_" + pair + ".bin");
+        string_q ret = getCachePath("prices/" + source + "_" + pair + ".bin");
         establishFolder(ret);
         return ret;
     }
@@ -49,7 +49,7 @@ namespace qblocks {
             string_q zipFile = configPath("cache/prices/") + dataSource + "_" + source.pair + ".bin.gz";
             if (zipFile != cacheFile) {
                 string_q cmd = "cp -f " + zipFile + " " + cacheFile + ".gz";
-                cmd += (" ; cd " + blockCachePath("prices/") + " ; gunzip *.gz");
+                cmd += (" ; cd " + getCachePath("prices/") + " ; gunzip *.gz");
                 doCommand(cmd);
             }
         }
@@ -58,7 +58,7 @@ namespace qblocks {
             if (!isTestMode())
                 cerr << "Updating prices...\r";
             CArchive priceCache(READING_ARCHIVE);
-            if (priceCache.Lock(cacheFile, binaryReadOnly, LOCK_NOWAIT)) {
+            if (priceCache.Lock(cacheFile, modeReadOnly, LOCK_NOWAIT)) {
                 priceCache.readHeader();  // we read the header even though it may not be the current version...
                 priceCache >> lastRead.m_nSeconds;
                 priceCache >> quotes;
@@ -89,8 +89,8 @@ namespace qblocks {
         time_q now       = Now();
         time_q nextRead  = (lastRead == time_q(2015, 1, 1, 0, 0, 0) ? firstDate : lastRead + 5*60);  // 5 minutes
 
-// #define DEBUGGING
-#ifdef DEBUGGING
+// #define DEBUG
+#ifdef DEBUG
         cerr << "firstDate: " << firstDate << "\n";
         cerr << "now: " << now << "\n";
         cerr << "nextRead: " << nextRead << "\n";
@@ -115,6 +115,9 @@ namespace qblocks {
                 timestamp_t start = date_2_Ts(nextRead);
                 // Polinex will give us as much as it has on the following day. Do this to account for time zones
                 timestamp_t end   = date_2_Ts(EOD(BOND(now)));
+                timestamp_t thirtyDays = (30 * 24 * 60 * 60);
+                if (end > start + thirtyDays)
+                    end = start + thirtyDays;
 
                 if (verbose > 1) {
                     cerr << "start: " << ts_2_Date(start) << "\n";
@@ -131,9 +134,7 @@ namespace qblocks {
                     cerr << "Fetching: " << url << "\n";
 
                 // Ask Poloniex for the latest data
-                setCurlNoteFunc(dotDot);
-                string_q response = urlToString(url);
-                setCurlNoteFunc(NULL);
+                string_q response = urlToString(url, dotDot);
                 cerr << "\r";
 
                 // Figure out how many new records there are
@@ -166,7 +167,7 @@ namespace qblocks {
                         // First entry should be on a two hour mark so we hit midnight in default two hour case
                         if (quotes.size() || (quote.date.onTheHour() && (!quote.date.GetHour()%2))) {
                             quotes.push_back(quote);
-#ifdef DEBUGGING
+#ifdef DEBUG
                             cerr << quote.Format() << "\n";
 #endif
                             lastRead = ts_2_Date((timestamp_t)quote.timestamp);
@@ -179,7 +180,7 @@ namespace qblocks {
             // Write the database to the cache
             if (prevLast != lastRead && freshen) {
                 CArchive priceCache(WRITING_ARCHIVE);
-                if (!priceCache.Lock(cacheFile, binaryWriteCreate, LOCK_WAIT)) {
+                if (!priceCache.Lock(cacheFile, modeWriteCreate, LOCK_WAIT)) {
                     message = "Could not open cache file for writing: '" + cacheFile + "'";
                     return false;
                 }
@@ -229,7 +230,7 @@ namespace qblocks {
     //---------------------------------------------------------------------------
     size_t dotDot(char *ptr, size_t size, size_t nmemb, void *userdata) {
         if (!isTestMode()) {
-            static int cnt = 0;
+            thread_local int cnt = 0;
             if (!(++cnt % 25)) {
                 cerr << ".";
                 cerr.flush();
