@@ -293,9 +293,7 @@ namespace qblocks {
             if (commandLines.size() > 1)
                 return usage("You may not use the --file with this application. Quitting...");
             // protect ourselves from running twice over
-            string_q cmd = "ps -ef | grep -i " + getProgName() + " | grep -v grep | grep -v \"sh -c \" | wc -l";
-            uint64_t cnt = str_2_Uint(doCommand(cmd));
-            if (cnt > 1)  // it is running itself, so if two or more, quit
+            if (isRunning(getProgName(), true))
                 return usage("Warning: the command " + getProgName() + " is already running. Quitting...");
         }
 

@@ -323,9 +323,6 @@ namespace qblocks {
     blknum_t getLastBlock_cache_final(void) {
 
         string_q finLast = getLastFileInFolder(indexFolder_finalized_v2, false);
-        if (!finLast.empty())
-            return bnFromPath(finLast);
-        finLast = getLastFileInFolder(indexFolder_sorted_v2, false);
         if (!finLast.empty()) {
             blknum_t last;
             bnFromPath(finLast, last);
@@ -335,11 +332,25 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------
-    blknum_t getLastBlock_cache_stage(void) {
-        string_q finStage = getLastFileInFolder(indexFolder_staging_v2, false);
-        if (!finStage.empty())
-            return bnFromPath(indexFolder_staging_v2);
+    blknum_t getLastBlock_cache_staging(void) {
+        string_q stageLast = getLastFileInFolder(indexFolder_staging_v2, false);
+        if (!stageLast.empty()) {  // if empty, we fall back on finalized folder
+            blknum_t last;
+            bnFromPath(stageLast, last);
+            return last;
+        }
         return getLastBlock_cache_final();
+    }
+
+    //--------------------------------------------------------------------------
+    blknum_t getLastBlock_cache_pending(void) {
+        string_q pendLast = getLastFileInFolder(indexFolder_pending_v2, false);
+        if (!pendLast.empty()) {  // if empty, we fall back on staging folder
+            blknum_t last;
+            bnFromPath(pendLast, last);
+            return last;
+        }
+        return getLastBlock_cache_staging();
     }
 
     //-------------------------------------------------------------------------
@@ -360,8 +371,9 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------
-    bool getLastBlocks(blknum_t& staging, blknum_t& finalized, blknum_t& client) {
-        staging   = getLastBlock_cache_stage();
+    bool getLastBlocks(blknum_t& pending, blknum_t& staging, blknum_t& finalized, blknum_t& client) {
+        pending   = getLastBlock_cache_pending();
+        staging   = getLastBlock_cache_staging();
         finalized = getLastBlock_cache_final();
         client    = getLastBlock_client();
         return true;
@@ -899,8 +911,8 @@ namespace qblocks {
         string_q tmpStore = configPath("cache/tmp/scraper-status.txt");
 
         uint64_t prevDiff = str_2_Uint(asciiFileToString(tmpStore));
-        uint64_t staging, finalized, client;
-        getLastBlocks(staging, finalized, client);
+        uint64_t pending, staging, finalized, client;
+        getLastBlocks(pending, staging, finalized, client);
 
         uint64_t currDiff = finalized > client ? finalized - client : client - finalized;
         stringToAsciiFile(tmpStore, uint_2_Str(currDiff));  // so we can use it next time
@@ -908,7 +920,7 @@ namespace qblocks {
 #define showOne(a, b) cYellow << (isTestMode() ? a : b) << cOff
 #define showOne1(a) showOne(a, a)
         ostringstream cos;
-        cos << showOne("--final--, --staging--", uint_2_Str(finalized)+", "+uint_2_Str(staging));
+        cos << showOne("--final--, --staging--, --pending--", uint_2_Str(finalized)+", "+uint_2_Str(staging)+", "+uint_2_Str(pending));
 
         ostringstream dos;
         dos << showOne("--diff--", (currDiff>prevDiff?"-":"+") + uint_2_Str(currDiff));

@@ -59,6 +59,7 @@ bool COptions::parseArguments(string_q& command) {
     establishFolder(indexFolder_sorted_v2);
     establishFolder(indexFolder_finalized_v2);
     establishFolder(indexFolder_staging_v2);
+    establishFolder(indexFolder_pending_v2);
     establishFolder(configPath("cache/tmp"));
     if (writeBlocks)
         establishFolder(blockFolder_v2);
@@ -67,8 +68,8 @@ bool COptions::parseArguments(string_q& command) {
     getBlock(latest, "latest");
     latestBlockTs = latest.timestamp;
 
-    blknum_t staging, finalized, client;
-    getLastBlocks(staging, finalized, client);
+    blknum_t pending, staging, finalized, client;
+    getLastBlocks(pending, staging, finalized, client);
 
     // Find out where to start and stop
     if (startBlock == NOPOS && endBlock != NOPOS) {
@@ -113,6 +114,7 @@ bool COptions::parseArguments(string_q& command) {
 
     maxIndexRows = getGlobalConfig("blockScrape")->getConfigInt("settings", "maxIndexRows", maxIndexRows);
 
+//#error
     string_q zeroIndex = indexFolder_sorted_v2 + padNum9(0) + "-" + padNum9(0) + ".txt";
     if (!fileExists(zeroIndex)) {
         CStringArray prefunds;

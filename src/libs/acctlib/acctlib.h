@@ -19,6 +19,7 @@
 #include "leaf.h"
 #include "treenode.h"
 #include "apispec.h"
+#include "indexing.h"
 
 extern void acctlib_init(QUITHANDLER qh);
 extern void acctlib_cleanup(void);

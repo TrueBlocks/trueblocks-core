@@ -239,4 +239,12 @@ namespace qblocks {
         }
         return folderExists(targetFolder);
     }
+
+    //----------------------------------------------------------------------------
+    bool isRunning(const string_q& progName, bool countSelf) {
+        string_q cmd = "ps -ef | grep -i " + progName + " | grep -v grep | grep -v \"sh -c \" | wc -l";
+        uint64_t cnt = str_2_Uint(doCommand(cmd));
+        // should we exclude ourselves?
+        return (countSelf ? cnt > 1 : cnt > 0);
+    }
 }  // namespace qblocks
