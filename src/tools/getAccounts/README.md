@@ -26,7 +26,7 @@ Using ethName to find Singular's address, list tokens held by other token accoun
 
 #### Usage
 
-`Usage:`    getAccounts [-p|-n|-s|-v|-h]  
+`Usage:`    getAccounts [-p|-n|-v|-h]  
 `Purpose:`  Show the list of Ethereum accounts known to the local node or named accounts.  
 `Where:`  
 
@@ -34,7 +34,6 @@ Using ethName to find Singular's address, list tokens held by other token accoun
 | -------: | :------- | :------- |
 | -p | --prefund | Show addresses from the list of prefunded addresses |
 | -n | --named | Show addresses from named accounts as per ethName |
-| -s | --scraper | Show addresses from scraper config.toml (if found in current folder |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

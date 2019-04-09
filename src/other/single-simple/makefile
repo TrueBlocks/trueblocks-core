@@ -20,6 +20,9 @@ $(exec).cpp
 
 #-------------------------------------------------
 all:
+	@make app
+
+every:
 	@cd ../../../build ; make ; cd -
 	@make app
 

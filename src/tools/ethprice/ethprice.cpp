@@ -15,9 +15,8 @@
 #include "sftime.h"
 
 //-----------------------------------------------------------------------------------
-int main(int argc, const char* argv[]) {
-
-    etherlib_init("binary", defaultQuitHandler);
+int main(int argc, const char *argv[]) {
+    etherlib_init(defaultQuitHandler);
 
     // Parse command line, allowing for command files
     COptions options;
@@ -34,7 +33,7 @@ int main(int argc, const char* argv[]) {
         if (loadPriceData(options.source, quotes, options.freshen, message) && quotes.size()) {
 
             string_q def = (verbose ? "" : "{ \"date\": \"[{DATE}]\", \"price\": \"[{CLOSE}]\" }");
-            string_q fmtStr = getGlobalConfig()->getDisplayStr(!verbose, def, "");
+            string_q fmtStr = getGlobalConfig("ethprice")->getDisplayStr(!verbose, def, "");
             bool isJson = ((startsWith(fmtStr, "{") && endsWith(fmtStr, "}")) || fmtStr.empty());
             if (options.at) {
                 cout << quotes[indexFromTimeStamp(quotes, options.at)].Format(fmtStr);
@@ -69,7 +68,7 @@ int main(int argc, const char* argv[]) {
             }
 
         } else {
-            return usage(message);
+            return options.usage(message);
 
         }
     }

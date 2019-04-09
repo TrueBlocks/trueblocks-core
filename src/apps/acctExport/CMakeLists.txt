@@ -43,6 +43,7 @@ endfunction(run_test)
 # Enter one line for each individual test
 run_test("acctExport_no_params")
 run_test("acctExport_help"  "-h")
+run_test("acctExport_export" "0x001d14804b399c6ef80e64576f657660804fec0b")
 
 # Installation steps, this tool is renamed at installation
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

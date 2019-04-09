@@ -13,7 +13,7 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("~block_list",  "a space-separated list of one or more blocks for which to retrieve blooms"),
     COption("-raw",         "pull the bloom filter directly from the running node (the default)"),
     COption("-eab",         "pull the enhanced adaptive blooms from QBlocks cache"),
@@ -27,7 +27,7 @@ static COption params[] = {
     COption("@force",       "force a re-write of the bloom to the cache"),
     COption("",             "Returns bloom filter(s) from running node (the default) or as EAB from QBlocks.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -36,12 +36,13 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     Init();
-    blknum_t latestBlock = getLatestBlockFromClient();
+    blknum_t latestBlock = getLastBlock_client();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (arg == "-o" || arg == "--force") {
-            etherlib_init("binary", defaultQuitHandler);
+            etherlib_init(defaultQuitHandler);
             force = true;
+            isRaw = false;
 
         } else if (arg == "-r" || arg == "--raw") {
             isRaw = true;  // last in wins
@@ -125,10 +126,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    arguments.clear();
-    paramsPtr  = params;
-    nParamsRef = nParams;
-    pOptions = this;
+    registerOptions(nParams, params);
 
     isRaw        = true;
     asBits       = false;

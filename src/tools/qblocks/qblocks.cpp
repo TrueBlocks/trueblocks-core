@@ -15,12 +15,11 @@
 extern const char* STR_NAME_DATA;
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-
-    getCurlContext()->nodeRequired = false;  // This will run without a node
-    etherlib_init("binary", quickQuitHandler);
+    nodeNotRequired(); // This command will run without a node
+    etherlib_init(quickQuitHandler);
 
     COptions options;
-    options.setProgramName(basename((char*)argv[0]));
+    options.setProgName(basename((char*)argv[0]));
 
     // Handle help on this tool's command line for this tool only if there are not enough args or if
     // --help is the first item in the command list. Otherwise, we need to pass it to subcommand
@@ -33,10 +32,10 @@ int main(int argc, const char *argv[]) {
         }
     }
     if (isHelp) {
-        optionOn(OPT_HELP);
+        options.optionOn(OPT_HELP);
         if (isTestMode())
             colorsOff();
-        return usage();
+        return options.usage();
     }
 
     // Act normally

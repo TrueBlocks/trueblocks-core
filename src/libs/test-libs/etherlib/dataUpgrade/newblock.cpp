@@ -16,7 +16,6 @@
  */
 #include <algorithm>
 #include "newblock.h"
-#include "etherlib.h"
 
 //---------------------------------------------------------------------------
 IMPLEMENT_NODE(CNewBlock, CBaseNode);
@@ -30,12 +29,12 @@ void CNewBlock::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const
     if (!m_showing)
         return;
 
-    if (fmtIn.empty()) {
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["newblock_fmt"] : fmtIn);
+    if (fmt.empty()) {
         ctx << toJson();
         return;
     }
 
-    string_q fmt = fmtIn;
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -202,9 +201,8 @@ CArchive& operator<<(CArchive& archive, const CNewBlockArray& array) {
 
 //---------------------------------------------------------------------------
 void CNewBlock::registerClass(void) {
-    static bool been_here = false;
-    if (been_here) return;
-    been_here = true;
+    // only do this once
+    if (HAS_FIELD(CNewBlock, "schema")) return;
 
     size_t fieldNum = 1000;
     ADD_FIELD(CNewBlock, "schema",  T_NUMBER, ++fieldNum);
@@ -289,12 +287,10 @@ bool CNewBlock::readBackLevel(CArchive& archive) {
         archive >> timestamp;
         archive >> transactions;
         // NOTE: See the real code in CBlock file for note about upgrading
-        string_q save = getCurlContext()->provider;
-        getCurlContext()->provider = "local";
         CBlock upgrade;
-        size_t unused;
-        queryBlock(upgrade, uint_2_Str(blockNumber), false, false, unused);
-        getCurlContext()->provider = save;
+        string_q prev = setDataSource("local");
+        queryBlock(upgrade, uint_2_Str(blockNumber), false);
+        setDataSource(prev);
         miner = upgrade.miner;
         difficulty = upgrade.difficulty;
         price = 0.0;
@@ -410,7 +406,7 @@ CNewBlock::CNewBlock(const CBlock& block) {
 bool readOneNewBlock_fromBinary(CNewBlock& block, const string_q& fileName) {
     block = CNewBlock();  // reset
     CArchive archive(READING_ARCHIVE);
-    if (archive.Lock(fileName, binaryReadOnly, LOCK_NOWAIT)) {
+    if (archive.Lock(fileName, modeReadOnly, LOCK_NOWAIT)) {
         block.Serialize(archive);
         archive.Close();
         return block.blockNumber;

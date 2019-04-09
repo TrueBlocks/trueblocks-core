@@ -25,14 +25,12 @@ namespace qblocks {
 };
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-
-    acctlib_init("binary", quickQuitHandler);
+    acctlib_init(quickQuitHandler);
 
     CNewBlock::registerClass();
     CNewReceipt::registerClass();
 //    CAccountWatch::registerClass();
 //    CApiSpec::registerClass();
-//    CAcctCacheItem::registerClass();
 //    CIncomeStatement::registerClass();
     UNHIDE_FIELD(CBaseNode, "cname");
 
@@ -42,7 +40,7 @@ int main(int argc, const char *argv[]) {
 
     if (!fileExists("./oldFmt.cache")) {
         CFilename fileName("./oldFmt.cache");
-        return usage("File '" + fileName.getFullPath() + "' not found. All tests will fail without that file.");
+        return options.usage("File '" + fileName.getFullPath() + "' not found. All tests will fail without that file.");
     }
 
     for (auto command : options.commandLines) {
@@ -97,7 +95,7 @@ bool testReadWrite(COptions& options) {
             cout.flush();
             readFromJson(block, "./newFmt.json");
             newBlock = CNewBlock(block);
-            newBlock.finalized = isBlockFinal(newBlock.timestamp, latest.timestamp, (60 * 4));
+            newBlock.finalized = isBlockFinal(newBlock.timestamp, latest.timestamp);
             writeNodeToBinary(newBlock, "./newFmt.cache");
             ASSERT(fileExists("./newFmt.cache"));
             reportNode(&block);

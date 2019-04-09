@@ -15,11 +15,8 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include <vector>
-#include <map>
 #include "etherlib.h"
 #include "transaction.h"
-#include "addressappearance.h"
 
 namespace qblocks {
 
@@ -180,16 +177,14 @@ extern CArchive& operator>>(CArchive& archive, CBlock& blo);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
+extern blknum_t bnFromPath(const string_q& path, blknum_t& endOut);
 inline blknum_t bnFromPath(const string_q& path) {
-    string_q p = substitute(substitute(path, ".bin", ""), ".txt", "");
-    reverse(p);
-    p = nextTokenClear(p, '/');
-    reverse(p);
-    return str_2_Uint(p);
+    blknum_t unused = NOPOS;
+    return bnFromPath(path, unused);
 }
 
 //---------------------------------------------------------------------------
-extern bool isBlockFinal(timestamp_t ts_block, timestamp_t ts_chain, timestamp_t seconds);
+extern bool isBlockFinal(timestamp_t ts_block, timestamp_t ts_chain);
 // EXISTING_CODE
 }  // namespace qblocks
 

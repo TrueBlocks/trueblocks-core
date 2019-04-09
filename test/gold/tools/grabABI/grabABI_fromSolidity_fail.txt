@@ -1,12 +1,12 @@
 grabABI argc: 3 [1:0x2234567812345678123456781234567812345678] [2:--sol] 
 grabABI 0x2234567812345678123456781234567812345678 --sol 
 
-  Could not find solidity file in order to convert to ABI. Quitting...
+  Could not find solidity file '0x2234567812345678123456781234567812345678.sol' in order to convert to ABI. Quitting...
 
   Usage:    grabABI [-c|-g|-d|-e|-j|-n|-o|-l|-r|-v|-h] addr  
   Purpose:  Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
              
-  Where:    
+  Where:  
 	addr                  the address(es) of the smart contract(s) to grab (required)
 	-c  (--canonical)     convert all types to their canonical represenation and remove all spaces from display
 	-g  (--generate)      generate C++ code into the current folder for all functions and events found in the ABI

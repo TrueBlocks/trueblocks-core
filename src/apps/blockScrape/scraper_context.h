@@ -8,28 +8,36 @@
 
 class COptions;
 //-------------------------------------------------------------------------
-class CScraperContext {
+class CScraper {
 public:
-    COptions     *opts;
-    CBlock       *pBlock;
-    CTransaction *pTrans;
-    CBloomArray   bloomList;
-    CUniqueState  addrList;
-    string_q      potList;
-    uint64_t      traceCount;
-    uint64_t      maxTraceDepth;
-    bool          reported;
-    uint64_t      nAddrsInBloom;
-    uint64_t      nAddrsInBlock;
-    bool          blockOkay;
-    bool          bloomOkay;
+    COptions     *options;
     string_q      status;
 
-    CScraperContext(COptions *o, CBlock *b);
+    CUniqueState  addrList;
+    CBlock        block;
 
-    void addToBloom(const address_t& addr);
-    bool scrape(CBlock& block);
-    void updateAddrIndex(void);
-    void addToAddrIndex(const address_t& addr);
+    string_q      potList;
+    uint64_t      traceCount;
+    uint64_t      curLines;
+    uint64_t      maxTraceDepth;
+    uint64_t      nAddrsInBlock;
+    CTransaction *pTrans;
+
+    CScraper(COptions *o, blknum_t num);
+
+    bool scrapeBlock(void);
+    bool scrapeTransaction(void);
     string_q report(uint64_t last);
+
+    void noteAddress(const address_t& addr, bool isMiner=false);
+
+    void finalizeIndexChunk(void);
+    bool addToStagingList(void);
+    bool addToPendingList(void);
+
+protected:
+    bool writeList(const string_q& toFile, const string_q& removeFile);
 };
+
+extern bool notePotential(const CAppearance& item, void *data);
+extern void foundPotential(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList);

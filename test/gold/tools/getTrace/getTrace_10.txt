@@ -4,7 +4,7 @@ getTrace 0x79d7c345492ae4176b8ace43db41de69cf471b19df6421c6a570e961a9544e25
   "blockHash": "0x759de0be90043e350377c7d1be2f639ead0953b06a16c32552265659bd134f2d",
   "blockNumber": 2229051,
   "subtraces": 0,
-  "traceAddress": [],
+  "traceAddress": null,
   "transactionHash": "0x79d7c345492ae4176b8ace43db41de69cf471b19df6421c6a570e961a9544e25",
   "transactionPosition": 9,
   "type": "call",

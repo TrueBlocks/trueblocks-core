@@ -12,15 +12,14 @@
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
 
-extern bool visitAddress(const CAddressAppearance& item, void *data);
+extern bool visitAddress(const CAppearance& item, void *data);
 //-----------------------------------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-
-    etherlib_init("binary", quickQuitHandler);
+    etherlib_init(quickQuitHandler);
 
     address_t search("0xbb9bc244d798123fde783fcc1c72d3bb8c189413");
     blknum_t start = 1428000;
-    for (blknum_t bl = start ; bl < getLatestBlockFromClient() ; bl++) {
+    for (blknum_t bl = start ; bl < getLastBlock_client() ; bl++) {
         CBlock block;
         getBlock(block, bl);
         if (!block.forEveryUniqueAddress(visitAddress, NULL, &search))
@@ -30,7 +29,7 @@ int main(int argc, const char *argv[]) {
 }
 
 //-----------------------------------------------------------------------------------------------
-bool visitAddress(const CAddressAppearance& item, void *data) {
+bool visitAddress(const CAppearance& item, void *data) {
     if (item.addr == *(address_t *)data) {
         cout << "Found at " << item << "\n";
         return false; // we're done

@@ -16,7 +16,7 @@
  */
 #include <algorithm>
 #include "block.h"
-#include "etherlib.h"
+#include "appearance.h"
 
 namespace qblocks {
 
@@ -32,12 +32,12 @@ void CBlock::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
-    if (fmtIn.empty()) {
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["block_fmt"] : fmtIn);
+    if (fmt.empty()) {
         ctx << toJson();
         return;
     }
 
-    string_q fmt = fmtIn;
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -216,9 +216,8 @@ CArchive& operator<<(CArchive& archive, const CBlockArray& array) {
 
 //---------------------------------------------------------------------------
 void CBlock::registerClass(void) {
-    static bool been_here = false;
-    if (been_here) return;
-    been_here = true;
+    // only do this once
+    if (HAS_FIELD(CBlock, "schema")) return;
 
     size_t fieldNum = 1000;
     ADD_FIELD(CBlock, "schema",  T_NUMBER, ++fieldNum);
@@ -311,12 +310,10 @@ bool CBlock::readBackLevel(CArchive& archive) {
         archive >> timestamp;
         archive >> transactions;
         // TODO(tjayrush): technically we should re-read these values from the node
-        string_q save = getCurlContext()->provider;
-        getCurlContext()->provider = "local";
         CBlock upgrade;
-        size_t unused;
-        queryBlock(upgrade, uint_2_Str(blockNumber), false, false, unused);
-        getCurlContext()->provider = save;
+        string_q prev = setDataSource("local");
+        queryBlock(upgrade, uint_2_Str(blockNumber), false);
+        setDataSource(prev);
         miner = upgrade.miner;
         difficulty = upgrade.difficulty;
         price = 0.0;
@@ -391,7 +388,7 @@ string_q CBlock::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "timestamp" ) return ts_2_Str(timestamp);
             if ( fieldName % "transactions" || fieldName % "transactionsCnt" ) {
                 size_t cnt = transactions.size();
-                if (endsWith(fieldName, "Cnt"))
+                if (endsWith(toLower(fieldName), "cnt"))
                     return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;
@@ -433,7 +430,7 @@ const CBaseNode *CBlock::getObjectAt(const string_q& fieldName, size_t index) co
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-extern bool accumulateAddresses(const CAddressAppearance& item, void *data);
+extern bool accumulateAddresses(const CAppearance& item, void *data);
 extern bool foundOne(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const address_t& addr, const string_q& reason); // NOLINT
 extern bool foundPot(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList, const string_q& reason); // NOLINT
 
@@ -467,7 +464,7 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC traceFilter, void *data
 }
 
 //---------------------------------------------------------------------------
-bool getTracesAndVisit(const hash_t& hash, CAddressAppearance& item, ADDRESSFUNC funcy, void *data) {
+bool getTracesAndVisit(const hash_t& hash, CAppearance& item, ADDRESSFUNC funcy, void *data) {
     string_q str;
     queryRawTrace(str, hash);
 
@@ -486,6 +483,9 @@ bool getTracesAndVisit(const hash_t& hash, CAddressAppearance& item, ADDRESSFUNC
         string_q inpt = extract(trace.action.input, 10);
         if (!inpt.empty())
             if (!foundPot(funcy, data, item.bn, item.tx, traceID+10, inpt, trID + "input")) return false;
+        string_q outpt = extract(trace.result.output, 2);
+        if (!outpt.empty())
+            if (!foundPot(funcy, data, item.bn, item.tx, traceID+10, outpt, trID + "output")) return false;
         traceID++;
         trace = CTrace();  // reset
     }
@@ -517,7 +517,7 @@ bool CTransaction::forEveryAddress(ADDRESSFUNC funcy, TRANSFUNC filt, void *data
     // If we're not filtering, or the filter passes, proceed. Note the filter depends on the
     // transaction only, not on any address.
     if (!filt || !filt(this, data)) {  // may look at DDos range and nTraces for example
-        CAddressAppearance item(blockNumber, tr, NOPOS, "", "");
+        CAppearance item(blockNumber, tr, NOPOS, "", "");
         getTracesAndVisit(hash, item, funcy, data);
     }
     return true;
@@ -534,11 +534,22 @@ bool CTransaction::forEveryUniqueAddressPerTx(ADDRESSFUNC funcy, TRANSFUNC filt,
 }
 
 //---------------------------------------------------------------------------
-bool isBlockFinal(timestamp_t ts_block, timestamp_t ts_chain, timestamp_t seconds) {
+bool isBlockFinal(timestamp_t ts_block, timestamp_t ts_chain) {
     // If the distance from the front of the node's current view of the front of the chain
     // is more than the number of seconds provided, consider the block final (even if it isn't
     // in a perfectly mathematical sense)
-    return ((ts_chain - ts_block) > seconds);
+    return ((ts_chain - ts_block) > (60 * 5));
+}
+
+    //---------------------------------------------------------------------------
+blknum_t bnFromPath(const string_q& path, blknum_t& endOut) {
+    // comes in of the form first_blk-last_blk.X or blknum.X
+    CStringArray parts;
+    explode(parts, path, '/');
+    string_q e = nextTokenClear(parts[parts.size()-1], '.');
+    string_q b = nextTokenClear(e, '-');
+    endOut = (e.empty() || !isNumeral(e) ? NOPOS : str_2_Uint(e));
+    return (b.empty() || !isNumeral(b) ? NOPOS : str_2_Uint(b));
 }
 // EXISTING_CODE
 }  // namespace qblocks

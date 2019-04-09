@@ -15,8 +15,7 @@
 
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-
-    etherlib_init("binary", quickQuitHandler);
+    etherlib_init(quickQuitHandler);
 
     // Parse command line, allowing for command files
     COptions options;
@@ -27,7 +26,7 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        string_q cachePath = substitute(blockCachePath(""), "/blocks/", "/"+options.mode+"s/");
+        string_q cachePath = blockFolder_v2;
         if (isTestMode())
             cachePath = "--";
         cout << cYellow << "\nReport on " << options.mode << " locations:" << cOff;
@@ -39,10 +38,11 @@ int main(int argc, const char *argv[]) {
         for (auto num : nums) {
             blknum_t bn = str_2_Uint(num);
             CFilename fileName(substitute(getBinaryFilename(bn), "/blocks/", "/"+options.mode+"s/"));
-            bool exists = fileExists(fileName.getFullPath());
+            string_q fn = fileName.getFullPath();
+            bool exists = fileExists(fn);
 
             string_q path = (verbose ? fileName.getFullPath() :
-                                fileName.relativePath(substitute(blockCachePath(""),
+                                fileName.relativePath(substitute(getCachePath(""),
                                                         "/blocks/", "/"+options.mode + "s/")));
             string_q vers = getVersionFromClient();
             if (isTestMode() && verbose)

@@ -13,11 +13,11 @@
 #include "etherlib.h"
 
 //----------------------------------------------------------------
-int main(int argc, char *argv[])
-{
-    etherlib_init("binary", quickQuitHandler);
-    forEveryFileInFolder(blockCachePath("traces/"), visitFile, NULL);
-    forEveryBlockOnDisc(visitBlock, NULL, 0, getLatestBlockFromCache());
+int main(int argc, const char *argv[]) {
+    etherlib_init(quickQuitHandler);
+
+    forEveryFileInFolder(getCachePath("traces/"), visitFile, NULL);
+    forEveryBlockOnDisc(visitBlock, NULL, 0, getLastBlock_cache_final());
     return 1;
 }
 

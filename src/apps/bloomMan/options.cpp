@@ -6,7 +6,7 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("~lists",        "list of block_nums or block_nums and addrs (if both, show hit stats for addrs)"),
     COption("-stats",        "calculate statistics for blooms in the block range"),
     COption("-rewrite",      "re-write the given bloom(s) -- works only with block numbers"),
@@ -17,7 +17,7 @@ static COption params[] = {
     COption("@raw",          "print blooms from the raw node"),
     COption("",              "Work with EABs, raw blooms and/or present statistics."),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -26,7 +26,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     Init();
-    blknum_t latestBlock = getLatestBlockFromCache();
+    blknum_t latestBlock = getLastBlock_cache_final();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (arg == "-s" || arg == "--stats") {
@@ -100,9 +100,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    arguments.clear();
-    paramsPtr = params;
-    nParamsRef = nParams;
+    registerOptions(nParams, params);
 
     isStats           = false;
     isRewrite         = false;

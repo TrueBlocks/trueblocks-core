@@ -20,15 +20,10 @@ namespace qblocks {
     #define READ_EOF 2
     #define READ_BAD 3
 
-    #define asciiReadOnly     "r"    // ascii read - fails if not present
-    #define asciiReadWrite    "r+"   // ascii read-write (file must exist)
-    #define asciiWriteCreate  "w"    // ascii writing - destroys previous contents or creates
-    #define asciiWriteAppend  "a+"   // ascii read/writing - appends
-
-    #define binaryReadOnly    "rb"   // binary read - fails if not present
-    #define binaryReadWrite   "rb+"  // binary read/write - fails if not present
-    #define binaryWriteCreate "wb"   // binary write - destroys previous contents or creates
-    #define binaryWriteAppend "ab+"  // binary read/writing - appends
+    #define modeReadOnly     "r"    // read only - fails if not present
+    #define modeReadWrite    "r+"   // read-write (file must exist)
+    #define modeWriteCreate  "w"    // writing - destroys previous contents or creates
+    #define modeWriteAppend  "a+"   // read/writing - appends
 
     #define LOCK_NOWAIT       1      // read only - do not even check for a lock
     #define LOCK_WAIT         2      // Wait for lock to release return true - if wait too long return false
@@ -45,7 +40,6 @@ namespace qblocks {
         size_t   m_error;
         bool     m_ownsLock;
         string_q m_lockingUser;
-        bool     m_isascii;
 
     protected:
         string_q m_filename;
@@ -60,7 +54,6 @@ namespace qblocks {
             // m_lockingUser = "";
             // m_mode = "";
             // m_errorMsg = "";
-            m_isascii  = false;
         }
 
         virtual ~CSharedResource(void) {
@@ -93,13 +86,6 @@ namespace qblocks {
 
         string_q getFilename(void) const { return m_filename; }
         void setFilename(const string_q& fn) { m_filename = fn; }
-
-        // Use only for cases where file deletion does not work
-        static bool setLocking(bool val);
-
-        bool isAscii(void) const {
-            return m_isascii;
-        }
 
     public:
         size_t Read(bool& val);
@@ -139,13 +125,11 @@ namespace qblocks {
 
         CSharedResource(const CSharedResource& l);
         CSharedResource& operator=(const CSharedResource& l);
-
-        // Turns on and off file locking for machines that do not allow file delete such as my ISP
-        static bool g_locking;  // = true;
     };
 
     //----------------------------------------------------------------------
     extern size_t stringToAsciiFile(const string_q& fileName, const string_q& contents);
+    extern size_t linesToAsciiFile(const string_q& fileName, const CStringArray& lines);
     extern uint64_t appendToAsciiFile(const string_q& fileName, const string_q& addContents);
 
     //----------------------------------------------------------------------
@@ -168,8 +152,10 @@ namespace qblocks {
                                 const string_q& ns = "", bool spaces = true);
 
     //----------------------------------------------------------------------
-    extern size_t asciiFileToString(const string_q& filename, string& contents);
-    extern bool   forEveryLineInAsciiFile(const string_q& filename, CHARPTRFUNC func, void *data);
+    extern size_t   asciiFileToString(const string_q& filename, string& contents);
+    extern string_q asciiFileToString(const string_q& filename);
+    extern size_t   asciiFileToLines (const string_q& fileName, CStringArray& lines);
+    extern bool     forEveryLineInAsciiFile(const string_q& filename, CHARPTRFUNC func, void *data);
 
     //----------------------------------------------------------------------
     inline bool isFileLocked(const string_q& fileName) {

@@ -212,7 +212,7 @@ namespace qblocks {
             return false;
 
         CArchive archive(READING_ARCHIVE);
-        if (archive.Lock(filename, asciiReadOnly, LOCK_NOWAIT)) {
+        if (archive.Lock(filename, modeReadOnly, LOCK_NOWAIT)) {
             bool done = false;
             while (!done) {
                 char buffer[4096];
@@ -232,7 +232,7 @@ namespace qblocks {
         size_t len = fileSize(fileName);
         buffer.resize(len);
         CArchive archive(READING_ARCHIVE);
-        if (archive.Lock(fileName, asciiReadOnly, LOCK_NOWAIT)) {
+        if (archive.Lock(fileName, modeReadOnly, LOCK_NOWAIT)) {
             archive.Read(buffer.data(), len, 1);
             archive.Release();
         }
@@ -249,15 +249,42 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
+    size_t asciiFileToLines(const string_q& fileName, CStringArray& lines) {
+        string_q contents;
+        asciiFileToString(fileName, contents);
+        explode(lines, contents, '\n');
+        return lines.size();
+    }
+
+    //----------------------------------------------------------------------
+    string_q asciiFileToString(const string_q& filename) {
+        string_q ret;
+        asciiFileToString(filename, ret);
+        return ret;
+    }
+
+    //----------------------------------------------------------------------
     uint64_t appendToAsciiFile(const string_q& fileName, const string_q& addContents) {
         CArchive asciiCache(WRITING_ARCHIVE);
-        if (asciiCache.Lock(fileName, asciiWriteAppend, LOCK_NOWAIT)) {
+        if (asciiCache.Lock(fileName, modeWriteAppend, LOCK_NOWAIT)) {
             asciiCache.WriteLine(addContents.c_str());
             asciiCache.Release();
         }
         return fileSize(fileName);
     }
 
+    //----------------------------------------------------------------------
+    size_t linesToAsciiFile(const string_q& fileName, const CStringArray& lines) {
+        CArchive asciiCache(WRITING_ARCHIVE);
+        if (asciiCache.Lock(fileName, modeWriteAppend, LOCK_NOWAIT)) {
+            for (auto line : lines)
+                asciiCache.WriteLine(line.c_str());
+            asciiCache.Release();
+        }
+        return fileSize(fileName);
+    }
+
+    //----------------------------------------------------------------------
     void CArchive::writeHeader(void) {
         Seek(0, SEEK_SET);
         m_header.m_lastWritten = date_2_Ts(Now());

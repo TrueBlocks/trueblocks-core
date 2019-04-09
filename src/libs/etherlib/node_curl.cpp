@@ -22,13 +22,18 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     CCurlContext::CCurlContext(void) {
-        headers      = "Content-Type: application/json\n";
         baseURL      = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
         callBackFunc = writeCallback;
         curlNoteFunc = NULL;
         theID        = 1;
         nodeRequired = true;
-        Clear();
+        earlyAbort   = false;
+        is_error     = false;
+        postData     = "";
+        result       = "";
+        curlHandle   = NULL;
+        headerPtr    = NULL;
+//      source       = "binary";
     }
 
     //-------------------------------------------------------------------------
@@ -42,12 +47,12 @@ namespace qblocks {
 int x = 0;
 #define PRINT(msg) \
 cerr << string_q(120, '-') << "\n" << ++x << "." << msg << "\n"; \
-cerr << "\tresult: \t[" << substitute(getCurlContext()->result, "\n", " ") << "]\n"; \
-cerr << "\tearlyAbort:\t" << getCurlContext()->earlyAbort << "\n"; \
-cerr << "\tcurlID: \t" << getCurlContext()->getCurlID() << "\n";
+cerr << "\tresult: \t[" << substitute(result, "\n", " ") << "]\n"; \
+cerr << "\tearlyAbort:\t" << earlyAbort << "\n"; \
+cerr << "\tcurlID: \t" << getCurlID() << "\n";
 #define PRINTQ(msg) \
 cerr << string_q(120, '-') << "\n" << ++x << "." << msg << "\n"; \
-cerr << "\tcurlID: \t" << getCurlContext()->getCurlID() << "\n";
+cerr << "\tcurlID: \t" << getCurlID() << "\n";
 #define PRINTL(msg) \
 cerr << string_q(120,'-') << "\n"; \
 PRINT(msg);
@@ -59,12 +64,12 @@ PRINT(msg);
 
     //-------------------------------------------------------------------------
     void CCurlContext::setPostData(const string_q& method, const string_q& params) {
-        Clear();
+        clear();
         postData  = "{";
         postData +=  quote("jsonrpc") + ":"  + quote("2.0")  + ",";
         postData +=  quote("method")  + ":"  + quote(method) + ",";
         postData +=  quote("params")  + ":"  + params + ",";
-        postData +=  quote("id")      + ":"  + quote(getCurlID());
+        postData +=  quote("id")      + ":"  + quote(getCurlContext()->getCurlID());
         postData += "}";
 #ifdef PROVING
         if (expContext().proving) {
@@ -76,143 +81,183 @@ PRINT(msg);
 
 PRINT("postData: " + postData);
 
-        curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDS,    postData.c_str());
-        curl_easy_setopt(getCurl(), CURLOPT_POSTFIELDSIZE, postData.length());
-        curl_easy_setopt(getCurl(), CURLOPT_WRITEDATA,     this);
-        curl_easy_setopt(getCurl(), CURLOPT_WRITEFUNCTION, callBackFunc);
+        curl_easy_setopt(getCurlContext()->getCurl(), CURLOPT_POSTFIELDS,    postData.c_str());
+        curl_easy_setopt(getCurlContext()->getCurl(), CURLOPT_POSTFIELDSIZE, postData.length());
+        curl_easy_setopt(getCurlContext()->getCurl(), CURLOPT_WRITEDATA,     this);
+        curl_easy_setopt(getCurlContext()->getCurl(), CURLOPT_WRITEFUNCTION, callBackFunc);
     }
 
     //-------------------------------------------------------------------------
-    void CCurlContext::Clear(void) {
+    void CCurlContext::clear(void) {
         earlyAbort   = false;
         is_error     = false;
         postData     = "";
         result       = "";
-//      source       = "binary";
     }
 
     //-------------------------------------------------------------------------
-    static CCurlContext theCurlContext;
+    typedef map<thread::id, CCurlContext*> CCurlThreadMap;
 
     //-------------------------------------------------------------------------
     CCurlContext *getCurlContext(void) {
-        return &theCurlContext;
+        static CCurlThreadMap g_threadMap;
+        thread::id threadID = this_thread::get_id();
+        if (g_threadMap[threadID])
+            return g_threadMap[threadID];
+        // TODO(tjayrush): this memory is never released
+        CCurlContext *cntx = new CCurlContext;
+        g_threadMap[threadID] = cntx;
+        if (verbose)
+            cout << "Created curl context `" << cntx << " for thread " << threadID << endl;
+        return cntx;
     }
 
     //--------------------------------------------------------------------------
     CURLCALLBACKFUNC CCurlContext::setCurlCallback(CURLCALLBACKFUNC func) {
-        CURLCALLBACKFUNC prev = getCurlContext()->callBackFunc;
-        getCurlContext()->callBackFunc = func;
+        CURLCALLBACKFUNC prev = callBackFunc;
+        callBackFunc = func;
         return prev;
     }
 
     //-------------------------------------------------------------------------
-    CURL *getCurl(bool cleanup) {
-        static CURL *curl = NULL;
-        static struct curl_slist *headers = NULL;
-        if (!curl && !cleanup) {
-            curl = curl_easy_init();
-            if (!curl) {
+    CURL *CCurlContext::getCurl(void) {
+        //TODO(tjayrush): global data
+        if (!curlHandle) {
+            curlHandle = curl_easy_init();
+            if (!curlHandle) {
                 fprintf(stderr, "Curl failed to initialize. Quitting...\n");
                 exit(0);
             }
 
-            string_q head = getCurlContext()->headers;
-            while (!head.empty()) {
-                string_q next = nextTokenClear(head, '\n');
-                headers = curl_slist_append(headers, (char*)next.c_str());  // NOLINT
-            }
-            curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
-
-            if (getCurlContext()->provider == "remote") {
-                curl_easy_setopt(curl, CURLOPT_URL, "https://mainnet.infura.io/");
-PRINT("getCurl::provider: " + getCurlContext()->provider);
-
-            } else if (getCurlContext()->provider == "ropsten") {
-                curl_easy_setopt(curl, CURLOPT_URL, "https://testnet.infura.io/");
-PRINT("getCurl::provider: " + getCurlContext()->provider);
-
-            } else {
-                curl_easy_setopt(curl, CURLOPT_URL, getCurlContext()->baseURL.c_str());
-PRINT("getCurl::provider: " + getCurlContext()->provider);
-            }
-
-        } else if (cleanup) {
-
-            if (headers)
-                curl_slist_free_all(headers);
-            if (curl)
-                curl_easy_cleanup(curl);
-            headers = NULL;
-            curl = NULL;
-            return NULL;
+            // curl_slist_append makes a copy of the string
+            CStringArray heads;
+            explode(heads, "Content-Type: application/json\n", '\n');
+            for (auto head : heads)
+                headerPtr = curl_slist_append(headerPtr, (char*)head.c_str());
+            curl_easy_setopt(curlHandle, CURLOPT_HTTPHEADER, headerPtr);
+            curl_easy_setopt(curlHandle, CURLOPT_URL, baseURL.c_str());
         }
 
-        return curl;
+        return curlHandle;
+    }
+
+    //-------------------------------------------------------------------------
+    void CCurlContext::releaseCurl(void) {
+        if (headerPtr)
+            curl_slist_free_all(headerPtr);
+        headerPtr = NULL;
+
+        if (curlHandle)
+            curl_easy_cleanup(curlHandle);
+        curlHandle = NULL;
     }
 
     //-------------------------------------------------------------------------
     bool isNodeRunning(void) {
         CURLCALLBACKFUNC prev = getCurlContext()->setCurlCallback(nullCallback);
         getCurlContext()->setPostData("web3_clientVersion", "[]");
-        CURLcode res = curl_easy_perform(getCurl());
+        CURLcode res = curl_easy_perform(getCurlContext()->getCurl());
         getCurlContext()->setCurlCallback(prev);
         return (res == CURLE_OK);
     }
 
+//-------------------------------------------------------------------------
+static const char *STR_CURLERROR =
+"\t[{Warning:}] The request to the Ethereum node resulted in\n"
+"\tfollowing error message: [{[VAL]}].\n"
+"\tIt is impossible to proceed. Quitting...\n";
+
+//-------------------------------------------------------------------------
+static const char *STR_CURLRESEMPTY =
+"\t[{Warning:}] The Ethereum node returned an empty response.\n"
+"\tIt is impossible to proceed. Quitting...\n";
+
+    //-------------------------------------------------------------------------
+    string_q displayCurlError(const string_q& msg, const string_q& val) {
+        ostringstream os;
+        os << "\n";
+        os << substitute(substitute(substitute(msg, "[{", cTeal), "}]", cOff), "[VAL]", val);
+        os << "\n";
+        return os.str();
+    }
+
     //-------------------------------------------------------------------------
     string_q callRPC(const string_q& method, const string_q& params, bool raw) {
+        return getCurlContext()->perform(method, params, raw);
+    }
 
-PRINTL("callRPC:\n\tmethod:\t\t" + method + params + "\n\tsource:\t\t" + getCurlContext()->provider);
+    //-------------------------------------------------------------------------
+    string_q CCurlContext::perform(const string_q& method, const string_q& params, bool raw) {
 
-        // getCurlContext()->callBackFunc = writeCallback;
+PRINTL("perform:\n\tmethod:\t\t" + method + params + "\n\tsource:\t\t" + provider);
+
         getCurlContext()->setPostData(method, params);
-        CURLcode res = curl_easy_perform(getCurl());
-        if (res != CURLE_OK && !getCurlContext()->earlyAbort) {
-PRINT("CURL returned an error: ! CURLE_OK")
-            cerr << "\n";
-            cerr << cYellow << "\tWarning: " << cOff << "The request to the Ethereum node ";
-            cerr << "resulted in\n\tfollowing error message: ";
-            cerr << bTeal << curl_easy_strerror(res) << cOff << ".\n";
-            cerr << "\tIt is impossible for QBlocks to proceed. Quitting...\n";
-            cerr << "\n";
+        CURLcode res = curl_easy_perform(curlHandle);
+        if (res != CURLE_OK && !earlyAbort) {
+            PRINT("CURL returned an error: ! CURLE_OK")
+            cerr << displayCurlError(STR_CURLERROR, curl_easy_strerror(res));
             quickQuitHandler(0);
         }
 
 PRINT("CURL returned CURLE_OK")
+        if (result.empty()) {
+            cerr << displayCurlError(STR_CURLRESEMPTY);
+            quickQuitHandler(0);
 
-        if (getCurlContext()->result.empty()) {
-            cerr << cYellow;
-            cerr << "\n";
-            cerr << "\tWarning:" << cOff << "The Ethereum node resulted in an empty\n";
-            cerr << "\tresponse. It is impossible for QBlocks to proceed. Quitting...\n";
-            cerr << "\n";
-            exit(0);
-        } else if (contains(getCurlContext()->result, "error")) {
+        } else if (contains(result, "error")) {
 #ifndef DEBUG_RPC
             if (verbose > 1)
 #endif
             {
-                cerr << getCurlContext()->result;
-                cerr << getCurlContext()->postData << "\n";
+                cerr << result;
+                cerr << postData << "\n";
             }
         }
 
-PRINTL("Received: " + getCurlContext()->result);
+PRINTL("Received: " + result);
 #ifdef DEBUG_RPC
 x = 0;
 #endif
         if (raw)
-            return getCurlContext()->result;
+            return result;
         CRPCResult generic;
-        generic.parseJson3(getCurlContext()->result);
+        generic.parseJson3(result);
         return generic.result;
     }
 
     //-------------------------------------------------------------------------
-    bool getObjectViaRPC(CBaseNode &node, const string_q& method, const string_q& params) {
-        string_q str = callRPC(method, params, false);
-        return node.parseJson3(str);
+    void nodeNotRequired(void) {
+        getCurlContext()->nodeRequired = false;
+    }
+
+    //-------------------------------------------------------------------------
+    void nodeRequired(void) {
+        getCurlContext()->nodeRequired = true;
+        checkNodeRequired();
+    }
+
+    //-------------------------------------------------------------------------
+    void checkNodeRequired(void) {
+
+        if (!getCurlContext()->nodeRequired)
+            return;
+
+        if (isNodeRunning())
+            return;
+
+static const char *STR_ERROR_NODEREQUIRED =
+"\t[{Warning:}] This program requires a running Ethereum node. Please start your node or\n"
+"\tconfigure the 'rpcProvider' setting before running this command. Quitting...";
+        cerr << displayCurlError(STR_ERROR_NODEREQUIRED);
+        quickQuitHandler(EXIT_FAILURE);
+    }
+
+    //-------------------------------------------------------------------------
+    string_q setDataSource(const string_q& newSrc) {
+        string_q old = getCurlContext()->provider;
+        if (newSrc == "local" || newSrc == "binary")
+            getCurlContext()->provider = newSrc;
+        return old;
     }
 
     //-------------------------------------------------------------------------
@@ -231,7 +276,6 @@ PRINTQ("data->result ==> " + string_q(s));
         if (data && data->curlNoteFunc)
             if (!(*data->curlNoteFunc)(ptr, size, nmemb, userdata))  // returns zero if it wants us to stop
                 return 0;
-
         return size * nmemb;
     }
 
@@ -243,8 +287,8 @@ PRINTQ("data->result ==> " + string_q(s));
         data->result = "ok";
         if (strstr(ptr, "erro") != NULL) {
             data->result = "error";
-            getCurlContext()->is_error = true;
-            getCurlContext()->earlyAbort = true;
+            data->is_error = true;
+            data->earlyAbort = true;
             return 0;
         }
 

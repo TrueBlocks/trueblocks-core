@@ -14,7 +14,7 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("~terms",       "a space separated list of one or more search terms"),
     COption("-addr",        "export only the associated address (may be used in scripting)"),
     COption("-count",       "print only the count of the number of matches"),
@@ -25,7 +25,7 @@ static COption params[] = {
     COption("-source",      "search 'source' field as well name and address (the default)"),
     COption("",             "Query Ethereum addresses and/or names making it easy to remember accounts.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -76,18 +76,18 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (addr.empty() && name.empty() && !list && !isEdit)
+    if (addr.empty() && name.empty() && !list && !isEdit && !data)
         return usage("You must supply at least one of 'addr,' or 'name.' Quitting...");
+
+    if (addr.empty() && name.empty() && data && !list)
+        list = true;
 
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    arguments.clear();
-    paramsPtr = params;
-    nParamsRef = nParams;
-    pOptions = this;
+    registerOptions(nParams, params);
 
     addr = "";
     name = "";
@@ -111,10 +111,11 @@ COptions::COptions(void) {
     // If you need the names file, you have to add it in the constructor
     namesFile = CFilename(configPath("names/names.txt"));
     establishFolder(namesFile.getPath());
-    if (!fileExists(namesFile.getFullPath()))
+    if (!fileExists(namesFile.getFullPath())) {
         stringToAsciiFile(namesFile.getFullPath(),
                           substitute(
                           substitute(string_q(STR_DEFAULT_NAMEDATA), " |", "|"), "|", "\t"));
+    }
     loadNames();
     Init();
 }

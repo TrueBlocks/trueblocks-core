@@ -9,30 +9,30 @@ const string_q clearStr(20, ' ');
 //------------------------------------------------------------------------
 bool handleCacheBals(COptions& options) {
 
-    if (!fileExists("./config.toml"))
-        return usage("Could not open file: ./config.toml. Quitting.");
-    CToml toml("./config.toml");
-    options.loadWatches(toml);
+    ASSERT(filenames.size() == 1);
 
     if (!nodeHasBalances())
-        return usage("Cannot cache balances on a machine that doesn't have balances. Quitting...");
+        return options.usage("Cannot cache balances on a machine that doesn't have balances. Quitting...");
 
-    CAcctCacheItemArray dataArray;
+    // The node needs to be there if we want to cache balances
+    nodeRequired();
+
+    CAppearanceArray_base dataArray;
 
     // Check to see if it's one of the pre-funded accounts
     string_q contents;
     asciiFileToString(configPath("prefunds.txt"), contents);
     CStringArray prefunds;
     explode(prefunds, contents, '\n');
-    for (auto const& watch : options.watches) {
+    for (auto const& watch : options.monitors) {
         for (auto prefund : prefunds) {
             address_t account = nextTokenClear(prefund, '\t');
             if (account == watch.address) {
-                CAcctCacheItem item;
-                item.blockNum = 1;
-                item.transIndex = NOPOS;
+                CAppearance_base item;
+                item.blk = 1;
+                item.txid = (uint32_t)-1;
                 dataArray.push_back(item);
-                biguint_t bal = getBalanceAt(watch.address, item.blockNum);
+                biguint_t bal = getBalanceAt(watch.address, item.blk);
 //                cout << account << "\t" << item << "\t" << bal << endl;
                 continue;
             }
@@ -40,14 +40,14 @@ bool handleCacheBals(COptions& options) {
     }
 
     CArchive txCache(READING_ARCHIVE);
-    if (txCache.Lock(options.filenames[0], binaryReadOnly, LOCK_NOWAIT)) {
-        CAcctCacheItem last;
+    if (txCache.Lock(options.monitors[0].name, modeReadOnly, LOCK_NOWAIT)) {
+        CAppearance_base last;
         while (!txCache.Eof()) {
-            CAcctCacheItem item;
-            txCache >> item.blockNum >> item.transIndex;
-            if (item.blockNum > 0 || !last.blockNum) {
+            CAppearance_base item;
+            txCache >> item.blk >> item.txid;
+            if (item.blk > 0 || !last.blk) {
                 dataArray.push_back(item);
-                cerr << "Reading transactions: " << cTeal << item.blockNum << "." << item.transIndex << cOff << clearStr << "\r";
+                cerr << "Reading transactions: " << cTeal << item.blk << "." << item.txid << cOff << clearStr << "\r";
                 cerr.flush();
             }
             last = item;
@@ -56,17 +56,17 @@ bool handleCacheBals(COptions& options) {
         cerr << clearStr << clearStr << "\r";
         cerr.flush();
     } else {
-        return usage("Could not open file: " + options.filenames[0] + ". Quitting.");
+        return options.usage("Could not open file: " + options.monitors[0].name + ". Quitting.");
     }
     sort(dataArray.begin(), dataArray.end());
 
     establishFolder("./balances/");
-    for (auto const& watch : options.watches) {
+    for (auto const& watch : options.monitors) {
 
         string_q binaryFilename = "./balances/" + watch.address + ".bals.bin";
         CArchive balCache(WRITING_ARCHIVE);
-        if (!balCache.Lock(binaryFilename, binaryWriteCreate, LOCK_WAIT))
-            return usage("Cannot open file " + binaryFilename + ". Quitting...");
+        if (!balCache.Lock(binaryFilename, modeWriteCreate, LOCK_WAIT))
+            return options.usage("Cannot open file " + binaryFilename + ". Quitting...");
 
         uint64_t nWritten = 0;
         biguint_t lastBal = biguint_t((uint64_t)NOPOS);
@@ -74,20 +74,20 @@ bool handleCacheBals(COptions& options) {
         blknum_t lastBlock = NOPOS;
         biguint_t bal = 0;
         for (auto const& item : dataArray) {
-            if (item.blockNum == 1 || item.blockNum >= watch.firstBlock) {
-                bal = getBalanceAt(watch.address, item.blockNum);
-                if (bal != lastBal && item.blockNum != lastBlock) {
-                    balCache << item.blockNum << watch.address << bal;
+            if (item.blk == 1 || item.blk >= watch.firstBlock) {
+                bal = getBalanceAt(watch.address, item.blk);
+                if (bal != lastBal && item.blk != lastBlock) {
+                    balCache << item.blk << watch.address << bal;
                     balCache.flush();
                     nWritten++;
                 }
                 lastBal = bal;
-                lastBlock = item.blockNum;
+                lastBlock = item.blk;
             }
             cout << "\t";
             cout << cTeal << watch.address << cOff;
             cout << " (" << nWritten << "/" << cnt++ << "/" << dataArray.size() << ") ";
-            cout << item.blockNum << " " << bal << clearStr << "\r";
+            cout << item.blk << " " << bal << clearStr << "\r";
             cout.flush();
         }
         cerr << "\tWrote " << padNum5T(nWritten++) << " balances to binary file " << cTeal;
@@ -102,27 +102,24 @@ bool handleCacheBals(COptions& options) {
 //------------------------------------------------------------------------
 bool listBalances(COptions& options) {
 
-    if (!fileExists("./config.toml"))
-        return usage("Could not open file: ./config.toml. Quitting.");
-    CToml toml("./config.toml");
-    options.loadWatches(toml);
+    ASSERT(monitors.size() > 0);
 
-    for (auto const& watch : options.watches) {
+    for (auto const& watch : options.monitors) {
 
         string_q binaryFilename = "./balances/" + watch.address + ".bals.bin";
         if (!fileExists(binaryFilename))
-            return usage("Cannot find file " + binaryFilename + ". Quitting...");
+            return options.usage("Cannot find file " + binaryFilename + ". Quitting...");
 
         if (fileSize(binaryFilename) > 0) {
 
             address_t lastAddr;
             // If the binary file exists, we use that
             CArchive balCache(READING_ARCHIVE);
-            if (balCache.Lock(binaryFilename, binaryReadOnly, LOCK_NOWAIT)) {
+            if (balCache.Lock(binaryFilename, modeReadOnly, LOCK_NOWAIT)) {
 
                 do {
 
-                    CAddressAppearance app;
+                    CAppearance app;
                     biguint_t bal;
                     balCache >> app.bn >> app.addr >> bal;
                     if (app.bn > 0) {

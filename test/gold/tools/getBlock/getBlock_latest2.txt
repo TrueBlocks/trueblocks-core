@@ -1,10 +1,9 @@
 getBlock argc: 3 [1:--latest] [2:0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b] 
 getBlock --latest 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b 
-Hostname:                --hostname--
-User:                    --username--
-QB Version:              0.5.5-alpha
-Client Version:          --version--
-Location of cache:       --cache_dir--
-Latest block in cache:  --cache--
-Latest block at client: --client--
-Behind head (catchup):  --diff--
+  Client version:     --version--
+  Trueblocks Version: GHC-TrueBlocks0.5.5-alpha
+  Cache location:     --cache_dir--
+  Host (user):        --host (user)--
+  Latest cache:       --final--, --staging--
+  Latest client:      --client--
+  Dist from head:     --diff-- (+1)

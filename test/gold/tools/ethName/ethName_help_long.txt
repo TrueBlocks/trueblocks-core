@@ -4,7 +4,7 @@ ethName --help
   Usage:    ethName [-a|-c|-d|-o|-l|-m|-s|-v|-h] <term> [term...]  
   Purpose:  Query Ethereum addresses and/or names making it easy to remember accounts.
              
-  Where:    
+  Where:  
 	terms                 a space separated list of one or more search terms (required)
 	-a  (--addr)          export only the associated address (may be used in scripting)
 	-c  (--count)         print only the count of the number of matches

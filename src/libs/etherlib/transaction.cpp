@@ -32,12 +32,12 @@ void CTransaction::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) co
     if (!m_showing)
         return;
 
-    if (fmtIn.empty()) {
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["transaction_fmt"] : fmtIn);
+    if (fmt.empty()) {
         ctx << toJson();
         return;
     }
 
-    string_q fmt = fmtIn;
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -105,8 +105,12 @@ bool CTransaction::setValueByName(const string_q& fieldName, const string_q& fie
             if ( fieldName % "blockHash" ) { blockHash = str_2_Hash(fieldValue); return true; }
             if ( fieldName % "blockNumber" ) { blockNumber = str_2_Uint(fieldValue); return true; }
             break;
+        case 'e':
+            if ( fieldName % "extra_data" ) { extra_data = fieldValue; return true; }
+            break;
         case 'f':
             if ( fieldName % "from" ) { from = str_2_Addr(fieldValue); return true; }
+            if ( fieldName % "finalized" ) { finalized = str_2_Bool(fieldValue); return true; }
             break;
         case 'g':
             if ( fieldName % "gas" ) { gas = str_2_Gas(fieldValue); return true; }
@@ -177,6 +181,8 @@ bool CTransaction::Serialize(CArchive& archive) {
     archive >> isInternal;
     archive >> receipt;
 //    archive >> articulatedTx;
+//    archive >> extra_data;
+//    archive >> finalized;
     finishParse();
     return true;
 }
@@ -205,6 +211,8 @@ bool CTransaction::SerializeC(CArchive& archive) const {
     archive << isInternal;
     archive << receipt;
 //    archive << articulatedTx;
+//    archive << extra_data;
+//    archive << finalized;
 
     return true;
 }
@@ -232,9 +240,8 @@ CArchive& operator<<(CArchive& archive, const CTransactionArray& array) {
 
 //---------------------------------------------------------------------------
 void CTransaction::registerClass(void) {
-    static bool been_here = false;
-    if (been_here) return;
-    been_here = true;
+    // only do this once
+    if (HAS_FIELD(CTransaction, "schema")) return;
 
     size_t fieldNum = 1000;
     ADD_FIELD(CTransaction, "schema",  T_NUMBER, ++fieldNum);
@@ -258,6 +265,10 @@ void CTransaction::registerClass(void) {
     ADD_FIELD(CTransaction, "receipt", T_OBJECT, ++fieldNum);
     ADD_FIELD(CTransaction, "articulatedTx", T_OBJECT, ++fieldNum);
     HIDE_FIELD(CTransaction, "articulatedTx");
+    ADD_FIELD(CTransaction, "extra_data", T_TEXT, ++fieldNum);
+    HIDE_FIELD(CTransaction, "extra_data");
+    ADD_FIELD(CTransaction, "finalized", T_BOOL, ++fieldNum);
+    HIDE_FIELD(CTransaction, "finalized");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTransaction, "schema");
@@ -394,7 +405,7 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
                 if ( fieldIn % "price" ) {
                     if (!IS_HIDDEN(CTransaction, "price")) {
                         timestamp_t ts = str_2_Ts(tra->Format("[{TIMESTAMP}]"));  // it may only be on the block
-                        return wei_2_Dollars(ts, weiPerEther);
+                        return wei_2_Dollars(ts, weiPerEther());
                     }
                 }
                 // EXISTING_CODE
@@ -467,8 +478,12 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "blockHash" ) return hash_2_Str(blockHash);
             if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
             break;
+        case 'e':
+            if ( fieldName % "extra_data" ) return extra_data;
+            break;
         case 'f':
             if ( fieldName % "from" ) return addr_2_Str(from);
+            if ( fieldName % "finalized" ) return int_2_Str(finalized);
             break;
         case 'g':
             if ( fieldName % "gas" ) return gas_2_Str(gas);

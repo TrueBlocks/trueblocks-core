@@ -22,21 +22,25 @@
 namespace qblocks {
 
     //--------------------------------------------------------------------------------
-    static size_t nP = 0;
-    static COption ps[] = { };
-    static CDefaultOptions defOpts;
+    void COptionsBase::registerOptions(size_t nP, COption const *pP) {
+        //TODO(tjayrush): global data
+        arguments.clear();
+        cntParams = nP;
+        pParams = pP;
+    }
 
     //--------------------------------------------------------------------------------
-    size_t& nParamsRef = nP;
-    COption *paramsPtr  = &ps[0];
-    COptionsBase *pOptions = &defOpts;
+    //TODO(tjayrush): global data - but okay, a program only has one name
+    string_q COptionsBase::g_progName = "quickBlocks";
 
     //--------------------------------------------------------------------------------
-    static string_q programName = "quickBlocks";
+    void COptionsBase::setProgName(const string_q& name) {
+        g_progName = name;
+    }
 
     //--------------------------------------------------------------------------------
-    void COptionsBase::setProgramName(const string_q& name) {
-        programName = name;
+    string_q COptionsBase::getProgName(void) const {
+        return g_progName;
     }
 
     //--------------------------------------------------------------------------------
@@ -46,17 +50,17 @@ namespace qblocks {
         if (string_q(env) == "true")
             colorsOff();
 
-        programName = basename((char*)argv[0]);  // NOLINT
+        setProgName(basename((char*)argv[0]));  // NOLINT
         if (isTestMode()) {
             // we present the data once for clarity...
-            cout << programName << " argc: " << argc << " ";
+            cout << getProgName() << " argc: " << argc << " ";
             for (int i = 1 ; i < argc ; i++) {
                 string_q str = argv[i];
                 cout << "[" << i << ":" << trim(str) << "] ";
             }
             cout << "\n";
             // ... and once to use as a command line for copy/paste
-            cout << programName << " ";
+            cout << getProgName() << " ";
             for (int i = 1 ; i < argc ; i++) {
                 string_q str = argv[i];
                 cout << trim(str) << " ";
@@ -140,10 +144,10 @@ namespace qblocks {
         for (size_t i = 0 ; i < nArgs ; i++) {
             string_q arg = args[i];
             bool combine = false;
-            for (size_t j = 0 ; j < nParamsRef && !combine ; j++) {
-                if (!paramsPtr[j].permitted.empty()) {
-                    string_q shortName = paramsPtr[j].shortName;
-                    string_q longName  = paramsPtr[j].longName;
+            for (size_t j = 0 ; j < cntParams && !combine ; j++) {
+                if (!pParams[j].permitted.empty()) {
+                    string_q shortName = pParams[j].shortName;
+                    string_q longName  = pParams[j].longName;
                     if (shortName == arg || startsWith(longName, arg)) {
                         // We want to pull the next parameter into this one since it's a ':' param
                         combine = true;
@@ -217,7 +221,7 @@ namespace qblocks {
         }
 
         if (contains(cmdLine, "--version ")) {
-            cerr << programName << " (quickBlocks) " << getVersionStr() << "\n";
+            cerr << getProgName() << getVersionStr(true) << "\n";
             exit(0);
         }
 
@@ -229,8 +233,8 @@ namespace qblocks {
         if (contains(cmdLine, "--qblocks ")) {
             replaceAll(cmdLine, "--qblocks ", "");
             CNameValue toolName;
-            findToolNickname(toolName, programName);
-            programName = "qblocks " + toolName.second;
+            findToolNickname(toolName, getProgName());
+            setProgName("qblocks " + toolName.second);
 
         }
 
@@ -289,10 +293,8 @@ namespace qblocks {
             if (commandLines.size() > 1)
                 return usage("You may not use the --file with this application. Quitting...");
             // protect ourselves from running twice over
-            string_q cmd = "ps -ef | grep -i " + programName + " | grep -v grep | grep -v \"sh -c \" | wc -l";
-            uint64_t cnt = str_2_Uint(doCommand(cmd));
-            if (cnt > 1)  // it is running itself, so if two or more, quit
-                return usage("Warning: the command " + programName + " is already running. Quitting...");
+            if (isRunning(getProgName(), true))
+                return usage("Warning: the command " + getProgName() + " is already running. Quitting...");
         }
 
         cmdLine = trim(cmdLine);
@@ -379,20 +381,17 @@ namespace qblocks {
         }
     }
 
-    static string_q sep = "  ";
-    static string_q sep2 = "";
-
     //--------------------------------------------------------------------------------
-    int usage(const string_q& errMsg) {
+    bool COptionsBase::usage(const string_q& errMsg) const {
         cerr << usageStr(errMsg);
         return false;
     }
 
-    string_q usageStr(const string_q& errMsg) {
+    //--------------------------------------------------------------------------------
+    string_q COptionsBase::usageStr(const string_q& errMsg) const {
 
         ostringstream os;
-        if (COptionsBase::isReadme) {
-            sep = sep2 = "`";
+        if (isReadme) {
             colorsOff();
             os << "#### Usage\n";
         }
@@ -400,86 +399,78 @@ namespace qblocks {
         os << "\n";
         if (!errMsg.empty())
             os << cRed << "  " << errMsg << "\n\n";
-        os << bYellow << sep << "Usage:" << sep2 << "    " << cOff << programName << " " << options() << "  \n";
+        os << hiUp1 << "Usage:" << hiDown << "    " << getProgName() << " " << options() << "  \n";
         os << purpose();
         os << descriptions() << "\n";
         os << notes();
-        if (!COptionsBase::isReadme) {
+        if (!isReadme) {
             os << bBlue << "  Powered by QBlocks";
-            os << (isTestMode() ? "" : " (" + getVersionStr() + ")") << "\n" << cOff;
+            os << (isTestMode() ? "" : " (" + getVersionStr(true) + ")") << "\n" << cOff;
         }
         string_q ret = os.str().c_str();
-        ASSERT(pOptions);
-        return pOptions->postProcess("usage", ret);
+        return postProcess("usage", ret);
     }
 
     //--------------------------------------------------------------------------------
-    string_q options(void) {
+    string_q COptionsBase::options(void) const {
         string_q required;
 
         ostringstream os;
-        if (!COptionsBase::needsOption)
+        if (!needsOption)
             os << "[";
-        for (uint64_t i = 0 ; i < nParamsRef ; i++) {
-            if (paramsPtr[i].mode) {
-                required += (" " + paramsPtr[i].longName);
+        for (uint64_t i = 0 ; i < cntParams ; i++) {
+            if (pParams[i].mode) {
+                required += (" " + pParams[i].longName);
 
-            } else if (paramsPtr[i].hidden) {
+            } else if (pParams[i].hidden) {
                 // invisible option
 
-            } else if (!paramsPtr[i].shortName.empty()) {
-                os << paramsPtr[i].shortName << "|";
+            } else if (!pParams[i].shortName.empty()) {
+                os << pParams[i].shortName << "|";
 
-            } else if (!paramsPtr[i].shortName.empty()) {
-                os << paramsPtr[i].shortName << "|";
+            } else if (!pParams[i].shortName.empty()) {
+                os << pParams[i].shortName << "|";
             }
         }
         if (isEnabled(OPT_VERBOSE))
             os << "-v|";
         if (isEnabled(OPT_HELP))
             os << "-h";
-        if (!COptionsBase::needsOption)
+        if (!needsOption)
             os << "]";
         os << required;
 
-        ASSERT(pOptions);
-        string_q ret = pOptions->postProcess("options", os.str().c_str());
-        if (COptionsBase::isReadme)
+        string_q ret = postProcess("options", os.str().c_str());
+        if (isReadme)
             ret = substitute(substitute(ret, "<", "&lt;"), ">", "&gt;");
         return ret;
     }
 
     //--------------------------------------------------------------------------------
-    string_q purpose(void) {
+    string_q COptionsBase::purpose(void) const {
         string_q purpose;
-        for (uint64_t i = 0 ; i < nParamsRef ; i++)
-            if (paramsPtr[i].shortName.empty())
-                purpose += ("\n           " + paramsPtr[i].description);
+        for (uint64_t i = 0 ; i < cntParams ; i++)
+            if (pParams[i].shortName.empty())
+                purpose += ("\n           " + pParams[i].description);
 
         ostringstream os;
         if (!purpose.empty()) {
             replace(purpose, "\n           ", "");
             string_q xxx;
             xxx = substitute(purpose, "\n", "\n           ");
-            os << bYellow;
-            os << sep;
-            os << "Purpose:";
-            os << sep2;
-            os << "  ";
-            os << cOff;
+            os << hiUp1 << "Purpose:" << hiDown << "  ";
             os << xxx;
             os << "  \n";
         }
-        ASSERT(pOptions);
-        return pOptions->postProcess("purpose", os.str().c_str());
+        return postProcess("purpose", os.str().c_str());
     }
 
     //--------------------------------------------------------------------------------
 const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
-    string_q oneDescription(const string_q& sN, const string_q& lN, const string_q& d, bool isMode, bool required) {
+    string_q COptionsBase::oneDescription(const string_q& sN, const string_q& lN, const string_q& d, bool isMode, bool required) const {
         ostringstream os;
-        if (COptionsBase::isReadme) {
+        if (isReadme) {
 
             // When we are writing the readme file...
             string_q line = STR_ONE_LINE;
@@ -501,31 +492,27 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             replace(line, "{D}", d + (required && isMode ? " (required)" : ""));
             os << line;
         }
-        ASSERT(pOptions);
-        return pOptions->postProcess("oneDescription", os.str().c_str());
+        return postProcess("oneDescription", os.str().c_str());
     }
 
     //--------------------------------------------------------------------------------
-    string_q notes(void) {
+    string_q COptionsBase::notes(void) const {
 
         ostringstream os;
-        ASSERT(pOptions);
-        string_q ret = pOptions->postProcess("notes", "");
+        string_q ret = postProcess("notes", "");
         if (!ret.empty()) {
             string_q tick = "- ";
             string_q lead = "\t";
             string_q trail = "\n";
-            string_q sepy1 = cTeal, sepy2 = cOff;
-            if (COptionsBase::isReadme) {
-                sepy1 = sepy2 = "`";
+            if (isReadme) {
                 lead = "";
                 trail = "\n";
             }
-            replaceAll(ret, "[{", sepy1);
-            replaceAll(ret, "}]", sepy2);
+            replaceAll(ret, "[{", hiUp2);
+            replaceAll(ret, "}]", hiDown);
 
-            os << bYellow << sep << "Notes:" << sep << cOff << "\n";
-            os << (COptionsBase::isReadme ? "\n" : "");
+            os << hiUp1 << "Notes:" << hiDown << "\n";
+            os << (isReadme ? "\n" : "");
             while (!ret.empty()) {
                 string_q line = substitute(nextTokenClear(ret, '\n'), "|", "\n" + lead + "  ");
                 os << lead << tick << line << "\n";
@@ -538,45 +525,45 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     }
 
     //--------------------------------------------------------------------------------
-    string_q descriptions(void) {
+    string_q COptionsBase::descriptions(void) const {
 
         ostringstream os;
-        os << bYellow << sep << "Where:" << sep << cOff << "  \n";
-        if (COptionsBase::isReadme) {
+        os << hiUp1 << "Where:" << hiDown << "  \n";
+        if (isReadme) {
             os << "\n";
             os << "| Short Cut | Option | Description |\n";
             os << "| -------: | :------- | :------- |\n";
         }
 
         size_t nHidden = 0;
-        for (uint64_t i = 0 ; i < nParamsRef ; i++) {
-            string_q sName = paramsPtr[i].shortName;
-            string_q lName = paramsPtr[i].longName;
-            string_q descr = trim(paramsPtr[i].description);
-            bool isMode = paramsPtr[i].mode;
-            if (!paramsPtr[i].hidden && !sName.empty()) {
-                bool isReq = !paramsPtr[i].optional;
+        for (uint64_t i = 0 ; i < cntParams ; i++) {
+            string_q sName = pParams[i].shortName;
+            string_q lName = pParams[i].longName;
+            string_q descr = trim(pParams[i].description);
+            bool isMode = pParams[i].mode;
+            if (!pParams[i].hidden && !sName.empty()) {
+                bool isReq = !pParams[i].optional;
                 sName = (isMode ? "" : sName);
                 lName = substitute(substitute((isMode ? substitute(lName, "-", "") : lName), "!", ""), "~", "");
                 os << oneDescription(sName, lName, descr, isMode, isReq);
             }
-            if (paramsPtr[i].hidden)
+            if (pParams[i].hidden)
                 nHidden++;
         }
 
         // For testing purposes, we show the hidden options
         if (isTestMode() && nHidden) {
             os << "\n#### Hidden options (shown during testing only)\n";
-            for (uint64_t i = 0 ; i < nParamsRef ; i++) {
-                string_q sName = paramsPtr[i].shortName;
-                string_q lName = paramsPtr[i].longName;
-                string_q descr = trim(paramsPtr[i].description);
-                bool isMode = paramsPtr[i].mode;
-                if (paramsPtr[i].hidden && !sName.empty()) {
-                    bool isReq = !paramsPtr[i].optional;
+            for (uint64_t i = 0 ; i < cntParams ; i++) {
+                string_q sName = pParams[i].shortName;
+                string_q lName = pParams[i].longName;
+                string_q descr = trim(pParams[i].description);
+                bool isMode = pParams[i].mode;
+                if (pParams[i].hidden && !sName.empty()) {
+                    bool isReq = !pParams[i].optional;
                     lName = substitute(substitute((isMode ? substitute(lName, "-", "") : lName), "!", ""), "~", "");
                     lName = substitute(lName, "@-", "");
-                    sName = (isMode ? "" : paramsPtr[i].shortName);
+                    sName = (isMode ? "" : pParams[i].shortName);
                     os << oneDescription(sName, lName, descr, isMode, isReq);
                 }
             }
@@ -588,19 +575,18 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
                     "set verbose level. Either -v, --verbose or -v:n where 'n' is level", false, false);
         if (isEnabled(OPT_HELP))
             os << oneDescription("-h", "--help", "display this help screen", false, false);
-        ASSERT(pOptions);
-        return pOptions->postProcess("description", os.str().c_str());
+        return postProcess("description", os.str().c_str());
     }
 
     //--------------------------------------------------------------------------------
-    string_q expandOption(string_q& arg) {
+    string_q COptionsBase::expandOption(string_q& arg) {
 
         string_q ret = arg;
 
         // Check that we don't have a regular command with a single dash, which
         // should report an error in client code
-        for (uint64_t i = 0 ; i < nParamsRef ; i++) {
-            if (paramsPtr[i].longName == arg) {
+        for (uint64_t i = 0 ; i < cntParams ; i++) {
+            if (pParams[i].longName == arg) {
                 arg = "";
                 return ret;
             }
@@ -626,7 +612,8 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
         // Special case
         if (arg == "-th" || arg == "-ht") {
-            COptionsBase::isReadme = true;
+            isReadme = true;
+            hiUp1 = hiUp2 = hiDown = '`';
             arg = "";
             replaceAll(ret, "-th", "");
             replaceAll(ret, "-ht", "");
@@ -666,11 +653,6 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     }
 
     //--------------------------------------------------------------------------------
-    uint32_t COptionsBase::enableBits = OPT_DEFAULT;
-    bool COptionsBase::isReadme = false;
-    bool COptionsBase::needsOption = false;
-
-    //--------------------------------------------------------------------------------
     uint64_t verbose = false;
 
     //---------------------------------------------------------------------------------------------------
@@ -699,21 +681,21 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             asciiFileToString(fileName, contents);
             cout << contents << "\n";
         } else {
-            doCommand(cmd);
+            if (system(cmd.c_str())) { }  // Don't remove. Silences compiler warnings
         }
     }
 
     //-------------------------------------------------------------------------
-    bool isEnabled(uint32_t q) {
-        return COptionsBase::enableBits & q;
+    bool COptionsBase::isEnabled(uint32_t q) const {
+        return (enableBits & q);
     }
 
-    void optionOff(uint32_t q) {
-        COptionsBase::enableBits &= (~q);
+    void COptionsBase::optionOff(uint32_t q) {
+        enableBits &= (~q);
     }
 
-    void optionOn (uint32_t q) {
-        COptionsBase::enableBits |= q;
+    void COptionsBase::optionOn (uint32_t q) {
+        enableBits |= q;
     }
 
     //--------------------------------------------------------------------------------
@@ -753,9 +735,9 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             toml = &theToml;
 
             // Always load the program's custom config if it exists
-            string_q fileName = configPath(programName+".toml");
-            if (fileExists(fileName) && !contains(components, programName+"|")) {
-                components += programName+"|";
+            string_q fileName = configPath(COptionsBase::g_progName + ".toml");
+            if (fileExists(fileName) && !contains(components, COptionsBase::g_progName + "|")) {
+                components += COptionsBase::g_progName + "|";
                 CToml custom(fileName);
                 toml->mergeFile(&custom);
             }
@@ -848,6 +830,10 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     }
 
     //-----------------------------------------------------------------------
+    //TODO(tjayrush): global data
+    CNameValueArray COptionsBase::specials;
+
+    //-----------------------------------------------------------------------
     void COptionsBase::loadSpecials(void) {
 
         const CToml *toml = getGlobalConfig("whenBlock");
@@ -864,9 +850,9 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     }
 
     //--------------------------------------------------------------------------------
-    bool COptionsBase::findSpecial(CNameValue& pair, const string_q& arg) const {
+    bool COptionsBase::findSpecial(CNameValue& pair, const string_q& arg) {
         if (specials.size() == 0)
-            ((COptionsBase*)this)->loadSpecials();  // NOLINT
+            loadSpecials();
         for (auto special : specials) {
             if (arg == special.first) {
                 pair = special;
@@ -881,15 +867,33 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         minArgs = 1;
         isReadme = false;
         needsOption = false;
+        enableBits = OPT_DEFAULT;
         for (int i = 0 ; i < 5 ; i++)
             sorts[i] = NULL;
+        hiUp1  = (isTestMode() ? "" : cYellow) + "  ";
+        hiUp2  = (isTestMode() ? "" : cTeal);
+        hiDown = (isTestMode() ? "" : cOff);
+        arguments.clear();
+        commandLines.clear();
+        tools.clear();
+        namedAccounts.clear();
+        pParams = NULL;
+        cntParams = 0;
     }
 
+#define TEXT_NAMES
     //-----------------------------------------------------------------------
     bool COptionsBase::getNamedAccount(CAccountName& acct, const string_q& addr) const {
         if (namedAccounts.size() == 0) {
             uint64_t save = verbose;
             verbose = false;
+#ifdef TEXT_NAMES
+            if (!contains(namesFile.getFullPath(), "names.txt"))
+                ((COptionsBase*)this)->namesFile = CFilename(configPath("names/names.txt"));
+#else
+            if (!contains(namesFile.getFullPath(), "names.json"))
+                ((COptionsBase*)this)->namesFile = CFilename(configPath("names/names.json"));
+#endif
             ((COptionsBase*)this)->loadNames();  // NOLINT
             verbose = save;
         }
@@ -904,6 +908,14 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     }
 
     //-----------------------------------------------------------------------
+    string_q COptionsBase::getNamedAccount(const string_q& addr) const {
+        CAccountName item;
+        item.addr = addr;
+        getNamedAccount(item, item.addr);
+        return substitute(substitute(item.name, "(", ""), ")", "");
+    }
+
+    //-----------------------------------------------------------------------
     bool COptionsBase::loadNames(void) {
 
         // If we're already loaded or editing, return
@@ -911,17 +923,20 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             return true;
 
         string_q textFile = namesFile.getFullPath();
+#ifdef TEXT_NAMES
         string_q binFile  = substitute(textFile, ".txt", ".bin");
+#else
+        string_q binFile  = substitute(textFile, ".json", ".bin");
+#endif
 
         time_q txtDate = fileLastModifyDate(textFile);
         time_q binDate = fileLastModifyDate(binFile);
-
         if (verbose && !isTestMode())
             cout << "txtDate: " << txtDate << " binDate: " << binDate << "\n";
 
         if (binDate > txtDate) {
             CArchive nameCache(READING_ARCHIVE);
-            if (nameCache.Lock(binFile, binaryReadOnly, LOCK_NOWAIT)) {
+            if (nameCache.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
                 if (verbose && !isTestMode())
                     cout << "Reading from binary cache\n";
                 nameCache >> namedAccounts;
@@ -930,12 +945,17 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             }
         }
 
+#ifdef TEXT_NAMES
         if (verbose && !isTestMode())
             cout << "Reading from text database\n";
-
+#else
+        if (verbose && !isTestMode())
+            cout << "Reading from the json database\n";
+#endif
         // Read the data from the names database and clean it up if needed
         string_q contents;
         asciiFileToString(textFile, contents);
+#ifdef TEXT_NAMES
         contents = trimWhitespace(contents);
         replaceAll(contents, "\t\t", "\t");
         if (!endsWith(contents, "\n"))
@@ -944,7 +964,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         // Parse out the data....
         while (!contents.empty()) {
             string_q line = nextTokenClear(contents, '\n');
-            if (!startsWith(line, "#")) {
+            if (!startsWith(line, "#") && !line.empty()) {
                 if (countOf(line, '\t') < 2) {
                     cerr << "Line " << line << " does not contain two tabs.\n";
 
@@ -954,9 +974,16 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
                 }
             }
         }
+#else
+        CAccountName item;
+        while (item.parseJson3(contents)) {
+            namedAccounts.push_back(item);
+            item = CAccountName();  // reset
+        }
+#endif
 
         CArchive nameCache(WRITING_ARCHIVE);
-        if (nameCache.Lock(binFile, binaryWriteCreate, LOCK_CREATE)) {
+        if (nameCache.Lock(binFile, modeWriteCreate, LOCK_CREATE)) {
             if (verbose && !isTestMode())
                 cout << "Writing binary cache\n";
             nameCache << namedAccounts;
@@ -969,6 +996,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     //-----------------------------------------------------------------------
     const char *STR_DEFAULT_NAMEDATA =
     "#---------------------------------------------------------------------------------------------------\n"
+#ifdef TEXT_NAMES
     "#  This is the ethName database. Format records as tab separated lines with the following format:\n"
     "#\n"
     "#      Optional Symbol <tab> Name <tab> Address <tab> Source of the data <tab> Description <newline>\n"
@@ -978,6 +1006,23 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     "#---------------------------------------------------------------------------------------------------------------\n"
     "#\n"
     "#Add your names here or remove this file and run \"ethName --list\"\n";
+#else
+    "# Add JSON data to this file (remove these comments). QB will use them in the ethName tool and\n"
+    "# to name addresses during export.\n"
+    "#\n"
+    "#  [\n"
+    "#    {\n"
+    "#        \"addr\": \"An Ethereum address (leading '0x')\",\n"
+    "#        \"symbol\": \"The token symbol (if applicable) found at this address\",\n"
+    "#        \"source\": \"An optional source for this information\",\n"
+    "#        \"name\": \"The name you wish to give to this address\",\n"
+    "#        \"logo\": \"A logo to display for this address\",\n"
+    "#        \"description\": \"A description of this address\",\n"
+    "#        \"visible\": 'true' if you wish to display this address name in the export, 'false' otherwise\n"
+    "#    }\n"
+    "#  ]\n"
+    "#---------------------------------------------------------------------------------------------------\n";
+#endif
 
     //-----------------------------------------------------------------------
     const char *STR_DEFAULT_TOOLNAMES =
@@ -999,8 +1044,8 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     "    { name = \"whenBlock\",      value = \"when\"        },\n"
     "    { name = \"whereBlock\",     value = \"where\"       },\n"
     "]";
-    //   Tools not added included for searching: makeClass, acctExport, acctScrape,
-    //   blockMan, bloomMan, cacheMan, blockScrape, chifra, miniBlocks
+    //   Tools not added included for searching: makeClass, acctExport,
+    //   acctScrape, blockMan, bloomMan, cacheMan, blockScrape, chifra
 
     const char *STR_DEFAULT_WHENBLOCKS =
     "[\n"
@@ -1024,7 +1069,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     "    { name : \"parityhack2\",    value : \"4501969\" },\n"
     "    { name : \"kitties\",        value : \"4605167\" },\n"
     "    { name : \"devcon4\",        value : \"6610279\" },\n"
-    "    { name : \"constantinople\", value : \"7080000\" },\n"
+    "    { name : \"constantinople\", value : \"7280000\" },\n"
     "    { name : \"latest\",         value : \"\"        }\n"
     "]";
 }  // namespace qblocks

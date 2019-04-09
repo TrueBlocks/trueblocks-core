@@ -10,6 +10,3 @@ project (other)
 # Compilation order of the src subdirectories
 add_subdirectory(install)
 add_subdirectory(build_scripts)
-#add_subdirectory(forMax_aws)
-#add_subdirectory(ddos)
-#add_subdirectory(speedTest)

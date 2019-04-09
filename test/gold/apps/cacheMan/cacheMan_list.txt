@@ -1,6 +1,6 @@
-cacheMan argc: 3 [1:-l] [2:Duplicate.acct.bin] 
-cacheMan -l Duplicate.acct.bin 
-Listing cache: Duplicate.acct.bin
+cacheMan argc: 3 [1:-l] [2:0x9876543210987654321098765432109876543210.acct.bin] 
+cacheMan -l 0x9876543210987654321098765432109876543210.acct.bin 
+Listing cache: 0x9876543210987654321098765432109876543210.acct.bin
 blockNum:    1235820 transID:       1
 blockNum:    1236136 transID:      14
 blockNum:    1244925 transID:       5

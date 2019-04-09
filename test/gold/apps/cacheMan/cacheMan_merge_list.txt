@@ -1,6 +1,10 @@
 cacheMan argc: 3 [1:-l] [2:merged.acct.bin] 
 cacheMan -l merged.acct.bin 
 Listing cache: merged.acct.bin
+blockNum:     989198 transID:       3
+blockNum:     989332 transID:       2
+blockNum:     989345 transID:       2
+blockNum:     992893 transID:      13
 blockNum:    1001001 transID:       1
 blockNum:    1235820 transID:       1
 blockNum:    1236136 transID:      14

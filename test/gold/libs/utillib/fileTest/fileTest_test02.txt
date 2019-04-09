@@ -1,0 +1,3 @@
+fileTest argc: 2 [1:first] 
+fileTest first 
+First file in folder: ../apiTest/

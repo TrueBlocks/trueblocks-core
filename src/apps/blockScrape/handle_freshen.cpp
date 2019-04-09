@@ -6,115 +6,103 @@
 #include "etherlib.h"
 #include "options.h"
 
-extern bool updateIndex(CArchive& fullBlockCache, blknum_t bn);
 //--------------------------------------------------------------------------
 bool handle_freshen(COptions& options) {
 
-    // We open this at the start of the scrape and keep it open until the end of the scrape. Normally,
-    // we'd rather open and shut the file, we're protected with lockSection and we flush every file
-    // write and the file gets cleaned up on exit, so it's all good.
-//TODO(tjayrush): Did this as part of the dAppNode docker hack. Otherwise, blockScrape gets stuck if dAppNode kills us
-    if (options.silent)
-        ::remove((fullBlockIndex + ".lck").c_str());
-    CArchive fullBlockCache(WRITING_ARCHIVE);
-    if (!fullBlockCache.Lock(fullBlockIndex, "a+", LOCK_WAIT)) {
-        cerr << "Could not open fullBlock index: " << fullBlockCache.LockFailure() << "\n";
-        return false;
-    }
+    //
+    //  Determine most recently finalized block (lastFinal)
+    //      'startBlock' = lastFinal + 1
+    //      'endBlock' is front of chain
+    //
+    //  For each block between startBlock and endBlock
+    //      Assume we need to scrape the block
+    //      If block is in binary cache (we've seen it before)
+    //          Read the block from cache (faster than querying the node)
+    //          Query node for block hash only
+    //          If hashes are different
+    //              We need to re-scan this block
+    //      Else
+    //          We need to scan this block
+    //
+    //      If we need to scan the block
+    //          Scan the block
+    //
+    //      If the block is final (i.e. four minutes old)
+    //          If we do not have a full block, scrape the block here
+    //          If the block has no transations
+    //              Remove it from the cache
+    //          Else if we are not storing blocks permanantly (default is to not store blocks)
+    //              Remove the block from cache
+    //          Else if the is not in the cache, but we're writing blocks
+    //              Write the block to the cache
+    //          Write the finalized block to the index
+    //          If the index is 'big enough'
+    //              Sort the index
+    //              Compress the index
+    //              Store the index in 'sorted'
+    //      Else
+    //          Write the non-final block to non-final index
+    //          Write the block to the binary cache (it may be removed later)
 
-    // Write the header if this is the first time through
-    if (!fileExists(blockCachePath("logs/block-scrape-data.log"))) {
-        cerr << "\t";
-        cout << "block-date\trun-date\tduration\tblockNum\tnTxs\tnTrcs\ttrcDepth\tnAddrs\tstatus\tblooms\n";
-    }
+    bool acctScrRunning = isRunning("acctScrape", false);
+    for (blknum_t num = options.startBlock ; num < options.endBlock && !shouldQuit() && !acctScrRunning ; num++) {
 
-    // The startBlock is the last block written to the fullBlockIndex. The lastBlock is the front of
-    // the chain. Block numbers only get written to the fullBlockIndex if they are finalized, so this
-    // means we will revisit blocks until they are finalized (unless we shouldQuit if user hits cntl+C)
-    for (blknum_t num = options.startBlock ; num < options.endBlock && !shouldQuit() ; num++) {
+        CScraper scraper(&options, num);
+        scraper.status = "scan";
 
-        CBlock block;
-        block.blockNumber = num;
-        CScraperContext sCtx(&options, &block);
-
-        // We need to be aware of re-orgs, so we only write to the fullBlock index if we're sure
-        // the block is final. In this way, when we start the next scan we will start from the place
-        // where we left off last time. We optionally write the binary block data to disc (this
-        // defaults to true). By making this optional, we can delay writing the much larger binary
-        // block data until we've identified blocks of interest if so desired. Note: if we are not
-        // writing blocks the behaviour is to requery the chain until a block is final. If we are writing
-        // blocks we only re-query the chain for blocks that don't exist
-
-        string_q blockFilename = getBinaryFilename(num);
-        string_q bloomFilename = substitute(blockFilename, "/blocks/", "/blooms/");
-        bool goodHash = false;
-        if (fileExists(blockFilename)) {
-            // If the file exists, we may be able to skip re-querying the chain
-            sCtx.bloomOkay = true;
-            sCtx.blockOkay = true;
-            readBlockFromBinary(block, blockFilename);
-            readBloomArray(sCtx.bloomList, bloomFilename);
-
-            // If it had been finalized, we wouldn't be re-reading it
-            ASSERT(!block.finalized);
-
-            // Check to see if the hash has changed
-            goodHash = (block.hash == getRawBlockHash(num));
-
-            // Check to see if its finalized
-            block.finalized = isBlockFinal(block.timestamp, options.latestBlockTs, (60 * 4));
-
-            if (goodHash) {
-                // If it's the same hash, assume it's not final...
-                sCtx.status = "not final";
-                if (block.finalized) {
-                    // ...unless it is...
-                    sCtx.status = "final-a";
-                    lockSection(true);
-                    sCtx.blockOkay = (!options.writeBlocks || writeBlockToBinary(block, blockFilename));
-                    if (block.transactions.size())
-                        updateIndex(fullBlockCache, num);
-                    lockSection(false);
-                }
+        string_q fn = getBinaryFilename(num);
+        bool needToScrape = true;
+        if (fileExists(fn)) {
+            readBlockFromBinary(scraper.block, fn);
+            if (scraper.block.hash != getRawBlockHash(num)) {
+                needToScrape = true;
+                scraper.status = "rescan";
             } else {
-                // This is a block re-org, so we will re-scan
-                sCtx.status = "reorg-re";
+                needToScrape = false;
+                scraper.status = "cache";
             }
         }
 
-        // If we already have a good hash, we're re-written it if it's now final, or we don't have to if it isn't.
-        // If we don't have a good hash (either because we've never seen this block before or it's changed since
-        // last read), we need to rescan.
-        if (!goodHash) {
-            bool hasTxs = sCtx.scrape(block);
+        if (needToScrape)
+            scraper.scrapeBlock();
 
+        scraper.block.finalized = isBlockFinal(scraper.block.timestamp, options.latestBlockTs);
+        if (scraper.block.finalized) {
+            scraper.status = "final";
             lockSection(true);
-            if (hasTxs) {
-                sCtx.status += "scanned";
-                block.finalized = isBlockFinal(block.timestamp, options.latestBlockTs, (60 * 4));
-                sCtx.updateAddrIndex();
-                sCtx.blockOkay = (options.writeBlocks ? writeBlockToBinary(block, blockFilename) : true);
-                sCtx.bloomOkay = writeBloomArray(sCtx.bloomList, bloomFilename);
-                if (block.finalized) {
-                    sCtx.status = "final-b";
-                    updateIndex(fullBlockCache, num);
-                }
-            } else {
-                // If block has no txs, we want to be able to distinguish. We always write the bloom and update index
-                sCtx.status += "skipped";
-                bloomFilename = substitute(bloomFilename, ".bin", "-e.bin");
-                sCtx.updateAddrIndex();
-                sCtx.bloomOkay = writeBloomArray(sCtx.bloomList, bloomFilename);
+            // If we haven't scraped yet, we need to scrape it here
+            if (!needToScrape)
+                scraper.scrapeBlock();
+            // Process the block cache...
+            if (scraper.block.transactions.size() == 0) {
+                // We never keep empty blocks
+                ::remove(fn.c_str());
+            } else if (!options.writeBlocks) {
+                // If we're not writing blocks, remove this one
+                if (fileExists(fn.c_str()))
+                    ::remove(fn.c_str());
+            } else if (!fileExists(fn)) {
+                // We may not yet have written this block (it was final the first time we saw it), so write it
+                writeBlockToBinary(scraper.block, fn);
             }
+            if (!scraper.addToStagingList())
+                return false;
             lockSection(false);
+
+        } else {
+            // We want to avoid rescraping the block if we can, so we store it here. We may delete it when the
+            // block gets finalized if we're not supposed to be writing blocks
+            scraper.addToPendingList();
+            if (!fileExists(fn)) {
+                lockSection(true);
+                writeBlockToBinary(scraper.block, fn);
+                lockSection(false);
+            }
         }
 
-        ASSERT((block.transactions.size() && (sCtx.blockOkay && sCtx.bloomOkay)) || (!block.transactions.size() && (!sCtx.blockOkay && !sCtx.bloomOkay)));
-        cout << sCtx.report(options.endBlock) << endl;
+        cout << scraper.report(options.endBlock) << endl;
+        acctScrRunning = isRunning("acctScrape", false);
     }
-
-    if (fullBlockCache.isOpen())
-        fullBlockCache.Release();
 
     return true;
 }

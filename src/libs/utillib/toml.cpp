@@ -120,9 +120,7 @@ extern string_q collapseArrays(const string_q& inStr);
                         curGroup = group;
                     }
                     string_q key = nextTokenClear(value, '=');  // value may be empty, but not whitespace
-                    key   = trim(trimWhitespace(key), '\"');
-                    value = trim(trimWhitespace(value), '\"');
-                    addKey(curGroup, key, value, comment);
+                    addKey(curGroup, trimWhitespace(key), trimWhitespace(value), comment);
                 }
             }
         }
@@ -160,7 +158,7 @@ extern string_q collapseArrays(const string_q& inStr);
 
     //---------------------------------------------------------------------------------------
     bool CToml::writeFile(void) {
-        if (!Lock(m_filename, asciiWriteCreate, LOCK_CREATE)) {
+        if (!Lock(m_filename, modeWriteCreate, LOCK_CREATE)) {
             LockFailure();
             return false;
         }
@@ -209,7 +207,7 @@ extern string_q collapseArrays(const string_q& inStr);
     void CToml::mergeFile(CToml *tomlIn) {
         for (auto group : tomlIn->groups) {
             for (auto key : group.keys) {
-                setConfigStr(group.groupName, key.keyName, key.value);
+                setConfigStr(group.groupName, key.keyName, "\"" + key.value + "\"");
                 if (key.deleted)
                     deleteKey(group.groupName, key.keyName);
             }
@@ -405,10 +403,12 @@ extern string_q collapseArrays(const string_q& inStr);
     void CToml::CTomlGroup::addKey(const string_q& keyName, const string_q& val, bool commented) {
         string_q str = substitute(val, "\"\"\"", "");
         if (endsWith(str, '\"'))
-            str = extract(str, 0, str.length()-1);
+            replaceReverse(str, "\"", "");
         if (startsWith(str, '\"'))
-            str = extract(str, 1);
-        CTomlKey key(keyName, substitute(substitute(str, "\\\"", "\""), "\\#", "#"), commented);
+            replace(str, "\"", "");
+        str = substitute(str, "\\\"", "\"");  // unescape
+        str = substitute(str, "\\#",  "#");  // unescape
+        CTomlKey key(keyName, str, commented);
         key.deleted = contains(val, "(deleted)");
         keys.push_back(key);
         return;

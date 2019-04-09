@@ -13,12 +13,11 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("~block_list",         "a space-separated list of one or more blocks to retrieve"),
     COption("-raw",                "pull the block data from the running Ethereum node (no cache)"),
     COption("-hash_o(n)ly",        "display only transaction hashes, default is to display full transaction detail"),
     COption("-check",              "compare results between qblocks and Ethereum node, report differences, if any"),
-    COption("-latest",             "display the latest blocks at both the node and the cache"),
     COption("-addrs",              "display all addresses included in the block"),
     COption("-uniq",               "display only uniq addresses found per block"),
     COption("-uniqT(x)",           "display only uniq addresses found per transaction"),
@@ -28,6 +27,7 @@ static COption params[] = {
 //    COption("-addresses:<val>",  "display addresses included in block as one of: [ all | to | from |\n\t\t\t\t"
 //            "self-destruct | create | log-topic | log-data | input-data |\n\t\t\t\t"
 //            "trace-to | trace-from | trace-data | trace-call ]"),
+    COption("@latest",             "display the latest blocks at both the node and the cache"),
     COption("@f(o)rce",            "force a re-write of the block to the cache"),
     COption("@quiet",              "do not print results to screen, used for speed testing and data checking"),
     COption("@source:[c|r]",       "either :c(a)che or :(r)aw, source for data retrival. (shortcuts "
@@ -38,7 +38,7 @@ static COption params[] = {
                                     "results (testing)"),
     COption("",                    "Returns block(s) from local cache or directly from a running node.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -75,38 +75,14 @@ bool COptions::parseArguments(string_q& command) {
             filters.push_back(str_2_Addr(toLower(arg)));
 
         } else if (arg == "-o" || arg == "--force") {
-            etherlib_init("binary", defaultQuitHandler);
+            etherlib_init(defaultQuitHandler);
             force = true;
 
         } else if (arg == "--normalize") {
             normalize = true;
 
         } else if (arg == "-l" || arg == "--latest") {
-            string_q tmpStore = configPath("cache/tmp/getBlock-latest.txt");
-            string_q contents;
-            asciiFileToString(tmpStore, contents);
-            uint64_t lastUpdate = str_2_Uint(contents);
-            uint64_t cache = NOPOS, client = NOPOS;
-            getLatestBlocks(cache, client);
-            uint64_t diff = cache > client ? 0 : client - cache;
-            stringToAsciiFile(tmpStore, uint_2_Str(diff));  // for next time
-
-            char hostname[HOST_NAME_MAX];  gethostname(hostname, HOST_NAME_MAX);
-            char username[LOGIN_NAME_MAX]; getlogin_r(username, LOGIN_NAME_MAX);
-
-            cout << cGreen << "Hostname:                " << cYellow << (isTestMode() ? "--hostname--"  : string_q(hostname)) << cOff << "\n";
-            cout << cGreen << "User:                    " << cYellow << (isTestMode() ? "--username--"  : string_q(username)) << cOff << "\n";
-            cout << cGreen << "QB Version:              " << cYellow <<                                   getVersionStr() << cOff << "\n";
-            cout << cGreen << "Client Version:          " << cYellow << (isTestMode() ? "--version--"   : getVersionFromClient()) << cOff << "\n";
-            cout << cGreen << "Location of cache:       " << cYellow << (isTestMode() ? "--cache_dir--" : blockCachePath("")) << cOff << "\n";
-            cout << cGreen << "Latest block in cache:  "  << cYellow << (isTestMode() ? "--cache--"     : padNum8T(cache))  << cOff << "\n";
-            cout << cGreen << "Latest block at client: "  << cYellow << (isTestMode() ? "--client--"    : padNum8T(client)) << cOff << "\n";
-            cout << cGreen << "Behind head (catchup):  "  << cYellow << (isTestMode() ? "--diff--"      : padNum8T(diff));
-            if (!isTestMode() && lastUpdate) {
-                uint64_t diffDiff = (diff > lastUpdate ? 0 : lastUpdate - diff);
-                cout << " (+" << diffDiff << ")";
-            }
-            cout << cOff << "\n";
+            cout << scraperStatus();
             return false;
 
         } else if (startsWith(arg, "--source:")) {
@@ -116,9 +92,6 @@ bool COptions::parseArguments(string_q& command) {
 
             } else if (mode == "c" || mode == "cache") {
                 isCache = true;
-
-            } else if (mode == "r" || mode == "remote") {
-                etherlib_init("remote", defaultQuitHandler);
 
             } else {
                 return usage("Invalide source. Must be either '(r)aw' or '(c)ache'. Quitting...");
@@ -264,21 +237,18 @@ bool COptions::parseArguments(string_q& command) {
     if (!blocks.hasBlocks())
         return usage("You must specify at least one block. Quitting...");
 
-    format = getGlobalConfig()->getDisplayStr(false, "");
+    format = getGlobalConfig("getBlock")->getDisplayStr(false, "");
     if (contains(format, "{PRICE:CLOSE}")) {
 //        priceBlocks = true;
     }
 
-    showZeroTrace = getGlobalConfig()->getConfigBool("display", "showZeroTrace", false);
+    showZeroTrace = getGlobalConfig("getBlock")->getConfigBool("display", "showZeroTrace", false);
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    arguments.clear();
-    paramsPtr  = params;
-    nParamsRef = nParams;
-    pOptions = this;
+    registerOptions(nParams, params);
 
     isCheck       = false;
     isRaw         = false;

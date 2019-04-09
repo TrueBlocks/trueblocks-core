@@ -13,14 +13,10 @@
 #include "etherlib.h"
 #include "options.h"
 
-//---------------------------------------------------------------
-extern bool lookupDate(CBlock& block, const time_q& date);
-extern void unloadCache(void);
-
+extern bool lookupDate(const COptions *options, CBlock& block, const timestamp_t& ts);
 //---------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-
-    etherlib_init("binary", quickQuitHandler);
+    etherlib_init(quickQuitHandler);
 
     // Parse command line, allowing for command files
     COptions options;
@@ -37,11 +33,11 @@ int main(int argc, const char *argv[]) {
             if (mode == "special") {
                 mode = "block";
                 special = nextTokenClear(value, '|');
-                if (str_2_Uint(value) > getLatestBlockFromClient()) {
+                if (str_2_Uint(value) > getLastBlock_client()) {
                     cerr << "The block number you requested (";
                     cerr << cTeal << special << ": " << value << cOff;
                     cerr << ") is after the latest block (";
-                    cerr << cTeal << (isTestMode() ? "TESTING" : uint_2_Str(getLatestBlockFromClient())) << cOff;
+                    cerr << cTeal << (isTestMode() ? "TESTING" : uint_2_Str(getLastBlock_client())) << cOff;
                     cerr << "). Quitting...\n";
                     return 0;
                 }
@@ -49,31 +45,22 @@ int main(int argc, const char *argv[]) {
 
             CBlock block;
             if (mode == "block") {
-                queryBlock(block, value, false, false);
+                queryBlock(block, value, false);
 
             } else if (mode == "date") {
-                if (!fileExists(miniBlockCache)) {
-                    cerr << "Looking up blocks by date is not supported without a miniBlock ";
-                    cerr << "database, which is an advanced feature.\n";
-
-                } else {
-                    time_q date = ts_2_Date((timestamp_t)str_2_Uint(value));
-                    bool found = lookupDate(block, date);
-                    if (!found) {
-                        unloadCache();
-                        return 0;
-                    }
-                }
+                bool found = lookupDate(&options, block, (timestamp_t)str_2_Uint(value));
+                if (!found)
+                    return 0;
             }
 
             // special case for the zero block
             if (block.blockNumber == 0)
                 block.timestamp = 1438269960;
 
-            string_q def = (options.alone ?
-                                    "[{BLOCKNUMBER}\\t][{DATE}]\\n" :
+            string_q def = (options.asData ?
+                                    "[{BLOCKNUMBER}]\\t[{TIMESTAMP}]\\t[{DATE}]\\n" :
                                     "block #[{BLOCKNUMBER}][ : {TIMESTAMP}][ : {DATE}]\\n");
-            string_q fmt = getGlobalConfig()->getDisplayStr(options.alone, def);
+            string_q fmt = getGlobalConfig("whenBlock")->getDisplayStr(options.asData, def);
             // we never want to print JSON
             if (fmt.empty()) fmt = substitute(def, "\\n" , "\n");
             if (verbose && !special.empty()) {
@@ -83,96 +70,55 @@ int main(int argc, const char *argv[]) {
             cout << block.Format(fmt);
         }
     }
-
-    unloadCache();
     return 0;
 }
 
-//---------------------------------------------------------------
-static CMiniBlock *blocks = NULL;
-static uint64_t nBlocks = 0;
-static blknum_t lower = ULONG_MAX;
-static blknum_t higher = 0;
+//--------------------------------------------------------------
+bool findTimestamp_binarySearch(CBlock& block, size_t first, size_t last) {
 
-//---------------------------------------------------------------
-int findFunc(const void *v1, const void *v2) {
-    const CMiniBlock *m1 = (const CMiniBlock *)v1;
-    const CMiniBlock *m2 = (const CMiniBlock *)v2;
-    lower  = (m1->timestamp > m2->timestamp ? m2->blockNumber : lower);
-    higher = (m1->timestamp < m2->timestamp ? m2->blockNumber : higher);
-//cout << " b1: " << m1->blockNumber;
-//cout << " (" << m1->timestamp << " - " << ts_2_Date(m1->timestamp);
-//cout << ") b2: " << m2->blockNumber;
-//cout << " (" << m2->timestamp << " - " << ts_2_Date(m2->timestamp);
-//cout << ") d: " << (m1->timestamp - m2->timestamp);
-//cout << " l: " << lower;
-//cout << " h: " << higher << "\n";
-//cout.flush();
-    return static_cast<int>(m1->timestamp - m2->timestamp);
-}
+    string_q t("|/-\\|/-\\");
+    static int i = 0;
+    if (!isTestMode()) { cerr << "\r" << cGreen << t[(i++%8)] << " working" << cOff; cerr.flush(); }
 
-//---------------------------------------------------------------
-class CBlockFinder {
-public:
-    timestamp_t ts;
-    uint64_t found;
-    explicit CBlockFinder(timestamp_t t) : ts(t), found(0) { }
-};
-
-//---------------------------------------------------------------
-bool lookCloser(CBlock& block, void *data) {
-
-    CBlockFinder *bf = reinterpret_cast<CBlockFinder*>(data);
-    if (block.timestamp <= bf->ts) {
-        bf->found = block.blockNumber;
-        return true;
+    if (last > first) {
+        size_t mid = first + ((last - first) / 2);
+        CBlock b1, b2;
+        getBlock(b1, mid);
+        getBlock(b2, mid+1);
+        bool atMid  = (b1.timestamp <= block.timestamp);
+        bool atMid1 = (b2.timestamp <= block.timestamp);
+        if (atMid && !atMid1) {
+            block = b1;
+            return true;
+        } else if (!atMid) {
+            // we're too high, so search below
+            return findTimestamp_binarySearch(block, first, mid-1);
+        }
+        // we're too low, so search above
+        return findTimestamp_binarySearch(block, mid+1, last);
     }
-    return false;
-}
-
-//---------------------------------------------------------------
-bool lookupDate(CBlock& block, const time_q& date) {
-    if (!blocks) {
-        nBlocks = fileSize(miniBlockCache) / sizeof(CMiniBlock);
-        blocks = new CMiniBlock[nBlocks];
-        if (!blocks)
-            return usage("Could not allocate memory for the blocks (size needed: " + uint_2_Str(nBlocks) + ").\n");
-        bzero(blocks, sizeof(CMiniBlock)*(nBlocks));
-        if (verbose)
-            cerr << "Allocated room for " << nBlocks << " miniBlocks.\n";
-
-        // Next, we try to open the mini-block database (caller will cleanup)
-        FILE *fpBlocks = fopen(miniBlockCache.c_str(), binaryReadOnly);
-        if (!fpBlocks)
-            return usage("Could not open the mini-block database: " + miniBlockCache + ".\n");
-
-        // Read the entire mini-block database into memory in one chunk
-        size_t nRead = fread(blocks, sizeof(CMiniBlock), nBlocks, fpBlocks);
-        if (nRead != nBlocks)
-            return usage("Error encountered reading mini-blocks database.\n Quitting...");
-        if (verbose)
-            cerr << "Read " << nRead << " miniBlocks into memory.\n";
-    }
-
-    CMiniBlock mini;
-    mini.timestamp = date_2_Ts(date);
-    CMiniBlock *found = reinterpret_cast<CMiniBlock*>(bsearch(&mini, blocks, nBlocks, sizeof(CMiniBlock), findFunc));
-    if (found) {
-        queryBlock(block, uint_2_Str(found->blockNumber), false, false);
-        return true;
-    }
-
-//cout << mini.timestamp << " is somewhere between " << lower << " and " << higher << "\n";
-    CBlockFinder finder(mini.timestamp);
-    forEveryBlockOnDisc(lookCloser, &finder, lower, higher-lower);
-    queryBlock(block, uint_2_Str(finder.found), false, false);
+    getBlock(block, first);
     return true;
 }
 
 //---------------------------------------------------------------
-void unloadCache(void) {
-    if (blocks) {
-        delete [] blocks;
-        blocks = NULL;
+bool lookupDate(const COptions *options, CBlock& block, const timestamp_t& ts) {
+    time_q date = ts_2_Date(ts);
+
+    // speed up
+    blknum_t start = 1, stop = getLastBlock_client();
+    if (date.GetYear() >= 2019) {
+        start = 6988614;
+    } else if (date.GetYear() >= 2018) {
+        start = 4832685; stop = 6988614;
+    } else if (date.GetYear() >= 2017) {
+        start = 2912406; stop = 4832685;
+    } else if (date.GetYear() >= 2016) {
+        start = 778482; stop = 2912406;
     }
+
+    block.timestamp = ts;
+    bool ret = findTimestamp_binarySearch(block, start, stop);
+    if (!isTestMode()) { cerr << "\r"; cerr.flush(); }
+    return ret;
 }

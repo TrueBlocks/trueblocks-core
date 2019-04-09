@@ -49,6 +49,8 @@ extern const bigint_t&  check(const bigint_t& x);
 
 //----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
+//    etherlib_init(quickQuitHandler);
+
     CDefaultOptions options;
     options.minArgs = 0;
     options.prepareArguments(argc, argv);
@@ -306,6 +308,30 @@ int main(int argc, const char *argv[]) {
         cout << "1" << ": ";
         cout << (str_2_BigInt ("0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")+2) << endl;
 #endif
+
+        cout << endl;
+        bool done = false;
+        // leading zeros
+        string_q v = "fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2";
+        while (!done) {
+            size_t bits = 256 - (countOf(v, '0') * 4);
+            string_q type = "int" + uint_2_Str(bits);
+
+            string_q v1 = substitute(v, "00", "ff");
+            string_q v2 = substitute(v, "00", "");
+
+            cout << padRight("u"+type, 7) << ": " << padRight(v,  64, ' ') << " : " << str_2_BigUint("0x" + v) << endl;
+            cout << padRight("u"+type, 7) << ": " << padRight(v1, 64, ' ') << " : " << str_2_BigUint("0x" + v1, bits) << endl;
+            cout << padRight("u"+type, 7) << ": " << padRight(v2, 64, ' ') << " : " << str_2_BigUint("0x" + v2) << endl;
+
+            cout << padRight(" "+type, 7) << ": " << padRight(v,  64, ' ') << " : " << str_2_BigInt ("0x" + v)        << endl;
+            cout << padRight(" "+type, 7) << ": " << padRight(v1, 64, ' ') << " : " << str_2_BigInt ("0x" + v1, bits) << endl;
+            cout << padRight(" "+type, 7) << ": " << padRight(v2, 64, ' ') << " : " << str_2_BigInt ("0x" + v2)       << endl;
+
+            done = (v == "00000000000000000000000000000000000000000000000000000000000000f2");
+            replace(v, "ff", "00");
+            cout << endl;
+        }
 
     } catch (char const* err) {
         cout << "The library threw an exception: " << err << endl;

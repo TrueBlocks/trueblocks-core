@@ -15,8 +15,6 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include <vector>
-#include <map>
 #include "basetypes.h"
 #include "basenode.h"
 #include "sfarchive.h"
@@ -29,11 +27,13 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CAccountName : public CBaseNode {
 public:
+    string_q addr;
     string_q symbol;
     string_q name;
-    string_q addr;
     string_q source;
     string_q description;
+    string_q logo;
+    bool visible;
 
 public:
     CAccountName(void);
@@ -96,11 +96,13 @@ inline void CAccountName::clear(void) {
 inline void CAccountName::initialize(void) {
     CBaseNode::initialize();
 
+    addr = "";
     symbol = "";
     name = "";
-    addr = "";
     source = "";
     description = "";
+    logo = "";
+    visible = true;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -111,11 +113,13 @@ inline void CAccountName::duplicate(const CAccountName& ac) {
     clear();
     CBaseNode::duplicate(ac);
 
+    addr = ac.addr;
     symbol = ac.symbol;
     name = ac.name;
-    addr = ac.addr;
     source = ac.source;
     description = ac.description;
+    logo = ac.logo;
+    visible = ac.visible;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -140,6 +144,7 @@ inline bool CAccountName::operator==(const CAccountName& item) const {
 //-------------------------------------------------------------------------
 inline bool operator<(const CAccountName& v1, const CAccountName& v2) {
     // EXISTING_CODE
+    return v1.addr < v2.addr;
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
