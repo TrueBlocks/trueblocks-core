@@ -321,9 +321,9 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------
     blknum_t getLastBlock_cache_final(void) {
-
         string_q finLast = getLastFileInFolder(indexFolder_finalized_v2, false);
         if (!finLast.empty()) {
+            // Files in this folder are n-m.bin
             blknum_t last;
             bnFromPath(finLast, last);
             return last;
@@ -334,22 +334,18 @@ namespace qblocks {
     //--------------------------------------------------------------------------
     blknum_t getLastBlock_cache_staging(void) {
         string_q stageLast = getLastFileInFolder(indexFolder_staging_v2, false);
-        if (!stageLast.empty()) {  // if empty, we fall back on finalized folder
-            blknum_t last;
-            bnFromPath(stageLast, last);
-            return last;
-        }
+        // Files in this folder are n.txt, if empty, we fall back on finalized folder
+        if (!stageLast.empty())
+            return bnFromPath(stageLast);
         return getLastBlock_cache_final();
     }
 
     //--------------------------------------------------------------------------
     blknum_t getLastBlock_cache_pending(void) {
         string_q pendLast = getLastFileInFolder(indexFolder_pending_v2, false);
-        if (!pendLast.empty()) {  // if empty, we fall back on staging folder
-            blknum_t last;
-            bnFromPath(pendLast, last);
-            return last;
-        }
+        // Files in this folder are n.txt, if empty, we fall back on finalized folder
+        if (!pendLast.empty())
+            return bnFromPath(pendLast);
         return getLastBlock_cache_staging();
     }
 
