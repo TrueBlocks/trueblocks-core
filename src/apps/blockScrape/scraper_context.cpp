@@ -238,7 +238,7 @@ bool CScraper::addToStagingList(void) {
     bool is50 = !(block.blockNumber % 50);
     if ((overLimit && is50)) {
         finalizeIndexChunk();
-        return false;
+//        return false;
     }
 
     return true;
