@@ -31,5 +31,7 @@ namespace qblocks {
 
     extern string_q makeValidName(const string_q& inOut);
 
+    extern bool isRunning(const string_q& progName, bool countSelf);
+
     #define kMaxPathSize _POSIX_PATH_MAX
 }  // namespace qblocks

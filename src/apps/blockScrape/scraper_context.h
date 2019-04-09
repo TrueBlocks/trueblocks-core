@@ -31,12 +31,12 @@ public:
 
     void noteAddress(const address_t& addr, bool isMiner=false);
 
-    bool finalizeList(void);
-    bool stageList(void);
+    void finalizeIndexChunk(void);
+    bool addToStagingList(void);
+    bool addToPendingList(void);
 
 protected:
     bool writeList(const string_q& toFile, const string_q& removeFile);
-    void consolidateIndex(void);
 };
 
 extern bool notePotential(const CAppearance& item, void *data);
