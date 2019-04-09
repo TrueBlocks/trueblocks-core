@@ -7,10 +7,10 @@
 #include "options.h"
 
 //---------------------------------------------------------------
-bool visitIndexFiles(const string_q& path, void *data) {
+bool visitFinalIndexFiles(const string_q& path, void *data) {
 
     if (endsWith(path, "/")) {
-        return forEveryFileInFolder(path + "*", visitIndexFiles, data);
+        return forEveryFileInFolder(path + "*", visitFinalIndexFiles, data);
 
     } else {
 
@@ -120,4 +120,14 @@ bool COptions::visitBinaryFile(const string_q& path, void *data) {
     }
 
     return !shouldQuit();
+}
+
+//---------------------------------------------------------------
+bool visitStagingIndexFiles(const string_q& path, void *data) {
+    return false;
+}
+
+//---------------------------------------------------------------
+bool visitPendingIndexFiles(const string_q& path, void *data) {
+    return false;
 }

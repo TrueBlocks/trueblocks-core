@@ -16,6 +16,7 @@ public:
     CAccountWatch      primary;
     blknum_t           firstBlockInFile;
     blknum_t           lastBlockInFile;
+    size_t             visit;
 
     COptions(void);
     ~COptions(void);
@@ -25,4 +26,10 @@ public:
     bool visitBinaryFile(const string_q& path, void *data);
 };
 
-extern bool visitIndexFiles  (const string_q& path, void *data);
+#define VIS_FINAL   (1<<1)
+#define VIS_STAGING (1<<2)
+#define VIS_PENDING (1<<3)
+
+extern bool visitFinalIndexFiles(const string_q& path, void *data);
+extern bool visitStagingIndexFiles(const string_q& path, void *data);
+extern bool visitPendingIndexFiles(const string_q& path, void *data);
