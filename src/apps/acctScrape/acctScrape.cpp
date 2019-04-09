@@ -18,7 +18,15 @@ int main(int argc, const char *argv[]) {
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
-        forEveryFileInFolder(indexFolder_binary_v2, visitIndexFiles, &options);
+
+        if (options.visit & VIS_FINAL)
+            forEveryFileInFolder(indexFolder_finalized_v2, visitFinalIndexFiles, &options);
+
+        if (options.visit & VIS_STAGING)
+            forEveryFileInFolder(indexFolder_staging_v2, visitStagingIndexFiles, &options);
+
+        if (options.visit & VIS_PENDING)
+            forEveryFileInFolder(indexFolder_pending_v2, visitPendingIndexFiles, &options);
     }
 
     acctlib_cleanup();
