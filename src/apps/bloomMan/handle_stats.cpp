@@ -11,7 +11,7 @@ bool handle_stats(blknum_t bn, void *data) {
 
     CStatistics *stats = (CStatistics*)&((COptions*)data)->stats;
 
-    string_q path = substitute(getBinaryFilename(bn), "/blocks/", "/blooms/");
+    string_q path = getBinaryCacheFilename(CT_BLOOMS, bn);
     if (fileExists(path)) {
         CBloomArray blooms;
         readBloomFromBinary(blooms, path);

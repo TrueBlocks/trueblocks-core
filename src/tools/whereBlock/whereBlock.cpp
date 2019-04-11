@@ -37,7 +37,7 @@ int main(int argc, const char *argv[]) {
         explode(nums, list, '|');
         for (auto num : nums) {
             blknum_t bn = str_2_Uint(num);
-            CFilename fileName(substitute(getBinaryFilename(bn), "/blocks/", "/"+options.mode+"s/"));
+            CFilename fileName(getBinaryCacheFilename((options.mode == "bloom" ? CT_BLOOMS : CT_BLOCKS), bn));
             string_q fn = fileName.getFullPath();
             bool exists = fileExists(fn);
 

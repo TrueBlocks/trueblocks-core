@@ -11,7 +11,7 @@ bool handle_addrs(blknum_t bn, void *data) {
 
     COptions *options = (COptions *)data;
 
-    string_q path = substitute(getBinaryFilename(bn), "/blocks/", "/blooms/");
+    string_q path = getBinaryCacheFilename(CT_BLOOMS, bn);
     if (!fileExists(path)) {
         if (verbose || bn < firstTransaction)
             cerr << "Skipping " << path << endl;

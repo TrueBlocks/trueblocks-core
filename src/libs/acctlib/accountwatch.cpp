@@ -355,33 +355,6 @@ const CBaseNode *CAccountWatch::getObjectAt(const string_q& fieldName, size_t in
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-string_q CAccountWatch::displayName(bool expand, bool useColor, bool terse, size_t w1, size_t w2) const {
-    if (address == "others") {
-        return padRight(name, w1 + w2 + 1);
-    }
-    if (name == address)
-        return name;
-
-    if (terse) {
-        uint64_t len = name.length();
-        uint64_t need = 42 - len - 6;  // the six is for " (" and "...)"
-        string_q ret;
-//        if (useColor)
-//            ret += color;
-        if (expand)
-            ret += "[000000000000";
-        ret += extract(name, 0, 42-6);
-        ret += " (" + extract(address, 0, need) + "...)";
-        if (expand)
-            ret += "]";
-//        if (useColor)
-//            ret += cOff;
-        return ret;
-    }
-    return padRight(extract(name, 0, w1), w1) + " " + extract(address, 0, w2) + " ";
-}
-
-//-----------------------------------------------------------------------
 biguint_t getNodeBal(CBalanceHistoryArray& history, const address_t& addr, blknum_t blockNum) {
 
     if (!startsWith(addr, "0x"))

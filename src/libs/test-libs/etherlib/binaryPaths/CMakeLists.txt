@@ -2,17 +2,17 @@
 cmake_minimum_required (VERSION 2.6)
 
 # application project
-project (chifra)
+project (binaryPaths)
 
 # The sources to be used
 file(GLOB SOURCE_FILES "*.cpp")
 
 # Output
-set(EXECUTABLE_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/../bin")
+set(EXECUTABLE_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/../bin/test")
 
 # Define the executable to be generated
-set(TOOL_NAME "chifra")
-set(PROJ_NAME "apps")
+set(TOOL_NAME "binaryPaths")
+set(PROJ_NAME "libs/etherlib")
 add_executable(${TOOL_NAME} ${SOURCE_FILES})
 
 # Add the project static libs at linking
@@ -37,23 +37,8 @@ endfunction(run_special_test)
 
 # Function to run an individual test case
 function(run_test testName)
-    run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+     run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
 endfunction(run_test)
 
 # Enter one line for each individual test
-run_test("chifra_README"           "-th")
-run_test("chifra_no_params")
-run_test("chifra_invalid_option"   "not_a_mode")
-run_test("chifra_scrape"           "scrape")
-run_test("chifra_daemon"           "daemon" " --sleep 10" " --filter 0x1,0x2")
-run_test("chifra_ls_1"             "ls")
-run_test("chifra_seed"             "seed" " --verbose")
-run_test("chifra_freshen"          "freshen" " 0x1234567812345678123456781234567812345678")
-run_test("chifra_list"             "list" " 0x1234567812345678123456781234567812345678")
-run_test("chifra_export"           "export" " 0x1234567812345678123456781234567812345678")
-run_test("chifra_init"             "init" " 0x1234567812345678123456781234567812345678")
-run_test("chifra_name"             "names" " -d")
-#run_test("chifra_edit_config"      "config")
-
-# Installation steps, this tool is renamed at installation
-install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)
+run_test("binaryPaths" "")

@@ -17,6 +17,7 @@ bool COptions::handle_export(void) {
     if (!freshen_internal(monitorsPath, addrs, "", freshen_flags))
         return false;
 
+    size_t cnt = 0;
     for (auto addr : addrs) {
         ostringstream os;
         os << "cd " << monitorsPath << " ; ";
@@ -26,7 +27,8 @@ bool COptions::handle_export(void) {
             cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
         else {
             if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
-            usleep(500000); // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
+            if (++cnt < addrs.size())
+                usleep(500000); // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
         }
     }
     return true;

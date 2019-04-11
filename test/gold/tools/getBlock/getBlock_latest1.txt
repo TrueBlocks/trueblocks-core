@@ -1,9 +1,10 @@
 getBlock argc: 2 [1:--latest] 
 getBlock --latest 
   Client version:     --version--
-  Trueblocks Version: GHC-TrueBlocks0.5.5-alpha
+  Trueblocks Version: GHC-TrueBlocks 0.5.5-alpha
+  RPC Provider:       --rpc_provider--
   Cache location:     --cache_dir--
   Host (user):        --host (user)--
-  Latest cache:       --final--, --staging--
+  Latest cache:       --final--, --staging--, --pending--
   Latest client:      --client--
-  Dist from head:     --diff-- (-70725)
+  Dist from head:     --diff----diffdiff--

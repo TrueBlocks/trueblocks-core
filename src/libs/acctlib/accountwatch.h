@@ -52,9 +52,6 @@ public:
     // EXISTING_CODE
     CAccountWatch(const string_q& _addr, const string_q& _name, blknum_t fB, blknum_t lB, const string_q& _color);
     CAccountWatch(const address_t& _addr, const string_q& _name);
-    string_q displayName(bool expand, bool terse, size_t w1 = 20, size_t w2 = 8) const
-        { return displayName(expand, true, terse, w1, w2); }
-    string_q displayName(bool expand, bool useColor, bool terse, size_t w1 = 20, size_t w2 = 8) const;
     bloom_t bloom;
     bool inBlock;
     CArchive *tx_cache;

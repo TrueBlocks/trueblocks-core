@@ -221,7 +221,7 @@ namespace qblocks {
         }
 
         if (contains(cmdLine, "--version ")) {
-            cerr << getProgName() << getVersionStr(true) << "\n";
+            cerr << getProgName() << " " << getVersionStr(true) << "\n";
             exit(0);
         }
 
