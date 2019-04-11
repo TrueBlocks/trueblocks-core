@@ -680,7 +680,7 @@ const char* STR_CASE_SET_CODE_ARRAY =
 const char* STR_CASE_CODE_ARRAY =
 " {\n"
 "[BTAB]\t\tsize_t cnt = [{PTR}][{FIELD}].size();\n"
-"[BTAB]\t\tif (endsWith(fieldName, \"Cnt\"))\n"
+"[BTAB]\t\tif (endsWith(toLower(fieldName), \"cnt\"))\n"
 "[BTAB]\t\t\treturn uint_2_Str(cnt);\n"
 "[BTAB]\t\tif (!cnt) return \"\";\n"
 "[BTAB]\t\tstring_q retS;\n"
@@ -695,7 +695,7 @@ const char* STR_CASE_CODE_ARRAY =
 const char* STR_CASE_CODE_STRINGARRAY =
 " {\n"
 "[BTAB]\t\tsize_t cnt = [{PTR}][{FIELD}].size();\n"
-"[BTAB]\t\tif (endsWith(fieldName, \"Cnt\"))\n"
+"[BTAB]\t\tif (endsWith(toLower(fieldName), \"cnt\"))\n"
 "[BTAB]\t\t\treturn uint_2_Str(cnt);\n"
 "[BTAB]\t\tif (!cnt) return \"\";\n"
 "[BTAB]\t\tstring_q retS;\n"

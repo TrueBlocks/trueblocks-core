@@ -1,13 +1,13 @@
 chifra argc: 1 
 chifra 
 
-  Please specify one of [ freshen | export | list | init | seed | daemon | scrape | ls | rm | names | config ]. Quitting...
+  Please specify one of [ seed | scrape | daemon | init | list | export | stats | ls | rm | names | config ]. Quitting...
 
   Usage:    chifra [-v|-h] command  
   Purpose:  Create a TrueBlocks monitor configuration.
              
   Where:  
-	command               one of [ freshen | export | list | init | seed | daemon | scrape | ls | rm | names | config ] (required)
+	command               one of [ seed | scrape | daemon | init | list | export | stats | ls | rm | names | config ] (required)
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 

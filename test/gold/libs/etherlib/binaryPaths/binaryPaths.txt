@@ -1,0 +1,12 @@
+binaryPaths argc: 1 
+binaryPaths 
+/Volumes/Samsung_T7/scraper/blocks/00/10/01/001001001.bin
+/Volumes/Samsung_T7/scraper/blooms/00/10/01/001001001.bin
+/Volumes/Samsung_T7/scraper/txs/00/10/01/001001001-00020.bin
+/Volumes/Samsung_T7/scraper/traces/00/10/01/001001001.bin
+/Volumes/Samsung_T7/scraper/accts/00/10/01/001001001.bin
+/Volumes/Samsung_T7/scraper/blocks/00/10/01/
+/Volumes/Samsung_T7/scraper/blooms/00/10/01/
+/Volumes/Samsung_T7/scraper/txs/00/10/01/
+/Volumes/Samsung_T7/scraper/traces/00/10/01/
+/Volumes/Samsung_T7/scraper/accts/00/10/01/

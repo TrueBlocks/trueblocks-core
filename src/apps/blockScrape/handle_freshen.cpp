@@ -50,7 +50,7 @@ bool handle_freshen(COptions& options) {
         CScraper scraper(&options, num);
         scraper.status = "scan";
 
-        string_q fn = getBinaryFilename(num);
+        string_q fn = getBinaryCacheFilename(CT_BLOCKS, num);
         bool needToScrape = true;
         if (fileExists(fn)) {
             readBlockFromBinary(scraper.block, fn);

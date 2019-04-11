@@ -1,8 +1,9 @@
 lastBlockTest argc: 1 
 lastBlockTest 
 Non-recursive from ../
-Found 11 (11) files
+Found 12 (12) files
 ../abiTest/
+../binaryPaths/
 ../blockTest/
 ../dataUpgrade/
 ../decode_abi/

@@ -10,7 +10,7 @@ acctScrape --list 0x1234567890123456789012345678901234567890
 	-m  (--maxBlocks val) scan at most --maxBlocks blocks ('all' implies scan to end of chain)
 
 #### Hidden options (shown during testing only)
-	-l  (--logLevel val)  specify the log level (default 1)
+	-p  (--pending)       visit pending but not yet staged or finalized blocks
 #### Hidden options (shown during testing only)
 
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level

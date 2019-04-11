@@ -25,7 +25,10 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     // fastest methods to access data
     extern bool     getBlock                (CBlock& block,       blknum_t blockNum);
+    extern bool     getBlock                (CBlock& block,       const hash_t& blockHash);
     extern bool     getTransaction          (CTransaction& trans, blknum_t blockNum, txnum_t txID);
+    extern bool     getTransaction          (CTransaction& trans, const hash_t& txHash);
+    extern bool     getTransaction          (CTransaction& trans, const hash_t& blockHash, txnum_t txID);
     extern bool     getReceipt              (CReceipt& receipt,   const hash_t& txHash);
     extern bool     getLogEntry             (CLogEntry& log,      const hash_t& txHash);
     extern void     getTraces               (CTraceArray& traces, const hash_t& txHash);
@@ -33,16 +36,10 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     extern wei_t    getBalanceAt            (const address_t& addr, blknum_t blockNum=NOPOS);
+    extern bool     isContractAt            (const address_t& addr, blknum_t blockNum=NOPOS);
     extern string_q getCodeAt               (const address_t& addr, blknum_t blockNum=NOPOS);
     extern string_q getStorageAt            (const address_t& addr, uint64_t pos, blknum_t blockNum=NOPOS);
     extern uint64_t getNonceAt              (const address_t& addr, blknum_t num=NOPOS);
-
-    //-------------------------------------------------------------------------
-    // other methods to access data
-    extern bool     getBlock                (CBlock& block,       const hash_t& blockHash);
-    extern bool     getTransaction          (CTransaction& trans, const hash_t& txHash);
-    extern bool     getTransaction          (CTransaction& trans, const hash_t& blockHash, txnum_t txID);
-    extern bool     isContractAt            (const address_t& addr, blknum_t blockNum=NOPOS);
 
     //-------------------------------------------------------------------------
     extern bool     queryBlock              (CBlock& block, const string_q& num, bool needTrace);
@@ -57,7 +54,7 @@ namespace qblocks {
     extern bool     queryRawLogs            (string_q& results,   const address_t& addr, uint64_t fromBlock, uint64_t toBlock);
 
     //-----------------------------------------------------------------------
-    extern hash_t   getRawBlock             (blknum_t bn);
+    extern string_q getRawBlock             (blknum_t bn);
     extern hash_t   getRawBlockHash         (blknum_t bn);
     extern hash_t   getRawTransactionHash   (blknum_t bn, txnum_t tx);
 
@@ -68,6 +65,8 @@ namespace qblocks {
     //-----------------------------------------------------------------------
     extern bool     writeBlockToBinary      (const CBlock& block, const string_q& fileName);
     extern bool     readBlockFromBinary     (      CBlock& block, const string_q& fileName);
+    extern bool     writeTransToBinary      (const CTransaction& block, const string_q& fileName);
+    extern bool     readTransFromBinary     (      CTransaction& block, const string_q& fileName);
 
     //-------------------------------------------------------------------------
     extern string_q getVersionFromClient    (void);
@@ -80,9 +79,9 @@ namespace qblocks {
     string_q        getSha3                 (const string_q& hexIn);
 
     //-------------------------------------------------------------------------
-    extern string_q getJsonFilename         (uint64_t num);
-    extern string_q getBinaryFilename       (uint64_t num);
-    extern string_q getBinaryPath           (uint64_t num);
+    enum CacheType { CT_BLOCKS, CT_BLOOMS, CT_TXS, CT_TRACES, CT_ACCTS };
+    extern string_q getBinaryCacheFilename  (CacheType ct, blknum_t bn, txnum_t txid=NOPOS);
+    extern string_q getBinaryCachePath      (CacheType ct, blknum_t bn, txnum_t txid=NOPOS);
 
     //-------------------------------------------------------------------------
     // function pointer types for forEvery functions
