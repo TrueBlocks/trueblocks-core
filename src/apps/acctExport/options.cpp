@@ -8,9 +8,14 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("~address_list",    "one or more addresses (0x...) to export"),
-    COption("-fmt:<fmt>",       "export format (one of [json|txt|csv]"),
-    COption("",                 "Export transactions for one or more Ethereum addresses.\n"),
+    COption("~address_list",      "one or more addresses (0x...) to export"),
+    COption("-fmt:<fmt>",         "export format (one of [json|txt|csv])"),
+    COption("@blocks:<on/off>",   "write blocks to the binary cache ('off' by default)"),
+    COption("@txs:<on/off>",      "write transactions to the binary cache ('on' by default)"),
+    COption("@t(r)aces:<on/off>", "write traces to the binary cache ('off' by default)"),
+    COption("@ddos:<on/off>",     "skip over dDos transactions in export ('on' by default)"),
+    COption("@maxTraces:<num>",   "if --ddos:on, the number of traces defining a dDos (default = 250)"),
+    COption("",                   "Export full detail of transactions for one or more Ethereum addresses.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -34,6 +39,36 @@ bool COptions::parseArguments(string_q& command) {
             else if ( arg == "csv" ) fmt = CSV;
             else if ( arg == "json") fmt = JSON;
             else return usage("Export format must be one of [ json | txt | csv ]. Quitting...");
+
+        } else if (startsWith(arg, "-b") || startsWith(arg, "--blocks")) {
+            arg = substitute(substitute(arg, "-b:", ""), "--blocks:", "");
+            if (arg != "on" && arg != "off")
+                return usage("Please provide either 'on' or 'off' for the --blocks options. Quitting...");
+            writeBlocks = (arg == "on" ? true : false);
+
+        } else if (startsWith(arg, "-t") || startsWith(arg, "--txs")) {
+            arg = substitute(substitute(arg, "-t:", ""), "--txs:", "");
+            if (arg != "on" && arg != "off")
+                return usage("Please provide either 'on' or 'off' for the --txs options. Quitting...");
+            writeTrxs = (arg == "on" ? true : false);
+
+        } else if (startsWith(arg, "-r") || startsWith(arg, "--traces")) {
+            arg = substitute(substitute(arg, "-r:", ""), "--traces:", "");
+            if (arg != "on" && arg != "off")
+                return usage("Please provide either 'on' or 'off' for the --trace options. Quitting...");
+            writeTraces = (arg == "on" ? true : false);
+
+        } else if (startsWith(arg, "-d") || startsWith(arg, "--ddos")) {
+            arg = substitute(substitute(arg, "-d:", ""), "--ddos:", "");
+            if (arg != "on" && arg != "off")
+                return usage("Please provide either 'on' or 'off' for the --ddos options. Quitting...");
+            skipDdos = (arg == "on" ? true : false);
+
+        } else if (startsWith(arg, "-m") || startsWith(arg, "--maxTraces")) {
+            arg = substitute(substitute(arg, "-m:", ""), "--maxTraces:", "");
+            if (!isNumeral(arg))
+                return usage("Please provide a number (you provided " + arg + ") for --maxTraces. Quitting...");
+            maxTraces = str_2_Uint(arg);
 
         } else if (startsWith(arg, "0x")) {
             if (!isAddress(arg))
@@ -94,6 +129,12 @@ bool COptions::parseArguments(string_q& command) {
 //        }
     }
 
+    writeBlocks = getGlobalConfig("acctExport")->getConfigBool("settings", "writeBlocks", writeBlocks);;
+    writeTrxs = getGlobalConfig("acctExport")->getConfigBool("settings", "writeTrxs", writeTrxs);;
+    writeTraces = getGlobalConfig("acctExport")->getConfigBool("settings", "writeTraces", writeTraces);;
+    skipDdos = getGlobalConfig("acctExport")->getConfigBool("settings", "skipDdos", skipDdos);;
+    maxTraces = getGlobalConfig("acctExport")->getConfigBool("settings", "maxTraces", maxTraces);;
+
     if (fmt != JSON) {
         string_q defFmt = "[{DATE}]\t[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{FROM}]\t[{TO}]\t[{VALUE}]\t[{ISERROR}]\t[{EVENTS}]";
         string_q format = toml.getConfigStr("formats", "trans_fmt", defFmt);
@@ -116,6 +157,12 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
 
     monitors.clear();
+
+    writeBlocks = false;
+    writeTrxs = true;
+    writeTraces = false;
+    skipDdos = true;
+    maxTraces = 250;
 
     minArgs = 0;
 }
