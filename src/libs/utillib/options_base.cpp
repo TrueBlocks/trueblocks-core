@@ -367,7 +367,7 @@ namespace qblocks {
             permitted = longName;
             longName = nextTokenClear(permitted, ':');
             replaceAny(permitted, "<>", "");
-            if (permitted != "range" && permitted != "list" && permitted != "fn" && permitted != "mode")
+            if (permitted != "range" && permitted != "list" && permitted != "fn" && permitted != "mode" && permitted != "on/off")
                 permitted = "val";
             longName += (" " + permitted);
         }

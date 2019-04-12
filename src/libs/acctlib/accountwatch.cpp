@@ -275,7 +275,7 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
         case 'b':
             if ( fieldName % "balanceHistory" || fieldName % "balanceHistoryCnt" ) {
                 size_t cnt = balanceHistory.size();
-                if (endsWith(fieldName, "Cnt"))
+                if (endsWith(toLower(fieldName), "cnt"))
                     return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;

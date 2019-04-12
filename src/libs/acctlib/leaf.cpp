@@ -216,7 +216,7 @@ string_q CLeaf::getValueByName(const string_q& fieldName) const {
         case 'b':
             if ( fieldName % "blocks" || fieldName % "blocksCnt" ) {
                 size_t cnt = blocks.size();
-                if (endsWith(fieldName, "Cnt"))
+                if (endsWith(toLower(fieldName), "cnt"))
                     return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;

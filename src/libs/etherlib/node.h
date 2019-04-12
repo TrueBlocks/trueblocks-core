@@ -63,10 +63,12 @@ namespace qblocks {
     extern bool     readFromJson            (      CBaseNode& node, const string_q& fileName);
 
     //-----------------------------------------------------------------------
-    extern bool     writeBlockToBinary      (const CBlock& block, const string_q& fileName);
-    extern bool     readBlockFromBinary     (      CBlock& block, const string_q& fileName);
-    extern bool     writeTransToBinary      (const CTransaction& block, const string_q& fileName);
-    extern bool     readTransFromBinary     (      CTransaction& block, const string_q& fileName);
+    extern bool     writeNodeToBinary       (const CBaseNode& node, const string_q& fileName);
+    extern bool     readNodeFromBinary      (CBaseNode& item, const string_q& fileName);
+    #define writeBlockToBinary  writeNodeToBinary
+    #define writeTransToBinary  writeNodeToBinary
+    #define readBlockFromBinary readNodeFromBinary
+    #define readTransFromBinary readNodeFromBinary
 
     //-------------------------------------------------------------------------
     extern string_q getVersionFromClient    (void);
@@ -80,8 +82,8 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     enum CacheType { CT_BLOCKS, CT_BLOOMS, CT_TXS, CT_TRACES, CT_ACCTS };
-    extern string_q getBinaryCacheFilename  (CacheType ct, blknum_t bn, txnum_t txid=NOPOS);
-    extern string_q getBinaryCachePath      (CacheType ct, blknum_t bn, txnum_t txid=NOPOS);
+    extern string_q getBinaryCacheFilename  (CacheType ct, blknum_t bn, txnum_t txid=NOPOS, txnum_t tcid=NOPOS);
+    extern string_q getBinaryCachePath      (CacheType ct, blknum_t bn, txnum_t txid=NOPOS, txnum_t tcid=NOPOS);
 
     //-------------------------------------------------------------------------
     // function pointer types for forEvery functions

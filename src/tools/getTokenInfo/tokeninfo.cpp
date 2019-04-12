@@ -258,7 +258,7 @@ string_q CTokenInfo::getValueByName(const string_q& fieldName) const {
         case 'h':
             if ( fieldName % "holders" || fieldName % "holdersCnt" ) {
                 size_t cnt = holders.size();
-                if (endsWith(fieldName, "Cnt"))
+                if (endsWith(toLower(fieldName), "cnt"))
                     return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;
