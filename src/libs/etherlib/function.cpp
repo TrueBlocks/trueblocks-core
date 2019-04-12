@@ -348,7 +348,7 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
         case 'i':
             if ( fieldName % "inputs" || fieldName % "inputsCnt" ) {
                 size_t cnt = inputs.size();
-                if (endsWith(fieldName, "Cnt"))
+                if (endsWith(toLower(fieldName), "cnt"))
                     return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;
@@ -368,7 +368,7 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
         case 'o':
             if ( fieldName % "outputs" || fieldName % "outputsCnt" ) {
                 size_t cnt = outputs.size();
-                if (endsWith(fieldName, "Cnt"))
+                if (endsWith(toLower(fieldName), "cnt"))
                     return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;

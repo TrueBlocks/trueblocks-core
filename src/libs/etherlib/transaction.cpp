@@ -512,7 +512,7 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "to" ) return addr_2_Str(to);
             if ( fieldName % "traces" || fieldName % "tracesCnt" ) {
                 size_t cnt = traces.size();
-                if (endsWith(fieldName, "Cnt"))
+                if (endsWith(toLower(fieldName), "cnt"))
                     return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;

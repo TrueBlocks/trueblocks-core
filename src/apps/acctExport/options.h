@@ -13,6 +13,11 @@ public:
     CAccountWatchArray monitors;
     CAppearanceArray_base items;
     blknum_t lastAtClient;
+    bool writeBlocks;
+    bool writeTrxs;
+    bool writeTraces;
+    bool skipDdos;
+    size_t maxTraces;
 
     COptions(void);
     ~COptions(void);
