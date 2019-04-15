@@ -81,9 +81,11 @@ namespace qblocks {
     string_q        getSha3                 (const string_q& hexIn);
 
     //-------------------------------------------------------------------------
-    enum CacheType { CT_BLOCKS, CT_BLOOMS, CT_TXS, CT_TRACES, CT_ACCTS };
+    enum CacheType { CT_BLOCKS, CT_BLOOMS, CT_TXS, CT_TRACES, CT_ACCTS, CT_MONITORS, CT_INDEX };
     extern string_q getBinaryCacheFilename  (CacheType ct, blknum_t bn, txnum_t txid=NOPOS, txnum_t tcid=NOPOS);
     extern string_q getBinaryCachePath      (CacheType ct, blknum_t bn, txnum_t txid=NOPOS, txnum_t tcid=NOPOS);
+    extern string_q getBinaryCacheFilename  (CacheType ct, const address_t& addr);
+    extern string_q getBinaryCachePath      (CacheType ct, const address_t& addr);
 
     //-------------------------------------------------------------------------
     // function pointer types for forEvery functions
@@ -131,6 +133,7 @@ namespace qblocks {
 
     #define indexFolder_v2           (getCachePath("addr_index/"))
     #define indexFolder_finalized_v2 (configPath  ("cache/addr_index/finalized/"))
+    #define indexFolder_blooms_v2    (configPath  ("cache/addr_index/blooms/"))
     #define indexFolder_staging_v2   (getCachePath("addr_index/staging/"))
     #define indexFolder_pending_v2   (getCachePath("addr_index/pending/"))
     #define indexFolder_zips_v2      (getCachePath("addr_index/zips/"))

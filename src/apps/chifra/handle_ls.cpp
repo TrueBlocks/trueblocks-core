@@ -23,7 +23,7 @@ bool COptions::handle_ls(void) {
 
     CAccountNameArray accounts;
     for (auto file : files) {
-        if (contains(file, ".acct.bin") && !contains(file, ".lck")) {
+        if (endsWith(file, ".acct.bin")) {
             replace(file, monitorsPath, "");
             CAccountName item;
             item.addr = nextTokenClear(file, '.');
@@ -39,7 +39,7 @@ bool COptions::handle_ls(void) {
     }
     sort(accounts.begin(), accounts.end());
 
-    if (stats) {
+    if (stats || contains(tool_flags, "-l")) {
         for (auto acct : accounts) {
             os << "Address: " << cTeal << acct.addr << cOff << endl;
             os << "\tName:       " << cYellow << (acct.name.empty() ? "" : acct.name) << cOff << endl;

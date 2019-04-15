@@ -95,6 +95,7 @@ namespace qblocks {
     extern string_q    bloom_2_Bytes  (const bloom_t& bl);
     extern string_q    bloom_2_Bits   (const bloom_t& bl);
     extern string_q    bloom_2_Bar    (const bloom_t& bl);
+    extern string_q    byte_2_Bits    (uint8_t ch);
 
     //--------------------------------------------------------------------
     class time_q;
