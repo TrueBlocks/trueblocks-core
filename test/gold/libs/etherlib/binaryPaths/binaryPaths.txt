@@ -3,10 +3,12 @@ binaryPaths
 /Volumes/Samsung_T7/scraper/blocks/00/10/01/001001001.bin
 /Volumes/Samsung_T7/scraper/blooms/00/10/01/001001001.bin
 /Volumes/Samsung_T7/scraper/txs/00/10/01/001001001-00020.bin
-/Volumes/Samsung_T7/scraper/traces/00/10/01/001001001.bin
-/Volumes/Samsung_T7/scraper/accts/00/10/01/001001001.bin
+/Volumes/Samsung_T7/scraper/traces/00/10/01/001001001-00020-00010.bin
+/Volumes/Samsung_T7/scraper/accts/c011/a724/c011a72400e58ecd99ee497cf89e3775d4bd732f.bin
+/Volumes/Samsung_T7/scraper/monitors/c011/a724/c011a72400e58ecd99ee497cf89e3775d4bd732f.bin
 /Volumes/Samsung_T7/scraper/blocks/00/10/01/
 /Volumes/Samsung_T7/scraper/blooms/00/10/01/
 /Volumes/Samsung_T7/scraper/txs/00/10/01/
 /Volumes/Samsung_T7/scraper/traces/00/10/01/
-/Volumes/Samsung_T7/scraper/accts/00/10/01/
+/Volumes/Samsung_T7/scraper/accts/c011/a724/c011a72400e58ecd99ee497cf89e3775d4bd732f.bin
+/Volumes/Samsung_T7/scraper/monitors/c011/a724/c011a72400e58ecd99ee497cf89e3775d4bd732f.bin
