@@ -1,3 +1,4 @@
 chifra argc: 4 [1:daemon] [2:--sleep 10] [3:--filter 0x1,0x2] 
 chifra daemon --sleep 10 --filter 0x1,0x2 
+cd $BLOCK_CACHE/monitors/ ; acctScrape   0x10821bc0260fe58606d2fd97fda2113d4ab4a1ca 0x10ed2372778da1b9d96782c894b752d8a647deb8 0x268e6834d5b40745849157cae0e5715190135f10 0x2b61cd90b5591604b3d969ca9eb944d59be6f5a7 0x2eb0056c62dddd0d5bd29fd51fe795b3cb0b9be1  ;
 Sleeping for 10 seconds
