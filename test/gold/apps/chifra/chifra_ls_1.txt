@@ -4,15 +4,16 @@ chifra ls
 Monitor path: $BLOCK_CACHE/monitors/
   Current monitors:
     0x001d14804b399c6ef80e64576f657660804fec0b                           0x00a6ef05a497236a1ea611857f52884593f63f8c                           0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533                       
-    0x10821bc0260fe58606d2fd97fda2113d4ab4a1ca                           0x10ed2372778da1b9d96782c894b752d8a647deb8                           0x268e6834d5b40745849157cae0e5715190135f10                       
-    0x2b61cd90b5591604b3d969ca9eb944d59be6f5a7                           0x2eb0056c62dddd0d5bd29fd51fe795b3cb0b9be1                           0x31f54a9d0c9817bb9e6ca1d17ca20d8ea718bc66                       
-    0x3464e758c8372d7cb536eaf9f5a126d3f574f4c3                           0x3b161d57f482cd2dfbb626f0307ef92b3b094fce                           0x3e575510b9304ff417c2e4d420d1314dc3f13687                       
-    0x48a74e18b38b153c54dd4f7c0c9f9f112a83a4ee                           0x62428f78fe0118447b9668ae867b4bf6a40c2d9c                           0x654e7f49b474e2f5ac29cc5f2f0d41c8a93d6d0a                       
-    0x6d343663e55f734781e278b2b41a36c99e0bac40                           0x713b73c3994442b533e6a083ec968e40606810ec (Eth Early Adoption R)    0x77d0967ffddbad3aba301837208392573da29299                       
-    0x7e02ee81df2b100c3292636e0813d71192d8b071                           0x85979379cb90d63fe944763b42b9ec4b49573ea7                           0x89205a3a3b2a69de6dbf7f01ed13b2108b2c43e7 (Unicorns)            
-    0x9519afbc60719a83c470ceec41e32d3e4b8b262e                           0x9e5adb4e5c299654c2f0619624f7c9eb7b9a3a1a                           0xa7e1819bb646e0b8c0dd6b5dba91212536e98cc5                       
-    0xa92e6abc1156b6ed4948cc962cb60f250d422c68                           0xb3a0f8e3c7e44949011b18cf5a92ebae41923419                           0xbb43f212b7b47bab7164ce74a07bd1d61aef1ee8                       
-    0xc0fab372fad6613c3be2bb1378b2857a86c5ad90                           0xc430503c9f7cade47eb28958e734ee6255fe143b                           0xcb1547417575261c4d84cab3e989acfd9f9ee35c                       
-    0xd31f381ad54386895852f311fc3be2008c88cb27                           0xdd449471bdc5a4d98f1a7d05e35b4cb55ebed441                           0xe583ac239693c716ee5567c7da61c96647d691e5                       
-    0xf6b0b85aa3a40e9d3e821847a65bd37d56ac78c2                           0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98                           0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 (Etherum Tip Jar)     
-    0xfd23407a31f54413e32043adb7b1ee61a6e04027                       
+    0x00cf36853aa4024fb5bf5cc377dfd85844b411a0                           0x10821bc0260fe58606d2fd97fda2113d4ab4a1ca                           0x10ed2372778da1b9d96782c894b752d8a647deb8                       
+    0x268e6834d5b40745849157cae0e5715190135f10                           0x2b61cd90b5591604b3d969ca9eb944d59be6f5a7                           0x2eb0056c62dddd0d5bd29fd51fe795b3cb0b9be1                       
+    0x31f54a9d0c9817bb9e6ca1d17ca20d8ea718bc66                           0x3464e758c8372d7cb536eaf9f5a126d3f574f4c3                           0x3b161d57f482cd2dfbb626f0307ef92b3b094fce                       
+    0x3e575510b9304ff417c2e4d420d1314dc3f13687                           0x48a74e18b38b153c54dd4f7c0c9f9f112a83a4ee                           0x62428f78fe0118447b9668ae867b4bf6a40c2d9c                       
+    0x654e7f49b474e2f5ac29cc5f2f0d41c8a93d6d0a                           0x6d343663e55f734781e278b2b41a36c99e0bac40                           0x713b73c3994442b533e6a083ec968e40606810ec (Eth Early Adoption R)
+    0x77d0967ffddbad3aba301837208392573da29299                           0x7e02ee81df2b100c3292636e0813d71192d8b071                           0x85979379cb90d63fe944763b42b9ec4b49573ea7                       
+    0x89205a3a3b2a69de6dbf7f01ed13b2108b2c43e7 (Unicorns)                0x9519afbc60719a83c470ceec41e32d3e4b8b262e                           0x9e5adb4e5c299654c2f0619624f7c9eb7b9a3a1a                       
+    0xa7e1819bb646e0b8c0dd6b5dba91212536e98cc5                           0xa92e6abc1156b6ed4948cc962cb60f250d422c68                           0xb3a0f8e3c7e44949011b18cf5a92ebae41923419                       
+    0xbb43f212b7b47bab7164ce74a07bd1d61aef1ee8                           0xc0fab372fad6613c3be2bb1378b2857a86c5ad90                           0xc430503c9f7cade47eb28958e734ee6255fe143b                       
+    0xcb1547417575261c4d84cab3e989acfd9f9ee35c                           0xd31f381ad54386895852f311fc3be2008c88cb27                           0xdd449471bdc5a4d98f1a7d05e35b4cb55ebed441                       
+    0xe583ac239693c716ee5567c7da61c96647d691e5                           0xf6b0b85aa3a40e9d3e821847a65bd37d56ac78c2                           0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98                       
+    0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 (Etherum Tip Jar)         0xfd23407a31f54413e32043adb7b1ee61a6e04027                           0xffd5170fd1a8118d558e7511e364b24906c4f6b3                       
+
