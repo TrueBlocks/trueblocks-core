@@ -58,7 +58,7 @@ string_q bitBar(const bloom_t& bloom, uint64_t unused, void *data) { return stri
 string_q bars  (const bloom_t& bloom, uint64_t unused, void *data) { return bloom_2_Bar(bloom);                              }
 
 //-------------------------------------------------------------------------------------
-string_q showBloom(blknum_t bn, uint64_t bitBnd, const CBloomArray& blooms, BLOOMTOSTRFUNC func, void *data=NULL) {
+string_q showBloom_oldblooms(blknum_t bn, uint64_t bitBnd, const CBloomArray& blooms, BLOOMTOSTRFUNC func, void *data=NULL) {
     if (!func)
         return "";
     ostringstream os;
@@ -96,9 +96,9 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
                 blooms.push_back(str_2_BigUint(rawBlock.transactions[i].receipt.logsBloom));
         }
 
-             if (opt.asBars)    return showBloom(num, opt.bitBound, blooms, bars);
-        else if (opt.asBitBars) return showBloom(num, opt.bitBound, blooms, bitBar);
-        else if (opt.asPctBars) return showBloom(num, opt.bitBound, blooms, pctBar, (void*)1024);
+             if (opt.asBars)    return showBloom_oldblooms(num, opt.bitBound, blooms, bars);
+        else if (opt.asBitBars) return showBloom_oldblooms(num, opt.bitBound, blooms, bitBar);
+        else if (opt.asPctBars) return showBloom_oldblooms(num, opt.bitBound, blooms, pctBar, (void*)1024);
         else {
             CBloomTransArray showing;
             if (opt.asBits)
@@ -123,15 +123,15 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
 
         string_q fileName = getBinaryCacheFilename(CT_BLOOMS, num);
         readBloomFromBinary(blooms, fileName);
-             if (opt.asBars)    return showBloom(num, opt.bitBound, blooms, bars);
-        else if (opt.asBitBars) return showBloom(num, opt.bitBound, blooms, bitBar);
+             if (opt.asBars)    return showBloom_oldblooms(num, opt.bitBound, blooms, bars);
+        else if (opt.asBitBars) return showBloom_oldblooms(num, opt.bitBound, blooms, bitBar);
         else if (opt.asPctBars) {
             bloom_t one_bloom = 0;
             uint64_t n = blooms.size();
             for (size_t i = 0 ; i < blooms.size() ; i++)
                 one_bloom = joinBloom(one_bloom, blooms[i]);
             blooms.clear(); blooms.push_back(one_bloom);
-            return showBloom(num, opt.bitBound, blooms, pctBar, (void*)(1024 * n));
+            return showBloom_oldblooms(num, opt.bitBound, blooms, pctBar, (void*)(1024 * n));
 
         } else {
 

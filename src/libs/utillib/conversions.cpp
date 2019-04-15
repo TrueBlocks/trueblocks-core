@@ -80,6 +80,12 @@ namespace qblocks {
     };
 
     //--------------------------------------------------------------------------------
+    string_q byte_2_Bits(uint8_t ch) {
+        bitset<8> bits(ch);
+        return bits.to_string();
+    }
+
+    //--------------------------------------------------------------------------------
     string_q bloom_2_Bytes(const bloom_t& bl) {
         if (bl == 0)
             return "0x0";
@@ -674,10 +680,11 @@ if (verbose > 1) {
     //--------------------------------------------------------------------------------
     bloom_tHex::bloom_tHex(const biguint_t& numIn) {
 
-        len = 1024;
-        allocate(1024);
-
         biguint_t x2(numIn);
+
+        len = x2.len;
+        allocate(x2.len);
+
         unsigned int nDigits = 0;
         while (x2.len != 0) {
             biguint_t lastDigit(x2);
@@ -687,7 +694,7 @@ if (verbose > 1) {
         }
         len = nDigits;
 
-        char s[1024+1];
+        char s[len+1];
         memset(s, '\0', sizeof(s));
         for (unsigned int p = 0 ; p < len ; p++) {
             unsigned short c = blk[len-1-p];  // NOLINT

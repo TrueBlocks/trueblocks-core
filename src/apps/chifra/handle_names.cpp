@@ -12,6 +12,9 @@ bool COptions::handle_names(void) {
     // names mode does not require a running node
     nodeNotRequired();
 
+    if (!contains(tool_flags, "--edit"))
+        tool_flags = substitute(tool_flags, "edit", "--edit");
+
     ostringstream os;
     os << "ethName " << (tool_flags.empty() ? "--data" : tool_flags) << " ; ";
     if (isTestMode())

@@ -28,7 +28,6 @@ bool visitFinalIndexFiles(const string_q& path, void *data) {
         if (options->startScrape > options->lastBlockInFile)
             return !shouldQuit();
 
-        cerr << "Searching file : " << path << "\r"; cerr.flush();
         return options->visitBinaryFile(path, data);
     }
     ASSERT(0); // should not happen
@@ -37,6 +36,26 @@ bool visitFinalIndexFiles(const string_q& path, void *data) {
 
 //---------------------------------------------------------------
 bool COptions::visitBinaryFile(const string_q& path, void *data) {
+
+    bool useBlooms = false;
+    if (useBlooms) {
+        string_q bPath = substitute(substitute(path, indexFolder_finalized_v2, indexFolder_blooms_v2), ".bin", ".blooms.bin");
+        CBloomArray blooms;
+        readBloomFromBinary(blooms, bPath);
+        bool hit = false;
+        for (size_t b = 0 ; b < blooms.size() && !hit ; b++) {
+            for (size_t a = 0 ; a < monitors.size() && !hit ; a++) {
+                if (isBloomHit(makeBloom(monitors[a].address), blooms[b]))
+                    hit = true;
+            }
+        }
+        if (!hit) {
+            cout << "No bloom hit. Leaving..." << endl;
+            return true;
+        }
+    }
+
+    cerr << "Searching file : " << path << "\r"; cerr.flush();
 
     CArchive *chunk = NULL;
     char *rawData = NULL;
