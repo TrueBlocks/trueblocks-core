@@ -660,36 +660,52 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    static string_q getFilename_local(CacheType type, blknum_t bn, txnum_t txid, txnum_t tcid, bool asPath) {
+    static string_q getFilename_local(CacheType type, const string_q& bn, const string_q& txid, const string_q& tcid, bool asPath) {
         ostringstream os;
-        string_q num = padNum9(bn);
         switch (type) {
-            case CT_BLOCKS: os << "blocks/"; break;
-            case CT_BLOOMS: os << "blooms/"; break;
-            case CT_TXS:    os << "txs/"; break;
-            case CT_TRACES: os << "traces/"; break;
-            case CT_ACCTS:  os << "accts/"; break;
+            case CT_BLOCKS:   os << "blocks/"; break;
+            case CT_BLOOMS:   os << "blooms/"; break;
+            case CT_TXS:      os << "txs/"; break;
+            case CT_TRACES:   os << "traces/"; break;
+            case CT_ACCTS:    os << "accts/"; break;
+            case CT_MONITORS: os << "monitors/"; break;
             default:
                 ASSERT(0); // should not happen
         }
-        os << extract(num, 0, 2) << "/" << extract(num, 2, 2) << "/" << extract(num, 4, 2) << "/";
-        if (!asPath) {
-            os << num;
-            os << ((type == CT_TRACES || type == CT_TXS) ? "-"+padNum5(txid) : "");
-            os << ( type == CT_TRACES ? "-"+padNum5(tcid) : "");
-            os << ".bin";
+        if (type == CT_ACCTS || type == CT_MONITORS) {
+            string_q addr = toLower(substitute(bn, "0x", ""));
+            os << extract(addr, 0, 4) << "/" << extract(addr, 4, 4) << "/" << addr << ".bin";
+
+        } else {
+            os << extract(bn, 0, 2) << "/" << extract(bn, 2, 2) << "/" << extract(bn, 4, 2) << "/";
+            if (!asPath) {
+                os << bn;
+                os << ((type == CT_TRACES || type == CT_TXS) ? "-" + txid : "");
+                os << ( type == CT_TRACES ? "-" + tcid : "");
+                os << ".bin";
+            }
         }
         return getCachePath(os.str());
     }
 
     //-------------------------------------------------------------------------
     string_q getBinaryCachePath(CacheType type, blknum_t bn, txnum_t txid, txnum_t tcid) {
-        return getFilename_local(type, bn, txid, tcid, true);
+        return getFilename_local(type, padNum9(bn), padNum5(txid), padNum5(tcid), true);
     }
 
     //-------------------------------------------------------------------------
     string_q getBinaryCacheFilename(CacheType type, blknum_t bn, txnum_t txid, txnum_t tcid) {
-        return getFilename_local(type, bn, txid, tcid, false);
+        return getFilename_local(type, padNum9(bn), padNum5(txid), padNum5(tcid), false);
+    }
+
+    //-------------------------------------------------------------------------
+    string_q getBinaryCachePath(CacheType type, const address_t& addr) {
+        return getFilename_local(type, addr, "", "", true);
+    }
+
+    //-------------------------------------------------------------------------
+    string_q getBinaryCacheFilename(CacheType type, const address_t& addr) {
+        return getFilename_local(type, addr, "", "", false);
     }
 
     //-------------------------------------------------------------------------
