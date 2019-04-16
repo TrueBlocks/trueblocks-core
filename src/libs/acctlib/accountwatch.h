@@ -38,6 +38,7 @@ public:
     wei_t nodeBal;
     bool enabled;
     CAbi abi_spec;
+    FreshenMode fm_mode;
 
 public:
     CAccountWatch(void);
@@ -145,6 +146,7 @@ inline void CAccountWatch::initialize(void) {
     nodeBal = 0;
     enabled = true;
     abi_spec = CAbi();
+    fm_mode = FM_PRODUCTION;
 
     // EXISTING_CODE
     lastBlock = UINT_MAX;
@@ -170,6 +172,7 @@ inline void CAccountWatch::duplicate(const CAccountWatch& ac) {
     nodeBal = ac.nodeBal;
     enabled = ac.enabled;
     abi_spec = ac.abi_spec;
+    fm_mode = ac.fm_mode;
 
     // EXISTING_CODE
     lastBlock = ac.lastBlock;

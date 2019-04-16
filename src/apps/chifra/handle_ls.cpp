@@ -16,15 +16,15 @@ bool COptions::handle_ls(void) {
     nodeNotRequired();
 
     ostringstream os;
-    os << endl << cGreen << "Monitor path: " << cWhite << monitorsPath << endl;
+    os << endl << cGreen << "Monitor path: " << cWhite << getMonitorPath("") << endl;
 
     CStringArray files;
-    listFilesInFolder(files, monitorsPath + "*.*", false);
+    listFilesInFolder(files, getMonitorPath("*.*"), false);
 
     CAccountNameArray accounts;
     for (auto file : files) {
         if (endsWith(file, ".acct.bin")) {
-            replace(file, monitorsPath, "");
+            replace(file, getMonitorPath(""), "");
             CAccountName item;
             item.addr = nextTokenClear(file, '.');
             getNamedAccount(item, item.addr);
