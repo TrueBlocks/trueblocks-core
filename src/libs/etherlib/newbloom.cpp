@@ -12,6 +12,8 @@
  *-------------------------------------------------------------------------------------------*/
 #include "newbloom.h"
 
+namespace qblocks {
+
 //---------------------------------------------------------------------------
 size_t bloom_nt::nBitsHit(void) const {
     size_t cnt = 0;
@@ -70,3 +72,5 @@ bool isMember(const CNewBloomArray& blooms, const address_t& addr) {
 
 //----------------------------------------------------------------------
 size_t bloom_nt::BYTE_SIZE = N_BYTES;
+
+}  // namespace qblocks
