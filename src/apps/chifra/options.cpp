@@ -8,7 +8,7 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("~command", "one of [ seed | scrape | daemon | init | list | export | stats | ls | rm | names | config ]"),
+    COption("~command", "one of [ seed | scrape | daemon | list | export | stats | ls | rm | names | config ]"),
     COption("",         "Create a TrueBlocks monitor configuration.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -45,7 +45,7 @@ bool COptions::parseArguments(string_q& command) {
                 addrs.push_back(toLower(arg));
 
             } else {
-                if (arg == "--new_version")
+                if (arg == "--useBlooms")
                     freshen_flags = (arg + " ");
                 else
                     tool_flags += (arg + " ");
@@ -56,8 +56,14 @@ bool COptions::parseArguments(string_q& command) {
 
     if (mode.empty())
         return usage("Please specify " + params[0].description + ". Quitting...");
-    monitorsPath = getMonitorPath("");
-    establishFolder(monitorsPath);
+    establishFolder(getMonitorPath("", FM_PRODUCTION));
+    establishFolder(getMonitorPath("", FM_STAGING));
+
+    if (verbose) {
+        tool_flags += " --verbose";
+        freshen_flags += " --verbose";
+    }
+
     tool_flags = trim(tool_flags, ' ');
     freshen_flags = trim(freshen_flags, ' ');
 

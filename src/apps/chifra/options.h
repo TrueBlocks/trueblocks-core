@@ -13,7 +13,6 @@ public:
     string_q mode;
     blknum_t minWatchBlock;
     blknum_t maxWatchBlock;
-    string_q monitorsPath;
     CArchive txCache;
 
     string_q freshen_flags;
@@ -28,7 +27,6 @@ public:
     bool createConfigFile(const address_t& addr);
 
     bool handle_export (void);
-    bool handle_init   (void);
     bool handle_list   (void);
     bool handle_seed   (void);
     bool handle_daemon (void);
@@ -41,8 +39,7 @@ public:
 };
 
 //--------------------------------------------------------------------------------
-extern bool freshen_internal(const string_q& path, const address_t& addr, const string_q& tool_flags, const string_q& freshen_flags);
-extern bool freshen_internal(const string_q& path, const CAddressArray& list, const string_q& tool_flags, const string_q& freshen_flags);
+extern bool freshen_internal(FreshenMode mode, const CAddressArray& list, const string_q& tool_flags, const string_q& freshen_flags);
 
 //--------------------------------------------------------------------------------
 extern string_q colors[];

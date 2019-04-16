@@ -96,6 +96,7 @@ bool CAccountWatch::setValueByName(const string_q& fieldName, const string_q& fi
             break;
         case 'f':
             if ( fieldName % "firstBlock" ) { firstBlock = str_2_Uint(fieldValue); return true; }
+//            if ( fieldName % "fm_mode" ) { fm_mode = fieldValue; return true; }
             break;
         case 'l':
             if ( fieldName % "lastBlock" ) { lastBlock = str_2_Uint(fieldValue); return true; }
@@ -145,6 +146,7 @@ bool CAccountWatch::Serialize(CArchive& archive) {
     archive >> nodeBal;
     archive >> enabled;
 //    archive >> abi_spec;
+//    archive >> fm_mode;
     finishParse();
     return true;
 }
@@ -167,6 +169,7 @@ bool CAccountWatch::SerializeC(CArchive& archive) const {
     archive << nodeBal;
     archive << enabled;
 //    archive << abi_spec;
+//    archive << fm_mode;
 
     return true;
 }
@@ -213,6 +216,8 @@ void CAccountWatch::registerClass(void) {
     ADD_FIELD(CAccountWatch, "enabled", T_BOOL, ++fieldNum);
     ADD_FIELD(CAccountWatch, "abi_spec", T_OBJECT, ++fieldNum);
     HIDE_FIELD(CAccountWatch, "abi_spec");
+    ADD_FIELD(CAccountWatch, "fm_mode", T_TEXT, ++fieldNum);
+    HIDE_FIELD(CAccountWatch, "fm_mode");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAccountWatch, "schema");
@@ -294,6 +299,7 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
             break;
         case 'f':
             if ( fieldName % "firstBlock" ) return uint_2_Str(firstBlock);
+//            if ( fieldName % "fm_mode" ) return fm_mode;
             break;
         case 'l':
             if ( fieldName % "lastBlock" ) return uint_2_Str(lastBlock);
@@ -450,16 +456,16 @@ bool CAccountWatch::openCacheFile1(void) {
     tx_cache = new CArchive(WRITING_ARCHIVE);
     if (tx_cache == NULL)
         return false;
-    return tx_cache->Lock(getMonitorPath(address), modeWriteAppend, LOCK_WAIT);
+    return tx_cache->Lock(getMonitorPath(address, fm_mode), modeWriteAppend, LOCK_WAIT);
 }
 
 //-------------------------------------------------------------------------
 void CAccountWatch::writeLastBlock(blknum_t bn) {
     if (!isTestMode())
-        stringToAsciiFile(getMonitorLast(address), uint_2_Str(bn) + "\n");
+        stringToAsciiFile(getMonitorLast(address, fm_mode), uint_2_Str(bn) + "\n");
     else
         if (address != "./merged.bin")
-            cerr << "Would have written " << getMonitorLast(address) << ": " << bn << endl;
+            cerr << "Would have written " << getMonitorLast(address, fm_mode) << ": " << bn << endl;
 }
 
 //-------------------------------------------------------------------------
