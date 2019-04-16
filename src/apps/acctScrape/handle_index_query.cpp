@@ -64,7 +64,6 @@ bool COptions::visitBinaryFile(const string_q& path, void *data) {
         CNewBloomArray blooms;
         newReadBloomFromBinary(blooms, bPath);
         bool hit = false;
-extern bool isMember(const CNewBloomArray& blooms, const address_t& addr);
         for (size_t a = 0 ; a < monitors.size() && !hit ; a++) {
             if (isMember(blooms, monitors[a].address))
                 hit = true;

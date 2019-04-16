@@ -2,6 +2,8 @@
 
 #include "utillib.h"
 
+namespace qblocks {
+
 #define N_RAND_ADDR ((120000)-1)
 #define MAX_INSERTS 50000
 #define N_BYTES (1048576 / 8)
@@ -146,3 +148,5 @@ inline bloom_nt addr_2_Bloom(const address_t& addrIn) {
 //----------------------------------------------------------------------
 extern bool addToSet(CNewBloomArray& blooms, const address_t& addr);
 extern bool isMember(const CNewBloomArray& blooms, const address_t& addr);
+
+}  // namespace
