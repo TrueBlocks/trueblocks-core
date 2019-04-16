@@ -9,6 +9,8 @@
 static const COption params[] = {
     COption("-maxBlocks:<val>", "scan at most --maxBlocks blocks ('all' implies scan to end of chain)"),
     COption("@pending",         "visit pending but not yet staged or finalized blocks"),
+    COption("@useBlooms",       "use bloom filters to decide which index files to search"),
+    COption("@staging",         "produce results in the staging folder instead of production folder"),
     COption("",                 "Index transactions for a given Ethereum address (or series of addresses).\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -40,6 +42,12 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-p" || arg == "--pending") {
             visit |= VIS_PENDING;
+
+        } else if (arg == "-u" || arg == "--useBlooms") {
+            useBlooms = true;
+
+        } else if (arg == "-s" || arg == "--staging") {
+            fm_mode = FM_STAGING;
 
         } else if (startsWith(arg, "0x")) {
             if (!isAddress(arg))
@@ -95,7 +103,7 @@ bool COptions::parseArguments(string_q& command) {
     if (isAll)
         maxBlocks = INT_MAX;
 
-    string_q transCachePath = getMonitorPath("");
+    string_q transCachePath = getMonitorPath("", fm_mode);
     if (!folderExists(transCachePath)) {
         cerr << "The cache folder '" << transCachePath << "' not found. Trying to create it." << endl;
         establishFolder(transCachePath);
@@ -104,11 +112,11 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     for (auto monitor : monitors) {
-        string_q fn = getMonitorPath(monitor.address);
+        string_q fn = getMonitorPath(monitor.address, fm_mode);
         if (fileExists(fn + ".lck"))
             return usage("The cache file '" + fn + "' is locked. Quitting...");
 
-        fn = getMonitorLast(monitor.address);
+        fn = getMonitorLast(monitor.address, fm_mode);
         if (fileExists(fn + ".lck"))
             return usage("The last block file '" + fn + "' is locked. Quitting...");
     }
@@ -117,7 +125,7 @@ bool COptions::parseArguments(string_q& command) {
         return usage("Address index path '" + indexFolder_finalized_v2 + "' not found. Quitting...");
 
     blknum_t lastInCache = getLastBlock_cache_final();
-    startScrape = str_2_Uint(asciiFileToString(getMonitorLast(primary.address)));
+    startScrape = str_2_Uint(asciiFileToString(getMonitorLast(primary.address, fm_mode)));
     scrapeCnt   = min(lastInCache - startScrape, maxBlocks);
 
     if (verbose) {
@@ -134,10 +142,12 @@ void COptions::Init(void) {
     // We want to be able to run this more than once
     // optionOn(OPT_RUNONCE);
 
+    fm_mode     = FM_PRODUCTION;
     minArgs     = 0;
     startScrape = 0;
     scrapeCnt   = 0;
     visit       = (VIS_STAGING | VIS_FINAL);
+    useBlooms   = false;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -147,4 +157,6 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+    // just some cleanup of the screen
+    cerr << string_q(150,' ') << "\r";
 }

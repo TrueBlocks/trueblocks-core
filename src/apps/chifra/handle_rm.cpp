@@ -19,7 +19,7 @@ bool COptions::handle_rm(void) {
         return usage("This function requires an address. Quitting...");
 
     for (auto addr : addrs) {
-        string_q fn = monitorsPath + addr + ".acct.bin";
+        string_q fn = getMonitorPath(addr);
         if (!fileExists(fn)) {
             cout << "monitor not found for address " << addr << "." << endl;
         } else {
@@ -28,7 +28,7 @@ bool COptions::handle_rm(void) {
             int ch = getchar();
             if (ch == 'y' || ch == 'Y') {
                 ostringstream os;
-                os << "cd " << monitorsPath << " ; ";
+                os << "cd " << getMonitorPath("") << " ; ";
                 os << "rm -f " << addr << ".* ; ";
                 if (isTestMode())
                     cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;

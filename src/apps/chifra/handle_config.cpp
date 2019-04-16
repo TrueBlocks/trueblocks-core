@@ -20,7 +20,7 @@ bool COptions::handle_config(void) {
         return usage("chifra config 'mode' must be either 'edit' or 'show'. Quitting...");
 
     for (auto addr : addrs) {
-        string_q path = monitorsPath + addr + ".toml";
+        string_q path = getMonitorPath(addr + ".toml");
         if (!fileExists(path)) {
             // If it does not exist and the user wants to edit it, create it, otherwise error out
             if (cmd == "show")
@@ -60,7 +60,7 @@ const char* STR_WATCH =
 //----------------------------------------------------------------
 bool COptions::createConfigFile(const address_t& addr) {
 
-    string_q fileName = monitorsPath + addr + ".toml";
+    string_q fileName = getMonitorPath(addr + ".toml");
     cerr << cTeal << "Creating configuration file: " << fileName << endl;
 
     string_q config;

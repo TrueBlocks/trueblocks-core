@@ -17,6 +17,8 @@ public:
     blknum_t           firstBlockInFile;
     blknum_t           lastBlockInFile;
     size_t             visit;
+    bool               useBlooms;
+    FreshenMode        fm_mode;
 
     COptions(void);
     ~COptions(void);

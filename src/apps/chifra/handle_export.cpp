@@ -14,13 +14,12 @@ bool COptions::handle_export(void) {
     if (addrs.empty())
         return usage("This function requires an address. Quitting...");
 
-    if (!freshen_internal(monitorsPath, addrs, "", freshen_flags))
+    if (!freshen_internal(FM_PRODUCTION, addrs, "", freshen_flags))
         return false;
 
     size_t cnt = 0;
     for (auto addr : addrs) {
         ostringstream os;
-        os << "cd " << monitorsPath << " ; ";
         os << "grabABI " << addr << " 1>/dev/null 2>&1; ";
         os << "acctExport " << addr << " " << tool_flags;
         if (isTestMode())

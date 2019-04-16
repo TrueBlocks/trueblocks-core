@@ -34,28 +34,50 @@ bool visitFinalIndexFiles(const string_q& path, void *data) {
     return !shouldQuit();
 }
 
+//----------------------------------------------------------------------------------
+bool newReadBloomFromBinary(CNewBloomArray& blooms, const string_q& fileName) {
+    blooms.clear();
+    CArchive bloomCache(READING_ARCHIVE);
+    if (bloomCache.Lock(fileName, modeReadOnly, LOCK_NOWAIT)) {
+        uint32_t n;
+        bloomCache.Read(n);
+        for (size_t i = 0 ; i < n ; i++) {
+            bloom_nt bloom;
+            uint32_t nI;
+            bloomCache.Read(nI);
+            bloom.nInserted = nI;
+            bloomCache.Read(bloom.bits, sizeof(uint8_t), bloom_nt::BYTE_SIZE);
+            blooms.push_back(bloom);
+        }
+        bloomCache.Close();
+        return true;
+    }
+    return false;
+}
+
 //---------------------------------------------------------------
 bool COptions::visitBinaryFile(const string_q& path, void *data) {
 
-    bool useBlooms = false;
-    if (useBlooms) {
-        string_q bPath = substitute(substitute(path, indexFolder_finalized_v2, indexFolder_blooms_v2), ".bin", ".blooms.bin");
-        CBloomArray blooms;
-        readBloomFromBinary(blooms, bPath);
+    COptions *options = reinterpret_cast<COptions*>(data);
+    string_q bPath = substitute(substitute(path, indexFolder_finalized_v2, indexFolder_blooms_v2), ".bin", ".bloom");
+    if (options->useBlooms && fileExists(bPath)) {
+        CNewBloomArray blooms;
+        newReadBloomFromBinary(blooms, bPath);
         bool hit = false;
-        for (size_t b = 0 ; b < blooms.size() && !hit ; b++) {
-            for (size_t a = 0 ; a < monitors.size() && !hit ; a++) {
-                if (isBloomHit(makeBloom(monitors[a].address), blooms[b]))
-                    hit = true;
-            }
+extern bool isMember(const CNewBloomArray& blooms, const address_t& addr);
+        for (size_t a = 0 ; a < monitors.size() && !hit ; a++) {
+            if (isMember(blooms, monitors[a].address))
+                hit = true;
         }
         if (!hit) {
-            cout << "No bloom hit. Leaving..." << endl;
+            cerr << "Skipping file : " << path << "\r"; cerr.flush();
             return true;
         }
     }
-
-    cerr << "Searching file : " << path << "\r"; cerr.flush();
+    cerr << "Searching file : " << path;
+    if (options->useBlooms)
+        cerr << endl;
+    else { cerr << "\r"; cerr.flush(); }
 
     CArchive *chunk = NULL;
     char *rawData = NULL;
@@ -63,8 +85,9 @@ bool COptions::visitBinaryFile(const string_q& path, void *data) {
 
     for (size_t ac = 0 ; ac < monitors.size() && !shouldQuit() ; ac++) {
         CAccountWatch *acct = &monitors[ac];
+        acct->fm_mode = options->fm_mode;
         if (!acct->openCacheFile1()) {
-            cerr << "Could not open transaction cache file " << getMonitorPath(acct->address) << ". Quitting...";
+            cerr << "Could not open transaction cache file " << getMonitorPath(acct->address, options->fm_mode) << ". Quitting...";
             return false;
         }
 
