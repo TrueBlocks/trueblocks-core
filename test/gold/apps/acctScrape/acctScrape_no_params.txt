@@ -11,9 +11,12 @@ acctScrape
 
 #### Hidden options (shown during testing only)
 	-p  (--pending)       visit pending but not yet staged or finalized blocks
+	-u  (--useBlooms)     use bloom filters to decide which index files to search
+	-s  (--staging)       produce results in the staging folder instead of production folder
 #### Hidden options (shown during testing only)
 
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 
   Powered by QBlocks
+                                                                                                                                                      
