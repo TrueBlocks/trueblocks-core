@@ -19,7 +19,11 @@ bool COptions::handle_ls(void) {
     os << endl << cGreen << "Monitor path: " << cWhite << getMonitorPath("") << endl;
 
     CStringArray files;
-    listFilesInFolder(files, getMonitorPath("*.*"), false);
+    if (isTestMode()) {
+        files.push_back("0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359.accts.bin");
+    } else {
+        listFilesInFolder(files, getMonitorPath("*.*"), false);
+    }
 
     CAccountNameArray accounts;
     for (auto file : files) {
