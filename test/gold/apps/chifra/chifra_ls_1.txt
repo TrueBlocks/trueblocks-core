@@ -3,5 +3,4 @@ chifra ls
 
 Monitor path: $BLOCK_CACHE/monitors/
   Current monitors:
-    0xf278c1ca969095ffddded020290cf8b5c424ace2 (RUFF)                    0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 (Etherum Tip Jar)         0xfc05987bd2be489accf0f509e44b0145d68240f7 (ESSENTIA)            
-
+    none                       
