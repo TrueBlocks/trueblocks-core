@@ -404,9 +404,17 @@ namespace qblocks {
 
     //-----------------------------------------------------------------------
     //TODO(tjayrush): global data
-    static bool sectionLocked = false;
+    static uint32_t sectionLocks = 0;
     void lockSection(bool lock) {
-        sectionLocked = lock;
+        if (lock)
+            sectionLocks++;
+        else if (sectionLocks > 0)
+            sectionLocks--;
+    }
+
+    //-----------------------------------------------------------------------
+    bool isSectionLocked(void) {
+        return (sectionLocks > 0);
     }
 
     //-----------------------------------------------------------------------
@@ -415,7 +423,7 @@ namespace qblocks {
         // This is global data, and therefore not thread safe, but it's okay since
         // we want to count a quit request no matter which thread it's from.
         static size_t g_QuitCount = 0;
-        if (g_QuitCount && sectionLocked)  // ignore if we're locked
+        if (g_QuitCount && isSectionLocked())  // ignore if we're locked
             return false;
         g_QuitCount += s;
         return g_QuitCount;
