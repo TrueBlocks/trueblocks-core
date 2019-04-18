@@ -69,7 +69,7 @@ bool COptions::handle_daemon(void) {
 
         cerr << "Sleeping for " << sleep << " seconds" << endl;
         if (!isTestMode())
-            usleep((unsigned int)sleep * 100000);
+            usleep((unsigned int)sleep * 1000000);
     }
     return true;
 }
