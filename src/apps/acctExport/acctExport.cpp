@@ -125,7 +125,7 @@ bool exportData(COptions& options) {
 
         if (isJson && !first)
             cout << ", ";
-        cout << trans.Format(transFmt);
+        cout << trans.Format(transFmt) << endl;
         if (needsTrace)
             cout << endl;
         HIDE_FIELD(CFunction, "message");
