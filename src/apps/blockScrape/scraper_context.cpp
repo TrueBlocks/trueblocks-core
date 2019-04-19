@@ -213,6 +213,8 @@ bool CScraper::writeList(const string_q& toFile, const string_q& removeFile) {
 //--------------------------------------------------------------------------
 bool CScraper::addToPendingList(void) {
     string_q pendingName = indexFolder_pending_v2 + padNum9(block.blockNumber) + ".txt";
+    string_q countFile = indexFolder_v2 + "counts.txt";
+    curLines = str_2_Uint(asciiFileToString(countFile)); // for reporting only
     return writeList(pendingName, "");
 }
 
