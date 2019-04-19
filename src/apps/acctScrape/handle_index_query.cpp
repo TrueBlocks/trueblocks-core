@@ -73,7 +73,9 @@ bool COptions::visitBinaryFile(const string_q& path, void *data) {
             return true;
         }
     }
-    cerr << "Searching file : " << path;
+    static int n = 0;
+    if (!(++n%23))
+        cerr << "Searching file " << substitute(path, indexFolder_finalized_v2, "./") << string_q((n/23), '.');
     if (options->useBlooms)
         cerr << endl;
     else { cerr << "\r"; cerr.flush(); }
