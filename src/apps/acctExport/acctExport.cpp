@@ -74,8 +74,8 @@ bool exportData(COptions& options) {
                 trans = *tx;
                 tx->pBlock = &block;
             } else {
-                // silently return
-                return true;
+                // silently skip over this
+                // return true;
             }
         }
 
