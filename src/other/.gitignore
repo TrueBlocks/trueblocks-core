@@ -1,7 +1,7 @@
-addrs_Bloom
 bloomBuilder
 addrs_reorder
 addrs_writeBack
 junk
 addrs_read
-addrs
+*output*
+*sorted*
