@@ -245,6 +245,6 @@ namespace qblocks {
         string_q cmd = "ps -ef | grep -i " + progName + " | grep -v grep | grep -v \"sh -c \" | wc -l";
         uint64_t cnt = str_2_Uint(doCommand(cmd));
         // should we exclude ourselves?
-        return (countSelf ? cnt > 1 : cnt > 0);
+        return (countSelf ? false : cnt > 0); //cnt > 1 : cnt > 0);
     }
 }  // namespace qblocks
