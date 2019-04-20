@@ -148,5 +148,6 @@ inline bloom_nt addr_2_Bloom(const address_t& addrIn) {
 //----------------------------------------------------------------------
 extern bool addToSet(CNewBloomArray& blooms, const address_t& addr);
 extern bool isMember(const CNewBloomArray& blooms, const address_t& addr);
+extern bool writeNewBloom(const string_q& outFile, const CNewBloomArray& blooms);
 
 }  // namespace

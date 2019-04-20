@@ -288,7 +288,7 @@ void CScraper::finalizeIndexChunk(void) {
         }
     }
     appendToAsciiFile(asciiFile, os.str());
-    writeIndexAsBinary(binFile, apps);
+    writeIndexAsBinary(binFile, apps); // also writes the bloom file
 
     string_q countFile = indexFolder_v2 + "counts.txt";
     ::remove(countFile.c_str());

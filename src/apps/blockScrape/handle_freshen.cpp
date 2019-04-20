@@ -85,8 +85,10 @@ bool handle_freshen(COptions& options) {
                 // We may not yet have written this block (it was final the first time we saw it), so write it
                 writeBlockToBinary(scraper.block, fn);
             }
-            if (!scraper.addToStagingList())
+            if (!scraper.addToStagingList()) {
+                lockSection(false);
                 return false;
+            }
             lockSection(false);
 
         } else {

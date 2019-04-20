@@ -85,6 +85,8 @@ namespace qblocks {
 
         hashbytes_t hash = hash_2_Bytes(versionHash);
 
+        CNewBloomArray blooms;
+
         cerr << "\tExtracting addresses...";
         CArchive archive(WRITING_ARCHIVE);
         archive.Lock(tmpFile, modeWriteCreate, LOCK_NOWAIT);
@@ -99,6 +101,7 @@ namespace qblocks {
             CAppearance_base rec(parts[1], parts[2]);
             blockTable.push_back(rec);
             if (!prev.empty() && parts[0] != prev) {
+                addToSet(blooms, prev);
                 addrbytes_t bytes = addr_2_Bytes(prev);
                 archive.Write(bytes.data(), bytes.size(), sizeof(uint8_t));
                 archive.Write(offset);
@@ -111,6 +114,7 @@ namespace qblocks {
             prev = parts[0];
         }
         // The above algo always misses the last address, so we add it here
+        addToSet(blooms, prev);
         addrbytes_t bytes = addr_2_Bytes(prev);
         archive.Write(bytes.data(), bytes.size(), sizeof(uint8_t));
         archive.Write(offset);
@@ -135,6 +139,8 @@ namespace qblocks {
         // data so it's not corrupted. In this way, we only move the data to its final resting place in one move. Safer.
         cerr << "\tFinalizing data..." << endl;
         lockSection(true);
+        string_q bloomFile = substitute(substitute(outFn, "/finalized/", "/blooms/"), ".bin", ".bloom");
+        writeNewBloom(bloomFile, blooms);
         copyFile(tmpFile, outFn);
         ::remove(tmpFile.c_str());
         lockSection(false);
