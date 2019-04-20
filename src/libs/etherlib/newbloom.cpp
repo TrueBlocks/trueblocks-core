@@ -71,6 +71,24 @@ bool isMember(const CNewBloomArray& blooms, const address_t& addr) {
 }
 
 //----------------------------------------------------------------------
+bool writeNewBloom(const string_q& outFile, const CNewBloomArray& blooms) {
+    lockSection(true);
+    CArchive output(WRITING_ARCHIVE);
+    if (!output.Lock(outFile, modeWriteCreate, LOCK_NOWAIT)) {
+        lockSection(false);
+        return false;
+    }
+    output.Write((uint32_t)blooms.size());
+    for (auto bloom : blooms) {
+        output.Write((uint32_t)bloom.nInserted);
+        output.Write(bloom.bits, sizeof(uint8_t), qblocks::bloom_nt::BYTE_SIZE);
+    }
+    output.Release();
+    lockSection(false);
+    return true;
+}
+
+//----------------------------------------------------------------------
 size_t bloom_nt::BYTE_SIZE = N_BYTES;
 
 }  // namespace qblocks
