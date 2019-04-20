@@ -81,8 +81,10 @@ bool visitFile(const string_q& path, void *data) {
 
             lockSection(true);
             CArchive output(WRITING_ARCHIVE);
-            if (!output.Lock(outFile, modeWriteCreate, LOCK_NOWAIT))
+            if (!output.Lock(outFile, modeWriteCreate, LOCK_NOWAIT)) {
+                lockSection(false);
                 return false;
+            }
             output.Write((uint32_t)blooms.size());
             for (auto bloom : blooms) {
                 //bloom.showBloom(cout);
