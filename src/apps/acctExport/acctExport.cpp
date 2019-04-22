@@ -128,6 +128,7 @@ bool exportData(COptions& options) {
         if (needsTrace)
             cout << endl;
         HIDE_FIELD(CFunction, "message");
+        first = false;
     }
 
     if (isJson)
