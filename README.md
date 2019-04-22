@@ -1,14 +1,14 @@
-## Two Important Notes
+### Important Notes:
 
-1. This code is alpha code. That means that we may (and probably will) make breaking changes as we move forward.
-2. We will be changing the name of our project in the near future. Stay tuned.
+1. TrueBlocks is alpha code. This means that we will be making breaking changes to the code and data as we move forward. Be forewarned.
+2. We have changed the name of our project to TrueBlocks. You may see reference to QuickBlocks here and there as we clean up the repo.
 
 -----------------
 
-#### Contact Info
+### Contact Info
 
-Visit our [Website](http://quickblocks.io)  
-Join our [Slack](https://join.slack.com/t/quickblocks/shared_invite/enQtMzEzMzYzODI2MDY4LWRjZWUzMzg3N2RhYjMzN2FiYWMzYzlmYTA1MzJhNDM3NTUyMmZlOWU1ZWY5ZjdjMjcyZTMzMjk2NDI0ZTVhZTg)
+Website: [http://trueblocks.io](http://trueblocks.io)  
+Discussion: [Slack](https://join.slack.com/t/quickblocks/shared_invite/enQtMzEzMzYzODI2MDY4LWRjZWUzMzg3N2RhYjMzN2FiYWMzYzlmYTA1MzJhNDM3NTUyMmZlOWU1ZWY5ZjdjMjcyZTMzMjk2NDI0ZTVhZTg)
 
 #### Installing QBlocks
 
