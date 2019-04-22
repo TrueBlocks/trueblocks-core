@@ -46,6 +46,7 @@
 #include <iomanip>
 #include <thread>
 #include <mutex>
+#include <bitset>
 
 //-------------------------------------------------------------------------
 using namespace std;  // NOLINT

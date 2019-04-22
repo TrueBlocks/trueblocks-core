@@ -16,15 +16,19 @@ bool COptions::handle_ls(void) {
     nodeNotRequired();
 
     ostringstream os;
-    os << endl << cGreen << "Monitor path: " << cWhite << monitorsPath << endl;
+    os << endl << cGreen << "Monitor path: " << cWhite << getMonitorPath("") << endl;
 
     CStringArray files;
-    listFilesInFolder(files, monitorsPath + "*.*", false);
+    if (isTestMode()) {
+        files.push_back("0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359.accts.bin");
+    } else {
+        listFilesInFolder(files, getMonitorPath("*.*"), false);
+    }
 
     CAccountNameArray accounts;
     for (auto file : files) {
-        if (contains(file, ".acct.bin") && !contains(file, ".lck")) {
-            replace(file, monitorsPath, "");
+        if (endsWith(file, ".acct.bin")) {
+            replace(file, getMonitorPath(""), "");
             CAccountName item;
             item.addr = nextTokenClear(file, '.');
             getNamedAccount(item, item.addr);
@@ -39,7 +43,7 @@ bool COptions::handle_ls(void) {
     }
     sort(accounts.begin(), accounts.end());
 
-    if (stats) {
+    if (stats || contains(tool_flags, "-l")) {
         for (auto acct : accounts) {
             os << "Address: " << cTeal << acct.addr << cOff << endl;
             os << "\tName:       " << cYellow << (acct.name.empty() ? "" : acct.name) << cOff << endl;

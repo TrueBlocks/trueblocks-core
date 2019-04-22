@@ -14,13 +14,13 @@ bool COptions::handle_list(void) {
     if (addrs.empty())
         return usage("This function requires an address. Quitting...");
 
-    if (!freshen_internal(monitorsPath, addrs, "", freshen_flags))
+    if (!freshen_internal(FM_PRODUCTION, addrs, "", freshen_flags))
         return false;
 
     for (auto addr : addrs) {
         ostringstream os;
-        os << "cd " << monitorsPath << " ; ";
-        os << "cacheMan -d " << addr << ".acct.bin ; ";
+        os << "cd " << getMonitorPath("") << " ; ";
+        os << "cacheMan " << tool_flags << " -d " << addr << ".acct.bin ; ";
         if (isTestMode())
             cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
         else

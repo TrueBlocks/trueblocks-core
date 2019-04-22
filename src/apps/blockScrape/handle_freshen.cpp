@@ -50,7 +50,7 @@ bool handle_freshen(COptions& options) {
         CScraper scraper(&options, num);
         scraper.status = "scan";
 
-        string_q fn = getBinaryFilename(num);
+        string_q fn = getBinaryCacheFilename(CT_BLOCKS, num);
         bool needToScrape = true;
         if (fileExists(fn)) {
             readBlockFromBinary(scraper.block, fn);
@@ -85,8 +85,10 @@ bool handle_freshen(COptions& options) {
                 // We may not yet have written this block (it was final the first time we saw it), so write it
                 writeBlockToBinary(scraper.block, fn);
             }
-            if (!scraper.addToStagingList())
+            if (!scraper.addToStagingList()) {
+                lockSection(false);
                 return false;
+            }
             lockSection(false);
 
         } else {

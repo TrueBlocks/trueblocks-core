@@ -350,7 +350,7 @@ string_q CNewBlock::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "timestamp" ) return ts_2_Str(timestamp);
             if ( fieldName % "transactions" || fieldName % "transactionsCnt" ) {
                 size_t cnt = transactions.size();
-                if (endsWith(fieldName, "Cnt"))
+                if (endsWith(toLower(fieldName), "cnt"))
                     return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;

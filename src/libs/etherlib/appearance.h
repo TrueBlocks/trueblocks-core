@@ -121,7 +121,9 @@ namespace qblocks {
     };
 
     extern int findAppearance(const void* v1, const void* v2);
-    extern string_q getMonitorPath(const string_q& addr);
-    extern string_q getMonitorLast(const string_q& addr);
+
+    typedef enum { FM_PRODUCTION, FM_STAGING } FreshenMode;
+    extern string_q getMonitorPath(const string_q& addr, FreshenMode mode=FM_PRODUCTION);
+    extern string_q getMonitorLast(const string_q& addr, FreshenMode mode=FM_PRODUCTION);
 
 }  // namespace qblocks

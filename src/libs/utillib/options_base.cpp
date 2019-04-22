@@ -221,7 +221,7 @@ namespace qblocks {
         }
 
         if (contains(cmdLine, "--version ")) {
-            cerr << getProgName() << getVersionStr(true) << "\n";
+            cerr << getProgName() << " " << getVersionStr(true) << "\n";
             exit(0);
         }
 
@@ -367,7 +367,7 @@ namespace qblocks {
             permitted = longName;
             longName = nextTokenClear(permitted, ':');
             replaceAny(permitted, "<>", "");
-            if (permitted != "range" && permitted != "list" && permitted != "fn" && permitted != "mode")
+            if (permitted != "range" && permitted != "list" && permitted != "fn" && permitted != "mode" && permitted != "on/off")
                 permitted = "val";
             longName += (" " + permitted);
         }
@@ -881,19 +881,13 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         cntParams = 0;
     }
 
-#define TEXT_NAMES
     //-----------------------------------------------------------------------
     bool COptionsBase::getNamedAccount(CAccountName& acct, const string_q& addr) const {
         if (namedAccounts.size() == 0) {
             uint64_t save = verbose;
             verbose = false;
-#ifdef TEXT_NAMES
             if (!contains(namesFile.getFullPath(), "names.txt"))
                 ((COptionsBase*)this)->namesFile = CFilename(configPath("names/names.txt"));
-#else
-            if (!contains(namesFile.getFullPath(), "names.json"))
-                ((COptionsBase*)this)->namesFile = CFilename(configPath("names/names.json"));
-#endif
             ((COptionsBase*)this)->loadNames();  // NOLINT
             verbose = save;
         }
@@ -923,11 +917,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             return true;
 
         string_q textFile = namesFile.getFullPath();
-#ifdef TEXT_NAMES
         string_q binFile  = substitute(textFile, ".txt", ".bin");
-#else
-        string_q binFile  = substitute(textFile, ".json", ".bin");
-#endif
 
         time_q txtDate = fileLastModifyDate(textFile);
         time_q binDate = fileLastModifyDate(binFile);
@@ -945,42 +935,19 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             }
         }
 
-#ifdef TEXT_NAMES
         if (verbose && !isTestMode())
             cout << "Reading from text database\n";
-#else
-        if (verbose && !isTestMode())
-            cout << "Reading from the json database\n";
-#endif
+
         // Read the data from the names database and clean it up if needed
-        string_q contents;
-        asciiFileToString(textFile, contents);
-#ifdef TEXT_NAMES
-        contents = trimWhitespace(contents);
-        replaceAll(contents, "\t\t", "\t");
-        if (!endsWith(contents, "\n"))
-            contents += "\n";
-
-        // Parse out the data....
-        while (!contents.empty()) {
-            string_q line = nextTokenClear(contents, '\n');
-            if (!startsWith(line, "#") && !line.empty()) {
-                if (countOf(line, '\t') < 2) {
-                    cerr << "Line " << line << " does not contain two tabs.\n";
-
-                } else {
-                    CAccountName account(line);
+        CStringArray names;
+        asciiFileToLines(textFile, names);
+        for (auto name : names) {
+            if (!startsWith(name, "#") && !name.empty()) {
+                CAccountName account(name);
+                if (isAddress(account.addr))
                     namedAccounts.push_back(account);
-                }
             }
         }
-#else
-        CAccountName item;
-        while (item.parseJson3(contents)) {
-            namedAccounts.push_back(item);
-            item = CAccountName();  // reset
-        }
-#endif
 
         CArchive nameCache(WRITING_ARCHIVE);
         if (nameCache.Lock(binFile, modeWriteCreate, LOCK_CREATE)) {
@@ -992,37 +959,6 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
         return true;
     }
-
-    //-----------------------------------------------------------------------
-    const char *STR_DEFAULT_NAMEDATA =
-    "#---------------------------------------------------------------------------------------------------\n"
-#ifdef TEXT_NAMES
-    "#  This is the ethName database. Format records as tab separated lines with the following format:\n"
-    "#\n"
-    "#      Optional Symbol <tab> Name <tab> Address <tab> Source of the data <tab> Description <newline>\n"
-    "#\n"
-    "#---------------------------------------------------------------------------------------------------------------\n"
-    "# Sym    Name                Address                        Source        Description\n"
-    "#---------------------------------------------------------------------------------------------------------------\n"
-    "#\n"
-    "#Add your names here or remove this file and run \"ethName --list\"\n";
-#else
-    "# Add JSON data to this file (remove these comments). QB will use them in the ethName tool and\n"
-    "# to name addresses during export.\n"
-    "#\n"
-    "#  [\n"
-    "#    {\n"
-    "#        \"addr\": \"An Ethereum address (leading '0x')\",\n"
-    "#        \"symbol\": \"The token symbol (if applicable) found at this address\",\n"
-    "#        \"source\": \"An optional source for this information\",\n"
-    "#        \"name\": \"The name you wish to give to this address\",\n"
-    "#        \"logo\": \"A logo to display for this address\",\n"
-    "#        \"description\": \"A description of this address\",\n"
-    "#        \"visible\": 'true' if you wish to display this address name in the export, 'false' otherwise\n"
-    "#    }\n"
-    "#  ]\n"
-    "#---------------------------------------------------------------------------------------------------\n";
-#endif
 
     //-----------------------------------------------------------------------
     const char *STR_DEFAULT_TOOLNAMES =

@@ -109,7 +109,7 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     bool getBlock(CBlock& block, blknum_t blockNum) {
-        getCurlContext()->provider = fileExists(getBinaryFilename(blockNum)) ? "binary" : "local";
+        getCurlContext()->provider = fileExists(getBinaryCacheFilename(CT_BLOCKS, blockNum)) ? "binary" : "local";
         bool ret = queryBlock(block, uint_2_Str(blockNum), true);
         getCurlContext()->provider = "binary";
         return ret;
@@ -128,29 +128,51 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    bool getTransaction(CTransaction& trans, const hash_t& blockHash, txnum_t txID) {
+    bool getTransaction(CTransaction& trans, const hash_t& blockHash, txnum_t txid) {
         getObjectViaRPC(trans, "eth_getTransactionByBlockHashAndIndex",
-                                    "[\"" + str_2_Hash(blockHash) +"\",\"" + uint_2_Hex(txID) + "\"]");
+                        "[\"" + str_2_Hash(blockHash) +"\",\"" + uint_2_Hex(txid) + "\"]");
         trans.finishParse();
         return true;
     }
 
-    //-------------------------------------------------------------------------
-    bool getTransaction(CTransaction& trans, blknum_t blockNum, txnum_t txID) {
-
-        if (fileExists(getBinaryFilename(blockNum))) {
-            CBlock block;
-            readBlockFromBinary(block, getBinaryFilename(blockNum));
-            if (txID < block.transactions.size()) {
-                trans = block.transactions[txID];
-                trans.pBlock = NULL;  // otherwise, it's pointing to a dead pointer
+    //-----------------------------------------------------------------------
+    bool writeNodeToBinary(const CBaseNode& node, const string_q& fileName) {
+        string_q created;
+        if (establishFolder(fileName, created)) {
+            if (!created.empty() && !isTestMode())
+                cerr << "mkdir(" << created << ")" << string_q(75, ' ') << "\n";
+            CArchive nodeCache(WRITING_ARCHIVE);
+            if (nodeCache.Lock(fileName, modeWriteCreate, LOCK_CREATE)) {
+                node.SerializeC(nodeCache);
+                nodeCache.Close();
                 return true;
             }
-            // fall through to node
+        }
+        return false;
+    }
+
+    //-----------------------------------------------------------------------
+    bool readNodeFromBinary(CBaseNode& item, const string_q& fileName) {
+        // Assumes that the item is clear, so no Init
+        CArchive nodeCache(READING_ARCHIVE);
+        if (nodeCache.Lock(fileName, modeReadOnly, LOCK_NOWAIT)) {
+            item.Serialize(nodeCache);
+            nodeCache.Close();
+            return true;
+        }
+        return false;
+    }
+
+    //-------------------------------------------------------------------------
+    bool getTransaction(CTransaction& trans, blknum_t blockNum, txnum_t txid) {
+
+        if (fileExists(getBinaryCacheFilename(CT_TXS, blockNum, txid))) {
+            readTransFromBinary(trans, getBinaryCacheFilename(CT_TXS, blockNum, txid));
+            trans.pBlock = NULL;  // otherwise, it's pointing to an unintialized item
+            return true;
         }
 
-        getObjectViaRPC(trans, "eth_getTransactionByBlockNumberAndIndex",
-                                    "[\"" + uint_2_Hex(blockNum) +"\",\"" + uint_2_Hex(txID) + "\"]");
+        getObjectViaRPC(trans, "eth_getTransactionByBlockNumberAndIndex", "[\"" + uint_2_Hex(blockNum) +"\",\"" + uint_2_Hex(txid) + "\"]");
         trans.finishParse();
         return true;
     }
@@ -193,10 +215,10 @@ namespace qblocks {
 
         } else {
             uint64_t num = str_2_Uint(datIn);
-            if (getCurlContext()->provider == "binary" && fileSize(getBinaryFilename(num)) > 0) {
+            if (getCurlContext()->provider == "binary" && fileSize(getBinaryCacheFilename(CT_BLOCKS, num)) > 0) {
                 UNHIDE_FIELD(CTransaction, "receipt");
                 block = CBlock();
-                return readBlockFromBinary(block, getBinaryFilename(num));
+                return readBlockFromBinary(block, getBinaryCacheFilename(CT_BLOCKS, num));
 
             }
 
@@ -239,10 +261,10 @@ namespace qblocks {
 
         if (isHash(datIn)) {
             blockStr = callRPC("eth_getBlockByHash",
-                                "[" + quote(datIn) + "," + (hashesOnly ? "false" : "true") + "]", true);
+                               "[" + quote(datIn) + "," + (hashesOnly ? "false" : "true") + "]", true);
         } else {
             blockStr = callRPC("eth_getBlockByNumber",
-                                "[" + quote(str_2_Hex(datIn)) + "," + (hashesOnly ? "false" : "true") + "]", true);
+                               "[" + quote(str_2_Hex(datIn)) + "," + (hashesOnly ? "false" : "true") + "]", true);
         }
         return true;
     }
@@ -456,7 +478,7 @@ namespace qblocks {
         // This means to retrieve the storage on pos1["0x391694e7e0b0cce554cb130d723a9d27458f9298"] we need to calculate
         // the position with:
         //
-        //      keccak(decodeHex("000000000000000000000000391694e7e0b0cce554cb130d723a9d27458f9298" + 
+        //      keccak(decodeHex("000000000000000000000000391694e7e0b0cce554cb130d723a9d27458f9298" +
         //                       "0000000000000000000000000000000000000000000000000000000000000001"))
         //
         // The geth console which comes with the web3 library can be used to make the calculation:
@@ -606,46 +628,6 @@ namespace qblocks {
         return node.parseJson3(contents);
     }
 
-    //-----------------------------------------------------------------------
-    bool writeNodeToBinary(const CBaseNode& node, const string_q& fileName) {
-        string_q created;
-        if (establishFolder(fileName, created)) {
-            if (!created.empty() && !isTestMode())
-                cerr << "mkdir(" << created << ")" << string_q(75, ' ') << "\n";
-            CArchive nodeCache(WRITING_ARCHIVE);
-            if (nodeCache.Lock(fileName, modeWriteCreate, LOCK_CREATE)) {
-                node.SerializeC(nodeCache);
-                nodeCache.Close();
-                return true;
-            }
-        }
-        return false;
-    }
-
-    //-----------------------------------------------------------------------
-    bool readNodeFromBinary(CBaseNode& item, const string_q& fileName) {
-        // Assumes that the item is clear, so no Init
-        CArchive nodeCache(READING_ARCHIVE);
-        if (nodeCache.Lock(fileName, modeReadOnly, LOCK_NOWAIT)) {
-            item.Serialize(nodeCache);
-            nodeCache.Close();
-            return true;
-        }
-        return false;
-    }
-
-    //-----------------------------------------------------------------------
-    bool writeBlockToBinary(const CBlock& block, const string_q& fileName) {
-        // CArchive g_blockCache(READING_ARCHIVE);  -- so search hits
-        return writeNodeToBinary(block, fileName);
-    }
-
-    //-----------------------------------------------------------------------
-    bool readBlockFromBinary(CBlock& block, const string_q& fileName) {
-        // CArchive g_blockCache(READING_ARCHIVE);  -- so search hits
-        return readNodeFromBinary(block, fileName);
-    }
-
     //----------------------------------------------------------------------------------
     bool readBloomFromBinary(CBloomArray& blooms, const string_q& fileName) {
         blooms.clear();
@@ -678,38 +660,52 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    static string_q getFilename_local(uint64_t numIn, bool asPath, bool asJson) {
+    static string_q getFilename_local(CacheType type, const string_q& bn, const string_q& txid, const string_q& tcid, bool asPath) {
+        ostringstream os;
+        switch (type) {
+            case CT_BLOCKS:   os << "blocks/"; break;
+            case CT_BLOOMS:   os << "blooms/"; break;
+            case CT_TXS:      os << "txs/"; break;
+            case CT_TRACES:   os << "traces/"; break;
+            case CT_ACCTS:    os << "accts/"; break;
+            case CT_MONITORS: os << "monitors/"; break;
+            default:
+                ASSERT(0); // should not happen
+        }
+        if (type == CT_ACCTS || type == CT_MONITORS) {
+            string_q addr = toLower(substitute(bn, "0x", ""));
+            os << extract(addr, 0, 4) << "/" << extract(addr, 4, 4) << "/" << addr << ".bin";
 
-        char ret[512];
-        bzero(ret, sizeof(ret));
-
-        string_q num = padLeft(uint_2_Str(numIn), 9, '0');
-        string_q fmt = (asPath ? "%s/%s/%s/" : "%s/%s/%s/%s");
-        string_q fn  = (asPath ? "" : num + (asJson ? ".json" : ".bin"));
-
-        sprintf(ret, (getCachePath("") + fmt).c_str(),  // NOLINT
-                      extract(num, 0, 2).c_str(), extract(num, 2, 2).c_str(), extract(num, 4, 2).c_str(),
-                      fn.c_str());
-        return ret;
+        } else {
+            os << extract(bn, 0, 2) << "/" << extract(bn, 2, 2) << "/" << extract(bn, 4, 2) << "/";
+            if (!asPath) {
+                os << bn;
+                os << ((type == CT_TRACES || type == CT_TXS) ? "-" + txid : "");
+                os << ( type == CT_TRACES ? "-" + tcid : "");
+                os << ".bin";
+            }
+        }
+        return getCachePath(os.str());
     }
 
     //-------------------------------------------------------------------------
-    string_q getJsonFilename(uint64_t num) {
-        return getFilename_local(num, false, true);
+    string_q getBinaryCachePath(CacheType type, blknum_t bn, txnum_t txid, txnum_t tcid) {
+        return getFilename_local(type, padNum9(bn), padNum5(txid), padNum5(tcid), true);
     }
 
     //-------------------------------------------------------------------------
-    string_q getBinaryFilename(uint64_t num) {
-        string_q ret = getFilename_local(num, false, false);
-        replace(ret, "/00/",  "/blocks/00/");  // can't use Substitute because it will change them all
-        return ret;
+    string_q getBinaryCacheFilename(CacheType type, blknum_t bn, txnum_t txid, txnum_t tcid) {
+        return getFilename_local(type, padNum9(bn), padNum5(txid), padNum5(tcid), false);
     }
 
     //-------------------------------------------------------------------------
-    string_q getBinaryPath(uint64_t num) {
-        string_q ret = getFilename_local(num, true, false);
-        replace(ret, "/00/",  "/blocks/00/");  // can't use Substitute because it will change them all
-        return ret;
+    string_q getBinaryCachePath(CacheType type, const address_t& addr) {
+        return getFilename_local(type, addr, "", "", true);
+    }
+
+    //-------------------------------------------------------------------------
+    string_q getBinaryCacheFilename(CacheType type, const address_t& addr) {
+        return getFilename_local(type, addr, "", "", false);
     }
 
     //-------------------------------------------------------------------------
@@ -719,7 +715,7 @@ namespace qblocks {
             return false;
 
         for (uint64_t i = start ; i < start + count - 1 ; i = i + skip) {
-            string_q fileName = getBinaryFilename(i);
+            string_q fileName = getBinaryCacheFilename(CT_BLOCKS, i);
             CBlock block;
             if (fileExists(fileName)) {
                 block = CBlock();
@@ -770,7 +766,7 @@ namespace qblocks {
         blknum_t st = (start / 1000) * 1000;
         blknum_t ed = ((start+count+1000) / 1000) * 1000;
         for (blknum_t b = st ; b < ed ; b += 1000) {
-            string_q path = substitute(getBinaryPath(b), "/blocks/", "/blooms/");
+            string_q path = getBinaryCachePath(CT_BLOOMS, b);
             if (!forEveryFileInFolder(path, func, data))
                 return false;
         }
@@ -809,8 +805,8 @@ namespace qblocks {
         if (!func)
             return false;
 
-//        cout << "Visiting " << trans.receipt.logs.size() << " logs\n";
-//        cout.flush();
+        //        cout << "Visiting " << trans.receipt.logs.size() << " logs\n";
+        //        cout.flush();
         for (size_t i = 0 ; i < trans.receipt.logs.size() ; i++) {
             CLogEntry log = trans.receipt.logs[i];
             if (!(*func)(log, data))
@@ -821,8 +817,8 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     bool forEveryLogInBlock(LOGVISITFUNC func, void *data, const CBlock& block) {
-//        cout << "Visiting " << block.transactions.size() << " transactions\n";
-//        cout.flush();
+        //        cout << "Visiting " << block.transactions.size() << " transactions\n";
+        //        cout.flush();
         for (size_t i = 0 ; i < block.transactions.size() ; i++) {
             if (!forEveryLogInTransaction(func, data, block.transactions[i]))
                 return false;
@@ -860,21 +856,21 @@ namespace qblocks {
             bool hasHex = startsWith(item, "0x");
 
             string_q hash = nextTokenClear(item, '.');
-            uint64_t txID = str_2_Uint(item);
+            uint64_t txid = str_2_Uint(item);
 
             CTransaction trans;
             if (hasHex) {
                 if (hasDot) {
-                    // blockHash.txID
-                    getTransaction(trans, hash, txID);
+                    // blockHash.txid
+                    getTransaction(trans, hash, txid);
 
                 } else {
                     // transHash
                     getTransaction(trans, hash);
                 }
             } else {
-                // blockNum.txID
-                getTransaction(trans, str_2_Uint(hash), txID);
+                // blockNum.txid
+                getTransaction(trans, str_2_Uint(hash), txid);
             }
 
             CBlock block;
@@ -920,11 +916,14 @@ namespace qblocks {
 
         ostringstream dos;
         dos << showOne("--diff--", (currDiff>prevDiff?"-":"+") + uint_2_Str(currDiff));
-        dos << (currDiff > prevDiff ? " (-" + uint_2_Str(currDiff-prevDiff) : " (+"+uint_2_Str(prevDiff-currDiff)) + ")";
+        dos << showOne("--diffdiff--", (currDiff > prevDiff ? " (-" + uint_2_Str(currDiff-prevDiff) : " (+"+uint_2_Str(prevDiff-currDiff)) + ")");
+
+        string_q rpcProvider = getCurlContext()->baseURL;
 
         ostringstream os;
         os << cGreen << "  Client version:     " << showOne("--version--", getVersionFromClient())    << endl;
         os << cGreen << "  Trueblocks Version: " << showOne1(getVersionStr(true))                     << endl;
+        os << cGreen << "  RPC Provider:       " << showOne("--rpc_provider--", rpcProvider)          << endl;
         os << cGreen << "  Cache location:     " << showOne("--cache_dir--", getCachePath(""))        << endl;
         os << cGreen << "  Host (user):        " << showOne("--host (user)--", hostUser)              << endl;
         os << cGreen << "  Latest cache:       " << cos.str()                                         << endl;
@@ -943,7 +942,7 @@ namespace qblocks {
             return substitute((g_cachePath + _part), "//", "/");
 
         { // give ourselves a frame - always enters - forces creation in the frame
-            // Wait until any other thread is finished filling the value.
+          // Wait until any other thread is finished filling the value.
             mutex aMutex;
             lock_guard<mutex> lock(aMutex);
 
@@ -1018,7 +1017,7 @@ namespace qblocks {
 
     //-----------------------------------------------------------------------
     const string_q defHide =
-        "CTransaction: nonce, input"
+    "CTransaction: nonce, input"
     "|" "CLogEntry: data, topics"
     "|" "CTrace: blockHash, blockNumber, transactionHash, transactionPosition, traceAddress, subtraces"
     "|" "CTraceAction: init"
@@ -1027,7 +1026,7 @@ namespace qblocks {
     "|" "CParameter: type, indexed, isPointer, isArray, isObject";
 
     const string_q defShow =
-        "CTransaction: price, gasCost, articulatedTx, traces, isError, date, ether"
+    "CTransaction: price, gasCost, articulatedTx, traces, isError, date, ether"
     "|" "CLogEntry: articulatedLog"
     "|" "CTrace: articulatedTrace"
     "|" "CTraceAction: "

@@ -105,7 +105,7 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
                 generic.parseJson3(result);
                 result = generic.result;
                 if (gold.parseJson3(result)) {
-                    string_q fileName = getBinaryFilename(num);
+                    string_q fileName = getBinaryCacheFilename(CT_BLOCKS, num);
                     gold.finalized = isBlockFinal(gold.timestamp, opt.latest.timestamp);
                     writeBlockToBinary(gold, fileName);
                 }
@@ -113,7 +113,7 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
         }
 
     } else {
-        string_q fileName = getBinaryFilename(gold.blockNumber);
+        string_q fileName = getBinaryCacheFilename(CT_BLOCKS, gold.blockNumber);
         if (opt.isCache) {
 
             // --source::cache mode doesn't include timestamp in transactions
