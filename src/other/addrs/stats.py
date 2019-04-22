@@ -44,3 +44,11 @@ os.system("join output-tmp/f1        output-tmp/bin.file   >output-tmp/f2")
 os.system("join output-tmp/f2        output-tmp/azip.file  >output-tmp/f3")
 os.system("join output-tmp/f3        output-tmp/bzip.file  >output-tmp/f4")
 os.system("join output-tmp/f4        output-tmp/counts.txt | tr ' ' ',' | tr '-' ','")
+
+
+#bin/addrs
+#ls -l output-final/blooms | cut -c28-36,50-100 | sed 's/ 00/|00/' | sed 's/.bloom//' | sed 's/ //g' | sort -n | tr '|' '\t' | grep -v "^$" | awk '{print $2 "\t" $1}' | sort >file.1
+#ls -l output-final/blooms.old | cut -c28-36,50-100 | sed 's/ 00/|00/' | sed 's/.blooms.bin//' | sed 's/ //g' | sort -n | tr '|' '\t' | grep -v "^$" | awk '{print $2 "\t" $1}' | sort >file.2
+#ls -l output-zips | cut -c28-35,49-100 | sed 's/ 00/|00/' | sed 's/.bloom.gz//' | sed 's/ //g' | sort -n | tr '|' '\t' | grep -v "^$" | awk '{print $2 "\t" $1}' | sort >file.3
+##join file.2 file.3 >file.4
+#join file.1 file.3 | sed 's/ /,/g' | cut -f2 -d'-' >x.csv
