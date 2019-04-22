@@ -22,7 +22,6 @@ int main(int argc, const char *argv[]) {
 
              if (options.mode == "list")    return !options.handle_list();
         else if (options.mode == "export")  return !options.handle_export();
-        else if (options.mode == "init")    return !options.handle_init();
         else if (options.mode == "seed")    return !options.handle_seed();
         else if (options.mode == "daemon")  return !options.handle_daemon();
         else if (options.mode == "scrape")  return !options.handle_scrape();

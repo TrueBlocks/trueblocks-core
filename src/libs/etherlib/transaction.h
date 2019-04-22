@@ -49,6 +49,7 @@ public:
     CFunction articulatedTx;
     string_q extra_data;
     bool finalized;
+    CTraceArray traces;
 
 public:
     CTransaction(void);
@@ -62,7 +63,6 @@ public:
 
     // EXISTING_CODE
     const CBlock *pBlock;
-    CTraceArray traces;
     bool forEveryAddress(ADDRESSFUNC func, TRANSFUNC filt = NULL, void *data = NULL);
     bool forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC filt = NULL, void *data = NULL);
     bool forEveryUniqueAddressPerTx(ADDRESSFUNC func, TRANSFUNC filt = NULL, void *data = NULL);
@@ -135,10 +135,10 @@ inline void CTransaction::initialize(void) {
     articulatedTx = CFunction();
     extra_data = "";
     finalized = 0;
+    traces.clear();
 
     // EXISTING_CODE
     pBlock = NULL;
-    traces.clear();
     // EXISTING_CODE
 }
 
@@ -165,10 +165,10 @@ inline void CTransaction::duplicate(const CTransaction& tr) {
     articulatedTx = tr.articulatedTx;
     extra_data = tr.extra_data;
     finalized = tr.finalized;
+    traces = tr.traces;
 
     // EXISTING_CODE
     pBlock = tr.pBlock;  // no deep copy, we don't own it
-    traces = tr.traces;
     finishParse();
     // EXISTING_CODE
 }

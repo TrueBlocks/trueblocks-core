@@ -1,0 +1,9 @@
+chifra argc: 2 [1:stats] 
+chifra stats 
+
+Monitor path: $BLOCK_CACHE/monitors/
+Address: none
+	Name:       
+	Filename:   ./monitors/none
+	File size:  0 MB
+	Last block: 	nRecords:   0

@@ -253,7 +253,7 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
         case 't':
             if ( fieldName % "topics" || fieldName % "topicsCnt" ) {
                 size_t cnt = topics.size();
-                if (endsWith(fieldName, "Cnt"))
+                if (endsWith(toLower(fieldName), "cnt"))
                     return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;

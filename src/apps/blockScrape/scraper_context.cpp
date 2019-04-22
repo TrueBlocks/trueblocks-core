@@ -213,9 +213,12 @@ bool CScraper::writeList(const string_q& toFile, const string_q& removeFile) {
 //--------------------------------------------------------------------------
 bool CScraper::addToPendingList(void) {
     string_q pendingName = indexFolder_pending_v2 + padNum9(block.blockNumber) + ".txt";
+    string_q countFile = indexFolder_v2 + "counts.txt";
+    curLines = str_2_Uint(asciiFileToString(countFile)); // for reporting only
     return writeList(pendingName, "");
 }
 
+#define MARKER 50
 //--------------------------------------------------------------------------
 bool CScraper::addToStagingList(void) {
 
@@ -235,8 +238,8 @@ bool CScraper::addToStagingList(void) {
     stringToAsciiFile(countFile, uint_2_Str(curLines));
 
     bool overLimit = curLines >= options->maxIndexRows;
-    bool is50 = !(block.blockNumber % 50);
-    if ((overLimit && is50)) {
+    bool isMark = !(block.blockNumber % MARKER);
+    if ((overLimit && isMark)) {
         finalizeIndexChunk();
 //        return false;
     }
@@ -249,6 +252,8 @@ void CScraper::finalizeIndexChunk(void) {
 
     blknum_t first = str_2_Uint(substitute(getFirstFileInFolder(indexFolder_staging_v2, false), indexFolder_staging_v2, ""));
     blknum_t last  = str_2_Uint(substitute(getLastFileInFolder (indexFolder_staging_v2, false), indexFolder_staging_v2, ""));
+    if (last % MARKER)
+        last = (last / MARKER) * MARKER;
 
     string_q asciiFile = indexFolder_sorted_v2 + padNum9(first)+"-"+padNum9(last) + ".txt";
     string_q binFile = indexFolder_finalized_v2 + padNum9(first)+"-"+padNum9(last) + ".bin";
@@ -283,7 +288,7 @@ void CScraper::finalizeIndexChunk(void) {
         }
     }
     appendToAsciiFile(asciiFile, os.str());
-    writeIndexAsBinary(binFile, apps);
+    writeIndexAsBinary(binFile, apps); // also writes the bloom file
 
     string_q countFile = indexFolder_v2 + "counts.txt";
     ::remove(countFile.c_str());

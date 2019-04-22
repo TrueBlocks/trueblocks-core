@@ -57,6 +57,8 @@ bool COptions::enterDebugger(const CBlock& block) {
     size_t cursor=0;
     bool showKeys = false;
 
+    establishFolder(configPath("cache/tmp"));
+
     cout << ">> ";
     cout.flush();
 
@@ -235,6 +237,6 @@ bool COptions::enterDebugger(const CBlock& block) {
 #ifdef DEBUGGER_ON
 //-----------------------------------------------------------------------
 bool debugFile(void) {
-    return fileExists(getMonitorPath("debug"));
+    return fileExists(configPath("cache/tmp/debug"));
 }
 #endif

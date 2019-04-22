@@ -1,0 +1,5 @@
+#
+# You may edit this file to add your own custom named accounts. We added an example below. Use an editor that inserts tabs instead of spaces.
+#
+addr	symbol	source	name	logo	description	visible
+0x713b73c3994442b533e6a083ec968e40606810ec	EEAR	quickBlocks.io	Eth Early Adoption Reg		An early, known-dead address useful for testing	true

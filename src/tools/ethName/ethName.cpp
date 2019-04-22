@@ -12,7 +12,6 @@
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
 
-extern const char* STR_NAME_DATA;
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
     nodeNotRequired(); // This command will run without a node
@@ -22,21 +21,16 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    bool loaded = options.loadNames();
-
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
 
-        string_q fmt = (options.addrOnly ? "[{ADDR}]" : (options.data ? STR_NAME_DATA : ""));
+        string_q fmt = (options.addrOnly ? "[{ADDR}]" : "");
         if (options.data && options.list)
             fmt = "[{ADDR}]\t[{NAME}]";
 
         if (options.isEdit) {
             editFile(options.namesFile.getFullPath());
-
-        } else if (!loaded) {
-            options.usage(options.namesFile.getFullPath() + " is empty. Use ethName -e to add some names. Quitting...");
 
         } else if (options.list) {
             if (options.count)
@@ -83,7 +77,3 @@ string_q COptions::showMatches(void) {
 
     return ret;
 }
-
-//-----------------------------------------------------------------------
-const char* STR_NAME_DATA =
-"[{symbol}]\t[{name}]\t[{addr}]\t[{source}]\t[{description}]";

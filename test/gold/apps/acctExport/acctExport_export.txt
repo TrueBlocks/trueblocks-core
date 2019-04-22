@@ -51,7 +51,8 @@ acctExport 0x001d14804b399c6ef80e64576f657660804fec0b
     }
   ]
 }
-bn: 1501459 tx: 2,{
+bn: 1501459 tx: 2
+,{
   "hash": "0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5",
   "blockHash": "0x66b5597c4a991decb68f56b94245a93485e4a30a3d77f95e6c32a3d4f91e2051",
   "blockNumber": 1501459,

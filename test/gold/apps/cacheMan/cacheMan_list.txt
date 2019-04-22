@@ -1,9 +1,14 @@
 cacheMan argc: 3 [1:-l] [2:0x9876543210987654321098765432109876543210.acct.bin] 
 cacheMan -l 0x9876543210987654321098765432109876543210.acct.bin 
 Listing cache: 0x9876543210987654321098765432109876543210.acct.bin
-blockNum:    1235820 transID:       1
-blockNum:    1236136 transID:      14
-blockNum:    1244925 transID:       5
-blockNum:    1260081 transID:       3
-blockNum:    1325879 transID:       0
-blockNum:    1332455 transID:       2
+1235820	0
+1	0
+1236136	0
+14	0
+1244925	0
+5	0
+1260081	0
+3	0
+1325879	0
+1332455	0
+2	0

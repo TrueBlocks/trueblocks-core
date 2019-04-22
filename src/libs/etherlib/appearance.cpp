@@ -152,18 +152,20 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------
-    string_q getMonitorLast(const string_q& addr) {
+    string_q getMonitorLast(const string_q& addr, FreshenMode mode) {
+        string_q base = ((mode == FM_STAGING) ? "monitors/staging/" : "monitors/");
         if (!isTestMode() && !isAddress(addr)) {
             cerr << "Not an address: " << addr << endl;
             quickQuitHandler(0);
         }
-        return getCachePath("monitors/" + addr + ".last.txt");
+        return getCachePath(base + addr + ".last.txt");
     }
     //---------------------------------------------------------------------------
-    string_q getMonitorPath(const string_q& addr) {
+    string_q getMonitorPath(const string_q& addr, FreshenMode mode) {
+        string_q base = ((mode == FM_STAGING) ? "monitors/staging/" : "monitors/");
         if (!isAddress(addr)) // empty for example
-            return getCachePath("monitors/" + addr);
-        return getCachePath("monitors/" + addr + ".acct.bin");
+            return getCachePath(base + addr);
+        return getCachePath(base + addr + ".acct.bin");
     }
 
     //----------------------------------------------------------------

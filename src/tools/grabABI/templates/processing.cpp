@@ -65,13 +65,13 @@ bool COptions::displayFromCache(uint64_t startBlock) {
 
                     // If we switched blocks, try to read the next block...
                     block = CBlock();
-                    bool ret = readBlockFromBinary(block, getBinaryFilename(blockNum));
+                    bool ret = readBlockFromBinary(block, getBinaryCacheFilename(CT_BLOCKS, blockNum));
                     if (!ret) {
                         // ... if we failed to read from some reason, try to pick it up from the node
                         getBlock(block, blockNum);
                         block.finalized = is BlockFinal(block.timestamp, latest.timestamp, (6 0 * 4));
-                        writeBlockToBinary(block, getBinaryFilename(blockNum));
-                        if (!fileExists(getBinaryFilename(blockNum))) {
+                        writeBlockToBinary(block, getBinaryCacheFilename(CT_BLOCKS, blockNum));
+                        if (!fileExists(getBinaryCacheFilename(CT_BLOCKS, blockNum))) {
                             cerr << "Read of block " << blockNum << " failed. Quitting cache read\r\n";
                             txCache.Release();
                             return false;

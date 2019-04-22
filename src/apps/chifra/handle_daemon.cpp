@@ -39,12 +39,12 @@ bool COptions::handle_daemon(void) {
     while (nRuns++ < maxRuns && !shouldQuit()) {
 
         CStringArray files;
-        listFilesInFolder(files, monitorsPath + "*.*", false);
+        listFilesInFolder(files, getMonitorPath("*.*"), false);
 
         CAccountNameArray accounts;
         for (auto file : files) {
             if (contains(file, ".acct.bin") && !contains(file, ".lck")) {
-                replace(file, monitorsPath, "");
+                replace(file, getMonitorPath(""), "");
                 CAccountName item;
                 item.addr = nextTokenClear(file, '.');
                 getNamedAccount(item, item.addr);
@@ -65,11 +65,11 @@ bool COptions::handle_daemon(void) {
         }
 
         if (runs.size())
-            freshen_internal(monitorsPath, runs, "", freshen_flags);
+            freshen_internal(FM_PRODUCTION, runs, "", freshen_flags);
 
         cerr << "Sleeping for " << sleep << " seconds" << endl;
         if (!isTestMode())
-            usleep((unsigned int)sleep * 100000);
+            usleep((unsigned int)sleep * 1000000);
     }
     return true;
 }

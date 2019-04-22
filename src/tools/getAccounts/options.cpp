@@ -70,10 +70,6 @@ COptions::COptions(void) {
     // If you need the names file, you have to add it in the constructor
     namesFile = CFilename(configPath("names/names.txt"));
     establishFolder(namesFile.getPath());
-    if (!fileExists(namesFile.getFullPath()))
-        stringToAsciiFile(namesFile.getFullPath(),
-                substitute(
-                substitute(string_q(STR_DEFAULT_NAMEDATA), " |", "|"), "|", "\t"));
     loadNames();
     Init();
 }

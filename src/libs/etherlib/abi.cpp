@@ -228,7 +228,7 @@ string_q CAbi::getValueByName(const string_q& fieldName) const {
         case 'i':
             if ( fieldName % "interfaces" || fieldName % "interfacesCnt" ) {
                 size_t cnt = interfaces.size();
-                if (endsWith(fieldName, "Cnt"))
+                if (endsWith(toLower(fieldName), "cnt"))
                     return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;

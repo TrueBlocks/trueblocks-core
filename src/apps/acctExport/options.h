@@ -11,14 +11,13 @@
 class COptions : public COptionsBase {
 public:
     CAccountWatchArray monitors;
-    CAccountWatchArray named;
     CAppearanceArray_base items;
-    CBlock curBlock;
-    bool useBloom;
-    bool needsArt;
-    bool needsTrace;
-    bool showProgress;
-    bool ignoreDdos;
+    blknum_t lastAtClient;
+    bool writeBlocks;
+    bool writeTrxs;
+    bool writeTraces;
+    bool skipDdos;
+    size_t maxTraces;
 
     COptions(void);
     ~COptions(void);
@@ -26,21 +25,7 @@ public:
     bool parseArguments(string_q& command);
     void Init(void);
     string_q postProcess(const string_q& which, const string_q& str) const;
-
-    string_q annotate       (const string_q& strIn) const;
-    bool     shouldTrace    (const CTransaction *trans) const;
-
-    typedef bool (*NAMEVISITFUNC)(string_q& str, const CAccountWatch& watch);
-    void renameItems(string_q& str, const CAccountWatchArray& array) const;
 };
-
-//------------------------------------------------------------------------
-extern bool loadData(COptions& options);
-extern bool exportData(COptions& options);
 
 //-----------------------------------------------------------------------------
-enum export_t {
-    JSON = 1,
-    TXT = 2,
-    CSV = 3,
-};
+enum export_t { JSON = (1<<1), TXT = (1<<2), CSV = (1<<3) };

@@ -304,7 +304,7 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
         case 't':
             if ( fieldName % "traceAddress" || fieldName % "traceAddressCnt" ) {
                 size_t cnt = traceAddress.size();
-                if (endsWith(fieldName, "Cnt"))
+                if (endsWith(toLower(fieldName), "cnt"))
                     return uint_2_Str(max((size_t)1, cnt));
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {

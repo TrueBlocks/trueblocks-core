@@ -96,6 +96,7 @@ bool CAccountWatch::setValueByName(const string_q& fieldName, const string_q& fi
             break;
         case 'f':
             if ( fieldName % "firstBlock" ) { firstBlock = str_2_Uint(fieldValue); return true; }
+//            if ( fieldName % "fm_mode" ) { fm_mode = fieldValue; return true; }
             break;
         case 'l':
             if ( fieldName % "lastBlock" ) { lastBlock = str_2_Uint(fieldValue); return true; }
@@ -145,6 +146,7 @@ bool CAccountWatch::Serialize(CArchive& archive) {
     archive >> nodeBal;
     archive >> enabled;
 //    archive >> abi_spec;
+//    archive >> fm_mode;
     finishParse();
     return true;
 }
@@ -167,6 +169,7 @@ bool CAccountWatch::SerializeC(CArchive& archive) const {
     archive << nodeBal;
     archive << enabled;
 //    archive << abi_spec;
+//    archive << fm_mode;
 
     return true;
 }
@@ -213,6 +216,8 @@ void CAccountWatch::registerClass(void) {
     ADD_FIELD(CAccountWatch, "enabled", T_BOOL, ++fieldNum);
     ADD_FIELD(CAccountWatch, "abi_spec", T_OBJECT, ++fieldNum);
     HIDE_FIELD(CAccountWatch, "abi_spec");
+    ADD_FIELD(CAccountWatch, "fm_mode", T_TEXT, ++fieldNum);
+    HIDE_FIELD(CAccountWatch, "fm_mode");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAccountWatch, "schema");
@@ -275,7 +280,7 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
         case 'b':
             if ( fieldName % "balanceHistory" || fieldName % "balanceHistoryCnt" ) {
                 size_t cnt = balanceHistory.size();
-                if (endsWith(fieldName, "Cnt"))
+                if (endsWith(toLower(fieldName), "cnt"))
                     return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;
@@ -294,6 +299,7 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
             break;
         case 'f':
             if ( fieldName % "firstBlock" ) return uint_2_Str(firstBlock);
+//            if ( fieldName % "fm_mode" ) return fm_mode;
             break;
         case 'l':
             if ( fieldName % "lastBlock" ) return uint_2_Str(lastBlock);
@@ -355,33 +361,6 @@ const CBaseNode *CAccountWatch::getObjectAt(const string_q& fieldName, size_t in
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-string_q CAccountWatch::displayName(bool expand, bool useColor, bool terse, size_t w1, size_t w2) const {
-    if (address == "others") {
-        return padRight(name, w1 + w2 + 1);
-    }
-    if (name == address)
-        return name;
-
-    if (terse) {
-        uint64_t len = name.length();
-        uint64_t need = 42 - len - 6;  // the six is for " (" and "...)"
-        string_q ret;
-//        if (useColor)
-//            ret += color;
-        if (expand)
-            ret += "[000000000000";
-        ret += extract(name, 0, 42-6);
-        ret += " (" + extract(address, 0, need) + "...)";
-        if (expand)
-            ret += "]";
-//        if (useColor)
-//            ret += cOff;
-        return ret;
-    }
-    return padRight(extract(name, 0, w1), w1) + " " + extract(address, 0, w2) + " ";
-}
-
-//-----------------------------------------------------------------------
 biguint_t getNodeBal(CBalanceHistoryArray& history, const address_t& addr, blknum_t blockNum) {
 
     if (!startsWith(addr, "0x"))
@@ -477,16 +456,16 @@ bool CAccountWatch::openCacheFile1(void) {
     tx_cache = new CArchive(WRITING_ARCHIVE);
     if (tx_cache == NULL)
         return false;
-    return tx_cache->Lock(getMonitorPath(address), modeWriteAppend, LOCK_WAIT);
+    return tx_cache->Lock(getMonitorPath(address, fm_mode), modeWriteAppend, LOCK_WAIT);
 }
 
 //-------------------------------------------------------------------------
 void CAccountWatch::writeLastBlock(blknum_t bn) {
     if (!isTestMode())
-        stringToAsciiFile(getMonitorLast(address), uint_2_Str(bn) + "\n");
+        stringToAsciiFile(getMonitorLast(address, fm_mode), uint_2_Str(bn) + "\n");
     else
         if (address != "./merged.bin")
-            cerr << "Would have written " << getMonitorLast(address) << ": " << bn << endl;
+            cerr << "Would have written " << getMonitorLast(address, fm_mode) << ": " << bn << endl;
 }
 
 //-------------------------------------------------------------------------

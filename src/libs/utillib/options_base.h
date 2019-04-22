@@ -171,7 +171,6 @@ protected:
         bool hasTrans(void) const { return !queries.empty(); }
     };
 
-    extern const char *STR_DEFAULT_NAMEDATA;
     extern const char *STR_DEFAULT_TOOLNAMES;
     extern const char *STR_DEFAULT_WHENBLOCKS;
 

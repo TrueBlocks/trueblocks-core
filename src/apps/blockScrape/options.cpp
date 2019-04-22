@@ -74,7 +74,7 @@ bool COptions::parseArguments(string_q& command) {
     // Find out where to start and stop
     if (startBlock == NOPOS && endBlock != NOPOS) {
 
-        startBlock = finalized + 1;
+        startBlock = staging + 1;
         if (startBlock >= endBlock)
             return usage("--start must be before --end. Quitting...");
 
@@ -84,7 +84,7 @@ bool COptions::parseArguments(string_q& command) {
         if (startBlock >= endBlock)
             return usage("--start must be before --end. Quitting...");
 
-        if (startBlock > finalized)
+        if (startBlock > staging)
             return usage("--start must be later than or equal to the last block already in the cache. Quitting...");
 
     } else if (startBlock != NOPOS) {
@@ -93,7 +93,7 @@ bool COptions::parseArguments(string_q& command) {
 
      } else {
 
-         startBlock = finalized + 1;
+         startBlock = staging + 1;
          endBlock = max(startBlock + 1, client);
 
     }
