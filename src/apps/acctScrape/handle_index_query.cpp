@@ -69,13 +69,14 @@ bool COptions::visitBinaryFile(const string_q& path, void *data) {
                 hit = true;
         }
         if (!hit) {
-            cerr << "Skipping file : " << path << "\r"; cerr.flush();
+            cerr << "Skipping blocks: " << path << "\r"; cerr.flush();
             return true;
         }
     }
     static uint32_t n = 0;
-    if (!(++n%23))
-        cerr << "Searching file " << substitute(path, indexFolder_finalized_v2, "./") << string_q((n/23), '.');
+#define BREAK_PT 9
+    if (!(++n%BREAK_PT))
+        cerr << "Searching blocks: " << substitute(path, indexFolder_finalized_v2, "./") << string_q((n/(BREAK_PT*3)), '.');
     if (options->useBlooms)
         cerr << endl;
     else { cerr << "\r"; cerr.flush(); }
