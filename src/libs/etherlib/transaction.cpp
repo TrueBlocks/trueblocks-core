@@ -82,14 +82,6 @@ bool CTransaction::setValueByName(const string_q& fieldName, const string_q& fie
         string_q str = fieldValue;
         return receipt.parseJson3(str);
 
-    } else if ( fieldName % "traces" ) {
-        CTrace item;
-        string_q str = fieldValue;
-        while (item.parseJson3(str)) {
-            traces.push_back(item);
-            item = CTrace();  // reset
-        }
-        return true;
     }
 
     if (pBlock)
@@ -134,6 +126,15 @@ bool CTransaction::setValueByName(const string_q& fieldName, const string_q& fie
             if ( fieldName % "transactionIndex" ) { transactionIndex = str_2_Uint(fieldValue); return true; }
             if ( fieldName % "timestamp" ) { timestamp = str_2_Ts(fieldValue); return true; }
             if ( fieldName % "to" ) { to = str_2_Addr(fieldValue); return true; }
+            if ( fieldName % "traces" ) {
+                CTrace item;
+                string_q str = fieldValue;
+                while (item.parseJson3(str)) {
+                    traces.push_back(item);
+                    item = CTrace();  // reset
+                }
+                return true;
+            }
             break;
         case 'v':
             if ( fieldName % "value" ) { value = str_2_Wei(fieldValue); return true; }
@@ -183,6 +184,7 @@ bool CTransaction::Serialize(CArchive& archive) {
 //    archive >> articulatedTx;
 //    archive >> extra_data;
 //    archive >> finalized;
+//    archive >> traces;
     finishParse();
     return true;
 }
@@ -213,6 +215,7 @@ bool CTransaction::SerializeC(CArchive& archive) const {
 //    archive << articulatedTx;
 //    archive << extra_data;
 //    archive << finalized;
+//    archive << traces;
 
     return true;
 }
@@ -269,6 +272,8 @@ void CTransaction::registerClass(void) {
     HIDE_FIELD(CTransaction, "extra_data");
     ADD_FIELD(CTransaction, "finalized", T_BOOL, ++fieldNum);
     HIDE_FIELD(CTransaction, "finalized");
+    ADD_FIELD(CTransaction, "traces", T_OBJECT|TS_ARRAY, ++fieldNum);
+    HIDE_FIELD(CTransaction, "traces");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTransaction, "schema");
@@ -297,7 +302,6 @@ void CTransaction::registerClass(void) {
     ADD_FIELD(CTransaction, "time", T_DATE, ++fieldNum);
     ADD_FIELD(CTransaction, "ether", T_ETHER, ++fieldNum);
     ADD_FIELD(CTransaction, "encoding", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTransaction, "traces", T_OBJECT|TS_ARRAY, ++fieldNum);
 
     // Hide fields we don't want to show by default
     HIDE_FIELD(CTransaction, "function");
@@ -311,7 +315,6 @@ void CTransaction::registerClass(void) {
     HIDE_FIELD(CTransaction, "datesh");
     HIDE_FIELD(CTransaction, "time");
     HIDE_FIELD(CTransaction, "ether");
-    HIDE_FIELD(CTransaction, "traces");
     if (isTestMode()) {
         UNHIDE_FIELD(CTransaction, "isError");
     }
@@ -507,6 +510,18 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "transactionIndex" ) return uint_2_Str(transactionIndex);
             if ( fieldName % "timestamp" ) return ts_2_Str(timestamp);
             if ( fieldName % "to" ) return addr_2_Str(to);
+            if ( fieldName % "traces" || fieldName % "tracesCnt" ) {
+                size_t cnt = traces.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt) return "";
+                string_q retS;
+                for (size_t i = 0 ; i < cnt ; i++) {
+                    retS += traces[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
             break;
         case 'v':
             if ( fieldName % "value" ) return wei_2_Str(value);
@@ -514,19 +529,7 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
     }
 
     // EXISTING_CODE
-    if ( fieldName % "traces" || fieldName % "tracesCnt" ) {
-        size_t cnt = traces.size();
-        if (endsWith(toLower(fieldName), "cnt"))
-            return uint_2_Str(cnt);
-        if (!cnt) return "";
-        string_q retS;
-        for (size_t i = 0 ; i < cnt ; i++) {
-            retS += traces[i].Format();
-            retS += ((i < cnt - 1) ? ",\n" : "\n");
-        }
-        return retS;
-
-    } else if (fieldName != "cname") {
+    if (fieldName != "cname") {
         // See if this field belongs to the item's container
         ret = nextBlockChunk(fieldName, pBlock);
         if (contains(ret, "Field not found"))

@@ -1,0 +1,9 @@
+chifra argc: 3 [1:ls] [2:-l] 
+chifra ls -l 
+
+Monitor path: $BLOCK_CACHE/monitors/
+Address: none
+	Name:       
+	Filename:   ./monitors/none
+	File size:  0 MB
+	Last block: 	nRecords:   0

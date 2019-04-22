@@ -47,6 +47,7 @@ namespace qblocks {
     typedef bool (*FILEVISITOR)(const string_q& path, void *data);
 
     //------------------------------------------------------------------
+    extern string_q getEffectiveUserName(void);
     extern string_q getHomeFolder       (void);
     extern bool     forEveryFileInFolder(const string_q& mask, FILEVISITOR func, void *data);
     extern size_t   listFilesInFolder   (CStringArray& files, const string_q& mask, bool recurse);

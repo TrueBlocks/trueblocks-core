@@ -1,8 +1,8 @@
 cacheMan argc: 3 [1:-i] [2:merged.acct.bin] 
 cacheMan -i merged.acct.bin 
-	Reading cache: merged.acct.bin...11 existing records read.
-	Importing record 13 of 4
+	Reading cache: merged.acct.bin...22 existing records read.
+	Importing record 26 of 4
 	Sorting...done
-	Writing...Would have written merged.last.txt: 5001001
-15 records written, 0 records ignored.
+	Writing...Would have written /media/wildmolasses/4tb-data/scraper/monitors/merged.last.txt: 5001001
+26 records written, 0 records ignored.
 	Written to merged.acct.bin

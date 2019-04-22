@@ -11,7 +11,7 @@
 // happen if the miner address is zero in a zero-transaction block.
 bool handle_rewrite(blknum_t bn, void *data) {
 
-    string_q path = substitute(getBinaryFilename(bn), "/blocks/", "/blooms/");
+    string_q path = getBinaryCacheFilename(CT_BLOOMS, bn);
 
     CBlock block;
     getBlock(block, bn);

@@ -42,10 +42,6 @@ getTrans -a -v -t 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7e
       }
     ]
   },
-  "gasCost": 6000000000000000,
-  "gasUsed": 3000000,
-  "date": "2018-10-14 13:49:30 UTC",
-  "ether": 0.000000000000000000,
   "traces": [
     {
       "type": "call",
@@ -90,7 +86,11 @@ getTrans -a -v -t 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7e
         "output": ""
       }
     }
-  ]
+  ],
+  "gasCost": 6000000000000000,
+  "gasUsed": 3000000,
+  "date": "2018-10-14 13:49:30 UTC",
+  "ether": 0.000000000000000000
 },{
   "hash": "0x8c0b6d6bf0390ba6618b10aa629f8208c8b871b0c052408505a7d9b5bf015f91",
   "blockHash": "0x9a06b1e8e7249a36a5e532997882429805c7a6510e91b05fd9b5ad6e367acb13",
@@ -149,10 +149,6 @@ getTrans -a -v -t 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7e
       }
     ]
   },
-  "gasCost": 3925900000000000,
-  "gasUsed": 78518,
-  "date": "2018-11-12 01:45:21 UTC",
-  "ether": 0.000000000000000000,
   "traces": [
     {
       "type": "call",
@@ -183,7 +179,11 @@ getTrans -a -v -t 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7e
         "output": "0x"
       }
     }
-  ]
+  ],
+  "gasCost": 3925900000000000,
+  "gasUsed": 78518,
+  "date": "2018-11-12 01:45:21 UTC",
+  "ether": 0.000000000000000000
 },{
   "hash": "0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12",
   "blockHash": "0xcd4dbd459893241b0c21c91d64b445b1eb0579f7341afd17e7b797795a7f1d7e",
@@ -222,10 +222,6 @@ getTrans -a -v -t 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7e
       }
     ]
   },
-  "gasCost": 3156100000000000,
-  "gasUsed": 31561,
-  "date": "2016-08-03 01:34:28 UTC",
-  "ether": 4.569662960000000000,
   "traces": [
     {
       "type": "call",
@@ -317,5 +313,9 @@ getTrans -a -v -t 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7e
         "output": "0x"
       }
     }
-  ]
+  ],
+  "gasCost": 3156100000000000,
+  "gasUsed": 31561,
+  "date": "2016-08-03 01:34:28 UTC",
+  "ether": 4.569662960000000000
 }]

@@ -19,10 +19,10 @@ static const COption params[] = {
     COption("-addr",        "export only the associated address (may be used in scripting)"),
     COption("-count",       "print only the count of the number of matches"),
     COption("-data",        "export results as tab separated data"),
-    COption("-open",        "open the name database for editing"),
+    COption("-edit",        "open the name database for editing"),
     COption("-list",        "list all names in the database"),
     COption("-matchCase",   "matches must agree in case (the default is to ignore case)"),
-    COption("-source",      "search 'source' field as well name and address (the default)"),
+    COption("@source",      "search 'source' field as well name and address (the default)"),
     COption("",             "Query Ethereum addresses and/or names making it easy to remember accounts.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -54,7 +54,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-m" || arg == "--matchCase") {
             matchCase = true;
 
-        } else if (arg == "-o" || arg == "--open") {
+        } else if (arg == "-e" || arg == "--edit") {
             isEdit = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
@@ -111,11 +111,6 @@ COptions::COptions(void) {
     // If you need the names file, you have to add it in the constructor
     namesFile = CFilename(configPath("names/names.txt"));
     establishFolder(namesFile.getPath());
-    if (!fileExists(namesFile.getFullPath())) {
-        stringToAsciiFile(namesFile.getFullPath(),
-                          substitute(
-                          substitute(string_q(STR_DEFAULT_NAMEDATA), " |", "|"), "|", "\t"));
-    }
     loadNames();
     Init();
 }

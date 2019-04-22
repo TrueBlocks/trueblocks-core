@@ -9,7 +9,7 @@
 //-------------------------------------------------------------------------
 bool handle_visit(blknum_t bn, void *data) {
 
-    string_q path = substitute(getBinaryFilename(bn), "/blocks/", "/blooms/");
+    string_q path = getBinaryCacheFilename(CT_BLOOMS, bn);
     if (!fileExists(path)) {
         if (verbose)
             cerr << "Skipping " << path << "\r";

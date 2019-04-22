@@ -31,12 +31,11 @@ endif()
 
 # copy the names json file which replaces the .txt file
 message(STATUS "Copying supporting names files to ${QUICKBLOCKS_HOME}/names/")
-set(NAMES_TXT "${CMAKE_SOURCE_DIR}/../../../src/other/install/names.txt")
-file(COPY ${NAMES_TXT} DESTINATION "${QUICKBLOCKS_HOME}/names/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
-# set(NAMES_JSON "${CMAKE_SOURCE_DIR}/../../../src/other/install/names.json")
-# file(COPY ${NAMES_JSON} DESTINATION "${QUICKBLOCKS_HOME}/names/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
-set(NAMES_LOGOS "${CMAKE_SOURCE_DIR}/../../../src/other/install/names_logos.tar.gz")
-file(COPY ${NAMES_LOGOS} DESTINATION "${QUICKBLOCKS_HOME}/names/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+file(GLOB NAMES_FILES "${CMAKE_SOURCE_DIR}/../../../src/other/install/names*")
+foreach(FILE ${NAMES_FILES} )
+    message(STATUS "  Copied file to ${QUICKBLOCKS_HOME}/names/")
+	file(COPY "${FILE}" DESTINATION "${QUICKBLOCKS_HOME}/names/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+endforeach( FILE )
 
 # Copy the prices files
 message(STATUS "Copying price database to ${QUICKBLOCKS_HOME}/cache/prices/")

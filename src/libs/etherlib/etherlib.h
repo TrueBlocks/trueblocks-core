@@ -27,5 +27,6 @@
 #include "blockoptions.h"
 #include "question.h"
 #include "appearance.h"
+#include "newbloom.h"
 
 using namespace qblocks;  // NOLINT
