@@ -27,6 +27,7 @@ every:
 	@make app
 
 app:
+	@mkdir -p bin
 	@make $(product)
 	mv $(product) $(dest)
 
