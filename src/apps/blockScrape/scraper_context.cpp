@@ -325,6 +325,9 @@ string_q CScraper::report(uint64_t last) {
     cerr << ((block.finalized ? greenCheck : whiteStar) + " ");
     cerr << padRight(uint_2_Str(last - block.blockNumber), 4) << ": ";
 
+#define dashIfNA(val) (status == "cache" ? "-" : uint_2_Str((val)))
+
+    uint64_t nUniq = addrList.addrTxMap->size();
     ostringstream os; os.precision(4);
     os << fixed << setprecision(3);
     os << bBlack;
@@ -333,10 +336,10 @@ string_q CScraper::report(uint64_t last) {
     os << TIC()                       << "\t" << cYellow;
     os << block.blockNumber           << "\t";
     os << block.transactions.size()   << "\t";
-    os << traceCount                  << "\t";
-    os << maxTraceDepth               << "\t";
-    os << nAddrsInBlock               << "\t";
-    os << addrList.addrTxMap->size()  << "\t";
+    os << dashIfNA(traceCount)        << "\t";
+    os << dashIfNA(maxTraceDepth)     << "\t";
+    os << dashIfNA(nAddrsInBlock)     << "\t";
+    os << dashIfNA(nUniq)             << "\t";
     os << padNum6(curLines)           << "\t" << cTeal;
     os << status                      << cOff;
 
