@@ -3,7 +3,8 @@ chifra stats
 
 Monitor path: $BLOCK_CACHE/monitors/
 Address: none
-	Name:       
-	Filename:   ./monitors/none
+	Name:       <unknown>
+	Filename:   
 	File size:  0 MB
-	Last block: 	nRecords:   0
+	Last block: 0
+	nRecords:   0
