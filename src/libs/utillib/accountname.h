@@ -34,6 +34,10 @@ public:
     string_q description;
     string_q logo;
     bool visible;
+    string_q fn;
+    uint64_t size;
+    blknum_t lb;
+    uint64_t nrecs;
 
 public:
     CAccountName(void);
@@ -103,6 +107,10 @@ inline void CAccountName::initialize(void) {
     description = "";
     logo = "";
     visible = true;
+    fn = "";
+    size = 0;
+    lb = 0;
+    nrecs = 0;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -120,6 +128,10 @@ inline void CAccountName::duplicate(const CAccountName& ac) {
     description = ac.description;
     logo = ac.logo;
     visible = ac.visible;
+    fn = ac.fn;
+    size = ac.size;
+    lb = ac.lb;
+    nrecs = ac.nrecs;
 
     // EXISTING_CODE
     // EXISTING_CODE
