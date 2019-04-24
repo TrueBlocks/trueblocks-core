@@ -18,11 +18,23 @@ bool COptions::handle_ls(void) {
     ostringstream os;
     os << endl << cGreen << "Monitor path: " << cWhite << getMonitorPath("") << endl;
 
+    stats = (stats || contains(tool_flags, "-l"));
+
     CStringArray files;
     if (isTestMode()) {
         files.push_back("0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359.accts.bin");
     } else {
-        listFilesInFolder(files, getMonitorPath("*.*"), false);
+        if (stats && addrs.size()) {
+            for (auto addr : addrs) {
+                string_q fn = getMonitorPath(addr + ".acct.bin");
+                if (fileExists(fn))
+                    files.push_back(fn);
+                else
+                    cerr << fn << " not found." << endl;
+            }
+        } else {
+            listFilesInFolder(files, getMonitorPath("*.*"), false);
+        }
     }
 
     CAccountNameArray accounts;
@@ -33,6 +45,10 @@ bool COptions::handle_ls(void) {
             item.addr = nextTokenClear(file, '.');
             getNamedAccount(item, item.addr);
             item.name = substitute(substitute(item.name, "(", ""), ")", "");
+            item.fn = substitute(getMonitorPath(item.addr), getCachePath(""), "./");
+            item.size = fileSize(getMonitorPath(item.addr));
+            item.lb = str_2_Uint(asciiFileToString(getMonitorLast(item.addr)));
+            item.nrecs = fileSize(getMonitorPath(item.addr)) / sizeof(CAppearance_base);
             accounts.push_back(item);
         }
     }
@@ -43,14 +59,35 @@ bool COptions::handle_ls(void) {
     }
     sort(accounts.begin(), accounts.end());
 
-    if (stats || contains(tool_flags, "-l")) {
+    if (!getEnvStr("IS_DOCKER").empty()) {
+        SHOW_FIELD(CAccountName, "fn");
+        SHOW_FIELD(CAccountName, "size");
+        SHOW_FIELD(CAccountName, "lb");
+        SHOW_FIELD(CAccountName, "nrecs");
+        ostringstream oss;
+        if (accounts.size() > 1)
+            oss << "[";
+        bool first = true;
+        for (auto acct : accounts) {
+            if (!first)
+                oss << ",";
+            oss << acct;
+            first = false;
+        }
+        if (accounts.size() > 1)
+            oss << "]";
+        cout << substitute(substitute(oss.str(), "\n", ""), "\t", "") << endl;
+        return true;
+    }
+
+    if (stats) {
         for (auto acct : accounts) {
             os << "Address: " << cTeal << acct.addr << cOff << endl;
-            os << "\tName:       " << cYellow << (acct.name.empty() ? "" : acct.name) << cOff << endl;
-            os << "\tFilename:   " << cYellow << substitute(getMonitorPath(acct.addr), getCachePath(""), "./") << cOff << endl;
-            os << "\tFile size:  " << cYellow << (((double)fileSize(getMonitorPath(acct.addr)))/1024./1024.) << " MB" << cOff << endl;
-            os << "\tLast block: " << cYellow << asciiFileToString(getMonitorLast(acct.addr)) << cOff;
-            os << "\tnRecords:   " << cYellow << fileSize(getMonitorPath(acct.addr)) / sizeof(CAppearance_base) << cOff << endl;
+            os << "\tName:       " << cYellow << (acct.name.empty() ? "<unknown>" : acct.name) << cOff << endl;
+            os << "\tFilename:   " << cYellow << acct.fn << cOff << endl;
+            os << "\tFile size:  " << cYellow << ((double)acct.size/1024./1024.) << " MB" << cOff << endl;
+            os << "\tLast block: " << cYellow << acct.lb << cOff;
+            os << "\tnRecords:   " << cYellow << acct.nrecs << cOff << endl;
         }
 
     } else {
@@ -62,21 +99,28 @@ bool COptions::handle_ls(void) {
         struct winsize ts;
         ioctl(STDIN_FILENO, TIOCGWINSZ, &ts);
         size_t ncols = ts.ws_col;
+#else
+        size_t ncols = 1;
 #endif /* TIOCGSIZE */
         ncols = max(ncols, (size_t)1);
+        // give ourselves a bit of room to the right
 
-        size_t mx = 0;
+        os << cGreen << "Current monitors:" << cOff << endl;
+
+        // find the longest name (max 25 chars)
+        size_t longest = 0;
         for (auto acct : accounts)
-            mx = max(mx, acct.addr.length() + 20 + 3);
-        mx = max(mx, (size_t)50);
+            longest = max(longest, acct.name.length() + 3); // two parens
+        longest = min(longest, (size_t)23); // max 23
+        ncols = (ncols / (size_t(42) + longest));
 
         uint64_t cnt = 0;
-        os << "  " << cGreen << "Current monitors:" << cOff << endl;
         for (auto acct : accounts) {
-            os << "    " << cTeal << acct.addr;
-            string_q nm = acct.name.empty() ? "" : " (" + acct.name.substr(0,20) + ")";
-            os << padRight(nm, 23);
-            if (ncols == 1 || !(++cnt % (ncols / mx)))
+            string_q name = acct.name;
+            if (!name.empty())
+                name = "(" + name.substr(0,20) + ") ";
+            os << " " << cTeal << acct.addr << " " << padRight(name, longest);
+            if (!(++cnt % ncols))
                 os << endl;
         }
         os << cOff << endl;
