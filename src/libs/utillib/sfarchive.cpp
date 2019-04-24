@@ -274,11 +274,11 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------
-    size_t linesToAsciiFile(const string_q& fileName, const CStringArray& lines) {
+    size_t linesToAsciiFile(const string_q& fileName, const CStringArray& lines, bool addNewlines) {
         CArchive asciiCache(WRITING_ARCHIVE);
         if (asciiCache.Lock(fileName, modeWriteAppend, LOCK_NOWAIT)) {
             for (auto line : lines)
-                asciiCache.WriteLine(line.c_str());
+                asciiCache.WriteLine((line + (addNewlines ? "\n" : "")).c_str());
             asciiCache.Release();
         }
         return fileSize(fileName);
