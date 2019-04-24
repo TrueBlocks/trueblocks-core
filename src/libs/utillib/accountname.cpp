@@ -67,15 +67,21 @@ bool CAccountName::setValueByName(const string_q& fieldName, const string_q& fie
         case 'd':
             if ( fieldName % "description" ) { description = fieldValue; return true; }
             break;
+        case 'f':
+            if ( fieldName % "fn" ) { fn = fieldValue; return true; }
+            break;
         case 'l':
             if ( fieldName % "logo" ) { logo = fieldValue; return true; }
+            if ( fieldName % "lb" ) { lb = str_2_Uint(fieldValue); return true; }
             break;
         case 'n':
             if ( fieldName % "name" ) { name = fieldValue; return true; }
+            if ( fieldName % "nrecs" ) { nrecs = str_2_Uint(fieldValue); return true; }
             break;
         case 's':
             if ( fieldName % "symbol" ) { symbol = fieldValue; return true; }
             if ( fieldName % "source" ) { source = fieldValue; return true; }
+            if ( fieldName % "size" ) { size = str_2_Uint(fieldValue); return true; }
             break;
         case 'v':
             if ( fieldName % "visible" ) { visible = str_2_Bool(fieldValue); return true; }
@@ -113,6 +119,10 @@ bool CAccountName::Serialize(CArchive& archive) {
     archive >> description;
     archive >> logo;
     archive >> visible;
+//    archive >> fn;
+//    archive >> size;
+//    archive >> lb;
+//    archive >> nrecs;
     finishParse();
     return true;
 }
@@ -132,6 +142,10 @@ bool CAccountName::SerializeC(CArchive& archive) const {
     archive << description;
     archive << logo;
     archive << visible;
+//    archive << fn;
+//    archive << size;
+//    archive << lb;
+//    archive << nrecs;
 
     return true;
 }
@@ -174,6 +188,14 @@ void CAccountName::registerClass(void) {
     ADD_FIELD(CAccountName, "description", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "logo", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "visible", T_BOOL, ++fieldNum);
+    ADD_FIELD(CAccountName, "fn", T_TEXT, ++fieldNum);
+    HIDE_FIELD(CAccountName, "fn");
+    ADD_FIELD(CAccountName, "size", T_NUMBER, ++fieldNum);
+    HIDE_FIELD(CAccountName, "size");
+    ADD_FIELD(CAccountName, "lb", T_NUMBER, ++fieldNum);
+    HIDE_FIELD(CAccountName, "lb");
+    ADD_FIELD(CAccountName, "nrecs", T_NUMBER, ++fieldNum);
+    HIDE_FIELD(CAccountName, "nrecs");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAccountName, "schema");
@@ -235,15 +257,21 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
         case 'd':
             if ( fieldName % "description" ) return description;
             break;
+        case 'f':
+            if ( fieldName % "fn" ) return fn;
+            break;
         case 'l':
             if ( fieldName % "logo" ) return logo;
+            if ( fieldName % "lb" ) return uint_2_Str(lb);
             break;
         case 'n':
             if ( fieldName % "name" ) return name;
+            if ( fieldName % "nrecs" ) return uint_2_Str(nrecs);
             break;
         case 's':
             if ( fieldName % "symbol" ) return symbol;
             if ( fieldName % "source" ) return source;
+            if ( fieldName % "size" ) return uint_2_Str(size);
             break;
         case 'v':
             if ( fieldName % "visible" ) return bool_2_Str(visible);
