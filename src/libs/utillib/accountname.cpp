@@ -81,7 +81,7 @@ bool CAccountName::setValueByName(const string_q& fieldName, const string_q& fie
         case 's':
             if ( fieldName % "symbol" ) { symbol = fieldValue; return true; }
             if ( fieldName % "source" ) { source = fieldValue; return true; }
-            if ( fieldName % "size" ) { size = str_2_Uint(fieldValue); return true; }
+            if ( fieldName % "size" ) { size = str_2_Double(fieldValue); return true; }
             break;
         case 'v':
             if ( fieldName % "visible" ) { visible = str_2_Bool(fieldValue); return true; }
@@ -190,7 +190,7 @@ void CAccountName::registerClass(void) {
     ADD_FIELD(CAccountName, "visible", T_BOOL, ++fieldNum);
     ADD_FIELD(CAccountName, "fn", T_TEXT, ++fieldNum);
     HIDE_FIELD(CAccountName, "fn");
-    ADD_FIELD(CAccountName, "size", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CAccountName, "size", T_DOUBLE, ++fieldNum);
     HIDE_FIELD(CAccountName, "size");
     ADD_FIELD(CAccountName, "lb", T_NUMBER, ++fieldNum);
     HIDE_FIELD(CAccountName, "lb");
@@ -271,7 +271,7 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
         case 's':
             if ( fieldName % "symbol" ) return symbol;
             if ( fieldName % "source" ) return source;
-            if ( fieldName % "size" ) return uint_2_Str(size);
+            if ( fieldName % "size" ) return double_2_Str(size);
             break;
         case 'v':
             if ( fieldName % "visible" ) return bool_2_Str(visible);
