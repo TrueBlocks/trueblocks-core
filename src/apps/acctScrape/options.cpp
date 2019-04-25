@@ -41,13 +41,10 @@ bool COptions::parseArguments(string_q& command) {
             }
 
         } else if (arg == "-p" || arg == "--pending") {
-            visit |= VIS_PENDING;
+            visitTypes |= VIS_PENDING;
 
         } else if (arg == "-u" || arg == "--useBlooms") {
             useBlooms = true;
-
-        } else if (arg == "-s" || arg == "--staging") {
-            fm_mode = FM_STAGING;
 
         } else if (startsWith(arg, "0x")) {
             if (!isAddress(arg))
@@ -103,20 +100,33 @@ bool COptions::parseArguments(string_q& command) {
     if (isAll)
         maxBlocks = INT_MAX;
 
-    string_q transCachePath = getMonitorPath("", fm_mode);
-    if (!folderExists(transCachePath)) {
-        cerr << "The cache folder '" << transCachePath << "' not found. Trying to create it." << endl;
-        establishFolder(transCachePath);
-        if (!folderExists(transCachePath))
-            return usage("The cache folder '" + transCachePath + "' not created. Quiting...");
+    string_q prodPath = getMonitorPath("", FM_PRODUCTION);
+    if (!folderExists(prodPath)) {
+        cerr << "The cache folder '" << prodPath << "' not found. Trying to create it." << endl;
+        establishFolder(prodPath);
+        if (!folderExists(prodPath))
+            return usage("The cache folder '" + prodPath + "' not created. Quiting...");
     }
 
+    string_q stagePath = getMonitorPath("", FM_STAGING);
+    if (!folderExists(stagePath)) {
+        cerr << "The cache folder '" << stagePath << "' not found. Trying to create it." << endl;
+        establishFolder(stagePath);
+        if (!folderExists(stagePath))
+            return usage("The cache folder '" + stagePath + "' not created. Quiting...");
+    }
+
+    blknum_t lastInCache = getLastBlock_cache_final();
     for (auto monitor : monitors) {
-        string_q fn = getMonitorPath(monitor.address, fm_mode);
+        // Note: We've cleaned the staging folder, so we only have to check for locks in the production folder
+        string_q fn = getMonitorLast(monitor.address);
+        if (fileExists(fn))
+            earliestStart = min(max(earliestStart, str_2_Uint(asciiFileToString(fn))), lastInCache);
+
         if (fileExists(fn + ".lck"))
             return usage("The cache file '" + fn + "' is locked. Quitting...");
 
-        fn = getMonitorLast(monitor.address, fm_mode);
+        fn = getMonitorLast(monitor.address);
         if (fileExists(fn + ".lck"))
             return usage("The last block file '" + fn + "' is locked. Quitting...");
     }
@@ -124,16 +134,16 @@ bool COptions::parseArguments(string_q& command) {
     if (!folderExists(indexFolder_finalized_v2))
         return usage("Address index path '" + indexFolder_finalized_v2 + "' not found. Quitting...");
 
-    blknum_t lastInCache = getLastBlock_cache_final();
-    startScrape = str_2_Uint(asciiFileToString(getMonitorLast(primary.address, fm_mode)));
-    scrapeCnt   = min(lastInCache - startScrape, maxBlocks);
+    // How many should we scrape?
+    ASSERT(earliestStart <= lastInCache);
+    scrapeCnt = min(lastInCache - earliestStart, maxBlocks);
 
     if (verbose) {
         for (auto monitor : monitors) {
             cerr << "Freshening " << monitor.address << "\r";cerr.flush();
         }
     }
-    return startScrape < lastInCache;
+    return earliestStart < lastInCache;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -142,21 +152,24 @@ void COptions::Init(void) {
     // We want to be able to run this more than once
     // optionOn(OPT_RUNONCE);
 
-    fm_mode     = FM_PRODUCTION;
-    minArgs     = 0;
-    startScrape = 0;
-    scrapeCnt   = 0;
-    visit       = (VIS_STAGING | VIS_FINAL);
-    useBlooms   = false;
+    minArgs       = 0;
+    earliestStart = 0;
+    scrapeCnt     = 0;
+    visitTypes    = (VIS_STAGING | VIS_FINAL);
+    useBlooms     = false;
 }
 
+
 //---------------------------------------------------------------------------------------------------
-COptions::COptions(void) {
+COptions::COptions(void) : log_file() {
     Init();
+    log_file = ofstream(configPath("cache/tmp/acctScrape.log"), std::ofstream::out);
 }
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
     // just some cleanup of the screen
     cerr << string_q(150,' ') << "\r";
+    LOG(log_file << "fin." << endl);
+    log_file.close();
 }

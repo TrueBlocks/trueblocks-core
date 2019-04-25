@@ -35,7 +35,7 @@ public:
     string_q logo;
     bool visible;
     string_q fn;
-    uint64_t size;
+    double size;
     blknum_t lb;
     uint64_t nrecs;
 
@@ -108,7 +108,7 @@ inline void CAccountName::initialize(void) {
     logo = "";
     visible = true;
     fn = "";
-    size = 0;
+    size = 0.0;
     lb = 0;
     nrecs = 0;
 
