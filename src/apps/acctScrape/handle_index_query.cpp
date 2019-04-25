@@ -14,21 +14,25 @@ bool visitFinalIndexFiles(const string_q& path, void *data) {
 
     } else {
 
+        // Pick up some useful data for either method...
+        COptions *options = reinterpret_cast<COptions*>(data);
+
         // Filenames take the form 'start-end.[txt|bin]' where both 'start' and 'end'
         // are inclusive. Silently skips unknown files in the folder (such as shell scripts).
         if (!contains(path, "-") || !endsWith(path, ".bin"))
             return !shouldQuit();
 
-        // Pick up some useful data for either method...
-        COptions *options = reinterpret_cast<COptions*>(data);
-        options->firstBlockInFile = bnFromPath(path, options->lastBlockInFile);
-        ASSERT(options->firstBlockInFile != NOPOS);
+//        blknum_t unused =
+            bnFromPath(path, options->lastBlockInFile);
+        ASSERT(unused != NOPOS);
         ASSERT(options->lastBlockInFile != NOPOS);
 
-        if (options->startScrape > options->lastBlockInFile)
+        if (options->earliestStart > options->lastBlockInFile)
             return !shouldQuit();
 
-        return options->visitBinaryFile(path, data);
+        bool ret = options->visitBinaryFile(path, data);
+        return ret && !shouldQuit();
+
     }
     ASSERT(0); // should not happen
     return !shouldQuit();
@@ -58,6 +62,9 @@ bool newReadBloomFromBinary(CNewBloomArray& blooms, const string_q& fileName) {
 //---------------------------------------------------------------
 bool COptions::visitBinaryFile(const string_q& path, void *data) {
 
+#define BREAK_PT 5
+    static uint32_t n = 0;
+
     COptions *options = reinterpret_cast<COptions*>(data);
     string_q bPath = substitute(substitute(path, indexFolder_finalized_v2, indexFolder_blooms_v2), ".bin", ".bloom");
     if (options->useBlooms && fileExists(bPath)) {
@@ -68,28 +75,44 @@ bool COptions::visitBinaryFile(const string_q& path, void *data) {
             if (isMember(blooms, monitors[a].address))
                 hit = true;
         }
+
         if (!hit) {
-            cerr << "Skipping blocks: " << path << "\r"; cerr.flush();
+            LOG(options->log_file << "Skipping blocks: " << substitute(path, indexFolder_finalized_v2, "./") << endl);
+            if (!(++n%BREAK_PT)) {
+                cerr << "Skipping blocks:  " << substitute(path, indexFolder_finalized_v2, "./");
+                cerr << string_q((n/(BREAK_PT*7)), '.');
+                cerr << "\r";
+                cerr.flush();
+            }
+            // none of them hit, so write last block for each of them
+            for (size_t a = 0 ; a < monitors.size() && !hit ; a++)
+                monitors[a].writeLastBlock(lastBlockInFile + 1);
             return true;
         }
     }
-    static uint32_t n = 0;
-#define BREAK_PT 9
-    if (!(++n%BREAK_PT))
-        cerr << "Searching blocks: " << substitute(path, indexFolder_finalized_v2, "./") << string_q((n/(BREAK_PT*3)), '.');
-    if (options->useBlooms)
-        cerr << endl;
-    else { cerr << "\r"; cerr.flush(); }
+
+    LOG(options->log_file << "Searching blocks: " << substitute(path, indexFolder_finalized_v2, "./") << endl);
+    if (!(++n%BREAK_PT)) {
+        cerr << "Searching blocks: " << substitute(path, indexFolder_finalized_v2, "./");
+        cerr << string_q((n/(BREAK_PT*7)), '.');
+        cerr << "\r";
+        cerr.flush();
+    }
 
     CArchive *chunk = NULL;
     char *rawData = NULL;
     uint32_t nAddrs = 0;
 
     for (size_t ac = 0 ; ac < monitors.size() && !shouldQuit() ; ac++) {
+
         CAccountWatch *acct = &monitors[ac];
-        acct->fm_mode = options->fm_mode;
+        string_q filename = getMonitorPath(acct->address);
+        bool exists = fileExists(filename);
+        acct->fm_mode = (exists ? FM_PRODUCTION : FM_STAGING);
+
         if (!acct->openCacheFile1()) {
-            cerr << "Could not open transaction cache file " << getMonitorPath(acct->address, options->fm_mode) << ". Quitting...";
+            LOG(options->log_file << "Could not open cache file " << getMonitorPath(acct->address, acct->fm_mode) << ". Quitting..." << endl);
+                             cerr << "Could not open cache file " << getMonitorPath(acct->address, acct->fm_mode) << ". Quitting..." << endl;
             return false;
         }
 
@@ -97,27 +120,38 @@ bool COptions::visitBinaryFile(const string_q& path, void *data) {
         items.reserve(300000);
 
         addrbytes_t array = addr_2_Bytes(acct->address);
+
         if (!chunk) {
+
             chunk = new CArchive(READING_ARCHIVE);
             if (!chunk || !chunk->Lock(path, modeReadOnly, LOCK_NOWAIT)) {
-                cerr << "Could not open index file " << path << ". Quitting...";
+                LOG(options->log_file << "Could not open index file " << path << ". Quitting..." << endl);
+                                 cerr << "Could not open index file " << path << ". Quitting..." << endl;
                 return false;
+            } else {
+                LOG(options->log_file << "Index file opened " << path << endl);
             }
 
             size_t sz = fileSize(path);
             rawData = (char*)malloc(sz + (2*59));
             if (!rawData) {
-                cerr << "Could not allocate memory for data. Quitting...";
+                LOG(options->log_file << "Could not allocate memory for data. Quitting..." << endl);
+                                 cerr << "Could not allocate memory for data. Quitting..." << endl;
                 chunk->Release();
                 delete chunk;
                 chunk = NULL;
                 return false;
+            } else {
+                LOG(options->log_file << "Allocated memory" << endl);
             }
             bzero(rawData, sz + (2*59));
             size_t nRead = chunk->Read(rawData, sz, sizeof(char));
             if (nRead != sz) {
-                cerr << "Could not read entire file. Quitting..." << endl;
+                LOG(options->log_file << "Could not read entire file. Quitting..." << endl);
+                                 cerr << "Could not read entire file. Quitting..." << endl;
                 return true;
+            } else {
+                LOG(options->log_file << "Read entire file" << endl);
             }
             CHeaderRecord_base *h = (CHeaderRecord_base*)rawData;
             ASSERT(h->magic == MAGIC_NUMBER);
@@ -125,6 +159,8 @@ bool COptions::visitBinaryFile(const string_q& path, void *data) {
             nAddrs = h->nAddrs;
             //uint32_t nRows = h->nRows; not used
         }
+
+        LOG(options->log_file << "Done reading." << endl);
 
         CAddressRecord_base search;
         for (size_t i = 0 ; i < 20 ; i++)
@@ -140,6 +176,7 @@ bool COptions::visitBinaryFile(const string_q& path, void *data) {
                 items.push_back(item);
             }
 
+            LOG(options->log_file << "Found" << endl);
             if (items.size()) {
                 lockSection(true);
                 acct->writeAnArray(items);
@@ -147,18 +184,22 @@ bool COptions::visitBinaryFile(const string_q& path, void *data) {
                 lockSection(false);
             }
         } else {
+
+            LOG(options->log_file << "Not found" << endl);
             acct->writeLastBlock(lastBlockInFile + 1);
         }
 
     }
 
     if (chunk) {
+        LOG(options->log_file << "Closing file" << endl);
         chunk->Release();
         delete chunk;
         chunk = NULL;
     }
 
     if (rawData) {
+        LOG(options->log_file << "Freeing memory" << endl);
         delete rawData;
         rawData = NULL;
     }
