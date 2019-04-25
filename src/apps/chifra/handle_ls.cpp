@@ -82,14 +82,18 @@ bool COptions::handle_ls(void) {
 
     if (stats) {
         for (auto acct : accounts) {
-            os << "Address: " << cTeal << acct.addr << cOff << endl;
-            os << "\tName:       " << cYellow << (acct.name.empty() ? "<unknown>" : acct.name) << cOff << endl;
-            os << "\tFilename:   " << cYellow << acct.fn << cOff << endl;
-            os << "\tFile size:  " << cYellow << ((double)acct.size/1024./1024.) << " MB" << cOff << endl;
-            os << "\tLast block: " << cYellow << acct.lb << cOff;
-            os << "\tnRecords:   " << cYellow << acct.nrecs << cOff << endl;
+            string_q fmt =
+                "[Address: -c1-{ADDR}-off-\n]"
+                "[\tName:       -c2-{NAME}-off-\n]"
+                "[\tFile name:  -c2-{FN}-off-\n]"
+                "[\tFile size:  -c2-{SIZE}-off-\n]"
+                "[\tLast block: -c2-{LB}-off-\n]"
+                "[\tnRecords:   -c2-{NRECS}-off-\n]";
+            replaceAll(fmt, "-c1-", cTeal);
+            replaceAll(fmt, "-c2-", cYellow);
+            replaceAll(fmt, "-off-", cOff);
+            os << acct.Format(fmt);
         }
-
     } else {
 #ifdef TIOCGSIZE
         struct ttysize ts;
@@ -103,7 +107,6 @@ bool COptions::handle_ls(void) {
         size_t ncols = 1;
 #endif /* TIOCGSIZE */
         ncols = max(ncols, (size_t)1);
-        // give ourselves a bit of room to the right
 
         os << cGreen << "Current monitors:" << cOff << endl;
 
@@ -112,7 +115,7 @@ bool COptions::handle_ls(void) {
         for (auto acct : accounts)
             longest = max(longest, acct.name.length() + 3); // two parens
         longest = min(longest, (size_t)23); // max 23
-        ncols = (ncols / (size_t(42) + longest));
+        ncols = max(((size_t)1), (ncols / (size_t(42) + longest)));
 
         uint64_t cnt = 0;
         for (auto acct : accounts) {
