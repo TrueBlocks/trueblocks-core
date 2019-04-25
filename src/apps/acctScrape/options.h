@@ -10,15 +10,14 @@
 class COptions : public COptionsBase {
 public:
 
-    blknum_t           startScrape;
+    blknum_t           earliestStart;
     blknum_t           scrapeCnt;
     CAccountWatchArray monitors;
     CAccountWatch      primary;
-    blknum_t           firstBlockInFile;
     blknum_t           lastBlockInFile;
-    size_t             visit;
+    size_t             visitTypes;
     bool               useBlooms;
-    FreshenMode        fm_mode;
+    ofstream           log_file;
 
     COptions(void);
     ~COptions(void);
@@ -26,6 +25,7 @@ public:
     bool parseArguments(string_q& command);
     void Init(void);
     bool visitBinaryFile(const string_q& path, void *data);
+    void moveToProduction(void);
 };
 
 #define VIS_FINAL   (1<<1)
@@ -35,3 +35,6 @@ public:
 extern bool visitFinalIndexFiles(const string_q& path, void *data);
 extern bool visitStagingIndexFiles(const string_q& path, void *data);
 extern bool visitPendingIndexFiles(const string_q& path, void *data);
+
+//#define LOG(a) { a; }
+#define LOG(a) { }
