@@ -42,6 +42,15 @@ namespace qblocks {
     }
 
 
+    //--------------------------------------------------------------------------------
+    int cleanFolder(const string_q& path, bool recurse, bool interactive) {
+        CStringArray files;
+        listFilesInFolder(files, path, true);
+        for (auto file : files)
+            ::remove(file.c_str());
+        return (int)files.size();
+    }
+
     //------------------------------------------------------------------
     int moveFile(const string_q& from, const string_q& to) {
         if (from % to)
