@@ -8,6 +8,7 @@
 
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
+
     nodeNotRequired();
     acctlib_init(defaultQuitHandler);
 
@@ -19,16 +20,46 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        if (options.visit & VIS_FINAL)
+        // Clean the staging folder since we want to start with clean scrapes for both
+        // never scraped or unfinished (partial) scrapes
+        cleanFolder(getMonitorPath("", FM_STAGING));
+
+        if (options.visitTypes & VIS_FINAL)
             forEveryFileInFolder(indexFolder_finalized_v2, visitFinalIndexFiles, &options);
 
-        if (options.visit & VIS_STAGING)
+        if (options.visitTypes & VIS_STAGING)
             forEveryFileInFolder(indexFolder_staging_v2, visitStagingIndexFiles, &options);
 
-        if (options.visit & VIS_PENDING)
+        if (options.visitTypes & VIS_PENDING)
             forEveryFileInFolder(indexFolder_pending_v2, visitPendingIndexFiles, &options);
+
+        options.moveToProduction();
     }
 
     acctlib_cleanup();
     return 0;
+}
+
+//--------------------------------------------------------------------------------
+void doMoveFile(const string_q& from, const string_q& to) {
+    if (verbose)
+        cerr << "Moving " << cTeal << from << cOff << " to " << cTeal << to << cOff << endl;
+    if (isTestMode()) {
+        cerr << "Would have moved " << substitute(from, getCachePath(""), "$BLOCK_CACHE/") << " to ";
+        cerr << substitute(to, getCachePath(""), "$BLOCK_CACHE/") << endl;
+    } else {
+        moveFile(from, to);
+    }
+}
+
+//--------------------------------------------------------------------------------
+void COptions::moveToProduction(void) {
+    for (auto acct : monitors) {
+        if (acct.fm_mode == FM_STAGING) {
+            lockSection(true);
+            doMoveFile(getMonitorPath(acct.address, FM_STAGING), getMonitorPath(acct.address));
+            doMoveFile(getMonitorLast(acct.address, FM_STAGING), getMonitorLast(acct.address));
+            lockSection(false);
+        }
+    }
 }
