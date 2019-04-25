@@ -59,7 +59,7 @@ bool COptions::handle_ls(void) {
     }
     sort(accounts.begin(), accounts.end());
 
-    if (!getEnvStr("IS_DOCKER").empty() || !getEnvStr("FROM_API").empty()) {
+    if (!getEnvStr("API_MODE").empty()) {
         SHOW_FIELD(CAccountName, "fn");
         SHOW_FIELD(CAccountName, "size");
         SHOW_FIELD(CAccountName, "lb");
