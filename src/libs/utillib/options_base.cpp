@@ -405,7 +405,7 @@ namespace qblocks {
         os << notes();
         if (!isReadme) {
             os << bBlue << "  Powered by QBlocks";
-            os << (isTestMode() ? "" : " (" + getVersionStr(true) + ")") << " [" << GIT_BRANCH << "@" << GIT_COMMIT_HASH << "]\n" << cOff;
+            os << (isTestMode() ? "" : " (" + getVersionStr(true) + ")") << "\n" << cOff;
         }
         string_q ret = os.str().c_str();
         return postProcess("usage", ret);
