@@ -59,10 +59,10 @@ bool COptions::parseArguments(string_q& command) {
     establishFolder(getMonitorPath("", FM_PRODUCTION));
     establishFolder(getMonitorPath("", FM_STAGING));
 
-    if (verbose) {
-        tool_flags += " --verbose";
-        freshen_flags += " --verbose";
-    }
+//    if (verbose) {
+//        tool_flags += " --verbose";
+//        freshen_flags += " --verbose";
+//    }
 
     tool_flags = trim(tool_flags, ' ');
     freshen_flags = trim(freshen_flags, ' ');
@@ -80,6 +80,7 @@ void COptions::Init(void) {
     mode          = "";
     stats         = false;
     minArgs       = 0;
+    api_mode      = !getEnvStr("API_MODE").empty();
 }
 
 //---------------------------------------------------------------------------------------------------

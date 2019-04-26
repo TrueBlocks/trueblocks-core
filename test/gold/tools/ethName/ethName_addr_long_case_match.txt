@@ -1,8 +1,7 @@
 ethName argc: 3 [1:--matchCase] [2:0xcb] 
 ethName --matchCase 0xcb 
-{ "addr": "0xcb94be6f13a1182e4a4b6140cb7bf2025d28e41b", "symbol": "TRST", "name": "WeTrust (Trustcoin)", "source": "Etherscan.io", "description": "A platform for Trusted Lending Circles, powered by people and blockchain", "visible": true }
-{ "addr": "0xcb5a05bef3257613e984c17dbcf039952b6d883f", "symbol": "SGR", "name": "Sugar Exchange", "source": "Etherscan.io", "description": "Sugar Exchange aims to be a new type of cryptocurrency trading platform utilizing proven methods, as well as implementing advanced technology to ensure a superior user experience.", "logo": "sugarexchange_28.png", "visible": true }
-{ "addr": "0xcb94be6f13a1182e4a4b6140cb7bf2025d28e41b", "symbol": "TRST", "name": "Trustcoin", "source": "Etherscan.io", "description": "A platform for Trusted Lending Circles, powered by people and blockchain", "logo": "wetrust.png", "visible": true }
-{ "addr": "0xcb97e65f07da24d46bcdd078ebebd7c6e6e3d750", "symbol": "BTM", "name": "Bytom", "source": "Etherscan.io", "description": "Transfer assets from atomic world to byteworld", "logo": "bytom_28.png", "visible": true }
-{ "addr": "0xcbcc0f036ed4788f63fc0fee32873d6a7487b908", "symbol": "HMQ", "name": "Humaniq", "source": "Etherscan.io", "description": "Humaniq aims to be a simple and secure 4th generation mobile bank.", "logo": "humaniq.png", "visible": true }
-{ "addr": "0xcbeaec699431857fdb4d37addbbdc20e132d4903", "symbol": "YOYOW", "name": "YOYOW", "source": "Etherscan.io", "description": "A blockchain based content rewards network", "logo": "yoyow28.png", "visible": true }
+0xcb94be6f13a1182e4a4b6140cb7bf2025d28e41b	Trustcoin
+0xcb5a05bef3257613e984c17dbcf039952b6d883f	Sugar Exchange
+0xcb97e65f07da24d46bcdd078ebebd7c6e6e3d750	Bytom
+0xcbcc0f036ed4788f63fc0fee32873d6a7487b908	Humaniq
+0xcbeaec699431857fdb4d37addbbdc20e132d4903	YOYOW

@@ -1,34 +1,34 @@
 ethName argc: 3 [1:etwork] [2:] 
 ethName etwork  
-{ "addr": "0x08f5a9235b08173b7569f83645d2c7fb55e8ccd8", "symbol": "TNT", "name": "Tierion Network Token", "source": "Etherscan.io", "description": "Tierion creates software to reduce the cost and complexity of trust. Anchoring data to the blockchain and generating a timestamp proof.", "logo": "tierion_28.png", "visible": true }
-{ "addr": "0x20f7a3ddf244dc9299975b4da1c39f8d5d75f05a", "symbol": "SPN", "name": "Sapien Network", "source": "Etherscan.io", "description": "Sapien is a decentralized social news platform.", "logo": "sapien_28_2.png", "visible": true }
-{ "addr": "0x2233799ee2683d75dfefacbcd2a26c78d34b470d", "symbol": "NTWK", "name": "Network", "source": "Etherscan.io", "description": "Network Learning is an e-learning platform where users who are new to cryptocurrency can come visit to learn the basics.", "logo": "networktoken_28.png", "visible": true }
-{ "addr": "0x3543638ed4a9006e4840b105944271bcea15605d", "symbol": "UUU", "name": "UNetworkToken", "source": "Etherscan.io", "description": "A Decentralized Protocol for Publishing and Valuing Online Content", "logo": "unetwork_28.png", "visible": true }
-{ "addr": "0x4162178b78d6985480a308b2190ee5517460406d", "symbol": "CLN", "name": "Colu Local Network", "source": "Etherscan.io", "description": "A Decentralized Payment Network Powered By Communities", "logo": "colu_28.png", "visible": true }
-{ "addr": "0x4bbbc57af270138ef2ff2c50dbfad684e9e0e604", "symbol": "WAB", "name": "WABnetwork", "source": "Etherscan.io", "description": "WAB network is a 5.0 Blockchain with outstanding features, a completed decentralization blockchain with remarkable transaction speed of millions per second.", "logo": "wabnetwork_28.png", "visible": true }
-{ "addr": "0x6fb3e0a217407efff7ca062d46c26e5d60a14d69", "symbol": "IOTX", "name": "IoTeX Network", "source": "Etherscan.io", "description": "IoTeX is the next generation of the IoT-oriented blockchain platform with vast scalability, privacy, isolatability, and developability. IoTeX connects the physical world, block by block.", "logo": "iotex_28.png", "visible": true }
-{ "addr": "0x6fff3806bbac52a20e0d79bc538d527f6a22c96b", "symbol": "CDX", "name": "Network", "source": "Etherscan.io", "description": "Aims to be a disruptive ad network of creative minds who speak out against the powers that be.", "logo": "cmadnetwork_28.png", "visible": true }
-{ "addr": "0x744d70fdbe2ba4cf95131626614a1763df805b9e", "symbol": "SNT", "name": "StatusNetwork", "source": "Etherscan.io", "description": "Status is an open source messaging platform and mobile browser to interact with decentralized applications that run on the Ethereum Network.", "logo": "status.png", "visible": true }
-{ "addr": "0x7b0c06043468469967dba22d1af33d77d44056c8", "symbol": "MRPH", "name": "Morpheus.Network", "source": "Etherscan.io", "description": "Morpheus.Network was designed with some of the world's largest shipping, customs & banking firms to create a full-service, global, automated, supply chain platform with an integrated cryptocurrency payment system", "logo": "morpheus_28.png", "visible": true }
-{ "addr": "0x7b2df125567815ac9b57da04b620f50bc93b320c", "symbol": "ACTP", "name": "Archetypal Network", "source": "Etherscan.io", "description": "Archetypal Network is an Ethereum based cloudmining smart contract miner to support real-time mining and high transaction throughput.", "logo": "archetypal_28.png", "visible": true }
-{ "addr": "0x881ef48211982d01e2cb7092c915e647cd40d85c", "symbol": "OTN", "name": "Open Trading Network", "source": "Etherscan.io", "description": "Open Trading Network (OTN) – a platform that offers cross-chain technology to unite all blockchain networks and market participants, and ensure their best interests.", "logo": "opentradingnetwork_28.png", "visible": true }
-{ "addr": "0xa4ea687a2a7f29cf2dc66b39c68e4411c0d00c49", "symbol": "IVY", "name": "IvyKoin Public Network Tokens", "source": "Etherscan.io", "description": "Ivy is a blockchain-based technology for FIAT & cryptocurrency business transactions. The Ivy network utilizes IVY tokens which carry KYC & KYT data points critical for Financial Institution validation.", "logo": "ivy_28.png", "visible": true }
-{ "addr": "0xa5fd1a791c4dfcaacc963d4f73c6ae5824149ea7", "symbol": "JNT", "name": "Jibrel Network Token", "source": "Etherscan.io", "description": "The Jibrel Network provides currencies, equities, commodities and other financial assets and instruments as standard ERC-20 tokens on the Ethereum blockchain.", "logo": "jibrel.png", "visible": true }
-{ "addr": "0xb2135ab9695a7678dd590b1a996cb0f37bcb0718", "symbol": "SGN", "name": "Signals Network Token", "source": "Etherscan.io", "description": "Marketplace of data science powered signals for trading cryptocurrencies", "logo": "signal_28.png", "visible": true }
-{ "addr": "0xc011a72400e58ecd99ee497cf89e3775d4bd732f", "symbol": "SNX", "name": "Synthetix Network Token", "source": "Etherscan.io", "description": "Synthetix is a cryptoasset-backed network that enables the creation of on-chain synthetic assets.", "logo": "synthetix_28.png", "visible": true }
-{ "addr": "0xc72fe8e3dd5bef0f9f31f259399f301272ef2a2d", "symbol": "INSTAR", "name": "Insights Network", "source": "Etherscan.io", "description": "The Insights Network’s unique combination of blockchain technology, smart contracts, and secure multiparty computation enables the individual to securely own, manage, and monetize their data.", "logo": "insightsnetwork28.png", "visible": true }
-{ "addr": "0xcfb98637bcae43c13323eaa1731ced2b716962fd", "symbol": "NET", "name": "NimiqNetwork", "source": "Etherscan.io", "description": "A Browser-based Blockchain & Ecosystem", "logo": "nimiq_28.png", "visible": true }
-{ "addr": "0xd2fa8f92ea72abb35dbd6deca57173d22db2ba49", "symbol": "ORI", "name": "Origami Network", "source": "Etherscan.io", "description": "A protocol for building decentralized marketplaces using the Ethereum blockchain", "logo": "origami_28.png", "visible": true }
-{ "addr": "0xd559f20296ff4895da39b5bd9add54b442596a61", "symbol": "FTX", "name": "FintruX Network", "source": "Etherscan.io", "description": "The Global P2P Lending Ecosystem Powered By Ethereum And No-Code Development.", "logo": "fintrux_28_28.png", "visible": true }
-{ "addr": "0xda80b20038bdf968c7307bb5907a469482cf6251", "symbol": "BNN", "name": "BrokerNekoNetwork", "source": "Etherscan.io", "description": "BrokerNeko Network provides rational, quick and easy solutions for individual and institutional transactions with its own unique system.", "logo": "brokerneko_28.png", "visible": true }
-{ "addr": "0xdd974d5c2e2928dea5f71b9825b8b646686bd200", "symbol": "KNC", "name": "KyberNetwork", "source": "Etherscan.io", "description": "KyberNetwork is a new system which allows the exchange and conversion of digital assets.", "logo": "kyber2_28.png", "visible": true }
-{ "addr": "0xe25bcec5d3801ce3a794079bf94adf1b8ccd802d", "symbol": "MAN", "name": "MATRIX AI Network", "source": "Etherscan.io", "description": "Aims to be an open source public intelligent blockchain platform", "logo": "matrix_ai_28.png", "visible": true }
-{ "addr": "0xe469c4473af82217b30cf17b10bcdb6c8c796e75", "symbol": "EXRN", "name": "EXRP Network", "source": "Etherscan.io", "description": "Connecting the blockchains using crosschain gateway built with smart contracts.", "logo": "exrnchain_28.png", "visible": true }
-{ "addr": "0xe7e4279b80d319ede2889855135a22021baf0907", "symbol": "ZEUS", "name": "ZeusNetwork", "source": "Etherscan.io", "description": "Cryptocurrency that allows people to raise crypto for events to challenging circumstances like accidents and illnesses or real world emergencies. 'The GoFundMe of Crypto'", "logo": "zues_28.png", "visible": true }
-{ "addr": "0xe95990825aab1a7f0af4cc648f76a3bcc99f25b2", "symbol": "ZNT", "name": "Zenswap Network Token", "source": "Etherscan.io", "description": "Zenswap Network offers a new and practical cryptosphere for cryptocurrency and token swap, integrated with user-friendly value-added services to deliver the best crypto experience.", "logo": "zenswapnetwork_28.png", "visible": true }
-{ "addr": "0xea5f88e54d982cbb0c441cde4e79bc305e5b43bc", "symbol": "PARETO", "name": "Pareto Network Token", "source": "Etherscan.io", "description": "The Pareto Network is a peer to peer financial content marketplace.", "logo": "pareto_28.png", "visible": true }
-{ "addr": "0xf970b8e36e23f7fc3fd752eea86f8be8d83375a6", "symbol": "RCN", "name": "RipioCreditNetwork", "source": "Etherscan.io", "description": "Ripio Credit Network is a global credit network based on cosigned smart contracts and blockchain technology that connects lenders and borrowers located anywhere in the world and on any currency", "logo": "ripio_28_2.png", "visible": true }
-{ "addr": "0xfedae5642668f8636a11987ff386bfd215f942ee", "symbol": "PAL", "name": "PolicyPal Network", "source": "Etherscan.io", "description": "Dual-Layered Protocol for Financial Assets", "logo": "pal_28.png", "visible": true }
-{ "addr": "0xff19138b039d938db46bdda0067dc4ba132ec71c", "symbol": "SNET", "name": "Snetwork", "source": "Etherscan.io", "description": "No description", "logo": "snetwork_28.png", "visible": true }
-{ "addr": "0xff5c25d2f40b47c4a37f989de933e26562ef0ac0", "symbol": "KNT", "name": "Kora Network Token", "source": "Etherscan.io", "description": "Kora is a digital banking solution powered by the Kora Network", "logo": "kora_28.png", "visible": true }
-{ "addr": "0xff603f43946a3a28df5e6a73172555d8c8b02386", "symbol": "RNT", "name": "OneRoot Network", "source": "Etherscan.io", "description": "No description", "logo": "onerootnetwork_28.png", "visible": true }
+0x08f5a9235b08173b7569f83645d2c7fb55e8ccd8	Tierion Network Token
+0x20f7a3ddf244dc9299975b4da1c39f8d5d75f05a	Sapien Network
+0x2233799ee2683d75dfefacbcd2a26c78d34b470d	Network
+0x3543638ed4a9006e4840b105944271bcea15605d	UNetworkToken
+0x4162178b78d6985480a308b2190ee5517460406d	Colu Local Network
+0x4bbbc57af270138ef2ff2c50dbfad684e9e0e604	WABnetwork
+0x6fb3e0a217407efff7ca062d46c26e5d60a14d69	IoTeX Network
+0x6fff3806bbac52a20e0d79bc538d527f6a22c96b	Network
+0x744d70fdbe2ba4cf95131626614a1763df805b9e	StatusNetwork
+0x7b0c06043468469967dba22d1af33d77d44056c8	Morpheus.Network
+0x7b2df125567815ac9b57da04b620f50bc93b320c	Archetypal Network
+0x881ef48211982d01e2cb7092c915e647cd40d85c	Open Trading Network
+0xa4ea687a2a7f29cf2dc66b39c68e4411c0d00c49	IvyKoin Public Network Tokens
+0xa5fd1a791c4dfcaacc963d4f73c6ae5824149ea7	Jibrel Network Token
+0xb2135ab9695a7678dd590b1a996cb0f37bcb0718	Signals Network Token
+0xc011a72400e58ecd99ee497cf89e3775d4bd732f	Synthetix Network Token
+0xc72fe8e3dd5bef0f9f31f259399f301272ef2a2d	Insights Network
+0xcfb98637bcae43c13323eaa1731ced2b716962fd	NimiqNetwork
+0xd2fa8f92ea72abb35dbd6deca57173d22db2ba49	Origami Network
+0xd559f20296ff4895da39b5bd9add54b442596a61	FintruX Network
+0xda80b20038bdf968c7307bb5907a469482cf6251	BrokerNekoNetwork
+0xdd974d5c2e2928dea5f71b9825b8b646686bd200	KyberNetwork
+0xe25bcec5d3801ce3a794079bf94adf1b8ccd802d	MATRIX AI Network
+0xe469c4473af82217b30cf17b10bcdb6c8c796e75	EXRP Network
+0xe7e4279b80d319ede2889855135a22021baf0907	ZeusNetwork
+0xe95990825aab1a7f0af4cc648f76a3bcc99f25b2	Zenswap Network Token
+0xea5f88e54d982cbb0c441cde4e79bc305e5b43bc	Pareto Network Token
+0xf970b8e36e23f7fc3fd752eea86f8be8d83375a6	RipioCreditNetwork
+0xfedae5642668f8636a11987ff386bfd215f942ee	PolicyPal Network
+0xff19138b039d938db46bdda0067dc4ba132ec71c	Snetwork
+0xff5c25d2f40b47c4a37f989de933e26562ef0ac0	Kora Network Token
+0xff603f43946a3a28df5e6a73172555d8c8b02386	OneRoot Network

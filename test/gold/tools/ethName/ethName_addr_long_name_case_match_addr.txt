@@ -1,2 +1,3 @@
 ethName argc: 4 [1:--matchCase] [2:0xcb] [3:torJ] 
 ethName --matchCase 0xcb torJ 
+00000000 TIME ~ CLOCK - <INFO>  : No matches found

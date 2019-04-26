@@ -16,7 +16,7 @@ bool COptions::handle_ls(void) {
     nodeNotRequired();
 
     ostringstream os;
-    os << endl << cGreen << "Monitor path: " << cWhite << getMonitorPath("") << endl;
+    os << cGreen << "Monitor path: " << cWhite << getMonitorPath("") << endl;
 
     stats = (stats || contains(tool_flags, "-l"));
 
@@ -31,7 +31,7 @@ bool COptions::handle_ls(void) {
                 if (fileExists(fn))
                     files.push_back(fn);
                 else
-                    LOG_ERR(fn, " not found.");
+                    LOG_WARN(fn, " not found.");
             }
         } else {
             listFilesInFolder(files, getMonitorPath("*.*"), false);
@@ -54,12 +54,19 @@ bool COptions::handle_ls(void) {
         }
     }
     if (accounts.size() == 0) {
-        LOG_WARN("No monitors found. Quitting...");
-        EXIT_OK("handle_" + mode);
+        if (api_mode) {
+            CAccountName item;
+            item.addr = "0x0";
+            item.name = "none";
+            accounts.push_back(item);
+        } else {
+            LOG_WARN("No monitors found. Quitting...");
+            EXIT_OK("handle_" + mode);
+        }
     }
     sort(accounts.begin(), accounts.end());
 
-    if (!getEnvStr("API_MODE").empty()) {
+    if (api_mode) {
         SHOW_FIELD(CAccountName, "fn");
         SHOW_FIELD(CAccountName, "size");
         SHOW_FIELD(CAccountName, "lb");

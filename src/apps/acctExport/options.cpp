@@ -19,7 +19,6 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-extern string_q cleanFmt(const string_q& str, export_t fmt);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
@@ -189,12 +188,4 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
         return ret;
     }
     return str;
-}
-
-//-----------------------------------------------------------------------
-string_q cleanFmt(const string_q& str, export_t fmt) {
-    string_q ret = (substitute(substitute(substitute(str, "\n", ""), "\\n", "\n"), "\\t", "\t"));
-    if (fmt == CSV)
-        ret = "\"" + substitute(ret, "\t", "\",\"") + "\"";
-    return ret;
 }
