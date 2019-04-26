@@ -44,13 +44,18 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    bool COptionsBase::prepareArguments(int argc, const char *argv[]) {
-
+    bool prepareEnv(int argc, const char *argv[]) {
         string_q env = getEnvStr("NO_COLOR");
         if (string_q(env) == "true")
             colorsOff();
+        COptionsBase::g_progName = basename((char*)argv[0]);  // NOLINT
+        return true;
+    }
 
-        setProgName(basename((char*)argv[0]));  // NOLINT
+    //--------------------------------------------------------------------------------
+    bool COptionsBase::prepareArguments(int argc, const char *argv[]) {
+
+        prepareEnv(argc, argv);
         if (isTestMode()) {
             // we present the data once for clarity...
             cout << getProgName() << " argc: " << argc << " ";
