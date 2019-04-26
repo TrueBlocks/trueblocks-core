@@ -1,4 +1,3 @@
-#pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
@@ -11,26 +10,11 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "basetypes.h"
-#include "sfstring.h"
-#include "basenode.h"
-#include "biglib.h"
-#include "conversions.h"
-#include "sftime.h"
-#include "sfos.h"
-#include "database.h"
-#include "toml.h"
-#include "exportcontext.h"
-#include "sfarchive.h"
-#include "fielddata.h"
-#include "curl_code.h"
-#include "colors.h"
-#include "performance.h"
-#include "options_base.h"
-#include "filenames.h"
-#include "accountname.h"
-#include "memmap.h"
-#include "rpcresult.h"
-#include "logging.h"
+#include "utillib.h"
 
-using namespace qblocks;  // NOLINT
+namespace qblocks {
+    static logger<file_log> flog("execution.log");
+    static logger<err_log> elog("");
+    logger<log_policy_i> *dLogger = (logger<log_policy_i>*)&elog;
+    logger<log_policy_i> *eLogger = (logger<log_policy_i>*)&elog;
+}
