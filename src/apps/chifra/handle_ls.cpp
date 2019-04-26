@@ -12,7 +12,7 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_ls(void) {
 
-    // ls mode does not require a running node
+    ENTER("handle_" + mode);
     nodeNotRequired();
 
     ostringstream os;
@@ -23,6 +23,7 @@ bool COptions::handle_ls(void) {
     CStringArray files;
     if (isTestMode()) {
         files.push_back("0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359.accts.bin");
+
     } else {
         if (stats && addrs.size()) {
             for (auto addr : addrs) {
@@ -30,7 +31,7 @@ bool COptions::handle_ls(void) {
                 if (fileExists(fn))
                     files.push_back(fn);
                 else
-                    cerr << fn << " not found." << endl;
+                    LOG_ERR(fn, " not found.");
             }
         } else {
             listFilesInFolder(files, getMonitorPath("*.*"), false);
@@ -53,9 +54,8 @@ bool COptions::handle_ls(void) {
         }
     }
     if (accounts.size() == 0) {
-        CAccountName item;
-        item.addr = "none";
-        accounts.push_back(item);
+        LOG_WARN("No monitors found. Quitting...");
+        EXIT_OK("handle_" + mode);
     }
     sort(accounts.begin(), accounts.end());
 
@@ -77,7 +77,7 @@ bool COptions::handle_ls(void) {
         if (accounts.size() > 1)
             oss << "]";
         cout << substitute(substitute(oss.str(), "\n", ""), "\t", "") << endl;
-        return true;
+        EXIT_OK("handle_" + mode);
     }
 
     if (stats) {
@@ -134,5 +134,5 @@ bool COptions::handle_ls(void) {
     else
         cout << os.str();
 
-    return true;
+    EXIT_OK("handle_" + mode);
 }

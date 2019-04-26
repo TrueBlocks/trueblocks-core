@@ -9,8 +9,8 @@
 // Run the scraper to build (or keep fresh) the address index
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_daemon(void) {
-
-    // daemon mode does not need a running node since it's only reading the index
+ 
+    ENTER("handle_" + mode);
     nodeNotRequired();
 
     size_t sleep = 14;
@@ -26,9 +26,8 @@ bool COptions::handle_daemon(void) {
             while (!commands[i+1].empty())
                 filters.push_back(nextTokenClear(commands[i+1], ','));
             i++;
-        } else {
-            return usage("Invalid param: " + commands[i]);
-        }
+        } else if (!builtInCmd(commands[i]))
+            EXIT_USAGE("Invalid param" + commands[i]);
     }
     if (filters.empty())
         filters.push_back("0x");
@@ -71,5 +70,6 @@ bool COptions::handle_daemon(void) {
         if (!isTestMode())
             usleep((unsigned int)sleep * 1000000);
     }
-    return true;
+
+    EXIT_OK("handle_" + mode);
 }
