@@ -32,7 +32,17 @@ execute_process(
         OUTPUT_STRIP_TRAILING_WHITESPACE
 )
 
+# git: Get date of latest commit in working branch
+execute_process(
+        COMMAND git log -1 --format=%ct
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        OUTPUT_VARIABLE GIT_COMMIT_TS
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+
 # git: add definitions and print to screen
 add_definitions(-DGIT_COMMIT_HASH="${GIT_COMMIT_HASH}")
 add_definitions(-DGIT_BRANCH="${GIT_BRANCH}")
-message (STATUS "GIT: branch ${GIT_BRANCH} commit ${GIT_COMMIT_HASH}")
+add_definitions(-DGIT_COMMIT_TS="${GIT_COMMIT_TS}")
+message (STATUS "GIT: branch ${GIT_BRANCH} commit ${GIT_COMMIT_HASH} timestamp ${GIT_COMMIT_TS}")
