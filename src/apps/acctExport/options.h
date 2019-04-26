@@ -26,6 +26,3 @@ public:
     void Init(void);
     string_q postProcess(const string_q& which, const string_q& str) const;
 };
-
-//-----------------------------------------------------------------------------
-enum export_t { JSON = (1<<1), TXT = (1<<2), CSV = (1<<3) };

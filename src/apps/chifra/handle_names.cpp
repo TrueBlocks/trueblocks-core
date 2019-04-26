@@ -9,18 +9,18 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_names(void) {
 
-    // names mode does not require a running node
+    ENTER("handle_" + mode);
+    LOG1("tool_flags: " + tool_flags);
     nodeNotRequired();
 
-    if (!contains(tool_flags, "--edit"))
+    if (!contains(tool_flags, "--edit")) // weird cleanup of --edit/edit confusion
         tool_flags = substitute(tool_flags, "edit", "--edit");
 
     ostringstream os;
-    os << "ethName " << (tool_flags.empty() ? "--data" : tool_flags) << " ; ";
-    if (isTestMode())
-        cout << os.str() << endl;
-    else
-        if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+    os << "ethName " << tool_flags << (api_mode ? " --fmt json" : "") << " ; "; // order matters, last in wins
 
-    return true;
+    LOG1("command: " + os.str());
+    if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+
+    EXIT_OK("handle_" + mode);
 }

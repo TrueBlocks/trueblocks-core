@@ -9,22 +9,22 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_config(void) {
 
-    // config node does not require a running node
+    ENTER("handle_" + mode);
     nodeNotRequired();
 
     if (addrs.empty())
-        return usage("This function requires an address. Quitting...");
+        EXIT_USAGE("This function requires an address.");
 
     string_q cmd = toLower(nextTokenClear(tool_flags, ' '));
     if (cmd != "edit" && cmd != "show")
-        return usage("chifra config 'mode' must be either 'edit' or 'show'. Quitting...");
+        EXIT_USAGE("chifra config 'mode' must be either 'edit' or 'show'.");
 
     for (auto addr : addrs) {
         string_q path = getMonitorPath(addr + ".toml");
         if (!fileExists(path)) {
             // If it does not exist and the user wants to edit it, create it, otherwise error out
             if (cmd == "show")
-                return usage("File '" + path + "' not found. Quitting...");
+                EXIT_USAGE("File '" + cleanPath(path) + "' not found.");
             createConfigFile(addr);
         }
         ASSERT(fileExists(path));
@@ -37,13 +37,12 @@ bool COptions::handle_config(void) {
             ostringstream os;
             os << "cat " << path;
             if (isTestMode())
-                cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
+                cout << cleanPath(os.str()) << endl;
             else
                 if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
         }
     }
-
-    return true;
+    EXIT_OK("handle_" + mode);
 }
 
 //--------------------------------------------------------------------------------
@@ -60,8 +59,10 @@ const char* STR_WATCH =
 //----------------------------------------------------------------
 bool COptions::createConfigFile(const address_t& addr) {
 
+    ENTER("createConfigFile:" + addr);
+
     string_q fileName = getMonitorPath(addr + ".toml");
-    cerr << cTeal << "Creating configuration file: " << fileName << endl;
+    LOG_INFO("Creating configuration file: " + cleanPath(fileName));
 
     string_q config;
     asciiFileToString(configPath("chifra/config.template"), config);
@@ -69,23 +70,23 @@ bool COptions::createConfigFile(const address_t& addr) {
     string_q name = getNamedAccount(addr);
     replace(config, "[{NAME}]", (name.empty() ? addr : name));
 
-    cout << cTeal << "\tAdding monitor for address '" << addr << "'..." << cOff << endl;
+    LOG_INFO("\tAdding monitor for address: " + addr);
     string_q watch = STR_WATCH;
     replaceAll(watch, "{ADDR}",  addr);
     replaceAll(watch, "{NAME}",  name);
     replaceAll(watch, "{FB}",    uint_2_Str(0));
     time_q now = Now();
-    replaceAll(watch, "{COLOR}", colors[((uint64_t)date_2_Ts(now)) % nColors]);
+    size_t randIdx = (isTestMode() ? 1 : ((size_t)date_2_Ts(now)) % nColors);
+    replaceAll(watch, "{COLOR}", colors[randIdx]);
 
     replace(config, "[{JSON_WATCH}]", "list = [\n" + watch + "]\n");
     if (isTestMode()) {
-        cout << fileName << endl;
+        cout << cleanPath(fileName) << endl;
         cout << config;
     } else {
         stringToAsciiFile(fileName, config);
         if (verbose > 1)
             cout << config << endl;
     }
-
-    return true;
+    EXIT_OK("createConfigFile:" + addr);
 }

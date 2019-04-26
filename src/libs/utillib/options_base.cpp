@@ -44,13 +44,18 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    bool COptionsBase::prepareArguments(int argc, const char *argv[]) {
-
+    bool prepareEnv(int argc, const char *argv[]) {
         string_q env = getEnvStr("NO_COLOR");
         if (string_q(env) == "true")
             colorsOff();
+        COptionsBase::g_progName = basename((char*)argv[0]);  // NOLINT
+        return true;
+    }
 
-        setProgName(basename((char*)argv[0]));  // NOLINT
+    //--------------------------------------------------------------------------------
+    bool COptionsBase::prepareArguments(int argc, const char *argv[]) {
+
+        prepareEnv(argc, argv);
         if (isTestMode()) {
             // we present the data once for clarity...
             cout << getProgName() << " argc: " << argc << " ";
@@ -674,7 +679,9 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
                 return;
             }
         }
-        string_q cmd = editor + " \"" + fileName + "\"";
+
+        CFilename fn(fileName);
+        string_q cmd = editor + " \"" + fn.getFilename() + "\"";
         if (isTestMode()) {
             cout << "Testing editFile: " << substitute(cmd, "nano", "open") << "\n";
             string_q contents;
