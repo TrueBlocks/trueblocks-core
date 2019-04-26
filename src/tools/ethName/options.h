@@ -15,16 +15,12 @@
 
 class COptions : public COptionsBase {
 public:
-    string_q addr;
-    string_q name;
-    string_q source;
-    bool all;
-    bool count;
+    CAccountNameArray filtered;
+    string_q search1;
+    string_q search2;
+    string_q search3;
     bool matchCase;
-    bool open;
-    bool list;
-    bool addrOnly;
-    bool data;
+    bool asData;
     bool isEdit;
 
     COptions(void);
@@ -34,5 +30,5 @@ public:
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 
-    string_q showMatches(void);
+    uint64_t applyFilter(const string_q& fmt);
 };

@@ -153,4 +153,7 @@ namespace qblocks {
 //    extern ostream& operator<<(ostream& os, const CToml::CTomlKey& k);
 //#endif
 
+    //-----------------------------------------------------------------------
+    extern string_q cleanFmt(const string_q& str, export_t fmt);
+
 }  // namespace qblocks
