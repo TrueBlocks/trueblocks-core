@@ -314,32 +314,6 @@ CAccountName::CAccountName(string_q& strIn) {
         visible = str_2_Bool(str);
     }
 }
-
-//---------------------------------------------------------------------------
-bool CAccountName::Match(const string_q& s1, const string_q& s2, const string_q& s3, bool matchCase, bool all) const {
-
-    string_q theAddr   = addr;
-    string_q theName   = name + " " + symbol;
-    string_q theSource = source;
-
-    bool m11 = (matchCase ? contains(theAddr  , s1) : contains(toLower(theAddr)  , toLower(s1)));
-    bool m12 = (matchCase ? contains(theName  , s1) : contains(toLower(theName)  , toLower(s1)));
-    bool m13 = (matchCase ? contains(theSource, s1) : contains(toLower(theSource), toLower(s1)));
-    bool m2  = (matchCase ? contains(theName  , s2) : contains(toLower(theName)  , toLower(s2)));
-    bool m3  = (matchCase ? contains(theSource, s3) : contains(toLower(theSource), toLower(s3)));
-
-    if (!s1.empty() && !s2.empty() && !s3.empty())
-        return m11 && m2 && m3;  // all three must match
-
-    if (!s1.empty() && !s2.empty())
-        return m11 && m2;  // addr and name must both match
-
-    if (s1.empty())
-        return false;  // nothing matches
-
-    // We have only s1
-    return (all ? m11 || m12 || m13 : m11 || m12);
-}
 // EXISTING_CODE
 }  // namespace qblocks
 

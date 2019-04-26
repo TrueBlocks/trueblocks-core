@@ -13,7 +13,7 @@
 #include "utillib.h"
 
 namespace qblocks {
-    static logger<file_log> flog("execution.log");
+    static logger<file_log> flog("");
     static logger<err_log> elog("");
     logger<log_policy_i> *dLogger = (logger<log_policy_i>*)&elog;
     logger<log_policy_i> *eLogger = (logger<log_policy_i>*)&elog;

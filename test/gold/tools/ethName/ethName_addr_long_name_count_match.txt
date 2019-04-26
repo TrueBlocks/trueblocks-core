@@ -1,3 +1,0 @@
-ethName argc: 4 [1:--count] [2:0xb6] [3:torj] 
-ethName --count 0xb6 torj 
-2 matches

@@ -25,55 +25,34 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        string_q fmt = (options.addrOnly ? "[{ADDR}]" : "");
-        if (options.data && options.list)
-            fmt = "[{ADDR}]\t[{NAME}]";
-
         if (options.isEdit) {
             editFile(options.namesFile.getFullPath());
 
-        } else if (options.list) {
-            if (options.count)
-                cout << options.namedAccounts.size() << " items\n";
-            ostringstream os;
-            if (!options.data && !options.addrOnly)
-                os << "[\n";
-            for (auto name : options.namedAccounts) {
-                if (!options.data && !options.addrOnly && os.str() != "[\n")
-                    os << ",";
-                os << substitute(substitute(name.Format(fmt), "\n", " "), "  ", " ") << endl;
-            }
-            if (!options.data && !options.addrOnly)
-                os << "]";
-            cout << os.str();
+        } else if (options.filtered.size() == 0) {
+            LOG_INFO("No matches found");
 
         } else {
-            string_q ret = options.showMatches();
-            if (!ret.empty())
-                cout << ret;
-            else if (verbose)
-                cout << "Address '" << options.addr << "' not found\n";
-            cout.flush();
+
+            string_q fmt = expContext().fmtMap["nick"];
+            bool isJson = fmt.empty();
+
+            if (isJson && options.filtered.size() > 1)
+                cout << "[";
+            uint64_t cnt = 0;
+            for (auto acct : options.filtered) {
+                if (isJson && cnt++ > 0)
+                    cout << "," << endl;
+                cout << acct.Format(fmt);
+                if (!isJson)
+                    cout << endl;
+            }
+            if (isJson)
+                cout << endl;
+            if (isJson && options.filtered.size() > 1)
+                cout << "]";
+
         }
     }
 
     return 0;
-}
-
-//-----------------------------------------------------------------------
-string_q COptions::showMatches(void) {
-    string_q ret;
-    size_t hits = 0;
-    string_q fmt = (addrOnly ? "[{ADDR}]" : "");
-    for (size_t i = 0 ; i < namedAccounts.size() ; i++) {
-        if (namedAccounts[i].Match(addr, name, source, matchCase, all)) {
-            ret += (substitute(substitute(namedAccounts[i].Format(fmt), "\n", " "), "  ", " ") + "\n");
-            hits++;
-        }
-    }
-
-    if (count)
-        ret = uint_2_Str(hits) + " match" + (hits == 1 ? "" : "es") + "\n" + (verbose ? ret : "");
-
-    return ret;
 }

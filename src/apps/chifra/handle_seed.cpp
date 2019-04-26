@@ -76,6 +76,7 @@ bool COptions::handle_seed(void) {
             os << "gunzip \"" << filename << "\" ; cd - >/dev/null";
 
             if (isTestMode()) {
+                LOG2("I am here");
                 cerr << "Seeding " << cTeal << substitute(textFile, getCachePath(""), "$BLOCK_CACHE/") << cOff << endl;
                 cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
             } else {

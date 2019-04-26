@@ -9,16 +9,14 @@
 // Run the scraper to build (or keep fresh) the address index
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_daemon(void) {
- 
+
     ENTER("handle_" + mode);
     nodeNotRequired();
 
-    size_t sleep = 14;
+    size_t sleep = (isTestMode() ? 1 : 14);
     CStringArray commands, filters;
     explode(commands, tool_flags, ' ');
     for (size_t i = 0; i < commands.size() ; i++) {
-        //COption("-sleep", "number of seconds to sleep between runs"),
-        //COption("-filter", "only runs address that start with the filter (default '0x')"),
         if (commands[i] == "--sleep" && i < commands.size() - 1) {
             sleep = str_2_Uint(commands[i+1]);
             i++;
@@ -27,13 +25,13 @@ bool COptions::handle_daemon(void) {
                 filters.push_back(nextTokenClear(commands[i+1], ','));
             i++;
         } else if (!builtInCmd(commands[i]))
-            EXIT_USAGE("Invalid param" + commands[i]);
+            EXIT_USAGE("Invalid param " + commands[i]);
     }
     if (filters.empty())
         filters.push_back("0x");
 
     // Run until we're told not to
-    size_t maxRuns = (isTestMode() ? 1 : UINT64_MAX);
+    size_t maxRuns = (isTestMode() ? 2 : UINT64_MAX);
     size_t nRuns = 0;
     while (nRuns++ < maxRuns && !shouldQuit()) {
 
@@ -42,7 +40,7 @@ bool COptions::handle_daemon(void) {
 
         CAccountNameArray accounts;
         for (auto file : files) {
-            if (contains(file, ".acct.bin") && !contains(file, ".lck")) {
+            if (contains(file, ".acct.bin") && !contains(file, ".lck")) { // we skip monitors that are already running
                 replace(file, getMonitorPath(""), "");
                 CAccountName item;
                 item.addr = nextTokenClear(file, '.');
@@ -50,23 +48,26 @@ bool COptions::handle_daemon(void) {
                 item.name = substitute(substitute(item.name, "(", ""), ")", "");
                 accounts.push_back(item);
             }
+
+            // We want to be able to run even if there's nothing to monitor
+            if (accounts.size() == 0)
+                cerr << cTeal << "\tnothing to monitor" << cOff << endl;
+
+            CAddressArray runs;
+            for (auto acct : accounts) {
+                for (auto filter : filters)
+                    if (startsWith(acct.addr, filter))
+                        runs.push_back(acct.addr);
+            }
+
+            if (runs.size())
+                freshen_internal(FM_PRODUCTION, runs, "", freshen_flags);
         }
 
-        // We want to be able to run even if there's nothing to monitor
-        if (accounts.size() == 0)
-            cerr << cTeal << "\tnothing to monitor" << cOff << endl;
+        if (files.size() == 0)
+            LOG_WARN("Nothing to monitor");
+        LOG_INFO("Sleeping for ", sleep, " seconds");
 
-        CAddressArray runs;
-        for (auto acct : accounts) {
-            for (auto filter : filters)
-                if (startsWith(acct.addr, filter))
-                    runs.push_back(acct.addr);
-        }
-
-        if (runs.size())
-            freshen_internal(FM_PRODUCTION, runs, "", freshen_flags);
-
-        cerr << "Sleeping for " << sleep << " seconds" << endl;
         if (!isTestMode())
             usleep((unsigned int)sleep * 1000000);
     }

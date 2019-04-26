@@ -8,14 +8,14 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_export(void) {
 
-    // export mode requires a running node
+    ENTER("handle_" + mode);
     nodeRequired();
 
     if (addrs.empty())
-        return usage("This function requires an address. Quitting...");
+        EXIT_USAGE("This function requires an address.");
 
     if (!freshen_internal(FM_PRODUCTION, addrs, "", freshen_flags))
-        return false;
+        EXIT_FAIL("'chifra list' freshen_internal returned false");
 
     size_t cnt = 0;
     for (auto addr : addrs) {
@@ -30,5 +30,5 @@ bool COptions::handle_export(void) {
                 usleep(500000); // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
         }
     }
-    return true;
+    EXIT_OK("handle_" + mode);
 }
