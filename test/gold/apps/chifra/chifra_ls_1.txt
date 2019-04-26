@@ -1,6 +1,3 @@
 chifra argc: 2 [1:ls] 
 chifra ls 
-
-Monitor path: $BLOCK_CACHE/monitors/
-Current monitors:
- none    
+00000000 TIME ~ CLOCK - <WARNG> : No monitors found. Quitting...

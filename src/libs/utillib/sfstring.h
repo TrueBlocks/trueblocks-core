@@ -201,4 +201,7 @@ namespace qblocks {
     extern string_q escape_string(const string_q& str);
     extern void cleanString(string_q& str, bool isCode);
 
+    //-----------------------------------------------------------------------------
+    enum export_t { NONE = 0, JSON = (1<<1), TXT = (1<<2), CSV = (1<<3) };
+
 }  // namespace qblocks

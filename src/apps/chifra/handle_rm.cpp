@@ -12,18 +12,19 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_rm(void) {
 
-    // ls mode does not require a running node
+    ENTER("handle_" + mode);
     nodeNotRequired();
 
     if (addrs.empty())
-        return usage("This function requires an address. Quitting...");
+        EXIT_USAGE("This function requires an address.");
 
     for (auto addr : addrs) {
         string_q fn = getMonitorPath(addr);
         if (!fileExists(fn)) {
-            cout << "monitor not found for address " << addr << "." << endl;
+            LOG_WARN("Monitor not found for address " + addr + ".");
+
         } else {
-            cout << "remove monitor for " << addr << "? (y=yes) >";
+            cout << "Remove monitor for " << addr << "? (y=yes) >";
             cout.flush();
             int ch = getchar();
             if (ch == 'y' || ch == 'Y') {
@@ -31,14 +32,16 @@ bool COptions::handle_rm(void) {
                 os << "cd " << getMonitorPath("") << " ; ";
                 os << "rm -f " << addr << ".* ; ";
                 if (isTestMode())
-                    cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
+                    LOG_INFO(substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/"));
                 else
                     if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+
             } else {
-                cout << "...not removed." << endl;
+                LOG_INFO("Monitor not removed.");
+
             }
         }
     }
 
-    return true;
+    EXIT_OK("handle_" + mode);
 }

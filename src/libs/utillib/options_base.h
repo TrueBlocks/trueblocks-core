@@ -173,5 +173,6 @@ protected:
 
     extern const char *STR_DEFAULT_TOOLNAMES;
     extern const char *STR_DEFAULT_WHENBLOCKS;
+    extern bool prepareEnv(int argc, const char *argv[]);
 
 }  // namespace qblocks

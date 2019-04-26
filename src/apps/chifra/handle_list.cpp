@@ -8,14 +8,14 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_list(void) {
 
-    // list mode does not require a running node since it only reads the account cache
+    ENTER("handle_" + mode);
     nodeNotRequired();
 
     if (addrs.empty())
-        return usage("This function requires an address. Quitting...");
+        EXIT_USAGE("'chifra list' requires an Ethereum address.");
 
     if (!freshen_internal(FM_PRODUCTION, addrs, "", freshen_flags))
-        return false;
+        EXIT_FAIL("'chifra list' freshen_internal returned false");
 
     for (auto addr : addrs) {
         ostringstream os;
@@ -27,5 +27,5 @@ bool COptions::handle_list(void) {
             if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
     }
 
-    return true;
+    EXIT_OK("handle_" + mode);
 }

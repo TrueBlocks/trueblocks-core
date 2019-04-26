@@ -12,17 +12,18 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_ls(void) {
 
-    // ls mode does not require a running node
+    ENTER("handle_" + mode);
     nodeNotRequired();
 
     ostringstream os;
-    os << endl << cGreen << "Monitor path: " << cWhite << getMonitorPath("") << endl;
+    os << cGreen << "Monitor path: " << cWhite << getMonitorPath("") << endl;
 
     stats = (stats || contains(tool_flags, "-l"));
 
     CStringArray files;
     if (isTestMode()) {
         files.push_back("0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359.accts.bin");
+
     } else {
         if (stats && addrs.size()) {
             for (auto addr : addrs) {
@@ -30,7 +31,7 @@ bool COptions::handle_ls(void) {
                 if (fileExists(fn))
                     files.push_back(fn);
                 else
-                    cerr << fn << " not found." << endl;
+                    LOG_WARN(fn, " not found.");
             }
         } else {
             listFilesInFolder(files, getMonitorPath("*.*"), false);
@@ -53,13 +54,19 @@ bool COptions::handle_ls(void) {
         }
     }
     if (accounts.size() == 0) {
-        CAccountName item;
-        item.addr = "none";
-        accounts.push_back(item);
+        if (api_mode) {
+            CAccountName item;
+            item.addr = "0x0";
+            item.name = "none";
+            accounts.push_back(item);
+        } else {
+            LOG_WARN("No monitors found. Quitting...");
+            EXIT_OK("handle_" + mode);
+        }
     }
     sort(accounts.begin(), accounts.end());
 
-    if (!getEnvStr("API_MODE").empty()) {
+    if (api_mode) {
         SHOW_FIELD(CAccountName, "fn");
         SHOW_FIELD(CAccountName, "size");
         SHOW_FIELD(CAccountName, "lb");
@@ -77,7 +84,7 @@ bool COptions::handle_ls(void) {
         if (accounts.size() > 1)
             oss << "]";
         cout << substitute(substitute(oss.str(), "\n", ""), "\t", "") << endl;
-        return true;
+        EXIT_OK("handle_" + mode);
     }
 
     if (stats) {
@@ -134,5 +141,5 @@ bool COptions::handle_ls(void) {
     else
         cout << os.str();
 
-    return true;
+    EXIT_OK("handle_" + mode);
 }

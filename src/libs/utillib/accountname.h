@@ -49,7 +49,6 @@ public:
 
     // EXISTING_CODE
     explicit CAccountName(string_q& nameIn);
-    bool Match(const string_q& s1, const string_q& s2, const string_q& s3, bool matchCase, bool all) const;
     // EXISTING_CODE
     bool operator==(const CAccountName& item) const;
     bool operator!=(const CAccountName& item) const { return !operator==(item); }
