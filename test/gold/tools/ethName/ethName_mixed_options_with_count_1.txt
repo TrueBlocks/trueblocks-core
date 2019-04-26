@@ -1,3 +1,0 @@
-ethName argc: 6 [1:-a] [2:-s] [3:-c] [4:0xb6] [5:torj] 
-ethName -a -s -c 0xb6 torj 
-2 matches

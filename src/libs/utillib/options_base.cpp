@@ -679,7 +679,9 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
                 return;
             }
         }
-        string_q cmd = editor + " \"" + fileName + "\"";
+
+        CFilename fn(fileName);
+        string_q cmd = editor + " \"" + fn.getFilename() + "\"";
         if (isTestMode()) {
             cout << "Testing editFile: " << substitute(cmd, "nano", "open") << "\n";
             string_q contents;

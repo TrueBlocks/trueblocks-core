@@ -67,17 +67,22 @@ namespace qblocks {
 
             stringstream header;
             header.fill('0');header.width(7);
-            header << bBlack << log_line_number++ << " " << Now().Format(FMT_EXPORT) << " ~ ";
-#define LOG_TIMING
-#ifdef LOG_TIMING
-            header.fill('0');header.width(7);
-            header << clock() << " - ";
-#endif
-            //#define LOG_THREADS
-#ifdef LOG_THREADS
-            header.fill('0');header.width(7);
-            header << this_thread::get_id() << " + ";
-#endif
+            header << bBlack << log_line_number++ << " ";
+            if (isTestMode()) {
+                header << "TIME ~ CLOCK - ";
+            } else {
+                header << Now().Format(FMT_EXPORT) << " ~ ";
+#define LOG_TIMING true
+#define LOG_THREAD false
+                if (LOG_TIMING) {
+                    header.fill('0');header.width(7);
+                    header << clock() << " - ";
+                }
+                if (LOG_THREAD) {
+                    header.fill('0');header.width(7);
+                    header << this_thread::get_id() << " + ";
+                }
+            }
             header << cOff;
 
             return header.str();
@@ -114,7 +119,8 @@ namespace qblocks {
             if( !policy ) {
                 throw std::runtime_error("LOGGER: Unable to create the logger instance");
             }
-            policy->open_ostream( name );
+            if (!name.empty())
+                policy->open_ostream( name );
         }
 
         //----------------------------------------------------------------
@@ -171,6 +177,6 @@ namespace qblocks {
 #define ENTER(a)       { LOG2(string_q("Enter(") + uint_2_Str(__LINE__) + ") " + a); }
 
 // The LOG parts of these routines disappear if turned off, but they still do their work because of the returns
-#define EXIT_USAGE(a)  { LOG2(string_q("Exit(")  + uint_2_Str(__LINE__) + ") " + a); return usage((a)); }
-#define EXIT_FAIL(a)   { LOG2(string_q("Exit(")  + uint_2_Str(__LINE__) + ") " + a); return false; }
+#define EXIT_USAGE(a)  { LOG_ERR(string_q("Exit(")  + uint_2_Str(__LINE__) + ") " + a); return usage((a)); }
+#define EXIT_FAIL(a)   { LOG_WARN(string_q("Exit(")  + uint_2_Str(__LINE__) + ") " + a); return false; }
 #define EXIT_OK(a)     { LOG2(string_q("Exit(")  + uint_2_Str(__LINE__) + ") " + a); return true; }

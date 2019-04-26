@@ -1,10 +1,3 @@
 chifra argc: 2 [1:stats] 
 chifra stats 
-
-Monitor path: $BLOCK_CACHE/monitors/
-Address: none
-	Name:       <unknown>
-	Filename:   
-	File size:  0 MB
-	Last block: 0
-	nRecords:   0
+00000000 TIME ~ CLOCK - <WARNG> : No monitors found. Quitting...
