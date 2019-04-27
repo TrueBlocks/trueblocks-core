@@ -93,7 +93,7 @@ bool COptions::parseArguments(string_q& command) {
     }
     expContext().fmtMap["nick"] = cleanFmt(format, fmt);
     applyFilter(format);
-    
+
     return true;
 }
 
@@ -152,6 +152,7 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
 //-----------------------------------------------------------------------
 uint64_t COptions::applyFilter(const string_q& fmtIn) {
 
+    ENTER("ethName:applyFilter");
     string_q fmt = fmtIn;
     if (!search3.empty()) fmt = "[ {DESCRIPTION}]" + fmt;
     if (!search2.empty()) fmt = "[ {NAME}][ {SYMBOL}]" + fmt;
@@ -172,6 +173,7 @@ uint64_t COptions::applyFilter(const string_q& fmtIn) {
         }
     }
 
+    EXIT_OK("ethName:applyFilter: " + uint_2_Str(filtered.size()));
     return filtered.size();
 }
 

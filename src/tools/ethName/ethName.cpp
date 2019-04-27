@@ -50,7 +50,6 @@ int main(int argc, const char *argv[]) {
                 cout << endl;
             if (isJson && options.filtered.size() > 1)
                 cout << "]";
-
         }
     }
 
