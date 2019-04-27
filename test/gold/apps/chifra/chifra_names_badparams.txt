@@ -3,15 +3,15 @@ ethName --not_an_option
 
   Invalid option: --not_an_option
 
-  Usage:    ethName [-a|-c|-d|-e|-l|-m|-v|-h] <term> [term...]  
+  Usage:    ethName [-a|-d|-e|-f|-l|-m|-v|-h] <term> [term...]  
   Purpose:  Query Ethereum addresses and/or names making it easy to remember accounts.
              
   Where:  
 	terms                 a space separated list of one or more search terms (required)
 	-a  (--addr)          export only the associated address (may be used in scripting)
-	-c  (--count)         print only the count of the number of matches
 	-d  (--data)          export results as tab separated data
 	-e  (--edit)          open the name database for editing
+	-f  (--fmt val)       export format (one of [json|txt|csv]
 	-l  (--list)          list all names in the database
 	-m  (--matchCase)     matches must agree in case (the default is to ignore case)
 

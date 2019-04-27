@@ -151,6 +151,34 @@ endfunction(run_the_state_test)
 ##add_custom_command(OUTPUT ${OUTPUT_TEST_FILE} COMMAND concatenate_files ${INPUT_LIST} ${OUTPUT_TEST_FILE})
 
 # ----------------------------------------------------------------------------------------
+# git: Get the current working branch
+execute_process(
+        COMMAND git rev-parse --abbrev-ref HEAD
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        OUTPUT_VARIABLE GIT_BRANCH
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+# git:  Get the latest abbreviated commit hash of the working branch
+execute_process(
+        COMMAND git log -1 --format=%h
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        OUTPUT_VARIABLE GIT_COMMIT_HASH
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+# git: Get date of latest commit in working branch
+execute_process(
+        COMMAND git log -1 --format=%ct
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        OUTPUT_VARIABLE GIT_COMMIT_TS
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+# git: add definitions and print to screen
+add_definitions(-DGIT_COMMIT_HASH="${GIT_COMMIT_HASH}")
+add_definitions(-DGIT_BRANCH="${GIT_BRANCH}")
+add_definitions(-DGIT_COMMIT_TS=${GIT_COMMIT_TS})
+message (STATUS "GIT: branch ${GIT_BRANCH} commit ${GIT_COMMIT_HASH} timestamp ${GIT_COMMIT_TS}")
+
+# ----------------------------------------------------------------------------------------
 # Compilation order for the subfolders
 add_subdirectory (libs)
 add_subdirectory (tools)
