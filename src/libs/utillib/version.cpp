@@ -33,7 +33,14 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     string_q getVersionStr(bool incProg) {
         ostringstream os;
-        os << (incProg ? PRODUCT_NAME : "") << MAJOR << "." << MINOR << "." << BUILD << "-" << SUBVERS;
+
+        // convert unix epoch to YYYYMMDD
+        std::tm tmTime;
+        memset(&tmTime, 0, sizeof(tmTime));
+        strptime(GIT_COMMIT_TS, "%s", &tmTime);
+
+        os << (incProg ? PRODUCT_NAME : "") << MAJOR << "." << MINOR << "." << BUILD << "-" << SUBVERS <<  "-" << GIT_COMMIT_HASH << "-" << std::put_time(&tmTime, "%Y%m%d");
+//
         return os.str();
     }
 
