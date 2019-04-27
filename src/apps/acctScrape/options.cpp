@@ -55,7 +55,7 @@ bool COptions::parseArguments(string_q& command) {
                 CAccountWatch watch;
                 watch.setValueByName("address", toLower(arg)); // don't change, sets bloom value also
                 watch.setValueByName("name", toLower(arg));
-                watch.extra_data = toLower("chifra/" + getVersionStr() + ": " + watch.address);
+                watch.extra_data = getVersionStr() + "/" + watch.address;
                 watch.color = cBlue;
                 watch.finishParse();
                 monitors.push_back(watch);
@@ -158,7 +158,6 @@ void COptions::Init(void) {
     visitTypes    = (VIS_STAGING | VIS_FINAL);
     useBlooms     = false;
 }
-
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) : log_file() {

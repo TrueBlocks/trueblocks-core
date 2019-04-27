@@ -19,7 +19,7 @@ namespace qblocks {
 #define MINOR 5
 #define BUILD 5
 #define SUBVERS "alpha"
-#define PRODUCT_NAME "GHC-TrueBlocks "
+#define PRODUCT_NAME "GHC-TrueBlocks/""/"
     //--------------------------------------------------------------------------------
     uint32_t getVersionNum(void) {
         return getVersionNum(MAJOR, MINOR, BUILD);
@@ -31,16 +31,13 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    string_q getVersionStr(bool incProg) {
+    string_q getVersionStr(bool incProg, bool incGit) {
         ostringstream os;
-
-        // convert unix epoch to YYYYMMDD
-        std::tm tmTime;
-        memset(&tmTime, 0, sizeof(tmTime));
-        strptime(GIT_COMMIT_TS, "%s", &tmTime);
-
-        os << (incProg ? PRODUCT_NAME : "") << MAJOR << "." << MINOR << "." << BUILD << "-" << SUBVERS <<  "-" << GIT_COMMIT_HASH << "-" << std::put_time(&tmTime, "%Y%m%d");
-//
+        if (incProg)
+            os << PRODUCT_NAME;
+        os << MAJOR << "." << MINOR << "." << BUILD << "-" << SUBVERS;
+        if (incGit)
+            os << "-" << GIT_COMMIT_HASH << "-" << ts_2_Date(str_2_Ts(GIT_COMMIT_TS)).Format(FMT_SHORT);
         return os.str();
     }
 
