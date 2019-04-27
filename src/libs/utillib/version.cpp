@@ -36,8 +36,12 @@ namespace qblocks {
         if (incProg)
             os << PRODUCT_NAME;
         os << MAJOR << "." << MINOR << "." << BUILD << "-" << SUBVERS;
-        if (incGit)
-            os << "-" << GIT_COMMIT_HASH << "-" << ts_2_Date(str_2_Ts(GIT_COMMIT_TS)).Format(FMT_SHORT);
+        if (incGit) {
+            if (isTestMode())
+                os << "-" << "-git-hash-" << "-" << "-git-ts-";
+            else
+                os << "-" << GIT_COMMIT_HASH << "-" << ts_2_Date(GIT_COMMIT_TS).Format(FMT_SHORT);
+        }
         return os.str();
     }
 
