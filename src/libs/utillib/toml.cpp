@@ -168,7 +168,7 @@ extern string_q collapseArrays(const string_q& inStr);
             deleteKey("version", "version");
             deleteKey("", "version");
         }
-        setConfigStr("version", "current", getVersionStr());
+        setConfigStr("version", "current", getVersionStr(false,false));
 
         bool first = true;
         for (auto group : groups) {
