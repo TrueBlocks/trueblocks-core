@@ -175,7 +175,7 @@ execute_process(
 # git: add definitions and print to screen
 add_definitions(-DGIT_COMMIT_HASH="${GIT_COMMIT_HASH}")
 add_definitions(-DGIT_BRANCH="${GIT_BRANCH}")
-add_definitions(-DGIT_COMMIT_TS="${GIT_COMMIT_TS}")
+add_definitions(-DGIT_COMMIT_TS=${GIT_COMMIT_TS})
 message (STATUS "GIT: branch ${GIT_BRANCH} commit ${GIT_COMMIT_HASH} timestamp ${GIT_COMMIT_TS}")
 
 # ----------------------------------------------------------------------------------------
