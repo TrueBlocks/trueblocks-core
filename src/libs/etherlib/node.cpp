@@ -922,7 +922,7 @@ namespace qblocks {
 
         ostringstream os;
         os << cGreen << "  Client version:     " << showOne("--version--", getVersionFromClient())    << endl;
-        os << cGreen << "  Trueblocks Version: " << showOne1(getVersionStr(true))                     << endl;
+        os << cGreen << "  Trueblocks Version: " << showOne1(getVersionStr())                         << endl;
         os << cGreen << "  RPC Provider:       " << showOne("--rpc_provider--", rpcProvider)          << endl;
         os << cGreen << "  Cache location:     " << showOne("--cache_dir--", getCachePath(""))        << endl;
         os << cGreen << "  Host (user):        " << showOne("--host (user)--", hostUser)              << endl;

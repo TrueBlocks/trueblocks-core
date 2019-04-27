@@ -5,7 +5,7 @@ calling: getBlock --latest --qblocks
 getBlock argc: 3 [1:--latest] [2:--qblocks] 
 getBlock --latest --qblocks 
   Client version:     --version--
-  Trueblocks Version: GHC-TrueBlocks 0.5.5-alpha
+  Trueblocks Version: GHC-TrueBlocks//0.5.5-alpha--git-hash---git-ts-
   RPC Provider:       --rpc_provider--
   Cache location:     --cache_dir--
   Host (user):        --host (user)--

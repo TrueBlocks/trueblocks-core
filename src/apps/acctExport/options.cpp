@@ -91,7 +91,7 @@ bool COptions::parseArguments(string_q& command) {
             watch.setValueByName("address", toLower(arg));
             // above - don't change, sets bloom value also
             watch.setValueByName("name", toLower(arg));
-            watch.extra_data = getVersionStr(true) + "/" + watch.address;
+            watch.extra_data = getVersionStr() + "/" + watch.address;
             watch.color = cTeal;
             watch.finishParse();
             monitors.push_back(watch);

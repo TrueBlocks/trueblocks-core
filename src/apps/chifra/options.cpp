@@ -59,11 +59,6 @@ bool COptions::parseArguments(string_q& command) {
     establishFolder(getMonitorPath("", FM_PRODUCTION));
     establishFolder(getMonitorPath("", FM_STAGING));
 
-//    if (verbose) {
-//        tool_flags += " --verbose";
-//        freshen_flags += " --verbose";
-//    }
-
     tool_flags = trim(tool_flags, ' ');
     freshen_flags = trim(freshen_flags, ' ');
 
