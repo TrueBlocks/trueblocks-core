@@ -1,10 +1,10 @@
 whenBlock argc: 4 [1:--data] [2:0] [3:--invalid] 
 whenBlock --data 0 --invalid 
-00000000 TIME ~ CLOCK - <ERROR> : Exit(56) Invalid option: '--invalid'.
+00000000 TIME ~ CLOCK - <ERROR> : Exit(69) Invalid option: '--invalid'.
 
   Invalid option: '--invalid'.
 
-  Usage:    whenBlock [-d|-l|-v|-h] < block | date > [ block... | date... ]  
+  Usage:    whenBlock [-d|-l|-f|-v|-h] < block | date > [ block... | date... ]  
   Purpose:  Finds the nearest block prior to a date, or the nearest date prior to a block.
             Alternatively, search for one of special 'named' blocks.
              
@@ -13,6 +13,7 @@ whenBlock --data 0 --invalid
 	date                  one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]
 	-d  (--data)          display the result as data (tab delimited; useful for scripting)
 	-l  (--list)          list names and block numbers for special blocks
+	-f  (--fmt val)       export format (one of [json|txt|csv])
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 

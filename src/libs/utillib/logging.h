@@ -16,10 +16,10 @@
 namespace qblocks {
 
     //----------------------------------------------------------------
-    typedef enum { sev_info = 1, sev_warning, sev_error, sev_fatal, sev_debug0, sev_debug1, sev_debug2 } severity_t;
+    typedef enum { sev_na = 0, sev_info = 1, sev_warning, sev_error, sev_fatal, sev_debug0, sev_debug1, sev_debug2 } severity_t;
 
     //----------------------------------------------------------------
-    inline bool isLevelOn(severity_t test) { if (test < sev_debug0) return true; return (verbose > (test - sev_debug0)); }
+    inline bool isLevelOn(severity_t test) { if (test < sev_debug0) return true; return (((severity_t)verbose) > (test - sev_debug0)); }
 
     //----------------------------------------------------------------
     class log_policy_i {
