@@ -74,8 +74,10 @@ bool COptions::parseArguments(string_q& command) {
                 return usage(arg + " does not appear to be a valid address. Quitting...");
 
             string_q fn = getMonitorPath(arg);
-            if (!fileExists(fn))
-                return usage("File not found '" + getMonitorPath(arg) + ". Quitting...");
+            if (!fileExists(fn)) {
+                fn = (isTestMode() ? substitute(fn, getMonitorPath(""), "./") : fn);
+                return usage("File not found '" + fn + ". Quitting...");
+            }
 
             if (fileExists(fn + ".lck"))
                 return usage("The cache lock file is present. The program is either already "

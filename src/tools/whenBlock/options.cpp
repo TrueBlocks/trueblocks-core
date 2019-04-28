@@ -344,4 +344,4 @@ bool containsAny(const string_q& haystack, const string_q& needle) {
 const char* STR_DATA =
 "";
 const char* STR_DISPLAY =
-"block #[{BLOCKNUMBER}][ : {TIMESTAMP}][ : {DATE}]\\n";
+"block #[{BLOCKNUMBER}][ : {TIMESTAMP}][ : {DATE}]";
