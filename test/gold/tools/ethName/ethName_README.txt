@@ -13,7 +13,7 @@ ethName -th
 | -a | --addr | export only the associated address (may be used in scripting) |
 | -d | --data | export results as tab separated data |
 | -e | --edit | open the name database for editing |
-| -f | --fmt val | export format (one of [json&#124;txt&#124;csv] |
+| -f | --fmt val | export format (one of [json&#124;txt&#124;csv]) |
 | -l | --list | list all names in the database |
 | -m | --matchCase | matches must agree in case (the default is to ignore case) |
 

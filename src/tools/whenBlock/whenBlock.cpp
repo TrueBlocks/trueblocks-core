@@ -57,9 +57,7 @@ int main(int argc, const char *argv[]) {
             if (block.blockNumber == 0)
                 block.timestamp = 1438269960;
 
-            string_q def = (options.asData ?
-                                    "[{BLOCKNUMBER}]\\t[{TIMESTAMP}]\\t[{DATE}]\\n" :
-                                    "block #[{BLOCKNUMBER}][ : {TIMESTAMP}][ : {DATE}]\\n");
+            string_q def = expContext().fmtMap["nick"];
             string_q fmt = getGlobalConfig("whenBlock")->getDisplayStr(options.asData, def);
             // we never want to print JSON
             if (fmt.empty()) fmt = substitute(def, "\\n" , "\n");

@@ -19,7 +19,7 @@ static const COption params[] = {
     COption("-addr",        "export only the associated address (may be used in scripting)"),
     COption("-data",        "export results as tab separated data"),
     COption("-edit",        "open the name database for editing"),
-    COption("-fmt:<fmt>",   "export format (one of [json|txt|csv]"),
+    COption("-fmt:<fmt>",   "export format (one of [json|txt|csv])"),
     COption("-list",        "list all names in the database"),
     COption("-matchCase",   "matches must agree in case (the default is to ignore case)"),
     COption("@source",      "search 'source' field as well name and address (the default)"),
