@@ -37,6 +37,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
+    bool isAddrOnly = false;
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
@@ -46,6 +47,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-a" || arg == "--addr") {
             format = "[{ADDR}]";
             fmt = NONE;
+            isAddrOnly = true;
 
         } else if (startsWith(arg, "-f:") || startsWith(arg, "--fmt:")) {
             arg = substitute(substitute(arg, "-f:", ""), "--fmt:", "");
@@ -85,11 +87,16 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    switch (fmt) {
-        case NONE: break; //format = "[{ADDR}]\t[{NAME}]"; break; //[ ({SYMBOL})]"; break;
-        case JSON: format = ""; break;
-        case TXT:
-        case CSV:  format = getGlobalConfig()->getConfigStr("display", "format", STR_ALLFIELDS); break;
+    if (!isAddrOnly) {
+        switch (fmt) {
+            case NONE: break; //format = "[{ADDR}]\t[{NAME}]"; break; //[ ({SYMBOL})]"; break;
+            case JSON: format = ""; break;
+            case TXT:
+            case CSV:  format = getGlobalConfig()->getConfigStr("display", "format", STR_ALLFIELDS); break;
+        }
+    } else {
+//        if (search3.empty()) search3 = search1;
+        if (search2.empty()) search2 = search1;
     }
     expContext().fmtMap["nick"] = cleanFmt(format, fmt);
     applyFilter(format);
