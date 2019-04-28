@@ -58,7 +58,7 @@ int main(int argc, const char *argv[]) {
                 block.timestamp = 1438269960;
 
             string_q def = expContext().fmtMap["nick"];
-            string_q fmt = getGlobalConfig("whenBlock")->getDisplayStr(options.asData, def);
+            string_q fmt = getGlobalConfig("whenBlock")->getDisplayStr(options.asData, def) + "\n";
             // we never want to print JSON
             if (fmt.empty()) fmt = substitute(def, "\\n" , "\n");
             if (verbose && !special.empty()) {

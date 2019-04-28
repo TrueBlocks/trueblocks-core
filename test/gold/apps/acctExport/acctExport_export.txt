@@ -1,7 +1,7 @@
 acctExport argc: 2 [1:0x001d14804b399c6ef80e64576f657660804fec0b] 
 acctExport 0x001d14804b399c6ef80e64576f657660804fec0b 
 
-  File not found '/Volumes/Samsung_T7/scraper/monitors/0x001d14804b399c6ef80e64576f657660804fec0b.acct.bin. Quitting...
+  File not found './0x001d14804b399c6ef80e64576f657660804fec0b.acct.bin. Quitting...
 
   Usage:    acctExport [-f|-v|-h] <address> [address...]  
   Purpose:  Export full detail of transactions for one or more Ethereum addresses.
