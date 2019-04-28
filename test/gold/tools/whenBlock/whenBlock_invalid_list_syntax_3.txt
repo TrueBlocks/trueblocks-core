@@ -1,7 +1,8 @@
 whenBlock argc: 3 [1:-l] [2:2015-03-02] 
 whenBlock -l 2015-03-02 
+00000000 TIME ~ CLOCK - <ERROR> : Exit(63) The --list option must appear alone on the line.
 
-  The --list option must appear alone on the line. Quitting...
+  The --list option must appear alone on the line.
 
   Usage:    whenBlock [-d|-l|-v|-h] < block | date > [ block... | date... ]  
   Purpose:  Finds the nearest block prior to a date, or the nearest date prior to a block.

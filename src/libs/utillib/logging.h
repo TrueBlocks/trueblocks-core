@@ -130,13 +130,13 @@ namespace qblocks {
                 return;
             write_mutex.lock();
             switch( severity ) {
-                case sev_debug0:  log_stream << cWhite  << "<DEBUG>" << cOff << " : "; break;
-                case sev_debug1:  log_stream << cWhite  << "<DEBUG>" << cOff << " : |-"; break;
-                case sev_debug2:  log_stream << cWhite  << "<DEBUG>" << cOff << " : |--"; break;
-                case sev_info:    log_stream << bGreen  << "<INFO> " << cOff << " : "; break;
-                case sev_warning: log_stream << bYellow << "<WARNG>" << cOff << " : "; break;
-                case sev_error:   log_stream << bRed    << "<ERROR>" << cOff << " : "; break;
-                case sev_fatal:   log_stream << bTeal   << "<FATAL>" << cOff << " : "; break;
+                case sev_debug0:  log_stream << cWhite   << "<DEBUG>" << cOff << " : "; break;
+                case sev_debug1:  log_stream << cWhite   << "<DEBUG>" << cOff << " : |-"; break;
+                case sev_debug2:  log_stream << bMagenta << "<TRACE>" << cOff << " : |--"; break;
+                case sev_info:    log_stream << bGreen   << "<INFO> " << cOff << " : "; break;
+                case sev_warning: log_stream << bYellow  << "<WARNG>" << cOff << " : "; break;
+                case sev_error:   log_stream << bRed     << "<ERROR>" << cOff << " : "; break;
+                case sev_fatal:   log_stream << bTeal    << "<FATAL>" << cOff << " : "; break;
             };
             print_impl( args... );
             write_mutex.unlock();
@@ -180,3 +180,4 @@ namespace qblocks {
 #define EXIT_USAGE(a)  { LOG_ERR(string_q("Exit(")  + uint_2_Str(__LINE__) + ") " + a); return usage((a)); }
 #define EXIT_FAIL(a)   { LOG_WARN(string_q("Exit(")  + uint_2_Str(__LINE__) + ") " + a); return false; }
 #define EXIT_OK(a)     { LOG2(string_q("Exit(")  + uint_2_Str(__LINE__) + ") " + a); return true; }
+#define EXIT_OK_Q(a)   { LOG2(string_q("Exit(")  + uint_2_Str(__LINE__) + ") " + a); return false; }

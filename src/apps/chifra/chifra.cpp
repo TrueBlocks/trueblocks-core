@@ -29,6 +29,7 @@ int main(int argc, const char *argv[]) {
         else if (options.mode == "ls")     RETURN(options.handle_ls())
         else if (options.mode == "rm")     RETURN(options.handle_rm())
         else if (options.mode == "names")  RETURN(options.handle_names())
+        else if (options.mode == "blocks") RETURN(options.handle_blocks())
         else if (options.mode == "config") RETURN(options.handle_config())
         else cerr << "Should not happen.";
     }

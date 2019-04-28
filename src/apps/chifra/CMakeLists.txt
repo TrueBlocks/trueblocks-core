@@ -71,9 +71,15 @@ endfunction(run_test)
 #run_test("chifra_export"           "export" " 0x1234567812345678123456781234567812345678")
 #run_test("chifra_init"             "init" " 0x1234567812345678123456781234567812345678")
 
-run_test("chifra_names_noparams"    "names")
-run_test("chifra_names_badparams"   "names" " --not_an_option")
-run_test("chifra_names"             "names" " -d")
+#run_test("chifra_names_noparams"    "names")
+#run_test("chifra_names_badparams"   "names" " --not_an_option")
+#run_test("chifra_names_edit"        "names" " edit")
+#run_test("chifra_names"             "names" " -d")
+
+run_test("chifra_blocks_noparams"    "blocks")
+run_test("chifra_blocks_badparams"   "blocks" " --not_an_option")
+run_test("chifra_blocks_edit"        "blocks" " edit")
+run_test("chifra_blocks"             "blocks" " -d")
 
 # Installation steps, this tool is renamed at installation
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

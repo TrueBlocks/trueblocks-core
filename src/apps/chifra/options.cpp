@@ -8,7 +8,7 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("~command", "one of [ seed | scrape | daemon | list | export | stats | ls | rm | names | config ]"),
+    COption("~command", "one of [ seed | scrape | daemon | list | export | stats | ls | rm | names | blocks | config ]"),
     COption("",         "Create a TrueBlocks monitor configuration.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -17,24 +17,23 @@ extern bool visitIndexFiles(const string_q& path, void *data);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
+    ENTER("parseArguments");
     if (!standardOptions(command))
-        return false;
+        EXIT_OK_Q("");
 
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-
         if (mode.empty() && startsWith(arg, '-')) {
 
-            if (!builtInCmd(arg)) {
-                return usage("Invalid option: " + arg);
-            }
+            if (!builtInCmd(arg))
+                EXIT_USAGE("Invalid option: " + arg);
 
         } else {
 
             if (contains(params[0].description, " " + arg + " ")) {
                 if (!mode.empty())
-                    return usage("Please specify " + params[0].description + ". Quitting...");
+                    EXIT_USAGE("Please specify " + params[0].description + ".");
                 mode = arg;
                 if (mode == "stats") {
                     mode = "ls";
@@ -55,14 +54,14 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (mode.empty())
-        return usage("Please specify " + params[0].description + ". Quitting...");
+        EXIT_USAGE("Please specify " + params[0].description + ".");
     establishFolder(getMonitorPath("", FM_PRODUCTION));
     establishFolder(getMonitorPath("", FM_STAGING));
 
     tool_flags = trim(tool_flags, ' ');
     freshen_flags = trim(freshen_flags, ' ');
 
-    return true;
+    EXIT_OK("parseArguments");
 }
 
 //---------------------------------------------------------------------------------------------------

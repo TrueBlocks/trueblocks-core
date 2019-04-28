@@ -16,7 +16,7 @@ Please contact us at [sales@greathill.com](mailto:sales@greathill.com) for more 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | address_list | one or more addresses (0x...) to export |
-| -f | --fmt val | export format (one of [json&#124;txt&#124;csv] |
+| -f | --fmt val | export format (one of [json&#124;txt&#124;csv]) |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

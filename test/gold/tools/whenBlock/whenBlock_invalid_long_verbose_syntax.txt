@@ -1,7 +1,8 @@
 whenBlock argc: 2 [1:--verbose] 
 whenBlock --verbose 
+00000000 TIME ~ CLOCK - <ERROR> : Exit(131) Please supply either a JSON formatted date or a blockNumber.
 
-  Please supply either a JSON formatted date or a blockNumber. Quitting...
+  Please supply either a JSON formatted date or a blockNumber.
 
   Usage:    whenBlock [-d|-l|-v|-h] < block | date > [ block... | date... ]  
   Purpose:  Finds the nearest block prior to a date, or the nearest date prior to a block.
