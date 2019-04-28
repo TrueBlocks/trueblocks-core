@@ -35,6 +35,7 @@ public:
     bool handle_ls     (void);
     bool handle_rm     (void);
     bool handle_names  (void);
+    bool handle_blocks (void);
     bool handle_config (void);
 };
 

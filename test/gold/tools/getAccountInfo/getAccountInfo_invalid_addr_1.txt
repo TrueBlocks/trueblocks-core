@@ -1,5 +1,5 @@
 getAccountInfo argc: 2 [1:invalid] 
 getAccountInfo invalid 
 
-  The given value 'invalid' is not a numeral or a special named block. Quitting...
+  The given value 'invalid' is not a numeral or a special named block.
 

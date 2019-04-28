@@ -1,7 +1,8 @@
 whenBlock argc: 4 [1:--data] [2:0] [3:--invalid] 
 whenBlock --data 0 --invalid 
+00000000 TIME ~ CLOCK - <ERROR> : Exit(56) Invalid option: '--invalid'.
 
-  Invalid option: '--invalid'. Quitting...
+  Invalid option: '--invalid'.
 
   Usage:    whenBlock [-d|-l|-v|-h] < block | date > [ block... | date... ]  
   Purpose:  Finds the nearest block prior to a date, or the nearest date prior to a block.
