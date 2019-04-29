@@ -1,6 +1,6 @@
 whenBlock argc: 2 [1:--edit] 
 whenBlock --edit 
-00000000 TIME ~ CLOCK - <ERROR> : Exit(69) Invalid option: '--edit'.
+00000001 TIME ~ CLOCK - <ERROR> : Exit(parseArguments): 
 
   Invalid option: '--edit'.
 

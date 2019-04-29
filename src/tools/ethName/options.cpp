@@ -159,11 +159,11 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
 //-----------------------------------------------------------------------
 uint64_t COptions::applyFilter(const string_q& fmtIn) {
 
-    ENTER("ethName:applyFilter");
+    ENTER("applyFilter");
     string_q fmt = fmtIn;
     if (!search3.empty()) fmt = "[ {DESCRIPTION}]" + fmt;
-    if (!search2.empty()) fmt = "[ {NAME}][ {SYMBOL}]" + fmt;
-    if (!search1.empty()) fmt = "[ {ADDR}]" + fmt;
+    if (!search2.empty()) fmt = "[ {SYMBOL}]" + fmt;
+    if (!search1.empty()) fmt = "[ {ADDR}][ {NAME}]" + fmt;
 
     for (size_t i = 0 ; i < namedAccounts.size() ; i++) {
         string_q str = namedAccounts[i].Format(fmt);
@@ -180,8 +180,8 @@ uint64_t COptions::applyFilter(const string_q& fmtIn) {
         }
     }
 
-    EXIT_OK("ethName:applyFilter: " + uint_2_Str(filtered.size()));
-    return filtered.size();
+    LOG2("nFiltered: ", filtered.size());
+    EXIT_NOMSG(filtered.size());
 }
 
 //-----------------------------------------------------------------------

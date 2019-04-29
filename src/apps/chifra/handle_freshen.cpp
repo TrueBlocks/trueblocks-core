@@ -27,6 +27,7 @@ bool freshen_internal(FreshenMode mode, const CAddressArray& addrs, const string
     // Process them until we're done
     while (!groupsOfFive.empty()) {
         string_q cmd = substitute(base.str(), "[ADDRS]", nextTokenClear(groupsOfFive, '|'));
+        LOG3("Calling " + cmd);
         if (isTestMode())
             cout << substitute(cmd, getCachePath(""), "$BLOCK_CACHE/") << endl;
 
@@ -36,5 +37,5 @@ bool freshen_internal(FreshenMode mode, const CAddressArray& addrs, const string
                 usleep(500000); // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
         }
     }
-    EXIT_OK("freshen_internal");
+    EXIT_NOMSG(true);
 }

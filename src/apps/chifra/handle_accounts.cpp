@@ -22,5 +22,5 @@ bool COptions::handle_accounts(void) {
     LOG1("command: " + os.str());
     if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
 
-    EXIT_OK("handle_" + mode);
+    EXIT_NOMSG(true);
 }

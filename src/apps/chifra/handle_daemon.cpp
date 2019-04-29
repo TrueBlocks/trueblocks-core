@@ -71,6 +71,5 @@ bool COptions::handle_daemon(void) {
         if (!isTestMode())
             usleep((unsigned int)sleep * 1000000);
     }
-
-    EXIT_OK("handle_" + mode);
+    EXIT_NOMSG(true);
 }

@@ -1,6 +1,5 @@
 chifraDaemon.py
 threads
-scraper.docker.py
 solidity_flatter.pl
 getem_internal.1
 getem_internal.2
@@ -22,7 +21,6 @@ extractAddrs
 fixMonitors.py
 getBals.py
 openBlock
-scraper.py
 showTest
 testMonitors.py
 uncpTest

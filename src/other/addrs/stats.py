@@ -42,8 +42,8 @@ os.system("cat output-tmp/file5 | grep azip  | awk '{print $1,$3}' OFS=, | tr ',
 os.system("cat output-tmp/file5 | grep bzip  | awk '{print $1,$3}' OFS=, | tr ',' '\t' >output-tmp/bzip.file")
 os.system("cat output-tmp/file5 | grep czip  | awk '{print $1,$3}' OFS=, | tr ',' '\t' >output-tmp/czip.file")
 
-os.system("find output-ascii | grep '00' | cut -d'/' -f2 | sed 's/^/.\/counts.1 /' | sed 's/.txt//' >counts")
-os.system("chmod uog+x counts* ; ./counts | sort -u >output-tmp/counts.txt")
+os.system("find output-ascii | grep '00' | cut -d'/' -f2 | sed 's/^/.\/counts.1.sh /' | sed 's/.txt//' >counts.sh")
+os.system("chmod uog+x counts* ; ./counts.sh | sort -u >output-tmp/counts.txt")
 
 os.system("join output-tmp/orig.file output-tmp/ascii.file >output-tmp/f1")
 os.system("join output-tmp/f1        output-tmp/bin.file   >output-tmp/f2")

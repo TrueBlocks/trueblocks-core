@@ -60,8 +60,8 @@ bool COptions::handle_ls(void) {
             item.name = "none";
             accounts.push_back(item);
         } else {
-            LOG_WARN("No monitors found. Quitting...");
-            EXIT_OK("handle_" + mode);
+            LOG_WARN("No monitors found.");
+            EXIT_NOMSG(true);
         }
     }
     sort(accounts.begin(), accounts.end());
@@ -84,7 +84,7 @@ bool COptions::handle_ls(void) {
         if (accounts.size() > 1)
             oss << "]";
         cout << substitute(substitute(oss.str(), "\n", ""), "\t", "") << endl;
-        EXIT_OK("handle_" + mode);
+        EXIT_NOMSG(true);
     }
 
     if (stats) {
@@ -141,5 +141,5 @@ bool COptions::handle_ls(void) {
     else
         cout << os.str();
 
-    EXIT_OK("handle_" + mode);
+    EXIT_NOMSG(true);
 }

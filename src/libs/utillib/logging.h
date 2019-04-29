@@ -12,13 +12,17 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "basetypes.h"
+#include "colors.h"
 
 namespace qblocks {
 
     //----------------------------------------------------------------
-    typedef enum { sev_na = 0, sev_info = 1, sev_warning, sev_error, sev_fatal, sev_debug0, sev_debug1, sev_debug2 } severity_t;
+    typedef enum { sev_na = 0,
+                    sev_info = 1, sev_warning, sev_error, sev_fatal,
+                    sev_debug0, sev_debug1, sev_debug2, sev_debug3, sev_debug4, sev_debug5,  } severity_t;
 
     //----------------------------------------------------------------
+    extern uint64_t verbose;
     inline bool isLevelOn(severity_t test) { if (test < sev_debug0) return true; return (((severity_t)verbose) > (test - sev_debug0)); }
 
     //----------------------------------------------------------------
@@ -114,7 +118,7 @@ namespace qblocks {
     public:
         //----------------------------------------------------------------
         logger( const string_q& name ) {
-            log_line_number = 0;
+            log_line_number = 1;
             policy = new log_policy;
             if( !policy ) {
                 throw std::runtime_error("LOGGER: Unable to create the logger instance");
@@ -133,6 +137,9 @@ namespace qblocks {
                 case sev_debug0:  log_stream << cWhite   << "<DEBUG>" << cOff << " : "; break;
                 case sev_debug1:  log_stream << cWhite   << "<DEBUG>" << cOff << " : |-"; break;
                 case sev_debug2:  log_stream << bMagenta << "<TRACE>" << cOff << " : |--"; break;
+                case sev_debug3:  log_stream << bMagenta << "<TRACE>" << cOff << " : |---"; break;
+                case sev_debug4:  log_stream << bMagenta << "<TRACE>" << cOff << " : |----"; break;
+                case sev_debug5:  log_stream << bMagenta << "<TRACE>" << cOff << " : |-----"; break;
                 case sev_info:    log_stream << bGreen   << "<INFO> " << cOff << " : "; break;
                 case sev_warning: log_stream << bYellow  << "<WARNG>" << cOff << " : "; break;
                 case sev_error:   log_stream << bRed     << "<ERROR>" << cOff << " : "; break;
@@ -160,6 +167,9 @@ namespace qblocks {
 #define LOG0      qblocks::dLogger->print<sev_debug0>
 #define LOG1      qblocks::dLogger->print<sev_debug1>
 #define LOG2      qblocks::dLogger->print<sev_debug2>
+#define LOG3      qblocks::dLogger->print<sev_debug3>
+#define LOG4      qblocks::dLogger->print<sev_debug4>
+#define LOG5      qblocks::dLogger->print<sev_debug5>
 #define LOG_INFO  qblocks::eLogger->print<sev_info>
 #define LOG_WARN  qblocks::eLogger->print<sev_warning>
 #define LOG_ERR   qblocks::eLogger->print<sev_error>
@@ -168,16 +178,18 @@ namespace qblocks {
 #define LOG0(...)
 #define LOG1(...)
 #define LOG2(...)
+#define LOG3(...)
+#define LOG4(...)
+#define LOG5(...)
 #define LOG_INFO(...)
 #define LOG_WARN(...)
 #define LOG_ERR(...)
 #define LOG_FATAL(...)
 #endif
 
-#define ENTER(a)       { LOG2(string_q("Enter(") + uint_2_Str(__LINE__) + ") " + a); }
-
 // The LOG parts of these routines disappear if turned off, but they still do their work because of the returns
-#define EXIT_USAGE(a)  { LOG_ERR(string_q("Exit(")  + uint_2_Str(__LINE__) + ") " + a); return usage((a)); }
-#define EXIT_FAIL(a)   { LOG_WARN(string_q("Exit(")  + uint_2_Str(__LINE__) + ") " + a); return false; }
-#define EXIT_OK(a)     { LOG2(string_q("Exit(")  + uint_2_Str(__LINE__) + ") " + a); return true; }
-#define EXIT_OK_Q(a)   { LOG2(string_q("Exit(")  + uint_2_Str(__LINE__) + ") " + a); return false; }
+#define ENTER(a)       { LOG2(string_q("Enter:") + a); } string_q l_funcName = (a);
+#define EXIT_USAGE(a)  { LOG_ERR( "Exit(", l_funcName, "): "); return usage((a)); }
+#define EXIT_FAIL(a)   { LOG_WARN("Exit(", l_funcName, "): "); cerr << a; return false; }
+#define EXIT_MSG(a,b)  { LOG2("Exit(", l_funcName, "): "); cerr << a; return (b); }
+#define EXIT_NOMSG(b)  { LOG2("Exit(", l_funcName, "): "); return (b); }
