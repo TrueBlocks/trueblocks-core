@@ -15,19 +15,26 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("~!block", "one or more block numbers (or a 'special' block), or..."),
-    COption("~!date",  "one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]"),
-    COption("-data",   "display the result as data (tab delimited; useful for scripting)"),
-    COption("-list",   "list names and block numbers for special blocks"),
-    COption("",        "Finds the nearest block prior to a date, or the nearest date prior to a block.\n"
-                       " Alternatively, search for one of special 'named' blocks.\n"),
+    COption("~!block",    "one or more block numbers (or a 'special' block), or..."),
+    COption("~!date",     "one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]"),
+    COption("-data",      "display the result as data (tab delimited; useful for scripting)"),
+    COption("-list",      "list names and block numbers for special blocks"),
+    COption("-fmt:<fmt>", "export format (one of [json|txt|csv])"),
+    COption("",           "Finds the nearest block prior to a date, or the nearest date prior to a block.\n"
+                          " Alternatively, search for one of special 'named' blocks.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
+extern const char* STR_DISPLAY;
+extern const char* STR_DATA;
 extern bool containsAny(const string_q& haystack, const string_q& needle);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
+    export_t fmt = NONE;
+    string_q format = STR_DISPLAY;
+
+    ENTER("parseArguments");
     if (!standardOptions(command))
         return false;
 
@@ -49,34 +56,40 @@ bool COptions::parseArguments(string_q& command) {
             asData = true;
             colorsOff();
 
+        } else if (startsWith(arg, "-f:") || startsWith(arg, "--fmt:")) {
+            arg = substitute(substitute(arg, "-f:", ""), "--fmt:", "");
+            if ( arg == "txt" ) fmt = TXT;
+            else if ( arg == "csv" ) fmt = CSV;
+            else if ( arg == "json") fmt = JSON;
+            else EXIT_USAGE("Export format must be one of [ json | txt | csv ].");
+
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
-                return usage("Invalid option: '" + orig + "'. Quitting...");
+                EXIT_USAGE("Invalid option: '" + orig + "'.");
             }
 
         } else if (containsAny(arg, ":- ") && countOf(arg, '-') > 1) {
 
             ASSERT(!startsWith(arg, "-"));
             if (isList)
-                return usage("The --list option must appear alone on the line. Quitting...");
+                EXIT_USAGE("The --list option must appear alone on the line.");
 
             time_q date = str_2_Date(arg);
             if (date == earliestDate) {
-                return usage("Invalid date: '" + orig + "'. Quitting...");
+                EXIT_USAGE("Invalid date: '" + orig + "'.");
 
             } else if (date > Now()) {
-                cout << "The date you specified (";
-                cout << cTeal << orig << cOff;
-                cout << ") is in the future. No such block. Quitting...\n";
-                return false;
+                ostringstream os;
+                os << "The date you specified (" << cTeal << orig << cOff << ")";
+                os << "is in the future. No such block.";
+                EXIT_FAIL("parseArguments: " + os.str());
 
             } else if (date < time_q(2015, 7, 30, 15, 25, 00)) {
-                // first block was at 15:26:00
-                cout << "The date you specified (";
-                cout << cTeal << orig << cOff;
-                cout << ") is before the first block. Quitting...\n";
-                return false;
+                ostringstream os;
+                os << "The date you specified (" << cTeal << orig << cOff << ")";
+                os << "is before the first block.";
+                EXIT_FAIL("parseArguments: " + os.str());
             }
 
             foundOne = true;
@@ -85,7 +98,7 @@ bool COptions::parseArguments(string_q& command) {
         } else {
 
             if (isList)
-                return usage("The --list option must appear alone on the line. Quitting...");
+                EXIT_USAGE("The --list option must appear alone on the line.");
 
             // if we're here, we better have a good block, assume we don't
             CNameValue spec;
@@ -100,10 +113,10 @@ bool COptions::parseArguments(string_q& command) {
 
                 string_q ret = blocks.parseBlockList(arg, latestBlock);
                 if (endsWith(ret, "\n")) {
-                    cerr << "\n  " << ret << "\n";
-                    return false;
+                    EXIT_FAIL("parseArguments: " + substitute(ret,"\n",""));
+
                 } else if (!ret.empty()) {
-                    return usage(ret);
+                    EXIT_USAGE(ret);
                 }
 
                 // Now we transfer the list of blocks to the requests array
@@ -119,17 +132,26 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    switch (fmt) {
+        case NONE: break;
+        case JSON: format = ""; break;
+        case TXT:
+        case CSV:  format = getGlobalConfig()->getConfigStr("display", "format", STR_DATA); break;
+    }
+    expContext().fmtMap["nick"] = cleanFmt(format, fmt);
+
     if (isList) {
         if (requests.size())
-            return usage("The --list option must appear alone on the line. Quitting...");
-        cout << listSpecials(false);
+            EXIT_USAGE("The --list option must appear alone on the line.");
+        cout << listSpecials(false, fmt);
+        EXIT_OK_Q("parseArguments");
         return false;
     }
 
     if (!foundOne)
-        return usage("Please supply either a JSON formatted date or a blockNumber. Quitting...");
+        EXIT_USAGE("Please supply either a JSON formatted date or a blockNumber.");
 
-    return true;
+    EXIT_OK("parseArguments");
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -179,16 +201,71 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
         if (verbose || COptions::isReadme) {
             ret += "Add custom special blocks by editing ~/.quickBlocks/whenBlock.toml.\n";
         }
-        ret += listSpecials(true);
+        ret += listSpecials(true, NONE);
         return ret;
     }
     return str;
 }
 
 //--------------------------------------------------------------------------------
-string_q COptions::listSpecials(bool terse) const {
+bool getBlock_light(CBlock& block, blknum_t num) {
+//    LOG2(getBinaryCacheFilename(CT_BLOCKS, num));
+    if (fileSize(getBinaryCacheFilename(CT_BLOCKS, num)) > 0) {
+//        LOG2("Reading");
+        return readBlockFromBinary(block, getBinaryCacheFilename(CT_BLOCKS, num));
+    }
+//    LOG2("Querying");
+    getObjectViaRPC(block, "eth_getBlockByNumber", "["+quote(uint_2_Hex(num))+",false]");
+    return true;
+}
+
+//--------------------------------------------------------------------------------
+string_q COptions::listSpecials(bool terse, export_t fmt) const {
     if (specials.size() == 0)
         ((COptionsBase *)this)->loadSpecials();  // NOLINT
+
+    if (fmt == JSON) {
+        HIDE_ALL_FIELDS(CBlock);
+        SHOW_FIELD(CBlock, "hash");
+        SHOW_FIELD(CBlock, "parentHash");
+        SHOW_FIELD(CBlock, "blockNumber");
+        SHOW_FIELD(CBlock, "price");
+        SHOW_FIELD(CBlock, "timestamp");
+        SHOW_FIELD(CBlock, "date");
+        SHOW_FIELD(CBlock, "finalized");
+        SHOW_FIELD(CBlock, "transactionsCnt");
+        CBlock latest;
+        getBlock(latest, "latest");
+        map<blknum_t, string_q> theMap;
+        CStringArray lines;
+        for (auto special : specials) {
+            string_q t1 = TIC();
+            string_q name = special.first;
+            blknum_t bn = str_2_Uint(special.second);
+            CBlock block;
+            getBlock(block, bn);
+            if (!fileExists(getBinaryCacheFilename(CT_BLOCKS, bn))) {
+                block.finalized = isBlockFinal(block.timestamp, latest.timestamp);
+                writeBlockToBinary(block, getBinaryCacheFilename(CT_BLOCKS, bn));
+            }
+            block.parentHash = name;
+            ostringstream os;
+            os << block << endl;
+            string_q s = substitute(os.str(), "parentHash", "name");
+            //LOG1("Fethcing block #: " + uint_2_Str(bn));
+            theMap.insert(pair<blknum_t, string_q>(bn, string_q(s)));
+//            cerr << bn << ":" << t1 << ":" << TIC() << endl;
+        }
+        ostringstream os;
+        for (auto item : theMap)
+            os << item.second << ",";
+//        map<blknum_t, string_q>::iterator it = theMap.begin();
+//        while (it != theMap.end()) {
+//            os << it->second;
+//            it++;
+//        }
+        return "[" + trim(os.str(),',') + "]";
+    }
 
     ostringstream os;
     if (!asData) {
@@ -263,3 +340,8 @@ bool containsAny(const string_q& haystack, const string_q& needle) {
     return false;
 }
 
+//-----------------------------------------------------------------------
+const char* STR_DATA =
+"";
+const char* STR_DISPLAY =
+"block #[{BLOCKNUMBER}][ : {TIMESTAMP}][ : {DATE}]";
