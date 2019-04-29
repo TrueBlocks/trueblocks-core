@@ -8,7 +8,7 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("~command", "one of [ seed | scrape | daemon | list | export | stats | ls | rm | names | blocks | config ]"),
+    COption("~command", "one of [ seed | scrape | daemon | list | export | stats | ls | rm | accounts | blocks | functions | config ]"),
     COption("",         "Create a TrueBlocks monitor configuration.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -33,7 +33,7 @@ bool COptions::parseArguments(string_q& command) {
 
             if (contains(params[0].description, " " + arg + " ")) {
                 if (!mode.empty())
-                    EXIT_USAGE("Please specify " + params[0].description + ".");
+                    EXIT_USAGE("Please specify " + params[0].description + ". " + mode + ":" + arg);
                 mode = arg;
                 if (mode == "stats") {
                     mode = "ls";
