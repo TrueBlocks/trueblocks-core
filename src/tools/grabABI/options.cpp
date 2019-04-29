@@ -15,22 +15,22 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("~addr",      "the address(es) of the smart contract(s) to grab"),
-    COption("-canonical", "convert all types to their canonical represenation and remove all spaces from display"),
-    COption("-generate",  "generate C++ code into the current folder for all functions and events found in the ABI"),
-    COption("-data",      "export the display as data"),
-    COption("-encode",    "generate the encodings for the functions / events in the ABI"),
-    COption("-json",      "print the ABI to the screen as json"),
-    COption("-noconst",   "generate encodings for non-constant functions and events only (always true when generating)"), // NOLINT
-    COption("-open",      "open the ABI file for editing, download if not already present"),
-    COption("-so(l)",     "create the ABI file from a .sol file in the local directory"),
-    COption("-raw",       "force retrieval of ABI from etherscan (ignoring cache)"),
-    COption("@silent",    "if ABI cannot be acquired, fail silently (useful for scripting)"),
-    COption("@nodec",     "do not decorate duplicate names"),
-    COption("@known",     "load common 'known' ABIs from cache"),
+    COption("~addr",       "the address(es) of the smart contract(s) to grab"),
+    COption("-canonical",  "convert all types to their canonical represenation and remove all spaces from display"),
+    COption("-generate",   "generate C++ code into the current folder for all functions and events found in the ABI"),
+    COption("-data",       "export the display as data"),
+    COption("-encode",     "generate the encodings for the functions / events in the ABI"),
+    COption("-json",       "print the ABI to the screen as json"),
+    COption("-noconst",    "generate encodings for non-constant functions and events only (always true when generating)"), // NOLINT
+    COption("-open",       "open the ABI file for editing, download if not already present"),
+    COption("-so(l):<fn>", "create the ABI file from a .sol file in the local directory"),
+    COption("-raw",        "force retrieval of ABI from etherscan (ignoring cache)"),
+    COption("@silent",     "if ABI cannot be acquired, fail silently (useful for scripting)"),
+    COption("@nodec",      "do not decorate duplicate names"),
+    COption("@known",      "load common 'known' ABIs from cache"),
 //    COption("@freshen",   "regenerate the binary database version of all ABIs in the abi cache"),
-    COption("",           "Fetches the ABI for a smart contract. Optionally generates C++ source code "
-                          "representing that ABI.\n"),
+    COption("",            "Fetches the ABI for a smart contract. Optionally generates C++ source code "
+                           "representing that ABI.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -38,6 +38,7 @@ extern bool sortByFuncName(const CFunction& f1, const CFunction& f2);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
+    ENTER("parseArguments");
     if (!standardOptions(command))
         return false;
 
@@ -83,8 +84,13 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-r" || arg == "--raw") {
             raw = true;
 
-        } else if (arg == "-l" || arg == "--sol") {
+        } else if (startsWith(arg,"-l:") || startsWith(arg,"--sol:")) {
+            string_q orig = arg;
+            arg = substitute(substitute(arg, "-l:", ""), "--sol:", "");
+            if (!fileExists(arg))
+                EXIT_USAGE("Solidity file " + arg + " not found in local folder.");
             fromSol = true;
+            addrs.push_back(substitute(arg, ".sol", ""));
 
         } else if (arg == "-o" || arg == "--open") {
             isOpen = true;
@@ -111,12 +117,6 @@ bool COptions::parseArguments(string_q& command) {
     if (parts != SIG_CANONICAL && verbose)
         parts |= SIG_DETAILS;
 
-    if (!addrs.size() && !loadKnown)
-        return usage("Please supply at least one Ethereum address.\n");
-
-    if (isGenerate && asData)
-        return usage("Incompatible options --generate and --data. Quitting...");
-
     if (fromSol) {
         for (auto addr : addrs) {
             CAbi abi;
@@ -142,6 +142,12 @@ bool COptions::parseArguments(string_q& command) {
             asJson = false;
         }
     }
+
+    if (!addrs.size() && !loadKnown)
+        return usage("Please supply at least one Ethereum address.\n");
+
+    if (isGenerate && asData)
+        return usage("Incompatible options --generate and --data. Quitting...");
 
     if (asJson) {
         for (auto addr : addrs) {
