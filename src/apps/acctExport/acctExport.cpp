@@ -38,6 +38,7 @@ bool excludeTrace(const CTransaction *trans, size_t maxTraces) {
 //-----------------------------------------------------------------------
 bool exportData(COptions& options) {
 
+    ENTER("exportData");
     string_q transFmt = expContext().fmtMap["trans_fmt"];
     string_q traceFmt = expContext().fmtMap["trace_fmt"];
     string_q header = toLower(transFmt);
@@ -61,6 +62,7 @@ bool exportData(COptions& options) {
         CBlock block; // do not move this from this scope
         CTransaction trans;
         string_q txFilename = getBinaryCacheFilename(CT_TXS, item->blk, item->txid);
+
         if (fileExists(txFilename)) {
             readTransFromBinary(trans, txFilename);
             trans.finishParse();
@@ -133,13 +135,13 @@ bool exportData(COptions& options) {
 
     if (isJson)
         cout << "]";
-
-    return true;
+    EXIT_NOMSG(true);
 }
 
 //-----------------------------------------------------------------------
-bool loadData(CAppearanceArray_base& apps, const address_t& addr) {
+bool loadMonitorData(CAppearanceArray_base& apps, const address_t& addr) {
 
+    ENTER("loadMonitorData");
     string_q fn = getMonitorPath(addr);
 
     size_t nRecords = (fileSize(fn) / sizeof(CAppearance_base));
@@ -154,8 +156,7 @@ bool loadData(CAppearanceArray_base& apps, const address_t& addr) {
             txCache.Read(buffer, sizeof(CAppearance_base), nRecords);
             txCache.Release();
         } else {
-            cerr << "Could not open old style cache file. Quiting...";
-            return false;
+            EXIT_FAIL("Could not open cache file.");
         }
 
         // Add to the apps which may be non-empty
@@ -166,28 +167,23 @@ bool loadData(CAppearanceArray_base& apps, const address_t& addr) {
         delete [] buffer;
 
     } else {
-        cerr << "Could not allocate memory for address " << addr << endl;
-        return false;
+        EXIT_FAIL("Could not allocate memory for address " + addr);
 
     }
-
-    return true;
+    EXIT_NOMSG(true);
 }
 
 //-----------------------------------------------------------------------
 bool loadData(COptions& options) {
 
+    ENTER("loadData");
     CAppearanceArray_base tmp;
     for (auto monitor : options.monitors) {
-        if (!loadData(tmp, monitor.address)) {
-            cerr << "Could not load data. Quitting...";
-            return false;
-        }
+        if (!loadMonitorData(tmp, monitor.address))
+            EXIT_FAIL("Could not load data.");
     }
-    if (tmp.size() == 0) {
-        cerr << "Nothing to export. Quitting...";
-        return false;
-    }
+    if (tmp.size() == 0)
+        EXIT_MSG("Nothing to export.", false);
 
     sort(tmp.begin(), tmp.end());
 
@@ -195,6 +191,7 @@ bool loadData(COptions& options) {
     options.items.push_back(tmp[0]);
     for (auto item : tmp) {
         CAppearance_base *prev = &options.items[options.items.size() - 1];
+        // TODO(tjayrush): I think this removes dups. Is it really necessary?
         if (item.blk != prev->blk || item.txid != prev->txid) {
             if (item.blk > options.lastAtClient)
                 hasFuture = true;
@@ -202,11 +199,14 @@ bool loadData(COptions& options) {
                 options.items.push_back(item);
         }
     }
+    LOG1("Items array: " +
+         uint_2_Str(options.items.size()) + " - " +
+         uint_2_Str(options.items.size() * sizeof(CAppearance_base)));
 
     if (hasFuture)
-        cerr << bRed << "[WARNING]: " << cTeal << "Cache file contains blocks ahead of the local chain. These items cannot be exported." << cOff << endl;
+        LOG_WARN("Cache file contains blocks ahead of the chain. Some items will not be exported.");
 
-    return true;
+    EXIT_NOMSG(true);
 }
 
 //-----------------------------------------------------------------------
@@ -231,34 +231,7 @@ int main(int argc, const char *argv[]) {
 
 
 #if 0
-/*-------------------------------------------------------------------------
- * This source code is confidential proprietary information which is
- * Copyright (c) 2017 by Great Hill Corporation.
- * All Rights Reserved
- *------------------------------------------------------------------------*/
-#include "etherlib.h"
-#include "options.h"
-
-//-----------------------------------------------------------------------
-int main(int argc, const char *argv[]) {
-
-    acctlib_init(quickQuitHandler);
-
-    COptions options;
-    if (!options.prepareArguments(argc, argv))
-        return 0;
-
-    for (auto command : options.commandLines) {
-        if (!options.parseArguments(command))
-            return 0;
-        loadData(options);
-        exportData(options);
-    }
-
-    acctlib_cleanup();
-    return 0;
-}
-
+/*
 //---------------------------------------------------------------------------------------------
 extern bool exportTransaction(COptions& options, const CAppearance_base *item, bool first);
 extern bool checkBloom(COptions& options, const CAppearance_base *item);
@@ -444,43 +417,6 @@ string_q COptions::annotate(const string_q& strIn) const {
     return ret;
 }
 
-//-----------------------------------------------------------------------
-bool loadData(COptions& options) {
-    string_q fileName = getMonitorPath(options.monitors[0].address);
-
-    // If we've already upgraded the file, we've deleted it and we're done...
-    if (!fileExists(fileName))
-        return true;
-
-    // If the file is locked, we need to tell the user.
-    if (fileExists(fileName + ".lck"))
-        return options.usage("The cache lock file is present. The program is either already "
-                             "running or it did not end cleanly the\n\tlast time it ran. "
-                             "Quit the already running program or, if it is not running, "
-                             "remove the lock\n\tfile: " + fileName + ".lck'. Quitting...");
-
-    size_t nRecords = (fileSize(fileName) / sizeof(CAppearance_base));
-    if (!nRecords)
-        return options.usage("Nothing to export. Quitting...");
-
-    CAppearance_base *buffer = new CAppearance_base[nRecords];
-    bzero(buffer, nRecords * sizeof(CAppearance_base));
-
-    CArchive txCache(READING_ARCHIVE);
-    if (txCache.Lock(fileName, modeReadOnly, LOCK_NOWAIT)) {
-        txCache.Read(buffer, sizeof(CAppearance_base), nRecords);
-        txCache.Release();
-    } else {
-        return options.usage("Could not open old style cache file. Quiting...");
-    }
-
-    for (size_t i = 0 ; i < nRecords ; i++) {
-        options.items.push_back(buffer[i]);
-    }
-
-    return true;
-}
-
 //----------------------------------------------------------------
 bool visitAddrs(const CAppearance& item, void *data) {
     CAppearanceArray *array = reinterpret_cast<CAppearanceArray*>(data);
@@ -510,4 +446,5 @@ bool isInTransaction(CTransaction *trans, const address_t& needle) {
             return true;
     return false;
 }
+*/
 #endif

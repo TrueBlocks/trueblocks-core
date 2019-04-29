@@ -12,11 +12,13 @@
  *-------------------------------------------------------------------------------------------*/
 #include "biglib.h"
 #include "conversions.h"
+#include "logging.h"
 
 // TODO(tjayrush): inline these conversions
 
 namespace qblocks {
 
+    extern uint64_t verbose;
     extern uint64_t hex_2_Uint64(const string_q& str);
     extern int64_t  hex_2_Int64(const string_q& str) { return (int64_t)hex_2_Uint64(str); }
     extern biguint_t exp_2_BigUint (const string_q &str);
@@ -252,44 +254,22 @@ namespace qblocks {
         ss = trimLeading(ss, '0');
         size_t len = ss.length();
 
-extern uint64_t verbose;
-if (verbose > 1) {
-    cout << "bits:         " << bits << endl;
-    cout << "len:          " << len << endl;
-    cout << "l*4:          " << len * 4 << endl;
-    cout << "b/4:          " << (bits / 4) << endl;
-}
-
         if (bits != 257 && len < bits / 4)
             ss = padLeft(ss, bits / 4, '0');
         else
             bits = min((size_t)256, len * 4);
 
-if (verbose > 1)
-    cout << "s:            " << s << endl;
-
         string_q maxStr = getMax(bits);
         if (maxStr.empty())
             return uValIn;
         bigint_t maxInt = bigint_t(str_2_BigUint(maxStr), 1);
-
-if (verbose > 1) {
-    cout << "maxStr:       " << maxStr << endl;
-    cout << "maxInt:       " << maxInt << endl;
-}
-
         bigint_t sVal = bigint_t(uValIn, 1);
-if (verbose > 1) {
-    cout << "sVal:         " << sVal << endl;
-    cout << "(maxInt / 2): " << (maxInt / 2) << endl;
-}
-
         if (sVal > (maxInt / 2)) // If it's bigger than half, we have to wrap
             sVal = sVal - maxInt - 1; // wrap if larger than half of max int256
 
-if (verbose > 1) {
-    cout << "sVal2:        " << sVal << endl;
-}
+        LOG5("str:  " + s);
+        LOG5("bits: " + uint_2_Str(bits));
+        LOG5("sVal: " + bni_2_Str(sVal));
 
         return sVal;
     }
@@ -323,16 +303,12 @@ if (verbose > 1) {
             return ret;
         biguint_t maxInt = biguint_t(BigUnsignedInABase(maxStr, 10));
 
-extern uint64_t verbose;
-if (verbose > 1) {
-    cout << "bits:         " << bits << endl;
-    cout << "maxStr:       " << maxStr << endl;
-    cout << "maxInt:       " << maxInt << endl;
-    cout << "ret:          " << ret << endl;
-}
-
         if (ret > maxInt) // If it's bigger than the max size, we have to wrap
             ret = (ret % maxInt);
+
+        LOG5("str:  " + str);
+        LOG5("bits: " + uint_2_Str(bits));
+        LOG5("ret: " + bnu_2_Str(ret));
 
         return ret;
     }

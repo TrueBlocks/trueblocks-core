@@ -1,6 +1,6 @@
 whenBlock argc: 4 [1:--data] [2:0] [3:--invalid] 
 whenBlock --data 0 --invalid 
-00000000 TIME ~ CLOCK - <ERROR> : Exit(69) Invalid option: '--invalid'.
+00000001 TIME ~ CLOCK - <ERROR> : Exit(parseArguments:68) 
 
   Invalid option: '--invalid'.
 
