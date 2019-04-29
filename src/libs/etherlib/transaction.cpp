@@ -408,7 +408,7 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
                 if ( fieldIn % "price" ) {
                     if (!IS_HIDDEN(CTransaction, "price")) {
                         timestamp_t ts = str_2_Ts(tra->Format("[{TIMESTAMP}]"));  // it may only be on the block
-                        return wei_2_Dollars(ts, weiPerEther());
+                        return wei_2_Dollars(ts, weiPerEther()); // this has huge performance implications because it loads a big file
                     }
                 }
                 // EXISTING_CODE

@@ -31,13 +31,12 @@ extern bool containsAny(const string_q& haystack, const string_q& needle);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
-    export_t fmt = NONE;
-    string_q format = STR_DISPLAY;
-
     ENTER("parseArguments");
     if (!standardOptions(command))
         return false;
 
+    export_t fmt = NONE;
+    string_q format = STR_DISPLAY;
     bool isList = false;
     bool foundOne = false;
     Init();
@@ -83,13 +82,13 @@ bool COptions::parseArguments(string_q& command) {
                 ostringstream os;
                 os << "The date you specified (" << cTeal << orig << cOff << ")";
                 os << "is in the future. No such block.";
-                EXIT_FAIL("parseArguments: " + os.str());
+                EXIT_FAIL(os.str());
 
             } else if (date < time_q(2015, 7, 30, 15, 25, 00)) {
                 ostringstream os;
                 os << "The date you specified (" << cTeal << orig << cOff << ")";
                 os << "is before the first block.";
-                EXIT_FAIL("parseArguments: " + os.str());
+                EXIT_FAIL(os.str());
             }
 
             foundOne = true;
@@ -113,7 +112,7 @@ bool COptions::parseArguments(string_q& command) {
 
                 string_q ret = blocks.parseBlockList(arg, latestBlock);
                 if (endsWith(ret, "\n")) {
-                    EXIT_FAIL("parseArguments: " + substitute(ret,"\n",""));
+                    EXIT_FAIL(substitute(ret,"\n",""));
 
                 } else if (!ret.empty()) {
                     EXIT_USAGE(ret);
@@ -144,14 +143,13 @@ bool COptions::parseArguments(string_q& command) {
         if (requests.size())
             EXIT_USAGE("The --list option must appear alone on the line.");
         cout << listSpecials(false, fmt);
-        EXIT_OK_Q("parseArguments");
-        return false;
+        EXIT_NOMSG(false);
     }
 
     if (!foundOne)
         EXIT_USAGE("Please supply either a JSON formatted date or a blockNumber.");
 
-    EXIT_OK("parseArguments");
+    EXIT_NOMSG(true);
 }
 
 //---------------------------------------------------------------------------------------------------

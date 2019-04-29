@@ -28,8 +28,9 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
+    ENTER("parseArguments");
     if (!standardOptions(command))
-        return false;
+        EXIT_NOMSG(false);
 
     bool isMerge = false, isSort = false, isCacheBal = false, isBals = false;
     Init();
@@ -49,10 +50,10 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-t:") || startsWith(arg, "--truncate:")) {
             arg = substitute(substitute(arg, "-t:", ""), "--truncate:", "");
             if (!isNumeral(arg))
-                return usage("You must supply a block number with the --truncate:n command.");
+                EXIT_USAGE("You must supply a block number with the --truncate:n command.");
             trunc = str_2_Uint(arg);
             if (trunc > getLastBlock_client())
-                return usage("You must supply a block number lower than the latest block.");
+                EXIT_USAGE("You must supply a block number lower than the latest block.");
             if (!contains(mode, "fix"))
                 mode += "fix|";
             replace(mode, "list|fix", "fix|list");  // do 'fixing' prior to 'listing'
@@ -60,7 +61,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-k:") || startsWith(arg, "--maxBlock:")) {
             arg = substitute(substitute(arg, "-k:", ""), "--maxBlock:", "");
             if (!isNumeral(arg))
-                return usage("You must supply a block number with the --maxBlock:n command.");
+                EXIT_USAGE("You must supply a block number with the --maxBlock:n command.");
             maxBlock = str_2_Uint(arg);
             if (maxBlock == 0)
                 maxBlock = NOPOS;
@@ -76,12 +77,12 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-i" || arg == "--import") {
             if (!fileExists("./import.txt"))
-                return usage("File ./import.txt not found. Quitting...");
+                EXIT_USAGE("File ./import.txt not found.");
             isImport = true;
 
         } else if (arg == "-r" || arg == "--remove") {
             if (!fileExists("./remove.txt"))
-                return usage("File ./remove.txt not found. Quitting...");
+                EXIT_USAGE("File ./remove.txt not found.");
             cerr << cGreen << "Found removal file...\n";
             string_q contents;
             asciiFileToString("./remove.txt", contents);
@@ -91,12 +92,9 @@ bool COptions::parseArguments(string_q& command) {
                 CAppearance_base item(line);
                 if (item.blk > 0) {
                     removals.push_back(item);
-                    cerr << cYellow << "\tremoval instruction: " << cTeal << removals.size() << "-" << item.blk << "." << item.txid << cOff << "\r";
-                    cerr.flush();
+                    LOG_INFO(cYellow, "\tremoval instruction: ", cTeal, removals.size(), "-", item.blk, ".", item.txid, cOff, "\r");
                 }
             }
-            cerr << "                                                                \n";
-            cerr.flush();
             if (!isTestMode()) {
                 copyFile("./remove.txt", "remove.bak");
                 remove("./remove.txt");
@@ -119,7 +117,7 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
-                return usage("Invalid option: " + arg);
+                EXIT_USAGE("Invalid option: " + arg);
             }
 
         } else {
@@ -127,54 +125,53 @@ bool COptions::parseArguments(string_q& command) {
             if (!endsWith(path, ".acct.bin"))
                 path += ".acct.bin";
             if (!fileExists(path))
-                return usage("Cannot open monitor file for '" + arg + "'. Quitting.");
+                EXIT_USAGE("Cannot open monitor file for '" + arg + "'.");
             address_t addr = substitute(path, ".acct.bin", "");
             if (contains(addr, "0x") && !startsWith(addr, "0x"))
                 addr = addr.substr(addr.find("0x"));
             if (!isTestMode() && !isAddress(addr))
-                return usage("Filename '" + arg + "' does not appear to contain an Ethereum address. Quitting...");
+                EXIT_USAGE("Filename '" + arg + "' does not appear to contain an Ethereum address.");
             monitors.push_back(CAccountWatch(addr, path));
         }
     }
 
     if (!isBals && monitors.size() == 0 && !isImport)
-        return usage("You must provide at least one filename. Quitting.");
+        EXIT_USAGE("You must provide at least one filename.");
     if (mode.empty())
         mode = "list|";
     if (isMerge && monitors.size() < 2)
-        return usage("Merge command needs at least two filenames. Quitting.");
+        EXIT_USAGE("Merge command needs at least two filenames.");
     if ((isSort || isRemove || isCacheBal) && monitors.size() != 1)
-        return usage("Command requires a single filename. Quitting.");
+        EXIT_USAGE("Command requires a single filename.");
 
     if (isBals) {
         listBalances(*this);
-        return false;
+        EXIT_NOMSG(false);
 
     } else if (isCacheBal) {
         handleCacheBals(*this);
-        return false;
+        EXIT_NOMSG(false);
 
     } else if (isSort) {
         handleSort();
-        return false;
+        EXIT_NOMSG(false);
 
     } else if (isMerge) {
         handleMerge();
-        return false;
+        EXIT_NOMSG(false);
 
     } else if (isImport) {
         if (monitors.empty() || monitors.size() > 1)
-            return usage("Please provide a single address for this import. Quitting...");
+            EXIT_USAGE("Please provide a single address for this import.");
         handleImport();
-        return false;
+        EXIT_NOMSG(false);
 
     } else if (isRemove) {
         handleRemove();
-        return false;
+        EXIT_NOMSG(false);
 
     }
-
-    return true;
+    EXIT_NOMSG(true);
 }
 
 //---------------------------------------------------------------------------------------------------

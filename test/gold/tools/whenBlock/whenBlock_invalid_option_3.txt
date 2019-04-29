@@ -1,6 +1,6 @@
 whenBlock argc: 2 [1:0-0] 
 whenBlock 0-0 
-00000000 TIME ~ CLOCK - <ERROR> : Exit(119) 'stop' must be strictly larger than 'start'
+00000001 TIME ~ CLOCK - <ERROR> : Exit(parseArguments:118) 
 
   'stop' must be strictly larger than 'start'
 

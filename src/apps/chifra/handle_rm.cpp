@@ -24,8 +24,8 @@ bool COptions::handle_rm(void) {
             LOG_WARN("Monitor not found for address " + addr + ".");
 
         } else {
-            cout << "Remove monitor for " << addr << "? (y=yes) >";
-            cout.flush();
+            cerr << "Remove monitor for " << addr << "? (y=yes) >";
+            cerr.flush();
             int ch = getchar();
             if (ch == 'y' || ch == 'Y') {
                 ostringstream os;
@@ -43,5 +43,5 @@ bool COptions::handle_rm(void) {
         }
     }
 
-    EXIT_OK("handle_" + mode);
+    EXIT_NOMSG(true);
 }

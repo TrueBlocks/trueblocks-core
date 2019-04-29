@@ -42,7 +42,7 @@ bool COptions::handle_config(void) {
                 if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
         }
     }
-    EXIT_OK("handle_" + mode);
+    EXIT_NOMSG(true);
 }
 
 //--------------------------------------------------------------------------------
@@ -88,5 +88,5 @@ bool COptions::createConfigFile(const address_t& addr) {
         if (verbose > 1)
             cout << config << endl;
     }
-    EXIT_OK("createConfigFile:" + addr);
+    EXIT_NOMSG(true);
 }

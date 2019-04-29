@@ -27,9 +27,9 @@ int main(int argc, const char *argv[]) {
         CStringArray modes;
         explode(modes, options.mode, '|');
         for (auto mode: modes) {
-            for (size_t fn = 0 ; fn < options.monitors.size() ; fn++) {
+            for (size_t ac = 0 ; ac < options.monitors.size() ; ac++) {
 
-                CAccountWatch *watch = &options.monitors[fn];
+                CAccountWatch *watch = &options.monitors[ac];
 
                 options.stats = CStats(); // reset
                 CAppearance_base lastItem;

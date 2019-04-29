@@ -18,4 +18,5 @@ block #200000 (iceage) : 1441661589 : 2015-09-07 21:33:09 UTC
 block #1150000 (homestead) : 1457981393 : 2016-03-14 18:49:53 UTC
 block #1718497 (daohack) : 1466134488 : 2016-06-17 03:34:48 UTC
 block #1920000 (daofork) : 1469020840 : 2016-07-20 13:20:40 UTC
-00000000 TIME ~ CLOCK - <WARNG> : Exit(116) parseArguments: The given value 'mistake' is not a numeral or a special named block.
+00000001 TIME ~ CLOCK - <WARNG> : Exit(parseArguments:115) 
+The given value 'mistake' is not a numeral or a special named block.

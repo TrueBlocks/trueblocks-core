@@ -1,6 +1,6 @@
 whenBlock argc: 2 [1:-d] 
 whenBlock -d 
-00000000 TIME ~ CLOCK - <ERROR> : Exit(152) Please supply either a JSON formatted date or a blockNumber.
+00000001 TIME ~ CLOCK - <ERROR> : Exit(parseArguments:150) 
 
   Please supply either a JSON formatted date or a blockNumber.
 

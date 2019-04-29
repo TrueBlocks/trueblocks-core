@@ -19,7 +19,7 @@ bool COptions::parseArguments(string_q& command) {
 
     ENTER("parseArguments");
     if (!standardOptions(command))
-        EXIT_OK_Q("");
+        EXIT_NOMSG(false);
 
     Init();
     explode(arguments, command, ' ');
@@ -58,10 +58,15 @@ bool COptions::parseArguments(string_q& command) {
     establishFolder(getMonitorPath("", FM_PRODUCTION));
     establishFolder(getMonitorPath("", FM_STAGING));
 
+    if (verbose) {
+        tool_flags += (" -v:" + uint_2_Str(verbose));
+        freshen_flags += (" -v:" + uint_2_Str(verbose));
+    }
+
     tool_flags = trim(tool_flags, ' ');
     freshen_flags = trim(freshen_flags, ' ');
 
-    EXIT_OK("parseArguments");
+    EXIT_NOMSG(true);
 }
 
 //---------------------------------------------------------------------------------------------------
