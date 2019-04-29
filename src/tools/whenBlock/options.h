@@ -25,5 +25,5 @@ public:
     string_q postProcess(const string_q& which, const string_q& str) const override;
     bool parseArguments(string_q& command) override;
     void Init(void) override;
-    string_q listSpecials(bool terse) const;
+    string_q listSpecials(bool terse, export_t fmt) const;
 };

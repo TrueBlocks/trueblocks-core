@@ -66,6 +66,8 @@ run_test("ethName_simple_search"                             "88897")
 run_test("ethName_help"                                      "-h")
 run_test("ethName_help_long"                                 "--help")
 run_test("ethName_upgrade_fail"                              "--list")   # customized
+run_test("ethName_tip1"                                      "tip")
+run_test("ethName_tip2"                                      "tip" " -a")
 
 #run_test("ethName_edit"                                     "-e")
 #run_test("ethName_long_edit"                                "--edit")

@@ -16,10 +16,10 @@
 namespace qblocks {
 
     //----------------------------------------------------------------
-    typedef enum { sev_info = 1, sev_warning, sev_error, sev_fatal, sev_debug0, sev_debug1, sev_debug2 } severity_t;
+    typedef enum { sev_na = 0, sev_info = 1, sev_warning, sev_error, sev_fatal, sev_debug0, sev_debug1, sev_debug2 } severity_t;
 
     //----------------------------------------------------------------
-    inline bool isLevelOn(severity_t test) { if (test < sev_debug0) return true; return (verbose > (test - sev_debug0)); }
+    inline bool isLevelOn(severity_t test) { if (test < sev_debug0) return true; return (((severity_t)verbose) > (test - sev_debug0)); }
 
     //----------------------------------------------------------------
     class log_policy_i {
@@ -130,13 +130,13 @@ namespace qblocks {
                 return;
             write_mutex.lock();
             switch( severity ) {
-                case sev_debug0:  log_stream << cWhite  << "<DEBUG>" << cOff << " : "; break;
-                case sev_debug1:  log_stream << cWhite  << "<DEBUG>" << cOff << " : |-"; break;
-                case sev_debug2:  log_stream << cWhite  << "<DEBUG>" << cOff << " : |--"; break;
-                case sev_info:    log_stream << bGreen  << "<INFO> " << cOff << " : "; break;
-                case sev_warning: log_stream << bYellow << "<WARNG>" << cOff << " : "; break;
-                case sev_error:   log_stream << bRed    << "<ERROR>" << cOff << " : "; break;
-                case sev_fatal:   log_stream << bTeal   << "<FATAL>" << cOff << " : "; break;
+                case sev_debug0:  log_stream << cWhite   << "<DEBUG>" << cOff << " : "; break;
+                case sev_debug1:  log_stream << cWhite   << "<DEBUG>" << cOff << " : |-"; break;
+                case sev_debug2:  log_stream << bMagenta << "<TRACE>" << cOff << " : |--"; break;
+                case sev_info:    log_stream << bGreen   << "<INFO> " << cOff << " : "; break;
+                case sev_warning: log_stream << bYellow  << "<WARNG>" << cOff << " : "; break;
+                case sev_error:   log_stream << bRed     << "<ERROR>" << cOff << " : "; break;
+                case sev_fatal:   log_stream << bTeal    << "<FATAL>" << cOff << " : "; break;
             };
             print_impl( args... );
             write_mutex.unlock();
@@ -180,3 +180,4 @@ namespace qblocks {
 #define EXIT_USAGE(a)  { LOG_ERR(string_q("Exit(")  + uint_2_Str(__LINE__) + ") " + a); return usage((a)); }
 #define EXIT_FAIL(a)   { LOG_WARN(string_q("Exit(")  + uint_2_Str(__LINE__) + ") " + a); return false; }
 #define EXIT_OK(a)     { LOG2(string_q("Exit(")  + uint_2_Str(__LINE__) + ") " + a); return true; }
+#define EXIT_OK_Q(a)   { LOG2(string_q("Exit(")  + uint_2_Str(__LINE__) + ") " + a); return false; }

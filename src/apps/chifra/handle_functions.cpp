@@ -7,7 +7,7 @@
 #include "question.h"
 
 //------------------------------------------------------------------------------------------------
-bool COptions::handle_names(void) {
+bool COptions::handle_functions(void) {
 
     ENTER("handle_" + mode);
     LOG1("tool_flags: " + tool_flags);
@@ -17,7 +17,9 @@ bool COptions::handle_names(void) {
         tool_flags = substitute(tool_flags, "edit", "--edit");
 
     ostringstream os;
-    os << "ethName " << tool_flags << (api_mode ? " --fmt json" : "") << " ; "; // order matters, last in wins
+    os << "grabABI " << tool_flags << (api_mode ? " --json" : ""); // order matters, last in wins
+    for (auto addr : addrs)
+        os << " " << addr;
 
     LOG1("command: " + os.str());
     if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings

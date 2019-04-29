@@ -1,8 +1,8 @@
-whenBlock argc: 4 [1:-l] [2:-d] [3:23123] 
-whenBlock -l -d 23123 
-00000000 TIME ~ CLOCK - <ERROR> : Exit(101) The --list option must appear alone on the line.
+whenBlock argc: 2 [1:--not_an_option] 
+whenBlock --not_an_option 
+00000000 TIME ~ CLOCK - <ERROR> : Exit(69) Invalid option: '--not_an_option'.
 
-  The --list option must appear alone on the line.
+  Invalid option: '--not_an_option'.
 
   Usage:    whenBlock [-d|-l|-f|-v|-h] < block | date > [ block... | date... ]  
   Purpose:  Finds the nearest block prior to a date, or the nearest date prior to a block.
@@ -18,7 +18,8 @@ whenBlock -l -d 23123
 	-h  (--help)          display this help screen
 
   Notes:
-	- first (0), firstTrans (46147), iceage (200000), devcon1 (543626)
+	- Use the following names to represent `special` blocks:
+	  - first (0), firstTrans (46147), iceage (200000), devcon1 (543626)
 	  - homestead (1150000), daofund (1428756), daohack (1718497), daofork (1920000)
 	  - devcon2 (2286910), tangerine (2463000), spurious (2675000), stateclear (2717576)
 	  - eea (3265360), ens2 (3327417), parityhack1 (4041179), byzantium (4370000)
@@ -26,3 +27,5 @@ whenBlock -l -d 23123
 	  - constantinople (7280000), latest ()
 
   Powered by QBlocks
+chifra argc: 3 [1:blocks] [2:--not_an_option] 
+chifra blocks --not_an_option 

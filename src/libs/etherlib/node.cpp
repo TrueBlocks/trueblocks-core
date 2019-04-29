@@ -148,7 +148,7 @@ namespace qblocks {
                 return true;
             }
         }
-        return false;
+        EXIT_FAIL("Could not open " + fileName);
     }
 
     //-----------------------------------------------------------------------

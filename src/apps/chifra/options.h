@@ -27,15 +27,17 @@ public:
     void Init(void);
     bool createConfigFile(const address_t& addr);
 
-    bool handle_export (void);
-    bool handle_list   (void);
-    bool handle_seed   (void);
-    bool handle_daemon (void);
-    bool handle_scrape (void);
-    bool handle_ls     (void);
-    bool handle_rm     (void);
-    bool handle_names  (void);
-    bool handle_config (void);
+    bool handle_export   (void);
+    bool handle_list     (void);
+    bool handle_seed     (void);
+    bool handle_daemon   (void);
+    bool handle_scrape   (void);
+    bool handle_ls       (void);
+    bool handle_rm       (void);
+    bool handle_accounts (void);
+    bool handle_blocks   (void);
+    bool handle_functions(void);
+    bool handle_config   (void);
 };
 
 //--------------------------------------------------------------------------------

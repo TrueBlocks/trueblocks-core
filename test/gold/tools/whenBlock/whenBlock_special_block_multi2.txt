@@ -1,5 +1,3 @@
 whenBlock argc: 6 [1:stateclear] [2:iceage] [3:4001001] [4:junk] [5:-v] 
 whenBlock stateclear iceage 4001001 junk -v 
-
-  The given value 'junk' is not a numeral or a special named block. Quitting...
-
+00000000 TIME ~ CLOCK - <WARNG> : Exit(116) parseArguments: The given value 'junk' is not a numeral or a special named block.
