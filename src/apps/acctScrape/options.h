@@ -17,7 +17,6 @@ public:
     blknum_t           lastBlockInFile;
     size_t             visitTypes;
     bool               useBlooms;
-    ofstream           log_file;
 
     COptions(void);
     ~COptions(void);
@@ -35,6 +34,3 @@ public:
 extern bool visitFinalIndexFiles(const string_q& path, void *data);
 extern bool visitStagingIndexFiles(const string_q& path, void *data);
 extern bool visitPendingIndexFiles(const string_q& path, void *data);
-
-//#define LOG(a) { a; }
-#define LOG(a) { }

@@ -1,6 +1,6 @@
 whenBlock argc: 2 [1:--not_an_option] 
 whenBlock --not_an_option 
-00000000 TIME ~ CLOCK - <ERROR> : Exit(69) Invalid option: '--not_an_option'.
+00000001 TIME ~ CLOCK - <ERROR> : Exit(parseArguments): 
 
   Invalid option: '--not_an_option'.
 

@@ -30,5 +30,5 @@ bool COptions::handle_export(void) {
                 usleep(500000); // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
         }
     }
-    EXIT_OK("handle_" + mode);
+    EXIT_NOMSG(true);
 }

@@ -160,15 +160,12 @@ void COptions::Init(void) {
 }
 
 //---------------------------------------------------------------------------------------------------
-COptions::COptions(void) : log_file() {
+COptions::COptions(void) {
     Init();
-    log_file = ofstream(configPath("cache/tmp/acctScrape.log"), std::ofstream::out);
 }
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
     // just some cleanup of the screen
     cerr << string_q(150,' ') << "\r";
-    LOG(log_file << "fin." << endl);
-    log_file.close();
 }

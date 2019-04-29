@@ -137,6 +137,7 @@ namespace qblocks {
 
     //-----------------------------------------------------------------------
     bool writeNodeToBinary(const CBaseNode& node, const string_q& fileName) {
+        ENTER("writeNodeToBinary");
         string_q created;
         if (establishFolder(fileName, created)) {
             if (!created.empty() && !isTestMode())
@@ -572,27 +573,19 @@ namespace qblocks {
     size_t getTraceCount(const hash_t& hashIn) {
         // handle most likely cases linearly
         for (size_t n = 2 ; n < 8 ; n++) {
-            if (!hasTraceAt(hashIn, n)) {
-                if (verbose > 2) cerr << "tiny trace" << (n - 1) << "\n";
+            if (!hasTraceAt(hashIn, n))
                 return n-1;
-            }
         }
 
         // binary search the rest
-        size_t ret = 0;
         if (!hasTraceAt(hashIn, (1 << 8))) {  // small?
-            ret = getTraceCount_binarySearch(hashIn, 0, (1 << 8) - 1);
-            if (verbose > 2) cerr << "small trace" << ret << "\n";
-            return ret;
+            return getTraceCount_binarySearch(hashIn, 0, (1 << 8) - 1);
         } else if (!hasTraceAt(hashIn, (1 << 16))) {  // medium?
-            ret = getTraceCount_binarySearch(hashIn, 0, (1 << 16) - 1);
-            if (verbose > 2) cerr << "medium trace" << ret << "\n";
-            return ret;
+            return getTraceCount_binarySearch(hashIn, 0, (1 << 16) - 1);
         } else {
-            ret = getTraceCount_binarySearch(hashIn, 0, (1 << 30));
-            if (verbose > 2) cerr << "large trace" << ret << "\n";
+            return getTraceCount_binarySearch(hashIn, 0, (1 << 30));
         }
-        return ret;
+        return 0;
     }
 
     //-------------------------------------------------------------------------
@@ -1017,7 +1010,7 @@ namespace qblocks {
 
     //-----------------------------------------------------------------------
     const string_q defHide =
-    "CTransaction: nonce, input"
+    "CTransaction: price, nonce, input"
     "|" "CLogEntry: data, topics"
     "|" "CTrace: blockHash, blockNumber, transactionHash, transactionPosition, traceAddress, subtraces"
     "|" "CTraceAction: init"
@@ -1026,7 +1019,7 @@ namespace qblocks {
     "|" "CParameter: type, indexed, isPointer, isArray, isObject";
 
     const string_q defShow =
-    "CTransaction: price, gasCost, articulatedTx, traces, isError, date, ether"
+    "CTransaction: gasCost, articulatedTx, traces, isError, date, ether"
     "|" "CLogEntry: articulatedLog"
     "|" "CTrace: articulatedTrace"
     "|" "CTraceAction: "

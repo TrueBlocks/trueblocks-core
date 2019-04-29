@@ -27,5 +27,5 @@ bool COptions::handle_list(void) {
             if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
     }
 
-    EXIT_OK("handle_" + mode);
+    EXIT_NOMSG(true);
 }
