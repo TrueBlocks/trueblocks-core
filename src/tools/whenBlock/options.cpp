@@ -223,6 +223,9 @@ string_q COptions::listSpecials(bool terse, export_t fmt) const {
         ((COptionsBase *)this)->loadSpecials();  // NOLINT
 
     if (fmt == JSON) {
+        extern const char* STR_KNOWN_BLOCKS;
+        return substitute(STR_KNOWN_BLOCKS, "+", "\"");
+/*
         HIDE_ALL_FIELDS(CBlock);
         SHOW_FIELD(CBlock, "hash");
         SHOW_FIELD(CBlock, "parentHash");
@@ -263,6 +266,7 @@ string_q COptions::listSpecials(bool terse, export_t fmt) const {
 //            it++;
 //        }
         return "[" + trim(os.str(),',') + "]";
+*/
     }
 
     ostringstream os;
@@ -343,3 +347,215 @@ const char* STR_DATA =
 "";
 const char* STR_DISPLAY =
 "block #[{BLOCKNUMBER}][ : {TIMESTAMP}][ : {DATE}]";
+const char* STR_KNOWN_BLOCKS =
+"[{"\
+" +hash+: +0xd4e56740f876aef8c010b86a40d5f56745a118d0906a34e69aec8c0db1cb8fa3+,"\
+" +blockNumber+: 0,"\
+" +name+: +first+,"\
+" +price+: 0,"\
+" +finalized+: 1,"\
+" +timestamp+: 0,"\
+" +date+: +1970-01-01 00:00:00 UTC+"\
+"}"\
+""\
+",{"\
+" +hash+: +0x4e3a3754410177e6937ef1f84bba68ea139e8d1a2258c5f85db9f1cd715a1bdd+,"\
+" +blockNumber+: 46147,"\
+" +name+: +firstTrans+,"\
+" +price+: 0,"\
+" +finalized+: 1,"\
+" +timestamp+: 1438918233,"\
+" +date+: +2015-08-07 03:30:33 UTC+"\
+"}"\
+""\
+",{"\
+" +hash+: +0x13ced9eaa49a522d4e7dcf80a739a57dbf08f4ce5efc4edbac86a66d8010f693+,"\
+" +blockNumber+: 200000,"\
+" +name+: +iceage+,"\
+" +price+: 0,"\
+" +finalized+: 1,"\
+" +timestamp+: 1441661589,"\
+" +date+: +2015-09-07 21:33:09 UTC+"\
+"}"\
+""\
+",{"\
+" +hash+: +0x827af61b9748436aed52828003f6a226a75be9e29676b4734ed011e94ff3b38d+,"\
+" +blockNumber+: 543626,"\
+" +name+: +devcon1+,"\
+" +price+: 0,"\
+" +finalized+: 1,"\
+" +timestamp+: 1447577992,"\
+" +date+: +2015-11-15 08:59:52 UTC+"\
+"}"\
+""\
+",{"\
+" +hash+: +0x584bdb5d4e74fe97f5a5222b533fe1322fd0b6ad3eb03f02c3221984e2c0b430+,"\
+" +blockNumber+: 1150000,"\
+" +name+: +homestead+,"\
+" +price+: 0,"\
+" +finalized+: 1,"\
+" +timestamp+: 1457981393,"\
+" +date+: +2016-03-14 18:49:53 UTC+"\
+"}"\
+""\
+",{"\
+" +hash+: +0x24caf7385e9bc711deaae286f8f2d7f79058be48b1ad76540974cf61a3fddeb7+,"\
+" +blockNumber+: 1428756,"\
+" +name+: +daofund+,"\
+" +price+: 0,"\
+" +finalized+: 1,"\
+" +timestamp+: 1461980573,"\
+" +date+: +2016-04-30 01:42:53 UTC+"\
+"}"\
+""\
+",{"\
+" +hash+: +0xcaaa13ce099342d5e1342b04d588d7733093591666af8ef756ce20cf13d16475+,"\
+" +blockNumber+: 1718497,"\
+" +name+: +daohack+,"\
+" +price+: 0,"\
+" +finalized+: 1,"\
+" +timestamp+: 1466134488,"\
+" +date+: +2016-06-17 03:34:48 UTC+"\
+"}"\
+""\
+",{"\
+" +hash+: +0x4985f5ca3d2afbec36529aa96f74de3cc10a2a4a6c44f2157a57d2c6059a11bb+,"\
+" +blockNumber+: 1920000,"\
+" +name+: +daofork+,"\
+" +price+: 0,"\
+" +finalized+: 1,"\
+" +timestamp+: 1469020840,"\
+" +date+: +2016-07-20 13:20:40 UTC+"\
+"}"\
+""\
+",{"\
+" +hash+: +0x2cb2611f99c5a16f20a7670322dca2df783e6b53bf03ab85bc436407b0142ab6+,"\
+" +blockNumber+: 2286910,"\
+" +name+: +devcon2+,"\
+" +price+: 0,"\
+" +finalized+: 1,"\
+" +timestamp+: 1474275599,"\
+" +date+: +2016-09-19 08:59:59 UTC+"\
+"}"\
+""\
+",{"\
+" +hash+: +0x2086799aeebeae135c246c65021c82b4e15a2c451340993aacfd2751886514f0+,"\
+" +blockNumber+: 2463000,"\
+" +name+: +tangerine+,"\
+" +price+: 0,"\
+" +finalized+: 1,"\
+" +timestamp+: 1476796771,"\
+" +date+: +2016-10-18 13:19:31 UTC+"\
+"}"\
+""\
+",{"\
+" +hash+: +0x58eff9265aedf8a54da8121de1324e1e0d9aac99f694d16c6a41afffe3817d73+,"\
+" +blockNumber+: 2675000,"\
+" +name+: +spurious+,"\
+" +price+: 0,"\
+" +finalized+: 1,"\
+" +timestamp+: 1479831344,"\
+" +date+: +2016-11-22 16:15:44 UTC+"\
+"}"\
+""\
+",{"\
+" +hash+: +0x4a8dde305769cf93d16ac1986d624a8c1a2a530405c21d248ed5448f9549f972+,"\
+" +blockNumber+: 2717576,"\
+" +name+: +stateclear+,"\
+" +price+: 0,"\
+" +finalized+: 1,"\
+" +timestamp+: 1480448309,"\
+" +date+: +2016-11-29 19:38:29 UTC+"\
+"}"\
+""\
+",{"\
+" +hash+: +0x0f2b57fe7a50a21591ba541d510187e6cd645087d2fa609f965e351563fd2408+,"\
+" +blockNumber+: 3265360,"\
+" +name+: +eea+,"\
+" +price+: 0,"\
+" +finalized+: 1,"\
+" +timestamp+: 1488272400,"\
+" +date+: +2017-02-28 09:00:00 UTC+"\
+"}"\
+""\
+",{"\
+" +hash+: +0xf925f632b57333c41961cc38f96600d71c7d10370e13779d00cd05e3d99eb1cd+,"\
+" +blockNumber+: 3327417,"\
+" +name+: +ens2+,"\
+" +price+: 0,"\
+" +finalized+: 1,"\
+" +timestamp+: 1489165544,"\
+" +date+: +2017-03-10 17:05:44 UTC+"\
+"}"\
+""\
+",{"\
+" +hash+: +0x40dd9a773b81b00aacdc81598d19a5beef3ab66d391cc1cea6fb083294e7a184+,"\
+" +blockNumber+: 4041179,"\
+" +name+: +parityhack1+,"\
+" +price+: 0,"\
+" +finalized+: 1,"\
+" +timestamp+: 1500417203,"\
+" +date+: +2017-07-18 22:33:23 UTC+"\
+"}"\
+""\
+",{"\
+" +hash+: +0xb1fcff633029ee18ab6482b58ff8b6e95dd7c82a954c852157152a7a6d32785e+,"\
+" +blockNumber+: 4370000,"\
+" +name+: +byzantium+,"\
+" +price+: 0,"\
+" +finalized+: 1,"\
+" +timestamp+: 1508131331,"\
+" +date+: +2017-10-16 05:22:11 UTC+"\
+"}"\
+""\
+",{"\
+" +hash+: +0xa74908153dd5ad12233f8588156e5aac2dfc2762c0ec4a921aa6cdfe06caaf1a+,"\
+" +blockNumber+: 4469339,"\
+" +name+: +devcon3+,"\
+" +price+: 0,"\
+" +finalized+: 1,"\
+" +timestamp+: 1509526798,"\
+" +date+: +2017-11-01 08:59:58 UTC+"\
+"}"\
+""\
+",{"\
+" +hash+: +0x894f3aac1c8a0c9b05d2cbe6c0c9af907ca44a1c96aeda69a0ec064b9a74b790+,"\
+" +blockNumber+: 4501969,"\
+" +name+: +parityhack2+,"\
+" +price+: 0,"\
+" +finalized+: 1,"\
+" +timestamp+: 1509981921,"\
+" +date+: +2017-11-06 15:25:21 UTC+"\
+"}"\
+""\
+",{"\
+" +hash+: +0x79c943cb77f647e0553a101d0c1df2d05645782b3a1ac8d3cabc593eb4fc3fa3+,"\
+" +blockNumber+: 4605167,"\
+" +name+: +kitties+,"\
+" +price+: 0,"\
+" +finalized+: 1,"\
+" +timestamp+: 1511415679,"\
+" +date+: +2017-11-23 05:41:19 UTC+"\
+"}"\
+""\
+",{"\
+" +hash+: +0x69ab90f74c7aca421c4f9bdf70e22534e5a653f995288d5b90c3783fa75722db+,"\
+" +blockNumber+: 6610279,"\
+" +name+: +devcon4+,"\
+" +price+: 0,"\
+" +finalized+: 1,"\
+" +timestamp+: 1540886395,"\
+" +date+: +2018-10-30 07:59:55 UTC+"\
+"}"\
+""\
+",{"\
+" +hash+: +0x0+,"\
+" +blockNumber+: 0,"\
+" +name+: +constantinople+,"\
+" +price+: 0,"\
+" +finalized+: 1,"\
+" +timestamp+: 0,"\
+" +date+: +1970-01-01 00:00:00 UTC+"\
+"}"\
+""\
+"]";
