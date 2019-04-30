@@ -1,6 +1,6 @@
 whenBlock argc: 3 [1:-l] [2:213123213] 
 whenBlock -l 213123213 
-00000001 TIME ~ CLOCK - <ERROR> : Exit(parseArguments:100) 
+00000001 TIME ~ CLOCK - <ERROR> : Exit(parseArguments): 
 
   The --list option must appear alone on the line.
 
