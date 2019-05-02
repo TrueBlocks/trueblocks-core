@@ -205,13 +205,13 @@ PRINT("CURL returned CURLE_OK")
             quickQuitHandler(0);
 
         } else if (contains(result, "error")) {
-#ifndef DEBUG_RPC
-            if (verbose > 1)
-#endif
-            {
-                cerr << result;
-                cerr << postData << "\n";
-            }
+//#ifndef DEBUG_RPC
+//            if (verbose > 1)
+//#endif
+//            {
+//                cerr << result;
+//                cerr << postData << "\n";
+//            }
         }
 
 PRINTL("Received: " + result);
