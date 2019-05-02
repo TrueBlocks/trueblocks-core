@@ -41,6 +41,10 @@ bool COptions::handle_data(void) {
         replaceAll(tool_flags, "--traces", "");
         os << "getTrace " << (api_mode ? substitute(tool_flags, ",", " ") : tool_flags) << " ; ";
 
+    } else if (contains(tool_flags, "--accounts")) {
+        replaceAll(tool_flags, "--accounts", "");
+        os << "getAccounts " << (api_mode ? substitute(tool_flags, ",", " ") : tool_flags) << " ; ";
+
     } else {
         EXIT_FAIL("Invalid option: " + tool_flags);
     }
