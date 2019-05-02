@@ -30,7 +30,10 @@ bool COptions::parseArguments(string_q& command) {
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if (mode.empty() && startsWith(arg, '-')) {
+        if (arg == "--tool_help" || (api_mode && arg == "--help")) {
+            tool_flags += (" --help");
+
+        } else if (mode.empty() && startsWith(arg, '-')) {
 
             if (!builtInCmd(arg))
                 EXIT_USAGE("Invalid option: " + arg);
