@@ -15,6 +15,7 @@
 
 //------------------------------------------------------------
 int main(int argc, const char *argv[]) {
+
     etherlib_init(quickQuitHandler);
 
     // We want to get the latestBlock prior to turning on --prove for example
@@ -122,12 +123,13 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
                 gold.transactions.at(t).timestamp = gold.timestamp;  // .at cannot go past end of vector!
 
         } else {
-            queryBlock(gold, numStr, true);
+            queryBlock(gold, numStr, (opt.api_mode ? false : true));
         }
 
         if (opt.force) {  // turn this on to force a write of the block to the disc
             gold.finalized = isBlockFinal(gold.timestamp, opt.latest.timestamp);
             writeBlockToBinary(gold, fileName);
+            LOG2("writeBlockToBinary(" + uint_2_Str(gold.blockNumber) + ", " + fileName + ": " + bool_2_Str(fileExists(fileName)));
         }
 
         if (!opt.silent) {

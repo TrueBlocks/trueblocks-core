@@ -137,7 +137,7 @@ namespace qblocks {
 
     //-----------------------------------------------------------------------
     bool writeNodeToBinary(const CBaseNode& node, const string_q& fileName) {
-        ENTER("writeNodeToBinary");
+        LOG3("Enter: writeNodeToBinary");
         string_q created;
         if (establishFolder(fileName, created)) {
             if (!created.empty() && !isTestMode())
@@ -146,10 +146,12 @@ namespace qblocks {
             if (nodeCache.Lock(fileName, modeWriteCreate, LOCK_CREATE)) {
                 node.SerializeC(nodeCache);
                 nodeCache.Close();
+                LOG3("Exit: writeNodeToBinary");
                 return true;
             }
         }
-        EXIT_FAIL("Could not open " + fileName);
+        LOG3("Could not open " + fileName);
+        return false;
     }
 
     //-----------------------------------------------------------------------
