@@ -8,7 +8,12 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("~command", "one of [ seed | scrape | daemon | list | export | stats | ls | rm | accounts | blocks | functions | config ]"),
+    COption("~command", "one of [ "
+                            "seed | scrape | daemon | "
+                            "list | export | stats | ls | rm | "
+                            "accounts | functions | config | "
+                            "data | blocks | trans | receipts | logs | traces "
+                            "]"),
     COption("",         "Create a TrueBlocks monitor configuration.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -17,9 +22,10 @@ extern bool visitIndexFiles(const string_q& path, void *data);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
-    ENTER("parseArguments");
     if (!standardOptions(command))
-        EXIT_NOMSG(false);
+        return false;
+
+    ENTER("parseArguments");
 
     Init();
     explode(arguments, command, ' ');
@@ -51,6 +57,11 @@ bool COptions::parseArguments(string_q& command) {
 
             }
         }
+    }
+
+    if (mode == "blocks" || mode == "trans" || mode == "receipts" || mode == "logs" || mode == "traces") {
+        tool_flags += (" --" + mode);
+        mode = "data";
     }
 
     if (mode.empty())
