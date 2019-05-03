@@ -11,6 +11,9 @@ bool COptions::handle_scrape(void) {
     // scrape mode requires a running node
     nodeRequired();
 
+    string_q tmpFile = configPath("cache/tmp/scraper-wait.txt");
+    bool wait = fileExists(tmpFile);
+
     size_t sleep = 14;
     CStringArray commands;
     explode(commands, tool_flags, ' ');
@@ -20,6 +23,10 @@ bool COptions::handle_scrape(void) {
             sleep = str_2_Uint(commands[i+1]);
             commands[i] = commands[i+1] = "";
             i++;
+        } else if (commands[i] == "--wait") {
+            wait = true;
+            commands[i] = "";
+            stringToAsciiFile(tmpFile, "wait");
         }
     }
 
@@ -33,17 +40,24 @@ bool COptions::handle_scrape(void) {
     size_t nRuns = 0;
     while (nRuns++ < maxRuns && !shouldQuit()) {
 
-        ostringstream os;
-        os << "blockScrape --verbose " << tool_flags;
-        if (isTestMode())
-            cout << os.str() << endl;
-        else {
-            if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
-        }
+        if (wait) {
+            cerr << "Your scraper is not enabled. Sleeping for one minute...";
+            usleep(((unsigned int)60) * 1000000);
+            wait = fileExists(tmpFile);
 
-        cerr << "Sleeping for " << sleep << " seconds" << endl;
-        if (!isTestMode())
-            usleep((unsigned int)sleep * 1000000);
+        } else {
+            ostringstream os;
+            os << "blockScrape --verbose " << tool_flags;
+            if (isTestMode())
+                cout << os.str() << endl;
+            else {
+                if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+            }
+
+            cerr << "Sleeping for " << sleep << " seconds" << endl;
+            if (!isTestMode())
+                usleep((unsigned int)sleep * 1000000);
+        }
     }
     return true;
 }
