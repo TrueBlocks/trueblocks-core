@@ -1,4 +1,3 @@
-#pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
@@ -11,17 +10,13 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "conversions.h"
+#include "basetypes.h"
+#include "version.h"
 
 namespace qblocks {
 
-    //--------------------------------------------------------------------------------
-    extern string_q getVersionStr(bool incProg=true, bool incGit=true);
-    extern uint32_t getVersionNum(uint16_t maj, uint16_t min, uint16_t build);
-    extern uint32_t getVersionNum(void);
-
-//    extern string_q GIT_COMMIT_BRANCH;
-    extern string_q GIT_COMMIT_HASH;
-    extern timestamp_t GIT_COMMIT_TS;
+//  string_q GIT_COMMIT_BRANCH = "develop";
+    string_q GIT_COMMIT_HASH = "de56cb7d";
+    timestamp_t GIT_COMMIT_TS = 1557066775;
 
 }  // namespace qblocks
