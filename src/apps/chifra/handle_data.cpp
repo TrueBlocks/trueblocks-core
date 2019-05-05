@@ -9,8 +9,8 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_data(void) {
 
-    ENTER("handle_" + mode);
-    LOG1("tool_flags: " + tool_flags);
+    ENTER4("handle_" + mode);
+    LOG4("tool_flags: " + tool_flags);
     nodeNotRequired();
 
     if (!contains(tool_flags, "--edit")) // weird cleanup of --edit/edit confusion
@@ -49,8 +49,8 @@ bool COptions::handle_data(void) {
         EXIT_FAIL("Invalid option: " + tool_flags);
     }
 
-    LOG1("command: " + os.str());
+    LOG4("command: " + os.str());
     if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
 
-    EXIT_NOMSG(true);
+    EXIT_NOMSG4(true);
 }

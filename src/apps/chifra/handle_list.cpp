@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_list(void) {
 
-    ENTER("handle_" + mode);
+    ENTER4("handle_" + mode);
     nodeNotRequired();
 
     if (addrs.empty())
@@ -27,5 +27,5 @@ bool COptions::handle_list(void) {
             if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
     }
 
-    EXIT_NOMSG(true);
+    EXIT_NOMSG4(true);
 }
