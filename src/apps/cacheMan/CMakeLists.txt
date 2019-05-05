@@ -57,10 +57,13 @@ run_test("cacheMan_noFile"          "--stats")
 
 # depends on fullblockIndex
 run_special_test("cacheMan_list"           "-l"  " 0x9876543210987654321098765432109876543210.acct.bin")
-#run_special_test("cacheMan_check"          "-c"  " 0x9876543210987654321098765432109876543210.acct.bin")
+run_special_test("cacheMan_check"          "-c"  " 0x9876543210987654321098765432109876543210.acct.bin")
 run_special_test("cacheMan_listTip"        "-l"  " 0x5555533333555553333355555333335555533333.acct.bin")
-#run_special_test("cacheMan_checkTip"       "-c"  " 0x5555533333555553333355555333335555533333.acct.bin")
-run_special_test("cacheMan_fixTip"         "-f"  " 0x5555533333555553333355555333335555533333.acct.bin")
+run_special_test("cacheMan_checkTip"       "-c"  " 0x5555533333555553333355555333335555533333.acct.bin")
+run_special_test("cacheMan_fixTip"         "-x"  " 0x5555533333555553333355555333335555533333.acct.bin")
+run_special_test("cacheMan_txtTip"         "-f"  " txt" " 0x5555533333555553333355555333335555533333.acct.bin")
+run_special_test("cacheMan_csvTip"         "-f"  " csv" " 0x5555533333555553333355555333335555533333.acct.bin")
+run_special_test("cacheMan_jsonTip"        "-f"  " json" " 0x5555533333555553333355555333335555533333.acct.bin")
 
 run_special_test("cacheMan_merge"          "-md" " 0x5555533333555553333355555333335555533333.acct.bin" " 0x9876543210987654321098765432109876543210.acct.bin")
 run_special_test("cacheMan_merge_list"     "-l"  " merged.acct.bin")
