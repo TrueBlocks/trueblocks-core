@@ -128,17 +128,17 @@ namespace qblocks {
     #define cleanPath(path_) (isTestMode() ? substitute(path_, getCachePath(""), "$CACHE_PATH/") : path_)
 
     //-------------------------------------------------------------------------
-    #define blockFolder_v2           (getCachePath("blocks/"))
+    #define blockFolder           (getCachePath("blocks/"))
     #define bloomFolder_v2           (getCachePath("blooms/"))
     #define monitorsFolder_v2        (getCachePath("monitors/"))
 
     #define indexFolder_v2           (getCachePath("addr_index/"))
-    #define indexFolder_finalized_v2 (configPath  ("cache/addr_index/finalized/"))
-    #define indexFolder_blooms_v2    (configPath  ("cache/addr_index/blooms/"))
-    #define indexFolder_staging_v2   (getCachePath("addr_index/staging/"))
-    #define indexFolder_pending_v2   (getCachePath("addr_index/pending/"))
-    #define indexFolder_zips_v2      (getCachePath("addr_index/zips/"))
-//    #define indexFolder_sorted_v2    (getCachePath("addr_index/sorted/"))
+    #define indexFolder_finalized (configPath  ("cache/addr_index/finalized/"))
+    #define indexFolder_blooms    (configPath  ("cache/addr_index/blooms/"))
+    #define indexFolder_staging   (getCachePath("addr_index/staging/"))
+    #define indexFolder_pending   (getCachePath("addr_index/pending/"))
+    #define indexFolder_zips      (getCachePath("addr_index/zips/"))
+//    #define indexFolder_sorted    (getCachePath("addr_index/sorted/"))
 
     //-------------------------------------------------------------------------
     extern biguint_t weiPerEther(void);

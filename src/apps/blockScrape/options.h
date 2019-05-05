@@ -26,4 +26,4 @@ public:
 
 //-------------------------------------------------------------------------
 extern bool handle_scrape(COptions &options);
-#define indexFolder_sorted_v2    (getCachePath("addr_index/sorted/"))
+#define indexFolder_sorted    (getCachePath("addr_index/sorted/"))
