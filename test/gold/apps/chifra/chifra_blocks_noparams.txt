@@ -1,29 +1,33 @@
-whenBlock argc: 1 
-whenBlock 
+getBlock argc: 1 
+getBlock 
 
   Not enough arguments presented.
 
-  Usage:    whenBlock [-d|-l|-f|-v|-h] < block | date > [ block... | date... ]  
-  Purpose:  Finds the nearest block prior to a date, or the nearest date prior to a block.
-            Alternatively, search for one of special 'named' blocks.
+  Usage:    getBlock [-r|-n|-c|-a|-u|-x|-m|-l|-v|-h] <block> [block...]  
+  Purpose:  Returns block(s) from local cache or directly from a running node.
              
   Where:  
-	block                 one or more block numbers (or a 'special' block), or...
-	date                  one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]
-	-d  (--data)          display the result as data (tab delimited; useful for scripting)
-	-l  (--list)          list names and block numbers for special blocks
-	-f  (--fmt val)       export format (one of [json|txt|csv])
+	block_list            a space-separated list of one or more blocks to retrieve (required)
+	-r  (--raw)           pull the block data from the running Ethereum node (no cache)
+	-n  (--hash_only)     display only transaction hashes, default is to display full transaction detail
+	-c  (--check)         compare results between qblocks and Ethereum node, report differences, if any
+	-a  (--addrs)         display all addresses included in the block
+	-u  (--uniq)          display only uniq addresses found per block
+	-x  (--uniqTx)        display only uniq addresses found per transaction
+	-m  (--number)        display address counts (alterntively --addrCnt, --uniqTxCnt, or --uniqCnt)
+	-l  (--filter val)    useful only for --addrs or --uniq, only display this address in results
+
+#### Hidden options (shown during testing only)
+	-l  (--latest)        display the latest blocks at both the node and the cache
+	-o  (--force)         force a re-write of the block to the cache
+	-q  (--quiet)         do not print results to screen, used for speed testing and data checking
+	-s  (--source val)    either :c(a)che or :(r)aw, source for data retrival. (shortcuts -c = qblocks, -r = node)
+	-f  (--fields val)    either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default)
+	-n  (--normalize)     normalize (remove un-common fields and sort) for comparison with other results (testing)
+#### Hidden options (shown during testing only)
+
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
-
-  Notes:
-	- Use the following names to represent `special` blocks:
-	  - first (0), firstTrans (46147), iceage (200000), devcon1 (543626)
-	  - homestead (1150000), daofund (1428756), daohack (1718497), daofork (1920000)
-	  - devcon2 (2286910), tangerine (2463000), spurious (2675000), stateclear (2717576)
-	  - eea (3265360), ens2 (3327417), parityhack1 (4041179), byzantium (4370000)
-	  - devcon3 (4469339), parityhack2 (4501969), kitties (4605167), devcon4 (6610279)
-	  - constantinople (7280000), latest ()
 
   Powered by QBlocks
 chifra argc: 2 [1:blocks] 
