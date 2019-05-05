@@ -258,8 +258,8 @@ void CScraper::finalizeIndexChunk(void) {
     string_q asciiFile = indexFolder_sorted_v2 + padNum9(first)+"-"+padNum9(last) + ".txt";
     string_q binFile = indexFolder_finalized_v2 + padNum9(first)+"-"+padNum9(last) + ".bin";
 
-    CStringArray apps;
-    apps.reserve(options->maxIndexRows + 100);
+    CStringArray appearances;
+    appearances.reserve(options->maxIndexRows + 100);
 
     cerr << "Processing index.";
     cerr.flush();
@@ -271,17 +271,17 @@ void CScraper::finalizeIndexChunk(void) {
         CStringArray lns;
         explode(lns, stagingList, '\n');
         for (auto ln : lns) {
-            apps.push_back(ln);
-            if (!(apps.size() % (options->maxIndexRows / 10))) {
+            appearances.push_back(ln);
+            if (!(appearances.size() % (options->maxIndexRows / 10))) {
                 cerr << "."; cerr.flush();
             }
         }
     }
-    sort(apps.begin(), apps.end());
+    sort(appearances.begin(), appearances.end());
 
     size_t cnt = 0;
     ostringstream os;
-    for (auto app : apps) {
+    for (auto app : appearances) {
         os << app << "\n";
         if (!(++cnt % (options->maxIndexRows / 10))) {
             cerr << "."; cerr.flush();
@@ -289,7 +289,7 @@ void CScraper::finalizeIndexChunk(void) {
     }
     // TODO(jayrush): should this be stringToAsciiFile not append?
     appendToAsciiFile(asciiFile, os.str());
-    writeIndexAsBinary(binFile, apps); // also writes the bloom file
+    writeIndexAsBinary(binFile, appearances); // also writes the bloom file
 
     string_q countFile = indexFolder_v2 + "counts.txt";
     ::remove(countFile.c_str());
