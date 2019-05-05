@@ -12,7 +12,7 @@ bool handle_freshen(COptions& options) {
     //
     //  Determine most recently finalized block (lastFinal)
     //      'startBlock' = lastFinal + 1
-    //      'endBlock' is front of chain
+    //      'endBlock' is front of chain at start of run or startBlock + maxBlocks
     //
     //  For each block between startBlock and endBlock
     //      Assume we need to scrape the block
@@ -95,6 +95,8 @@ bool handle_freshen(COptions& options) {
         } else {
             // We want to avoid rescraping the block if we can, so we store it here. We may delete it when the
             // block gets finalized if we're not supposed to be writing blocks
+
+            // TODO(tjayrush): Should I be writing this block to binary even if it exists (especially if it was a rescan)
             scraper.addToPendingList();
             if (!fileExists(fn)) {
                 lockSection(true);
