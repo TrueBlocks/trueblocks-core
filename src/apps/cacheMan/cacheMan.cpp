@@ -41,7 +41,10 @@ int main(int argc, const char *argv[]) {
                 if (txCache.Lock(watch->name, modeReadOnly, LOCK_NOWAIT)) {
 
                     if (!options.asData)
-                        cout << toProper(mode)+"ing cache: " << watch->name << "\n";
+                        cerr << toProper(mode)+"ing cache: " << watch->name << "\n";
+                    if (options.fmt == JSON)
+                        cout << "[";
+
                     while (!txCache.Eof()) {
 
                         CAppearance_base item;
@@ -110,7 +113,18 @@ int main(int argc, const char *argv[]) {
 
                             } else if (mode == "list") {
                                 if (!(options.stats.nRecords % options.skip)) {
-                                    cout << item.blk << "\t" << item.txid << endl; // Format(fmtStr);
+                                    static bool first = true;
+                                    if (options.fmt == JSON) {
+                                        if (!first)
+                                            cout << ",";
+                                        cout << "{ ";
+                                        cout << "\"bn\": " << item.blk << ",";
+                                        cout << "\"tx_id\": " << item.txid;
+                                        cout << "}\n";
+                                        first = false;
+                                    } else {
+                                        cout << item.blk << "\t" << item.txid << endl; // Format(fmtStr);
+                                    }
                                 }
 
                             } else {
@@ -118,6 +132,10 @@ int main(int argc, const char *argv[]) {
                             }
                         }
                     }
+
+                    if (options.fmt == JSON)
+                        cout << "]";
+
                     txCache.Release();
 
                 } else {
