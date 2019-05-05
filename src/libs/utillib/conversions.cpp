@@ -267,9 +267,9 @@ namespace qblocks {
         if (sVal > (maxInt / 2)) // If it's bigger than half, we have to wrap
             sVal = sVal - maxInt - 1; // wrap if larger than half of max int256
 
-        LOG5("str:  " + s);
-        LOG5("bits: " + uint_2_Str(bits));
-        LOG5("sVal: " + bni_2_Str(sVal));
+//        LOG5("str:  " + s);
+//        LOG5("bits: " + uint_2_Str(bits));
+//        LOG5("sVal: " + bni_2_Str(sVal));
 
         return sVal;
     }
@@ -306,9 +306,9 @@ namespace qblocks {
         if (ret > maxInt) // If it's bigger than the max size, we have to wrap
             ret = (ret % maxInt);
 
-        LOG5("str:  " + str);
-        LOG5("bits: " + uint_2_Str(bits));
-        LOG5("ret: " + bnu_2_Str(ret));
+//        LOG5("str:  " + str);
+//        LOG5("bits: " + uint_2_Str(bits));
+//        LOG5("ret: " + bnu_2_Str(ret));
 
         return ret;
     }
