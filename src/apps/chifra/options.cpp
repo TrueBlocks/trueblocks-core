@@ -25,7 +25,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-    ENTER("parseArguments");
+    ENTER4("parseArguments");
 
     Init();
     explode(arguments, command, ' ');
@@ -62,7 +62,11 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (mode == "blocks" || mode == "trans" || mode == "receipts" || mode == "logs" || mode == "traces") {
+    if (mode == "blocks" ||
+    	mode == "trans" ||
+    	mode == "receipts" ||
+    	mode == "logs" ||
+    	mode == "traces") {
         tool_flags += (" --" + mode);
         mode = "data";
     }
@@ -80,7 +84,7 @@ bool COptions::parseArguments(string_q& command) {
     tool_flags = trim(tool_flags, ' ');
     freshen_flags = trim(freshen_flags, ' ');
 
-    EXIT_NOMSG(true);
+    EXIT_NOMSG4(true);
 }
 
 //---------------------------------------------------------------------------------------------------

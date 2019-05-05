@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------------------------
 bool freshen_internal(FreshenMode mode, const CAddressArray& addrs, const string_q& tool_flags, const string_q& freshen_flags) {
 
-    ENTER("freshen_internal");
+    ENTER4("freshen_internal");
     nodeNotRequired();
 
     ostringstream base;
@@ -27,7 +27,7 @@ bool freshen_internal(FreshenMode mode, const CAddressArray& addrs, const string
     // Process them until we're done
     while (!groupsOfFive.empty()) {
         string_q cmd = substitute(base.str(), "[ADDRS]", nextTokenClear(groupsOfFive, '|'));
-        LOG3("Calling " + cmd);
+        LOG4("Calling " + cmd);
         if (isTestMode())
             cout << substitute(cmd, getCachePath(""), "$BLOCK_CACHE/") << endl;
 
@@ -37,5 +37,5 @@ bool freshen_internal(FreshenMode mode, const CAddressArray& addrs, const string
                 usleep(500000); // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
         }
     }
-    EXIT_NOMSG(true);
+    EXIT_NOMSG4(true);
 }
