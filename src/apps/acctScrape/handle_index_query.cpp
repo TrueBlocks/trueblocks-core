@@ -62,7 +62,7 @@ bool newReadBloomFromBinary(CNewBloomArray& blooms, const string_q& fileName) {
 //---------------------------------------------------------------
 bool COptions::visitBinaryFile(const string_q& path, void *data) {
 
-    ENTER("visitBinaryFile");
+    ENTER4("visitBinaryFile");
 #define BREAK_PT 5
     static uint32_t n = 0;
 
@@ -87,7 +87,7 @@ bool COptions::visitBinaryFile(const string_q& path, void *data) {
             // none of them hit, so write last block for each of them
             for (size_t a = 0 ; a < monitors.size() && !hit ; a++)
                 monitors[a].writeLastBlock(lastBlockInFile + 1);
-            EXIT_NOMSG(true);
+            EXIT_NOMSG4(true);
         }
     }
 
@@ -182,7 +182,7 @@ bool COptions::visitBinaryFile(const string_q& path, void *data) {
         rawData = NULL;
     }
 
-    EXIT_NOMSG(!shouldQuit());
+    EXIT_NOMSG4(!shouldQuit());
 }
 
 //---------------------------------------------------------------
