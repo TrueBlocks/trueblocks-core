@@ -12,7 +12,7 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_rm(void) {
 
-    ENTER("handle_" + mode);
+    ENTER4("handle_" + mode);
     nodeNotRequired();
 
     if (addrs.empty())
@@ -43,5 +43,5 @@ bool COptions::handle_rm(void) {
         }
     }
 
-    EXIT_NOMSG(true);
+    EXIT_NOMSG4(true);
 }

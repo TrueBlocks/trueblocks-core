@@ -8,7 +8,12 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("~command", "one of [ seed | scrape | daemon | list | export | stats | ls | rm | accounts | blocks | functions | config ]"),
+    COption("~command", "one of [ "
+                            "seed | scrape | daemon | "
+                            "list | export | stats | ls | rm | "
+                            "accounts | functions | config | "
+                            "data | blocks | trans | receipts | logs | traces "
+                            "]"),
     COption("",         "Create a TrueBlocks monitor configuration.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -17,14 +22,18 @@ extern bool visitIndexFiles(const string_q& path, void *data);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
-    ENTER("parseArguments");
     if (!standardOptions(command))
-        EXIT_NOMSG(false);
+        return false;
+
+    ENTER4("parseArguments");
 
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if (mode.empty() && startsWith(arg, '-')) {
+        if (arg == "--tool_help" || (api_mode && arg == "--help")) {
+            tool_flags += (" --help");
+
+        } else if (mode.empty() && startsWith(arg, '-')) {
 
             if (!builtInCmd(arg))
                 EXIT_USAGE("Invalid option: " + arg);
@@ -53,6 +62,15 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    if (mode == "blocks" ||
+    	mode == "trans" ||
+    	mode == "receipts" ||
+    	mode == "logs" ||
+    	mode == "traces") {
+        tool_flags += (" --" + mode);
+        mode = "data";
+    }
+
     if (mode.empty())
         EXIT_USAGE("Please specify " + params[0].description + ".");
     establishFolder(getMonitorPath("", FM_PRODUCTION));
@@ -66,7 +84,7 @@ bool COptions::parseArguments(string_q& command) {
     tool_flags = trim(tool_flags, ' ');
     freshen_flags = trim(freshen_flags, ' ');
 
-    EXIT_NOMSG(true);
+    EXIT_NOMSG4(true);
 }
 
 //---------------------------------------------------------------------------------------------------

@@ -18,6 +18,7 @@ public:
     bool writeTraces;
     bool skipDdos;
     size_t maxTraces;
+    export_t fmt;
 
     COptions(void);
     ~COptions(void);

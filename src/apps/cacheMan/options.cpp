@@ -11,7 +11,7 @@ static const COption params[] = {
     COption("-check",            "check for duplicates and other problems in the cache"),
     COption("-data",             "in 'list' mode, render results as data (i.e export mode)"),
     COption("-sort",             "sort the list of transactions and re-write (precludes other modes, other than --dedup)"),
-    COption("-fix",              "remove duplicates from the cache (if any)"),
+    COption("-fi(x)",            "remove duplicates from the cache (if any)"),
     COption("-list",             "list the contents of the cache (the default if no other option)"),
     COption("-cacheB(a)ls",      "cache per block account balances for each account"),
     COption("-balances",         "export account balances for each account"),
@@ -20,6 +20,7 @@ static const COption params[] = {
     COption("-truncate:<num>",   "truncate the cache at block :n (keeps block 'n' and before, implies --fix)"),
     COption("-maxBloc(k):<num>", "for testing, max block to visit"),
     COption("-merge",            "merge two or more caches into a single cache"),
+    COption("-fmt:<fmt>",         "export format (one of [json|txt|csv])"),
     COption("@s(k)ip",           "skip value for testing"),
     COption("",                  "Show the contents of an account cache and/or fix it by removing duplicate records.\n"),
 };
@@ -39,7 +40,15 @@ bool COptions::parseArguments(string_q& command) {
         if (arg == "-c" || arg == "--check") {
             mode = "check|" + mode;  // always do 'checks' first
 
-        } else if (arg == "-f" || arg == "--fix") {
+        } else if (startsWith(arg, "-f:") || startsWith(arg, "--fmt:")) {
+
+            arg = substitute(substitute(arg, "-f:", ""), "--fmt:", "");
+            if ( arg == "txt" ) fmt = TXT;
+            else if ( arg == "csv" ) fmt = CSV;
+            else if ( arg == "json") fmt = JSON;
+            else return usage("Export format must be one of [ json | txt | csv ]. Quitting...");
+
+        } else if (arg == "-x" || arg == "--fix") {
             if (!contains(mode, "fix"))
                 mode += "fix|";
             replace(mode, "list|fix", "fix|list");  // always do 'fixes' first
@@ -186,6 +195,7 @@ void COptions::Init(void) {
     skip = 1;
     isRemove = false;
     isImport = false;
+    fmt = JSON;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -196,3 +206,5 @@ COptions::COptions(void) {
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
 }
+
+

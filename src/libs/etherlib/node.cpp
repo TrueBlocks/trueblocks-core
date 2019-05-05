@@ -137,7 +137,7 @@ namespace qblocks {
 
     //-----------------------------------------------------------------------
     bool writeNodeToBinary(const CBaseNode& node, const string_q& fileName) {
-        ENTER("writeNodeToBinary");
+        LOG3("Enter: writeNodeToBinary");
         string_q created;
         if (establishFolder(fileName, created)) {
             if (!created.empty() && !isTestMode())
@@ -146,10 +146,12 @@ namespace qblocks {
             if (nodeCache.Lock(fileName, modeWriteCreate, LOCK_CREATE)) {
                 node.SerializeC(nodeCache);
                 nodeCache.Close();
+                LOG3("Exit: writeNodeToBinary");
                 return true;
             }
         }
-        EXIT_FAIL("Could not open " + fileName);
+        LOG3("Exit: Could not open " + fileName);
+        return false;
     }
 
     //-----------------------------------------------------------------------
@@ -979,29 +981,39 @@ namespace qblocks {
 
     //-----------------------------------------------------------------------
     void manageFields(const string_q& listIn, bool show) {
+        LOG5("Entry: manageFields");
         string_q list = substitute(listIn, " ", "");
         while (!list.empty()) {
             string_q fields = nextTokenClear(list, '|');
             string_q cl = nextTokenClear(fields, ':');
+            LOG5("class: " + cl + " fields: " + fields);
             CBaseNode *item = createObjectOfType(cl);
             while (item && !fields.empty()) {
                 string_q fieldName = nextTokenClear(fields, ',');
                 if (fieldName == "all") {
                     if (show) {
+                        LOG5("show " + fieldName);
                         item->getRuntimeClass()->showAllFields();
                     } else {
+                        LOG5("hide " + fieldName);
                         item->getRuntimeClass()->hideAllFields();
                     }
                 } else if (fieldName == "none") {
                     if (show) {
+                        LOG5("show " + fieldName);
                         item->getRuntimeClass()->hideAllFields();
                     } else {
+                        LOG5("hide " + fieldName);
                         item->getRuntimeClass()->showAllFields();
                     }
                 } else {
                     CFieldData *f = item->getRuntimeClass()->findField(fieldName);
-                    if (f)
+                    if (f) {
+                        LOG5((show ? "show " : "hide ") + fieldName);
                         f->setHidden(!show);
+                    } else {
+                        LOG5("field not found: " + fieldName);
+                    }
                 }
             }
             delete item;

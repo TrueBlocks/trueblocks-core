@@ -461,11 +461,11 @@ bool CAccountWatch::openCacheFile1(void) {
 
 //-------------------------------------------------------------------------
 void CAccountWatch::writeLastBlock(blknum_t bn) {
-    if (!isTestMode())
-        stringToAsciiFile(getMonitorLast(address, fm_mode), uint_2_Str(bn) + "\n");
-    else
-        if (address != "./merged.bin")
-            cerr << "Would have written " << getMonitorLast(address, fm_mode) << ": " << bn << endl;
+    if (isTestMode()) {
+        cerr << "Would have written to " << address << ".last.txt with " << bn << endl;
+        return;
+    }
+    stringToAsciiFile(getMonitorLast(address, fm_mode), uint_2_Str(bn) + "\n");
 }
 
 //-------------------------------------------------------------------------

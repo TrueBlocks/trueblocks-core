@@ -241,7 +241,7 @@ bool CScraper::addToStagingList(void) {
     bool isMark = !(block.blockNumber % MARKER);
     if ((overLimit && isMark)) {
         finalizeIndexChunk();
-//        return false;
+//        return false; // this will quit the next time the index is compressed - if we're debugging or something - normally we want to continue
     }
 
     return true;
@@ -287,6 +287,7 @@ void CScraper::finalizeIndexChunk(void) {
             cerr << "."; cerr.flush();
         }
     }
+    // TODO(jayrush): should this be stringToAsciiFile not append?
     appendToAsciiFile(asciiFile, os.str());
     writeIndexAsBinary(binFile, apps); // also writes the bloom file
 

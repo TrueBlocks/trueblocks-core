@@ -12,7 +12,7 @@ bool handle_freshen(COptions& options) {
     //
     //  Determine most recently finalized block (lastFinal)
     //      'startBlock' = lastFinal + 1
-    //      'endBlock' is front of chain
+    //      'endBlock' is front of chain at start of run or startBlock + maxBlocks
     //
     //  For each block between startBlock and endBlock
     //      Assume we need to scrape the block
@@ -27,19 +27,20 @@ bool handle_freshen(COptions& options) {
     //      If we need to scan the block
     //          Scan the block
     //
-    //      If the block is final (i.e. four minutes old)
+    //      If the block is final (i.e. five minutes old)
     //          If we do not have a full block, scrape the block here
     //          If the block has no transations
     //              Remove it from the cache
     //          Else if we are not storing blocks permanantly (default is to not store blocks)
     //              Remove the block from cache
-    //          Else if the is not in the cache, but we're writing blocks
+    //          Else if the block is not in the cache, but we're writing blocks
     //              Write the block to the cache
     //          Write the finalized block to the index
     //          If the index is 'big enough'
     //              Sort the index
     //              Compress the index
-    //              Store the index in 'sorted'
+    //              Create the bloom
+    //              (Optionally) store the index and the bloom in IPFS
     //      Else
     //          Write the non-final block to non-final index
     //          Write the block to the binary cache (it may be removed later)
@@ -49,9 +50,9 @@ bool handle_freshen(COptions& options) {
 
         CScraper scraper(&options, num);
         scraper.status = "scan";
+        bool needToScrape = true;
 
         string_q fn = getBinaryCacheFilename(CT_BLOCKS, num);
-        bool needToScrape = true;
         if (fileExists(fn)) {
             readBlockFromBinary(scraper.block, fn);
             if (scraper.block.hash != getRawBlockHash(num)) {
@@ -94,6 +95,8 @@ bool handle_freshen(COptions& options) {
         } else {
             // We want to avoid rescraping the block if we can, so we store it here. We may delete it when the
             // block gets finalized if we're not supposed to be writing blocks
+
+            // TODO(tjayrush): Should I be writing this block to binary even if it exists (especially if it was a rescan)
             scraper.addToPendingList();
             if (!fileExists(fn)) {
                 lockSection(true);

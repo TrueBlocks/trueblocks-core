@@ -64,14 +64,13 @@ namespace qblocks {
     class logger {
 
         //----------------------------------------------------------------
-        unsigned log_line_number;
-
-        //----------------------------------------------------------------
         string_q get_logline_header() {
+
+            static unsigned log_line_number = 0;
 
             stringstream header;
             header.fill('0');header.width(7);
-            header << bBlack << log_line_number++ << " ";
+            header << bBlack << ++log_line_number << " ";
             if (isTestMode()) {
                 header << "TIME ~ CLOCK - ";
             } else {
@@ -118,7 +117,6 @@ namespace qblocks {
     public:
         //----------------------------------------------------------------
         logger( const string_q& name ) {
-            log_line_number = 1;
             policy = new log_policy;
             if( !policy ) {
                 throw std::runtime_error("LOGGER: Unable to create the logger instance");
@@ -193,3 +191,7 @@ namespace qblocks {
 #define EXIT_FAIL(a)   { LOG_WARN("Exit(", l_funcName, "): "); cerr << a; return false; }
 #define EXIT_MSG(a,b)  { LOG2("Exit(", l_funcName, "): "); cerr << a; return (b); }
 #define EXIT_NOMSG(b)  { LOG2("Exit(", l_funcName, "): "); return (b); }
+
+#define ENTER4(a)       { LOG4(string_q("Enter:") + a); } string_q l_funcName = (a);
+#define EXIT_MSG4(a,b)  { LOG4("Exit(", l_funcName, "): "); cerr << a; return (b); }
+#define EXIT_NOMSG4(b)  { LOG4("Exit(", l_funcName, "): "); return (b); }
