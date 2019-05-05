@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_config(void) {
 
-    ENTER("handle_" + mode);
+    ENTER4("handle_" + mode);
     nodeNotRequired();
 
     if (addrs.empty())
@@ -24,12 +24,13 @@ bool COptions::handle_config(void) {
         if (!fileExists(path)) {
             // If it does not exist and the user wants to edit it, create it, otherwise error out
             if (cmd == "show")
-                EXIT_USAGE("File '" + cleanPath(path) + "' not found.");
+                EXIT_USAGE("File '" + cleanPath(path) + "' not found, cannot show it. Did you mean 'edit'?");
             createConfigFile(addr);
         }
         ASSERT(fileExists(path));
 
         if (cmd == "edit") {
+
             editFile(path);
 
         } else {
@@ -42,7 +43,7 @@ bool COptions::handle_config(void) {
                 if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
         }
     }
-    EXIT_NOMSG(true);
+    EXIT_NOMSG4(true);
 }
 
 //--------------------------------------------------------------------------------
@@ -59,7 +60,7 @@ const char* STR_WATCH =
 //----------------------------------------------------------------
 bool COptions::createConfigFile(const address_t& addr) {
 
-    ENTER("createConfigFile:" + addr);
+    ENTER4("createConfigFile:" + addr);
 
     string_q fileName = getMonitorPath(addr + ".toml");
     LOG_INFO("Creating configuration file: " + cleanPath(fileName));
@@ -88,5 +89,5 @@ bool COptions::createConfigFile(const address_t& addr) {
         if (verbose > 1)
             cout << config << endl;
     }
-    EXIT_NOMSG(true);
+    EXIT_NOMSG4(true);
 }

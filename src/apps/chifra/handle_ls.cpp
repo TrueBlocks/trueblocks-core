@@ -12,7 +12,7 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_ls(void) {
 
-    ENTER("handle_" + mode);
+    ENTER4("handle_" + mode);
     nodeNotRequired();
 
     ostringstream os;
@@ -61,7 +61,7 @@ bool COptions::handle_ls(void) {
             accounts.push_back(item);
         } else {
             LOG_WARN("No monitors found.");
-            EXIT_NOMSG(true);
+            EXIT_NOMSG4(true);
         }
     }
     sort(accounts.begin(), accounts.end());
@@ -84,7 +84,7 @@ bool COptions::handle_ls(void) {
         if (accounts.size() > 1)
             oss << "]";
         cout << substitute(substitute(oss.str(), "\n", ""), "\t", "") << endl;
-        EXIT_NOMSG(true);
+        EXIT_NOMSG4(true);
     }
 
     if (stats) {
@@ -141,5 +141,5 @@ bool COptions::handle_ls(void) {
     else
         cout << os.str();
 
-    EXIT_NOMSG(true);
+    EXIT_NOMSG4(true);
 }

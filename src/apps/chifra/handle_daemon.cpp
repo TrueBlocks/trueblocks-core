@@ -10,7 +10,7 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_daemon(void) {
 
-    ENTER("handle_" + mode);
+    ENTER4("handle_" + mode);
     nodeNotRequired();
 
     size_t sleep = (isTestMode() ? 1 : 14);
@@ -71,5 +71,5 @@ bool COptions::handle_daemon(void) {
         if (!isTestMode())
             usleep((unsigned int)sleep * 1000000);
     }
-    EXIT_NOMSG(true);
+    EXIT_NOMSG4(true);
 }
