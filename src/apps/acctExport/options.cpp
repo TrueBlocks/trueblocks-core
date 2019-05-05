@@ -24,7 +24,6 @@ bool COptions::parseArguments(string_q& command) {
 
     CAccountWatch::registerClass();
 
-    export_t fmt = JSON;
     if (!standardOptions(command))
         return false;
 
@@ -105,15 +104,22 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    SHOW_FIELD(CTransaction, "traces");
+
     if (monitors.size() == 0)
         return usage("You must provide at least one Ethereum address. Quitting...");
 
+#define SEP5(a) LOG5(cGreen + string_q(50,'-') + (a) + string_q(50,'-'))
     // show certain fields and hide others
+    SEP5("default field hiding");
     manageFields(defHide, false);
+    SEP5("default field showing");
     manageFields(defShow, true);
 
-    CToml toml(monitors[0].address + ".toml");
+    CToml toml(getMonitorPath(monitors[0].address + ".toml"));
+    SEP5("field hiding");
     manageFields(toml.getConfigStr("fields", "hide", ""), false);
+    SEP5("field showing");
     manageFields(toml.getConfigStr("fields", "show", ""), true );
 
     // Try to articulate the watched addresses
@@ -141,7 +147,10 @@ bool COptions::parseArguments(string_q& command) {
         string_q format = toml.getConfigStr("formats", "trans_fmt", defFmt);
         if (format.empty())
             return usage("For non-json export a 'trans_fmt' string is required. Check your config file. Quitting...");
-        expContext().fmtMap["trans_fmt"] = cleanFmt(format, fmt);
+        expContext().fmtMap["transaction_fmt"] = cleanFmt(format, fmt);
+        if (!contains(toLower(format), "traces"))
+            HIDE_FIELD(CTransaction, "traces");
+
         format = toml.getConfigStr("formats", "trace_fmt", "{TRACES}");
         expContext().fmtMap["trace_fmt"] = cleanFmt(format, fmt);
         format = toml.getConfigStr("formats", "logentry_fmt", "{LOGS}");
@@ -164,6 +173,7 @@ void COptions::Init(void) {
     writeTraces = false;
     skipDdos = true;
     maxTraces = 250;
+    fmt = JSON;
 
     minArgs = 0;
 }
