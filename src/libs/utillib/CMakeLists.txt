@@ -5,15 +5,33 @@ cmake_minimum_required (VERSION 2.6)
 project (util)
 
 # produce the version-git.cpp file with current git branch, hash and timestamp
-set (GIT_VERSION_FILE ${CMAKE_CURRENT_SOURCE_DIR}/version_git.cpp)
-set (VERSION_BUILD_SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/build_scripts/touch-version-file.sh)
-add_custom_target(git_version ALL DEPENDS ${GIT_VERSION_FILE})
-add_custom_command(OUTPUT ${GIT_VERSION_FILE} COMMAND ${VERSION_BUILD_SCRIPT})
-execute_process(COMMAND ${VERSION_BUILD_SCRIPT} WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/ )
-# debugging
-#message(STATUS "verion file: " ${GIT_VERSION_FILE})
-#message(STATUS "build script: " ${VERSION_BUILD_SCRIPT})
-#message(STATUS "current folder: " ${CMAKE_CURRENT_SOURCE_DIR})
+execute_process(
+    COMMAND git rev-parse --abbrev-ref HEAD
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    OUTPUT_VARIABLE COMMIT_BRANCH
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+execute_process(
+    COMMAND git log -1 --format=%h
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    OUTPUT_VARIABLE COMMIT_HASH
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+execute_process(
+    COMMAND git log -1 --format=%ct
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    OUTPUT_VARIABLE COMMIT_TS
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+set_property(
+    SOURCE version_git.cpp
+    PROPERTY COMPILE_DEFINITIONS
+        D_COMMIT_BRANCH=\"${COMMIT_BRANCH}\"
+        D_COMMIT_HASH=\"${COMMIT_HASH}\"
+        D_COMMIT_TS=${COMMIT_TS}
+)
+message (STATUS "GIT: branch '${COMMIT_BRANCH}' commit '${COMMIT_HASH}' timestamp '${COMMIT_TS}'")
+add_custom_target(git_version ALL DEPENDS version_git.cpp)
 
 # The sources to be used
 file(GLOB SOURCE_FILES "*.cpp")

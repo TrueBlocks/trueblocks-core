@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2019 Great Hill Corporation (http://greathill.com)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -15,8 +15,8 @@
 
 namespace qblocks {
 
-//  string_q GIT_COMMIT_BRANCH = "develop";
-    string_q GIT_COMMIT_HASH = "de56cb7d";
-    timestamp_t GIT_COMMIT_TS = 1557066775;
+    string_q GIT_COMMIT_BRANCH = D_COMMIT_BRANCH;
+    string_q GIT_COMMIT_HASH = D_COMMIT_HASH;
+    timestamp_t GIT_COMMIT_TS = D_COMMIT_TS;
 
 }  // namespace qblocks
