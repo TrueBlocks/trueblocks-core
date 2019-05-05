@@ -132,7 +132,7 @@ namespace qblocks {
     #define bloomFolder_v2           (getCachePath("blooms/"))
     #define monitorsFolder_v2        (getCachePath("monitors/"))
 
-    #define indexFolder_v2           (getCachePath("addr_index/"))
+    #define indexFolder           (getCachePath("addr_index/"))
     #define indexFolder_finalized (configPath  ("cache/addr_index/finalized/"))
     #define indexFolder_blooms    (configPath  ("cache/addr_index/blooms/"))
     #define indexFolder_staging   (getCachePath("addr_index/staging/"))
