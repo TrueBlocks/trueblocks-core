@@ -45,4 +45,4 @@ extern bool freshen_internal(FreshenMode mode, const CAddressArray& list, const 
 //--------------------------------------------------------------------------------
 extern string_q colors[];
 extern uint64_t nColors;
-#define indexFolder_sorted_v2    (getCachePath("addr_index/sorted/"))
+#define indexFolder_sorted    (getCachePath("addr_index/sorted/"))
