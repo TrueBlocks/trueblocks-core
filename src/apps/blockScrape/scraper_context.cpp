@@ -213,7 +213,7 @@ bool CScraper::writeList(const string_q& toFile, const string_q& removeFile) {
 //--------------------------------------------------------------------------
 bool CScraper::addToPendingList(void) {
     string_q pendingName = indexFolder_pending + padNum9(block.blockNumber) + ".txt";
-    string_q countFile = indexFolder_v2 + "counts.txt";
+    string_q countFile = indexFolder + "counts.txt";
     curLines = str_2_Uint(asciiFileToString(countFile)); // for reporting only
     return writeList(pendingName, "");
 }
@@ -232,7 +232,7 @@ bool CScraper::addToStagingList(void) {
         return false;
 
     //string_q countFile = configPath("cache/tmp/scrape_count.tmp");
-    string_q countFile = indexFolder_v2 + "counts.txt";
+    string_q countFile = indexFolder + "counts.txt";
     curLines = str_2_Uint(asciiFileToString(countFile));
     curLines += addrList.addrTxMap->size();
     stringToAsciiFile(countFile, uint_2_Str(curLines));
@@ -291,7 +291,7 @@ void CScraper::finalizeIndexChunk(void) {
     appendToAsciiFile(asciiFile, os.str());
     writeIndexAsBinary(binFile, appearances); // also writes the bloom file
 
-    string_q countFile = indexFolder_v2 + "counts.txt";
+    string_q countFile = indexFolder + "counts.txt";
     ::remove(countFile.c_str());
     cnt = 0;
     cerr << "\ncleaning up"; cerr.flush();
