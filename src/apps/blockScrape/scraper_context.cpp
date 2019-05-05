@@ -212,7 +212,7 @@ bool CScraper::writeList(const string_q& toFile, const string_q& removeFile) {
 
 //--------------------------------------------------------------------------
 bool CScraper::addToPendingList(void) {
-    string_q pendingName = indexFolder_pending_v2 + padNum9(block.blockNumber) + ".txt";
+    string_q pendingName = indexFolder_pending + padNum9(block.blockNumber) + ".txt";
     string_q countFile = indexFolder_v2 + "counts.txt";
     curLines = str_2_Uint(asciiFileToString(countFile)); // for reporting only
     return writeList(pendingName, "");
@@ -226,8 +226,8 @@ bool CScraper::addToStagingList(void) {
     // Write the per-block address list to the staging folder and keep track of how
     // many items we've stored so far.
     //
-    string_q pendingName = indexFolder_pending_v2 + padNum9(block.blockNumber) + ".txt";
-    string_q stagingName = indexFolder_staging_v2 + padNum9(block.blockNumber) + ".txt";
+    string_q pendingName = indexFolder_pending + padNum9(block.blockNumber) + ".txt";
+    string_q stagingName = indexFolder_staging + padNum9(block.blockNumber) + ".txt";
     if (!writeList(stagingName, pendingName))
         return false;
 
@@ -250,13 +250,13 @@ bool CScraper::addToStagingList(void) {
 //--------------------------------------------------------------------------
 void CScraper::finalizeIndexChunk(void) {
 
-    blknum_t first = str_2_Uint(substitute(getFirstFileInFolder(indexFolder_staging_v2, false), indexFolder_staging_v2, ""));
-    blknum_t last  = str_2_Uint(substitute(getLastFileInFolder (indexFolder_staging_v2, false), indexFolder_staging_v2, ""));
+    blknum_t first = str_2_Uint(substitute(getFirstFileInFolder(indexFolder_staging, false), indexFolder_staging, ""));
+    blknum_t last  = str_2_Uint(substitute(getLastFileInFolder (indexFolder_staging, false), indexFolder_staging, ""));
     if (last % MARKER)
         last = (last / MARKER) * MARKER;
 
-    string_q asciiFile = indexFolder_sorted_v2 + padNum9(first)+"-"+padNum9(last) + ".txt";
-    string_q binFile = indexFolder_finalized_v2 + padNum9(first)+"-"+padNum9(last) + ".bin";
+    string_q asciiFile = indexFolder_sorted + padNum9(first)+"-"+padNum9(last) + ".txt";
+    string_q binFile = indexFolder_finalized + padNum9(first)+"-"+padNum9(last) + ".bin";
 
     CStringArray appearances;
     appearances.reserve(options->maxIndexRows + 100);
@@ -266,7 +266,7 @@ void CScraper::finalizeIndexChunk(void) {
 
     for (blknum_t i = first ; i <= last ; i++) {
         string_q stagingList;
-        string_q file = indexFolder_staging_v2 + padNum9(i) + ".txt";
+        string_q file = indexFolder_staging + padNum9(i) + ".txt";
         asciiFileToString(file, stagingList);
         CStringArray lns;
         explode(lns, stagingList, '\n');
@@ -296,7 +296,7 @@ void CScraper::finalizeIndexChunk(void) {
     cnt = 0;
     cerr << "\ncleaning up"; cerr.flush();
     for (blknum_t i = first ; i <= last ; i++) {
-        string_q fn = indexFolder_staging_v2 + padNum9(i) + ".txt";
+        string_q fn = indexFolder_staging + padNum9(i) + ".txt";
         ::remove(fn.c_str());
         if (!(++cnt % (options->maxIndexRows / 10))) {
             cerr << "."; cerr.flush();
