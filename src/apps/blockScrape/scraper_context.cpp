@@ -265,11 +265,11 @@ void CScraper::finalizeIndexChunk(void) {
     cerr.flush();
 
     for (blknum_t i = first ; i <= last ; i++) {
-        string_q theStuff;
-        string_q fn = indexFolder_staging_v2 + padNum9(i) + ".txt";
-        asciiFileToString(fn, theStuff);
+        string_q stagingList;
+        string_q file = indexFolder_staging_v2 + padNum9(i) + ".txt";
+        asciiFileToString(file, stagingList);
         CStringArray lns;
-        explode(lns, theStuff, '\n');
+        explode(lns, stagingList, '\n');
         for (auto ln : lns) {
             apps.push_back(ln);
             if (!(apps.size() % (options->maxIndexRows / 10))) {
