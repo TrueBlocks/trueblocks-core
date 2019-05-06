@@ -212,8 +212,8 @@ bool CScraper::writeList(const string_q& toFile, const string_q& removeFile) {
 
 //--------------------------------------------------------------------------
 bool CScraper::addToPendingList(void) {
-    string_q pendingName = indexFolder_pending_v2 + padNum9(block.blockNumber) + ".txt";
-    string_q countFile = indexFolder_v2 + "counts.txt";
+    string_q pendingName = indexFolder_pending + padNum9(block.blockNumber) + ".txt";
+    string_q countFile = indexFolder + "counts.txt";
     curLines = str_2_Uint(asciiFileToString(countFile)); // for reporting only
     return writeList(pendingName, "");
 }
@@ -226,13 +226,13 @@ bool CScraper::addToStagingList(void) {
     // Write the per-block address list to the staging folder and keep track of how
     // many items we've stored so far.
     //
-    string_q pendingName = indexFolder_pending_v2 + padNum9(block.blockNumber) + ".txt";
-    string_q stagingName = indexFolder_staging_v2 + padNum9(block.blockNumber) + ".txt";
+    string_q pendingName = indexFolder_pending + padNum9(block.blockNumber) + ".txt";
+    string_q stagingName = indexFolder_staging + padNum9(block.blockNumber) + ".txt";
     if (!writeList(stagingName, pendingName))
         return false;
 
     //string_q countFile = configPath("cache/tmp/scrape_count.tmp");
-    string_q countFile = indexFolder_v2 + "counts.txt";
+    string_q countFile = indexFolder + "counts.txt";
     curLines = str_2_Uint(asciiFileToString(countFile));
     curLines += addrList.addrTxMap->size();
     stringToAsciiFile(countFile, uint_2_Str(curLines));
@@ -250,38 +250,38 @@ bool CScraper::addToStagingList(void) {
 //--------------------------------------------------------------------------
 void CScraper::finalizeIndexChunk(void) {
 
-    blknum_t first = str_2_Uint(substitute(getFirstFileInFolder(indexFolder_staging_v2, false), indexFolder_staging_v2, ""));
-    blknum_t last  = str_2_Uint(substitute(getLastFileInFolder (indexFolder_staging_v2, false), indexFolder_staging_v2, ""));
+    blknum_t first = str_2_Uint(substitute(getFirstFileInFolder(indexFolder_staging, false), indexFolder_staging, ""));
+    blknum_t last  = str_2_Uint(substitute(getLastFileInFolder (indexFolder_staging, false), indexFolder_staging, ""));
     if (last % MARKER)
         last = (last / MARKER) * MARKER;
 
-    string_q asciiFile = indexFolder_sorted_v2 + padNum9(first)+"-"+padNum9(last) + ".txt";
-    string_q binFile = indexFolder_finalized_v2 + padNum9(first)+"-"+padNum9(last) + ".bin";
+    string_q asciiFile = indexFolder_sorted + padNum9(first)+"-"+padNum9(last) + ".txt";
+    string_q binFile = indexFolder_finalized + padNum9(first)+"-"+padNum9(last) + ".bin";
 
-    CStringArray apps;
-    apps.reserve(options->maxIndexRows + 100);
+    CStringArray appearances;
+    appearances.reserve(options->maxIndexRows + 100);
 
     cerr << "Processing index.";
     cerr.flush();
 
     for (blknum_t i = first ; i <= last ; i++) {
-        string_q theStuff;
-        string_q fn = indexFolder_staging_v2 + padNum9(i) + ".txt";
-        asciiFileToString(fn, theStuff);
+        string_q stagingList;
+        string_q file = indexFolder_staging + padNum9(i) + ".txt";
+        asciiFileToString(file, stagingList);
         CStringArray lns;
-        explode(lns, theStuff, '\n');
+        explode(lns, stagingList, '\n');
         for (auto ln : lns) {
-            apps.push_back(ln);
-            if (!(apps.size() % (options->maxIndexRows / 10))) {
+            appearances.push_back(ln);
+            if (!(appearances.size() % (options->maxIndexRows / 10))) {
                 cerr << "."; cerr.flush();
             }
         }
     }
-    sort(apps.begin(), apps.end());
+    sort(appearances.begin(), appearances.end());
 
     size_t cnt = 0;
     ostringstream os;
-    for (auto app : apps) {
+    for (auto app : appearances) {
         os << app << "\n";
         if (!(++cnt % (options->maxIndexRows / 10))) {
             cerr << "."; cerr.flush();
@@ -289,14 +289,14 @@ void CScraper::finalizeIndexChunk(void) {
     }
     // TODO(jayrush): should this be stringToAsciiFile not append?
     appendToAsciiFile(asciiFile, os.str());
-    writeIndexAsBinary(binFile, apps); // also writes the bloom file
+    writeIndexAsBinary(binFile, appearances); // also writes the bloom file
 
-    string_q countFile = indexFolder_v2 + "counts.txt";
+    string_q countFile = indexFolder + "counts.txt";
     ::remove(countFile.c_str());
     cnt = 0;
     cerr << "\ncleaning up"; cerr.flush();
     for (blknum_t i = first ; i <= last ; i++) {
-        string_q fn = indexFolder_staging_v2 + padNum9(i) + ".txt";
+        string_q fn = indexFolder_staging + padNum9(i) + ".txt";
         ::remove(fn.c_str());
         if (!(++cnt % (options->maxIndexRows / 10))) {
             cerr << "."; cerr.flush();

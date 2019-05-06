@@ -32,7 +32,7 @@ int main(int argc, const char *argv[]) {
         cout << "nBlooms\tnBytes\ttBlooms\ttBytes" << endl;
 
         CReporter reporter;
-        forEveryFileInFolder(blockFolder_v2 + "00/", countBytes, &reporter);
+        forEveryFileInFolder(blockFolder + "00/", countBytes, &reporter);
         cout << "block stats: " << reporter.blocks.stats() << "\n";
 //        cout << "bloom stats: " << reporter.blooms.stats() << "\n";
     }

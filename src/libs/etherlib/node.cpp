@@ -346,7 +346,7 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------
     blknum_t getLastBlock_cache_final(void) {
-        string_q finLast = getLastFileInFolder(indexFolder_finalized_v2, false);
+        string_q finLast = getLastFileInFolder(indexFolder_finalized, false);
         if (!finLast.empty()) {
             // Files in this folder are n-m.bin
             blknum_t last;
@@ -358,7 +358,7 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------
     blknum_t getLastBlock_cache_staging(void) {
-        string_q stageLast = getLastFileInFolder(indexFolder_staging_v2, false);
+        string_q stageLast = getLastFileInFolder(indexFolder_staging, false);
         // Files in this folder are n.txt, if empty, we fall back on finalized folder
         if (!stageLast.empty())
             return bnFromPath(stageLast);
@@ -367,7 +367,7 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------
     blknum_t getLastBlock_cache_pending(void) {
-        string_q pendLast = getLastFileInFolder(indexFolder_pending_v2, false);
+        string_q pendLast = getLastFileInFolder(indexFolder_pending, false);
         // Files in this folder are n.txt, if empty, we fall back on finalized folder
         if (!pendLast.empty())
             return bnFromPath(pendLast);
@@ -753,7 +753,7 @@ namespace qblocks {
 
         // If the caller does not specify start/end block numbers, visit every bloom file
         if (start == 0 || count == (uint64_t)-1)
-            return forEveryFileInFolder(bloomFolder_v2, func, data);
+            return forEveryFileInFolder(bloomFolder, func, data);
 
         // The user is asking for certain files and not others. The bext we can do is limit which folders
         // to visit, which we do here. Caller must protect against too early or too late files by number.
