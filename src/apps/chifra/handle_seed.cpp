@@ -13,10 +13,10 @@ bool COptions::handle_seed(void) {
     nodeNotRequired();
     // TODO(tjayrush): We should check that IPFS is running here (in much the same way we do for the node)
 
-    establishFolder(indexFolder_finalized_v2);
-    establishFolder(indexFolder_staging_v2);
-    establishFolder(indexFolder_pending_v2);
-    establishFolder(indexFolder_zips_v2);
+    establishFolder(indexFolder_finalized);
+    establishFolder(indexFolder_staging);
+    establishFolder(indexFolder_pending);
+    establishFolder(indexFolder_zips);
 
     string_q contents;
     string_q source = configPath("chifra/ipfs_get.sh");
@@ -41,15 +41,15 @@ bool COptions::handle_seed(void) {
             filename = parts[4];
         }
 
-        string_q zipFile = indexFolder_zips_v2 + filename;
-        string_q textFile = substitute(indexFolder_sorted_v2 + filename, ".gz", "");
+        string_q zipFile = indexFolder_zips + filename;
+        string_q textFile = substitute(indexFolder_sorted + filename, ".gz", "");
 
         if (isTestMode()) cout << endl;
         if (!fileExists(zipFile) || isTestMode()) {
             ostringstream os;
 
             // go to the zips folder
-            os << "cd \"" << indexFolder_zips_v2 << "\" ; ";
+            os << "cd \"" << indexFolder_zips << "\" ; ";
 
             // get the zip file from the IPFS cache
             os << ipfs_cmd.str() << " \"" << zipFile << "\" ; ";
@@ -69,10 +69,10 @@ bool COptions::handle_seed(void) {
             ostringstream os;
 
             // go to the production folder
-            os << "cd \"" << indexFolder_sorted_v2 << "\" ; ";
+            os << "cd \"" << indexFolder_sorted << "\" ; ";
 
             // copy the new zip locally and unzip it
-            os << "cp -p \"" << zipFile << "\" \"" << indexFolder_sorted_v2 << filename << "\" ; ";
+            os << "cp -p \"" << zipFile << "\" \"" << indexFolder_sorted << filename << "\" ; ";
             os << "gunzip \"" << filename << "\" ; cd - >/dev/null";
 
             if (isTestMode()) {

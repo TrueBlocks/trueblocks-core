@@ -66,7 +66,7 @@ bool COptions::visitBinaryFile(const string_q& path, void *data) {
     static uint32_t n = 0;
 
     COptions *options = reinterpret_cast<COptions*>(data);
-    string_q bPath = substitute(substitute(path, indexFolder_finalized_v2, indexFolder_blooms_v2), ".bin", ".bloom");
+    string_q bPath = substitute(substitute(path, indexFolder_finalized, indexFolder_blooms), ".bin", ".bloom");
     if (options->useBlooms && fileExists(bPath)) {
         CNewBloomArray blooms;
         newReadBloomFromBinary(blooms, bPath);
@@ -78,7 +78,7 @@ bool COptions::visitBinaryFile(const string_q& path, void *data) {
 
         if (!hit) {
             if (!(++n%BREAK_PT)) {
-                cerr << "Skipping blocks:  " << substitute(path, indexFolder_finalized_v2, "./");
+                cerr << "Skipping blocks:  " << substitute(path, indexFolder_finalized, "./");
                 cerr << string_q((n/(BREAK_PT*7)), '.');
                 cerr << "\r";
                 cerr.flush();
@@ -91,7 +91,7 @@ bool COptions::visitBinaryFile(const string_q& path, void *data) {
     }
 
     if (!(++n%BREAK_PT)) {
-        cerr << "Searching blocks: " << substitute(path, indexFolder_finalized_v2, "./");
+        cerr << "Searching blocks: " << substitute(path, indexFolder_finalized, "./");
         cerr << string_q((n/(BREAK_PT*7)), '.');
         cerr << "\r";
         cerr.flush();

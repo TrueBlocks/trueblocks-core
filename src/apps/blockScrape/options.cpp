@@ -56,13 +56,13 @@ bool COptions::parseArguments(string_q& command) {
     writeBlocks = getGlobalConfig("blockScrape")->getConfigBool("settings", "writeBlocks", writeBlocks);
 
     // Establish the folders that hold the data...
-    establishFolder(indexFolder_sorted_v2);
-    establishFolder(indexFolder_finalized_v2);
-    establishFolder(indexFolder_staging_v2);
-    establishFolder(indexFolder_pending_v2);
+    establishFolder(indexFolder_sorted);
+    establishFolder(indexFolder_finalized);
+    establishFolder(indexFolder_staging);
+    establishFolder(indexFolder_pending);
     establishFolder(configPath("cache/tmp"));
     if (writeBlocks)
-        establishFolder(blockFolder_v2);
+        establishFolder(blockFolder);
 
     CBlock latest;
     getBlock(latest, "latest");
@@ -115,7 +115,7 @@ bool COptions::parseArguments(string_q& command) {
     maxIndexRows = getGlobalConfig("blockScrape")->getConfigInt("settings", "maxIndexRows", maxIndexRows);
 
 //#error
-    string_q zeroIndex = indexFolder_sorted_v2 + padNum9(0) + "-" + padNum9(0) + ".txt";
+    string_q zeroIndex = indexFolder_sorted + padNum9(0) + "-" + padNum9(0) + ".txt";
     if (!fileExists(zeroIndex)) {
         CStringArray prefunds;
         asciiFileToLines(configPath("prefunds.txt"), prefunds);

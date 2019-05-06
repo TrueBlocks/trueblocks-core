@@ -25,13 +25,13 @@ int main(int argc, const char *argv[]) {
         cleanFolder(getMonitorPath("", FM_STAGING));
 
         if (options.visitTypes & VIS_FINAL)
-            forEveryFileInFolder(indexFolder_finalized_v2, visitFinalIndexFiles, &options);
+            forEveryFileInFolder(indexFolder_finalized, visitFinalIndexFiles, &options);
 
         if (options.visitTypes & VIS_STAGING)
-            forEveryFileInFolder(indexFolder_staging_v2, visitStagingIndexFiles, &options);
+            forEveryFileInFolder(indexFolder_staging, visitStagingIndexFiles, &options);
 
         if (options.visitTypes & VIS_PENDING)
-            forEveryFileInFolder(indexFolder_pending_v2, visitPendingIndexFiles, &options);
+            forEveryFileInFolder(indexFolder_pending, visitPendingIndexFiles, &options);
 
         options.moveToProduction();
     }
