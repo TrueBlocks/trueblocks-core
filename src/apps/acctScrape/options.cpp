@@ -131,8 +131,8 @@ bool COptions::parseArguments(string_q& command) {
             return usage("The last block file '" + fn + "' is locked. Quitting...");
     }
 
-    if (!folderExists(indexFolder_finalized_v2))
-        return usage("Address index path '" + indexFolder_finalized_v2 + "' not found. Quitting...");
+    if (!folderExists(indexFolder_finalized))
+        return usage("Address index path '" + indexFolder_finalized + "' not found. Quitting...");
 
     // How many should we scrape?
     ASSERT(earliestStart <= lastInCache);

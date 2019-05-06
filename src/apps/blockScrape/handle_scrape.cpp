@@ -7,7 +7,7 @@
 #include "options.h"
 
 //--------------------------------------------------------------------------
-bool handle_freshen(COptions& options) {
+bool handle_scrape(COptions &options) {
 
     //
     //  Determine most recently finalized block (lastFinal)
