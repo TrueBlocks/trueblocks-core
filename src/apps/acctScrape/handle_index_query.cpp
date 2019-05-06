@@ -30,10 +30,9 @@ bool visitFinalIndexFiles(const string_q& path, void *data) {
         if (options->earliestStart > options->lastBlockInFile)
             return !shouldQuit();
 
-        bool ret = options->visitBinaryFile(path, data);
-        return ret && !shouldQuit();
-
+        return options->visitBinaryFile(path, data) && !shouldQuit();
     }
+
     ASSERT(0); // should not happen
     return !shouldQuit();
 }

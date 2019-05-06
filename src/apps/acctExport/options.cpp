@@ -109,17 +109,17 @@ bool COptions::parseArguments(string_q& command) {
     if (monitors.size() == 0)
         return usage("You must provide at least one Ethereum address. Quitting...");
 
-#define SEP5(a) LOG5(cGreen + string_q(50,'-') + (a) + string_q(50,'-'))
+#define SEP4(a) LOG4(cGreen + string_q(50,'-') + (a) + string_q(50,'-') + cOff)
     // show certain fields and hide others
-    SEP5("default field hiding");
+    SEP4("default field hiding: " + defHide);
     manageFields(defHide, false);
-    SEP5("default field showing");
+    SEP4("default field showing: " + defHide);
     manageFields(defShow, true);
 
     CToml toml(getMonitorPath(monitors[0].address + ".toml"));
-    SEP5("field hiding");
+    SEP4("field hiding: " + toml.getConfigStr("fields", "hide", ""));
     manageFields(toml.getConfigStr("fields", "hide", ""), false);
-    SEP5("field showing");
+    SEP4("field showing: " + toml.getConfigStr("fields", "show", ""));
     manageFields(toml.getConfigStr("fields", "show", ""), true );
 
     // Try to articulate the watched addresses
