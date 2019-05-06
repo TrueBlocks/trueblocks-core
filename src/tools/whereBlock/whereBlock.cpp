@@ -26,7 +26,7 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        string_q cachePath = blockFolder_v2;
+        string_q cachePath = blockFolder;
         if (isTestMode())
             cachePath = "--";
         cout << cYellow << "\nReport on " << options.mode << " locations:" << cOff;
