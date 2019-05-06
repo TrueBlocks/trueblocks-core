@@ -129,8 +129,8 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     #define blockFolder           (getCachePath("blocks/"))
-    #define bloomFolder_v2           (getCachePath("blooms/"))
-    #define monitorsFolder_v2        (getCachePath("monitors/"))
+    #define bloomFolder           (getCachePath("blooms/"))
+    #define monitorsFolder        (getCachePath("monitors/"))
 
     #define indexFolder           (getCachePath("addr_index/"))
     #define indexFolder_finalized (configPath  ("cache/addr_index/finalized/"))
