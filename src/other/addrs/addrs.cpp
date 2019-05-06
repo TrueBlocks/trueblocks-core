@@ -12,7 +12,7 @@
  *-------------------------------------------------------------------------------------------*/
 #include "acctlib.h"
 
-#define indexFolder_sorted_v2 (getCachePath("addr_index/sorted/"))
+#define indexFolder_sorted (getCachePath("addr_index/sorted/"))
 //----------------------------------------------------------------
 bool visitFile(const string_q& path, void *data) {
 
@@ -21,13 +21,13 @@ bool visitFile(const string_q& path, void *data) {
 
     } else {
 
-        string_q asciiFn = substitute(path, indexFolder_sorted_v2, "./output-ascii/");
+        string_q asciiFn = substitute(path, indexFolder_sorted, "./output-ascii/");
         bool asciiExists = fileExists(asciiFn);
 
-        string_q binaryFn = substitute(substitute(path, indexFolder_sorted_v2, indexFolder_finalized_v2), ".txt", ".bin");
+        string_q binaryFn = substitute(substitute(path, indexFolder_sorted, indexFolder_finalized), ".txt", ".bin");
         bool binaryExists = fileExists(binaryFn);
 
-        string_q bloomFn = substitute(substitute(path, indexFolder_sorted_v2, indexFolder_blooms_v2), ".txt", ".bloom");
+        string_q bloomFn = substitute(substitute(path, indexFolder_sorted, indexFolder_blooms), ".txt", ".bloom");
         bool bloomExists = fileExists(bloomFn);
 
         CStringArray lines;
@@ -65,13 +65,13 @@ bool visitFile(const string_q& path, void *data) {
 
             // We now copy again to build the IPFS cache file. We zip the data first to make it as small as possible
             cerr << "\tCopying zip files..." << endl;
-            string_q zipPath = substitute(binaryFn, indexFolder_finalized_v2, "./output-bzips/");
+            string_q zipPath = substitute(binaryFn, indexFolder_finalized, "./output-bzips/");
             string_q cmd = "cp -p " + binaryFn + " " + zipPath + " ; ";
             cerr << "\t" << cmd << endl;
             if (!doCommand(cmd).empty())
                 cerr << "\t" << redX << " command failed.";
 
-            zipPath = substitute(bloomFn, indexFolder_blooms_v2, "./output-czips/");
+            zipPath = substitute(bloomFn, indexFolder_blooms, "./output-czips/");
             cmd = "cp -p " + bloomFn + " " + zipPath + " ; ";
             cerr << "\t" << cmd << endl;
             if (!doCommand(cmd).empty())
@@ -87,7 +87,7 @@ int main(int argc, const char *argv[]) {
     nodeNotRequired();
     etherlib_init(defaultQuitHandler);
 
-    forEveryFileInFolder(indexFolder_sorted_v2, visitFile, NULL);
+    forEveryFileInFolder(indexFolder_sorted, visitFile, NULL);
     cout << "Done..." << endl;
 
     etherlib_cleanup();
