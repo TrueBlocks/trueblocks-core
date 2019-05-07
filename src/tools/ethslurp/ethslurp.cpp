@@ -46,9 +46,13 @@ int main(int argc, const char *argv[]) {
                 trans->m_showing = isInRange(trans->blockNumber, options.blocks.start, options.blocks.stop);
             }
             theAccount.displayString = options.displayString;
-            theAccount.Format(cout, options.getFormatString("file", false));
+
+            ostringstream os;
+            theAccount.Format(os, options.getFormatString("file", false));
+            cout << "[" << trim(trim(substitute(os.str(), "\n", " "), ' '), ',') << "]" << endl;
         }
     }
+    cerr << "Finished." << endl;
 
     return 0;
 }
