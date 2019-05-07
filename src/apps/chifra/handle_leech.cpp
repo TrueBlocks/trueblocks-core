@@ -7,9 +7,9 @@
 #include "question.h"
 
 //------------------------------------------------------------------------------------------------
-bool COptions::handle_seed(void) {
+bool COptions::handle_leech(void) {
 
-    // seed mode does not require a running node
+    // leech mode does not require a running node
     nodeNotRequired();
     // TODO(tjayrush): We should check that IPFS is running here (in much the same way we do for the node)
 
@@ -76,10 +76,10 @@ bool COptions::handle_seed(void) {
             os << "gunzip \"" << filename << "\" ; cd - >/dev/null";
 
             if (isTestMode()) {
-                cerr << "Seeding " << cTeal << substitute(textFile, getCachePath(""), "$BLOCK_CACHE/") << cOff << endl;
+                cerr << "Leeching " << cTeal << substitute(textFile, getCachePath(""), "$BLOCK_CACHE/") << cOff << endl;
                 cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
             } else {
-                cerr << "Seeding " << cTeal << textFile << cOff << endl;
+                cerr << "Leeching " << cTeal << textFile << cOff << endl;
                 if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
                 usleep(500000); // so Ctrl+C works
             }
@@ -88,6 +88,6 @@ bool COptions::handle_seed(void) {
                 cout << "File " << cTeal << textFile << cOff << " " << greenCheck << endl;
         }
     }
-    cerr << cGreen << "Index cache has been seeded." << cOff << endl;
+    cerr << cGreen << "The index cache has been leeched." << cOff << endl;
     return true;
 }

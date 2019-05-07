@@ -9,10 +9,10 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     COption("~command", "one of [ "
-                            "seed | scrape | daemon | "
+                            "leech | scrape | daemon | "
                             "list | export | stats | ls | rm | "
                             "accounts | functions | config | "
-                            "data | blocks | trans | receipts | logs | traces "
+                            "data | blocks | trans | receipts | logs | traces | slurp | prices "
                             "]"),
     COption("",         "Create a TrueBlocks monitor configuration.\n"),
 };
