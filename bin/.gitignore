@@ -1,3 +1,7 @@
+ModuleCache*
+proj
+Debug
+Release
 chifraDaemon.py
 threads
 solidity_flatter.pl
