@@ -31,7 +31,7 @@ set_property(
         D_COMMIT_TS=${COMMIT_TS}
 )
 message (STATUS "GIT: branch '${COMMIT_BRANCH}' commit '${COMMIT_HASH}' timestamp '${COMMIT_TS}'")
-add_custom_target(git_version ALL DEPENDS version_git.cpp)
+add_custom_target(git_version COMMAND touch versio_git.cpp DEPENDS version_git.cpp)
 
 # The sources to be used
 file(GLOB SOURCE_FILES "*.cpp")
