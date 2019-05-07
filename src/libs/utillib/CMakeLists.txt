@@ -30,7 +30,7 @@ set_property(
         D_COMMIT_HASH=\"${COMMIT_HASH}\"
         D_COMMIT_TS=${COMMIT_TS}
 )
-add_custom_target(git_version touch version_git.cpp SOURCES version_git.cpp)
+add_custom_target(git_version touch version_git.cpp DEPENDS version_git.cpp)
 message (STATUS "GIT: branch '${COMMIT_BRANCH}' commit '${COMMIT_HASH}' timestamp '${COMMIT_TS}'")
 
 # The sources to be used
