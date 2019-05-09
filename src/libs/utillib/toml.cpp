@@ -439,20 +439,34 @@ extern string_q collapseArrays(const string_q& inStr);
         if (!contains(inStr, "[[") && !contains(inStr, "]]"))
             return inStr;
 
-#if 0
-        size_t start = inStr.find("[[");
-        size_t stop = inStr.find_last_of("]]")+1;
-        cout << inStr << endl;
-        string_q front = extract(inStr, 0, start + 2);
-        string_q back = extract(inStr, stop - 2, inStr.length());
-        string_q mid = substitute(extract(inStr, start + 2, stop - 2), "\n", "");
-        cout << "front: " << front << endl;
-        cout << "mid: " << mid << endl;
-        cout << "back: " << back << endl;
-        string_q ret = front + collapseArrays(mid) + back;
-        return ret;
-#else
         string_q ret;
+#if 0
+        enum { OUT, IN };
+        size_t state = OUT;
+        string_q str = substitute(substitute(inStr,"[[","+ARRAY+"),"]]\n","-ARRAY-\n`");
+        for (auto& ch : str) {
+            switch (state) {
+                case OUT:
+                    if (ch == '`')
+                        state = IN;
+                    break;
+                case IN:
+                    if (ch == ']')
+                        state = OUT;
+                    else if (ch == '\n')
+                        ch = ' ';
+                    break;
+                default:
+                    break;
+            }
+            ret += ch;
+        }
+        replaceAll(ret,"+ARRAY+", "[");
+        replaceAll(ret,"-ARRAY-", "]");
+        replaceAll(ret,"`", "");
+        cout << ret << endl;
+        return ret;
+#endif
         string_q str = substitute(inStr, "  ", " ");
         replace(str, "[[", "`");
         string_q front = nextTokenClear(str, '`');
@@ -476,7 +490,6 @@ extern string_q collapseArrays(const string_q& inStr);
             ret += line;
         }
         return front + ret;
-#endif
     }
 
     //-----------------------------------------------------------------------

@@ -70,6 +70,12 @@ run_test("getTrans_help"               "-h")
 run_test("getTrans_help_long"          "--help")
 run_test("getTrans_should_be_error"    "0xeec4ccd13fe05907f9d732a8ad245bcb7f918217157b89baaa23895c12eb329a" " --verbose")
 
+#run_test("getTrans_latest"             " latest")
+run_test("getTrans_nav_prev1"          " 1001001.1.prev")
+run_test("getTrans_nav_prev2"          " 1001001.0.prev")
+run_test("getTrans_nav_next1"          " 1001001.2.next")
+run_test("getTrans_nav_next2"          " 1001001.3.next")
+
 run_test("getTrans_verbose_blk_idx1"   "-v" " 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3")
 run_test("getTrans_verbose_blk_idx2"   "--verbose" " 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.4")
 run_test("getTrans_verbose_blk_idx3"   "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3" " -v" " -t")
