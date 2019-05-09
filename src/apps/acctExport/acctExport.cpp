@@ -119,21 +119,36 @@ bool exportData(COptions& options) {
             }
         }
 
-#if 0
-        // TODO(tjayrush): We turned this off because of performance reasons
-        for (size_t w = 0 ; w < options.monitors.size() ; w++) {
-            options.monitors[w].abi_spec.articulateTransaction(&trans);
-            HIDE_FIELD(CFunction, "message");
-            if (!trans.articulatedTx.message.empty())
-                SHOW_FIELD(CFunction, "message");
+        // TODO(tjayrush): We turned this off by default because of performance reasons
+        if (options.articulate) {
+            for (size_t w = 0 ; w < options.monitors.size() ; w++) {
+                options.monitors[w].abi_spec.articulateTransaction(&trans);
+                HIDE_FIELD(CFunction, "message");
+                if (!trans.articulatedTx.message.empty())
+                    SHOW_FIELD(CFunction, "message");
+            }
         }
-#endif
 
         if (options.fmt == JSON && !first)
             cout << ", ";
-        cout << trans.Format() << endl;
-        if (!(i%29)) {
-            cerr << i << " of " << options.items.size() << ": " << trans.hash << "\r";
+        ostringstream os;
+        os << trans.Format() << endl;
+        string_q str = os.str();
+        for (size_t w = 0 ; w < options.monitors.size() ; w++)
+            replaceAll(str, options.monitors[w].address, options.monitors[w].color + options.monitors[w].address + cOff);
+        for (size_t w = 0 ; w < options.named.size() ; w++) {
+            CAccountWatch name = options.named[w];
+            string_q newName = name.name.substr(0,10);
+            if (!newName.empty()) {
+                newName = name.color + newName + cOff + "-" + name.address.substr(0,name.address.length()-newName.length()-1);
+            } else {
+                newName = name.address;
+            }
+            replaceAll(str, options.named[w].address, newName);
+        }
+        cout << str;
+        if (true) { //}!(i%1)) {
+            cerr << " " << i << " of " << options.items.size() << ": " << trans.hash << "\r";
             cerr.flush();
         }
         first = false;
