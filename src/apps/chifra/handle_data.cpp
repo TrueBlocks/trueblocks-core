@@ -45,6 +45,14 @@ bool COptions::handle_data(void) {
         replaceAll(tool_flags, "--accounts", "");
         os << "getAccounts " << (api_mode ? substitute(tool_flags, ",", " ") : tool_flags) << " ; ";
 
+    } else if (contains(tool_flags, "--slurp")) {
+        replaceAll(tool_flags, "--slurp", "");
+        return handle_slurp();
+
+    } else if (contains(tool_flags, "--prices")) {
+        replaceAll(tool_flags, "--prices", "");
+        return handle_prices();
+
     } else {
         EXIT_FAIL("Invalid option: " + tool_flags);
     }

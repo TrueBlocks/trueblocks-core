@@ -3,12 +3,13 @@ acctExport
 
   You must provide at least one Ethereum address. Quitting...
 
-  Usage:    acctExport [-f|-v|-h] <address> [address...]  
+  Usage:    acctExport [-f|-a|-v|-h] <address> [address...]  
   Purpose:  Export full detail of transactions for one or more Ethereum addresses.
              
   Where:  
 	address_list          one or more addresses (0x...) to export (required)
 	-f  (--fmt val)       export format (one of [json|txt|csv])
+	-a  (--articulate)    articulate transactions, traces, logs, and outputs
 
 #### Hidden options (shown during testing only)
 	-b  (--blocks on/off) write blocks to the binary cache ('off' by default)

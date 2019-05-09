@@ -10,6 +10,7 @@
 static const COption params[] = {
     COption("~address_list",      "one or more addresses (0x...) to export"),
     COption("-fmt:<fmt>",         "export format (one of [json|txt|csv])"),
+    COption("-articulate",        "articulate transactions, traces, logs, and outputs"),
     COption("@blocks:<on/off>",   "write blocks to the binary cache ('off' by default)"),
     COption("@txs:<on/off>",      "write transactions to the binary cache ('on' by default)"),
     COption("@t(r)aces:<on/off>", "write traces to the binary cache ('off' by default)"),
@@ -68,7 +69,13 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Please provide a number (you provided " + arg + ") for --maxTraces. Quitting...");
             maxTraces = str_2_Uint(arg);
 
+        } else if (arg == "-a" || arg == "--articulate") {
+            articulate = true;
+
         } else if (startsWith(arg, "0x")) {
+
+            arg = toLower(arg);
+
             if (!isAddress(arg))
                 return usage(arg + " does not appear to be a valid address. Quitting...");
 
@@ -84,8 +91,8 @@ bool COptions::parseArguments(string_q& command) {
                              "Quit the already running program or, if it is not running, "
                              "remove the lock\n\tfile: " + fn + ".lck'. Quitting...");
 
-            if (fileSize(fn) == 0)
-                return usage("Nothing to export. Quitting...");
+            //if (fileSize(fn) == 0)
+            //    return usage("Nothing to export. Quitting...");
 
             CAccountWatch watch;
             // below - don't change, sets bloom value also
@@ -109,17 +116,17 @@ bool COptions::parseArguments(string_q& command) {
     if (monitors.size() == 0)
         return usage("You must provide at least one Ethereum address. Quitting...");
 
-#define SEP5(a) LOG5(cGreen + string_q(50,'-') + (a) + string_q(50,'-'))
+#define SEP4(a) LOG4(cGreen + string_q(50,'-') + (a) + string_q(50,'-') + cOff)
     // show certain fields and hide others
-    SEP5("default field hiding");
+    SEP4("default field hiding: " + defHide);
     manageFields(defHide, false);
-    SEP5("default field showing");
+    SEP4("default field showing: " + defHide);
     manageFields(defShow, true);
 
     CToml toml(getMonitorPath(monitors[0].address + ".toml"));
-    SEP5("field hiding");
+    SEP4("field hiding: " + toml.getConfigStr("fields", "hide", ""));
     manageFields(toml.getConfigStr("fields", "hide", ""), false);
-    SEP5("field showing");
+    SEP4("field showing: " + toml.getConfigStr("fields", "show", ""));
     manageFields(toml.getConfigStr("fields", "show", ""), true );
 
     // Try to articulate the watched addresses
@@ -127,13 +134,22 @@ bool COptions::parseArguments(string_q& command) {
         CAccountWatch *watch = &monitors[i];
         watch->abi_spec.loadAbiByAddress(watch->address);
         watch->abi_spec.loadAbiKnown("all");
-//#error
-//        // We may as well articulate the named contracts while we're at it
-//        for (size_t n = 0 ; n < named.size() ; n++) {
-//            CAccountWatch *alt = &named.at(n);
-//            //if (alt->enabled)
-//            watch->abi_spec.loadAbiByAddress(alt->address);
-//        }
+        string_q path = getMonitorPath(watch->address + ".toml");
+        if (fileExists(path)) { // if there's a config file, let's use it
+                                // user can tell us the names of other addresses
+            CToml thisToml(path);
+            string_q str = substitute(substitute(thisToml.getConfigJson("named", "list", ""),"[",""),"=",":");
+            CAccountWatch item;
+            while (item.parseJson3(str)) {
+                item.address   = str_2_Addr(toLower(item.address));
+                item.color     = convertColor(item.color);
+                item.extra_data = getVersionStr() + "/" + item.address;
+                item.finishParse();
+                named.push_back(item);
+                watch->abi_spec.loadAbiByAddress(item.address);
+                item = CAccountWatch();
+            }
+        }
     }
 
     writeBlocks = getGlobalConfig("acctExport")->getConfigBool("settings", "writeBlocks", writeBlocks);;
@@ -174,6 +190,7 @@ void COptions::Init(void) {
     skipDdos = true;
     maxTraces = 250;
     fmt = JSON;
+    articulate = false;
 
     minArgs = 0;
 }
