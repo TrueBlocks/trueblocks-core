@@ -437,7 +437,6 @@ biguint_t getNodeBal(CBalanceHistoryArray& history, const address_t& addr, blknu
 void loadWatchList(const CToml& toml, CAccountWatchArray& monitors, const string_q& key) {
 
     string_q watchStr = toml.getConfigJson("watches", key, "");
-
     CAccountWatch watch;
     while (watch.parseJson3(watchStr)) {
         // cleanup and add to list of watches
