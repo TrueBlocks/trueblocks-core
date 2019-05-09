@@ -264,6 +264,8 @@ string_q nextBlockChunk_custom(const string_q& fieldIn, const void *dataPtr) {
             // EXISTING_CODE
             case 'a':
                 if ( fieldIn % "age" ) {
+                    if (isTestMode())
+                        return "100";
                     static CBlock latest;
                     if (latest.timestamp == 0)
                         getBlock(latest, "latest");
@@ -272,7 +274,7 @@ string_q nextBlockChunk_custom(const string_q& fieldIn, const void *dataPtr) {
                     if (blkTs > myTs) {
                         return int_2_Str(blkTs - myTs);
                     }
-                    return 0;
+                    return "0";
                 }
                 break;
             case 'd':
