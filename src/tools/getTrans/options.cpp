@@ -167,7 +167,7 @@ bool COptions::getDirectionalTxId(blknum_t bn, txnum_t txid, const string_q& dir
             getBlock(block, ++bn);
             nextid = 0;
         } else if (dir == "prev") {
-            if (txid > 0) {
+            if (txid > 0 && block.transactions.size() > 0) {
                 argOut = uint_2_Str(block.blockNumber) + "." + uint_2_Str(txid - 1);
                 return true;
             }
