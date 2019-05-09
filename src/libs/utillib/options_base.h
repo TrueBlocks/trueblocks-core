@@ -158,7 +158,7 @@ protected:
         bool forEveryBlockNumber(UINT64VISITFUNC func, void *) const;
         bool hasBlocks(void) const { return (hashList.size() || numList.size() || (start != stop)); }
         bool isInRange(blknum_t bn) const;
-        blknum_t parseBlockOption(string_q& msg, blknum_t lastBlock) const;
+        blknum_t parseBlockOption(string_q& msg, blknum_t lastBlock, direction_t offset) const;
     };
 
     class COptionsTransList {

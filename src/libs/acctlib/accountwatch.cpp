@@ -437,7 +437,6 @@ biguint_t getNodeBal(CBalanceHistoryArray& history, const address_t& addr, blknu
 void loadWatchList(const CToml& toml, CAccountWatchArray& monitors, const string_q& key) {
 
     string_q watchStr = toml.getConfigJson("watches", key, "");
-
     CAccountWatch watch;
     while (watch.parseJson3(watchStr)) {
         // cleanup and add to list of watches
@@ -461,11 +460,11 @@ bool CAccountWatch::openCacheFile1(void) {
 
 //-------------------------------------------------------------------------
 void CAccountWatch::writeLastBlock(blknum_t bn) {
-    if (!isTestMode())
-        stringToAsciiFile(getMonitorLast(address, fm_mode), uint_2_Str(bn) + "\n");
-    else
-        if (address != "./merged.bin")
-            cerr << "Would have written " << getMonitorLast(address, fm_mode) << ": " << bn << endl;
+    if (isTestMode()) {
+        cerr << "Would have written to " << address << ".last.txt with " << bn << endl;
+        return;
+    }
+    stringToAsciiFile(getMonitorLast(address, fm_mode), uint_2_Str(bn) + "\n");
 }
 
 //-------------------------------------------------------------------------

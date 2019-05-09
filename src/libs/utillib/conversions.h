@@ -112,4 +112,6 @@ namespace qblocks {
     extern bool        isHash       (const hash_t& hashIn);
     extern bool        isUnsigned   (const string_q& in);
 
+    typedef enum { NODIR, PREV, NEXT } direction_t;
+
 }  // namespace qblocks

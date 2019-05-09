@@ -191,3 +191,7 @@ namespace qblocks {
 #define EXIT_FAIL(a)   { LOG_WARN("Exit(", l_funcName, "): "); cerr << a; return false; }
 #define EXIT_MSG(a,b)  { LOG2("Exit(", l_funcName, "): "); cerr << a; return (b); }
 #define EXIT_NOMSG(b)  { LOG2("Exit(", l_funcName, "): "); return (b); }
+
+#define ENTER4(a)       { LOG4(string_q("Enter:") + a); } string_q l_funcName = (a);
+#define EXIT_MSG4(a,b)  { LOG4("Exit(", l_funcName, "): "); cerr << a; return (b); }
+#define EXIT_NOMSG4(b)  { LOG4("Exit(", l_funcName, "): "); return (b); }

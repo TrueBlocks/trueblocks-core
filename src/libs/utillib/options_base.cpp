@@ -681,9 +681,9 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         }
 
         CFilename fn(fileName);
-        string_q cmd = editor + " \"" + fn.getFilename() + "\"";
+        string_q cmd = "cd " + fn.getPath() + " ; " + editor + " \"" + fn.getFilename() + "\"";
         if (isTestMode()) {
-            cout << "Testing editFile: " << substitute(cmd, "nano", "open") << "\n";
+            cerr << "Testing editFile: " << fn.getFilename() << "\n";
             string_q contents;
             asciiFileToString(fileName, contents);
             cout << contents << "\n";
