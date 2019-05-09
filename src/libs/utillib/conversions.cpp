@@ -670,7 +670,10 @@ namespace qblocks {
         }
         len = nDigits;
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wvla-extension"
         char s[len+1];
+#pragma clang diagnostic pop
         memset(s, '\0', sizeof(s));
         for (unsigned int p = 0 ; p < len ; p++) {
             unsigned short c = blk[len-1-p];  // NOLINT

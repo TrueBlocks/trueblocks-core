@@ -17,6 +17,8 @@
 
 namespace qblocks {
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpedantic"
     string_q cBlack     = "\e[0;30m";
     string_q cRed       = "\e[0;31m";
     string_q cGreen     = "\e[0;32m";
@@ -71,6 +73,7 @@ namespace qblocks {
         redX       = "\e[0;31mX\e[0m";
         whiteStar  = "\e[0;37m✽\e[0m";
     }
+#pragma clang diagnostic pop
 
     bool colorsDisabled(void) { return cBlack == ""; }
 

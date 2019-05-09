@@ -68,6 +68,8 @@ void testNextToken(void) {
     cout << sentence << "\n";
 }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Woverlength-strings"
 const char* STR_WHATEVER =
 "This is the thing that matters "
 "This is the thing that matters "
@@ -9499,3 +9501,4 @@ const char* STR_WHATEVER =
 "This is the thing that matters "
 "This is the thing that matters "
 "This is the thing that matters ";
+#pragma clang diagnostic pop

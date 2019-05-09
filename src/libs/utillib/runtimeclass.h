@@ -86,7 +86,7 @@ public: \
                                                      const override; \
            string_q       Format          (const string_q& fmtIn = "") const override \
                             { stringstream ctx; Format(ctx, fmtIn, NULL); return ctx.str(); } \
-           string_q       getClassName    (void) const;
+           string_q       getClassName    (void) const
 
 //------------------------------------------------------------
 //TODO(tjayrush): global data
