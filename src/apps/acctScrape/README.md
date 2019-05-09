@@ -6,7 +6,7 @@
 
 #### Usage
 
-`Usage:`    acctScrape [-m|-l|-v|-h]  
+`Usage:`    acctScrape [-m|-v|-h]  
 `Purpose:`  Index transactions for a given Ethereum address (or series of addresses).
              
 `Where:`  
@@ -14,10 +14,10 @@
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
 | -m | --maxBlocks val | scan at most --maxBlocks blocks ('all' implies scan to end of chain) |
-| -l | --logLevel val | specify the log level (default 1) |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
+                                                                                                                                                      
 #### Other Options
 
 All **QBlocks** command-line tools support the following commands (although in some case, they have no meaning):
