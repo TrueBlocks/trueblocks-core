@@ -339,6 +339,8 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
             // EXISTING_CODE
             case 'a':
                 if ( fieldIn % "age" ) {
+                    if (isTestMode())
+                        return "100";
                     static CBlock latest;
                     if (latest.timestamp == 0)
                         getBlock(latest, "latest");
@@ -347,7 +349,7 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
                     if (blkTs > myTs) {
                         return int_2_Str(blkTs - myTs);
                     }
-                    return 0;
+                    return "0";
                 }
                 break;
             case 'c':
