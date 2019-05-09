@@ -19,7 +19,7 @@
 | -j | --json | print the ABI to the screen as json |
 | -n | --noconst | generate encodings for non-constant functions and events only (always true when generating) |
 | -o | --open | open the ABI file for editing, download if not already present |
-| -l | --sol | create the ABI file from a .sol file in the local directory |
+| -l | --sol fn | create the ABI file from a .sol file in the local directory |
 | -r | --raw | force retrieval of ABI from etherscan (ignoring cache) |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |

@@ -10,7 +10,7 @@ You may name your own blocks (for example, to denote the start of an ICO perhaps
 
 #### Usage
 
-`Usage:`    whenBlock [-d|-l|-v|-h] &lt; block | date &gt; [ block... | date... ]  
+`Usage:`    whenBlock [-d|-l|-f|-v|-h] &lt; block | date &gt; [ block... | date... ]  
 `Purpose:`  Finds the nearest block prior to a date, or the nearest date prior to a block.
             Alternatively, search for one of special 'named' blocks.
              
@@ -22,6 +22,7 @@ You may name your own blocks (for example, to denote the start of an ICO perhaps
 |  | date | one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]] |
 | -d | --data | display the result as data (tab delimited; useful for scripting) |
 | -l | --list | list names and block numbers for special blocks |
+| -f | --fmt val | export format (one of [json&#124;txt&#124;csv]) |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
