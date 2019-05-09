@@ -8,8 +8,8 @@ Please contact us at [sales@greathill.com](mailto:sales@greathill.com) for more 
 
 #### Usage
 
-`Usage:`    acctExport [-f|-l|-u|-i|-v|-h] &lt;address&gt; [address...]  
-`Purpose:`  Export transactions for one or more Ethereum addresses.
+`Usage:`    acctExport [-f|-a|-v|-h] &lt;address&gt; [address...]  
+`Purpose:`  Export full detail of transactions for one or more Ethereum addresses.
              
 `Where:`  
 
@@ -17,6 +17,7 @@ Please contact us at [sales@greathill.com](mailto:sales@greathill.com) for more 
 | -------: | :------- | :------- |
 |  | address_list | one or more addresses (0x...) to export |
 | -f | --fmt val | export format (one of [json&#124;txt&#124;csv]) |
+| -a | --articulate | articulate transactions, traces, logs, and outputs |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
