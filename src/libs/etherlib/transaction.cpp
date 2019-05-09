@@ -300,6 +300,7 @@ void CTransaction::registerClass(void) {
     ADD_FIELD(CTransaction, "date", T_DATE, ++fieldNum);
     ADD_FIELD(CTransaction, "datesh", T_DATE, ++fieldNum);
     ADD_FIELD(CTransaction, "time", T_DATE, ++fieldNum);
+    ADD_FIELD(CTransaction, "age", T_DATE, ++fieldNum);
     ADD_FIELD(CTransaction, "ether", T_ETHER, ++fieldNum);
     ADD_FIELD(CTransaction, "encoding", T_TEXT, ++fieldNum);
 
@@ -314,9 +315,17 @@ void CTransaction::registerClass(void) {
     HIDE_FIELD(CTransaction, "date");
     HIDE_FIELD(CTransaction, "datesh");
     HIDE_FIELD(CTransaction, "time");
+    HIDE_FIELD(CTransaction, "age");
     HIDE_FIELD(CTransaction, "ether");
     if (isTestMode()) {
         UNHIDE_FIELD(CTransaction, "isError");
+    }
+    if (!getEnvStr("API_MODE").empty()) {
+        UNHIDE_FIELD(CTransaction, "datesh");
+        UNHIDE_FIELD(CTransaction, "time");
+        UNHIDE_FIELD(CTransaction, "date");
+        UNHIDE_FIELD(CTransaction, "age");
+        UNHIDE_FIELD(CTransaction, "ether");
     }
     //    HIDE_FIELD(CTransaction, "receipt");
     // EXISTING_CODE
@@ -328,6 +337,19 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
     if (tra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'a':
+                if ( fieldIn % "age" ) {
+                    static CBlock latest;
+                    if (latest.timestamp == 0)
+                        getBlock(latest, "latest");
+                    timestamp_t myTs = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
+                    timestamp_t blkTs = ((timestamp_t)latest.timestamp);
+                    if (blkTs > myTs) {
+                        return int_2_Str(blkTs - myTs);
+                    }
+                    return 0;
+                }
+                break;
             case 'c':
                 if ( fieldIn % "contractAddress" ) return addr_2_Str(tra->receipt.contractAddress);
                 break;
