@@ -640,12 +640,13 @@ bool decodeRLP(CParameterArray& interfaces, const string_q& inputStr) {
 //-----------------------------------------------------------------------
 bool CAbi::articulateTransaction(CTransaction *p) const {
 
+    ENTER("articulateTransaction");
     if (!p)
-        return false;
+        EXIT_NOMSG(false);
 
     // articulate the events, so we can return with a fully articulated object
-    for (auto& log : p->receipt.logs)
-        articulateLog(&log);
+    for (size_t i = 0 ; i < p->receipt.logs.size() ; i++)
+        articulateLog(&p->receipt.logs[i]);
 
     // articulate the traces, so we can return with a fully articulated object
     bool hasTraces = false;
@@ -666,7 +667,7 @@ bool CAbi::articulateTransaction(CTransaction *p) const {
                 p->articulatedTx.showOutput = false;
                 bool ret1 = decodeRLP(p->articulatedTx.inputs, input);
                 bool ret2 = (hasTraces ? decodeRLP(p->articulatedTx.outputs, p->traces[0].result.output) : false);
-                return (ret1 || ret2);
+                EXIT_NOMSG(ret1 || ret2);
             }
         }
 
@@ -674,7 +675,8 @@ extern bool isPrintable(const string_q& inHex);
         if (isPrintable(p->input))
             p->articulatedTx.message = hex_2_Str(p->input);
     }
-    return false;
+
+    EXIT_NOMSG(false);
 }
 
 //-----------------------------------------------------------------------
@@ -682,11 +684,35 @@ inline bool sortByPosition(const CParameter& v1, const CParameter& v2) {
     return v1.pos < v2.pos;
 }
 
+// Significant speed improvement if we handle these items without regular processing
+static const biguint_t transferTopic = str_2_BigUint("0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef");
+bool parseTransferEvent(CLogEntry *p) {
+    static CFunction *transDef = NULL;
+    if (transDef == NULL) {
+        transDef = new CFunction;
+        transDef->name = "Transfer";
+        transDef->type = "event";
+        transDef->inputs.push_back(CParameter("_from", "address"));
+        transDef->inputs.push_back(CParameter("_to", "address"));
+        transDef->inputs.push_back(CParameter("_amount", "uint256"));
+    }
+    p->articulatedLog = *transDef;
+    p->articulatedLog.inputs[0].value = str_2_Addr(topic_2_Str(p->topics[1]));
+    p->articulatedLog.inputs[1].value = str_2_Addr(topic_2_Str(p->topics[2]));
+    p->articulatedLog.inputs[2].value = bnu_2_Str(str_2_BigUint(p->data));
+    return true;
+}
+
 //-----------------------------------------------------------------------
 bool CAbi::articulateLog(CLogEntry *p) const {
 
+    ENTER("articulateLog");
     if (!p)
-        return false;
+        EXIT_NOMSG(false);
+
+    // Hacky shortcut is way faster since this event is about 90% of all events
+    if (p->topics[0] == transferTopic && p->topics.size() > 1)
+        return parseTransferEvent(p);
 
     // From solidity documentation:
     // For all fixed-length Solidity types, the EVENT_INDEXED_ARGS array contains the 32-byte encoded value directly.
@@ -737,17 +763,18 @@ bool CAbi::articulateLog(CLogEntry *p) const {
             for (auto a : data)
                 p->articulatedLog.inputs.push_back(a);
             sort(p->articulatedLog.inputs.begin(), p->articulatedLog.inputs.end(), sortByPosition);
-            return (ret1 || ret2);
+            EXIT_NOMSG(ret1 || ret2);
         }
     }
-    return false;
+    EXIT_NOMSG(false);
 }
 
 //-----------------------------------------------------------------------
 bool CAbi::articulateTrace(CTrace *p) const {
 
+    ENTER("articulateTrace");
     if (!p)
-        return false;
+        EXIT_NOMSG(false);
 
     if (p->action.input.length() >= 10 || p->action.input == "0x") {
         string_q encoding = extract(p->action.input, 0, 10);
@@ -758,23 +785,25 @@ bool CAbi::articulateTrace(CTrace *p) const {
                 p->articulatedTrace.showOutput = false;
                 bool ret1 = decodeRLP(p->articulatedTrace.inputs, input);
                 bool ret2 = decodeRLP(p->articulatedTrace.outputs, p->result.output);
-                return (ret1 || ret2);
+                EXIT_NOMSG(ret1 || ret2);
             }
         }
     }
-    return false;
+    EXIT_NOMSG(false);
 }
 
 //-----------------------------------------------------------------------
 bool CAbi::articulateOutputs(const string_q& encoding, const string_q& output, CFunction& ret) const {
+    ENTER("articulateOutputs");
     for (auto interface : interfaces) {
         if (encoding % interface.encoding) {
             ret = CFunction(interface);
             ret.showOutput = false;
-            return decodeRLP(ret.outputs, output);
+            bool bRet = decodeRLP(ret.outputs, output);
+            EXIT_NOMSG(bRet);
         }
     }
-    return true;
+    EXIT_NOMSG(true);
 }
 // EXISTING_CODE
 }  // namespace qblocks
