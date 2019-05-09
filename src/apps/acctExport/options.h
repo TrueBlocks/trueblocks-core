@@ -11,6 +11,7 @@
 class COptions : public COptionsBase {
 public:
     CAccountWatchArray monitors;
+    CAccountWatchArray named;
     CAppearanceArray_base items;
     blknum_t lastAtClient;
     bool writeBlocks;
@@ -19,6 +20,7 @@ public:
     bool skipDdos;
     size_t maxTraces;
     export_t fmt;
+    bool articulate;
 
     COptions(void);
     ~COptions(void);
