@@ -45,6 +45,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else {
 
+            string_q errorMsg;
+            if (!wrangleTxId(arg, errorMsg))
+                return usage(errorMsg);
             string_q ret = transList.parseTransList(arg);
             if (!ret.empty())
                 return usage(ret);
