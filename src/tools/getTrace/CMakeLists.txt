@@ -57,6 +57,13 @@ run_test("getTrace_invalid_param_1"   ".th")
 run_test("getTrace_invalid_param_2"   ".whatever")
 run_test("getTrace_invalid_param_3"   "1233123")
 
+run_test("getTrace_first"              " 40500.0.next")
+#run_test("getTrace_latest"             " latest")
+run_test("getTrace_nav_prev1"          " 1001001.1.prev")
+run_test("getTrace_nav_prev2"          " 1001001.0.prev")
+run_test("getTrace_nav_next1"          " 1001001.2.next")
+run_test("getTrace_nav_next2"          " 1001001.3.next")
+
 # Note: the following tests will only work with a full archive tracing node
 run_special_test("getTrace_by_txhash"          "0x66e49e99a984cd88e097782a001afaac8c6ff786c936651895475dd88ec360f6")
 run_special_test("getTrace_by_bnun_and_txid"   "4348290.92")

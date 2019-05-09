@@ -70,6 +70,7 @@ run_test("getTrans_help"               "-h")
 run_test("getTrans_help_long"          "--help")
 run_test("getTrans_should_be_error"    "0xeec4ccd13fe05907f9d732a8ad245bcb7f918217157b89baaa23895c12eb329a" " --verbose")
 
+run_test("getTrans_first"              " 40500.0.next")
 #run_test("getTrans_latest"             " latest")
 run_test("getTrans_nav_prev1"          " 1001001.1.prev")
 run_test("getTrans_nav_prev2"          " 1001001.0.prev")

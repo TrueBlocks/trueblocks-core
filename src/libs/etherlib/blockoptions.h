@@ -34,3 +34,7 @@ public:
     string_q getDispBal(blknum_t blockNum, biguint_t bal, bool asData);
     bool hasHistory(void) const;
 };
+
+//-----------------------------------------------------------------------------
+extern bool wrangleTxId(string_q& argIn, string_q& errorMsg);
+extern bool getDirectionalTxId(blknum_t bn, txnum_t txid, const string_q& dir, string_q& argOut, string_q& errorMsg);

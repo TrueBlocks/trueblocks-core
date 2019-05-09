@@ -1,7 +1,7 @@
 getReceipt argc: 2 [1:1233123] 
 getReceipt 1233123 
 
-  The argument '1233123' is not properly formatted.
+  1233123 does not appear to be a valid transaction index.
 
   Usage:    getReceipt [-r|-v|-h] <transID> [transID...]  
   Purpose:  Retrieve a transaction's receipt from the local cache or a running node.  

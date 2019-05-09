@@ -1,7 +1,7 @@
 getLogs argc: 2 [1:.whatever] 
 getLogs .whatever 
 
-  The argument '.whatever' is not properly formatted.
+  .whatever does not appear to be a valid transaction index.
 
   Usage:    getLogs [-r|-v|-h] <transID> [transID...]  
   Purpose:  Retrieve a transaction's logs from the local cache or a running node.  
