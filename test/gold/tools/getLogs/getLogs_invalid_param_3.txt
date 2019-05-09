@@ -1,7 +1,7 @@
 getLogs argc: 2 [1:1233123] 
 getLogs 1233123 
 
-  The argument '1233123' is not properly formatted.
+  1233123 does not appear to be a valid transaction index.
 
   Usage:    getLogs [-r|-v|-h] <transID> [transID...]  
   Purpose:  Retrieve a transaction's logs from the local cache or a running node.  

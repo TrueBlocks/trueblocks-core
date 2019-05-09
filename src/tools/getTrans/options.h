@@ -33,7 +33,4 @@ public:
     string_q postProcess(const string_q& which, const string_q& str) const override;
     bool parseArguments(string_q& command) override;
     void Init(void) override;
-
-    bool getDirectionalTxId(blknum_t bn, txnum_t txid, const string_q& dir, string_q& argOut);
-    bool wrangleTxId(string_q& argIn);
 };

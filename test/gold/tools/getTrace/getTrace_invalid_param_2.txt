@@ -1,7 +1,7 @@
 getTrace argc: 2 [1:.whatever] 
 getTrace .whatever 
 
-  The argument '.whatever' is not properly formatted.
+  .whatever does not appear to be a valid transaction index.
 
   Usage:    getTrace [-r|-c|-v|-h] <transID> [transID...]  
   Purpose:  Retrieve a transaction's traces from the local cache or a running node.  
