@@ -30,6 +30,8 @@ All **QBlocks** command-line tools support the following commands (although in s
     --wei       |   specify value in wei (the default)
     --ether     |   specify value in ether
     --dollars   |   specify value in US dollars
+    --raw       |   report JSON data from the node with minimal processing
+    --veryRaw   |   report JSON data from node with zero processing
     --file:fn   |   specify multiple sets of command line options in a file.
 
 <small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>

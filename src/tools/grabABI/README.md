@@ -4,7 +4,7 @@
 
 #### Usage
 
-`Usage:`    grabABI [-c|-g|-d|-e|-j|-n|-o|-l|-r|-v|-h] addr  
+`Usage:`    grabABI [-c|-g|-d|-e|-j|-n|-o|-l|-v|-h] addr  
 `Purpose:`  Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
              
 `Where:`  
@@ -20,7 +20,6 @@
 | -n | --noconst | generate encodings for non-constant functions and events only (always true when generating) |
 | -o | --open | open the ABI file for editing, download if not already present |
 | -l | --sol fn | create the ABI file from a .sol file in the local directory |
-| -r | --raw | force retrieval of ABI from etherscan (ignoring cache) |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
@@ -39,6 +38,8 @@ All **QBlocks** command-line tools support the following commands (although in s
     --wei       |   specify value in wei (the default)
     --ether     |   specify value in ether
     --dollars   |   specify value in US dollars
+    --raw       |   report JSON data from the node with minimal processing
+    --veryRaw   |   report JSON data from node with zero processing
     --file:fn   |   specify multiple sets of command line options in a file.
 
 <small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>

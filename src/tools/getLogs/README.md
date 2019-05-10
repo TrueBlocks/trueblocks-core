@@ -4,14 +4,13 @@
 
 #### Usage
 
-`Usage:`    getLogs [-r|-v|-h] &lt;transID&gt; [transID...]  
+`Usage:`    getLogs [-v|-h] &lt;transID&gt; [transID...]  
 `Purpose:`  Retrieve a transaction's logs from the local cache or a running node.  
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | trans_list | a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) |
-| -r | --raw | retrieve raw transaction directly from the running node |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
@@ -34,6 +33,8 @@ All **QBlocks** command-line tools support the following commands (although in s
     --wei       |   specify value in wei (the default)
     --ether     |   specify value in ether
     --dollars   |   specify value in US dollars
+    --raw       |   report JSON data from the node with minimal processing
+    --veryRaw   |   report JSON data from node with zero processing
     --file:fn   |   specify multiple sets of command line options in a file.
 
 <small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
