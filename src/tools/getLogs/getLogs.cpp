@@ -64,11 +64,19 @@ bool visitTransaction(CTransaction& trans, void *data) {
     if (opt->isRaw) {
         // Note: this call is redundant. The transaction is already populated (if it's valid), but we need the raw data)
         string_q raw;
-        //queryRawLogs(<#string_q &results#>, <#const address_t &addr#>, <#uint64_t fromBlock#>, <#uint64_t toBlock#>)(raw, trans.getValueByName("hash"));
-        raw = substitute(raw,"[{\"jsonrpc\":\"2.0\",\"result\":[", "");
-        raw = substitute(raw,"],\"id\":1}\n]", "");
-        raw = substitute(raw,",\"id\":\"1\"}", "");
-        opt->rawLogs.push_back(raw);
+        queryRawLogs(raw, trans.blockNumber, trans.blockNumber, trans.to);
+        CRPCResult generic;
+        generic.parseJson3(raw);
+        CLogEntry log;
+        log.parseJson3(generic.result);
+        UNHIDE_FIELD(CLogEntry, "blockHash");
+        UNHIDE_FIELD(CLogEntry, "blockNumber");
+        UNHIDE_FIELD(CLogEntry, "removed");
+        UNHIDE_FIELD(CLogEntry, "transactionHash");
+        UNHIDE_FIELD(CLogEntry, "transactionIndex");
+        UNHIDE_FIELD(CLogEntry, "transactionLogIndex");
+        UNHIDE_FIELD(CLogEntry, "type");
+        opt->rawLogs.push_back(log.Format());
         return true;
     }
 
