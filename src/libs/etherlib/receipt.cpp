@@ -71,8 +71,16 @@ bool CReceipt::setValueByName(const string_q& fieldName, const string_q& fieldVa
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
+        case 'b':
+            if ( fieldName % "blockHash" ) { blockHash = str_2_Hash(fieldValue); return true; }
+            if ( fieldName % "blockNumber" ) { blockNumber = str_2_Uint(fieldValue); return true; }
+            break;
         case 'c':
             if ( fieldName % "contractAddress" ) { contractAddress = str_2_Addr(fieldValue); return true; }
+            if ( fieldName % "cumulativeGasUsed" ) { cumulativeGasUsed = str_2_Wei(fieldValue); return true; }
+            break;
+        case 'f':
+            if ( fieldName % "from" ) { from = str_2_Addr(fieldValue); return true; }
             break;
         case 'g':
             if ( fieldName % "gasUsed" ) { gasUsed = str_2_Gas(fieldValue); return true; }
@@ -87,9 +95,18 @@ bool CReceipt::setValueByName(const string_q& fieldName, const string_q& fieldVa
                 }
                 return true;
             }
+            if ( fieldName % "logsBloom" ) { logsBloom = fieldValue; return true; }
+            break;
+        case 'r':
+            if ( fieldName % "root" ) { root = toLower(fieldValue); return true; }
             break;
         case 's':
             if ( fieldName % "status" ) { status = (uint32_t)str_2_Uint(fieldValue); return true; }
+            break;
+        case 't':
+            if ( fieldName % "to" ) { to = str_2_Addr(fieldValue); return true; }
+            if ( fieldName % "transactionHash" ) { transactionHash = str_2_Hash(fieldValue); return true; }
+            if ( fieldName % "transactionIndex" ) { transactionIndex = str_2_Uint(fieldValue); return true; }
             break;
         default:
             break;
@@ -120,10 +137,19 @@ bool CReceipt::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
+//    archive >> blockHash;
+//    archive >> blockNumber;
     archive >> contractAddress;
+//    archive >> cumulativeGasUsed;
+//    archive >> from;
     archive >> gasUsed;
     archive >> logs;
+//    archive >> logsBloom;
+//    archive >> root;
     archive >> status;
+//    archive >> to;
+//    archive >> transactionHash;
+//    archive >> transactionIndex;
     finishParse();
     return true;
 }
@@ -136,10 +162,19 @@ bool CReceipt::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
+//    archive << blockHash;
+//    archive << blockNumber;
     archive << contractAddress;
+//    archive << cumulativeGasUsed;
+//    archive << from;
     archive << gasUsed;
     archive << logs;
+//    archive << logsBloom;
+//    archive << root;
     archive << status;
+//    archive << to;
+//    archive << transactionHash;
+//    archive << transactionIndex;
 
     return true;
 }
@@ -175,10 +210,28 @@ void CReceipt::registerClass(void) {
     ADD_FIELD(CReceipt, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CReceipt, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CReceipt, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CReceipt, "blockHash", T_HASH, ++fieldNum);
+    HIDE_FIELD(CReceipt, "blockHash");
+    ADD_FIELD(CReceipt, "blockNumber", T_NUMBER, ++fieldNum);
+    HIDE_FIELD(CReceipt, "blockNumber");
     ADD_FIELD(CReceipt, "contractAddress", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(CReceipt, "cumulativeGasUsed", T_WEI, ++fieldNum);
+    HIDE_FIELD(CReceipt, "cumulativeGasUsed");
+    ADD_FIELD(CReceipt, "from", T_ADDRESS, ++fieldNum);
+    HIDE_FIELD(CReceipt, "from");
     ADD_FIELD(CReceipt, "gasUsed", T_GAS, ++fieldNum);
     ADD_FIELD(CReceipt, "logs", T_OBJECT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CReceipt, "logsBloom", T_TEXT, ++fieldNum);
+    HIDE_FIELD(CReceipt, "logsBloom");
+    ADD_FIELD(CReceipt, "root", T_TEXT, ++fieldNum);
+    HIDE_FIELD(CReceipt, "root");
     ADD_FIELD(CReceipt, "status", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CReceipt, "to", T_ADDRESS, ++fieldNum);
+    HIDE_FIELD(CReceipt, "to");
+    ADD_FIELD(CReceipt, "transactionHash", T_HASH, ++fieldNum);
+    HIDE_FIELD(CReceipt, "transactionHash");
+    ADD_FIELD(CReceipt, "transactionIndex", T_NUMBER, ++fieldNum);
+    HIDE_FIELD(CReceipt, "transactionIndex");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CReceipt, "schema");
@@ -280,8 +333,16 @@ string_q CReceipt::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
+        case 'b':
+            if ( fieldName % "blockHash" ) return hash_2_Str(blockHash);
+            if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
+            break;
         case 'c':
             if ( fieldName % "contractAddress" ) return addr_2_Str(contractAddress);
+            if ( fieldName % "cumulativeGasUsed" ) return wei_2_Str(cumulativeGasUsed);
+            break;
+        case 'f':
+            if ( fieldName % "from" ) return addr_2_Str(from);
             break;
         case 'g':
             if ( fieldName % "gasUsed" ) return gas_2_Str(gasUsed);
@@ -299,9 +360,18 @@ string_q CReceipt::getValueByName(const string_q& fieldName) const {
                 }
                 return retS;
             }
+            if ( fieldName % "logsBloom" ) return logsBloom;
+            break;
+        case 'r':
+            if ( fieldName % "root" ) return root;
             break;
         case 's':
             if ( fieldName % "status" ) return uint_2_Str(status);
+            break;
+        case 't':
+            if ( fieldName % "to" ) return addr_2_Str(to);
+            if ( fieldName % "transactionHash" ) return hash_2_Str(transactionHash);
+            if ( fieldName % "transactionIndex" ) return uint_2_Str(transactionIndex);
             break;
     }
 
