@@ -1,5 +1,6 @@
 getLogs argc: 2 [1:1233123] 
 getLogs 1233123 
+00000001 TIME ~ CLOCK - <ERROR> : Exit(parseArguments): 
 
   1233123 does not appear to be a valid transaction index.
 

@@ -1,5 +1,6 @@
 getLogs argc: 2 [1:.whatever] 
 getLogs .whatever 
+00000001 TIME ~ CLOCK - <ERROR> : Exit(parseArguments): 
 
   .whatever does not appear to be a valid transaction index.
 
