@@ -68,8 +68,11 @@ run_test("getLogs_nav_prev2"          " 1001001.0.prev")
 run_test("getLogs_nav_next1"          " 1001001.2.next")
 run_test("getLogs_nav_next2"          " 1001001.3.next")
 
-run_test("getLogs_from_node"          "-r" " 4000000.5")
+run_test("getLogs_from_node"          "--raw" " 4000000.5")
 run_test("getLogs_from_node_long"     "--raw" " 4000000.5")
+# block number is too high to be useful test: run_test("getLogs_prev_bug1"          "--raw" "7733935.174")
+run_test("getLogs_prev_bug2_1"        "4279119.46")
+run_test("getLogs_prev_bug2_2"        "4279119.46" " --raw")
 
 run_test("getLogs_verbose_blk_idx1"   "-v" " 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3")
 run_test("getLogs_verbose_blk_idx2"   "--verbose" " 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3")

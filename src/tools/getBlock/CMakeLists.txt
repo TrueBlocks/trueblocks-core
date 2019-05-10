@@ -61,7 +61,7 @@ run_test("getBlock_raw_01"         "--source:raw"   " 2768801" " 1995314" " 1958
 run_test("getBlock_raw_02"         "--source:r"     " 2768801" " 1995314" " 1958017" " --normalize")
 run_special_test("getBlock_raw_03" "--source:raw"   " 2768801" " 1995314" " 1958017" " --normalize")
 run_special_test("getBlock_raw_04" "--raw"          " 2768801" " 1995314" " 1958017" " --normalize")
-run_special_test("getBlock_raw_05" "-r"             " 2768801" " 1995314" " 1958017" " --normalize")
+run_special_test("getBlock_raw_05" "--raw"          " 2768801" " 1995314" " 1958017" " --normalize")
 
 # so that the test works, we must first bring these blocks onto the cache (uses undocumented options)
 run_the_test(${TEST_PATH} ${GOLD_PATH} "getBlock_force_01" ${EXECUTABLE_OUTPUT_PATH}/getBlock " 2768801" " 1995314" " 1958017" " -o")
@@ -83,10 +83,10 @@ run_test("getBlock_parity_hex"   "--parity"       " 0x2e7721" " --force")
 run_test("getBlock_parity_num"   "--parity"       " 728708")
 run_special_test("getBlock_parity_range" "--parity"       " 358450-0x5785a" " --force")
 
-run_test("getBlock_force_02"                  " 2769609" " 2799895" " 2872831" " 3076260" " -o")
-run_test("getBlock_force_fail"                " 2769609" " 2799895" " 2872831" " 3076260" " -o" " --uniqTx")
-run_test("getBlock_multi1"   "--parity" " -r" " 2769609" " 2799895" " 2872831" " 3076260")
-run_test("getBlock_multi2"   "--parity" " -d" " 2769609" " 2799895" " 2872831" " 3076260")
+run_test("getBlock_force_02"                     " 2769609" " 2799895" " 2872831" " 3076260" " -o")
+run_test("getBlock_force_fail"                   " 2769609" " 2799895" " 2872831" " 3076260" " -o" " --uniqTx")
+run_test("getBlock_multi1"   "--parity" " --raw" " 2769609" " 2799895" " 2872831" " 3076260")
+run_test("getBlock_multi2"   "--parity" " -d"    " 2769609" " 2799895" " 2872831" " 3076260")
 
 run_test("getBlock_terse_no_raw"  "-n"                 " 4001001-4001003")
 run_test("getBlock_terse_yes_raw" "-n" " --source:raw" " 4001001")
