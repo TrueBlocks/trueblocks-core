@@ -72,8 +72,6 @@ type                	1016	0	131122	T_TEXT TS_STRING
   "showing": 1,
   "cname": "LogEntry",
   "address": "0x0",
-  "blockHash": "0x0",
-  "blockNumber": 0,
   "logIndex": 0,
   "removed": false,
   "topics": [],
@@ -81,8 +79,6 @@ type                	1016	0	131122	T_TEXT TS_STRING
     "inputs": [],
     "outputs": []
   },
-  "transactionHash": "0x0",
-  "transactionIndex": 0,
   "transactionLogIndex": 0
 }
 

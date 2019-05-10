@@ -57,20 +57,24 @@ string_q nextBlockChunk(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CBlock::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
+bool CBlock::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+    string_q fieldName = fieldNameIn;
+    string_q fieldValue = fieldValueIn;
+
     // EXISTING_CODE
+    LOG4("CBlock::setValueByName --> " + fieldName + "=" + fieldValue.substr(0,50));
     if (fieldName % "number") {
-        *(string_q*)&fieldName = "blockNumber";  // NOLINT
+        fieldName = "blockNumber";  // NOLINT
 
     } else if (fieldName % "author") {
-        *(string_q*)&fieldName = "miner";  // NOLINT
+        fieldName = "miner";  // NOLINT
 
-    } else if (isTestMode() && fieldName % "blockHash") {
-        *(string_q*)&fieldName = "hash";  // NOLINT
+    } else if (fieldName % "blockHash") {
+        fieldName = "hash";  // NOLINT
 
     } else if (fieldName % "transactions") {
-        // Transactions come to us either as a JSON objects or lists of hashes (i.e. a string array). JSON objects have
-        // (among other things) a 'from' field
+        // Transactions come to us either as a JSON objects or lists of hashes (i.e. a string array).
+        // JSON objects have (among other things) a 'from' field so we can identify the former by its absence
         if (!contains(fieldValue, "from")) {
             string_q str = fieldValue;
             while (!str.empty()) {
@@ -122,6 +126,7 @@ bool CBlock::setValueByName(const string_q& fieldName, const string_q& fieldValu
         default:
             break;
     }
+
     return false;
 }
 

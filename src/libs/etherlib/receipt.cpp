@@ -57,30 +57,40 @@ string_q nextReceiptChunk(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CReceipt::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
+bool CReceipt::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+    string_q fieldName = fieldNameIn;
+    string_q fieldValue = fieldValueIn;
+
     // EXISTING_CODE
+    SEP4("CReceipt::setValueByName(" + fieldName + ", " + fieldValue.substr(0,40) + "...)");
     if (fieldName == "contractAddress" && fieldValue == "null") {
         *((string_q*)&fieldValue) = "0";  // NOLINT
     } else if (fieldName == "status" && (fieldValue == "null" || fieldValue == "0x")) {
         *((string_q*)&fieldValue) = uint_2_Str(NO_STATUS);  // NOLINT
     }
-
-    if (pTrans)
-        if (((CTransaction*)pTrans)->setValueByName(fieldName, fieldValue))  // NOLINT
-            return true;
+    if (pTrans) {
+        bool ret = ((CTransaction*)pTrans)->setValueByName(fieldName, fieldValue);  // NOLINT
+        if (ret) {
+            bool done = (fieldName != "gasUsed");
+            LOG4(fieldName, done);
+            if (done) {
+                LOG4("set in transaction");
+                return true;
+            } else {
+                LOG4("set in receipt and transaction");
+            }
+        } else {
+            LOG4("not set in transaction");
+        }
+    }
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "blockHash" ) { blockHash = str_2_Hash(fieldValue); return true; }
-            if ( fieldName % "blockNumber" ) { blockNumber = str_2_Uint(fieldValue); return true; }
             break;
         case 'c':
             if ( fieldName % "contractAddress" ) { contractAddress = str_2_Addr(fieldValue); return true; }
             if ( fieldName % "cumulativeGasUsed" ) { cumulativeGasUsed = str_2_Wei(fieldValue); return true; }
-            break;
-        case 'f':
-            if ( fieldName % "from" ) { from = str_2_Addr(fieldValue); return true; }
             break;
         case 'g':
             if ( fieldName % "gasUsed" ) { gasUsed = str_2_Gas(fieldValue); return true; }
@@ -102,11 +112,6 @@ bool CReceipt::setValueByName(const string_q& fieldName, const string_q& fieldVa
             break;
         case 's':
             if ( fieldName % "status" ) { status = (uint32_t)str_2_Uint(fieldValue); return true; }
-            break;
-        case 't':
-            if ( fieldName % "to" ) { to = str_2_Addr(fieldValue); return true; }
-            if ( fieldName % "transactionHash" ) { transactionHash = str_2_Hash(fieldValue); return true; }
-            if ( fieldName % "transactionIndex" ) { transactionIndex = str_2_Uint(fieldValue); return true; }
             break;
         default:
             break;
@@ -324,25 +329,20 @@ CArchive& operator>>(CArchive& archive, CReceipt& rec) {
 }
 
 //---------------------------------------------------------------------------
-string_q CReceipt::getValueByName(const string_q& fieldName) const {
+string_q CReceipt::getValueByName(const string_q& fieldNameIn) const {
+    string_q fieldName = fieldNameIn;
 
     // Give customized code a chance to override first
+    SEP4("CReceipt::getValueByName(" + fieldName + ")");
     string_q ret = nextReceiptChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
     // Return field values
     switch (tolower(fieldName[0])) {
-        case 'b':
-            if ( fieldName % "blockHash" ) return hash_2_Str(blockHash);
-            if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
-            break;
         case 'c':
             if ( fieldName % "contractAddress" ) return addr_2_Str(contractAddress);
             if ( fieldName % "cumulativeGasUsed" ) return wei_2_Str(cumulativeGasUsed);
-            break;
-        case 'f':
-            if ( fieldName % "from" ) return addr_2_Str(from);
             break;
         case 'g':
             if ( fieldName % "gasUsed" ) return gas_2_Str(gasUsed);
@@ -368,17 +368,15 @@ string_q CReceipt::getValueByName(const string_q& fieldName) const {
         case 's':
             if ( fieldName % "status" ) return uint_2_Str(status);
             break;
-        case 't':
-            if ( fieldName % "to" ) return addr_2_Str(to);
-            if ( fieldName % "transactionHash" ) return hash_2_Str(transactionHash);
-            if ( fieldName % "transactionIndex" ) return uint_2_Str(transactionIndex);
-            break;
     }
 
     // EXISTING_CODE
-    if (fieldName != "cname") {
+    if (fieldName != "schema" && fieldName != "deleted" && fieldName != "showing" && fieldName != "cname") {
+        if (fieldName == "transactionHash")
+            fieldName = "hash";  // NOLINT
         // See if this field belongs to the item's container
         ret = nextTransactionChunk(fieldName, pTrans);
+        LOG4(fieldName, "=", ret, " from parent");
         if (contains(ret, "Field not found"))
             ret = "";
         if (!ret.empty())

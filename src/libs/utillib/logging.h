@@ -134,10 +134,10 @@ namespace qblocks {
             switch( severity ) {
                 case sev_debug0:  log_stream << cWhite   << "<DEBUG>" << cOff << " : "; break;
                 case sev_debug1:  log_stream << cWhite   << "<DEBUG>" << cOff << " : |-"; break;
-                case sev_debug2:  log_stream << bMagenta << "<TRACE>" << cOff << " : |--"; break;
-                case sev_debug3:  log_stream << bMagenta << "<TRACE>" << cOff << " : |---"; break;
-                case sev_debug4:  log_stream << bMagenta << "<TRACE>" << cOff << " : |----"; break;
-                case sev_debug5:  log_stream << bMagenta << "<TRACE>" << cOff << " : |-----"; break;
+                case sev_debug2:  log_stream << cGreen   << "<TRACE>" << cOff << " : |--"; break;
+                case sev_debug3:  log_stream << cYellow  << "<TRACE>" << cOff << " : |---"; break;
+                case sev_debug4:  log_stream << cRed     << "<TRACE>" << cOff << " : |----"; break;
+                case sev_debug5:  log_stream << cTeal    << "<TRACE>" << cOff << " : |-----"; break;
                 case sev_info:    log_stream << bGreen   << "<INFO> " << cOff << " : "; break;
                 case sev_warning: log_stream << bYellow  << "<WARNG>" << cOff << " : "; break;
                 case sev_error:   log_stream << bRed     << "<ERROR>" << cOff << " : "; break;
@@ -172,6 +172,11 @@ namespace qblocks {
 #define LOG_WARN  qblocks::eLogger->print<sev_warning>
 #define LOG_ERR   qblocks::eLogger->print<sev_error>
 #define LOG_FATAL qblocks::eLogger->print<sev_fatal>
+#define SEP1(a)   LOG1(cWrite + string_q(10,'-') + (a) + string_q(10,'-') + cOff)
+#define SEP2(a)   LOG2(cGreen + string_q(10,'-') + (a) + string_q(10,'-') + cOff)
+#define SEP3(a)   LOG3(cYellow + string_q(10,'-') + (a) + string_q(10,'-') + cOff)
+#define SEP4(a)   LOG4(cRed + string_q(10,'-') + (a) + string_q(10,'-') + cOff)
+#define SEP5(a)   LOG5(cTeal + string_q(10,'-') + (a) + string_q(10,'-') + cOff)
 #else
 #define LOG0(...)
 #define LOG1(...)
@@ -183,6 +188,11 @@ namespace qblocks {
 #define LOG_WARN(...)
 #define LOG_ERR(...)
 #define LOG_FATAL(...)
+#define SEP1(...)
+#define SEP2(...)
+#define SEP3(...)
+#define SEP4(...)
+#define SEP5(...)
 #endif
 
 // The LOG parts of these routines disappear if turned off, but they still do their work because of the returns

@@ -57,10 +57,14 @@ string_q nextTransactionChunk(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTransaction::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
+bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+    string_q fieldName = fieldNameIn;
+    string_q fieldValue = fieldValueIn;
+
     // EXISTING_CODE
+    LOG4("CTransaction::setValueByName --> " + fieldName + "=" + fieldValue.substr(0,50));
     if (fieldName == "to" && fieldValue == "null")
-        *((string_q*)&fieldValue) = "0x";  // NOLINT
+        fieldValue = "0x";  // NOLINT
 
     if ( fieldName % "input" ) {
         input = fieldValue;
@@ -84,9 +88,25 @@ bool CTransaction::setValueByName(const string_q& fieldName, const string_q& fie
 
     }
 
-    if (pBlock)
-        if (((CBlock*)pBlock)->setValueByName(fieldName, fieldValue))  // NOLINT
-            return true;
+    if (pBlock) {
+        bool ret = ((CBlock*)pBlock)->setValueByName(fieldName, fieldValue);  // NOLINT
+        if (ret) {
+            bool done = (fieldName != "blockHash" && fieldName != "blockNumber" && fieldName != "gasUsed");
+            LOG4(fieldName, done);
+            if (done) {
+                LOG4("set in block");
+                return true;
+            } else {
+                LOG4("set in block and transaction");
+            }
+        } else {
+            LOG4("not set in block");
+        }
+    }
+
+    // Order matters
+    if (fieldName == "transactionHash")
+        fieldName = "hash";  // NOLINT
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
@@ -142,6 +162,7 @@ bool CTransaction::setValueByName(const string_q& fieldName, const string_q& fie
         default:
             break;
     }
+
     return false;
 }
 
@@ -553,7 +574,7 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
     }
 
     // EXISTING_CODE
-    if (fieldName != "cname") {
+    if (fieldName != "schema" && fieldName != "deleted" && fieldName != "showing" && fieldName != "cname") {
         // See if this field belongs to the item's container
         ret = nextBlockChunk(fieldName, pBlock);
         if (contains(ret, "Field not found"))

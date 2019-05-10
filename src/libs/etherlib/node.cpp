@@ -182,7 +182,7 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     bool getReceipt(CReceipt& receipt, const hash_t& txHash) {
-        receipt = CReceipt();
+        receipt = CReceipt(receipt.pTrans);
         getObjectViaRPC(receipt, "eth_getTransactionReceipt", "[\"" + str_2_Hash(txHash) + "\"]");
         return true;
     }
@@ -894,6 +894,7 @@ namespace qblocks {
                 getBlock(block, trans.blockNumber);
                 if (block.transactions.size() > trans.transactionIndex)
                     trans.isError = block.transactions[trans.transactionIndex].isError;
+                trans.receipt.pTrans = &trans;
                 getReceipt(trans.receipt, trans.getValueByName("hash"));
                 trans.finishParse();
             } else {
