@@ -69,11 +69,18 @@ bool CLogEntry::setValueByName(const string_q& fieldName, const string_q& fieldV
             if ( fieldName % "address" ) { address = str_2_Addr(fieldValue); return true; }
             if ( fieldName % "articulatedLog" ) { /* articulatedLog = fieldValue; */ return false; }
             break;
+        case 'b':
+            if ( fieldName % "blockHash" ) { blockHash = str_2_Hash(fieldValue); return true; }
+            if ( fieldName % "blockNumber" ) { blockNumber = str_2_Uint(fieldValue); return true; }
+            break;
         case 'd':
             if ( fieldName % "data" ) { data = fieldValue; return true; }
             break;
         case 'l':
             if ( fieldName % "logIndex" ) { logIndex = str_2_Uint(fieldValue); return true; }
+            break;
+        case 'r':
+            if ( fieldName % "removed" ) { removed = str_2_Bool(fieldValue); return true; }
             break;
         case 't':
             if ( fieldName % "topics" ) {
@@ -83,6 +90,10 @@ bool CLogEntry::setValueByName(const string_q& fieldName, const string_q& fieldV
                 }
                 return true;
             }
+            if ( fieldName % "transactionHash" ) { transactionHash = str_2_Hash(fieldValue); return true; }
+            if ( fieldName % "transactionIndex" ) { transactionIndex = str_2_Uint(fieldValue); return true; }
+            if ( fieldName % "transactionLogIndex" ) { transactionLogIndex = str_2_Uint(fieldValue); return true; }
+            if ( fieldName % "type" ) { type = fieldValue; return true; }
             break;
         default:
             break;
@@ -111,10 +122,17 @@ bool CLogEntry::Serialize(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     archive >> address;
+//    archive >> blockHash;
+//    archive >> blockNumber;
     archive >> data;
     archive >> logIndex;
+//    archive >> removed;
     archive >> topics;
 //    archive >> articulatedLog;
+//    archive >> transactionHash;
+//    archive >> transactionIndex;
+//    archive >> transactionLogIndex;
+//    archive >> type;
     finishParse();
     return true;
 }
@@ -128,10 +146,17 @@ bool CLogEntry::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     // EXISTING_CODE
     archive << address;
+//    archive << blockHash;
+//    archive << blockNumber;
     archive << data;
     archive << logIndex;
+//    archive << removed;
     archive << topics;
 //    archive << articulatedLog;
+//    archive << transactionHash;
+//    archive << transactionIndex;
+//    archive << transactionLogIndex;
+//    archive << type;
 
     return true;
 }
@@ -168,11 +193,25 @@ void CLogEntry::registerClass(void) {
     ADD_FIELD(CLogEntry, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CLogEntry, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CLogEntry, "address", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(CLogEntry, "blockHash", T_HASH, ++fieldNum);
+    HIDE_FIELD(CLogEntry, "blockHash");
+    ADD_FIELD(CLogEntry, "blockNumber", T_NUMBER, ++fieldNum);
+    HIDE_FIELD(CLogEntry, "blockNumber");
     ADD_FIELD(CLogEntry, "data", T_TEXT, ++fieldNum);
     ADD_FIELD(CLogEntry, "logIndex", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CLogEntry, "removed", T_BOOL, ++fieldNum);
+    HIDE_FIELD(CLogEntry, "removed");
     ADD_FIELD(CLogEntry, "topics", T_OBJECT|TS_ARRAY, ++fieldNum);
     ADD_FIELD(CLogEntry, "articulatedLog", T_OBJECT, ++fieldNum);
     HIDE_FIELD(CLogEntry, "articulatedLog");
+    ADD_FIELD(CLogEntry, "transactionHash", T_HASH, ++fieldNum);
+    HIDE_FIELD(CLogEntry, "transactionHash");
+    ADD_FIELD(CLogEntry, "transactionIndex", T_NUMBER, ++fieldNum);
+    HIDE_FIELD(CLogEntry, "transactionIndex");
+    ADD_FIELD(CLogEntry, "transactionLogIndex", T_NUMBER, ++fieldNum);
+    HIDE_FIELD(CLogEntry, "transactionLogIndex");
+    ADD_FIELD(CLogEntry, "type", T_TEXT, ++fieldNum);
+    HIDE_FIELD(CLogEntry, "type");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CLogEntry, "schema");
@@ -244,11 +283,18 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "address" ) return addr_2_Str(address);
             if ( fieldName % "articulatedLog" ) { expContext().noFrst=true; return articulatedLog.Format(); }
             break;
+        case 'b':
+            if ( fieldName % "blockHash" ) return hash_2_Str(blockHash);
+            if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
+            break;
         case 'd':
             if ( fieldName % "data" ) return data;
             break;
         case 'l':
             if ( fieldName % "logIndex" ) return uint_2_Str(logIndex);
+            break;
+        case 'r':
+            if ( fieldName % "removed" ) return bool_2_Str(removed);
             break;
         case 't':
             if ( fieldName % "topics" || fieldName % "topicsCnt" ) {
@@ -263,6 +309,10 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
                 }
                 return retS;
             }
+            if ( fieldName % "transactionHash" ) return hash_2_Str(transactionHash);
+            if ( fieldName % "transactionIndex" ) return uint_2_Str(transactionIndex);
+            if ( fieldName % "transactionLogIndex" ) return uint_2_Str(transactionLogIndex);
+            if ( fieldName % "type" ) return type;
             break;
     }
 
