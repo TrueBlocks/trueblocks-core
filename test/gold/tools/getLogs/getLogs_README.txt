@@ -2,14 +2,13 @@ getLogs argc: 2 [1:-th]
 getLogs -th 
 #### Usage
 
-`Usage:`    getLogs [-r|-v|-h] &lt;transID&gt; [transID...]  
+`Usage:`    getLogs [-v|-h] &lt;transID&gt; [transID...]  
 `Purpose:`  Retrieve a transaction's logs from the local cache or a running node.  
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | trans_list | a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) |
-| -r | --raw | retrieve raw transaction directly from the running node |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

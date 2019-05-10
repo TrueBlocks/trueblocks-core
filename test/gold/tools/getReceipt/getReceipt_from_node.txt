@@ -1,5 +1,5 @@
-getReceipt argc: 3 [1:-r] [2:4000000.5] 
-getReceipt -r 4000000.5 
+getReceipt argc: 3 [1:--raw] [2:4000000.5] 
+getReceipt --raw 4000000.5 
 [{
   "blockHash": "0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853",
   "blockNumber": 4000000,

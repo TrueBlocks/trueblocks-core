@@ -2,14 +2,13 @@ getTrans argc: 2 [1:-th]
 getTrans -th 
 #### Usage
 
-`Usage:`    getTrans [-r|-t|-a|-v|-h] &lt;transID&gt; [transID...]  
+`Usage:`    getTrans [-t|-a|-v|-h] &lt;transID&gt; [transID...]  
 `Purpose:`  Retrieve an Ethereum transaction from the local cache or a running node.  
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | trans_list | a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) |
-| -r | --raw | retrieve raw transaction directly from the running node |
 | -t | --trace | display the transaction's trace |
 | -a | --articulate | articulate the transactions if an ABI is found |
 
