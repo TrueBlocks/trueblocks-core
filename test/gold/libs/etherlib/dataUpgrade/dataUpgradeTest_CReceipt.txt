@@ -75,16 +75,10 @@ transactionIndex    	1017	0	65561	T_NUMBER TS_NUMERAL
   "deleted": 0,
   "showing": 1,
   "cname": "Receipt",
-  "blockHash": "0x0",
-  "blockNumber": 0,
   "contractAddress": "0x0",
   "cumulativeGasUsed": 0,
-  "from": "0x0",
   "gasUsed": 0,
   "logs": [],
-  "status": null,
-  "to": "0x0",
-  "transactionHash": "0x0",
-  "transactionIndex": 0
+  "status": null
 }
 

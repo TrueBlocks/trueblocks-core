@@ -57,21 +57,33 @@ string_q nextLogentryChunk(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CLogEntry::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
+bool CLogEntry::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+    string_q fieldName = fieldNameIn;
+    string_q fieldValue = fieldValueIn;
+
     // EXISTING_CODE
-    if (pReceipt)
-        if (((CReceipt*)pReceipt)->setValueByName(fieldName, fieldValue))  // NOLINT
-            return true;
+    SEP4("CLogEntry::setValueByName(" + fieldName + ", " + fieldValue.substr(0,40) + "...)");
+    if (pReceipt) {
+        bool ret = ((CReceipt*)pReceipt)->setValueByName(fieldName, fieldValue);  // NOLINT
+        if (ret) {
+            bool done = true; // there are no fields handled in the receipt and the log
+            LOG4(fieldName, done);
+            if (done) {
+                LOG4("set in transaction");
+                return true;
+            } else {
+                LOG4("set in receipt and transaction");
+            }
+        } else {
+            LOG4("not set in transaction");
+        }
+    }
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "address" ) { address = str_2_Addr(fieldValue); return true; }
             if ( fieldName % "articulatedLog" ) { /* articulatedLog = fieldValue; */ return false; }
-            break;
-        case 'b':
-            if ( fieldName % "blockHash" ) { blockHash = str_2_Hash(fieldValue); return true; }
-            if ( fieldName % "blockNumber" ) { blockNumber = str_2_Uint(fieldValue); return true; }
             break;
         case 'd':
             if ( fieldName % "data" ) { data = fieldValue; return true; }
@@ -90,8 +102,6 @@ bool CLogEntry::setValueByName(const string_q& fieldName, const string_q& fieldV
                 }
                 return true;
             }
-            if ( fieldName % "transactionHash" ) { transactionHash = str_2_Hash(fieldValue); return true; }
-            if ( fieldName % "transactionIndex" ) { transactionIndex = str_2_Uint(fieldValue); return true; }
             if ( fieldName % "transactionLogIndex" ) { transactionLogIndex = str_2_Uint(fieldValue); return true; }
             if ( fieldName % "type" ) { type = fieldValue; return true; }
             break;
@@ -283,10 +293,6 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "address" ) return addr_2_Str(address);
             if ( fieldName % "articulatedLog" ) { expContext().noFrst=true; return articulatedLog.Format(); }
             break;
-        case 'b':
-            if ( fieldName % "blockHash" ) return hash_2_Str(blockHash);
-            if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
-            break;
         case 'd':
             if ( fieldName % "data" ) return data;
             break;
@@ -309,8 +315,6 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
                 }
                 return retS;
             }
-            if ( fieldName % "transactionHash" ) return hash_2_Str(transactionHash);
-            if ( fieldName % "transactionIndex" ) return uint_2_Str(transactionIndex);
             if ( fieldName % "transactionLogIndex" ) return uint_2_Str(transactionLogIndex);
             if ( fieldName % "type" ) return type;
             break;
@@ -318,8 +322,8 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
 
     // EXISTING_CODE
     // See if this field belongs to the item's container
-    if (fieldName != "cname") {
-        ret = nextReceiptChunk(fieldName, pReceipt);
+    if (fieldName != "schema" && fieldName != "deleted" && fieldName != "showing" && fieldName != "cname") {
+      ret = nextReceiptChunk(fieldName, pReceipt);
         if (contains(ret, "Field not found"))
             ret = "";
         if (!ret.empty())
@@ -368,4 +372,3 @@ const string_q CLogEntry::getStringAt(const string_q& fieldName, size_t i) const
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

@@ -116,7 +116,6 @@ bool COptions::parseArguments(string_q& command) {
     if (monitors.size() == 0)
         return usage("You must provide at least one Ethereum address. Quitting...");
 
-#define SEP4(a) LOG4(cGreen + string_q(50,'-') + (a) + string_q(50,'-') + cOff)
     // show certain fields and hide others
     SEP4("default field hiding: " + defHide);
     manageFields(defHide, false);
