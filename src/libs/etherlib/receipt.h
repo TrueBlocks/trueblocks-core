@@ -28,10 +28,19 @@ class CTransaction;
 //--------------------------------------------------------------------------
 class CReceipt : public CBaseNode {
 public:
+    hash_t blockHash;
+    blknum_t blockNumber;
     address_t contractAddress;
+    wei_t cumulativeGasUsed;
+    address_t from;
     gas_t gasUsed;
     CLogEntryArray logs;
+    string_q logsBloom;
+    string_q root;
     uint32_t status;
+    address_t to;
+    hash_t transactionHash;
+    blknum_t transactionIndex;
 
 public:
     CReceipt(void);
@@ -96,10 +105,19 @@ inline void CReceipt::clear(void) {
 inline void CReceipt::initialize(void) {
     CBaseNode::initialize();
 
+    blockHash = "";
+    blockNumber = 0;
     contractAddress = "";
+    cumulativeGasUsed = 0;
+    from = "";
     gasUsed = 0;
     logs.clear();
+    logsBloom = "";
+    root = "";
     status = NO_STATUS;
+    to = "";
+    transactionHash = "";
+    transactionIndex = 0;
 
     // EXISTING_CODE
     pTrans = NULL;
@@ -111,10 +129,19 @@ inline void CReceipt::duplicate(const CReceipt& re) {
     clear();
     CBaseNode::duplicate(re);
 
+    blockHash = re.blockHash;
+    blockNumber = re.blockNumber;
     contractAddress = re.contractAddress;
+    cumulativeGasUsed = re.cumulativeGasUsed;
+    from = re.from;
     gasUsed = re.gasUsed;
     logs = re.logs;
+    logsBloom = re.logsBloom;
+    root = re.root;
     status = re.status;
+    to = re.to;
+    transactionHash = re.transactionHash;
+    transactionIndex = re.transactionIndex;
 
     // EXISTING_CODE
     pTrans = re.pTrans;  // no deep copy becuase it's const

@@ -52,16 +52,22 @@ int main(int argc, const char *argv[]) {
 
 //--------------------------------------------------------------
 bool visitTransaction(CTransaction& trans, void *data) {
+
+    ENTER("visitTransaction");
+    LOG4(trans.blockNumber, ".", trans.transactionIndex);
+
     COptions *opt = (COptions*)data;
     if (contains(trans.hash, "invalid")) {
         ostringstream os;
         os << cRed << "{ \"error\": \"The logs for transaction ";
         os << nextTokenClear(trans.hash, ' ') << " were not found.\" }" << cOff;
         opt->rawLogs.push_back(os.str());
-        return true;
+        LOG4("invalid");
+        EXIT_NOMSG(true);
     }
 
     if (opt->isRaw) {
+        LOG4("raw");
         // Note: this call is redundant. The transaction is already populated (if it's valid), but we need the raw data)
         string_q raw;
         queryRawLogs(raw, trans.blockNumber, trans.blockNumber, trans.to);
@@ -76,12 +82,15 @@ bool visitTransaction(CTransaction& trans, void *data) {
         UNHIDE_FIELD(CLogEntry, "transactionIndex");
         UNHIDE_FIELD(CLogEntry, "transactionLogIndex");
         UNHIDE_FIELD(CLogEntry, "type");
+        LOG4(log.Format());
         opt->rawLogs.push_back(log.Format());
-        return true;
+        EXIT_NOMSG(true);
     }
 
-    for (auto l : trans.receipt.logs)
+    for (auto l : trans.receipt.logs) {
+        LOG4("Pushing: ", l);
         opt->logs.push_back(l);
+    }
 
-    return true;
+    EXIT_NOMSG(true);
 }

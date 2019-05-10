@@ -62,12 +62,32 @@ bool visitTransaction(CTransaction& trans, void *data) {
     }
 
     if (opt->isRaw) {
+        LOG4("raw");
+        // Note: this call is redundant. The transaction is already populated (if it's valid), but we need the raw data)
         string_q raw;
         queryRawReceipt(raw, trans.getValueByName("hash"));
-        raw = substitute(raw,"{\"jsonrpc\":\"2.0\",\"result\":", "");
-        raw = substitute(raw,",\"id\":1}", "");
-        raw = substitute(raw,",\"id\":\"1\"}", "");
-        opt->rawReceipts.push_back(raw);
+        CRPCResult generic;
+        generic.parseJson3(raw);
+        CReceipt receipt;
+        receipt.parseJson3(generic.result);
+        UNHIDE_FIELD(CReceipt, "blockHash");
+        UNHIDE_FIELD(CReceipt, "blockNumber");
+        UNHIDE_FIELD(CReceipt, "cumulativeGasUsed");
+        UNHIDE_FIELD(CReceipt, "from");
+        UNHIDE_FIELD(CReceipt, "logsBloom");
+        UNHIDE_FIELD(CReceipt, "root");
+        UNHIDE_FIELD(CReceipt, "to");
+        UNHIDE_FIELD(CReceipt, "transactionHash");
+        UNHIDE_FIELD(CReceipt, "transactionIndex");
+        UNHIDE_FIELD(CLogEntry, "blockHash");
+        UNHIDE_FIELD(CLogEntry, "blockNumber");
+        UNHIDE_FIELD(CLogEntry, "removed");
+        UNHIDE_FIELD(CLogEntry, "transactionHash");
+        UNHIDE_FIELD(CLogEntry, "transactionIndex");
+        UNHIDE_FIELD(CLogEntry, "transactionLogIndex");
+        UNHIDE_FIELD(CLogEntry, "type");
+        LOG4(receipt.Format());
+        opt->rawReceipts.push_back(receipt.Format());
         return true;
     }
 

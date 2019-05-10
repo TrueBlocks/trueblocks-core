@@ -28,6 +28,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
+    ENTER("parseArguments");
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
@@ -38,31 +39,31 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-a:") || startsWith(arg, "--address:")) {
             arg = substitute(substitute(arg, "-a:", ""), "--address:", "");
             if (!isAddress(arg))
-                return usage(orig + " does not appear to be a valid Ethereum address. Quitting...");
+                EXIT_USAGE(orig + " does not appear to be a valid Ethereum address.");
             address_list += (arg + "|");
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
-                return usage("Invalid option: " + arg);
+                EXIT_USAGE("Invalid option: " + arg);
             }
 
         } else {
 
             string_q errorMsg;
             if (!wrangleTxId(arg, errorMsg))
-                return usage(errorMsg);
+                EXIT_USAGE(errorMsg);
             string_q ret = transList.parseTransList(arg);
             if (!ret.empty())
-                return usage(ret);
+                EXIT_USAGE(ret);
 
         }
     }
 
     if (!transList.hasTrans())
-        return usage("Please specify at least one transaction identifier.");
+        EXIT_USAGE("Please specify at least one transaction identifier.");
 
-    return true;
+    EXIT_NOMSG(true);
 }
 
 //---------------------------------------------------------------------------------------------------

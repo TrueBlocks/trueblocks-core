@@ -1,5 +1,6 @@
 getLogs argc: 2 [1:-p] 
 getLogs -p 
+00000001 TIME ~ CLOCK - <ERROR> : Exit(parseArguments): 
 
   Invalid option: -p
 

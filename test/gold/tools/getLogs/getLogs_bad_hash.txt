@@ -1,5 +1,6 @@
 getLogs argc: 2 [1:0x0012] 
 getLogs 0x0012 
+00000001 TIME ~ CLOCK - <ERROR> : Exit(parseArguments): 
 
   The argument '0x0012' is not properly formatted. Is it the right length?
 
