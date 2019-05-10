@@ -62,7 +62,7 @@ bool CBlock::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
-    LOG4("CBlock::setValueByName --> " + fieldName + "=" + fieldValue.substr(0,50));
+    //LOG4("CBlock::setValueByName --> " + fieldName + "=" + fieldValue.substr(0,50));
     if (fieldName % "number") {
         fieldName = "blockNumber";  // NOLINT
 
