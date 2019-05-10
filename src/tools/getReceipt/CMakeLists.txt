@@ -59,7 +59,7 @@ run_test("getReceipt_by_txhash"          "0x6afbe0f0ea3613edd6b84b71260836c03bdd
 run_test("getReceipt_by_bnun_and_txid"   "4000000.5")
 run_test("getReceipt_by_bhash_and_txid"  "0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4" " -v" " --parity")
 
-run_test("getReceipt_from_node"          "-r" " 4000000.5")
+run_test("getReceipt_from_node"          "--raw" " 4000000.5")
 run_test("getReceipt_from_node_long"     "--raw" " 4000000.5")
 
 run_test("getReceipt_verbose_blk_idx1"   "-v" " 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3")
