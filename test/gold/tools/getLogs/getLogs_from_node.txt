@@ -1,5 +1,5 @@
-getLogs argc: 3 [1:-r] [2:4000000.5] 
-getLogs -r 4000000.5 
+getLogs argc: 3 [1:--raw] [2:4000000.5] 
+getLogs --raw 4000000.5 
 [{
   "address": "0x1a95b271b0535d15fa49932daba31ba612b52946",
   "blockHash": "0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853",
