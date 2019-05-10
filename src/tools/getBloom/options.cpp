@@ -15,7 +15,6 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     COption("~block_list",  "a space-separated list of one or more blocks for which to retrieve blooms"),
-    COption("-raw",         "pull the bloom filter directly from the running node (the default)"),
     COption("-eab",         "pull the enhanced adaptive blooms from QBlocks cache"),
     COption("-block",       "show only the block-level bloom (--raw only)"),
     COption("-re(c)eipts",  "show only the receipt-level blooms (--raw only)"),
@@ -126,9 +125,10 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
+    optionOn(OPT_RAW);
     registerOptions(nParams, params);
 
-    isRaw        = true;
+    isRaw        = true; // unusual, but true
     asBits       = false;
     asBars       = false;
     asBitBars    = false;

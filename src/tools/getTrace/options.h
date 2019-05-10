@@ -17,7 +17,6 @@
 class COptions : public COptionsBase {
 public:
     COptionsTransList transList;
-    bool isRaw;
     bool countOnly;
     CTraceArray  traces;
     CStringArray rawTraces;

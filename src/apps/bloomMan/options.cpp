@@ -14,7 +14,6 @@ static const COption params[] = {
     COption("-upgrade",      "read, then write, all blooms (effectivly upgrading them)"),
     COption("-bucket:<val>", "for --stats only, optional bucket size"),
     COption("-c(u)m",        "for --stats only, stats are cummulative (per bucket otherwise) "),
-    COption("@raw",          "print blooms from the raw node"),
     COption("",              "Work with EABs, raw blooms and/or present statistics."),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -46,9 +45,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-r" || arg == "--rewrite") {
             isRewrite = true;
             registerQuitHandler(defaultQuitHandler);  // we want to protect writes
-
-        } else if (arg == "--raw") {
-            isRaw = true;
 
         } else if (arg == "-c" || arg == "--check") {
             isCheck = true;
@@ -100,12 +96,12 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
+    optionOn(OPT_RAW);
     registerOptions(nParams, params);
 
     isStats           = false;
     isRewrite         = false;
     isCheck           = false;
-    isRaw             = false;
     stats.cummulative = false;
     address_list      = "";
     bucketSize        = 10000;

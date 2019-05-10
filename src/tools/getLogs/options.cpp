@@ -16,8 +16,6 @@
 static const COption params[] = {
     COption("~!trans_list",    "a space-separated list of one or more transaction identifiers "
                                     "(tx_hash, bn.txID, blk_hash.txID)"),
-//    COption("-address:<addr>", "retrieve raw transaction for a given Ethereum address"),
-    COption("-raw",            "retrieve raw transaction directly from the running node"),
     COption("",                "Retrieve a transaction's logs from the local cache or a running node."),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -33,10 +31,7 @@ bool COptions::parseArguments(string_q& command) {
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         string_q orig = arg;
-        if (arg == "-r" || arg == "--raw") {
-            isRaw = true;
-
-        } else if (startsWith(arg, "-a:") || startsWith(arg, "--address:")) {
+        if (startsWith(arg, "-a:") || startsWith(arg, "--address:")) {
             arg = substitute(substitute(arg, "-a:", ""), "--address:", "");
             if (!isAddress(arg))
                 EXIT_USAGE(orig + " does not appear to be a valid Ethereum address.");
@@ -68,11 +63,11 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
+    optionOn(OPT_RAW);
     registerOptions(nParams, params);
 
     transList.Init();
     address_list = "";
-    isRaw = false;
     logs.reserve(5000);
     rawLogs.reserve(5000);
 }
@@ -109,4 +104,3 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
     }
     return str;
 }
-

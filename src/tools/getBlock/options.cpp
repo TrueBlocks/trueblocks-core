@@ -15,7 +15,6 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     COption("~block_list",         "a space-separated list of one or more blocks to retrieve"),
-    COption("-raw",                "pull the block data from the running Ethereum node (no cache)"),
     COption("-hash_o(n)ly",        "display only transaction hashes, default is to display full transaction detail"),
     COption("-check",              "compare results between qblocks and Ethereum node, report differences, if any"),
     COption("-addrs",              "display all addresses included in the block"),
@@ -248,10 +247,10 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
+    optionOn(OPT_RAW);
     registerOptions(nParams, params);
 
     isCheck       = false;
-    isRaw         = false;
     isCache       = false;
     hashes        = false;
     filterType    = "";

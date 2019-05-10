@@ -16,7 +16,6 @@
 static const COption params[] = {
     COption("~!trans_list",    "a space-separated list of one or more transaction identifiers "
                                   "(tx_hash, bn.txID, blk_hash.txID)"),
-    COption("-raw",            "retrieve raw transaction directly from the running node"),
     COption("-trace",          "display the transaction's trace"),
     COption("-articulate",     "articulate the transactions if an ABI is found"),
     COption("@belongs:<addr>", "report true or false if the given address is found anywhere in the transaction"),
@@ -34,10 +33,7 @@ bool COptions::parseArguments(string_q& command) {
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if (arg == "-r" || arg == "--raw") {
-            isRaw = true;
-
-        } else if (arg == "-t" || arg == "--trace") {
+        if (arg == "-t" || arg == "--trace") {
             incTrace = true;
 
         } else if (arg == "-a" || arg == "--articulate") {
@@ -99,10 +95,10 @@ extern const char* STR_DISPLAY_FORMAT;
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
+    optionOn(OPT_RAW);
     registerOptions(nParams, params);
 
     transList.Init();
-    isRaw = false;
     incTrace = false;
     articulate = false;
     format = "";

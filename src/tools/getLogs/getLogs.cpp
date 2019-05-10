@@ -67,43 +67,31 @@ bool visitTransaction(CTransaction& trans, void *data) {
     }
 
     if (opt->isRaw) {
-        LOG4("raw");
-        // Note: this call is redundant. The transaction is already populated (if it's valid), but we need the raw data)
+        string_q fields =
+            "CBlock:blockHash,blockNumber|"
+            "CTransaction:to,from,blockHash,blockNumber|"
+            "CReceipt:to,from,blockHash,blockNumber,transactionHash,transactionIndex|"
+            "CLogEntry:blockHash,blockNumber,transactionHash,transactionIndex,transactionLogIndex,removed,type";
+        manageFields(fields, true);
+
         string_q raw;
-        queryRawLogs(raw, trans.blockNumber, trans.blockNumber, trans.to);
+        queryRawLogs(raw, trans.blockNumber, trans.blockNumber);
+        if (opt->isVeryRaw) {
+            opt->rawLogs.push_back(raw);
+            EXIT_NOMSG(true);
+        }
         CRPCResult generic;
         generic.parseJson3(raw);
         CBlock bl;
         CTransaction tt; tt.pBlock = &bl;
         CReceipt rr; rr.pTrans = &tt;
         CLogEntry log; log.pReceipt = &rr;
-        log.parseJson3(generic.result);
-
-        UNHIDE_FIELD(CBlock, "blockHash");
-        UNHIDE_FIELD(CTransaction, "blockHash");
-        UNHIDE_FIELD(CReceipt, "blockHash");
-        UNHIDE_FIELD(CLogEntry, "blockHash");
-
-        UNHIDE_FIELD(CBlock, "blockNumber");
-        UNHIDE_FIELD(CTransaction, "blockNumber");
-        UNHIDE_FIELD(CReceipt, "blockNumber");
-        UNHIDE_FIELD(CLogEntry, "blockNumber");
-
-        UNHIDE_FIELD(CTransaction, "from");
-        UNHIDE_FIELD(CReceipt, "from");
-        UNHIDE_FIELD(CTransaction, "to");
-        UNHIDE_FIELD(CReceipt, "to");
-
-        UNHIDE_FIELD(CReceipt, "transactionHash");
-        UNHIDE_FIELD(CLogEntry, "transactionHash");
-        UNHIDE_FIELD(CReceipt, "transactionIndex");
-        UNHIDE_FIELD(CLogEntry, "transactionIndex");
-        UNHIDE_FIELD(CLogEntry, "transactionLogIndex");
-
-        UNHIDE_FIELD(CLogEntry, "removed");
-        UNHIDE_FIELD(CLogEntry, "type");
-        LOG4(log.Format());
-        opt->rawLogs.push_back(log.Format());
+        while (log.parseJson3(generic.result)) {
+            if (log.getValueByName("transactionIndex") == uint_2_Str(trans.transactionIndex))
+                opt->rawLogs.push_back(log.Format());
+            log = CLogEntry();
+            log.pReceipt = &rr;
+        }
         EXIT_NOMSG(true);
     }
 
