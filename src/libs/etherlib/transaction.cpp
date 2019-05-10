@@ -62,7 +62,7 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
-    LOG4("CTransaction::setValueByName --> " + fieldName + "=" + fieldValue.substr(0,50));
+    //LOG4("CTransaction::setValueByName --> " + fieldName + "=" + fieldValue.substr(0,50));
     if (fieldName == "to" && fieldValue == "null")
         fieldValue = "0x";  // NOLINT
 
@@ -92,15 +92,15 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
         bool ret = ((CBlock*)pBlock)->setValueByName(fieldName, fieldValue);  // NOLINT
         if (ret) {
             bool done = (fieldName != "blockHash" && fieldName != "blockNumber" && fieldName != "gasUsed");
-            LOG4(fieldName, done);
+            //LOG4(fieldName, done);
             if (done) {
-                LOG4("set in block");
+                //LOG4("set in block");
                 return true;
             } else {
-                LOG4("set in block and transaction");
+                //LOG4("set in block and transaction");
             }
         } else {
-            LOG4("not set in block");
+            //LOG4("not set in block");
         }
     }
 

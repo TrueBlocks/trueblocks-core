@@ -62,7 +62,7 @@ bool CReceipt::setValueByName(const string_q& fieldNameIn, const string_q& field
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
-    SEP4("CReceipt::setValueByName(" + fieldName + ", " + fieldValue.substr(0,40) + "...)");
+    //SEP4("CReceipt::setValueByName(" + fieldName + ", " + fieldValue.substr(0,40) + "...)");
     if (fieldName == "contractAddress" && fieldValue == "null") {
         *((string_q*)&fieldValue) = "0";  // NOLINT
     } else if (fieldName == "status" && (fieldValue == "null" || fieldValue == "0x")) {
@@ -72,15 +72,15 @@ bool CReceipt::setValueByName(const string_q& fieldNameIn, const string_q& field
         bool ret = ((CTransaction*)pTrans)->setValueByName(fieldName, fieldValue);  // NOLINT
         if (ret) {
             bool done = (fieldName != "gasUsed");
-            LOG4(fieldName, done);
+            //LOG4(fieldName, done);
             if (done) {
-                LOG4("set in transaction");
+                //LOG4("set in transaction");
                 return true;
             } else {
-                LOG4("set in receipt and transaction");
+                //LOG4("set in receipt and transaction");
             }
         } else {
-            LOG4("not set in transaction");
+            //LOG4("not set in transaction");
         }
     }
     // EXISTING_CODE
@@ -333,7 +333,7 @@ string_q CReceipt::getValueByName(const string_q& fieldNameIn) const {
     string_q fieldName = fieldNameIn;
 
     // Give customized code a chance to override first
-    SEP4("CReceipt::getValueByName(" + fieldName + ")");
+    //SEP4("CReceipt::getValueByName(" + fieldName + ")");
     string_q ret = nextReceiptChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
@@ -376,7 +376,7 @@ string_q CReceipt::getValueByName(const string_q& fieldNameIn) const {
             fieldName = "hash";  // NOLINT
         // See if this field belongs to the item's container
         ret = nextTransactionChunk(fieldName, pTrans);
-        LOG4(fieldName, "=", ret, " from parent");
+        //LOG4(fieldName, "=", ret, " from parent");
         if (contains(ret, "Field not found"))
             ret = "";
         if (!ret.empty())
