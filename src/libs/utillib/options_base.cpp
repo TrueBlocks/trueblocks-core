@@ -268,6 +268,15 @@ namespace qblocks {
             expContext().asWei = false;
         }
 
+        if (isEnabled(OPT_RAW) && contains(cmdLine, "--veryRaw ")) {
+            isRaw = true;
+            isVeryRaw = true;
+        }
+
+        if (isEnabled(OPT_RAW) && contains(cmdLine, "--raw ")) {
+            isRaw = true;
+        }
+
         if (isEnabled(OPT_WEI) && contains(cmdLine, "--wei ")) {
             replaceAll(cmdLine, "--wei ", "");
             expContext().asEther = false;
@@ -319,6 +328,10 @@ namespace qblocks {
             return true;
 #endif
         if (isEnabled(OPT_ETHER) && arg == "--ether")
+            return true;
+        if (isEnabled(OPT_RAW) && arg == "--raw")
+            return true;
+        if (isEnabled(OPT_RAW) && arg == "--veryRaw")
             return true;
         if (isEnabled(OPT_WEI) && arg == "--wei")
             return true;
@@ -873,6 +886,8 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     COptionsBase::COptionsBase(void) : namesFile("") {
         minArgs = 1;
         isReadme = false;
+        isRaw = false;
+        isVeryRaw = false;
         needsOption = false;
         enableBits = OPT_DEFAULT;
         for (int i = 0 ; i < 5 ; i++)

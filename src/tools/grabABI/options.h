@@ -17,7 +17,6 @@ class COptions : public COptionsBase {
 public:
     uint64_t parts;
     bool noconst;
-    bool raw;
     bool asData;
     bool loadKnown;
     bool decNames;
