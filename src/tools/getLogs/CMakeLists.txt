@@ -62,15 +62,14 @@ run_test("getLogs_by_bnun_and_txid"   "4000000.5")
 run_test("getLogs_by_bhash_and_txid"  "0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4" " -v" " --parity")
 
 run_test("getLogs_first"              " 40500.0.next")
-#run_test("getLogs_latest"             " latest")
+# changes each time it's run: run_test("getLogs_latest" " latest")
 run_test("getLogs_nav_prev1"          " 1001001.1.prev")
 run_test("getLogs_nav_prev2"          " 1001001.0.prev")
 run_test("getLogs_nav_next1"          " 1001001.2.next")
 run_test("getLogs_nav_next2"          " 1001001.3.next")
 
-# There is no way to query logs without an ethereum address. Since getLogs doesn't use address, we can't do it
-#run_test("getLogs_from_node"          "-r" " 4000000.5")
-#run_test("getLogs_from_node_long"     "--raw" " 4000000.5")
+run_test("getLogs_from_node"          "-r" " 4000000.5")
+run_test("getLogs_from_node_long"     "--raw" " 4000000.5")
 
 run_test("getLogs_verbose_blk_idx1"   "-v" " 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3")
 run_test("getLogs_verbose_blk_idx2"   "--verbose" " 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3")

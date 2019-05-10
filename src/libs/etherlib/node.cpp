@@ -322,11 +322,30 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    bool queryRawLogs(string_q& results, const address_t& addr, uint64_t fromBlock, uint64_t toBlock) {
-        string_q data = "[{\"fromBlock\":\"[START]\",\"toBlock\":\"[STOP]\", \"address\": \"[ADDR]\"}]";
-        replace(data, "[START]", uint_2_Hex(fromBlock));
-        replace(data, "[STOP]",  uint_2_Hex(toBlock));
-        replace(data, "[ADDR]",  addr_2_Str(addr));
+    bool queryRawLogs(string_q& results, hash_t hash, const address_t& addr, const CTopicArray& topics) {
+        string_q data = "[{\"blockHash\":\"[HASH]\",\"address\":\"[ADDR]\"}]";
+//        string_q data = "[{\"blockHash\":\"[HASH]\",\"address\":\"[ADDR]\",\"topics\":[[TOPICS]]}]";
+        replace(data, "[HASH]", hash);
+        if (addr.empty())
+            replace(data, ",\"address\":\"[ADDR]\"", "");
+        else
+            replace(data, "[ADDR]", addr_2_Str(addr));
+//        replace(data, "[TOPICS]", topic_2_Str(topics));
+        results = callRPC("eth_getLogs", data, true);
+        return true;
+    }
+
+    //-------------------------------------------------------------------------
+    bool queryRawLogs(string_q& results,   uint64_t fromBlock, uint64_t toBlock, const address_t& addr, const CTopicArray& topics) {
+        string_q data = "[{\"fromBlock\":\"[START]\",\"toBlock\":\"[STOP]\",\"address\":\"[ADDR]\"}]";
+//        string_q data = "[{\"fromBlock\":\"[START]\",\"toBlock\":\"[STOP]\",\"address\":\"[ADDR]\",\"topics\":[[TOPICS]]}]";
+        replace(data, "[START]",  uint_2_Hex(fromBlock));
+        replace(data, "[STOP]",   uint_2_Hex(toBlock));
+        if (addr.empty())
+            replace(data, ",\"address\":\"[ADDR]\"", "");
+        else
+            replace(data, "[ADDR]", addr_2_Str(addr));
+//        replace(data, "[TOPICS]", topic_2_Str(topics));
         results = callRPC("eth_getLogs", data, true);
         return true;
     }
