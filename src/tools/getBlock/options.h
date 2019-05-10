@@ -17,7 +17,6 @@
 class COptions : public CBlockOptions {
 public:
     bool isCheck;
-    bool isRaw;
     bool isCache;
     bool hashes;
     bool traces;

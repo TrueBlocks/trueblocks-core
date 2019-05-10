@@ -36,7 +36,6 @@ public:
     bool              isStats;
     bool              isRewrite;
     bool              isCheck;
-    bool              isRaw;
     bool              hasAddrs;
     bool              hasBlocks;
     uint64_t          bucketSize;

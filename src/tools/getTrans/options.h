@@ -21,7 +21,6 @@ public:
     bool chkAsStr;
     COptionsTransList transList;
     size_t index;
-    bool isRaw;
     bool incTrace;
     string_q format;
     bool articulate;

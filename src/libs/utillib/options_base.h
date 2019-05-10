@@ -34,6 +34,7 @@
 #define OPT_DEFAULT (OPT_HELP|OPT_VERBOSE|OPT_DENOM|OPT_PARITY|OPT_TRUEDATA)
 #endif
 #define OPT_RUNONCE (1<<9)
+#define OPT_RAW     (1<<10)
 
 namespace qblocks {
 
@@ -45,6 +46,8 @@ namespace qblocks {
         uint32_t enableBits;
         bool needsOption;
         bool isReadme;
+        bool isRaw;
+        bool isVeryRaw;
 
         CStringArray commandLines;
         uint64_t minArgs;

@@ -24,7 +24,6 @@ static const COption params[] = {
     COption("-noconst",    "generate encodings for non-constant functions and events only (always true when generating)"), // NOLINT
     COption("-open",       "open the ABI file for editing, download if not already present"),
     COption("-so(l):<fn>", "create the ABI file from a .sol file in the local directory"),
-    COption("-raw",        "force retrieval of ABI from etherscan (ignoring cache)"),
     COption("@silent",     "if ABI cannot be acquired, fail silently (useful for scripting)"),
     COption("@nodec",      "do not decorate duplicate names"),
     COption("@known",      "load common 'known' ABIs from cache"),
@@ -80,9 +79,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "--nodec") {
             decNames = false;
-
-        } else if (arg == "-r" || arg == "--raw") {
-            raw = true;
 
         } else if (startsWith(arg,"-l:") || startsWith(arg,"--sol:")) {
             string_q orig = arg;
@@ -182,7 +178,7 @@ bool COptions::parseArguments(string_q& command) {
 
     for (auto addr : addrs) {
         CAbi abi;
-        abi.loadAbiAndCache(addr, raw, silent, decNames);
+        abi.loadAbiAndCache(addr, isRaw, silent, decNames);
         abi.address = addr;
         sort(abi.interfaces.begin(), abi.interfaces.end(), sortByFuncName);
         abi_specs.push_back(abi);
@@ -205,13 +201,13 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
+    optionOn(OPT_RAW);
     registerOptions(nParams, params);
 
     parts = SIG_DEFAULT;
     noconst = false;
     silent = false;
     loadKnown = false;
-    raw = false;
     decNames = true;
     asData = false;
     isGenerate = false;
