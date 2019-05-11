@@ -1,14 +1,13 @@
-getTrace argc: 2 [1:--other] 
-getTrace --other 
+getLogs argc: 3 [1:--bad] [2:--file:cmd_file] 
+getLogs --bad --file:cmd_file 
 00000001 TIME ~ CLOCK - <ERROR> : Exit(parseArguments): 
 
-  Invalid option: --other
+  Invalid option: --bad
 
-  Usage:    getTrace [-c|-v|-h] <transID> [transID...]  
-  Purpose:  Retrieve a transaction's traces from the local cache or a running node.  
+  Usage:    getLogs [-v|-h] <transID> [transID...]  
+  Purpose:  Retrieve a transaction's logs from the local cache or a running node.  
   Where:  
 	trans_list            a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)
-	-c  (--countOnly)     show the number of traces for the transaction only
 
 #### Hidden options (shown during testing only)
 	-a  (--address val)   a list of addresses used to filter the results

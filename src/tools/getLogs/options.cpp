@@ -14,9 +14,10 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("~!trans_list",    "a space-separated list of one or more transaction identifiers "
-                                    "(tx_hash, bn.txID, blk_hash.txID)"),
-    COption("",                "Retrieve a transaction's logs from the local cache or a running node."),
+    COption("~!trans_list",   "a space-separated list of one or more transaction identifiers "
+                                "(tx_hash, bn.txID, blk_hash.txID)"),
+    COption("@address:<val>", "a list of addresses used to filter the results"),
+    COption("",               "Retrieve a transaction's logs from the local cache or a running node."),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -26,7 +27,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-    ENTER("parseArguments");
+    ENTER4("parseArguments");
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
@@ -35,7 +36,7 @@ bool COptions::parseArguments(string_q& command) {
             arg = substitute(substitute(arg, "-a:", ""), "--address:", "");
             if (!isAddress(arg))
                 EXIT_USAGE(orig + " does not appear to be a valid Ethereum address.");
-            address_list += (arg + "|");
+            addresses.push_back(arg + "|");
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -66,10 +67,10 @@ void COptions::Init(void) {
     optionOn(OPT_RAW);
     registerOptions(nParams, params);
 
+    addresses.clear();
     transList.Init();
-    address_list = "";
-    logs.reserve(5000);
-    rawLogs.reserve(5000);
+    items.reserve(5000);
+    rawItems.reserve(5000);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -95,7 +96,7 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
 
         string_q ret;
         ret += "[{trans_list}] is one or more space-separated identifiers which may be either a transaction hash,|"
-                    "a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.\n";
+                "a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.\n";
         ret += "This tool checks for valid input syntax, but does not check that the transaction requested exists.\n";
         ret += "This tool retrieves information from the local node or rpcProvider if configured "
                     "(see documentation).\n";
@@ -104,3 +105,4 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
     }
     return str;
 }
+
