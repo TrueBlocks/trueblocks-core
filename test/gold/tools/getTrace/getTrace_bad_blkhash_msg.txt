@@ -28,4 +28,4 @@ getTrace 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1 0x
     "output": "0x"
   }
 },
-{ "error": "The traces for transaction 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 were not found." }]
+{ "error": "The item you requested (0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5) was not found." }]

@@ -1,8 +1,8 @@
-getTrace argc: 2 [1:--other] 
-getTrace --other 
+getTrace argc: 3 [1:--address] [2:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] 
+getTrace --address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 
 00000001 TIME ~ CLOCK - <ERROR> : Exit(parseArguments): 
 
-  Invalid option: --other
+  Please specify at least one transaction identifier.
 
   Usage:    getTrace [-c|-v|-h] <transID> [transID...]  
   Purpose:  Retrieve a transaction's traces from the local cache or a running node.  

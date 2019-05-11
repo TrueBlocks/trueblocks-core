@@ -31,16 +31,16 @@ int main(int argc, const char *argv[]) {
 
     size_t cnt = 0;
     cout << "[";
-    for (auto tr : options.traces) {
+    for (auto item : options.items) {
         if (cnt++ > 0)
             cout << ",";
-        tr.doExport(cout);
+        item.doExport(cout);
     }
-    if (cnt && options.rawTraces.size())
+    if (cnt && options.rawItems.size())
         cout << ",\n";
 
     cnt = 0;
-    for (auto str : options.rawTraces) {
+    for (auto str : options.rawItems) {
         if (cnt++ > 0)
             cout << ",\n";
         cout << str;
@@ -55,32 +55,47 @@ bool visitTransaction(CTransaction& trans, void *data) {
     COptions *opt = (COptions*)data;
     if (contains(trans.hash, "invalid")) {
         ostringstream os;
-        os << cRed << "{ \"error\": \"The traces for transaction ";
-        os << nextTokenClear(trans.hash, ' ') << " were not found.\" }" << cOff;
-        opt->rawTraces.push_back(os.str());
+        os << cRed << "{ \"error\": \"The item you requested (";
+        os << nextTokenClear(trans.hash, ' ') << ") was not found.\" }" << cOff;
+        opt->rawItems.push_back(os.str());
         return true;
     }
 
-    if (opt->isRaw) {
-        // Note: this call is redundant. The transaction is already populated (if it's valid), but we need the raw data)
-        string_q raw;
-        queryRawTrace(raw, trans.getValueByName("hash"));
-        raw = substitute(raw,"[{\"jsonrpc\":\"2.0\",\"result\":[", "");
-        raw = substitute(raw,"],\"id\":1}\n]", "");
-        raw = substitute(raw,"],\"id\":\"1\"}\n]", "");
-        opt->rawTraces.push_back(raw);
+    if (!opt->isRaw) {
+        if (opt->countOnly) {
+            cout << trans.hash << "\t" << getTraceCount(trans.hash) << "\n";
+        } else {
+            CTraceArray traces;
+            getTraces(traces, trans.getValueByName("hash"));
+            for (auto tr : traces) {
+                tr.pTrans = &trans;
+                opt->items.push_back(tr);
+            }
+         }
+        return true;
+     }
+
+    string_q fields =
+        "CBlock:blockHash,blockNumber|"
+        "CTransaction:to,from,blockHash,blockNumber|"
+        "CTrace|blockHash,blockNumber,subtraces,traceAddress,transactionHash,transactionPosition,type,error,articulatedTrace,action,result,date|"
+        "CTraceAction:address,balance,callType,from,gas,init,input,refundAddress,to,value,ether|"
+        "CTraceResult:address,code,gasUsed,output|";
+    manageFields(fields, true);
+
+    string_q result;
+    queryRawTrace(result, trans.getValueByName("hash"));
+    if (opt->isVeryRaw) {
+        opt->rawItems.push_back(result);
         return true;
     }
-
-    if (opt->countOnly) {
-        cout << trans.hash << "\t" << getTraceCount(trans.hash) << "\n";
-
-    } else {
-        CTraceArray traces;
-        getTraces(traces, trans.getValueByName("hash"));
-        for (auto tr : traces)
-            opt->traces.push_back(tr);
-    }
-
+    CRPCResult generic;
+    generic.parseJson3(result);
+    CBlock bl;
+    CTransaction tt; tt.pBlock = &bl;
+    CReceipt receipt; receipt.pTrans = &tt;
+    CTrace trace; trace.pTrans = &tt;
+    trace.parseJson3(generic.result);
+    opt->rawItems.push_back(trace.Format());
     return true;
 }

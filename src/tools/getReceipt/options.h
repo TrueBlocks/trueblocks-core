@@ -16,9 +16,10 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
+    CAddressArray     addresses;
     COptionsTransList transList;
-    CReceiptArray receipts;
-    CStringArray  rawReceipts;
+    CReceiptArray     items;
+    CStringArray      rawItems;
 
     COptions(void);
     ~COptions(void);

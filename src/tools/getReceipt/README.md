@@ -22,7 +22,6 @@
 - This tool retrieves information from the local node or rpcProvider if configured (see documentation).
 - If the queried node does not store historical state, the results may be undefined.
 
-
 #### Other Options
 
 All **QBlocks** command-line tools support the following commands (although in some case, they have no meaning):
