@@ -14,9 +14,10 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("~!trans_list", "a space-separated list of one or more transaction identifiers "
+    COption("~!trans_list",   "a space-separated list of one or more transaction identifiers "
                                 "(tx_hash, bn.txID, blk_hash.txID)"),
-    COption("",             "Retrieve a transaction's receipt from the local cache or a running node."),
+    COption("@address:<val>", "a list of addresses used to filter the results"),
+    COption("",               "Retrieve a transaction's receipt from the local cache or a running node."),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -26,34 +27,39 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
+    ENTER4("parseArguments");
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if (startsWith(arg, '-')) {  // do not collapse
+        string_q orig = arg;
+        if (startsWith(arg, "-a:") || startsWith(arg, "--address:")) {
+            arg = substitute(substitute(arg, "-a:", ""), "--address:", "");
+            if (!isAddress(arg))
+                EXIT_USAGE(orig + " does not appear to be a valid Ethereum address.");
+            addresses.push_back(arg + "|");
+
+        } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
-                return usage("Invalid option: " + arg);
+                EXIT_USAGE("Invalid option: " + arg);
             }
 
         } else {
 
             string_q errorMsg;
             if (!wrangleTxId(arg, errorMsg))
-                return usage(errorMsg);
+                EXIT_USAGE(errorMsg);
             string_q ret = transList.parseTransList(arg);
             if (!ret.empty())
-                return usage(ret);
+                EXIT_USAGE(ret);
 
         }
     }
 
     if (!transList.hasTrans())
-        return usage("Please specify at least one transaction identifier.");
+        EXIT_USAGE("Please specify at least one transaction identifier.");
 
-//    if (address && !isAddress(address))
-//        return usage("Bad address.");
-
-    return true;
+    EXIT_NOMSG(true);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -61,9 +67,10 @@ void COptions::Init(void) {
     optionOn(OPT_RAW);
     registerOptions(nParams, params);
 
+    addresses.clear();
     transList.Init();
-    receipts.reserve(5000);
-    rawReceipts.reserve(5000);;
+    items.reserve(5000);
+    rawItems.reserve(5000);
 }
 
 //---------------------------------------------------------------------------------------------------

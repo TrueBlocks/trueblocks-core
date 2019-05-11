@@ -31,16 +31,16 @@ int main(int argc, const char *argv[]) {
 
     size_t cnt = 0;
     cout << "[";
-    for (auto r : options.receipts) {
+    for (auto item : options.items) {
         if (cnt++ > 0)
             cout << ",";
-        r.doExport(cout);
+        item.doExport(cout);
     }
-    if (cnt && options.rawReceipts.size())
+    if (cnt && options.rawItems.size())
         cout << ",\n";
 
     cnt = 0;
-    for (auto str : options.rawReceipts) {
+    for (auto str : options.rawItems) {
         if (cnt++ > 0)
             cout << ",\n";
         cout << str;
@@ -55,36 +55,37 @@ bool visitTransaction(CTransaction& trans, void *data) {
     COptions *opt = (COptions*)data;
     if (contains(trans.hash, "invalid")) {
         ostringstream os;
-        os << cRed << "{ \"error\": \"The receipt for transaction ";
-        os << nextTokenClear(trans.hash, ' ') << " was not found.\" }" << cOff;
-        opt->rawReceipts.push_back(os.str());
+        os << cRed << "{ \"error\": \"The item you requested (";
+        os << nextTokenClear(trans.hash, ' ') << ") was not found.\" }" << cOff;
+        opt->rawItems.push_back(os.str());
         return true;
     }
 
-    if (opt->isRaw) {
-        string_q fields =
-            "CBlock:blockHash,blockNumber|"
-            "CTransaction:to,from,blockHash,blockNumber|"
-            "CReceipt:to,from,blockHash,blockNumber,transactionHash,transactionIndex,cumulativeGasUsed,logsBloom,root|"
-            "CLogEntry:blockHash,blockNumber,transactionHash,transactionIndex,transactionLogIndex,removed,type";
-        manageFields(fields, true);
-
-        string_q result;
-        queryRawReceipt(result, trans.getValueByName("hash"));
-        if (opt->isVeryRaw) {
-            opt->rawReceipts.push_back(result);
-            return true;
-        }
-        CRPCResult generic;
-        generic.parseJson3(result);
-        CBlock bl;
-        CTransaction tt; tt.pBlock = &bl;
-        CReceipt receipt; receipt.pTrans = &tt;
-        receipt.parseJson3(generic.result);
-        opt->rawReceipts.push_back(receipt.Format());
+    if (!opt->isRaw) {
+        opt->items.push_back(trans.receipt);
         return true;
     }
 
-    opt->receipts.push_back(trans.receipt);
+    string_q fields =
+        "CBlock:blockHash,blockNumber|"
+        "CTransaction:to,from,blockHash,blockNumber|"
+        "CReceipt:to,from,blockHash,blockNumber,transactionHash,transactionIndex,cumulativeGasUsed,logsBloom,root|"
+        "CLogEntry:blockHash,blockNumber,transactionHash,transactionIndex,transactionLogIndex,removed,type";
+    manageFields(fields, true);
+
+    string_q result;
+    queryRawReceipt(result, trans.getValueByName("hash"));
+    if (opt->isVeryRaw) {
+        opt->rawItems.push_back(result);
+        return true;
+    }
+    CRPCResult generic;
+    generic.parseJson3(result);
+    CBlock bl;
+    CTransaction tt; tt.pBlock = &bl;
+    CReceipt receipt; receipt.pTrans = &tt;
+    receipt.parseJson3(generic.result);
+    opt->rawItems.push_back(receipt.Format());
+
     return true;
 }

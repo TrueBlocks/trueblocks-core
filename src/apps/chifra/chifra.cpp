@@ -7,12 +7,14 @@
 #include "options.h"
 #include "question.h"
 
-#define RETURN(a) { bool ret = (a); if (!getEnvStr("TEST_MODE").empty()) { return 0; } else { return ret; } }
+#define RETURN(a) { bool ret = (a); if (!getEnvStr("TEST_MODE").empty()) { EXIT_NOMSG(0); } else { EXIT_NOMSG(ret); } }
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
+
     nodeNotRequired(); // not every command needs a node
     acctlib_init(quickQuitHandler);
 
+    ENTER("chifra");
     COptions options;
     if (!options.prepareArguments(argc, argv))
         RETURN(1);
@@ -37,6 +39,6 @@ int main(int argc, const char *argv[]) {
     }
 
     acctlib_cleanup();
-    return 0;
+    EXIT_NOMSG(0);
 }
 

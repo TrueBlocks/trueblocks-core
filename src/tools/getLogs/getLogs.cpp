@@ -31,16 +31,16 @@ int main(int argc, const char *argv[]) {
 
     size_t cnt = 0;
     cout << "[";
-    for (auto l : options.logs) {
+    for (auto item : options.items) {
         if (cnt++ > 0)
             cout << ",";
-        l.doExport(cout);
+        item.doExport(cout);
     }
-    if (cnt && options.rawLogs.size())
+    if (cnt && options.rawItems.size())
         cout << ",\n";
 
     cnt = 0;
-    for (auto str : options.rawLogs) {
+    for (auto str : options.rawItems) {
         if (cnt++ > 0)
             cout << ",\n";
         cout << str;
@@ -52,53 +52,46 @@ int main(int argc, const char *argv[]) {
 
 //--------------------------------------------------------------
 bool visitTransaction(CTransaction& trans, void *data) {
-
-    ENTER("visitTransaction");
-    LOG4(trans.blockNumber, ".", trans.transactionIndex);
-
     COptions *opt = (COptions*)data;
     if (contains(trans.hash, "invalid")) {
         ostringstream os;
-        os << cRed << "{ \"error\": \"The logs for transaction ";
-        os << nextTokenClear(trans.hash, ' ') << " were not found.\" }" << cOff;
-        opt->rawLogs.push_back(os.str());
-        LOG4("invalid");
-        EXIT_NOMSG(true);
+        os << cRed << "{ \"error\": \"The item you requested (";
+        os << nextTokenClear(trans.hash, ' ') << ") was not found.\" }" << cOff;
+        opt->rawItems.push_back(os.str());
+        return true;
     }
 
-    if (opt->isRaw) {
-        string_q fields =
-            "CBlock:blockHash,blockNumber|"
-            "CTransaction:to,from,blockHash,blockNumber|"
-            "CReceipt:to,from,blockHash,blockNumber,transactionHash,transactionIndex|"
-            "CLogEntry:blockHash,blockNumber,transactionHash,transactionIndex,transactionLogIndex,removed,type";
-        manageFields(fields, true);
-
-        string_q raw;
-        queryRawLogs(raw, trans.blockNumber, trans.blockNumber);
-        if (opt->isVeryRaw) {
-            opt->rawLogs.push_back(raw);
-            EXIT_NOMSG(true);
-        }
-        CRPCResult generic;
-        generic.parseJson3(raw);
-        CBlock bl;
-        CTransaction tt; tt.pBlock = &bl;
-        CReceipt rr; rr.pTrans = &tt;
-        CLogEntry log; log.pReceipt = &rr;
-        while (log.parseJson3(generic.result)) {
-            if (log.getValueByName("transactionIndex") == uint_2_Str(trans.transactionIndex))
-                opt->rawLogs.push_back(log.Format());
-            log = CLogEntry();
-            log.pReceipt = &rr;
-        }
-        EXIT_NOMSG(true);
+    if (!opt->isRaw) {
+        for (auto log : trans.receipt.logs)
+            opt->items.push_back(log);
+        return true;
     }
 
-    for (auto l : trans.receipt.logs) {
-        LOG4("Pushing: ", l);
-        opt->logs.push_back(l);
+    string_q fields =
+        "CBlock:blockHash,blockNumber|"
+        "CTransaction:to,from,blockHash,blockNumber|"
+        "CReceipt:to,from,blockHash,blockNumber,transactionHash,transactionIndex,cumulativeGasUsed,logsBloom,root|"
+        "CLogEntry:blockHash,blockNumber,transactionHash,transactionIndex,transactionLogIndex,removed,type";
+    manageFields(fields, true);
+
+    string_q result;
+    queryRawLogs(result, trans.blockNumber, trans.blockNumber);
+    if (opt->isVeryRaw) {
+        opt->rawItems.push_back(result);
+        return true;
+    }
+    CRPCResult generic;
+    generic.parseJson3(result);
+    CBlock bl;
+    CTransaction tt; tt.pBlock = &bl;
+    CReceipt receipt; receipt.pTrans = &tt;
+    CLogEntry log; log.pReceipt = &receipt;
+    while (log.parseJson3(generic.result)) {
+        if (log.getValueByName("transactionIndex") == uint_2_Str(trans.transactionIndex))
+            opt->rawItems.push_back(log.Format());
+        log = CLogEntry();
+        log.pReceipt = &receipt;
     }
 
-    EXIT_NOMSG(true);
+    return true;
 }
