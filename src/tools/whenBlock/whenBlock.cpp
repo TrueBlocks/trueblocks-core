@@ -15,7 +15,6 @@
 
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-    nodeNotRequired(); // This command will run without a node
     etherlib_init(quickQuitHandler);
 
     COptions options;
