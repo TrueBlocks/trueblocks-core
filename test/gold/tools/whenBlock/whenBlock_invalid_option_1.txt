@@ -1,6 +1,5 @@
 whenBlock argc: 2 [1:-x] 
 whenBlock -x 
-00000001 TIME ~ CLOCK - <ERROR> : Exit(parseArguments): 
 
   Invalid option: '-x'.
 

@@ -21,18 +21,21 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
+    bool first = true;
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
-        string_q format = expContext().fmtMap["nick"];  // order matters
 
+        string_q format = expContext().fmtMap["nick"];  // order matters
         if (options.exportFmt & (TXT1|CSV1) && options.items.size() == 0) {
-            LOG_INFO("No matches");
+            LOG_INFO("No results");
 
         } else {
             for (size_t a = 0 ; a < options.items.size() ; a++) {
-                if (a == 0)
+                if (first) {
                     cout  << exportPreamble(options.exportFmt, format, GETRUNTIME_CLASS(CAccountName));
+                    first = false;
+                }
                 if (options.exportFmt & (TXT1|CSV1))
                     cout << options.items[a].Format(format) << endl;
                 else {
@@ -44,8 +47,7 @@ int main(int argc, const char *argv[]) {
                 }
             }
         }
+        cout << exportPostamble(options.exportFmt);
     }
-    cout << exportPostamble(options.exportFmt);
-
     return 0;
 }

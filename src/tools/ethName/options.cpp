@@ -10,7 +10,6 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "utillib.h"
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
@@ -25,8 +24,7 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-extern const char* STR_ALLFIELDS;
-extern const char* STR_DEFFIELDS;
+extern const char* STR_DISPLAY;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
@@ -42,6 +40,14 @@ bool COptions::parseArguments(string_q& command) {
             return false;
 
         } else if (arg == "-d" || arg == "--allFields") {
+const char* STR_ALLFIELDS =
+"[{ADDR}]\t"
+"[{SYMBOL}]\t"
+"[{NAME}]\t"
+"[{SOURCE}]\t"
+"[{DESCRIPTION}]\t"
+"[{LOGO}]\t"
+"[{VISIBLE}]";
             searchFields = STR_ALLFIELDS;
             format = searchFields;
 
@@ -76,7 +82,7 @@ bool COptions::parseArguments(string_q& command) {
         case JSON1: format = ""; break;
         case TXT1:
         case CSV1:
-            format = getGlobalConfig()->getConfigStr("display", "format", format.empty() ? STR_DEFFIELDS : format);
+            format = getGlobalConfig()->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
             manageFields("CAccountName:" + cleanFmt(format, exportFmt));
             break;
     }
@@ -92,7 +98,7 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
 
     searches.clear();
-    searchFields = STR_DEFFIELDS;
+    searchFields = STR_DISPLAY;
     matchCase = false;
     minArgs = 0;
 }
@@ -109,6 +115,10 @@ COptions::COptions(void) {
     establishFolder(namesFile.getPath());
     loadNames();
     Init();
+}
+
+//--------------------------------------------------------------------------------
+COptions::~COptions(void) {
 }
 
 //--------------------------------------------------------------------------------
@@ -160,17 +170,7 @@ void COptions::applyFilter() {
     }
 }
 
-//-----------------------------------------------------------------------
-const char* STR_ALLFIELDS =
-"[{ADDR}]\t"
-"[{SYMBOL}]\t"
-"[{NAME}]\t"
-"[{SOURCE}]\t"
-"[{DESCRIPTION}]\t"
-"[{LOGO}]\t"
-"[{VISIBLE}]";
-
-const char* STR_DEFFIELDS =
+const char* STR_DISPLAY =
 "[{ADDR}]\t"
 "[{SYMBOL}]\t"
 "[{NAME}]";

@@ -1,4 +1,3 @@
 whenBlock argc: 2 [1:a] 
 whenBlock a 
-00000001 TIME ~ CLOCK - <WARNG> : Exit(parseArguments): 
-The given value 'a' is not a numeral or a special named block.
+00000001 TIME ~ CLOCK - <WARNG> : The given value 'a' is not a numeral or a special named block.
