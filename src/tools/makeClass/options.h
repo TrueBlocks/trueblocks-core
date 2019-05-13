@@ -34,6 +34,8 @@ public:
 
     bool parseArguments(string_q& command);
     void Init(void);
+
+    bool exportJson(const string_q& cl);
 };
 
 //-------------------------------------------------------------------

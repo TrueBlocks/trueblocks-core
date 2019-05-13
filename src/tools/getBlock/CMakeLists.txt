@@ -103,7 +103,7 @@ run_test("getBlock_address_addrsf"   "3982128"  " --addr"   )
 run_test("getBlock_address_uniq1"    "3982128"  " --uniq"   )
 run_test("getBlock_address_uniq2"    "3982128"  " -u"       )
 run_test("getBlock_address_uniqTx1"  "3982128"  " --uniqTx" " --filter" " 0xd26114cd6ee289accf82350c8d8487fedb8a0c07")
-run_test("getBlock_address_uniqTx2"  "3982128"  " -x "      " --filter" " 0xd26114cd6ee289accf82350c8d8487fedb8a0c07")
+run_test("getBlock_address_uniqTx2"  "3982128"  " --uniqTx" " --filter" " 0xd26114cd6ee289accf82350c8d8487fedb8a0c07")
 
 run_test("getBlock_address_addrsCnt1"  "3982128"  " --addrs"    " --number")
 run_test("getBlock_address_addrsCnt2"  "3982128"  " --addrsCnt"            )

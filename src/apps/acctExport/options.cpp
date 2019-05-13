@@ -31,15 +31,7 @@ bool COptions::parseArguments(string_q& command) {
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if (startsWith(arg, "-f:") || startsWith(arg, "--fmt:")) {
-
-            arg = substitute(substitute(arg, "-f:", ""), "--fmt:", "");
-                 if ( arg == "txt" ) fmt = TXT;
-            else if ( arg == "csv" ) fmt = CSV;
-            else if ( arg == "json") fmt = JSON;
-            else return usage("Export format must be one of [ json | txt | csv ]. Quitting...");
-
-        } else if (startsWith(arg, "-b") || startsWith(arg, "--blocks")) {
+        if (startsWith(arg, "-b") || startsWith(arg, "--blocks")) {
             arg = substitute(substitute(arg, "-b:", ""), "--blocks:", "");
             if (arg != "on" && arg != "off")
                 return usage("Please provide either 'on' or 'off' for the --blocks options. Quitting...");
@@ -157,19 +149,19 @@ bool COptions::parseArguments(string_q& command) {
     skipDdos = getGlobalConfig("acctExport")->getConfigBool("settings", "skipDdos", skipDdos);;
     maxTraces = getGlobalConfig("acctExport")->getConfigBool("settings", "maxTraces", maxTraces);;
 
-    if (fmt != JSON) {
+    if (exportFmt != JSON1) {
         string_q defFmt = "[{DATE}]\t[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{FROM}]\t[{TO}]\t[{VALUE}]\t[{ISERROR}]\t[{EVENTS}]";
         string_q format = toml.getConfigStr("formats", "trans_fmt", defFmt);
         if (format.empty())
             return usage("For non-json export a 'trans_fmt' string is required. Check your config file. Quitting...");
-        expContext().fmtMap["transaction_fmt"] = cleanFmt(format, fmt);
+        expContext().fmtMap["transaction_fmt"] = cleanFmt(format, exportFmt);
         if (!contains(toLower(format), "traces"))
             HIDE_FIELD(CTransaction, "traces");
 
         format = toml.getConfigStr("formats", "trace_fmt", "{TRACES}");
-        expContext().fmtMap["trace_fmt"] = cleanFmt(format, fmt);
+        expContext().fmtMap["trace_fmt"] = cleanFmt(format, exportFmt);
         format = toml.getConfigStr("formats", "logentry_fmt", "{LOGS}");
-        expContext().fmtMap["logentry_fmt"] = cleanFmt(format, fmt);
+        expContext().fmtMap["logentry_fmt"] = cleanFmt(format, exportFmt);
     }
 
     lastAtClient = getLastBlock_client();
@@ -188,7 +180,6 @@ void COptions::Init(void) {
     writeTraces = false;
     skipDdos = true;
     maxTraces = 250;
-    fmt = JSON;
     articulate = false;
 
     minArgs = 0;

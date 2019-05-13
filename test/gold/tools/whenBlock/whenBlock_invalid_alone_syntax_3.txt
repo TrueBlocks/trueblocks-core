@@ -1,4 +1,4 @@
-whenBlock argc: 3 [1:-d] [2:pppppp1] 
-whenBlock -d pppppp1 
+whenBlock argc: 2 [1:pppppp1] 
+whenBlock pppppp1 
 00000001 TIME ~ CLOCK - <WARNG> : Exit(parseArguments): 
 The given value 'pppppp1' is not a numeral or a special named block.

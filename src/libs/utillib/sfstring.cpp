@@ -402,4 +402,12 @@ namespace qblocks {
         str.resize(pos);
     }
 
+    //---------------------------------------------------------------------------------------
+    bool containsAny(const string_q& haystack, const string_q& needle) {
+        string need = needle.c_str();
+        for (const auto elem : need)
+            if (contains(haystack, elem))
+                return true;
+        return false;
+    }
 }  // namespace qblocks

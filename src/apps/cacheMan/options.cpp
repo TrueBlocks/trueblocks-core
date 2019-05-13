@@ -11,7 +11,7 @@ static const COption params[] = {
     COption("-check",            "check for duplicates and other problems in the cache"),
     COption("-data",             "in 'list' mode, render results as data (i.e export mode)"),
     COption("-sort",             "sort the list of transactions and re-write (precludes other modes, other than --dedup)"),
-    COption("-fi(x)",            "remove duplicates from the cache (if any)"),
+    COption("-fix",              "remove duplicates from the cache (if any)"),
     COption("-list",             "list the contents of the cache (the default if no other option)"),
     COption("-cacheB(a)ls",      "cache per block account balances for each account"),
     COption("-balances",         "export account balances for each account"),
@@ -40,21 +40,14 @@ bool COptions::parseArguments(string_q& command) {
         if (arg == "-c" || arg == "--check") {
             mode = "check|" + mode;  // always do 'checks' first
 
-        } else if (startsWith(arg, "-f:") || startsWith(arg, "--fmt:")) {
-
-            arg = substitute(substitute(arg, "-f:", ""), "--fmt:", "");
-            if ( arg == "txt" ) fmt = TXT;
-            else if ( arg == "csv" ) fmt = CSV;
-            else if ( arg == "json") fmt = JSON;
-            else return usage("Export format must be one of [ json | txt | csv ]. Quitting...");
-
-        } else if (arg == "-x" || arg == "--fix") {
+        } else if (arg == "--fix") {
             if (!contains(mode, "fix"))
                 mode += "fix|";
             replace(mode, "list|fix", "fix|list");  // always do 'fixes' first
 
         } else if (arg == "-l" || arg == "--list") {
             mode += "list|";  // do 'listing' in order found
+            exportFmt = JSON1;
 
         } else if (startsWith(arg, "-t:") || startsWith(arg, "--truncate:")) {
             arg = substitute(substitute(arg, "-t:", ""), "--truncate:", "");
@@ -195,7 +188,6 @@ void COptions::Init(void) {
     skip = 1;
     isRemove = false;
     isImport = false;
-    fmt = JSON;
 }
 
 //---------------------------------------------------------------------------------------------------

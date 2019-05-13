@@ -1,4 +1,4 @@
-whenBlock argc: 3 [1:--data] [2:2015-03-02] 
-whenBlock --data 2015-03-02 
+whenBlock argc: 2 [1:2015-03-02] 
+whenBlock 2015-03-02 
 00000001 TIME ~ CLOCK - <WARNG> : Exit(parseArguments): 
 The date you specified (2015-03-02)is before the first block.

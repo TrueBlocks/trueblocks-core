@@ -42,7 +42,7 @@ int main(int argc, const char *argv[]) {
 
                     if (!options.asData)
                         cerr << toProper(mode)+"ing cache: " << watch->name << "\n";
-                    if (options.fmt == JSON)
+                    if (options.exportFmt == JSON1)
                         cout << "[";
 
                     while (!txCache.Eof()) {
@@ -114,7 +114,7 @@ int main(int argc, const char *argv[]) {
                             } else if (mode == "list") {
                                 if (!(options.stats.nRecords % options.skip)) {
                                     static bool first = true;
-                                    if (options.fmt == JSON) {
+                                    if (options.exportFmt == JSON1) {
                                         if (!first)
                                             cout << ",";
                                         cout << "{ ";
@@ -133,7 +133,7 @@ int main(int argc, const char *argv[]) {
                         }
                     }
 
-                    if (options.fmt == JSON)
+                    if (options.exportFmt == JSON1)
                         cout << "]";
 
                     txCache.Release();

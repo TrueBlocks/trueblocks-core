@@ -2,7 +2,7 @@ whenBlock argc: 2 [1:-th]
 whenBlock -th 
 #### Usage
 
-`Usage:`    whenBlock [-d|-l|-f|-v|-h] &lt; block | date &gt; [ block... | date... ]  
+`Usage:`    whenBlock [-l|-v|-h] &lt; block | date &gt; [ block... | date... ]  
 `Purpose:`  Finds the nearest block prior to a date, or the nearest date prior to a block.
             Alternatively, search for one of special 'named' blocks.
              
@@ -12,9 +12,12 @@ whenBlock -th
 | -------: | :------- | :------- |
 |  | block | one or more block numbers (or a 'special' block), or... |
 |  | date | one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]] |
-| -d | --data | display the result as data (tab delimited; useful for scripting) |
-| -l | --list | list names and block numbers for special blocks |
-| -f | --fmt val | export format (one of [json&#124;txt&#124;csv]) |
+| -l | --list | export all the named blocks |
+
+#### Hidden options (shown during testing only)
+| -x | --fmt val | export format (one of [none&#124;json&#124;txt&#124;csv&#124;api]) |
+#### Hidden options (shown during testing only)
+
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

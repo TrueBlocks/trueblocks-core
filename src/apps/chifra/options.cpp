@@ -97,7 +97,6 @@ void COptions::Init(void) {
     mode          = "";
     stats         = false;
     minArgs       = 0;
-    api_mode      = !getEnvStr("API_MODE").empty();
 }
 
 //---------------------------------------------------------------------------------------------------

@@ -19,7 +19,7 @@ static const COption params[] = {
     COption("-check",              "compare results between qblocks and Ethereum node, report differences, if any"),
     COption("-addrs",              "display all addresses included in the block"),
     COption("-uniq",               "display only uniq addresses found per block"),
-    COption("-uniqT(x)",           "display only uniq addresses found per transaction"),
+    COption("-uni(q)Tx",           "display only uniq addresses found per transaction"),
     COption("-nu(m)ber",           "display address counts (alterntively --addrCnt, --uniqTxCnt, or --uniqCnt)"),
     COption("-fi(l)ter:<addr>",    "useful only for --addrs or --uniq, only display this address in results"),
 //    COption("-trac(e)s",         "include transaction traces in the export"),
@@ -113,7 +113,7 @@ bool COptions::parseArguments(string_q& command) {
             filterType = "uniq";
             counting = true;
 
-        } else if (arg == "-x" || arg == "--uniqTx") {
+        } else if (arg == "-q" || arg == "--uniqTx") {
             filterType = "uniqTx";
 
         } else if (arg == "--uniqTxCnt") {
@@ -126,7 +126,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-e" || arg == "--traces") {
             traces = true;
 
-        } else if (arg == "-q" || arg == "--quiet") {
+        } else if (arg == "--quiet") {
             quiet++;  // if both --check and --quiet are present, be very quiet...
 
         } else if (startsWith(arg, "-f:") || startsWith(arg, "--fields:")) {
@@ -267,8 +267,6 @@ void COptions::Init(void) {
     // latest.clear(); // use the same latest block for every run
     filters.clear();
     blocks.Init();
-
-    api_mode = !getEnvStr("API_MODE").empty();
 }
 
 //---------------------------------------------------------------------------------------------------
