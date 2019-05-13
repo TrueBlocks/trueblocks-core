@@ -117,9 +117,6 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
             if ( fieldName % "blockHash" ) { blockHash = str_2_Hash(fieldValue); return true; }
             if ( fieldName % "blockNumber" ) { blockNumber = str_2_Uint(fieldValue); return true; }
             break;
-        case 'e':
-            if ( fieldName % "extra_data" ) { extra_data = fieldValue; return true; }
-            break;
         case 'f':
             if ( fieldName % "from" ) { from = str_2_Addr(fieldValue); return true; }
             if ( fieldName % "finalized" ) { finalized = str_2_Bool(fieldValue); return true; }
@@ -203,7 +200,6 @@ bool CTransaction::Serialize(CArchive& archive) {
     archive >> isInternal;
     archive >> receipt;
 //    archive >> articulatedTx;
-//    archive >> extra_data;
 //    archive >> finalized;
 //    archive >> traces;
     finishParse();
@@ -234,7 +230,6 @@ bool CTransaction::SerializeC(CArchive& archive) const {
     archive << isInternal;
     archive << receipt;
 //    archive << articulatedTx;
-//    archive << extra_data;
 //    archive << finalized;
 //    archive << traces;
 
@@ -289,8 +284,6 @@ void CTransaction::registerClass(void) {
     ADD_FIELD(CTransaction, "receipt", T_OBJECT, ++fieldNum);
     ADD_FIELD(CTransaction, "articulatedTx", T_OBJECT, ++fieldNum);
     HIDE_FIELD(CTransaction, "articulatedTx");
-    ADD_FIELD(CTransaction, "extra_data", T_TEXT, ++fieldNum);
-    HIDE_FIELD(CTransaction, "extra_data");
     ADD_FIELD(CTransaction, "finalized", T_BOOL, ++fieldNum);
     HIDE_FIELD(CTransaction, "finalized");
     ADD_FIELD(CTransaction, "traces", T_OBJECT|TS_ARRAY, ++fieldNum);
@@ -525,9 +518,6 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
         case 'b':
             if ( fieldName % "blockHash" ) return hash_2_Str(blockHash);
             if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
-            break;
-        case 'e':
-            if ( fieldName % "extra_data" ) return extra_data;
             break;
         case 'f':
             if ( fieldName % "from" ) return addr_2_Str(from);
