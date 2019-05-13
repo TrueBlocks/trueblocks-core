@@ -13,6 +13,7 @@
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
 
+//-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
     CAccountNameArray items;
@@ -21,7 +22,7 @@ public:
     bool              matchCase;
 
     COptions(void);
-    ~COptions(void) {}
+    ~COptions(void);
 
     string_q postProcess(const string_q& which, const string_q& str) const override;
     bool parseArguments(string_q& command) override;

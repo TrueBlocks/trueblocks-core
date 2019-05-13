@@ -1,6 +1,5 @@
 whenBlock argc: 2 [1:--verbose] 
 whenBlock --verbose 
-00000001 TIME ~ CLOCK - <ERROR> : Exit(parseArguments): 
 
   Please supply either a JSON formatted date or a blockNumber.
 

@@ -10,7 +10,6 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include <string>
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
@@ -28,7 +27,6 @@ extern const char* STR_DISPLAY;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
-    ENTER("parseArguments");
     if (!standardOptions(command))
         return false;
 
@@ -48,7 +46,7 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg))
-                EXIT_USAGE("Invalid option: '" + orig + "'.");
+                return usage("Invalid option: '" + orig + "'.");
 
         } else if (containsAny(arg, ":- ") && countOf(arg, '-') > 1) {
 
@@ -56,21 +54,25 @@ bool COptions::parseArguments(string_q& command) {
             ASSERT(!startsWith(arg, "-"));
             time_q date = str_2_Date(arg);
             if (date == earliestDate) {
-                EXIT_USAGE("Invalid date: '" + orig + "'.");
+                return usage("Invalid date: '" + orig + "'.");
 
             } else if (date > Now()) {
                 ostringstream os;
                 os << "The date you specified (" << cTeal << orig << cOff << ")";
                 os << "is in the future. No such block.";
-                EXIT_FAIL(os.str());
+                LOG_WARN(os.str());
+                return false;
 
             } else if (date < time_q(2015, 7, 30, 15, 25, 00)) {
                 ostringstream os;
                 os << "The date you specified (" << cTeal << orig << cOff << ")";
                 os << "is before the first block.";
-                EXIT_FAIL(os.str());
+                LOG_WARN(os.str());
+                return false;
+
+            } else {
+                requests.push_back(CNameValue("date", int_2_Str(date_2_Ts(date))));
             }
-            requests.push_back(CNameValue("date", int_2_Str(date_2_Ts(date))));
 
         } else {
 
@@ -85,10 +87,11 @@ bool COptions::parseArguments(string_q& command) {
 
                 string_q ret = blocks.parseBlockList(arg, latestBlock);
                 if (endsWith(ret, "\n")) {
-                    EXIT_FAIL(substitute(ret,"\n",""));
+                    LOG_WARN(substitute(ret,"\n",""));
+                    return false;
 
                 } else if (!ret.empty()) {
-                    EXIT_USAGE(ret);
+                    return usage(ret);
                 }
 
                 // Now we transfer the list of blocks to the requests array
@@ -103,7 +106,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (requests.size() == 0)
-        EXIT_USAGE("Please supply either a JSON formatted date or a blockNumber.");
+        return usage("Please supply either a JSON formatted date or a blockNumber.");
 
     string_q format = getGlobalConfig()->getConfigStr("display", "format", STR_DISPLAY);
     if (format.empty())
@@ -136,11 +139,11 @@ bool COptions::parseArguments(string_q& command) {
             if (lookupDate(this, block, (timestamp_t)str_2_Uint(request.second)))
                 items.push_back(block);
             else
-                LOG_INFO("Could not find a block at date " + request.second);
+                LOG_WARN("Could not find a block at date " + request.second);
         }
     }
 
-    EXIT_NOMSG(true);
+    return true;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -157,10 +160,8 @@ COptions::COptions(void) {
     sorts[1] = GETRUNTIME_CLASS(CTransaction);
     sorts[2] = GETRUNTIME_CLASS(CReceipt);
 
-    // Upgrade the configuration file by opening it, fixing the data, and then re-writing it
+    // Upgrade the configuration file by opening it, fixing the data, and then re-writing it (i.e. versions prior to 0.6.0)
     CToml toml(configPath("whenBlock.toml"));
-
-    // versions prior to 0.6.0
     if (toml.isBackLevel()) {
         string_q ss = toml.getConfigStr("specials", "list", "");
         if (!contains(ss, "kitties")) {
@@ -170,6 +171,8 @@ COptions::COptions(void) {
         }
     }
     Init();
+    
+    // Differnt default for this software, but only change it if user hasn't already therefor not in Init
     exportFmt = TXT1;
 }
 
@@ -179,7 +182,6 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
-
     if (which == "options") {
         return substitute(str, "block date", "< block | date > [ block... | date... ]");
 
@@ -240,4 +242,7 @@ string_q COptions::listSpecials(format_t fmt) const {
 
 //-----------------------------------------------------------------------
 const char* STR_DISPLAY =
-"[{BLOCKNUMBER}]\t[{TIMESTAMP}]\t[{DATE}][\t{NAME}]";
+"[{BLOCKNUMBER}]\t"
+"[{TIMESTAMP}]\t"
+"[{DATE}]"
+"[\t{NAME}]";

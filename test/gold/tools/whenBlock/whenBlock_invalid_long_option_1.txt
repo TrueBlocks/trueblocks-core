@@ -1,6 +1,5 @@
 whenBlock argc: 2 [1:--none] 
 whenBlock --none 
-00000001 TIME ~ CLOCK - <ERROR> : Exit(parseArguments): 
 
   Invalid option: '--none'.
 
