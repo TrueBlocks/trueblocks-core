@@ -249,14 +249,6 @@ namespace qblocks {
             colorsOff();
         }
 
-        if (contains(cmdLine, "--qblocks ")) {
-            replaceAll(cmdLine, "--qblocks ", "");
-            CNameValue toolName;
-            findToolNickname(toolName, getProgName());
-            setProgName("qblocks " + toolName.second);
-
-        }
-
         if (isEnabled(OPT_HELP) && (contains(cmdLine, "-h ") || contains(cmdLine, "--help "))) {
             usage();
             exit(0);
@@ -354,8 +346,6 @@ namespace qblocks {
         if (isEnabled(OPT_PARITY) && (arg == "--parity"))
             return true;
         if (arg == "--version")
-            return true;
-        if (arg == "--qblocks")
             return true;
         if (arg == "--nocolor")
             return true;
@@ -791,64 +781,6 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     }
 
     //-----------------------------------------------------------------------
-    void COptionsBase::loadToolNames(void) {
-        const CToml *toml = getGlobalConfig();
-        tools.clear();
-
-        string_q toolStr = toml->getConfigStr("tools", "list", "<not_set>");
-        if (toolStr == "<not_set>") {
-            CToml lToml(configPath("quickBlocks.toml"));
-            lToml.setConfigArray("tools", "list", STR_DEFAULT_TOOLNAMES);
-            lToml.writeFile();
-            toml = getGlobalConfig("reload");
-            toolStr = toml->getConfigStr("tools", "list", "");
-        }
-        CKeyValuePair keyVal;
-        while (keyVal.parseJson3(toolStr)) {
-            CNameValue pair = make_pair(keyVal.jsonrpc, keyVal.result);
-            tools.push_back(pair);
-            keyVal = CKeyValuePair();  // reset
-        }
-        return;
-    }
-
-    //--------------------------------------------------------------------------------
-    bool COptionsBase::findToolName(CNameValue& pair, const string_q& nickname) const {
-        if (tools.size() == 0)
-            ((COptionsBase*)this)->loadToolNames();  // NOLINT
-        for (auto tool : tools) {
-            if (nickname == tool.second) {
-                pair = tool;
-                return true;
-            }
-        }
-        return false;
-    }
-
-    //--------------------------------------------------------------------------------
-    bool COptionsBase::findToolNickname(CNameValue& pair, const string_q& name) const {
-        if (tools.size() == 0)
-            ((COptionsBase*)this)->loadToolNames();  // NOLINT
-        for (auto tool : tools) {
-            if (name == tool.first) {
-                pair = tool;
-                return true;
-            }
-        }
-        return false;
-    }
-
-    //--------------------------------------------------------------------------------
-    string_q COptionsBase::toolNicknames(void) const {
-        if (tools.size() == 0)
-            ((COptionsBase*)this)->loadToolNames();  // NOLINT
-        string_q ret;
-        for (auto tool : tools)
-            ret += tool.second + "|";
-        return ret;
-    }
-
-    //-----------------------------------------------------------------------
     static bool sortByValue(const CNameValue& p1, const CNameValue& p2) {
         blknum_t b1 = str_2_Uint(p1.second);
         blknum_t b2 = str_2_Uint(p2.second);
@@ -925,7 +857,6 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         hiDown = (isTestMode() ? "" : cOff);
         arguments.clear();
         commandLines.clear();
-        tools.clear();
         namedAccounts.clear();
         pParams = NULL;
         cntParams = 0;
@@ -1017,29 +948,6 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             ret = "\"" + substitute(ret, "\t", "\",\"") + "\"";
         return ret;
     }
-
-    //-----------------------------------------------------------------------
-    const char *STR_DEFAULT_TOOLNAMES =
-    "[\n"
-    "    { name = \"getBlock\",       value = \"block\"       },\n"
-    "    { name = \"getTrans\",       value = \"trans\"       },\n"
-    "    { name = \"getReceipt\",     value = \"receipt\"     },\n"
-    "    { name = \"getLogs\",        value = \"logs\"        },\n"
-    "    { name = \"getTrace\",       value = \"trace\"       },\n"
-    "    { name = \"getBloom\",       value = \"bloom\"       },\n"
-    "    { name = \"getAccounts\",    value = \"accounts\"    },\n"
-    "    { name = \"getBalance\",     value = \"balance\"     },\n"
-    "    { name = \"getTokenInfo\",   value = \"tokeninfo\"   },\n"
-    "    { name = \"getAccountInfo\", value = \"accountinfo\" },\n"
-    "    { name = \"ethslurp\",       value = \"slurp\"       },\n"
-    "    { name = \"grabABI\",        value = \"grab\"        },\n"
-    "    { name = \"ethprice\",       value = \"price\"       },\n"
-    "    { name = \"ethName\",        value = \"name\"        },\n"
-    "    { name = \"whenBlock\",      value = \"when\"        },\n"
-    "    { name = \"whereBlock\",     value = \"where\"       },\n"
-    "]";
-    //   Tools not added included for searching: makeClass, acctExport,
-    //   acctScrape, blockMan, bloomMan, cacheMan, blockScrape, chifra
 
     const char *STR_DEFAULT_WHENBLOCKS =
     "[\n"

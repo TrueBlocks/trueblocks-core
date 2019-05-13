@@ -75,13 +75,6 @@ namespace qblocks {
         static bool findSpecial(CNameValue& pair, const string_q& arg);
         static bool forEverySpecialBlock(NAMEVALFUNC func, void *data);
 
-        // supporting tools
-        CNameValueArray tools;
-        void     loadToolNames(void);
-        bool     findToolNickname(CNameValue& pair, const string_q& name) const;
-        bool     findToolName(CNameValue& pair, const string_q& nickname) const;
-        string_q toolNicknames(void) const;
-
         // supporting named accounts
         CAccountNameArray namedAccounts;
         CFilename namesFile;
@@ -179,7 +172,6 @@ namespace qblocks {
         bool hasTrans(void) const { return !queries.empty(); }
     };
 
-    extern const char *STR_DEFAULT_TOOLNAMES;
     extern const char *STR_DEFAULT_WHENBLOCKS;
     extern bool prepareEnv(int argc, const char *argv[]);
     extern string_q cleanFmt(const string_q& str, format_t fmt);
