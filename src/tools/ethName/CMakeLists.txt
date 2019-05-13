@@ -68,10 +68,10 @@ run_test("ethName_help_long"                                 "--help")
 run_test("ethName_upgrade_fail"                              "--list")   # customized
 run_test("ethName_tip1"                                      "tip")
 run_test("ethName_tip2"                                      "tip" " -d")
-
-#run_test("ethName_edit"                                     "-e")
-#run_test("ethName_long_edit"                                "--edit")
-#run_test("ethName_mixed_options_with_edit_1"                "-e" " -s" " -a" " 0xb6" " torj")
+run_test("ethName_fromFile"                                  "--file:names.txt")
+run_test("ethName_edit"                                     "-e")
+run_test("ethName_long_edit"                                "--edit")
+run_test("ethName_mixed_options_with_edit_1"                "-e" " -s" " -a" " 0xb6" " torj")
 
 run_special_test("ethName_addr_case_match"                   "-m" " 0xcb")
 run_special_test("ethName_addr_case_no_match"                "-m" " 0xCB")
