@@ -97,6 +97,7 @@ const char* STR_ALLFIELDS =
 void COptions::Init(void) {
     registerOptions(nParams, params);
 
+    items.clear();
     searches.clear();
     searchFields = STR_DISPLAY;
     matchCase = false;
