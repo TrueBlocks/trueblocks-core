@@ -972,21 +972,20 @@ isError             	1017	0	65561	T_NUMBER TS_NUMERAL
 isInternal          	1018	1	65561	T_NUMBER TS_NUMERAL
 receipt             	1019	0	1048651	T_OBJECT TS_OBJECT
 articulatedTx       	1020	1	1048651	T_OBJECT TS_OBJECT
-extra_data          	1021	1	131122	T_TEXT TS_STRING
-finalized           	1022	1	65556	T_BOOL TS_NUMERAL
-traces              	1023	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-confirmations       	1024	1	65561	T_NUMBER TS_NUMERAL
-gasCost             	1025	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-function            	1026	1	131122	T_TEXT TS_STRING
-events              	1027	1	131122	T_TEXT TS_STRING
-price               	1028	1	131122	T_TEXT TS_STRING
-gasUsed             	1029	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-date                	1030	1	262149	T_DATE TS_DATE
-datesh              	1031	1	262149	T_DATE TS_DATE
-time                	1032	1	262149	T_DATE TS_DATE
-age                 	1033	1	262149	T_DATE TS_DATE
-ether               	1034	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
-encoding            	1035	1	131122	T_TEXT TS_STRING
+finalized           	1021	1	65556	T_BOOL TS_NUMERAL
+traces              	1022	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+confirmations       	1023	1	65561	T_NUMBER TS_NUMERAL
+gasCost             	1024	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+function            	1025	1	131122	T_TEXT TS_STRING
+events              	1026	1	131122	T_TEXT TS_STRING
+price               	1027	1	131122	T_TEXT TS_STRING
+gasUsed             	1028	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+date                	1029	1	262149	T_DATE TS_DATE
+datesh              	1030	1	262149	T_DATE TS_DATE
+time                	1031	1	262149	T_DATE TS_DATE
+age                 	1032	1	262149	T_DATE TS_DATE
+ether               	1033	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+encoding            	1034	1	131122	T_TEXT TS_STRING
 {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -1037,21 +1036,20 @@ isError             	1017	1	65561	T_NUMBER TS_NUMERAL
 isInternal          	1018	1	65561	T_NUMBER TS_NUMERAL
 receipt             	1019	1	1048651	T_OBJECT TS_OBJECT
 articulatedTx       	1020	1	1048651	T_OBJECT TS_OBJECT
-extra_data          	1021	1	131122	T_TEXT TS_STRING
-finalized           	1022	1	65556	T_BOOL TS_NUMERAL
-traces              	1023	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-confirmations       	1024	1	65561	T_NUMBER TS_NUMERAL
-gasCost             	1025	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-function            	1026	1	131122	T_TEXT TS_STRING
-events              	1027	1	131122	T_TEXT TS_STRING
-price               	1028	1	131122	T_TEXT TS_STRING
-gasUsed             	1029	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-date                	1030	1	262149	T_DATE TS_DATE
-datesh              	1031	1	262149	T_DATE TS_DATE
-time                	1032	1	262149	T_DATE TS_DATE
-age                 	1033	1	262149	T_DATE TS_DATE
-ether               	1034	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
-encoding            	1035	1	131122	T_TEXT TS_STRING
+finalized           	1021	1	65556	T_BOOL TS_NUMERAL
+traces              	1022	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+confirmations       	1023	1	65561	T_NUMBER TS_NUMERAL
+gasCost             	1024	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+function            	1025	1	131122	T_TEXT TS_STRING
+events              	1026	1	131122	T_TEXT TS_STRING
+price               	1027	1	131122	T_TEXT TS_STRING
+gasUsed             	1028	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+date                	1029	1	262149	T_DATE TS_DATE
+datesh              	1030	1	262149	T_DATE TS_DATE
+time                	1031	1	262149	T_DATE TS_DATE
+age                 	1032	1	262149	T_DATE TS_DATE
+ether               	1033	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+encoding            	1034	1	131122	T_TEXT TS_STRING
 {
 }
 
@@ -1078,21 +1076,20 @@ isError             	1017	0	65561	T_NUMBER TS_NUMERAL
 isInternal          	1018	0	65561	T_NUMBER TS_NUMERAL
 receipt             	1019	0	1048651	T_OBJECT TS_OBJECT
 articulatedTx       	1020	0	1048651	T_OBJECT TS_OBJECT
-extra_data          	1021	0	131122	T_TEXT TS_STRING
-finalized           	1022	0	65556	T_BOOL TS_NUMERAL
-traces              	1023	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-confirmations       	1024	0	65561	T_NUMBER TS_NUMERAL
-gasCost             	1025	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-function            	1026	0	131122	T_TEXT TS_STRING
-events              	1027	0	131122	T_TEXT TS_STRING
-price               	1028	0	131122	T_TEXT TS_STRING
-gasUsed             	1029	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-date                	1030	0	262149	T_DATE TS_DATE
-datesh              	1031	0	262149	T_DATE TS_DATE
-time                	1032	0	262149	T_DATE TS_DATE
-age                 	1033	0	262149	T_DATE TS_DATE
-ether               	1034	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
-encoding            	1035	0	131122	T_TEXT TS_STRING
+finalized           	1021	0	65556	T_BOOL TS_NUMERAL
+traces              	1022	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+confirmations       	1023	0	65561	T_NUMBER TS_NUMERAL
+gasCost             	1024	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+function            	1025	0	131122	T_TEXT TS_STRING
+events              	1026	0	131122	T_TEXT TS_STRING
+price               	1027	0	131122	T_TEXT TS_STRING
+gasUsed             	1028	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+date                	1029	0	262149	T_DATE TS_DATE
+datesh              	1030	0	262149	T_DATE TS_DATE
+time                	1031	0	262149	T_DATE TS_DATE
+age                 	1032	0	262149	T_DATE TS_DATE
+ether               	1033	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+encoding            	1034	0	131122	T_TEXT TS_STRING
 {
   "schema": 5005,
   "deleted": 0,
