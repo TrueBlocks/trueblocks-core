@@ -47,7 +47,6 @@ public:
     uint64_t isInternal;
     CReceipt receipt;
     CFunction articulatedTx;
-    string_q extra_data;
     bool finalized;
     CTraceArray traces;
 
@@ -133,7 +132,6 @@ inline void CTransaction::initialize(void) {
     isInternal = 0;
     receipt = CReceipt();
     articulatedTx = CFunction();
-    extra_data = "";
     finalized = 0;
     traces.clear();
 
@@ -163,7 +161,6 @@ inline void CTransaction::duplicate(const CTransaction& tr) {
     isInternal = tr.isInternal;
     receipt = tr.receipt;
     articulatedTx = tr.articulatedTx;
-    extra_data = tr.extra_data;
     finalized = tr.finalized;
     traces = tr.traces;
 
