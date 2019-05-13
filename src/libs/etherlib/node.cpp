@@ -1071,7 +1071,6 @@ namespace qblocks {
         while (contains(format, "<field>")) {
             string_q field = toLower(snagFieldClear(format, "field"));
             ret = ret + (sep2 + field + sep2 + sep1);
-            printf("");
         }
         return trim(ret, sep1[0]);
     }
