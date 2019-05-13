@@ -13,60 +13,42 @@
 #include "etherlib.h"
 #include "options.h"
 
-extern bool lookupDate(const COptions *options, CBlock& block, const timestamp_t& ts);
-//---------------------------------------------------------------
+//-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
+    nodeNotRequired(); // This command will run without a node
     etherlib_init(quickQuitHandler);
 
-    // Parse command line, allowing for command files
     COptions options;
     if (!options.prepareArguments(argc, argv))
         return 0;
 
+    bool first = true;
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
 
-        for (auto value : options.requests) {
-            string_q mode = nextTokenClear(value, ':');
-            string_q special;
-            if (mode == "special") {
-                mode = "block";
-                special = nextTokenClear(value, '|');
-                if (str_2_Uint(value) > getLastBlock_client()) {
-                    cerr << "The block number you requested (";
-                    cerr << cTeal << special << ": " << value << cOff;
-                    cerr << ") is after the latest block (";
-                    cerr << cTeal << (isTestMode() ? "TESTING" : uint_2_Str(getLastBlock_client())) << cOff;
-                    cerr << "). Quitting...\n";
-                    return 0;
+        string_q format = expContext().fmtMap["nick"];  // order matters
+        if (options.exportFmt & (TXT1|CSV1) && options.items.size() == 0) {
+            LOG_INFO("No results");
+
+        } else {
+            for (size_t a = 0 ; a < options.items.size() ; a++) {
+                if (first) {
+                    cout  << exportPreamble(options.exportFmt, format, GETRUNTIME_CLASS(CBlock));
+                    first = false;
+                }
+                if (options.exportFmt & (TXT1|CSV1))
+                    cout << options.items[a].Format(format) << endl;
+                else {
+                    if (a > 0)
+                        cout << "," << endl;
+                    cout << "  "; incIndent();
+                    options.items[a].doExport(cout);
+                    decIndent();
                 }
             }
-
-            CBlock block;
-            if (mode == "block") {
-                queryBlock(block, value, false);
-
-            } else if (mode == "date") {
-                bool found = lookupDate(&options, block, (timestamp_t)str_2_Uint(value));
-                if (!found)
-                    return 0;
-            }
-
-            // special case for the zero block
-            if (block.blockNumber == 0)
-                block.timestamp = 1438269960;
-
-            string_q def = expContext().fmtMap["nick"];
-            string_q fmt = getGlobalConfig("whenBlock")->getDisplayStr(options.asData, def) + "\n";
-            // we never want to print JSON
-            if (fmt.empty()) fmt = substitute(def, "\\n" , "\n");
-            if (verbose && !special.empty()) {
-                string_q sp = "(" + special + ")";
-                replace(fmt, "{BLOCKNUMBER}", "{BLOCKNUMBER} " + sp);
-            }
-            cout << block.Format(fmt);
         }
+        cout << exportPostamble(options.exportFmt);
     }
     return 0;
 }

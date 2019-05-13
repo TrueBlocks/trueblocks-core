@@ -21,6 +21,11 @@ bool COptions::handle_data(void) {
         replaceAll(tool_flags, "--when", "");
         os << "whenBlock --list --data " << tool_flags << (api_mode ? " --fmt json" : "") << " ; "; // order matters, last in wins
 
+    } else if (contains(tool_flags, "--accounts")) {
+        replaceAll(tool_flags, "--accounts", "");
+        for (auto addr : addrs)
+           os << "ethName " << addr << " " << (api_mode ? substitute(tool_flags, ",", " ") + " --fmt json" : tool_flags) << " ; ";
+
     } else if (contains(tool_flags, "--blocks")) {
         replaceAll(tool_flags, "--blocks", "");
         os << "getBlock " << (api_mode ? substitute(tool_flags, ",", " ") : tool_flags) << " ; ";
@@ -40,10 +45,6 @@ bool COptions::handle_data(void) {
     } else if (contains(tool_flags, "--traces")) {
         replaceAll(tool_flags, "--traces", "");
         os << "getTrace " << (api_mode ? substitute(tool_flags, ",", " ") : tool_flags) << " ; ";
-
-    } else if (contains(tool_flags, "--accounts")) {
-        replaceAll(tool_flags, "--accounts", "");
-        os << "getAccounts " << (api_mode ? substitute(tool_flags, ",", " ") : tool_flags) << " ; ";
 
     } else if (contains(tool_flags, "--slurp")) {
         replaceAll(tool_flags, "--slurp", "");

@@ -39,7 +39,7 @@ bool excludeTrace(const CTransaction *trans, size_t maxTraces) {
 bool exportData(COptions& options) {
 
     ENTER("exportData");
-    if (options.fmt != JSON) {
+    if (options.exportFmt != JSON1) {
         string_q transFmt = expContext().fmtMap["transaction_fmt"];
         string_q header = toLower(transFmt);
         for (uint32_t i = 0 ; i < 10 ; i++) {
@@ -129,7 +129,7 @@ bool exportData(COptions& options) {
             }
         }
 
-        if (options.fmt == JSON && !first)
+        if (options.exportFmt == JSON1 && !first)
             cout << ", ";
         ostringstream os;
         os << trans.Format() << endl;
@@ -158,7 +158,7 @@ bool exportData(COptions& options) {
     cerr << "Exported " << options.items.size() << " of " << options.items.size() << " records.                                           \n";
     cerr.flush();
 
-    if (options.fmt == JSON)
+    if (options.exportFmt == JSON1)
         cout << "]";
 
     EXIT_NOMSG(true);

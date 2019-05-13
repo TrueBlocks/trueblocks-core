@@ -107,6 +107,9 @@ bool CBlock::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
         case 'm':
             if ( fieldName % "miner" ) { miner = str_2_Addr(fieldValue); return true; }
             break;
+        case 'n':
+            if ( fieldName % "name" ) { name = fieldValue; return true; }
+            break;
         case 'p':
             if ( fieldName % "parentHash" ) { parentHash = str_2_Hash(fieldValue); return true; }
             if ( fieldName % "price" ) { price = str_2_Double(fieldValue); return true; }
@@ -126,7 +129,6 @@ bool CBlock::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
         default:
             break;
     }
-
     return false;
 }
 
@@ -171,6 +173,7 @@ bool CBlock::Serialize(CArchive& archive) {
     archive >> finalized;
     archive >> timestamp;
     archive >> transactions;
+//    archive >> name;
     finishParse();
     return true;
 }
@@ -194,6 +197,7 @@ bool CBlock::SerializeC(CArchive& archive) const {
     archive << finalized;
     archive << timestamp;
     archive << transactions;
+//    archive << name;
 
     return true;
 }
@@ -240,6 +244,8 @@ void CBlock::registerClass(void) {
     ADD_FIELD(CBlock, "finalized", T_BOOL, ++fieldNum);
     ADD_FIELD(CBlock, "timestamp", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CBlock, "transactions", T_OBJECT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CBlock, "name", T_TEXT, ++fieldNum);
+    HIDE_FIELD(CBlock, "name");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CBlock, "schema");
@@ -257,6 +263,7 @@ void CBlock::registerClass(void) {
     if (!getEnvStr("API_MODE").empty()) {
         UNHIDE_FIELD(CBlock, "date");
         UNHIDE_FIELD(CBlock, "age");
+        UNHIDE_FIELD(CBlock, "name");
     }
     // EXISTING_CODE
 }
@@ -410,6 +417,9 @@ string_q CBlock::getValueByName(const string_q& fieldName) const {
             break;
         case 'm':
             if ( fieldName % "miner" ) return addr_2_Str(miner);
+            break;
+        case 'n':
+            if ( fieldName % "name" ) return name;
             break;
         case 'p':
             if ( fieldName % "parentHash" ) return hash_2_Str(parentHash);

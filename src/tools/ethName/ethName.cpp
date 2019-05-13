@@ -24,34 +24,28 @@ int main(int argc, const char *argv[]) {
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
+        string_q format = expContext().fmtMap["nick"];  // order matters
 
-        if (options.isEdit) {
-            editFile(options.namesFile.getFullPath());
-
-        } else if (options.filtered.size() == 0) {
-            LOG_INFO("No matches found");
+        if (options.exportFmt & (TXT1|CSV1) && options.items.size() == 0) {
+            LOG_INFO("No matches");
 
         } else {
-
-            string_q fmt = expContext().fmtMap["nick"];
-            bool isJson = fmt.empty();
-
-            if (isJson && options.filtered.size() > 1)
-                cout << "[";
-            uint64_t cnt = 0;
-            for (auto acct : options.filtered) {
-                if (isJson && cnt++ > 0)
-                    cout << "," << endl;
-                cout << acct.Format(fmt);
-                if (!isJson)
-                    cout << endl;
+            for (size_t a = 0 ; a < options.items.size() ; a++) {
+                if (a == 0)
+                    cout  << exportPreamble(options.exportFmt, format, GETRUNTIME_CLASS(CAccountName));
+                if (options.exportFmt & (TXT1|CSV1))
+                    cout << options.items[a].Format(format) << endl;
+                else {
+                    if (a > 0)
+                        cout << "," << endl;
+                    cout << "  "; incIndent();
+                    options.items[a].doExport(cout);
+                    decIndent();
+                }
             }
-            if (isJson)
-                cout << endl;
-            if (isJson && options.filtered.size() > 1)
-                cout << "]";
         }
     }
+    cout << exportPostamble(options.exportFmt);
 
     return 0;
 }

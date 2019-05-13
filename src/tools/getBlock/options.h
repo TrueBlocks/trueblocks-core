@@ -32,7 +32,6 @@ public:
     uint64_t addrCnt;
     string_q filterType;
     CAddressArray filters;
-    bool api_mode;
 
     COptions(void);
     ~COptions(void);

@@ -61,10 +61,12 @@ bool visitTransaction(CTransaction& trans, void *data) {
         return true;
     }
 
+    ENTER("visitTransaction");
     if (!opt->isRaw) {
+        LOG4("Not raw");
         for (auto log : trans.receipt.logs)
             opt->items.push_back(log);
-        return true;
+        EXIT_NOMSG(true);
     }
 
     string_q fields =
@@ -73,12 +75,12 @@ bool visitTransaction(CTransaction& trans, void *data) {
         "CReceipt:to,from,blockHash,blockNumber,transactionHash,transactionIndex,cumulativeGasUsed,logsBloom,root|"
         "CLogEntry:blockHash,blockNumber,transactionHash,transactionIndex,transactionLogIndex,removed,type";
     manageFields(fields, true);
-
     string_q result;
     queryRawLogs(result, trans.blockNumber, trans.blockNumber);
     if (opt->isVeryRaw) {
+        LOG4("very raw: " + result);
         opt->rawItems.push_back(result);
-        return true;
+        EXIT_NOMSG(true);
     }
     CRPCResult generic;
     generic.parseJson3(result);
@@ -87,11 +89,21 @@ bool visitTransaction(CTransaction& trans, void *data) {
     CReceipt receipt; receipt.pTrans = &tt;
     CLogEntry log; log.pReceipt = &receipt;
     while (log.parseJson3(generic.result)) {
-        if (log.getValueByName("transactionIndex") == uint_2_Str(trans.transactionIndex))
+        LOG4("log: " + substitute(log.Format(),"\n"," "));
+        if (log.getValueByName("transactionIndex") == uint_2_Str(trans.transactionIndex)) {
             opt->rawItems.push_back(log.Format());
+        }
         log = CLogEntry();
         log.pReceipt = &receipt;
     }
-
-    return true;
+    if (opt->rawItems.size() == 0) {
+        CReceipt receipt;
+        receipt.pTrans = &trans;
+        CLogEntry log;
+        log.pReceipt = &receipt;
+        log.address = "not_an_real_log";
+        opt->rawItems.push_back(log.Format());
+    }
+    LOG4("found ", opt->rawItems.size(), " logs");
+    EXIT_NOMSG(true);
 }

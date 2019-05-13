@@ -58,19 +58,19 @@ namespace qblocks {
         prepareEnv(argc, argv);
         if (isTestMode()) {
             // we present the data once for clarity...
-            cout << getProgName() << " argc: " << argc << " ";
+            cerr << getProgName() << " argc: " << argc << " ";
             for (int i = 1 ; i < argc ; i++) {
                 string_q str = argv[i];
-                cout << "[" << i << ":" << trim(str) << "] ";
+                cerr << "[" << i << ":" << trim(str) << "] ";
             }
-            cout << "\n";
+            cerr << endl;
             // ... and once to use as a command line for copy/paste
-            cout << getProgName() << " ";
+            cerr << getProgName() << " ";
             for (int i = 1 ; i < argc ; i++) {
                 string_q str = argv[i];
-                cout << trim(str) << " ";
+                cerr << trim(str) << " ";
             }
-            cout << "\n";
+            cerr << endl;
         }
 
         if ((uint64_t)argc <= minArgs)  // the first arg is the program's name
@@ -115,34 +115,6 @@ namespace qblocks {
         }
 
         //-----------------------------------------------------------------------------------
-        // We now have 'nArgs' command line arguments stored in the array 'args.'  We spin
-        // through them doing one of two things
-        //
-        // (1) handle any arguments common to all programs and remove them from the array
-        // (2) identify any --file arguments and store them for later use
-        //-----------------------------------------------------------------------------------
-        string_q cmdFileName = "";
-        for (uint64_t i = 0 ; i < nArgs ; i++) {
-            string_q arg = args[i];
-            if (startsWith(arg, "--file:")) {
-                cmdFileName = substitute(arg, "--file:", "");
-                replace(cmdFileName, "~/", getHomeFolder());
-                if (!fileExists(cmdFileName)) {
-                    if (args) delete [] args;
-                    return usage("--file: '" + cmdFileName + "' not found. Quitting.");
-                }
-            } else if (startsWith(arg, "-v") || startsWith(arg, "--verbose")) {
-                verbose = true;
-                arg = substitute(substitute(substitute(arg, "-v", ""), "--verbose", ""), ":", "");
-                if (!arg.empty()) {
-                    if (!isUnsigned(arg))
-                        return usage("Invalid verbose level '" + arg + "'. Quitting...");
-                    verbose = str_2_Uint(arg);
-                }
-            }
-        }
-
-        //-----------------------------------------------------------------------------------
         // Collapse commands that have 'permitted' sub options (i.e. colon ":" args)
         //-----------------------------------------------------------------------------------
         size_t curArg = 0;
@@ -168,6 +140,48 @@ namespace qblocks {
             }
         }
         nArgs = curArg;
+
+        //-----------------------------------------------------------------------------------
+        // We now have 'nArgs' command line arguments stored in the array 'args.'  We spin
+        // through them doing one of two things
+        //
+        // (1) handle any arguments common to all programs and remove them from the array
+        // (2) identify any --file arguments and store them for later use
+        //-----------------------------------------------------------------------------------
+        string_q cmdFileName = "";
+        for (uint64_t i = 0 ; i < nArgs ; i++) {
+            string_q arg = args[i];
+            if (startsWith(arg, "--file:")) {
+                cmdFileName = substitute(arg, "--file:", "");
+                replace(cmdFileName, "~/", getHomeFolder());
+                if (!fileExists(cmdFileName)) {
+                    if (args) delete [] args;
+                    return usage("--file: '" + cmdFileName + "' not found. Quitting.");
+                }
+            } else if (startsWith(arg, "-v") || startsWith(arg, "--verbose")) {
+                verbose = true;
+                arg = substitute(substitute(substitute(arg, "-v", ""), "--verbose", ""), ":", "");
+                if (!arg.empty()) {
+                    if (!isUnsigned(arg))
+                        return usage("Invalid verbose level '" + arg + "'. Quitting...");
+                    verbose = str_2_Uint(arg);
+                }
+
+            } else if (arg == "--api_mode") {
+                api_mode = true;
+                exportFmt = API1;
+                args[i] = "";
+
+            } else if (startsWith(arg, "--fmt:")) {
+                arg = substitute(substitute(arg, "-f:", ""), "--fmt:", "");
+                     if ( arg == "txt" ) { exportFmt = TXT1;  api_mode = false; }
+                else if ( arg == "csv" ) { exportFmt = CSV1;  api_mode = false; }
+                else if ( arg == "json") { exportFmt = JSON1; api_mode = false; }
+                else if ( arg == "api" ) { exportFmt = API1;  api_mode = true; }
+                else return usage("Export format must be one of [ json | txt | csv | api ]. Quitting...");
+                args[i] = "";
+            }
+        }
 
         // If we have a command file, we will use it, if not we will creat one and pretend we have one.
         string_q commandList = "";
@@ -376,7 +390,7 @@ namespace qblocks {
 
         if (!mode) {
             longName = "--" + shortName;
-            shortName = "-" + extract(shortName, 0, 1);
+            shortName = "-" + (contains(shortName,"fmt") ? "x" : extract(shortName, 0, 1));
         } else {
             longName = shortName;
         }
@@ -870,6 +884,18 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     }
 
     //--------------------------------------------------------------------------------
+    bool  COptionsBase::forEverySpecialBlock(NAMEVALFUNC func, void *data) {
+        if (!func)
+            return false;
+        if (specials.size() == 0)
+            loadSpecials();
+        for (auto special : specials)
+            if (!(*func)(special, data))
+                return false;
+        return true;
+    }
+
+    //--------------------------------------------------------------------------------
     bool COptionsBase::findSpecial(CNameValue& pair, const string_q& arg) {
         if (specials.size() == 0)
             loadSpecials();
@@ -888,6 +914,8 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         isReadme = false;
         isRaw = false;
         isVeryRaw = false;
+        api_mode = !getEnvStr("API_MODE").empty();
+        exportFmt = (api_mode ? API1 : TXT1);
         needsOption = false;
         enableBits = OPT_DEFAULT;
         for (int i = 0 ; i < 5 ; i++)
@@ -980,6 +1008,14 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         }
 
         return true;
+    }
+
+    //-----------------------------------------------------------------------
+    string_q cleanFmt(const string_q& str, format_t fmt) {
+        string_q ret = (substitute(substitute(substitute(str, "\n", ""), "\\n", "\n"), "\\t", "\t"));
+        if (fmt == CSV1)
+            ret = "\"" + substitute(ret, "\t", "\",\"") + "\"";
+        return ret;
     }
 
     //-----------------------------------------------------------------------

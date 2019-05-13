@@ -32,14 +32,14 @@ namespace qblocks {
             // if it's not a number, it better be a special value, and we better be able to find it
             CNameValue spec;
             if (COptionsBase::findSpecial(spec, arg)) {
-                if (spec.first == "latest") {
-                    ret = lastBlock;
-                } else {
-                    ret = str_2_Uint(spec.second);
-                }
+                if (spec.first == "latest")
+                    spec.second = uint_2_Str(lastBlock);
+                ret = str_2_Uint(spec.second);
+
             } else {
                 msg = "The given value '" + arg + "' is not a numeral or a special named block.\n";
                 return NOPOS;
+
             }
         }
 

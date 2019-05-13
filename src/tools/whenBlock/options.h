@@ -16,8 +16,7 @@
 //-----------------------------------------------------------------------------
 class COptions : public CBlockOptions {
 public:
-    CStringArray requests;
-    bool         asData;
+    CBlockArray items;
 
     COptions(void);
     ~COptions(void);
@@ -25,5 +24,8 @@ public:
     string_q postProcess(const string_q& which, const string_q& str) const override;
     bool parseArguments(string_q& command) override;
     void Init(void) override;
-    string_q listSpecials(bool terse, export_t fmt) const;
+    string_q listSpecials(format_t fmt) const;
 };
+
+extern bool lookupDate(const COptions *options, CBlock& block, const timestamp_t& ts);
+extern bool showSpecials(CNameValue& pair, void *data);

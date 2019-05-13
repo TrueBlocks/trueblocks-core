@@ -63,6 +63,10 @@ namespace qblocks {
     extern hash_t   getRawTransactionHash   (blknum_t bn, txnum_t tx);
 
     //-----------------------------------------------------------------------
+    extern bool     getBlock_light          (CBlock& block, const string_q& val);
+    extern bool     getBlock_light          (CBlock& block, blknum_t num);
+
+    //-----------------------------------------------------------------------
     extern void     writeToJson             (const CBaseNode& node, const string_q& fileName);
     extern bool     readFromJson            (      CBaseNode& node, const string_q& fileName);
 
@@ -148,9 +152,14 @@ namespace qblocks {
     extern biguint_t weiPerEther(void);
 
     //-------------------------------------------------------------------------
+    extern void manageFields(const string_q& formatStr);
     extern void manageFields(const string_q& listIn, bool show);
     extern const string_q defHide;
     extern const string_q defShow;
+
+    //-------------------------------------------------------------------------
+    string_q exportPreamble(format_t fmt, const string_q& format, const CRuntimeClass *pClass);
+    string_q exportPostamble(format_t fmt);
 
 }  // namespace qblocks
 

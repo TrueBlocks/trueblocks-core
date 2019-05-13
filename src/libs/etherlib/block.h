@@ -38,6 +38,7 @@ public:
     bool finalized;
     timestamp_t timestamp;
     CTransactionArray transactions;
+    string_q name;
 
 public:
     CBlock(void);
@@ -114,6 +115,7 @@ inline void CBlock::initialize(void) {
     finalized = 0;
     timestamp = 0;
     transactions.clear();
+    name = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -135,6 +137,7 @@ inline void CBlock::duplicate(const CBlock& bl) {
     finalized = bl.finalized;
     timestamp = bl.timestamp;
     transactions = bl.transactions;
+    name = bl.name;
 
     // EXISTING_CODE
     finishParse();

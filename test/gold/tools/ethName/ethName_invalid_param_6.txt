@@ -3,20 +3,18 @@ ethName -t
 
   Invalid option: -t
 
-  Usage:    ethName [-a|-d|-e|-f|-l|-m|-v|-h] <term> [term...]  
+  Usage:    ethName [-d|-m|-v|-h] <term> [term...]  
   Purpose:  Query Ethereum addresses and/or names making it easy to remember accounts.
              
   Where:  
 	terms                 a space separated list of one or more search terms (required)
-	-a  (--addr)          export only the associated address (may be used in scripting)
-	-d  (--data)          export results as tab separated data
-	-e  (--edit)          open the name database for editing
-	-f  (--fmt val)       export format (one of [json|txt|csv])
-	-l  (--list)          list all names in the database
-	-m  (--matchCase)     matches must agree in case (the default is to ignore case)
+	-d  (--allFields)     search all fields (default searches name, address, and symbol only)
+	-m  (--matchCase)     case-sensitive search
 
 #### Hidden options (shown during testing only)
-	-s  (--source)        search 'source' field as well name and address (the default)
+	-x  (--fmt val)       export format (one of [none|json|txt|csv|api])
+	-d  (--add)           add a record to the database
+	-e  (--edit)          open the name database for editing
 #### Hidden options (shown during testing only)
 
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level

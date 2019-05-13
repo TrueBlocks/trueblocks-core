@@ -15,13 +15,10 @@
 
 class COptions : public COptionsBase {
 public:
-    CAccountNameArray filtered;
-    string_q search1;
-    string_q search2;
-    string_q search3;
-    bool matchCase;
-    bool asData;
-    bool isEdit;
+    CAccountNameArray items;
+    CStringArray      searches;
+    string_q          searchFields;
+    bool              matchCase;
 
     COptions(void);
     ~COptions(void) {}
@@ -30,5 +27,5 @@ public:
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 
-    uint64_t applyFilter(const string_q& fmt);
+    void applyFilter(void);
 };

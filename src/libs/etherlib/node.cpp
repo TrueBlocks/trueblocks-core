@@ -107,6 +107,19 @@ namespace qblocks {
         return node.parseJson3(str);
     }
 
+    //--------------------------------------------------------------------------------
+    bool getBlock_light(CBlock& block, const string_q& val) {
+        getObjectViaRPC(block, "eth_getBlockByNumber", "["+quote(val)+",false]");
+        return true;
+    }
+
+    //--------------------------------------------------------------------------------
+    bool getBlock_light(CBlock& block, blknum_t num) {
+        if (fileSize(getBinaryCacheFilename(CT_BLOCKS, num)) > 0)
+            return readBlockFromBinary(block, getBinaryCacheFilename(CT_BLOCKS, num));
+        return getBlock_light(block, uint_2_Hex(num));
+    }
+
     //-------------------------------------------------------------------------
     bool getBlock(CBlock& block, blknum_t blockNum) {
         getCurlContext()->provider = fileExists(getBinaryCacheFilename(CT_BLOCKS, blockNum)) ? "binary" : "local";
@@ -1001,43 +1014,113 @@ namespace qblocks {
 
     //-----------------------------------------------------------------------
     void manageFields(const string_q& listIn, bool show) {
-        LOG5("Entry: manageFields");
+        //LOG5("Entry: manageFields");
         string_q list = substitute(listIn, " ", "");
         while (!list.empty()) {
             string_q fields = nextTokenClear(list, '|');
             string_q cl = nextTokenClear(fields, ':');
-            LOG5("class: " + cl + " fields: " + fields);
+            //LOG5("class: " + cl + " fields: " + fields);
             CBaseNode *item = createObjectOfType(cl);
             while (item && !fields.empty()) {
                 string_q fieldName = nextTokenClear(fields, ',');
                 if (fieldName == "all") {
                     if (show) {
-                        LOG5("show " + fieldName);
+                        //LOG5("show " + fieldName);
                         item->getRuntimeClass()->showAllFields();
                     } else {
-                        LOG5("hide " + fieldName);
+                        //LOG5("hide " + fieldName);
                         item->getRuntimeClass()->hideAllFields();
                     }
                 } else if (fieldName == "none") {
                     if (show) {
-                        LOG5("show " + fieldName);
+                        //LOG5("show " + fieldName);
                         item->getRuntimeClass()->hideAllFields();
                     } else {
-                        LOG5("hide " + fieldName);
+                        //LOG5("hide " + fieldName);
                         item->getRuntimeClass()->showAllFields();
                     }
                 } else {
                     CFieldData *f = item->getRuntimeClass()->findField(fieldName);
                     if (f) {
-                        LOG5((show ? "show " : "hide ") + fieldName);
+                        //LOG5((show ? "show " : "hide ") + fieldName);
                         f->setHidden(!show);
                     } else {
-                        LOG5("field not found: " + fieldName);
+                        //LOG5("field not found: " + fieldName);
                     }
                 }
             }
             delete item;
         }
+    }
+
+    //-----------------------------------------------------------------------
+    void manageFields(const string_q& formatIn) {
+        string_q fields;
+        string_q format = substitute(substitute(formatIn,"{","<field>"),"}","</field>");
+        string_q cl = nextTokenClear(format, ':');
+        while (contains(format, "<field>"))
+            fields += toLower(snagFieldClear(format, "field") + ",");
+        manageFields(cl + ":all", false);
+        manageFields(cl + ":" + fields, true);
+    }
+
+    //-----------------------------------------------------------------------
+    string_q headerRow(const string_q& formatIn, const string_q& sep1, const string_q& sep2) {
+        string_q format = substitute(substitute(formatIn, "{", "<field>"), "}", "</field>");
+        string_q ret;
+        while (contains(format, "<field>")) {
+            string_q field = toLower(snagFieldClear(format, "field"));
+            ret = ret + (sep2 + field + sep2 + sep1);
+            printf("");
+        }
+        return trim(ret, sep1[0]);
+    }
+
+    //-----------------------------------------------------------------------
+    string_q exportPreamble(format_t fmt, const string_q& format, const CRuntimeClass *pClass) {
+        ostringstream os;
+        switch (fmt) {
+            case NONE1:
+                break;
+            case TXT1:
+                os << headerRow(format, "\t", "");
+                break;
+            case CSV1:
+                os << headerRow(format, ",", "\"");
+                break;
+            case JSON1:
+                os << "[";
+                break;
+            case API1:
+                os << "{ \"type\": \"" << pClass->m_ClassName << "\", \"data\": [";
+                break;
+            default:
+                ASSERT(0); // shouldn't happen
+                break;
+        }
+        return trim(trim(os.str(),','),'\t') + "\n";
+    }
+
+    //-----------------------------------------------------------------------
+    string_q exportPostamble(format_t fmt) {
+        if (fmt != API1 && fmt != JSON1)
+            return "";
+        if (fmt != API1)
+            return "\n]";
+
+        uint64_t pending, staging, finalized, client;
+        getLastBlocks(pending, staging, finalized, client);
+        if (isTestMode())
+            pending = staging = finalized = client = NOPOS;
+
+        ostringstream os;
+        os << "\n], \"meta\": {";
+        os << "\"pending\": " << pending << ",";
+        os << "\"staging\": " << staging << ",";
+        os << "\"finalized\": " << finalized << ",";
+        os << "\"client\": " << client;
+        os << " } }";
+        return os.str();
     }
 
     //-----------------------------------------------------------------------
