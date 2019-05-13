@@ -54,6 +54,7 @@ run_test("makeClass_list"       "--list" " function")
 run_test("makeClass_edit"       "-e" " function")
 run_test("makeClass_run"        "--run" " block")
 run_test("makeClass_run_ns"     "-n" " qblocks" " -r" " function")
+run_test("makeClass_js"         "--js" " CBlock")
 
 # Installation steps
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)
