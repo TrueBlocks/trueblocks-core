@@ -1,7 +1,0 @@
-qblocks argc: 3 [1:accountinfo] [2:0x4775daf2fdc3b3c513ef2a6e07862c27f9d6f781] 
-qblocks accountinfo 0x4775daf2fdc3b3c513ef2a6e07862c27f9d6f781 
-calling: getAccountInfo 0x4775daf2fdc3b3c513ef2a6e07862c27f9d6f781  --qblocks
-
-getAccountInfo argc: 3 [1:0x4775daf2fdc3b3c513ef2a6e07862c27f9d6f781] [2:--qblocks] 
-getAccountInfo 0x4775daf2fdc3b3c513ef2a6e07862c27f9d6f781 --qblocks 
-getAccountInfo(0x4775daf2fdc3b3c513ef2a6e07862c27f9d6f781): false
