@@ -1,9 +1,11 @@
+chifra argc: 2 [1:blocks] 
+chifra blocks 
 getBlock argc: 1 
 getBlock 
 
   Not enough arguments presented.
 
-  Usage:    getBlock [-n|-c|-a|-u|-x|-m|-l|-v|-h] <block> [block...]  
+  Usage:    getBlock [-n|-c|-a|-u|-q|-m|-l|-v|-h] <block> [block...]  
   Purpose:  Returns block(s) from local cache or directly from a running node.
              
   Where:  
@@ -12,7 +14,7 @@ getBlock
 	-c  (--check)         compare results between qblocks and Ethereum node, report differences, if any
 	-a  (--addrs)         display all addresses included in the block
 	-u  (--uniq)          display only uniq addresses found per block
-	-x  (--uniqTx)        display only uniq addresses found per transaction
+	-q  (--uniqTx)        display only uniq addresses found per transaction
 	-m  (--number)        display address counts (alterntively --addrCnt, --uniqTxCnt, or --uniqCnt)
 	-l  (--filter val)    useful only for --addrs or --uniq, only display this address in results
 
@@ -29,5 +31,3 @@ getBlock
 	-h  (--help)          display this help screen
 
   Powered by QBlocks
-chifra argc: 2 [1:blocks] 
-chifra blocks 

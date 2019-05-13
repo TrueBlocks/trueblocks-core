@@ -1,3 +1,4 @@
 ethName argc: 7 [1:-s] [2:cbCC] [3:Humaniq] [4:Ether] [5:--fmt] [6:csv] 
 ethName -s cbCC Humaniq Ether --fmt csv 
-"0xcbcc0f036ed4788f63fc0fee32873d6a7487b908","HMQ","Humaniq","Etherscan.io","Humaniq aims to be a simple and secure 4th generation mobile bank.","humaniq.png","true"
+"addr","symbol","name","source"
+"0xcbcc0f036ed4788f63fc0fee32873d6a7487b908","HMQ","Humaniq","Etherscan.io"

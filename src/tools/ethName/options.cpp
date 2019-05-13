@@ -16,90 +16,73 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     COption("~terms",       "a space separated list of one or more search terms"),
-    COption("-addr",        "export only the associated address (may be used in scripting)"),
-    COption("-data",        "export results as tab separated data"),
-    COption("-edit",        "open the name database for editing"),
-    COption("-fmt:<fmt>",   "export format (one of [json|txt|csv])"),
-    COption("-list",        "list all names in the database"),
-    COption("-matchCase",   "matches must agree in case (the default is to ignore case)"),
-    COption("@source",      "search 'source' field as well name and address (the default)"),
+    COption("-allFiel(d)s", "search all fields (default searches name, address, and symbol only)"),
+    COption("-matchCase",   "case-sensitive search"),
+    COption("@fmt:<fmt>",   "export format (one of [none|json|txt|csv|api])"),
+    COption("@a(d)d",       "add a record to the database"),
+    COption("@edit",        "open the name database for editing"),
     COption("",             "Query Ethereum addresses and/or names making it easy to remember accounts.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
 extern const char* STR_ALLFIELDS;
+extern const char* STR_DEFFIELDS;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-
-    export_t fmt = NONE;
-    string_q format = "[{ADDR}]\t[{NAME}]"; //[ ({SYMBOL})]";
 
     if (!standardOptions(command))
         return false;
 
-    bool isAddrOnly = false;
+    string_q format;
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if (arg == "-s" || arg == "--source") {
-            format += "\t[{SOURCE}]";
+        if (arg == "-e" || arg == "--edit") {
+            editFile(namesFile.getFullPath());
+            return false;
+
+        } else if (arg == "-d" || arg == "--allFields") {
+            searchFields = STR_ALLFIELDS;
+            format = searchFields;
+
+        } else if (arg == "-s" || arg == "--source") {
+            searchFields += "\t[{SOURCE}]";
+            format = searchFields;
 
         } else if (arg == "-a" || arg == "--addr") {
+            searchFields = "[{ADDR}]\t[{NAME}]";
             format = "[{ADDR}]";
-            fmt = NONE;
-            isAddrOnly = true;
-
-        } else if (startsWith(arg, "-f:") || startsWith(arg, "--fmt:")) {
-            arg = substitute(substitute(arg, "-f:", ""), "--fmt:", "");
-                 if ( arg == "txt" ) fmt = TXT;
-            else if ( arg == "csv" ) fmt = CSV;
-            else if ( arg == "json") fmt = JSON;
-            else return usage("Export format must be one of [ json | txt | csv ]. Quitting...");
-
-        } else if (arg == "-d" || arg == "--data") {
-            asData = true;
 
         } else if (arg == "-l" || arg == "--list") {
-            fmt = JSON;
+            exportFmt = JSON1;
 
         } else if (arg == "-m" || arg == "--matchCase") {
             matchCase = true;
 
-        } else if (arg == "-e" || arg == "--edit") {
-            isEdit = true;
-
         } else if (startsWith(arg, '-')) {  // do not collapse
-
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
 
         } else {
+            searches.push_back(arg);
 
-            if (!search1.empty() && !search2.empty() && !search3.empty())
-                return usage("You may search for at most three terms: " + arg);
-            else if (!search1.empty() && !search2.empty())
-                search3 = arg;
-            else if (!search1.empty())
-                search2 = arg;
-            else
-                search1 = arg;
         }
     }
 
-    if (!isAddrOnly) {
-        switch (fmt) {
-            case NONE: break; //format = "[{ADDR}]\t[{NAME}]"; break; //[ ({SYMBOL})]"; break;
-            case JSON: format = ""; break;
-            case TXT:
-            case CSV:  format = getGlobalConfig()->getConfigStr("display", "format", STR_ALLFIELDS); break;
-        }
-    } else {
-//        if (search3.empty()) search3 = search1;
-        if (search2.empty()) search2 = search1;
+    switch (exportFmt) {
+        case NONE1: format = "[{ADDR}]\t[{NAME}]\t[{SYMBOL}]"; break;
+        case API1:
+        case JSON1: format = ""; break;
+        case TXT1:
+        case CSV1:
+            format = getGlobalConfig()->getConfigStr("display", "format", format.empty() ? STR_DEFFIELDS : format);
+            manageFields("CAccountName:" + cleanFmt(format, exportFmt));
+            break;
     }
-    expContext().fmtMap["nick"] = cleanFmt(format, fmt);
-    applyFilter(format);
+    expContext().fmtMap["nick"] = cleanFmt(format, exportFmt);
+
+    applyFilter();
 
     return true;
 }
@@ -108,12 +91,9 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     registerOptions(nParams, params);
 
-    search1 = "";
-    search2 = "";
-    search3 = "";
+    searches.clear();
+    searchFields = STR_DEFFIELDS;
     matchCase = false;
-    asData = true;
-    isEdit = false;
     minArgs = 0;
 }
 
@@ -157,31 +137,27 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
 }
 
 //-----------------------------------------------------------------------
-uint64_t COptions::applyFilter(const string_q& fmtIn) {
+void COptions::applyFilter() {
 
-    ENTER("applyFilter");
-    string_q fmt = fmtIn;
-    if (!search3.empty()) fmt = "[ {DESCRIPTION}]" + fmt;
-    if (!search2.empty()) fmt = "[ {SYMBOL}]" + fmt;
-    if (!search1.empty()) fmt = "[ {ADDR}][ {NAME}]" + fmt;
+    if (!matchCase)
+        for (size_t i = 0 ; i < searches.size() ; i++)
+            searches[i] = toLower(searches[i]);
+
+    string_q format = searchFields;
+    string_q search1 = searches.size() > 0 ? searches.at(0) : "";
+    string_q search2 = searches.size() > 1 ? searches.at(1) : "";
+    string_q search3 = searches.size() > 2 ? searches.at(2) : "";
 
     for (size_t i = 0 ; i < namedAccounts.size() ; i++) {
-        string_q str = namedAccounts[i].Format(fmt);
-        if (!matchCase) {
+        string_q str = namedAccounts[i].Format(format);
+        if (!matchCase)
             str = toLower(str);
-            search1 = toLower(search1);
-            search2 = toLower(search2);
-            search3 = toLower(search3);
-        }
-        if ((search1.empty() || (search1 == "*") || contains(str, search1)) &&
-            (search2.empty() || (search2 == "*") || contains(str, search2)) &&
-            (search3.empty() || (search3 == "*") || contains(str, search3))) {
-            filtered.push_back(namedAccounts[i]);
+        if ((search1.empty() || search1 == "*" || contains(str, search1)) &&
+            (search2.empty() || search2 == "*" || contains(str, search2)) &&
+            (search3.empty() || search3 == "*" || contains(str, search3))) {
+            items.push_back(namedAccounts[i]);
         }
     }
-
-    LOG2("nFiltered: ", filtered.size());
-    EXIT_NOMSG(filtered.size());
 }
 
 //-----------------------------------------------------------------------
@@ -193,3 +169,8 @@ const char* STR_ALLFIELDS =
 "[{DESCRIPTION}]\t"
 "[{LOGO}]\t"
 "[{VISIBLE}]";
+
+const char* STR_DEFFIELDS =
+"[{ADDR}]\t"
+"[{SYMBOL}]\t"
+"[{NAME}]";

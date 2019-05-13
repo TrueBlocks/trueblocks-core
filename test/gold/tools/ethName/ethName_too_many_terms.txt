@@ -1,25 +1,4 @@
 ethName argc: 6 [1:88897] [2:torj] [3:scan] [4:etwork] [5:-s] 
 ethName 88897 torj scan etwork -s 
-
-  You may search for at most three terms: etwork
-
-  Usage:    ethName [-a|-d|-e|-f|-l|-m|-v|-h] <term> [term...]  
-  Purpose:  Query Ethereum addresses and/or names making it easy to remember accounts.
-             
-  Where:  
-	terms                 a space separated list of one or more search terms (required)
-	-a  (--addr)          export only the associated address (may be used in scripting)
-	-d  (--data)          export results as tab separated data
-	-e  (--edit)          open the name database for editing
-	-f  (--fmt val)       export format (one of [json|txt|csv])
-	-l  (--list)          list all names in the database
-	-m  (--matchCase)     matches must agree in case (the default is to ignore case)
-
-#### Hidden options (shown during testing only)
-	-s  (--source)        search 'source' field as well name and address (the default)
-#### Hidden options (shown during testing only)
-
-	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
-	-h  (--help)          display this help screen
-
-  Powered by QBlocks
+addr	symbol	name	source
+0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac	STORJ	Storj	Etherscan.io

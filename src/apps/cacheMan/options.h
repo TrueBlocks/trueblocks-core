@@ -36,7 +36,6 @@ public:
     bool isImport;
     bool isRemove;
     CAppearanceArray_base removals;
-    export_t fmt;
 
     COptions(void);
     ~COptions(void);

@@ -492,14 +492,6 @@ extern string_q collapseArrays(const string_q& inStr);
         return front + ret;
     }
 
-    //-----------------------------------------------------------------------
-    string_q cleanFmt(const string_q& str, export_t fmt) {
-        string_q ret = (substitute(substitute(substitute(str, "\n", ""), "\\n", "\n"), "\\t", "\t"));
-        if (fmt == CSV)
-            ret = "\"" + substitute(ret, "\t", "\",\"") + "\"";
-        return ret;
-    }
-
 //#endif
 #if 0
     CNewToml::CNewToml(const string_q& path) {

@@ -17,6 +17,7 @@ static const COption params[] = {
     COption("~className",          "name of C++ class(es) to process"),
     COption("-open",               "edit <className(s)> definition file in local folder"),
     COption("-run",                "run the class maker on associated <className(s)>"),
+    COption("-js:<class>",         "export javaScript components for 'class'"),
     COption("-filter:<string>",    "process only files with :filter in their names"),
     COption("-list",               "list all definition files found in the local folder"),
     COption("-header",             "write headers files only"),
@@ -35,6 +36,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
+    bool didJs = false;
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
@@ -49,6 +51,12 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-h" || arg == "--header") {
             writeHeader = true;
+
+        } else if (startsWith(arg, "--js:")) {
+            arg = substitute(arg, "--js:", "");
+            if (!exportJson(arg))
+                return false;
+            didJs = true;
 
         } else if (arg == "-l" || arg == "--list") {
             if (isRun)
@@ -108,6 +116,8 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (!isList && !isEdit && !isRemove && !isRun) {
+        if (didJs)
+            return true;
         errMsg = "You must specify at least one of --run, --list, --open, or --clear";
     }
 
@@ -184,3 +194,30 @@ bool listClasses(const string_q& path, void *data) {
     }
     return true;
 }
+
+//---------------------------------------------------------------------------------------------------
+bool visitField(const CFieldData& field, void *data) {
+    ostream *pOs = (ostream*)data;
+    *pOs << "<Row ";
+    *pOs << "name=\"" << field.getName() << "\" ";
+    *pOs << "type=\"string\" ";
+    *pOs << "value={item." << field.getName() << "} ";
+    *pOs << "display={item." << field.getName() << "} ";
+    *pOs << "route=\"\" ";
+    *pOs << "/>" << endl;
+    return true;
+}
+
+//---------------------------------------------------------------------------------------------------
+bool COptions::exportJson(const string_q& cl) {
+    if (cl.empty())
+        return usage("Cannot export js for empty class.");
+
+    CBaseNode *item = createObjectOfType(cl);
+    if (!item)
+        return usage("Class " + cl + " not found.");
+    CRuntimeClass *pClass = item->getRuntimeClass();
+    pClass->forEveryField(visitField, &cout);
+    return true;
+}
+

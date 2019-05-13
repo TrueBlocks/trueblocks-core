@@ -1,3 +1,4 @@
 ethName argc: 4 [1:-m] [2:0xcb] [3:Humaniq] 
 ethName -m 0xcb Humaniq 
-0xcbcc0f036ed4788f63fc0fee32873d6a7487b908	Humaniq
+addr	symbol	name
+0xcbcc0f036ed4788f63fc0fee32873d6a7487b908	HMQ	Humaniq

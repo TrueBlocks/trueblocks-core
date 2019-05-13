@@ -1,12 +1,12 @@
 acctExport argc: 2 [1:-h] 
 acctExport -h 
 
-  Usage:    acctExport [-f|-a|-v|-h] <address> [address...]  
+  Usage:    acctExport [-x|-a|-v|-h] <address> [address...]  
   Purpose:  Export full detail of transactions for one or more Ethereum addresses.
              
   Where:  
 	address_list          one or more addresses (0x...) to export (required)
-	-f  (--fmt val)       export format (one of [json|txt|csv])
+	-x  (--fmt val)       export format (one of [json|txt|csv])
 	-a  (--articulate)    articulate transactions, traces, logs, and outputs
 
 #### Hidden options (shown during testing only)

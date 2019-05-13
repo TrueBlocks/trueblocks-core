@@ -36,8 +36,9 @@
 #define OPT_RUNONCE (1<<9)
 #define OPT_RAW     (1<<10)
 
+//-----------------------------------------------------------------------------
+enum format_t { NONE1 = 0, JSON1 = (1<<1), TXT1 = (1<<2), CSV1 = (1<<3), API1 = (1<<4) };
 namespace qblocks {
-
     class COption;
     class COptionsBase {
     public:
@@ -48,6 +49,8 @@ namespace qblocks {
         bool isReadme;
         bool isRaw;
         bool isVeryRaw;
+        bool api_mode;
+        format_t exportFmt;
 
         CStringArray commandLines;
         uint64_t minArgs;
@@ -66,9 +69,11 @@ namespace qblocks {
         bool standardOptions(string_q& cmdLine);
 
         // supporting special block names
+        typedef bool (*NAMEVALFUNC)(CNameValue& pair, void *data);
         static CNameValueArray specials;
         static void loadSpecials(void);
         static bool findSpecial(CNameValue& pair, const string_q& arg);
+        static bool forEverySpecialBlock(NAMEVALFUNC func, void *data);
 
         // supporting tools
         CNameValueArray tools;
@@ -99,7 +104,7 @@ namespace qblocks {
         string_q notes(void) const;
         virtual string_q postProcess(const string_q& which, const string_q& str) const { return str; }
 
-protected:
+    protected:
         void registerOptions(size_t nP, COption const *pP);
         virtual void Init(void) = 0;
         const COption *pParams;
@@ -177,5 +182,6 @@ protected:
     extern const char *STR_DEFAULT_TOOLNAMES;
     extern const char *STR_DEFAULT_WHENBLOCKS;
     extern bool prepareEnv(int argc, const char *argv[]);
+    extern string_q cleanFmt(const string_q& str, format_t fmt);
 
 }  // namespace qblocks
