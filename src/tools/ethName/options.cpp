@@ -42,8 +42,8 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-d" || arg == "--allFields") {
 const char* STR_ALLFIELDS =
 "[{ADDR}]\t"
-"[{SYMBOL}]\t"
 "[{NAME}]\t"
+"[{SYMBOL}]\t"
 "[{SOURCE}]\t"
 "[{DESCRIPTION}]\t"
 "[{LOGO}]\t"
@@ -171,7 +171,5 @@ void COptions::applyFilter() {
     }
 }
 
-const char* STR_DISPLAY =
-"[{ADDR}]\t"
-"[{SYMBOL}]\t"
-"[{NAME}]";
+//-----------------------------------------------------------------------
+const char* STR_DISPLAY = "[{ADDR}]\t[{NAME}]\t[{SYMBOL}]";
