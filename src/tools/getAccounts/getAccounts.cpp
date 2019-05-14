@@ -11,67 +11,46 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
-#include "acctlib.h"
 
-extern void readCustomAddrs(CAddressArray& array);
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
     nodeNotRequired(); // This command will run without a node
-    acctlib_init(quickQuitHandler);
+    etherlib_init(quickQuitHandler);
 
     COptions options;
     if (!options.prepareArguments(argc, argv))
         return 0;
 
+    bool first = true;
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
 
-        CAddressArray addrs;
-        if (options.fromNamed) {
-            for (size_t i = 0 ; i < options.namedAccounts.size() ; i++)
-                addrs.push_back(toLower(options.namedAccounts[i].addr));
-
-        } else if (options.fromPrefunded) {
-            string_q contents;
-            asciiFileToString(configPath("prefunds.txt"), contents);
-            CStringArray prefunds;
-            explode(prefunds, contents, '\n');
-            for (auto prefund : prefunds) {
-                CStringArray fields;
-                explode(fields, prefund, '\t');
-                cout << fields[0] << endl;
-            }
+        string_q format = expContext().fmtMap["nick"];  // order matters
+        if (options.exportFmt & (TXT1|CSV1) && options.items.size() == 0) {
+            LOG_INFO("No results");
 
         } else {
-            getAccounts(addrs);
-            readCustomAddrs(addrs);
-            if (isTestMode()) {
-                addrs.clear();
-                addrs.push_back("0x0000000000000000000000000000000000000000");
-                addrs.push_back("0x0000000000000000000000000000000000000001");
-                addrs.push_back("0x0000000000000000000000000000000000000002");
-                addrs.push_back("0x0000000000000000000000000000000000000003");
+            for (auto item : options.items) {
+                bool isText = (options.exportFmt & (TXT1|CSV1));
+                if (first && !(isText && format == "[{ADDR}]"))
+                    cout  << exportPreamble(options.exportFmt, format, GETRUNTIME_CLASS(CAccountName));
+                if (options.exportFmt & (TXT1|CSV1))
+                    cout << item.second.Format(format) << endl;
+                else {
+                    if (!first)
+                        cout << "," << endl;
+                    cout << "  ";
+                    incIndent();
+                    item.second.doExport(cout);
+                    decIndent();
+                }
+                first = false;
             }
         }
-
-        for (size_t i = 0 ; i < addrs.size() ; i++) {
-            CAccountName acct;
-            bool found = verbose && options.getNamedAccount(acct, addrs[i]);
-            cout << addrs[i] << (found ? acct.Format(" ([{NAME}])") : "") << "\n";
-        }
+        cout << exportPostamble(options.exportFmt);
     }
 
-    acctlib_cleanup();
+    etherlib_cleanup();
     return 0;
-}
-
-//-----------------------------------------------------------------------
-void readCustomAddrs(CAddressArray& array) {
-    size_t n = getGlobalConfig("getAccounts")->getConfigInt("extra_accounts", "n", 0);
-    for (size_t i = 0 ; i < n ; i++) {
-        string_q addr = getGlobalConfig("getAccounts")->getConfigStr("extra_accounts", "ea_" + uint_2_Str(i), "");
-        if (!isZeroAddr(addr))
-            array.push_back(addr);
-    }
 }

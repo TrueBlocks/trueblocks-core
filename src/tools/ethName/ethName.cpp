@@ -41,7 +41,8 @@ int main(int argc, const char *argv[]) {
                 else {
                     if (a > 0)
                         cout << "," << endl;
-                    cout << "  "; incIndent();
+                    cout << "  ";
+                    incIndent();
                     options.items[a].doExport(cout);
                     decIndent();
                 }
@@ -49,5 +50,7 @@ int main(int argc, const char *argv[]) {
         }
         cout << exportPostamble(options.exportFmt);
     }
+
+    etherlib_cleanup();
     return 0;
 }

@@ -80,6 +80,11 @@ bool exportData(COptions& options) {
             }
         }
 
+        if (true) { //}!(i%1)) {
+            cerr << " " << i << " of " << options.items.size() << ": " << trans.hash << "\r";
+            cerr.flush();
+        }
+
         bool needsTrace = !IS_HIDDEN(CTransaction, "traces") &&
                             (getTraceCount(trans.hash) > 1) &&
                             !excludeTrace(&trans, options.maxTraces);
@@ -147,10 +152,6 @@ bool exportData(COptions& options) {
             replaceAll(str, options.named[w].address, newName);
         }
         cout << str;
-        if (true) { //}!(i%1)) {
-            cerr << " " << i << " of " << options.items.size() << ": " << trans.hash << "\r";
-            cerr.flush();
-        }
         first = false;
         HIDE_FIELD(CFunction, "message");
     }
