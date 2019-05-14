@@ -457,6 +457,22 @@ void loadType(CParameterArray& ar, const string_q& type) {
 //------------------------------------------------------------------------------------------------
 size_t decodeTheData(CParameterArray& interfaces, const CStringArray& dataArray, size_t& readIndex) {
 
+//    SEP5("decodeTheData");
+//    ENTER("decodeTheData");
+//    LOG5("readIndex: ", readIndex, " dataArray.size(): ", dataArray.size());
+//    LOG5("interfaces:", interfaces.size());
+//    for (auto i : interfaces)
+//        LOG5("\t" + substitute(i.Format(),"\n"," "));
+//    LOG5(readIndex);
+//    LOG5("dataArray:", dataArray.size());
+//    for (auto d : dataArray)
+//        LOG5("\t" + d);
+    if (interfaces.size() > dataArray.size()) {
+        cerr << "{ \"error\": \"Bad data encountered in decodeTheData. Ignoring...\" }," << endl;
+        return 1;
+        //EXIT_FAIL("{ \"error\": \"Bad data encountered in decodeTheData. Ignoring...\" },\n");
+    }
+
     for (size_t q = 0 ; q < interfaces.size() ; q++) {
 
         CParameter *pPtr = &interfaces[q];
@@ -482,7 +498,6 @@ size_t decodeTheData(CParameterArray& interfaces, const CStringArray& dataArray,
                 pPtr->value = "0x" + padLeft(toLower(bnu_2_Hex(str_2_BigUint(tmp[0].value))), 40, '0');
 
             } else if (type.find("uint") != string::npos) {
-
                 size_t bits = str_2_Uint(substitute(type, "uint", ""));
                 pPtr->value = bnu_2_Str(str_2_BigUint("0x" + dataArray[readIndex++], bits));
 
@@ -571,6 +586,7 @@ size_t decodeTheData(CParameterArray& interfaces, const CStringArray& dataArray,
         }
     }
     return 1;
+//    EXIT_NOMSG(1);
 }
 
 //-----------------------------------------------------------------------------------------
@@ -753,7 +769,17 @@ bool CAbi::articulateLog(CLogEntry *p) const {
             }
 
             // decode each separately
+//            SEP4("Prior to call");
+//            SEP5("topics");
+//            for (auto t : topics)
+//                LOG5(substitute(t.Format(),"\n"," "));
+//            LOG5(topicStr);
             bool ret1 = decodeRLP(topics, topicStr);
+
+//            SEP5("data");
+//            for (auto d : data)
+//                LOG5(substitute(d.Format(),"\n"," "));
+//            LOG5(p->data);
             bool ret2 = decodeRLP(data, p->data);
 
             // put them back together in the right order and we're done

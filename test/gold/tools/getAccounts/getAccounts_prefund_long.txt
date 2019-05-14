@@ -1,5 +1,5 @@
-getAccounts argc: 2 [1:-p] 
-getAccounts -p 
+getAccounts argc: 2 [1:--prefund] 
+getAccounts --prefund 
 addr	name	symbol
 0x000d836201318ec6899a67540690382780743280
 0x001762430ea9c3a26e5749afdb70da5f78ddbb8c

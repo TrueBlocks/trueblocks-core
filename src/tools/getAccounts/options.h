@@ -13,15 +13,23 @@
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
 
+//-----------------------------------------------------------------------------
+typedef map<address_t, CAccountName> CAccountNameMap;
+enum account_t { OWNED = (1<<1), CUSTOM = (1<<2), NAMED = (1<<3), PREFUND = (1<<4) };
+
+//-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    bool fromPrefunded;
-    bool fromNamed;
+    CAccountNameMap items;
+    uint64_t types;
 
     COptions(void);
-    ~COptions(void) {}
+    ~COptions(void);
 
     string_q postProcess(const string_q& which, const string_q& str) const override;
     bool parseArguments(string_q& command) override;
     void Init(void) override;
+
+    void applyFilter(void);
+    bool addIfUnique(const CAccountName& item);
 };

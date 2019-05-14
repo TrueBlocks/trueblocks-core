@@ -111,7 +111,7 @@ bool COptions::parseArguments(string_q& command) {
     // show certain fields and hide others
     SEP4("default field hiding: " + defHide);
     manageFields(defHide, false);
-    SEP4("default field showing: " + defHide);
+    SEP4("default field showing: " + defShow);
     manageFields(defShow, true);
 
     CToml toml(getMonitorPath(monitors[0].address + ".toml"));
