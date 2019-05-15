@@ -51,39 +51,34 @@ int main(int argc, const char *argv[]) {
 //--------------------------------------------------------------
 bool visitBlock(uint64_t blockNum, void *data) {
 
+    if (!isTestMode()) { cerr << blockNum << "\r"; cerr.flush(); }
     COptions *options = reinterpret_cast<COptions *>(data);
     if (blockNum < options->oldestBlock)
         options->oldestBlock = blockNum;
 
     wei_t balance = getBalanceAt(options->item->address, blockNum);
-    uint64_t nonce = getNonceAt(options->item->address, blockNum);
-    string_q code = getCodeAt(options->item->address);
-    string_q storage = getStorageAt(options->item->address, 0);
-
-    bool show = true;
     if (options->changes) {
         if (balance == options->prevBal)
-            show = false;
+            return !shouldQuit();
         options->prevBal = balance;
     }
-    if (show)
-        show = (!options->exclude_zero || balance > 0);
-    if (!show) {
-        if (!isTestMode()) {
-            cerr << blockNum << "\r";
-            cerr.flush();
-        }
+
+    if (options->exclude_zero && balance == 0)
         return !shouldQuit();
-    }
 
     options->item->blockNumber = blockNum;
-    options->item->balance = balance;
-    options->item->nonce = nonce;
-    options->item->code = code;
-    options->item->storage = storage;
-    bool isText = (options->exportFmt & (TXT1|CSV1));
-    if (isText) {
+    if (options->mode & ST_BALANCE)
+        options->item->balance = balance;
+    if (options->mode & ST_NONCE)
+        options->item->nonce = getNonceAt(options->item->address, blockNum);
+    if (options->mode & ST_CODE)
+        options->item->code = getCodeAt(options->item->address);
+    if (options->mode & ST_STORAGE)
+        options->item->storage = getStorageAt(options->item->address, 0);
+
+    if ((options->exportFmt & (TXT1|CSV1))) {
         cout << options->item->Format(expContext().fmtMap["format"]) << endl;
+
     } else {
         static bool first = true;
         if (!first)
