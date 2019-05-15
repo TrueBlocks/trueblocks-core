@@ -59,7 +59,7 @@ int main(int argc, const char *argv[]) {
 bool visitBlock(uint64_t blockNum, void *data) {
 
     COptions *options = reinterpret_cast<COptions *>(data);
-    wei_t balance = getBalanceAt(options->item->address, options->item->blockNumber);
+    wei_t balance = getBalanceAt(options->item->address, blockNum);
 
     bool show = true;
     if (options->changes) {

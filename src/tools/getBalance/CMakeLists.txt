@@ -58,7 +58,7 @@ run_test("getBalance_invalid_address_1"    "0x12")
 run_test("getBalance_invalid_address_2"    "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d3592") # longer than expected, 41 bytes
 run_test("getBalance_invalid_block_1"    "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" "fdfsdf")
 run_state_test("getBalance_dao_1500000"   "0xbb9bc244d798123fde783fcc1c72d3bb8c189413" " 1500000")
-run_state_test("getBalance_two_accts"     "0xbb9bc244d798123fde783fcc1c72d3bb8c189413" " 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 1500000" " --api")
+run_state_test("getBalance_two_accts"     "0xbb9bc244d798123fde783fcc1c72d3bb8c189413" " 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 1500000" " --fmt" " api")
 run_state_test("getBalance_tip_4"         "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 1500000" " 2000000" " 2500000" " 3000000")
 run_state_test("getBalance_from_file"     "--file:cmd_file")
 run_state_test("getBalance_multiple_accounts" "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 0x6f46cf5569aefa1acc1009290c8e043747172d89"  " 4000000" " --total")
