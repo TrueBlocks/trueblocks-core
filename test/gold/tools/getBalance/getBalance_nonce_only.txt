@@ -1,4 +1,4 @@
-getBalance argc: 6 [1:0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98] [2:--mode] [3:none] [4:--mode] [5:nonce] 
-getBalance 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 --mode none --mode nonce 
+getBalance argc: 7 [1:0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359] [2:--mode] [3:none] [4:--mode] [5:nonce] [6:2500000] 
+getBalance 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 --mode none --mode nonce 2500000 
 address	blocknumber	nonce
-0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98	7767013	1
+0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359	2500000	0
