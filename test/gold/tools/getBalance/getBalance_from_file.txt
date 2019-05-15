@@ -1,6 +1,6 @@
 getBalance argc: 2 [1:--file:cmd_file] 
 getBalance --file:cmd_file 
-address	blocknumber	wei
+address	blocknumber	balance
 0xbb9bc244d798123fde783fcc1c72d3bb8c189413	1500000	4420466920675732108465682
 0xbb9bc244d798123fde783fcc1c72d3bb8c189413	2000000	4
 0xbb9bc244d798123fde783fcc1c72d3bb8c189413	2500000	7450996705823359920
