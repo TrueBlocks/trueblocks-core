@@ -14,7 +14,7 @@
 
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-    nodeNotRequired(); // This command will run without a node
+    nodeNotRequired();
     etherlib_init(quickQuitHandler);
 
     COptions options;
@@ -26,17 +26,16 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        string_q format = expContext().fmtMap["nick"];  // order matters
-        if (options.exportFmt & (TXT1|CSV1) && options.items.size() == 0) {
+        bool isText = (options.exportFmt & (TXT1|CSV1));
+        if (isText && options.items.size() == 0) {
             LOG_INFO("No results");
 
         } else {
             for (auto item : options.items) {
-                bool isText = (options.exportFmt & (TXT1|CSV1));
-                if (first && !(isText && format == "[{ADDR}]"))
-                    cout  << exportPreamble(options.exportFmt, format, GETRUNTIME_CLASS(CAccountName));
-                if (options.exportFmt & (TXT1|CSV1))
-                    cout << item.second.Format(format) << endl;
+                if (first)
+                    cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], item.second.getRuntimeClass());
+                if (isText)
+                    cout << item.second.Format(expContext().fmtMap["format"]) << endl;
                 else {
                     if (!first)
                         cout << "," << endl;
@@ -48,7 +47,7 @@ int main(int argc, const char *argv[]) {
                 first = false;
             }
         }
-        cout << exportPostamble(options.exportFmt);
+        cout << exportPostamble(options.exportFmt, expContext().fmtMap["meta"]);
     }
 
     etherlib_cleanup();

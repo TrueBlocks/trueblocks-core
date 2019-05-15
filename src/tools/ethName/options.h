@@ -16,10 +16,10 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    CAccountNameArray items;
-    CStringArray      searches;
-    string_q          searchFields;
-    bool              matchCase;
+    CAccountNameMap items;
+    CStringArray    searches;
+    string_q        searchFields;
+    bool            matchCase;
 
     COptions(void);
     ~COptions(void);

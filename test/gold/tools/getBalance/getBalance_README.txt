@@ -2,7 +2,7 @@ getBalance argc: 2 [1:-th]
 getBalance -th 
 #### Usage
 
-`Usage:`    getBalance [-d|-l fn|-n|-t|-c|-v|-h] &lt;address&gt; [address...] [block...]  
+`Usage:`    getBalance [-n|-t|-c|-v|-h] &lt;address&gt; [address...] [block...]  
 `Purpose:`  Retrieve the balance (in wei) for one or more addresses at the given block(s).
              
 `Where:`  
@@ -11,11 +11,14 @@ getBalance -th
 | -------: | :------- | :------- |
 |  | address_list | one or more addresses (0x...) from which to retrieve balances |
 |  | block_list | an optional list of one or more blocks at which to report balances, defaults to 'latest' |
-| -d | --data | render results as tab delimited data |
-| -l | --list fn | an alternative way to specify an address_list; place one address per line in the file 'fn' |
 | -n | --nozero | suppress the display of zero balance accounts |
 | -t | --total | if more than one balance is requested, display a total as well. |
 | -c | --changes | only report a balance when it changes from one block to the next |
+
+#### Hidden options (shown during testing only)
+| -x | --fmt val | export format (one of [none&#124;json&#124;txt&#124;csv&#124;api]) |
+#### Hidden options (shown during testing only)
+
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

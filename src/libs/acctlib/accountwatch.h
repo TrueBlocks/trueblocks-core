@@ -18,7 +18,7 @@
 #include "etherlib.h"
 #include "transaction.h"
 #include "incomestatement.h"
-#include "balancehistory.h"
+#include "balancerecord.h"
 
 namespace qblocks {
 
@@ -34,7 +34,7 @@ public:
     blknum_t firstBlock;
     blknum_t lastBlock;
     CIncomeStatement statement;
-    CBalanceHistoryArray balanceHistory;
+    CBalanceRecordArray balanceHistory;
     wei_t nodeBal;
     bool enabled;
     CAbi abi_spec;
@@ -214,7 +214,8 @@ extern CArchive& operator<<(CArchive& archive, const CAccountWatchArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern biguint_t getNodeBal(CBalanceHistoryArray& history, const address_t& addr, blknum_t blockNum);
+typedef map<address_t,CAccountWatch> CAccountWatchMap;
+extern biguint_t getNodeBal(CBalanceRecordArray& history, const address_t& addr, blknum_t blockNum);
 extern void loadWatchList(const CToml& toml, CAccountWatchArray& monitors, const string_q& key);
 // EXISTING_CODE
 }  // namespace qblocks

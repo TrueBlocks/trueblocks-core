@@ -79,11 +79,11 @@ bool CAccountWatch::setValueByName(const string_q& fieldName, const string_q& fi
             break;
         case 'b':
             if ( fieldName % "balanceHistory" ) {
-                CBalanceHistory item;
+                CBalanceRecord item;
                 string_q str = fieldValue;
                 while (item.parseJson3(str)) {
                     balanceHistory.push_back(item);
-                    item = CBalanceHistory();  // reset
+                    item = CBalanceRecord();  // reset
                 }
                 return true;
             }
@@ -361,7 +361,7 @@ const CBaseNode *CAccountWatch::getObjectAt(const string_q& fieldName, size_t in
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-biguint_t getNodeBal(CBalanceHistoryArray& history, const address_t& addr, blknum_t blockNum) {
+biguint_t getNodeBal(CBalanceRecordArray& record, const address_t& addr, blknum_t blockNum) {
 
     if (!startsWith(addr, "0x"))
         return 0;
@@ -371,9 +371,9 @@ biguint_t getNodeBal(CBalanceHistoryArray& history, const address_t& addr, blknu
     if (nodeHasBalances())
         return getBalanceAt(addr, blockNum);
 
-    // If the history is empty, we can try to load the history from a file if it exists...
+    // If the record is empty, we can try to load the record from a file if it exists...
     string_q binaryFilename = "./balances/" + addr + ".bals.bin";
-    if (history.size() == 0 && fileExists(binaryFilename) && fileSize(binaryFilename) > 0) {
+    if (record.size() == 0 && fileExists(binaryFilename) && fileSize(binaryFilename) > 0) {
 
         CArchive balCache(READING_ARCHIVE);
         if (balCache.Lock(binaryFilename, modeReadOnly, LOCK_NOWAIT)) {
@@ -386,10 +386,10 @@ biguint_t getNodeBal(CBalanceHistoryArray& history, const address_t& addr, blknu
                 balCache >> bn >> addr1 >> bal;
                 if (addr == addr1) {
                     if (last != bn || bal != 0) {
-                        CBalanceHistory newBal;
-                        newBal.bn = bn;
-                        newBal.balance = bal;
-                        history.push_back(newBal);
+                        CBalanceRecord newBal;
+                        newBal.blockNumber = bn;
+                        newBal.wei = bal;
+                        record.push_back(newBal);
                         last = bn;
                     }
                     cerr << "Loaded block  #" << bn << " at " << addr1 << "\r";
@@ -404,24 +404,24 @@ biguint_t getNodeBal(CBalanceHistoryArray& history, const address_t& addr, blknu
     }
 
     // First, we try to find it using a binary search. Many times this will hit...
-    CBalanceHistory search;
-    search.bn = blockNum;
-    const CBalanceHistoryArray::iterator it = find(history.begin(), history.end(), search);
-    if (it != history.end())
-        return it->balance;
+    CBalanceRecord search;
+    search.blockNumber = blockNum;
+    const CBalanceRecordArray::iterator it = find(record.begin(), record.end(), search);
+    if (it != record.end())
+        return it->wei;
 
     // ...if it doesn't hit, we need to find the most recent balance
     biguint_t ret = 0;
-    for (size_t i = 0 ; i < history.size() ; i++) {
+    for (size_t i = 0 ; i < record.size() ; i++) {
         // if we hit the block number exactly return it
-        if (history[i].bn == blockNum)
-            return history[i].balance;
+        if (record[i].blockNumber == blockNum)
+            return record[i].wei;
 
         // ...If we've overshot, report the previous balance
-        if (history[i].bn > blockNum)
+        if (record[i].blockNumber > blockNum)
             return ret;
 
-        ret = history[i].balance;
+        ret = record[i].wei;
     }
 
     // We've run off the end of the array, return the most recent balance (if any)

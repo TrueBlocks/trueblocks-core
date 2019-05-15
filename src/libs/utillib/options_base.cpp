@@ -183,6 +183,14 @@ namespace qblocks {
             }
         }
 
+        // remove empty arguments
+        curArg = 0;
+        for (size_t i = 0 ; i < nArgs ; i++) {
+            if (!args[i].empty())
+                args[curArg++] = args[i];
+        }
+        nArgs = curArg;
+
         // If we have a command file, we will use it, if not we will creat one and pretend we have one.
         string_q commandList = "";
         for (uint64_t i = 0 ; i < nArgs ; i++) {

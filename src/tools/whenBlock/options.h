@@ -16,7 +16,7 @@
 //-----------------------------------------------------------------------------
 class COptions : public CBlockOptions {
 public:
-    CBlockArray items;
+    CBlockMap items;
 
     COptions(void);
     ~COptions(void);
@@ -24,6 +24,7 @@ public:
     string_q postProcess(const string_q& which, const string_q& str) const override;
     bool parseArguments(string_q& command) override;
     void Init(void) override;
+
     string_q listSpecials(format_t fmt) const;
 };
 

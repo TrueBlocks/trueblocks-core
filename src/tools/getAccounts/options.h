@@ -14,14 +14,13 @@
 #include "etherlib.h"
 
 //-----------------------------------------------------------------------------
-typedef map<address_t, CAccountName> CAccountNameMap;
 enum account_t { OWNED = (1<<1), CUSTOM = (1<<2), NAMED = (1<<3), PREFUND = (1<<4) };
 
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
     CAccountNameMap items;
-    uint64_t types;
+    uint64_t        types;
 
     COptions(void);
     ~COptions(void);

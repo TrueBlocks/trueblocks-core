@@ -11,28 +11,15 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "etherlib.h"
-
-//-----------------------------------------------------------------------------
-class CState {
-public:
-    bool needsNewline;
-    biguint_t totalVal;
-    biguint_t lastBal;
-    address_t curAddr;
-    CState(void) {
-        needsNewline = true;
-        totalVal = 0;
-        lastBal = 0;
-    }
-};
+#include "acctlib.h"
 
 //-----------------------------------------------------------------------------
 class COptions : public CHistoryOptions {
 public:
-    CState state;
-    CAddressArray addrs;
-    bool asData;
+    CBalanceRecordMap items;
+    CBalanceRecord *item;
+    biguint_t totalWei;
+    biguint_t prevWei;
     bool noZero;
     bool total;
     bool changes;
@@ -40,7 +27,9 @@ public:
     COptions(void);
     ~COptions(void);
 
+    string_q postProcess(const string_q& which, const string_q& str) const override;
     bool parseArguments(string_q& command) override;
     void Init(void) override;
-    string_q postProcess(const string_q& which, const string_q& str) const override;
 };
+
+extern bool visitBlock(uint64_t num, void *data);

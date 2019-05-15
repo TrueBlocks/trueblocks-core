@@ -54,8 +54,8 @@ bool testDisplayStr(COptions& options) {
         abi.interfaces.push_back(func);
         watch.abi_spec = abi;
 
-        CBalanceHistory bh;
-        bh.balance = str_2_Wei("6000000000000000000");
+        CBalanceRecord bh;
+        bh.wei = str_2_Wei("6000000000000000000");
         watch.balanceHistory.push_back(bh);
 
         CIncomeStatement is;
@@ -69,7 +69,7 @@ bool testDisplayStr(COptions& options) {
         //      watch.Format("[{ABI_SPEC::INTERFACES[i]::NAME}]" name of all elements
         cout << watch.abi_spec.interfaces[0].Format("[{p:NAME}]: [{NAME}]") << endl;
         cout << watch.abi_spec.interfaces[0].inputs[0].Format("[{p:NAME}]: [{NAME}]") << endl;
-        cout << watch.balanceHistory[0].Format("[{p:BALANCE}]: [{BALANCE}]") << endl;
+        cout << watch.balanceHistory[0].Format("[{p:WEI}]: [{WEI}]") << endl;
 
     } else if (options.className == "CBlock") {
 
