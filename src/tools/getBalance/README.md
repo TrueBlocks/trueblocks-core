@@ -17,7 +17,6 @@ specify at least one address.
 | -d | --data | render results as tab delimited data |
 | -l | --list fn | an alternative way to specify an address_list; place one address per line in the file 'fn' |
 | -n | --nozero | suppress the display of zero balance accounts |
-| -t | --total | if more than one balance is requested, display a total as well. |
 | -c | --changes | only report a balance when it changes from one block to the next |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |

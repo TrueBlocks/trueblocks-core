@@ -176,4 +176,4 @@ void COptions::applyFilter() {
 }
 
 //-----------------------------------------------------------------------
-const char* STR_DISPLAY = "[{ADDR}]\t[{NAME}]\t[{SYMBOL}]";
+const char *STR_DISPLAY = "[{ADDR}]\t[{NAME}]\t[{SYMBOL}]";

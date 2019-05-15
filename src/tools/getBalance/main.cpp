@@ -39,16 +39,9 @@ int main(int argc, const char *argv[]) {
                 first = false;
             }
         }
+        if (!options.hasHistory())
+            LOG_WARN("This node does not have historical state. The results presented above are incorrect.");
         cout << exportPostamble(options.exportFmt, expContext().fmtMap["meta"]);
-
-#if 0
-        if (options.total) {
-            string_q dispBal = options.getDispBal(options.newestBlock, options.totalBal);
-            cout << "        Total for " << cGreen << options.items.size() << cOff;
-            cout << " accounts at " << cTeal << "latest" << cOff << " block";
-            cout << " is " << cYellow << substitute(dispBal, "  ", " ") << cOff << "\n";
-        }
-#endif
     }
 
     acctlib_cleanup();
@@ -59,6 +52,9 @@ int main(int argc, const char *argv[]) {
 bool visitBlock(uint64_t blockNum, void *data) {
 
     COptions *options = reinterpret_cast<COptions *>(data);
+    if (blockNum < options->oldestBlock)
+        options->oldestBlock = blockNum;
+
     wei_t balance = getBalanceAt(options->item->address, blockNum);
 
     bool show = true;
@@ -69,8 +65,11 @@ bool visitBlock(uint64_t blockNum, void *data) {
     }
     if (show)
         show = (!options->noZero || balance > 0);
-    if (!show)
+    if (!show) {
+        if (!isTestMode())
+            cerr << blockNum << "\r"; cerr.flush();
         return !shouldQuit();
+    }
 
     options->item->blockNumber = blockNum;
     options->item->wei = balance;

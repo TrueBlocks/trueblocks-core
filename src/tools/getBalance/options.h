@@ -18,10 +18,8 @@ class COptions : public CHistoryOptions {
 public:
     CBalanceRecordMap items;
     CBalanceRecord *item;
-    biguint_t totalWei;
     biguint_t prevWei;
     bool noZero;
-    bool total;
     bool changes;
 
     COptions(void);
