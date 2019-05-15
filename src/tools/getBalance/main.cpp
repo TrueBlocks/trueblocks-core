@@ -66,8 +66,10 @@ bool visitBlock(uint64_t blockNum, void *data) {
     if (show)
         show = (!options->noZero || balance > 0);
     if (!show) {
-        if (!isTestMode())
-            cerr << blockNum << "\r"; cerr.flush();
+        if (!isTestMode()) {
+            cerr << blockNum << "\r";
+            cerr.flush();
+        }
         return !shouldQuit();
     }
 
