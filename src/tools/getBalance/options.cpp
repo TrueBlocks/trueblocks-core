@@ -18,7 +18,8 @@ static const COption params[] = {
     COption("~!block_list",  "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
     COption("-nozero",       "suppress the display of zero balance accounts"),
     COption("-changes",      "only report a balance when it changes from one block to the next"),
-    COption("@fmt:<fmt>",   "export format (one of [none|json|txt|csv|api])"),
+    COption("-mode:<val>",   "control which state to export. One of [none|all|balance|nonce|code|storage]"),
+    COption("@fmt:<fmt>",    "export format (one of [none|json|txt|csv|api])"),
     COption("",              "Retrieve the balance (in wei) for one or more addresses at the given block(s).\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -39,6 +40,24 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-c" || arg == "--changes") {
             changes = true;
+
+        } else if (startsWith(arg, "-m:") || startsWith(arg, "--mode:")) {
+            arg = substitute(substitute(arg, "-m:", ""), "--mode:", "");
+            if (arg == "none") mode = ST_NONE;
+            if (arg == "balance") mode = ethstate_t(mode|ST_BALANCE);
+            if (arg == "nonce") mode = ethstate_t(mode|ST_NONCE);
+            if (arg == "code") mode = ethstate_t(mode|ST_CODE);
+            if (arg == "storage") mode = ethstate_t(mode|ST_STORAGE);
+            if (arg == "all") mode = ethstate_t(mode|ST_ALL);
+
+        } else if (arg == "-o" || arg == "--code") {
+            mode = ethstate_t(mode|ST_CODE);
+
+        } else if (arg == "-s" || arg == "--storage") {
+            mode = ethstate_t(mode|ST_STORAGE);
+
+        } else if (arg == "-a" || arg == "--all") {
+            mode = ethstate_t(ST_BALANCE|ST_NONCE|ST_CODE|ST_STORAGE);
 
         } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
@@ -81,8 +100,15 @@ bool COptions::parseArguments(string_q& command) {
     if (!items.size())
         return usage("You must provide at least one Ethereum address.");
 
+    string_q add;
+    if (mode & ST_BALANCE) { add += "\t[{BALANCE}]";  UNHIDE_FIELD(CEthState, "balance"); }
+    if (mode & ST_NONCE)   { add += "\t[{NONCE}]";    UNHIDE_FIELD(CEthState, "nonce");   }
+    if (mode & ST_CODE)    { add += "\t[{CODE}]";     UNHIDE_FIELD(CEthState, "code");    }
+    if (mode & ST_STORAGE) { add += "\t[{STORGAGE}]"; UNHIDE_FIELD(CEthState, "storage"); }
+    format += add;
+
     switch (exportFmt) {
-        case NONE1: format = STR_DISPLAY; break;
+        case NONE1: break;
         case API1:
         case JSON1: format = ""; break;
         case TXT1:
@@ -106,6 +132,7 @@ void COptions::Init(void) {
     exclude_zero = false;
     changes = false;
     prevBal = 0;
+    mode = ST_BALANCE;
 
     items.clear();
     blocks.Init();
@@ -137,10 +164,12 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
         ret += "This tool retrieves information from the local node or rpcProvider if configured (see documentation).\n";
         ret += "If the queried node does not store historical state, the results are undefined.\n";
         ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + ".\n";
+        ret += "[{balance}] is the default mode. To select a single mode use [{none}] first, followed by that mode.\n";
+        ret += "You may specify multiple modes on a single line.\n";
         return ret;
     }
     return str;
 }
 
 //--------------------------------------------------------------------------------
-const char *STR_DISPLAY = "[{ADDRESS}]\t[{BLOCKNUMBER}]\t[{BALANCE}]\t[{NONCE}]\t[{CODE}]\t[{STORAGE}]";
+const char *STR_DISPLAY = "[{ADDRESS}]\t[{BLOCKNUMBER}]";

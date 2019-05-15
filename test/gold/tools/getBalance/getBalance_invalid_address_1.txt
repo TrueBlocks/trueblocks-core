@@ -3,7 +3,7 @@ getBalance 0x12
 
   0x12 does not appear to be a valid Ethereum address. Quitting...
 
-  Usage:    getBalance [-n|-c|-v|-h] <address> [address...] [block...]  
+  Usage:    getBalance [-n|-c|-m|-v|-h] <address> [address...] [block...]  
   Purpose:  Retrieve the balance (in wei) for one or more addresses at the given block(s).
              
   Where:  
@@ -11,6 +11,7 @@ getBalance 0x12
 	block_list            an optional list of one or more blocks at which to report balances, defaults to 'latest'
 	-n  (--nozero)        suppress the display of zero balance accounts
 	-c  (--changes)       only report a balance when it changes from one block to the next
+	-m  (--mode val)      control which state to export. One of [none|all|balance|nonce|code|storage]
 
 #### Hidden options (shown during testing only)
 	-x  (--fmt val)       export format (one of [none|json|txt|csv|api])

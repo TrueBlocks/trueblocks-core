@@ -41,7 +41,7 @@ public:
 };
 
 //--------------------------------------------------------------------------------
-extern bool freshen_internal(FreshenMode mode, const CAddressArray& list, const string_q& tool_flags, const string_q& freshen_flags);
+extern bool freshen_internal(freshen_t mode, const CAddressArray& list, const string_q& tool_flags, const string_q& freshen_flags);
 
 //--------------------------------------------------------------------------------
 extern string_q colors[];

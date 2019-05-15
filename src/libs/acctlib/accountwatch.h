@@ -38,7 +38,7 @@ public:
     wei_t nodeBal;
     bool enabled;
     CAbi abi_spec;
-    FreshenMode fm_mode;
+    freshen_t fm_mode;
 
 public:
     CAccountWatch(void);

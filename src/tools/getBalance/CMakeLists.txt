@@ -99,5 +99,13 @@ run_state_test("getBalance_fmt_api"      "0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0
 run_state_test("getBalance_fmt_junk"     "0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98" " --fmt" " junk" " 2000000")
 run_state_test("getBalance_fmt_api_mode" "0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98" " --api_mode" " 2000000" " --ether")
 
+run_state_test("getBalance_bal"        "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " --mode" " bal" " 2500000")
+run_state_test("getBalance_nonce"      "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " --mode" " nonce" " 2500000")
+run_state_test("getBalance_code"       "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " --mode" " code" " 2500000")
+run_state_test("getBalance_storage"    "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " --mode" " storage" " 2500000")
+run_state_test("getBalance_all"        "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " --mode" " all" " 2500000")
+run_state_test("getBalance_none"       "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " --mode" " none" " 2500000")
+run_state_test("getBalance_nonce_only" "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " --mode" " none" " --mode" " nonce" " 2500000")
+
 # Installation steps
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)
