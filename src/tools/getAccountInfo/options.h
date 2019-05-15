@@ -11,14 +11,12 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "etherlib.h"
+#include "acctlib.h"
 
 //-----------------------------------------------------------------------------
 class COptions : public CHistoryOptions {
 public:
-    CAddressArray addrs;
-    bool diff;
-    bool asData;
+    CAddressArray items;
     bool showBytes;
     bool when;
 
@@ -29,3 +27,7 @@ public:
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 };
+
+//-----------------------------------------------------------------------------
+extern bool visitBlock(uint64_t num, void *data);
+extern blknum_t whenDeployed(const address_t& addr);

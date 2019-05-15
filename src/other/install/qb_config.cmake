@@ -56,7 +56,7 @@ endif()
 # makeClass content
 message(STATUS "Copying makeClass templates to ${QUICKBLOCKS_HOME}/makeClass/")
 file(COPY "${CMAKE_SOURCE_DIR}/../../../bin/makeClass" DESTINATION "${QUICKBLOCKS_HOME}/makeClass")
-file(GLOB TARGET_FILES "${CMAKE_SOURCE_DIR}/../../../src/tools/makeClass/templates/blank*")
+file(GLOB TARGET_FILES "${CMAKE_SOURCE_DIR}/../../../src/dev_tools/makeClass/templates/blank*")
 foreach(FILE ${TARGET_FILES} )
     message(STATUS "  Copied file to ${QUICKBLOCKS_HOME}/makeClass/")
 	file(COPY "${FILE}" DESTINATION "${QUICKBLOCKS_HOME}/makeClass/")

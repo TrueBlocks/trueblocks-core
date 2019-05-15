@@ -30,4 +30,5 @@ public:
     void Init(void) override;
 };
 
+//-----------------------------------------------------------------------------
 extern bool visitBlock(uint64_t num, void *data);
