@@ -1,14 +1,13 @@
 getBalance argc: 3 [1:--help] [2:-v] 
 getBalance --help -v 
 
-  Usage:    getBalance [-n|-t|-c|-v|-h] <address> [address...] [block...]  
+  Usage:    getBalance [-n|-c|-v|-h] <address> [address...] [block...]  
   Purpose:  Retrieve the balance (in wei) for one or more addresses at the given block(s).
              
   Where:  
 	address_list          one or more addresses (0x...) from which to retrieve balances (required)
 	block_list            an optional list of one or more blocks at which to report balances, defaults to 'latest'
 	-n  (--nozero)        suppress the display of zero balance accounts
-	-t  (--total)         if more than one balance is requested, display a total as well.
 	-c  (--changes)       only report a balance when it changes from one block to the next
 
 #### Hidden options (shown during testing only)
