@@ -14,10 +14,18 @@
 #include "acctlib.h"
 
 //-----------------------------------------------------------------------------
+typedef enum {
+    ST_NONE = 0,
+    ST_BALANCE = (1<<1), ST_NONCE = (1<<2), ST_CODE = (1<<3), ST_STORAGE = (1<<4),
+    ST_ALL = (ST_BALANCE|ST_NONCE|ST_CODE|ST_STORAGE)
+} ethstate_t;
+
+//-----------------------------------------------------------------------------
 class COptions : public CHistoryOptions {
 public:
     CEthStateMap items;
     CEthState *item;
+    ethstate_t mode;
     biguint_t prevBal;
     bool exclude_zero;
     bool changes;
