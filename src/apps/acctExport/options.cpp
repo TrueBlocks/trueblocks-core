@@ -1,4 +1,4 @@
-//TODO: This used to work: watch->nodeBal = getNodeBal(watch->balanceHistory, watch->address, watch->firstBlock-1);
+//TODO: This used to work: watch->nodeBal = getNodeBal(watch->stateHistory, watch->address, watch->firstBlock-1);
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
  * Copyright (c) 2017 by Great Hill Corporation.

@@ -18,7 +18,7 @@
 #include "etherlib.h"
 #include "transaction.h"
 #include "incomestatement.h"
-#include "balancerecord.h"
+#include "ethstate.h"
 
 namespace qblocks {
 
@@ -34,7 +34,7 @@ public:
     blknum_t firstBlock;
     blknum_t lastBlock;
     CIncomeStatement statement;
-    CBalanceRecordArray balanceHistory;
+    CEthStateArray stateHistory;
     wei_t nodeBal;
     bool enabled;
     CAbi abi_spec;
@@ -142,7 +142,7 @@ inline void CAccountWatch::initialize(void) {
     firstBlock = 0;
     lastBlock = 0;
     statement = CIncomeStatement();
-    balanceHistory.clear();
+    stateHistory.clear();
     nodeBal = 0;
     enabled = true;
     abi_spec = CAbi();
@@ -168,7 +168,7 @@ inline void CAccountWatch::duplicate(const CAccountWatch& ac) {
     firstBlock = ac.firstBlock;
     lastBlock = ac.lastBlock;
     statement = ac.statement;
-    balanceHistory = ac.balanceHistory;
+    stateHistory = ac.stateHistory;
     nodeBal = ac.nodeBal;
     enabled = ac.enabled;
     abi_spec = ac.abi_spec;
@@ -215,7 +215,7 @@ extern CArchive& operator<<(CArchive& archive, const CAccountWatchArray& array);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 typedef map<address_t,CAccountWatch> CAccountWatchMap;
-extern biguint_t getNodeBal(CBalanceRecordArray& history, const address_t& addr, blknum_t blockNum);
+extern biguint_t getNodeBal(CEthStateArray& history, const address_t& addr, blknum_t blockNum);
 extern void loadWatchList(const CToml& toml, CAccountWatchArray& monitors, const string_q& key);
 // EXISTING_CODE
 }  // namespace qblocks

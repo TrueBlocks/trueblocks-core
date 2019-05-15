@@ -23,31 +23,34 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CBalanceRecord : public CBaseNode {
+class CEthState : public CBaseNode {
 public:
     blknum_t blockNumber;
-    biguint_t wei;
+    biguint_t balance;
+    uint64_t nonce;
+    string_q code;
+    string_q storage;
     address_t address;
 
 public:
-    CBalanceRecord(void);
-    CBalanceRecord(const CBalanceRecord& ba);
-    virtual ~CBalanceRecord(void);
-    CBalanceRecord& operator=(const CBalanceRecord& ba);
+    CEthState(void);
+    CEthState(const CEthState& et);
+    virtual ~CEthState(void);
+    CEthState& operator=(const CEthState& et);
 
-    DECLARE_NODE(CBalanceRecord);
+    DECLARE_NODE(CEthState);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CBalanceRecord& item) const;
-    bool operator!=(const CBalanceRecord& item) const { return !operator==(item); }
-    friend bool operator<(const CBalanceRecord& v1, const CBalanceRecord& v2);
-    friend ostream& operator<<(ostream& os, const CBalanceRecord& item);
+    bool operator==(const CEthState& item) const;
+    bool operator!=(const CEthState& item) const { return !operator==(item); }
+    friend bool operator<(const CEthState& v1, const CEthState& v2);
+    friend ostream& operator<<(ostream& os, const CEthState& item);
 
 protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CBalanceRecord& ba);
+    void duplicate(const CEthState& et);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -55,41 +58,44 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline CBalanceRecord::CBalanceRecord(void) {
+inline CEthState::CEthState(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CBalanceRecord::CBalanceRecord(const CBalanceRecord& ba) {
+inline CEthState::CEthState(const CEthState& et) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(ba);
+    duplicate(et);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CBalanceRecord::~CBalanceRecord(void) {
+inline CEthState::~CEthState(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CBalanceRecord::clear(void) {
+inline void CEthState::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CBalanceRecord::initialize(void) {
+inline void CEthState::initialize(void) {
     CBaseNode::initialize();
 
     blockNumber = 0;
-    wei = 0;
+    balance = 0;
+    nonce = 0;
+    code = "";
+    storage = "";
     address = "";
 
     // EXISTING_CODE
@@ -97,50 +103,53 @@ inline void CBalanceRecord::initialize(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CBalanceRecord::duplicate(const CBalanceRecord& ba) {
+inline void CEthState::duplicate(const CEthState& et) {
     clear();
-    CBaseNode::duplicate(ba);
+    CBaseNode::duplicate(et);
 
-    blockNumber = ba.blockNumber;
-    wei = ba.wei;
-    address = ba.address;
+    blockNumber = et.blockNumber;
+    balance = et.balance;
+    nonce = et.nonce;
+    code = et.code;
+    storage = et.storage;
+    address = et.address;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CBalanceRecord& CBalanceRecord::operator=(const CBalanceRecord& ba) {
-    duplicate(ba);
+inline CEthState& CEthState::operator=(const CEthState& et) {
+    duplicate(et);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CBalanceRecord::operator==(const CBalanceRecord& item) const {
+inline bool CEthState::operator==(const CEthState& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default equal operator in class definition, assume none are equal (so find fails)
-    return false;
+    // Default equality operator as defined in class definition
+    return blockNumber == item.blockNumber;
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CBalanceRecord& v1, const CBalanceRecord& v2) {
+inline bool operator<(const CEthState& v1, const CEthState& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted, preserve ordering
-    return true;
+    // Default sort as defined in class definition
+    return v1.blockNumber < v2.blockNumber;
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CBalanceRecord> CBalanceRecordArray;
-extern CArchive& operator>>(CArchive& archive, CBalanceRecordArray& array);
-extern CArchive& operator<<(CArchive& archive, const CBalanceRecordArray& array);
+typedef vector<CEthState> CEthStateArray;
+extern CArchive& operator>>(CArchive& archive, CEthStateArray& array);
+extern CArchive& operator<<(CArchive& archive, const CEthStateArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-typedef map<address_t,CBalanceRecord> CBalanceRecordMap;
+typedef map<address_t,CEthState> CEthStateMap;
 // EXISTING_CODE
 }  // namespace qblocks
 
