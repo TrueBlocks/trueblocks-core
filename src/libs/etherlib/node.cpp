@@ -534,6 +534,32 @@ namespace qblocks {
         //
     }
 
+    //--------------------------------------------------------------
+    static blknum_t findCodeAt_binarySearch(const address_t& addr, blknum_t first, blknum_t last) {
+        if (last > first) {
+            size_t mid = first + ((last - first) / 2);
+            bool atMid  = isContractAt(addr, mid);
+            bool atMid1 = isContractAt(addr, mid + 1);
+            if (!atMid && atMid1)
+                return mid;  // found it
+            if (atMid) {
+                // we're too high, so search below
+                return findCodeAt_binarySearch(addr, first, mid-1);
+            }
+            // we're too low, so search above
+            return findCodeAt_binarySearch(addr, mid+1, last);
+        }
+        return first;
+    }
+
+    //-------------------------------------------------------------------------------------
+    blknum_t getDeployBlock(const address_t& addr) {
+        if (!isContractAt(addr))
+            return NOPOS;
+        blknum_t num = findCodeAt_binarySearch(addr, 0, getLastBlock_client());
+        return (num ? num+1 : NOPOS);
+    }
+
     //-------------------------------------------------------------------------
     uint64_t addFilter(address_t addr, const CTopicArray& topics, blknum_t num) {
         // Creates a filter object, based on filter options, to notify when the state changes (logs). To check if the state has
