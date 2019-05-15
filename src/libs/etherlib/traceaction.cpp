@@ -193,18 +193,18 @@ void CTraceAction::registerClass(void) {
     ADD_FIELD(CTraceAction, "refundAddress", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CTraceAction, "to", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CTraceAction, "value", T_WEI, ++fieldNum);
-    ADD_FIELD(CTraceAction, "ether", T_ETHER, ++fieldNum)
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTraceAction, "schema");
     HIDE_FIELD(CTraceAction, "deleted");
     HIDE_FIELD(CTraceAction, "showing");
     HIDE_FIELD(CTraceAction, "cname");
-    HIDE_FIELD(CTraceAction, "ether");
 
     builtIns.push_back(_biCTraceAction);
 
     // EXISTING_CODE
+    ADD_FIELD(CTraceAction, "ether", T_ETHER, ++fieldNum)
+    HIDE_FIELD(CTraceAction, "ether");
     // EXISTING_CODE
 }
 

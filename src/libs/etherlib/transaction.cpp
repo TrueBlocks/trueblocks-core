@@ -159,7 +159,6 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
         default:
             break;
     }
-
     return false;
 }
 

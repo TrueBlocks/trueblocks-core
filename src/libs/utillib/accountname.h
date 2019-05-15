@@ -163,12 +163,12 @@ inline bool operator<(const CAccountName& v1, const CAccountName& v2) {
 
 //---------------------------------------------------------------------------
 typedef vector<CAccountName> CAccountNameArray;
-typedef map<address_t, CAccountName> CAccountNameMap;
 extern CArchive& operator>>(CArchive& archive, CAccountNameArray& array);
 extern CArchive& operator<<(CArchive& archive, const CAccountNameArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+typedef map<address_t, CAccountName> CAccountNameMap;
 // EXISTING_CODE
 }  // namespace qblocks
 

@@ -16,10 +16,10 @@
 //-----------------------------------------------------------------------------
 class COptions : public CHistoryOptions {
 public:
-    CBalanceRecordMap items;
-    CBalanceRecord *item;
-    biguint_t prevWei;
-    bool noZero;
+    CEthStateMap items;
+    CEthState *item;
+    biguint_t prevBal;
+    bool exclude_zero;
     bool changes;
 
     COptions(void);

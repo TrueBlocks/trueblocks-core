@@ -209,8 +209,6 @@ void CTrace::registerClass(void) {
     HIDE_FIELD(CTrace, "articulatedTrace");
     ADD_FIELD(CTrace, "action", T_OBJECT, ++fieldNum);
     ADD_FIELD(CTrace, "result", T_OBJECT, ++fieldNum);
-    ADD_FIELD(CTrace, "date", T_DATE, ++fieldNum);
-    HIDE_FIELD(CTrace, "date");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTrace, "schema");
@@ -221,6 +219,8 @@ void CTrace::registerClass(void) {
     builtIns.push_back(_biCTrace);
 
     // EXISTING_CODE
+    ADD_FIELD(CTrace, "date", T_DATE, ++fieldNum);
+    HIDE_FIELD(CTrace, "date");
     // EXISTING_CODE
 }
 
