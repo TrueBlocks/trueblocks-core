@@ -90,7 +90,9 @@ void reportByToken(COptions& options) {
                     options.oldestBlock = blockNum;
                 biguint_t bal = str_2_Wei(getTokenInfo("balanceOf", token, holder, blockNum));
                 totalVal += bal;
-                string_q dispBal = options.getDispBal(options.newestBlock, bal, options.asData);
+                string_q dispBal = getDispBal(options.newestBlock, bal);
+                if (options.asData)
+                    replaceAll(dispBal, ",", "");
                 needsNewline = true;
                 if (bal > 0 || !options.noZero) {
                     if (options.asData) {
@@ -117,7 +119,9 @@ void reportByToken(COptions& options) {
     }
 
     if (options.total && cnt > 1) {
-        string_q dispBal = options.getDispBal(options.newestBlock, totalVal, options.asData);
+        string_q dispBal = getDispBal(options.newestBlock, totalVal);
+        if (options.asData)
+            replaceAll(dispBal, ",", "");
         cout << "        Total for " << cGreen << cnt << cOff;
         cout << " accounts at " << cTeal << "latest" << cOff << " block";
         cout << " is " << cYellow << dispBal << cOff << "\n";
@@ -152,7 +156,9 @@ void reportByAccount(COptions& options) {
                     options.oldestBlock = blockNum;
                 biguint_t bal = str_2_Wei(getTokenInfo("balanceOf", token, holder, blockNum));
                 totalVal += bal;
-                string_q dispBal = options.getDispBal(options.newestBlock, bal, options.asData);
+                string_q dispBal = getDispBal(options.newestBlock, bal);
+                if (options.asData)
+                    replaceAll(dispBal, ",", "");
                 needsNewline = true;
                 if (bal > 0 || !options.noZero) {
                     if (options.asData) {
@@ -179,7 +185,9 @@ void reportByAccount(COptions& options) {
     }
 
     if (options.total && cnt > 1) {
-        string_q dispBal = options.getDispBal(options.newestBlock, totalVal, options.asData);
+        string_q dispBal = getDispBal(options.newestBlock, totalVal);
+        if (options.asData)
+            replaceAll(dispBal, ",", "");
         cout << "        Total for " << cGreen << cnt << cOff;
         cout << " accounts at " << cTeal << "latest" << cOff << " block";
         cout << " is " << cYellow << dispBal << cOff << "\n";

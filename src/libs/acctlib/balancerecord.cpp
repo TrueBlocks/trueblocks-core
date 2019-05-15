@@ -15,23 +15,23 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <algorithm>
-#include "balancehistory.h"
+#include "balancerecord.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CBalanceHistory, CBaseNode);
+IMPLEMENT_NODE(CBalanceRecord, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextBalancehistoryChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextBalancehistoryChunk_custom(const string_q& fieldIn, const void *dataPtr);
+static string_q nextBalancerecordChunk(const string_q& fieldIn, const void *dataPtr);
+static string_q nextBalancerecordChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CBalanceHistory::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CBalanceRecord::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
-    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["balancehistory_fmt"] : fmtIn);
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["balancerecord_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();
         return;
@@ -41,13 +41,13 @@ void CBalanceHistory::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr)
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextBalancehistoryChunk, this);
+        ctx << getNextChunk(fmt, nextBalancerecordChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextBalancehistoryChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextBalancerecordChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CBalanceHistory *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CBalanceRecord *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -56,14 +56,23 @@ string_q nextBalancehistoryChunk(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CBalanceHistory::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
+bool CBalanceRecord::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
+    if ( fieldName % "ether" ) {
+        wei = str_2_Wei(fieldValue)* weiPerEther();
+        return true;
+    }
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
+        case 'a':
+            if ( fieldName % "address" ) { address = str_2_Addr(fieldValue); return true; }
+            break;
         case 'b':
-            if ( fieldName % "bn" ) { bn = str_2_Uint(fieldValue); return true; }
-            if ( fieldName % "balance" ) { balance = str_2_Wei(fieldValue); return true; }
+            if ( fieldName % "blockNumber" ) { blockNumber = str_2_Uint(fieldValue); return true; }
+            break;
+        case 'w':
+            if ( fieldName % "wei" ) { wei = str_2_Wei(fieldValue); return true; }
             break;
         default:
             break;
@@ -72,13 +81,13 @@ bool CBalanceHistory::setValueByName(const string_q& fieldName, const string_q& 
 }
 
 //---------------------------------------------------------------------------------------------------
-void CBalanceHistory::finishParse() {
+void CBalanceRecord::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CBalanceHistory::Serialize(CArchive& archive) {
+bool CBalanceRecord::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -91,28 +100,30 @@ bool CBalanceHistory::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> bn;
-    archive >> balance;
+    archive >> blockNumber;
+    archive >> wei;
+//    archive >> address;
     finishParse();
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CBalanceHistory::SerializeC(CArchive& archive) const {
+bool CBalanceRecord::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << bn;
-    archive << balance;
+    archive << blockNumber;
+    archive << wei;
+//    archive << address;
 
     return true;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CBalanceHistoryArray& array) {
+CArchive& operator>>(CArchive& archive, CBalanceRecordArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -124,7 +135,7 @@ CArchive& operator>>(CArchive& archive, CBalanceHistoryArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CBalanceHistoryArray& array) {
+CArchive& operator<<(CArchive& archive, const CBalanceRecordArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -133,36 +144,48 @@ CArchive& operator<<(CArchive& archive, const CBalanceHistoryArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void CBalanceHistory::registerClass(void) {
+void CBalanceRecord::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CBalanceHistory, "schema")) return;
+    if (HAS_FIELD(CBalanceRecord, "schema")) return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CBalanceHistory, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CBalanceHistory, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CBalanceHistory, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CBalanceHistory, "cname", T_TEXT,  ++fieldNum);
-    ADD_FIELD(CBalanceHistory, "bn", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CBalanceHistory, "balance", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CBalanceRecord, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CBalanceRecord, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CBalanceRecord, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CBalanceRecord, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CBalanceRecord, "blockNumber", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CBalanceRecord, "wei", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CBalanceRecord, "address", T_ADDRESS, ++fieldNum);
+    HIDE_FIELD(CBalanceRecord, "address");
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CBalanceHistory, "schema");
-    HIDE_FIELD(CBalanceHistory, "deleted");
-    HIDE_FIELD(CBalanceHistory, "showing");
-    HIDE_FIELD(CBalanceHistory, "cname");
+    HIDE_FIELD(CBalanceRecord, "schema");
+    HIDE_FIELD(CBalanceRecord, "deleted");
+    HIDE_FIELD(CBalanceRecord, "showing");
+    HIDE_FIELD(CBalanceRecord, "cname");
 
-    builtIns.push_back(_biCBalanceHistory);
+    builtIns.push_back(_biCBalanceRecord);
 
     // EXISTING_CODE
+    ADD_FIELD(CBalanceRecord, "ether", T_NUMBER, ++fieldNum);
+    HIDE_FIELD(CBalanceRecord, "ether");
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextBalancehistoryChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CBalanceHistory *bal = reinterpret_cast<const CBalanceHistory *>(dataPtr);
+string_q nextBalancerecordChunk_custom(const string_q& fieldIn, const void *dataPtr) {
+    const CBalanceRecord *bal = reinterpret_cast<const CBalanceRecord *>(dataPtr);
     if (bal) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'd':
+                if ( fieldIn % "dollars" )
+                    return getDispBal(bal->blockNumber, bal->wei);
+                break;
+            case 'e':
+                if ( fieldIn % "ether" )
+                    return wei_2_Ether(bnu_2_Str(bal->wei));
+                break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
@@ -181,7 +204,7 @@ string_q nextBalancehistoryChunk_custom(const string_q& fieldIn, const void *dat
 }
 
 //---------------------------------------------------------------------------
-bool CBalanceHistory::readBackLevel(CArchive& archive) {
+bool CBalanceRecord::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE
@@ -190,18 +213,23 @@ bool CBalanceHistory::readBackLevel(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-string_q CBalanceHistory::getValueByName(const string_q& fieldName) const {
+string_q CBalanceRecord::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
-    string_q ret = nextBalancehistoryChunk_custom(fieldName, this);
+    string_q ret = nextBalancerecordChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
     // Return field values
     switch (tolower(fieldName[0])) {
+        case 'a':
+            if ( fieldName % "address" ) return addr_2_Str(address);
+            break;
         case 'b':
-            if ( fieldName % "bn" ) return uint_2_Str(bn);
-            if ( fieldName % "balance" ) return bnu_2_Str(balance);
+            if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
+            break;
+        case 'w':
+            if ( fieldName % "wei" ) return bnu_2_Str(wei);
             break;
     }
 
@@ -213,7 +241,7 @@ string_q CBalanceHistory::getValueByName(const string_q& fieldName) const {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CBalanceHistory& item) {
+ostream& operator<<(ostream& os, const CBalanceRecord& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 

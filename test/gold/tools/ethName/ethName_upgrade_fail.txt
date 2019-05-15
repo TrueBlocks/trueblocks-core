@@ -893,6 +893,15 @@ ethName --list
     "visible": true
   },
   {
+    "addr": "0x1820a4b7618bde71dce8cdc73aab6c95905fad24",
+    "symbol": "REG",
+    "name": "1820 Registry",
+    "source": "QuickBlocks",
+    "description": "Registration smart contract as described in this EIP: https://eips.ethereum.org/EIPS/eip-1820",
+    "logo": "",
+    "visible": true
+  },
+  {
     "addr": "0x1829aa045e21e0d59580024a951db48096e01782",
     "symbol": "FXT",
     "name": "FuzeX",
@@ -2459,15 +2468,6 @@ ethName --list
     "visible": true
   },
   {
-    "addr": "0x4df812f6064def1e5e029f1ca858777cc98d2d81",
-    "symbol": "XAUR",
-    "name": "Xaurum",
-    "source": "Etherscan.io",
-    "description": "Xaurum is unit of value on the golden blockchain, it represents an increasing amount of gold and can be exchanged for it by melting",
-    "logo": "xaurum2_28.png",
-    "visible": true
-  },
-  {
     "addr": "0x4a220e6096b25eadb88358cb44068a3248254675",
     "symbol": "QNT",
     "name": "Quant",
@@ -2627,6 +2627,15 @@ ethName --list
     "source": "Etherscan.io",
     "description": "FundRequest is more than a platform to fund projects. We provide the best experience to fund an issue and incentivise the open source community.",
     "logo": "fundrequest_28.png",
+    "visible": true
+  },
+  {
+    "addr": "0x4df812f6064def1e5e029f1ca858777cc98d2d81",
+    "symbol": "XAUR",
+    "name": "Xaurum",
+    "source": "Etherscan.io",
+    "description": "Xaurum is unit of value on the golden blockchain, it represents an increasing amount of gold and can be exchanged for it by melting",
+    "logo": "xaurum2_28.png",
     "visible": true
   },
   {
@@ -2954,15 +2963,6 @@ ethName --list
     "visible": true
   },
   {
-    "addr": "0x5af2be193a6abca9c8817001f45744777db30756",
-    "symbol": "ETHOS",
-    "name": "Ethos",
-    "source": "Etherscan.io",
-    "description": "People-powered cryptocurrency services for the blockchain",
-    "logo": "ethos_28.png",
-    "visible": true
-  },
-  {
     "addr": "0x5a84969bb663fb64f6d015dcf9f622aedc796750",
     "symbol": "ICE",
     "name": "IDICE",
@@ -2987,6 +2987,15 @@ ethName --list
     "source": "Etherscan.io",
     "description": "A peer-to-peer ecosystem of crypto buyers, sellers and physical shops.",
     "logo": "dether3_28.png",
+    "visible": true
+  },
+  {
+    "addr": "0x5af2be193a6abca9c8817001f45744777db30756",
+    "symbol": "ETHOS",
+    "name": "Ethos",
+    "source": "Etherscan.io",
+    "description": "People-powered cryptocurrency services for the blockchain",
+    "logo": "ethos_28.png",
     "visible": true
   },
   {
@@ -4232,15 +4241,6 @@ ethName --list
     "visible": true
   },
   {
-    "addr": "0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0",
-    "symbol": "EOS",
-    "name": "EOS",
-    "source": "Etherscan.io",
-    "description": "Infrastructure for Decentralized Applications",
-    "logo": "",
-    "visible": true
-  },
-  {
     "addr": "0x86d5b3b108dbc56e9e5ea7d5c56a3e32ccadac35",
     "symbol": "AGVC",
     "name": "AgaveCoin",
@@ -4256,6 +4256,15 @@ ethName --list
     "source": "Etherscan.io",
     "description": "Quinads is an advertisement platform with blockchain based and allows users to socially interact and rewarded by cryptocurrency.",
     "logo": "quinads_28.png",
+    "visible": true
+  },
+  {
+    "addr": "0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0",
+    "symbol": "EOS",
+    "name": "EOS",
+    "source": "Etherscan.io",
+    "description": "Infrastructure for Decentralized Applications",
+    "logo": "",
     "visible": true
   },
   {
@@ -5105,132 +5114,6 @@ ethName --list
     "visible": true
   },
   {
-    "addr": "0xaf30d2a7e90d7dc361c8c4585e9bb7d2f6f15bc7",
-    "symbol": "1ST",
-    "name": "FirstBlood Token",
-    "source": "Etherscan.io",
-    "description": "FirstBlood.io is a decentralized Esports gaming platform that is powered by the blockchain",
-    "logo": "",
-    "visible": true
-  },
-  {
-    "addr": "0xb63b606ac810a52cca15e44bb630fd42d8d1d83d",
-    "symbol": "MCO",
-    "name": "Crypto.com",
-    "source": "Etherscan.io",
-    "description": "Crypto.com, the pioneering payments and cryptocurrency platform, seeks to accelerate the world’s transition to cryptocurrency.",
-    "logo": "cryptocom_28.png",
-    "visible": true
-  },
-  {
-    "addr": "0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac",
-    "symbol": "STORJ",
-    "name": "Storj",
-    "source": "Etherscan.io",
-    "description": "Blockchain-based, end-to-end encrypted, distributed object storage, where only you have access to your data",
-    "logo": "storj2.png",
-    "visible": true
-  },
-  {
-    "addr": "0xb97048628db6b661d4c2aa833e95dbe1a905b280",
-    "symbol": "PAY",
-    "name": "TenXPay",
-    "source": "Etherscan.io",
-    "description": "TenX connects your blockchain assets for everyday use. TenX’s debit card and banking licence will allow us to be a hub for the blockchain ecosystem to connect for real-world use cases.",
-    "logo": "tenx_28.png",
-    "visible": true
-  },
-  {
-    "addr": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",
-    "symbol": "SWT",
-    "name": "SwarmCity",
-    "source": "Etherscan.io",
-    "description": "Swarm City is a decentralized peer to peer sharing economy",
-    "logo": "SwarmCity.png",
-    "visible": true
-  },
-  {
-    "addr": "0xbeb9ef514a379b997e0798fdcc901ee474b6d9a1",
-    "symbol": "MLN",
-    "name": "Melon Token",
-    "source": "Etherscan.io",
-    "description": "The Melon protocol is a blockchain protocol for digital asset management built on the Ethereum platform",
-    "logo": "",
-    "visible": true
-  },
-  {
-    "addr": "0xc66ea802717bfb9833400264dd12c2bceaa34a6d",
-    "symbol": "MKR",
-    "name": "Maker",
-    "source": "Etherscan.io",
-    "description": "Maker is a Decentralized Autonomous Organization that creates and insures the dai stablecoin on the Ethereum blockchain",
-    "logo": "",
-    "visible": true
-  },
-  {
-    "addr": "0xcb94be6f13a1182e4a4b6140cb7bf2025d28e41b",
-    "symbol": "TRST",
-    "name": "Trustcoin",
-    "source": "Etherscan.io",
-    "description": "A platform for Trusted Lending Circles, powered by people and blockchain",
-    "logo": "wetrust.png",
-    "visible": true
-  },
-  {
-    "addr": "0xd0d6d6c5fe4a677d343cc433536bb717bae167dd",
-    "symbol": "ADT",
-    "name": "AdToken",
-    "source": "Etherscan.io",
-    "description": "adChain is a browser agnostic Ethereum based solution for digital advertising that seamlessly integrates with pre-existing RTB and programmatic industry standards.",
-    "logo": "adtoken.png",
-    "visible": true
-  },
-  {
-    "addr": "0xd8912c10681d8b21fd3742244f44658dba12264e",
-    "symbol": "PLU",
-    "name": "Pluton",
-    "source": "Etherscan.io",
-    "description": "With Plutus Tap & Pay, you can pay at any NFC-enabled merchant",
-    "logo": "pluton.png",
-    "visible": true
-  },
-  {
-    "addr": "0xe0b7927c4af23765cb51314a0e0521a9645f0e2a",
-    "symbol": "DGD",
-    "name": "DGD",
-    "source": "Etherscan.io",
-    "description": "DigixDAO is a decentralized voting / utility token that allows users to submit and manage proposals that relate to the growth of the Digix ecosystem and platform.",
-    "logo": "digix_dgd_28.png",
-    "visible": true
-  },
-  {
-    "addr": "0xe7775a6e9bcf904eb39da2b68c5efb4f9360e08c",
-    "symbol": "TAAS",
-    "name": "TAAS",
-    "source": "Etherscan.io",
-    "description": "TaaS is a tokenized closed-end fund designed to reduce the risks and technical barriers of investing in the blockchain space.",
-    "logo": "TAAS.png",
-    "visible": true
-  },
-  {
-    "addr": "0xe94327d07fc17907b4db788e5adf2ed424addff6",
-    "symbol": "REP",
-    "name": "Augur (Reputation)",
-    "source": "Etherscan.io",
-    "description": "Augur combines the magic of prediction markets with the power of a decentralized network",
-    "logo": "",
-    "visible": true
-  },
-  {
-    "addr": "0xff3519eeeea3e76f1f699ccce5e23ee0bdda41ac",
-    "symbol": "BCAP",
-    "name": "Blockchain Capital",
-    "source": "Etherscan.io",
-    "description": "Blockchain Capital is a pioneer and the premier venture capital firm investing in Blockchain enabled technology",
-    "logo": "",
-    "visible": true
-  },
-  {
     "addr": "0xa017ac5fac5941f95010b12570b812c974469c2c",
     "symbol": "XES",
     "name": "Proxeus",
@@ -5645,6 +5528,15 @@ ethName --list
     "visible": true
   },
   {
+    "addr": "0xaf30d2a7e90d7dc361c8c4585e9bb7d2f6f15bc7",
+    "symbol": "1ST",
+    "name": "FirstBlood Token",
+    "source": "Etherscan.io",
+    "description": "FirstBlood.io is a decentralized Esports gaming platform that is powered by the blockchain",
+    "logo": "",
+    "visible": true
+  },
+  {
     "addr": "0xaf4dce16da2877f8c9e00544c93b62ac40631f16",
     "symbol": "MTH",
     "name": "Monetha",
@@ -5861,6 +5753,24 @@ ethName --list
     "visible": true
   },
   {
+    "addr": "0xb63b606ac810a52cca15e44bb630fd42d8d1d83d",
+    "symbol": "MCO",
+    "name": "Crypto.com",
+    "source": "Etherscan.io",
+    "description": "Crypto.com, the pioneering payments and cryptocurrency platform, seeks to accelerate the world’s transition to cryptocurrency.",
+    "logo": "cryptocom_28.png",
+    "visible": true
+  },
+  {
+    "addr": "0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac",
+    "symbol": "STORJ",
+    "name": "Storj",
+    "source": "Etherscan.io",
+    "description": "Blockchain-based, end-to-end encrypted, distributed object storage, where only you have access to your data",
+    "logo": "storj2.png",
+    "visible": true
+  },
+  {
     "addr": "0xb683d83a532e2cb7dfa5275eed3698436371cc9f",
     "symbol": "BTU",
     "name": "BTU Protocol",
@@ -5933,6 +5843,15 @@ ethName --list
     "visible": true
   },
   {
+    "addr": "0xb97048628db6b661d4c2aa833e95dbe1a905b280",
+    "symbol": "PAY",
+    "name": "TenXPay",
+    "source": "Etherscan.io",
+    "description": "TenX connects your blockchain assets for everyday use. TenX’s debit card and banking licence will allow us to be a hub for the blockchain ecosystem to connect for real-world use cases.",
+    "logo": "tenx_28.png",
+    "visible": true
+  },
+  {
     "addr": "0xb98d4c97425d9908e66e53a6fdf673acca0be986",
     "symbol": "ABT",
     "name": "ArcBlock",
@@ -5948,6 +5867,15 @@ ethName --list
     "source": "Etherscan.io",
     "description": "Native multichain system in the world that supports Ethereum Virtual Machine (EVM), which consists of one main chain and multiple derived chains.",
     "logo": "pchain_28.png",
+    "visible": true
+  },
+  {
+    "addr": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",
+    "symbol": "SWT",
+    "name": "SwarmCity",
+    "source": "Etherscan.io",
+    "description": "Swarm City is a decentralized peer to peer sharing economy",
+    "logo": "SwarmCity.png",
     "visible": true
   },
   {
@@ -6149,6 +6077,15 @@ ethName --list
     "visible": true
   },
   {
+    "addr": "0xbeb9ef514a379b997e0798fdcc901ee474b6d9a1",
+    "symbol": "MLN",
+    "name": "Melon Token",
+    "source": "Etherscan.io",
+    "description": "The Melon protocol is a blockchain protocol for digital asset management built on the Ethereum platform",
+    "logo": "",
+    "visible": true
+  },
+  {
     "addr": "0xbf2179859fc6d5bee9bf9158632dc51678a4100e",
     "symbol": "ELF",
     "name": "ELF",
@@ -6302,6 +6239,15 @@ ethName --list
     "visible": true
   },
   {
+    "addr": "0xc66ea802717bfb9833400264dd12c2bceaa34a6d",
+    "symbol": "MKR",
+    "name": "Maker",
+    "source": "Etherscan.io",
+    "description": "Maker is a Decentralized Autonomous Organization that creates and insures the dai stablecoin on the Ethereum blockchain",
+    "logo": "",
+    "visible": true
+  },
+  {
     "addr": "0xc6abf3c09341741ac6041b0b08195701bdfd460c",
     "symbol": "OSA",
     "name": "OSAToken",
@@ -6407,6 +6353,15 @@ ethName --list
     "source": "Etherscan.io",
     "description": "Sugar Exchange aims to be a new type of cryptocurrency trading platform utilizing proven methods, as well as implementing advanced technology to ensure a superior user experience.",
     "logo": "sugarexchange_28.png",
+    "visible": true
+  },
+  {
+    "addr": "0xcb94be6f13a1182e4a4b6140cb7bf2025d28e41b",
+    "symbol": "TRST",
+    "name": "Trustcoin",
+    "source": "Etherscan.io",
+    "description": "A platform for Trusted Lending Circles, powered by people and blockchain",
+    "logo": "wetrust.png",
     "visible": true
   },
   {
@@ -6581,6 +6536,15 @@ ethName --list
     "visible": true
   },
   {
+    "addr": "0xd0d6d6c5fe4a677d343cc433536bb717bae167dd",
+    "symbol": "ADT",
+    "name": "AdToken",
+    "source": "Etherscan.io",
+    "description": "adChain is a browser agnostic Ethereum based solution for digital advertising that seamlessly integrates with pre-existing RTB and programmatic industry standards.",
+    "logo": "adtoken.png",
+    "visible": true
+  },
+  {
     "addr": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
     "symbol": "OMG",
     "name": "OmiseGO",
@@ -6752,6 +6716,15 @@ ethName --list
     "visible": true
   },
   {
+    "addr": "0xd8912c10681d8b21fd3742244f44658dba12264e",
+    "symbol": "PLU",
+    "name": "Pluton",
+    "source": "Etherscan.io",
+    "description": "With Plutus Tap & Pay, you can pay at any NFC-enabled merchant",
+    "logo": "pluton.png",
+    "visible": true
+  },
+  {
     "addr": "0xd938137e6d96c72e4a6085412ada2dad78ff89c4",
     "symbol": "AAA",
     "name": "Change Your Life",
@@ -6920,6 +6893,15 @@ ethName --list
     "source": "Etherscan.io",
     "description": "Using Blockchain to eliminate review fraud and provide lower pricing in the home repair industry through a decentralized platform.",
     "logo": "bobrepair_28.png",
+    "visible": true
+  },
+  {
+    "addr": "0xe0b7927c4af23765cb51314a0e0521a9645f0e2a",
+    "symbol": "DGD",
+    "name": "DGD",
+    "source": "Etherscan.io",
+    "description": "DigixDAO is a decentralized voting / utility token that allows users to submit and manage proposals that relate to the growth of the Digix ecosystem and platform.",
+    "logo": "digix_dgd_28.png",
     "visible": true
   },
   {
@@ -7112,6 +7094,15 @@ ethName --list
     "visible": true
   },
   {
+    "addr": "0xe7775a6e9bcf904eb39da2b68c5efb4f9360e08c",
+    "symbol": "TAAS",
+    "name": "TAAS",
+    "source": "Etherscan.io",
+    "description": "TaaS is a tokenized closed-end fund designed to reduce the risks and technical barriers of investing in the blockchain space.",
+    "logo": "TAAS.png",
+    "visible": true
+  },
+  {
     "addr": "0xe7d3e4413e29ae35b0893140f4500965c74365e5",
     "symbol": "BBC",
     "name": "B2BCoin",
@@ -7190,6 +7181,15 @@ ethName --list
     "source": "Etherscan.io",
     "description": "Crypto Based Virtual / Augmented Reality Marketplace & Hub.",
     "logo": "vibecoin28.png",
+    "visible": true
+  },
+  {
+    "addr": "0xe94327d07fc17907b4db788e5adf2ed424addff6",
+    "symbol": "REP",
+    "name": "Augur (Reputation)",
+    "source": "Etherscan.io",
+    "description": "Augur combines the magic of prediction markets with the power of a decentralized network",
+    "logo": "",
     "visible": true
   },
   {
@@ -7886,6 +7886,15 @@ ethName --list
     "visible": true
   },
   {
+    "addr": "0xff3519eeeea3e76f1f699ccce5e23ee0bdda41ac",
+    "symbol": "BCAP",
+    "name": "Blockchain Capital",
+    "source": "Etherscan.io",
+    "description": "Blockchain Capital is a pioneer and the premier venture capital firm investing in Blockchain enabled technology",
+    "logo": "",
+    "visible": true
+  },
+  {
     "addr": "0xff5c25d2f40b47c4a37f989de933e26562ef0ac0",
     "symbol": "KNT",
     "name": "Kora Network Token",
@@ -7928,15 +7937,6 @@ ethName --list
     "source": "Etherscan.io",
     "description": "An investment portal for the ICO and Staking platforms.",
     "logo": "hedge-crypto2_28.png",
-    "visible": true
-  },
-  {
-    "addr": "0x1820a4b7618bde71dce8cdc73aab6c95905fad24",
-    "symbol": "REG",
-    "name": "1820 Registry",
-    "source": "QuickBlocks",
-    "description": "Registration smart contract as described in this EIP: https://eips.ethereum.org/EIPS/eip-1820",
-    "logo": "",
     "visible": true
   }
 ]

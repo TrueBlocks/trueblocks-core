@@ -1,6 +1,6 @@
-ethName argc: 4 [1:0x1] [2:--fmt] [3:json] 
-ethName 0x1 --fmt json 
-[
+ethName argc: 4 [1:0x1] [2:--fmt] [3:api] 
+ethName 0x1 --fmt api 
+{ "type": "CAccountName", "data": [
   {
     "addr": "0x1014613e2b3cbc4d575054d4982e580d9b99d7b1",
     "symbol": "BCV",
@@ -335,6 +335,15 @@ ethName 0x1 --fmt json
     "visible": true
   },
   {
+    "addr": "0x1820a4b7618bde71dce8cdc73aab6c95905fad24",
+    "symbol": "REG",
+    "name": "1820 Registry",
+    "source": "QuickBlocks",
+    "description": "Registration smart contract as described in this EIP: https://eips.ethereum.org/EIPS/eip-1820",
+    "logo": "",
+    "visible": true
+  },
+  {
     "addr": "0x1829aa045e21e0d59580024a951db48096e01782",
     "symbol": "FXT",
     "name": "FuzeX",
@@ -576,14 +585,5 @@ ethName 0x1 --fmt json
     "description": "BitRent is the blockchain platform meant to attract commercial and residential property investments at an early stage of construction in order to gain maximum profit by selling and renting out the acquired property",
     "logo": "rntb_28.png",
     "visible": true
-  },
-  {
-    "addr": "0x1820a4b7618bde71dce8cdc73aab6c95905fad24",
-    "symbol": "REG",
-    "name": "1820 Registry",
-    "source": "QuickBlocks",
-    "description": "Registration smart contract as described in this EIP: https://eips.ethereum.org/EIPS/eip-1820",
-    "logo": "",
-    "visible": true
   }
-]
+], "meta": {"pending": 18446744073709551615,"staging": 18446744073709551615,"finalized": 18446744073709551615,"client": 18446744073709551615 } }

@@ -1,0 +1,4 @@
+[settings]
+class     = CBalanceRecord
+fields    = blknum blockNumber|uint256 wei|address address (nowrite)
+includes  = etherlib.h

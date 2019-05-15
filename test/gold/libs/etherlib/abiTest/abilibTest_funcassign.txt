@@ -1,7 +1,7 @@
 abiTest argc: 2 [1:func_assign] 
 abiTest func_assign 
 function assignment test...
-CBalanceHistoryArray				a->_val = extract(params, 0*64, 64);
+CBalanceRecordArray				a->_val = extract(params, 0*64, 64);
 CBlockNumArray				a->_val = extract(params, 0*64, 64);
 CFunctionArray				a->_val = extract(params, 0*64, 64);
 CIncomeStatement				a->_val = extract(params, 0*64, 64);

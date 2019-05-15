@@ -61,8 +61,10 @@ namespace qblocks {
         CAbi::registerClass();
         CFunction::registerClass();
         CParameter::registerClass();
+
         CRPCResult::registerClass();
         CAccountName::registerClass();
+        CCacheEntry::registerClass();
 
         establishFolder(configPath(""));
         establishFolder(getCachePath(""));
@@ -687,7 +689,7 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    static string_q getFilename_local(CacheType type, const string_q& bn, const string_q& txid, const string_q& tcid, bool asPath) {
+    static string_q getFilename_local(cache_t type, const string_q& bn, const string_q& txid, const string_q& tcid, bool asPath) {
         ostringstream os;
         switch (type) {
             case CT_BLOCKS:   os << "blocks/"; break;
@@ -716,22 +718,22 @@ namespace qblocks {
     }
 
     //-------------------------------------------------------------------------
-    string_q getBinaryCachePath(CacheType type, blknum_t bn, txnum_t txid, txnum_t tcid) {
+    string_q getBinaryCachePath(cache_t type, blknum_t bn, txnum_t txid, txnum_t tcid) {
         return getFilename_local(type, padNum9(bn), padNum5(txid), padNum5(tcid), true);
     }
 
     //-------------------------------------------------------------------------
-    string_q getBinaryCacheFilename(CacheType type, blknum_t bn, txnum_t txid, txnum_t tcid) {
+    string_q getBinaryCacheFilename(cache_t type, blknum_t bn, txnum_t txid, txnum_t tcid) {
         return getFilename_local(type, padNum9(bn), padNum5(txid), padNum5(tcid), false);
     }
 
     //-------------------------------------------------------------------------
-    string_q getBinaryCachePath(CacheType type, const address_t& addr) {
+    string_q getBinaryCachePath(cache_t type, const address_t& addr) {
         return getFilename_local(type, addr, "", "", true);
     }
 
     //-------------------------------------------------------------------------
-    string_q getBinaryCacheFilename(CacheType type, const address_t& addr) {
+    string_q getBinaryCacheFilename(cache_t type, const address_t& addr) {
         return getFilename_local(type, addr, "", "", false);
     }
 
@@ -1082,16 +1084,20 @@ namespace qblocks {
             case NONE1:
                 break;
             case TXT1:
+                if (format.empty())
+                    return "";
                 os << headerRow(format, "\t", "");
                 break;
             case CSV1:
+                if (format.empty())
+                    return "";
                 os << headerRow(format, ",", "\"");
                 break;
             case JSON1:
                 os << "[";
                 break;
             case API1:
-                os << "{ \"type\": \"" << pClass->m_ClassName << "\", \"data\": [";
+                os << "{ \"type\": \"" << (pClass ? pClass->m_ClassName : "unknown") << "\", \"data\": [";
                 break;
             default:
                 ASSERT(0); // shouldn't happen
@@ -1101,7 +1107,7 @@ namespace qblocks {
     }
 
     //-----------------------------------------------------------------------
-    string_q exportPostamble(format_t fmt) {
+    string_q exportPostamble(format_t fmt, const string_q& extra) {
         if (fmt != API1 && fmt != JSON1)
             return "";
         if (fmt != API1)
@@ -1118,6 +1124,8 @@ namespace qblocks {
         os << "\"staging\": " << staging << ",";
         os << "\"finalized\": " << finalized << ",";
         os << "\"client\": " << client;
+        if (!extra.empty())
+            os << extra;
         os << " } }";
         return os.str();
     }

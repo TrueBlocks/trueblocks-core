@@ -170,6 +170,7 @@ inline bool operator<(const CBlock& v1, const CBlock& v2) {
 
 //---------------------------------------------------------------------------
 typedef vector<CBlock> CBlockArray;
+typedef map<blknum_t, CBlock> CBlockMap;
 extern CArchive& operator>>(CArchive& archive, CBlockArray& array);
 extern CArchive& operator<<(CArchive& archive, const CBlockArray& array);
 

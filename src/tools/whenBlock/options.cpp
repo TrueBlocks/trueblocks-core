@@ -116,7 +116,7 @@ bool COptions::parseArguments(string_q& command) {
     } else {
         manageFields("CBlock:" + cleanFmt(format, exportFmt));
     }
-    expContext().fmtMap["nick"] = cleanFmt(format, exportFmt);
+    expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
 
     for (auto request : requests) {
         CBlock block;
@@ -133,11 +133,11 @@ bool COptions::parseArguments(string_q& command) {
             if (block.blockNumber == 0)
                 block.timestamp = 1438269960;
             block.name = request.second;
-            items.push_back(block);
+            items[block.blockNumber] = block;
 
         } else if (request.first == "date") {
             if (lookupDate(this, block, (timestamp_t)str_2_Uint(request.second)))
-                items.push_back(block);
+                items[block.blockNumber] = block;
             else
                 LOG_WARN("Could not find a block at date " + request.second);
         }
@@ -151,6 +151,7 @@ void COptions::Init(void) {
     optionOff(OPT_DENOM);
     registerOptions(nParams, params);
     items.clear();
+    blocks.Init();
 }
 
 //---------------------------------------------------------------------------------------------------

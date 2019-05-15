@@ -56,5 +56,12 @@ run_test("whereBlock_notcached"         "45000")
 run_test("whereBlock_cached"            "1001001")
 run_test("whereBlock_blockByHash"       "0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b")
 
+run_test("whereBlock_fmt_txt"           "1001001" " --fmt" " txt")
+run_test("whereBlock_fmt_csv"           "1001001" " --fmt" " csv")
+run_test("whereBlock_fmt_json"          "1001001" " --fmt" " json")
+run_test("whereBlock_fmt_api"           "1001001" " --fmt" " api")
+run_test("whereBlock_fmt_api_mode"      "1001001" " --api_mode")
+run_test("whereBlock_fmt_junk"          "1001001" " --fmt" " junk")
+
 # Installation steps
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

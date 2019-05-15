@@ -1,7 +1,7 @@
 abiTest argc: 2 [1:evt_assign] 
 abiTest evt_assign 
 event assignment test...
-CBalanceHistoryArray				a->_val = "0x" + extract(data, 0*64, 64);
+CBalanceRecordArray				a->_val = "0x" + extract(data, 0*64, 64);
 CBlockNumArray				a->_val = "0x" + extract(data, 0*64, 64);
 CFunctionArray				a->_val = "0x" + extract(data, 0*64, 64);
 CIncomeStatement				a->_val = "0x" + extract(data, 0*64, 64);

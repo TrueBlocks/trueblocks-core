@@ -25,16 +25,15 @@ public:
 //-----------------------------------------------------------------------------
 class CHistoryOptions : public CBlockOptions {
 public:
-    map<blknum_t, timestamp_t> timestampMap;
     blknum_t newestBlock;
     blknum_t oldestBlock;
     CHistoryOptions(void) { Init(); }
     ~CHistoryOptions(void) { }
     void Init(void) override { CBlockOptions::Init(); newestBlock = oldestBlock = NOPOS; }
-    string_q getDispBal(blknum_t blockNum, biguint_t bal, bool asData);
     bool hasHistory(void) const;
 };
 
 //-----------------------------------------------------------------------------
+extern string_q getDispBal(blknum_t blockNum, biguint_t bal);
 extern bool wrangleTxId(string_q& argIn, string_q& errorMsg);
 extern bool getDirectionalTxId(blknum_t bn, txnum_t txid, const string_q& dir, string_q& argOut, string_q& errorMsg);

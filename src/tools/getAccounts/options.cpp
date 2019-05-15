@@ -32,7 +32,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     string_q format = STR_DISPLAY;
-    bool deflt = true;
+    bool deflt = true, noHeader = false;
 
     Init();
     explode(arguments, command, ' ');
@@ -54,6 +54,7 @@ bool COptions::parseArguments(string_q& command) {
             types |= OWNED;
 
         } else if (arg == "-a" || arg == "--addr_only") {
+            noHeader = true;
             format = "[{ADDR}]";
 
         } else if (startsWith(arg, '-')) {  // do not collapse
@@ -76,7 +77,9 @@ bool COptions::parseArguments(string_q& command) {
             manageFields("CAccountName:" + cleanFmt(format, exportFmt));
             break;
     }
-    expContext().fmtMap["nick"] = cleanFmt(format, exportFmt);
+    expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
+    if (noHeader)
+        expContext().fmtMap["header"] = "";
 
     applyFilter();
 
@@ -89,6 +92,7 @@ void COptions::Init(void) {
 
     items.clear();
     types = OWNED;
+
     minArgs = 0;
 }
 
