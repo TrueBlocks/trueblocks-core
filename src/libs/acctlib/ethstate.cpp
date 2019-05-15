@@ -15,23 +15,23 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <algorithm>
-#include "balancerecord.h"
+#include "ethstate.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CBalanceRecord, CBaseNode);
+IMPLEMENT_NODE(CEthState, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextBalancerecordChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextBalancerecordChunk_custom(const string_q& fieldIn, const void *dataPtr);
+static string_q nextEthstateChunk(const string_q& fieldIn, const void *dataPtr);
+static string_q nextEthstateChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CBalanceRecord::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CEthState::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
-    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["balancerecord_fmt"] : fmtIn);
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["ethstate_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();
         return;
@@ -41,13 +41,13 @@ void CBalanceRecord::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) 
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextBalancerecordChunk, this);
+        ctx << getNextChunk(fmt, nextEthstateChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextBalancerecordChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextEthstateChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CBalanceRecord *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CEthState *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -56,10 +56,10 @@ string_q nextBalancerecordChunk(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CBalanceRecord::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
+bool CEthState::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     if ( fieldName % "ether" ) {
-        wei = str_2_Wei(fieldValue)* weiPerEther();
+        balance = str_2_Wei(fieldValue)* weiPerEther();
         return true;
     }
     // EXISTING_CODE
@@ -70,9 +70,16 @@ bool CBalanceRecord::setValueByName(const string_q& fieldName, const string_q& f
             break;
         case 'b':
             if ( fieldName % "blockNumber" ) { blockNumber = str_2_Uint(fieldValue); return true; }
+            if ( fieldName % "balance" ) { balance = str_2_Wei(fieldValue); return true; }
             break;
-        case 'w':
-            if ( fieldName % "wei" ) { wei = str_2_Wei(fieldValue); return true; }
+        case 'c':
+            if ( fieldName % "code" ) { code = fieldValue; return true; }
+            break;
+        case 'n':
+            if ( fieldName % "nonce" ) { nonce = str_2_Uint(fieldValue); return true; }
+            break;
+        case 's':
+            if ( fieldName % "storage" ) { storage = fieldValue; return true; }
             break;
         default:
             break;
@@ -81,13 +88,13 @@ bool CBalanceRecord::setValueByName(const string_q& fieldName, const string_q& f
 }
 
 //---------------------------------------------------------------------------------------------------
-void CBalanceRecord::finishParse() {
+void CEthState::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CBalanceRecord::Serialize(CArchive& archive) {
+bool CEthState::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -101,14 +108,17 @@ bool CBalanceRecord::Serialize(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     archive >> blockNumber;
-    archive >> wei;
+    archive >> balance;
+//    archive >> nonce;
+//    archive >> code;
+//    archive >> storage;
 //    archive >> address;
     finishParse();
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CBalanceRecord::SerializeC(CArchive& archive) const {
+bool CEthState::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -116,14 +126,17 @@ bool CBalanceRecord::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     // EXISTING_CODE
     archive << blockNumber;
-    archive << wei;
+    archive << balance;
+//    archive << nonce;
+//    archive << code;
+//    archive << storage;
 //    archive << address;
 
     return true;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CBalanceRecordArray& array) {
+CArchive& operator>>(CArchive& archive, CEthStateArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -135,7 +148,7 @@ CArchive& operator>>(CArchive& archive, CBalanceRecordArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CBalanceRecordArray& array) {
+CArchive& operator<<(CArchive& archive, const CEthStateArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -144,53 +157,59 @@ CArchive& operator<<(CArchive& archive, const CBalanceRecordArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void CBalanceRecord::registerClass(void) {
+void CEthState::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CBalanceRecord, "schema")) return;
+    if (HAS_FIELD(CEthState, "schema")) return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CBalanceRecord, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CBalanceRecord, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CBalanceRecord, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CBalanceRecord, "cname", T_TEXT,  ++fieldNum);
-    ADD_FIELD(CBalanceRecord, "blockNumber", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CBalanceRecord, "wei", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CBalanceRecord, "address", T_ADDRESS, ++fieldNum);
-    HIDE_FIELD(CBalanceRecord, "address");
+    ADD_FIELD(CEthState, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CEthState, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CEthState, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CEthState, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CEthState, "blockNumber", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CEthState, "balance", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CEthState, "nonce", T_NUMBER, ++fieldNum);
+    HIDE_FIELD(CEthState, "nonce");
+    ADD_FIELD(CEthState, "code", T_TEXT, ++fieldNum);
+    HIDE_FIELD(CEthState, "code");
+    ADD_FIELD(CEthState, "storage", T_TEXT, ++fieldNum);
+    HIDE_FIELD(CEthState, "storage");
+    ADD_FIELD(CEthState, "address", T_ADDRESS, ++fieldNum);
+    HIDE_FIELD(CEthState, "address");
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CBalanceRecord, "schema");
-    HIDE_FIELD(CBalanceRecord, "deleted");
-    HIDE_FIELD(CBalanceRecord, "showing");
-    HIDE_FIELD(CBalanceRecord, "cname");
+    HIDE_FIELD(CEthState, "schema");
+    HIDE_FIELD(CEthState, "deleted");
+    HIDE_FIELD(CEthState, "showing");
+    HIDE_FIELD(CEthState, "cname");
 
-    builtIns.push_back(_biCBalanceRecord);
+    builtIns.push_back(_biCEthState);
 
     // EXISTING_CODE
-    ADD_FIELD(CBalanceRecord, "ether", T_NUMBER, ++fieldNum);
-    HIDE_FIELD(CBalanceRecord, "ether");
+    ADD_FIELD(CEthState, "ether", T_NUMBER, ++fieldNum);
+    HIDE_FIELD(CEthState, "ether");
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextBalancerecordChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CBalanceRecord *bal = reinterpret_cast<const CBalanceRecord *>(dataPtr);
-    if (bal) {
+string_q nextEthstateChunk_custom(const string_q& fieldIn, const void *dataPtr) {
+    const CEthState *eth = reinterpret_cast<const CEthState *>(dataPtr);
+    if (eth) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'd':
                 if ( fieldIn % "dollars" )
-                    return getDispBal(bal->blockNumber, bal->wei);
+                    return getDispBal(eth->blockNumber, eth->balance);
                 break;
             case 'e':
                 if ( fieldIn % "ether" )
-                    return wei_2_Ether(bnu_2_Str(bal->wei));
+                    return wei_2_Ether(bnu_2_Str(eth->balance));
                 break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, bal);
+                    return nextBasenodeChunk(fieldIn, eth);
                 // EXISTING_CODE
                 // EXISTING_CODE
                 break;
@@ -204,7 +223,7 @@ string_q nextBalancerecordChunk_custom(const string_q& fieldIn, const void *data
 }
 
 //---------------------------------------------------------------------------
-bool CBalanceRecord::readBackLevel(CArchive& archive) {
+bool CEthState::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE
@@ -213,10 +232,10 @@ bool CBalanceRecord::readBackLevel(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-string_q CBalanceRecord::getValueByName(const string_q& fieldName) const {
+string_q CEthState::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
-    string_q ret = nextBalancerecordChunk_custom(fieldName, this);
+    string_q ret = nextEthstateChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -227,9 +246,16 @@ string_q CBalanceRecord::getValueByName(const string_q& fieldName) const {
             break;
         case 'b':
             if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
+            if ( fieldName % "balance" ) return bnu_2_Str(balance);
             break;
-        case 'w':
-            if ( fieldName % "wei" ) return bnu_2_Str(wei);
+        case 'c':
+            if ( fieldName % "code" ) return code;
+            break;
+        case 'n':
+            if ( fieldName % "nonce" ) return uint_2_Str(nonce);
+            break;
+        case 's':
+            if ( fieldName % "storage" ) return storage;
             break;
     }
 
@@ -241,7 +267,7 @@ string_q CBalanceRecord::getValueByName(const string_q& fieldName) const {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CBalanceRecord& item) {
+ostream& operator<<(ostream& os, const CEthState& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 

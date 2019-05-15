@@ -54,9 +54,13 @@ bool testDisplayStr(COptions& options) {
         abi.interfaces.push_back(func);
         watch.abi_spec = abi;
 
-        CBalanceRecord bh;
-        bh.wei = str_2_Wei("6000000000000000000");
-        watch.balanceHistory.push_back(bh);
+        CEthState es;
+        es.address = "0x1234567890123456789012345678901234567890";
+        es.balance = str_2_Wei("6000000000000000000");
+        es.nonce = 1001234;
+        es.code = "0xTHIS_IS_BOGUS_CODE";
+        es.storage = "0xTHIS_IS_BOGUS_STORAGE_DATA";
+        watch.stateHistory.push_back(es);
 
         CIncomeStatement is;
         is.inflow = str_2_Wei("2000000000000000000");
@@ -69,7 +73,11 @@ bool testDisplayStr(COptions& options) {
         //      watch.Format("[{ABI_SPEC::INTERFACES[i]::NAME}]" name of all elements
         cout << watch.abi_spec.interfaces[0].Format("[{p:NAME}]: [{NAME}]") << endl;
         cout << watch.abi_spec.interfaces[0].inputs[0].Format("[{p:NAME}]: [{NAME}]") << endl;
-        cout << watch.balanceHistory[0].Format("[{p:WEI}]: [{WEI}]") << endl;
+        cout << watch.stateHistory[0].Format("[{p:ADDRESS}]: [{ADDRESS}]") << endl;
+        cout << watch.stateHistory[0].Format("[{p:BALANCE}]: [{BALANCE}]") << endl;
+        cout << watch.stateHistory[0].Format("[{p:NONCE}]: [{NONCE}]") << endl;
+        cout << watch.stateHistory[0].Format("[{p:CODE}]: [{CODE}]") << endl;
+        cout << watch.stateHistory[0].Format("[{p:STORAGE}]: [{STORAGE}]") << endl;
 
     } else if (options.className == "CBlock") {
 

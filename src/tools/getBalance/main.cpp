@@ -33,8 +33,8 @@ int main(int argc, const char *argv[]) {
             for (auto item : options.items) {
                 if (first)
                     cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], item.second.getRuntimeClass());
-                options.prevWei = 0;
-                options.item = &item.second;
+                options.prevBal = 0;
+                options.item = (CEthState*)&item.second;
                 options.blocks.forEveryBlockNumber(visitBlock, &options);
                 first = false;
             }
@@ -56,15 +56,18 @@ bool visitBlock(uint64_t blockNum, void *data) {
         options->oldestBlock = blockNum;
 
     wei_t balance = getBalanceAt(options->item->address, blockNum);
+    uint64_t nonce = getNonceAt(options->item->address, blockNum);
+    string_q code = getCodeAt(options->item->address);
+    string_q storage = getStorageAt(options->item->address, 0);
 
     bool show = true;
     if (options->changes) {
-        if (balance == options->prevWei)
+        if (balance == options->prevBal)
             show = false;
-        options->prevWei = balance;
+        options->prevBal = balance;
     }
     if (show)
-        show = (!options->noZero || balance > 0);
+        show = (!options->exclude_zero || balance > 0);
     if (!show) {
         if (!isTestMode()) {
             cerr << blockNum << "\r";
@@ -74,7 +77,10 @@ bool visitBlock(uint64_t blockNum, void *data) {
     }
 
     options->item->blockNumber = blockNum;
-    options->item->wei = balance;
+    options->item->balance = balance;
+    options->item->nonce = nonce;
+    options->item->code = code;
+    options->item->storage = storage;
     bool isText = (options->exportFmt & (TXT1|CSV1));
     if (isText) {
         cout << options->item->Format(expContext().fmtMap["format"]) << endl;

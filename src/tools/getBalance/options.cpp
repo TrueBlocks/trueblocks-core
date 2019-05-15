@@ -35,7 +35,7 @@ bool COptions::parseArguments(string_q& command) {
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (arg == "-n" || arg == "--nozero") {
-            noZero = true;
+            exclude_zero = true;
 
         } else if (arg == "-c" || arg == "--changes") {
             changes = true;
@@ -59,7 +59,7 @@ bool COptions::parseArguments(string_q& command) {
             if (!isAddress(arg))
                 return usage(arg + " does not appear to be a valid Ethereum address. Quitting...");
             address_t l = toLower(arg);
-            CBalanceRecord record;
+            CEthState record;
             record.address = l;
             items[l] = record;
 
@@ -82,7 +82,7 @@ bool COptions::parseArguments(string_q& command) {
         return usage("You must provide at least one Ethereum address.");
 
     switch (exportFmt) {
-        case NONE1: format = "[{ADDR}]\t[{NAME}]\t[{SYMBOL}]"; break;
+        case NONE1: format = STR_DISPLAY; break;
         case API1:
         case JSON1: format = ""; break;
         case TXT1:
@@ -92,8 +92,8 @@ bool COptions::parseArguments(string_q& command) {
             break;
     }
 
-    if ( expContext().asEther   ) format = substitute(format, "{WEI}", "{ETHER}");
-    if ( expContext().asDollars ) format = substitute(format, "{WEI}", "{DOLLARS}");
+    if ( expContext().asEther   ) format = substitute(format, "{BALANCE}", "{ETHER}");
+    if ( expContext().asDollars ) format = substitute(format, "{BALANCE}", "{DOLLARS}");
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
 
     return true;
@@ -103,9 +103,9 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     registerOptions(nParams, params);
 
-    noZero = false;
+    exclude_zero = false;
     changes = false;
-    prevWei = 0;
+    prevBal = 0;
 
     items.clear();
     blocks.Init();
@@ -143,4 +143,4 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
 }
 
 //--------------------------------------------------------------------------------
-const char *STR_DISPLAY = "[{ADDRESS}]\t[{BLOCKNUMBER}]\t[{WEI}]";
+const char *STR_DISPLAY = "[{ADDRESS}]\t[{BLOCKNUMBER}]\t[{BALANCE}]\t[{NONCE}]\t[{CODE}]\t[{STORAGE}]";
