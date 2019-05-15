@@ -2,3 +2,5 @@
 class     = CBalanceRecord
 fields    = blknum blockNumber|uint256 wei|address address (nowrite)
 includes  = etherlib.h
+sort      = v1.bn < v2.bn
+equals    = bn == item.bn

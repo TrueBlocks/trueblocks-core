@@ -75,11 +75,11 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (!items.size())
-        return usage("You must provide at least one Ethereum address.");
-
     if (!blocks.hasBlocks())
         blocks.numList.push_back(newestBlock);  // use 'latest'
+
+    if (!items.size())
+        return usage("You must provide at least one Ethereum address.");
 
     switch (exportFmt) {
         case NONE1: format = "[{ADDR}]\t[{NAME}]\t[{SYMBOL}]"; break;
@@ -111,8 +111,6 @@ void COptions::Init(void) {
     blocks.Init();
     CHistoryOptions::Init();
     newestBlock = oldestBlock = getLastBlock_client();
-    manageFields("CBalanceRecord:all", false);
-    manageFields("CBalanceRecord:address,blockNumber,wei,ether", true);
 }
 
 //---------------------------------------------------------------------------------------------------
