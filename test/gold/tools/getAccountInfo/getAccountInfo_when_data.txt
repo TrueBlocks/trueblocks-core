@@ -1,3 +1,0 @@
-getAccountInfo argc: 4 [1:0x423b5F62b328D0D6D44870F4Eee316befA0b2dF5] [2:-d] [3:-w] 
-getAccountInfo 0x423b5F62b328D0D6D44870F4Eee316befA0b2dF5 -d -w 
-0x423b5f62b328d0d6d44870f4eee316befa0b2df5	true	5449023
