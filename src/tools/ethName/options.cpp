@@ -31,6 +31,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
+    bool noHeader = false;
     string_q format;
     Init();
     explode(arguments, command, ' ');
@@ -58,6 +59,7 @@ const char* STR_ALLFIELDS =
         } else if (arg == "-a" || arg == "--addr") {
             searchFields = "[{ADDR}]\t[{NAME}]";
             format = "[{ADDR}]";
+            noHeader = true;
 
         } else if (arg == "-l" || arg == "--list") {
             exportFmt = JSON1;
@@ -86,7 +88,9 @@ const char* STR_ALLFIELDS =
             manageFields("CAccountName:" + cleanFmt(format, exportFmt));
             break;
     }
-    expContext().fmtMap["nick"] = cleanFmt(format, exportFmt);
+    expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
+    if (noHeader)
+        expContext().fmtMap["header"] = "";
 
     applyFilter();
 
@@ -166,7 +170,7 @@ void COptions::applyFilter() {
         if ((search1.empty() || search1 == "*" || contains(str, search1)) &&
             (search2.empty() || search2 == "*" || contains(str, search2)) &&
             (search3.empty() || search3 == "*" || contains(str, search3))) {
-            items.push_back(namedAccounts[i]);
+            items[namedAccounts[i].addr] = namedAccounts[i];
         }
     }
 }

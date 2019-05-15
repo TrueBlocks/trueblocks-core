@@ -13,6 +13,7 @@
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
 #include "node_curl.h"
+#include "cacheentry.h"
 
 namespace qblocks {
 
@@ -89,11 +90,10 @@ namespace qblocks {
     string_q        getSha3                 (const string_q& hexIn);
 
     //-------------------------------------------------------------------------
-    enum CacheType { CT_BLOCKS, CT_BLOOMS, CT_TXS, CT_TRACES, CT_ACCTS, CT_MONITORS, CT_INDEX };
-    extern string_q getBinaryCacheFilename  (CacheType ct, blknum_t bn, txnum_t txid=NOPOS, txnum_t tcid=NOPOS);
-    extern string_q getBinaryCachePath      (CacheType ct, blknum_t bn, txnum_t txid=NOPOS, txnum_t tcid=NOPOS);
-    extern string_q getBinaryCacheFilename  (CacheType ct, const address_t& addr);
-    extern string_q getBinaryCachePath      (CacheType ct, const address_t& addr);
+    extern string_q getBinaryCacheFilename  (cache_t ct, blknum_t bn, txnum_t txid=NOPOS, txnum_t tcid=NOPOS);
+    extern string_q getBinaryCachePath      (cache_t ct, blknum_t bn, txnum_t txid=NOPOS, txnum_t tcid=NOPOS);
+    extern string_q getBinaryCacheFilename  (cache_t ct, const address_t& addr);
+    extern string_q getBinaryCachePath      (cache_t ct, const address_t& addr);
 
     //-------------------------------------------------------------------------
     // function pointer types for forEvery functions
@@ -159,7 +159,7 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     string_q exportPreamble(format_t fmt, const string_q& format, const CRuntimeClass *pClass);
-    string_q exportPostamble(format_t fmt);
+    string_q exportPostamble(format_t fmt, const string_q& extra);
 
 }  // namespace qblocks
 
@@ -169,4 +169,3 @@ extern bool visitBlock      (CBlock& block,       void *data);
 extern bool visitTransaction(CTransaction& trans, void *data);
 extern bool visitLog        (CLogEntry& log,      void *data);
 extern bool visitTrace      (CTrace& trace,       void *data);
-

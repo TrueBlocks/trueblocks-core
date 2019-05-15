@@ -1,6 +1,0 @@
-[settings]
-class     = CBalanceHistory
-fields    = blknum bn|uint256 balance
-includes  = etherlib.h
-sort      = v1.bn < v2.bn
-equals    = bn == item.bn

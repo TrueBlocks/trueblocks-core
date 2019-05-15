@@ -28,5 +28,6 @@
 #include "question.h"
 #include "appearance.h"
 #include "newbloom.h"
+#include "cacheentry.h"
 
 using namespace qblocks;  // NOLINT

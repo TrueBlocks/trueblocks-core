@@ -15,38 +15,43 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "etherlib.h"
+#include "basetypes.h"
+#include "basenode.h"
+#include "sfarchive.h"
 
 namespace qblocks {
 
 // EXISTING_CODE
+enum cache_t { CT_BLOCKS, CT_BLOOMS, CT_TXS, CT_TRACES, CT_ACCTS, CT_MONITORS, CT_INDEX };
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CBalanceHistory : public CBaseNode {
+class CCacheEntry : public CBaseNode {
 public:
-    blknum_t bn;
-    biguint_t balance;
+    uint64_t type;
+    string_q extra;
+    bool cached;
+    string_q path;
 
 public:
-    CBalanceHistory(void);
-    CBalanceHistory(const CBalanceHistory& ba);
-    virtual ~CBalanceHistory(void);
-    CBalanceHistory& operator=(const CBalanceHistory& ba);
+    CCacheEntry(void);
+    CCacheEntry(const CCacheEntry& ca);
+    virtual ~CCacheEntry(void);
+    CCacheEntry& operator=(const CCacheEntry& ca);
 
-    DECLARE_NODE(CBalanceHistory);
+    DECLARE_NODE(CCacheEntry);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CBalanceHistory& item) const;
-    bool operator!=(const CBalanceHistory& item) const { return !operator==(item); }
-    friend bool operator<(const CBalanceHistory& v1, const CBalanceHistory& v2);
-    friend ostream& operator<<(ostream& os, const CBalanceHistory& item);
+    bool operator==(const CCacheEntry& item) const;
+    bool operator!=(const CCacheEntry& item) const { return !operator==(item); }
+    friend bool operator<(const CCacheEntry& v1, const CCacheEntry& v2);
+    friend ostream& operator<<(ostream& os, const CCacheEntry& item);
 
 protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CBalanceHistory& ba);
+    void duplicate(const CCacheEntry& ca);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -54,89 +59,94 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline CBalanceHistory::CBalanceHistory(void) {
+inline CCacheEntry::CCacheEntry(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CBalanceHistory::CBalanceHistory(const CBalanceHistory& ba) {
+inline CCacheEntry::CCacheEntry(const CCacheEntry& ca) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(ba);
+    duplicate(ca);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CBalanceHistory::~CBalanceHistory(void) {
+inline CCacheEntry::~CCacheEntry(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CBalanceHistory::clear(void) {
+inline void CCacheEntry::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CBalanceHistory::initialize(void) {
+inline void CCacheEntry::initialize(void) {
     CBaseNode::initialize();
 
-    bn = 0;
-    balance = 0;
+    type = 0;
+    extra = "";
+    cached = 0;
+    path = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CBalanceHistory::duplicate(const CBalanceHistory& ba) {
+inline void CCacheEntry::duplicate(const CCacheEntry& ca) {
     clear();
-    CBaseNode::duplicate(ba);
+    CBaseNode::duplicate(ca);
 
-    bn = ba.bn;
-    balance = ba.balance;
+    type = ca.type;
+    extra = ca.extra;
+    cached = ca.cached;
+    path = ca.path;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CBalanceHistory& CBalanceHistory::operator=(const CBalanceHistory& ba) {
-    duplicate(ba);
+inline CCacheEntry& CCacheEntry::operator=(const CCacheEntry& ca) {
+    duplicate(ca);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CBalanceHistory::operator==(const CBalanceHistory& item) const {
+inline bool CCacheEntry::operator==(const CCacheEntry& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
-    // Default equality operator as defined in class definition
-    return bn == item.bn;
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CBalanceHistory& v1, const CBalanceHistory& v2) {
+inline bool operator<(const CCacheEntry& v1, const CCacheEntry& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // Default sort as defined in class definition
-    return v1.bn < v2.bn;
+    // No default sort defined in class definition, assume already sorted, preserve ordering
+    return true;
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CBalanceHistory> CBalanceHistoryArray;
-extern CArchive& operator>>(CArchive& archive, CBalanceHistoryArray& array);
-extern CArchive& operator<<(CArchive& archive, const CBalanceHistoryArray& array);
+typedef vector<CCacheEntry> CCacheEntryArray;
+extern CArchive& operator>>(CArchive& archive, CCacheEntryArray& array);
+extern CArchive& operator<<(CArchive& archive, const CCacheEntryArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+typedef map<uint64_t, CCacheEntry> CCacheEntryMap;
 // EXISTING_CODE
 }  // namespace qblocks
 

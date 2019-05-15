@@ -1,3 +1,5 @@
-getBalance argc: 4 [1:--nozero] [2:0xf27daff52c38b2c373ad2b9392652ddf433303c5] [3:3500000] 
-getBalance --nozero 0xf27daff52c38b2c373ad2b9392652ddf433303c5 3500000 
-    No values were reported
+getBalance argc: 5 [1:--nozero] [2:0xf27daff52c38b2c373ad2b9392652ddf433303c5] [3:3500000] [4:--api_mode] 
+getBalance --nozero 0xf27daff52c38b2c373ad2b9392652ddf433303c5 3500000 --api_mode 
+{ "type": "CBalanceRecord", "data": [
+
+], "meta": {"pending": 18446744073709551615,"staging": 18446744073709551615,"finalized": 18446744073709551615,"client": 18446744073709551615 } }
