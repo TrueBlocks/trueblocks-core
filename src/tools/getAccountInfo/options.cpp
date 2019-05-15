@@ -16,12 +16,9 @@
 static const COption params[] = {
     COption("~address_list", "one or more addresses (0x...) from which to retrieve balances"),
     COption("~!block_list",  "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
-    COption("-data",         "display results as data (addr <tab> is_contract)"),
     COption("-bytes",        "display the byte code at the address(es)"),
-    COption("-nodiff",       "return 'true' if (exactly) two Ethereum addresses have identical code"),
     COption("-whenDep",      "for smart contracts only, return the first block when the address had code"),
-        COption("",              "Returns 'true' or 'false' if the given address(es) holds byte code "
-                             "(optionally displays the code).\n"),
+    COption("",              "Returns 'true' or 'false' if the given address(es) holds byte code (optionally displays the code).\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -31,31 +28,22 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-    blknum_t latestBlock = getLastBlock_client();
     Init();
     explode(arguments, command, ' ');
-    bool hasExplicitBlocks = false;
     for (auto arg : arguments) {
-        if (arg == "-n" || arg == "--nodiff") {
-            diff = true;
-
-        } else if (arg == "-b" || arg == "--bytes") {
+        if (arg == "-b" || arg == "--bytes") {
             showBytes = true;
-
-        } else if (arg == "-d" || arg == "--data") {
-            asData = true;
 
         } else if (arg == "-w" || arg == "--whenDep") {
             when = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
-
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
 
         } else if (isHash(arg)) {
-            string_q ret = blocks.parseBlockList(arg, latestBlock);
+            string_q ret = blocks.parseBlockList(arg, newestBlock);
             if (endsWith(ret, "\n")) {
                 cerr << "\n  " << ret << "\n";
                 return false;
@@ -67,43 +55,33 @@ bool COptions::parseArguments(string_q& command) {
 
             if (!isAddress(arg))
                 return usage(arg + " does not appear to be a valid Ethereum address. Quitting...");
-            addrs.push_back(toLower(arg));
+            address_t l = toLower(arg);
+            items.push_back(l);
 
         } else {
 
-            string_q ret = blocks.parseBlockList(arg, latestBlock);
+            string_q ret = blocks.parseBlockList(arg, newestBlock);
             if (endsWith(ret, "\n")) {
                 cerr << "\n  " << ret << "\n";
                 return false;
             } else if (!ret.empty()) {
                 return usage(ret);
             }
-            hasExplicitBlocks = true;
         }
     }
 
     if (!blocks.hasBlocks())
-        blocks.parseBlockList("latest", latestBlock);
+        blocks.numList.push_back(newestBlock);  // use 'latest'
 
-    if (addrs.size() == 0)
-        return usage("Please supply valid Ethereum addresses.\n");
-
-    if (diff && (addrs.size() != 2))
-        return usage("--nodiff command requires exactly two addresses.\n");
-
-    if (diff && showBytes)
-        return usage("Choose only one of --nodiff and --display.\n");
+    if (!items.size())
+        return usage("You must provide at least one Ethereum address.");
 
     if (when) {
         if (!nodeHasBalances())
             return usage("--whenDep option requires a full archive node. Quitting...");
-        if (hasExplicitBlocks)
-            return usage("You may not use the block_list option when using --whenBlock. Quitting...");
-
-        // check to make sure all the addresses have code first
-        for (auto addr : addrs) {
-            if (!isContractAt(addr))
-                return usage("Address " + addr + " is not a smart contract, you may not use --whenDep. Quitting...");
+        for (auto item : items) {
+            if (!isContractAt(item))
+                return usage("Address " + item + " is not a smart contract, you may not use --whenDep. Quitting...");
         }
     }
 
@@ -114,20 +92,20 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     registerOptions(nParams, params);
 
-    addrs.clear();
-    diff = false;
-    asData = false;
     when = false;
     showBytes = false;
+
+    items.clear();
+    blocks.Init();
+    CHistoryOptions::Init();
+    newestBlock = oldestBlock = getLastBlock_client();
 }
 
 //---------------------------------------------------------------------------------------------------
-COptions::COptions(void) {
-    // will sort the fields in these classes if --parity is given
+COptions::COptions(void) : CHistoryOptions() {
     sorts[0] = GETRUNTIME_CLASS(CBlock);
     sorts[1] = GETRUNTIME_CLASS(CTransaction);
     sorts[2] = GETRUNTIME_CLASS(CReceipt);
-
     Init();
 }
 
@@ -138,14 +116,12 @@ COptions::~COptions(void) {
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
     if (which == "options") {
-        return substitute(str, "address_list block_list", "<address> [address...] [block...]");
-
+        return substitute(substitute(str, "address_list block_list", "<address> [address...] [block...]"), "-l|", "-l fn|");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
         string_q ret;
         ret += "[{addresses}] must start with '0x' and be forty two characters long.\n";
-        ret += "[{block_list}] may be a space-separated list of values, a start-end range, a "
-                "[{special}], or any combination.\n";
+        ret += "[{block_list}] may be a space-separated list of values, a start-end range, a [{special}], or any combination.\n";
         ret += "This tool retrieves information from the local node or rpcProvider if configured.\n";
         ret += "If the queried node does not store historical state, the results are undefined.\n";
         ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + ".\n";
