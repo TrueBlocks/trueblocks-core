@@ -61,7 +61,7 @@ run_state_test("getBalance_dao_1500000"   "0xbb9bc244d798123fde783fcc1c72d3bb8c1
 run_state_test("getBalance_two_accts"     "0xbb9bc244d798123fde783fcc1c72d3bb8c189413" " 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 1500000" " --fmt" " api")
 run_state_test("getBalance_tip_4"         "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 1500000" " 2000000" " 2500000" " 3000000")
 run_state_test("getBalance_from_file"     "--file:cmd_file")
-run_state_test("getBalance_multiple_accounts" "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 0x6f46cf5569aefa1acc1009290c8e043747172d89"  " 4000000" " --total")
+run_state_test("getBalance_multiple_accounts" "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 0x6f46cf5569aefa1acc1009290c8e043747172d89"  " 4000000")
 run_state_test("getBalance_multiple_accounts_and_blocks_1" "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 0x6f46cf5569aefa1acc1009290c8e043747172d89"  " 3500000" " 4000000")
 run_state_test("getBalance_multiple_accounts_and_blocks_2" "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 0x6f46cf5569aefa1acc1009290c8e043747172d89" " 0xf27daff52c38b2c373ad2b9392652ddf433303c4" " 3500000" " 3700000" " 4000000")
 run_state_test("getBalance_display_tab_format" "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 4000000" " -d" " --json")
@@ -69,7 +69,7 @@ run_state_test("getBalance_display_tab_format_long" "0xfb6916095ca1df60bb79ce92c
 run_test("getBalance_no_zero_1" "-n" " 0xf27daff52c38b2c373ad2b9392652ddf433303c5" " 3500000")
 run_state_test("getBalance_no_zero_2" "-n" " 0xf27daff52c38b2c373ad2b9392652ddf433303c5" " 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 3500000")
 run_state_test("getBalance_no_zero_3" "-n" " 0xf27daff52c38b2c373ad2b9392652ddf433303c4" " 0" " 4000000")
-run_state_test("getBalance_no_zero_4" "-n" "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 0x6f46cf5569aefa1acc1009290c8e043747172d89" " 0xf27daff52c38b2c373ad2b9392652ddf433303c4" " 3500000" " 3700000" " 4000000" " -t")
+run_state_test("getBalance_no_zero_4" "-n" "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 0x6f46cf5569aefa1acc1009290c8e043747172d89" " 0xf27daff52c38b2c373ad2b9392652ddf433303c4" " 3500000" " 3700000" " 4000000")
 run_test("getBalance_no_zero_long_1" "--nozero" " 0xf27daff52c38b2c373ad2b9392652ddf433303c5" " 3500000" " --api_mode")
 run_state_test("getBalance_no_zero_long_2" "--nozero" " 0xf27daff52c38b2c373ad2b9392652ddf433303c5" " 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " 3500000")
 run_state_test("getBalance_no_zero_long_3" "--nozero" " 0xf27daff52c38b2c373ad2b9392652ddf433303c4" " 0" " 4000000")
@@ -92,12 +92,12 @@ run_state_test("getBalance_e_tip_4"         "0xfb6916095ca1df60bb79ce92ce3ea74c3
 # Don't run this test since it defaults to latest block which chages at every 14 seconds
 #run_test("getBalance_no_block"    "0xbb9bc244d798123fde783fcc1c72d3bb8c189413")
 
-run_test("getBalance_fmt_txt"      "0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98" " --fmt" " txt" " 2000000" " --ether")
-run_test("getBalance_fmt_csv"      "0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98" " --fmt" " csv" " 2000000")
-run_test("getBalance_fmt_json"     "0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98" " --fmt" " json" " 2000000" " --dollars")
-run_test("getBalance_fmt_api"      "0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98" " --fmt" " api" " 2000000")
-run_test("getBalance_fmt_junk"     "0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98" " --fmt" " junk" " 2000000")
-run_test("getBalance_fmt_api_mode" "0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98" " --api_mode" " 2000000" " --ether")
+run_state_test("getBalance_fmt_txt"      "0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98" " --fmt" " txt" " 2000000" " --ether")
+run_state_test("getBalance_fmt_csv"      "0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98" " --fmt" " csv" " 2000000")
+run_state_test("getBalance_fmt_json"     "0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98" " --fmt" " json" " 2000000" " --dollars")
+run_state_test("getBalance_fmt_api"      "0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98" " --fmt" " api" " 2000000")
+run_state_test("getBalance_fmt_junk"     "0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98" " --fmt" " junk" " 2000000")
+run_state_test("getBalance_fmt_api_mode" "0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98" " --api_mode" " 2000000" " --ether")
 
 # Installation steps
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

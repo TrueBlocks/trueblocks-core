@@ -17,7 +17,6 @@ static const COption params[] = {
     COption("~address_list", "one or more addresses (0x...) from which to retrieve balances"),
     COption("~!block_list",  "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
     COption("-nozero",       "suppress the display of zero balance accounts"),
-    COption("-total",        "if more than one balance is requested, display a total as well."),
     COption("-changes",      "only report a balance when it changes from one block to the next"),
     COption("@fmt:<fmt>",   "export format (one of [none|json|txt|csv|api])"),
     COption("",              "Retrieve the balance (in wei) for one or more addresses at the given block(s).\n"),
@@ -37,9 +36,6 @@ bool COptions::parseArguments(string_q& command) {
     for (auto arg : arguments) {
         if (arg == "-n" || arg == "--nozero") {
             noZero = true;
-
-        } else if (arg == "-t" || arg == "--total") {
-            total = true;
 
         } else if (arg == "-c" || arg == "--changes") {
             changes = true;
@@ -79,9 +75,6 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-//    if (asData && total)
-//        return usage("Totalling is not available when exporting data.");
-
     if (!items.size())
         return usage("You must provide at least one Ethereum address.");
 
@@ -110,11 +103,8 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     registerOptions(nParams, params);
 
-//    asData = false;
     noZero = false;
-    total = false;
     changes = false;
-//    totalBal = 0;
     prevWei = 0;
 
     items.clear();
