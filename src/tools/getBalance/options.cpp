@@ -1,3 +1,18 @@
+//whenDeployed
+//isContract
+//    if (when) {
+//        if (!nodeHasBalances())
+//            return usage("--whenDep option requires a full archive node. Quitting...");
+//        for (auto item : items) {
+//            if (!isContractAt(item))
+//                return usage("Address " + item + " is not a smart contract, you may not use 
+//--whenDep. Quitting...");
+//        }
+//    }
+
+
+
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
