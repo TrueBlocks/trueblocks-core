@@ -24,7 +24,7 @@ bool COptions::handle_data(void) {
     } else if (contains(tool_flags, "--accounts")) {
         replaceAll(tool_flags, "--accounts", "");
         for (auto addr : addrs)
-           os << "getBalance " << addr << " " << (api_mode ? substitute(tool_flags, ",", " ") + " --mode some" : tool_flags) << " ; ";
+           os << "getState " << addr << " " << (api_mode ? substitute(tool_flags, ",", " ") + " --mode some" : tool_flags) << " ; ";
 
     } else if (contains(tool_flags, "--blocks")) {
         replaceAll(tool_flags, "--blocks", "");
@@ -40,11 +40,11 @@ bool COptions::handle_data(void) {
 
     } else if (contains(tool_flags, "--logs")) {
         replaceAll(tool_flags, "--logs", "");
-        os << "getLogs " << (api_mode ? substitute(tool_flags, ",", " ") : tool_flags) << " ; ";
+        os << "getLogs "  << (api_mode ? (substitute(tool_flags, ",", " ") + " --raw") : tool_flags) << " ; ";
 
     } else if (contains(tool_flags, "--traces")) {
         replaceAll(tool_flags, "--traces", "");
-        os << "getTrace " << (api_mode ? substitute(tool_flags, ",", " ") : tool_flags) << " ; ";
+        os << "getTrace " << (api_mode ? (substitute(tool_flags, ",", " ") + " --raw") : tool_flags) << " ; ";
 
     } else if (contains(tool_flags, "--slurp")) {
         replaceAll(tool_flags, "--slurp", "");
