@@ -13,7 +13,7 @@ getBalance -th
 |  | block_list | an optional list of one or more blocks at which to report balances, defaults to 'latest' |
 | -n | --nozero | suppress the display of zero balance accounts |
 | -c | --changes | only report a balance when it changes from one block to the next |
-| -m | --mode val | control which state to export. One of [none&#124;all&#124;balance&#124;nonce&#124;code&#124;storage] |
+| -m | --mode val | control which state to export. One of [none&#124;all&#124;balance&#124;nonce&#124;code&#124;storage&#124;deployed&#124;accttype] |
 
 #### Hidden options (shown during testing only)
 | -x | --fmt val | export format (one of [none&#124;json&#124;txt&#124;csv&#124;api]) |

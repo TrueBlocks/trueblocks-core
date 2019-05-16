@@ -71,10 +71,18 @@ bool visitBlock(uint64_t blockNum, void *data) {
         options->item->balance = balance;
     if (options->mode & ST_NONCE)
         options->item->nonce = getNonceAt(options->item->address, blockNum);
-    if (options->mode & ST_CODE)
-        options->item->code = getCodeAt(options->item->address);
+    if (options->mode & ST_CODE) {
+        string_q code = getCodeAt(options->item->address);
+        options->item->code = code;
+        if (code.length() > 250)
+            options->item->code = code.substr(0,20) + "..." + code.substr(code.length()-20, 100);
+    }
     if (options->mode & ST_STORAGE)
         options->item->storage = getStorageAt(options->item->address, 0);
+    if (options->mode & ST_DEPLOYED)
+        options->item->deployed = getDeployBlock(options->item->address);
+    if (options->mode & ST_ACCTTYPE)
+        options->item->accttype = (isContractAt(options->item->address) ? "Contract" : "EOA");
 
     if ((options->exportFmt & (TXT1|CSV1))) {
         cout << options->item->Format(expContext().fmtMap["format"]) << endl;
