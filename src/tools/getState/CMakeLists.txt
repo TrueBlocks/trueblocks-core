@@ -109,7 +109,7 @@ run_state_test("getState_some"       "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359
 run_state_test("getState_all"        "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " --mode" " all" " 2500000")
 run_state_test("getState_none"       "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " --mode" " none" " 2500000")
 run_state_test("getState_nonce_only" "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " --mode" " none" " --mode" " nonce" " 2500000")
-run_state_test("getState_mode_fail"  "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " --mode" " junk")
+run_state_test("getState_mode_fail"  "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " --mode" " junk" " 2500000")
 
 # Installation steps
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)
