@@ -67,6 +67,7 @@ bool CEthState::setValueByName(const string_q& fieldName, const string_q& fieldV
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "address" ) { address = str_2_Addr(fieldValue); return true; }
+            if ( fieldName % "accttype" ) { accttype = fieldValue; return true; }
             break;
         case 'b':
             if ( fieldName % "blockNumber" ) { blockNumber = str_2_Uint(fieldValue); return true; }
@@ -74,6 +75,9 @@ bool CEthState::setValueByName(const string_q& fieldName, const string_q& fieldV
             break;
         case 'c':
             if ( fieldName % "code" ) { code = fieldValue; return true; }
+            break;
+        case 'd':
+            if ( fieldName % "deployed" ) { deployed = str_2_Uint(fieldValue); return true; }
             break;
         case 'n':
             if ( fieldName % "nonce" ) { nonce = str_2_Uint(fieldValue); return true; }
@@ -113,6 +117,8 @@ bool CEthState::Serialize(CArchive& archive) {
 //    archive >> code;
 //    archive >> storage;
 //    archive >> address;
+//    archive >> deployed;
+//    archive >> accttype;
     finishParse();
     return true;
 }
@@ -131,6 +137,8 @@ bool CEthState::SerializeC(CArchive& archive) const {
 //    archive << code;
 //    archive << storage;
 //    archive << address;
+//    archive << deployed;
+//    archive << accttype;
 
     return true;
 }
@@ -176,6 +184,10 @@ void CEthState::registerClass(void) {
     HIDE_FIELD(CEthState, "storage");
     ADD_FIELD(CEthState, "address", T_ADDRESS, ++fieldNum);
     HIDE_FIELD(CEthState, "address");
+    ADD_FIELD(CEthState, "deployed", T_NUMBER, ++fieldNum);
+    HIDE_FIELD(CEthState, "deployed");
+    ADD_FIELD(CEthState, "accttype", T_TEXT, ++fieldNum);
+    HIDE_FIELD(CEthState, "accttype");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CEthState, "schema");
@@ -243,6 +255,7 @@ string_q CEthState::getValueByName(const string_q& fieldName) const {
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "address" ) return addr_2_Str(address);
+            if ( fieldName % "accttype" ) return accttype;
             break;
         case 'b':
             if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
@@ -250,6 +263,9 @@ string_q CEthState::getValueByName(const string_q& fieldName) const {
             break;
         case 'c':
             if ( fieldName % "code" ) return code;
+            break;
+        case 'd':
+            if ( fieldName % "deployed" ) return uint_2_Str(deployed);
             break;
         case 'n':
             if ( fieldName % "nonce" ) return uint_2_Str(nonce);

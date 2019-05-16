@@ -9,7 +9,7 @@ getBalance --help -v
 	block_list            an optional list of one or more blocks at which to report balances, defaults to 'latest'
 	-n  (--nozero)        suppress the display of zero balance accounts
 	-c  (--changes)       only report a balance when it changes from one block to the next
-	-m  (--mode val)      control which state to export. One of [none|all|balance|nonce|code|storage]
+	-m  (--mode val)      control which state to export. One of [none|all|balance|nonce|code|storage|deployed|accttype]
 
 #### Hidden options (shown during testing only)
 	-x  (--fmt val)       export format (one of [none|json|txt|csv|api])

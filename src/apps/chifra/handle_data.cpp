@@ -24,7 +24,7 @@ bool COptions::handle_data(void) {
     } else if (contains(tool_flags, "--accounts")) {
         replaceAll(tool_flags, "--accounts", "");
         for (auto addr : addrs)
-           os << "ethName " << addr << " " << (api_mode ? substitute(tool_flags, ",", " ") + " --fmt json" : tool_flags) << " ; ";
+           os << "getBalance " << addr << " " << (api_mode ? substitute(tool_flags, ",", " ") + " --mode some" : tool_flags) << " ; ";
 
     } else if (contains(tool_flags, "--blocks")) {
         replaceAll(tool_flags, "--blocks", "");
