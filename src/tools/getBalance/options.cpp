@@ -1,18 +1,3 @@
-//whenDeployed
-//isContract
-//    if (when) {
-//        if (!nodeHasBalances())
-//            return usage("--whenDep option requires a full archive node. Quitting...");
-//        for (auto item : items) {
-//            if (!isContractAt(item))
-//                return usage("Address " + item + " is not a smart contract, you may not use 
-//--whenDep. Quitting...");
-//        }
-//    }
-
-
-
-
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
@@ -33,7 +18,7 @@ static const COption params[] = {
     COption("~!block_list",  "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
     COption("-nozero",       "suppress the display of zero balance accounts"),
     COption("-changes",      "only report a balance when it changes from one block to the next"),
-    COption("-mode:<val>",   "control which state to export. One of [none|all|balance|nonce|code|storage]"),
+    COption("-mode:<val>",   "control which state to export. One of [none|some|all|balance|nonce|code|storage|deployed|accttype]"),
     COption("@fmt:<fmt>",    "export format (one of [none|json|txt|csv|api])"),
     COption("",              "Retrieve the balance (in wei) for one or more addresses at the given block(s).\n"),
 };
@@ -63,16 +48,10 @@ bool COptions::parseArguments(string_q& command) {
             if (arg == "nonce") mode = ethstate_t(mode|ST_NONCE);
             if (arg == "code") mode = ethstate_t(mode|ST_CODE);
             if (arg == "storage") mode = ethstate_t(mode|ST_STORAGE);
+            if (arg == "deployed") mode = ethstate_t(mode|ST_DEPLOYED);
+            if (arg == "accttype") mode = ethstate_t(mode|ST_ACCTTYPE);
+            if (arg == "some") mode = ethstate_t(mode|ST_SOME);
             if (arg == "all") mode = ethstate_t(mode|ST_ALL);
-
-        } else if (arg == "-o" || arg == "--code") {
-            mode = ethstate_t(mode|ST_CODE);
-
-        } else if (arg == "-s" || arg == "--storage") {
-            mode = ethstate_t(mode|ST_STORAGE);
-
-        } else if (arg == "-a" || arg == "--all") {
-            mode = ethstate_t(ST_BALANCE|ST_NONCE|ST_CODE|ST_STORAGE);
 
         } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
@@ -116,10 +95,12 @@ bool COptions::parseArguments(string_q& command) {
         return usage("You must provide at least one Ethereum address.");
 
     string_q add;
-    if (mode & ST_BALANCE) { add += "\t[{BALANCE}]";  UNHIDE_FIELD(CEthState, "balance"); }
-    if (mode & ST_NONCE)   { add += "\t[{NONCE}]";    UNHIDE_FIELD(CEthState, "nonce");   }
-    if (mode & ST_CODE)    { add += "\t[{CODE}]";     UNHIDE_FIELD(CEthState, "code");    }
-    if (mode & ST_STORAGE) { add += "\t[{STORGAGE}]"; UNHIDE_FIELD(CEthState, "storage"); }
+    if (mode & ST_BALANCE)  { add += "\t[{BALANCE}]";  UNHIDE_FIELD(CEthState, "balance"); }
+    if (mode & ST_NONCE)    { add += "\t[{NONCE}]";    UNHIDE_FIELD(CEthState, "nonce");   }
+    if (mode & ST_CODE)     { add += "\t[{CODE}]";     UNHIDE_FIELD(CEthState, "code");    }
+    if (mode & ST_STORAGE)  { add += "\t[{STORGAGE}]"; UNHIDE_FIELD(CEthState, "storage"); }
+    if (mode & ST_DEPLOYED) { add += "\t[{DEPLOYED}]"; UNHIDE_FIELD(CEthState, "deployed"); }
+    if (mode & ST_ACCTTYPE) { add += "\t[{ACCTTYPE}]"; UNHIDE_FIELD(CEthState, "accttype"); }
     format += add;
 
     switch (exportFmt) {
@@ -153,6 +134,8 @@ void COptions::Init(void) {
     blocks.Init();
     CHistoryOptions::Init();
     newestBlock = oldestBlock = getLastBlock_client();
+
+    manageFields("CEthState:all", true);
 }
 
 //---------------------------------------------------------------------------------------------------

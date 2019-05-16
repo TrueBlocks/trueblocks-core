@@ -428,7 +428,7 @@ namespace qblocks {
 
         os << "\n";
         if (!errMsg.empty())
-            os << cRed << "  " << errMsg << "\n\n";
+            os << cRed << "  " << errMsg << cOff << "\n\n";
         os << hiUp1 << "Usage:" << hiDown << "    " << getProgName() << " " << options() << "  \n";
         os << purpose();
         os << descriptions() << "\n";

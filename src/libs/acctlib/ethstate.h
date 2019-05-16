@@ -31,6 +31,8 @@ public:
     string_q code;
     string_q storage;
     address_t address;
+    blknum_t deployed;
+    string_q accttype;
 
 public:
     CEthState(void);
@@ -97,6 +99,8 @@ inline void CEthState::initialize(void) {
     code = "";
     storage = "";
     address = "";
+    deployed = 0;
+    accttype = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -113,6 +117,8 @@ inline void CEthState::duplicate(const CEthState& et) {
     code = et.code;
     storage = et.storage;
     address = et.address;
+    deployed = et.deployed;
+    accttype = et.accttype;
 
     // EXISTING_CODE
     // EXISTING_CODE

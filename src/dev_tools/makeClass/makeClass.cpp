@@ -10,7 +10,7 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "etherlib.h"
+#include "acctlib.h"
 #include "options.h"
 
 //------------------------------------------------------------------------------------------------------------
@@ -24,7 +24,7 @@ extern string_q convertTypes  (const string_q& inStr);
 
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-    etherlib_init(quickQuitHandler);
+    acctlib_init(quickQuitHandler);
 
     CParameter::registerClass();
 
@@ -92,6 +92,7 @@ int main(int argc, const char *argv[]) {
         }
     }
 
+    acctlib_cleanup();
     return 0;
 }
 
