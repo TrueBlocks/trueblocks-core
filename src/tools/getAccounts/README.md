@@ -2,7 +2,8 @@
 
 `getAccounts` lists the addresses found in your local node's keystore. It can be used to report your ether holdings, for example. It also lists known, named accounts from [ethName](../ethName/README.md).
 
-One way to use this tool is to feed its output through the [getBalance](../getBalance/README.md) or [getTokenInfo](../getTokenInfo/README.md). This will give you the balances of your ether holdings or token holings. For example, you can do these commands:
+One way to use this tool is to feed its output through the [getState](../getState/README.md) or [getTokenInfo](../getTokenInfo/README.md). This will give you the 
+balances of your ether holdings or token holings. For example, you can do these commands:
 
 List accounts held in the local node's keystore:
 
@@ -10,11 +11,11 @@ List accounts held in the local node's keystore:
 
 List balances of those accounts (note 'xargs' puts the results on a single line):
 
-    getBalance `getAccounts | xargs`
+    getState --mode balance `getAccounts -a | xargs`
     
 List balances of the local node's accounts in US dollars:
 
-    getBalance `getAccounts | xargs` --dollars
+    getState --mode balance `getAccounts -a | xargs` --dollars
 
 Using ethName to find Singular's address, list token balances held by your accounts:
 

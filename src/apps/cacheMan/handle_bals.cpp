@@ -33,7 +33,6 @@ bool handleCacheBals(COptions& options) {
                 item.txid = (uint32_t)-1;
                 dataArray.push_back(item);
                 biguint_t bal = getBalanceAt(watch.address, item.blk);
-//                cout << account << "\t" << item << "\t" << bal << endl;
                 continue;
             }
         }
