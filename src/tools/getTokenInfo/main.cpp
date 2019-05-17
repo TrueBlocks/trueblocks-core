@@ -46,8 +46,6 @@ int main(int argc, const char *argv[]) {
                 cout << "]\n";
 
         } else {
-            if (options.asData)
-                cout << "block\ttoken\tholder\ttoken balance\n";
             if (options.byAccount)
                 reportByAccount(options);
             else
@@ -63,15 +61,13 @@ int main(int argc, const char *argv[]) {
 //--------------------------------------------------------------
 void reportByToken(COptions& options) {
 
-    biguint_t totalVal = 0;
     uint64_t cnt = 0;
 
     bool needsNewline = true;
 
     // For each token contract
     for (auto token : options.watches) {
-        if (!options.asData)
-            cout << "\n  For token contract: " << bBlue << token.address << cOff << "\n";
+        cout << "\n  For token contract: " << bBlue << token.address << cOff << "\n";
 
         // For each holder
         for (auto holder : options.holders) {
@@ -84,44 +80,23 @@ void reportByToken(COptions& options) {
                 if (blockNum < options.oldestBlock)
                     options.oldestBlock = blockNum;
                 biguint_t bal = str_2_Wei(getERC20State("balanceOf", token, holder, blockNum));
-                totalVal += bal;
                 string_q dispBal = getDispBal(options.newestBlock, bal);
-                if (options.asData)
-                    replaceAll(dispBal, ",", "");
                 needsNewline = true;
                 if (bal > 0 || !options.exclude_zero) {
-                    if (options.asData) {
-                        cout << blockNum << "\t" << token.address << "\t" << holder << "\t" << dispBal << "\n";
-                    } else {
-                        cout << "    Balance for account " << cGreen << holder << cOff;
-                        cout << " at block " << cTeal << blockNum << cOff;
-                        cout << " is " << cYellow << dispBal << cOff << "\n";
-                    }
+                    cout << "    Balance for account " << cGreen << holder << cOff;
+                    cout << " at block " << cTeal << blockNum << cOff;
+                    cout << " is " << cYellow << dispBal << cOff << "\n";
                     needsNewline = false;
                 } else {
-                    if (options.asData) {
-                        cerr << blockNum << "\t" << token.address << "\t" << holder << "         \r";
-                    } else {
-                        cerr << "    Balance for account " << cGreen << holder << cOff;
-                        cerr << " at block " << cTeal << blockNum << cOff;
-                        cerr << " is " << cYellow << dispBal << cOff << "           \r";
-                    }
+                    cerr << "    Balance for account " << cGreen << holder << cOff;
+                    cerr << " at block " << cTeal << blockNum << cOff;
+                    cerr << " is " << cYellow << dispBal << cOff << "           \r";
                 }
                 cerr.flush();
                 cout.flush();
             }
         }
     }
-
-    if (options.total && cnt > 1) {
-        string_q dispBal = getDispBal(options.newestBlock, totalVal);
-        if (options.asData)
-            replaceAll(dispBal, ",", "");
-        cout << "        Total for " << cGreen << cnt << cOff;
-        cout << " accounts at " << cTeal << "latest" << cOff << " block";
-        cout << " is " << cYellow << dispBal << cOff << "\n";
-    }
-
     if (needsNewline)
         cerr << string_q(104, ' ') << "\n";
 }
@@ -129,15 +104,13 @@ void reportByToken(COptions& options) {
 //--------------------------------------------------------------
 void reportByAccount(COptions& options) {
 
-    biguint_t totalVal = 0;
     uint64_t cnt = 0;
 
     bool needsNewline = true;
 
     // For each holder
     for (auto holder : options.holders) {
-        if (!options.asData)
-            cout << "\n  For account: " << bBlue << holder << cOff << "\n";
+        cout << "\n  For contract: " << bBlue << holder << cOff << "\n";
 
         // For each token contract
         for (auto token : options.watches) {
@@ -150,42 +123,22 @@ void reportByAccount(COptions& options) {
                 if (blockNum < options.oldestBlock)
                     options.oldestBlock = blockNum;
                 biguint_t bal = str_2_Wei(getERC20State("balanceOf", token, holder, blockNum));
-                totalVal += bal;
                 string_q dispBal = getDispBal(options.newestBlock, bal);
-                if (options.asData)
-                    replaceAll(dispBal, ",", "");
                 needsNewline = true;
                 if (bal > 0 || !options.exclude_zero) {
-                    if (options.asData) {
-                        cout << blockNum << "\t" << token.address << "\t" << holder << "\t" << dispBal << "\n";
-                    } else {
-                        cout << "    Balance of token contract " << cGreen << token.address << cOff;
-                        cout << " at block " << cTeal << blockNum << cOff;
-                        cout << " is " << cYellow << dispBal << cOff << "\n";
-                    }
+                    cout << "    Balance of token contract " << cGreen << token.address << cOff;
+                    cout << " at block " << cTeal << blockNum << cOff;
+                    cout << " is " << cYellow << dispBal << cOff << "\n";
                     needsNewline = false;
                 } else {
-                    if (options.asData) {
-                        cerr << blockNum << "\t" << token.address << "\t" << holder << "         \r";
-                    } else {
-                        cerr << "    Balance of token contract " << cGreen << token.address << cOff;
-                        cerr << " at block " << cTeal << blockNum << cOff;
-                        cerr << " is " << cYellow << dispBal << cOff << "           \r";
-                    }
+                    cerr << "    Balance of token contract " << cGreen << token.address << cOff;
+                    cerr << " at block " << cTeal << blockNum << cOff;
+                    cerr << " is " << cYellow << dispBal << cOff << "           \r";
                 }
                 cerr.flush();
                 cout.flush();
             }
         }
-    }
-
-    if (options.total && cnt > 1) {
-        string_q dispBal = getDispBal(options.newestBlock, totalVal);
-        if (options.asData)
-            replaceAll(dispBal, ",", "");
-        cout << "        Total for " << cGreen << cnt << cOff;
-        cout << " accounts at " << cTeal << "latest" << cOff << " block";
-        cout << " is " << cYellow << dispBal << cOff << "\n";
     }
 
     if (needsNewline)
