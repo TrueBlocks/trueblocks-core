@@ -19,10 +19,8 @@ public:
     CTokenState_erc20Array watches;
     CAddressArray holders;
     string_q tokenInfo;
-    bool asData;
     bool byAccount;
     bool exclude_zero;
-    bool total;
 
     COptions(void);
     ~COptions(void);
