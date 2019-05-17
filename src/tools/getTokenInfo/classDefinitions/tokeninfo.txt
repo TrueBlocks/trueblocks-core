@@ -1,7 +1,0 @@
-[settings]
-class       = CTokenInfo
-baseClass   = CAccountWatch
-fields      = address addr|wei totalSupply|uint64 decimals|string version|string symbol|CAddressArray holders (nowrite)
-includes    = acctlib.h
-scope       = extern
-serialize   = true

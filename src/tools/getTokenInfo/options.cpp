@@ -18,7 +18,6 @@ static const COption params[] = {
     COption("~!block_list",  "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
     COption("-byAcct",       "consider each address an ERC20 token except the last, whose balance is reported for each token"),
     COption("-data",         "render results as tab delimited data (for example, to build a cap table)"),
-    COption("-list:<fn>",    "an alternative way to specify an address_list, place one address per line in the file 'fn'"),
     COption("-nozero",       "suppress the display of zero balance accounts"),
     COption("-total",        "if more than one balance is requested, display a total as well"),
     COption("@info:<val>",   "retreive information [name|decimals|totalSupply|version|symbol|all] about the token"),
@@ -43,7 +42,7 @@ bool COptions::parseArguments(string_q& command) {
             asData = true;
 
         } else if (arg == "-n" || arg == "--nozero") {
-            noZero = true;
+            exclude_zero = true;
 
         } else if (arg == "-t" || arg == "--total") {
             total = true;
@@ -58,26 +57,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-b" || arg == "--byAcct") {
             byAccount = true;
 
-        } else if (startsWith(arg, "-l:") || startsWith(arg, "--list:")) {
-
-            CFilename fileName(substitute(substitute(arg, "-l:", ""), "--list:", ""));
-            if (!fileName.isValid())
-                return usage("Not a valid filename: " + orig + ". Quitting...");
-            if (!fileExists(fileName.getFullPath()))
-                return usage("File " + fileName.relativePath() + " not found. Quitting...");
-            string_q contents;
-            asciiFileToString(fileName.getFullPath(), contents);
-            if (contents.empty())
-                return usage("No addresses were found in file " + fileName.relativePath() + ". Quitting...");
-            while (!contents.empty()) {
-                string_q line = nextTokenClear(contents, '\n');
-                if (!isAddress(line))
-                    return usage(line + " does not appear to be a valid Ethereum address. Quitting...");
-                addrs.push_back(toLower(line));
-            }
-
         } else if (startsWith(arg, '-')) {  // do not collapse
-
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
@@ -109,6 +89,9 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    if (!blocks.hasBlocks())
+        blocks.numList.push_back(newestBlock);  // use 'latest'
+
     if (asData && total)
         return usage("Totalling is not available when exporting data.");
 
@@ -124,7 +107,7 @@ bool COptions::parseArguments(string_q& command) {
     for (auto addr : addrs) {
         if (byAccount) {
             // all items but the last are tokens, the last item is the account <token> [tokens...] <holder>
-            CTokenInfo watch;
+            CTokenState_erc20 watch;
             watch.address = addr;
             watch.abi_spec.loadAbiByAddress(addr);
             watches.push_back(watch);
@@ -132,7 +115,7 @@ bool COptions::parseArguments(string_q& command) {
         } else {
             // first item is ERC20 contract, remainder are accounts <token> <holder1> [holder2...]
             if (watches.empty()) {
-                CTokenInfo watch;
+                CTokenState_erc20 watch;
                 watch.address = addr;
                 watch.abi_spec.loadAbiByAddress(addr);
                 watches.push_back(watch);
@@ -153,9 +136,6 @@ bool COptions::parseArguments(string_q& command) {
             return usage("Address '" + watch.address + "' does not appear to be a token smart contract. Quitting...");
     }
 
-    if (!blocks.hasBlocks())
-        blocks.numList.push_back(newestBlock);  // use 'latest'
-
     return true;
 }
 
@@ -168,7 +148,7 @@ void COptions::Init(void) {
 
     optionOff(OPT_DOLLARS|OPT_ETHER);
     asData = false;
-    noZero = false;
+    exclude_zero = false;
     byAccount = false;
     total = false;
     tokenInfo = "";
@@ -179,12 +159,9 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) : CHistoryOptions() {
-
-    // will sort the fields in these classes if --parity is given
     sorts[0] = GETRUNTIME_CLASS(CBlock);
     sorts[1] = GETRUNTIME_CLASS(CTransaction);
     sorts[2] = GETRUNTIME_CLASS(CReceipt);
-
     Init();
 }
 
@@ -194,22 +171,15 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
-
     if (which == "options") {
-        return
-            substitute(substitute(str, "address_list block_list", "<address> <address> [address...] [block...]"),
-                                            "-l|", "-l fn|");
+        return substitute(str, "address_list block_list", "<address> <address> [address...] [block...]");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
-
         string_q ret;
         ret += "[{addresses}] must start with '0x' and be forty two characters long.\n";
-        ret += "[{block_list}] may be a space-separated list of values, a start-end range, a "
-                    "[{special}], or any combination.\n";
-        ret += "This tool retrieves information from the local node or rpcProvider if "
-                    "configured (see documentation).\n";
-        ret += "If the token contract(s) from which you request balances are not ERC20 compliant, the results "
-                    "are undefined.\n";
+        ret += "[{block_list}] may be a space-separated list of values, a start-end range, a [{special}], or any combination.\n";
+        ret += "This tool retrieves information from the local node or rpcProvider if configured (see documentation).\n";
+        ret += "If the token contract(s) from which you request balances are not ERC20 compliant, the results are undefined.\n";
         ret += "If the queried node does not store historical state, the results are undefined.\n";
         ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + ".\n";
         return ret;

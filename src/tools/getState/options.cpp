@@ -155,7 +155,7 @@ COptions::~COptions(void) {
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
     if (which == "options") {
-        return substitute(substitute(str, "address_list block_list", "<address> [address...] [block...]"), "-l|", "-l fn|");
+        return substitute(str, "address_list block_list", "<address> [address...] [block...]");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
         string_q ret;

@@ -39,8 +39,9 @@ int main(int argc, const char *argv[]) {
                 first = false;
             }
         }
-        if (!options.hasHistory())
-            LOG_WARN("This node does not have historical state. The results presented above are incorrect.");
+
+        if (options.hasHistory() && !nodeHasBalances())
+            LOG_WARN("Your node does not report historical state. The results presented above are incorrect.");
         cout << exportPostamble(options.exportFmt, expContext().fmtMap["meta"]);
     }
 

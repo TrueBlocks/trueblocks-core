@@ -10,17 +10,15 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "etherlib.h"
 #include "options.h"
 
 void reportByToken(COptions& options);
 void reportByAccount(COptions& options);
-extern string_q getTokenInfo(const string_q& which, CTokenInfo& w, const address_t& h, blknum_t b);
-//--------------------------------------------------------------
+extern string_q getERC20State(const string_q& which, CTokenState_erc20& w, const address_t& h, blknum_t b);
+//-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
     acctlib_init(quickQuitHandler);
 
-    // Parse command line, allowing for command files
     COptions options;
     if (!options.prepareArguments(argc, argv))
         return 0;
@@ -38,7 +36,7 @@ int main(int argc, const char *argv[]) {
                 string_q blocks = options.getBlockNumList();
                 while (!blocks.empty()) {
                     blknum_t blockNum = str_2_Uint(nextTokenClear(blocks, '|'));
-                    cout << getTokenInfo(options.tokenInfo, watch, holder, blockNum) << "\n";
+                    cout << getERC20State(options.tokenInfo, watch, holder, blockNum) << "\n";
                     if (cnt++ < options.watches.size() - 1)
                         cout << ",";
                     cout << "\n";
@@ -57,11 +55,8 @@ int main(int argc, const char *argv[]) {
         }
     }
 
-    if (!options.hasHistory()) {
-        cerr << cRed << "    Warning: " << cOff;
-        cerr << "Your node does not have historical balances. Historical information is incorrect.\n";
-    }
-
+    if (options.hasHistory() && !nodeHasBalances())
+        LOG_WARN("Your node does not report historical state. The results presented above are incorrect.");
     return 0;
 }
 
@@ -88,13 +83,13 @@ void reportByToken(COptions& options) {
                 blknum_t blockNum = str_2_Uint(nextTokenClear(blocks, '|'));
                 if (blockNum < options.oldestBlock)
                     options.oldestBlock = blockNum;
-                biguint_t bal = str_2_Wei(getTokenInfo("balanceOf", token, holder, blockNum));
+                biguint_t bal = str_2_Wei(getERC20State("balanceOf", token, holder, blockNum));
                 totalVal += bal;
                 string_q dispBal = getDispBal(options.newestBlock, bal);
                 if (options.asData)
                     replaceAll(dispBal, ",", "");
                 needsNewline = true;
-                if (bal > 0 || !options.noZero) {
+                if (bal > 0 || !options.exclude_zero) {
                     if (options.asData) {
                         cout << blockNum << "\t" << token.address << "\t" << holder << "\t" << dispBal << "\n";
                     } else {
@@ -154,13 +149,13 @@ void reportByAccount(COptions& options) {
                 blknum_t blockNum = str_2_Uint(nextTokenClear(blocks, '|'));
                 if (blockNum < options.oldestBlock)
                     options.oldestBlock = blockNum;
-                biguint_t bal = str_2_Wei(getTokenInfo("balanceOf", token, holder, blockNum));
+                biguint_t bal = str_2_Wei(getERC20State("balanceOf", token, holder, blockNum));
                 totalVal += bal;
                 string_q dispBal = getDispBal(options.newestBlock, bal);
                 if (options.asData)
                     replaceAll(dispBal, ",", "");
                 needsNewline = true;
-                if (bal > 0 || !options.noZero) {
+                if (bal > 0 || !options.exclude_zero) {
                     if (options.asData) {
                         cout << blockNum << "\t" << token.address << "\t" << holder << "\t" << dispBal << "\n";
                     } else {
@@ -198,7 +193,7 @@ void reportByAccount(COptions& options) {
 }
 
 //-------------------------------------------------------------------------
-string_q getTokenInfo(const string_q& which, CTokenInfo& token, const address_t& holder, blknum_t blockNum) {
+string_q getERC20State(const string_q& which, CTokenState_erc20& token, const address_t& holder, blknum_t blockNum) {
 
     if (!isAddress(token.address))
         return "";
@@ -238,8 +233,6 @@ string_q getTokenInfo(const string_q& which, CTokenInfo& token, const address_t&
     }
 
     string_q result = callRPC("eth_call", cmd, false);
-//    if (isTestMode())
-//        cerr << "eth_call for " << which << endl << "\twith: " << cmd << endl << "\treturned: " << result << endl;
     CFunction ret;
     token.abi_spec.articulateOutputs(encoding, result, ret);
     os << "{\n    \"" << which << "\": \"" << (ret.outputs.size() ? ret.outputs[0].value : "") << "\"\n}";
