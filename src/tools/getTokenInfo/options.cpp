@@ -130,6 +130,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
+    optionOn(OPT_RAW);
     registerOptions(nParams, params);
 
     watches.clear();
