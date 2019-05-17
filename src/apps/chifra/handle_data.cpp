@@ -50,9 +50,9 @@ bool COptions::handle_data(void) {
         replaceAll(tool_flags, "--slurp", "");
         return handle_slurp();
 
-    } else if (contains(tool_flags, "--prices")) {
-        replaceAll(tool_flags, "--prices", "");
-        return handle_prices();
+    } else if (contains(tool_flags, "--quotes")) {
+        replaceAll(tool_flags, "--quotes", "");
+        return handle_quotes();
 
     } else {
         EXIT_FAIL("Invalid option: " + tool_flags);

@@ -29,7 +29,7 @@ int main(int argc, const char *argv[]) {
         else if (options.mode == "daemon")    RETURN(options.handle_daemon())
         else if (options.mode == "scrape")    RETURN(options.handle_scrape())
         else if (options.mode == "slurp")     RETURN(options.handle_slurp())
-        else if (options.mode == "prices")    RETURN(options.handle_prices())
+        else if (options.mode == "quotes")    RETURN(options.handle_quotes())
         else if (options.mode == "ls")        RETURN(options.handle_ls())
         else if (options.mode == "rm")        RETURN(options.handle_rm())
         else if (options.mode == "functions") RETURN(options.handle_functions())

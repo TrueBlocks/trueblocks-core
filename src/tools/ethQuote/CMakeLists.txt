@@ -2,7 +2,7 @@
 cmake_minimum_required (VERSION 2.6)
 
 # application project
-project (ethprice)
+project (ethQuote)
 
 # The sources to be used
 file(GLOB SOURCE_FILES "*.cpp")
@@ -11,7 +11,7 @@ file(GLOB SOURCE_FILES "*.cpp")
 set(EXECUTABLE_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/../bin")
 
 # Define the executable to be generated
-set(TOOL_NAME "ethprice")
+set(TOOL_NAME "ethQuote")
 set(PROJ_NAME "tools")
 add_executable(${TOOL_NAME} ${SOURCE_FILES})
 
@@ -41,27 +41,26 @@ function(run_test testName)
 endfunction(run_test)
 
 # Enter one line for each individual test
-run_test("ethprice_README"          "-th")
-run_test("ethprice_no_params"            )
-run_test("ethprice_verbose_00"      "-v")
-run_test("ethprice_at_00"           "-a" " 1438272138")
-run_test("ethprice_period_01"       "--period" " 240" " -v:2")
-run_test("ethprice_when_01"         "--when" " 19")
+run_test("ethQuote_README"          "-th")
+run_test("ethQuote_no_params"            )
+run_test("ethQuote_verbose_00"      "-v")
+run_test("ethQuote_at_00"           "-a" " 1438272138")
+run_test("ethQuote_period_01"       "--period" " 240" " -v:2")
+run_test("ethQuote_when_01"         "--when" " 19")
 
 # Slower tests
-run_special_test("ethprice_invalid_param_1" "-x" )
-run_special_test("ethprice_at_invalid"      "-a")
-run_special_test("ethprice_period_invalid"  "-p")
-run_special_test("ethprice_when_invalid"    "-w")
-run_special_test("ethprice_period_00"       "-p" " 60")
-run_special_test("ethprice_period_02"       "--period" " 12")
-run_special_test("ethprice_when_00"         "-w" " 14")
-run_special_test("ethprice_verbose_01"      "-v:1")
-run_special_test("ethprice_from_file"       "--file:cmd_file")
-#run_special_test("ethprice_bitcoin_eth"     "--pair:BTC_ETH")  # customized
-#run_special_test("ethprice_usd_bitcoin"     "--pair:USDT_BTC")
-#run_special_test("ethprice_usd_litecoin"    "--pair:USDT_LTC")  # customized
+run_special_test("ethQuote_invalid_param_1" "-x" )
+run_special_test("ethQuote_at_invalid"      "-a")
+run_special_test("ethQuote_period_invalid"  "-p")
+run_special_test("ethQuote_when_invalid"    "-w")
+run_special_test("ethQuote_period_00"       "-p" " 60")
+run_special_test("ethQuote_period_02"       "--period" " 12")
+run_special_test("ethQuote_when_00"         "-w" " 14")
+run_special_test("ethQuote_verbose_01"      "-v:1")
+run_special_test("ethQuote_from_file"       "--file:cmd_file")
+#run_special_test("ethQuote_bitcoin_eth"     "--pair:BTC_ETH")  # customized
+#run_special_test("ethQuote_usd_bitcoin"     "--pair:USDT_BTC")
+#run_special_test("ethQuote_usd_litecoin"    "--pair:USDT_LTC")  # customized
 
 # Installation steps, this tool is renamed at installation
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)
-install(CODE "file(RENAME \"${CMAKE_INSTALL_PREFIX}/bin/${TOOL_NAME}\" \"${CMAKE_INSTALL_PREFIX}/bin/ethPrice\")")

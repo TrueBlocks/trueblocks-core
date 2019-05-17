@@ -1,5 +1,5 @@
-ethprice argc: 2 [1:-v] 
-ethprice -v 
+ethQuote argc: 2 [1:-v] 
+ethQuote -v 
 Read cnt existing price quotes (lastRead: Now)
 [
 {

@@ -1,5 +1,5 @@
-ethprice argc: 2 [1:--file:cmd_file] 
-ethprice --file:cmd_file 
+ethQuote argc: 2 [1:--file:cmd_file] 
+ethQuote --file:cmd_file 
 [
 { "date": "2015-08-09 00:00:00 UTC", "price": "1.40000" },
 { "date": "2015-08-09 04:00:00 UTC", "price": "1.40000" },
