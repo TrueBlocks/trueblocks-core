@@ -15,23 +15,23 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <algorithm>
-#include "tokeninfo.h"
+#include "erc20.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CTokenInfo, CAccountWatch);
+IMPLEMENT_NODE(CTokenState_erc20, CAccountWatch);
 
 //---------------------------------------------------------------------------
-extern string_q nextTokeninfoChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextTokeninfoChunk_custom(const string_q& fieldIn, const void *dataPtr);
+extern string_q nextTokenState_erc20Chunk(const string_q& fieldIn, const void *dataPtr);
+static string_q nextTokenState_erc20Chunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CTokenInfo::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CTokenState_erc20::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
-    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["tokeninfo_fmt"] : fmtIn);
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["tokenstate_erc20_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();
         return;
@@ -41,13 +41,13 @@ void CTokenInfo::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) cons
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextTokeninfoChunk, this);
+        ctx << getNextChunk(fmt, nextTokenState_erc20Chunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextTokeninfoChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextTokenState_erc20Chunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CTokenInfo *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CTokenState_erc20 *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -56,7 +56,7 @@ string_q nextTokeninfoChunk(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTokenInfo::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
+bool CTokenState_erc20::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -65,7 +65,7 @@ bool CTokenInfo::setValueByName(const string_q& fieldName, const string_q& field
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "addr" ) { addr = str_2_Addr(fieldValue); return true; }
+            if ( fieldName % "address" ) { address = str_2_Addr(fieldValue); return true; }
             break;
         case 'd':
             if ( fieldName % "decimals" ) { decimals = str_2_Uint(fieldValue); return true; }
@@ -95,13 +95,13 @@ bool CTokenInfo::setValueByName(const string_q& fieldName, const string_q& field
 }
 
 //---------------------------------------------------------------------------------------------------
-void CTokenInfo::finishParse() {
+void CTokenState_erc20::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTokenInfo::Serialize(CArchive& archive) {
+bool CTokenState_erc20::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -114,7 +114,7 @@ bool CTokenInfo::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> addr;
+    archive >> address;
     archive >> totalSupply;
     archive >> decimals;
     archive >> version;
@@ -125,14 +125,14 @@ bool CTokenInfo::Serialize(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTokenInfo::SerializeC(CArchive& archive) const {
+bool CTokenState_erc20::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CAccountWatch::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << addr;
+    archive << address;
     archive << totalSupply;
     archive << decimals;
     archive << version;
@@ -143,7 +143,7 @@ bool CTokenInfo::SerializeC(CArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CTokenInfoArray& array) {
+CArchive& operator>>(CArchive& archive, CTokenState_erc20Array& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -155,7 +155,7 @@ CArchive& operator>>(CArchive& archive, CTokenInfoArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CTokenInfoArray& array) {
+CArchive& operator<<(CArchive& archive, const CTokenState_erc20Array& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -164,40 +164,40 @@ CArchive& operator<<(CArchive& archive, const CTokenInfoArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void CTokenInfo::registerClass(void) {
+void CTokenState_erc20::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CTokenInfo, "schema")) return;
+    if (HAS_FIELD(CTokenState_erc20, "schema")) return;
 
     CAccountWatch::registerClass();
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CTokenInfo, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTokenInfo, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CTokenInfo, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CTokenInfo, "cname", T_TEXT,  ++fieldNum);
-    ADD_FIELD(CTokenInfo, "addr", T_ADDRESS, ++fieldNum);
-    ADD_FIELD(CTokenInfo, "totalSupply", T_WEI, ++fieldNum);
-    ADD_FIELD(CTokenInfo, "decimals", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTokenInfo, "version", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTokenInfo, "symbol", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTokenInfo, "holders", T_ADDRESS|TS_ARRAY, ++fieldNum);
-    HIDE_FIELD(CTokenInfo, "holders");
+    ADD_FIELD(CTokenState_erc20, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTokenState_erc20, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CTokenState_erc20, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CTokenState_erc20, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CTokenState_erc20, "address", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(CTokenState_erc20, "totalSupply", T_WEI, ++fieldNum);
+    ADD_FIELD(CTokenState_erc20, "decimals", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTokenState_erc20, "version", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTokenState_erc20, "symbol", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTokenState_erc20, "holders", T_ADDRESS|TS_ARRAY, ++fieldNum);
+    HIDE_FIELD(CTokenState_erc20, "holders");
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CTokenInfo, "schema");
-    HIDE_FIELD(CTokenInfo, "deleted");
-    HIDE_FIELD(CTokenInfo, "showing");
-    HIDE_FIELD(CTokenInfo, "cname");
+    HIDE_FIELD(CTokenState_erc20, "schema");
+    HIDE_FIELD(CTokenState_erc20, "deleted");
+    HIDE_FIELD(CTokenState_erc20, "showing");
+    HIDE_FIELD(CTokenState_erc20, "cname");
 
-    builtIns.push_back(_biCTokenInfo);
+    builtIns.push_back(_biCTokenState_erc20);
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextTokeninfoChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CTokenInfo *tok = reinterpret_cast<const CTokenInfo *>(dataPtr);
+string_q nextTokenState_erc20Chunk_custom(const string_q& fieldIn, const void *dataPtr) {
+    const CTokenState_erc20 *tok = reinterpret_cast<const CTokenState_erc20 *>(dataPtr);
     if (tok) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -219,7 +219,7 @@ string_q nextTokeninfoChunk_custom(const string_q& fieldIn, const void *dataPtr)
 }
 
 //---------------------------------------------------------------------------
-bool CTokenInfo::readBackLevel(CArchive& archive) {
+bool CTokenState_erc20::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE
@@ -228,29 +228,29 @@ bool CTokenInfo::readBackLevel(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CTokenInfo& tok) {
+CArchive& operator<<(CArchive& archive, const CTokenState_erc20& tok) {
     tok.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CTokenInfo& tok) {
+CArchive& operator>>(CArchive& archive, CTokenState_erc20& tok) {
     tok.Serialize(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-string_q CTokenInfo::getValueByName(const string_q& fieldName) const {
+string_q CTokenState_erc20::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
-    string_q ret = nextTokeninfoChunk_custom(fieldName, this);
+    string_q ret = nextTokenState_erc20Chunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "addr" ) return addr_2_Str(addr);
+            if ( fieldName % "address" ) return addr_2_Str(address);
             break;
         case 'd':
             if ( fieldName % "decimals" ) return uint_2_Str(decimals);
@@ -288,7 +288,7 @@ string_q CTokenInfo::getValueByName(const string_q& fieldName) const {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CTokenInfo& item) {
+ostream& operator<<(ostream& os, const CTokenState_erc20& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -298,7 +298,7 @@ ostream& operator<<(ostream& os, const CTokenInfo& item) {
 }
 
 //---------------------------------------------------------------------------
-const string_q CTokenInfo::getStringAt(const string_q& fieldName, size_t i) const {
+const string_q CTokenState_erc20::getStringAt(const string_q& fieldName, size_t i) const {
     if ( fieldName % "holders" && i < holders.size() )
         return (holders[i]);
     return "";

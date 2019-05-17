@@ -48,7 +48,6 @@ namespace qblocks {
     extern void          nodeNotRequired  (void);
     extern void          checkNodeRequired(void);
     extern bool          isNodeRunning    (void);
-    extern bool          nodeHasBalances  (void);
     extern bool          nodeHasTraces    (void);
     extern string_q      setDataSource    (const string_q& newSrc);
     extern string_q      displayCurlError (const string_q& msg, const string_q& val="");

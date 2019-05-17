@@ -12,26 +12,25 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "acctlib.h"
-#include "tokeninfo.h"
 
 //-----------------------------------------------------------------------------
 class COptions : public CHistoryOptions {
 public:
-    CTokenInfoArray watches;
+    CTokenState_erc20Array watches;
     CAddressArray holders;
     string_q tokenInfo;
     bool asData;
     bool byAccount;
-    bool noZero;
+    bool exclude_zero;
     bool total;
 
     COptions(void);
     ~COptions(void);
 
+    string_q postProcess(const string_q& which, const string_q& str) const override;
     bool parseArguments(string_q& command) override;
     void Init(void) override;
-    string_q postProcess(const string_q& which, const string_q& str) const override;
 };
 
-extern const CStringArray infoOptions;
 extern bool isValidInfo(const string_q which, string_q& result);
+extern const CStringArray infoOptions;
