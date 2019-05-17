@@ -33,7 +33,7 @@ int main(int argc, const char *argv[]) {
         if (loadPriceData(options.source, quotes, options.freshen, message) && quotes.size()) {
 
             string_q def = (verbose ? "" : "{ \"date\": \"[{DATE}]\", \"price\": \"[{CLOSE}]\" }");
-            string_q fmtStr = getGlobalConfig("ethprice")->getDisplayStr(!verbose, def, "");
+            string_q fmtStr = getGlobalConfig("ethQuote")->getDisplayStr(!verbose, def, "");
             bool isJson = ((startsWith(fmtStr, "{") && endsWith(fmtStr, "}")) || fmtStr.empty());
             if (options.at) {
                 cout << quotes[indexFromTimeStamp(quotes, options.at)].Format(fmtStr);

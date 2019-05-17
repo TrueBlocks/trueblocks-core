@@ -50,7 +50,7 @@ editAll
 ethName
 ethgoog
 ethgoog.py
-ethprice
+ethQuote
 ethscan
 ethscan.py
 ethslurp

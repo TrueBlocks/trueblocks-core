@@ -12,7 +12,7 @@ static const COption params[] = {
                             "leech | scrape | daemon | "
                             "list | export | stats | ls | rm | "
                             "accounts | functions | config | "
-                            "data | blocks | trans | receipts | logs | traces | slurp | prices "
+                            "data | blocks | trans | receipts | logs | traces | slurp | quotes "
                             "]"),
     COption("",         "Create a TrueBlocks monitor configuration.\n"),
 };

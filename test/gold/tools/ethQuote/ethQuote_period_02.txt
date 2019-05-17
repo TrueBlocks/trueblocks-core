@@ -1,9 +1,9 @@
-ethprice argc: 3 [1:--when] [2:19] 
-ethprice --when 19 
+ethQuote argc: 3 [1:--period] [2:12] 
+ethQuote --period 12 
 
-  Invalid option: --when
+  Positive multiple of 5 expected: --period:12
 
-  Usage:    ethprice -a|-c|-d|-f|-p|-p|-v|-h  
+  Usage:    ethQuote -a|-c|-d|-f|-p|-p|-v|-h  
   Purpose:  Freshen and/or display Ethereum price data and other purposes.
              
   Where:  

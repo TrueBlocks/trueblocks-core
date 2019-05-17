@@ -1,9 +1,9 @@
-## ethprice
+## ethQuote
 
-The `ethprice` tool provides Ethereum price data to various **QBlocks** tools or for other purposes. Currently, `ethprice` retrieves data using the Poloniex API. In future versions, we intend to add other sources of pricing data and provide a mechanism to specify an averaging calculate given multiple price sources. Ultimately, we hope Ethereum/fiat price data appears under consensus, but until that time, **QBlocks** uses `ethprice`. Powered, in part, by Poloniex<sup>&reg;<sup>
+The `ethQuote` tool provides Ethereum price data to various tools or for other purposes. Currently, `ethQuote` retrieves data using the Poloniex API. In future versions, we intend to add other sources of pricing data and provide a mechanism to specify an averaging calculate given multiple price sources. Ultimately, we hope Ethereum/fiat price data appears under consensus, but until that time, **QBlocks** uses `ethQuote`. Powered, in part, by Poloniex<sup>&reg;<sup>
 #### Usage
 
-`Usage:`    ethprice -a|-c|-d|-f|-p|-p|-v|-h  
+`Usage:`    ethQuote -a|-c|-d|-f|-p|-p|-v|-h  
 `Purpose:`  Freshen and/or display Ethereum price data and other purposes.
              
 `Where:`  
