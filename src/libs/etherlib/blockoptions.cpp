@@ -55,14 +55,9 @@ string_q CBlockOptions::getBlockNumList(void) {
 
 //--------------------------------------------------------------------------------
 bool CHistoryOptions::hasHistory(void) const {
-    if (isTestMode())  // we don't report this error during testing
-        return true;
-
-    if (nodeHasBalances())
-        return true;
-
+    if (isTestMode()) return false; // we don't report this error during testing
     blknum_t n_blocks = getGlobalConfig()->getConfigInt("history", "n_blocks", 250);
-    return (newestBlock - oldestBlock) < n_blocks;
+    return (newestBlock - oldestBlock) >= n_blocks;
 }
 
 //--------------------------------------------------------------------------------

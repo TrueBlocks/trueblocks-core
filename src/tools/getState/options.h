@@ -14,15 +14,6 @@
 #include "acctlib.h"
 
 //-----------------------------------------------------------------------------
-typedef enum {
-    ST_NONE = 0,
-    ST_BALANCE = (1<<1), ST_NONCE = (1<<2), ST_CODE = (1<<3), ST_STORAGE = (1<<4),
-    ST_DEPLOYED = (1<<5), ST_ACCTTYPE = (1<<6),
-    ST_SOME = (ST_BALANCE|ST_NONCE|ST_CODE|ST_ACCTTYPE),
-    ST_ALL = (ST_BALANCE|ST_NONCE|ST_CODE|ST_STORAGE|ST_DEPLOYED|ST_ACCTTYPE)
-} ethstate_t;
-
-//-----------------------------------------------------------------------------
 class COptions : public CHistoryOptions {
 public:
     CEthStateMap items;

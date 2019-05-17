@@ -20,6 +20,14 @@
 namespace qblocks {
 
 // EXISTING_CODE
+typedef enum {
+    ST_NONE = 0,
+    ST_BALANCE = (1 << 1), ST_NONCE = (1 << 2), ST_CODE = (1 << 3), ST_STORAGE = (1 << 4),
+    ST_DEPLOYED = (1 << 5),
+    ST_ACCTTYPE = (1 << 6),
+    ST_SOME = (ST_BALANCE | ST_NONCE | ST_CODE | ST_ACCTTYPE),
+    ST_ALL = (ST_BALANCE | ST_NONCE | ST_CODE | ST_STORAGE | ST_DEPLOYED | ST_ACCTTYPE)
+} ethstate_t;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -156,6 +164,14 @@ extern CArchive& operator<<(CArchive& archive, const CEthStateArray& array);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 typedef map<address_t,CEthState> CEthStateMap;
+//-------------------------------------------------------------------------
+extern wei_t    getBalanceAt   (const address_t& addr, blknum_t blockNum=NOPOS);
+extern bool     isContractAt   (const address_t& addr, blknum_t blockNum=NOPOS);
+extern string_q getCodeAt      (const address_t& addr, blknum_t blockNum=NOPOS);
+extern string_q getStorageAt   (const address_t& addr, uint64_t pos, blknum_t blockNum=NOPOS);
+extern uint64_t getNonceAt     (const address_t& addr, blknum_t num=NOPOS);
+extern blknum_t getDeployBlock (const address_t& addr);
+extern bool     nodeHasBalances(void);
 // EXISTING_CODE
 }  // namespace qblocks
 
