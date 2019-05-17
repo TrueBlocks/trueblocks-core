@@ -1,8 +1,8 @@
-ethprice argc: 2 [1:-th] 
-ethprice -th 
+ethQuote argc: 2 [1:-th] 
+ethQuote -th 
 #### Usage
 
-`Usage:`    ethprice -a|-c|-d|-f|-p|-p|-v|-h  
+`Usage:`    ethQuote -a|-c|-d|-f|-p|-p|-v|-h  
 `Purpose:`  Freshen and/or display Ethereum price data and other purposes.
              
 `Where:`  

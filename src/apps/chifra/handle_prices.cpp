@@ -6,14 +6,14 @@
 #include "options.h"
 
 //------------------------------------------------------------------------------------------------
-bool COptions::handle_prices(void) {
+bool COptions::handle_quotes(void) {
 
     ENTER4("handle_" + mode);
     nodeNotRequired();
 
     LOG5("tool_flags: " + tool_flags);
     ostringstream os;
-    os << "ethprice " << tool_flags << " ; ";
+    os << "ethQuote " << tool_flags << " ; ";
     if (isTestMode())
         cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
     else

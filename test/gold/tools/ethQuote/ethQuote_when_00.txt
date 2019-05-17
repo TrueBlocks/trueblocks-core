@@ -1,9 +1,9 @@
-ethprice argc: 2 [1:-a] 
-ethprice -a 
+ethQuote argc: 3 [1:-w] [2:14] 
+ethQuote -w 14 
 
-  Invalid option: -a
+  Invalid option: -w
 
-  Usage:    ethprice -a|-c|-d|-f|-p|-p|-v|-h  
+  Usage:    ethQuote -a|-c|-d|-f|-p|-p|-v|-h  
   Purpose:  Freshen and/or display Ethereum price data and other purposes.
              
   Where:  

@@ -32,7 +32,7 @@ public:
     bool handle_daemon   (void);
     bool handle_scrape   (void);
     bool handle_slurp    (void);
-    bool handle_prices   (void);
+    bool handle_quotes   (void);
     bool handle_ls       (void);
     bool handle_rm       (void);
     bool handle_data     (void);
