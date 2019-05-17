@@ -117,10 +117,10 @@ run_state_test("getState_fmt_api_mode" "${EA4}" " --api_mode" " 2000000" " --eth
 
 run_state_test("getState_bal"          "${TIP}" " --mode" " bal" " 2500000")
 run_state_test("getState_nonce"        "${TIP}" " --mode" " nonce" " 2500000")
-run_state_test("getState_code"         "${TIP}" " --mode" " code")
+run_state_test("getState_code"         "${TIP}" " --mode" " code" " 2500000")
 run_state_test("getState_storage"      "${TIP}" " --mode" " storage" " 2500000")
-run_state_test("getState_deployed"     "${TIP}" " --mode" " deployed")
-run_state_test("getState_accttype"     "${TIP}" " --mode" " accttype")
+run_state_test("getState_deployed"     "${TIP}" " --mode" " deployed" " 2500000")
+run_state_test("getState_accttype"     "${TIP}" " --mode" " accttype" " 2500000")
 run_state_test("getState_some"         "${TIP}" " --mode" " some" " 2500000")
 run_state_test("getState_all"          "${TIP}" " --mode" " all" " 2500000")
 run_state_test("getState_none"         "${TIP}" " --mode" " none" " 2500000")

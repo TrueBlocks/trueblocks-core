@@ -17,9 +17,7 @@ static const COption params[] = {
     COption("~address_list", "two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported"),
     COption("~!block_list",  "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
     COption("-byAcct",       "consider each address an ERC20 token except the last, whose balance is reported for each token"),
-    COption("-data",         "render results as tab delimited data (for example, to build a cap table)"),
     COption("-nozero",       "suppress the display of zero balance accounts"),
-    COption("-total",        "if more than one balance is requested, display a total as well"),
     COption("@info:<val>",   "retreive information [name|decimals|totalSupply|version|symbol|all] about the token"),
     COption("",              "Retrieve the token balance(s) for one or more addresses at the given (or "
                                 "latest) block(s).\n"),
@@ -38,14 +36,8 @@ bool COptions::parseArguments(string_q& command) {
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         string_q orig = arg;
-        if (arg == "-d" || arg == "--data") {
-            asData = true;
-
-        } else if (arg == "-n" || arg == "--nozero") {
+        if (arg == "-n" || arg == "--nozero") {
             exclude_zero = true;
-
-        } else if (arg == "-t" || arg == "--total") {
-            total = true;
 
         } else if (startsWith(arg, "-i:") || startsWith(arg, "--info:")) {
             arg = substitute(substitute(arg, "-i:", ""), "--info:", "");
@@ -91,9 +83,6 @@ bool COptions::parseArguments(string_q& command) {
 
     if (!blocks.hasBlocks())
         blocks.numList.push_back(newestBlock);  // use 'latest'
-
-    if (asData && total)
-        return usage("Totalling is not available when exporting data.");
 
     if ((tokenInfo.empty() || tokenInfo == "balanceOf") && addrs.size() < 2)
         return usage("You must provide both a token contract and an account. Quitting...");
@@ -147,10 +136,8 @@ void COptions::Init(void) {
     holders.clear();
 
     optionOff(OPT_DOLLARS|OPT_ETHER);
-    asData = false;
     exclude_zero = false;
     byAccount = false;
-    total = false;
     tokenInfo = "";
     blocks.Init();
     CHistoryOptions::Init();
