@@ -20,6 +20,7 @@ public:
     bool skipDdos;
     size_t maxTraces;
     bool articulate;
+    blknum_t start;
 
     COptions(void);
     ~COptions(void);
