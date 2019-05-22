@@ -16,6 +16,7 @@ static const COption params[] = {
     COption("@t(r)aces:<on/off>", "write traces to the binary cache ('off' by default)"),
     COption("@ddos:<on/off>",     "skip over dDos transactions in export ('on' by default)"),
     COption("@maxTraces:<num>",   "if --ddos:on, the number of traces defining a dDos (default = 250)"),
+    COption("@start:<num>",       "block to start on"),
     COption("",                   "Export full detail of transactions for one or more Ethereum addresses.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -63,6 +64,12 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
+
+        } else if (startsWith(arg, "-s") || startsWith(arg, "--start")) {
+            arg = substitute(substitute(arg, "-s:", ""), "--start:", "");
+            if (!isNumeral(arg))
+                return usage("Not a number for --start: " + arg + ". Quitting.");
+            start = str_2_Uint(arg);
 
         } else if (startsWith(arg, "0x")) {
 
@@ -181,6 +188,8 @@ void COptions::Init(void) {
     skipDdos = true;
     maxTraces = 250;
     articulate = false;
+    exportFmt = JSON1;
+    start = 0;
 
     minArgs = 0;
 }
