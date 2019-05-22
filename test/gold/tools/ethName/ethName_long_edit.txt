@@ -887,4 +887,6 @@ addr	symbol	source	name	logo	description	visible
 0xffe02ee4c69edf1b340fcad64fbd6b37a7b9e265	NANJ	Etherscan.io	NANJCOIN	nanjcoin_28.png	No description	true
 0xffe8196bc259e8dedc544d935786aa4709ec3e64	HDG	Etherscan.io	Hedge	hedge-crypto2_28.png	An investment portal for the ICO and Staking platforms.	true
 0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24	REG	QuickBlocks	1820 Registry		Registration smart contract as described in this EIP: https://eips.ethereum.org/EIPS/eip-1820	true
+0xc0a47dFe034B400B47bDaD5FecDa2621de6c4d95	UNI	Uniswap website	Uniswap Factory Contract	Uniswap factory contract	true	
+0x2157A7894439191e520825fe9399aB8655E0f708		Uniswap website	Uniswap Exchange Template	Uniswap exchange template	true
 

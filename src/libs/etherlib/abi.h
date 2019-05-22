@@ -48,7 +48,6 @@ public:
     bool loadAbiByAddress(address_t addr);
     bool loadAbiFromFile(const string_q& fileName, bool builtIn);
     bool loadAbiFromString(const string_q& str, bool builtIn);
-    bool loadAbiAndCache(const address_t& addr, bool raw, bool silent, bool decNames);
     bool articulateTransaction(CTransaction *p) const;
     bool articulateLog(CLogEntry *l) const;
     bool articulateTrace(CTrace *t) const;
@@ -158,7 +157,7 @@ extern CArchive& operator>>(CArchive& archive, CAbi& abi);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern bool decodeRLP(CParameterArray& interfaces, const string_q& input);
+extern bool decodeRLP(CParameterArray& interfaces, const string_q& desc, const string_q& input);
 // EXISTING_CODE
 }  // namespace qblocks
 

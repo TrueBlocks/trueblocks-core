@@ -343,87 +343,6 @@ bool CAbi::addIfUnique(const string_q& addr, CFunction& func, bool decorateNames
     return true;
 }
 
-//-----------------------------------------------------------------------
-bool CAbi::loadAbiAndCache(const address_t& addr, bool raw, bool silent, bool decNames) {
-
-    if (isZeroAddr(addr))
-        return false;
-
-    string_q results;
-    string_q fileName = getCachePath("abis/" + addr + ".json");
-
-    string_q localFile("./" + addr + ".json");
-    if (fileExists(localFile) && localFile != fileName) {
-        cerr << "Local file copied to cache\n";
-        copyFile(localFile, fileName);
-    }
-
-    string_q dispName = substitute(fileName, getCachePath(""), "$BLOCK_CACHE/");
-    if (fileExists(fileName) && !raw) {
-
-        if (verbose) {
-            cerr << "Reading ABI for address " << addr << " from " << (isTestMode() ? "--" : "cache") << "\r";
-            cerr.flush();
-        }
-        asciiFileToString(fileName, results);
-
-    } else {
-        if (verbose) {
-            cerr << "Reading ABI for address " << addr << " from " << (isTestMode() ? "--" : "EtherScan") << "\r";
-            cerr.flush();
-        }
-        string_q url = string_q("http:/")
-                                + "/api.etherscan.io/api?module=contract&action=getabi&address="
-                                + addr;
-        results = substitute(urlToString(url), "\\", "");
-        if (!contains(results, "NOTOK")) {
-
-            // Clear the RPC wrapper
-            if (!isTestMode()) {
-                if (verbose)
-                    cerr << results << endl;
-                cerr << "Caching abi in " << dispName << endl;
-            }
-            replace(results, "\"result\":\"", "<extract>");
-            replaceReverse(results, "\"}", "</extract>");
-            results = snagFieldClear(results, "extract", "");
-            establishFolder(fileName);
-            stringToAsciiFile(fileName, results);
-
-        } else if (contains(toLower(results), "source code not verified")) {
-
-            if (!silent) {
-                LOG_WARN("Could not get the ABI for address ", addr, ". Etherscan returned: ");
-                LOG_WARN(results);
-                LOG_WARN("If you copy the ABI to the current folder, QBlocks will use it.");
-                quickQuitHandler(0);
-            }
-
-        } else {
-
-            if (!silent) {
-                cerr << "Etherscan returned " << results << "\n";
-                cerr << "Could not grab ABI for " + addr + " from etherscan.io.\n";
-                quickQuitHandler(0);
-            }
-
-            // TODO(tjayrush): If we store the ABI here even if empty, we won't have to get it again, but then
-            // what happens if user later posts the ABI? Need a 'refresh' option or clear cache option
-            establishFolder(fileName);
-            stringToAsciiFile(fileName, "[]");
-        }
-    }
-
-    CFunction func;
-    ostringstream os;
-    while (func.parseJson3(results)) {
-        if (addIfUnique(addr, func, decNames))
-            func.doExport(os);
-        func = CFunction();  // reset
-    }
-    return !os.str().empty();
-}
-
 //-----------------------------------------------------------------------------------------
 string_q params_2_Str(CParameterArray& interfaces) {
     string_q ret;
@@ -433,13 +352,6 @@ string_q params_2_Str(CParameterArray& interfaces) {
         ret += p.value;
     }
     return trim(ret);
-}
-
-//------------------------------------------------------------------------------------------------
-void loadType(CParameterArray& ar, const string_q& type) {
-    CParameter p;
-    p.type = type;
-    ar.push_back(p);
 }
 
 //------------------------------------------------------------------------------------------------
@@ -473,7 +385,7 @@ size_t decodeTheData(CParameterArray& interfaces, const CStringArray& dataArray,
 
                 // sugar
                 CParameterArray tmp;
-                loadType(tmp, "uint256");
+                { CParameter p; p.type = "uint256"; tmp.push_back(p); }
                 decodeTheData(tmp, dataArray, readIndex);
                 pPtr->value = ((tmp[0].value == "1") ? "true" : "false");
 
@@ -481,7 +393,7 @@ size_t decodeTheData(CParameterArray& interfaces, const CStringArray& dataArray,
 
                 // sugar
                 CParameterArray tmp;
-                loadType(tmp, "uint160");
+                { CParameter p; p.type = "uint160"; tmp.push_back(p); }
                 decodeTheData(tmp, dataArray, readIndex);
                 pPtr->value = "0x" + padLeft(toLower(bnu_2_Hex(str_2_BigUint(tmp[0].value))), 40, '0');
 
@@ -539,7 +451,7 @@ size_t decodeTheData(CParameterArray& interfaces, const CStringArray& dataArray,
 
                 CParameterArray tmp;
                 for (size_t i = 0; i < nItems; i++)
-                    loadType(tmp, baseType);
+                { CParameter p; p.type = baseType; tmp.push_back(p); }
 
                 size_t tPtr = dataStart + 1;
                 decodeTheData(tmp, dataArray, tPtr);
@@ -566,7 +478,7 @@ size_t decodeTheData(CParameterArray& interfaces, const CStringArray& dataArray,
                 int nBytes = stoi(type.substr(type.find('[')+1, type.find(']')));
                 CParameterArray tmp;
                 for (int i = 0; i < nBytes; i++)
-                    loadType(tmp, subType);
+                { CParameter p; p.type = subType; tmp.push_back(p); }
                 decodeTheData(tmp, dataArray, readIndex);
                 pPtr->value = "[" + params_2_Str(tmp) + "]";
                 //readIndex++;
@@ -577,47 +489,345 @@ size_t decodeTheData(CParameterArray& interfaces, const CStringArray& dataArray,
 //    EXIT_NOMSG(1);
 }
 
-//-----------------------------------------------------------------------------------------
-size_t extractParams(CParameterArray& paramArray, const string_q& paramStr) {
-
-    string_q str = substitute(substitute(paramStr, "(", "|"), ")", "|");
-
-    CStringArray parts;
-    explode(parts, str, '|');
-
-    CStringArray strArray;
-    explode(strArray, parts[1], ',');
-
-    for (auto p : strArray) {
-
-        // remove extraneous spaces or tabs
-        string type = trim(substitute(p, "\t", " "), ' ');
-        while (contains(type, " ["))
-            type = substitute(type, " [", "[");
-        while (contains(type, " ]"))
-            type = substitute(type, " ]", "]");
-
-        // strip field names
-        if (type.find(" ") != string::npos)
-            type = type.substr(0, type.find(" "));
-
-        // clean up syntactic sugar
-        if (type == "int") type = "int256";
-        if (type == "uint") type = "uint256";
-        if (type == "fixed") type = "fixed128x128";
-        if (type == "ufixed") type = "ufixed128x128";
-        if (startsWith(type, "int[")) type = substitute(type, "int[", "int256[");
-        if (startsWith(type, "uint[")) type = substitute(type, "uint[", "uint256[");
-        if (startsWith(type, "fixed[")) type = substitute(type, "fixed[", "fixed128x128[");
-        if (startsWith(type, "ufixed[")) type = substitute(type, "ufixed[", "ufixed128x128[");
-
-        loadType(paramArray, type);
+#define SPEEDY1
+#define SPEEDY2
+#define right(s,r) (s.substr(s.length()-r))
+    typedef map<string_q, NEXTCHUNKFUNC> parse_map_t;
+    parse_map_t parseMap;
+    //-----------------------------------------------------------------------------------------
+    string_q parse_addr(const string_q& input, const void *data=NULL) {
+        return "0x" + right(input,40);
     }
-    return paramArray.size();
-}
+    string_q parse_bool(const string_q& input, const void *data=NULL) {
+        if (input[input.length()-1] == '1') return "true"; return "false";
+    }
+    string_q parse_i8__(const string_q& input, const void *data=NULL) {
+        ostringstream os;
+        os << (int)(signed char)strtol(("0x" + right(input, 2)).c_str(), NULL, 16);
+        return os.str();
+    }
+    string_q parse_i16_(const string_q& input, const void *data=NULL) {
+        ostringstream os;
+        os << (int)(signed char)strtol(("0x" + right(input, 4)).c_str(), NULL, 16);
+        return os.str();
+    }
+    string_q parse_i32_(const string_q& input, const void *data=NULL) {
+        ostringstream os;
+        os << (int)(signed char)strtol(("0x" + right(input, 8)).c_str(), NULL, 16);
+        return os.str();
+    }
+    string_q parse_i64_(const string_q& input, const void *data=NULL) {
+        return int_2_Str(str_2_Int("0x"+right(input,16)));
+    }
+    static const string_q leads48 = "000000000000000000000000000000000000000000000000";
+    string_q parse_i128(const string_q& input, const void *data=NULL) {
+#ifdef SPEEDY2
+        if (startsWith(input, leads48))
+            return parse_i64_(substitute(input, leads48, ""));
+#endif
+        return bni_2_Str(str_2_BigInt("0x" + input, 128));
+    }
+    string_q parse_i256(const string_q& input, const void *data=NULL) {
+#ifdef SPEEDY2
+        if (startsWith(input, leads48))
+            return parse_i64_(substitute(input, leads48, ""));
+#endif
+        return bni_2_Str(str_2_BigInt("0x" + input, 256));
+    }
+    string_q parse_u8__(const string_q& input, const void *data=NULL) {
+        return uint_2_Str(str_2_Uint("0x"+input.substr(input.length()-( 8/4))));
+    }
+    string_q parse_u16_(const string_q& input, const void *data=NULL) {
+        return uint_2_Str(str_2_Uint("0x"+input.substr(input.length()-(16/4))));
+    }
+    string_q parse_u32_(const string_q& input, const void *data=NULL) {
+        return uint_2_Str(str_2_Uint("0x"+input.substr(input.length()-(32/4))));
+    }
+    string_q parse_u64_(const string_q& input, const void *data=NULL) {
+        return uint_2_Str(str_2_Uint("0x"+input.substr(input.length()-(64/4))));
+    }
+    string_q parse_u128(const string_q& input, const void *data=NULL) {
+#ifdef SPEEDY2
+        if (startsWith(input, "000000000000000000000000000000000000000000000000"))
+            return parse_u64_(input);
+#endif
+        return bnu_2_Str(str_2_BigUint("0x" + input, 128));
+    }
+    string_q parse_u256(const string_q& input, const void *data=NULL) {
+#ifdef SPEEDY2
+        if (startsWith(input, "000000000000000000000000000000000000000000000000"))
+            return parse_u64_(input);
+#endif
+        return bnu_2_Str(str_2_BigUint("0x" + input, 256));
+    }
+    string_q parse_by32(const string_q& input, const void *data=NULL) {
+        return "0x" + input;
+    }
+    string_q parse_addr_addr(const string_q& input, const void *data) {
+        return
+        parse_addr(input.substr( 0, 64)) + "," +
+        parse_addr(input.substr(64, 64));
+    }
+    string_q parse_addr_bool(const string_q& input, const void *data) {
+        return
+        parse_addr(input.substr( 0, 64)) + "," +
+        parse_bool(input.substr(64, 64));
+    }
+    string_q parse_addr_by32(const string_q& input, const void *data) {
+        return
+        parse_addr(input.substr( 0, 64)) + "," +
+        parse_by32(input.substr(64, 64));
+    }
+    string_q parse_addr_i256(const string_q& input, const void *data) {
+        return
+        parse_addr(input.substr( 0, 64)) + "," +
+        parse_i256(input.substr(64, 64));
+    }
+    string_q parse_addr_u256(const string_q& input, const void *data) {
+        return
+        parse_addr(input.substr( 0, 64)) + "," +
+        parse_u256(input.substr(64, 64));
+    }
+    string_q parse_u8___u8__(const string_q& input, const void *data) {
+        return
+        parse_u8__(input.substr( 0, 64)) + "," +
+        parse_u8__(input.substr(64, 64));
+    }
+    string_q parse_u16__u16_(const string_q& input, const void *data) {
+        return
+        parse_u16_(input.substr( 0, 64)) + "," +
+        parse_u16_(input.substr(64, 64));
+    }
+    string_q parse_u32__u32_(const string_q& input, const void *data) {
+        return
+        parse_u32_(input.substr( 0, 64)) + "," +
+        parse_u32_(input.substr(64, 64));
+    }
+    string_q parse_u64__u64_(const string_q& input, const void *data) {
+        return
+        parse_u64_(input.substr( 0, 64)) + "," +
+        parse_u64_(input.substr(64, 64));
+    }
+    string_q parse_u256_addr(const string_q& input, const void *data) {
+        return
+        parse_u256(input.substr( 0, 64)) + "," +
+        parse_addr(input.substr(64, 64));
+    }
+    string_q parse_u256_bool(const string_q& input, const void *data) {
+        return
+        parse_u256(input.substr( 0, 64)) + "," +
+        parse_bool(input.substr(64, 64));
+    }
+    string_q parse_u256_u8__(const string_q& input, const void *data) {
+        return
+        parse_u256(input.substr( 0, 64)) + "," +
+        parse_u8__(input.substr(64, 64));
+    }
+    string_q parse_u256_u256(const string_q& input, const void *data) {
+        return
+        parse_u256(input.substr( 0, 64)) + "," +
+        parse_u256(input.substr(64, 64));
+    }
+    string_q parse_by32_addr(const string_q& input, const void *data) {
+        return
+        parse_by32(input.substr( 0, 64)) + "," +
+        parse_addr(input.substr(64, 64));
+    }
+    string_q parse_by32_by32(const string_q& input, const void *data) {
+        return
+        parse_by32(input.substr( 0, 64)) + "," +
+        parse_by32(input.substr(64, 64));
+    }
+    string_q parse_by32_u256(const string_q& input, const void *data) {
+        return
+        parse_by32(input.substr( 0, 64)) + "," +
+        parse_u256(input.substr(64, 64));
+    }
+    string_q parse_addr_addr_addr(const string_q& input, const void *data) {
+        return
+        parse_addr(input.substr(  0, 64)) + "," +
+        parse_addr(input.substr( 64, 64)) + "," +
+        parse_addr(input.substr(128, 64));
+    }
+    string_q parse_addr_addr_u256(const string_q& input, const void *data) {
+        return
+        parse_addr(input.substr(  0, 64)) + "," +
+        parse_addr(input.substr( 64, 64)) + "," +
+        parse_u256(input.substr(128, 64));
+    }
+    string_q parse_addr_u256_addr(const string_q& input, const void *data) {
+        return
+        parse_addr(input.substr(  0, 64)) + "," +
+        parse_u256(input.substr( 64, 64)) + "," +
+        parse_addr(input.substr(128, 64));
+    }
+    string_q parse_addr_u256_u256(const string_q& input, const void *data) {
+        return
+        parse_addr(input.substr(  0, 64)) + "," +
+        parse_u256(input.substr( 64, 64)) + "," +
+        parse_u256(input.substr(128, 64));
+    }
+    string_q parse_by32_by32_u256(const string_q& input, const void *data) {
+        return
+        parse_by32(input.substr(  0, 64)) + "," +
+        parse_by32(input.substr( 64, 64)) + "," +
+        parse_u256(input.substr(128, 64));
+    }
+    string_q parse_u256_addr_u256(const string_q& input, const void *data) {
+        return
+        parse_u256(input.substr(  0, 64)) + "," +
+        parse_addr(input.substr( 64, 64)) + "," +
+        parse_u256(input.substr(128, 64));
+    }
+    string_q parse_u256_u256_u256(const string_q& input, const void *data) {
+        return
+        parse_u256(input.substr(  0, 64)) + "," +
+        parse_u256(input.substr( 64, 64)) + "," +
+        parse_u256(input.substr(128, 64));
+    }
+    string_q parse_addr_addr_addr_u256(const string_q& input, const void *data) {
+        return
+        parse_addr(input.substr(  0, 64)) + "," +
+        parse_addr(input.substr( 64, 64)) + "," +
+        parse_addr(input.substr(128, 64)) + "," +
+        parse_u256(input.substr(192, 64));
+    }
+    string_q parse_addr_u256_u256_u256(const string_q& input, const void *data) {
+        return
+        parse_addr(input.substr(  0, 64)) + "," +
+        parse_u256(input.substr( 64, 64)) + "," +
+        parse_u256(input.substr(128, 64)) + "," +
+        parse_u256(input.substr(192, 64));
+    }
+    string_q parse_u256_u256_u256_u256(const string_q& input, const void *data) {
+        return
+        parse_u256(input.substr(  0, 64)) + "," +
+        parse_u256(input.substr( 64, 64)) + "," +
+        parse_u256(input.substr(128, 64)) + "," +
+        parse_u256(input.substr(192, 64));
+    }
+    string_q parse_u256_u256_u256_u256_u256(const string_q& input, const void *data) {
+        return
+        parse_u256(input.substr(  0, 64)) + "," +
+        parse_u256(input.substr( 64, 64)) + "," +
+        parse_u256(input.substr(128, 64)) + "," +
+        parse_u256(input.substr(192, 64)) + "," +
+        parse_u256(input.substr(256, 64));
+    }
+    string_q parse_u256_u256_u256_u256_u256_u256(const string_q& input, const void *data) {
+        return
+        parse_u256(input.substr(  0, 64)) + "," +
+        parse_u256(input.substr( 64, 64)) + "," +
+        parse_u256(input.substr(128, 64)) + "," +
+        parse_u256(input.substr(192, 64)) + "," +
+        parse_u256(input.substr(256, 64)) + "," +
+        parse_u256(input.substr(320, 64));
+    }
+    string_q parse_two_u256_one_addr(const string_q& input, const void *data) {
+        return
+        parse_u256(input.substr(  0, 64)) + "," +
+        parse_u256(input.substr( 64, 64)) + "," +
+        parse_addr(input.substr(128, 64));
+    }
+    string_q parse_three_u256_one_addr(const string_q& input, const void *data) {
+        return
+        parse_u256(input.substr(  0, 64)) + "," +
+        parse_u256(input.substr( 64, 64)) + "," +
+        parse_u256(input.substr(128, 64)) + "," +
+        parse_addr(input.substr(192, 64));
+    }
+    string_q parse_four_u256_one_addr(const string_q& input, const void *data) {
+        return
+        parse_u256(input.substr(  0, 64)) + "," +
+        parse_u256(input.substr( 64, 64)) + "," +
+        parse_u256(input.substr(128, 64)) + "," +
+        parse_u256(input.substr(192, 64)) + "," +
+        parse_addr(input.substr(256, 64));
+    }
+    string_q parse_four_u256_two_addr(const string_q& input, const void *data) {
+        return
+        parse_u256(input.substr(  0, 64)) + "," +
+        parse_u256(input.substr( 64, 64)) + "," +
+        parse_u256(input.substr(128, 64)) + "," +
+        parse_u256(input.substr(192, 64)) + "," +
+        parse_addr(input.substr(256, 64)) + "," +
+        parse_addr(input.substr(320, 64));
+    }
+    string_q parse_str(const string_q& input, const void *data) {
+        uint64_t len = str_2_Uint("0x"+right(input.substr(64,64),16)) * 2;
+        return
+        hex_2_Str(input.substr(128,len));
+    }
+
+    //-----------------------------------------------------------------------------------------
+    void loadParseMap(void) {
+        parseMap["address"] = parse_addr;
+        parseMap["bool"] = parse_bool;
+        parseMap["int8"] = parse_i8__;
+        parseMap["int16"] = parse_i16_;
+        parseMap["int32"] = parse_i32_;
+        parseMap["int64"] = parse_i64_;
+        parseMap["int128"] = parse_i128;
+        parseMap["int256"] = parse_i256;
+        parseMap["uint8"] = parse_u8__;
+        parseMap["uint16"] = parse_u16_;
+        parseMap["uint32"] = parse_u32_;
+        parseMap["uint64"] = parse_u64_;
+        parseMap["uint128"] = parse_u128;
+        parseMap["uint256"] = parse_u256;
+        parseMap["bytes32"] = parse_by32;
+        parseMap["string"] = parse_str;
+        parseMap["address,address"] = parse_addr_addr;
+        parseMap["address,bool"] = parse_addr_bool;
+        parseMap["address,bytes32"] = parse_addr_by32;
+        parseMap["address,int256"] = parse_addr_i256;
+        parseMap["address,uint256"] = parse_addr_u256;
+        parseMap["uint8,uint8"] = parse_u8___u8__;
+        parseMap["uint16,uint16"] = parse_u16__u16_;
+        parseMap["uint32,uint32"] = parse_u32__u32_;
+        parseMap["uint64,uint64"] = parse_u64__u64_;
+        parseMap["uint256,address"] = parse_u256_addr;
+        parseMap["uint256,bool"] = parse_u256_bool;
+        parseMap["uint256,uint8"] = parse_u256_u8__;
+        parseMap["uint256,uint256"] = parse_u256_u256;
+        parseMap["bytes32,address"] = parse_by32_addr;
+        parseMap["bytes32,bytes32"] = parse_by32_by32;
+        parseMap["bytes32,uint256"] = parse_by32_u256;
+        parseMap["address,address,address"] = parse_addr_addr_addr;
+        parseMap["address,address,uint256"] = parse_addr_addr_u256;
+        parseMap["address,uint256,address"] = parse_addr_u256_addr;
+        parseMap["address,uint256,uint256"] = parse_addr_u256_u256;
+        parseMap["bytes32,bytes32,uint256"] = parse_by32_by32_u256;
+        parseMap["uint256,address,uint256"] = parse_u256_addr_u256;
+        parseMap["uint256,uint256,uint256"] = parse_u256_u256_u256;
+        parseMap["address,address,address,uint256"] = parse_addr_addr_addr_u256;
+        parseMap["address,uint256,uint256,uint256"] = parse_addr_u256_u256_u256;
+        parseMap["uint256,uint256,uint256,uint256"] = parse_u256_u256_u256_u256;
+        parseMap["uint256,uint256,uint256,uint256,uint256"] = parse_u256_u256_u256_u256_u256;
+        parseMap["uint256,uint256,uint256,uint256,uint256,uint256"] = parse_u256_u256_u256_u256_u256_u256;
+        parseMap["uint256,uint256,address"] = parse_two_u256_one_addr;
+        parseMap["uint256,uint256,uint256,address"] = parse_three_u256_one_addr;
+        parseMap["uint256,uint256,uint256,uint256,address"] = parse_four_u256_one_addr;
+        parseMap["uint256,uint256,uint256,uint256,address,address"] = parse_four_u256_two_addr;
+    }
 
 //---------------------------------------------------------------------------
-bool decodeRLP(CParameterArray& interfaces, const string_q& inputStr) {
+bool decodeRLP(CParameterArray& interfaces, const string_q& desc, const string_q& inputStr) {
+
+    string_q built;
+    NEXTCHUNKFUNC func = parseMap[desc];
+    if (!func) {
+        for (auto i : interfaces)
+            built += (i.type + ",");
+        built = trim(built,',');
+        func = parseMap[built];
+    }
+    if (func) {
+        string_q result = (*func)(substitute(inputStr,"0x",""), NULL);
+        for (auto& item : interfaces)
+            item.value = nextTokenClear(result, ',');
+        return true;
+    }
 
     // Clean up the input to work with the provided interfaces - one input row per 32 bytes
     CStringArray inputs;
@@ -669,8 +879,8 @@ bool CAbi::articulateTransaction(CTransaction *p) const {
             if (encoding % interface.encoding) {
                 p->articulatedTx = CFunction(interface);
                 p->articulatedTx.showOutput = false;
-                bool ret1 = decodeRLP(p->articulatedTx.inputs, input);
-                bool ret2 = (hasTraces ? decodeRLP(p->articulatedTx.outputs, p->traces[0].result.output) : false);
+                bool ret1 = decodeRLP(p->articulatedTx.inputs, "", input);
+                bool ret2 = (hasTraces ? decodeRLP(p->articulatedTx.outputs, "", p->traces[0].result.output) : false);
                 EXIT_NOMSG(ret1 || ret2);
             }
         }
@@ -762,13 +972,13 @@ bool CAbi::articulateLog(CLogEntry *p) const {
 //            for (auto t : topics)
 //                LOG5(substitute(t.Format(),"\n"," "));
 //            LOG5(topicStr);
-            bool ret1 = decodeRLP(topics, topicStr);
+            bool ret1 = decodeRLP(topics, "", topicStr);
 
 //            SEP5("data");
 //            for (auto d : data)
 //                LOG5(substitute(d.Format(),"\n"," "));
 //            LOG5(p->data);
-            bool ret2 = decodeRLP(data, p->data);
+            bool ret2 = decodeRLP(data, "", p->data);
 
             // put them back together in the right order and we're done
             p->articulatedLog.inputs.clear();
@@ -797,8 +1007,8 @@ bool CAbi::articulateTrace(CTrace *p) const {
             if (encoding % interface.encoding) {
                 p->articulatedTrace = CFunction(interface);
                 p->articulatedTrace.showOutput = false;
-                bool ret1 = decodeRLP(p->articulatedTrace.inputs, input);
-                bool ret2 = decodeRLP(p->articulatedTrace.outputs, p->result.output);
+                bool ret1 = decodeRLP(p->articulatedTrace.inputs, "", input);
+                bool ret2 = decodeRLP(p->articulatedTrace.outputs, "", p->result.output);
                 EXIT_NOMSG(ret1 || ret2);
             }
         }
@@ -813,7 +1023,7 @@ bool CAbi::articulateOutputs(const string_q& encoding, const string_q& output, C
         if (encoding % interface.encoding) {
             ret = CFunction(interface);
             ret.showOutput = false;
-            bool bRet = decodeRLP(ret.outputs, output);
+            bool bRet = decodeRLP(ret.outputs, "", output);
             EXIT_NOMSG(bRet);
         }
     }

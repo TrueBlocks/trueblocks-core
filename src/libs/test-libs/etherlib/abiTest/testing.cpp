@@ -390,7 +390,7 @@ public:
 
         } else if (parts[0] == "decode" || parts[0] == "decode_raw") {
             expected = parts[4];
-            decodeRLP(inputs, parts[3]);
+            decodeRLP(inputs, parts[2], parts[3]);
             for (auto param : inputs) {
                 if (!result.empty())
                     result += ", ";

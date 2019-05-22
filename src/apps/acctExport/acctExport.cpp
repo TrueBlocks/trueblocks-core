@@ -1,3 +1,4 @@
+#define MAX_TXS NOPOS
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
  * Copyright (c) 2017 by Great Hill Corporation.
@@ -55,7 +56,7 @@ bool exportData(COptions& options) {
     }
 
     bool first = true;
-    for (size_t i = 0 ; i < options.items.size() && !shouldQuit() ; i++) {
+    for (size_t i = 0 ; i < options.items.size() && !shouldQuit() && i < MAX_TXS ; i++) {
         const CAppearance_base *item = &options.items[i];
 
         CBlock block; // do not move this from this scope
@@ -81,7 +82,7 @@ bool exportData(COptions& options) {
         }
 
         if (true) { //}!(i%1)) {
-            cerr << " " << i << " of " << options.items.size() << ": " << trans.hash << "\r";
+            cerr << "   " << i << " of " << options.items.size() << ": " << trans.hash << "\r";
             cerr.flush();
         }
 
@@ -156,7 +157,7 @@ bool exportData(COptions& options) {
         HIDE_FIELD(CFunction, "message");
     }
 
-    cerr << "Exported " << options.items.size() << " of " << options.items.size() << " records.                                           \n";
+    cerr << "Exported " << min((size_t)MAX_TXS , options.items.size()) << " of " << options.items.size() << " records.                                           \n";
     cerr.flush();
 
     if (options.exportFmt == JSON1)

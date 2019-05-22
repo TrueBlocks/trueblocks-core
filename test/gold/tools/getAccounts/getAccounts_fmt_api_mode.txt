@@ -1208,6 +1208,15 @@ getAccounts --named --custom --owned --api_mode
     "visible": true
   },
   {
+    "addr": "0x2157a7894439191e520825fe9399ab8655e0f708",
+    "symbol": "",
+    "name": "Uniswap Exchange Template",
+    "source": "Uniswap website",
+    "description": "true",
+    "logo": "Uniswap exchange template",
+    "visible": false
+  },
+  {
     "addr": "0x2167fb82309cf76513e83b25123f8b0559d6b48f",
     "symbol": "LION",
     "name": "LionCoin",
@@ -6156,6 +6165,15 @@ getAccounts --named --custom --owned --api_mode
     "description": "An Ecosystem for Reviewers, Professionals and Businesses all around the world, powered and connected by Blockchain.",
     "logo": "lina1_28.png",
     "visible": true
+  },
+  {
+    "addr": "0xc0a47dfe034b400b47bdad5fecda2621de6c4d95",
+    "symbol": "UNI",
+    "name": "Uniswap Factory Contract",
+    "source": "Uniswap website",
+    "description": "true",
+    "logo": "Uniswap factory contract",
+    "visible": false
   },
   {
     "addr": "0xc0eb85285d83217cd7c891702bcbc0fc401e2d9d",

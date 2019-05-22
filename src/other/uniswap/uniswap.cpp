@@ -1,4 +1,3 @@
-#pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
@@ -11,36 +10,19 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "acctlib.h"
+#include "etherlib.h"
 
-class COptions : public COptionsBase {
-public:
-    uint64_t parts;
-    bool noconst;
-    bool asData;
-    bool loadKnown;
-    bool decNames;
-    bool isGenerate;
-    CAbiArray abi_specs;
-    CAddressArray addrs;
-    string_q classDir;
-    string_q prefix;
-    bool silent;
+//----------------------------------------------------------------
+int main(int argc, const char *argv[]) {
+    etherlib_init(quickQuitHandler);
 
-    COptions(void);
-    ~COptions(void);
+    string_q contents = asciiFileToString("./uniswap.json");
 
-    string_q postProcess(const string_q& which, const string_q& str) const override;
-    bool parseArguments(string_q& command) override;
-    void Init(void) override;
+    CTransaction trans;
+    while (trans.parseJson3(contents)) {
+        cout << trans << endl;
+    }
 
-    bool isToken(void) const { return prefix % "tokenlib"; }
-    bool isWallet(void) const { return prefix % "walletlib"; }
-    bool isBuiltIn(void) const { return isToken() || isWallet(); }
-    void handle_display(void);
-    void handle_generate(void);
-};
-
-//-----------------------------------------------------------------------
-extern string_q getPrefix (const string_q& in);
-extern bool sol_2_Abi(CAbi& abi, const string_q& solFile);
+    etherlib_cleanup();
+    return 1;
+}

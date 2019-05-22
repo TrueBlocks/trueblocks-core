@@ -240,8 +240,12 @@ namespace qblocks {
         return map[bits];
     }
 
+//#define NO_STR_CONVERT_FAST
     //--------------------------------------------------------------------------------
     bigint_t str_2_BigInt(const string_q& s, size_t bits) {
+#ifdef NO_STR_CONVERT_FAST
+        return 0;
+#else
         if (s.empty() || s == "0x")
             return 0;
 
@@ -267,15 +271,15 @@ namespace qblocks {
         if (sVal > (maxInt / 2)) // If it's bigger than half, we have to wrap
             sVal = sVal - maxInt - 1; // wrap if larger than half of max int256
 
-//        LOG5("str:  " + s);
-//        LOG5("bits: " + uint_2_Str(bits));
-//        LOG5("sVal: " + bni_2_Str(sVal));
-
         return sVal;
+#endif
     }
 
     //--------------------------------------------------------------------------------
     biguint_t str_2_BigUint(const string_q& str, size_t bits) {
+#ifdef NO_STR_CONVERT_FAST
+        return 0;
+#else
         if (str.empty() || str == "0x")
             return 0;
 
@@ -306,11 +310,8 @@ namespace qblocks {
         if (ret > maxInt) // If it's bigger than the max size, we have to wrap
             ret = (ret % maxInt);
 
-//        LOG5("str:  " + str);
-//        LOG5("bits: " + uint_2_Str(bits));
-//        LOG5("ret: " + bnu_2_Str(ret));
-
         return ret;
+#endif
     }
 
     //--------------------------------------------------------------------------------

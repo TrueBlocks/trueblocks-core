@@ -111,7 +111,7 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "articulatedTx" ) { /* articulatedTx = fieldValue; */ return false; }
+            if ( fieldName % "articulatedTx" ) { return articulatedTx.parseJson3(fieldValue); }
             break;
         case 'b':
             if ( fieldName % "blockHash" ) { blockHash = str_2_Hash(fieldValue); return true; }
@@ -137,7 +137,7 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
             if ( fieldName % "nonce" ) { nonce = str_2_Uint(fieldValue); return true; }
             break;
         case 'r':
-            if ( fieldName % "receipt" ) { /* receipt = fieldValue; */ return false; }
+            if ( fieldName % "receipt" ) { return receipt.parseJson3(fieldValue); }
             break;
         case 't':
             if ( fieldName % "transactionIndex" ) { transactionIndex = str_2_Uint(fieldValue); return true; }
