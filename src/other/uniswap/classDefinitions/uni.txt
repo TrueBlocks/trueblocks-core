@@ -1,0 +1,6 @@
+[settings]
+class     = CAbi
+fields    = address address|CFunctionArray interfaces
+includes  = function.h|parameter.h
+cIncs     = node.h
+serialize = true

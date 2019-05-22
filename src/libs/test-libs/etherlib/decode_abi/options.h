@@ -73,3 +73,4 @@ public:
 extern void padTest    (void);
 extern void hexUtilTest(void);
 extern void decodeTest (void);
+extern void speedTest  (void);

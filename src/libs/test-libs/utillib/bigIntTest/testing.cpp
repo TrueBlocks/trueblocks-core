@@ -55,6 +55,53 @@ int main(int argc, const char *argv[]) {
     options.minArgs = 0;
     options.prepareArguments(argc, argv);
 
+extern void contentTest(void);
+extern void performanceTest(void);
+    if (argc == 1)
+        contentTest();
+    else
+        performanceTest();
+
+    return 0;
+}
+
+void performanceTest(void) {
+#define XXXX 100000
+    cout << "\t\t" << TIC();
+    biguint_t bn;
+    for (size_t i = 0 ; i < XXXX ; i++) {
+        bn = str_2_BigUint("0x10000000000000000000000000000000000000000000000000000000000000001",256);
+        if (!(i%20)) { cerr << "\r" << i; cerr.flush(); }
+    }
+    cout << "\t\t\t\t" << TIC() << "\t\tstr_2_BigUint" << endl;
+
+    cout << "\t\t" << TIC();
+    for (size_t i = 0 ; i < XXXX ; i++) {
+        string_q unused = bnu_2_Str(bn);
+        if (!(i%20)) { cerr << "\r" << i << " " << (unused == "3"); cerr.flush(); }
+    }
+    cout << "\t\t\t\t" << TIC() << "\t\tbnu_2_Str" << endl;
+
+    cout << "\t\t" << TIC();
+    bigint_t bi;
+    for (size_t i = 0 ; i < XXXX ; i++) {
+        bi = str_2_BigInt("0x10000000000000000000000000000000000000000000000000000000000000001",256);
+        if (!(i%20)) { cerr << "\r" << i; cerr.flush(); }
+    }
+    cout << "\t\t\t\t" << TIC() << "\tstr_2_BigInt" << endl;
+
+    cout << "\t\t" << TIC();
+    for (size_t i = 0 ; i < XXXX ; i++) {
+        string_q unused = bni_2_Str(bi);
+        if (!(i%20)) { cerr << "\r" << i << " " << (unused == "3"); cerr.flush(); }
+    }
+    cout << "\t\t\t\t" << TIC() << "\t\tbni_2_Str" << endl;
+
+    //    cout << (str_2_BigInt ("0x10000000000000000000000000000000000000000000000000000000000000001",256)) << endl;
+//    bn = str_2_BigUint("0x12345678901234567890");
+}
+
+void contentTest(void) {
     try {
         short    pathologicalShort = (short)~((unsigned short)(~0) >> 1);  // NOLINT
         int      pathologicalInt   = (int)~((unsigned int)(~0) >> 1);  // NOLINT
@@ -289,7 +336,7 @@ int main(int argc, const char *argv[]) {
                      9,
                      uint64_t(10000000000)), "1000000000000000000");
 
-#if 0
+#if 1
         cout << "18446744073709551615" << ": ";
         cout << (str_2_Uint("0xffffffffffffffffffffffffffffffff")) << endl;
         cout << "1" << ": ";
@@ -297,7 +344,7 @@ int main(int argc, const char *argv[]) {
         cout << "115792089237316195423570985008687907853269984665640564039457584007913129639935" << ": ";
         cout << (str_2_BigUint("0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")) << endl;
         cout << "1" << ": ";
-        cout << (str_2_BigUint("0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")+2) << endl;
+        cout << (str_2_BigUint("0x10000000000000000000000000000000000000000000000000000000000000001",256)) << endl;
 
         cout << "-1" << ": ";
         cout << (str_2_Int ("0xffffffffffffffffffffffffffffffff")) << endl;
@@ -307,6 +354,7 @@ int main(int argc, const char *argv[]) {
         cout << (str_2_BigInt ("0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")) << endl;
         cout << "1" << ": ";
         cout << (str_2_BigInt ("0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")+2) << endl;
+        cout << (str_2_BigInt ("0x10000000000000000000000000000000000000000000000000000000000000001",256)) << endl;
 #endif
 
         cout << endl;
@@ -336,8 +384,6 @@ int main(int argc, const char *argv[]) {
     } catch (char const* err) {
         cout << "The library threw an exception: " << err << endl;
     }
-
-    return 0;
 }
 
 const biguint_t &check(const biguint_t &x) {
