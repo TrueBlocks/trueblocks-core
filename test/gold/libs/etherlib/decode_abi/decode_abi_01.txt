@@ -104,7 +104,7 @@ hexUtilTest:
 	expected: 115792089237316195423570985008687907853269984665640564039457584007913129639935
 	result:   115792089237316195423570985008687907853269984665640564039457584007913129639935
 
-decodeTest2:
+decodeTest:
   ✓	desc:     function baz(int8)
 	input:    0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
 	expected: -2

@@ -83,7 +83,7 @@ bool CLogEntry::setValueByName(const string_q& fieldNameIn, const string_q& fiel
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "address" ) { address = str_2_Addr(fieldValue); return true; }
-            if ( fieldName % "articulatedLog" ) { /* articulatedLog = fieldValue; */ return false; }
+            if ( fieldName % "articulatedLog" ) { return articulatedLog.parseJson3(fieldValue); }
             break;
         case 'd':
             if ( fieldName % "data" ) { data = fieldValue; return true; }

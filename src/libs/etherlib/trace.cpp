@@ -59,14 +59,6 @@ string_q nextTraceChunk(const string_q& fieldIn, const void *dataPtr) {
 //---------------------------------------------------------------------------------------------------
 bool CTrace::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
-    if (fieldName % "action") {
-        string_q str = fieldValue;
-        return action.parseJson3(str);
-
-    } else if (fieldName % "result") {
-        string_q str = fieldValue;
-        return result.parseJson3(str);
-    }
     if (pTrans)
         if (((CTransaction*)pTrans)->setValueByName(fieldName, fieldValue))  // NOLINT
             return true;
@@ -74,8 +66,8 @@ bool CTrace::setValueByName(const string_q& fieldName, const string_q& fieldValu
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "articulatedTrace" ) { /* articulatedTrace = fieldValue; */ return false; }
-            if ( fieldName % "action" ) { /* action = fieldValue; */ return false; }
+            if ( fieldName % "articulatedTrace" ) { string_q str = fieldValue ; return articulatedTrace.parseJson3(str); }
+            if ( fieldName % "action" ) { string_q str = fieldValue; return action.parseJson3(str); }
             break;
         case 'b':
             if ( fieldName % "blockHash" ) { blockHash = str_2_Hash(fieldValue); return true; }
@@ -85,7 +77,7 @@ bool CTrace::setValueByName(const string_q& fieldName, const string_q& fieldValu
             if ( fieldName % "error" ) { error = fieldValue; return true; }
             break;
         case 'r':
-            if ( fieldName % "result" ) { /* result = fieldValue; */ return false; }
+            if ( fieldName % "result" ) { string_q str = fieldValue; return result.parseJson3(str); }
             break;
         case 's':
             if ( fieldName % "subtraces" ) { subtraces = str_2_Uint(fieldValue); return true; }

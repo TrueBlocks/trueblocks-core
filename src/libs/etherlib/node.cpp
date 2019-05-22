@@ -34,6 +34,9 @@ namespace qblocks {
             }
         }
 
+extern void loadParseMap(void);
+        loadParseMap();
+
         getCurlContext()->provider = ((sourceIn == "local") ? "local" : "binary");
 
         // if curl has already been initialized, we want to clear it out

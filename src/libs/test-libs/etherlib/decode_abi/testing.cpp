@@ -13,22 +13,112 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    padTest();
-    hexUtilTest();
-    decodeTest();
+    if (!verbose && options.commandLines.size() && !options.commandLines[0].empty()) {
+        speedTest();
+    } else {
+        padTest();
+        hexUtilTest();
+        decodeTest();
+    }
 
     return 0;
 }
 
 //-----------------------------------------------------------------------------------------
+size_t extractParams(CParameterArray& paramArray, const string_q& paramStr) {
+
+    string_q str = substitute(substitute(paramStr, "(", "|"), ")", "|");
+
+    CStringArray parts;
+    explode(parts, str, '|');
+
+    CStringArray strArray;
+    explode(strArray, parts[1], ',');
+
+    for (auto p : strArray) {
+
+        // remove extraneous spaces or tabs
+        string type = trim(substitute(p, "\t", " "), ' ');
+        while (contains(type, " ["))
+            type = substitute(type, " [", "[");
+        while (contains(type, " ]"))
+            type = substitute(type, " ]", "]");
+
+        // strip field names
+        if (type.find(" ") != string::npos)
+            type = type.substr(0, type.find(" "));
+
+        // clean up syntactic sugar
+        if (type == "int") type = "int256";
+        if (type == "uint") type = "uint256";
+        if (type == "fixed") type = "fixed128x128";
+        if (type == "ufixed") type = "ufixed128x128";
+        if (startsWith(type, "int[")) type = substitute(type, "int[", "int256[");
+        if (startsWith(type, "uint[")) type = substitute(type, "uint[", "uint256[");
+        if (startsWith(type, "fixed[")) type = substitute(type, "fixed[", "fixed128x128[");
+        if (startsWith(type, "ufixed[")) type = substitute(type, "ufixed[", "ufixed128x128[");
+
+        CParameter pp;
+        pp.type = type;
+        paramArray.push_back(pp);
+    }
+    return paramArray.size();
+}
+
+//-----------------------------------------------------------------------------------------
 namespace qblocks {
-    extern size_t extractParams(CParameterArray& paramArray, const string_q& paramStr);
     extern string_q params_2_Str(CParameterArray& interfaces);
+    extern size_t decodeTheData(CParameterArray& interfaces, const CStringArray& dataArray, size_t& readIndex);
+}
+
+//-----------------------------------------------------------------------------------------
+string_q cleanIt(const string_q& in) {
+    string_q out = in;
+    nextTokenClear(out, '(');
+    out = nextTokenClear(out, ')');
+    replaceAll(out, " bVal", "");
+    replaceAll(out, " iVal", "");
+    replaceAll(out, " addr1", "");
+    replaceAll(out, " addr2", "");
+    replaceAll(out, " addr3", "");
+    replaceAll(out, " ", "");
+    return out;
+}
+
+#define N_SPEED_TESTS 5000
+//-----------------------------------------------------------------------------------------
+void speedTest(void) {
+    timepoint_t start = qbNow2();
+
+    TIC();
+    CStringArray testcases;
+    asciiFileToLines("./speed_test.txt", testcases);
+    for (auto testcase : testcases) {
+        if (!startsWith(testcase, '#') && !startsWith(testcase, ';')) {
+            CStringArray parts;
+            explode(parts, testcase, '|');
+            T test;
+            test.desc = parts[2];
+            test.input = parts[3];
+            test.expected = (parts.size() > 4 ? parts[4] : "");
+            CParameterArray interfaces;
+            extractParams(interfaces, test.desc);
+            string_q cleaned = cleanIt(test.desc);
+            for (size_t t = 1 ; t <= N_SPEED_TESTS ; t++) {
+                decodeRLP(interfaces, cleaned, test.input);
+                cerr << t << "\t\r";
+                cerr.flush();
+            }
+            cout << "\t" << TIC() << "\t" << test.desc << endl;
+        }
+    }
+    timepoint_t stop = qbNow2();
+    cout << double_2_Str(std::chrono::duration_cast<duration_t>(stop - start).count(), 5);
 }
 
 //-----------------------------------------------------------------------------------------
 void decodeTest(void) {
-    cout << cTeal << "decodeTest2:" << cOff << endl;
+    cout << cTeal << "decodeTest:" << cOff << endl;
     string_q contents;
     asciiFileToString("./decode.txt", contents);
     contents = substitute(contents, "\\\n", "");
@@ -47,7 +137,8 @@ void decodeTest(void) {
             test.expected = parts[4];
             CParameterArray interfaces;
             extractParams(interfaces, test.desc);
-            decodeRLP(interfaces, test.input);
+            string_q cleaned = cleanIt(test.desc);
+            decodeRLP(interfaces, cleaned, test.input);
             cout << test.check(params_2_Str(interfaces));
         } else if (startsWith(testcase, "#end"))
             return;
