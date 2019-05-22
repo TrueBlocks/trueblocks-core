@@ -59,102 +59,104 @@ bool exportData(COptions& options) {
     for (size_t i = 0 ; i < options.items.size() && !shouldQuit() && i < MAX_TXS ; i++) {
         const CAppearance_base *item = &options.items[i];
 
-        CBlock block; // do not move this from this scope
-        CTransaction trans;
-        string_q txFilename = getBinaryCacheFilename(CT_TXS, item->blk, item->txid);
+        if (item->blk >= options.start) {
+            CBlock block; // do not move this from this scope
+            CTransaction trans;
+            string_q txFilename = getBinaryCacheFilename(CT_TXS, item->blk, item->txid);
 
-        if (fileExists(txFilename)) {
-            readTransFromBinary(trans, txFilename);
-            trans.finishParse();
+            if (fileExists(txFilename)) {
+                readTransFromBinary(trans, txFilename);
+                trans.finishParse();
 
-        } else {
-            getBlock(block, item->blk);
-            if (item->txid < block.transactions.size()) {
-                CTransaction *tx = &block.transactions[item->txid];
-                tx->timestamp = block.timestamp;
-                if (options.writeTrxs && !fileExists(txFilename))
-                    writeTransToBinary(*tx, txFilename);
-                trans = *tx;
-                tx->pBlock = &block;
             } else {
-                // silently skip over this
-            }
-        }
-
-        if (true) { //}!(i%1)) {
-            cerr << "   " << i << " of " << options.items.size() << ": " << trans.hash << "\r";
-            cerr.flush();
-        }
-
-        bool needsTrace = !IS_HIDDEN(CTransaction, "traces") &&
-                            (getTraceCount(trans.hash) > 1) &&
-                            !excludeTrace(&trans, options.maxTraces);
-
-        if (needsTrace) {  // (THIS IS A BUG!  LOOK AT THE NEXT else if BELOW!)
-                           // Even if we don't need traces, if we can read it quickly, we might as well use them (as we don't need dDos)...
-            string_q markerFile = getBinaryCacheFilename(CT_TRACES, item->blk, item->txid, 1);
-            if (options.skipDdos && fileExists(markerFile)) {
-                // If the first trace for a transaction exists, the rest of them do too as well. We use whatever
-                // traces we find in this folder
-                size_t count = getTraceCount(trans.hash);
-                for (txnum_t tc = 1 ; tc < count ; tc++) { // start at trace one since trace zero is same as transaction
-                    string_q path = getBinaryCacheFilename(CT_TRACES, item->blk, item->txid, tc);
-                    if (fileExists(path)) {
-                        cout << path << endl;
-                        CTrace trace;
-                        readNodeFromBinary(trace, path);
-                        trace.pTrans = &trans;
-                        trans.traces.push_back(trace);
-                    }
+                getBlock(block, item->blk);
+                if (item->txid < block.transactions.size()) {
+                    CTransaction *tx = &block.transactions[item->txid];
+                    tx->timestamp = block.timestamp;
+                    if (options.writeTrxs && !fileExists(txFilename))
+                        writeTransToBinary(*tx, txFilename);
+                    trans = *tx;
+                    tx->pBlock = &block;
+                } else {
+                    // silently skip over this
                 }
+            }
 
-            } else if (needsTrace) {  // else, only if we need the traces do we read them (avoid traces if we can)
+            if (true) { //}!(i%1)) {
+                cerr << "   " << i << " of " << options.items.size() << ": " << trans.hash << "\r";
+                cerr.flush();
+            }
 
-                if (!options.skipDdos || !excludeTrace(&trans, options.maxTraces)) {
+            bool needsTrace = !IS_HIDDEN(CTransaction, "traces") &&
+            (getTraceCount(trans.hash) > 1) &&
+            !excludeTrace(&trans, options.maxTraces);
 
-                    // Only get traces if the user has told us to
-                    getTraces(trans.traces, trans.hash);
-                    for (size_t tc = 1 ; tc < trans.traces.size() ; tc++) { // start at trace one since trace zero is same as transaction
-                        trans.traces[tc].pTrans = &trans; // we need this so we don't dump
-                        if (options.writeTraces) {
-                            string_q traceFilename = getBinaryCacheFilename(CT_TRACES, item->blk, item->txid, tc);
-                            writeNodeToBinary(trans.traces[tc], traceFilename);
+            if (needsTrace) {  // (THIS IS A BUG!  LOOK AT THE NEXT else if BELOW!)
+                // Even if we don't need traces, if we can read it quickly, we might as well use them (as we don't need dDos)...
+                string_q markerFile = getBinaryCacheFilename(CT_TRACES, item->blk, item->txid, 1);
+                if (options.skipDdos && fileExists(markerFile)) {
+                    // If the first trace for a transaction exists, the rest of them do too as well. We use whatever
+                    // traces we find in this folder
+                    size_t count = getTraceCount(trans.hash);
+                    for (txnum_t tc = 1 ; tc < count ; tc++) { // start at trace one since trace zero is same as transaction
+                        string_q path = getBinaryCacheFilename(CT_TRACES, item->blk, item->txid, tc);
+                        if (fileExists(path)) {
+                            cout << path << endl;
+                            CTrace trace;
+                            readNodeFromBinary(trace, path);
+                            trace.pTrans = &trans;
+                            trans.traces.push_back(trace);
+                        }
+                    }
+
+                } else if (needsTrace) {  // else, only if we need the traces do we read them (avoid traces if we can)
+
+                    if (!options.skipDdos || !excludeTrace(&trans, options.maxTraces)) {
+
+                        // Only get traces if the user has told us to
+                        getTraces(trans.traces, trans.hash);
+                        for (size_t tc = 1 ; tc < trans.traces.size() ; tc++) { // start at trace one since trace zero is same as transaction
+                            trans.traces[tc].pTrans = &trans; // we need this so we don't dump
+                            if (options.writeTraces) {
+                                string_q traceFilename = getBinaryCacheFilename(CT_TRACES, item->blk, item->txid, tc);
+                                writeNodeToBinary(trans.traces[tc], traceFilename);
+                            }
                         }
                     }
                 }
             }
-        }
 
-        // TODO(tjayrush): We turned this off by default because of performance reasons
-        if (options.articulate) {
-            for (size_t w = 0 ; w < options.monitors.size() ; w++) {
-                options.monitors[w].abi_spec.articulateTransaction(&trans);
-                HIDE_FIELD(CFunction, "message");
-                if (!trans.articulatedTx.message.empty())
-                    SHOW_FIELD(CFunction, "message");
+            // TODO(tjayrush): We turned this off by default because of performance reasons
+            if (options.articulate) {
+                for (size_t w = 0 ; w < options.monitors.size() ; w++) {
+                    options.monitors[w].abi_spec.articulateTransaction(&trans);
+                    HIDE_FIELD(CFunction, "message");
+                    if (!trans.articulatedTx.message.empty())
+                        SHOW_FIELD(CFunction, "message");
+                }
             }
-        }
 
-        if (options.exportFmt == JSON1 && !first)
-            cout << ", ";
-        ostringstream os;
-        os << trans.Format() << endl;
-        string_q str = os.str();
-        for (size_t w = 0 ; w < options.monitors.size() ; w++)
-            replaceAll(str, options.monitors[w].address, options.monitors[w].color + options.monitors[w].address + cOff);
-        for (size_t w = 0 ; w < options.named.size() ; w++) {
-            CAccountWatch name = options.named[w];
-            string_q newName = name.name.substr(0,10);
-            if (!newName.empty()) {
-                newName = name.color + newName + cOff + "-" + name.address.substr(0,name.address.length()-newName.length()-1);
-            } else {
-                newName = name.address;
+            if (options.exportFmt == JSON1 && !first)
+                cout << ", ";
+            ostringstream os;
+            os << trans.Format() << endl;
+            string_q str = os.str();
+            for (size_t w = 0 ; w < options.monitors.size() ; w++)
+                replaceAll(str, options.monitors[w].address, options.monitors[w].color + options.monitors[w].address + cOff);
+            for (size_t w = 0 ; w < options.named.size() ; w++) {
+                CAccountWatch name = options.named[w];
+                string_q newName = name.name.substr(0,10);
+                if (!newName.empty()) {
+                    newName = name.color + newName + cOff + "-" + name.address.substr(0,name.address.length()-newName.length()-1);
+                } else {
+                    newName = name.address;
+                }
+                replaceAll(str, options.named[w].address, newName);
             }
-            replaceAll(str, options.named[w].address, newName);
+            cout << str;
+            first = false;
+            HIDE_FIELD(CFunction, "message");
         }
-        cout << str;
-        first = false;
-        HIDE_FIELD(CFunction, "message");
     }
 
     cerr << "Exported " << min((size_t)MAX_TXS , options.items.size()) << " of " << options.items.size() << " records.                                           \n";
