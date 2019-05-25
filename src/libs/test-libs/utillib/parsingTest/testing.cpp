@@ -17,6 +17,9 @@
 //--------------------------------------------------------------
 extern void testNative(void);
 extern void testNextToken(void);
+extern void testParseJson(void);
+extern void testParseText(void);
+extern void testParseCsv(void);
 static const string_q sep(120, '-');
 
 //--------------------------------------------------------------
@@ -35,6 +38,9 @@ int main(int argc, const char *argv[]) {
         cout << sep << "\n";
         switch (options.testNum) {
             case 1: testNextToken(); break;
+            case 2: testParseJson(); break;
+            case 3: testParseText(); break;
+            case 4: testParseCsv(); break;
             default: testNative(); break;
         }
     }
@@ -66,6 +72,51 @@ void testNextToken(void) {
         cout << "\t" << nextTokenClear(sentence, ' ') << "\n";
 
     cout << sentence << "\n";
+}
+
+#include "newblock.h"
+//--------------------------------------------------------------
+void testParseJson(void) {
+    CNewBlock::registerClass();
+    string_q values =
+        "{\n\"gasLimit\": 5000,\n\"gasUsed\": 0,\n"
+        "\"hash\":\"0xc63f666315fa1eae17e354fab532aeeecf549be93e358737d0648f50d57083a0\",\n"
+        "\"blockNumber\": 12,\n\"parentHash\": \"0x3f5e756c3efcb93099361b7ddd0dabfeaa592439437c1c836e443ccb81e93242\",\n"
+        "\"miner\": \"0x0193d941b50d91be6567c7ee1c0fe7af498b4137\",\n\"difficulty\": 17179844608,\n"
+        "\"price\": 0,\n\"finalized\": 1,\n\"timestamp\": 1438270144,\n\"transactions\": []\n}";
+    CNewBlock block;
+    block.parseJson3(values);
+    cout << block << endl;
+}
+
+//--------------------------------------------------------------
+void testParseText(void) {
+    CNewBlock::registerClass();
+    string_q fieldStr = "gasLimit:gasUsed:hash:blockNumber:parentHash:miner:difficulty:price:finalized:timestamp:transactions";
+    string_q values   =
+        "5000\t0\t0xc63f666315fa1eae17e354fab532aeeecf549be93e358737d0648f50d57083a0\t12\t"
+        "0x3f5e756c3efcb93099361b7ddd0dabfeaa592439437c1c836e443ccb81e93242\t"
+        "0x0193d941b50d91be6567c7ee1c0fe7af498b4137\t17179844608\t0\t1\t1438270144\t[]";
+    CStringArray fields;
+    explode(fields, fieldStr, ':');
+    CNewBlock block;
+    block.parseText(fields, values);
+    cout << block << endl;
+}
+
+//--------------------------------------------------------------
+void testParseCsv(void) {
+    CNewBlock::registerClass();
+    string_q fieldStr = "gasLimit:gasUsed:hash:blockNumber:parentHash:miner:difficulty:price:finalized:timestamp:transactions";
+    string_q values   =
+        "\"5000\",\"0\",\"0xc63f666315fa1eae17e354fab532aeeecf549be93e358737d0648f50d57083a0\",\"12\",\""
+        "0x3f5e756c3efcb93099361b7ddd0dabfeaa592439437c1c836e443ccb81e93242\",\""
+        "0x0193d941b50d91be6567c7ee1c0fe7af498b4137\",\"17179844608\",\"0\",\"1\",\"1438270144\",\"[]\"";
+    CStringArray fields;
+    explode(fields, fieldStr, ':');
+    CNewBlock block;
+    block.parseCSV(fields, values);
+    cout << block << endl;
 }
 
 const char* STR_WHATEVER =
