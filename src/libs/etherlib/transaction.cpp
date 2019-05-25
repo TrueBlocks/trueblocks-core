@@ -89,7 +89,11 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
     }
 
     if (pBlock) {
+        if (fieldName == "hash")
+            fieldName = "tx_hash";  // otherwise, the block uses it and returns empty
         bool ret = ((CBlock*)pBlock)->setValueByName(fieldName, fieldValue);  // NOLINT
+        if (fieldName == "tx_hash")
+            fieldName = "hash";  // otherwise, the block uses it and returns empty
         if (ret) {
             bool done = (fieldName != "blockHash" && fieldName != "blockNumber" && fieldName != "gasUsed");
             //LOG4(fieldName, done);
@@ -306,6 +310,7 @@ void CTransaction::registerClass(void) {
 
     // Add custom fields
     ADD_FIELD(CTransaction, "gasCost", T_WEI, ++fieldNum);
+    ADD_FIELD(CTransaction, "gasCostEther", T_WEI, ++fieldNum);
     ADD_FIELD(CTransaction, "function", T_TEXT, ++fieldNum);
     ADD_FIELD(CTransaction, "events", T_TEXT, ++fieldNum);
     ADD_FIELD(CTransaction, "price", T_TEXT, ++fieldNum);
@@ -323,6 +328,7 @@ void CTransaction::registerClass(void) {
     HIDE_FIELD(CTransaction, "price");
     HIDE_FIELD(CTransaction, "encoding");
     HIDE_FIELD(CTransaction, "gasCost");
+    HIDE_FIELD(CTransaction, "gasCostEther");
     HIDE_FIELD(CTransaction, "isError");
     HIDE_FIELD(CTransaction, "isInternal");
     HIDE_FIELD(CTransaction, "date");
@@ -428,6 +434,11 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
                     biguint_t price = tra->gasPrice;
                     return bnu_2_Str(used * price);
                 }
+                if ( fieldIn % "gasCostEther" ) {
+                    biguint_t used = tra->receipt.gasUsed;
+                    biguint_t price = tra->gasPrice;
+                    return wei_2_Ether(bnu_2_Str(used * price));
+                }
                 break;
             case 't':
                 if ( fieldIn % "timestamp" && tra->pBlock) return int_2_Str(tra->pBlock->timestamp);
@@ -512,7 +523,12 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "articulatedTx" ) { expContext().noFrst=true; return articulatedTx.Format(); }
+            if ( fieldName % "articulatedTx" ) {
+                if (articulatedTx == CFunction())
+                    return "";
+                expContext().noFrst=true;
+                return articulatedTx.Format();
+            }
             break;
         case 'b':
             if ( fieldName % "blockHash" ) return hash_2_Str(blockHash);

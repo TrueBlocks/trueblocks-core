@@ -190,11 +190,12 @@ extern void loadParseMap(void);
         if (fileExists(getBinaryCacheFilename(CT_TXS, blockNum, txid))) {
             readTransFromBinary(trans, getBinaryCacheFilename(CT_TXS, blockNum, txid));
             trans.pBlock = NULL;  // otherwise, it's pointing to an unintialized item
+            trans.finishParse();  // set the pointer for the receipt
             return true;
         }
 
         getObjectViaRPC(trans, "eth_getTransactionByBlockNumberAndIndex", "[\"" + uint_2_Hex(blockNum) +"\",\"" + uint_2_Hex(txid) + "\"]");
-        trans.finishParse();
+        trans.finishParse();  // set the pointer for the receipt
         return true;
     }
 
@@ -231,19 +232,16 @@ extern void loadParseMap(void);
             return queryBlock(block, uint_2_Str(getLastBlock_client()), needTrace);
 
         if (isHash(datIn)) {
-            HIDE_FIELD(CTransaction, "receipt");
             getObjectViaRPC(block, "eth_getBlockByHash", "["+quote(datIn)+",true]");
 
         } else {
             uint64_t num = str_2_Uint(datIn);
             if (getCurlContext()->provider == "binary" && fileSize(getBinaryCacheFilename(CT_BLOCKS, num)) > 0) {
-                UNHIDE_FIELD(CTransaction, "receipt");
                 block = CBlock();
                 return readBlockFromBinary(block, getBinaryCacheFilename(CT_BLOCKS, num));
 
             }
 
-            HIDE_FIELD(CTransaction, "receipt");
             getObjectViaRPC(block, "eth_getBlockByNumber", "["+quote(uint_2_Hex(num))+",true]");
         }
 
@@ -256,21 +254,18 @@ extern void loadParseMap(void);
             CTransaction *trans = &block.transactions.at(i);  // taking a non-const reference
             trans->pBlock = &block;
 
-            UNHIDE_FIELD(CTransaction, "receipt");
-            CReceipt receipt;
-            getReceipt(receipt, trans->hash);
-            trans->receipt = receipt;  // deep copy
+            getReceipt(trans->receipt, trans->hash);
             if (block.blockNumber >= byzantiumBlock) {
-                trans->isError = (receipt.status == 0);
+                trans->isError = (trans->receipt.status == 0);
 
-            } else if (needTrace && trans->gas == receipt.gasUsed) {
-
-                string_q unused;
+            } else if (needTrace && trans->gas == trans->receipt.gasUsed) {
                 CURLCALLBACKFUNC prev = getCurlContext()->setCurlCallback(errorCallback);
                 getCurlContext()->is_error = false;
+                string_q unused;
                 queryRawTrace(unused, trans->hash);
                 trans->isError = getCurlContext()->is_error;
                 getCurlContext()->setCurlCallback(prev);
+
             }
         }
 
