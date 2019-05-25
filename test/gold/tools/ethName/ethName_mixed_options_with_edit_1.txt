@@ -578,7 +578,7 @@ addr	symbol	source	name	logo	description	visible
 0xb97048628db6b661d4c2aa833e95dbe1a905b280	PAY	Etherscan.io	TenXPay	tenx_28.png	TenX connects your blockchain assets for everyday use. TenX’s debit card and banking licence will allow us to be a hub for the blockchain ecosystem to connect for real-world use cases.	true
 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607	SWT	Etherscan.io	SwarmCity	SwarmCity.png	Swarm City is a decentralized peer to peer sharing economy	true
 0xBEB9eF514a379B997e0798FDcC901Ee474B6D9A1	MLN	Etherscan.io	Melon Token		The Melon protocol is a blockchain protocol for digital asset management built on the Ethereum platform	true
-0xC66eA802717bFb9833400264Dd12c2bCeAa34a6d	MKR	Etherscan.io	Maker		Maker is a Decentralized Autonomous Organization that creates and insures the dai stablecoin on the Ethereum blockchain	true
+0xC66eA802717bFb9833400264Dd12c2bCeAa34a6d	MKR	Etherscan.io	Maker-Old		Maker-Old is a Decentralized Autonomous Organization that creates and insures the dai stablecoin on the Ethereum blockchain	true
 0xcb94be6f13a1182e4a4b6140cb7bf2025d28e41b	TRST	Etherscan.io	Trustcoin	wetrust.png	A platform for Trusted Lending Circles, powered by people and blockchain	true
 0xd0d6d6c5fe4a677d343cc433536bb717bae167dd	ADT	Etherscan.io	AdToken	adtoken.png	adChain is a browser agnostic Ethereum based solution for digital advertising that seamlessly integrates with pre-existing RTB and programmatic industry standards.	true
 0xd8912c10681d8b21fd3742244f44658dba12264e	PLU	Etherscan.io	Pluton	pluton.png	With Plutus Tap & Pay, you can pay at any NFC-enabled merchant	true
