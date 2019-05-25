@@ -32,15 +32,13 @@ int main(int argc, const char *argv[]) {
         CPriceQuoteArray quotes;
         if (loadPriceData(options.source, quotes, options.freshen, message) && quotes.size()) {
 
-            string_q def = (verbose ? "" : "{ \"date\": \"[{DATE}]\", \"price\": \"[{CLOSE}]\" }");
+            string_q def = (verbose ? "" : "[{TIMESTAMP}]\t[{DATE}]\t[{CLOSE}]\n");
             string_q fmtStr = getGlobalConfig("ethQuote")->getDisplayStr(!verbose, def, "");
             bool isJson = ((startsWith(fmtStr, "{") && endsWith(fmtStr, "}")) || fmtStr.empty());
             if (options.at) {
                 cout << quotes[indexFromTimeStamp(quotes, options.at)].Format(fmtStr);
 
             } else {
-//                if (verbose > 1)
-//                    UNHIDE_FIELD(CPriceQuote, "schema");
                 if (isJson)
                     cout << "[\n";
                 size_t step = (options.freq / 5);
@@ -52,12 +50,6 @@ int main(int argc, const char *argv[]) {
                             cout << ",";
                         cout << "\n";
                     }
-//                    if (i != indexFromTimeStamp(quotes, ts)) {
-//                        cerr << cRed << "mismatch between 'i' ("
-//                        << i << ") and 'index' ("
-//                        << indexFromTimeStamp(quotes, ts) << "). Quitting.\n" << cOff;
-//                        return 0;
-//                    }
                     cout << quotes[i].Format(fmtStr);
                     if (isTestMode() && ts_2_Date(ts) >= time_q(2017, 8, 15, 0, 0, 0))
                         done = true;
