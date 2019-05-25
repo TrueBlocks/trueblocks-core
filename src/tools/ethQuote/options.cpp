@@ -10,7 +10,6 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "etherlib.h"
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
@@ -25,18 +24,21 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
+extern const char* STR_DISPLAY;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
 
+    bool noHeader = false;
+    string_q format;
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        // do not collapse
         if (arg == "-c" || arg == "--current")
             arg = "-a:now";
+
         string_q orig = arg;
 
         if (arg == "-f" || arg == "--freshen") {
@@ -73,6 +75,20 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    switch (exportFmt) {
+        case NONE1: format = "[{ADDR}]\t[{NAME}]\t[{SYMBOL}]"; break;
+        case API1:
+        case JSON1: format = ""; break;
+        case TXT1:
+        case CSV1:
+            format = getGlobalConfig()->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
+            manageFields("CAccountName:" + cleanFmt(format, exportFmt));
+            break;
+    }
+    expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
+    if (noHeader)
+        expContext().fmtMap["header"] = "";
+
     string_q unused;
     if (!fileExists(source.getDatabasePath(unused))) {
         if (verbose)
@@ -99,14 +115,14 @@ COptions::COptions(void) {
 }
 
 //--------------------------------------------------------------------------------
-string_q COptions::postProcess(const string_q& which, const string_q& str) const {
+COptions::~COptions(void) {
+}
 
+//--------------------------------------------------------------------------------
+string_q COptions::postProcess(const string_q& which, const string_q& str) const {
     if (which == "options") {
-        // return substitute(
-        //       substitute(str, "address_list block_list", "<address> [address...] [block...]"), "-l|", "-l fn|");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
-
         string_q ret;
         ret += "Valid pairs include any pair from the public Poloniex's API here:|"
                 "https://poloniex.com/public?command=returnCurrencies.\n";
@@ -116,3 +132,6 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
     }
     return str;
 }
+
+//-----------------------------------------------------------------------
+const char *STR_DISPLAY = "[{BLOCKNUMBER}]\t[{TIMESTAMP}]\t[{PRICE}]";
