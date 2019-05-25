@@ -259,7 +259,6 @@ void COptions::Init(void) {
     traces        = false;
     force         = false;
     normalize     = false;
-    silent        = false;
     quiet         = 0;  // quiet has levels
     format        = "";
     priceBlocks   = false;
