@@ -39,8 +39,8 @@ namespace qblocks {
         virtual bool isKindOf(const CRuntimeClass* pClass) const;
         virtual bool  parseJson3(string_q& str);
         virtual bool  parseJson4(string_q& str);
-        virtual char *parseCSV(char *s, size_t& nFields, const string_q *fields);
-        virtual char *parseText(char *s, size_t& nFields, const string_q *fields);
+        virtual bool  parseCSV(const CStringArray& fields, string_q& str);
+        virtual bool  parseText(const CStringArray& fields, string_q& str);
         virtual string_q toJson1(void) const;
         virtual string_q toJson(void) const;
         virtual string_q toJson(const string_q& fields) const;
