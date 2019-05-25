@@ -6214,9 +6214,9 @@ ethName -s Ether --fmt json
   {
     "addr": "0xc66ea802717bfb9833400264dd12c2bceaa34a6d",
     "symbol": "MKR",
-    "name": "Maker",
+    "name": "Maker-Old",
     "source": "Etherscan.io",
-    "description": "Maker is a Decentralized Autonomous Organization that creates and insures the dai stablecoin on the Ethereum blockchain",
+    "description": "Maker-Old is a Decentralized Autonomous Organization that creates and insures the dai stablecoin on the Ethereum blockchain",
     "logo": "",
     "visible": true
   },
