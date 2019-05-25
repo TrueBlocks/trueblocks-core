@@ -125,25 +125,16 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
         } else {
             queryBlock(gold, numStr, (opt.api_mode ? false : true));
         }
+        if (gold.blockNumber == 0 && gold.timestamp == 0)
+            gold.timestamp = 1438269960;
+        gold.finalized = isBlockFinal(gold.timestamp, opt.latest.timestamp);
 
         if (opt.force) {  // turn this on to force a write of the block to the disc
-            gold.finalized = isBlockFinal(gold.timestamp, opt.latest.timestamp);
             writeBlockToBinary(gold, fileName);
             LOG2("writeBlockToBinary(" + uint_2_Str(gold.blockNumber) + ", " + fileName + ": " + bool_2_Str(fileExists(fileName)));
         }
 
-        if (!opt.silent) {
-            string_q format = opt.format;
-            if (gold.blockNumber == 0 && gold.timestamp == 0)
-                gold.timestamp = 1438269960;
-            result = gold.Format(format);
-            if (opt.hashes) {
-                result = substitute(result, "        {\n            \"hash\":", "       ");
-                result = substitute(result, "\n            \"receipt\": {\n            }\n        }", "");
-                result = substitute(result, ",,", ",");
-                result = substitute(result, ",\n    ]", "\n    ]");
-            }
-        }
+        result = gold.Format(opt.format);
     }
 
 #ifndef PROVING
