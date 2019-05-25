@@ -14,7 +14,7 @@
 #include "etherlib.h"
 
 //-----------------------------------------------------------------------------
-enum account_t { OWNED = (1<<1), CUSTOM = (1<<2), NAMED = (1<<3), PREFUND = (1<<4) };
+enum account_t { OWNED = (1<<1), CUSTOM = (1<<2), NAMED = (1<<3), PREFUND = (1<<4), OTHER = (1<<5) };
 
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {

@@ -20,6 +20,7 @@ static const COption params[] = {
     COption("-named",     "Show named addresses (see ethName)"),
     COption("-addr_only", "export only addresses, no names"),
     COption("@fmt:<fmt>", "export format (one of [none|json|txt|csv|api])"),
+    COption("@o(t)her",   "export other addresses if found"),
     COption("",           "List known accounts ('owned' are shown by default)."),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -52,6 +53,10 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-o" || arg == "--owned") {
             if (deflt) { types = 0; deflt = false; }
             types |= OWNED;
+
+        } else if (arg == "-t" || arg == "--other") {
+            if (deflt) { types = 0; deflt = false; }
+            types |= OTHER;
 
         } else if (arg == "-a" || arg == "--addr_only") {
             noHeader = true;
@@ -193,6 +198,23 @@ void COptions::applyFilter() {
             string_q addr = nextTokenClear(prefund,'\t');
             CAccountName item(addr);
             addIfUnique(item);
+        }
+    }
+
+    //------------------------
+    if (types & OTHER) {
+        cout << getCWD() << endl;
+        string_q contents = asciiFileToString("../src/tools/ethName/tests/other_names.txt");
+        if (!contents.empty()) {
+            CStringArray fields;
+            fields.push_back("addr");
+            fields.push_back("name");
+            fields.push_back("source");
+            CAccountName item;
+            while (item.parseText(fields, contents)) {
+                addIfUnique(item);
+                item = CAccountName();
+            }
         }
     }
 }
