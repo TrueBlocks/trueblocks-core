@@ -11,19 +11,20 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+#include "acctlib.h"
 
-//--------------------------------------------------------------
+//-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    bool        freshen;
-    uint64_t    freq;
-    timestamp_t at;
     CPriceSource source;
+    bool         freshen;
+    uint64_t     freq;
+    timestamp_t  at;
 
     COptions(void);
-    ~COptions(void) { }
+    ~COptions(void);
 
+    string_q postProcess(const string_q& which, const string_q& str) const override;
     bool parseArguments(string_q& command) override;
     void Init(void) override;
-    string_q postProcess(const string_q& which, const string_q& str) const override;
 };
