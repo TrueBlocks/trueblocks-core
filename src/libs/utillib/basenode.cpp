@@ -94,72 +94,29 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    char *CBaseNode::parseCSV(char *s, size_t& nFields, const string_q *fields) {
-        nFields = 0;
-
-        typedef enum { OUTSIDE = 0, INSIDE } parseState;
-        parseState state = OUTSIDE;
-
-        char *fieldVal = NULL;
-        while (*s) {
-            switch (state) {
-                case OUTSIDE:
-                    if (*s == '\"') {
-                        state = INSIDE;
-                        fieldVal = s+1;
-
-                    } else if (*s == '\n') {
-                        finishParse();
-                        return (s+1);
-                    }
-                    s++;
-                    break;
-
-                case INSIDE:
-                    if (*s == '\"') {
-                        *s = '\0';
-                        if (!this->setValueByName(fields[nFields++], fieldVal)) {
-//                          fprintf(stderr, "Bad field name %s. Quitting...", fields[nFields-1].c_str());
-//                          return NULL;
-                        }
-                        fieldVal = NULL;
-                        state = OUTSIDE;
-
-                    }
-                    s++;
-                    break;
-            }
-        }
-        finishParse();
-        return NULL;
+    bool CBaseNode::parseCSV(const CStringArray& fields, string_q& str) {
+        // Assumes no internal quotes or commas
+        str = substitute(substitute(str, "\"", ""), ",", "\t");
+        return parseText(fields, str);
     }
 
     //--------------------------------------------------------------------------------
-    char *CBaseNode::parseText(char *s, size_t& nFields, const string_q *fields) {
-        size_t max = nFields;
-        nFields = 0;
-        char *fieldVal = s;
-        while (s && *s) {
-            switch (*s) {
-                case '\r':
-                    break;
-                case '\t':
-                    *s = '\0';
-                    this->setValueByName(fields[nFields++], fieldVal);
-                    fieldVal = s+1;
-                    break;
-                case '\n':
-                    *s = '\0';
-                    this->setValueByName(fields[nFields++], fieldVal);
-                    finishParse();
-                    return s+1;
+    bool CBaseNode::parseText(const CStringArray& fields, string_q& str) {
+        str = substitute(str, "\r", "");
+        string_q line = nextTokenClear(str, '\n');
+        CStringArray values;
+        explode(values, line, '\t');
+        size_t cnt = 0;
+        for (auto value : values) {
+            if (cnt < fields.size()) {
+                this->setValueByName(fields[cnt++], value);
+            } else {
+                finishParse();
+                return false;
             }
-            s++;
         }
-        if (nFields < max)
-            this->setValueByName(fields[nFields++], fieldVal);
         finishParse();
-        return NULL;
+        return !str.empty();
     }
 
     //--------------------------------------------------------------------------------
