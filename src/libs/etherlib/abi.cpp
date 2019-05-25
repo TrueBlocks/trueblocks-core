@@ -499,7 +499,9 @@ size_t decodeTheData(CParameterArray& interfaces, const CStringArray& dataArray,
         return "0x" + right(input,40);
     }
     string_q parse_bool(const string_q& input, const void *data=NULL) {
-        if (input[input.length()-1] == '1') return "true"; return "false";
+        if (input[input.length()-1] == '1')
+            return "true";
+        return "false";
     }
     string_q parse_i8__(const string_q& input, const void *data=NULL) {
         ostringstream os;
