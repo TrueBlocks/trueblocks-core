@@ -31,5 +31,5 @@ ethName -th
 - The `--list` option predominates otherwise. If present, the tool displays a list of stored names and addresses and then quits.
 - The `--count` option works with any other option and will simply display the number of matches.
 - The `--matchCase` option requires case sensitive matching. It works with all other options.
-- Name file: `~/.quickBlocks/names/names.txt` (168132)
+- Name file: `~/.quickBlocks/names/names.txt` (168140)
 

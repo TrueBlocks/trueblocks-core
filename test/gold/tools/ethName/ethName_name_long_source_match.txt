@@ -691,7 +691,7 @@ addr	name	symbol	source
 0xc528c28fec0a90c083328bc45f587ee215760a0f	Endor Protocol Token	EDR	Etherscan.io
 0xc56b13ebbcffa67cfb7979b900b736b3fb480d78	Social Activity Token	SAT	Etherscan.io
 0xc5bbae50781be1669306b9e001eff57a2957b09d	Gifto	GTO	Etherscan.io
-0xc66ea802717bfb9833400264dd12c2bceaa34a6d	Maker	MKR	Etherscan.io
+0xc66ea802717bfb9833400264dd12c2bceaa34a6d	Maker-Old	MKR	Etherscan.io
 0xc6abf3c09341741ac6041b0b08195701bdfd460c	OSAToken	OSA	Etherscan.io
 0xc72ed4445b3fe9f0863106e344e241530d338906	Mallcoin Token	MLC	Etherscan.io
 0xc72fe8e3dd5bef0f9f31f259399f301272ef2a2d	Insights Network	INSTAR	Etherscan.io
