@@ -22,7 +22,6 @@ public:
     bool traces;
     bool force;
     bool normalize;
-    bool silent;
     int quiet;
     bool showZeroTrace;
     string_q format;
