@@ -22,6 +22,7 @@ static const COption params[] = {
     COption("-merge",            "merge two or more caches into a single cache"),
     COption("-fmt:<fmt>",         "export format (one of [json|txt|csv])"),
     COption("@s(k)ip",           "skip value for testing"),
+    COption("@start:<num>",      "un-used hidden value - do not remove"),
     COption("",                  "Show the contents of an account cache and/or fix it by removing duplicate records.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -59,6 +60,9 @@ bool COptions::parseArguments(string_q& command) {
             if (!contains(mode, "fix"))
                 mode += "fix|";
             replace(mode, "list|fix", "fix|list");  // do 'fixing' prior to 'listing'
+
+        } else if (startsWith(arg, "--start:")) {
+            // dummy value
 
         } else if (startsWith(arg, "-k:") || startsWith(arg, "--maxBlock:")) {
             arg = substitute(substitute(arg, "-k:", ""), "--maxBlock:", "");
@@ -179,6 +183,7 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
+    optionOn(OPT_PREFUND);
 
     monitors.clear();
     mode = "";
@@ -199,4 +204,29 @@ COptions::COptions(void) {
 COptions::~COptions(void) {
 }
 
-
+//-----------------------------------------------------------------------
+bool loadMonitorData(CAppearanceArray_base& items, const address_t& addr) {
+    ENTER("loadMonitorData");
+    string_q fn = getMonitorPath(addr);
+    size_t nRecords = (fileSize(fn) / sizeof(CAppearance_base));
+    ASSERT(nRecords);
+    CAppearance_base *buffer = new CAppearance_base[nRecords];
+    if (buffer) {
+        bzero(buffer, nRecords * sizeof(CAppearance_base));
+        CArchive txCache(READING_ARCHIVE);
+        if (txCache.Lock(fn, modeReadOnly, LOCK_NOWAIT)) {
+            txCache.Read(buffer, sizeof(CAppearance_base), nRecords);
+            txCache.Release();
+        } else {
+            EXIT_FAIL("Could not open cache file.");
+        }
+        // Add to the items which may be non-empty
+        items.reserve(items.size() + nRecords);
+        for (size_t i = 0 ; i < nRecords ; i++)
+            items.push_back(buffer[i]);
+        delete [] buffer;
+    } else {
+        EXIT_FAIL("Could not allocate memory for address " + addr);
+    }
+    EXIT_NOMSG(true);
+}

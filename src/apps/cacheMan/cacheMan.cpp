@@ -36,20 +36,18 @@ int main(int argc, const char *argv[]) {
                 CAppearanceArray_base fixed;
                 fixed.reserve(2000000); // just a guess, but makes adding new records very much faster
 
-                // Read from the current cache
-                CArchive txCache(READING_ARCHIVE);
-                if (txCache.Lock(watch->name, modeReadOnly, LOCK_NOWAIT)) {
+extern bool loadMonitorData(CAppearanceArray_base& items, const address_t& addr);
+                CAppearanceArray_base items;
+                if (loadMonitorData(items, watch->address)) {
 
                     if (!options.asData)
                         cerr << toProper(mode)+"ing cache: " << watch->name << "\n";
                     if (options.exportFmt == JSON1)
                         cout << "[";
 
-                    while (!txCache.Eof()) {
+                    for (auto item : items) {
 
-                        CAppearance_base item;
-                        txCache >> item.blk >> item.txid;
-                        if (item.blk > 0 && item.blk < options.maxBlock) {
+                        if (item.blk < options.maxBlock) {
                             options.stats.nRecords++;
                             bool isDup = (lastItem.blk == item.blk && lastItem.txid == item.txid);
                             if (mode == "check") {
@@ -135,8 +133,6 @@ int main(int argc, const char *argv[]) {
 
                     if (options.exportFmt == JSON1)
                         cout << "]";
-
-                    txCache.Release();
 
                 } else {
                     cout << "Could not open file: " << watch->name << "\n";
