@@ -735,7 +735,8 @@ namespace qblocks {
             string_q nibble = extract(in, 0, 2);
             in = extract(in, 2);
             char ch = (char)hex_2_Ascii(nibble[0], nibble[1]);  // NOLINT
-            ret += (char)ch;
+            if (ch != '\"')
+                ret += (char)ch;
         }
         return ret;
     }
