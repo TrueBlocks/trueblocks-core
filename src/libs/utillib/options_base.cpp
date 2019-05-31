@@ -48,7 +48,8 @@ namespace qblocks {
         string_q env = getEnvStr("NO_COLOR");
         if (string_q(env) == "true")
             colorsOff();
-        COptionsBase::g_progName = basename((char*)argv[0]);  // NOLINT
+        if (argc > 0)
+            COptionsBase::g_progName = basename((char*)argv[0]);  // NOLINT
         return true;
     }
 
@@ -316,7 +317,10 @@ namespace qblocks {
                     sorts[i]->sortFieldList();
         }
 
-        // A final set of checks
+        // A final set of options that do not have command line options
+        if (isEnabled(OPT_PREFUND))
+            asciiFileToLines(configPath("prefunds.txt"), prefunds);
+
         if (isEnabled(OPT_RUNONCE)) {
             if (commandLines.size() > 1)
                 return usage("You may not use the --file with this application. Quitting...");

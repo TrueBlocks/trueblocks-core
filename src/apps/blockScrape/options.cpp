@@ -114,19 +114,21 @@ bool COptions::parseArguments(string_q& command) {
 
     maxIndexRows = getGlobalConfig("blockScrape")->getConfigInt("settings", "maxIndexRows", maxIndexRows);
 
-//#error
-    string_q zeroIndex = indexFolder_sorted + padNum9(0) + "-" + padNum9(0) + ".txt";
-    if (!fileExists(zeroIndex)) {
-        CStringArray prefunds;
-        asciiFileToLines(configPath("prefunds.txt"), prefunds);
-        ostringstream os;
+    string_q zeroBin = indexFolder_finalized + padNum9(0) + "-" + padNum9(0) + ".bin";
+    if (!fileExists(zeroBin)) {
+        ASSERT(prefunds.size() == 8893);  // This is a known value
+        CStringArray appearances;
         for (auto prefund : prefunds) {
             CStringArray parts;
             explode(parts, prefund, '\t');
-            os << parts[0] << "\t" << padNum9(0) << "\t" << padNum5(0) << endl;
+            // The prefund transactions have a zero for thier block numbers and an index
+            // into thier location in the list of presale addresses. We need to do this so we
+            // can distringuish them when they are exported.
+            ostringstream os;
+            os << parts[0] << "\t" << padNum9(0) << "\t" << padNum5((uint32_t)appearances.size()) << endl;
+            appearances.push_back(os.str());
         }
-        // TODO(tjayrush): This does not make the file binary
-        stringToAsciiFile(zeroIndex, os.str());
+        writeIndexAsBinary(zeroBin, appearances); // also writes the bloom file
     }
 
     if (startBlock > client)
@@ -137,7 +139,7 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
-    optionOn(OPT_RUNONCE);
+    optionOn(OPT_RUNONCE | OPT_PREFUND);
 
     startBlock   = NOPOS;
     endBlock     = NOPOS;
