@@ -28,6 +28,8 @@ namespace qblocks {
     //----------------------------------------------------------------
     class log_policy_i {
     public:
+        char end_line;
+        log_policy_i(void) : end_line('\n') { }
         virtual void open_ostream(const string_q& name) = 0;
         virtual void close_ostream() = 0;
         virtual void write(const string_q& msg) = 0;
@@ -45,7 +47,7 @@ namespace qblocks {
                 throw(runtime_error("LOGGER: Unable to open an output stream"));
         }
         void close_ostream() { if (os) os->close(); }
-        void write(const string_q &msg) { if (os) (*os) << msg << endl; }
+        void write(const string_q &msg) { if (os) { (*os) << msg << end_line; os->flush(); } }
         ~file_log() { close_ostream(); }
     };
 
@@ -55,7 +57,7 @@ namespace qblocks {
         err_log() { }
         void open_ostream(const string_q& unused) { }
         void close_ostream() { }
-        void write(const string_q& msg) { cerr << msg << endl; }
+        void write(const string_q& msg) { cerr << msg << end_line; cerr.flush(); }
         ~err_log() { }
     };
 
@@ -113,8 +115,10 @@ namespace qblocks {
             print_impl(parm...);
         }
 
-
     public:
+        //----------------------------------------------------------------
+        void setEndline(char ch) { if (policy) policy->end_line = ch; }
+
         //----------------------------------------------------------------
         logger( const string_q& name ) {
             policy = new log_policy;
@@ -162,21 +166,21 @@ namespace qblocks {
 
 #define LOGGING_LEVEL
 #ifdef LOGGING_LEVEL
-#define LOG0      qblocks::dLogger->print<sev_debug0>
-#define LOG1      qblocks::dLogger->print<sev_debug1>
-#define LOG2      qblocks::dLogger->print<sev_debug2>
-#define LOG3      qblocks::dLogger->print<sev_debug3>
-#define LOG4      qblocks::dLogger->print<sev_debug4>
-#define LOG5      qblocks::dLogger->print<sev_debug5>
-#define LOG_INFO  qblocks::eLogger->print<sev_info>
-#define LOG_WARN  qblocks::eLogger->print<sev_warning>
-#define LOG_ERR   qblocks::eLogger->print<sev_error>
-#define LOG_FATAL qblocks::eLogger->print<sev_fatal>
-#define SEP1(a)   LOG1(cWrite + string_q(10,'-') + (a) + string_q(10,'-') + cOff)
-#define SEP2(a)   LOG2(cGreen + string_q(10,'-') + (a) + string_q(10,'-') + cOff)
-#define SEP3(a)   LOG3(cYellow + string_q(10,'-') + (a) + string_q(10,'-') + cOff)
-#define SEP4(a)   LOG4(cRed + string_q(10,'-') + (a) + string_q(10,'-') + cOff)
-#define SEP5(a)   LOG5(cTeal + string_q(10,'-') + (a) + string_q(10,'-') + cOff)
+#define LOG0       qblocks::dLogger->print<sev_debug0>
+#define LOG1       qblocks::dLogger->print<sev_debug1>
+#define LOG2       qblocks::dLogger->print<sev_debug2>
+#define LOG3       qblocks::dLogger->print<sev_debug3>
+#define LOG4       qblocks::dLogger->print<sev_debug4>
+#define LOG5       qblocks::dLogger->print<sev_debug5>
+#define LOG_INFO   qblocks::eLogger->print<sev_info>
+#define LOG_WARN   qblocks::eLogger->print<sev_warning>
+#define LOG_ERR    qblocks::eLogger->print<sev_error>
+#define LOG_FATAL  qblocks::eLogger->print<sev_fatal>
+#define SEP1(a)    LOG1(cWrite + string_q(10,'-') + (a) + string_q(10,'-') + cOff)
+#define SEP2(a)    LOG2(cGreen + string_q(10,'-') + (a) + string_q(10,'-') + cOff)
+#define SEP3(a)    LOG3(cYellow + string_q(10,'-') + (a) + string_q(10,'-') + cOff)
+#define SEP4(a)    LOG4(cRed + string_q(10,'-') + (a) + string_q(10,'-') + cOff)
+#define SEP5(a)    LOG5(cTeal + string_q(10,'-') + (a) + string_q(10,'-') + cOff)
 #else
 #define LOG0(...)
 #define LOG1(...)
