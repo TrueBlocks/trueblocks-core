@@ -35,6 +35,7 @@
 #endif
 #define OPT_RUNONCE (1<<9)
 #define OPT_RAW     (1<<10)
+#define OPT_PREFUND (1<<11)
 
 //-----------------------------------------------------------------------------
 enum format_t { NONE1 = 0, JSON1 = (1<<1), TXT1 = (1<<2), CSV1 = (1<<3), API1 = (1<<4) };
@@ -42,6 +43,7 @@ namespace qblocks {
     class COption;
     class COptionsBase {
     public:
+        CStringArray prefunds;
         CStringArray arguments;
         //TODO(tjayrush): global data
         uint32_t enableBits;
