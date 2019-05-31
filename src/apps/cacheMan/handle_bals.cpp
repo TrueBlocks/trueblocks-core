@@ -20,18 +20,16 @@ bool handleCacheBals(COptions& options) {
     CAppearanceArray_base dataArray;
 
     // Check to see if it's one of the pre-funded accounts
-    string_q contents;
-    asciiFileToString(configPath("prefunds.txt"), contents);
-    CStringArray prefunds;
-    explode(prefunds, contents, '\n');
+    ASSERT(prefunds.size() == 8893);  // This is a known value
     for (auto const& watch : options.monitors) {
-        for (auto prefund : prefunds) {
+        for (auto prefund : options.prefunds) {
             address_t account = nextTokenClear(prefund, '\t');
             if (account == watch.address) {
                 CAppearance_base item;
                 item.blk = 1;
                 item.txid = (uint32_t)-1;
                 dataArray.push_back(item);
+                // TODO(tjayrush): does this actually save the balance?
                 biguint_t bal = getBalanceAt(watch.address, item.blk);
                 continue;
             }
