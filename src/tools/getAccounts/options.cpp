@@ -94,6 +94,7 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
+    optionOn(OPT_PREFUND);
 
     items.clear();
     types = OWNED;
@@ -192,11 +193,12 @@ void COptions::applyFilter() {
 
     //------------------------
     if (types & PREFUND) {
-        CStringArray prefunds;
-        asciiFileToLines(configPath("prefunds.txt"), prefunds);
+        uint32_t cnt = 0;
+        ASSERT(prefunds.size() == 8893);  // This is a known value
         for (auto prefund : prefunds) {
             string_q addr = nextTokenClear(prefund,'\t');
             CAccountName item(addr);
+            item.name = "Prefund_" + padNum4(cnt++);
             addIfUnique(item);
         }
     }
