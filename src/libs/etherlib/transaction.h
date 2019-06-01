@@ -65,6 +65,7 @@ public:
     bool forEveryAddress(ADDRESSFUNC func, TRANSFUNC filt = NULL, void *data = NULL);
     bool forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC filt = NULL, void *data = NULL);
     bool forEveryUniqueAddressPerTx(ADDRESSFUNC func, TRANSFUNC filt = NULL, void *data = NULL);
+    bool loadAsPrefund(const CStringArray& prefunds, const address_t& addr);
     // EXISTING_CODE
     bool operator==(const CTransaction& item) const;
     bool operator!=(const CTransaction& item) const { return !operator==(item); }

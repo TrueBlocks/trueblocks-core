@@ -85,6 +85,9 @@ bool CLogEntry::setValueByName(const string_q& fieldNameIn, const string_q& fiel
             if ( fieldName % "address" ) { address = str_2_Addr(fieldValue); return true; }
             if ( fieldName % "articulatedLog" ) { return articulatedLog.parseJson3(fieldValue); }
             break;
+        case 'c':
+            if ( fieldName % "compressedLog" ) { compressedLog = fieldValue; return true; }
+            break;
         case 'd':
             if ( fieldName % "data" ) { data = fieldValue; return true; }
             break;
@@ -132,15 +135,12 @@ bool CLogEntry::Serialize(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     archive >> address;
-//    archive >> blockHash;
-//    archive >> blockNumber;
     archive >> data;
     archive >> logIndex;
 //    archive >> removed;
     archive >> topics;
 //    archive >> articulatedLog;
-//    archive >> transactionHash;
-//    archive >> transactionIndex;
+//    archive >> compressedLog;
 //    archive >> transactionLogIndex;
 //    archive >> type;
     finishParse();
@@ -156,15 +156,12 @@ bool CLogEntry::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     // EXISTING_CODE
     archive << address;
-//    archive << blockHash;
-//    archive << blockNumber;
     archive << data;
     archive << logIndex;
 //    archive << removed;
     archive << topics;
 //    archive << articulatedLog;
-//    archive << transactionHash;
-//    archive << transactionIndex;
+//    archive << compressedLog;
 //    archive << transactionLogIndex;
 //    archive << type;
 
@@ -214,6 +211,8 @@ void CLogEntry::registerClass(void) {
     ADD_FIELD(CLogEntry, "topics", T_OBJECT|TS_ARRAY, ++fieldNum);
     ADD_FIELD(CLogEntry, "articulatedLog", T_OBJECT, ++fieldNum);
     HIDE_FIELD(CLogEntry, "articulatedLog");
+    ADD_FIELD(CLogEntry, "compressedLog", T_TEXT, ++fieldNum);
+    HIDE_FIELD(CLogEntry, "compressedLog");
     ADD_FIELD(CLogEntry, "transactionHash", T_HASH, ++fieldNum);
     HIDE_FIELD(CLogEntry, "transactionHash");
     ADD_FIELD(CLogEntry, "transactionIndex", T_NUMBER, ++fieldNum);
@@ -241,6 +240,15 @@ string_q nextLogentryChunk_custom(const string_q& fieldIn, const void *dataPtr) 
     if (log) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'c':
+                if ( fieldIn % "compressedLog" ) {
+                    string_q ret = log->articulatedLog.name + "(";
+                    for (auto input : log->articulatedLog.inputs)
+                        ret += (input.name + ":" + input.value + ",");
+                    ret = trim(ret, ',');
+                    ret += ")";
+                    return ret;
+                }
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
@@ -292,6 +300,9 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
         case 'a':
             if ( fieldName % "address" ) return addr_2_Str(address);
             if ( fieldName % "articulatedLog" ) { expContext().noFrst=true; return articulatedLog.Format(); }
+            break;
+        case 'c':
+            if ( fieldName % "compressedLog" ) return compressedLog;
             break;
         case 'd':
             if ( fieldName % "data" ) return data;
@@ -372,3 +383,4 @@ const string_q CLogEntry::getStringAt(const string_q& fieldName, size_t i) const
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
+

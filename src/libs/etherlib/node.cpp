@@ -139,6 +139,20 @@ extern void loadParseMap(void);
     }
 
     //-------------------------------------------------------------------------
+    bool getTransaction(CTransaction& trans, blknum_t blockNum, txnum_t txid) {
+        if (fileExists(getBinaryCacheFilename(CT_TXS, blockNum, txid))) {
+            readTransFromBinary(trans, getBinaryCacheFilename(CT_TXS, blockNum, txid));
+            trans.pBlock = NULL;  // otherwise, it's pointing to an unintialized item
+            trans.finishParse();  // set the pointer for the receipt
+            return true;
+        }
+
+        getObjectViaRPC(trans, "eth_getTransactionByBlockNumberAndIndex", "[\"" + uint_2_Hex(blockNum) +"\",\"" + uint_2_Hex(txid) + "\"]");
+        trans.finishParse();  // set the pointer for the receipt
+        return true;
+    }
+
+    //-------------------------------------------------------------------------
     bool getTransaction(CTransaction& trans, const hash_t& txHash) {
         getObjectViaRPC(trans, "eth_getTransactionByHash", "[\"" + str_2_Hash(txHash) +"\"]");
         trans.finishParse();
@@ -185,21 +199,6 @@ extern void loadParseMap(void);
     }
 
     //-------------------------------------------------------------------------
-    bool getTransaction(CTransaction& trans, blknum_t blockNum, txnum_t txid) {
-
-        if (fileExists(getBinaryCacheFilename(CT_TXS, blockNum, txid))) {
-            readTransFromBinary(trans, getBinaryCacheFilename(CT_TXS, blockNum, txid));
-            trans.pBlock = NULL;  // otherwise, it's pointing to an unintialized item
-            trans.finishParse();  // set the pointer for the receipt
-            return true;
-        }
-
-        getObjectViaRPC(trans, "eth_getTransactionByBlockNumberAndIndex", "[\"" + uint_2_Hex(blockNum) +"\",\"" + uint_2_Hex(txid) + "\"]");
-        trans.finishParse();  // set the pointer for the receipt
-        return true;
-    }
-
-    //-------------------------------------------------------------------------
     bool getReceipt(CReceipt& receipt, const hash_t& txHash) {
         receipt = CReceipt(receipt.pTrans);
         getObjectViaRPC(receipt, "eth_getTransactionReceipt", "[\"" + str_2_Hash(txHash) + "\"]");
@@ -223,6 +222,24 @@ extern void loadParseMap(void);
             traces.push_back(trace);
             trace = CTrace();  // reset
         }
+    }
+
+    //-------------------------------------------------------------------------
+    bool getFullReceipt(CTransaction *trans, bool needsTrace) {
+
+        getReceipt(trans->receipt, trans->hash);
+        if (trans->blockNumber >= byzantiumBlock) {
+            trans->isError = (trans->receipt.status == 0);
+
+        } else if (needsTrace && trans->gas == trans->receipt.gasUsed) {
+            CURLCALLBACKFUNC prev = getCurlContext()->setCurlCallback(errorCallback);
+            getCurlContext()->is_error = false;
+            string_q unused;
+            queryRawTrace(unused, trans->hash);
+            trans->isError = getCurlContext()->is_error;
+            getCurlContext()->setCurlCallback(prev);
+        }
+        return true;
     }
 
     //-------------------------------------------------------------------------
@@ -253,20 +270,7 @@ extern void loadParseMap(void);
         for (size_t i = 0 ; i < block.transactions.size() ; i++) {
             CTransaction *trans = &block.transactions.at(i);  // taking a non-const reference
             trans->pBlock = &block;
-
-            getReceipt(trans->receipt, trans->hash);
-            if (block.blockNumber >= byzantiumBlock) {
-                trans->isError = (trans->receipt.status == 0);
-
-            } else if (needTrace && trans->gas == trans->receipt.gasUsed) {
-                CURLCALLBACKFUNC prev = getCurlContext()->setCurlCallback(errorCallback);
-                getCurlContext()->is_error = false;
-                string_q unused;
-                queryRawTrace(unused, trans->hash);
-                trans->isError = getCurlContext()->is_error;
-                getCurlContext()->setCurlCallback(prev);
-
-            }
+            getFullReceipt(trans, needTrace);
         }
 
         return true;
@@ -785,6 +789,7 @@ extern void loadParseMap(void);
             string_q hash = nextTokenClear(item, '.');
             uint64_t txid = str_2_Uint(item);
 
+            bool fromCache = false;
             CTransaction trans;
             if (hasHex) {
                 if (hasDot) {
@@ -797,26 +802,31 @@ extern void loadParseMap(void);
                 }
             } else {
                 // blockNum.txid
-                getTransaction(trans, str_2_Uint(hash), txid);
+                blknum_t blockNum = str_2_Uint(hash);  // so the input is poorly named, sue me
+                getTransaction(trans, blockNum, txid);
+                if (fileExists(getBinaryCacheFilename(CT_TXS, blockNum, txid)))
+                    fromCache = true;
             }
 
-            CBlock block;
-            trans.pBlock = &block;
-            if (isHash(trans.hash)) {
-                // Note: at this point, we are not fully formed, we have to ask the node for the receipt
-                getBlock(block, trans.blockNumber);
-                if (block.transactions.size() > trans.transactionIndex)
-                    trans.isError = block.transactions[trans.transactionIndex].isError;
-                trans.receipt.pTrans = &trans;
-                getReceipt(trans.receipt, trans.getValueByName("hash"));
-                trans.finishParse();
-            } else {
-                // If the transaction has no hash here, there was a problem. Let the caller know
-                trans.hash = orig + " invalid";
+            if (!fromCache) {
+                CBlock block;
+                trans.pBlock = &block;
+                if (isHash(trans.hash)) {
+                    // Note: at this point, we are not fully formed, we have to ask the node for the receipt
+                    getBlock(block, trans.blockNumber);
+                    if (block.transactions.size() > trans.transactionIndex)
+                        trans.isError = block.transactions[trans.transactionIndex].isError;
+                    trans.receipt.pTrans = &trans;
+                    getReceipt(trans.receipt, trans.getValueByName("hash"));
+                    trans.finishParse();
+                } else {
+                    // If the transaction has no hash here, there was a problem. Let the caller know
+                    trans.hash = orig + " invalid";
+                }
             }
-
             if (!(*func)(trans, data))
                 return false;
+
         }
         return true;
     }

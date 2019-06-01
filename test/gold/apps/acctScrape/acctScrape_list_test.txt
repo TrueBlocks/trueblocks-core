@@ -13,6 +13,7 @@ acctScrape --list 0x1234567890123456789012345678901234567890
 	-p  (--pending)       visit pending but not yet staged or finalized blocks
 	-u  (--useBlooms)     use bloom filters to decide which index files to search
 	-s  (--staging)       produce results in the staging folder instead of production folder
+	-s  (--start val)     first block to check
 #### Hidden options (shown during testing only)
 
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
