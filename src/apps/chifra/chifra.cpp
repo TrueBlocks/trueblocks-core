@@ -32,7 +32,6 @@ int main(int argc, const char *argv[]) {
         else if (options.mode == "quotes")    RETURN(options.handle_quotes())
         else if (options.mode == "ls")        RETURN(options.handle_ls())
         else if (options.mode == "rm")        RETURN(options.handle_rm())
-        else if (options.mode == "functions") RETURN(options.handle_functions())
         else if (options.mode == "data")      RETURN(options.handle_data())
         else if (options.mode == "config")    RETURN(options.handle_config())
         else cerr << "Should not happen.";

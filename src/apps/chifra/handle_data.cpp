@@ -21,6 +21,16 @@ bool COptions::handle_data(void) {
         replaceAll(tool_flags, "--when", "");
         os << "whenBlock --list --data " << tool_flags << (api_mode ? " --fmt json" : "") << " ; "; // order matters, last in wins
 
+    } else if (contains(tool_flags, "--abi")) {
+        replaceAll(tool_flags, "--abi", "");
+        for (auto addr : addrs)
+            os << "grabABI " << addr << " " << (api_mode ? substitute(tool_flags, ",", " ") + " --encode --data" : tool_flags) << " ; ";
+
+    } else if (contains(tool_flags, "--balance")) {
+        replaceAll(tool_flags, "--balance", "");
+        for (auto addr : addrs)
+            os << "getState " << addr << " " << (api_mode ? substitute(tool_flags, ",", " ") + " " : tool_flags) << " ; ";
+
     } else if (contains(tool_flags, "--accounts")) {
         replaceAll(tool_flags, "--accounts", "");
         for (auto addr : addrs)
@@ -56,6 +66,7 @@ bool COptions::handle_data(void) {
 
     } else {
         EXIT_FAIL("Invalid option: " + tool_flags);
+
     }
 
     LOG4("command: " + os.str());

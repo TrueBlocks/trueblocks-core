@@ -11,8 +11,8 @@ static const COption params[] = {
     COption("~command", "one of [ "
                             "leech | scrape | daemon | "
                             "list | export | stats | ls | rm | "
-                            "accounts | functions | config | "
-                            "data | blocks | trans | receipts | logs | traces | slurp | quotes "
+                            "accounts | config | slurp | quotes | data | "
+                            "blocks | trans | receipts | logs | traces "
                             "]"),
     COption("",         "Create a TrueBlocks monitor configuration.\n"),
 };
@@ -76,13 +76,19 @@ bool COptions::parseArguments(string_q& command) {
     establishFolder(getMonitorPath("", FM_PRODUCTION));
     establishFolder(getMonitorPath("", FM_STAGING));
 
-    if (verbose) {
+    if (verbose && !contains(tool_flags, "-v"))
         tool_flags += (" -v:" + uint_2_Str(verbose));
+    if (verbose && !contains(freshen_flags, "-v"))
         freshen_flags += (" -v:" + uint_2_Str(verbose));
-    }
 
     tool_flags = trim(tool_flags, ' ');
     freshen_flags = trim(freshen_flags, ' ');
+
+    LOG4("API_MODE", getEnvStr("API_MODE"));
+    LOG4("IPFS_PATH", getEnvStr("IPFS_PATH"));
+    LOG4("TEST_MODE", getEnvStr("TEST_MODE"));
+    LOG4("NO_COLOR", getEnvStr("NO_COLOR"));
+    LOG4("EDITOR", getEnvStr("EDITOR"));
 
     EXIT_NOMSG4(true);
 }
