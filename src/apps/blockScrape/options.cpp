@@ -65,7 +65,7 @@ bool COptions::parseArguments(string_q& command) {
         establishFolder(blockFolder);
 
     CBlock latest;
-    getBlock(latest, "latest");
+    getBlock_light(latest, "latest");
     latestBlockTs = latest.timestamp;
 
     blknum_t pending, staging, finalized, client;
