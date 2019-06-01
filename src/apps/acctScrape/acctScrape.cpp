@@ -35,6 +35,7 @@ int main(int argc, const char *argv[]) {
 
         options.moveToProduction();
     }
+    cerr << "Done..." << endl;
 
     acctlib_cleanup();
     return 0;

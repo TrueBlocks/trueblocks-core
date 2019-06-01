@@ -11,6 +11,7 @@ static const COption params[] = {
     COption("@pending",         "visit pending but not yet staged or finalized blocks"),
     COption("@useBlooms",       "use bloom filters to decide which index files to search"),
     COption("@staging",         "produce results in the staging folder instead of production folder"),
+    COption("@start:<num>",     "first block to check"),
     COption("",                 "Index transactions for a given Ethereum address (or series of addresses).\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -23,6 +24,7 @@ bool COptions::parseArguments(string_q& command) {
 
     bool isAll = false;
     blknum_t maxBlocks = 10000;
+    blknum_t start     = 0;
 
     Init();
     explode(arguments, command, ' ');
@@ -39,6 +41,13 @@ bool COptions::parseArguments(string_q& command) {
                 else
                     return usage("Please provide an integer value of maxBlocks. Quitting...");
             }
+
+        } else if (startsWith(arg, "-s:") || startsWith(arg, "--start:")) {
+            arg = substitute(substitute(arg, "-s:", ""), "--start:", "");
+            if (isUnsigned(arg))
+                start = str_2_Uint(arg);
+            else
+                return usage("Please provide an integer value for start. Quitting...");
 
         } else if (arg == "-p" || arg == "--pending") {
             visitTypes |= VIS_PENDING;
@@ -91,7 +100,7 @@ bool COptions::parseArguments(string_q& command) {
 
     if (getCurlContext()->nodeRequired) {
         CBlock latest;
-        getBlock(latest, "latest");
+        getBlock_light(latest, "latest");
 
         if (!isParity() || !nodeHasTraces())
             return usage("This tool will only run if it is running against a Parity node that has tracing enabled. Quitting...");
@@ -129,7 +138,11 @@ bool COptions::parseArguments(string_q& command) {
         fn = getMonitorLast(monitor.address);
         if (fileExists(fn + ".lck"))
             return usage("The last block file '" + fn + "' is locked. Quitting...");
+
+        cerr << "freshening " << monitor.address << "..." << endl;
     }
+    if (start > earliestStart && start <= lastInCache)
+        earliestStart = start;
 
     if (!folderExists(indexFolder_finalized))
         return usage("Address index path '" + indexFolder_finalized + "' not found. Quitting...");
@@ -156,7 +169,7 @@ void COptions::Init(void) {
     earliestStart = 0;
     scrapeCnt     = 0;
     visitTypes    = (VIS_STAGING | VIS_FINAL);
-    useBlooms     = false;
+    useBlooms     = true;
 }
 
 //---------------------------------------------------------------------------------------------------
