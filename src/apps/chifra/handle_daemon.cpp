@@ -14,6 +14,7 @@ bool COptions::handle_daemon(void) {
     nodeNotRequired();
 
     size_t sleep = (isTestMode() ? 1 : 14);
+
     CStringArray commands, filters;
     explode(commands, tool_flags, ' ');
     for (size_t i = 0; i < commands.size() ; i++) {
@@ -48,21 +49,21 @@ bool COptions::handle_daemon(void) {
                 item.name = substitute(substitute(item.name, "(", ""), ")", "");
                 accounts.push_back(item);
             }
-
-            // We want to be able to run even if there's nothing to monitor
-            if (accounts.size() == 0)
-                cerr << cTeal << "\tnothing to monitor" << cOff << endl;
-
-            CAddressArray runs;
-            for (auto acct : accounts) {
-                for (auto filter : filters)
-                    if (startsWith(acct.addr, filter))
-                        runs.push_back(acct.addr);
-            }
-
-            if (runs.size())
-                freshen_internal(FM_PRODUCTION, runs, "", freshen_flags);
         }
+
+        // We want to be able to run even if there's nothing to monitor
+        if (accounts.size() == 0)
+            cerr << cTeal << "\tnothing to monitor" << cOff << endl;
+
+        CAddressArray runs;
+        for (auto acct : accounts) {
+            for (auto filter : filters)
+                if (startsWith(acct.addr, filter))
+                    runs.push_back(acct.addr);
+        }
+
+        if (runs.size())
+            freshen_internal(FM_PRODUCTION, runs, "", freshen_flags);
 
         if (files.size() == 0)
             LOG_WARN("Nothing to monitor");
