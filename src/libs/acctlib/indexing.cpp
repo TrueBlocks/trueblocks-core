@@ -90,11 +90,11 @@ namespace qblocks {
         cerr << "\tExtracting addresses...";
         CArchive archive(WRITING_ARCHIVE);
         archive.Lock(tmpFile, modeWriteCreate, LOCK_NOWAIT);
-        archive.Seek(SEEK_SET, 0);
+        archive.Seek(SEEK_SET, 0);  // write the header even though it's not fully detailed to preserve the space
         archive.Write(MAGIC_NUMBER);
         archive.Write(hash.data(), hash.size(), sizeof(uint8_t));
         archive.Write(nAddrs);
-        archive.Write((uint32_t)blockTable.size());
+        archive.Write((uint32_t)blockTable.size());  // not accurate yet
         for (auto line : lines) {
             CStringArray parts;
             explode(parts, line, '\t');
@@ -128,7 +128,7 @@ namespace qblocks {
         }
 
         cerr << "\tExporting data..." << endl;
-        archive.Seek(SEEK_SET, 0);
+        archive.Seek(SEEK_SET, 0);  // re-write the header now that we have full data
         archive.Write(MAGIC_NUMBER);
         archive.Write(hash.data(), hash.size(), sizeof(uint8_t));
         archive.Write(nAddrs);
@@ -136,13 +136,13 @@ namespace qblocks {
         archive.Release();
 
         // We've built the data in a temporary file. We do this in case we're interrupted during the building of the
-        // data so it's not corrupted. In this way, we only move the data to its final resting place in one move. Safer.
+        // data so it's not corrupted. In this way, we only move the data to its final resting place once. It's safer.
         cerr << "\tFinalizing data..." << endl;
-        lockSection(true);
+        lockSection(true);  // disallow control+c
         string_q bloomFile = substitute(substitute(outFn, "/finalized/", "/blooms/"), ".bin", ".bloom");
-        writeNewBloom(bloomFile, blooms);
-        copyFile(tmpFile, outFn);
-        ::remove(tmpFile.c_str());
+        writeNewBloom(bloomFile, blooms);  // write the bloom file
+        copyFile(tmpFile, outFn);  // move the index file
+        ::remove(tmpFile.c_str());  // remove the tmp file
         lockSection(false);
 
         cerr << "\t" << greenCheck << " Binary file created..." << endl;
