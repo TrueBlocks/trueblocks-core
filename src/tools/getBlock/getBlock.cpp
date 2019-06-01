@@ -20,7 +20,7 @@ int main(int argc, const char *argv[]) {
 
     // We want to get the latestBlock prior to turning on --prove for example
     COptions options;
-    getBlock(options.latest, "latest");
+    getBlock_light(options.latest, "latest");
     if (!options.prepareArguments(argc, argv))
         return 0;
 

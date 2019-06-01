@@ -142,19 +142,10 @@ bool CReceipt::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-//    archive >> blockHash;
-//    archive >> blockNumber;
     archive >> contractAddress;
-//    archive >> cumulativeGasUsed;
-//    archive >> from;
     archive >> gasUsed;
     archive >> logs;
-//    archive >> logsBloom;
-//    archive >> root;
     archive >> status;
-//    archive >> to;
-//    archive >> transactionHash;
-//    archive >> transactionIndex;
     finishParse();
     return true;
 }
@@ -167,19 +158,10 @@ bool CReceipt::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-//    archive << blockHash;
-//    archive << blockNumber;
     archive << contractAddress;
-//    archive << cumulativeGasUsed;
-//    archive << from;
     archive << gasUsed;
     archive << logs;
-//    archive << logsBloom;
-//    archive << root;
     archive << status;
-//    archive << to;
-//    archive << transactionHash;
-//    archive << transactionIndex;
 
     return true;
 }

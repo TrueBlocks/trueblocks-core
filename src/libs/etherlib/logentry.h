@@ -32,6 +32,7 @@ public:
     bool removed;
     CTopicArray topics;
     CFunction articulatedLog;
+    string_q compressedLog;
     blknum_t transactionLogIndex;
     string_q type;
 
@@ -104,6 +105,7 @@ inline void CLogEntry::initialize(void) {
     removed = 0;
     topics.clear();
     articulatedLog = CFunction();
+    compressedLog = "";
     transactionLogIndex = 0;
     type = "";
 
@@ -123,6 +125,7 @@ inline void CLogEntry::duplicate(const CLogEntry& lo) {
     removed = lo.removed;
     topics = lo.topics;
     articulatedLog = lo.articulatedLog;
+    compressedLog = lo.compressedLog;
     transactionLogIndex = lo.transactionLogIndex;
     type = lo.type;
 

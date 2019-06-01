@@ -26,6 +26,7 @@ cacheMan -th
 
 #### Hidden options (shown during testing only)
 | -k | --skip | skip value for testing |
+| -s | --start val | un-used hidden value - do not remove |
 #### Hidden options (shown during testing only)
 
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
