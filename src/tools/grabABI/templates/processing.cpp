@@ -34,7 +34,7 @@ bool COptions::displayFromCache(uint64_t startBlock) {
     }
 
     CBlock latest;
-    getBlock(latest, "latest");
+    getBlock_light(latest, "latest");
 
     CBlock block;
     uint64_t lastBlock = 0;

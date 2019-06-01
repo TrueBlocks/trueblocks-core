@@ -280,7 +280,7 @@ string_q nextBlockChunk_custom(const string_q& fieldIn, const void *dataPtr) {
                         return "100";
                     static CBlock latest;
                     if (latest.timestamp == 0)
-                        getBlock(latest, "latest");
+                        getBlock_light(latest, "latest");
                     timestamp_t myTs = (blo->timestamp);
                     timestamp_t blkTs = ((timestamp_t)latest.timestamp);
                     if (blkTs > myTs) {

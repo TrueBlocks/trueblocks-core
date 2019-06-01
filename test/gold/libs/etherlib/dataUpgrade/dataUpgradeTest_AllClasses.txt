@@ -456,10 +456,11 @@ logIndex            	1009	0	65561	T_NUMBER TS_NUMERAL
 removed             	1010	1	65556	T_BOOL TS_NUMERAL
 topics              	1011	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 articulatedLog      	1012	1	1048651	T_OBJECT TS_OBJECT
-transactionHash     	1013	1	131132	T_HASH TS_STRING
-transactionIndex    	1014	1	65561	T_NUMBER TS_NUMERAL
-transactionLogIndex 	1015	1	65561	T_NUMBER TS_NUMERAL
-type                	1016	1	131122	T_TEXT TS_STRING
+compressedLog       	1013	1	131122	T_TEXT TS_STRING
+transactionHash     	1014	1	131132	T_HASH TS_STRING
+transactionIndex    	1015	1	65561	T_NUMBER TS_NUMERAL
+transactionLogIndex 	1016	1	65561	T_NUMBER TS_NUMERAL
+type                	1017	1	131122	T_TEXT TS_STRING
 {
   "address": "0x0",
   "logIndex": 0,
@@ -481,10 +482,11 @@ logIndex            	1009	1	65561	T_NUMBER TS_NUMERAL
 removed             	1010	1	65556	T_BOOL TS_NUMERAL
 topics              	1011	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 articulatedLog      	1012	1	1048651	T_OBJECT TS_OBJECT
-transactionHash     	1013	1	131132	T_HASH TS_STRING
-transactionIndex    	1014	1	65561	T_NUMBER TS_NUMERAL
-transactionLogIndex 	1015	1	65561	T_NUMBER TS_NUMERAL
-type                	1016	1	131122	T_TEXT TS_STRING
+compressedLog       	1013	1	131122	T_TEXT TS_STRING
+transactionHash     	1014	1	131132	T_HASH TS_STRING
+transactionIndex    	1015	1	65561	T_NUMBER TS_NUMERAL
+transactionLogIndex 	1016	1	65561	T_NUMBER TS_NUMERAL
+type                	1017	1	131122	T_TEXT TS_STRING
 {
 }
 
@@ -503,10 +505,11 @@ logIndex            	1009	0	65561	T_NUMBER TS_NUMERAL
 removed             	1010	0	65556	T_BOOL TS_NUMERAL
 topics              	1011	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 articulatedLog      	1012	0	1048651	T_OBJECT TS_OBJECT
-transactionHash     	1013	0	131132	T_HASH TS_STRING
-transactionIndex    	1014	0	65561	T_NUMBER TS_NUMERAL
-transactionLogIndex 	1015	0	65561	T_NUMBER TS_NUMERAL
-type                	1016	0	131122	T_TEXT TS_STRING
+compressedLog       	1013	0	131122	T_TEXT TS_STRING
+transactionHash     	1014	0	131132	T_HASH TS_STRING
+transactionIndex    	1015	0	65561	T_NUMBER TS_NUMERAL
+transactionLogIndex 	1016	0	65561	T_NUMBER TS_NUMERAL
+type                	1017	0	131122	T_TEXT TS_STRING
 {
   "schema": 5005,
   "deleted": 0,
@@ -524,6 +527,7 @@ type                	1016	0	131122	T_TEXT TS_STRING
     "inputs": [],
     "outputs": []
   },
+  "compressedLog": "()",
   "transactionLogIndex": 0
 }
 

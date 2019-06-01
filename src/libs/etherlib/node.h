@@ -34,6 +34,7 @@ namespace qblocks {
     extern bool     getLogEntry             (CLogEntry& log,      const hash_t& txHash);
     extern void     getTraces               (CTraceArray& traces, const hash_t& txHash);
     extern size_t   getTraceCount           (const hash_t& hashIn);
+    extern bool     getFullReceipt          (CTransaction *trans, bool needsTrace);
 
     //-------------------------------------------------------------------------
     extern bool     queryBlock              (CBlock& block, const string_q& num, bool needTrace);
@@ -131,7 +132,6 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     #define blockFolder           (getCachePath("blocks/"))
     #define bloomFolder           (getCachePath("blooms/"))
-    #define monitorsFolder        (getCachePath("monitors/"))
 
     #define indexFolder           (getCachePath("addr_index/"))
     #define indexFolder_finalized (configPath  ("cache/addr_index/finalized/"))
@@ -139,7 +139,6 @@ namespace qblocks {
     #define indexFolder_staging   (getCachePath("addr_index/staging/"))
     #define indexFolder_pending   (getCachePath("addr_index/pending/"))
     #define indexFolder_zips      (getCachePath("addr_index/zips/"))
-//    #define indexFolder_sorted    (getCachePath("addr_index/sorted/"))
 
     //-------------------------------------------------------------------------
     extern biguint_t weiPerEther(void);

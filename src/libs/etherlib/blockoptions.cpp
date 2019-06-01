@@ -105,7 +105,7 @@ bool wrangleTxId(string_q& argOut, string_q& errorMsg) {
     // it's directional
     if (parts[0] == "latest") {
         CBlock block;
-        getBlock(block, "latest");
+        getBlock_light(block, "latest");
         if (block.transactions.size() > 0) {
             ostringstream os;
             os << block.blockNumber << "." << (block.transactions.size() - 1);

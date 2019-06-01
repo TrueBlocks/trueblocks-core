@@ -89,6 +89,16 @@ bool COptions::parseArguments(string_q& command) {
 
 extern const char* STR_DISPLAY_FORMAT;
     format = getGlobalConfig("getTrans")->getDisplayStr(!verbose, (verbose ? "" : STR_DISPLAY_FORMAT));
+    if (api_mode) {
+        manageFields("CTransaction:hash,blockHash,timestamp,blockNumber,transactionIndex,from,to,value,gas,gasPrice,articulatedTx", false);
+        manageFields("CTransaction:articulatedTx", true);
+        manageFields("CReceipt:gasUsed,", false);
+        manageFields("CLogEntry:logIndex,topics,articulatedLog", false);
+        manageFields("CTraceAction:balance,gas", false);
+
+        manageFields("CLogEntry:compressedLog", true);
+//        manageFields("CTransaction:compressedTx", true);
+    }
 
     return true;
 }
