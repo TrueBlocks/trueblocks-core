@@ -27,7 +27,7 @@ bool visitFinalIndexFiles(const string_q& path, void *data) {
         ASSERT(unused != NOPOS);
         ASSERT(options->lastBlockInFile != NOPOS);
 
-        if (options->earliestStart > options->lastBlockInFile)
+        if (options->lastBlockInFile != 0 && options->earliestStart > options->lastBlockInFile)
             return !shouldQuit();
 
         return options->visitBinaryFile(path, data) && !shouldQuit();
@@ -58,11 +58,12 @@ bool newReadBloomFromBinary(CNewBloomArray& blooms, const string_q& fileName) {
     return false;
 }
 
+#define BREAK_PT 1
 //---------------------------------------------------------------
 bool COptions::visitBinaryFile(const string_q& path, void *data) {
 
-    ENTER4("visitBinaryFile");
-#define BREAK_PT 5
+    string_q l_funcName = "visitBinaryFile";
+//    ENTER4("visitBinaryFile");
     static uint32_t n = 0;
 
     COptions *options = reinterpret_cast<COptions*>(data);
@@ -77,24 +78,23 @@ bool COptions::visitBinaryFile(const string_q& path, void *data) {
         }
 
         if (!hit) {
-            if (!(++n%BREAK_PT)) {
-                cerr << "Skipping blocks:  " << substitute(path, indexFolder_finalized, "./");
-                cerr << string_q((n/(BREAK_PT*7)), '.');
-                cerr << "\r";
-                cerr.flush();
+            if (! ( ++n % BREAK_PT)) {
+                qblocks::eLogger->setEndline('\r');
+                LOG_INFO("Skipping blocks:  ",substitute(path, indexFolder_finalized, "./"));
+                qblocks::eLogger->setEndline('\n');
             }
             // none of them hit, so write last block for each of them
             for (size_t a = 0 ; a < monitors.size() && !hit ; a++)
                 monitors[a].writeLastBlock(lastBlockInFile + 1);
-            EXIT_NOMSG4(true);
+//            EXIT_NOMSG4(true);
+            return true;
         }
     }
 
-    if (!(++n%BREAK_PT)) {
-        cerr << "Searching blocks: " << substitute(path, indexFolder_finalized, "./");
-        cerr << string_q((n/(BREAK_PT*7)), '.');
-        cerr << "\r";
-        cerr.flush();
+    if (! ( ++n % BREAK_PT)) {
+        qblocks::eLogger->setEndline('\r');
+        LOG_INFO("Searching blocks:  ",substitute(path, indexFolder_finalized, "./"));
+        qblocks::eLogger->setEndline('\n');
     }
 
     CArchive *chunk = NULL;
@@ -181,7 +181,8 @@ bool COptions::visitBinaryFile(const string_q& path, void *data) {
         rawData = NULL;
     }
 
-    EXIT_NOMSG4(!shouldQuit());
+//    EXIT_NOMSG4(!shouldQuit());
+    return !shouldQuit();
 }
 
 //---------------------------------------------------------------
