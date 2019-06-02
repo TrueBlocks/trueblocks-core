@@ -16,11 +16,13 @@ static const COption params[] = {
     COption("@t(r)aces:<on/off>", "write traces to the binary cache ('off' by default)"),
     COption("@ddos:<on/off>",     "skip over dDos transactions in export ('on' by default)"),
     COption("@maxTraces:<num>",   "if --ddos:on, the number of traces defining a dDos (default = 250)"),
-    COption("@start:<num>",       "block to start on"),
+    COption("@start:<num>",       "first block to export (inclusive)"),
+    COption("@end:<num>",         "last block to export (inclusive)"),
     COption("",                   "Export full detail of transactions for one or more Ethereum addresses.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
+extern const char* STR_DISPLAY;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
@@ -68,8 +70,14 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-s") || startsWith(arg, "--start")) {
             arg = substitute(substitute(arg, "-s:", ""), "--start:", "");
             if (!isNumeral(arg))
-                return usage("Not a number for --start: " + arg + ". Quitting.");
-            start = str_2_Uint(arg);
+                return usage("Not a number for --startBlock: " + arg + ". Quitting.");
+            scanRange.first = str_2_Uint(arg);
+
+        } else if (startsWith(arg, "-e") || startsWith(arg, "--end")) {
+            arg = substitute(substitute(arg, "-e:", ""), "--end:", "");
+            if (!isNumeral(arg))
+                return usage("Not a number for --endBlock: " + arg + ". Quitting.");
+            scanRange.second = str_2_Uint(arg);
 
         } else if (startsWith(arg, "0x")) {
 
@@ -150,28 +158,35 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    if (api_mode)
+        exportFmt = TXT1;
+
     writeBlocks = getGlobalConfig("acctExport")->getConfigBool("settings", "writeBlocks", writeBlocks);;
-    writeTrxs = getGlobalConfig("acctExport")->getConfigBool("settings", "writeTrxs", writeTrxs);;
+    writeTrxs   = getGlobalConfig("acctExport")->getConfigBool("settings", "writeTrxs", writeTrxs);;
     writeTraces = getGlobalConfig("acctExport")->getConfigBool("settings", "writeTraces", writeTraces);;
-    skipDdos = getGlobalConfig("acctExport")->getConfigBool("settings", "skipDdos", skipDdos);;
-    maxTraces = getGlobalConfig("acctExport")->getConfigBool("settings", "maxTraces", maxTraces);;
+    skipDdos    = getGlobalConfig("acctExport")->getConfigBool("settings", "skipDdos", skipDdos);;
+    maxTraces   = getGlobalConfig("acctExport")->getConfigBool("settings", "maxTraces", maxTraces);;
 
     if (exportFmt != JSON1) {
-        string_q defFmt = "[{DATE}]\t[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{FROM}]\t[{TO}]\t[{VALUE}]\t[{ISERROR}]\t[{EVENTS}]";
-        string_q format = toml.getConfigStr("formats", "trans_fmt", defFmt);
+        string_q deflt, format;
+
+        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "format", STR_DISPLAY);
+        format = toml.getConfigStr("formats", "trans_fmt", deflt);
+        expContext().fmtMap["transaction_fmt"] = cleanFmt(format, exportFmt);
+
         if (format.empty())
             return usage("For non-json export a 'trans_fmt' string is required. Check your config file. Quitting...");
-        expContext().fmtMap["transaction_fmt"] = cleanFmt(format, exportFmt);
-        if (!contains(toLower(format), "traces"))
+        if (!contains(toLower(format), "trace"))
             HIDE_FIELD(CTransaction, "traces");
 
-        format = toml.getConfigStr("formats", "trace_fmt", "{TRACES}");
+        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "trace", "{TRACES}");
+        format = toml.getConfigStr("formats", "trace_fmt", deflt);
         expContext().fmtMap["trace_fmt"] = cleanFmt(format, exportFmt);
-        format = toml.getConfigStr("formats", "logentry_fmt", "{LOGS}");
+
+        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "log", "{LOGS}");
+        format = toml.getConfigStr("formats", "logentry_fmt", deflt);
         expContext().fmtMap["logentry_fmt"] = cleanFmt(format, exportFmt);
     }
-
-    lastAtClient = getLastBlock_client();
 
     return true;
 }
@@ -179,6 +194,7 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
+    optionOn(OPT_PREFUND);
 
     monitors.clear();
 
@@ -188,14 +204,13 @@ void COptions::Init(void) {
     skipDdos = true;
     maxTraces = 250;
     articulate = false;
-    exportFmt = JSON1;
-    start = 0;
 
     minArgs = 0;
 }
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
+    exportFmt = JSON1;
     Init();
 }
 
@@ -217,3 +232,99 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
     }
     return str;
 }
+
+//-----------------------------------------------------------------------
+bool COptions::loadMonitorData(CAppearanceArray_base& apps, const address_t& addr) {
+
+    ENTER("loadMonitorData");
+    string_q fn = getMonitorPath(addr);
+
+    size_t nRecords = (fileSize(fn) / sizeof(CAppearance_base));
+    ASSERT(nRecords);
+
+    CAppearance_base *buffer = new CAppearance_base[nRecords];
+    if (buffer) {
+        bzero(buffer, nRecords * sizeof(CAppearance_base));
+
+        CArchive txCache(READING_ARCHIVE);
+        if (txCache.Lock(fn, modeReadOnly, LOCK_NOWAIT)) {
+            txCache.Read(buffer, sizeof(CAppearance_base), nRecords);
+            txCache.Release();
+        } else {
+            EXIT_FAIL("Could not open cache file.");
+        }
+
+        // Add to the apps which may be non-empty
+        apps.reserve(apps.size() + nRecords);
+        for (size_t i = 0 ; i < nRecords ; i++) {
+            // TODO(tjayrush): MEGAHACK -- we need this when we export prefunds
+            if (buffer[i].blk == 0)
+                prefundMap[buffer[i].txid] = addr;
+            apps.push_back(buffer[i]);
+        }
+
+        delete [] buffer;
+
+    } else {
+        EXIT_FAIL("Could not allocate memory for address " + addr);
+
+    }
+    EXIT_NOMSG(true);
+}
+
+//-----------------------------------------------------------------------
+bool COptions::loadData(void) {
+
+    tsArray.clear();
+
+    string_q zipFile = configPath("ts.bin.gz");
+    string_q tsFile = configPath("ts.bin");
+    if (fileExists(zipFile)) {
+        string_q cmd = "cd " + configPath("") + " ; gunzip ts.bin.gz";
+        cerr << doCommand(cmd) << endl;
+        ASSERT(!fileExists(zipFile));
+        ASSERT(fileExists(tsFile));
+    }
+
+    CArchive ts(READING_ARCHIVE);
+    if (ts.Lock(tsFile, modeReadOnly, LOCK_NOWAIT)) {
+        tsArray.reserve(fileSize(tsFile));
+        ts >> tsArray;
+        ts.Release();
+    }
+
+    ENTER("loadData");
+    CAppearanceArray_base tmp;
+    for (auto monitor : monitors) {
+        if (!loadMonitorData(tmp, monitor.address))
+            EXIT_FAIL("Could not load data.");
+    }
+    if (tmp.size() == 0)
+        EXIT_MSG("Nothing to export.", false);
+
+    // Should be sorted already, so it can't hurt
+    sort(tmp.begin(), tmp.end());
+
+    bool hasFuture = false;
+    blknum_t lastAtClient = getLastBlock_client();
+    items.push_back(tmp[0]);
+    for (auto item : tmp) {
+        CAppearance_base *prev = &items[items.size() - 1];
+        // TODO(tjayrush): I think this removes dups. Is it really necessary?
+        if (item.blk != prev->blk || item.txid != prev->txid) {
+            if (item.blk > lastAtClient)
+                hasFuture = true;
+            else
+                items.push_back(item);
+        }
+    }
+    LOG1("Items array: " + uint_2_Str(items.size()) + " - " + uint_2_Str(items.size() * sizeof(CAppearance_base)));
+    if (hasFuture)
+        LOG_WARN("Cache file contains blocks ahead of the chain. Some items will not be exported.");
+
+    EXIT_NOMSG(true);
+}
+
+//-----------------------------------------------------------------------
+const char* STR_DISPLAY =
+"[{HASH}]\t[{TIMESTAMP}]\t[{FROM}]\t[{TO}]\t[{ETHER}]\t[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{ETHERGASCOST}]\t[{GASUSED}]\t[{ISERROR}]\t[{ENCODING}]";
