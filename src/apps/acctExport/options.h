@@ -13,14 +13,13 @@ public:
     CAccountWatchArray monitors;
     CAccountWatchArray named;
     CAppearanceArray_base items;
-    blknum_t lastAtClient;
     bool writeBlocks;
     bool writeTrxs;
     bool writeTraces;
     bool skipDdos;
     size_t maxTraces;
     bool articulate;
-    blknum_t start;
+    CUintArray tsArray;
 
     COptions(void);
     ~COptions(void);
@@ -28,4 +27,9 @@ public:
     bool parseArguments(string_q& command);
     void Init(void);
     string_q postProcess(const string_q& which, const string_q& str) const;
+
+    map<uint32_t,address_t> prefundMap;
+    bool loadMonitorData(CAppearanceArray_base& apps, const address_t& addr);
+    bool loadData(void);
+    bool exportData(void);
 };

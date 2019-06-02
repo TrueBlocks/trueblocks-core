@@ -8,7 +8,7 @@
 #include "options.h"
 
 //----------------------------------------------------------------
-bool isInTrace(CTrace& trace, const address_t& addr) {
+inline bool isInTrace(CTrace& trace, const address_t& addr) {
     string_q justBytes = toLower(extract(addr, 2));
     if (contains(trace.action.from, justBytes)) return true;
     if (contains(trace.action.to, justBytes)) return true;
@@ -21,7 +21,7 @@ bool isInTrace(CTrace& trace, const address_t& addr) {
 }
 
 //----------------------------------------------------------------
-bool excludeTrace(const CTransaction *trans, size_t maxTraces) {
+inline bool excludeTrace(const CTransaction *trans, size_t maxTraces) {
     if (!ddosRange(trans->blockNumber))
         return false; // be careful, it's backwards
     static string_q exclusions;
@@ -36,65 +36,65 @@ bool excludeTrace(const CTransaction *trans, size_t maxTraces) {
     return (getTraceCount(trans->hash) > maxTraces);
 }
 
+//---------------------------------------------------------------------------------------------
+inline bool isInRange(blknum_t ref, blknum_t start, blknum_t end) {
+    return (start <= ref && end >= ref);
+}
+
 //-----------------------------------------------------------------------
-bool exportData(COptions& options) {
+bool COptions::exportData(void) {
 
     ENTER("exportData");
-    if (options.exportFmt != JSON1) {
-        string_q transFmt = expContext().fmtMap["transaction_fmt"];
-        string_q header = toLower(transFmt);
-        for (uint32_t i = 0 ; i < 10 ; i++) {
-            string_q str = "w:" + uint_2_Str(i);
-            header = substitute(header, str, "");
-        }
-        for (auto const& ch : header)
-            if (ch != '[' && ch != '{' && ch != '}' && ch != ']' && ch != ':')
-                cout << ch;
-        cout << endl;
-    } else {
+    if (exportFmt == JSON1)
         cout << "[";
-    }
 
     bool first = true;
-    for (size_t i = 0 ; i < options.items.size() && !shouldQuit() && i < MAX_TXS ; i++) {
-        const CAppearance_base *item = &options.items[i];
+    size_t nExported = 0;
+    for (size_t i = 0 ; i < items.size() && !shouldQuit() && i < MAX_TXS && i < tsArray.size() ; i++) {
+        const CAppearance_base *item = &items[i];
+        if (isInRange(item->blk, scanRange.first, scanRange.second)) {
 
-        if (item->blk >= options.start) {
             CBlock block; // do not move this from this scope
             CTransaction trans;
-            string_q txFilename = getBinaryCacheFilename(CT_TXS, item->blk, item->txid);
+            trans.pBlock = &block;
 
+            string_q txFilename = getBinaryCacheFilename(CT_TXS, item->blk, item->txid);
             if (fileExists(txFilename)) {
                 readTransFromBinary(trans, txFilename);
                 trans.finishParse();
+                trans.pBlock = &block;
+                block.timestamp = trans.timestamp = (timestamp_t)tsArray[item->blk];
 
             } else {
-                getBlock(block, item->blk);
-                if (item->txid < block.transactions.size()) {
-                    CTransaction *tx = &block.transactions[item->txid];
-                    tx->timestamp = block.timestamp;
-                    if (options.writeTrxs && !fileExists(txFilename))
-                        writeTransToBinary(*tx, txFilename);
-                    trans = *tx;
-                    tx->pBlock = &block;
+                if (item->blk == 0) {
+                    trans.transactionIndex = item->txid;
+                    trans.loadAsPrefund(prefunds, prefundMap[item->txid]);
+
                 } else {
-                    // silently skip over this
+                    getTransaction(trans, item->blk, item->txid);
+                    getFullReceipt(&trans, true);
                 }
+                trans.pBlock = &block;
+                trans.timestamp = block.timestamp = (timestamp_t)tsArray[item->blk];
+                if (writeTrxs && !fileExists(txFilename))
+                    writeTransToBinary(trans, txFilename);
             }
+            if (exportFmt == JSON1 && !first)
+                cout << ", ";
+            cout << trans.Format() << endl;
+            nExported++;
+            first = false;
+            HIDE_FIELD(CFunction, "message");
+            cerr << "   " << i << " of " << items.size() << ": " << trans.hash << "\r";
+            cerr.flush();
 
-            if (true) { //}!(i%1)) {
-                cerr << "   " << i << " of " << options.items.size() << ": " << trans.hash << "\r";
-                cerr.flush();
-            }
-
-            bool needsTrace = !IS_HIDDEN(CTransaction, "traces") &&
-            (getTraceCount(trans.hash) > 1) &&
-            !excludeTrace(&trans, options.maxTraces);
-
+#if 0
+/*
+            bool needsTrace = !IS_HIDDEN(CTransaction, "traces") && (getTraceCount(trans.hash) > 1) && !excludeTrace(&trans, maxTraces);
             if (needsTrace) {  // (THIS IS A BUG!  LOOK AT THE NEXT else if BELOW!)
                 // Even if we don't need traces, if we can read it quickly, we might as well use them (as we don't need dDos)...
                 string_q markerFile = getBinaryCacheFilename(CT_TRACES, item->blk, item->txid, 1);
-                if (options.skipDdos && fileExists(markerFile)) {
+                if (skipDdos && fileExists(markerFile)) {
                     // If the first trace for a transaction exists, the rest of them do too as well. We use whatever
                     // traces we find in this folder
                     size_t count = getTraceCount(trans.hash);
@@ -111,13 +111,13 @@ bool exportData(COptions& options) {
 
                 } else if (needsTrace) {  // else, only if we need the traces do we read them (avoid traces if we can)
 
-                    if (!options.skipDdos || !excludeTrace(&trans, options.maxTraces)) {
+                    if (!skipDdos || !excludeTrace(&trans, maxTraces)) {
 
                         // Only get traces if the user has told us to
                         getTraces(trans.traces, trans.hash);
                         for (size_t tc = 1 ; tc < trans.traces.size() ; tc++) { // start at trace one since trace zero is same as transaction
                             trans.traces[tc].pTrans = &trans; // we need this so we don't dump
-                            if (options.writeTraces) {
+                            if (writeTraces) {
                                 string_q traceFilename = getBinaryCacheFilename(CT_TRACES, item->blk, item->txid, tc);
                                 writeNodeToBinary(trans.traces[tc], traceFilename);
                             }
@@ -127,114 +127,40 @@ bool exportData(COptions& options) {
             }
 
             // TODO(tjayrush): We turned this off by default because of performance reasons
-            if (options.articulate) {
-                for (size_t w = 0 ; w < options.monitors.size() ; w++) {
-                    options.monitors[w].abi_spec.articulateTransaction(&trans);
+            if (articulate) {
+                for (size_t w = 0 ; w < monitors.size() ; w++) {
+                    monitors[w].abi_spec.articulateTransaction(&trans);
                     HIDE_FIELD(CFunction, "message");
                     if (!trans.articulatedTx.message.empty())
                         SHOW_FIELD(CFunction, "message");
                 }
             }
 
-            if (options.exportFmt == JSON1 && !first)
-                cout << ", ";
             ostringstream os;
             os << trans.Format() << endl;
             string_q str = os.str();
-            for (size_t w = 0 ; w < options.monitors.size() ; w++)
-                replaceAll(str, options.monitors[w].address, options.monitors[w].color + options.monitors[w].address + cOff);
-            for (size_t w = 0 ; w < options.named.size() ; w++) {
-                CAccountWatch name = options.named[w];
+            for (size_t w = 0 ; w < monitors.size() ; w++)
+                replaceAll(str, monitors[w].address, monitors[w].color + monitors[w].address + cOff);
+            for (size_t w = 0 ; w < named.size() ; w++) {
+                CAccountWatch name = named[w];
                 string_q newName = name.name.substr(0,10);
                 if (!newName.empty()) {
                     newName = name.color + newName + cOff + "-" + name.address.substr(0,name.address.length()-newName.length()-1);
                 } else {
                     newName = name.address;
                 }
-                replaceAll(str, options.named[w].address, newName);
+                replaceAll(str, named[w].address, newName);
             }
             cout << str;
-            first = false;
-            HIDE_FIELD(CFunction, "message");
+ */
+#endif
         }
     }
 
-    cerr << "Exported " << min((size_t)MAX_TXS , options.items.size()) << " of " << options.items.size() << " records.                                           \n";
+    cerr << "Exported " << nExported << " of " << items.size() << " records." << string_q(45,' ') << "\n";
     cerr.flush();
-
-    if (options.exportFmt == JSON1)
+    if (exportFmt == JSON1)
         cout << "]";
-
-    EXIT_NOMSG(true);
-}
-
-//-----------------------------------------------------------------------
-bool loadMonitorData(CAppearanceArray_base& apps, const address_t& addr) {
-
-    ENTER("loadMonitorData");
-    string_q fn = getMonitorPath(addr);
-
-    size_t nRecords = (fileSize(fn) / sizeof(CAppearance_base));
-    ASSERT(nRecords);
-
-    CAppearance_base *buffer = new CAppearance_base[nRecords];
-    if (buffer) {
-        bzero(buffer, nRecords * sizeof(CAppearance_base));
-
-        CArchive txCache(READING_ARCHIVE);
-        if (txCache.Lock(fn, modeReadOnly, LOCK_NOWAIT)) {
-            txCache.Read(buffer, sizeof(CAppearance_base), nRecords);
-            txCache.Release();
-        } else {
-            EXIT_FAIL("Could not open cache file.");
-        }
-
-        // Add to the apps which may be non-empty
-        apps.reserve(apps.size() + nRecords);
-        for (size_t i = 0 ; i < nRecords ; i++)
-            apps.push_back(buffer[i]);
-
-        delete [] buffer;
-
-    } else {
-        EXIT_FAIL("Could not allocate memory for address " + addr);
-
-    }
-    EXIT_NOMSG(true);
-}
-
-//-----------------------------------------------------------------------
-bool loadData(COptions& options) {
-
-    ENTER("loadData");
-    CAppearanceArray_base tmp;
-    for (auto monitor : options.monitors) {
-        if (!loadMonitorData(tmp, monitor.address))
-            EXIT_FAIL("Could not load data.");
-    }
-    if (tmp.size() == 0)
-        EXIT_MSG("Nothing to export.", false);
-
-    sort(tmp.begin(), tmp.end());
-
-    bool hasFuture = false;
-    options.items.push_back(tmp[0]);
-    for (auto item : tmp) {
-        CAppearance_base *prev = &options.items[options.items.size() - 1];
-        // TODO(tjayrush): I think this removes dups. Is it really necessary?
-        if (item.blk != prev->blk || item.txid != prev->txid) {
-            if (item.blk > options.lastAtClient)
-                hasFuture = true;
-            else
-                options.items.push_back(item);
-        }
-    }
-    LOG1("Items array: " +
-         uint_2_Str(options.items.size()) + " - " +
-         uint_2_Str(options.items.size() * sizeof(CAppearance_base)));
-
-    if (hasFuture)
-        LOG_WARN("Cache file contains blocks ahead of the chain. Some items will not be exported.");
 
     EXIT_NOMSG(true);
 }
@@ -251,8 +177,8 @@ int main(int argc, const char *argv[]) {
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
-        loadData(options);
-        exportData(options);
+        options.loadData();
+        options.exportData();
     }
 
     acctlib_cleanup();
@@ -267,11 +193,6 @@ int main(int argc, const char *argv[]) {
  extern bool checkBloom(COptions& options, const CAppearance_base *item);
  extern bool isInTransaction(CTransaction *trans, const address_t& addr);
  extern bool transFilter(const CTransaction *trans, void *data);
-
- //---------------------------------------------------------------------------------------------
- inline bool isInRange(blknum_t ref, blknum_t start, blknum_t end) {
- return (start <= ref && end >= ref);
- }
 
  //-----------------------------------------------------------------------
  bool exportData(COptions& options) {
