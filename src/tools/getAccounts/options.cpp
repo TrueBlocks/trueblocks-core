@@ -73,12 +73,14 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     switch (exportFmt) {
-        case NONE1: format = "[{ADDR}]\t[{NAME}]\t[{SYMBOL}]"; break;
+        case NONE1: format = "[{ADDR}][\t{NAME}][\t{SYMBOL}]"; if (verbose) format += "[\t{SOURCE}]"; break;
         case API1:
         case JSON1: format = ""; break;
         case TXT1:
         case CSV1:
             format = getGlobalConfig()->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
+            if (verbose)
+                format += "[\t{SOURCE}]";
             manageFields("CAccountName:" + cleanFmt(format, exportFmt));
             break;
     }
