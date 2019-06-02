@@ -15,7 +15,8 @@ acctExport -h
 	-r  (--traces on/off) write traces to the binary cache ('off' by default)
 	-d  (--ddos on/off)   skip over dDos transactions in export ('on' by default)
 	-m  (--maxTraces val) if --ddos:on, the number of traces defining a dDos (default = 250)
-	-s  (--start val)     block to start on
+	-s  (--start val)     first block to export (inclusive)
+	-e  (--end val)       last block to export (inclusive)
 #### Hidden options (shown during testing only)
 
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
