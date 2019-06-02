@@ -39,11 +39,17 @@ endforeach( FILE )
 
 # Copy the prices files
 message(STATUS "Copying price database to ${QUICKBLOCKS_HOME}/cache/prices/")
-set(QUICKBLOCKS_PRICES_FILE "${QUICKBLOCKS_HOME}/cache/prices/poloniex_USDT_ETH.bin.gz")
+set(QUICKBLOCKS_PRICES_FILE "${QUICKBLOCKS_HOME}/cache/prices/poloniex_USDT_ETH.bin")
 if (NOT EXISTS "${QUICKBLOCKS_PRICES_FILE}")
     set(QUICKBLOCKS_PRICES_SOURCE "${CMAKE_SOURCE_DIR}/../../../src/other/install/prices/poloniex_USDT_ETH.bin.gz")
     message(STATUS "  Copied file to ${QUICKBLOCKS_HOME}/cache/prices/")
     file(COPY "${QUICKBLOCKS_PRICES_SOURCE}" DESTINATION "${QUICKBLOCKS_HOME}/cache/prices" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+endif()
+set(QUICKBLOCKS_TS_FILE "${QUICKBLOCKS_HOME}/ts.bin")
+if (NOT EXISTS "${QUICKBLOCKS_TS_FILE}")
+    set(QUICKBLOCKS_TS_SOURCE "${CMAKE_SOURCE_DIR}/../../../src/other/install/prices/ts.bin.gz")
+    message(STATUS "  Copied file to ${QUICKBLOCKS_HOME}/")
+    file(COPY "${QUICKBLOCKS_TS_SOURCE}" DESTINATION "${QUICKBLOCKS_HOME}/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 endif()
 
 # prefund
