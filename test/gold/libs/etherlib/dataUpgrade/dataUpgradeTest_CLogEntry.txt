@@ -70,7 +70,7 @@ transactionIndex    	1015	0	65561	T_NUMBER TS_NUMERAL
 transactionLogIndex 	1016	0	65561	T_NUMBER TS_NUMERAL
 type                	1017	0	131122	T_TEXT TS_STRING
 {
-  "schema": 5005,
+  "schema": 5007,
   "deleted": 0,
   "showing": 1,
   "cname": "LogEntry",

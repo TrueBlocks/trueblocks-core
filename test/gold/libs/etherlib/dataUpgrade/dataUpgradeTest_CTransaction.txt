@@ -140,7 +140,7 @@ age                 	1033	0	262149	T_DATE TS_DATE
 ether               	1034	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
 encoding            	1035	0	131122	T_TEXT TS_STRING
 {
-  "schema": 5005,
+  "schema": 5007,
   "deleted": 0,
   "showing": 1,
   "cname": "Transaction",
