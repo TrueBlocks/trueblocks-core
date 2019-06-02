@@ -53,10 +53,7 @@ bool COptions::parseArguments(string_q& command) {
                 addrs.push_back(toLower(arg));
 
             } else {
-                if (arg == "--useBlooms")
-                    freshen_flags = (arg + " ");
-                else
-                    tool_flags += (arg + " ");
+                tool_flags += (arg + " ");
 
             }
         }
