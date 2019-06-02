@@ -26,8 +26,10 @@ bool COptions::handle_data(void) {
         for (auto addr : addrs)
             os << "grabABI " << addr << " " << (api_mode ? substitute(tool_flags, ",", " ") + " --encode --data" : tool_flags) << " ; ";
 
-    } else if (contains(tool_flags, "--balance")) {
+    } else if (contains(tool_flags, "--balance") || contains(tool_flags, "--code") || contains(tool_flags, "--nonce")) {
         replaceAll(tool_flags, "--balance", "");
+        replaceAll(tool_flags, "--code", "");
+        replaceAll(tool_flags, "--nonce", "");
         for (auto addr : addrs)
             os << "getState " << addr << " " << (api_mode ? substitute(tool_flags, ",", " ") + " " : tool_flags) << " ; ";
 
