@@ -27,7 +27,7 @@ bool visitFinalIndexFiles(const string_q& path, void *data) {
         ASSERT(unused != NOPOS);
         ASSERT(options->lastBlockInFile != NOPOS);
 
-        if (options->lastBlockInFile != 0 && options->earliestStart > options->lastBlockInFile)
+        if (options->lastBlockInFile != 0 && options->scanRange.first > options->lastBlockInFile)
             return !shouldQuit();
 
         return options->visitBinaryFile(path, data) && !shouldQuit();
@@ -63,7 +63,6 @@ bool newReadBloomFromBinary(CNewBloomArray& blooms, const string_q& fileName) {
 bool COptions::visitBinaryFile(const string_q& path, void *data) {
 
     string_q l_funcName = "visitBinaryFile";
-//    ENTER4("visitBinaryFile");
     static uint32_t n = 0;
 
     COptions *options = reinterpret_cast<COptions*>(data);
@@ -86,7 +85,6 @@ bool COptions::visitBinaryFile(const string_q& path, void *data) {
             // none of them hit, so write last block for each of them
             for (size_t a = 0 ; a < monitors.size() && !hit ; a++)
                 monitors[a].writeLastBlock(lastBlockInFile + 1);
-//            EXIT_NOMSG4(true);
             return true;
         }
     }
@@ -181,7 +179,6 @@ bool COptions::visitBinaryFile(const string_q& path, void *data) {
         rawData = NULL;
     }
 
-//    EXIT_NOMSG4(!shouldQuit());
     return !shouldQuit();
 }
 

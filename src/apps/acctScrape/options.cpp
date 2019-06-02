@@ -9,7 +9,7 @@
 static const COption params[] = {
     COption("-maxBlocks:<val>", "scan at most --maxBlocks blocks ('all' implies scan to end of chain)"),
     COption("@pending",         "visit pending but not yet staged or finalized blocks"),
-    COption("@useBlooms",       "use bloom filters to decide which index files to search"),
+    COption("@noBlooms",        "turn off bloom filters for performance testing"),
     COption("@staging",         "produce results in the staging folder instead of production folder"),
     COption("@start:<num>",     "first block to check"),
     COption("",                 "Index transactions for a given Ethereum address (or series of addresses).\n"),
@@ -52,8 +52,8 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-p" || arg == "--pending") {
             visitTypes |= VIS_PENDING;
 
-        } else if (arg == "-u" || arg == "--useBlooms") {
-            useBlooms = true;
+        } else if (arg == "-n" || arg == "--noBlooms") {
+            useBlooms = false;
 
         } else if (startsWith(arg, "0x")) {
             if (!isAddress(arg))
@@ -130,7 +130,7 @@ bool COptions::parseArguments(string_q& command) {
         // Note: We've cleaned the staging folder, so we only have to check for locks in the production folder
         string_q fn = getMonitorLast(monitor.address);
         if (fileExists(fn))
-            earliestStart = min(max(earliestStart, str_2_Uint(asciiFileToString(fn))), lastInCache);
+            scanRange.first = min(max(scanRange.first, str_2_Uint(asciiFileToString(fn))), lastInCache);
 
         if (fileExists(fn + ".lck"))
             return usage("The cache file '" + fn + "' is locked. Quitting...");
@@ -141,22 +141,22 @@ bool COptions::parseArguments(string_q& command) {
 
         cerr << "freshening " << monitor.address << "..." << endl;
     }
-    if (start > earliestStart && start <= lastInCache)
-        earliestStart = start;
+    if (start > scanRange.first && start <= lastInCache)
+        scanRange.first = start;
 
     if (!folderExists(indexFolder_finalized))
         return usage("Address index path '" + indexFolder_finalized + "' not found. Quitting...");
 
     // How many should we scrape?
     ASSERT(earliestStart <= lastInCache);
-    scrapeCnt = min(lastInCache - earliestStart, maxBlocks);
+    scrapeCnt = min(lastInCache - scanRange.first, maxBlocks);
 
     if (verbose) {
         for (auto monitor : monitors) {
             cerr << "Freshening " << monitor.address << "\r";cerr.flush();
         }
     }
-    return earliestStart < lastInCache;
+    return scanRange.first < lastInCache;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -165,11 +165,10 @@ void COptions::Init(void) {
     // We want to be able to run this more than once
     // optionOn(OPT_RUNONCE);
 
-    minArgs       = 0;
-    earliestStart = 0;
-    scrapeCnt     = 0;
-    visitTypes    = (VIS_STAGING | VIS_FINAL);
-    useBlooms     = true;
+    minArgs         = 0;
+    scrapeCnt       = 0;
+    visitTypes      = (VIS_STAGING | VIS_FINAL);
+    useBlooms       = true;
 }
 
 //---------------------------------------------------------------------------------------------------
