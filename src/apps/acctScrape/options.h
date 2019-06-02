@@ -10,7 +10,6 @@
 class COptions : public COptionsBase {
 public:
 
-    blknum_t           earliestStart;
     blknum_t           scrapeCnt;
     CAccountWatchArray monitors;
     CAccountWatch      primary;
