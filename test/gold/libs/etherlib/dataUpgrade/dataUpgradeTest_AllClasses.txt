@@ -980,7 +980,7 @@ finalized           	1021	1	65556	T_BOOL TS_NUMERAL
 traces              	1022	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 confirmations       	1023	1	65561	T_NUMBER TS_NUMERAL
 gasCost             	1024	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-gasCostEther        	1025	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+etherGasCost        	1025	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 function            	1026	1	131122	T_TEXT TS_STRING
 events              	1027	1	131122	T_TEXT TS_STRING
 price               	1028	1	131122	T_TEXT TS_STRING
@@ -1045,7 +1045,7 @@ finalized           	1021	1	65556	T_BOOL TS_NUMERAL
 traces              	1022	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 confirmations       	1023	1	65561	T_NUMBER TS_NUMERAL
 gasCost             	1024	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-gasCostEther        	1025	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+etherGasCost        	1025	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 function            	1026	1	131122	T_TEXT TS_STRING
 events              	1027	1	131122	T_TEXT TS_STRING
 price               	1028	1	131122	T_TEXT TS_STRING
@@ -1086,7 +1086,7 @@ finalized           	1021	0	65556	T_BOOL TS_NUMERAL
 traces              	1022	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 confirmations       	1023	0	65561	T_NUMBER TS_NUMERAL
 gasCost             	1024	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-gasCostEther        	1025	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+etherGasCost        	1025	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 function            	1026	0	131122	T_TEXT TS_STRING
 events              	1027	0	131122	T_TEXT TS_STRING
 price               	1028	0	131122	T_TEXT TS_STRING
@@ -1129,7 +1129,7 @@ encoding            	1035	0	131122	T_TEXT TS_STRING
   "finalized": 0,
   "traces": [],
   "gasCost": 0,
-  "gasCostEther": 0.000000000000000000,
+  "etherGasCost": 0.000000000000000000,
   "price": "1.400000000000000000",
   "gasUsed": 0,
   "date": "1970-01-01 00:00:00 UTC",

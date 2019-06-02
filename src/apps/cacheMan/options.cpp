@@ -208,6 +208,8 @@ COptions::~COptions(void) {
 bool loadMonitorData(CAppearanceArray_base& items, const address_t& addr) {
     ENTER("loadMonitorData");
     string_q fn = getMonitorPath(addr);
+    if (isTestMode())
+        replace(fn, getMonitorPath(""), "./");
     size_t nRecords = (fileSize(fn) / sizeof(CAppearance_base));
     ASSERT(nRecords);
     CAppearance_base *buffer = new CAppearance_base[nRecords];
