@@ -53,6 +53,7 @@ namespace qblocks {
         bool isVeryRaw;
         bool api_mode;
         format_t exportFmt;
+        blkrange_t scanRange;
 
         CStringArray commandLines;
         uint64_t minArgs;

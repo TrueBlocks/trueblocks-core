@@ -862,6 +862,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         exportFmt = (api_mode ? API1 : TXT1);
         needsOption = false;
         enableBits = OPT_DEFAULT;
+        scanRange = make_pair(0,NOPOS);
         for (int i = 0 ; i < 5 ; i++)
             sorts[i] = NULL;
         hiUp1  = (isTestMode() ? "" : cYellow) + "  ";
