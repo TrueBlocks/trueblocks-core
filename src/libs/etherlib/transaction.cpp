@@ -310,7 +310,7 @@ void CTransaction::registerClass(void) {
 
     // Add custom fields
     ADD_FIELD(CTransaction, "gasCost", T_WEI, ++fieldNum);
-    ADD_FIELD(CTransaction, "gasCostEther", T_WEI, ++fieldNum);
+    ADD_FIELD(CTransaction, "etherGasCost", T_WEI, ++fieldNum);
     ADD_FIELD(CTransaction, "function", T_TEXT, ++fieldNum);
     ADD_FIELD(CTransaction, "events", T_TEXT, ++fieldNum);
     ADD_FIELD(CTransaction, "price", T_TEXT, ++fieldNum);
@@ -328,7 +328,7 @@ void CTransaction::registerClass(void) {
     HIDE_FIELD(CTransaction, "price");
     HIDE_FIELD(CTransaction, "encoding");
     HIDE_FIELD(CTransaction, "gasCost");
-    HIDE_FIELD(CTransaction, "gasCostEther");
+    HIDE_FIELD(CTransaction, "etherGasCost");
     HIDE_FIELD(CTransaction, "isError");
     HIDE_FIELD(CTransaction, "isInternal");
     HIDE_FIELD(CTransaction, "date");
@@ -386,9 +386,9 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
             case 'e':
                 if ( fieldIn % "ether" )
                     return wei_2_Ether(bnu_2_Str(tra->value));
-                else if ( fieldIn % "encoding" )
+                if ( fieldIn % "encoding" )
                     return extract(tra->input, 0, 10);
-                else if ( fieldIn % "events" || fieldIn % "eventnames") {
+                if ( fieldIn % "events" || fieldIn % "eventnames") {
                     string_q ret;
                     for (uint64_t n = 0 ; n < tra->receipt.logs.size() ; n++) {
                         string_q v = tra->receipt.logs[n].Format("[{ARTICULATEDLOG}]");
@@ -416,6 +416,11 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
                     }
                     return ret;
                 }
+                if ( fieldIn % "etherGasCost" ) {
+                    biguint_t used = tra->receipt.gasUsed;
+                    biguint_t price = tra->gasPrice;
+                    return wei_2_Ether(bnu_2_Str(used * price));
+                }
                 break;
             case 'f':
                 if ( fieldIn % "function" ) {
@@ -433,11 +438,6 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
                     biguint_t used = tra->receipt.gasUsed;
                     biguint_t price = tra->gasPrice;
                     return bnu_2_Str(used * price);
-                }
-                if ( fieldIn % "gasCostEther" ) {
-                    biguint_t used = tra->receipt.gasUsed;
-                    biguint_t price = tra->gasPrice;
-                    return wei_2_Ether(bnu_2_Str(used * price));
                 }
                 break;
             case 't':
