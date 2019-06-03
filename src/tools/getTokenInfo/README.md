@@ -10,7 +10,7 @@ You may optionally specify one or more blocks at which to report.
 
 #### Usage
 
-`Usage:`    getTokenInfo [-b|-d|-l fn|-n|-t|-v|-h] &lt;address&gt; &lt;address&gt; [address...] [block...]  
+`Usage:`    getTokenInfo [-b|-n|-v|-h] &lt;address&gt; &lt;address&gt; [address...] [block...]  
 `Purpose:`  Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).
              
 `Where:`  
@@ -20,10 +20,7 @@ You may optionally specify one or more blocks at which to report.
 |  | address_list | two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported |
 |  | block_list | an optional list of one or more blocks at which to report balances, defaults to 'latest' |
 | -b | --byAcct | consider each address an ERC20 token except the last, whose balance is reported for each token |
-| -d | --data | render results as tab delimited data (for example, to build a cap table) |
-| -l | --list fn | an alternative way to specify an address_list, place one address per line in the file 'fn' |
 | -n | --nozero | suppress the display of zero balance accounts |
-| -t | --total | if more than one balance is requested, display a total as well |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
@@ -49,6 +46,8 @@ All **QBlocks** command-line tools support the following commands (although in s
     --dollars   |   specify value in US dollars
     --raw       |   report JSON data from the node with minimal processing
     --veryRaw   |   report JSON data from node with zero processing
+    --fmt       |   export format (where appropriate). One of [none|txt|csv|json|api]
+    --api_mode  |   simulate api_mode for testing
     --file:fn   |   specify multiple sets of command line options in a file.
 
 <small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>

@@ -4,7 +4,7 @@ The `cacheMan` program allows one to  manage and explore [monitor cache files](.
 
 #### Usage
 
-`Usage:`    cacheMan [-c|-d|-s|-x|-l|-a|-b|-i|-r|-t|-k|-m|-f|-v|-h] filenames  
+`Usage:`    cacheMan [-c|-d|-s|-f|-l|-a|-b|-i|-r|-t|-k|-m|-x|-v|-h] filenames  
 `Purpose:`  Show the contents of an account cache and/or fix it by removing duplicate records.
              
 `Where:`  
@@ -15,7 +15,7 @@ The `cacheMan` program allows one to  manage and explore [monitor cache files](.
 | -c | --check | check for duplicates and other problems in the cache |
 | -d | --data | in 'list' mode, render results as data (i.e export mode) |
 | -s | --sort | sort the list of transactions and re-write (precludes other modes, other than --dedup) |
-| -x | --fix | remove duplicates from the cache (if any) |
+| -f | --fix | remove duplicates from the cache (if any) |
 | -l | --list | list the contents of the cache (the default if no other option) |
 | -a | --cacheBals | cache per block account balances for each account |
 | -b | --balances | export account balances for each account |
@@ -24,7 +24,7 @@ The `cacheMan` program allows one to  manage and explore [monitor cache files](.
 | -t | --truncate val | truncate the cache at block :n (keeps block 'n' and before, implies --fix) |
 | -k | --maxBlock val | for testing, max block to visit |
 | -m | --merge | merge two or more caches into a single cache |
-| -f | --fmt val | export format (one of [json&#124;txt&#124;csv]) |
+| -x | --fmt val | export format (one of [json&#124;txt&#124;csv]) |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
@@ -41,6 +41,8 @@ All **QBlocks** command-line tools support the following commands (although in s
     --dollars   |   specify value in US dollars
     --raw       |   report JSON data from the node with minimal processing
     --veryRaw   |   report JSON data from node with zero processing
+    --fmt       |   export format (where appropriate). One of [none|txt|csv|json|api]
+    --api_mode  |   simulate api_mode for testing
     --file:fn   |   specify multiple sets of command line options in a file.
 
 <small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
