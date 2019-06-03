@@ -10,7 +10,7 @@ You may name your own blocks (for example, to denote the start of an ICO perhaps
 
 #### Usage
 
-`Usage:`    whenBlock [-d|-l|-f|-v|-h] &lt; block | date &gt; [ block... | date... ]  
+`Usage:`    whenBlock [-l|-v|-h] &lt; block | date &gt; [ block... | date... ]  
 `Purpose:`  Finds the nearest block prior to a date, or the nearest date prior to a block.
             Alternatively, search for one of special 'named' blocks.
              
@@ -20,9 +20,7 @@ You may name your own blocks (for example, to denote the start of an ICO perhaps
 | -------: | :------- | :------- |
 |  | block | one or more block numbers (or a 'special' block), or... |
 |  | date | one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]] |
-| -d | --data | display the result as data (tab delimited; useful for scripting) |
-| -l | --list | list names and block numbers for special blocks |
-| -f | --fmt val | export format (one of [json&#124;txt&#124;csv]) |
+| -l | --list | export all the named blocks |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
@@ -50,6 +48,8 @@ All **QBlocks** command-line tools support the following commands (although in s
     --dollars   |   specify value in US dollars
     --raw       |   report JSON data from the node with minimal processing
     --veryRaw   |   report JSON data from node with zero processing
+    --fmt       |   export format (where appropriate). One of [none|txt|csv|json|api]
+    --api_mode  |   simulate api_mode for testing
     --file:fn   |   specify multiple sets of command line options in a file.
 
 <small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
