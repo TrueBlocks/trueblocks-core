@@ -14,18 +14,17 @@
 #include "options.h"
 
 //------------------------------------------------------------
-int main(int argc, const char * argv[]) {
+int main(int argc, const char *argv[]) {
 
     etherlib_init(quickQuitHandler);
 
     // We want to get the latestBlock prior to turning on --prove for example
     COptions options;
-    getBlock(options.latest, "latest");
+    getBlock_light(options.latest, "latest");
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    while (!options.commandList.empty()) {
-        string_q command = nextTokenClear(options.commandList, '\n');
+    for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
 
@@ -107,7 +106,7 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
                 generic.parseJson3(result);
                 result = generic.result;
                 if (gold.parseJson3(result)) {
-                    string_q fileName = getBinaryFilename(num);
+                    string_q fileName = getBinaryCacheFilename(CT_BLOCKS, num);
                     gold.finalized = isBlockFinal(gold.timestamp, opt.latest.timestamp);
                     writeBlockToBinary(gold, fileName);
                 }
@@ -115,7 +114,7 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
         }
 
     } else {
-        string_q fileName = getBinaryFilename(gold.blockNumber);
+        string_q fileName = getBinaryCacheFilename(CT_BLOCKS, gold.blockNumber);
         if (opt.isCache) {
 
             // --source::cache mode doesn't include timestamp in transactions
@@ -124,29 +123,18 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
                 gold.transactions.at(t).timestamp = gold.timestamp;  // .at cannot go past end of vector!
 
         } else {
-            queryBlock(gold, numStr, true, false);
+            queryBlock(gold, numStr, (opt.api_mode ? false : true));
         }
+        if (gold.blockNumber == 0 && gold.timestamp == 0)
+            gold.timestamp = 1438269960;
+        gold.finalized = isBlockFinal(gold.timestamp, opt.latest.timestamp);
 
         if (opt.force) {  // turn this on to force a write of the block to the disc
-            gold.finalized = isBlockFinal(gold.timestamp, opt.latest.timestamp);
             writeBlockToBinary(gold, fileName);
+            LOG2("writeBlockToBinary(" + uint_2_Str(gold.blockNumber) + ", " + fileName + ": " + bool_2_Str(fileExists(fileName)));
         }
 
-        if (!opt.silent) {
-            string_q format = opt.format;
-//            if (false) { //opt.priceBlocks) {
-//                biguint_t oneWei = str_2_Wei("1000000000000000000");
-//                string_q dollars = "$" + asDollars(gold.timestamp, oneWei);
-//                replace(format, "{PRICE:CLOSE}", dollars);
-//            }
-            result = gold.Format(format);
-            if (opt.hashes) {
-                result = substitute(result, "        {\n            \"hash\":", "       ");
-                result = substitute(result, "\n            \"receipt\": {\n            }\n        }", "");
-                result = substitute(result, ",,", ",");
-                result = substitute(result, ",\n    ]", "\n    ]");
-            }
-        }
+        result = gold.Format(opt.format);
     }
 
 #ifndef PROVING
@@ -181,7 +169,7 @@ string_q checkOneBlock(uint64_t num, const COptions& opt) {
     // Now get the same block from QBlocks
     string_q fromQblocks;
     CBlock qBlocks;
-    queryBlock(qBlocks, numStr, true, false);
+    queryBlock(qBlocks, numStr, true);
     for (size_t i = 0 ; i < qBlocks.transactions.size() ; i++) {
         // QBlocks pulls the receipt for each transaction, but the RPC does
         // not. Therefore, we must set the transactions' gasUsed and logsBloom
@@ -227,7 +215,7 @@ void interumReport(ostream& os, blknum_t i) {
 }
 
 //------------------------------------------------------------
-bool sortByBlocknumTxId(const CAddressAppearance& v1, const CAddressAppearance& v2) {
+bool sortByBlocknumTxId(const CAppearance& v1, const CAppearance& v2) {
     if (v1.bn != v2.bn)
         return v1.bn < v2.bn;
     else if (v1.tx != v2.tx)
@@ -239,11 +227,11 @@ bool sortByBlocknumTxId(const CAddressAppearance& v1, const CAddressAppearance& 
     return v1.addr < v2.addr;
 }
 
-extern bool visitAddrs(const CAddressAppearance& item, void *data);
+extern bool visitAddrs(const CAppearance& item, void *data);
 extern bool transFilter(const CTransaction *trans, void *data);
 
 //------------------------------------------------------------
-bool passesFilter(const COptions *opts, const CAddressAppearance& item) {
+bool passesFilter(const COptions *opts, const CAppearance& item) {
     if (item.tc == 10 && !opts->showZeroTrace)
         return false;
     if (opts->filters.size() == 0)
@@ -276,7 +264,7 @@ string_q getAddresses(uint64_t num, const COptions& opt) {
 }
 
 //----------------------------------------------------------------
-bool visitAddrs(const CAddressAppearance& item, void *data) {
+bool visitAddrs(const CAppearance& item, void *data) {
     if (!isZeroAddr(item.addr)) {
         COptions *opt = (COptions*)data;
         if (passesFilter(opt, item)) {

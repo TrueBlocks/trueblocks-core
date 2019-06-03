@@ -16,7 +16,7 @@ set(PROJ_NAME "apps")
 add_executable(${TOOL_NAME} ${SOURCE_FILES})
 
 # Add the project static libs at linking
-target_link_libraries (${TOOL_NAME} token wallet ${BASE_LIBS})
+target_link_libraries (${TOOL_NAME} ${BASE_LIBS})
 
 # Testing
 # Define paths to test folder and gold folder
@@ -37,12 +37,13 @@ endfunction(run_special_test)
 
 # Function to run an individual test case
 function(run_test testName)
-     run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+    run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
 endfunction(run_test)
 
 # Enter one line for each individual test
 run_test("acctExport_no_params")
-run_test("acctExport_help"                           "-h")
+run_test("acctExport_help"  "-h")
+run_test("acctExport_export" "0x001d14804b399c6ef80e64576f657660804fec0b")
 
 # Installation steps, this tool is renamed at installation
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

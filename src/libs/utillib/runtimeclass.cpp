@@ -50,7 +50,7 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     CFieldData *CRuntimeClass::findField(const string_q& fieldName) {
         for (size_t i = 0 ; i < fieldList.size() ; i++) {
-            if (fieldList[i].getName() == fieldName)
+            if (fieldList[i].getName() % fieldName)
                 return &fieldList[i];
         }
         return NULL;

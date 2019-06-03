@@ -22,6 +22,7 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     using timestamp_t = int64_t;
     using blknum_t    = uint64_t;
+    using blkrange_t  = pair<blknum_t, blknum_t>;
     using txnum_t     = uint64_t;
     using gas_t       = uint64_t;
     using address_t   = string_q;
@@ -29,17 +30,21 @@ namespace qblocks {
     using bloom_t     = biguint_t;
     using wei_t       = biguint_t;
     using topic_t     = biguint_t;
+    using uchar_t     = unsigned char;
+    using addrbytes_t = vector<uint8_t>;
+    using hashbytes_t = vector<uint8_t>;
 
     //-------------------------------------------------------------------------
-    using CStringArray   = vector < string_q  >;
-    using CBlockNumArray = vector < uint64_t  >;
-    using CUintArray     = vector < uint64_t  >;
-    using CIntArray      = vector < int64_t   >;
-    using CBigUintArray  = vector < biguint_t  >;
-    using CBigIntArray   = vector < bigint_t   >;
-    using CAddressArray  = vector < address_t >;
-    using CBloomArray    = vector < bloom_t   >;
-    using CTopicArray    = vector < topic_t   >;
+    using CStringArray     = vector < string_q   >;
+    using CBlockNumArray   = vector < uint64_t   >;
+    using CBlockRangeArray = vector < blkrange_t >;
+    using CUintArray       = vector < uint64_t   >;
+    using CIntArray        = vector < int64_t    >;
+    using CBigUintArray    = vector < biguint_t  >;
+    using CBigIntArray     = vector < bigint_t   >;
+    using CAddressArray    = vector < address_t  >;
+    using CBloomArray      = vector < bloom_t    >;
+    using CTopicArray      = vector < topic_t    >;
 
     //-------------------------------------------------------------------------
     extern bool        str_2_Bool   (const string_q& str);
@@ -48,8 +53,8 @@ namespace qblocks {
     extern string_q    str_2_Hex    (const string_q& str);
     extern gas_t       str_2_Gas    (const string_q& str);
     extern double      str_2_Double (const string_q& str);
-    extern bigint_t    str_2_BigInt (const string_q& str);
-    extern biguint_t   str_2_BigUint(const string_q& str);
+    extern bigint_t    str_2_BigInt (const string_q& str, size_t bits = 257);
+    extern biguint_t   str_2_BigUint(const string_q& str, size_t bits = 257);
     extern address_t   str_2_Addr   (const string_q& str);
     extern hash_t      str_2_Hash   (const string_q& str);
     extern biguint_t   str_2_Wei    (const string_q& str);
@@ -59,10 +64,11 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     extern string_q    bool_2_Str   (bool num);
+    extern string_q    bool_2_Str_t (bool num);
     extern string_q    int_2_Str    (int64_t num);
     extern string_q    uint_2_Str   (uint64_t num);
     extern string_q    gas_2_Str    (const gas_t& gas);
-    extern string_q    double_2_Str (double f, size_t nDecimals = 10);
+    extern string_q    double_2_Str (double f, size_t nDecimals = NOPOS);
     extern string_q    bni_2_Str    (const bigint_t& bn);
     extern string_q    bnu_2_Str    (const biguint_t& bu);
     extern string_q    addr_2_Str   (const address_t& addr);
@@ -72,20 +78,30 @@ namespace qblocks {
     extern string_q    topic_2_Str  (const topic_t& topic);
     extern string_q    ts_2_Str     (timestamp_t ts);
 
+    //----------------------------------------------------------------------------
+    extern string_q    hex_2_Str      (const string_q& inHex, size_t nBytes=NOPOS);
+    extern uchar_t     hex_2_Ascii    (char c1, char c2);
+    extern hashbytes_t hash_2_Bytes   (const hash_t& in);
+    extern addrbytes_t addr_2_Bytes   (const address_t& in);
+    extern hash_t      bytes_2_Hash   (uint8_t const bytes[32]);
+    extern address_t   bytes_2_Addr   (uint8_t const bytes[20]);
+
     //-------------------------------------------------------------------------
-    extern string_q    chr_2_HexStr (const string_q& str);
-    extern string_q    bnu_2_Hex    (const biguint_t& bu);
-    extern string_q    uint_2_Hex   (uint64_t num);
-    extern string_q    wei_2_Ether  (const string_q& str);
-    extern string_q    wei_2_Ether  (biguint_t val);
-    extern string_q    bloom_2_Bytes(const bloom_t& bl);
-    extern string_q    bloom_2_Bits (const bloom_t& bl);
-    extern string_q    bloom_2_Bar  (const bloom_t& bl);
+    extern string_q    chr_2_HexStr   (const string_q& str);
+    extern string_q    bnu_2_Hex      (const biguint_t& bu);
+    extern string_q    uint_2_Hex     (uint64_t num);
+    extern string_q    wei_2_Ether    (const string_q& str);
+    extern string_q    wei_2_Ether    (biguint_t val);
+    extern string_q    bloom_2_Bytes  (const bloom_t& bl);
+    extern string_q    bloom_2_Bits   (const bloom_t& bl);
+    extern string_q    bloom_2_Bar    (const bloom_t& bl);
+    extern string_q    byte_2_Bits    (uint8_t ch);
 
     //--------------------------------------------------------------------
     class time_q;
-    extern timestamp_t date_2_Ts(const time_q&   timeIn);
-    extern time_q      ts_2_Date(timestamp_t tsIn);
+    extern timestamp_t date_2_Ts      (const time_q& timeIn);
+    extern time_q      ts_2_Date      (const timestamp_t& tsIn);
+    extern time_q      str_2_Date     (const string_q& str);
 
     //--------------------------------------------------------------------
     extern bool        isZeroHash   (const hash_t& hash);
@@ -95,5 +111,7 @@ namespace qblocks {
     extern bool        isAddress    (const address_t& addr);
     extern bool        isHash       (const hash_t& hashIn);
     extern bool        isUnsigned   (const string_q& in);
+
+    typedef enum { NODIR, PREV, NEXT } direction_t;
 
 }  // namespace qblocks

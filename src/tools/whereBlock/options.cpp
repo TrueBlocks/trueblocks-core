@@ -13,38 +13,33 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("~block_list", "a space-separated list of one or more blocks to search for"),
-    COption("-account",    "find an account file, not the block file"),
-    COption("-bloom",      "find a bloom file, not the block file"),
+    COption("@fmt:<fmt>",  "export format (one of [none|json|txt|csv|api])"),
     COption("",            "Reports if a block was found in the cache, at a local, or at a remote node.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
+extern const char *STR_DISPLAY;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
+    string_q format = STR_DISPLAY;
+    blknum_t latestBlock = isNodeRunning() ? getLastBlock_client() : NOPOS;
     if (!standardOptions(command))
         return false;
 
     Init();
-    blknum_t latestBlock = isNodeRunning() ? getLatestBlockFromClient() : 7000000;
-    while (!command.empty()) {
-        string_q arg = nextTokenClear(command, ' ');
+    explode(arguments, command, ' ');
+    for (auto arg : arguments) {
         string_q orig = arg;
 
-        if (arg == "-a" || arg == "--account") {
-            mode = "account";
-
-        } else if (arg == "-b" || arg == "--bloom") {
-            mode = "bloom";
-
-        } else if (startsWith(arg, '-')) {  // do not collapse
+        if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
-        } else {
 
+        } else {
             string_q ret = blocks.parseBlockList(arg, latestBlock);
             if (endsWith(ret, "\n")) {
                 cerr << "\n  " << ret << "\n";
@@ -58,17 +53,32 @@ bool COptions::parseArguments(string_q& command) {
     if (!blocks.hasBlocks())
         return usage("You must enter a valid block number. Quitting...");
 
+    switch (exportFmt) {
+        case NONE1: format = "[{ADDR}]\t[{NAME}]\t[{SYMBOL}]"; break;
+        case API1:
+        case JSON1: format = ""; break;
+        case TXT1:
+        case CSV1:
+            format = getGlobalConfig()->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
+            manageFields("CAccountName:" + cleanFmt(format, exportFmt));
+            break;
+    }
+    expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
+
+    applyFilter();
+
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    paramsPtr = params;
-    nParamsRef = nParams;
-    pOptions = this;
-
-    mode = "block";
     optionOff(OPT_DENOM);
+    registerOptions(nParams, params);
+    items.clear();
+    blocks.Init();
+    type = CT_BLOCKS;
+    RENAME_FIELD(CCacheEntry, "extra", "blockNumber");
+    HIDE_FIELD(CCacheEntry, "type");
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -91,3 +101,28 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
         return substitute(str, "block_list", "<block> [block...]");
     return str;
 }
+
+//--------------------------------------------------------------------------------
+void COptions::applyFilter() {
+
+    string_q list = getBlockNumList();
+    CStringArray blockStrs;
+    explode(blockStrs, list, '|');
+    for (auto blockStr : blockStrs) {
+        blknum_t bn = str_2_Uint(blockStr);
+        CCacheEntry ce;
+        ce.type = type;
+        ce.extra = blockStr;
+        ce.path = getBinaryCacheFilename(CT_BLOCKS, bn);
+        ce.cached = fileExists(ce.path);
+        if (!ce.cached)
+            ce.path = (isNodeRunning() ? getVersionFromClient() : "not found");
+        if (isTestMode())
+            ce.path = substitute(substitute(ce.path, getVersionFromClient(), "--nodeVersion--"), getCachePath(""), "./");
+        items[bn] = ce;
+    }
+    expContext().fmtMap["meta"] = ", \"cachePath\": \"" + (isTestMode() ? "--" : getCachePath("")) + "\"";
+}
+
+//--------------------------------------------------------------------------------
+const char *STR_DISPLAY = "[{BLOCKNUMBER}]\t[{PATH}]\t[{CACHED}]";

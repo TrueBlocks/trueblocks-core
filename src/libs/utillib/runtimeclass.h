@@ -70,6 +70,7 @@ namespace qblocks {
 (&CLASS_NAME::class##CLASS_NAME)
 
 //------------------------------------------------------------
+//TODO(tjayrush): global data
 #define DECLARE_NODE(CLASS_NAME) \
 public: \
     static CRuntimeClass  class##CLASS_NAME; \
@@ -88,6 +89,7 @@ public: \
            string_q       getClassName    (void) const;
 
 //------------------------------------------------------------
+//TODO(tjayrush): global data
 #define IMPLEMENT_NODE(CLASS_NAME, BASECLASS_NAME) \
     static CBuiltIn       _bi##CLASS_NAME(&CLASS_NAME::class##CLASS_NAME, #CLASS_NAME, sizeof(CLASS_NAME), \
                                 CLASS_NAME::createObject, GETRUNTIME_CLASS(BASECLASS_NAME)); \
@@ -104,6 +106,9 @@ public: \
 //------------------------------------------------------------
 #define SUBFIELD_FMT(a, sf, b) string_q("[\"") + string_q(sf) + string_q("\": \"{") + \
     toUpper(string_q(a)) + "::" + toUpper(string_q(sf)) + "}\"" + (b ? ", ]" : "]")
+
+//------------------------------------------------------------
+#define HAS_FIELD(CLASS_NAME, FIELD_NAME) (GETRUNTIME_CLASS(CLASS_NAME)->findField(FIELD_NAME) != NULL)
 
 //------------------------------------------------------------
 #define HIDE_FIELD(CLASS_NAME, FIELD_NAME) { \

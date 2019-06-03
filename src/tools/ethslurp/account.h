@@ -15,9 +15,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include <vector>
-#include <map>
-#include "abilib.h"
+#include "etherlib.h"
 #include "transaction.h"
 
 namespace qblocks {
@@ -99,7 +97,7 @@ inline void CAccount::initialize(void) {
 
     addr = "";
     latestPage = 1;
-    latestTx.initialize();
+    latestTx = CTransaction();
     transactions.clear();
 
     // EXISTING_CODE
@@ -118,7 +116,6 @@ inline void CAccount::duplicate(const CAccount& ac) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    finishParse();
 }
 
 //--------------------------------------------------------------------------

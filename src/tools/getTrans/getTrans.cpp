@@ -16,23 +16,24 @@
 
 extern bool visitTransaction(CTransaction& trans, void *data);
 extern bool checkBelongs(CTransaction& trans, void *data);
+extern bool checkBelongsDeep(CTransaction& trans, void *data);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-
-    etherlib_init();
+    etherlib_init(quickQuitHandler);
 
     // Parse command line, allowing for command files
     COptions options;
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    options.nCmds = countOf(options.commandList, '\n');
-    if (options.nCmds > 1 && verbose && options.filters.size() == 0)
-        cout << "[\n";
-    while (!options.commandList.empty()) {
-        string_q command = nextTokenClear(options.commandList, '\n');
+    size_t cmdCnt = options.commandLines.size();
+    if (verbose && cmdCnt > 1)
+        cout << "[";
+
+    for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
+
         if (options.filters.size() > 0) {
             bool on = options.chkAsStr;
             options.chkAsStr = false;
@@ -40,7 +41,7 @@ int main(int argc, const char *argv[]) {
             if (!options.belongs) {
                 if (on) {
                     options.chkAsStr = on;
-                    forEveryTransactionInList(checkBelongs, &options, options.transList.queries);
+                    forEveryTransactionInList(checkBelongsDeep, &options, options.transList.queries);
                 }
                 if (!options.belongs) {
                     for (auto addr : options.filters) {
@@ -50,23 +51,27 @@ int main(int argc, const char *argv[]) {
                 }
             }
         } else {
+            size_t txCnt = countOf(options.transList.queries, '|') + 1;
+            if (verbose && txCnt > 1 && cmdCnt < 2)
+                cout << "[";
             forEveryTransactionInList(visitTransaction, &options, options.transList.queries);
+            if (verbose && txCnt > 1 && cmdCnt < 2)
+                cout << "]";
         }
     }
-    if (options.nCmds > 1 && verbose && options.filters.size() == 0)
+    if (verbose && cmdCnt > 1)
         cout << "]\n";
+
     cout.flush();
     return 0;
 }
 
-#define EARLY_QUIT 1
 //----------------------------------------------------------------
-bool visitAddrs(const CAddressAppearance& item, void *data) {
+bool visitAddrs(const CAppearance& item, void *data) {
     COptions *opt = (COptions*)data;
-#ifdef EARLY_QUIT
+
     if (opt->belongs)
         return false;
-#endif
 
     for (auto addr : opt->filters) {
         if (addr % item.addr) {
@@ -87,11 +92,7 @@ bool visitAddrs(const CAddressAppearance& item, void *data) {
 #endif
             cout.flush();
             opt->belongs = true;
-#ifdef EARLY_QUIT
             return true;  // we're done
-#else
-            return false;
-#endif
         }
     }
     return true;
@@ -99,14 +100,17 @@ bool visitAddrs(const CAddressAppearance& item, void *data) {
 
 //--------------------------------------------------------------
 bool checkBelongs(CTransaction& trans, void *data) {
+
+    // if we've been told we're done (because we found the target), stop searching
     if (!trans.forEveryAddress(visitAddrs, NULL, data))
-        return false; // if we've been told we're done (because we found the target), stop searching
+        return false;
+    return true;
+}
 
-    // if we're still searching, and we want to search input and event data as a string, do so
+//--------------------------------------------------------------
+bool checkBelongsDeep(CTransaction& trans, void *data) {
+
     COptions *opt = (COptions*)data;
-    if (!opt->chkAsStr)
-        return true;
-
     for (auto addr : opt->filters) {
         string_q bytes = substitute(addr, "0x", "");
         if (contains(trans.input, bytes)) {
@@ -139,20 +143,18 @@ bool checkBelongs(CTransaction& trans, void *data) {
 //--------------------------------------------------------------
 bool visitTransaction(CTransaction& trans, void *data) {
     COptions *opt = reinterpret_cast<COptions *>(data);
-    opt->nVisited++;
+    if (contains(trans.hash, "invalid")) {
+        ostringstream os;
+        os << cRed << "{ \"error\": \"The transaction ";
+        os << nextTokenClear(trans.hash, ' ') << " was not found.\" }" << cOff;
+        cerr << os.str();
+        return true;
+    }
+    if (verbose && opt->index > 0)
+        cout << ",";
+    opt->index++;
 
-    bool badHash = !isHash(trans.hash);
-    bool isBlock = contains(trans.hash, "block");
-    trans.hash = substitute(substitute(trans.hash, "-block_not_found", ""), "-trans_not_found", "");
     if (opt->isRaw) {
-        if (badHash) {
-            cerr << "{\"jsonrpc\":\"2.0\",\"result\":{\"hash\":\"";
-            cerr << substitute(trans.hash, " ", "") << "\",\"result\":\"";
-            cerr << (isBlock ? "block " : "");
-            cerr << "hash not found\"},\"id\":-1}" << "\n";
-            return true;
-        }
-
         // Note: this call is redundant. The transaction is already populated (if it's valid), but we need the raw data)
         string_q results;
         queryRawTransaction(results, trans.getValueByName("hash"));
@@ -160,44 +162,24 @@ bool visitTransaction(CTransaction& trans, void *data) {
         return true;
     }
 
-    if (badHash) {
-        cerr << cRed << "Warning:" << cOff;
-        cerr << " The " << (isBlock ? "block " : "") << "hash " << cYellow << trans.hash << cOff << " was not found.\n";
-        return true;
+    string_q fmt = opt->format;
+    if (opt->incTrace) {
+        getTraces(trans.traces, trans.hash);
+        SHOW_FIELD(CTransaction, "traces");
+        fmt = substitute(fmt, "\n", "\tnTraces:[{TRACESCNT}]\n");
     }
 
     if (verbose) {
-        trans.doExport(cout);
-        if (opt->nVisited <= opt->nCmds && verbose)
-            cout << ",";
-        cout << "\n";
-    } else {
-        cout << trans.Format(opt->format);
-    }
-
-    if (opt->incTrace) {
-        uint64_t nTr = getTraceCount(trans.hash);
-        CTraceArray traces;
-        getTraces(traces, trans.hash);
-        if (traces.size()) {
-            size_t dTs = 0;
-            cout << "[";
-            for (size_t i = 0 ; i < traces.size() ; i++) {
-                const CTrace *trace = &traces[i];
-                trace->doExport(cout);
-                dTs = max(dTs, trace->traceAddress.size());
-            }
-            cout << "]\n";
-            if (opt->nTraces) {
-                string_q fmt = ",{ \"nTraces\": [N]-[NN], \"depth\": [D] }";
-                cout << substitute(
-                        substitute(
-                        substitute(fmt,
-                                   "[N]", uint_2_Str(nTr)),
-                                   "[NN]", uint_2_Str(traces.size())),
-                                   "[D]", uint_2_Str(dTs));
-            }
+        if (opt->articulate) {
+            opt->abi_spec.loadAbiByAddress(trans.to);
+            opt->abi_spec.articulateTransaction(&trans);
+            if (!trans.articulatedTx.message.empty())
+                SHOW_FIELD(CFunction, "message");
         }
+        trans.doExport(cout);
+        HIDE_FIELD(CFunction, "message");
+    } else {
+        cout << trans.Format(fmt);
     }
 
     return true;

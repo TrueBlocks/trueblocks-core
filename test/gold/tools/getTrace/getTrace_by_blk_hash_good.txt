@@ -4,7 +4,7 @@ getTrace 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55 -
   "blockHash": "0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f",
   "blockNumber": 4001001,
   "subtraces": 0,
-  "traceAddress": [],
+  "traceAddress": null,
   "transactionHash": "0xe49b9d48866035a82b622e4900791210cbf36905194a7ae3dc38feedf8ca3762",
   "transactionPosition": 55,
   "type": "call",
@@ -27,5 +27,4 @@ getTrace 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55 -
     "gasUsed": 23221,
     "output": "0x"
   }
-}
-]
+}]

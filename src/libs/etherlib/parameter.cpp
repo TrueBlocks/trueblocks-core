@@ -31,12 +31,12 @@ void CParameter::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) cons
     if (!m_showing)
         return;
 
-    if (fmtIn.empty()) {
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["parameter_fmt"] : fmtIn);
+    if (fmt.empty()) {
         ctx << toJson();
         return;
     }
 
-    string_q fmt = fmtIn;
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -160,9 +160,8 @@ CArchive& operator<<(CArchive& archive, const CParameterArray& array) {
 
 //---------------------------------------------------------------------------
 void CParameter::registerClass(void) {
-    static bool been_here = false;
-    if (been_here) return;
-    been_here = true;
+    // only do this once
+    if (HAS_FIELD(CParameter, "schema")) return;
 
     size_t fieldNum = 1000;
     ADD_FIELD(CParameter, "schema",  T_NUMBER, ++fieldNum);
@@ -233,10 +232,10 @@ string_q CParameter::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'i':
-            if ( fieldName % "indexed" ) return int_2_Str(indexed);
-            if ( fieldName % "isPointer" ) return int_2_Str(isPointer);
-            if ( fieldName % "isArray" ) return int_2_Str(isArray);
-            if ( fieldName % "isObject" ) return int_2_Str(isObject);
+            if ( fieldName % "indexed" ) return bool_2_Str_t(indexed);
+            if ( fieldName % "isPointer" ) return bool_2_Str_t(isPointer);
+            if ( fieldName % "isArray" ) return bool_2_Str_t(isArray);
+            if ( fieldName % "isObject" ) return bool_2_Str_t(isObject);
             break;
         case 'n':
             if ( fieldName % "name" ) return name;
@@ -402,6 +401,43 @@ string_q CParameter::getEventAssign(uint64_t which, uint64_t nIndexed) const {
     replace(ass, "[{WHICH}]", uint_2_Str(which));
     string_q fmt = "\t\t\ta->[{NAME}] = " + ass + "\n";
     return Format(fmt);
+}
+
+//-----------------------------------------------------------------------
+static string_q elementaryName(const string_q& in) {
+    if (startsWith(in, "int["))    return "int256" + in.substr(3);
+    if (in == "int")               return "int256";
+    if (startsWith(in, "uint["))   return "uint256" + in.substr(4);
+    if (in == "uint")              return "uint256";
+    if (startsWith(in, "fixed["))  return "fixed128x128" + in.substr(5);
+    if (in == "fixed")             return "fixed128x128";
+    if (startsWith(in, "ufixed[")) return "ufixed128x128" + in.substr(6);
+    if (in == "ufixed")            return "ufixed128x128";
+    return in;
+}
+
+//-----------------------------------------------------------------------
+bool CParameter::fromDefinition(const string_q &strIn) {
+    string_q str = strIn;
+    indexed = contains(str, "indexed");
+    str = trim(substitute(str, "indexed ", ""));  // should be of form 'type name'
+    type = elementaryName(nextTokenClear(str, ' '));
+    isArray = contains(type, '[');
+    name = str;
+    return true;
+}
+
+//-----------------------------------------------------------------------
+bool CParameter::isValid(void) const {
+    // TODO(tjayrush): not exhaustive
+    if (!(startsWith(type, "address") || startsWith(type, "bool") || startsWith(type, "string") || startsWith(type, "bytes") ||
+          startsWith(type, "fixed") || startsWith(type, "uint")  || startsWith(type, "int")))
+        return false;
+    if (startsWith(type, "bytes") && type != "bytes") {
+        uint64_t n = str_2_Uint(substitute(type,"bytes",""));
+        return n > 0 && n <= 32;
+    }
+    return true;
 }
 // EXISTING_CODE
 }  // namespace qblocks

@@ -1,3 +1,4 @@
 whenBlock argc: 3 [1:stateclear] [2:-v] 
 whenBlock stateclear -v 
-block #2717576 (stateclear) : 1480448309 : 2016-11-29 19:38:29 UTC
+blocknumber	timestamp	date	name
+2717576	1480448309	2016-11-29 19:38:29 UTC	stateclear

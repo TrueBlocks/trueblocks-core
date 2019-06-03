@@ -1,17 +1,26 @@
 acctExport argc: 1 
 acctExport 
 
-  The config.toml file was not found. Are you in the right folder? Quitting...
+  You must provide at least one Ethereum address. Quitting...
 
-
-  Usage:    acctExport [-f|-l|-u|-i|-v|-h]  
-  Purpose:  Export transactions for one or more Ethereum addresses.
+  Usage:    acctExport [-x|-a|-v|-h] <address> [address...]  
+  Purpose:  Export full detail of transactions for one or more Ethereum addresses.
              
-  Where:    
-	-f  (--fmt val)       export format (one of [json|txt|csv]
-	-l  (--filter val)    show results for this address (you may specify more than one filter)
-	-u  (--useBlooms)     use bloom filters to decide whether or not to re-check the cache
-	-i  (--ignoreDdos)    ignore apparent dDos transactions.
+  Where:  
+	address_list          one or more addresses (0x...) to export (required)
+	-x  (--fmt val)       export format (one of [json|txt|csv])
+	-a  (--articulate)    articulate transactions, traces, logs, and outputs
+
+#### Hidden options (shown during testing only)
+	-b  (--blocks on/off) write blocks to the binary cache ('off' by default)
+	-t  (--txs on/off)    write transactions to the binary cache ('on' by default)
+	-r  (--traces on/off) write traces to the binary cache ('off' by default)
+	-d  (--ddos on/off)   skip over dDos transactions in export ('on' by default)
+	-m  (--maxTraces val) if --ddos:on, the number of traces defining a dDos (default = 250)
+	-s  (--start val)     first block to export (inclusive)
+	-e  (--end val)       last block to export (inclusive)
+#### Hidden options (shown during testing only)
+
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 

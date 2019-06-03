@@ -15,8 +15,6 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include <vector>
-#include <map>
 #include "abilib.h"
 #include "logentry.h"
 
@@ -31,8 +29,11 @@ class CTransaction;
 class CReceipt : public CBaseNode {
 public:
     address_t contractAddress;
+    wei_t cumulativeGasUsed;
     gas_t gasUsed;
     CLogEntryArray logs;
+    string_q logsBloom;
+    string_q root;
     uint32_t status;
 
 public:
@@ -46,6 +47,7 @@ public:
     const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
+    CReceipt(const CTransaction *pT) : pTrans(pT) {}
     const CTransaction *pTrans;
     friend class CTransaction;
     // EXISTING_CODE
@@ -99,8 +101,11 @@ inline void CReceipt::initialize(void) {
     CBaseNode::initialize();
 
     contractAddress = "";
+    cumulativeGasUsed = 0;
     gasUsed = 0;
     logs.clear();
+    logsBloom = "";
+    root = "";
     status = NO_STATUS;
 
     // EXISTING_CODE
@@ -114,14 +119,17 @@ inline void CReceipt::duplicate(const CReceipt& re) {
     CBaseNode::duplicate(re);
 
     contractAddress = re.contractAddress;
+    cumulativeGasUsed = re.cumulativeGasUsed;
     gasUsed = re.gasUsed;
     logs = re.logs;
+    logsBloom = re.logsBloom;
+    root = re.root;
     status = re.status;
 
     // EXISTING_CODE
     pTrans = re.pTrans;  // no deep copy becuase it's const
-    // EXISTING_CODE
     finishParse();
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------

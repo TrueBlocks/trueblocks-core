@@ -16,9 +16,11 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
+    CAddressArray     addresses;
     COptionsTransList transList;
-    bool isRaw;
-    bool countOnly;
+    CTraceArray       items;
+    CStringArray      rawItems;
+    bool              countOnly;
 
     COptions(void);
     ~COptions(void);

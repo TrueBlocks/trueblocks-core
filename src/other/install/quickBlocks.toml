@@ -1,5 +1,6 @@
 [version]
-current=0.2.0
+current = "0.2.0"
 
 [settings]
-blockCachePath=<NOT_SET>
+rpcProvider = "http://localhost:8545"
+cachePath = "<NOT_SET>"

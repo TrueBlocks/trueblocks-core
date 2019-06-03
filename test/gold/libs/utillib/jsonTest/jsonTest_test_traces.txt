@@ -5,7 +5,7 @@ tests/traces.json
   "blockHash": "0x680e9bb9efe81c9e304d9c60d3804ea4ba1ff33aea5932be35b7bdd75b5f3107",
   "blockNumber": 4245573,
   "subtraces": 0,
-  "traceAddress": [],
+  "traceAddress": null,
   "transactionHash": "0x6b37abd2b3fcffb64df6f6c039e8ef1bed3212b9c5f88db72fea1e189718164e",
   "transactionPosition": 193,
   "type": "call",

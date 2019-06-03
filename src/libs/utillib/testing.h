@@ -17,6 +17,7 @@ namespace testing {  // NOLINT
     typedef bool (*PF)(uint64_t testID);
     class Test {
     public:
+        //TODO(tjayrush): global data
         static PF funcs[100];
         static uint64_t nFuncs;
         Test(void)  { memset(funcs, '\0', sizeof(funcs)); }
@@ -82,7 +83,7 @@ namespace testing {  // NOLINT
     if ((a) == (b)) { \
         cout << "passed '" << #a << "' is equal to '" << #b << "'" << "\n"; \
     } else { \
-        cout << "failed '" << #a << "' should be equal to '" << #b << "'" << "\n"; \
+        cout << "failed '" << #a << "' should be equal to '" << #b << "' but got '" << a << "'\n"; \
         return false; \
     } \
 }

@@ -6,7 +6,7 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("~filenames",        "path(s) of files to check, merge, fix or display (default=display)"),
     COption("-check",            "check for duplicates and other problems in the cache"),
     COption("-data",             "in 'list' mode, render results as data (i.e export mode)"),
@@ -20,47 +20,54 @@ static COption params[] = {
     COption("-truncate:<num>",   "truncate the cache at block :n (keeps block 'n' and before, implies --fix)"),
     COption("-maxBloc(k):<num>", "for testing, max block to visit"),
     COption("-merge",            "merge two or more caches into a single cache"),
+    COption("-fmt:<fmt>",         "export format (one of [json|txt|csv])"),
     COption("@s(k)ip",           "skip value for testing"),
+    COption("@start:<num>",      "un-used hidden value - do not remove"),
     COption("",                  "Show the contents of an account cache and/or fix it by removing duplicate records.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
+    ENTER("parseArguments");
     if (!standardOptions(command))
-        return false;
+        EXIT_NOMSG(false);
 
     bool isMerge = false, isSort = false, isCacheBal = false, isBals = false;
     Init();
-    while (!command.empty()) {
-        string_q arg = nextTokenClear(command, ' ');
+    explode(arguments, command, ' ');
+    for (auto arg : arguments) {
         if (arg == "-c" || arg == "--check") {
             mode = "check|" + mode;  // always do 'checks' first
 
-        } else if (arg == "-f" || arg == "--fix") {
+        } else if (arg == "--fix") {
             if (!contains(mode, "fix"))
                 mode += "fix|";
             replace(mode, "list|fix", "fix|list");  // always do 'fixes' first
 
         } else if (arg == "-l" || arg == "--list") {
             mode += "list|";  // do 'listing' in order found
+            exportFmt = JSON1;
 
         } else if (startsWith(arg, "-t:") || startsWith(arg, "--truncate:")) {
             arg = substitute(substitute(arg, "-t:", ""), "--truncate:", "");
             if (!isNumeral(arg))
-                return usage("You must supply a block number with the --truncate:n command.");
+                EXIT_USAGE("You must supply a block number with the --truncate:n command.");
             trunc = str_2_Uint(arg);
-            if (trunc > getLatestBlockFromClient())
-                return usage("You must supply a block number lower than the latest block.");
+            if (trunc > getLastBlock_client())
+                EXIT_USAGE("You must supply a block number lower than the latest block.");
             if (!contains(mode, "fix"))
                 mode += "fix|";
             replace(mode, "list|fix", "fix|list");  // do 'fixing' prior to 'listing'
 
+        } else if (startsWith(arg, "--start:")) {
+            // dummy value
+
         } else if (startsWith(arg, "-k:") || startsWith(arg, "--maxBlock:")) {
             arg = substitute(substitute(arg, "-k:", ""), "--maxBlock:", "");
             if (!isNumeral(arg))
-                return usage("You must supply a block number with the --maxBlock:n command.");
+                EXIT_USAGE("You must supply a block number with the --maxBlock:n command.");
             maxBlock = str_2_Uint(arg);
             if (maxBlock == 0)
                 maxBlock = NOPOS;
@@ -76,24 +83,24 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-i" || arg == "--import") {
             if (!fileExists("./import.txt"))
-                return usage("File ./import.txt not found. Quitting...");
+                EXIT_USAGE("File ./import.txt not found.");
             isImport = true;
 
         } else if (arg == "-r" || arg == "--remove") {
             if (!fileExists("./remove.txt"))
-                return usage("File ./remove.txt not found. Quitting...");
+                EXIT_USAGE("File ./remove.txt not found.");
             cerr << cGreen << "Found removal file...\n";
             string_q contents;
             asciiFileToString("./remove.txt", contents);
-            while (!contents.empty()) {
-                string_q line  = nextTokenClear(contents,'\n');
-                CAcctCacheItem item(line);
-                removals.push_back(item);
-                cerr << cYellow << "\tremoval instruction: " << cTeal << removals.size() << "-" << item << cOff << "\r";
-                cerr.flush();
+            CStringArray lines;
+            explode(lines, contents, '\n');
+            for (auto line : lines) {
+                CAppearance_base item(line);
+                if (item.blk > 0) {
+                    removals.push_back(item);
+                    LOG_INFO(cYellow, "\tremoval instruction: ", cTeal, removals.size(), "-", item.blk, ".", item.txid, cOff, "\r");
+                }
             }
-            cerr << "                                                                \n";
-            cerr.flush();
             if (!isTestMode()) {
                 copyFile("./remove.txt", "remove.bak");
                 remove("./remove.txt");
@@ -116,69 +123,69 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
-                return usage("Invalid option: " + arg);
+                EXIT_USAGE("Invalid option: " + arg);
             }
 
         } else {
             string_q path = arg;
-            filenames.push_back(path);
+            if (!endsWith(path, ".acct.bin"))
+                path += ".acct.bin";
             if (!fileExists(path))
-                return usage("Cannot open file: " + path + ". Quitting.");
-            if (!contains(path, ".acct.bin"))
-                return usage("cacheMan app only processes .acct.bin files. Quitting.");
+                EXIT_USAGE("Cannot open monitor file for '" + arg + "'.");
+            address_t addr = substitute(path, ".acct.bin", "");
+            if (contains(addr, "0x") && !startsWith(addr, "0x"))
+                addr = addr.substr(addr.find("0x"));
+            if (!isTestMode() && !isAddress(addr))
+                EXIT_USAGE("Filename '" + arg + "' does not appear to contain an Ethereum address.");
+            monitors.push_back(CAccountWatch(addr, path));
         }
     }
 
-    if (!isBals && filenames.size() == 0 && !isImport)
-        return usage("You must provide at least one filename. Quitting.");
+    if (!isBals && monitors.size() == 0 && !isImport)
+        EXIT_USAGE("You must provide at least one filename.");
     if (mode.empty())
         mode = "list|";
-    if (isMerge && filenames.size() < 2)
-        return usage("Merge command needs at least two filenames. Quitting.");
-    if ((isSort || isRemove || isCacheBal) && filenames.size() != 1)
-        return usage("Command requires a single filename. Quitting.");
+    if (isMerge && monitors.size() < 2)
+        EXIT_USAGE("Merge command needs at least two filenames.");
+    if ((isSort || isRemove || isCacheBal) && monitors.size() != 1)
+        EXIT_USAGE("Command requires a single filename.");
 
     if (isBals) {
         listBalances(*this);
-        return false;
+        EXIT_NOMSG(false);
 
     } else if (isCacheBal) {
         handleCacheBals(*this);
-        return false;
+        EXIT_NOMSG(false);
 
     } else if (isSort) {
         handleSort();
-        return false;
+        EXIT_NOMSG(false);
 
     } else if (isMerge) {
         handleMerge();
-        return false;
+        EXIT_NOMSG(false);
 
     } else if (isImport) {
-        if (!fileExists("./config.toml"))
-            return usage("Could not open file: ./config.toml. Quitting.");
-        CToml toml("./config.toml");
-        loadWatches(toml);
-        if (filenames.empty())
-            filenames.push_back("cache/" + watches[0].address + ".acct.bin");
+        if (monitors.empty() || monitors.size() > 1)
+            EXIT_USAGE("Please provide a single address for this import.");
         handleImport();
-        return false;
+        EXIT_NOMSG(false);
 
     } else if (isRemove) {
         handleRemove();
-        return false;
+        EXIT_NOMSG(false);
 
     }
-
-    return true;
+    EXIT_NOMSG(true);
 }
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    paramsPtr = params;
-    nParamsRef = nParams;
+    registerOptions(nParams, params);
+    optionOn(OPT_PREFUND);
 
-    filenames.clear();
+    monitors.clear();
     mode = "";
     trunc = 0;
     asData = false;
@@ -198,23 +205,30 @@ COptions::~COptions(void) {
 }
 
 //-----------------------------------------------------------------------
-bool COptions::loadWatches(const CToml& toml) {
-
-    // Note: this call does no checks on the data
-    loadWatchList(toml, watches, "list");
-
-    if (watches.size() == 0)
-        return usage("Empty list of watches. Quitting...\n");
-
-    // Check the watches for validity and pick up balance if possible
-    for (uint32_t i = 0 ; i < watches.size() ; i++) {
-
-        const CAccountWatch *watch = &watches[i];
-        if (!isAddress(watch->address))
-            return usage("Invalid watch address " + watch->address + "\n");
-
-        if (watch->name.empty())
-            return usage("Empty watch name " + watch->name + "\n");
+bool loadMonitorData(CAppearanceArray_base& items, const address_t& addr) {
+    ENTER("loadMonitorData");
+    string_q fn = getMonitorPath(addr);
+    if (isTestMode())
+        replace(fn, getMonitorPath(""), "./");
+    size_t nRecords = (fileSize(fn) / sizeof(CAppearance_base));
+    ASSERT(nRecords);
+    CAppearance_base *buffer = new CAppearance_base[nRecords];
+    if (buffer) {
+        bzero(buffer, nRecords * sizeof(CAppearance_base));
+        CArchive txCache(READING_ARCHIVE);
+        if (txCache.Lock(fn, modeReadOnly, LOCK_NOWAIT)) {
+            txCache.Read(buffer, sizeof(CAppearance_base), nRecords);
+            txCache.Release();
+        } else {
+            EXIT_FAIL("Could not open cache file.");
+        }
+        // Add to the items which may be non-empty
+        items.reserve(items.size() + nRecords);
+        for (size_t i = 0 ; i < nRecords ; i++)
+            items.push_back(buffer[i]);
+        delete [] buffer;
+    } else {
+        EXIT_FAIL("Could not allocate memory for address " + addr);
     }
-    return true;
+    EXIT_NOMSG(true);
 }

@@ -15,8 +15,6 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include <vector>
-#include <map>
 #include "abilib.h"
 #include "receipt.h"
 #include "trace.h"
@@ -25,8 +23,8 @@ namespace qblocks {
 
 // EXISTING_CODE
 class CBlock;
-class CAddressAppearance;
-typedef bool (*ADDRESSFUNC)(const CAddressAppearance& item, void *data);
+class CAppearance;
+typedef bool (*ADDRESSFUNC)(const CAppearance& item, void *data);
 typedef bool (*TRANSFUNC)(const CTransaction *trans, void *data);
 // EXISTING_CODE
 
@@ -48,7 +46,9 @@ public:
     uint64_t isError;
     uint64_t isInternal;
     CReceipt receipt;
-    CStringArray articulatedTx;
+    CFunction articulatedTx;
+    bool finalized;
+    CTraceArray traces;
 
 public:
     CTransaction(void);
@@ -59,15 +59,13 @@ public:
     DECLARE_NODE(CTransaction);
 
     const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
-    const string_q getStringAt(const string_q& name, size_t i) const override;
 
     // EXISTING_CODE
     const CBlock *pBlock;
-    CTraceArray traces;
-    CFunction *func;
     bool forEveryAddress(ADDRESSFUNC func, TRANSFUNC filt = NULL, void *data = NULL);
     bool forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC filt = NULL, void *data = NULL);
     bool forEveryUniqueAddressPerTx(ADDRESSFUNC func, TRANSFUNC filt = NULL, void *data = NULL);
+    bool loadAsPrefund(const CStringArray& prefunds, const address_t& addr);
     // EXISTING_CODE
     bool operator==(const CTransaction& item) const;
     bool operator!=(const CTransaction& item) const { return !operator==(item); }
@@ -95,7 +93,6 @@ inline CTransaction::CTransaction(void) {
 //--------------------------------------------------------------------------
 inline CTransaction::CTransaction(const CTransaction& tr) {
     // EXISTING_CODE
-    func = NULL;
     // EXISTING_CODE
     duplicate(tr);
 }
@@ -113,9 +110,6 @@ inline CTransaction::~CTransaction(void) {
 //--------------------------------------------------------------------------
 inline void CTransaction::clear(void) {
     // EXISTING_CODE
-    if (func)
-        delete func;
-    func = NULL;
     // EXISTING_CODE
 }
 
@@ -137,13 +131,13 @@ inline void CTransaction::initialize(void) {
     input = "";
     isError = 0;
     isInternal = 0;
-    receipt.initialize();
-    articulatedTx.clear();
+    receipt = CReceipt();
+    articulatedTx = CFunction();
+    finalized = 0;
+    traces.clear();
 
     // EXISTING_CODE
     pBlock = NULL;
-    func = NULL;
-    traces.clear();
     // EXISTING_CODE
 }
 
@@ -168,13 +162,13 @@ inline void CTransaction::duplicate(const CTransaction& tr) {
     isInternal = tr.isInternal;
     receipt = tr.receipt;
     articulatedTx = tr.articulatedTx;
+    finalized = tr.finalized;
+    traces = tr.traces;
 
     // EXISTING_CODE
     pBlock = tr.pBlock;  // no deep copy, we don't own it
-    func = (tr.func ? new CFunction(*tr.func) : NULL);
-    traces = tr.traces;
-    // EXISTING_CODE
     finishParse();
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
@@ -213,8 +207,6 @@ extern CArchive& operator>>(CArchive& archive, CTransaction& tra);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 extern bool sortTransactionsForWrite(const CTransaction& t1, const CTransaction& t2);
-extern string_q decodeRLP(const string_q& name, const string_q& input, size_t nItems, string_q *items);
-extern string_q decodeRLP(const CFunction *func, const string_q& input);
 extern string_q nextBlockChunk(const string_q& fieldIn, const void *data);
 // EXISTING_CODE
 }  // namespace qblocks

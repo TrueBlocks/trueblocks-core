@@ -15,8 +15,6 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include <vector>
-#include <map>
 #include "basetypes.h"
 #include "basenode.h"
 #include "sfarchive.h"
@@ -29,11 +27,17 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CAccountName : public CBaseNode {
 public:
+    string_q addr;
     string_q symbol;
     string_q name;
-    string_q addr;
     string_q source;
     string_q description;
+    string_q logo;
+    bool visible;
+    string_q fn;
+    double size;
+    blknum_t lb;
+    uint64_t nrecs;
 
 public:
     CAccountName(void);
@@ -45,7 +49,6 @@ public:
 
     // EXISTING_CODE
     explicit CAccountName(string_q& nameIn);
-    bool Match(const string_q& s1, const string_q& s2, const string_q& s3, bool matchCase, bool all) const;
     // EXISTING_CODE
     bool operator==(const CAccountName& item) const;
     bool operator!=(const CAccountName& item) const { return !operator==(item); }
@@ -96,11 +99,17 @@ inline void CAccountName::clear(void) {
 inline void CAccountName::initialize(void) {
     CBaseNode::initialize();
 
+    addr = "";
     symbol = "";
     name = "";
-    addr = "";
     source = "";
     description = "";
+    logo = "";
+    visible = true;
+    fn = "";
+    size = 0.0;
+    lb = 0;
+    nrecs = 0;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -111,15 +120,20 @@ inline void CAccountName::duplicate(const CAccountName& ac) {
     clear();
     CBaseNode::duplicate(ac);
 
+    addr = ac.addr;
     symbol = ac.symbol;
     name = ac.name;
-    addr = ac.addr;
     source = ac.source;
     description = ac.description;
+    logo = ac.logo;
+    visible = ac.visible;
+    fn = ac.fn;
+    size = ac.size;
+    lb = ac.lb;
+    nrecs = ac.nrecs;
 
     // EXISTING_CODE
     // EXISTING_CODE
-    finishParse();
 }
 
 //--------------------------------------------------------------------------
@@ -141,6 +155,7 @@ inline bool CAccountName::operator==(const CAccountName& item) const {
 //-------------------------------------------------------------------------
 inline bool operator<(const CAccountName& v1, const CAccountName& v2) {
     // EXISTING_CODE
+    return v1.addr < v2.addr;
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;
@@ -153,6 +168,7 @@ extern CArchive& operator<<(CArchive& archive, const CAccountNameArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+typedef map<address_t, CAccountName> CAccountNameMap;
 // EXISTING_CODE
 }  // namespace qblocks
 

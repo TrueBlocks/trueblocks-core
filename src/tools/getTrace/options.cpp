@@ -13,14 +13,14 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
-    COption("~!trans_list", "a space-separated list of one or more transaction identifiers "
+static const COption params[] = {
+    COption("~!trans_list",   "a space-separated list of one or more transaction identifiers "
                                 "(tx_hash, bn.txID, blk_hash.txID)"),
-    COption("-raw",         "retrieve raw transaction directly from the running node"),
-    COption("-countOnly",   "show the number of traces for the transaction only"),
-    COption("",             "Retrieve a transaction's traces from the local cache or a running node."),
+    COption("-countOnly",     "show the number of traces for the transaction only"),
+    COption("@address:<val>", "a list of addresses used to filter the results"),
+    COption("",               "Retrieve a transaction's traces from the local cache or a running node."),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -28,47 +28,53 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
+    ENTER4("parseArguments");
     Init();
-    while (!command.empty()) {
-        string_q arg = nextTokenClear(command, ' ');
-        if (arg == "-r" || arg == "--raw") {
-            isRaw = true;
+    explode(arguments, command, ' ');
+    for (auto arg : arguments) {
+        string_q orig = arg;
+        if (startsWith(arg, "-a:") || startsWith(arg, "--address:")) {
+            arg = substitute(substitute(arg, "-a:", ""), "--address:", "");
+            if (!isAddress(arg))
+                EXIT_USAGE(orig + " does not appear to be a valid Ethereum address.");
+            addresses.push_back(arg + "|");
 
-        } else if (arg == "-c" || arg == "--countOnly") {
+       } else if (arg == "-c" || arg == "--countOnly") {
             countOnly = true;
 
        } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
-                return usage("Invalid option: " + arg);
+                EXIT_USAGE("Invalid option: " + arg);
             }
 
         } else {
 
+            string_q errorMsg;
+            if (!wrangleTxId(arg, errorMsg))
+                EXIT_USAGE(errorMsg);
             string_q ret = transList.parseTransList(arg);
             if (!ret.empty())
-                return usage(ret);
+                EXIT_USAGE(ret);
 
         }
     }
 
     if (!transList.hasTrans())
-        return usage("Please specify at least one transaction identifier.");
+        EXIT_USAGE("Please specify at least one transaction identifier.");
 
-//    if (address && !isAddress(address))
-//        return usage("Bad address.");
-
-    return true;
+    EXIT_NOMSG(true);
 }
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    paramsPtr = params;
-    nParamsRef = nParams;
-    pOptions = this;
+    optionOn(OPT_RAW);
+    registerOptions(nParams, params);
 
+    addresses.clear();
     transList.Init();
-    isRaw = false;
+    items.reserve(5000);
+    rawItems.reserve(5000);
     countOnly = false;
 }
 
@@ -97,7 +103,7 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
         ret += "[{trans_list}] is one or more space-separated identifiers which may be either a transaction hash,|"
                 "a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.\n";
         ret += "This tool checks for valid input syntax, but does not check that the transaction requested exists.\n";
-        ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if configured "
+        ret += "This tool retrieves information from the local node or rpcProvider if configured "
                     "(see documentation).\n";
         ret += "If the queried node does not store historical state, the results may be undefined.\n";
         return ret;

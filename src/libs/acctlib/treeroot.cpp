@@ -31,12 +31,12 @@ void CTreeRoot::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const
     if (!m_showing)
         return;
 
-    if (fmtIn.empty()) {
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["treeroot_fmt"] : fmtIn);
+    if (fmt.empty()) {
         ctx << toJson();
         return;
     }
 
-    string_q fmt = fmtIn;
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -153,9 +153,8 @@ CArchive& operator<<(CArchive& archive, const CTreeRootArray& array) {
 
 //---------------------------------------------------------------------------
 void CTreeRoot::registerClass(void) {
-    static bool been_here = false;
-    if (been_here) return;
-    been_here = true;
+    // only do this once
+    if (HAS_FIELD(CTreeRoot, "schema")) return;
 
     size_t fieldNum = 1000;
     ADD_FIELD(CTreeRoot, "schema",  T_NUMBER, ++fieldNum);
@@ -246,6 +245,30 @@ ostream& operator<<(ostream& os, const CTreeRoot& item) {
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+    string_q idex(char n) {
+        switch (n) {
+            case 0: return "0";
+            case 1: return "1";
+            case 2: return "2";
+            case 3: return "3";
+            case 4: return "4";
+            case 5: return "5";
+            case 6: return "6";
+            case 7: return "7";
+            case 8: return "8";
+            case 9: return "9";
+            case 10: return "a";
+            case 11: return "b";
+            case 12: return "c";
+            case 13: return "d";
+            case 14: return "e";
+            case 15: return "f";
+        }
+        cerr << "should never happen";
+        quickQuitHandler(1);
+        return "";
+    }
+
     //-----------------------------------------------------------------------------
     string_q CTreeRoot::at(const string_q& _key) const {
         if (!root)

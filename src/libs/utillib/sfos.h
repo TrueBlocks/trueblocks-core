@@ -17,11 +17,9 @@ namespace qblocks {
     //-------------------------------------------------------------------------------
     extern uint64_t fileSize(const string_q& file);
 
-    extern void listFiles(size_t& nFiles, string_q *files, const string_q& mask);
-    extern void listFolders(size_t& nDirs, string_q *dirs, const string_q& mask);
-    extern void listFilesOrFolders(size_t& nItems, string_q *items, const string_q& mask);
-
     extern int copyFile(const string_q& from, const string_q& to);
+    extern int moveFile(const string_q& from, const string_q& to);
+    extern int cleanFolder(const string_q& path, bool recurse=false, bool interactive=false);
 
     extern bool folderExists(const string_q& path);
     extern bool fileExists(const string_q& file);
@@ -33,6 +31,8 @@ namespace qblocks {
     extern string_q doCommand(const string_q& cmd);
 
     extern string_q makeValidName(const string_q& inOut);
+
+    extern bool isRunning(const string_q& progName, bool excludeSelf);
 
     #define kMaxPathSize _POSIX_PATH_MAX
 }  // namespace qblocks

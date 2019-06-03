@@ -42,8 +42,15 @@ endfunction(run_test)
 
 # Weird, but we have to call the getBlock code to make sure the block is in the cache
 run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrans_preload" ${EXECUTABLE_OUTPUT_PATH}/getBlock " 3657480" " -o")
+# Weird, but we have to get ABIs so the articulation tests work
+run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrans_preload_abi1" ${EXECUTABLE_OUTPUT_PATH}/grabABI " 0x1234567812345678123456781234567812345678")
+run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrans_preload_abi2" ${EXECUTABLE_OUTPUT_PATH}/grabABI " 0x6090a6e47849629b7245dfa1ca21d94cd15878ef")
+run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrans_preload_abi3" ${EXECUTABLE_OUTPUT_PATH}/grabABI " 0xebf2bf80c3ddb0b6ac2f88be8dceec7bf12dff22")
+run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrans_preload_abi4" ${EXECUTABLE_OUTPUT_PATH}/grabABI " 0x2bd2326c993dfaef84f696526064ff22eba5b362")
+run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrans_preload_abi5" ${EXECUTABLE_OUTPUT_PATH}/grabABI " 0x314159265dd8dbb310642f98f50c066173c1259c")
+run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrans_preload_abi6" ${EXECUTABLE_OUTPUT_PATH}/grabABI " 0x314159265dd8dbb310642f98f50c066173c1259b")
+run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrans_preload_abi7" ${EXECUTABLE_OUTPUT_PATH}/grabABI " 0x159cf1e9ae58211b588f5e3bf1d7e423952d959b")
 
-# Enter one line for each individual test
 run_test("getTrans_README"            "-th")
 run_test("getTrans_no_input"          )
 run_test("getTrans_bad_hash"          "0x0012")
@@ -53,19 +60,29 @@ run_test("getTrans_invalid_param_1"   ".th")
 run_test("getTrans_invalid_param_2"   ".whatever")
 run_test("getTrans_invalid_param_3"   "1233123")
 run_test("getTrans_by_txhash"          "0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765")
-run_test("getTrans_by_bnun_and_txid"   "4000000.5")
+run_test("getTrans_by_bnun_and_txid"   "4000002.5" " --trace")
 run_test("getTrans_by_bhash_and_txid"  "0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4" " -v" " --parity")
-run_test("getTrans_keys_combination" "0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765" " 4000000.5" " 0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4")
-run_test("getTrans_from_node"          "-r" " 4000000.5")
+run_test("getTrans_keys_combination" "0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765" " 4000000.5" " 0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4" " -v")
+run_test("getTrans_mulit_line_mulit_txs" "--file:cmd_file_1" " -v")
+run_test("getTrans_from_node"          "--raw" " 4000000.5")
 run_test("getTrans_from_node_long"     "--raw" " 4000000.5")
 run_test("getTrans_help"               "-h")
 run_test("getTrans_help_long"          "--help")
 run_test("getTrans_should_be_error"    "0xeec4ccd13fe05907f9d732a8ad245bcb7f918217157b89baaa23895c12eb329a" " --verbose")
 
+run_test("getTrans_first"              " 40500.0.next")
+#run_test("getTrans_latest"             " latest")
+run_test("getTrans_nav_prev1"          " 1001001.1.prev")
+run_test("getTrans_nav_prev2"          " 1001001.0.prev")
+run_test("getTrans_nav_next1"          " 1001001.2.next")
+run_test("getTrans_nav_next2"          " 1001001.3.next")
+
 run_test("getTrans_verbose_blk_idx1"   "-v" " 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3")
 run_test("getTrans_verbose_blk_idx2"   "--verbose" " 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.4")
-run_test("getTrans_verbose_blk_idx3"   "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3" " -v")
-
+run_test("getTrans_verbose_blk_idx3"   "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3" " -v" " -t")
+run_test("getTrans_articulate"         "-a" " -v" " -t" " 6513870.62" " 6687987.11" " 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12")
+run_test("getTrans_articulate_2"       "3648669.24" " -avt")
+run_test("getTrans_articulate_arrays"  "0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f" " -vta")
 run_test("getTrans_by_blk_hash_good"   "0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55" " --verbose")
 # this test case should fail, but it doesn't. It calls for a transaction (#155) that does not exist since this block only has 94 transactions
 #run_test("getTrans_by_blk_hash_bad"    "0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.155" " -v")
@@ -81,6 +98,11 @@ run_test("getTrans_bad_hash_msg"                 "0x060e4cf9fa8d34a8b423b5b3691b
 run_test("getTrans_bad_hash_msg_raw"     "--raw" " 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521" " 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11" " 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521")
 run_test("getTrans_bad_blkhash_msg"              "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1" " 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5")
 run_test("getTrans_bad_blkhash_msg_raw"  "--raw" "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1" " 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5")
+
+run_test("getTrans_revert_not_err" "0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c" " -a" " -v" " -t")
+
+#run_test("getTrans_message" "0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344" " -a" " -v")
+run_test("getTrans_core_dump_bug"      "0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10" " -avt")
 
 # Installation steps
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

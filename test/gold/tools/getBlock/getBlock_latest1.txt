@@ -1,8 +1,10 @@
 getBlock argc: 2 [1:--latest] 
 getBlock --latest 
-Hostname:                --hostname--
-Version:                 0.5.5-alpha
-Location of cache:       --cache_dir--
-Latest block in cache:  --cache--
-Latest block at client: --client--
-Behind head (catchup):  --diff--
+  Client version:     --version--
+  Trueblocks Version: GHC-TrueBlocks//0.5.7-alpha--git-hash---git-ts-
+  RPC Provider:       --rpc_provider--
+  Cache location:     --cache_dir--
+  Host (user):        --host (user)--
+  Latest cache:       --final--, --staging--, --pending--
+  Latest client:      --client--
+  Dist from head:     --diff----diffdiff--

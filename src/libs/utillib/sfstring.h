@@ -80,6 +80,7 @@ namespace qblocks {
     extern bool    contains       (const string_q& haystack, const string_q& needle);
     extern bool    contains       (const string_q& haystack, char ch);
     extern bool    containsI      (const string_q& haystack, const string_q& needle);
+    extern bool    containsAny    (const string_q& haystack, const string_q& needle);
 
     //--------------------------------------------------------------------
     extern string_q toLower       (const string_q& in);
@@ -104,11 +105,37 @@ namespace qblocks {
     extern size_t   explode              (CStringArray& result, const string& input, char ch);
     extern size_t   forEveryExplodedItem (const string& input, char ch, APPLYFUNC func, void *data);
 
+    //---------------------------------------------------------------------------
+    template<typename T>
+    string_q join(const T begin, const T end, const string_q& separator, const string_q& concluder) {
+        stringstream ss;
+        for (T iter = begin; iter != end; iter++) {
+            if (!ss.str().empty())
+                ss << separator;
+            ss << *iter;
+        }
+        ss << concluder;
+        return ss.str();
+    }
+
+    //---------------------------------------------------------------------------
+    template<typename T>
+    string_q join(T begin, T end, string_q separator) {
+        return join(begin, end, separator, "");
+    }
+
+    //---------------------------------------------------------------------------
+    template<typename T>
+    string_q join(T begin, T end) {
+        return join(begin, end, ", ");
+    }
+
     //---------------------------------------------------------------------------------------
     inline string_q getEnvStr(const char* name) {
         char *sss = getenv(name);
         return ( sss ? string_q(sss) : string_q(""));
     }
+    inline string_q getEnvStr(const string_q& name) { return getEnvStr(name.c_str()); }
 
     // formatting only
     extern string_q uint_2_Str(uint64_t i);
@@ -124,6 +151,36 @@ namespace qblocks {
     inline string_q padNum9(uint64_t n) { return padLeft(uint_2_Str((n)), 9, '0'); }
 
     //--------------------------------------------------------------------
+    inline string_q padNum2(uint32_t n) { return padLeft(uint_2_Str(uint64_t(n)), 2, '0'); }
+    inline string_q padNum3(uint32_t n) { return padLeft(uint_2_Str(uint64_t(n)), 3, '0'); }
+    inline string_q padNum4(uint32_t n) { return padLeft(uint_2_Str(uint64_t(n)), 4, '0'); }
+    inline string_q padNum5(uint32_t n) { return padLeft(uint_2_Str(uint64_t(n)), 5, '0'); }
+    inline string_q padNum6(uint32_t n) { return padLeft(uint_2_Str(uint64_t(n)), 6, '0'); }
+    inline string_q padNum7(uint32_t n) { return padLeft(uint_2_Str(uint64_t(n)), 7, '0'); }
+    inline string_q padNum8(uint32_t n) { return padLeft(uint_2_Str(uint64_t(n)), 8, '0'); }
+    inline string_q padNum9(uint32_t n) { return padLeft(uint_2_Str(uint64_t(n)), 9, '0'); }
+
+    //--------------------------------------------------------------------
+    inline string_q padNum2(int64_t n) { return padLeft(int_2_Str((n)), 2, '0'); }
+    inline string_q padNum3(int64_t n) { return padLeft(int_2_Str((n)), 3, '0'); }
+    inline string_q padNum4(int64_t n) { return padLeft(int_2_Str((n)), 4, '0'); }
+    inline string_q padNum5(int64_t n) { return padLeft(int_2_Str((n)), 5, '0'); }
+    inline string_q padNum6(int64_t n) { return padLeft(int_2_Str((n)), 6, '0'); }
+    inline string_q padNum7(int64_t n) { return padLeft(int_2_Str((n)), 7, '0'); }
+    inline string_q padNum8(int64_t n) { return padLeft(int_2_Str((n)), 8, '0'); }
+    inline string_q padNum9(int64_t n) { return padLeft(int_2_Str((n)), 9, '0'); }
+
+    //--------------------------------------------------------------------
+    inline string_q padNum2(int32_t n) { return padLeft(int_2_Str(int64_t(n)), 2, '0'); }
+    inline string_q padNum3(int32_t n) { return padLeft(int_2_Str(int64_t(n)), 3, '0'); }
+    inline string_q padNum4(int32_t n) { return padLeft(int_2_Str(int64_t(n)), 4, '0'); }
+    inline string_q padNum5(int32_t n) { return padLeft(int_2_Str(int64_t(n)), 5, '0'); }
+    inline string_q padNum6(int32_t n) { return padLeft(int_2_Str(int64_t(n)), 6, '0'); }
+    inline string_q padNum7(int32_t n) { return padLeft(int_2_Str(int64_t(n)), 7, '0'); }
+    inline string_q padNum8(int32_t n) { return padLeft(int_2_Str(int64_t(n)), 8, '0'); }
+    inline string_q padNum9(int32_t n) { return padLeft(int_2_Str(int64_t(n)), 9, '0'); }
+
+    //--------------------------------------------------------------------
     inline string_q padNum3T(uint64_t n) { return padLeft(uint_2_Str((n)), 3); }
     inline string_q padNum4T(uint64_t n) { return padLeft(uint_2_Str((n)), 4); }
     inline string_q padNum5T(uint64_t n) { return padLeft(uint_2_Str((n)), 5); }
@@ -133,19 +190,16 @@ namespace qblocks {
     inline string_q padNum9T(uint64_t n) { return padLeft(uint_2_Str((n)), 9); }
 
     //--------------------------------------------------------------------
-    inline string_q padNum2 (int64_t n) { return padLeft(int_2_Str((n)), 2, '0'); }
-    inline string_q padNum3i(int64_t n) { return padLeft(int_2_Str((n)), 3, '0'); }
-    inline string_q padNum4 (int64_t n) { return padLeft(int_2_Str((n)), 4, '0'); }
-    inline string_q padNum5 (int64_t n) { return padLeft(int_2_Str((n)), 5, '0'); }
-    inline string_q padNum6 (int64_t n) { return padLeft(int_2_Str((n)), 6, '0'); }
-    inline string_q padNum7 (int64_t n) { return padLeft(int_2_Str((n)), 7, '0'); }
-    inline string_q padNum8 (int64_t n) { return padLeft(int_2_Str((n)), 8, '0'); }
-    inline string_q padNum9 (int64_t n) { return padLeft(int_2_Str((n)), 9, '0'); }
-
-    //--------------------------------------------------------------------
     inline string_q padNum3T(int64_t n) { return padLeft(int_2_Str((n)), 3); }
+    inline string_q padNum4T(int64_t n) { return padLeft(int_2_Str((n)), 4); }
     inline string_q padNum5T(int64_t n) { return padLeft(int_2_Str((n)), 5); }
+    inline string_q padNum6T(int64_t n) { return padLeft(int_2_Str((n)), 6); }
     inline string_q padNum7T(int64_t n) { return padLeft(int_2_Str((n)), 7); }
     inline string_q padNum8T(int64_t n) { return padLeft(int_2_Str((n)), 8); }
+    inline string_q padNum9T(int64_t n) { return padLeft(int_2_Str((n)), 9); }
+
+    //--------------------------------------------------------------------
+    extern string_q escape_string(const string_q& str);
+    extern void cleanString(string_q& str, bool isCode);
 
 }  // namespace qblocks

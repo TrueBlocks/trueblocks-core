@@ -15,8 +15,6 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include <vector>
-#include <map>
 #include "abilib.h"
 
 namespace qblocks {
@@ -31,8 +29,12 @@ public:
     address_t address;
     string_q data;
     uint64_t logIndex;
+    bool removed;
     CTopicArray topics;
-    CStringArray articulatedLog;
+    CFunction articulatedLog;
+    string_q compressedLog;
+    blknum_t transactionLogIndex;
+    string_q type;
 
 public:
     CLogEntry(void);
@@ -42,11 +44,11 @@ public:
 
     DECLARE_NODE(CLogEntry);
 
-    const string_q getStringAt(const string_q& name, size_t i) const override;
+    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
+    const string_q getStringAt(const string_q& fieldName, size_t i) const override;
 
     // EXISTING_CODE
     const CReceipt *pReceipt;
-    CFunction *func;
     // EXISTING_CODE
     bool operator==(const CLogEntry& item) const;
     bool operator!=(const CLogEntry& item) const { return !operator==(item); }
@@ -73,7 +75,6 @@ inline CLogEntry::CLogEntry(void) {
 //--------------------------------------------------------------------------
 inline CLogEntry::CLogEntry(const CLogEntry& lo) {
     // EXISTING_CODE
-    func = NULL;
     // EXISTING_CODE
     duplicate(lo);
 }
@@ -91,9 +92,6 @@ inline CLogEntry::~CLogEntry(void) {
 //--------------------------------------------------------------------------
 inline void CLogEntry::clear(void) {
     // EXISTING_CODE
-    if (func)
-        delete func;
-    func = NULL;
     // EXISTING_CODE
 }
 
@@ -104,12 +102,15 @@ inline void CLogEntry::initialize(void) {
     address = "";
     data = "";
     logIndex = 0;
+    removed = 0;
     topics.clear();
-    articulatedLog.clear();
+    articulatedLog = CFunction();
+    compressedLog = "";
+    transactionLogIndex = 0;
+    type = "";
 
     // EXISTING_CODE
     pReceipt = NULL;
-    func = NULL;
     // EXISTING_CODE
 }
 
@@ -121,15 +122,18 @@ inline void CLogEntry::duplicate(const CLogEntry& lo) {
     address = lo.address;
     data = lo.data;
     logIndex = lo.logIndex;
+    removed = lo.removed;
     topics = lo.topics;
     articulatedLog = lo.articulatedLog;
+    compressedLog = lo.compressedLog;
+    transactionLogIndex = lo.transactionLogIndex;
+    type = lo.type;
 
     // EXISTING_CODE
     // no deep copy because it's const
     pReceipt = lo.pReceipt;
-    func = (lo.func ? new CFunction(*lo.func) : NULL);
-    // EXISTING_CODE
     finishParse();
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------

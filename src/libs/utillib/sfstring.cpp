@@ -35,9 +35,9 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     size_t explode(CStringArray& result, const string& input, char needle) {
 
-        string_q buffer{""};
-        result.reserve(countOf(input, needle)+1);
+        result.reserve(result.size() + countOf(input, needle) + 1); // maybe an append
 
+        string_q buffer{""};
         for (auto ch : input) {
             if (ch != needle) {
                 buffer += ch;
@@ -314,10 +314,100 @@ namespace qblocks {
         return str;
     }
 
+    //--------------------------------------------------------------------
     string_q extract(const string_q& haystack, size_t pos, size_t len) {
         if (pos >= haystack.length())
             return "";
         return haystack.substr(pos, len);
     }
 
+    //--------------------------------------------------------------------
+    string_q escape_string(const string_q& str) {
+        string_q res;
+        for (auto it = str.begin(); it != str.end(); ++it) {
+            if (*it == '\b') res += "\\b";
+            else if (*it == '\t') res += "\\t";
+            else if (*it == '\n') res += "\\n";
+            else if (*it == '\f') res += "\\f";
+            else if (*it == '\r') res += "\\r";
+            else if (*it == '"' ) res += "\\\"";
+            else if (*it == '\\') res += "\\\\";
+            else if (static_cast<uint32_t>(*it) <= UINT32_C(0x001f)) {
+                res += "\\u";
+                stringstream ss;
+                ss << hex << static_cast<uint32_t>(*it);
+                res += ss.str();
+            } else { res += *it; }
+        }
+        return res;
+    }
+
+    //--------------------------------------------------------------------------------
+    void cleanString(string_q& str, bool isCode) {
+        size_t pos = 0;
+        typedef enum { OUT, IN_DASH, IN_SPACE, IN_NL, COMM_START, IN_COMM } StateThing;
+        string_q comment_end, lastTwo = "~~";
+        StateThing state = OUT;
+        for (auto ch : str) {
+            lastTwo = trim((comment_end == "\n" ? ' ' : lastTwo[lastTwo.length()-1]) + string(1, ch));
+            switch (state) {
+                case OUT:
+                    switch (ch) {
+                        case '\t': break; // skip it
+                        case '\r': if (!isCode) str[pos++] = ch;    break;
+                        case '\n': if (isCode)  str[pos++] = ' ';   else str[pos++] = ch; break;
+                        case ' ' :              state = IN_SPACE;   break;
+                        case '-' : if (!isCode) state = IN_DASH;    else str[pos++] = ch; break;
+                        case '\\':              state = IN_NL;      break;
+                        case '/' : if (isCode)  state = COMM_START; break;
+                        default: str[pos++] = ch;
+                    }
+                    break;
+                case IN_SPACE:
+                    if (isCode && ch == '\n') {
+                        str[pos++] = ' ';
+                    } else switch (ch) {
+                        case ' ':                                                 break; // skip it
+                        default : str[pos++] = ' '; str[pos++] = ch; state = OUT; break;
+                    }
+                    break;
+                case IN_DASH:
+                    switch (ch) {
+                        case 'v':
+                        case 'h':                                                 break; // skip it
+                        default : str[pos++] = '-'; str[pos++] = ch; state = OUT; break;
+                    }
+                    break;
+                case IN_NL:
+                    switch (ch) {
+                        case '\n':                                                 break; // skip it
+                        default : str[pos++] = '\\'; str[pos++] = ch; state = OUT; break;
+                    }
+                    break;
+                case COMM_START:
+                    switch (ch) {
+                        case '*': state = IN_COMM; comment_end = "*/"; break;
+                        case '/': state = IN_COMM; comment_end = "\n"; break;
+                        default : str[pos++] = '/'; str[pos++] = ch; state = OUT; break;
+                    }
+                    break;
+                case IN_COMM:
+                    if (lastTwo == comment_end) {
+                        state = OUT;
+                    }
+                    break;
+            }
+        }
+        str[pos] = '\0';
+        str.resize(pos);
+    }
+
+    //---------------------------------------------------------------------------------------
+    bool containsAny(const string_q& haystack, const string_q& needle) {
+        string need = needle.c_str();
+        for (const auto elem : need)
+            if (contains(haystack, elem))
+                return true;
+        return false;
+    }
 }  // namespace qblocks

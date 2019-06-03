@@ -1,3 +1,4 @@
 whenBlock argc: 3 [1:daofork] [2:-v] 
 whenBlock daofork -v 
-block #1920000 (daofork) : 1469020840 : 2016-07-20 13:20:40 UTC
+blocknumber	timestamp	date	name
+1920000	1469020840	2016-07-20 13:20:40 UTC	daofork

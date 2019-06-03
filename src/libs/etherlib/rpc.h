@@ -48,9 +48,9 @@ namespace qblocks {
     class RPCSession {
     public:
         CReceipt eth_getTransactionReceipt(const string_q& _transactionHash);
-        string_q eth_getCode(const string_q& _address, const string_q& _blockNumber);
-        string_q eth_getBalance(const string_q& _address, const string_q& _blockNumber);
-        string_q eth_getStorageRoot(const string_q& _address, const string_q& _blockNumber);
+//        string_q eth_get Code(const string_q& _address, const string_q& _blockNumber);
+//        string_q eth_get Balance(const string_q& _address, const string_q& _blockNumber);
+//        string_q eth_get StorageRoot(const string_q& _address, const string_q& _blockNumber);
         string_q rpcCall(const string_q& _methodName, const string_q& _args);
 
     private:

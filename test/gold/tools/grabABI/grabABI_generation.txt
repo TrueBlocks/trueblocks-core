@@ -1,33 +1,33 @@
 grabABI argc: 7 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:-v] [3:-n] [4:-e] [5:-g] [6:code] 
 grabABI 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -v -n -e -g code 
 
-  Invalid address 'code'. Length is not equal to 40 characters (20 bytes).
+  Invalid address 'code'. Length (4) is not equal to 40 characters (20 bytes).
 
 
-  Usage:    grabABI [-c|-g|-d|-e|-n|-o|-r|-v|-h] addr  
+  Usage:    grabABI [-c|-g|-d|-e|-j|-n|-o|-l|-v|-h] addr  
   Purpose:  Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
              
-  Where:    
+  Where:  
 	addr                  the address(es) of the smart contract(s) to grab (required)
 	-c  (--canonical)     convert all types to their canonical represenation and remove all spaces from display
 	-g  (--generate)      generate C++ code into the current folder for all functions and events found in the ABI
 	-d  (--data)          export the display as data
 	-e  (--encode)        generate the encodings for the functions / events in the ABI
+	-j  (--json)          print the ABI to the screen as json
 	-n  (--noconst)       generate encodings for non-constant functions and events only (always true when generating)
 	-o  (--open)          open the ABI file for editing, download if not already present
-	-r  (--raw)           force retrieval of ABI from etherscan (ignoring cache)
+	-l  (--sol fn)        create the ABI file from a .sol file in the local directory
 
 #### Hidden options (shown during testing only)
-	-j  (--json)          print the ABI to the screen as json
 	-s  (--silent)        if ABI cannot be acquired, fail silently (useful for scripting)
 	-n  (--nodec)         do not decorate duplicate names
-	-f  (--freshen)       regenerate the binary database version of all ABIs in the abi cache
+	-k  (--known)         load common 'known' ABIs from cache
 #### Hidden options (shown during testing only)
 
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 
-  Notes:  
+  Notes:
 	- Use the --silent option, which displays fewer messages, for scripting.
 
   Powered by QBlocks

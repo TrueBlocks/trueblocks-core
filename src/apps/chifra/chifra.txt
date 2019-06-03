@@ -20,7 +20,6 @@ rm -fR etherTip ; chifra etherTip 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 0x8
 Tip Jar|988725
 Unicorn Tokens|988949
 
-
 FirstBlood
 rm -fR firstBlood ; chifra firstBlood 0xaf30d2a7e90d7dc361c8c4585e9bb7d2f6f15bc7 0x3286652Eacf7aBF27383Dd1a9218bA9d8169D15E 0xa5384627F6DcD3440298E2D8b0Da9d5F0FCBCeF7
 FirstBlood|2321002

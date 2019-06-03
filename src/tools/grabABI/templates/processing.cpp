@@ -17,7 +17,7 @@
 bool COptions::displayFromCache(uint64_t startBlock) {
 
     // Make sure we have a cache file...
-    string_q cacheFileName = "./cache/" + watches[0].address + ".acct.bin";
+    string_q cacheFileName = getMonitorPath(watches[0].address);
     if (!fileExists(cacheFileName))
         return false;
 
@@ -34,14 +34,14 @@ bool COptions::displayFromCache(uint64_t startBlock) {
     }
 
     CBlock latest;
-    getBlock(latest, "latest");
+    getBlock_light(latest, "latest");
 
     CBlock block;
     uint64_t lastBlock = 0;
     uint64_t endBlock = NOPOS;
 
     CArchive txCache(READING_ARCHIVE);
-    if (txCache.Lock(cacheFileName, binaryReadOnly, LOCK_NOWAIT)) {
+    if (txCache.Lock(cacheFileName, modeReadOnly, LOCK_NOWAIT)) {
 
         txCache.Seek( (-1 * (long)(2*sizeof(uint64_t))), SEEK_END);  // NOLINT
         txCache.Read(endBlock);
@@ -65,13 +65,13 @@ bool COptions::displayFromCache(uint64_t startBlock) {
 
                     // If we switched blocks, try to read the next block...
                     block = CBlock();
-                    bool ret = readBlockFromBinary(block, getBinaryFilename(blockNum));
+                    bool ret = readBlockFromBinary(block, getBinaryCacheFilename(CT_BLOCKS, blockNum));
                     if (!ret) {
                         // ... if we failed to read from some reason, try to pick it up from the node
                         getBlock(block, blockNum);
-                        block.finalized = isBlockFinal(block.timestamp, latest.timestamp, (60 * 4));
-                        writeBlockToBinary(block, getBinaryFilename(blockNum));
-                        if (!fileExists(getBinaryFilename(blockNum))) {
+                        block.finalized = is BlockFinal(block.timestamp, latest.timestamp, (6 0 * 4));
+                        writeBlockToBinary(block, getBinaryCacheFilename(CT_BLOCKS, blockNum));
+                        if (!fileExists(getBinaryCacheFilename(CT_BLOCKS, blockNum))) {
                             cerr << "Read of block " << blockNum << " failed. Quitting cache read\r\n";
                             txCache.Release();
                             return false;
@@ -178,7 +178,7 @@ bool COptions::loadWatches(const CToml& toml) {
         if (watch->name.empty())
             return usage("Empty watch name " + watch->name + "\n");
 
-        watch->nodeBal = getNodeBal(watch->balanceHistory, watch->address, watch->firstBlock-1);
+        watch->nodeBal = getNodeBal(watch->stateHistory, watch->address, watch->firstBlock-1);
 
         blockStats.minWatchBlock = min(blockStats.minWatchBlock, watch->firstBlock);
         blockStats.maxWatchBlock = max(blockStats.maxWatchBlock, watch->lastBlock);

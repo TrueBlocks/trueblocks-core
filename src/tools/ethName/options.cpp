@@ -10,95 +10,102 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "utillib.h"
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("~terms",       "a space separated list of one or more search terms"),
-    COption("-addr",        "export only the associated address (may be used in scripting)"),
-    COption("-count",       "print only the count of the number of matches"),
-    COption("-data",        "export results as tab separated data"),
-    COption("-open",        "open the name database for editing"),
-    COption("-list",        "list all names in the database"),
-    COption("-matchCase",   "matches must agree in case (the default is to ignore case)"),
-    COption("-source",      "search 'source' field as well name and address (the default)"),
+    COption("-allFiel(d)s", "search all fields (default searches name, address, and symbol only)"),
+    COption("-matchCase",   "case-sensitive search"),
+    COption("@fmt:<fmt>",   "export format (one of [none|json|txt|csv|api])"),
+    COption("@a(d)d",       "add a record to the database"),
+    COption("@edit",        "open the name database for editing"),
     COption("",             "Query Ethereum addresses and/or names making it easy to remember accounts.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
+extern const char* STR_DISPLAY;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
 
+    bool noHeader = false;
+    string_q format;
     Init();
-    while (!command.empty()) {
-        string_q arg = nextTokenClear(command, ' ');
-        if (arg == "-s" || arg == "--source") {
-            all = true;
+    explode(arguments, command, ' ');
+    for (auto arg : arguments) {
+        if (arg == "-e" || arg == "--edit") {
+            editFile(namesFile.getFullPath());
+            return false;
 
-        } else if (arg == "-c" || arg == "--count") {
-            count = true;
+        } else if (arg == "-d" || arg == "--allFields") {
+const char* STR_ALLFIELDS =
+"[{ADDR}]\t"
+"[{NAME}]\t"
+"[{SYMBOL}]\t"
+"[{SOURCE}]\t"
+"[{DESCRIPTION}]\t"
+"[{LOGO}]\t"
+"[{VISIBLE}]";
+            searchFields = STR_ALLFIELDS;
+            format = searchFields;
+
+        } else if (arg == "-s" || arg == "--source") {
+            searchFields += "\t[{SOURCE}]";
+            format = searchFields;
 
         } else if (arg == "-a" || arg == "--addr") {
-            addrOnly = true;
-
-        } else if (arg == "-d" || arg == "--data") {
-            data = true;
+            searchFields = "[{ADDR}]\t[{NAME}]";
+            format = "[{ADDR}]";
+            noHeader = true;
 
         } else if (arg == "-l" || arg == "--list") {
-            list = true;
+            exportFmt = JSON1;
 
         } else if (arg == "-m" || arg == "--matchCase") {
             matchCase = true;
 
-        } else if (arg == "-o" || arg == "--open") {
-            isEdit = true;
-
         } else if (startsWith(arg, '-')) {  // do not collapse
-
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
 
         } else {
+            searches.push_back(arg);
 
-            if (!addr.empty() && !name.empty() && !source.empty())
-                return usage("You may search for at most three terms: " + arg);
-            else if (!addr.empty() && !name.empty())
-                source = arg;
-            else if (!addr.empty())
-                name = arg;
-            else
-                addr = arg;
         }
     }
 
-    if (addr.empty() && name.empty() && !list && !isEdit)
-        return usage("You must supply at least one of 'addr,' or 'name.' Quitting...");
+    switch (exportFmt) {
+        case NONE1: format = "[{ADDR}]\t[{NAME}]\t[{SYMBOL}]"; break;
+        case API1:
+        case JSON1: format = ""; break;
+        case TXT1:
+        case CSV1:
+            format = getGlobalConfig()->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
+            manageFields("CAccountName:" + cleanFmt(format, exportFmt));
+            break;
+    }
+    expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
+    if (noHeader)
+        expContext().fmtMap["header"] = "";
+
+    applyFilter();
 
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
+    registerOptions(nParams, params);
 
-    paramsPtr = params;
-    nParamsRef = nParams;
-    pOptions = this;
-
-    addr = "";
-    name = "";
-    source = "";
-    all = false;
+    items.clear();
+    searches.clear();
+    searchFields = STR_DISPLAY;
     matchCase = false;
-    list = false;
-    addrOnly = false;
-    data = false;
-    count = false;
-    isEdit = false;
+    minArgs = 0;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -111,12 +118,12 @@ COptions::COptions(void) {
     // If you need the names file, you have to add it in the constructor
     namesFile = CFilename(configPath("names/names.txt"));
     establishFolder(namesFile.getPath());
-    if (!fileExists(namesFile.getFullPath()))
-        stringToAsciiFile(namesFile.getFullPath(),
-                          substitute(
-                          substitute(string_q(STR_DEFAULT_NAMEDATA), " |", "|"), "|", "\t"));
     loadNames();
     Init();
+}
+
+//--------------------------------------------------------------------------------
+COptions::~COptions(void) {
 }
 
 //--------------------------------------------------------------------------------
@@ -136,7 +143,6 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
                     "stored names and addresses and then quits.\n";
         ret += "The [{--count}] option works with any other option and will simply display the number of matches.\n";
         ret += "The [{--matchCase}] option requires case sensitive matching. It works with all other options.\n";
-        ret += "The [{--addrOnly}] option modifies the display output and therefore works with any other options.\n";
         ret += "Name file: [{" +
                 substitute(namesFile.getFullPath(), getHomeFolder(), "~/") +
                     "}] (" + uint_2_Str(fileSize(namesFile.getFullPath())) + ")\n";
@@ -144,3 +150,30 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
     }
     return str;
 }
+
+//-----------------------------------------------------------------------
+void COptions::applyFilter() {
+
+    if (!matchCase)
+        for (size_t i = 0 ; i < searches.size() ; i++)
+            searches[i] = toLower(searches[i]);
+
+    string_q format = searchFields;
+    string_q search1 = searches.size() > 0 ? searches.at(0) : "";
+    string_q search2 = searches.size() > 1 ? searches.at(1) : "";
+    string_q search3 = searches.size() > 2 ? searches.at(2) : "";
+
+    for (size_t i = 0 ; i < namedAccounts.size() ; i++) {
+        string_q str = namedAccounts[i].Format(format);
+        if (!matchCase)
+            str = toLower(str);
+        if ((search1.empty() || search1 == "*" || contains(str, search1)) &&
+            (search2.empty() || search2 == "*" || contains(str, search2)) &&
+            (search3.empty() || search3 == "*" || contains(str, search3))) {
+            items[namedAccounts[i].addr] = namedAccounts[i];
+        }
+    }
+}
+
+//-----------------------------------------------------------------------
+const char *STR_DISPLAY = "[{ADDR}]\t[{NAME}]\t[{SYMBOL}]";

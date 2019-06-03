@@ -25,15 +25,13 @@ namespace qblocks {
 };
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-
-    etherlib_init();
+    acctlib_init(quickQuitHandler);
 
     CNewBlock::registerClass();
     CNewReceipt::registerClass();
-    CAccountWatch::registerClass();
-    CAcctCacheItem::registerClass();
-    CBalHistory::registerClass();
-    CIncomeStatement::registerClass();
+//    CAccountWatch::registerClass();
+//    CApiSpec::registerClass();
+//    CIncomeStatement::registerClass();
     UNHIDE_FIELD(CBaseNode, "cname");
 
     COptions options;
@@ -42,11 +40,10 @@ int main(int argc, const char *argv[]) {
 
     if (!fileExists("./oldFmt.cache")) {
         CFilename fileName("./oldFmt.cache");
-        return usage("File '" + fileName.getFullPath() + "' not found. All tests will fail without that file.");
+        return options.usage("File '" + fileName.getFullPath() + "' not found. All tests will fail without that file.");
     }
 
-    while (!options.commandList.empty()) {
-        string_q command = nextTokenClear(options.commandList, '\n');
+    for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
 
@@ -67,7 +64,7 @@ bool testReadWrite(COptions& options) {
     CNewBlock newBlock;
 
     CBlock latest;
-    getBlock(latest, "latest");
+    getBlock_light(latest, "latest");
 
     switch (options.testNum) {
         case 0: {
@@ -165,7 +162,7 @@ CBaseNode *getNode(const string_q& nodeType) {
     else if (nodeType == "CTreeNode")        node = CTreeNode::createObject();
     else if (nodeType == "CTreeRoot")        node = CTreeRoot::createObject();
     else if (nodeType == "CAccountWatch")    node = CAccountWatch::createObject();
-    else if (nodeType == "CBalHistory")      node = CBalHistory::createObject();
+    else if (nodeType == "CApiSpec")         node = CApiSpec::createObject();
     else if (nodeType == "CBlock")           node = CBlock::createObject();
     else if (nodeType == "CIncomeStatement") node = CIncomeStatement::createObject();
     else if (nodeType == "CLogEntry")        node = CLogEntry::createObject();

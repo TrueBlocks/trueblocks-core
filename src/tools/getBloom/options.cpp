@@ -13,9 +13,8 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("~block_list",  "a space-separated list of one or more blocks for which to retrieve blooms"),
-    COption("-raw",         "pull the bloom filter directly from the running node (the default)"),
     COption("-eab",         "pull the enhanced adaptive blooms from QBlocks cache"),
     COption("-block",       "show only the block-level bloom (--raw only)"),
     COption("-re(c)eipts",  "show only the receipt-level blooms (--raw only)"),
@@ -27,7 +26,7 @@ static COption params[] = {
     COption("@force",       "force a re-write of the bloom to the cache"),
     COption("",             "Returns bloom filter(s) from running node (the default) or as EAB from QBlocks.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -36,13 +35,13 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     Init();
-    blknum_t latestBlock = getLatestBlockFromClient();
-    while (!command.empty()) {
-
-        string_q arg = nextTokenClear(command, ' ');
+    blknum_t latestBlock = getLastBlock_client();
+    explode(arguments, command, ' ');
+    for (auto arg : arguments) {
         if (arg == "-o" || arg == "--force") {
-            etherlib_init("binary");
+            etherlib_init(defaultQuitHandler);
             force = true;
+            isRaw = false;
 
         } else if (arg == "-r" || arg == "--raw") {
             isRaw = true;  // last in wins
@@ -118,16 +117,18 @@ bool COptions::parseArguments(string_q& command) {
             UNHIDE_FIELD(CBloomBlock, "sizeInBytes");
     }
 
+    // SEARCH FOR 'BIT_TWIDDLE_AMT 200'
+    bitBound = getGlobalConfig("blockScrape")->getConfigInt("settings", "bitBound", 200);
+
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    paramsPtr  = params;
-    nParamsRef = nParams;
-    pOptions = this;
+    optionOn(OPT_RAW);
+    registerOptions(nParams, params);
 
-    isRaw        = true;
+    isRaw        = true; // unusual, but true
     asBits       = false;
     asBars       = false;
     asBitBars    = false;
@@ -136,6 +137,7 @@ void COptions::Init(void) {
     force        = false;
     receiptsOnly = false;
     blockOnly    = false;
+    bitBound     = 200;
     blocks.Init();
 }
 
@@ -176,7 +178,7 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
         string_q ret;
         ret += "[{block_list}] is a space-separated list of values, a start-end range, a [{special}], "
                         "or any combination.\n";
-        ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if "
+        ret += "This tool retrieves information from the local node or rpcProvider if "
                         "configured (see documentation).\n";
         ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + ".\n";
         return ret;

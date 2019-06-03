@@ -1,5 +1,3 @@
 whenBlock argc: 2 [1:idonotexist] 
 whenBlock idonotexist 
-
-  The given value 'idonotexist' is not a numeral or a special named block. Quitting...
-
+00000001 TIME ~ CLOCK - <WARNG> : The given value 'idonotexist' is not a numeral or a special named block.

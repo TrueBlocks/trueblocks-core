@@ -16,7 +16,6 @@
  */
 #include <algorithm>
 #include "incomestatement.h"
-#include "etherlib.h"
 
 namespace qblocks {
 
@@ -32,12 +31,12 @@ void CIncomeStatement::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr
     if (!m_showing)
         return;
 
-    if (fmtIn.empty()) {
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["incomestatement_fmt"] : fmtIn);
+    if (fmt.empty()) {
         ctx << toJson();
         return;
     }
 
-    string_q fmt = fmtIn;
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -155,9 +154,8 @@ CArchive& operator<<(CArchive& archive, const CIncomeStatementArray& array) {
 
 //---------------------------------------------------------------------------
 void CIncomeStatement::registerClass(void) {
-    static bool been_here = false;
-    if (been_here) return;
-    been_here = true;
+    // only do this once
+    if (HAS_FIELD(CIncomeStatement, "schema")) return;
 
     size_t fieldNum = 1000;
     ADD_FIELD(CIncomeStatement, "schema",  T_NUMBER, ++fieldNum);

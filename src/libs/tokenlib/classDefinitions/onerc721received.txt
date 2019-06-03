@@ -1,6 +1,0 @@
-[settings]
-class     = QOnERC721Received
-baseClass = CTransaction
-fields    = address _operator|address _from|uint256 _tokenId|bytes _data|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

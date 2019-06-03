@@ -7,53 +7,29 @@
 #include "acctlib.h"
 
 //-----------------------------------------------------------------------------
-class CStats {
-public:
-    blknum_t nSeen;
-    blknum_t nSkipped;
-    blknum_t nHit;
-    CStats(void) : nSeen(0), nSkipped(0), nHit(0) { }
-};
-#define nQueried nSkipped
-
-//-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    blknum_t           lastBlock;
-    blknum_t           minWatchBlock;
-    blknum_t           maxWatchBlock;
-    blknum_t           maxBlocks;
-    blknum_t           oneBlock;
-    blknum_t           oneTrans;
-    timestamp_t        lastTimestamp;
-    bool               checkAddrs;
-    bool               ignoreBlooms;
-    bool               writeBlocks;
-    string_q           exclusions;
-    blknum_t           firstBlock;
-    blknum_t           nBlocks;
-    CStats             blkStats;
-    CStats             addrStats;
-    CStats             transStats;
-    CStats             traceStats;
-    bool               blockCounted;
+
+    blknum_t           scrapeCnt;
     CAccountWatchArray monitors;
-    CArchive           txCache;
-    string_q           name;
-    uint64_t           debugging;
-    uint64_t           logLevel;
+    CAccountWatch      primary;
+    blknum_t           lastBlockInFile;
+    size_t             visitTypes;
+    bool               useBlooms;
 
     COptions(void);
     ~COptions(void);
 
     bool parseArguments(string_q& command);
     void Init(void);
-    bool isExcluded(const address_t& addr) { return contains(exclusions, addr); }
-    bool loadMonitors(const CToml& toml);
-    friend ostream& operator<<(ostream& os, const COptions& item);
-    string_q finalReport(double timing) const;
+    bool visitBinaryFile(const string_q& path, void *data);
+    void moveToProduction(void);
 };
 
-//-----------------------------------------------------------------------
-extern bool visitBloomFilters(const string_q& path, void *data);
-extern void myQuitHandler    (int s);
+#define VIS_FINAL   (1<<1)
+#define VIS_STAGING (1<<2)
+#define VIS_PENDING (1<<3)
+
+extern bool visitFinalIndexFiles(const string_q& path, void *data);
+extern bool visitStagingIndexFiles(const string_q& path, void *data);
+extern bool visitPendingIndexFiles(const string_q& path, void *data);

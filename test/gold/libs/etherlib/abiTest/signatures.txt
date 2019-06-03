@@ -1,0 +1,11 @@
+signature|test 1|function vote(uint256,bool)||0xc9d27afe
+signature|test 2|event AllowedRecipientChanged(address,bool)||0x73ad2a153c8b67991df9459024950b318a609782cee8c7eeda47b905f9baa91f
+signature|method signature 1|function test()||0xf8a8fd6d
+signature|method signature 2|function test(uint)||0x29e99f07
+signature|method signature 3|function test(uint256)||0x29e99f07
+signature|method signature 4|function test(uint, uint)||0xeb8ac921
+signature|event signature 1|event test()||0xf8a8fd6dd9544ca87214e80c840685bd13ff4682cacb0c90821ed74b1d248926
+signature|event signature 2|event test(uint)||0x29e99f07d14aa8d30a12fa0b0789b43183ba1bf6b4a72b95459a3e397cca10d7
+signature|event signature 3|event test(uint256)||0x29e99f07d14aa8d30a12fa0b0789b43183ba1bf6b4a72b95459a3e397cca10d7
+signature|event signature 4|event test(uint, uint)||0xeb8ac9210327650aab0044de896b150391af3be06f43d0f74c01f05633b97a70
+signature|encoding bytes33 (should fail)|function baz(bytes33)||fail

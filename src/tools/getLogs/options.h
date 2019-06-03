@@ -16,9 +16,10 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
+    CAddressArray     addresses;
     COptionsTransList transList;
-    string_q address_list;
-    bool isRaw;
+    CLogEntryArray     items;
+    CStringArray      rawItems;
 
     COptions(void);
     ~COptions(void);
