@@ -8,7 +8,7 @@ Please contact us at [sales@greathill.com](mailto:sales@greathill.com) for more 
 
 #### Usage
 
-`Usage:`    acctExport [-f|-a|-v|-h] &lt;address&gt; [address...]  
+`Usage:`    acctExport [-x|-a|-v|-h] &lt;address&gt; [address...]  
 `Purpose:`  Export full detail of transactions for one or more Ethereum addresses.
              
 `Where:`  
@@ -16,7 +16,7 @@ Please contact us at [sales@greathill.com](mailto:sales@greathill.com) for more 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | address_list | one or more addresses (0x...) to export |
-| -f | --fmt val | export format (one of [json&#124;txt&#124;csv]) |
+| -x | --fmt val | export format (one of [json&#124;txt&#124;csv]) |
 | -a | --articulate | articulate transactions, traces, logs, and outputs |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
@@ -38,6 +38,8 @@ All **QBlocks** command-line tools support the following commands (although in s
     --dollars   |   specify value in US dollars
     --raw       |   report JSON data from the node with minimal processing
     --veryRaw   |   report JSON data from node with zero processing
+    --fmt       |   export format (where appropriate). One of [none|txt|csv|json|api]
+    --api_mode  |   simulate api_mode for testing
     --file:fn   |   specify multiple sets of command line options in a file.
 
 <small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
