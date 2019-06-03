@@ -1,5 +1,4 @@
 [settings]
 class     = CAccount
 fields    = address addr|uint64 latestPage=1|CTransaction latestTx|CTransactionArray transactions
-includes  = abilib.h|transaction.h
-cIncs     = #include "etherlib.h"
+includes  = etherlib.h|transaction.h

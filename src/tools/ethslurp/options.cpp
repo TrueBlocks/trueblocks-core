@@ -13,7 +13,7 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("~addrs",           "one or more addresses to slurp"),
     COption("-blocks:<range>",   "an optional range of blocks to slurp"),
     COption("-type:<tx_type>",  "extract either [ ext | int | token | miner | all ] type of transactions"),
@@ -23,7 +23,7 @@ static COption params[] = {
     COption("",                 "Fetches data from EtherScan for an arbitrary address. Formats "
                                     "the output to your specification.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -32,9 +32,9 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     Init();
-    blknum_t latestBlock = getLatestBlockFromClient();
-    while (!command.empty()) {
-        string_q arg = nextTokenClear(command, ' ');
+    blknum_t latestBlock = getLastBlock_client();
+    explode(arguments, command, ' ');
+    for (auto arg : arguments) {
         string_q orig = arg;
 
         if (startsWith(arg, "-t:") || startsWith(arg, "--type:")) {
@@ -79,20 +79,20 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // Note this may not return if user chooses to exit
+    // Note this may not return if user chooses to quit
     api.checkKey();
 
     if (addrs.empty())
         return usage("You must supply an Ethereum account or contract address. ");
 
-    if (!establishFolder(blockCachePath("slurps/")))
-        return usage("Unable to create data folders at " + blockCachePath("slurps/"));
+    if (!establishFolder(getCachePath("slurps/")))
+        return usage("Unable to create data folders at " + getCachePath("slurps/"));
 
     // Dumps an error message if the fmt_X_file format string is not found.
     getFormatString("file", false);
 
     // Load per address configurations if any
-    string_q customConfig = blockCachePath("slurps/" + addrs[0] + ".toml");
+    string_q customConfig = getCachePath("slurps/" + addrs[0] + ".toml");
     if (fileExists(customConfig)) {
         CToml perAddr("");
         perAddr.setFilename(customConfig);
@@ -110,15 +110,14 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    paramsPtr = params;
-    nParamsRef = nParams;
-    pOptions = this;
+    registerOptions(nParams, params);
 
     type = "";
     blocks.Init();
     exportFormat = "json";
     addrs.clear();
     silent = false;
+    fromFile = false;
 }
 
 //---------------------------------------------------------------------------------------------------

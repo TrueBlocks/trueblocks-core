@@ -1,3 +1,0 @@
-ethName argc: 3 [1:--count] [2:0xCB1] 
-ethName --count 0xCB1 
-0 matches

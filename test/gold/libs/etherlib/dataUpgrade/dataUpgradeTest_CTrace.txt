@@ -10,19 +10,20 @@ cname               	1004	1	131122	T_TEXT TS_STRING
 blockHash           	1005	0	131132	T_HASH TS_STRING
 blockNumber         	1006	0	65561	T_NUMBER TS_NUMERAL
 subtraces           	1007	0	65561	T_NUMBER TS_NUMERAL
-traceAddress        	1008	0	655410	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY
+traceAddress        	1008	0	131122	T_TEXT TS_STRING
 transactionHash     	1009	0	131132	T_HASH TS_STRING
 transactionPosition 	1010	0	65561	T_NUMBER TS_NUMERAL
 type                	1011	0	131122	T_TEXT TS_STRING
 error               	1012	0	131122	T_TEXT TS_STRING
-articulatedTrace    	1013	1	655410	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY
+articulatedTrace    	1013	1	1048651	T_OBJECT TS_OBJECT
 action              	1014	0	1048651	T_OBJECT TS_OBJECT
 result              	1015	0	1048651	T_OBJECT TS_OBJECT
+date                	1016	1	262149	T_DATE TS_DATE
 {
   "blockHash": "0x0",
   "blockNumber": 0,
   "subtraces": 0,
-  "traceAddress": [],
+  "traceAddress": null,
   "transactionHash": "0x0",
   "transactionPosition": 0,
   "action": {
@@ -50,14 +51,15 @@ cname               	1004	1	131122	T_TEXT TS_STRING
 blockHash           	1005	1	131132	T_HASH TS_STRING
 blockNumber         	1006	1	65561	T_NUMBER TS_NUMERAL
 subtraces           	1007	1	65561	T_NUMBER TS_NUMERAL
-traceAddress        	1008	1	655410	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY
+traceAddress        	1008	1	131122	T_TEXT TS_STRING
 transactionHash     	1009	1	131132	T_HASH TS_STRING
 transactionPosition 	1010	1	65561	T_NUMBER TS_NUMERAL
 type                	1011	1	131122	T_TEXT TS_STRING
 error               	1012	1	131122	T_TEXT TS_STRING
-articulatedTrace    	1013	1	655410	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY
+articulatedTrace    	1013	1	1048651	T_OBJECT TS_OBJECT
 action              	1014	1	1048651	T_OBJECT TS_OBJECT
 result              	1015	1	1048651	T_OBJECT TS_OBJECT
+date                	1016	1	262149	T_DATE TS_DATE
 {
 }
 
@@ -71,26 +73,30 @@ cname               	1004	0	131122	T_TEXT TS_STRING
 blockHash           	1005	0	131132	T_HASH TS_STRING
 blockNumber         	1006	0	65561	T_NUMBER TS_NUMERAL
 subtraces           	1007	0	65561	T_NUMBER TS_NUMERAL
-traceAddress        	1008	0	655410	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY
+traceAddress        	1008	0	131122	T_TEXT TS_STRING
 transactionHash     	1009	0	131132	T_HASH TS_STRING
 transactionPosition 	1010	0	65561	T_NUMBER TS_NUMERAL
 type                	1011	0	131122	T_TEXT TS_STRING
 error               	1012	0	131122	T_TEXT TS_STRING
-articulatedTrace    	1013	0	655410	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY
+articulatedTrace    	1013	0	1048651	T_OBJECT TS_OBJECT
 action              	1014	0	1048651	T_OBJECT TS_OBJECT
 result              	1015	0	1048651	T_OBJECT TS_OBJECT
+date                	1016	0	262149	T_DATE TS_DATE
 {
-  "schema": 5005,
+  "schema": 5007,
   "deleted": 0,
   "showing": 1,
   "cname": "Trace",
   "blockHash": "0x0",
   "blockNumber": 0,
   "subtraces": 0,
-  "traceAddress": [],
+  "traceAddress": null,
   "transactionHash": "0x0",
   "transactionPosition": 0,
-  "articulatedTrace": [],
+  "articulatedTrace": {
+    "inputs": [],
+    "outputs": []
+  },
   "action": {
     "address": "0x0",
     "balance": 0,

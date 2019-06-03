@@ -22,19 +22,16 @@ CPerson leader("Leader", 100);
 CPerson *lastAdded = &leader;
 
 int main(int argc, const char *argv[]) {
+    etherlib_init(quickQuitHandler);
 
     CPerson::registerClass();
-
-    etherlib_init();
 
     // Parse command line, allowing for command files
     COptions options;
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    // while (!options.commandList.empty())
-    {
-        string_q command = nextTokenClear(options.commandList, '\n');
+    for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
 
@@ -53,7 +50,7 @@ int main(int argc, const char *argv[]) {
         cout.flush();
 
         CArchive out(WRITING_ARCHIVE);
-        if (out.Lock("./file.bin", binaryWriteCreate, LOCK_WAIT)) {
+        if (out.Lock("./file.bin", modeWriteCreate, LOCK_WAIT)) {
             leader.Serialize(out);
             out.Release();
         }
@@ -68,7 +65,7 @@ int main(int argc, const char *argv[]) {
         cout.flush();
 
         CArchive in(READING_ARCHIVE);
-        if (in.Lock("./file.bin", binaryReadOnly, LOCK_WAIT)) {
+        if (in.Lock("./file.bin", modeReadOnly, LOCK_WAIT)) {
             leader.Serialize(in);
             in.Release();
         }

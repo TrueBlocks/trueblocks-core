@@ -2,7 +2,7 @@ ethName argc: 2 [1:-th]
 ethName -th 
 #### Usage
 
-`Usage:`    ethName [-a|-c|-d|-o|-l|-m|-s|-v|-h] &lt;term&gt; [term...]  
+`Usage:`    ethName [-d|-m|-v|-h] &lt;term&gt; [term...]  
 `Purpose:`  Query Ethereum addresses and/or names making it easy to remember accounts.
              
 `Where:`  
@@ -10,13 +10,15 @@ ethName -th
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | terms | a space separated list of one or more search terms |
-| -a | --addr | export only the associated address (may be used in scripting) |
-| -c | --count | print only the count of the number of matches |
-| -d | --data | export results as tab separated data |
-| -o | --open | open the name database for editing |
-| -l | --list | list all names in the database |
-| -m | --matchCase | matches must agree in case (the default is to ignore case) |
-| -s | --source | search 'source' field as well name and address (the default) |
+| -d | --allFields | search all fields (default searches name, address, and symbol only) |
+| -m | --matchCase | case-sensitive search |
+
+#### Hidden options (shown during testing only)
+| -x | --fmt val | export format (one of [none&#124;json&#124;txt&#124;csv&#124;api]) |
+| -d | --add | add a record to the database |
+| -e | --edit | open the name database for editing |
+#### Hidden options (shown during testing only)
+
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
@@ -29,6 +31,5 @@ ethName -th
 - The `--list` option predominates otherwise. If present, the tool displays a list of stored names and addresses and then quits.
 - The `--count` option works with any other option and will simply display the number of matches.
 - The `--matchCase` option requires case sensitive matching. It works with all other options.
-- The `--addrOnly` option modifies the display output and therefore works with any other options.
-- Name file: `~/.quickBlocks/names/names.txt` (8034)
+- Name file: `~/.quickBlocks/names/names.txt` (168140)
 

@@ -10,136 +10,148 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include <string>
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
-    COption("~!block", "one or more block numbers (or a 'special' block), or..."),
-    COption("~!date",  "one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]"),
-    COption("-data",   "display the result as data (tab delimited; useful for scripting)"),
-    COption("-list",   "list names and block numbers for special blocks"),
-    COption("",        "Finds the nearest block prior to a date, or the nearest date prior to a block.\n"
-                       " Alternatively, search for one of special 'named' blocks.\n"),
+static const COption params[] = {
+    COption("~!block",    "one or more block numbers (or a 'special' block), or..."),
+    COption("~!date",     "one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]"),
+    COption("-list",      "export all the named blocks"),
+    COption("@fmt:<fmt>", "export format (one of [none|json|txt|csv|api])"),
+    COption("",           "Finds the nearest block prior to a date, or the nearest date prior to a block.\n"
+                          " Alternatively, search for one of special 'named' blocks.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
-extern time_q grabDate(const string_q& strIn);
-extern bool containsAny(const string_q& haystack, const string_q& needle);
+extern const char* STR_DISPLAY;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
 
-    bool isList = false;
-    bool foundOne = false;
+    CNameValueArray requests;
+
     Init();
-    blknum_t latestBlock = getLatestBlockFromClient();
-    while (!command.empty()) {
-        string_q arg = nextTokenClear(command, ' ');
+    blknum_t latestBlock = getLastBlock_client();
+    explode(arguments, command, ' ');
+    for (auto arg : arguments) {
         string_q orig = arg;
 
         if (arg == "UTC") {
             // do nothing
 
         } else if (arg == "-l" || arg == "--list") {
-            isList = true;
-
-        } else if (arg == "-d" || arg == "--data") {
-            alone = true;
-            colorsOff();
+            forEverySpecialBlock(showSpecials, &requests);
 
         } else if (startsWith(arg, '-')) {  // do not collapse
-
-            if (!builtInCmd(arg)) {
-                return usage("Invalid option: '" + orig + "'. Quitting...");
-            }
+            if (!builtInCmd(arg))
+                return usage("Invalid option: '" + orig + "'.");
 
         } else if (containsAny(arg, ":- ") && countOf(arg, '-') > 1) {
 
+            // a json formatted date
             ASSERT(!startsWith(arg, "-"));
-            if (isList)
-                return usage("The --list option must appear alone on the line. Quitting...");
-
-            time_q date = grabDate(arg);
+            time_q date = str_2_Date(arg);
             if (date == earliestDate) {
-                return usage("Invalid date: '" + orig + "'. Quitting...");
+                return usage("Invalid date: '" + orig + "'.");
 
             } else if (date > Now()) {
-                cout << "The date you specified (";
-                cout << cTeal << orig << cOff;
-                cout << ") is in the future. No such block. Quitting...\n";
+                ostringstream os;
+                os << "The date you specified (" << cTeal << orig << cOff << ")";
+                os << "is in the future. No such block.";
+                LOG_WARN(os.str());
                 return false;
 
             } else if (date < time_q(2015, 7, 30, 15, 25, 00)) {
-                // first block was at 15:26:00
-                cout << "The date you specified (";
-                cout << cTeal << orig << cOff;
-                cout << ") is before the first block. Quitting...\n";
+                ostringstream os;
+                os << "The date you specified (" << cTeal << orig << cOff << ")";
+                os << "is before the first block.";
+                LOG_WARN(os.str());
                 return false;
+
+            } else {
+                requests.push_back(CNameValue("date", int_2_Str(date_2_Ts(date))));
             }
 
-            foundOne = true;
-            requests.push_back("date:" + int_2_Str(date_2_Ts(date)));
-
         } else {
-
-            if (isList)
-                return usage("The --list option must appear alone on the line. Quitting...");
 
             // if we're here, we better have a good block, assume we don't
             CNameValue spec;
             if (findSpecial(spec, arg)) {
-                string_q val = spec.second;
                 if (spec.first == "latest")
-                    val = uint_2_Str(getLatestBlockFromClient());
-                requests.push_back("special:" + spec.first + "|" + val);
-                foundOne = true;
+                    spec.second = uint_2_Str(latestBlock);
+                requests.push_back(CNameValue("block", spec.second + "|" + spec.first));
 
             } else  {
 
                 string_q ret = blocks.parseBlockList(arg, latestBlock);
                 if (endsWith(ret, "\n")) {
-                    cerr << "\n  " << ret << "\n";
+                    LOG_WARN(substitute(ret,"\n",""));
                     return false;
+
                 } else if (!ret.empty()) {
                     return usage(ret);
                 }
 
                 // Now we transfer the list of blocks to the requests array
-                string_q blockList = getBlockNumList();
-                blocks.Init();
-                while (!blockList.empty()) {
-                    requests.push_back("block:" + nextTokenClear(blockList, '|'));
-                    foundOne = true;
-                }
+                string_q blockList = getBlockNumList();  // get the list from blocks
+                blocks.Init();  // clear out blocks
+                CStringArray blks;
+                explode(blks, blockList, '|');
+                for (auto blk : blks)
+                    requests.push_back(CNameValue("block", blk));
             }
         }
     }
 
-    if (isList) {
-        if (requests.size())
-            return usage("The --list option must appear alone on the line. Quitting...");
-        cout << listSpecials(false);
-        return false;
-    }
+    if (requests.size() == 0)
+        return usage("Please supply either a JSON formatted date or a blockNumber.");
 
-    if (!foundOne)
-        return usage("Please supply either a JSON formatted date or a blockNumber. Quitting...");
+    string_q format = getGlobalConfig()->getConfigStr("display", "format", STR_DISPLAY);
+    if (format.empty())
+        exportFmt = JSON1;
+    if (!(exportFmt & (TXT1|CSV1))) {
+        manageFields("CBlock:" + cleanFmt(STR_DISPLAY, JSON1));
+    } else {
+        manageFields("CBlock:" + cleanFmt(format, exportFmt));
+    }
+    expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
+
+    for (auto request : requests) {
+        CBlock block;
+        if (request.first == "block") {
+            string_q bn = nextTokenClear(request.second,'|');
+            if (request.second == "latest") {
+                if (isTestMode()) {
+                    continue;
+                }
+                queryBlock(block, "latest", false);
+            } else {
+                queryBlock(block, bn, false);
+            }
+            if (block.blockNumber == 0)
+                block.timestamp = 1438269960;
+            block.name = request.second;
+            items[block.blockNumber] = block;
+
+        } else if (request.first == "date") {
+            if (lookupDate(this, block, (timestamp_t)str_2_Uint(request.second)))
+                items[block.blockNumber] = block;
+            else
+                LOG_WARN("Could not find a block at date " + request.second);
+        }
+    }
 
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    paramsPtr  = params;
-    nParamsRef = nParams;
-    pOptions = this;
-
-    requests.clear();
-    alone = false;
     optionOff(OPT_DENOM);
+    registerOptions(nParams, params);
+    items.clear();
+    blocks.Init();
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -149,7 +161,21 @@ COptions::COptions(void) {
     sorts[1] = GETRUNTIME_CLASS(CTransaction);
     sorts[2] = GETRUNTIME_CLASS(CReceipt);
 
+    // Upgrade the configuration file by opening it, fixing the data, and then re-writing it (i.e. versions prior to 0.6.0)
+    CToml toml(configPath("whenBlock.toml"));
+    if (toml.isBackLevel()) {
+        string_q ss = toml.getConfigStr("specials", "list", "");
+        if (!contains(ss, "kitties")) {
+            toml.setConfigArray("specials", "list", STR_DEFAULT_WHENBLOCKS);
+            toml.writeFile();
+            getGlobalConfig("whenBlock");
+        }
+    }
     Init();
+    
+    // Differnt default for this software, but only change it if user hasn't already therefor not in Init
+    if (!api_mode)
+        exportFmt = TXT1;
 }
 
 //--------------------------------------------------------------------------------
@@ -158,7 +184,6 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
-
     if (which == "options") {
         return substitute(str, "block date", "< block | date > [ block... | date... ]");
 
@@ -167,136 +192,59 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
         if (verbose || COptions::isReadme) {
             ret += "Add custom special blocks by editing ~/.quickBlocks/whenBlock.toml.\n";
         }
-        ret += listSpecials(true);
+        ret += "Use the following names to represent `special` blocks:\n  ";
+        ret += listSpecials(NONE1);
         return ret;
     }
     return str;
 }
 
 //--------------------------------------------------------------------------------
-time_q grabDate(const string_q& strIn) {
-
-    if (strIn.empty()) {
-        return earliestDate;
-    }
-
-// #error
-    string_q str = strIn;
-    replaceAny(str, " -:", ";");
-    replace(str, ";UTC", "");
-    str = nextTokenClear(str, '.');
-
-    // Expects four number year, two number month and day at a minimum. Fields may be separated by '-' or ';'
-    //    YYYYMMDD or YYYY;MM;DD
-    replaceAll(str, ";", "");
-    if (contains(str, "T")) {
-        replace(str, "T", "");
-               if (str.length() == 10) { str += "0000";
-        } else if (str.length() == 12) { str += "00";
-        } else if (str.length() != 14) { cerr << "Bad: " << str << "\n"; return earliestDate;
-        }
-    } else {
-        str += "000000";
-    }
-
-#define NP ((uint32_t)-1)
-#define str_2_Int32u(a) (uint32_t)str_2_Uint((a))
-    uint32_t y, m, d, h, mn, s;
-    y = m = d = h = mn = s = NP;
-    if (isUnsigned(extract(str,  0, 4))) { y  = str_2_Int32u(extract(str,  0, 4)); }
-    if (isUnsigned(extract(str,  4, 2))) { m  = str_2_Int32u(extract(str,  4, 2)); }
-    if (isUnsigned(extract(str,  6, 2))) { d  = str_2_Int32u(extract(str,  6, 2)); }
-    if (isUnsigned(extract(str,  8, 2))) { h  = str_2_Int32u(extract(str,  8, 2)); }
-    if (isUnsigned(extract(str, 10, 2))) { mn = str_2_Int32u(extract(str, 10, 2)); }
-    if (isUnsigned(extract(str, 12, 2))) { s  = str_2_Int32u(extract(str, 12, 2)); }
-
-    // If any of them was not an unsigned int, it's a fail
-    if (y == NP || m == NP || d == NP || h == NP || mn == NP || s == NP)
-        return earliestDate;
-
-    if (m > 12) return earliestDate;
-    if (d > 31) return earliestDate;
-    if (h > 23) return earliestDate;
-    if (mn > 59) return earliestDate;
-    if (s > 59) return earliestDate;
-
-    return time_q(y, m, d, h, mn, s);
+bool showSpecials(CNameValue& pair, void *data) {
+    ((CNameValueArray*)data)->push_back(CNameValue("block", pair.second + "|" + pair.first));
+    return true;
 }
 
 //--------------------------------------------------------------------------------
-string_q COptions::listSpecials(bool terse) const {
+string_q COptions::listSpecials(format_t fmt) const {
     if (specials.size() == 0)
         ((COptionsBase *)this)->loadSpecials();  // NOLINT
 
     ostringstream os;
-    if (!alone) {
-        if (terse) {
-            os << "Use the following names to represent `special` blocks:\n  ";
-        } else {
-            os << bYellow << "\n  Blocks:" << cOff;
-        }
-    }
-
     string_q extra;
     for (size_t i = 0 ; i < specials.size(); i++) {
 
         string_q name = specials[i].first;
         string_q bn = specials[i].second;
         if (name == "latest") {
-            bn = uint_2_Str(getLatestBlockFromClient());
+            bn = uint_2_Str(getLastBlock_client());
             if (isTestMode()) {
                 bn = "";
             } else if (COptionsBase::isReadme) {
                 bn = "--";
-            } else if (i > 0 && str_2_Uint(specials[i-1].second) >= getLatestBlockFromClient()) {
+            } else if (i > 0 && str_2_Uint(specials[i-1].second) >= getLastBlock_client()) {
                 extra = iWhite + " (syncing)" + cOff;
             }
         }
 
-        if (alone && !terse) {
-            if (!contains(bn, "tbd"))
-                os << bn << " ";
-        } else {
-            if (terse) {
-                os << name;
-                os << " (" << cTeal << bn << extra << cOff << ")";
-                if (!((i+1)%4)) {
-                    if (i < specials.size()-1)
-                        os << "\n  ";
-                } else if (i < specials.size()-1) {
-                    os << ", ";
-                }
-            } else {
-                os << "\n      - " << padRight(name, 15);
-                os << cTeal << padLeft(bn, 9) << cOff;
-                if (verbose) {
-                    CBlock block;
-                    getBlock(block, bn);
-                    block.timestamp = (block.blockNumber == 0 ? 1438269973 : block.timestamp);
-                    if (block.timestamp != 0) {
-                        UNHIDE_FIELD(CBlock, "date");
-                        os << block.Format(" [{DATE}] ([{TIMESTAMP}])");
-                    }
-                }
-                os << extra;
-            }
+#define N_PER_LINE 4
+        os << name;
+        os << " (" << cTeal << bn << extra << cOff << ")";
+        if (!((i+1) % N_PER_LINE)) {
+            if (i < specials.size()-1)
+                os << "\n  ";
+        } else if (i < specials.size()-1) {
+            os << ", ";
         }
     }
-    if (terse) {
-        if (specials.size() % 4)
-            os << "\n";
-    } else {
+    if (specials.size() % N_PER_LINE)
         os << "\n";
-    }
     return os.str().c_str();
 }
 
-//---------------------------------------------------------------------------------------
-bool containsAny(const string_q& haystack, const string_q& needle) {
-    string need = needle.c_str();
-    for (const auto elem : need)
-        if (contains(haystack, elem))
-            return true;
-    return false;
-}
-
+//-----------------------------------------------------------------------
+const char* STR_DISPLAY =
+"[{BLOCKNUMBER}]\t"
+"[{TIMESTAMP}]\t"
+"[{DATE}]"
+"[\t{NAME}]";

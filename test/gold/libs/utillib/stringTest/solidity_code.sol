@@ -1,0 +1,307 @@
+pragma solidity 0.4.25;
+
+/* ----------------------------------------------------------------------------
+// SAFE MATH
+// ----------------------------------------------------------------------------*/
+contract SafeMath {
+	function add(uint a, uint b) internal pure returns (uint c) {
+		c = a + b;
+		require(c >= a);
+	}
+	function sub(uint a, uint b) internal pure returns (uint c) {
+		require(b <= a);
+		c = a - b;
+	}
+	function mul(uint a, uint b) internal pure returns (uint c) {
+		c = a * b;
+		require(a == 0 || c / a == b);
+	}
+	function div(uint a, uint b) internal pure returns (uint c) {
+		require(b > 0);
+		c = a / b;
+	}
+}
+
+
+// ----------------------------------------------------------------------------
+// ERC20 INTERFACE
+// https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20-token-standard.md
+// ----------------------------------------------------------------------------
+contract ERC20Interface {
+	function totalSupply() public constant returns (uint);
+	function balanceOf(address tokenOwner) public constant returns (uint balance);
+	function allowance(address tokenOwner, address spender) public constant returns (uint remaining);
+	function transfer(address to, uint tokens) public returns (bool success);
+	function approve(address spender, uint tokens) public returns (bool success);
+	function transferFrom(address from, address to, uint tokens) public returns (bool success);
+
+	event Transfer(address indexed from, address indexed to, uint tokens);
+	event Approval(address indexed tokenOwner, address indexed spender, uint tokens);
+}
+
+contract FiatContract {
+	function ETH(uint _id) public constant returns (uint);
+	function USD(uint _id) public constant returns (uint);
+	function EUR(uint _id) public constant returns (uint);
+	function GBP(uint _id) public constant returns (uint);
+	function updatedAt(uint _id) public constant returns (uint);
+}
+
+// ----------------------------------------------------------------------------
+// ERC20 TOKEN, with the addition of symbol, name and decimals and an
+// initial fixed supply
+// ----------------------------------------------------------------------------
+contract Whatever is ERC20Interface, SafeMath {
+	string public symbol;
+	string public name;
+	uint8 public decimals;
+	bool public pause;
+/**/
+	// Investor database
+	struct Holder {
+		uint balance;
+		uint affirmDate;
+		uint verifyDate;
+		uint commitments;
+		uint etherPaymentDue;
+		string verifyMetaData;
+		bool isTrustedVerifier;
+	}
+
+	// Request database
+	struct Request {
+		uint date;
+		uint tokenAmount;
+		uint dollarPrice;
+		uint etherDepositMade;
+		address requesterAddress;
+		bool hasBeenClosed;
+		uint acceptanceDT;
+		address acceptorAddress;
+		RequestType requestType;
+	}
+
+	enum RequestType {
+		IsBidRequestToBuy,
+		IsAskRequestToSell
+	}
+
+	// Contract settings enumeration
+	enum Settings {
+		SeedAmount,
+		DaysStale,
+		DaysVerify,
+		MinPrice,
+		MaxPrice
+	}
+
+	// Records for each request
+	mapping(uint => Request) requests;
+	uint[] requestKeys;
+	uint lastRequestKey;
+
+	// Records for each account
+	mapping(address => Holder) holders;
+	address[] holderAddresses;
+
+	// Admin of account approves the transfer of an amount to another account
+	mapping(address => mapping (address => uint)) allowed;
+
+	// ----------------------------------------------------------------------------
+	// MODIFIERS
+	// ----------------------------------------------------------------------------
+
+	// circuit breaker for the contract
+	modifier notPaused() {
+		require (!pause);
+		_;
+	}
+
+	// Functions with this modifier only can be executed by the admin
+	modifier onlyAdmin() {
+		require (msg.sender == admin);
+		_;
+	}
+
+	// Basic requirement to participate
+	modifier isSeeded(address _account) {
+		require (holders[_account].balance > 0);
+		_;
+	}
+
+	// If not stale, can purchase/receive/redeem
+	// If stale, can only redeem
+	modifier isNotStale(address _account) {
+		require (holders[_account].affirmDate >= sub(now, (_daysStale * 1 days)));
+		_;
+	}
+
+
+	// ------------------------------------------------------------------------
+	// CONSTRUCTOR
+	// ------------------------------------------------------------------------
+	constructor() public {
+		symbol = "WHT";
+		name = "Whatevers";
+		decimals = 18;
+		pause = false;
+		admin = msg.sender;	// initially admin = owner
+		owner = msg.sender;	// initially owner = admin
+		contractAddress = this;
+
+		totalTokensCommitted	= 0;    // no commitments
+		totalEtherPaymentsDue	= 0;    // no payments due
+		totalEtherDepositsMade	= 0;    // no payments made
+
+		_totalSupply    = 0;			// variable mint;
+		_seedAmount     = 10**14;		// 0.0001 Tokens
+		_daysStale      = 370 * 3;		// off-chain use 365 * 3
+		_daysVerify     = 370;			// off-chain use 365
+		_minPrice		= 0;			// no min price set
+		_maxPrice		= 0;			// no max price set
+
+		fiatContract = FiatContract(0x8055d0504666e2B6942BeB8D6014c964658Ca591);     // MainNet
+		//fiatContract = FiatContract(0x2CDe56E5c8235D6360CCbb0c57Ce248Ca9C80909);   // Ropsten
+	}
+
+
+	// ------------------------------------------------------------------------
+	// PRIMARY FUNCTIONS
+	// ------------------------------------------------------------------------
+
+	// New users must be "seeded" before they can do anything
+	// Users cannot self-seed.  Only the admin and trustedVerifiers can seed
+	// Once seeded, users can re-affirm themselves to update their status
+	// To discourage programmatic attack, keep seedAmount < gas price
+	function affirmStatusGlimpAsAccreditedInvestor(address _account) public notPaused returns (bool success)
+	{
+		if (msg.sender == _account && holders[_account].balance > 0) {
+			holders[_account].affirmDate = now;
+			emit AffirmStatus(msg.sender, _account, holders[_account].affirmDate, holders[_account].balance);
+			return true;
+		}
+		require (msg.sender == admin || holders[msg.sender].isTrustedVerifier);
+		if (holders[_account].balance == 0) {
+			_totalSupply = add(_totalSupply, _seedAmount);
+			holders[_account].balance = add(holders[_account].balance, _seedAmount);
+			if (holders[_account].affirmDate == 0) {
+				holderAddresses.push(_account);
+			}
+		}
+		holders[_account].affirmDate = now;
+		emit AffirmGlimpStatus(msg.sender, _account, holders[_account].affirmDate, holders[_account].balance);
+		return true;
+	}
+
+	// For Reg D Rule 506(c).
+	// Trusted verifiers can assert that a user is verified (e.g. submits W-2)
+	function verifyGlimpStatusAsAccreditedInvestor
+	(
+		address _account, 		string
+_verifyMetaData) public
+ notPaused
+  returns
+   (
+	   bool
+	    success
+		)
+
+
+
+		 {
+		require (holders[msg.sender].isTrustedVerifier);
+		if (holders[_account].balance == 0) {
+			_totalSupply = add(_totalSupply, _seedAmount);
+			holders[_account].balance = add(holders[_account].balance, _seedAmount);
+			if (holders[_account].affirmDate == 0) {
+				holderAddresses.push(_account);
+			}
+		}
+		holders[_account].affirmDate = now;
+		holders[_account].verifyDate = now;
+		holders[_account].verifyMetaData = _verifyMetaData;
+		emit VerifyStatus(msg.sender, _account, holders[_account].verifyDate, _verifyMetaData);
+		return true;
+	}
+
+	// Dollar price specified by requestor must be within bounds
+	// Or the admin has not specified upper and lower price limits
+	function priceOkay(uint _dollarPrice) internal returns (bool) {
+		if (_minPrice == 0 && _maxPrice == 0) {
+			return true;
+		} else if (_maxPrice == 0 && _minPrice <= _dollarPrice) {
+			return true;
+		} else if (_minPrice == 0 && _maxPrice >= _dollarPrice) {
+			return true;
+		} else if (_minPrice <= _dollarPrice && _maxPrice >= _dollarPrice) {
+			return true;
+		} else {
+			emit Message("priceOkay", "Price out of bounds");
+			return false;
+		}
+	}
+
+	// Investor (buyer/sender) cannot have stale accreditation (e.g. > 3 years)
+	// Receiver (seller/issuer) cannot have stale accreditation (e.g. > 3 years)
+	function permitTransfer(address _to)
+		isSeeded(_to)
+		isNotStale(_to)
+		isNotStale(msg.sender)
+		internal view returns (bool) {
+			return true;
+	}
+
+	function sufficientBalance(address _account, uint _amount) internal returns (bool) {
+		require (holders[_account].balance >= holders[_account].commitments);
+		uint availableTokens = sub(holders[_account].balance, holders[_account].commitments);
+		if (availableTokens >= _amount) {
+			return true;
+		} else {
+			emit Message("sufficientBalance", "Amount exceeds availableTokens");
+			return false;
+		}
+	}
+	function transferAnyERC20Token(address _tokenAddress, uint _tokens) external onlyAdmin returns (bool success) {
+		require (_tokenAddress != contractAddress);
+		return ERC20Interface(_tokenAddress).transfer(admin, _tokens);
+	}
+
+	function togglePause() external onlyAdmin {
+		pause = !pause;
+		emit Message("togglePause", pause ? "paused" : "running");
+	}
+
+	event AffirmStatus(address indexed _sender, address indexed _account, uint _affirmDate, uint _value);
+	event VerifyStatus(address indexed _verifier, address indexed _account, uint _verifyDate, string _verifyMetaData);
+	event Transfer(address indexed _from, address indexed _to, uint _value);
+	event TransferX(address indexed _from, address indexed _to, uint _value, string _transferMetaData);
+	event Approval(address indexed _owner, address indexed _spender, uint _value);
+	event MakeRequest(uint _key, uint _date, uint _tokenAmount, uint _dollarPrice, RequestType _requestType, address indexed _requester);
+
+	// Triggered when a user or admin cancels an existing request created by that user.
+	event CancelRequest(uint _key, address indexed _sender, uint _deposit, uint _amount);
+
+	// Triggered when a user accepts a market request and Buys or Sells at the request price.
+	event AcceptRequest(uint _key, uint _etherAmount, uint _tokenAmount, uint _dollarPrice, address indexed _acceptor);
+
+	// Triggered when ether is withdrawn from contract.
+	event WithdrawPayment(address indexed _account, uint _payment);
+
+	// Triggered whenever tokens are minted to admin account.
+	event MintTokens(uint _value, uint _balance);
+
+	// Triggered whenever tokens are burned from admin account.
+	event BurnTokens(uint _value, uint _balance);
+
+	// Triggered when lost tokens are reclaimed to admin account.
+	event ReclaimMisplacedTokens(address indexed _from, uint _tokenAmount);
+
+	// Triggered whenever a trusted verifier's status is changed.
+	event ToggleTrustedVerifier(address indexed _verifier, bool _isTrustedVerifier);
+
+	// Triggered whenever a change is made to a contract parameter.
+	event SettingChange(address _admin, NthRound.Settings _setting, uint _value);
+
+	// Triggered when certain functions throw an error or other message.
+	event Message(string fName, string message);
+}

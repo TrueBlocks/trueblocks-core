@@ -18,31 +18,43 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     class CCurlContext {
     public:
-        string_q         headers;
-        string_q         baseURL;
-        CURLCALLBACKFUNC callBackFunc;
-        CURLCALLBACKFUNC curlNoteFunc;
-        bool             earlyAbort;
-        string_q         postData;
-        string_q         result;
-        string_q         provider;
-        bool             is_error;
-        size_t           theID;
+        string_q          baseURL;
+        bool              nodeRequired;
+        CURLCALLBACKFUNC  callBackFunc;
+        CURLCALLBACKFUNC  curlNoteFunc;
+        bool              earlyAbort;
+        string_q          postData;
+        string_q          result;
+        string_q          provider;
+        bool              is_error;
+        size_t            theID;
+        CURL              *curlHandle;
+        struct curl_slist *headerPtr;
 
         CCurlContext(void);
-        string_q getCurlID(void);
-        void setPostData(const string_q& method, const string_q& params);
-        void Clear(void);
+
+        CURL    *getCurl    (void);
+        void     releaseCurl(void);
+        void     setPostData(const string_q& method, const string_q& params);
+        string_q perform    (const string_q& method, const string_q& params, bool raw);
+        string_q getCurlID  (void);
+        void     clear      (void);
         CURLCALLBACKFUNC setCurlCallback(CURLCALLBACKFUNC func);
     };
 
-    extern CURL         *getCurl         (bool cleanup = false);
-    extern bool          isNodeRunning   (void);
-    extern bool          nodeHasBalances (void);
-    extern bool          nodeHasTraces   (void);
-    extern bool          getObjectViaRPC (CBaseNode &node, const string_q& method, const string_q& params);
-    extern string_q      callRPC         (const string_q& method, const string_q& params, bool raw);
-    extern CCurlContext *getCurlContext  (void);
-    extern size_t        writeCallback   (char *ptr, size_t size, size_t nmemb, void *userdata);
-    extern size_t        traceCallback   (char *ptr, size_t size, size_t nmemb, void *userdata);
+    extern CCurlContext *getCurlContext   (void);
+
+    extern void          nodeRequired     (void);
+    extern void          nodeNotRequired  (void);
+    extern void          checkNodeRequired(void);
+    extern bool          isNodeRunning    (void);
+    extern bool          nodeHasTraces    (void);
+    extern string_q      setDataSource    (const string_q& newSrc);
+    extern string_q      displayCurlError (const string_q& msg, const string_q& val="");
+
+    extern string_q      callRPC          (const string_q& method, const string_q& params, bool raw);
+    extern bool          getObjectViaRPC  (CBaseNode &node, const string_q& method, const string_q& params);
+
+    extern size_t        writeCallback    (char *ptr, size_t size, size_t nmemb, void *userdata);
+    extern size_t        errorCallback    (char *ptr, size_t size, size_t nmemb, void *userdata);
 }  // namespace qblocks

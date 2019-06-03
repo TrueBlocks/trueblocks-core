@@ -16,55 +16,76 @@
 extern bool visitTransaction(CTransaction& trans, void *data);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-
-    etherlib_init();
+    etherlib_init(quickQuitHandler);
 
     // Parse command line, allowing for command files
     COptions options;
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    while (!options.commandList.empty()) {
-        string_q command = nextTokenClear(options.commandList, '\n');
+    for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
         forEveryTransactionInList(visitTransaction, &options, options.transList.queries);
     }
+
+    size_t cnt = 0;
+    cout << "[";
+    for (auto item : options.items) {
+        if (cnt++ > 0)
+            cout << ",";
+        item.doExport(cout);
+    }
+    if (cnt && options.rawItems.size())
+        cout << ",\n";
+
+    cnt = 0;
+    for (auto str : options.rawItems) {
+        if (cnt++ > 0)
+            cout << ",\n";
+        cout << str;
+    }
+    cout << "]";
+
     return 0;
 }
 
 //--------------------------------------------------------------
 bool visitTransaction(CTransaction& trans, void *data) {
-    const COptions *opt = (const COptions*)data;
-
-    bool badHash = !isHash(trans.hash);
-    bool isBlock = contains(trans.hash, "block");
-    trans.hash = substitute(substitute(trans.hash, "-block_not_found", ""), "-trans_not_found", "");
-    if (opt->isRaw) {
-        if (badHash) {
-            cerr << "{\"jsonrpc\":\"2.0\",\"result\":{\"hash\":\"";
-            cerr << substitute(trans.hash, " ", "") << "\",\"result\":\"";
-            cerr << (isBlock ? "block " : "");
-            cerr << "hash not found\"},\"id\":-1}" << "\n";
-            return true;
-        }
-
-        // Note: this call is redundant. The transaction is already populated (if it's valid), but we need the raw data)
-        string_q results;
-        queryRawReceipt(results, trans.getValueByName("hash"));
-        cout << results;
+    COptions *opt = (COptions*)data;
+    if (contains(trans.hash, "invalid")) {
+        ostringstream os;
+        os << cRed << "{ \"error\": \"The item you requested (";
+        os << nextTokenClear(trans.hash, ' ') << ") was not found.\" }" << cOff;
+        opt->rawItems.push_back(os.str());
         return true;
     }
 
-    if (badHash) {
-        cerr << cRed << "Warning:" << cOff;
-        cerr << " The " << (isBlock ? "block " : "") << "hash " << cYellow;
-        cerr << trans.hash << cOff << " was not found.\n";
+    if (!opt->isRaw) {
+        opt->items.push_back(trans.receipt);
         return true;
     }
 
-    trans.receipt.doExport(cout);
-    cout << "\n";
+    string_q fields =
+        "CBlock:blockHash,blockNumber|"
+        "CTransaction:to,from,blockHash,blockNumber|"
+        "CReceipt:to,from,blockHash,blockNumber,transactionHash,transactionIndex,cumulativeGasUsed,logsBloom,root|"
+        "CLogEntry:blockHash,blockNumber,transactionHash,transactionIndex,transactionLogIndex,removed,type";
+    manageFields(fields, true);
+
+    string_q result;
+    queryRawReceipt(result, trans.getValueByName("hash"));
+    if (opt->isVeryRaw) {
+        opt->rawItems.push_back(result);
+        return true;
+    }
+    CRPCResult generic;
+    generic.parseJson3(result);
+    CBlock bl;
+    CTransaction tt; tt.pBlock = &bl;
+    CReceipt receipt; receipt.pTrans = &tt;
+    receipt.parseJson3(generic.result);
+    opt->rawItems.push_back(receipt.Format());
 
     return true;
 }

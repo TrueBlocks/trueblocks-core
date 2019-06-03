@@ -15,16 +15,12 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include <vector>
-#include <map>
 #include "etherlib.h"
 #include "transaction.h"
-#include "addressappearance.h"
 
 namespace qblocks {
 
 // EXISTING_CODE
-typedef bool (*ADDRESSFUNC)(const CAddressAppearance& item, void *data);
 typedef bool (*TRANSFUNC)(const CTransaction *trans, void *data);
 // EXISTING_CODE
 
@@ -42,6 +38,7 @@ public:
     bool finalized;
     timestamp_t timestamp;
     CTransactionArray transactions;
+    string_q name;
 
 public:
     CBlock(void);
@@ -118,6 +115,7 @@ inline void CBlock::initialize(void) {
     finalized = 0;
     timestamp = 0;
     transactions.clear();
+    name = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -139,10 +137,11 @@ inline void CBlock::duplicate(const CBlock& bl) {
     finalized = bl.finalized;
     timestamp = bl.timestamp;
     transactions = bl.transactions;
+    name = bl.name;
 
     // EXISTING_CODE
-    // EXISTING_CODE
     finishParse();
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
@@ -180,23 +179,16 @@ extern CArchive& operator>>(CArchive& archive, CBlock& blo);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+typedef map<blknum_t, CBlock> CBlockMap;
 //---------------------------------------------------------------------------
+extern blknum_t bnFromPath(const string_q& path, blknum_t& endOut);
 inline blknum_t bnFromPath(const string_q& path) {
-    string_q p = substitute(substitute(path, ".bin", ""), ".txt", "");
-    reverse(p);
-    p = nextTokenClear(p, '/');
-    reverse(p);
-    return str_2_Uint(p);
+    blknum_t unused = NOPOS;
+    return bnFromPath(path, unused);
 }
 
 //---------------------------------------------------------------------------
-inline bool isBlockFinal(timestamp_t ts_block, timestamp_t ts_chain, timestamp_t seconds = (60 * 4)) {
-    // Default to four minutes
-    // If the distance from the front of the node's current view of the front of the chain
-    // is more than the numbers of seconds provided, consider the block final (even if it isn't
-    // in a perfectly mathematical sense
-    return ((ts_chain - ts_block) > seconds);
-}
+extern bool isBlockFinal(timestamp_t ts_block, timestamp_t ts_chain);
 // EXISTING_CODE
 }  // namespace qblocks
 

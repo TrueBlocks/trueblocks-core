@@ -1,0 +1,19 @@
+whereBlock argc: 4 [1:1001001] [2:--fmt] [3:junk] 
+whereBlock 1001001 --fmt junk 
+
+  Export format must be one of [ json | txt | csv | api ]. Quitting...
+
+  Usage:    whereBlock [-v|-h] <block> [block...]  
+  Purpose:  Reports if a block was found in the cache, at a local, or at a remote node.
+             
+  Where:  
+	block_list            a space-separated list of one or more blocks to search for (required)
+
+#### Hidden options (shown during testing only)
+	-x  (--fmt val)       export format (one of [none|json|txt|csv|api])
+#### Hidden options (shown during testing only)
+
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Powered by QBlocks

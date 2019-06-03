@@ -4,49 +4,45 @@
  * Copyright (c) 2017 by Great Hill Corporation.
  * All Rights Reserved.
  *------------------------------------------------------------------------*/
-#include "etherlib.h"
+#include "acctlib.h"
 
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    string_q sourceFolder;
-    string_q monitorFolder;
-    string_q monitorName;
-    string_q addrList;
+    bool     stats;
+    string_q mode;
+    blknum_t minWatchBlock;
+    blknum_t maxWatchBlock;
+    CArchive txCache;
+
+    string_q freshen_flags;
+    string_q tool_flags;
+    CAddressArray addrs;
 
     COptions(void);
     ~COptions(void);
 
-    string_q postProcess(const string_q& which, const string_q& str) const;
     bool parseArguments(string_q& command);
     void Init(void);
+    bool createConfigFile(const address_t& addr);
+
+    bool handle_export   (void);
+    bool handle_list     (void);
+    bool handle_leech    (void);
+    bool handle_daemon   (void);
+    bool handle_scrape   (void);
+    bool handle_slurp    (void);
+    bool handle_quotes   (void);
+    bool handle_ls       (void);
+    bool handle_rm       (void);
+    bool handle_data     (void);
+    bool handle_config   (void);
 };
 
-//-----------------------------------------------------------------------------
-class CQuestion;
-typedef bool (*QUESTIONFUNC)(const COptions& options, CQuestion *q);
+//--------------------------------------------------------------------------------
+extern bool freshen_internal(freshen_t mode, const CAddressArray& list, const string_q& tool_flags, const string_q& freshen_flags);
 
-//-----------------------------------------------------------------------------
-class CQuestion {
-public:
-    string_q question;
-    string_q answer;
-    QUESTIONFUNC func;
-    string_q color;
-    bool wantsInput;
-    bool nl;
-    CQuestion(const string_q& q,bool h, const string_q& c, QUESTIONFUNC f = NULL)
-        : question(q), answer(""), func(f), color(c), wantsInput(h), nl(true) {}
-    bool getResponse(void);
-};
-
-//--------------------------------------------------------------
-extern bool createFolders(const COptions& options, CQuestion *q);
-extern bool createRebuild(const COptions& options, CQuestion *q);
-extern bool createConfig (const COptions& options, CQuestion *q);
-extern bool createCache  (const COptions& options, CQuestion *q);
-extern bool editMakeLists(const COptions& options, CQuestion *q);
-
-//--------------------------------------------------------------
-extern CQuestion questions[];
-extern uint64_t  nQuestions;
+//--------------------------------------------------------------------------------
+extern string_q colors[];
+extern uint64_t nColors;
+#define indexFolder_sorted    (getCachePath("addr_index/sorted/"))

@@ -13,84 +13,81 @@
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
 #include "node_curl.h"
+#include "cacheentry.h"
 
 namespace qblocks {
 
     //-------------------------------------------------------------------------
     // setup and tear down of the library
-    extern void     etherlib_init           (const string_q& primarySource = "binary",
-                                                QUITHANDLER qh = defaultQuitHandler);
+    extern void     etherlib_init           (const string_q& primarySource, QUITHANDLER qh);
     inline void     etherlib_init           (QUITHANDLER qh) { etherlib_init("binary", qh); }
     extern void     etherlib_cleanup        (void);
 
     //-------------------------------------------------------------------------
     // fastest methods to access data
     extern bool     getBlock                (CBlock& block,       blknum_t blockNum);
+    extern bool     getBlock                (CBlock& block,       const hash_t& blockHash);
     extern bool     getTransaction          (CTransaction& trans, blknum_t blockNum, txnum_t txID);
+    extern bool     getTransaction          (CTransaction& trans, const hash_t& txHash);
+    extern bool     getTransaction          (CTransaction& trans, const hash_t& blockHash, txnum_t txID);
     extern bool     getReceipt              (CReceipt& receipt,   const hash_t& txHash);
     extern bool     getLogEntry             (CLogEntry& log,      const hash_t& txHash);
     extern void     getTraces               (CTraceArray& traces, const hash_t& txHash);
     extern size_t   getTraceCount           (const hash_t& hashIn);
+    extern bool     getFullReceipt          (CTransaction *trans, bool needsTrace);
 
     //-------------------------------------------------------------------------
-    // other methods to access data
-    extern bool     getBlock                (CBlock& block,       const hash_t& blockHash);
-    extern bool     getTransaction          (CTransaction& trans, const hash_t& txHash);
-    extern bool     getTransaction          (CTransaction& trans, const hash_t& blockHash, txnum_t txID);
-
-    //-------------------------------------------------------------------------
-    extern bool     queryBlock              (CBlock& block,       const string_q& num, bool needTrace, bool byHash,
-                                                                    size_t& nTraces);
-    extern bool     queryBlock              (CBlock& block,       const string_q& num, bool needTrace, bool byHash);
+    extern bool     queryBlock              (CBlock& block, const string_q& num, bool needTrace);
 
     //-------------------------------------------------------------------------
     // lower level access to the node's responses
-    extern bool     queryRawBlock           (string_q& results,   const string_q& blockNum,
-                                                    bool needTrace, bool hashesOnly);
-    extern bool     queryRawTransaction     (string_q& results,   const hash_t& txHash);
-    extern bool     queryRawReceipt         (string_q& results,   const hash_t& txHash);
-    extern bool     queryRawLog             (string_q& results,   const hash_t& hashIn);
-    extern bool     queryRawTrace           (string_q& results,   const hash_t& hashIn);
-    extern bool     queryRawLogs            (string_q& results,   const address_t& addr,
-                                                    uint64_t fromBlock, uint64_t toBlock);
+    extern bool     queryRawBlock           (string_q& results, const string_q& blockNum, bool needTrace, bool hashesOnly);
+    extern bool     queryRawTransaction     (string_q& results, const hash_t& txHash);
+    extern bool     queryRawReceipt         (string_q& results, const hash_t& txHash);
+    extern bool     queryRawTrace           (string_q& results, const hash_t& hashIn);
+    extern bool     queryRawLogs            (string_q& results, uint64_t fromBlock, uint64_t toBlock, const address_t& addr, const CTopicArray& topics);
+    inline bool     queryRawLogs            (string_q& results, uint64_t fromBlock, uint64_t toBlock, const address_t& addr) { CTopicArray unused2; return queryRawLogs(results, fromBlock, toBlock, addr, unused2); }
+    inline bool     queryRawLogs            (string_q& results, uint64_t fromBlock, uint64_t toBlock) { address_t unused1; CTopicArray unused2; return queryRawLogs(results, fromBlock, toBlock, unused1, unused2); }
+    extern bool     queryRawLogs            (string_q& results, const hash_t& hash, const address_t& addr, const CTopicArray& topics);
+    inline bool     queryRawLogs            (string_q& results, const hash_t& hash, const address_t& addr) { CTopicArray unused2; return queryRawLogs(results, hash, addr, unused2); }
+    inline bool     queryRawLogs            (string_q& results, const hash_t& hash) { address_t unused1; CTopicArray unused2; return queryRawLogs(results, hash, unused1, unused2); }
 
     //-----------------------------------------------------------------------
-    extern hash_t   getRawBlock             (blknum_t bn);
+    extern string_q getRawBlock             (blknum_t bn);
     extern hash_t   getRawBlockHash         (blknum_t bn);
     extern hash_t   getRawTransactionHash   (blknum_t bn, txnum_t tx);
+
+    //-----------------------------------------------------------------------
+    extern bool     getBlock_light          (CBlock& block, const string_q& val);
+    extern bool     getBlock_light          (CBlock& block, blknum_t num);
 
     //-----------------------------------------------------------------------
     extern void     writeToJson             (const CBaseNode& node, const string_q& fileName);
     extern bool     readFromJson            (      CBaseNode& node, const string_q& fileName);
 
     //-----------------------------------------------------------------------
-    extern bool     writeBlockToBinary      (const CBlock& block, const string_q& fileName);
-    extern bool     readBlockFromBinary     (      CBlock& block, const string_q& fileName);
+    extern bool     writeNodeToBinary       (const CBaseNode& node, const string_q& fileName);
+    extern bool     readNodeFromBinary      (CBaseNode& item, const string_q& fileName);
+    #define writeBlockToBinary  writeNodeToBinary
+    #define writeTransToBinary  writeNodeToBinary
+    #define readBlockFromBinary readNodeFromBinary
+    #define readTransFromBinary readNodeFromBinary
 
     //-------------------------------------------------------------------------
     extern string_q getVersionFromClient    (void);
     inline bool     isGeth                  (void) { return contains(toLower(getVersionFromClient()), "geth"); }  // NOLINT
     inline bool     isParity                (void) { return contains(toLower(getVersionFromClient()), "parity"); }  // NOLINT
     extern bool     getAccounts             (CAddressArray& addrs);
-    extern uint64_t getLatestBlockFromClient(void);
-    extern uint64_t getLatestBlockFromCache (void);
-    extern bool     getLatestBlocks         (uint64_t& cache, uint64_t& client);
 
     //-------------------------------------------------------------------------
-    extern bool     getCode                 (const address_t& addr, string_q& theCode);
-    inline string_q getCode                 (const address_t& addr) { string_q ret; getCode(addr, ret); return ret; }  // NOLINT
-    extern bool     getStorageAt            (const address_t& addr, uint64_t pos, string_q&storage);
-    inline string_q getStorageAt            (const address_t& addr, uint64_t pos) { string_q ret; getStorageAt(addr, pos, ret); return ret; }  // NOLINT
     uint64_t        addFilter               (address_t addr, const CTopicArray& topics, blknum_t block);
-    inline bool     isContract              (const address_t& addr) { return !substitute(getCode(addr), "0x", "").empty(); }  // NOLINT
-    extern biguint_t getBalance              (const address_t& addr, blknum_t blockNum, bool isDemo);
-    extern bool     getSha3                 (const string_q& hexIn, string_q& shaOut);
-    inline string_q getSha3                 (const string_q& hexIn) { string_q ret; getSha3(hexIn,ret); return ret; }  // NOLINT
+    string_q        getSha3                 (const string_q& hexIn);
 
     //-------------------------------------------------------------------------
-    extern string_q getJsonFilename         (uint64_t num);
-    extern string_q getBinaryFilename       (uint64_t num);
-    extern string_q getBinaryPath           (uint64_t num);
+    extern string_q getBinaryCacheFilename  (cache_t ct, blknum_t bn, txnum_t txid=NOPOS, txnum_t tcid=NOPOS);
+    extern string_q getBinaryCachePath      (cache_t ct, blknum_t bn, txnum_t txid=NOPOS, txnum_t tcid=NOPOS);
+    extern string_q getBinaryCacheFilename  (cache_t ct, const address_t& addr);
+    extern string_q getBinaryCachePath      (cache_t ct, const address_t& addr);
 
     //-------------------------------------------------------------------------
     // function pointer types for forEvery functions
@@ -104,8 +101,6 @@ namespace qblocks {
     extern bool forEveryBlock                (BLOCKVISITFUNC func, void *data, const string_q& block_list);  // NOLINT
     extern bool forEveryBlock                (BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
     extern bool forEveryBlockOnDisc          (BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
-    extern bool forEveryNonEmptyBlockOnDisc  (BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
-    extern bool forEveryEmptyBlockOnDisc     (BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip=1);  // NOLINT
 
     //-------------------------------------------------------------------------
     // forEvery functions
@@ -123,15 +118,40 @@ namespace qblocks {
     extern bool forEveryLogInBlock           (LOGVISITFUNC func,   void *data, const CBlock& block);
 
     //-------------------------------------------------------------------------
-    extern string_q blockCachePath(const string_q& _part);
+    extern blknum_t getLastBlock_client       (void);
+    extern blknum_t getLastBlock_cache_final  (void);
+    extern blknum_t getLastBlock_cache_staging(void);
+    extern blknum_t getLastBlock_cache_pending(void);
+    extern bool     getLastBlocks             (blknum_t& pending, blknum_t& staging, blknum_t& final, blknum_t& client);
 
-    #define fullBlockIndex (blockCachePath("fullBlocks.bin"))
-    #define accountIndex   (blockCachePath("accountTree.bin"))
-    #define miniBlockCache (blockCachePath("miniBlocks.bin"))
-    #define miniTransCache (blockCachePath("miniTrans.bin"))
-    #define blockFolder    (blockCachePath("blocks/"))
-    #define bloomFolder    (blockCachePath("blooms/"))
-    extern biguint_t weiPerEther;
+    //-------------------------------------------------------------------------
+    extern string_q getCachePath            (const string_q& _part);
+    extern string_q scraperStatus           (void);
+    #define cleanPath(path_) (isTestMode() ? substitute(path_, getCachePath(""), "$CACHE_PATH/") : path_)
+
+    //-------------------------------------------------------------------------
+    #define blockFolder           (getCachePath("blocks/"))
+    #define bloomFolder           (getCachePath("blooms/"))
+
+    #define indexFolder           (getCachePath("addr_index/"))
+    #define indexFolder_finalized (configPath  ("cache/addr_index/finalized/"))
+    #define indexFolder_blooms    (configPath  ("cache/addr_index/blooms/"))
+    #define indexFolder_staging   (getCachePath("addr_index/staging/"))
+    #define indexFolder_pending   (getCachePath("addr_index/pending/"))
+    #define indexFolder_zips      (getCachePath("addr_index/zips/"))
+
+    //-------------------------------------------------------------------------
+    extern biguint_t weiPerEther(void);
+
+    //-------------------------------------------------------------------------
+    extern void manageFields(const string_q& formatStr);
+    extern void manageFields(const string_q& listIn, bool show);
+    extern const string_q defHide;
+    extern const string_q defShow;
+
+    //-------------------------------------------------------------------------
+    string_q exportPreamble(format_t fmt, const string_q& format, const CRuntimeClass *pClass);
+    string_q exportPostamble(format_t fmt, const string_q& extra);
 
 }  // namespace qblocks
 
@@ -141,4 +161,3 @@ extern bool visitBlock      (CBlock& block,       void *data);
 extern bool visitTransaction(CTransaction& trans, void *data);
 extern bool visitLog        (CLogEntry& log,      void *data);
 extern bool visitTrace      (CTrace& trace,       void *data);
-

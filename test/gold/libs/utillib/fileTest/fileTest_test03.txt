@@ -1,0 +1,3 @@
+fileTest argc: 2 [1:last] 
+fileTest last 
+Last file in folder: ../typesTest/

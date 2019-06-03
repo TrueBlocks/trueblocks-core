@@ -20,12 +20,11 @@ public:
     bool belongs;
     bool chkAsStr;
     COptionsTransList transList;
-    bool isRaw;
+    size_t index;
     bool incTrace;
-    bool nTraces;
     string_q format;
-    uint64_t nCmds;
-    uint64_t nVisited;
+    bool articulate;
+    CAbi abi_spec;
 
     COptions(void);
     ~COptions(void);

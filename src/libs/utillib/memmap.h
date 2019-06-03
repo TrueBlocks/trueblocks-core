@@ -48,6 +48,7 @@ public:
     const unsigned char* getData(void) const;
 
     bool isValid(void) const;
+    bool is_open(void) const { return _file != 0; }
 
     uint64_t size(void) const;
     size_t   mappedSize(void) const;

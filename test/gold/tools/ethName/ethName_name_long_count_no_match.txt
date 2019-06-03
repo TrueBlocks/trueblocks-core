@@ -1,3 +1,0 @@
-ethName argc: 3 [1:--count] [2:no_torj] 
-ethName --count no_torj 
-0 matches

@@ -1,14 +1,4 @@
 cacheMan argc: 3 [1:-l] [2:merged.acct.bin] 
 cacheMan -l merged.acct.bin 
-Listing cache: merged.acct.bin
-blockNum:    1001001 transID:       1
-blockNum:    1235820 transID:       1
-blockNum:    1236136 transID:      14
-blockNum:    1244925 transID:       5
-blockNum:    1260081 transID:       3
-blockNum:    1325879 transID:       0
-blockNum:    1332455 transID:       2
-blockNum:    2001001 transID:       2
-blockNum:    3001001 transID:       3
-blockNum:    4001001 transID:       4
-blockNum:    5001001 transID:       5
+00000001 TIME ~ CLOCK - <WARNG> : Exit(loadMonitorData): 
+Could not open cache file.Could not open file: merged.acct.bin

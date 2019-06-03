@@ -3,6 +3,7 @@ CFunction
 CParameter
 CAccount
 CAccountWatch
+CApiSpec
 CBalHistory
 CBlock
 CIncomeStatement

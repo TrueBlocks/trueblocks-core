@@ -4,100 +4,109 @@
  * All Rights Reserved
  *------------------------------------------------------------------------*/
 #include "options.h"
+#include "question.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
-    COption("~folder",       "name of the monitor (also the ./folder for the source code)"),
-    COption("~address_list", "a list of one or more addresses to monitor (must start with '0x')"),
-    COption("-silent",       "suppress all output from chifra (normally chifra is quite verbose)"),
-    COption("",              "Interactively creates a QBlocks monitor for the given address.\n"),
+static const COption params[] = {
+    COption("~command", "one of [ "
+                            "leech | scrape | daemon | "
+                            "list | export | stats | ls | rm | "
+                            "accounts | config | slurp | quotes | data | "
+                            "blocks | trans | receipts | logs | traces "
+                            "]"),
+    COption("",         "Create a TrueBlocks monitor configuration.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
+extern bool visitIndexFiles(const string_q& path, void *data);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
 
+    ENTER4("parseArguments");
+
     Init();
-    while (!command.empty()) {
+    explode(arguments, command, ' ');
+    for (auto arg : arguments) {
+        if (arg == "--tool_help" || (api_mode && arg == "--help")) {
+            tool_flags += (" --help");
 
-        string_q arg = nextTokenClear(command, ' ');
-        if (arg == "-s" || arg == "--silent") {
-            verbose = 0;
+        } else if (mode.empty() && startsWith(arg, '-')) {
 
-        } else if (startsWith(arg, '-')) {
-
-            if (!builtInCmd(arg)) {
-                return usage("Invalid option: " + arg);
-            }
+            if (!builtInCmd(arg))
+                EXIT_USAGE("Invalid option: " + arg);
 
         } else {
 
-            if (startsWith(arg, "0x")) {
-                if (!isAddress(arg))
-                    return usage("Address '" + arg + "' does not appear to be a valid Ethereum adddress. Quitting...");
-                addrList += arg + "|";
+            if (contains(params[0].description, " " + arg + " ")) {
+                if (!mode.empty())
+                    EXIT_USAGE("Please specify " + params[0].description + ". " + mode + ":" + arg);
+                mode = arg;
+                if (mode == "stats") {
+                    mode = "ls";
+                    stats = true;
+                }
+
+            } else if (isAddress(arg)) {
+                addrs.push_back(toLower(arg));
 
             } else {
-                if (!sourceFolder.empty())
-                    return usage("Extranious value '" + arg + ". Specify only a single folder or addresses starting with '0x'. Quitting...");
-                CPath path(makeValidName(arg));
-                sourceFolder = path.getFullPath();
-                if (folderExists(sourceFolder))
-                    return usage("Folder '" + sourceFolder + "' exists. Please remove it or use a different folder name. Quitting...");
-                monitorName = arg;
+                tool_flags += (arg + " ");
+
             }
         }
     }
 
-    if (sourceFolder.empty()) {
-        return usage("You must supply a folder into which to place the monitor.");
-
-    } else {
-        // TODO(tjayrush): make this configurable
-        CPath path(sourceFolder);
-        monitorFolder = substitute(path.getFullPath(), "/src/monitors/", "/monitors/");
-        if (verbose)
-            cerr << "Monitor folder " << substitute(monitorFolder, getHomeFolder(), "~/") << "\n";
+    if (mode == "blocks" ||
+    	mode == "trans" ||
+    	mode == "receipts" ||
+    	mode == "logs" ||
+    	mode == "traces") {
+        tool_flags += (" --" + mode);
+        mode = "data";
     }
 
-    if (addrList.empty())
-        return usage("You must supply at least one Ethereum address to monitor.");
+    if (mode.empty())
+        EXIT_USAGE("Please specify " + params[0].description + ".");
+    establishFolder(getMonitorPath("", FM_PRODUCTION));
+    establishFolder(getMonitorPath("", FM_STAGING));
 
-    return true;
+    if (verbose && !contains(tool_flags, "-v"))
+        tool_flags += (" -v:" + uint_2_Str(verbose));
+    if (verbose && !contains(freshen_flags, "-v"))
+        freshen_flags += (" -v:" + uint_2_Str(verbose));
+
+    tool_flags = trim(tool_flags, ' ');
+    freshen_flags = trim(freshen_flags, ' ');
+
+    LOG4("API_MODE", getEnvStr("API_MODE"));
+    LOG4("IPFS_PATH", getEnvStr("IPFS_PATH"));
+    LOG4("TEST_MODE", getEnvStr("TEST_MODE"));
+    LOG4("NO_COLOR", getEnvStr("NO_COLOR"));
+    LOG4("EDITOR", getEnvStr("EDITOR"));
+
+    EXIT_NOMSG4(true);
 }
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    paramsPtr = params;
-    nParamsRef = nParams;
+    registerOptions(nParams, params);
 
-    verbose = 1;
-    sourceFolder = "";
-    monitorFolder = "";
-    addrList = "";
+    addrs.clear();
+    tool_flags    = "";
+    freshen_flags = "";
+    mode          = "";
+    stats         = false;
+    minArgs       = 0;
 }
 
 //---------------------------------------------------------------------------------------------------
-COptions::COptions(void) {
+COptions::COptions(void) : txCache(WRITING_ARCHIVE) {
     Init();
 }
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-}
-
-//--------------------------------------------------------------------------------
-string_q COptions::postProcess(const string_q& which, const string_q& str) const {
-
-    if (which == "options") {
-        return substitute(str, "address_list", "<address> [address...]");
-
-    } else if (which == "notes" && (verbose || COptions::isReadme)) {
-        return "[{addresses}] must start with '0x' and be forty characters long.\n";
-
-    }
-    return str;
 }

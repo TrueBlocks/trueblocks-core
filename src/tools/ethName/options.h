@@ -11,28 +11,22 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "etherlib.h"
+#include "acctlib.h"
 
+//-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    string_q addr;
-    string_q name;
-    string_q source;
-    bool all;
-    bool count;
-    bool matchCase;
-    bool open;
-    bool list;
-    bool addrOnly;
-    bool data;
-    bool isEdit;
+    CAccountNameMap items;
+    CStringArray    searches;
+    string_q        searchFields;
+    bool            matchCase;
 
     COptions(void);
-    ~COptions(void) {}
+    ~COptions(void);
 
     string_q postProcess(const string_q& which, const string_q& str) const override;
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 
-    string_q showMatches(void);
+    void applyFilter(void);
 };

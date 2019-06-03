@@ -32,12 +32,12 @@ void CAbi::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
-    if (fmtIn.empty()) {
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["abi_fmt"] : fmtIn);
+    if (fmt.empty()) {
         ctx << toJson();
         return;
     }
 
-    string_q fmt = fmtIn;
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -63,20 +63,14 @@ bool CAbi::setValueByName(const string_q& fieldName, const string_q& fieldValue)
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "abiByName" ) {
+            if ( fieldName % "address" ) { address = str_2_Addr(fieldValue); return true; }
+            break;
+        case 'i':
+            if ( fieldName % "interfaces" ) {
                 CFunction item;
                 string_q str = fieldValue;
                 while (item.parseJson3(str)) {
-                    abiByName.push_back(item);
-                    item = CFunction();  // reset
-                }
-                return true;
-            }
-            if ( fieldName % "abiByEncoding" ) {
-                CFunction item;
-                string_q str = fieldValue;
-                while (item.parseJson3(str)) {
-                    abiByEncoding.push_back(item);
+                    interfaces.push_back(item);
                     item = CFunction();  // reset
                 }
                 return true;
@@ -108,8 +102,8 @@ bool CAbi::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> abiByName;
-    archive >> abiByEncoding;
+    archive >> address;
+    archive >> interfaces;
     finishParse();
     return true;
 }
@@ -122,8 +116,8 @@ bool CAbi::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << abiByName;
-    archive << abiByEncoding;
+    archive << address;
+    archive << interfaces;
 
     return true;
 }
@@ -151,17 +145,16 @@ CArchive& operator<<(CArchive& archive, const CAbiArray& array) {
 
 //---------------------------------------------------------------------------
 void CAbi::registerClass(void) {
-    static bool been_here = false;
-    if (been_here) return;
-    been_here = true;
+    // only do this once
+    if (HAS_FIELD(CAbi, "schema")) return;
 
     size_t fieldNum = 1000;
     ADD_FIELD(CAbi, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CAbi, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CAbi, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CAbi, "cname", T_TEXT,  ++fieldNum);
-    ADD_FIELD(CAbi, "abiByName", T_OBJECT|TS_ARRAY, ++fieldNum);
-    ADD_FIELD(CAbi, "abiByEncoding", T_OBJECT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CAbi, "address", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(CAbi, "interfaces", T_OBJECT|TS_ARRAY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAbi, "schema");
@@ -208,6 +201,18 @@ bool CAbi::readBackLevel(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CAbi& abi) {
+    abi.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CAbi& abi) {
+    abi.Serialize(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
 string_q CAbi::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
@@ -218,26 +223,17 @@ string_q CAbi::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "abiByName" || fieldName % "abiByNameCnt" ) {
-                size_t cnt = abiByName.size();
-                if (endsWith(fieldName, "Cnt"))
+            if ( fieldName % "address" ) return addr_2_Str(address);
+            break;
+        case 'i':
+            if ( fieldName % "interfaces" || fieldName % "interfacesCnt" ) {
+                size_t cnt = interfaces.size();
+                if (endsWith(toLower(fieldName), "cnt"))
                     return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {
-                    retS += abiByName[i].Format();
-                    retS += ((i < cnt - 1) ? ",\n" : "\n");
-                }
-                return retS;
-            }
-            if ( fieldName % "abiByEncoding" || fieldName % "abiByEncodingCnt" ) {
-                size_t cnt = abiByEncoding.size();
-                if (endsWith(fieldName, "Cnt"))
-                    return uint_2_Str(cnt);
-                if (!cnt) return "";
-                string_q retS;
-                for (size_t i = 0 ; i < cnt ; i++) {
-                    retS += abiByEncoding[i].Format();
+                    retS += interfaces[i].Format();
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
                 }
                 return retS;
@@ -255,12 +251,9 @@ string_q CAbi::getValueByName(const string_q& fieldName) const {
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CAbi& item) {
     // EXISTING_CODE
-    if (sizeof(item) != 0) {  // do this to always go through here, but avoid a warning
-        for (size_t i = 0 ; i < item.abiByName.size() ; i++) {
-            os << item.abiByName[i].Format() << "\n";
-        }
-        for (size_t i = 0 ; i < item.abiByEncoding.size() ; i++) {
-            os << item.abiByEncoding[i].Format() << "\n";
+    if (sizeof(item) != 0) {  // always true, but we do this to avoid a warning
+        for (auto interface : item.interfaces) {
+            os << interface.Format() << "\n";
         }
         return os;
     }
@@ -273,29 +266,81 @@ ostream& operator<<(ostream& os, const CAbi& item) {
 
 //---------------------------------------------------------------------------
 const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) const {
-    if ( fieldName % "abiByName" && index < abiByName.size() )
-        return &abiByName[index];
-    if ( fieldName % "abiByEncoding" && index < abiByEncoding.size() )
-        return &abiByEncoding[index];
+    if ( fieldName % "interfaces" && index < interfaces.size() )
+        return &interfaces[index];
     return NULL;
 }
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-bool CAbi::loadABIFromFile(const string_q& fileName) {
+bool visitABI(const qblocks::string_q& path, void *data) {
+    if (!endsWith(path, ".json"))
+        return true;
+    CAbi *abi = (CAbi*)data;
+    if (!abi->loadAbiFromFile(path, true))
+        return false;
+    return true;
+}
 
+//---------------------------------------------------------------------------
+bool CAbi::loadAbiKnown(const string_q& which) {
+    if (which == "all")
+        return forEveryFileInFolder(configPath("known_abis/""*"), visitABI, this);
+    return loadAbiFromFile(configPath("known_abis/" + which + ".json"), true);
+}
+
+//---------------------------------------------------------------------------
+bool CAbi::loadAbiByAddress(address_t addrIn) {
+    if (isZeroAddr(addrIn))
+        return false;
+    string_q addr = toLower(addrIn);
+    string_q fileName = getCachePath("abis/" + addr + ".json");
+    return loadAbiFromFile(fileName, false);
+}
+
+//---------------------------------------------------------------------------
+bool CAbi::loadAbiFromFile(const string_q& fileName, bool builtIn) {
+    if (!fileExists(fileName))
+        return false;
     string_q contents;
     asciiFileToString(fileName, contents);
+    return loadAbiFromString(contents, builtIn);
+}
+
+//---------------------------------------------------------------------------
+bool CAbi::loadAbiFromString(const string_q& in, bool builtIn) {
+    string_q contents = in;
     CFunction func;
     while (func.parseJson3(contents)) {
-        abiByName.push_back(func);
-        abiByEncoding.push_back(func);
+        func.isBuiltIn = builtIn;
+        interfaces.push_back(func);
         func = CFunction();  // reset
     }
-    sort(abiByName.begin(), abiByName.end(), sortByFuncName);
-    sort(abiByEncoding.begin(), abiByEncoding.end());  // encoding is default sort
-    return abiByName.size();
+    sort(interfaces.begin(), interfaces.end());
+    return interfaces.size();
+}
+
+//-----------------------------------------------------------------------
+bool CAbi::addIfUnique(const string_q& addr, CFunction& func, bool decorateNames) {
+    if (func.name.empty())  // && func.type != "constructor")
+        return false;
+
+    for (auto f : interfaces) {
+        if (f.encoding == func.encoding)
+            return false;
+
+        // different encoding same name means a duplicate function name in the code. We won't build with
+        // duplicate function names, so we need to modify the incoming function. We do this by appending
+        // the first four characters of the contract's address.
+        if (decorateNames && f.name == func.name && !f.isBuiltIn) {
+            func.origName = func.name;
+            func.name += (startsWith(addr, "0x") ? extract(addr, 2, 4) : extract(addr, 0, 4));
+        }
+    }
+
+    interfaces.push_back(func);
+    return true;
 }
 // EXISTING_CODE
 }  // namespace qblocks

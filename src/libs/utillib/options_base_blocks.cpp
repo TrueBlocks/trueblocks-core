@@ -17,7 +17,7 @@
 namespace qblocks {
 
     //--------------------------------------------------------------------------------
-    blknum_t COptionsBlockList::parseBlockOption(string_q& msg, blknum_t lastBlock) const {
+    blknum_t COptionsBlockList::parseBlockOption(string_q& msg, blknum_t lastBlock, direction_t offset) const {
 
         blknum_t ret = NOPOS;
 
@@ -31,24 +31,28 @@ namespace qblocks {
         } else {
             // if it's not a number, it better be a special value, and we better be able to find it
             CNameValue spec;
-            if (pOptions && pOptions->findSpecial(spec, arg)) {
-                if (spec.first == "latest") {
-                    ret = lastBlock;
-                } else {
-                    ret = str_2_Uint(spec.second);
-                }
+            if (COptionsBase::findSpecial(spec, arg)) {
+                if (spec.first == "latest")
+                    spec.second = uint_2_Str(lastBlock);
+                ret = str_2_Uint(spec.second);
+
             } else {
-                msg = "The given value '" + arg + "' is not a numeral or a special named block. Quitting...\n";
+                msg = "The given value '" + arg + "' is not a numeral or a special named block.\n";
                 return NOPOS;
+
             }
         }
 
         if (ret > lastBlock) {
             string_q lateStr = (isTestMode() ? "--" : uint_2_Str(lastBlock));
-            msg = "Block " + arg + " is later than the last valid block " + lateStr + ". Quitting...\n";
+            msg = "Block " + arg + " is later than the last valid block " + lateStr + ".\n";
             return NOPOS;
         }
 
+        if (offset == PREV && ret > 0)
+            ret--;
+        else if (offset == NEXT && ret < lastBlock)
+            ret++;
         return ret;
     }
 
@@ -56,6 +60,9 @@ namespace qblocks {
     string_q COptionsBlockList::parseBlockList(const string_q& argIn, blknum_t lastBlock) {
 
         string_q arg = argIn;
+
+        direction_t offset = (contains(arg, ".next") ? NEXT : contains(arg, ".prev") ? PREV : NODIR);
+        arg = substitute(substitute(arg, ".next", ""), ".prev", "");
 
         // scrape off the skip marker if any
         if (contains(arg, ":")) {
@@ -75,11 +82,11 @@ namespace qblocks {
 
             if (contains(arg, "+")) {
                 string_q n = nextTokenClear(arg, '+');
-                blknum_t s1 = parseBlockOption(n, lastBlock);
+                blknum_t s1 = parseBlockOption(n, lastBlock, NODIR);
                 if (!n.empty())
                     return n;
                 n = arg;
-                blknum_t s2 = parseBlockOption(n, lastBlock);
+                blknum_t s2 = parseBlockOption(n, lastBlock, NODIR);
                 if (!n.empty())
                     return n;
                 s2 = s1 + s2;
@@ -89,11 +96,11 @@ namespace qblocks {
             string_q stp = arg;
             string_q strt = nextTokenClear(stp, '-');
             string_q msg = strt;
-            start = parseBlockOption(msg, lastBlock);
+            start = parseBlockOption(msg, lastBlock, offset);
             if (!msg.empty())
                 return msg;
             msg = stp;
-            stop = parseBlockOption(msg, lastBlock);
+            stop = parseBlockOption(msg, lastBlock, offset);
             if (!msg.empty())
                 return msg;
 
@@ -107,7 +114,7 @@ namespace qblocks {
 
             } else {
                 string_q msg = arg;
-                blknum_t num = parseBlockOption(msg, lastBlock);
+                blknum_t num = parseBlockOption(msg, lastBlock, offset);
                 if (!msg.empty())
                     return msg;
                 numList.push_back(num);

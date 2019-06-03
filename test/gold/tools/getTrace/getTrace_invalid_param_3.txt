@@ -1,14 +1,19 @@
 getTrace argc: 2 [1:1233123] 
 getTrace 1233123 
+00000001 TIME ~ CLOCK - <ERROR> : Exit(parseArguments): 
 
-  The argument '1233123' is not properly formatted.
+  1233123 does not appear to be a valid transaction index.
 
-  Usage:    getTrace [-r|-c|-v|-h] <transID> [transID...]  
+  Usage:    getTrace [-c|-v|-h] <transID> [transID...]  
   Purpose:  Retrieve a transaction's traces from the local cache or a running node.  
-  Where:    
+  Where:  
 	trans_list            a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)
-	-r  (--raw)           retrieve raw transaction directly from the running node
 	-c  (--countOnly)     show the number of traces for the transaction only
+
+#### Hidden options (shown during testing only)
+	-a  (--address val)   a list of addresses used to filter the results
+#### Hidden options (shown during testing only)
+
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 

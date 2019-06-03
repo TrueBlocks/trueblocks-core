@@ -22,6 +22,7 @@
 namespace qblocks {
 
     //--------------------------------------------------------------------------------
+    //TODO(tjayrush): global data
     CRuntimeClass CBaseNode::classCBaseNode;
     static CBuiltIn _biBaseNode(&CBaseNode::classCBaseNode, "CBaseNode", sizeof(CBaseNode), NULL, NULL);
     vector<CBuiltIn> builtIns;  // Keeps track of all the classes that have beebn registered
@@ -93,72 +94,39 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    char *CBaseNode::parseCSV(char *s, size_t& nFields, const string_q *fields) {
-        nFields = 0;
-
-        typedef enum { OUTSIDE = 0, INSIDE } parseState;
-        parseState state = OUTSIDE;
-
-        char *fieldVal = NULL;
-        while (*s) {
-            switch (state) {
-                case OUTSIDE:
-                    if (*s == '\"') {
-                        state = INSIDE;
-                        fieldVal = s+1;
-
-                    } else if (*s == '\n') {
-                        finishParse();
-                        return (s+1);
-                    }
-                    s++;
-                    break;
-
-                case INSIDE:
-                    if (*s == '\"') {
-                        *s = '\0';
-                        if (!this->setValueByName(fields[nFields++], fieldVal)) {
-//                          fprintf(stderr, "Bad field name %s. Quitting...", fields[nFields-1].c_str());
-//                          return NULL;
-                        }
-                        fieldVal = NULL;
-                        state = OUTSIDE;
-
-                    }
-                    s++;
-                    break;
-            }
-        }
-        finishParse();
-        return NULL;
+    bool CBaseNode::parseCSV(const CStringArray& fields, string_q& str) {
+        // Assumes no internal quotes or commas
+        str = substitute(substitute(str, "\"", ""), ",", "\t");
+        return parseText(fields, str);
     }
 
     //--------------------------------------------------------------------------------
-    char *CBaseNode::parseText(char *s, size_t& nFields, const string_q *fields) {
-        size_t max = nFields;
-        nFields = 0;
-        char *fieldVal = s;
-        while (s && *s) {
-            switch (*s) {
-                case '\r':
-                    break;
-                case '\t':
-                    *s = '\0';
-                    this->setValueByName(fields[nFields++], fieldVal);
-                    fieldVal = s+1;
-                    break;
-                case '\n':
-                    *s = '\0';
-                    this->setValueByName(fields[nFields++], fieldVal);
-                    finishParse();
-                    return s+1;
+    bool CBaseNode::parseText(const CStringArray& fields, string_q& str) {
+        str = substitute(str, "\r", "");
+        string_q line = nextTokenClear(str, '\n');
+        CStringArray values;
+        explode(values, line, '\t');
+        size_t cnt = 0;
+        for (auto value : values) {
+            if (cnt < fields.size()) {
+                this->setValueByName(fields[cnt++], value);
+            } else {
+                finishParse();
+                return false;
             }
-            s++;
         }
-        if (nFields < max)
-            this->setValueByName(fields[nFields++], fieldVal);
         finishParse();
-        return NULL;
+        return !str.empty();
+    }
+
+    //--------------------------------------------------------------------------------
+    bool CBaseNode::parseJson4(string_q& str) {
+        char *p = (char *)str.c_str();  // NOLINT
+        size_t nFields = 0;
+        p = parseJson1(p, nFields);
+        if (p)
+            str = p;
+        return (nFields);
     }
 
     //--------------------------------------------------------------------------------
@@ -350,6 +318,7 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------
+    //TODO(tjayrush): global data
     static CExportOptions expC;
     CExportOptions& expContext(void) {
         return expC;
@@ -481,7 +450,10 @@ namespace qblocks {
                     ret += val;
 
                 } else {
-                    ret += "\"" + val + "\"";
+                    if (val == "null")
+                        ret += val;
+                    else
+                        ret += "\"" + val + "\"";
                 }
             }
             decIndent();
@@ -497,67 +469,82 @@ namespace qblocks {
         if (!pClass)
             return;
 
-        string_q last;
+        string_q first;
         for (auto field : pClass->fieldList) {
-            if (!field.isHidden()) {
-                last = field.getName();
+            if (!field.isHidden() && first.empty()) {
+                first = field.getName();
             }
         }
 
-        os << "{\n";
-        incIndent();
-        for (auto field : pClass->fieldList) {
-            if (!field.isHidden()) {
+        os << "{";
+        if (m_showing) {
+            incIndent();
+            for (auto field : pClass->fieldList) {
                 string_q name = field.getName();
-                os << indent() << "\"" << name << "\": ";
-                if (field.isArray()) {
-                    uint64_t cnt = str_2_Uint(getValueByName(name+"Cnt"));
-                    os << "[";
-                    if (cnt) {
-                        incIndent();
-                        os << "\n";
-                        for (size_t i = 0 ; i < cnt ; i++) {
-                            os << indent();
-                            const CBaseNode *node = getObjectAt(name, i);
-                            if (node) {
-                                node->doExport(os);
-                            } else {
-                                os << "\"" << getStringAt(name, i) << "\"";
-                            }
-                            if (i < cnt-1)
+                if (!field.isHidden()) {
+                    if (field.isArray()) {
+                        uint64_t cnt = str_2_Uint(getValueByName(name+"Cnt"));
+                        if (cnt || showEmptyField(name)) {
+                            if (field.getName() != first)
                                 os << ",";
                             os << "\n";
+                            os << indent() << "\"" << name << "\": ";
+                            os << "[";
+                            if (cnt) {
+                                incIndent();
+                                os << "\n";
+                                for (size_t i = 0 ; i < cnt ; i++) {
+                                    os << indent();
+                                    const CBaseNode *node = getObjectAt(name, i);
+                                    if (node) {
+                                        node->doExport(os);
+                                    } else {
+                                        os << "\"" << getStringAt(name, i) << "\"";
+                                    }
+                                    if (i < cnt-1)
+                                        os << ",";
+                                    os << "\n";
+                                }
+                                decIndent();
+                                os << indent();
+                            }
+                            os << "]";
                         }
-                        decIndent();
-                        os << indent();
-                    }
-                    os << "]";
-                } else if (field.isObject()) {
-                    const CBaseNode *node = getObjectAt(name, 0);
-                    if (node) {
-                        node->doExport(os);
+
+                    } else if (field.isObject()) {
+
+                        if (field.getName() != first)
+                            os << ",";
+                        os << "\n";
+                        os << indent() << "\"" << name << "\": ";
+                        const CBaseNode *node = getObjectAt(name, 0);
+                        if (node) {
+                            node->doExport(os);
+                        } else {
+                            os << getValueByName(name);
+                        }
+
                     } else {
-                        os << getValueByName(name);
+                        if (field.getName() != first)
+                            os << ",";
+                        os << "\n";
+                        os << indent() << "\"" << name << "\": ";
+                        string_q val = getValueByName(name);
+                        bool isNum = field.m_fieldType & TS_NUMERAL;
+                        if (isNum && expContext().hexNums && !startsWith(val, "0x"))
+                            val = str_2_Hex(val);
+                        bool quote = (!isNum || expContext().quoteNums) && val != "null";
+                        if (quote)
+                            os << "\"";
+                        os << val;
+                        if (quote)
+                            os << "\"";
                     }
-                } else {
-                    string_q val = getValueByName(name);
-                    bool isNum = field.m_fieldType & TS_NUMERAL;
-                    if (isNum && expContext().hexNums && !startsWith(val, "0x"))
-                        val = str_2_Hex(val);
-                    bool quote = (!isNum || expContext().quoteNums) && val != "null";
-                    if (quote)
-                        os << "\"";
-                    os << val;
-                    if (quote)
-                        os << "\"";
                 }
-                if (field.getName() != last)
-                    os << ",";
-                os << "\n";
             }
+            decIndent();
+            os << "\n" << indent();
         }
-        decIndent();
-        os << indent();
         os << "}";
     }
 
@@ -660,7 +647,7 @@ namespace qblocks {
         }
 
         size_t maxWidth = 0xdeadbeef, lineWidth = 0xdeadbeef;
-        bool rightJust = false, lineJust = false;
+        bool rightJust = false, lineJust = false, zeroJust = false;
         if (contains(fieldName, "w:")) {
             ASSERT(extract(fieldName, 0, 2) % "w:");  // must be first modifier in the string
             replace(fieldName, "w:", "");   // get rid of the 'w:'
@@ -672,6 +659,12 @@ namespace qblocks {
             maxWidth = str_2_Uint(fieldName);   // grab the width
             nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
             rightJust = true;
+        } else if (contains(fieldName, "z:")) {
+            ASSERT(extract(fieldName, 0, 2) % "z:");  // must be first modifier in the string
+            replace(fieldName, "z:", "");   // get rid of the 'w:'
+            maxWidth = str_2_Uint(fieldName);   // grab the width
+            nextTokenClear(fieldName, ':');    // skip to the start of the fieldname
+            zeroJust = true;
         } else if (contains(fieldName, "l:")) {
             ASSERT(extract(fieldName, 0, 2) % "l:");  // must be first modifier in the string
             replace(fieldName, "l:", "");   // get rid of the 'w:'
@@ -694,6 +687,8 @@ namespace qblocks {
             fieldValue = "";
         if (rightJust) {
             fieldValue = truncPadR(fieldValue, maxWidth);  // pad or truncate
+        } if (zeroJust) {
+            fieldValue = padLeft(fieldValue, maxWidth, '0'); // pad
         } else {
             fieldValue = truncPad(fieldValue, maxWidth);  // pad or truncate
         }
@@ -719,10 +714,15 @@ extern string_q reformat1(const string_q& in, size_t len);
 
     //---------------------------------------------------------------------------------------------------
     CBaseNode *createObjectOfType(const string_q& className) {
-        static bool isSorted = false;
-        if (!isSorted) {
-            sort(builtIns.begin(), builtIns.end());
-            isSorted = true;
+        //TODO(tjayrush): global data
+        { // keep the frame
+            mutex aMutex;
+            lock_guard<mutex> lock(aMutex);
+            static bool isSorted = false;
+            if (!isSorted) {
+                sort(builtIns.begin(), builtIns.end());
+                isSorted = true;
+            }
         }
 
         CRuntimeClass *pClass = &CBaseNode::classCBaseNode;

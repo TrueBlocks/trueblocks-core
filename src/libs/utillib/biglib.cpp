@@ -8,6 +8,7 @@
 #include "basetypes.h"
 #include "biglib.h"
 #include "conversions.h"
+#include "performance.h"
 
 /*
  * A BigUnsignedInABase object represents a nonnegative integer of size limited
@@ -62,6 +63,7 @@ namespace qblocks {
 
     //------------------------------------------------------------------
     BigUnsignedInABase::BigUnsignedInABase(const biguint_t &x, unsigned short base) {  // NOLINT
+//        cerr << "\t" << TIC() << " ";
         if (base < 2)
             throw "BigUnsignedInABase(biguint_t, Base): The base must be at least 2";
         this->base = base;
@@ -89,6 +91,7 @@ namespace qblocks {
 
         // Save the actual length.
         len = digitNum;
+//        cerr << TIC() << " BigUnsigned" << endl;
     }
 
     //------------------------------------------------------------------
@@ -147,15 +150,12 @@ namespace qblocks {
     BigUnsignedInABase::operator string(void) const {
         if (len == 0)
             return string("0");
-        char *s = new char[len+1];
-        memset(s, '\0', len + 1);
+        string_q ret;
+        ret.reserve(len + 1);
         for (unsigned int p = 0 ; p < len ; p++) {  // NOLINT
             unsigned short c = blk[len - 1 - p];  // NOLINT
-            s[p] = ((c < 10) ? char('0'+c) : char('A'+c-10));  // NOLINT
+            ret += ((c < 10) ? char('0'+c) : char('A'+c-10));  // NOLINT
         }
-
-        string ret = s;
-        delete [] s;
         return ret;
     }
 

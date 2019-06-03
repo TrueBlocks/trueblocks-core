@@ -31,12 +31,12 @@ void CAccountName::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) co
     if (!m_showing)
         return;
 
-    if (fmtIn.empty()) {
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["accountname_fmt"] : fmtIn);
+    if (fmt.empty()) {
         ctx << toJson();
         return;
     }
 
-    string_q fmt = fmtIn;
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -67,12 +67,24 @@ bool CAccountName::setValueByName(const string_q& fieldName, const string_q& fie
         case 'd':
             if ( fieldName % "description" ) { description = fieldValue; return true; }
             break;
+        case 'f':
+            if ( fieldName % "fn" ) { fn = fieldValue; return true; }
+            break;
+        case 'l':
+            if ( fieldName % "logo" ) { logo = fieldValue; return true; }
+            if ( fieldName % "lb" ) { lb = str_2_Uint(fieldValue); return true; }
+            break;
         case 'n':
             if ( fieldName % "name" ) { name = fieldValue; return true; }
+            if ( fieldName % "nrecs" ) { nrecs = str_2_Uint(fieldValue); return true; }
             break;
         case 's':
             if ( fieldName % "symbol" ) { symbol = fieldValue; return true; }
             if ( fieldName % "source" ) { source = fieldValue; return true; }
+            if ( fieldName % "size" ) { size = str_2_Double(fieldValue); return true; }
+            break;
+        case 'v':
+            if ( fieldName % "visible" ) { visible = str_2_Bool(fieldValue); return true; }
             break;
         default:
             break;
@@ -100,11 +112,17 @@ bool CAccountName::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
+    archive >> addr;
     archive >> symbol;
     archive >> name;
-    archive >> addr;
     archive >> source;
     archive >> description;
+    archive >> logo;
+    archive >> visible;
+//    archive >> fn;
+//    archive >> size;
+//    archive >> lb;
+//    archive >> nrecs;
     finishParse();
     return true;
 }
@@ -117,11 +135,17 @@ bool CAccountName::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
+    archive << addr;
     archive << symbol;
     archive << name;
-    archive << addr;
     archive << source;
     archive << description;
+    archive << logo;
+    archive << visible;
+//    archive << fn;
+//    archive << size;
+//    archive << lb;
+//    archive << nrecs;
 
     return true;
 }
@@ -149,20 +173,29 @@ CArchive& operator<<(CArchive& archive, const CAccountNameArray& array) {
 
 //---------------------------------------------------------------------------
 void CAccountName::registerClass(void) {
-    static bool been_here = false;
-    if (been_here) return;
-    been_here = true;
+    // only do this once
+    if (HAS_FIELD(CAccountName, "schema")) return;
 
     size_t fieldNum = 1000;
     ADD_FIELD(CAccountName, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CAccountName, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CAccountName, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CAccountName, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CAccountName, "addr", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "symbol", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "name", T_TEXT, ++fieldNum);
-    ADD_FIELD(CAccountName, "addr", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "source", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "description", T_TEXT, ++fieldNum);
+    ADD_FIELD(CAccountName, "logo", T_TEXT, ++fieldNum);
+    ADD_FIELD(CAccountName, "visible", T_BOOL, ++fieldNum);
+    ADD_FIELD(CAccountName, "fn", T_TEXT, ++fieldNum);
+    HIDE_FIELD(CAccountName, "fn");
+    ADD_FIELD(CAccountName, "size", T_DOUBLE, ++fieldNum);
+    HIDE_FIELD(CAccountName, "size");
+    ADD_FIELD(CAccountName, "lb", T_NUMBER, ++fieldNum);
+    HIDE_FIELD(CAccountName, "lb");
+    ADD_FIELD(CAccountName, "nrecs", T_NUMBER, ++fieldNum);
+    HIDE_FIELD(CAccountName, "nrecs");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAccountName, "schema");
@@ -224,12 +257,24 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
         case 'd':
             if ( fieldName % "description" ) return description;
             break;
+        case 'f':
+            if ( fieldName % "fn" ) return fn;
+            break;
+        case 'l':
+            if ( fieldName % "logo" ) return logo;
+            if ( fieldName % "lb" ) return uint_2_Str(lb);
+            break;
         case 'n':
             if ( fieldName % "name" ) return name;
+            if ( fieldName % "nrecs" ) return uint_2_Str(nrecs);
             break;
         case 's':
             if ( fieldName % "symbol" ) return symbol;
             if ( fieldName % "source" ) return source;
+            if ( fieldName % "size" ) return double_2_Str(size);
+            break;
+        case 'v':
+            if ( fieldName % "visible" ) return bool_2_Str(visible);
             break;
     }
 
@@ -259,38 +304,15 @@ CAccountName::CAccountName(string_q& strIn) {
         addr = toLower(nextTokenClear(source, '\t'));
         name = nextTokenClear(source, '\t');
     } else {
-        description = strIn;
-        symbol = nextTokenClear(description, '\t');
-        name = nextTokenClear(description, '\t');
-        addr = toLower(nextTokenClear(description, '\t'));
-        source = nextTokenClear(description, '\t');
+        string str = substitute(substitute(trim(strIn, '\t'), "\n", ""), "\r", "");
+        addr = toLower(nextTokenClear(str, '\t'));
+        symbol = nextTokenClear(str, '\t');
+        source = nextTokenClear(str, '\t');
+        name = nextTokenClear(str, '\t');
+        logo = nextTokenClear(str, '\t');
+        description = nextTokenClear(str, '\t');
+        visible = str_2_Bool(str);
     }
-}
-
-//---------------------------------------------------------------------------
-bool CAccountName::Match(const string_q& s1, const string_q& s2, const string_q& s3, bool matchCase, bool all) const {
-
-    string_q theAddr   = addr;
-    string_q theName   = name + " " + symbol;
-    string_q theSource = source;
-
-    bool m11 = (matchCase ? contains(theAddr  , s1) : contains(toLower(theAddr)  , toLower(s1)));
-    bool m12 = (matchCase ? contains(theName  , s1) : contains(toLower(theName)  , toLower(s1)));
-    bool m13 = (matchCase ? contains(theSource, s1) : contains(toLower(theSource), toLower(s1)));
-    bool m2  = (matchCase ? contains(theName  , s2) : contains(toLower(theName)  , toLower(s2)));
-    bool m3  = (matchCase ? contains(theSource, s3) : contains(toLower(theSource), toLower(s3)));
-
-    if (!s1.empty() && !s2.empty() && !s3.empty())
-        return m11 && m2 && m3;  // all three must match
-
-    if (!s1.empty() && !s2.empty())
-        return m11 && m2;  // addr and name must both match
-
-    if (s1.empty())
-        return false;  // nothing matches
-
-    // We have only s1
-    return (all ? m11 || m12 || m13 : m11 || m12);
 }
 // EXISTING_CODE
 }  // namespace qblocks

@@ -24,7 +24,7 @@ namespace qblocks {
 IPCSocket::IPCSocket(const string_q& _path): m_path(_path) {
     if (_path.length() >= sizeof(sockaddr_un::sun_path)) {
         cerr << "Error opening IPC: socket path is too long!" << "\n";
-        exit(0);
+        return;
     }
 
     struct sockaddr_un saun;
@@ -35,12 +35,12 @@ IPCSocket::IPCSocket(const string_q& _path): m_path(_path) {
 
     if ((m_socket = socket(AF_UNIX, SOCK_STREAM, 0)) < 0) {
         cerr << "Error creating IPC socket object" << "\n";
-        exit(0);
+        return;
     }
 
     if (connect(m_socket, reinterpret_cast<struct sockaddr const*>(&saun), sizeof(struct sockaddr_un)) < 0) {
         cerr << "Error connecting to IPC socket: " << "\n";
-        exit(0);
+        return;
     }
 
     m_fp = fdopen(m_socket, "r");
@@ -62,13 +62,13 @@ string_q IPCSocket::sendRequest(const string_q& _req) {
 }
 
 //-----------------------------------------------------
-CReceipt RPCSession::eth_getTransactionReceipt(const string_q& _transactionHash) {
+CReceipt RPCSession::eth_get TransactionReceipt(const string_q& _transactionHash) {
     CReceipt receipt;
 
     string_q const result = rpcCall("eth_getTransactionReceipt", { _transactionHash });
     if (result.empty()) {
         cerr << "Result from eth_getTransactionReceipt call is empty. Quitting...\n";
-        exit(0);
+        return;
     }
     receipt.gasUsed = result["gasUsed"];
     receipt.contractAddress = result["contractAddress"];
@@ -98,18 +98,18 @@ string_q RPCSession::rpcCall(const string_q& _methodName, const string_q& _args)
     string_q result = m_ipcSocket.sendRequest(request);
     if (contains(result, "error")) {
         cerr << "Error on JSON-RPC call: " << result << "\n";
-        exit(0);
+        return;
     }
     return result;
 }
 
 //-----------------------------------------------------
-string_q RPCSession::eth_getCode(const string_q& _address, const string_q& _blockNumber) {
-    return rpcCall("eth_getCode", _address + "|" + _blockNumber);
+string_q RPCSession::eth_get Code(const string_q& _address, const string_q& _blockNumber) {
+    return rpcCall("eth_get Code", _address + "|" + _blockNumber);
 }
 
 //-----------------------------------------------------
-string_q RPCSession::eth_getBalance(const string_q& _address, const string_q& _blockNumber) {
+string_q RPCSession::eth_get Balance(const string_q& _address, const string_q& _blockNumber) {
     return rpcCall("eth_getBalanc e", _address + "|" + _blockNumber);
 }
 

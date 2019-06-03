@@ -24,13 +24,11 @@ string_q small(const string_q& in) {
 //-------------------------------------------------------------------------
 IMPLEMENT_NODE(CBloomReceipt, CBaseNode);
 CBloomReceipt::CBloomReceipt(void) {
-    static bool been_here = false;
-    if (!been_here) {
-        ADD_FIELD(CBloomReceipt, "bitCount", T_NUMBER, 1);
-        ADD_FIELD(CBloomReceipt, "logsBloom", T_TEXT, 2);
-        HIDE_FIELD(CBloomReceipt, "bitCount");
-        been_here = true;
-    }
+    // only do this once
+    if (HAS_FIELD(CBloomReceipt, "bitCount")) return;
+    ADD_FIELD(CBloomReceipt, "bitCount", T_NUMBER, 1);
+    ADD_FIELD(CBloomReceipt, "logsBloom", T_TEXT, 2);
+    HIDE_FIELD(CBloomReceipt, "bitCount");
 }
 bool CBloomReceipt::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     if (fieldName == "bitCount"   ) { /* nothing to do */ return true; }
@@ -50,14 +48,12 @@ void CBloomReceipt::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) c
 //-------------------------------------------------------------------------
 IMPLEMENT_NODE(CBloomTrans, CBaseNode);
 CBloomTrans::CBloomTrans(void) {
-    static bool been_here = false;
-    if (!been_here) {
-        ADD_FIELD(CBloomTrans, "hash", T_TEXT, 1);
-        ADD_FIELD(CBloomTrans, "receipt", T_OBJECT, 2);
-        ADD_FIELD(CBloomTrans, "transactionIndex", T_TEXT, 3);
-        HIDE_FIELD(CBloomTrans, "hash");
-        been_here = true;
-    }
+    // only do this once
+    if (HAS_FIELD(CBloomTrans, "hash")) return;
+    ADD_FIELD(CBloomTrans, "hash", T_TEXT, 1);
+    ADD_FIELD(CBloomTrans, "receipt", T_OBJECT, 2);
+    ADD_FIELD(CBloomTrans, "transactionIndex", T_TEXT, 3);
+    HIDE_FIELD(CBloomTrans, "hash");
 }
 bool CBloomTrans::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     if (fieldName == "hash"   ) { hash = fieldValue; return true; }
@@ -83,17 +79,15 @@ const CBaseNode *CBloomTrans::getObjectAt(const string_q& name, size_t i) const 
 //-------------------------------------------------------------------------
 IMPLEMENT_NODE(CBloomBlock, CBaseNode);
 CBloomBlock::CBloomBlock(void) {
-    static bool been_here = false;
-    if (!been_here) {
-        ADD_FIELD(CBloomBlock, "bitCount", T_NUMBER, 1);
-        ADD_FIELD(CBloomBlock, "sizeInBytes", T_NUMBER, 2);
-        ADD_FIELD(CBloomBlock, "logsBloom", T_TEXT, 3);
-        ADD_FIELD(CBloomBlock, "number", T_TEXT, 4);
-        ADD_FIELD(CBloomBlock, "transactions", T_OBJECT|TS_ARRAY, 5);
-        HIDE_FIELD(CBloomBlock, "bitCount");
-        HIDE_FIELD(CBloomBlock, "sizeInBytes");
-        been_here = true;
-    }
+    // only do this once
+    if (HAS_FIELD(CBloomBlock, "bitCount")) return;
+    ADD_FIELD(CBloomBlock, "bitCount", T_NUMBER, 1);
+    ADD_FIELD(CBloomBlock, "sizeInBytes", T_NUMBER, 2);
+    ADD_FIELD(CBloomBlock, "logsBloom", T_TEXT, 3);
+    ADD_FIELD(CBloomBlock, "number", T_TEXT, 4);
+    ADD_FIELD(CBloomBlock, "transactions", T_OBJECT|TS_ARRAY, 5);
+    HIDE_FIELD(CBloomBlock, "bitCount");
+    HIDE_FIELD(CBloomBlock, "sizeInBytes");
 }
 bool CBloomBlock::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     if (fieldName == "bitCount"    ) { /* nothing to do */ return true; }

@@ -15,12 +15,10 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include <vector>
-#include <map>
-#include "abilib.h"
+#include "etherlib.h"
 #include "transaction.h"
 #include "incomestatement.h"
-#include "balancehistory.h"
+#include "ethstate.h"
 
 namespace qblocks {
 
@@ -35,12 +33,12 @@ public:
     string_q color;
     blknum_t firstBlock;
     blknum_t lastBlock;
-    bool deepScan;
-    CIncomeStatement qbis;
-    CBalanceHistoryArray balanceHistory;
+    CIncomeStatement statement;
+    CEthStateArray stateHistory;
     wei_t nodeBal;
     bool enabled;
-    CAbi abi;
+    CAbi abi_spec;
+    freshen_t fm_mode;
 
 public:
     CAccountWatch(void);
@@ -53,13 +51,16 @@ public:
     const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    CAccountWatch(const string_q& _addr, const string_q& _name, blknum_t fB, blknum_t lB, const string_q& _color)
-    : address(toLower(_addr)), name(_name), color(_color), firstBlock(fB), lastBlock(lB) {}
-    string_q displayName(bool expand, bool terse, size_t w1 = 20, size_t w2 = 8) const
-        { return displayName(expand, true, terse, w1, w2); }
-    string_q displayName(bool expand, bool useColor, bool terse, size_t w1 = 20, size_t w2 = 8) const;
+    CAccountWatch(const string_q& _addr, const string_q& _name, blknum_t fB, blknum_t lB, const string_q& _color);
+    CAccountWatch(const address_t& _addr, const string_q& _name);
     bloom_t bloom;
     bool inBlock;
+    CArchive *tx_cache;
+    string_q extra_data;
+    void writeLastBlock(blknum_t bn);
+    void writeAnArray(const CAppearanceArray_base& array);
+    void writeARecord(blknum_t bn, blknum_t tx_id);
+    bool openCacheFile1(void);
     // EXISTING_CODE
     bool operator==(const CAccountWatch& item) const;
     bool operator!=(const CAccountWatch& item) const { return !operator==(item); }
@@ -86,11 +87,31 @@ inline CAccountWatch::CAccountWatch(void) {
 //--------------------------------------------------------------------------
 inline CAccountWatch::CAccountWatch(const CAccountWatch& ac) {
     // EXISTING_CODE
+    tx_cache = NULL;
     // EXISTING_CODE
     duplicate(ac);
 }
 
 // EXISTING_CODE
+//--------------------------------------------------------------------------
+inline CAccountWatch::CAccountWatch(const string_q& _addr, const string_q& _name, blknum_t fB, blknum_t lB, const string_q& _color) {
+    initialize();
+    address = toLower(_addr);
+    name = _name;
+    color = _color;
+    firstBlock = fB;
+    lastBlock = lB;
+}
+
+//--------------------------------------------------------------------------
+inline CAccountWatch::CAccountWatch(const address_t& _addr, const string_q& _name) {
+    initialize();
+    address = toLower(_addr);
+    name = _name;
+    color = cBlue;
+    firstBlock = 0;
+    lastBlock = 0;
+}
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -103,6 +124,11 @@ inline CAccountWatch::~CAccountWatch(void) {
 //--------------------------------------------------------------------------
 inline void CAccountWatch::clear(void) {
     // EXISTING_CODE
+    if (tx_cache) {
+        tx_cache->Release();
+        delete tx_cache;
+    }
+    tx_cache = NULL;
     // EXISTING_CODE
 }
 
@@ -115,17 +141,19 @@ inline void CAccountWatch::initialize(void) {
     color = "";
     firstBlock = 0;
     lastBlock = 0;
-    deepScan = 0;
-    qbis.initialize();
-    balanceHistory.clear();
+    statement = CIncomeStatement();
+    stateHistory.clear();
     nodeBal = 0;
     enabled = true;
-    abi.initialize();
+    abi_spec = CAbi();
+    fm_mode = FM_PRODUCTION;
 
     // EXISTING_CODE
     lastBlock = UINT_MAX;
     bloom = 0;
     inBlock = false;
+    tx_cache = NULL;
+    extra_data = "";
     // EXISTING_CODE
 }
 
@@ -139,19 +167,20 @@ inline void CAccountWatch::duplicate(const CAccountWatch& ac) {
     color = ac.color;
     firstBlock = ac.firstBlock;
     lastBlock = ac.lastBlock;
-    deepScan = ac.deepScan;
-    qbis = ac.qbis;
-    balanceHistory = ac.balanceHistory;
+    statement = ac.statement;
+    stateHistory = ac.stateHistory;
     nodeBal = ac.nodeBal;
     enabled = ac.enabled;
-    abi = ac.abi;
+    abi_spec = ac.abi_spec;
+    fm_mode = ac.fm_mode;
 
     // EXISTING_CODE
     lastBlock = ac.lastBlock;
     bloom = ac.bloom;
     inBlock = ac.inBlock;
+    tx_cache = NULL; // we do not copy the tx_cache
+    extra_data = ac.extra_data;
     // EXISTING_CODE
-    finishParse();
 }
 
 //--------------------------------------------------------------------------
@@ -185,8 +214,9 @@ extern CArchive& operator<<(CArchive& archive, const CAccountWatchArray& array);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern biguint_t getNodeBal(CBalanceHistoryArray& history, const address_t& addr, blknum_t blockNum);
-extern void loadWatchList(const CToml& toml, CAccountWatchArray& watches, const string_q& key);
+typedef map<address_t,CAccountWatch> CAccountWatchMap;
+extern biguint_t getNodeBal(CEthStateArray& history, const address_t& addr, blknum_t blockNum);
+extern void loadWatchList(const CToml& toml, CAccountWatchArray& monitors, const string_q& key);
 // EXISTING_CODE
 }  // namespace qblocks
 

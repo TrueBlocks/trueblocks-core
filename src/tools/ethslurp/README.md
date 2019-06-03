@@ -6,7 +6,7 @@ While `ethslurp` does have its shortcomings, it also provides some nice features
 
 #### Usage
 
-`Usage:`    ethslurp [-b|-t|-f|-b|-s|-v|-h] addrs  
+`Usage:`    ethslurp [-b|-t|-x|-b|-s|-v|-h] addrs  
 `Purpose:`  Fetches data from EtherScan for an arbitrary address. Formats the output to your specification.
              
 `Where:`  
@@ -16,7 +16,7 @@ While `ethslurp` does have its shortcomings, it also provides some nice features
 |  | addrs | one or more addresses to slurp |
 | -b | --blocks range | an optional range of blocks to slurp |
 | -t | --type val | extract either [ ext &#124; int &#124; token &#124; miner &#124; all ] type of transactions |
-| -f | --fmt val | pretty print, optionally add ':txt,' ':csv,' or ':html' |
+| -x | --fmt val | pretty print, optionally add ':txt,' ':csv,' or ':html' |
 | -b | --blocks range | export records in block range (:0[:max]) |
 | -s | --silent | Run silently (only freshen the data, do not display it) |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
@@ -37,6 +37,10 @@ All **QBlocks** command-line tools support the following commands (although in s
     --wei       |   specify value in wei (the default)
     --ether     |   specify value in ether
     --dollars   |   specify value in US dollars
+    --raw       |   report JSON data from the node with minimal processing
+    --veryRaw   |   report JSON data from node with zero processing
+    --fmt       |   export format (where appropriate). One of [none|txt|csv|json|api]
+    --api_mode  |   simulate api_mode for testing
     --file:fn   |   specify multiple sets of command line options in a file.
 
 <small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>

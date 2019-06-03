@@ -1,0 +1,21 @@
+getState argc: 2 [1:--help] 
+getState --help 
+
+  Usage:    getState [-n|-c|-m|-v|-h] <address> [address...] [block...]  
+  Purpose:  Retrieve the balance (in wei) for one or more addresses at the given block(s).
+             
+  Where:  
+	address_list          one or more addresses (0x...) from which to retrieve balances (required)
+	block_list            an optional list of one or more blocks at which to report balances, defaults to 'latest'
+	-n  (--nozero)        suppress the display of zero balance accounts
+	-c  (--changes)       only report a balance when it changes from one block to the next
+	-m  (--mode val)      control which state to export. One of [none|some|all|balance|nonce|code|storage|deployed|accttype]
+
+#### Hidden options (shown during testing only)
+	-x  (--fmt val)       export format (one of [none|json|txt|csv|api])
+#### Hidden options (shown during testing only)
+
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Powered by QBlocks

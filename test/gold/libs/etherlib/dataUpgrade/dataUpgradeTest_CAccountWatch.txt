@@ -12,18 +12,17 @@ name                	1006	0	131122	T_TEXT TS_STRING
 color               	1007	0	131122	T_TEXT TS_STRING
 firstBlock          	1008	0	65561	T_NUMBER TS_NUMERAL
 lastBlock           	1009	0	65561	T_NUMBER TS_NUMERAL
-deepScan            	1010	0	65556	T_BOOL TS_NUMERAL
-qbis                	1011	0	1048651	T_OBJECT TS_OBJECT
-balanceHistory      	1012	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-nodeBal             	1013	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-enabled             	1014	0	65556	T_BOOL TS_NUMERAL
-abi                 	1015	1	1048651	T_OBJECT TS_OBJECT
+statement           	1010	0	1048651	T_OBJECT TS_OBJECT
+stateHistory        	1011	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+nodeBal             	1012	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+enabled             	1013	0	65556	T_BOOL TS_NUMERAL
+abi_spec            	1014	1	1048651	T_OBJECT TS_OBJECT
+fm_mode             	1015	1	131122	T_TEXT TS_STRING
 {
   "address": "0x0",
   "firstBlock": 0,
   "lastBlock": 4294967295,
-  "deepScan": 0,
-  "qbis": {
+  "statement": {
     "begBal": 0,
     "inflow": 0,
     "outflow": 0,
@@ -31,7 +30,7 @@ abi                 	1015	1	1048651	T_OBJECT TS_OBJECT
     "endBal": 0,
     "blockNum": 0
   },
-  "balanceHistory": [],
+  "stateHistory": [],
   "nodeBal": 0,
   "enabled": 1
 }
@@ -48,12 +47,12 @@ name                	1006	1	131122	T_TEXT TS_STRING
 color               	1007	1	131122	T_TEXT TS_STRING
 firstBlock          	1008	1	65561	T_NUMBER TS_NUMERAL
 lastBlock           	1009	1	65561	T_NUMBER TS_NUMERAL
-deepScan            	1010	1	65556	T_BOOL TS_NUMERAL
-qbis                	1011	1	1048651	T_OBJECT TS_OBJECT
-balanceHistory      	1012	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-nodeBal             	1013	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-enabled             	1014	1	65556	T_BOOL TS_NUMERAL
-abi                 	1015	1	1048651	T_OBJECT TS_OBJECT
+statement           	1010	1	1048651	T_OBJECT TS_OBJECT
+stateHistory        	1011	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+nodeBal             	1012	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+enabled             	1013	1	65556	T_BOOL TS_NUMERAL
+abi_spec            	1014	1	1048651	T_OBJECT TS_OBJECT
+fm_mode             	1015	1	131122	T_TEXT TS_STRING
 {
 }
 
@@ -69,22 +68,21 @@ name                	1006	0	131122	T_TEXT TS_STRING
 color               	1007	0	131122	T_TEXT TS_STRING
 firstBlock          	1008	0	65561	T_NUMBER TS_NUMERAL
 lastBlock           	1009	0	65561	T_NUMBER TS_NUMERAL
-deepScan            	1010	0	65556	T_BOOL TS_NUMERAL
-qbis                	1011	0	1048651	T_OBJECT TS_OBJECT
-balanceHistory      	1012	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-nodeBal             	1013	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-enabled             	1014	0	65556	T_BOOL TS_NUMERAL
-abi                 	1015	0	1048651	T_OBJECT TS_OBJECT
+statement           	1010	0	1048651	T_OBJECT TS_OBJECT
+stateHistory        	1011	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+nodeBal             	1012	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+enabled             	1013	0	65556	T_BOOL TS_NUMERAL
+abi_spec            	1014	0	1048651	T_OBJECT TS_OBJECT
+fm_mode             	1015	0	131122	T_TEXT TS_STRING
 {
-  "schema": 5005,
+  "schema": 5007,
   "deleted": 0,
   "showing": 1,
   "cname": "AccountWatch",
   "address": "0x0",
   "firstBlock": 0,
   "lastBlock": 4294967295,
-  "deepScan": 0,
-  "qbis": {
+  "statement": {
     "begBal": 0,
     "inflow": 0,
     "outflow": 0,
@@ -92,12 +90,12 @@ abi                 	1015	0	1048651	T_OBJECT TS_OBJECT
     "endBal": 0,
     "blockNum": 0
   },
-  "balanceHistory": [],
+  "stateHistory": [],
   "nodeBal": 0,
   "enabled": 1,
-  "abi": {
-    "abiByName": [],
-    "abiByEncoding": []
+  "abi_spec": {
+    "address": "0x0",
+    "interfaces": []
   }
 }
 

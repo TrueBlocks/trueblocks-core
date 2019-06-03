@@ -32,12 +32,12 @@ void CTraceAction::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) co
     if (!m_showing)
         return;
 
-    if (fmtIn.empty()) {
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["traceaction_fmt"] : fmtIn);
+    if (fmt.empty()) {
         ctx << toJson();
         return;
     }
 
-    string_q fmt = fmtIn;
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -175,9 +175,8 @@ CArchive& operator<<(CArchive& archive, const CTraceActionArray& array) {
 
 //---------------------------------------------------------------------------
 void CTraceAction::registerClass(void) {
-    static bool been_here = false;
-    if (been_here) return;
-    been_here = true;
+    // only do this once
+    if (HAS_FIELD(CTraceAction, "schema")) return;
 
     size_t fieldNum = 1000;
     ADD_FIELD(CTraceAction, "schema",  T_NUMBER, ++fieldNum);
@@ -204,6 +203,8 @@ void CTraceAction::registerClass(void) {
     builtIns.push_back(_biCTraceAction);
 
     // EXISTING_CODE
+    ADD_FIELD(CTraceAction, "ether", T_ETHER, ++fieldNum)
+    HIDE_FIELD(CTraceAction, "ether");
     // EXISTING_CODE
 }
 
@@ -213,6 +214,10 @@ string_q nextTraceactionChunk_custom(const string_q& fieldIn, const void *dataPt
     if (tra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'e':
+                if ( fieldIn % "ether" )
+                    return wei_2_Ether(bnu_2_Str(tra->value));
+                break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type

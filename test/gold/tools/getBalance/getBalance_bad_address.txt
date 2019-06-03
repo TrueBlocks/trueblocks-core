@@ -1,5 +1,0 @@
-getBalance argc: 3 [1:$doa] [2:0x12] 
-getBalance $doa 0x12 
-
-  The given value '$doa' is not a numeral or a special named block. Quitting...
-

@@ -11,13 +11,12 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "etherlib.h"
+#include "acctlib.h"
 
 //-----------------------------------------------------------------------------
 class COptions : public CBlockOptions {
 public:
-    CStringArray     requests;
-    bool             alone;
+    CBlockMap items;
 
     COptions(void);
     ~COptions(void);
@@ -25,5 +24,9 @@ public:
     string_q postProcess(const string_q& which, const string_q& str) const override;
     bool parseArguments(string_q& command) override;
     void Init(void) override;
-    string_q listSpecials(bool terse) const;
+
+    string_q listSpecials(format_t fmt) const;
 };
+
+extern bool lookupDate(const COptions *options, CBlock& block, const timestamp_t& ts);
+extern bool showSpecials(CNameValue& pair, void *data);

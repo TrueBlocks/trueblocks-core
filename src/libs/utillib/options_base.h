@@ -33,17 +33,29 @@
 #define OPT_TRUEDATA (OPT_PROVE|OPT_VERIFY)
 #define OPT_DEFAULT (OPT_HELP|OPT_VERBOSE|OPT_DENOM|OPT_PARITY|OPT_TRUEDATA)
 #endif
+#define OPT_RUNONCE (1<<9)
+#define OPT_RAW     (1<<10)
+#define OPT_PREFUND (1<<11)
 
+//-----------------------------------------------------------------------------
+enum format_t { NONE1 = 0, JSON1 = (1<<1), TXT1 = (1<<2), CSV1 = (1<<3), API1 = (1<<4) };
 namespace qblocks {
-
+    class COption;
     class COptionsBase {
     public:
-        static uint32_t enableBits;
-        static bool needsOption;
-        static bool isReadme;
+        CStringArray prefunds;
+        CStringArray arguments;
+        //TODO(tjayrush): global data
+        uint32_t enableBits;
+        bool needsOption;
+        bool isReadme;
+        bool isRaw;
+        bool isVeryRaw;
+        bool api_mode;
+        format_t exportFmt;
+        blkrange_t scanRange;
 
-        string_q commandList;
-        bool     fromFile;
+        CStringArray commandLines;
         uint64_t minArgs;
         CRuntimeClass *sorts[5];
 
@@ -51,33 +63,51 @@ namespace qblocks {
         virtual ~COptionsBase(void) { }
 
         //--------------------------------------------------------------------------------
-        void setProgramName(const string_q& name);
+        static string_q g_progName;
+        void setProgName(const string_q& name);
+        string_q getProgName(void) const;
         bool prepareArguments(int argc, const char *argv[]);
         virtual bool parseArguments(string_q& command) = 0;
         bool builtInCmd(const string_q& arg);
         bool standardOptions(string_q& cmdLine);
-        virtual string_q postProcess(const string_q& which, const string_q& str) const { return str; }
 
         // supporting special block names
-        CNameValueArray specials;
-        void     loadSpecials(void);
-        bool     findSpecial(CNameValue& pair, const string_q& arg) const;
-
-        // supporting tools
-        CNameValueArray tools;
-        void     loadToolNames(void);
-        bool     findToolNickname(CNameValue& pair, const string_q& name) const;
-        bool     findToolName(CNameValue& pair, const string_q& nickname) const;
-        string_q toolNicknames(void) const;
+        typedef bool (*NAMEVALFUNC)(CNameValue& pair, void *data);
+        static CNameValueArray specials;
+        static void loadSpecials(void);
+        static bool findSpecial(CNameValue& pair, const string_q& arg);
+        static bool forEverySpecialBlock(NAMEVALFUNC func, void *data);
 
         // supporting named accounts
         CAccountNameArray namedAccounts;
         CFilename namesFile;
         bool loadNames(void);
         bool getNamedAccount(CAccountName& acct, const string_q& addr) const;
+        string_q getNamedAccount(const string_q& addr) const;
+
+        // enabling options
+        bool isEnabled(uint32_t q) const;
+        void optionOff(uint32_t q);
+        void optionOn (uint32_t q);
+
+        string_q expandOption(string_q& arg);
+        bool     usage(const string_q& errMsg = "") const;
+        string_q usageStr(const string_q& errMsg = "") const;
+        string_q purpose(void) const;
+        string_q options(void) const;
+        string_q descriptions(void) const;
+        string_q oneDescription(const string_q& sN, const string_q& lN, const string_q& d, bool isMode, bool required) const;
+        string_q notes(void) const;
+        virtual string_q postProcess(const string_q& which, const string_q& str) const { return str; }
 
     protected:
+        void registerOptions(size_t nP, COption const *pP);
         virtual void Init(void) = 0;
+        const COption *pParams;
+        size_t cntParams;
+        string_q hiUp1;
+        string_q hiUp2;
+        string_q hiDown;
     };
 
     //--------------------------------------------------------------------------------
@@ -102,16 +132,7 @@ namespace qblocks {
     };
 
     //--------------------------------------------------------------------------------
-    extern int usage(const string_q& errMsg = "");
-    extern string_q usageStr(const string_q& errMsg = "");
-    extern string_q options(void);
-    extern string_q descriptions(void);
-    extern string_q notes(void);
-    extern string_q purpose(void);
-
-    //--------------------------------------------------------------------------------
     extern int sortParams(const void *c1, const void *c2);
-    extern string_q expandOption(string_q& arg);
 
     //--------------------------------------------------------------------------------
     extern uint64_t verbose;
@@ -121,15 +142,7 @@ namespace qblocks {
     extern string_q configPath(const string_q& part);
 
     //--------------------------------------------------------------------------------
-    extern COption *paramsPtr;
-    extern size_t& nParamsRef;
-    extern COptionsBase *pOptions;
-
-    extern bool isEnabled(uint32_t q);
-    extern void optionOff(uint32_t q);
-    extern void optionOn (uint32_t q);
-
-    //--------------------------------------------------------------------------------
+    class CToml;
     extern const CToml *getGlobalConfig(const string_q& name = "");
 
     typedef bool (*UINT64VISITFUNC)(uint64_t num, void *data);
@@ -149,7 +162,7 @@ namespace qblocks {
         bool forEveryBlockNumber(UINT64VISITFUNC func, void *) const;
         bool hasBlocks(void) const { return (hashList.size() || numList.size() || (start != stop)); }
         bool isInRange(blknum_t bn) const;
-        blknum_t parseBlockOption(string_q& msg, blknum_t lastBlock) const;
+        blknum_t parseBlockOption(string_q& msg, blknum_t lastBlock, direction_t offset) const;
     };
 
     class COptionsTransList {
@@ -162,7 +175,8 @@ namespace qblocks {
         bool hasTrans(void) const { return !queries.empty(); }
     };
 
-    extern const char *STR_DEFAULT_NAMEDATA;
-    extern const char *STR_DEFAULT_TOOLNAMES;
+    extern const char *STR_DEFAULT_WHENBLOCKS;
+    extern bool prepareEnv(int argc, const char *argv[]);
+    extern string_q cleanFmt(const string_q& str, format_t fmt);
 
 }  // namespace qblocks

@@ -51,6 +51,7 @@ TEST_F(ThisTest, Test1) {
 
 //------------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
+    etherlib_init(quickQuitHandler);
 
     opts.minArgs = 0;
     if (!opts.prepareArguments(argc, argv))
@@ -58,8 +59,7 @@ int main(int argc, const char *argv[]) {
 
     bool ret = true;
     LOAD_TEST(Test1);
-    while (!opts.commandList.empty()) {
-        string_q command = nextTokenClear(opts.commandList, '\n');
+    for (auto command : opts.commandLines) {
         if (!opts.parseArguments(command))
             return 0;
         cout << string_q(80, '-') << "\n";

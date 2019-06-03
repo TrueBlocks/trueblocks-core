@@ -8,8 +8,8 @@
 //-------------------------------------------------------------------------
 bool COptions::handleMerge(void) const {
 
-    CAcctCacheItemArray dataArray;
-    if (!handleRead("Merging", filenames.size(), dataArray))
+    CAppearanceArray_base dataArray;
+    if (!handleRead("Merging", monitors.size(), dataArray))
         return false;
 
     cerr << "\tSorting...";

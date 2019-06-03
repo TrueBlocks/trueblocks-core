@@ -16,8 +16,7 @@
 extern void doTests(void);
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-
-    etherlib_init();
+    etherlib_init(quickQuitHandler);
 
     // Parse command line, allowing for command files
     COptions options;
@@ -27,8 +26,7 @@ int main(int argc, const char *argv[]) {
     if (isTestMode()) {
         doTests();
     } else {
-        while (!options.commandList.empty()) {
-            string_q command = nextTokenClear(options.commandList, '\n');
+        for (auto command : options.commandLines) {
             if (!options.parseArguments(command))
                 return 0;
             string_q in = argv[1];

@@ -21,3 +21,19 @@ public:
     string_q getBlockNumList(void);
     void Init(void);
 };
+
+//-----------------------------------------------------------------------------
+class CHistoryOptions : public CBlockOptions {
+public:
+    blknum_t newestBlock;
+    blknum_t oldestBlock;
+    CHistoryOptions(void) { Init(); }
+    ~CHistoryOptions(void) { }
+    void Init(void) override { CBlockOptions::Init(); newestBlock = oldestBlock = NOPOS; }
+    bool hasHistory(void) const;
+};
+
+//-----------------------------------------------------------------------------
+extern string_q getDispBal(blknum_t blockNum, biguint_t bal);
+extern bool wrangleTxId(string_q& argIn, string_q& errorMsg);
+extern bool getDirectionalTxId(blknum_t bn, txnum_t txid, const string_q& dir, string_q& argOut, string_q& errorMsg);

@@ -1,0 +1,19 @@
+getState argc: 5 [1:0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98] [2:--api_mode] [3:2000000] [4:--ether] 
+getState 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 --api_mode 2000000 --ether 
+{ "type": "CEthState", "data": [
+  {
+    "schema": 5007,
+    "deleted": 0,
+    "showing": 1,
+    "cname": "EthState",
+    "blockNumber": 2000000,
+    "balance": 97380000000000,
+    "nonce": 0,
+    "code": "",
+    "storage": "",
+    "address": "0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98",
+    "deployed": 0,
+    "accttype": "",
+    "ether": 0.000097380000000000
+  }
+], "meta": {"pending": 18446744073709551615,"staging": 18446744073709551615,"finalized": 18446744073709551615,"client": 18446744073709551615 } }

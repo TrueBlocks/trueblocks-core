@@ -1,6 +1,4 @@
-//IT SHOULD NOT START IF IT CANNOT FIND THE FILE.
-//I REMOVED AN ADDRESS ENTRY, THE FIRST, WHICH CHANGED THE NAME OF THE FILE
-//SHOULD DISALLOW WEIRD COMMAND LINE options
+//TODO: This used to work: watch->nodeBal = getNodeBal(watch->stateHistory, watch->address, watch->firstBlock-1);
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
  * Copyright (c) 2017 by Great Hill Corporation.
@@ -9,48 +7,109 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
-    COption("-fmt:<fmt>",       "export format (one of [json|txt|csv]"),
-    COption("-fi(l)ter:<addr>", "show results for this address (you may specify more than one filter)"),
-    COption("-useBlooms",       "use bloom filters to decide whether or not to re-check the cache"),
-    COption("-ignoreDdos",      "ignore apparent dDos transactions."),
-    COption("",                 "Export transactions for one or more Ethereum addresses.\n"),
+static const COption params[] = {
+    COption("~address_list",      "one or more addresses (0x...) to export"),
+    COption("-fmt:<fmt>",         "export format (one of [json|txt|csv])"),
+    COption("-articulate",        "articulate transactions, traces, logs, and outputs"),
+    COption("@blocks:<on/off>",   "write blocks to the binary cache ('off' by default)"),
+    COption("@txs:<on/off>",      "write transactions to the binary cache ('on' by default)"),
+    COption("@t(r)aces:<on/off>", "write traces to the binary cache ('off' by default)"),
+    COption("@ddos:<on/off>",     "skip over dDos transactions in export ('on' by default)"),
+    COption("@maxTraces:<num>",   "if --ddos:on, the number of traces defining a dDos (default = 250)"),
+    COption("@start:<num>",       "first block to export (inclusive)"),
+    COption("@end:<num>",         "last block to export (inclusive)"),
+    COption("",                   "Export full detail of transactions for one or more Ethereum addresses.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
+extern const char* STR_DISPLAY;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
     CAccountWatch::registerClass();
 
-    export_t fmt = JSON;
-    CStringArray filters;
     if (!standardOptions(command))
         return false;
 
     Init();
-#ifdef OUTPUT_REDIR
-    outFile = "file.txt";
-#endif
-    while (!command.empty()) {
-        string_q arg = nextTokenClear(command, ' ');
-        if (startsWith(arg, "-f:") || startsWith(arg, "--fmt:")) {
+    explode(arguments, command, ' ');
+    for (auto arg : arguments) {
+        if (startsWith(arg, "-b") || startsWith(arg, "--blocks")) {
+            arg = substitute(substitute(arg, "-b:", ""), "--blocks:", "");
+            if (arg != "on" && arg != "off")
+                return usage("Please provide either 'on' or 'off' for the --blocks options. Quitting...");
+            writeBlocks = (arg == "on" ? true : false);
 
-            arg = substitute(substitute(arg, "-f:", ""), "--fmt:", "");
-                 if ( arg == "txt" ) fmt = TXT;
-            else if ( arg == "csv" ) fmt = CSV;
-            else if ( arg == "json") fmt = JSON;
-            else return usage("Export format must be one of [ json | txt | csv ]. Quitting...");
+        } else if (startsWith(arg, "-t") || startsWith(arg, "--txs")) {
+            arg = substitute(substitute(arg, "-t:", ""), "--txs:", "");
+            if (arg != "on" && arg != "off")
+                return usage("Please provide either 'on' or 'off' for the --txs options. Quitting...");
+            writeTrxs = (arg == "on" ? true : false);
 
-        } else if (startsWith(arg, "-l:") || startsWith(arg, "--filter:")) {
-            arg = substitute(substitute(arg, "-l:", ""), "--filter:", "");
-            filters.push_back(arg);
+        } else if (startsWith(arg, "-r") || startsWith(arg, "--traces")) {
+            arg = substitute(substitute(arg, "-r:", ""), "--traces:", "");
+            if (arg != "on" && arg != "off")
+                return usage("Please provide either 'on' or 'off' for the --trace options. Quitting...");
+            writeTraces = (arg == "on" ? true : false);
 
-        } else if (arg == "-i" || arg == "--ignoreDdos") {
-            ignoreDdos = true;
+        } else if (startsWith(arg, "-d") || startsWith(arg, "--ddos")) {
+            arg = substitute(substitute(arg, "-d:", ""), "--ddos:", "");
+            if (arg != "on" && arg != "off")
+                return usage("Please provide either 'on' or 'off' for the --ddos options. Quitting...");
+            skipDdos = (arg == "on" ? true : false);
 
-        } else if ((arg == "-u") || (arg == "--useBlooms")) {
-            useBloom = true;
+        } else if (startsWith(arg, "-m") || startsWith(arg, "--maxTraces")) {
+            arg = substitute(substitute(arg, "-m:", ""), "--maxTraces:", "");
+            if (!isNumeral(arg))
+                return usage("Please provide a number (you provided " + arg + ") for --maxTraces. Quitting...");
+            maxTraces = str_2_Uint(arg);
+
+        } else if (arg == "-a" || arg == "--articulate") {
+            articulate = true;
+
+        } else if (startsWith(arg, "-s") || startsWith(arg, "--start")) {
+            arg = substitute(substitute(arg, "-s:", ""), "--start:", "");
+            if (!isNumeral(arg))
+                return usage("Not a number for --startBlock: " + arg + ". Quitting.");
+            scanRange.first = str_2_Uint(arg);
+
+        } else if (startsWith(arg, "-e") || startsWith(arg, "--end")) {
+            arg = substitute(substitute(arg, "-e:", ""), "--end:", "");
+            if (!isNumeral(arg))
+                return usage("Not a number for --endBlock: " + arg + ". Quitting.");
+            scanRange.second = str_2_Uint(arg);
+
+        } else if (startsWith(arg, "0x")) {
+
+            arg = toLower(arg);
+
+            if (!isAddress(arg))
+                return usage(arg + " does not appear to be a valid address. Quitting...");
+
+            string_q fn = getMonitorPath(arg);
+            if (!fileExists(fn)) {
+                fn = (isTestMode() ? substitute(fn, getMonitorPath(""), "./") : fn);
+                return usage("File not found '" + fn + ". Quitting...");
+            }
+
+            if (fileExists(fn + ".lck"))
+                return usage("The cache lock file is present. The program is either already "
+                             "running or it did not end cleanly the\n\tlast time it ran. "
+                             "Quit the already running program or, if it is not running, "
+                             "remove the lock\n\tfile: " + fn + ".lck'. Quitting...");
+
+            //if (fileSize(fn) == 0)
+            //    return usage("Nothing to export. Quitting...");
+
+            CAccountWatch watch;
+            // below - don't change, sets bloom value also
+            watch.setValueByName("address", toLower(arg));
+            // above - don't change, sets bloom value also
+            watch.setValueByName("name", toLower(arg));
+            watch.extra_data = getVersionStr() + "/" + watch.address;
+            watch.color = cTeal;
+            watch.finishParse();
+            monitors.push_back(watch);
 
         } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
@@ -59,50 +118,74 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (!fileExists("./config.toml"))
-        return usage("The config.toml file was not found. Are you in the right folder? Quitting...\n");
+    SHOW_FIELD(CTransaction, "traces");
 
-    CToml toml("./config.toml");
-    if (!loadWatches(toml))
-        return false;
-
-    if (filters.size() > 0) {
-        for (CAccountWatch& watch : watches) {
-            watch.enabled = false;
-            for (auto addr : filters)
-                if (addr % watch.address)
-                    watch.enabled = true;
-        }
-
-//        HIDE_FIELD(CAccountWatch, "qbis");
-//        for (CAccountWatch& watch : watches) {
-//            cout << watch << "\n";
-//        }
-//        cout << "Press enter to continue >";
-//        getchar();
-    }
+    if (monitors.size() == 0)
+        return usage("You must provide at least one Ethereum address. Quitting...");
 
     // show certain fields and hide others
+    SEP4("default field hiding: " + defHide);
     manageFields(defHide, false);
+    SEP4("default field showing: " + defShow);
     manageFields(defShow, true);
+
+    CToml toml(getMonitorPath(monitors[0].address + ".toml"));
+    SEP4("field hiding: " + toml.getConfigStr("fields", "hide", ""));
     manageFields(toml.getConfigStr("fields", "hide", ""), false);
+    SEP4("field showing: " + toml.getConfigStr("fields", "show", ""));
     manageFields(toml.getConfigStr("fields", "show", ""), true );
 
-#ifdef OUTPUT_REDIR
-    if (!outFile.empty()) {
-        outStream.open(outFile);
-        out = new COutputPipe(outStream.rdbuf(), cout);
+    // Try to articulate the watched addresses
+    for (size_t i = 0 ; i < monitors.size() ; i++) {
+        CAccountWatch *watch = &monitors[i];
+        watch->abi_spec.loadAbiByAddress(watch->address);
+        watch->abi_spec.loadAbiKnown("all");
+        string_q path = getMonitorPath(watch->address + ".toml");
+        if (fileExists(path)) { // if there's a config file, let's use it
+                                // user can tell us the names of other addresses
+            CToml thisToml(path);
+            string_q str = substitute(substitute(thisToml.getConfigJson("named", "list", ""),"[",""),"=",":");
+            CAccountWatch item;
+            while (item.parseJson3(str)) {
+                item.address   = str_2_Addr(toLower(item.address));
+                item.color     = convertColor(item.color);
+                item.extra_data = getVersionStr() + "/" + item.address;
+                item.finishParse();
+                named.push_back(item);
+                watch->abi_spec.loadAbiByAddress(item.address);
+                item = CAccountWatch();
+            }
+        }
     }
-#endif
 
-    transFmt = "";  // empty string gets us JSON output
-    if (fmt != JSON) {
-        string_q format = toml.getConfigStr("formats", "trans_fmt", "");
+    if (api_mode)
+        exportFmt = TXT1;
+
+    writeBlocks = getGlobalConfig("acctExport")->getConfigBool("settings", "writeBlocks", writeBlocks);;
+    writeTrxs   = getGlobalConfig("acctExport")->getConfigBool("settings", "writeTrxs", writeTrxs);;
+    writeTraces = getGlobalConfig("acctExport")->getConfigBool("settings", "writeTraces", writeTraces);;
+    skipDdos    = getGlobalConfig("acctExport")->getConfigBool("settings", "skipDdos", skipDdos);;
+    maxTraces   = getGlobalConfig("acctExport")->getConfigBool("settings", "maxTraces", maxTraces);;
+
+    if (exportFmt != JSON1) {
+        string_q deflt, format;
+
+        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "format", STR_DISPLAY);
+        format = toml.getConfigStr("formats", "trans_fmt", deflt);
+        expContext().fmtMap["transaction_fmt"] = cleanFmt(format, exportFmt);
+
         if (format.empty())
-            return usage("Non-json export requires 'trans_fmt' string in config.toml. Quitting...");
-        transFmt = cleanFmt(format);
-        if (fmt == CSV)
-            transFmt = "\"" + substitute(transFmt, "\t", "\",\"") + "\"";
+            return usage("For non-json export a 'trans_fmt' string is required. Check your config file. Quitting...");
+        if (!contains(toLower(format), "trace"))
+            HIDE_FIELD(CTransaction, "traces");
+
+        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "trace", "{TRACES}");
+        format = toml.getConfigStr("formats", "trace_fmt", deflt);
+        expContext().fmtMap["trace_fmt"] = cleanFmt(format, exportFmt);
+
+        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "log", "{LOGS}");
+        format = toml.getConfigStr("formats", "logentry_fmt", deflt);
+        expContext().fmtMap["logentry_fmt"] = cleanFmt(format, exportFmt);
     }
 
     return true;
@@ -110,96 +193,138 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    paramsPtr = params;
-    nParamsRef = nParams;
+    registerOptions(nParams, params);
+    optionOn(OPT_PREFUND);
 
-    transFmt = "";
-    blk_minWatchBlock = 0;
-    blk_maxWatchBlock = UINT32_MAX;
-    showProgress = getGlobalConfig()->getConfigBool("debug", "showProgress", false);
-    useBloom = false;
-    ignoreDdos = true;
-    needsArt = false;
-    needsTrace = false;
+    monitors.clear();
+
+    writeBlocks = false;
+    writeTrxs = true;
+    writeTraces = false;
+    skipDdos = true;
+    maxTraces = 250;
+    articulate = false;
 
     minArgs = 0;
-#ifdef OUTPUT_REDIR
-    if (out)
-        delete out;
-    out = NULL;
-    outFile = "";
-    outStream.close();
-#endif
 }
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
-#ifdef OUTPUT_REDIR
-    out = NULL;
-#endif
+    exportFmt = JSON1;
     Init();
 }
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-#ifdef OUTPUT_REDIR
-    if (out)
-        delete out;
-    outStream.close();
-#endif
 }
 
-//-----------------------------------------------------------------------
-string_q cleanFmt(const string_q& str) {
-    return (substitute(substitute(substitute(str, "\n", ""), "\\n", "\n"), "\\t", "\t"));
-}
+//--------------------------------------------------------------------------------
+string_q COptions::postProcess(const string_q& which, const string_q& str) const {
 
-//-----------------------------------------------------------------------
-void manageFields(const string_q& listIn, bool show) {
-    string_q list = substitute(listIn, " ", "");
-    while (!list.empty()) {
-        string_q fields = nextTokenClear(list, '|');
-        string_q cl = nextTokenClear(fields, ':');
-        CBaseNode *item =  createObjectOfType(cl);
-        while (item && !fields.empty()) {
-            string_q fieldName = nextTokenClear(fields, ',');
-            if (fieldName == "all") {
-                if (show) {
-                    item->getRuntimeClass()->showAllFields();
-                } else {
-                    item->getRuntimeClass()->hideAllFields();
-                }
-            } else if (fieldName == "none") {
-                if (show) {
-                    item->getRuntimeClass()->hideAllFields();
-                } else {
-                    item->getRuntimeClass()->showAllFields();
-                }
-            } else {
-                CFieldData *f = item->getRuntimeClass()->findField(fieldName);
-                if (f)
-                    f->setHidden(!show);
-            }
-        }
-        delete item;
+    if (which == "options") {
+        return substitute(str, "address_list", "<address> [address...]");
+
+    } else if (which == "notes" && (verbose || COptions::isReadme)) {
+
+        string_q ret;
+        ret += "[{addresses}] must start with '0x' and be forty two characters long.\n";
+        return ret;
     }
+    return str;
 }
 
 //-----------------------------------------------------------------------
-string_q defTransFmt = "{ \"date\": \"[{DATE}]\", \"from\": \"[{FROM}]\", \"to\": \"[{TO}]\", \"value\": \"[{VALUE}]\" }";
-string_q defHide =
-    "CTransaction: nonce, input"
-"|" "CLogEntry: data, topics"
-"|" "CTrace: blockHash, blockNumber, transactionHash, transactionPosition, traceAddress, subtraces"
-"|" "CTraceAction: init"
-"|" "CTraceResult: code"
-"|" "CFunction: constant, payable, outputs, signature, encoding, type, articulate_str"
-"|" "CParameter: type, indexed, isPointer, isArray, isObject";
-string_q defShow =
-    "CTransaction: price, gasCost, articulatedTx, traces, isError, date, ether"
-"|" "CLogEntry: articulatedLog"
-"|" "CTrace: articulatedTrace"
-"|" "CTraceAction: "
-"|" "CTraceResult: "
-"|" "CFunction: "
-"|" "CParameter: ";
+bool COptions::loadMonitorData(CAppearanceArray_base& apps, const address_t& addr) {
+
+    ENTER("loadMonitorData");
+    string_q fn = getMonitorPath(addr);
+
+    size_t nRecords = (fileSize(fn) / sizeof(CAppearance_base));
+    ASSERT(nRecords);
+
+    CAppearance_base *buffer = new CAppearance_base[nRecords];
+    if (buffer) {
+        bzero(buffer, nRecords * sizeof(CAppearance_base));
+
+        CArchive txCache(READING_ARCHIVE);
+        if (txCache.Lock(fn, modeReadOnly, LOCK_NOWAIT)) {
+            txCache.Read(buffer, sizeof(CAppearance_base), nRecords);
+            txCache.Release();
+        } else {
+            EXIT_FAIL("Could not open cache file.");
+        }
+
+        // Add to the apps which may be non-empty
+        apps.reserve(apps.size() + nRecords);
+        for (size_t i = 0 ; i < nRecords ; i++) {
+            // TODO(tjayrush): MEGAHACK -- we need this when we export prefunds
+            if (buffer[i].blk == 0)
+                prefundMap[buffer[i].txid] = addr;
+            apps.push_back(buffer[i]);
+        }
+
+        delete [] buffer;
+
+    } else {
+        EXIT_FAIL("Could not allocate memory for address " + addr);
+
+    }
+    EXIT_NOMSG(true);
+}
+
+//-----------------------------------------------------------------------
+bool COptions::loadData(void) {
+
+    tsArray.clear();
+
+    string_q zipFile = configPath("ts.bin.gz");
+    string_q tsFile = configPath("ts.bin");
+    if (fileExists(zipFile)) {
+        string_q cmd = "cd " + configPath("") + " ; gunzip ts.bin.gz";
+        cerr << doCommand(cmd) << endl;
+        ASSERT(!fileExists(zipFile));
+        ASSERT(fileExists(tsFile));
+    }
+
+    CArchive ts(READING_ARCHIVE);
+    if (ts.Lock(tsFile, modeReadOnly, LOCK_NOWAIT)) {
+        tsArray.reserve(fileSize(tsFile));
+        ts >> tsArray;
+        ts.Release();
+    }
+
+    ENTER("loadData");
+    CAppearanceArray_base tmp;
+    for (auto monitor : monitors) {
+        if (!loadMonitorData(tmp, monitor.address))
+            EXIT_FAIL("Could not load data.");
+    }
+    if (tmp.size() == 0)
+        EXIT_MSG("Nothing to export.", false);
+
+    // Should be sorted already, so it can't hurt
+    sort(tmp.begin(), tmp.end());
+
+    bool hasFuture = false;
+    blknum_t lastAtClient = getLastBlock_client();
+    items.push_back(tmp[0]);
+    for (auto item : tmp) {
+        CAppearance_base *prev = &items[items.size() - 1];
+        // TODO(tjayrush): I think this removes dups. Is it really necessary?
+        if (item.blk != prev->blk || item.txid != prev->txid) {
+            if (item.blk > lastAtClient)
+                hasFuture = true;
+            else
+                items.push_back(item);
+        }
+    }
+    LOG1("Items array: " + uint_2_Str(items.size()) + " - " + uint_2_Str(items.size() * sizeof(CAppearance_base)));
+    if (hasFuture)
+        LOG_WARN("Cache file contains blocks ahead of the chain. Some items will not be exported.");
+
+    EXIT_NOMSG(true);
+}
+
+//-----------------------------------------------------------------------
+const char* STR_DISPLAY =
+"[{HASH}]\t[{TIMESTAMP}]\t[{FROM}]\t[{TO}]\t[{ETHER}]\t[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{ETHERGASCOST}]\t[{GASUSED}]\t[{ISERROR}]\t[{ENCODING}]";

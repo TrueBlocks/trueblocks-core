@@ -1,0 +1,23 @@
+acctScrape argc: 3 [1:--list] [2:0x1234567890123456789012345678901234567890] 
+acctScrape --list 0x1234567890123456789012345678901234567890 
+
+  Invalid option: --list
+
+  Usage:    acctScrape [-m|-v|-h]  
+  Purpose:  Index transactions for a given Ethereum address (or series of addresses).
+             
+  Where:  
+	-m  (--maxBlocks val) scan at most --maxBlocks blocks ('all' implies scan to end of chain)
+
+#### Hidden options (shown during testing only)
+	-p  (--pending)       visit pending but not yet staged or finalized blocks
+	-n  (--noBlooms)      turn off bloom filters for performance testing
+	-s  (--staging)       produce results in the staging folder instead of production folder
+	-s  (--start val)     first block to check
+#### Hidden options (shown during testing only)
+
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Powered by QBlocks
+                                                                                                                                                      
