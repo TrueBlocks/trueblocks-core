@@ -1,0 +1,16 @@
+;tight|solidity tight packing bool|function baz(bool)|true|01
+;tight|solidity tight packing bool|function baz(bool)|false|00
+;tight|solidity tight packing address|function baz(address)|0x43989fb883ba8111221e89123897538475893837|0x43989fb883ba8111221e89123897538475893837
+;tight|solidity tight packing string|function baz(string)|test|0x74657374
+;tight|solidity tight packing bytes|function baz(bytes)|0x123456|0x123456
+;tight|solidity tight packing bytes8|function baz(bytes8)|0x123456|0x1234560000000000
+;tight|solidity tight packing uint|function baz(uint)|42|0x000000000000000000000000000000000000000000000000000000000000002a
+;tight|solidity tight packing uint16|function baz(uint16)|42|002a
+;tight|solidity tight packing int|function baz(int)|-42|0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffd6
+;tight|solidity tight packing int16|function baz(int16)|-42|0xffd6
+;tight|solidity tight packing multiple arguments|function baz(bytes32, uint32, uint32, uint32, uint32)|0x123456,6,7,8,9|0x123456000000000000000000000000000000000000000000000000000000000000000006000000070000000800000009
+;tight|solidity tight packing sha3|function baz(address,address,uint,uint)|0x43989fb883ba8111221e89123897538475893837, 0, 10000, 1448075779|0xc3ab5ca31a013757f26a88561f0ff5057a97dfcc33f43d6b479abc3ac2d1d595
+;tight|solidity tight packing sha3 #2|function baz(bytes32,uint32,uint32,uint32,uint32)|0x123456,6,7,8,9|0x1f2eedb6c2ac3e4b4e4c9f7598e626baf1e15a4e848d295479f46ec85d967cba
+;tight|solidity tight packing sha256|function baz(address,address,uint,uint)|0x43989fb883ba8111221e89123897538475893837,0,10000,1448075779|0x344d8cb0711672efbdfe991f35943847c1058e1ecf515ff63ad936b91fd16231
+;tight|solidity tight packing ripemd160|function baz(address,address,uint,uint)|0x43989fb883ba8111221e89123897538475893837,0,10000,1448075779|0x000000000000000000000000a398cc72490f72048efa52c4e92067e8499672e7
+;tight|solidity tight packing with small ints|function baz(address,address,int64,uint192|0x43989fb883ba8111221e89123897538475893837,0,10000,1448075779)|0x1c34bbd3d419c05d028a9f13a81a1212e33cb21f4b96ce1310442911c62c6986

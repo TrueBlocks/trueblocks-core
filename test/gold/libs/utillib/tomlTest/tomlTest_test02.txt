@@ -4,3 +4,12 @@ test02.toml
 
 name: 		NONAME
 max_width: 	10000
+version: 		0.0.0
+
+File contents as read
+
+
+File contents after write
+[version]
+current = "0.5.7-alpha"
+

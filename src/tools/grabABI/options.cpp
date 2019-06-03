@@ -14,36 +14,42 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
-    COption("~addr",      "the address(es) of the smart contract(s) to grab"),
-    COption("-canonical", "convert all types to their canonical represenation and remove all spaces from display"),
-    COption("-generate",  "generate C++ code into the current folder for all functions and events found in the ABI"),
-    COption("-data",      "export the display as data"),
-    COption("-encode",    "generate the encodings for the functions / events in the ABI"),
-    COption("-noconst",   "generate encodings for non-constant functions and events only (always true when generating)"), // NOLINT
-    COption("-open",      "open the ABI file for editing, download if not already present"),
-    COption("-raw",       "force retrieval of ABI from etherscan (ignoring cache)"),
-    COption("@json",      "print the ABI to the screen as json"),
-    COption("@silent",    "if ABI cannot be acquired, fail silently (useful for scripting)"),
-    COption("@nodec",     "do not decorate duplicate names"),
-    COption("@freshen",   "regenerate the binary database version of all ABIs in the abi cache"),
-    COption("",           "Fetches the ABI for a smart contract. Optionally generates C++ source code "
-                          "representing that ABI.\n"),
+static const COption params[] = {
+    COption("~addr",       "the address(es) of the smart contract(s) to grab"),
+    COption("-canonical",  "convert all types to their canonical represenation and remove all spaces from display"),
+    COption("-generate",   "generate C++ code into the current folder for all functions and events found in the ABI"),
+    COption("-data",       "export the display as data"),
+    COption("-encode",     "generate the encodings for the functions / events in the ABI"),
+    COption("-json",       "print the ABI to the screen as json"),
+    COption("-noconst",    "generate encodings for non-constant functions and events only (always true when generating)"), // NOLINT
+    COption("-open",       "open the ABI file for editing, download if not already present"),
+    COption("-so(l):<fn>", "create the ABI file from a .sol file in the local directory"),
+    COption("@silent",     "if ABI cannot be acquired, fail silently (useful for scripting)"),
+    COption("@nodec",      "do not decorate duplicate names"),
+    COption("@known",      "load common 'known' ABIs from cache"),
+//    COption("@freshen",   "regenerate the binary database version of all ABIs in the abi cache"),
+    COption("",            "Fetches the ABI for a smart contract. Optionally generates C++ source code "
+                           "representing that ABI.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
+extern bool sortByFuncName(const CFunction& f1, const CFunction& f2);
+extern void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, bool silent, bool decNames);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
+    ENTER("parseArguments");
     if (!standardOptions(command))
         return false;
 
     Init();
-    while (!command.empty()) {
-        string_q arg = nextTokenClear(command, ' ');
+    bool asJson = false, isOpen = false, fromSol = false;
+    explode(arguments, command, ' ');
+    for (auto arg : arguments) {
         if (arg == "-g" || arg == "--gen" || arg == "--generate") {
             classDir = getCWD();
             prefix = getPrefix(classDir);
+            isGenerate = true;
 
         } else if (arg == "-c" || arg == "--canonical") {
             if (parts&SIG_ENCODE)
@@ -53,6 +59,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-e" || arg == "--encode") {
             parts |= SIG_ENCODE;
+
+        } else if (arg == "-k" || arg == "--known") {
+            loadKnown = true;
 
         } else if (arg == "-d" || arg == "--data") {
             parts |= SIG_FTYPE;
@@ -65,19 +74,23 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-n" || arg == "--noconst") {
             noconst = true;
 
-        } else if (arg == "-f" || arg == "--freshen") {
-extern void rebuildFourByteDB(void);
-            rebuildFourByteDB();
-            exit(0);
+//        } else if (arg == "-f" || arg == "--freshen") {
+//extern void rebuildFourByteDB(void);
+//            rebuildFourByteDB();
 
         } else if (arg == "--nodec") {
             decNames = false;
 
-        } else if (arg == "-r" || arg == "--raw") {
-            raw = true;
+        } else if (startsWith(arg,"-l:") || startsWith(arg,"--sol:")) {
+            string_q orig = arg;
+            arg = substitute(substitute(arg, "-l:", ""), "--sol:", "");
+            if (!fileExists(arg))
+                EXIT_USAGE("Solidity file " + arg + " not found in local folder.");
+            fromSol = true;
+            addrs.push_back(substitute(arg, ".sol", ""));
 
         } else if (arg == "-o" || arg == "--open") {
-            open = true;
+            isOpen = true;
 
         } else if (arg == "-j" || arg == "--json") {
             asJson = true;
@@ -89,16 +102,13 @@ extern void rebuildFourByteDB(void);
             }
 
         } else {
-            if (primaryAddr.empty())
-                primaryAddr = arg;
-            if (!isAddress(arg) && arg != "0xTokenLib" && arg != "0xWalletLib")
-                return usage("Invalid address '" + arg + "'. Length is not equal to 40 characters (20 bytes).\n");
-            address_t addr = str_2_Addr(arg);
-            if (arg == "0xTokenLib" || arg == "0xWalletLib") {
-                addr = arg;
-                addrs.push_back(addr);
+            if (!isAddress(arg))
+                return usage("Invalid address '" + arg + "'. Length (" + uint_2_Str(arg.length()) + ") is not equal to 40 characters (20 bytes).\n");
+            if (!isTestMode() && !isContractAt(arg)) {
+                cerr << "Address " << arg << " is not a smart contract. Skipping...";
+
             } else {
-                addrs.push_back(toLower(addr));
+                addrs.push_back(toLower(str_2_Addr(arg)));
             }
         }
     }
@@ -109,30 +119,104 @@ extern void rebuildFourByteDB(void);
     if (parts != SIG_CANONICAL && verbose)
         parts |= SIG_DETAILS;
 
-    if (!addrs.size())
+    if (fromSol) {
+        for (auto addr : addrs) {
+            CAbi abi;
+            if (!sol_2_Abi(abi, addr))
+                return usage("Could not find solidity file '" + addr + ".sol' in order to convert to ABI. Quitting...");
+            bool first = true;
+            expContext().spcs = 4;
+            ostringstream os;
+            os << "[" << endl;
+            incIndent();
+            for (auto func : abi.interfaces) {
+                if (!first)
+                    os << ",";
+                os << endl;
+                os << "\n    " << func;
+                first = false;
+            }
+            decIndent();
+            os << endl << "]" << endl;
+
+            ::remove((addr + ".json").c_str());
+            stringToAsciiFile(addr + ".json", os.str());
+            asJson = false;
+        }
+    }
+
+    if (!addrs.size() && !loadKnown)
         return usage("Please supply at least one Ethereum address.\n");
 
-    bool isGenerate = !classDir.empty();
     if (isGenerate && asData)
         return usage("Incompatible options --generate and --data. Quitting...");
+
+    if (asJson) {
+        for (auto addr : addrs) {
+            string_q fileName = getCachePath("abis/" + addr + ".json");
+            string_q localFile("./" + addr + ".json");
+            if (fileExists(localFile)) {
+                cerr << "Local file found\n";
+                fileName = localFile;
+            }
+            if (!fileExists(fileName)) {
+                cerr << "ABI for '" + addr + "' not found. Quitting...\n";
+                return false;
+            }
+            string_q contents;
+            asciiFileToString(fileName, contents);
+            cout << contents << "\n";
+        }
+        return false;
+    }
+
+    if (isOpen) {
+        for (auto addr : addrs) {
+            string_q fileName = getCachePath("abis/" + addr + ".json");
+            if (!fileExists(fileName)) {
+                cerr << "ABI for '" + addr + "' not found. Quitting...\n";
+                return false;
+            }
+            editFile(fileName);
+        }
+        return false;
+    }
+
+    for (auto addr : addrs) {
+        CAbi abi;
+        loadAbiAndCache(abi, addr, isRaw, silent, decNames);
+        abi.address = addr;
+        sort(abi.interfaces.begin(), abi.interfaces.end(), sortByFuncName);
+        abi_specs.push_back(abi);
+    }
+    if (loadKnown) {
+        string_q knownPath = configPath("known_abis/");
+        CStringArray files;
+        listFilesInFolder(files, knownPath + "*.*", false);
+        for (auto file : files) {
+            CAbi abi;
+            abi.loadAbiFromFile(file, true);
+            abi.address = substitute(substitute(file, ".json",""), configPath("known_abis/"), "");
+            sort(abi.interfaces.begin(), abi.interfaces.end(), sortByFuncName);
+            abi_specs.push_back(abi);
+        }
+    }
 
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    paramsPtr = params;
-    nParamsRef = nParams;
-    pOptions = this;
+    optionOn(OPT_RAW);
+    registerOptions(nParams, params);
 
     parts = SIG_DEFAULT;
     noconst = false;
-    open = false;
     silent = false;
-    asJson = false;
-    raw = false;
+    loadKnown = false;
     decNames = true;
     asData = false;
+    isGenerate = false;
     addrs.clear();
 }
 
@@ -181,29 +265,120 @@ bool visitABIs(const string_q& path, void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-void rebuildFourByteDB(void) {
+//void rebuildFourByteDB(void) {
+//
+//    string_q fileList;
+//    string_q abiPath = getCachePath("abis/");
+//    cout << abiPath << "\n";
+//    forEveryFileInFolder(abiPath+"*", visitABIs, &fileList);
+//
+//    CFunctionArray funcArray;
+//    while (!fileList.empty()) {
+//        string_q fileName = nextTokenClear(fileList, '\n');
+//        CAbi abi;
+//        abi.loadAbiFromFile(fileName, false);
+//        for (auto interface : abi.interfaces) {
+//            funcArray.push_back(interface);
+//            cout << interface.encoding << " : ";
+//            cout << interface.name << " : ";
+//            cout << interface.signature << "\n";
+//        }
+//    }
+//    sort(funcArray.begin(), funcArray.end());
+//    CArchive funcCache(WRITING_ARCHIVE);
+//    if (funcCache.Lock(abiPath+"abis.bin", modeWriteCreate, LOCK_CREATE)) {
+//        funcCache << funcArray;
+//        funcCache.Release();
+//    }
+//}
 
-    string_q fileList;
-    string_q abiPath = blockCachePath("abis/");
-    cout << abiPath << "\n";
-    forEveryFileInFolder(abiPath+"*", visitABIs, &fileList);
+//-----------------------------------------------------------------------
+bool sortByFuncName(const CFunction& f1, const CFunction& f2) {
+    string_q s1 = (f1.type == "event" ? "zzzevent" : f1.type) + f1.name + f1.encoding;
+    for (auto f : f1.inputs) s1 += f.name;
+    string_q s2 = (f2.type == "event" ? "zzzevent" : f2.type) + f2.name + f2.encoding;
+    for (auto f : f2.inputs) s2 += f.name;
+    return s1 < s2;
+}
 
-    CFunctionArray funcArray;
-    while (!fileList.empty()) {
-        string_q fileName = nextTokenClear(fileList, '\n');
-        CAbi abi;
-        abi.loadABIFromFile(fileName);
-        for (size_t f = 0 ; f < abi.abiByEncoding.size() ; f++) {
-            funcArray.push_back(abi.abiByEncoding[f]);
-            cout << abi.abiByEncoding[f].encoding << " : ";
-            cout << abi.abiByEncoding[f].name << " : ";
-            cout << abi.abiByEncoding[f].signature << "\n";
+//-----------------------------------------------------------------------
+void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, bool silent, bool decNames) {
+
+    if (isZeroAddr(addr))
+        return;
+
+    string_q results;
+    string_q fileName = getCachePath("abis/" + addr + ".json");
+
+    string_q localFile("./" + addr + ".json");
+    if (fileExists(localFile) && localFile != fileName) {
+        cerr << "Local file copied to cache\n";
+        copyFile(localFile, fileName);
+    }
+
+    string_q dispName = substitute(fileName, getCachePath(""), "$BLOCK_CACHE/");
+    if (fileExists(fileName) && !raw) {
+
+        if (verbose) {
+            cerr << "Reading ABI for address " << addr << " from " << (isTestMode() ? "--" : "cache") << "\r";
+            cerr.flush();
+        }
+        asciiFileToString(fileName, results);
+
+    } else {
+
+        if (verbose) {
+            cerr << "Reading ABI for address " << addr << " from " << (isTestMode() ? "--" : "EtherScan") << "\r";
+            cerr.flush();
+        }
+        string_q url = string_q("http:/""/api.etherscan.io/api?module=contract&action=getabi&address=") + addr;
+        results = substitute(urlToString(url), "\\", "");
+
+        if (!contains(results, "NOTOK")) {
+            if (!isTestMode()) {
+                if (verbose)
+                    cerr << results << endl;
+                cerr << "Caching abi in " << dispName << endl;
+            }
+            replace(results, "\"result\":\"", "<extract>");
+            replaceReverse(results, "\"}", "</extract>");
+            results = snagFieldClear(results, "extract", "");
+            establishFolder(fileName);
+            stringToAsciiFile(fileName, results);
+
+        } else if (contains(toLower(results), "source code not verified")) {
+
+            if (!silent) {
+                LOG_WARN("Could not get the ABI for address ", addr, ". Etherscan returned: ");
+                LOG_WARN(results);
+                LOG_WARN("If you copy the ABI to the current folder, QBlocks will use it.");
+                //quickQuitHandler(0);
+            }
+            return;
+
+        } else {
+
+            if (!silent) {
+                cerr << "Etherscan returned " << results << "\n";
+                cerr << "Could not grab ABI for " + addr + " from etherscan.io.\n";
+                //quickQuitHandler(0);
+            }
+
+            // TODO(tjayrush): If we store the ABI here even if empty, we won't have to get it again, but then
+            // what happens if user later posts the ABI? Need a 'refresh' option or clear cache option
+            establishFolder(fileName);
+            stringToAsciiFile(fileName, "[]");
+            return;
         }
     }
-    sort(funcArray.begin(), funcArray.end());
-    CArchive funcCache(WRITING_ARCHIVE);
-    if (funcCache.Lock(abiPath+"abis.bin", binaryWriteCreate, LOCK_CREATE)) {
-        funcCache << funcArray;
-        funcCache.Release();
+
+    CFunction func;
+//    ostringstream os;
+    while (func.parseJson3(results)) {
+        abi.addIfUnique(addr, func, decNames);
+//)
+//            func.doExport(os);
+        func = CFunction();  // reset
     }
+    return; // !os.str().empty();
 }

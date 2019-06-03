@@ -15,8 +15,6 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include <vector>
-#include <map>
 #include "etherlib.h"
 #include "treenode.h"
 
@@ -39,7 +37,7 @@ public:
 
     DECLARE_NODE(CLeaf);
 
-    const string_q getStringAt(const string_q& name, size_t i) const override;
+    const string_q getStringAt(const string_q& fieldName, size_t i) const override;
 
     // EXISTING_CODE
     CLeaf(const string_q& _key, const string_q& _value);
@@ -117,7 +115,6 @@ inline void CLeaf::duplicate(const CLeaf& le) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    finishParse();
 }
 
 //--------------------------------------------------------------------------

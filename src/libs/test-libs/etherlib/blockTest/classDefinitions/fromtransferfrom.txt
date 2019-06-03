@@ -2,5 +2,4 @@
 class     = QFromTransferFrom
 baseClass = QTransferFrom
 fields    = address whop|address werp
-includes  = transferfrom.h
-cIncs     = #include "etherlib.h"
+includes  = etherlib.h|transferfrom.h

@@ -1,7 +1,0 @@
-qblocks argc: 4 [1:balance] [2:0xf7b098298f7c69fc14610bf71d5e02c60792894c] [3:2001001] 
-qblocks balance 0xf7b098298f7c69fc14610bf71d5e02c60792894c 2001001 
-calling: getBalance 0xf7b098298f7c69fc14610bf71d5e02c60792894c 2001001  --qblocks
-
-getBalance argc: 4 [1:0xf7b098298f7c69fc14610bf71d5e02c60792894c] [2:2001001] [3:--qblocks] 
-getBalance 0xf7b098298f7c69fc14610bf71d5e02c60792894c 2001001 --qblocks 
-    Balance for account 0xf7b098298f7c69fc14610bf71d5e02c60792894c at block 2001001 is 0

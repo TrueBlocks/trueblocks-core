@@ -44,7 +44,7 @@ void COptions::displayTrans(ostream& os, const CTransaction *theTrans) const {
     string_q transStr = substitute(promoted->Format(fmt), "...", cYellow + "..." + cOff);
 
     if (contains(transStr, "++PRICE++"))
-        transStr = substitute(transStr, "++PRICE++", asDollars(ts, weiPerEther));
+        transStr = substitute(transStr, "++PRICE++", displayDollars(ts, weiPerEther()));
 
     //promoted->receipt.clear();
 

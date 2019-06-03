@@ -12,7 +12,6 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "known_blocks.h"
-#include "abilib.h"
 #include "block.h"
 #include "transaction.h"
 #include "receipt.h"
@@ -22,9 +21,12 @@
 #include "trace.h"
 #include "traceaction.h"
 #include "traceresult.h"
-#include "miniblock.h"
 #include "node.h"
 #include "blooms.h"
 #include "blockoptions.h"
+#include "question.h"
+#include "appearance.h"
+#include "newbloom.h"
+#include "cacheentry.h"
 
 using namespace qblocks;  // NOLINT

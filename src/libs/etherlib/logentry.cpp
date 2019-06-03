@@ -32,12 +32,12 @@ void CLogEntry::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const
     if (!m_showing)
         return;
 
-    if (fmtIn.empty()) {
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["logentry_fmt"] : fmtIn);
+    if (fmt.empty()) {
         ctx << toJson();
         return;
     }
 
-    string_q fmt = fmtIn;
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -57,29 +57,45 @@ string_q nextLogentryChunk(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CLogEntry::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
+bool CLogEntry::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+    string_q fieldName = fieldNameIn;
+    string_q fieldValue = fieldValueIn;
+
     // EXISTING_CODE
-    if (pReceipt)
-        if (((CReceipt*)pReceipt)->setValueByName(fieldName, fieldValue))  // NOLINT
-            return true;
+    //SEP4("CLogEntry::setValueByName(" + fieldName + ", " + fieldValue.substr(0,40) + "...)");
+    if (pReceipt) {
+        bool ret = ((CReceipt*)pReceipt)->setValueByName(fieldName, fieldValue);  // NOLINT
+        if (ret) {
+            bool done = true; // there are no fields handled in the receipt and the log
+            //LOG4(fieldName, done);
+            if (done) {
+                //LOG4("set in transaction");
+                return true;
+            } else {
+                //LOG4("set in receipt and transaction");
+            }
+        } else {
+            //LOG4("not set in transaction");
+        }
+    }
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "address" ) { address = str_2_Addr(fieldValue); return true; }
-            if ( fieldName % "articulatedLog" ) {
-                string_q str = fieldValue;
-                while (!str.empty()) {
-                    articulatedLog.push_back(nextTokenClear(str, ','));
-                }
-                return true;
-            }
+            if ( fieldName % "articulatedLog" ) { return articulatedLog.parseJson3(fieldValue); }
+            break;
+        case 'c':
+            if ( fieldName % "compressedLog" ) { compressedLog = fieldValue; return true; }
             break;
         case 'd':
             if ( fieldName % "data" ) { data = fieldValue; return true; }
             break;
         case 'l':
             if ( fieldName % "logIndex" ) { logIndex = str_2_Uint(fieldValue); return true; }
+            break;
+        case 'r':
+            if ( fieldName % "removed" ) { removed = str_2_Bool(fieldValue); return true; }
             break;
         case 't':
             if ( fieldName % "topics" ) {
@@ -89,6 +105,8 @@ bool CLogEntry::setValueByName(const string_q& fieldName, const string_q& fieldV
                 }
                 return true;
             }
+            if ( fieldName % "transactionLogIndex" ) { transactionLogIndex = str_2_Uint(fieldValue); return true; }
+            if ( fieldName % "type" ) { type = fieldValue; return true; }
             break;
         default:
             break;
@@ -119,8 +137,12 @@ bool CLogEntry::Serialize(CArchive& archive) {
     archive >> address;
     archive >> data;
     archive >> logIndex;
+//    archive >> removed;
     archive >> topics;
 //    archive >> articulatedLog;
+//    archive >> compressedLog;
+//    archive >> transactionLogIndex;
+//    archive >> type;
     finishParse();
     return true;
 }
@@ -136,8 +158,12 @@ bool CLogEntry::SerializeC(CArchive& archive) const {
     archive << address;
     archive << data;
     archive << logIndex;
+//    archive << removed;
     archive << topics;
 //    archive << articulatedLog;
+//    archive << compressedLog;
+//    archive << transactionLogIndex;
+//    archive << type;
 
     return true;
 }
@@ -165,9 +191,8 @@ CArchive& operator<<(CArchive& archive, const CLogEntryArray& array) {
 
 //---------------------------------------------------------------------------
 void CLogEntry::registerClass(void) {
-    static bool been_here = false;
-    if (been_here) return;
-    been_here = true;
+    // only do this once
+    if (HAS_FIELD(CLogEntry, "schema")) return;
 
     size_t fieldNum = 1000;
     ADD_FIELD(CLogEntry, "schema",  T_NUMBER, ++fieldNum);
@@ -175,11 +200,27 @@ void CLogEntry::registerClass(void) {
     ADD_FIELD(CLogEntry, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CLogEntry, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CLogEntry, "address", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(CLogEntry, "blockHash", T_HASH, ++fieldNum);
+    HIDE_FIELD(CLogEntry, "blockHash");
+    ADD_FIELD(CLogEntry, "blockNumber", T_NUMBER, ++fieldNum);
+    HIDE_FIELD(CLogEntry, "blockNumber");
     ADD_FIELD(CLogEntry, "data", T_TEXT, ++fieldNum);
     ADD_FIELD(CLogEntry, "logIndex", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CLogEntry, "removed", T_BOOL, ++fieldNum);
+    HIDE_FIELD(CLogEntry, "removed");
     ADD_FIELD(CLogEntry, "topics", T_OBJECT|TS_ARRAY, ++fieldNum);
-    ADD_FIELD(CLogEntry, "articulatedLog", T_TEXT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CLogEntry, "articulatedLog", T_OBJECT, ++fieldNum);
     HIDE_FIELD(CLogEntry, "articulatedLog");
+    ADD_FIELD(CLogEntry, "compressedLog", T_TEXT, ++fieldNum);
+    HIDE_FIELD(CLogEntry, "compressedLog");
+    ADD_FIELD(CLogEntry, "transactionHash", T_HASH, ++fieldNum);
+    HIDE_FIELD(CLogEntry, "transactionHash");
+    ADD_FIELD(CLogEntry, "transactionIndex", T_NUMBER, ++fieldNum);
+    HIDE_FIELD(CLogEntry, "transactionIndex");
+    ADD_FIELD(CLogEntry, "transactionLogIndex", T_NUMBER, ++fieldNum);
+    HIDE_FIELD(CLogEntry, "transactionLogIndex");
+    ADD_FIELD(CLogEntry, "type", T_TEXT, ++fieldNum);
+    HIDE_FIELD(CLogEntry, "type");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CLogEntry, "schema");
@@ -199,13 +240,15 @@ string_q nextLogentryChunk_custom(const string_q& fieldIn, const void *dataPtr) 
     if (log) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
-            case 'a':
-                if ( fieldIn % "articulatedLog" && log->articulatedLog.size() == 0 && log->func) {
-                    ostringstream os;
-                    os << *log->func;
-                    return os.str();
+            case 'c':
+                if ( fieldIn % "compressedLog" ) {
+                    string_q ret = log->articulatedLog.name + "(";
+                    for (auto input : log->articulatedLog.inputs)
+                        ret += (input.name + ":" + input.value + ",");
+                    ret = trim(ret, ',');
+                    ret += ")";
+                    return ret;
                 }
-                break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
@@ -256,18 +299,10 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "address" ) return addr_2_Str(address);
-            if ( fieldName % "articulatedLog" || fieldName % "articulatedLogCnt" ) {
-                size_t cnt = articulatedLog.size();
-                if (endsWith(fieldName, "Cnt"))
-                    return uint_2_Str(cnt);
-                if (!cnt) return "";
-                string_q retS;
-                for (size_t i = 0 ; i < cnt ; i++) {
-                    retS += ("\"" + articulatedLog[i] + "\"");
-                    retS += ((i < cnt - 1) ? ",\n" + indent() : "\n");
-                }
-                return retS;
-            }
+            if ( fieldName % "articulatedLog" ) { expContext().noFrst=true; return articulatedLog.Format(); }
+            break;
+        case 'c':
+            if ( fieldName % "compressedLog" ) return compressedLog;
             break;
         case 'd':
             if ( fieldName % "data" ) return data;
@@ -275,10 +310,13 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
         case 'l':
             if ( fieldName % "logIndex" ) return uint_2_Str(logIndex);
             break;
+        case 'r':
+            if ( fieldName % "removed" ) return bool_2_Str(removed);
+            break;
         case 't':
             if ( fieldName % "topics" || fieldName % "topicsCnt" ) {
                 size_t cnt = topics.size();
-                if (endsWith(fieldName, "Cnt"))
+                if (endsWith(toLower(fieldName), "cnt"))
                     return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;
@@ -288,19 +326,30 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
                 }
                 return retS;
             }
+            if ( fieldName % "transactionLogIndex" ) return uint_2_Str(transactionLogIndex);
+            if ( fieldName % "type" ) return type;
             break;
     }
 
     // EXISTING_CODE
     // See if this field belongs to the item's container
-    if (fieldName != "cname") {
-        ret = nextReceiptChunk(fieldName, pReceipt);
+    if (fieldName != "schema" && fieldName != "deleted" && fieldName != "showing" && fieldName != "cname") {
+      ret = nextReceiptChunk(fieldName, pReceipt);
         if (contains(ret, "Field not found"))
             ret = "";
         if (!ret.empty())
             return ret;
     }
     // EXISTING_CODE
+
+    string_q s;
+    s = toUpper(string_q("articulatedLog")) + "::";
+    if (contains(fieldName, s)) {
+        string_q f = fieldName;
+        replaceAll(f, s, "");
+        f = articulatedLog.getValueByName(f);
+        return f;
+    }
 
     // Finally, give the parent class a chance
     return CBaseNode::getValueByName(fieldName);
@@ -317,11 +366,16 @@ ostream& operator<<(ostream& os, const CLogEntry& item) {
 }
 
 //---------------------------------------------------------------------------
-const string_q CLogEntry::getStringAt(const string_q& name, size_t i) const {
-    if ( name % "topics" && i < topics.size() )
+const CBaseNode *CLogEntry::getObjectAt(const string_q& fieldName, size_t index) const {
+    if ( fieldName % "articulatedLog" )
+        return &articulatedLog;
+    return NULL;
+}
+
+//---------------------------------------------------------------------------
+const string_q CLogEntry::getStringAt(const string_q& fieldName, size_t i) const {
+    if ( fieldName % "topics" && i < topics.size() )
         return topic_2_Str(topics[i]);
-    if ( name % "articulatedLog" && i < articulatedLog.size() )
-        return (articulatedLog[i]);
     return "";
 }
 

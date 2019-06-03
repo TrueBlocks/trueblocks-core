@@ -13,7 +13,7 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("~testNum",         "the number of the test to run"),
     COption("~!optionalMode",   "an optional mode with ~! start"),
     COption("-bool:<bool>",     "enter a boolean value (either '0', '1', 'false', or 'true')"),
@@ -25,7 +25,7 @@ static COption params[] = {
     COption("@hid(d)enOption",  "a hidden option with an alternative hot key"),
     COption("",                 "Tests various command line behavior.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -34,8 +34,8 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     Init();
-    while (!command.empty()) {
-        string_q arg = nextTokenClear(command, ' ');
+    explode(arguments, command, ' ');
+    for (auto arg : arguments) {
         string_q orig = arg;
         if (startsWith(arg, "-b:") || startsWith(arg, "--bool:")) {
             arg = substitute(substitute(arg, "-b:", ""), "--bool:", "");
@@ -82,8 +82,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    paramsPtr = params;
-    nParamsRef = nParams;
+    registerOptions(nParams, params);
 
     boolOption = false;
     boolSet = false;

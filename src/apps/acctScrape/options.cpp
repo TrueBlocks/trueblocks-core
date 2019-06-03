@@ -6,18 +6,15 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
-    COption("-maxBlocks:<val>",  "the maximum number of blocks to visit during this run"),
-    COption("-oneBlock:<val>",   "check if the block would be a hit"),
-    COption("-oneTra(n)s:<val>", "check if the block and transaction would be a hit"),
-    COption("-writeBlocks",      "write binary blocks to cache (default: do not write blocks)"),
-    COption("-all",              "scan to the end of the blockchain (ignore --maxBlocks)"),
-    COption("-noBloom(s)",       "do not use adaptive enhanced blooms (much faster if you use them)"),
-    COption("@checkAddrs",       "use the per-block address lists (disabled)"),
-    COption("@logLevel:<val>",   "specify the log level (default 1)"),
-    COption("",                  "Index transactions for a given Ethereum address (or series of addresses).\n"),
+static const COption params[] = {
+    COption("-maxBlocks:<val>", "scan at most --maxBlocks blocks ('all' implies scan to end of chain)"),
+    COption("@pending",         "visit pending but not yet staged or finalized blocks"),
+    COption("@noBlooms",        "turn off bloom filters for performance testing"),
+    COption("@staging",         "produce results in the staging folder instead of production folder"),
+    COption("@start:<num>",     "first block to check"),
+    COption("",                 "Index transactions for a given Ethereum address (or series of addresses).\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -26,125 +23,161 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     bool isAll = false;
+    blknum_t maxBlocks = 10000;
+    blknum_t start     = 0;
 
     Init();
-    while (!command.empty()) {
-        string_q arg = nextTokenClear(command, ' ');
+    explode(arguments, command, ' ');
+    for (auto arg : arguments) {
+        if (arg == "--all" || arg == "-a") arg = "--maxBlocks:all";
+
         if (startsWith(arg, "-m:") || startsWith(arg, "--maxBlocks:")) {
-            nextTokenClear(arg,':');
+            arg = substitute(substitute(arg, "-m:", ""), "--maxBlocks:", "");
+            if (arg == "all") {
+                isAll = true;
+            } else {
+                if (isUnsigned(arg))
+                    maxBlocks = str_2_Uint(arg);
+                else
+                    return usage("Please provide an integer value of maxBlocks. Quitting...");
+            }
+
+        } else if (startsWith(arg, "-s:") || startsWith(arg, "--start:")) {
+            arg = substitute(substitute(arg, "-s:", ""), "--start:", "");
             if (isUnsigned(arg))
-                maxBlocks = str_2_Uint(arg);
+                start = str_2_Uint(arg);
             else
-                return usage("Please provide an integer value of maxBlocks. Quitting...");
+                return usage("Please provide an integer value for start. Quitting...");
 
-        } else if (startsWith(arg, "-o:") || startsWith(arg, "--oneBlock:")) {
-            nextTokenClear(arg,':');
-            if (isUnsigned(arg))
-                oneBlock = str_2_Uint(arg);
-            else
-                return usage("Please provide an integer value for oneBlock. Quitting...");
+        } else if (arg == "-p" || arg == "--pending") {
+            visitTypes |= VIS_PENDING;
 
-        } else if (startsWith(arg, "-n:") || startsWith(arg, "--oneTrans:")) {
-            nextTokenClear(arg,':');
-            if (isUnsigned(arg))
-                oneTrans = str_2_Uint(arg);
-            else
-                return usage("Please provide an integer value for oneTrans. Quitting...");
+        } else if (arg == "-n" || arg == "--noBlooms") {
+            useBlooms = false;
 
-        } else if (startsWith(arg, "-l:") || startsWith(arg, "--level:")) {
-            nextTokenClear(arg,':');
-            if (isUnsigned(arg))
-                logLevel = str_2_Uint(arg);
-            else
-                return usage("Please provide an integer value for --logLevel. Quitting...");
+        } else if (startsWith(arg, "0x")) {
+            if (!isAddress(arg))
+                return usage(arg + " does not appear to be a valid address. Quitting...");
 
-        } else if (arg == "-c" || arg == "--checkAddrs") {
-            checkAddrs = true;
-
-        } else if (arg == "-a" || arg == "--all") {
-            isAll = true;
-
-        } else if (arg == "-s" || arg == "--noBlooms") {
-            ignoreBlooms = true;
-
-        } else if (arg == "-w" || arg == "--writeBlocks") {
-            writeBlocks = true;
+            // TODO(tjayrush): HARD CODED LIMIT???
+            if (monitors.size() < 30) {
+                CAccountWatch watch;
+                watch.setValueByName("address", toLower(arg)); // don't change, sets bloom value also
+                watch.setValueByName("name", toLower(arg));
+                watch.extra_data = getVersionStr() + "/" + watch.address;
+                watch.color = cBlue;
+                watch.finishParse();
+                monitors.push_back(watch);
+            } else {
+                return usage("You may scrape at most 30 addresses per invocation. Quitting...");
+            }
 
         } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
+        } else {
+            return usage("Invalid option: " + arg);
         }
     }
 
-//#define WHICH_BLOCK 4759050
-//#define WHICH_TRANS 199
-#ifdef WHICH_BLOCK
-    visitor.opts.oneBlock = WHICH_BLOCK;
-#ifdef WHICH_TRANS
-    visitor.opts.oneTrans = WHICH_TRANS;
-#endif
-#endif
+    if (monitors.size() == 0)
+        return usage("You must provide at least one Ethereum address. Quitting...");
 
-    if (oneTrans && !oneBlock)
-        return usage("If you specify oneTrans, you must specify oneBlock. Quitting...");
+    // show certain fields and hide others
+    manageFields(defHide, false);
+    manageFields(defShow, true);
+    primary = monitors[0];
+    string_q configFile = "./" + primary.address + ".toml";
+    if (fileExists(configFile)) {
+        CToml *toml = new CToml(configFile);
+        if (toml) {
+            manageFields(toml->getConfigStr("fields", "hide", ""), false);
+            manageFields(toml->getConfigStr("fields", "show", ""), true );
+            delete toml;
+        }
+    }
 
-    if (isAll && oneBlock)
-        return usage("Choose either --all or --oneBlock, not both. Quitting...");
+    if (getCurlContext()->nodeRequired) {
+        CBlock latest;
+        getBlock_light(latest, "latest");
 
-    CBlock latest;
-    getBlock(latest, "latest");
-    lastTimestamp = latest.timestamp;
+        if (!isParity() || !nodeHasTraces())
+            return usage("This tool will only run if it is running against a Parity node that has tracing enabled. Quitting...");
+    }
 
     if (isAll)
         maxBlocks = INT_MAX;
 
-    // Note: Pick up these defaults from the blockScrape application settings.
+    string_q prodPath = getMonitorPath("", FM_PRODUCTION);
+    if (!folderExists(prodPath)) {
+        cerr << "The cache folder '" << prodPath << "' not found. Trying to create it." << endl;
+        establishFolder(prodPath);
+        if (!folderExists(prodPath))
+            return usage("The cache folder '" + prodPath + "' not created. Quiting...");
+    }
 
-    // If writeBlocks is true, then the user told us what to do on the command line and we obey them. If it's false
-    // then we check to see if the config file for blockScrape is set to write blocks. If the blockScraper is writing
-    // blocks, we don't have to. If not, then we do want to write blocks here (therefore we negate the config value).
-    if (!writeBlocks)
-        writeBlocks = !getGlobalConfig("blockScrape")->getConfigBool("settings", "writeBlocks", true);
+    string_q stagePath = getMonitorPath("", FM_STAGING);
+    if (!folderExists(stagePath)) {
+        cerr << "The cache folder '" << stagePath << "' not found. Trying to create it." << endl;
+        establishFolder(stagePath);
+        if (!folderExists(stagePath))
+            return usage("The cache folder '" + stagePath + "' not created. Quiting...");
+    }
 
-    // Exclusions are always picked up from the blockScraper
-    exclusions = toLower(getGlobalConfig("blockScrape")->getConfigStr("exclusions", "list", ""));
+    blknum_t lastInCache = getLastBlock_cache_final();
+    for (auto monitor : monitors) {
+        // Note: We've cleaned the staging folder, so we only have to check for locks in the production folder
+        string_q fn = getMonitorLast(monitor.address);
+        if (fileExists(fn))
+            scanRange.first = min(max(scanRange.first, str_2_Uint(asciiFileToString(fn))), lastInCache);
 
-    if (!isParity() || !nodeHasTraces())
-        return usage("This tool will only run if it is running against a Parity node that has tracing enabled. Quitting...");
+        if (fileExists(fn + ".lck"))
+            return usage("The cache file '" + fn + "' is locked. Quitting...");
 
-    return true;
+        fn = getMonitorLast(monitor.address);
+        if (fileExists(fn + ".lck"))
+            return usage("The last block file '" + fn + "' is locked. Quitting...");
+
+        cerr << "freshening " << monitor.address << "..." << endl;
+    }
+    if (start > scanRange.first && start <= lastInCache)
+        scanRange.first = start;
+
+    if (!folderExists(indexFolder_finalized))
+        return usage("Address index path '" + indexFolder_finalized + "' not found. Quitting...");
+
+    // How many should we scrape?
+    ASSERT(earliestStart <= lastInCache);
+    scrapeCnt = min(lastInCache - scanRange.first, maxBlocks);
+
+    if (verbose) {
+        for (auto monitor : monitors) {
+            cerr << "Freshening " << monitor.address << "\r";cerr.flush();
+        }
+    }
+    return scanRange.first < lastInCache;
 }
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    paramsPtr = params;
-    nParamsRef = nParams;
+    registerOptions(nParams, params);
+    // We want to be able to run this more than once
+    // optionOn(OPT_RUNONCE);
 
-    lastBlock     = 0;
-    minWatchBlock = 0;
-    maxWatchBlock = UINT32_MAX;
-    maxBlocks     = 10000;
-    minArgs       = 0;
-    oneBlock      = 0;
-    oneTrans      = 0;
-    lastTimestamp = 0;
-    writeBlocks   = false;
-    checkAddrs    = false;
-    ignoreBlooms  = false;
-    firstBlock    = 0;
-    nBlocks       = 0;
-    blockCounted  = false;
-    debugging     = 0;
-    logLevel      = 1;
+    minArgs         = 0;
+    scrapeCnt       = 0;
+    visitTypes      = (VIS_STAGING | VIS_FINAL);
+    useBlooms       = true;
 }
 
 //---------------------------------------------------------------------------------------------------
-COptions::COptions(void) : blkStats(), addrStats(), transStats(), traceStats(), txCache(WRITING_ARCHIVE) {
+COptions::COptions(void) {
     Init();
 }
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+    // just some cleanup of the screen
+    cerr << string_q(150,' ') << "\r";
 }
-

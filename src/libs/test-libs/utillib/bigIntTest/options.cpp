@@ -13,10 +13,10 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("",             "Simple test program.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -25,8 +25,8 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     Init();
-    while (!command.empty()) {
-        string_q arg = nextTokenClear(command, ' ');
+    explode(arguments, command, ' ');
+    for (auto arg : arguments) {
         string_q orig = arg;
         if (arg == "-x" || arg == "--xarg") {
         } else if (startsWith(arg, "-")) {
@@ -43,8 +43,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    paramsPtr = params;
-    nParamsRef = nParams;
+    registerOptions(nParams, params);
 }
 
 //---------------------------------------------------------------------------------------------------

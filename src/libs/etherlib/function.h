@@ -15,8 +15,6 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include <vector>
-#include <map>
 #include "utillib.h"
 #include "parameter.h"
 
@@ -35,6 +33,7 @@ public:
     bool payable;
     string_q signature;
     string_q encoding;
+    string_q message;
     CParameterArray inputs;
     CParameterArray outputs;
 
@@ -49,12 +48,20 @@ public:
     const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    explicit CFunction(const string_q& n) : name(n) { }
-    bool hasAddrs;
+    bool checkTypes(void) const;
+    bool showOutput;
+    bool isBuiltIn;
+    string_q origName;
+    explicit CFunction(const string_q& n) : name(n), anonymous(false), constant(false), payable(false) { }
     string_q getSignature(uint64_t parts) const;
     string_q encodeItem(void) const;
-    bool isBuiltin;
-    string_q origName;
+    friend class CTransaction;
+    friend class CLogEntry;
+    friend class CTrace;
+    bool showEmptyField(const string_q& fn) const override {
+        return (showOutput || fn != "outputs");
+    }
+    bool fromDefinition(const string_q& lineIn);
     // EXISTING_CODE
     bool operator==(const CFunction& item) const;
     bool operator!=(const CFunction& item) const { return !operator==(item); }
@@ -112,12 +119,13 @@ inline void CFunction::initialize(void) {
     payable = 0;
     signature = "";
     encoding = "";
+    message = "";
     inputs.clear();
     outputs.clear();
 
     // EXISTING_CODE
-    hasAddrs = false;
-    isBuiltin = false;
+    showOutput = true;
+    isBuiltIn = false;
     origName = "";
     // EXISTING_CODE
 }
@@ -134,15 +142,15 @@ inline void CFunction::duplicate(const CFunction& fu) {
     payable = fu.payable;
     signature = fu.signature;
     encoding = fu.encoding;
+    message = fu.message;
     inputs = fu.inputs;
     outputs = fu.outputs;
 
     // EXISTING_CODE
-    hasAddrs = fu.hasAddrs;
-    isBuiltin = fu.isBuiltin;
+    showOutput = fu.showOutput;
+    isBuiltIn = fu.isBuiltIn;
     origName = fu.origName;
     // EXISTING_CODE
-    finishParse();
 }
 
 //--------------------------------------------------------------------------
@@ -175,10 +183,11 @@ extern CArchive& operator>>(CArchive& archive, CFunctionArray& array);
 extern CArchive& operator<<(CArchive& archive, const CFunctionArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CFunction& fun);
+extern CArchive& operator>>(CArchive& archive, CFunction& fun);
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
-inline bool sortByFuncName(const CFunction& f1, const CFunction& f2) {
-    return f1.name < f2.name;
-}
 // EXISTING_CODE
 }  // namespace qblocks
 

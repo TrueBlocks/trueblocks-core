@@ -13,10 +13,10 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("",        "Test harness for QBlocks.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -25,8 +25,8 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     Init();
-    while (!command.empty()) {
-        string_q arg = nextTokenClear(command, ' ');
+    explode(arguments, command, ' ');
+    for (auto arg : arguments) {
         if (arg == "-o" || arg == "--option") {
             // whatever
 
@@ -45,8 +45,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    paramsPtr = params;
-    nParamsRef = nParams;
+    registerOptions(nParams, params);
 }
 
 //---------------------------------------------------------------------------------------------------

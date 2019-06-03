@@ -13,17 +13,16 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("~!trans_list",    "a space-separated list of one or more transaction identifiers "
                                   "(tx_hash, bn.txID, blk_hash.txID)"),
-    COption("-raw",            "retrieve raw transaction directly from the running node"),
-    COption("-nTraces",        "report on how many traces the transaction generated and deepest trace"),
+    COption("-trace",          "display the transaction's trace"),
+    COption("-articulate",     "articulate the transactions if an ABI is found"),
     COption("@belongs:<addr>", "report true or false if the given address is found anywhere in the transaction"),
     COption("@asStrs",         "when checking --belongs, treat input and log data as a string"),
-    COption("@trace",          "include the transactions trace after the transaction"),
     COption("",                "Retrieve an Ethereum transaction from the local cache or a running node."),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -32,23 +31,21 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     Init();
-    while (!command.empty()) {
-        string_q arg = nextTokenClear(command, ' ');
-        if (arg == "-r" || arg == "--raw") {
-            isRaw = true;
-
-        } else if (arg == "-t" || arg == "--trace") {
+    explode(arguments, command, ' ');
+    for (auto arg : arguments) {
+        if (arg == "-t" || arg == "--trace") {
             incTrace = true;
 
-        } else if (arg == "-n" || arg == "--nTraces") {
-            nTraces = true;
+        } else if (arg == "-a" || arg == "--articulate") {
+            articulate = true;
+            verbose = true;
 
-        } else if (arg == "-a" || arg == "--asStrs") {
+        } else if (arg == "--asStrs") {
             chkAsStr = true;
 
-        } else if (startsWith(arg, "-b:") || startsWith(arg, "--belongs:")) {
+        } else if (startsWith(arg, "--belongs:")) {
             string_q orig = arg;
-            arg = substitute(substitute(arg, "-b:", ""), "--belongs:", "");
+            arg = substitute(arg, "--belongs:", "");
             if (!isAddress(arg))
                 return usage(arg + " does not appear to be a valid Ethereum address.\n");
             filters.push_back(str_2_Addr(toLower(arg)));
@@ -61,32 +58,59 @@ bool COptions::parseArguments(string_q& command) {
 
         } else {
 
+            string_q errorMsg;
+            if (!wrangleTxId(arg, errorMsg))
+                return usage(errorMsg);
             string_q ret = transList.parseTransList(arg);
             if (!ret.empty())
                 return usage(ret);
-
         }
+    }
+
+    if (articulate) {
+        // show certain fields and hide others
+        manageFields(defHide, false);
+        manageFields(defShow, true);
+        manageFields("CParameter:strDefault", false);  // hide
+        manageFields("CTransaction:price", false);  // hide
+        manageFields("CFunction:outputs", true);  // show
+        if (verbose) {
+            manageFields("CTransaction:input", true);  // show
+            manageFields("CLogEntry:topics", true);  // show
+        }
+
+        //    manageFields(toml.getConfigStr("fields", "hide", ""), false);
+        //    manageFields(toml.getConfigStr("fields", "show", ""), true );
+        abi_spec.loadAbiKnown("all");
     }
 
     if (!transList.hasTrans())
         return usage("Please specify at least one transaction identifier.");
 
 extern const char* STR_DISPLAY_FORMAT;
-    format = getGlobalConfig()->getDisplayStr(!verbose, (verbose ? "" : STR_DISPLAY_FORMAT));
+    format = getGlobalConfig("getTrans")->getDisplayStr(!verbose, (verbose ? "" : STR_DISPLAY_FORMAT));
+    if (api_mode) {
+        manageFields("CTransaction:hash,blockHash,timestamp,blockNumber,transactionIndex,from,to,value,gas,gasPrice,articulatedTx", false);
+        manageFields("CTransaction:articulatedTx", true);
+        manageFields("CReceipt:gasUsed,", false);
+        manageFields("CLogEntry:logIndex,topics,articulatedLog", false);
+        manageFields("CTraceAction:balance,gas", false);
+
+        manageFields("CLogEntry:compressedLog", true);
+//        manageFields("CTransaction:compressedTx", true);
+    }
 
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    paramsPtr = params;
-    nParamsRef = nParams;
-    pOptions = this;
+    optionOn(OPT_RAW);
+    registerOptions(nParams, params);
 
     transList.Init();
-    isRaw = false;
     incTrace = false;
-    nTraces = false;
+    articulate = false;
     format = "";
     filters.clear();
     belongs = false;
@@ -102,9 +126,7 @@ COptions::COptions(void) {
     HIDE_FIELD(CTransaction, "cumulativeGasUsed");
 
     Init();
-    // Don't reset these for each command
-    nCmds = 0;
-    nVisited = 0;
+    index = 0;
     if (isTestMode())
         UNHIDE_FIELD(CTransaction, "isError");
 }
@@ -124,7 +146,7 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
         ret += "[{trans_list}] is one or more space-separated identifiers which may be either a transaction hash,|"
                 "a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.\n";
         ret += "This tool checks for valid input syntax, but does not check that the transaction requested exists.\n";
-        ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if configured "
+        ret += "This tool retrieves information from the local node or rpcProvider if configured "
                     "(see documentation).\n";
         ret += "If the queried node does not store historical state, the results may be undefined.\n";
         return ret;

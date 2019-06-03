@@ -14,20 +14,14 @@ We store our QBlocks cache on an external SSD hard drive. We've found [this SSD 
 
 ## Not Running an Ethereum Node
 
-Many of our users will not want the burden of running a full node. In this case, you may choose to run QBlocks against a remote Ethereum node such as [Infura](http://infura.io). The caching capabilities of QBlocks really shine in this scenario. Using QBlocks, we've seen performance increases of nearly two orders of magnitude over requesting the same data repeatedly from Infura. 
-
-In order to use this mode, you must run in a shell that has an environment variable set. That environment variable is called ${FALLBACK}. You may set this on the command line, thus
-
-    FALLBACK=infura getBlock 1001001
-    
-which will return block 1001001 even if you're not running a local node. You may also set this variable in your shell init code.
+You may use a remote node if you wish or a testnet node by changing the rpcProvider option in the configuration file. The caching capabilities of QBlocks really shines in the remote scenario. Using QBlocks, we've seen performance increases of nearly two orders of magnitude over requesting the same data repeatedly from Infura. 
 
 By default, so as to not over burden your hard drive, QBlocks does not cache every request. For example, the `getBlock` command only caches if you tell it to with the [currently undocumented] `--force` option:
 
-    FALLBACK=infura getBlock 1001001 --force
+    getBlock 1001001 --force
     
 You may check where a block is with the `whereBlock` command:
 
     whereBlock 1001001
 
-The Infura platform does not run their nodes with `--tracing on` nor `--pruning archive`; therefore, the behavior of operations such as getBalance, getTokenBal and getTrace, which are dependant on either tracing or archiving, is undefined.
+The Infura platform does not run their nodes with `--tracing on` nor `--pruning archive`; therefore, the behavior of operations such as getState, getTokenInfo and getTrace, which are dependant on either tracing or archiving, is undefined.

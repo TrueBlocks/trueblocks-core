@@ -15,8 +15,6 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include <vector>
-#include <map>
 #include "abilib.h"
 #include "traceaction.h"
 #include "traceresult.h"
@@ -47,7 +45,7 @@ public:
     uint64_t transactionPosition;
     string_q type;
     string_q error;
-    CStringArray articulatedTrace;
+    CFunction articulatedTrace;
     CTraceAction action;
     CTraceResult result;
 
@@ -60,11 +58,11 @@ public:
     DECLARE_NODE(CTrace);
 
     const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
-    const string_q getStringAt(const string_q& name, size_t i) const override;
+    const string_q getStringAt(const string_q& fieldName, size_t i) const override;
 
     // EXISTING_CODE
     bool isError(void) const;
-    CFunction *func;
+    const CTransaction *pTrans;
     // EXISTING_CODE
     bool operator==(const CTrace& item) const;
     bool operator!=(const CTrace& item) const { return !operator==(item); }
@@ -91,7 +89,6 @@ inline CTrace::CTrace(void) {
 //--------------------------------------------------------------------------
 inline CTrace::CTrace(const CTrace& tr) {
     // EXISTING_CODE
-    func = NULL;
     // EXISTING_CODE
     duplicate(tr);
 }
@@ -109,9 +106,6 @@ inline CTrace::~CTrace(void) {
 //--------------------------------------------------------------------------
 inline void CTrace::clear(void) {
     // EXISTING_CODE
-    if (func)
-        delete func;
-    func = NULL;
     // EXISTING_CODE
 }
 
@@ -127,12 +121,12 @@ inline void CTrace::initialize(void) {
     transactionPosition = 0;
     type = "";
     error = "";
-    articulatedTrace.clear();
-    action.initialize();
-    result.initialize();
+    articulatedTrace = CFunction();
+    action = CTraceAction();
+    result = CTraceResult();
 
     // EXISTING_CODE
-    func = NULL;
+    pTrans = NULL;
     // EXISTING_CODE
 }
 
@@ -154,9 +148,8 @@ inline void CTrace::duplicate(const CTrace& tr) {
     result = tr.result;
 
     // EXISTING_CODE
-    func = (tr.func ? new CFunction(*tr.func) : NULL);
+    pTrans = tr.pTrans;  // no deep copy, we don't own it
     // EXISTING_CODE
-    finishParse();
 }
 
 //--------------------------------------------------------------------------

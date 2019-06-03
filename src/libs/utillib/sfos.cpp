@@ -16,12 +16,12 @@
 #include "basetypes.h"
 #include "sfos.h"
 #include "sftime.h"
-#include "string.h"
+#include "sfstring.h"
+#include "database.h"
 #include "filenames.h"
 
 namespace qblocks {
 
-    #define ANY_FILETYPE -1
     #define remove unlink
 
     //------------------------------------------------------------------
@@ -41,13 +41,33 @@ namespace qblocks {
         return 0;
     }
 
+
+    //--------------------------------------------------------------------------------
+    int cleanFolder(const string_q& path, bool recurse, bool interactive) {
+        CStringArray files;
+        listFilesInFolder(files, path, true);
+        for (auto file : files)
+            ::remove(file.c_str());
+        return (int)files.size();
+    }
+
+    //------------------------------------------------------------------
+    int moveFile(const string_q& from, const string_q& to) {
+        if (from % to)
+            return true;
+        if (copyFile(from, to)) {
+            int ret = ::remove(from.c_str()); // remove file returns '0' on success
+            return !ret;
+        }
+        return false;
+    }
+
     //------------------------------------------------------------------
     int copyFile(const string_q& fromIn, const string_q& toIn) {
         string_q from = escapePath(fromIn);
         string_q to   = escapePath(toIn);
 
-        const string_q copyCmd = "cp -pf";
-        string_q command = copyCmd + " " + from + " " + to;
+        string_q command = "cp -f " + from + " " + to;
         if (system(command.c_str())) { }  // do not remove. The test just silences compiler warnings
         return static_cast<int>(fileExists(to));
     }
@@ -55,7 +75,7 @@ namespace qblocks {
     //------------------------------------------------------------------
     // Returns a list of either files or folders, but not both.
     //------------------------------------------------------------------
-    void doGlob(size_t& nStrs, string_q *strs, const string_q& maskIn, int wantFiles, bool keepPaths ) {
+    void doGlob(size_t& nStrs, string_q *strs, const string_q& maskIn, int wantFiles ) {
         ASSERT(!strs || nStrs);
 
         glob_t globBuf;
@@ -91,15 +111,13 @@ namespace qblocks {
                     if (endsWith(path, '/'))
                         path = extract(path, 0, path.length() - 1);
 
-                    if (!keepPaths) {
-                        // trim path to last directory / file
-                        path = basename((char*)path.c_str());  // NOLINT
-                        if (startsWith(path, '/'))
-                            path = extract(path, 1);
-                        // The path we return is always just the name of the folder or file
-                        // without any leading (or even existing) '/'
-                        ASSERT(path.length() && path[0] != '/');
-                    }
+                    // trim path to last directory / file
+                    path = basename((char*)path.c_str());  // NOLINT
+                    if (startsWith(path, '/'))
+                         path = extract(path, 1);
+                    // The path we return is always just the name of the folder or file
+                    // without any leading (or even existing) '/'
+                    ASSERT(path.length() && path[0] != '/');
 
                     if (wantFiles == ANY_FILETYPE) {
                         if (isDir)
@@ -153,7 +171,6 @@ namespace qblocks {
 
         // Check twice for existance since the previous command creates the file but may take some time
         waitForCreate(filename);
-extern size_t asciiFileToString(const string_q& filename, string& contents);
         string_q ret;
         asciiFileToString(filename, ret);
         remove(filename.c_str());
@@ -186,35 +203,18 @@ extern size_t asciiFileToString(const string_q& filename, string& contents);
             folder += '/';
 
         size_t nFiles = 0;
-        listFiles(nFiles, NULL, folder+"*.*");
+        string_q mask = folder + "*.*";
+        doGlob(nFiles, NULL, mask, true);
+
         // check to see if it is just folders
         if (!nFiles)
-            listFolders(nFiles, NULL, folder+"*.*");
-        if (!nFiles)
-            listFolders(nFiles, NULL, folder+".");
+            doGlob(nFiles, NULL, mask, false);
+        if (!nFiles) {
+            mask = folder + ".";
+            doGlob(nFiles, NULL, mask, false);
+        }
 
         return (nFiles > 0);
-    }
-
-    //------------------------------------------------------------------
-    void listFiles(size_t& nStrs, string_q *strs, const string_q& mask) {
-        size_t ret = 0;
-        doGlob(ret, strs, mask, true, contains(mask, "/*/")); /* fixes color coding in pico */
-        nStrs = ret;
-    }
-
-    //------------------------------------------------------------------
-    void listFolders(size_t& nStrs, string_q *strs, const string_q& mask) {
-        size_t ret = 0;
-        doGlob(ret, strs, mask, false, contains(mask, "/*/")); /* fixes color coding in pico */
-        nStrs = ret;
-    }
-
-    //------------------------------------------------------------------
-    void listFilesOrFolders(size_t& nStrs, string_q *strs, const string_q& mask) {
-        size_t ret = 0;
-        doGlob(ret, strs, mask, ANY_FILETYPE, contains(mask, "/*/"));
-        nStrs = ret;
     }
 
     //------------------------------------------------------------------
@@ -247,5 +247,15 @@ extern size_t asciiFileToString(const string_q& filename, string& contents);
             }
         }
         return folderExists(targetFolder);
+    }
+
+    //----------------------------------------------------------------------------
+    bool isRunning(const string_q& progName, bool excludeSelf) {
+        string_q cmd = "ps -ef | grep -i " + progName + " | grep -v grep | grep -v \"sh -c \" | wc -l";
+        string_q result = doCommand(cmd);
+        uint64_t cnt = str_2_Uint(result);
+        if (!cnt || !contains(result, getEffectiveUserName())) // not running or not running by this user
+            return false;
+        return (!excludeSelf || cnt > 1);
     }
 }  // namespace qblocks

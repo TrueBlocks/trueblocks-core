@@ -17,13 +17,11 @@
 class COptions : public CBlockOptions {
 public:
     bool isCheck;
-    bool isRaw;
     bool isCache;
     bool hashes;
     bool traces;
     bool force;
     bool normalize;
-    bool silent;
     int quiet;
     bool showZeroTrace;
     string_q format;

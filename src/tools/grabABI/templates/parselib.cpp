@@ -11,7 +11,7 @@
  */
 [{HEADERS}]
 //-----------------------------------------------------------------------
-void [{PREFIX}]_init(void) {[{BLKPATH}]
+void [{PREFIX}]_init(QUITHANDLER qh) {[{BLKPATH}]
 [{REGISTERS}][{CHAINLIB}]
 }
 

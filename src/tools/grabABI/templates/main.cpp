@@ -17,16 +17,15 @@
 
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-
     parselib_init(myQuitHandler);
+
     if (argc < 2)
         verbose = true;
     cerr << "Starting monitor...\r";
     cerr.flush();
 
-    blknum_t clientHeight;
-    uint64_t cacheHeight;
-    getLatestBlocks(cacheHeight, clientHeight);
+    blknum_t pending, staging, finalized, client;
+    getLastBlocks(pending, staging, finalized, client);
 
     // Parse command line, allowing for command files
     COptions visitor;
@@ -35,9 +34,7 @@ int main(int argc, const char *argv[]) {
         return 0;
     }
 
-    // while (!visitor.commandList.empty())
-    {
-        string_q command = nextTokenClear(visitor.commandList, '\n');
+    for (auto command : visitor.commandLines) {
         if (!visitor.parseArguments(command)) {
             etherlib_cleanup();
             return 0;
@@ -53,12 +50,12 @@ int main(int argc, const char *argv[]) {
         if (visitor.kBlock) {
             // we're not starting at the beginning
             for (uint32_t i = 0 ; i < visitor.watches.size() ; i++) {
-                visitor.watches.at(i).qbis.endBal = getNodeBal(visitor.watches.at(i).balanceHistory, visitor.watches.at(i).address, blockNum);
+                visitor.watches.at(i).statement.endBal = getNodeBal(visitor.watches.at(i).stateHistory, visitor.watches.at(i).address, blockNum);
             }
         }
 
         if (visitor.debugger_on) {
-            remove("./cache/debug");
+            remove(configPath("cache/tmp/debug"));
             initscr();
             raw();
             keypad(stdscr, true);
@@ -76,6 +73,8 @@ int main(int argc, const char *argv[]) {
             UNHIDE_FIELD(CTransaction, "articulated");
             UNHIDE_FIELD(CTransaction, "traces");
             UNHIDE_FIELD(CTransaction, "isError");
+            UNHIDE_FIELD(CTransaction, "date");
+            UNHIDE_FIELD(CTransaction, "ether");
             HIDE_FIELD  (CTransaction, "gasUsed");
 
             UNHIDE_FIELD(CLogEntry,    "cname");
@@ -124,11 +123,11 @@ int main(int argc, const char *argv[]) {
 //-----------------------------------------------------------------------
 void myQuitHandler(int s) {
     quickQuitHandler(-1);
-    remove("./cache/debug");
+    remove(configPath("cache/tmp/debug"));
     if (!isendwin()) {
         endwin();
     }
-    exit(1);
+    exit(EXIT_SUCCESS);
 }
 
 //-----------------------------------------------------------------------

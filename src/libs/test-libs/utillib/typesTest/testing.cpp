@@ -51,14 +51,14 @@ TEST_F(CThisTest, Test01) {
 #include "options.h"
 //------------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
+    etherlib_init(quickQuitHandler);
 
     COptions options;
     options.minArgs = 0;
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    while (!options.commandList.empty()) {
-        string_q command = nextTokenClear(options.commandList, '\n');
+    for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
     }

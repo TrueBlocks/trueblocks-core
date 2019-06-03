@@ -15,8 +15,6 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include <vector>
-#include <map>
 #include "abilib.h"
 
 namespace qblocks {
@@ -108,8 +106,8 @@ inline void CPriceQuote::duplicate(const CPriceQuote& pr) {
 
     // EXISTING_CODE
     date = pr.date;
-    // EXISTING_CODE
     finishParse();
+    // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
@@ -144,8 +142,8 @@ extern CArchive& operator<<(CArchive& archive, const CPriceQuoteArray& array);
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 extern uint64_t indexFromTimeStamp(const CPriceQuoteArray& quotes, timestamp_t ts);
-extern string_q asDollars(timestamp_t ts, biguint_t weiIn);
-extern string_q dispDollars(timestamp_t ts, biguint_t weiIn);
+extern string_q wei_2_Dollars(timestamp_t ts, biguint_t weiIn);
+extern string_q displayDollars(timestamp_t ts, biguint_t weiIn);
 // EXISTING_CODE
 }  // namespace qblocks
 

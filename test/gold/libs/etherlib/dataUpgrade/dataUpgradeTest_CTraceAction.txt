@@ -17,6 +17,7 @@ input               	1011	0	131122	T_TEXT TS_STRING
 refundAddress       	1012	0	131127	T_ADDRESS TS_STRING
 to                  	1013	0	131127	T_ADDRESS TS_STRING
 value               	1014	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+ether               	1015	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
 {
   "address": "0x0",
   "balance": 0,
@@ -44,6 +45,7 @@ input               	1011	1	131122	T_TEXT TS_STRING
 refundAddress       	1012	1	131127	T_ADDRESS TS_STRING
 to                  	1013	1	131127	T_ADDRESS TS_STRING
 value               	1014	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+ether               	1015	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
 {
 }
 
@@ -64,8 +66,9 @@ input               	1011	0	131122	T_TEXT TS_STRING
 refundAddress       	1012	0	131127	T_ADDRESS TS_STRING
 to                  	1013	0	131127	T_ADDRESS TS_STRING
 value               	1014	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+ether               	1015	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
 {
-  "schema": 5005,
+  "schema": 5007,
   "deleted": 0,
   "showing": 1,
   "cname": "TraceAction",
@@ -75,6 +78,7 @@ value               	1014	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
   "gas": 0,
   "refundAddress": "0x0",
   "to": "0x0",
-  "value": 0
+  "value": 0,
+  "ether": 0.000000000000000000
 }
 

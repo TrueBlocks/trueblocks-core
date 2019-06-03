@@ -10,64 +10,103 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "utillib.h"
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
-    COption("-named",    "Show addresses from named accounts as per ethName"),
-    COption("-scraper",  "Show addresses from scraper config.toml (if found in current folder"),
-    COption("",          "Show the list of Ethereum accounts known to the local node or named accounts."),
+static const COption params[] = {
+    COption("-owned",     "Show owned addresses"),
+    COption("-custom",    "Show custom addresses (see below)"),
+    COption("-prefund",   "Show prefunded addresses"),
+    COption("-named",     "Show named addresses (see ethName)"),
+    COption("-addr_only", "export only addresses, no names"),
+    COption("@fmt:<fmt>", "export format (one of [none|json|txt|csv|api])"),
+    COption("@o(t)her",   "export other addresses if found"),
+    COption("",           "List known accounts ('owned' are shown by default)."),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
+extern const char* STR_DISPLAY;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
 
-    Init();
-    while (!command.empty()) {
-        string_q arg = nextTokenClear(command, ' ');
-        if (arg == "-n" || arg == "--named") {
-            fromNamed = true;
+    string_q format = STR_DISPLAY;
+    bool deflt = true, noHeader = false;
 
-        } else if (arg == "-s" || arg == "--scraper") {
-            if (!fileExists("./config.toml"))
-                return usage("--scraper option requires a file ./config.toml exists in current folder. Quitting...");
-            fromScraper = true;
+    Init();
+    explode(arguments, command, ' ');
+    for (auto arg : arguments) {
+        if (arg == "-n" || arg == "--named") {
+            if (deflt) { types = 0; deflt = false; }
+            types |= NAMED;
+
+        } else if (arg == "-p" || arg == "--prefund") {
+            if (deflt) { types = 0; deflt = false; }
+            types |= PREFUND;
+
+        } else if (arg == "-c" || arg == "--custom") {
+            if (deflt) { types = 0; deflt = false; }
+            types |= CUSTOM;
+
+        } else if (arg == "-o" || arg == "--owned") {
+            if (deflt) { types = 0; deflt = false; }
+            types |= OWNED;
+
+        } else if (arg == "-t" || arg == "--other") {
+            if (deflt) { types = 0; deflt = false; }
+            types |= OTHER;
+
+        } else if (arg == "-a" || arg == "--addr_only") {
+            noHeader = true;
+            format = "[{ADDR}]";
 
         } else if (startsWith(arg, '-')) {  // do not collapse
-
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
 
         } else {
-
             return usage("Invalid option '" + arg + "'. Quitting...");
         }
     }
+
+    switch (exportFmt) {
+        case NONE1: format = "[{ADDR}][\t{NAME}][\t{SYMBOL}]"; if (verbose) format += "[\t{SOURCE}]"; break;
+        case API1:
+        case JSON1: format = ""; break;
+        case TXT1:
+        case CSV1:
+            format = getGlobalConfig()->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
+            if (verbose)
+                format += "[\t{SOURCE}]";
+            manageFields("CAccountName:" + cleanFmt(format, exportFmt));
+            break;
+    }
+    expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
+    if (noHeader)
+        expContext().fmtMap["header"] = "";
+
+    applyFilter();
 
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
+    registerOptions(nParams, params);
+    optionOn(OPT_PREFUND);
 
-    paramsPtr = params;
-    nParamsRef = nParams;
-    pOptions = this;
+    items.clear();
+    types = OWNED;
 
-    fromNamed = false;
-    fromScraper = false;
     minArgs = 0;
 }
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
-    // Will sort the fields in these classes if --parity is given
+    // will sort the fields in these classes if --parity is given
     sorts[0] = GETRUNTIME_CLASS(CBlock);
     sorts[1] = GETRUNTIME_CLASS(CTransaction);
     sorts[2] = GETRUNTIME_CLASS(CReceipt);
@@ -75,17 +114,115 @@ COptions::COptions(void) {
     // If you need the names file, you have to add it in the constructor
     namesFile = CFilename(configPath("names/names.txt"));
     establishFolder(namesFile.getPath());
-    if (!fileExists(namesFile.getFullPath()))
-        stringToAsciiFile(namesFile.getFullPath(),
-                substitute(
-                substitute(string_q(STR_DEFAULT_NAMEDATA), " |", "|"), "|", "\t"));
     loadNames();
     Init();
 }
 
 //--------------------------------------------------------------------------------
+COptions::~COptions(void) {
+}
+
+//--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
     if (which == "notes" && (verbose || COptions::isReadme))
-        return "To customize this list add an [{extra_accounts}] section to the config file (see documentation).\n";
+        return "To customize this list add an [{custom}] section to the config file (see documentation).\n";
     return str;
 }
+
+//-----------------------------------------------------------------------
+bool COptions::addIfUnique(const CAccountName& item) {
+    if (isZeroAddr(item.addr))
+        return false;
+
+    address_t l = toLower(item.addr);
+    if (items[l].addr == l) {
+        if (!item.name.empty() && items[l].name != item.name) // last in wins
+            items[l].name = item.name;
+        return false;
+    }
+    items[l] = item;
+    return true;
+}
+
+//-----------------------------------------------------------------------
+void COptions::applyFilter() {
+
+    //------------------------
+    if (types & OWNED) {
+        if (isTestMode()) {
+            for (uint32_t i = 1 ; i < 5 ; i++) {
+                CAccountName item;
+                item.addr = "0x000000000000000000000000000000000000000" + uint_2_Str(i);
+                addIfUnique(item);
+            }
+        } else {
+            CStringArray addrs;
+            getAccounts(addrs);
+            for (auto addr : addrs) {
+                CAccountName item(addr);
+                addIfUnique(item);
+            }
+        }
+    }
+
+    //------------------------
+    if (types & CUSTOM) {
+        if (isTestMode()) {
+            for (uint32_t i = 1 ; i < 5 ; i++) {
+                CAccountName item;
+                item.addr = "0x000000000000000000000000000000000000000" + uint_2_Str(i);
+                item.name = "Account_" + uint_2_Str(i);
+                if (!(i%2))
+                    item.symbol = "AC_" + uint_2_Str(i);
+                addIfUnique(item);
+            }
+        } else {
+            CAccountName item;
+            string_q customStr = getGlobalConfig("getAccounts")->getConfigJson("custom", "list", "");
+            while (item.parseJson3(customStr)) {
+                addIfUnique(item);
+                item = CAccountName();
+            }
+        }
+    }
+
+    //------------------------
+    if (types & NAMED) {
+        for (auto item : namedAccounts) {
+            addIfUnique(item);
+        }
+    }
+
+    //------------------------
+    if (types & PREFUND) {
+        uint32_t cnt = 0;
+        ASSERT(prefunds.size() == 8893);  // This is a known value
+        for (auto prefund : prefunds) {
+            string_q addr = nextTokenClear(prefund,'\t');
+            CAccountName item(addr);
+            item.name = "Prefund_" + padNum4(cnt++);
+            addIfUnique(item);
+        }
+    }
+
+    //------------------------
+    if (types & OTHER) {
+        cout << getCWD() << endl;
+        string_q contents = asciiFileToString("../src/tools/ethName/tests/other_names.txt");
+        if (!contents.empty()) {
+            CStringArray fields;
+            fields.push_back("addr");
+            fields.push_back("name");
+            fields.push_back("source");
+            CAccountName item;
+            while (item.parseText(fields, contents)) {
+                addIfUnique(item);
+                item = CAccountName();
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------
+const char* STR_DISPLAY =
+"[{ADDR}][\t{NAME}][\t{SYMBOL}]";

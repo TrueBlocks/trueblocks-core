@@ -31,5 +31,6 @@
 #include "accountname.h"
 #include "memmap.h"
 #include "rpcresult.h"
+#include "logging.h"
 
 using namespace qblocks;  // NOLINT

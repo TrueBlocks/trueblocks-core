@@ -1,0 +1,251 @@
+abiTest argc: 3 [1:generation] [2:encoding] 
+abiTest generation encoding 
+Generation test...
+Testing of already sorted JSON
+{
+  "address": "0x0",
+  "interfaces": [
+    {
+      "name": "a",
+      "signature": "a()",
+      "encoding": "0x0dbe671f",
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "name": "c",
+      "signature": "c()",
+      "encoding": "0xc3da42b8",
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "name": "d",
+      "signature": "d()",
+      "encoding": "0x8a054ac2",
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "name": "e",
+      "signature": "e()",
+      "encoding": "0xffae15ba",
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "name": "m",
+      "signature": "m()",
+      "encoding": "0x5a2ee019",
+      "inputs": [],
+      "outputs": []
+    }
+  ]
+}
+
+{
+  "address": "0x0",
+  "interfaces": [
+    {
+      "name": "a",
+      "signature": "a()",
+      "encoding": "0x0dbe671f",
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "name": "m",
+      "signature": "m()",
+      "encoding": "0x5a2ee019",
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "name": "d",
+      "signature": "d()",
+      "encoding": "0x8a054ac2",
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "name": "c",
+      "signature": "c()",
+      "encoding": "0xc3da42b8",
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "name": "e",
+      "signature": "e()",
+      "encoding": "0xffae15ba",
+      "inputs": [],
+      "outputs": []
+    }
+  ]
+}
+
+Testing of not sorted JSON
+{
+  "address": "0x0",
+  "interfaces": [
+    {
+      "name": "a",
+      "signature": "a()",
+      "encoding": "0x0dbe671f",
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "name": "aa1",
+      "signature": "aa1()",
+      "encoding": "0x74d0d855",
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "name": "az",
+      "signature": "az()",
+      "encoding": "0x73fc24ec",
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "name": "b",
+      "signature": "b()",
+      "encoding": "0x4df7e3d0",
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "name": "ba1",
+      "signature": "ba1()",
+      "encoding": "0x53241b65",
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "name": "bz",
+      "signature": "bz()",
+      "encoding": "0x3c7df70c",
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "name": "z",
+      "signature": "z()",
+      "encoding": "0xc5d7802e",
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "name": "za1",
+      "signature": "za1()",
+      "encoding": "0xb7938cb5",
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "name": "zz",
+      "signature": "zz()",
+      "encoding": "0xfa14c2df",
+      "inputs": [],
+      "outputs": []
+    }
+  ]
+}
+
+{
+  "address": "0x0",
+  "interfaces": [
+    {
+      "name": "a",
+      "signature": "a()",
+      "encoding": "0x0dbe671f",
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "name": "bz",
+      "signature": "bz()",
+      "encoding": "0x3c7df70c",
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "name": "b",
+      "signature": "b()",
+      "encoding": "0x4df7e3d0",
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "name": "ba1",
+      "signature": "ba1()",
+      "encoding": "0x53241b65",
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "name": "az",
+      "signature": "az()",
+      "encoding": "0x73fc24ec",
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "name": "aa1",
+      "signature": "aa1()",
+      "encoding": "0x74d0d855",
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "name": "za1",
+      "signature": "za1()",
+      "encoding": "0xb7938cb5",
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "name": "z",
+      "signature": "z()",
+      "encoding": "0xc5d7802e",
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "name": "zz",
+      "signature": "zz()",
+      "encoding": "0xfa14c2df",
+      "inputs": [],
+      "outputs": []
+    }
+  ]
+}
+
+...passed
+
+Done...
+Encodings test...
+	event: ContributionMade(address) encoding: 0x97a3367c201ad38e0d37322fd0ffa1b93457541ae8baf20eb9aa50bb83fcabef ✓
+	event: RefundPayoutClaimed(uint256) encoding: 0x5e5c64a3ed3fb7fd17b9ca165f3ebe344a48d7c845dc947fc27249da676e7fbd ✓
+	event: BeneficiaryPayoutClaimed(address,uint256) encoding: 0x22c1e24047f1e0c1af6f78290547f44645cdd2ad4d06b09115a162e41460c4d5 ✓
+	function: emergencyCall() encoding: 0x299ed37a ✓
+	function: setup(address,address) encoding: 0x2d34ba79 ✓
+	function: withdrawFunding() encoding: 0x30b9af98 ✓
+	function: changeBaseValue(uint256) encoding: 0x92a781d8 ✓
+	function: fund() encoding: 0xb60d4288 ✓
+	function: updateStage() encoding: 0xc062f578 ✓
+	function: withdrawForWorkshop() encoding: 0xf3a44fe1 ✓
+	function: issueTokens(address,uint256) encoding: 0x475a9fa9 ✓
+	function: depositRevenue() encoding: 0x44e43cb8 ✓
+	function: withdrawRevenue() encoding: 0x4f573cb2 ✓
+	function: softWithdrawRevenueFor(address) encoding: 0x5d0be9de ✓
+	event: Transfer(address,address,uint256) encoding: 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef ✓
+	event: Approval(address,address,uint256) encoding: 0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925 ✓
+	function: transferFrom(address,address,uint256) encoding: 0x23b872dd ✓
+	function: approve(address,uint256) encoding: 0x095ea7b3 ✓
+	function: transfer(address,uint256) encoding: 0xa9059cbb ✓
+...passed
+
+Done...

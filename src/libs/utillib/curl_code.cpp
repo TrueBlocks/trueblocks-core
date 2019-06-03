@@ -14,34 +14,17 @@
 #include "basetypes.h"
 #include "biglib.h"
 #include "curl_code.h"
+#include "database.h"
 
 namespace qblocks {
 
-    //-------------------------------------------------------------------------
-    CURL *getCurl_internal(bool cleanup = false) {
-        static CURL *curl = NULL;
-        if (!curl) {
-
-            curl = curl_easy_init();
-            if (!curl) {
-                fprintf(stderr, "Curl failed to initialize. Quitting...\n");
-                exit(0);
-            }
-
-        } else if (cleanup) {
-
-            if (curl)
-                curl_easy_cleanup(curl);
-            return NULL;
-        }
-        return curl;
-    }
-
     //---------------------------------------------------------------------------------------------------
-    static CURLCALLBACKFUNC curlNoteFunc = NULL;
-    void setCurlNoteFunc(CURLCALLBACKFUNC func) {
-        curlNoteFunc = func;
-    }
+    class CResponseData {
+    public:
+        CURLCALLBACKFUNC noteFunc;
+        string_q response;
+        CResponseData(void) : noteFunc(NULL) { }
+    };
 
     //-------------------------------------------------------------------------
     size_t internalCallback(char *ptr, size_t size, size_t nmemb, void *userdata) {
@@ -58,49 +41,37 @@ namespace qblocks {
         // ...but we need the last character...
         result += l;
 
-        // Now we copy out to the caller's buffer
-        string *str = reinterpret_cast<string*>(userdata);
-        ASSERT(str);
-        *str += result;
-
-        if (curlNoteFunc)
-            (*curlNoteFunc)(ptr, size, nmemb, userdata);
+        // Now we copy out to the caller's buffer and make a note of it if told to
+        CResponseData *dataPtr = reinterpret_cast<CResponseData*>(userdata);
+        if (dataPtr) {
+            dataPtr->response += result;
+            if (dataPtr->noteFunc)
+                (*dataPtr->noteFunc)(ptr, size, nmemb, userdata);
+        }
 
         // We've handeled everything, tell curl to keep going
         return size * nmemb;
     }
 
     //---------------------------------------------------------------------------------------------------
-    string_q urlToString(const string_q& url) {
-        if (url.empty()) {
-            getCurl_internal(true);
-            return "";
+    string_q urlToString(const string_q& url, CURLCALLBACKFUNC noteFunc) {
+        CURL *curl = curl_easy_init();
+        if (!curl) {
+            cerr << "Curl failed to initialize. Quitting..." << endl;
+            quickQuitHandler(0);
         }
-
-        string result;
-        curl_easy_setopt(getCurl_internal(), CURLOPT_URL,           url.c_str());
-        curl_easy_setopt(getCurl_internal(), CURLOPT_WRITEDATA,     &result);
-        curl_easy_setopt(getCurl_internal(), CURLOPT_WRITEFUNCTION, internalCallback);
-        CURLcode res = curl_easy_perform(getCurl_internal());
+        CResponseData result;
+        result.noteFunc = noteFunc;
+        curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, internalCallback);
+        CURLcode res = curl_easy_perform(curl);
         if (res != CURLE_OK) {
-            fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
-            exit(0);
+            cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << endl;
+            quickQuitHandler(0);
         }
-
-        return result.c_str();
+        curl_easy_cleanup(curl);
+        return result.response;
     }
-
-    //-------------------------------------------------------------------------
-    class Cleanup {
-    public:
-        size_t unused;
-        Cleanup() { unused = 0; }
-        ~Cleanup() {
-            urlToString();
-        }
-    };
-
-    // destructor gets called on pragram exit to clear curl handle
-    static Cleanup cleanUp;
 
 }  // namespace qblocks

@@ -13,21 +13,20 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("~block_list",         "a space-separated list of one or more blocks to retrieve"),
-    COption("-raw",                "pull the block data from the running Ethereum node (no cache)"),
     COption("-hash_o(n)ly",        "display only transaction hashes, default is to display full transaction detail"),
     COption("-check",              "compare results between qblocks and Ethereum node, report differences, if any"),
-    COption("-latest",             "display the latest blocks at both the node and the cache"),
     COption("-addrs",              "display all addresses included in the block"),
     COption("-uniq",               "display only uniq addresses found per block"),
-    COption("-uniqT(x)",           "display only uniq addresses found per transaction"),
+    COption("-uni(q)Tx",           "display only uniq addresses found per transaction"),
     COption("-nu(m)ber",           "display address counts (alterntively --addrCnt, --uniqTxCnt, or --uniqCnt)"),
     COption("-fi(l)ter:<addr>",    "useful only for --addrs or --uniq, only display this address in results"),
 //    COption("-trac(e)s",         "include transaction traces in the export"),
 //    COption("-addresses:<val>",  "display addresses included in block as one of: [ all | to | from |\n\t\t\t\t"
 //            "self-destruct | create | log-topic | log-data | input-data |\n\t\t\t\t"
 //            "trace-to | trace-from | trace-data | trace-call ]"),
+    COption("@latest",             "display the latest blocks at both the node and the cache"),
     COption("@f(o)rce",            "force a re-write of the block to the cache"),
     COption("@quiet",              "do not print results to screen, used for speed testing and data checking"),
     COption("@source:[c|r]",       "either :c(a)che or :(r)aw, source for data retrival. (shortcuts "
@@ -38,7 +37,7 @@ static COption params[] = {
                                     "results (testing)"),
     COption("",                    "Returns block(s) from local cache or directly from a running node.\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -47,10 +46,8 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     Init();
-    while (!command.empty()) {
-
-        string_q arg = nextTokenClear(command, ' ');
-
+    explode(arguments, command, ' ');
+    for (auto arg : arguments) {
         // shortcuts
         if (arg == "-r" || arg == "--raw")   { arg = "--source:raw";   }
         if (arg == "-d" || arg == "--cache") { arg = "--source:cache"; }
@@ -77,32 +74,14 @@ bool COptions::parseArguments(string_q& command) {
             filters.push_back(str_2_Addr(toLower(arg)));
 
         } else if (arg == "-o" || arg == "--force") {
-            etherlib_init("binary");
+            etherlib_init(defaultQuitHandler);
             force = true;
 
         } else if (arg == "--normalize") {
             normalize = true;
 
         } else if (arg == "-l" || arg == "--latest") {
-            string_q contents;
-            asciiFileToString("/tmp/getBlock_junk.txt", contents);
-            uint64_t lastUpdate = str_2_Uint(contents);
-            uint64_t cache = NOPOS, client = NOPOS;
-            getLatestBlocks(cache, client);
-            uint64_t diff = cache > client ? 0 : client - cache;
-            stringToAsciiFile("/tmp/getBlock_junk.txt", uint_2_Str(diff));  // for next time
-
-            cout << cGreen << "Hostname:                " << cYellow << (isTestMode() ? "--hostname--"  : doCommand("hostname")) << cOff << "\n";
-            cout << cGreen << "Version:                 " << cYellow <<                                   getVersionStr() << cOff << "\n";
-            cout << cGreen << "Location of cache:       " << cYellow << (isTestMode() ? "--cache_dir--" : blockCachePath("")) << cOff << "\n";
-            cout << cGreen << "Latest block in cache:  "  << cYellow << (isTestMode() ? "--cache--"     : padNum8T(cache))  << cOff << "\n";
-            cout << cGreen << "Latest block at client: "  << cYellow << (isTestMode() ? "--client--"    : padNum8T(client)) << cOff << "\n";
-            cout << cGreen << "Behind head (catchup):  "  << cYellow << (isTestMode() ? "--diff--"      : padNum8T(diff));
-            if (!isTestMode() && lastUpdate) {
-                uint64_t diffDiff = (diff > lastUpdate ? 0 : lastUpdate - diff);
-                cout << " (+" << diffDiff << ")";
-            }
-            cout << cOff << "\n";
+            cout << scraperStatus();
             return false;
 
         } else if (startsWith(arg, "--source:")) {
@@ -112,9 +91,6 @@ bool COptions::parseArguments(string_q& command) {
 
             } else if (mode == "c" || mode == "cache") {
                 isCache = true;
-
-            } else if (mode == "r" || mode == "remote") {
-                etherlib_init("remote");
 
             } else {
                 return usage("Invalide source. Must be either '(r)aw' or '(c)ache'. Quitting...");
@@ -137,7 +113,7 @@ bool COptions::parseArguments(string_q& command) {
             filterType = "uniq";
             counting = true;
 
-        } else if (arg == "-x" || arg == "--uniqTx") {
+        } else if (arg == "-q" || arg == "--uniqTx") {
             filterType = "uniqTx";
 
         } else if (arg == "--uniqTxCnt") {
@@ -150,7 +126,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-e" || arg == "--traces") {
             traces = true;
 
-        } else if (arg == "-q" || arg == "--quiet") {
+        } else if (arg == "--quiet") {
             quiet++;  // if both --check and --quiet are present, be very quiet...
 
         } else if (startsWith(arg, "-f:") || startsWith(arg, "--fields:")) {
@@ -260,23 +236,21 @@ bool COptions::parseArguments(string_q& command) {
     if (!blocks.hasBlocks())
         return usage("You must specify at least one block. Quitting...");
 
-    format = getGlobalConfig()->getDisplayStr(false, "");
+    format = getGlobalConfig("getBlock")->getDisplayStr(false, "");
     if (contains(format, "{PRICE:CLOSE}")) {
 //        priceBlocks = true;
     }
 
-    showZeroTrace = getGlobalConfig()->getConfigBool("display", "showZeroTrace", false);
+    showZeroTrace = getGlobalConfig("getBlock")->getConfigBool("display", "showZeroTrace", false);
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    paramsPtr  = params;
-    nParamsRef = nParams;
-    pOptions = this;
+    optionOn(OPT_RAW);
+    registerOptions(nParams, params);
 
     isCheck       = false;
-    isRaw         = false;
     isCache       = false;
     hashes        = false;
     filterType    = "";
@@ -285,7 +259,6 @@ void COptions::Init(void) {
     traces        = false;
     force         = false;
     normalize     = false;
-    silent        = false;
     quiet         = 0;  // quiet has levels
     format        = "";
     priceBlocks   = false;
@@ -316,7 +289,7 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 bool COptions::isMulti(void) const {
-    return ((blocks.stop - blocks.start) > 1 || blocks.hashList.size() > 1 || blocks.numList.size() > 1);
+    return api_mode || ((blocks.stop - blocks.start) > 1 || blocks.hashList.size() > 1 || blocks.numList.size() > 1);
 }
 
 //--------------------------------------------------------------------------------
@@ -330,7 +303,7 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
         string_q ret;
         ret += "[{block_list}] is a space-separated list of values, a start-end range, a [{special}], "
                     "or any combination.\n";
-        ret += "This tool retrieves information from the local node or the ${FALLBACK} node, if configured "
+        ret += "This tool retrieves information from the local node or rpcProvider if configured "
                     "(see documentation).\n";
         ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + ".\n";
         return ret;

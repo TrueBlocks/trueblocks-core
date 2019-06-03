@@ -16,6 +16,7 @@
  */
 #include <algorithm>
 #include "trace.h"
+#include "transaction.h"
 
 namespace qblocks {
 
@@ -31,12 +32,12 @@ void CTrace::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
-    if (fmtIn.empty()) {
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["trace_fmt"] : fmtIn);
+    if (fmt.empty()) {
         ctx << toJson();
         return;
     }
 
-    string_q fmt = fmtIn;
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -58,26 +59,15 @@ string_q nextTraceChunk(const string_q& fieldIn, const void *dataPtr) {
 //---------------------------------------------------------------------------------------------------
 bool CTrace::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
     // EXISTING_CODE
-    if (fieldName % "action") {
-        string_q str = fieldValue;
-        return action.parseJson3(str);
-
-    } else if (fieldName % "result") {
-        string_q str = fieldValue;
-        return result.parseJson3(str);
-    }
+    if (pTrans)
+        if (((CTransaction*)pTrans)->setValueByName(fieldName, fieldValue))  // NOLINT
+            return true;
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "articulatedTrace" ) {
-                string_q str = fieldValue;
-                while (!str.empty()) {
-                    articulatedTrace.push_back(nextTokenClear(str, ','));
-                }
-                return true;
-            }
-            if ( fieldName % "action" ) { /* action = fieldValue; */ return false; }
+            if ( fieldName % "articulatedTrace" ) { string_q str = fieldValue ; return articulatedTrace.parseJson3(str); }
+            if ( fieldName % "action" ) { string_q str = fieldValue; return action.parseJson3(str); }
             break;
         case 'b':
             if ( fieldName % "blockHash" ) { blockHash = str_2_Hash(fieldValue); return true; }
@@ -87,7 +77,7 @@ bool CTrace::setValueByName(const string_q& fieldName, const string_q& fieldValu
             if ( fieldName % "error" ) { error = fieldValue; return true; }
             break;
         case 'r':
-            if ( fieldName % "result" ) { /* result = fieldValue; */ return false; }
+            if ( fieldName % "result" ) { string_q str = fieldValue; return result.parseJson3(str); }
             break;
         case 's':
             if ( fieldName % "subtraces" ) { subtraces = str_2_Uint(fieldValue); return true; }
@@ -191,9 +181,8 @@ CArchive& operator<<(CArchive& archive, const CTraceArray& array) {
 
 //---------------------------------------------------------------------------
 void CTrace::registerClass(void) {
-    static bool been_here = false;
-    if (been_here) return;
-    been_here = true;
+    // only do this once
+    if (HAS_FIELD(CTrace, "schema")) return;
 
     size_t fieldNum = 1000;
     ADD_FIELD(CTrace, "schema",  T_NUMBER, ++fieldNum);
@@ -203,12 +192,12 @@ void CTrace::registerClass(void) {
     ADD_FIELD(CTrace, "blockHash", T_HASH, ++fieldNum);
     ADD_FIELD(CTrace, "blockNumber", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTrace, "subtraces", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTrace, "traceAddress", T_TEXT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CTrace, "traceAddress", T_TEXT, ++fieldNum);
     ADD_FIELD(CTrace, "transactionHash", T_HASH, ++fieldNum);
     ADD_FIELD(CTrace, "transactionPosition", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTrace, "type", T_TEXT, ++fieldNum);
     ADD_FIELD(CTrace, "error", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTrace, "articulatedTrace", T_TEXT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CTrace, "articulatedTrace", T_OBJECT, ++fieldNum);
     HIDE_FIELD(CTrace, "articulatedTrace");
     ADD_FIELD(CTrace, "action", T_OBJECT, ++fieldNum);
     ADD_FIELD(CTrace, "result", T_OBJECT, ++fieldNum);
@@ -222,6 +211,8 @@ void CTrace::registerClass(void) {
     builtIns.push_back(_biCTrace);
 
     // EXISTING_CODE
+    ADD_FIELD(CTrace, "date", T_DATE, ++fieldNum);
+    HIDE_FIELD(CTrace, "date");
     // EXISTING_CODE
 }
 
@@ -231,11 +222,22 @@ string_q nextTraceChunk_custom(const string_q& fieldIn, const void *dataPtr) {
     if (tra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
-            case 'a':
-                if ( fieldIn % "articulatedTrace" && tra->articulatedTrace.size() == 0 && tra->func) {
-                    ostringstream os;
-                    os << *tra->func;
-                    return os.str();
+            case 'd':
+                if (tra->pTrans) {
+                    if (fieldIn % "date" || fieldIn % "datesh")
+                        return nextTransactionChunk(fieldIn, tra->pTrans);
+                }
+                break;
+            case 'f':
+                if (tra->pTrans) {
+                    if (fieldIn % "function") {
+                        string_q ret = tra->Format("[{ARTICULATEDTRACE}]");
+                        if (ret.empty())
+                            return "";
+                        CFunction func;
+                        func.parseJson3(ret);
+                        return func.name;
+                    }
                 }
                 break;
             // EXISTING_CODE
@@ -275,18 +277,7 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "articulatedTrace" || fieldName % "articulatedTraceCnt" ) {
-                size_t cnt = articulatedTrace.size();
-                if (endsWith(fieldName, "Cnt"))
-                    return uint_2_Str(cnt);
-                if (!cnt) return "";
-                string_q retS;
-                for (size_t i = 0 ; i < cnt ; i++) {
-                    retS += ("\"" + articulatedTrace[i] + "\"");
-                    retS += ((i < cnt - 1) ? ",\n" + indent() : "\n");
-                }
-                return retS;
-            }
+            if ( fieldName % "articulatedTrace" ) { expContext().noFrst=true; return articulatedTrace.Format(); }
             if ( fieldName % "action" ) { expContext().noFrst=true; return action.Format(); }
             break;
         case 'b':
@@ -305,14 +296,16 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
         case 't':
             if ( fieldName % "traceAddress" || fieldName % "traceAddressCnt" ) {
                 size_t cnt = traceAddress.size();
-                if (endsWith(fieldName, "Cnt"))
-                    return uint_2_Str(cnt);
-                if (!cnt) return "";
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(max((size_t)1, cnt));
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {
-                    retS += ("\"" + traceAddress[i] + "\"");
-                    retS += ((i < cnt - 1) ? ",\n" + indent() : "\n");
+                    if (!retS.empty())
+                        retS += "-";
+                    retS += traceAddress[i];
                 }
+                if (retS.empty())
+                    retS = "null";
                 return retS;
             }
             if ( fieldName % "transactionHash" ) return hash_2_Str(transactionHash);
@@ -325,6 +318,14 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
 
     string_q s;
+    s = toUpper(string_q("articulatedTrace")) + "::";
+    if (contains(fieldName, s)) {
+        string_q f = fieldName;
+        replaceAll(f, s, "");
+        f = articulatedTrace.getValueByName(f);
+        return f;
+    }
+
     s = toUpper(string_q("action")) + "::";
     if (contains(fieldName, s)) {
         string_q f = fieldName;
@@ -357,6 +358,8 @@ ostream& operator<<(ostream& os, const CTrace& item) {
 
 //---------------------------------------------------------------------------
 const CBaseNode *CTrace::getObjectAt(const string_q& fieldName, size_t index) const {
+    if ( fieldName % "articulatedTrace" )
+        return &articulatedTrace;
     if ( fieldName % "action" )
         return &action;
     if ( fieldName % "result" )
@@ -365,11 +368,9 @@ const CBaseNode *CTrace::getObjectAt(const string_q& fieldName, size_t index) co
 }
 
 //---------------------------------------------------------------------------
-const string_q CTrace::getStringAt(const string_q& name, size_t i) const {
-    if ( name % "traceAddress" && i < traceAddress.size() )
+const string_q CTrace::getStringAt(const string_q& fieldName, size_t i) const {
+    if ( fieldName % "traceAddress" && i < traceAddress.size() )
         return (traceAddress[i]);
-    if ( name % "articulatedTrace" && i < articulatedTrace.size() )
-        return (articulatedTrace[i]);
     return "";
 }
 

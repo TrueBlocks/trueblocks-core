@@ -1,3 +1,4 @@
 whenBlock argc: 2 [1:0] 
 whenBlock 0 
-block #0 : 1438269960 : 2015-07-30 15:26:00 UTC
+blocknumber	timestamp	date	name
+0	1438269960	2015-07-30 15:26:00 UTC

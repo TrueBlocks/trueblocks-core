@@ -11,10 +11,8 @@ project (libs)
 add_subdirectory (utillib)
 add_subdirectory (etherlib)
 add_subdirectory (acctlib)
-add_subdirectory (tokenlib)
-add_subdirectory (walletlib)
 add_subdirectory (test-libs)
 
 # Headers installation steps
-file(GLOB HEADER_FILES "utillib/*.h" "etherlib/*.h" "acctlib/*.h" "tokenlib/*.h" "walletlib/*.h")
+file(GLOB HEADER_FILES "utillib/*.h" "etherlib/*.h" "acctlib/*.h")
 install (FILES ${HEADER_FILES} DESTINATION include)

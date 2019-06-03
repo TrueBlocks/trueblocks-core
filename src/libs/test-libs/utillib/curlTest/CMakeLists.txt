@@ -27,6 +27,9 @@ set(GOLD_PATH "${GOLD_PATH}/${PROJ_NAME}/${TOOL_NAME}")
 # Additional target to make the README.md
 build_readme(${CMAKE_CURRENT_SOURCE_DIR} ${TOOL_NAME})
 
+# To run only specific tests we define a test configuration named "test_all"
+add_custom_target(test-all COMMAND ${CMAKE_CTEST_COMMAND} -C test_all)
+
 # Function to run an special or slow test case
 function(run_special_test testName)
     run_the_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
@@ -38,4 +41,4 @@ function(run_test testName)
 endfunction(run_test)
 
 # Enter one line for each individual test
-#run_test("curlTest_00")
+run_test("curlTest_00")

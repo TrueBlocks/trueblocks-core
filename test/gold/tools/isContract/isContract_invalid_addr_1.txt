@@ -1,5 +1,0 @@
-isContract argc: 2 [1:invalid] 
-isContract invalid 
-
-  The given value 'invalid' is not a numeral or a special named block. Quitting...
-

@@ -17,7 +17,6 @@
 class COptions : public CBlockOptions {
 public:
     bool force;
-    bool isRaw;
     bool blockOnly;
     bool receiptsOnly;
     bool asBits;
@@ -25,6 +24,7 @@ public:
     bool asBitBars;
     bool asPctBars;
     bool bitCount;
+    uint64_t bitBound;
 
     COptions(void);
     ~COptions(void);

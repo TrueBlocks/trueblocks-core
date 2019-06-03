@@ -2,16 +2,14 @@ chifra argc: 2 [1:-th]
 chifra -th 
 #### Usage
 
-`Usage:`    chifra [-s|-v|-h] folder address_list  
-`Purpose:`  Interactively creates a QBlocks monitor for the given address.
+`Usage:`    chifra [-v|-h] command  
+`Purpose:`  Create a TrueBlocks monitor configuration.
              
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | folder | name of the monitor (also the ./folder for the source code) |
-|  | address_list | a list of one or more addresses to monitor (must start with '0x') |
-| -s | --silent | suppress all output from chifra (normally chifra is quite verbose) |
+|  | command | one of [ seed &#124; scrape &#124; daemon &#124; list &#124; export &#124; stats &#124; ls &#124; rm &#124; names &#124; config ] |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

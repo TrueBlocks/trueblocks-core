@@ -56,14 +56,13 @@ TEST_F(CThisTest, TestSizes) {
 #include "options.h"
 //------------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
+    etherlib_init(quickQuitHandler);
 
     COptions options;
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    // while (!options.commandList.empty())
-    {
-        string_q command = nextTokenClear(options.commandList, '\n');
+    for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
         LOAD_TEST(TestSizes);

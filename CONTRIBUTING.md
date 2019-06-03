@@ -1,5 +1,11 @@
 ## How to contribute to QBlocks
 
+#### **Git Commit and Branch Guildlines**
+
+[Commit Message Guidelines](https://gist.github.com/robertpainsi/b632364184e70900af4ab688decf6f53)
+
+[Branch Naming Conventions](https://gist.github.com/digitaljhelms/4287848)
+
 #### **Did you find a bug?**
 
 * **Do not open up a GitHub issue if the bug is a security vulnerability

@@ -8,7 +8,7 @@
 #include "main.h"
 
 //---------------------------------------------------------------------------------------------------
-static COption params[] = {
+static const COption params[] = {
     COption("-parse",        "display parsed input data"),
     COption("-lo(g)s",       "display smart contract lo(g)s or events"),
     COption("-trace",        "display smart contract internal traces"),
@@ -26,7 +26,7 @@ static COption params[] = {
     COption("-offset:<num>", "offset to kBlock"),
     COption("",              "Index transactions for a given Ethereum address (or series of addresses).\r\n"),
 };
-static size_t nParams = sizeof(params) / sizeof(COption);
+static const size_t nParams = sizeof(params) / sizeof(COption);
 
 extern const char* defTransFmt;
 extern const char* defTraceFmt;
@@ -38,8 +38,8 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     Init();
-    while (!command.empty()) {
-        string_q arg = nextTokenClear(command, ' ');
+    explode(arguments, command, ' ');
+    for (auto arg : arguments) {
         if (contains(arg, "-k:") || contains(arg, "--kBlock:")) {
 
             arg = substitute(substitute(arg, "-k:", ""), "--kBlock:", "");
@@ -91,7 +91,7 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-l" || arg == "--list") {
             colorsOff();
-            CToml toml("./config.toml");
+            CToml toml("./con fig.toml");
             COptions visitor;
             if (!visitor.loadWatches(toml))
                 return false;
@@ -124,12 +124,13 @@ bool COptions::parseArguments(string_q& command) {
     if (debugger_on && !accounting_on)
         return usage("If you want to use the debugger, you must use the --accounting option as well.");
 
-    if (!fileExists("./config.toml"))
-        return usage("The config.toml file was not found. Are you in the right folder? Quitting...\n");
+    if (!fileExists("./con fig.toml"))
+        return usage("The con fig.toml file was not found. Are you in the right folder? Quitting...\n");
 
-    CToml toml("./config.toml");
+    CToml toml("./con fig.toml");
     if (!loadWatches(toml))
         return false;
+    theWidth = toml.getConfigInt("display", "width", theWidth);
 
     accounting_on  =          toml.getConfigBool("display", "accounting",  false) || accounting_on;
     logs_on        =          toml.getConfigBool("display", "logs",        false) || logs_on;
@@ -157,8 +158,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    paramsPtr = params;
-    nParamsRef = nParams;
+    registerOptions(nParams, params);
 
     no_check = false;
     single_on = false;
@@ -174,14 +174,15 @@ void COptions::Init(void) {
     kBlock = 0;
     offset = 0;
     minArgs = 0;
+    theWidth = 23;
 }
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) : transStats(), blockStats(),
 #ifdef DEBUGGER_ON
-    tBuffer(),
+tBuffer(),
 #endif
-    transFmt(""), traceFmt(""), esc_hit(false) {
+transFmt(""), traceFmt(""), esc_hit(false) {
     Init();
     barLen(80);
 }

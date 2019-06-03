@@ -12,16 +12,18 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "accountwatch.h"
-#include "acctcacheitem.h"
-#include "balhistory.h"
 #include "treeroot.h"
 #include "acctlib.h"
 #include "branch.h"
 #include "infix.h"
 #include "leaf.h"
 #include "treenode.h"
+#include "apispec.h"
+#include "indexing.h"
+#include "ethstate.h"
+#include "erc20.h"
 
-extern void acctlib_init(void);
+extern void acctlib_init(QUITHANDLER qh);
 extern void acctlib_cleanup(void);
 
 using namespace qblocks;  // NOLINT

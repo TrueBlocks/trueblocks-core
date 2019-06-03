@@ -15,8 +15,6 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include <vector>
-#include <map>
 #include "utillib.h"
 
 namespace qblocks {
@@ -68,6 +66,8 @@ public:
     explicit CParameter(const string_q& n, const string_q& type, const CStringArray& array);
     string_q getFunctionAssign(uint64_t which) const;
     string_q getEventAssign(uint64_t which, uint64_t nIndexed = NOPOS) const;
+    bool fromDefinition(const string_q& input);
+    bool isValid(void) const;
     bool noWrite;
     // EXISTING_CODE
     bool operator==(const CParameter& item) const;
@@ -150,7 +150,6 @@ inline void CParameter::duplicate(const CParameter& pa) {
     // EXISTING_CODE
     noWrite = pa.noWrite;
     // EXISTING_CODE
-    finishParse();
 }
 
 //--------------------------------------------------------------------------

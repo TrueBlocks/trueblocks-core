@@ -15,21 +15,22 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include <vector>
-#include <map>
 #include "function.h"
 #include "parameter.h"
 
 namespace qblocks {
 
 // EXISTING_CODE
+class CTransaction;
+class CLogEntry;
+class CTrace;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
 class CAbi : public CBaseNode {
 public:
-    CFunctionArray abiByName;
-    CFunctionArray abiByEncoding;
+    address_t address;
+    CFunctionArray interfaces;
 
 public:
     CAbi(void);
@@ -42,7 +43,15 @@ public:
     const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    bool loadABIFromFile(const string_q& fileName);
+    bool addIfUnique(const string_q& addr, CFunction& func, bool decorateNames);
+    bool loadAbiKnown(const string_q& which);
+    bool loadAbiByAddress(address_t addr);
+    bool loadAbiFromFile(const string_q& fileName, bool builtIn);
+    bool loadAbiFromString(const string_q& str, bool builtIn);
+    bool articulateTransaction(CTransaction *p) const;
+    bool articulateLog(CLogEntry *l) const;
+    bool articulateTrace(CTrace *t) const;
+    bool articulateOutputs(const string_q& encoding, const string_q& value, CFunction& ret) const;
     friend class CAccountWatch;
     // EXISTING_CODE
     bool operator==(const CAbi& item) const;
@@ -87,8 +96,6 @@ inline CAbi::~CAbi(void) {
 //--------------------------------------------------------------------------
 inline void CAbi::clear(void) {
     // EXISTING_CODE
-    abiByName.clear();
-    abiByEncoding.clear();
     // EXISTING_CODE
 }
 
@@ -96,8 +103,8 @@ inline void CAbi::clear(void) {
 inline void CAbi::initialize(void) {
     CBaseNode::initialize();
 
-    abiByName.clear();
-    abiByEncoding.clear();
+    address = "";
+    interfaces.clear();
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -108,12 +115,11 @@ inline void CAbi::duplicate(const CAbi& ab) {
     clear();
     CBaseNode::duplicate(ab);
 
-    abiByName = ab.abiByName;
-    abiByEncoding = ab.abiByEncoding;
+    address = ab.address;
+    interfaces = ab.interfaces;
 
     // EXISTING_CODE
     // EXISTING_CODE
-    finishParse();
 }
 
 //--------------------------------------------------------------------------
@@ -146,7 +152,12 @@ extern CArchive& operator>>(CArchive& archive, CAbiArray& array);
 extern CArchive& operator<<(CArchive& archive, const CAbiArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CAbi& abi);
+extern CArchive& operator>>(CArchive& archive, CAbi& abi);
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
+extern bool decodeRLP(CParameterArray& interfaces, const string_q& desc, const string_q& input);
 // EXISTING_CODE
 }  // namespace qblocks
 

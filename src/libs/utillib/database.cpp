@@ -29,22 +29,11 @@ namespace qblocks {
     //----------------------------------------------------------------------
     extern string_q manageRemoveList(const string_q& filename = "");
     extern size_t quitCount(size_t s = 0);
-    bool CSharedResource::g_locking = true;
-
-    //----------------------------------------------------------------------
-    bool CSharedResource::setLocking(bool val) {
-        bool ret = g_locking;
-        g_locking = val;
-        return ret;
-    }
 
     //----------------------------------------------------------------------
     bool CSharedResource::createLockFile(const string_q& lockfilename) {
-        if (!g_locking)
-            return true;
-
         m_ownsLock = false;
-        FILE *fp = fopen(lockfilename.c_str(), asciiWriteCreate);
+        FILE *fp = fopen(lockfilename.c_str(), modeWriteCreate);
         if (fp) {
             fprintf(fp, "%s\n", m_lockingUser.c_str());
             fclose(fp);
@@ -59,9 +48,6 @@ namespace qblocks {
 
     //----------------------------------------------------------------------
     bool CSharedResource::createLock(bool createOnFail) {
-        if (!g_locking)
-            return true;
-
         string_q lockFilename = m_filename + ".lck";
 
         int i = 0;
@@ -85,9 +71,6 @@ namespace qblocks {
 
     //----------------------------------------------------------------------
     bool CSharedResource::waitOnLock(bool deleteOnFail) const {
-        if (!g_locking)
-            return true;
-
         string_q lockFilename = m_filename + ".lck";
 
         if (fileExists(lockFilename) && !isTestMode())
@@ -108,19 +91,12 @@ namespace qblocks {
             ((CSharedResource*)this)->m_ownsLock = true;  // NOLINT
             ((CSharedResource*)this)->Release();          // NOLINT
             ((CSharedResource*)this)->m_ownsLock = owns;  // NOLINT
-            cerr << "Lock cleared...\n";
+            if (!isTestMode())
+                cerr << "Lock cleared...\n";
             return true;
         }
 
         return false;
-    }
-
-    //----------------------------------------------------------------------
-    static bool isAscii(const string_q& mode) {
-        return (mode % asciiReadOnly ||
-                mode % asciiReadWrite ||
-                mode % asciiWriteCreate ||
-                mode % asciiWriteAppend);
     }
 
     //----------------------------------------------------------------------
@@ -131,7 +107,6 @@ namespace qblocks {
         // Close and re-open the file without relinqishing the lock
         Close();
         m_fp = fopen(m_filename.c_str(), mode.c_str());
-        m_isascii = qblocks::isAscii(mode);
 
         return isOpen();
     }
@@ -147,16 +122,14 @@ namespace qblocks {
         // If the file we are trying to lock does not exist but we are not trying to open
         // it under one of the create modes then do not create a lock, do not open the file,
         // and let the user know.
-        if (!fileExists(m_filename) &&
-            (m_mode != asciiWriteCreate && m_mode != asciiWriteAppend && m_mode != binaryWriteCreate)
-            ) {
+        if (!fileExists(m_filename) && (m_mode != modeWriteCreate && m_mode != modeWriteAppend)) {
             m_error = LK_FILE_NOT_EXIST;
             m_errorMsg = "File does not exist: " + m_filename;
             return false;
         }
 
         bool openIt = true;
-        if (m_mode == binaryReadOnly || m_mode == asciiReadOnly) {
+        if (m_mode == modeReadOnly) {
 
             // Wait for lock to clear...
             if (lockType == LOCK_WAIT)
@@ -165,9 +138,7 @@ namespace qblocks {
             // ... proceed even if it doesn't....
             openIt = true;
 
-        } else if (m_mode == binaryReadWrite || m_mode == binaryWriteCreate ||
-                   m_mode == asciiReadWrite  || m_mode == asciiWriteAppend  ||
-                   m_mode == asciiWriteCreate) {
+        } else if (m_mode == modeReadWrite || m_mode == modeWriteAppend || m_mode == modeWriteCreate) {
 
             ASSERT(lockType == LOCK_CREATE || lockType == LOCK_WAIT);
             openIt = createLock(lockType != LOCK_WAIT);
@@ -184,7 +155,6 @@ namespace qblocks {
 
         if (openIt) {
             m_fp = fopen(m_filename.c_str(), m_mode.c_str());  // operator on event database
-            m_isascii = qblocks::isAscii(m_mode);
         }
 
         return isOpen();
@@ -194,7 +164,7 @@ namespace qblocks {
     void CSharedResource::Release(void) {
         Close();
 
-        if (g_locking && m_ownsLock) {
+        if (m_ownsLock) {
             string_q lockFilename = m_filename + ".lck";
             bool ret = remove(lockFilename.c_str());
             manageRemoveList("r:"+lockFilename);
@@ -217,7 +187,6 @@ namespace qblocks {
             fclose(m_fp);
         }
         m_fp = NULL;
-        m_isascii = false;
     }
 
     //----------------------------------------------------------------------
@@ -267,7 +236,6 @@ namespace qblocks {
     //----------------------------------------------------------------------
     size_t CSharedResource::Read(string_q& str) {
         ASSERT(isOpen());
-        ASSERT(!isAscii());
 
         unsigned long len;  // NOLINT
         Read(&len, sizeof(unsigned long), 1);  // NOLINT
@@ -291,7 +259,6 @@ namespace qblocks {
     //----------------------------------------------------------------------
     char *CSharedResource::ReadLine(char *buff, size_t maxBuff) {
         ASSERT(isOpen());
-        ASSERT(isAscii());
         return fgets(buff, static_cast<int>(maxBuff), m_fp);
     }
 
@@ -316,7 +283,6 @@ namespace qblocks {
     //----------------------------------------------------------------------
     size_t CSharedResource::Write(const string_q& val) const {
         ASSERT(isOpen());
-        ASSERT(!isAscii());
 
         unsigned long len = val.length();  // NOLINT
         size_t ret = Write(&len, sizeof(unsigned long), 1);  // NOLINT
@@ -326,7 +292,6 @@ namespace qblocks {
     //----------------------------------------------------------------------
     void CSharedResource::WriteLine(const string_q& str) {
         ASSERT(isOpen());
-        ASSERT(isAscii());
         fprintf(m_fp, "%s", str.c_str());
     }
 
@@ -373,7 +338,7 @@ namespace qblocks {
     //----------------------------------------------------------------------
     size_t stringToAsciiFile(const string_q& fileName, const string_q& contents) {
         CAsciiFile lock;
-        if (lock.Lock(fileName, asciiWriteCreate, LOCK_WAIT)) {
+        if (lock.Lock(fileName, modeWriteCreate, LOCK_WAIT)) {
             lock.WriteLine(contents.c_str());
             lock.Release();
         } else {
@@ -438,36 +403,52 @@ namespace qblocks {
     }
 
     //-----------------------------------------------------------------------
-    static bool sectionLocked = false;
+    //TODO(tjayrush): global data
+    static uint32_t sectionLocks = 0;
     void lockSection(bool lock) {
-        sectionLocked = lock;
+        if (lock)
+            sectionLocks++;
+        else if (sectionLocks > 0)
+            sectionLocks--;
+    }
+
+    //-----------------------------------------------------------------------
+    bool isSectionLocked(void) {
+        return (sectionLocks > 0);
     }
 
     //-----------------------------------------------------------------------
     size_t quitCount(size_t s) {
-        static size_t cnt = 0;
-        if (cnt && sectionLocked)  // ignore if we're locked
+        //TODO(tjayrush): global data
+        // This is global data, and therefore not thread safe, but it's okay since
+        // we want to count a quit request no matter which thread it's from.
+        static size_t g_QuitCount = 0;
+        if (g_QuitCount && isSectionLocked())  // ignore if we're locked
             return false;
-        cnt += s;
-        return cnt;
+        g_QuitCount += s;
+        return g_QuitCount;
     }
 
     //-----------------------------------------------------------------------
     bool shouldQuit(void) {
-        bool ret = quitCount() > 1;
-        if (ret) {
-            cout << "\nFinishing work...Hit Cntl+C again to quit...\n";
-            cleanFileLocks();
-            cout.flush();
-        }
-        return ret;
+        if (quitCount() == 0)
+            return false;
+        cout << "\nFinishing work...\n";
+        cleanFileLocks();
+        cout.flush();
+        return true;
     }
 
     //-----------------------------------------------------------------------
     void cleanFileLocks(void) {
+        // We want to clean the list entirely, once we start
+        mutex aMutex;
+        lock_guard<mutex> lock(aMutex);
+
         string_q list = manageRemoveList();
-        while (!list.empty()) {
-            string_q file = nextTokenClear(list, '|');
+        CStringArray files;
+        explode(files, list, '|');
+        for (auto file : files) {
             remove(file.c_str());
             cerr << "Removing file: " << file << "\n";
             cerr.flush();
@@ -480,7 +461,7 @@ namespace qblocks {
         if (quitCount(1) > 2) {
             cleanFileLocks();
             if (signum != -1)
-                exit(1);
+                exit(EXIT_SUCCESS);
         }
     }
 
@@ -488,7 +469,7 @@ namespace qblocks {
     void quickQuitHandler(int signum) {
         cleanFileLocks();
         if (signum != -1)
-            exit(1);
+            exit(EXIT_SUCCESS);
     }
 
     //-----------------------------------------------------------------------
@@ -504,6 +485,13 @@ namespace qblocks {
 
     //-----------------------------------------------------------------------
     string_q manageRemoveList(const string_q& filename) {
+
+        // We want to protect this so it doesn't get messed up. We don't
+        // add the same string twice, so it's all good
+        mutex aMutex;
+        lock_guard<mutex> lock(aMutex);
+
+        //TODO(tjayrush): global data
         static string_q theList;
         if (filename == "clear") {
             theList = "";

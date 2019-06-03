@@ -12,32 +12,44 @@
  *-------------------------------------------------------------------------------------------*/
 #include <string>
 #include "node.h"
+#include "filenames.h"
 
 namespace qblocks {
 
+    //TODO(tjayrush): global data
     static QUITHANDLER theQuitHandler = NULL;
     //-------------------------------------------------------------------------
     void etherlib_init(const string_q& sourceIn, QUITHANDLER qh) {
 
-        string_q fallBack = getEnvStr("FALLBACK");
-        if (!isNodeRunning() && fallBack.empty() && getCurlContext()->provider != "None") {
-            cerr << "\n\t";
-            cerr << cTeal << "Warning: " << cOff << "QBlocks requires a running Ethereum\n";
-            cerr << "\tnode to operate properly. Please start your node.\n";
-            cerr << "\tAlternatively, export FALLBACK=infura in your\n";
-            cerr << "\tenvironment before running this command. Quitting...\n\n";
-            cerr.flush();
-            exit(0);
+        {
+            // Keep the frame
+            mutex aMutex;
+            lock_guard<mutex> lock(aMutex);
+            // This global is okay to be program-wide (as opposed to thread wide)
+            // since we should only ever init curl once for any number of threads.
+            static bool been_here = false;
+            if (!been_here) {
+                curl_global_init(CURL_GLOBAL_ALL);
+                been_here = true;
+            }
         }
 
-        establishFolder(blockCachePath(""));
+extern void loadParseMap(void);
+        loadParseMap();
 
-        // In case we create any lock files, so
-        // they get cleaned up
+        getCurlContext()->provider = ((sourceIn == "local") ? "local" : "binary");
+
+        // if curl has already been initialized, we want to clear it out
+        getCurlContext()->releaseCurl();
+        // initialize curl
+        getCurlContext()->getCurl();
+
+        checkNodeRequired();
+
+        // If we create any lock files, we need to clean them up
         if (theQuitHandler == NULL || qh != defaultQuitHandler) {
             // Set this once, unless it's non-default
             theQuitHandler = qh;
-extern void registerQuitHandler(QUITHANDLER qh);
             registerQuitHandler(qh);
         }
 
@@ -52,20 +64,13 @@ extern void registerQuitHandler(QUITHANDLER qh);
         CAbi::registerClass();
         CFunction::registerClass();
         CParameter::registerClass();
+
         CRPCResult::registerClass();
         CAccountName::registerClass();
-
-        if (sourceIn != "remote" && sourceIn != "local" && sourceIn != "ropsten")
-            getCurlContext()->provider = "binary";
-        else
-            getCurlContext()->provider = sourceIn;
-
-        // if curl has already been initialized, we want to clear it out
-        getCurl(true);
-        // initialize curl
-        getCurl();
+        CCacheEntry::registerClass();
 
         establishFolder(configPath(""));
+        establishFolder(getCachePath(""));
     }
 
     //-------------------------------------------------------------------------
@@ -80,8 +85,21 @@ extern void registerQuitHandler(QUITHANDLER qh);
             cout.flush();
         }
 #endif
-        getCurl(true);
-        clearInMemoryCache();
+
+        {
+            // Keep the frame
+            mutex aMutex;
+            lock_guard<mutex> lock(aMutex);
+            // This global is okay to be program-wide (as opposed to thread wide)
+            // since we should only ever init curl once for any number of threads.
+            static bool been_here = false;
+            if (!been_here) {
+                curl_global_cleanup();
+                been_here = true;
+            }
+        }
+
+        getCurlContext()->releaseCurl();
         if (theQuitHandler)
             (*theQuitHandler)(-1);
         else
@@ -89,16 +107,49 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-------------------------------------------------------------------------
+    bool getObjectViaRPC(CBaseNode &node, const string_q& method, const string_q& params) {
+        string_q str = callRPC(method, params, false);
+        return node.parseJson3(str);
+    }
+
+    //--------------------------------------------------------------------------------
+    bool getBlock_light(CBlock& block, const string_q& val) {
+        getObjectViaRPC(block, "eth_getBlockByNumber", "["+quote(val)+",false]");
+        return true;
+    }
+
+    //--------------------------------------------------------------------------------
+    bool getBlock_light(CBlock& block, blknum_t num) {
+        if (fileSize(getBinaryCacheFilename(CT_BLOCKS, num)) > 0)
+            return readBlockFromBinary(block, getBinaryCacheFilename(CT_BLOCKS, num));
+        return getBlock_light(block, uint_2_Hex(num));
+    }
+
+    //-------------------------------------------------------------------------
     bool getBlock(CBlock& block, blknum_t blockNum) {
-        getCurlContext()->provider = fileExists(getBinaryFilename(blockNum)) ? "binary" : "local";
-        bool ret = queryBlock(block, uint_2_Str(blockNum), true, false);
+        getCurlContext()->provider = fileExists(getBinaryCacheFilename(CT_BLOCKS, blockNum)) ? "binary" : "local";
+        bool ret = queryBlock(block, uint_2_Str(blockNum), true);
         getCurlContext()->provider = "binary";
         return ret;
     }
 
     //-------------------------------------------------------------------------
     bool getBlock(CBlock& block, const hash_t& blockHash) {
-        return queryBlock(block, blockHash, true, true);
+        return queryBlock(block, blockHash, true);
+    }
+
+    //-------------------------------------------------------------------------
+    bool getTransaction(CTransaction& trans, blknum_t blockNum, txnum_t txid) {
+        if (fileExists(getBinaryCacheFilename(CT_TXS, blockNum, txid))) {
+            readTransFromBinary(trans, getBinaryCacheFilename(CT_TXS, blockNum, txid));
+            trans.pBlock = NULL;  // otherwise, it's pointing to an unintialized item
+            trans.finishParse();  // set the pointer for the receipt
+            return true;
+        }
+
+        getObjectViaRPC(trans, "eth_getTransactionByBlockNumberAndIndex", "[\"" + uint_2_Hex(blockNum) +"\",\"" + uint_2_Hex(txid) + "\"]");
+        trans.finishParse();  // set the pointer for the receipt
+        return true;
     }
 
     //-------------------------------------------------------------------------
@@ -109,36 +160,47 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-------------------------------------------------------------------------
-    bool getTransaction(CTransaction& trans, const hash_t& blockHash, txnum_t txID) {
+    bool getTransaction(CTransaction& trans, const hash_t& blockHash, txnum_t txid) {
         getObjectViaRPC(trans, "eth_getTransactionByBlockHashAndIndex",
-                                    "[\"" + str_2_Hash(blockHash) +"\",\"" + uint_2_Hex(txID) + "\"]");
+                        "[\"" + str_2_Hash(blockHash) +"\",\"" + uint_2_Hex(txid) + "\"]");
         trans.finishParse();
         return true;
     }
 
-    //-------------------------------------------------------------------------
-    bool getTransaction(CTransaction& trans, blknum_t blockNum, txnum_t txID) {
-
-        if (fileExists(getBinaryFilename(blockNum))) {
-            CBlock block;
-            readBlockFromBinary(block, getBinaryFilename(blockNum));
-            if (txID < block.transactions.size()) {
-                trans = block.transactions[txID];
-                trans.pBlock = NULL;  // otherwise, it's pointing to a dead pointer
+    //-----------------------------------------------------------------------
+    bool writeNodeToBinary(const CBaseNode& node, const string_q& fileName) {
+        LOG3("Enter: writeNodeToBinary");
+        string_q created;
+        if (establishFolder(fileName, created)) {
+            if (!created.empty() && !isTestMode())
+                cerr << "mkdir(" << created << ")" << string_q(75, ' ') << "\n";
+            CArchive nodeCache(WRITING_ARCHIVE);
+            if (nodeCache.Lock(fileName, modeWriteCreate, LOCK_CREATE)) {
+                node.SerializeC(nodeCache);
+                nodeCache.Close();
+                LOG3("Exit: writeNodeToBinary");
                 return true;
             }
-            // fall through to node
         }
+        LOG3("Exit: Could not open " + fileName);
+        return false;
+    }
 
-        getObjectViaRPC(trans, "eth_getTransactionByBlockNumberAndIndex",
-                                    "[\"" + uint_2_Hex(blockNum) +"\",\"" + uint_2_Hex(txID) + "\"]");
-        trans.finishParse();
-        return true;
+    //-----------------------------------------------------------------------
+    bool readNodeFromBinary(CBaseNode& item, const string_q& fileName) {
+        // Assumes that the item is clear, so no Init
+        CArchive nodeCache(READING_ARCHIVE);
+        if (nodeCache.Lock(fileName, modeReadOnly, LOCK_NOWAIT)) {
+            item.Serialize(nodeCache);
+            nodeCache.Close();
+            return true;
+        }
+        return false;
     }
 
     //-------------------------------------------------------------------------
     bool getReceipt(CReceipt& receipt, const hash_t& txHash) {
-        receipt = CReceipt();
+        receipt = CReceipt(receipt.pTrans);
         getObjectViaRPC(receipt, "eth_getTransactionReceipt", "[\"" + str_2_Hash(txHash) + "\"]");
         return true;
     }
@@ -146,45 +208,57 @@ extern void registerQuitHandler(QUITHANDLER qh);
     //--------------------------------------------------------------
     void getTraces(CTraceArray& traces, const hash_t& hash) {
 
+        traces.clear();
+
         string_q str;
         queryRawTrace(str, hash);
 
         CRPCResult generic;
         generic.parseJson3(str);  // pull out the result
 
+        generic.result = cleanUpJson((char*)generic.result.c_str());
         CTrace trace;
-        while (trace.parseJson3(generic.result)) {
+        while (trace.parseJson4(generic.result)) {
             traces.push_back(trace);
             trace = CTrace();  // reset
         }
     }
 
     //-------------------------------------------------------------------------
-    bool queryBlock(CBlock& block, const string_q& datIn, bool needTrace, bool byHash) {
-        size_t unused = 0;
-        return queryBlock(block, datIn, needTrace, byHash, unused);
+    bool getFullReceipt(CTransaction *trans, bool needsTrace) {
+
+        getReceipt(trans->receipt, trans->hash);
+        if (trans->blockNumber >= byzantiumBlock) {
+            trans->isError = (trans->receipt.status == 0);
+
+        } else if (needsTrace && trans->gas == trans->receipt.gasUsed) {
+            CURLCALLBACKFUNC prev = getCurlContext()->setCurlCallback(errorCallback);
+            getCurlContext()->is_error = false;
+            string_q unused;
+            queryRawTrace(unused, trans->hash);
+            trans->isError = getCurlContext()->is_error;
+            getCurlContext()->setCurlCallback(prev);
+        }
+        return true;
     }
 
     //-------------------------------------------------------------------------
-    bool queryBlock(CBlock& block, const string_q& datIn, bool needTrace, bool byHash, size_t& nTraces) {
+    bool queryBlock(CBlock& block, const string_q& datIn, bool needTrace) {
 
         if (datIn == "latest")
-            return queryBlock(block, uint_2_Str(getLatestBlockFromClient()), needTrace, false);
+            return queryBlock(block, uint_2_Str(getLastBlock_client()), needTrace);
 
         if (isHash(datIn)) {
-            HIDE_FIELD(CTransaction, "receipt");
             getObjectViaRPC(block, "eth_getBlockByHash", "["+quote(datIn)+",true]");
 
         } else {
             uint64_t num = str_2_Uint(datIn);
-            if (getCurlContext()->provider == "binary" && fileSize(getBinaryFilename(num)) > 0) {
-                UNHIDE_FIELD(CTransaction, "receipt");
+            if (getCurlContext()->provider == "binary" && fileSize(getBinaryCacheFilename(CT_BLOCKS, num)) > 0) {
                 block = CBlock();
-                return readBlockFromBinary(block, getBinaryFilename(num));
+                return readBlockFromBinary(block, getBinaryCacheFilename(CT_BLOCKS, num));
 
             }
 
-            HIDE_FIELD(CTransaction, "receipt");
             getObjectViaRPC(block, "eth_getBlockByNumber", "["+quote(uint_2_Hex(num))+",true]");
         }
 
@@ -193,28 +267,10 @@ extern void registerQuitHandler(QUITHANDLER qh);
             return false;
 
         // We have the transactions, but we also want the receipts, and we need an error indication
-        nTraces = 0;
         for (size_t i = 0 ; i < block.transactions.size() ; i++) {
             CTransaction *trans = &block.transactions.at(i);  // taking a non-const reference
             trans->pBlock = &block;
-
-            UNHIDE_FIELD(CTransaction, "receipt");
-            CReceipt receipt;
-            getReceipt(receipt, trans->hash);
-            trans->receipt = receipt;  // deep copy
-            if (block.blockNumber >= byzantiumBlock) {
-                trans->isError = (receipt.status == 0);
-
-            } else if (needTrace && trans->gas == receipt.gasUsed) {
-
-                string_q unused;
-                CURLCALLBACKFUNC prev = getCurlContext()->setCurlCallback(traceCallback);
-                getCurlContext()->is_error = false;
-                queryRawTrace(unused, trans->hash);
-                trans->isError = getCurlContext()->is_error;
-                getCurlContext()->setCurlCallback(prev);
-                nTraces++;
-            }
+            getFullReceipt(trans, needTrace);
         }
 
         return true;
@@ -225,10 +281,10 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
         if (isHash(datIn)) {
             blockStr = callRPC("eth_getBlockByHash",
-                                "[" + quote(datIn) + "," + (hashesOnly ? "false" : "true") + "]", true);
+                               "[" + quote(datIn) + "," + (hashesOnly ? "false" : "true") + "]", true);
         } else {
             blockStr = callRPC("eth_getBlockByNumber",
-                                "[" + quote(str_2_Hex(datIn)) + "," + (hashesOnly ? "false" : "true") + "]", true);
+                               "[" + quote(str_2_Hex(datIn)) + "," + (hashesOnly ? "false" : "true") + "]", true);
         }
         return true;
     }
@@ -283,11 +339,30 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-------------------------------------------------------------------------
-    bool queryRawLogs(string_q& results, const address_t& addr, uint64_t fromBlock, uint64_t toBlock) {
-        string_q data = "[{\"fromBlock\":\"[START]\",\"toBlock\":\"[STOP]\", \"address\": \"[ADDR]\"}]";
-        replace(data, "[START]", uint_2_Hex(fromBlock));
-        replace(data, "[STOP]",  uint_2_Hex(toBlock));
-        replace(data, "[ADDR]",  addr_2_Str(addr));
+    bool queryRawLogs(string_q& results, hash_t hash, const address_t& addr, const CTopicArray& topics) {
+        string_q data = "[{\"blockHash\":\"[HASH]\",\"address\":\"[ADDR]\"}]";
+//        string_q data = "[{\"blockHash\":\"[HASH]\",\"address\":\"[ADDR]\",\"topics\":[[TOPICS]]}]";
+        replace(data, "[HASH]", hash);
+        if (addr.empty())
+            replace(data, ",\"address\":\"[ADDR]\"", "");
+        else
+            replace(data, "[ADDR]", addr_2_Str(addr));
+//        replace(data, "[TOPICS]", topic_2_Str(topics));
+        results = callRPC("eth_getLogs", data, true);
+        return true;
+    }
+
+    //-------------------------------------------------------------------------
+    bool queryRawLogs(string_q& results,   uint64_t fromBlock, uint64_t toBlock, const address_t& addr, const CTopicArray& topics) {
+        string_q data = "[{\"fromBlock\":\"[START]\",\"toBlock\":\"[STOP]\",\"address\":\"[ADDR]\"}]";
+//        string_q data = "[{\"fromBlock\":\"[START]\",\"toBlock\":\"[STOP]\",\"address\":\"[ADDR]\",\"topics\":[[TOPICS]]}]";
+        replace(data, "[START]",  uint_2_Hex(fromBlock));
+        replace(data, "[STOP]",   uint_2_Hex(toBlock));
+        if (addr.empty())
+            replace(data, ",\"address\":\"[ADDR]\"", "");
+        else
+            replace(data, "[ADDR]", addr_2_Str(addr));
+//        replace(data, "[TOPICS]", topic_2_Str(topics));
         results = callRPC("eth_getLogs", data, true);
         return true;
     }
@@ -305,8 +380,38 @@ extern void registerQuitHandler(QUITHANDLER qh);
         return true;
     }
 
+    //--------------------------------------------------------------------------
+    blknum_t getLastBlock_cache_final(void) {
+        string_q finLast = getLastFileInFolder(indexFolder_finalized, false);
+        if (!finLast.empty()) {
+            // Files in this folder are n-m.bin
+            blknum_t last;
+            bnFromPath(finLast, last);
+            return last;
+        }
+        return 0;
+    }
+
+    //--------------------------------------------------------------------------
+    blknum_t getLastBlock_cache_staging(void) {
+        string_q stageLast = getLastFileInFolder(indexFolder_staging, false);
+        // Files in this folder are n.txt, if empty, we fall back on finalized folder
+        if (!stageLast.empty())
+            return bnFromPath(stageLast);
+        return getLastBlock_cache_final();
+    }
+
+    //--------------------------------------------------------------------------
+    blknum_t getLastBlock_cache_pending(void) {
+        string_q pendLast = getLastFileInFolder(indexFolder_pending, false);
+        // Files in this folder are n.txt, if empty, we fall back on finalized folder
+        if (!pendLast.empty())
+            return bnFromPath(pendLast);
+        return getLastBlock_cache_staging();
+    }
+
     //-------------------------------------------------------------------------
-    uint64_t getLatestBlockFromClient(void) {
+    blknum_t getLastBlock_client(void) {
         string_q ret = callRPC("eth_blockNumber", "[]", false);
         uint64_t retN = str_2_Uint(ret);
         if (retN == 0) {
@@ -323,90 +428,16 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //--------------------------------------------------------------------------
-    uint64_t getLatestBlockFromCache(void) {
-
-        CArchive fullBlockCache(READING_ARCHIVE);
-        if (!fullBlockCache.Lock(fullBlockIndex, binaryReadOnly, LOCK_NOWAIT)) {
-            if (!isTestMode())
-                cerr << "getLatestBlockFromCache failed: " << fullBlockCache.LockFailure() << "\n";
-            return 0;
-        }
-        ASSERT(fullBlockCache.isOpen());
-
-        uint64_t ret = 0;
-        fullBlockCache.Seek( (-1 * (long)sizeof(uint64_t)), SEEK_END);  // NOLINT
-        fullBlockCache.Read(ret);
-        fullBlockCache.Release();
-        return ret;
-    }
-
-    //--------------------------------------------------------------------------
-    bool getLatestBlocks(uint64_t& cache, uint64_t& client) {
-        client = getLatestBlockFromClient();
-        cache  = getLatestBlockFromCache();
+    bool getLastBlocks(blknum_t& pending, blknum_t& staging, blknum_t& finalized, blknum_t& client) {
+        pending   = getLastBlock_cache_pending();
+        staging   = getLastBlock_cache_staging();
+        finalized = getLastBlock_cache_final();
+        client    = getLastBlock_client();
         return true;
     }
 
     //-------------------------------------------------------------------------
-    bool getCode(const string_q& addr, string_q& theCode) {
-        string_q a = startsWith(addr, "0x") ? extract(addr, 2) : addr;
-        a = padLeft(a, 40, '0');
-        theCode = callRPC("eth_getCode", "[\"0x" + a +"\"]", false);
-        return theCode.length() != 0;
-    }
-
-    //-------------------------------------------------------------------------
-    bool getStorageAt(const string_q& addr, uint64_t pos, string_q& theStorage) {
-        // Calculating the correct position depends on the storage to retrieve. Consider the following
-        // contract deployed at 0x295a70b2de5e3953354a6a8344e616ed314d7251 by address
-        // 0x391694e7e0b0cce554cb130d723a9d27458f9298.
-        //
-        // contract Storage {
-        //     uint pos0;
-        //     mapping(address => uint) pos1;
-        //
-        //     function Storage() {
-        //         pos0 = 1234;
-        //         pos1[msg.sender] = 5678;
-        //     }
-        // }
-        //
-        // Retrieving the value of pos0 is straight forward:
-        //
-        // curl -X POST --data '{"jsonrpc":"2.0", "method": "eth_getStorageAt", "params": ["0x295a70b2de5e3953354a6a8344e616ed314d7251", "0x0", "latest"],
-        //      "id": 1}' localhost:8545
-        //
-        // returns {"jsonrpc":"2.0","id":1,"result":"0x00000000000000000000000000000000000000000000000000000000000004d2"}
-        //
-        // Retrieving an element of the map is harder. The position of an element in the map is calculated with:
-        //
-        //      keccack(LeftPad32(key, 0), LeftPad32(map_position, 0))
-        //
-        // This means to retrieve the storage on pos1["0x391694e7e0b0cce554cb130d723a9d27458f9298"] we need to calculate
-        // the position with:
-        //
-        //      keccak(decodeHex("000000000000000000000000391694e7e0b0cce554cb130d723a9d27458f9298" + 
-        //                       "0000000000000000000000000000000000000000000000000000000000000001"))
-        //
-        // The geth console which comes with the web3 library can be used to make the calculation:
-        //
-        //      > var key = "000000000000000000000000391694e7e0b0cce554cb130d723a9d27458f9298" + "0000000000000000000000000000000000000000000000000000000000000001"
-        //      undefined
-        //      > web3.sha3(key, {"encoding": "hex"})
-        //      "0x6661e9d6d8b923d5bbaab1b96e1dd51ff6ea2a93520fdc9eb75d059238b8c5e9"
-        //
-        // Now to fetch the storage:
-        //
-        //      curl -X POST --data '{"jsonrpc":"2.0", "method": "eth_getStorageAt", "params": ["0x295a70b2de5e3953354a6a8344e616ed314d7251",
-        //                  "0x6661e9d6d8b923d5bbaab1b96e1dd51ff6ea2a93520fdc9eb75d059238b8c5e9", "latest"], "id": 1}' localhost:8545
-        //
-        // returns: {"jsonrpc":"2.0","id":1,"result":"0x000000000000000000000000000000000000000000000000000000000000162e"}
-        //
-        return false;
-    }
-
-    //-------------------------------------------------------------------------
-    uint64_t addFilter(address_t addr, const CTopicArray& topics, blknum_t block) {
+    uint64_t addFilter(address_t addr, const CTopicArray& topics, blknum_t num) {
         // Creates a filter object, based on filter options, to notify when the state changes (logs). To check if the state has
         // changed, call eth_getFilterChanges.
         //
@@ -438,24 +469,6 @@ extern void registerQuitHandler(QUITHANDLER qh);
         //      }]
         //  Returns QUANTITY - A filter id.
         return 0;
-    }
-
-    //-------------------------------------------------------------------------
-    biguint_t getBalance(const string_q& addr, blknum_t blockNum, bool isDemo) {
-        string_q a = extract(addr, 2);
-        a = padLeft(a, 40, '0');
-        string_q ret = callRPC("eth_getBalance", "[\"0x" + a + "\",\"" + uint_2_Hex(blockNum) + "\"]", false);
-        return str_2_Wei(ret);
-    }
-
-    //-------------------------------------------------------------------------
-    bool nodeHasBalances(void) {
-        // Account 0xa1e4380a3b1f749673e270229993ee55f35663b4 owned 2000000000000000000000 (2000 ether)
-        // at block zero. If the node is holding balances (i.e. its an archive node), then it will
-        // return that value for block 1 as well. Otherwise, it will return a zero balance.
-        // NOTE: Unimportantly, account 0xa1e4380a3b1f749673e270229993ee55f35663b4 transacted in the first ever transaction.
-        return getBalance("0xa1e4380a3b1f749673e270229993ee55f35663b4", 1, false) ==
-                            str_2_Wei("2000000000000000000000");
     }
 
     //-------------------------------------------------------------------------
@@ -498,33 +511,24 @@ extern void registerQuitHandler(QUITHANDLER qh);
     size_t getTraceCount(const hash_t& hashIn) {
         // handle most likely cases linearly
         for (size_t n = 2 ; n < 8 ; n++) {
-            if (!hasTraceAt(hashIn, n)) {
-                if (verbose > 2) cerr << "tiny trace" << (n - 1) << "\n";
+            if (!hasTraceAt(hashIn, n))
                 return n-1;
-            }
         }
 
         // binary search the rest
-        size_t ret = 0;
         if (!hasTraceAt(hashIn, (1 << 8))) {  // small?
-            ret = getTraceCount_binarySearch(hashIn, 0, (1 << 8) - 1);
-            if (verbose > 2) cerr << "small trace" << ret << "\n";
-            return ret;
+            return getTraceCount_binarySearch(hashIn, 0, (1 << 8) - 1);
         } else if (!hasTraceAt(hashIn, (1 << 16))) {  // medium?
-            ret = getTraceCount_binarySearch(hashIn, 0, (1 << 16) - 1);
-            if (verbose > 2) cerr << "medium trace" << ret << "\n";
-            return ret;
+            return getTraceCount_binarySearch(hashIn, 0, (1 << 16) - 1);
         } else {
-            ret = getTraceCount_binarySearch(hashIn, 0, (1 << 30));
-            if (verbose > 2) cerr << "large trace" << ret << "\n";
+            return getTraceCount_binarySearch(hashIn, 0, (1 << 30));
         }
-        return ret;
+        return 0;
     }
 
     //-------------------------------------------------------------------------
-    bool getSha3(const string_q& hexIn, string_q& shaOut) {
-        shaOut = callRPC("web3_sha3", "[\"" + hexIn + "\"]", false);
-        return true;
+    string_q getSha3(const string_q& hexIn) {
+        return callRPC("web3_sha3", "[\"" + hexIn + "\"]", false);
     }
 
     //-----------------------------------------------------------------------
@@ -555,51 +559,11 @@ extern void registerQuitHandler(QUITHANDLER qh);
         return node.parseJson3(contents);
     }
 
-    //-----------------------------------------------------------------------
-    bool writeNodeToBinary(const CBaseNode& node, const string_q& fileName) {
-        string_q created;
-        if (establishFolder(fileName, created)) {
-            if (!created.empty() && !isTestMode())
-                cerr << "mkdir(" << created << ")" << string_q(75, ' ') << "\n";
-            CArchive nodeCache(WRITING_ARCHIVE);
-            if (nodeCache.Lock(fileName, binaryWriteCreate, LOCK_CREATE)) {
-                node.SerializeC(nodeCache);
-                nodeCache.Close();
-                return true;
-            }
-        }
-        return false;
-    }
-
-    //-----------------------------------------------------------------------
-    bool readNodeFromBinary(CBaseNode& item, const string_q& fileName) {
-        // Assumes that the item is clear, so no Init
-        CArchive nodeCache(READING_ARCHIVE);
-        if (nodeCache.Lock(fileName, binaryReadOnly, LOCK_NOWAIT)) {
-            item.Serialize(nodeCache);
-            nodeCache.Close();
-            return true;
-        }
-        return false;
-    }
-
-    //-----------------------------------------------------------------------
-    bool writeBlockToBinary(const CBlock& block, const string_q& fileName) {
-        // CArchive blockCache(READING_ARCHIVE);  -- so search hits
-        return writeNodeToBinary(block, fileName);
-    }
-
-    //-----------------------------------------------------------------------
-    bool readBlockFromBinary(CBlock& block, const string_q& fileName) {
-        // CArchive blockCache(READING_ARCHIVE);  -- so search hits
-        return readNodeFromBinary(block, fileName);
-    }
-
     //----------------------------------------------------------------------------------
-    bool readBloomArray(CBloomArray& blooms, const string_q& fileName) {
+    bool readBloomFromBinary(CBloomArray& blooms, const string_q& fileName) {
         blooms.clear();
         CArchive bloomCache(READING_ARCHIVE);
-        if (bloomCache.Lock(fileName, binaryReadOnly, LOCK_NOWAIT)) {
+        if (bloomCache.Lock(fileName, modeReadOnly, LOCK_NOWAIT)) {
             bloomCache >> blooms;
             bloomCache.Close();
             return true;
@@ -617,7 +581,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
             if (!created.empty() && !isTestMode())
                 cerr << "mkdir(" << created << ")" << string_q(75, ' ') << "\n";
             CArchive bloomCache(WRITING_ARCHIVE);
-            if (bloomCache.Lock(fileName, binaryWriteCreate, LOCK_CREATE)) {
+            if (bloomCache.Lock(fileName, modeWriteCreate, LOCK_CREATE)) {
                 bloomCache << blooms;
                 bloomCache.Close();
                 return true;
@@ -627,38 +591,52 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-------------------------------------------------------------------------
-    static string_q getFilename_local(uint64_t numIn, bool asPath, bool asJson) {
+    static string_q getFilename_local(cache_t type, const string_q& bn, const string_q& txid, const string_q& tcid, bool asPath) {
+        ostringstream os;
+        switch (type) {
+            case CT_BLOCKS:   os << "blocks/"; break;
+            case CT_BLOOMS:   os << "blooms/"; break;
+            case CT_TXS:      os << "txs/"; break;
+            case CT_TRACES:   os << "traces/"; break;
+            case CT_ACCTS:    os << "accts/"; break;
+            case CT_MONITORS: os << "monitors/"; break;
+            default:
+                ASSERT(0); // should not happen
+        }
+        if (type == CT_ACCTS || type == CT_MONITORS) {
+            string_q addr = toLower(substitute(bn, "0x", ""));
+            os << extract(addr, 0, 4) << "/" << extract(addr, 4, 4) << "/" << addr << ".bin";
 
-        char ret[512];
-        bzero(ret, sizeof(ret));
-
-        string_q num = padLeft(uint_2_Str(numIn), 9, '0');
-        string_q fmt = (asPath ? "%s/%s/%s/" : "%s/%s/%s/%s");
-        string_q fn  = (asPath ? "" : num + (asJson ? ".json" : ".bin"));
-
-        sprintf(ret, (blockCachePath("") + fmt).c_str(),  // NOLINT
-                      extract(num, 0, 2).c_str(), extract(num, 2, 2).c_str(), extract(num, 4, 2).c_str(),
-                      fn.c_str());
-        return ret;
+        } else {
+            os << extract(bn, 0, 2) << "/" << extract(bn, 2, 2) << "/" << extract(bn, 4, 2) << "/";
+            if (!asPath) {
+                os << bn;
+                os << ((type == CT_TRACES || type == CT_TXS) ? "-" + txid : "");
+                os << ( type == CT_TRACES ? "-" + tcid : "");
+                os << ".bin";
+            }
+        }
+        return getCachePath(os.str());
     }
 
     //-------------------------------------------------------------------------
-    string_q getJsonFilename(uint64_t num) {
-        return getFilename_local(num, false, true);
+    string_q getBinaryCachePath(cache_t type, blknum_t bn, txnum_t txid, txnum_t tcid) {
+        return getFilename_local(type, padNum9(bn), padNum5(txid), padNum5(tcid), true);
     }
 
     //-------------------------------------------------------------------------
-    string_q getBinaryFilename(uint64_t num) {
-        string_q ret = getFilename_local(num, false, false);
-        replace(ret, "/00/",  "/blocks/00/");  // can't use Substitute because it will change them all
-        return ret;
+    string_q getBinaryCacheFilename(cache_t type, blknum_t bn, txnum_t txid, txnum_t tcid) {
+        return getFilename_local(type, padNum9(bn), padNum5(txid), padNum5(tcid), false);
     }
 
     //-------------------------------------------------------------------------
-    string_q getBinaryPath(uint64_t num) {
-        string_q ret = getFilename_local(num, true, false);
-        replace(ret, "/00/",  "/blocks/00/");  // can't use Substitute because it will change them all
-        return ret;
+    string_q getBinaryCachePath(cache_t type, const address_t& addr) {
+        return getFilename_local(type, addr, "", "", true);
+    }
+
+    //-------------------------------------------------------------------------
+    string_q getBinaryCacheFilename(cache_t type, const address_t& addr) {
+        return getFilename_local(type, addr, "", "", false);
     }
 
     //-------------------------------------------------------------------------
@@ -668,7 +646,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
             return false;
 
         for (uint64_t i = start ; i < start + count - 1 ; i = i + skip) {
-            string_q fileName = getBinaryFilename(i);
+            string_q fileName = getBinaryCacheFilename(CT_BLOCKS, i);
             CBlock block;
             if (fileExists(fileName)) {
                 block = CBlock();
@@ -707,94 +685,6 @@ extern void registerQuitHandler(QUITHANDLER qh);
     }
 
     //-------------------------------------------------------------------------
-    bool forEveryNonEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
-
-        // Read the non-empty block index file and spit it out only non-empty blocks
-        if (!func)
-            return false;
-
-        CArchive fullBlockCache(READING_ARCHIVE);
-        if (!fullBlockCache.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT)) {
-            cerr << "forEveryNonEmptyBlockOnDisc failed: " << fullBlockCache.LockFailure() << "\n";
-            return false;
-        }
-        ASSERT(fullBlockCache.isOpen());
-
-        uint64_t nItems = fileSize(fullBlockIndex) / sizeof(uint64_t);
-        uint64_t *contents = new uint64_t[nItems];
-        if (contents) {
-            // read the entire full block index
-            fullBlockCache.Read(contents, sizeof(uint64_t), nItems);
-            fullBlockCache.Release();  // release it since we don't need it any longer
-
-            for (uint64_t i = 0 ; i < nItems ; i = i + skip) {
-                // TODO(tjayrush): This should be a binary search not a scan. This is why it appears to wait
-                uint64_t item = contents[i];
-                if (inRange(item, start, start + count - 1)) {
-                    CBlock block;
-                    if (getBlock(block, contents[i])) {
-                        bool ret = (*func)(block, data);
-                        if (!ret) {
-                            // Cleanup and return if user tells us to
-                            delete [] contents;
-                            return false;
-                        }
-                    }
-                } else {
-                    // do nothing
-                }
-            }
-            delete [] contents;
-        }
-        return true;
-    }
-
-    //-------------------------------------------------------------------------
-    bool forEveryEmptyBlockOnDisc(BLOCKVISITFUNC func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
-        if (!func)
-            return false;
-
-        getCurlContext()->provider = "local";   // the empty blocks are not on disk, so we have to
-                                                // ask parity. Don't write them, though
-
-        CArchive fullBlockCache(READING_ARCHIVE);
-        if (!fullBlockCache.Lock(fullBlockIndex, binaryReadOnly, LOCK_WAIT)) {
-            cerr << "forEveryEmptyBlockOnDisc failed: " << fullBlockCache.LockFailure() << "\n";
-            return false;
-        }
-        ASSERT(fullBlockCache.isOpen());
-
-        uint64_t nItems = fileSize(fullBlockIndex) / sizeof(uint64_t) + 1;  // we need an extra one for item '0'
-        uint64_t *contents = new uint64_t[nItems+2];  // extra space
-        if (contents) {
-            // read the entire full block index
-            fullBlockCache.Read(&contents[0], sizeof(uint64_t), nItems-1);  // one less since we asked for an extra one
-            fullBlockCache.Release();  // release it since we don't need it any longer
-
-            contents[0] = 0;  // Starting point (because we are build the empty list from the non-empty list)
-            uint64_t cnt = start;
-            for (uint64_t i = 1 ; i < nItems ; i = i + skip) {  // first one is assumed to be the '0' block
-                while (cnt < contents[i]) {
-                    CBlock block;
-                    // Both 'queryBlock' and 'getBlock' return false if there are no
-                    // transactions, so we ignore the return value
-                    getBlock(block, cnt);
-                    if (!(*func)(block, data)) {
-                        getCurlContext()->provider = "binary";
-                        delete [] contents;
-                        return false;
-                    }
-                    cnt++;  // go to the next one
-                }
-                cnt++;  // contents[i] has transactions, so skip it
-            }
-            delete [] contents;
-        }
-        getCurlContext()->provider = "binary";
-        return true;
-    }
-
-    //-------------------------------------------------------------------------
     bool forEveryBloomFile(FILEVISITOR func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
 
         // If the caller does not specify start/end block numbers, visit every bloom file
@@ -807,7 +697,7 @@ extern void registerQuitHandler(QUITHANDLER qh);
         blknum_t st = (start / 1000) * 1000;
         blknum_t ed = ((start+count+1000) / 1000) * 1000;
         for (blknum_t b = st ; b < ed ; b += 1000) {
-            string_q path = substitute(getBinaryPath(b), "/blocks/", "/blooms/");
+            string_q path = getBinaryCachePath(CT_BLOOMS, b);
             if (!forEveryFileInFolder(path, func, data))
                 return false;
         }
@@ -846,8 +736,8 @@ extern void registerQuitHandler(QUITHANDLER qh);
         if (!func)
             return false;
 
-//        cout << "Visiting " << trans.receipt.logs.size() << " logs\n";
-//        cout.flush();
+        //        cout << "Visiting " << trans.receipt.logs.size() << " logs\n";
+        //        cout.flush();
         for (size_t i = 0 ; i < trans.receipt.logs.size() ; i++) {
             CLogEntry log = trans.receipt.logs[i];
             if (!(*func)(log, data))
@@ -858,8 +748,8 @@ extern void registerQuitHandler(QUITHANDLER qh);
 
     //-------------------------------------------------------------------------
     bool forEveryLogInBlock(LOGVISITFUNC func, void *data, const CBlock& block) {
-//        cout << "Visiting " << block.transactions.size() << " transactions\n";
-//        cout.flush();
+        //        cout << "Visiting " << block.transactions.size() << " transactions\n";
+        //        cout.flush();
         for (size_t i = 0 ; i < block.transactions.size() ; i++) {
             if (!forEveryLogInTransaction(func, data, block.transactions[i]))
                 return false;
@@ -892,74 +782,279 @@ extern void registerQuitHandler(QUITHANDLER qh);
         string_q list = trans_list;
         while (!list.empty()) {
             string_q item = nextTokenClear(list, '|');
+            string_q orig = item;
             bool hasDot = contains(item, ".");
             bool hasHex = startsWith(item, "0x");
 
             string_q hash = nextTokenClear(item, '.');
-            uint64_t txID = str_2_Uint(item);
+            uint64_t txid = str_2_Uint(item);
 
+            bool fromCache = false;
             CTransaction trans;
             if (hasHex) {
                 if (hasDot) {
-                    // We are not fully formed, we have to ask the node for the receipt
-                    getTransaction(trans, hash, txID);  // blockHash.txID
+                    // blockHash.txid
+                    getTransaction(trans, hash, txid);
+
                 } else {
-                    // We are not fully formed, we have to ask the node for the receipt
-                    getTransaction(trans, hash);  // transHash
+                    // transHash
+                    getTransaction(trans, hash);
                 }
             } else {
-                getTransaction(trans, str_2_Uint(hash), txID);  // blockNum.txID
+                // blockNum.txid
+                blknum_t blockNum = str_2_Uint(hash);  // so the input is poorly named, sue me
+                getTransaction(trans, blockNum, txid);
+                if (fileExists(getBinaryCacheFilename(CT_TXS, blockNum, txid)))
+                    fromCache = true;
             }
 
-            CBlock block;
-            trans.pBlock = &block;
-            getBlock(block, trans.blockNumber);
-            if (block.transactions.size() > trans.transactionIndex)
-                trans.isError = block.transactions[trans.transactionIndex].isError;
-            getReceipt(trans.receipt, trans.getValueByName("hash"));
-            trans.finishParse();
-            if (!isHash(trans.hash)) {
-                // If the transaction has no hash here, either the block hash or the transaction hash being asked
-                // for doesn't exist. We need to report which hash failed and why to the caller. Because we have
-                // no better way, we report that in the hash itself. There are three cases, two with either block
-                // hash or block num one with transaction hash. Note: This will fail if we move to non-string hashes
-                trans.hash = hash + "-" + (!hasHex || hasDot ? "block_not_found" : "trans_not_found");
+            if (!fromCache) {
+                CBlock block;
+                trans.pBlock = &block;
+                if (isHash(trans.hash)) {
+                    // Note: at this point, we are not fully formed, we have to ask the node for the receipt
+                    getBlock(block, trans.blockNumber);
+                    if (block.transactions.size() > trans.transactionIndex)
+                        trans.isError = block.transactions[trans.transactionIndex].isError;
+                    trans.receipt.pTrans = &trans;
+                    getReceipt(trans.receipt, trans.getValueByName("hash"));
+                    trans.finishParse();
+                } else {
+                    // If the transaction has no hash here, there was a problem. Let the caller know
+                    trans.hash = orig + " invalid";
+                }
             }
-
             if (!(*func)(trans, data))
                 return false;
+
         }
         return true;
     }
 
     //-------------------------------------------------------------------------
-    string_q blockCachePath(const string_q& _part) {
+    string_q scraperStatus(void) {
 
-        static string_q blockCache;
-        if (blockCache.empty()) {
+        char hostname[HOST_NAME_MAX];  gethostname(hostname, HOST_NAME_MAX);
+        char username[LOGIN_NAME_MAX]; getlogin_r(username, LOGIN_NAME_MAX);
+        string_q hostUser = string_q(hostname) + " (" + username + ")";
+
+        string_q tmpStore = configPath("cache/tmp/scraper-status.txt");
+
+        uint64_t prevDiff = str_2_Uint(asciiFileToString(tmpStore));
+        uint64_t pending, staging, finalized, client;
+        getLastBlocks(pending, staging, finalized, client);
+
+        uint64_t currDiff = finalized > client ? finalized - client : client - finalized;
+        stringToAsciiFile(tmpStore, uint_2_Str(currDiff));  // so we can use it next time
+
+#define showOne(a, b) cYellow << (isTestMode() ? a : b) << cOff
+#define showOne1(a) showOne(a, a)
+        ostringstream cos;
+        cos << showOne("--final--, --staging--, --pending--", uint_2_Str(finalized)+", "+uint_2_Str(staging)+", "+uint_2_Str(pending));
+
+        ostringstream dos;
+        dos << showOne("--diff--", (currDiff>prevDiff?"-":"+") + uint_2_Str(currDiff));
+        dos << showOne("--diffdiff--", (currDiff > prevDiff ? " (-" + uint_2_Str(currDiff-prevDiff) : " (+"+uint_2_Str(prevDiff-currDiff)) + ")");
+
+        string_q rpcProvider = getCurlContext()->baseURL;
+
+        ostringstream os;
+        os << cGreen << "  Client version:     " << showOne("--version--", getVersionFromClient())    << endl;
+        os << cGreen << "  Trueblocks Version: " << showOne1(getVersionStr())                         << endl;
+        os << cGreen << "  RPC Provider:       " << showOne("--rpc_provider--", rpcProvider)          << endl;
+        os << cGreen << "  Cache location:     " << showOne("--cache_dir--", getCachePath(""))        << endl;
+        os << cGreen << "  Host (user):        " << showOne("--host (user)--", hostUser)              << endl;
+        os << cGreen << "  Latest cache:       " << cos.str()                                         << endl;
+        os << cGreen << "  Latest client:      " << showOne("--client--", uint_2_Str(client))         << endl;
+        os << cGreen << "  Dist from head:     " << dos.str()                                         << endl;
+
+        return os.str();
+    }
+
+    //-------------------------------------------------------------------------
+    string_q getCachePath(const string_q& _part) {
+
+        //TODO(tjayrush): global data
+        static string_q g_cachePath;
+        if (!g_cachePath.empty()) // leave early if we can
+            return substitute((g_cachePath + _part), "//", "/");
+
+        { // give ourselves a frame - always enters - forces creation in the frame
+          // Wait until any other thread is finished filling the value.
+            mutex aMutex;
+            lock_guard<mutex> lock(aMutex);
+
+            // Another thread may have filled the data while we were waiting
+            if (!g_cachePath.empty())
+                return substitute((g_cachePath + _part), "//", "/");
+
+            // Otherwise, fill the value
             CToml toml(configPath("quickBlocks.toml"));
-            string_q path = toml.getConfigStr("settings", "blockCachePath", "<NOT_SET>");
-            // cout << path << "\n";
+            string_q path = toml.getConfigStr("settings", "cachePath", "<NOT_SET>");
             if (path == "<NOT_SET>") {
-                path = configPath("cache/");
-                toml.setConfigStr("settings", "blockCachePath", path);
+                // May have been an old installation, so try to upgrade
+                path = toml.getConfigStr("settings", "blockCachePath", "<NOT_SET>");
+                if (path == "<NOT_SET>")
+                    path = configPath("cache/");
+                toml.setConfigStr("settings", "cachePath", path);
+                toml.deleteKey("settings", "blockCachePath");
                 toml.writeFile();
             }
+
             CFilename folder(path);
             if (!folderExists(folder.getFullPath()))
                 establishFolder(folder.getFullPath());
+
             if (!folder.isValid()) {
                 cerr << "Invalid path (" << folder.getFullPath() << ") in config file. Quitting...\n";
-                exit(0);
+                quickQuitHandler(EXIT_FAILURE);
             }
-            blockCache = folder.getFullPath();
-            if (!endsWith(blockCache, "/"))
-                blockCache += "/";
+            g_cachePath = folder.getFullPath();
+            if (!endsWith(g_cachePath, "/"))
+                g_cachePath += "/";
         }
-        return substitute((blockCache + _part), "//", "/");
+
+        return substitute((g_cachePath + _part), "//", "/");
     }
 
     //--------------------------------------------------------------------------
-    biguint_t weiPerEther = (modexp(10, 9, uint64_t(10000000000)) * modexp(10, 9, uint64_t(10000000000)));
+    biguint_t weiPerEther(void) {
+        return (modexp(10, 9, uint64_t(10000000000)) * modexp(10, 9, uint64_t(10000000000)));
+    }
+
+    //-----------------------------------------------------------------------
+    void manageFields(const string_q& listIn, bool show) {
+        //LOG5("Entry: manageFields");
+        string_q list = substitute(listIn, " ", "");
+        while (!list.empty()) {
+            string_q fields = nextTokenClear(list, '|');
+            string_q cl = nextTokenClear(fields, ':');
+            //LOG5("class: " + cl + " fields: " + fields);
+            CBaseNode *item = createObjectOfType(cl);
+            while (item && !fields.empty()) {
+                string_q fieldName = nextTokenClear(fields, ',');
+                if (fieldName == "all") {
+                    if (show) {
+                        //LOG5("show " + fieldName);
+                        item->getRuntimeClass()->showAllFields();
+                    } else {
+                        //LOG5("hide " + fieldName);
+                        item->getRuntimeClass()->hideAllFields();
+                    }
+                } else if (fieldName == "none") {
+                    if (show) {
+                        //LOG5("show " + fieldName);
+                        item->getRuntimeClass()->hideAllFields();
+                    } else {
+                        //LOG5("hide " + fieldName);
+                        item->getRuntimeClass()->showAllFields();
+                    }
+                } else {
+                    CFieldData *f = item->getRuntimeClass()->findField(fieldName);
+                    if (f) {
+                        //LOG5((show ? "show " : "hide ") + fieldName);
+                        f->setHidden(!show);
+                    } else {
+                        //LOG5("field not found: " + fieldName);
+                    }
+                }
+            }
+            delete item;
+        }
+    }
+
+    //-----------------------------------------------------------------------
+    void manageFields(const string_q& formatIn) {
+        string_q fields;
+        string_q format = substitute(substitute(formatIn,"{","<field>"),"}","</field>");
+        string_q cl = nextTokenClear(format, ':');
+        while (contains(format, "<field>"))
+            fields += toLower(snagFieldClear(format, "field") + ",");
+        manageFields(cl + ":all", false);
+        manageFields(cl + ":" + fields, true);
+    }
+
+    //-----------------------------------------------------------------------
+    string_q headerRow(const string_q& formatIn, const string_q& sep1, const string_q& sep2) {
+        string_q format = substitute(substitute(formatIn, "{", "<field>"), "}", "</field>");
+        string_q ret;
+        while (contains(format, "<field>")) {
+            string_q field = toLower(snagFieldClear(format, "field"));
+            ret = ret + (sep2 + field + sep2 + sep1);
+        }
+        return trim(ret, sep1[0]);
+    }
+
+    //-----------------------------------------------------------------------
+    string_q exportPreamble(format_t fmt, const string_q& format, const CRuntimeClass *pClass) {
+        ostringstream os;
+        switch (fmt) {
+            case NONE1:
+                break;
+            case TXT1:
+                if (format.empty())
+                    return "";
+                os << headerRow(format, "\t", "");
+                break;
+            case CSV1:
+                if (format.empty())
+                    return "";
+                os << headerRow(format, ",", "\"");
+                break;
+            case JSON1:
+                os << "[";
+                break;
+            case API1:
+                os << "{ \"type\": \"" << (pClass ? pClass->m_ClassName : "unknown") << "\", \"data\": [";
+                break;
+            default:
+                ASSERT(0); // shouldn't happen
+                break;
+        }
+        return trim(trim(os.str(),','),'\t') + "\n";
+    }
+
+    //-----------------------------------------------------------------------
+    string_q exportPostamble(format_t fmt, const string_q& extra) {
+        if (fmt != API1 && fmt != JSON1)
+            return "";
+        if (fmt != API1)
+            return "\n]";
+
+        uint64_t pending, staging, finalized, client;
+        getLastBlocks(pending, staging, finalized, client);
+        if (isTestMode())
+            pending = staging = finalized = client = NOPOS;
+
+        ostringstream os;
+        os << "\n], \"meta\": {";
+        os << "\"pending\": " << pending << ",";
+        os << "\"staging\": " << staging << ",";
+        os << "\"finalized\": " << finalized << ",";
+        os << "\"client\": " << client;
+        if (!extra.empty())
+            os << extra;
+        os << " } }";
+        return os.str();
+    }
+
+    //-----------------------------------------------------------------------
+    const string_q defHide =
+    "CTransaction: price, nonce, input"
+    "|" "CLogEntry: data, topics"
+    "|" "CTrace: blockHash, blockNumber, transactionHash, transactionPosition, traceAddress, subtraces"
+    "|" "CTraceAction: init"
+    "|" "CTraceResult: code"
+    "|" "CFunction: constant, payable, signature, encoding, type, articulate_str"
+    "|" "CParameter: type, indexed, isPointer, isArray, isObject";
+
+    const string_q defShow =
+    "CTransaction: gasCost, articulatedTx, traces, isError, date, ether"
+    "|" "CLogEntry: articulatedLog"
+    "|" "CTrace: articulatedTrace"
+    "|" "CTraceAction: "
+    "|" "CTraceResult: "
+    "|" "CFunction: "
+    "|" "CParameter: ";
 
 }  // namespace qblocks

@@ -38,14 +38,16 @@ namespace qblocks {
 
         virtual bool isKindOf(const CRuntimeClass* pClass) const;
         virtual bool  parseJson3(string_q& str);
-        virtual char *parseCSV(char *s, size_t& nFields, const string_q *fields);
-        virtual char *parseText(char *s, size_t& nFields, const string_q *fields);
+        virtual bool  parseJson4(string_q& str);
+        virtual bool  parseCSV(const CStringArray& fields, string_q& str);
+        virtual bool  parseText(const CStringArray& fields, string_q& str);
         virtual string_q toJson1(void) const;
         virtual string_q toJson(void) const;
         virtual string_q toJson(const string_q& fields) const;
         virtual string_q jsonFromArray(const CFieldDataArray& array) const;
 
     public:
+        //TODO(tjayrush): global data
         static CRuntimeClass classCBaseNode;
         static CBaseNode *createObject(void);
         virtual CRuntimeClass *getRuntimeClass(void) const;
@@ -58,7 +60,8 @@ namespace qblocks {
         virtual void Format(ostream& ctx, const string_q& fmtIn, void *data = NULL) const { }
         virtual string_q Format(const string_q& fmtIn = "") const { return ""; }
         virtual const CBaseNode *getObjectAt(const string_q& name, size_t i) const { return NULL; }
-        virtual const string_q   getStringAt(const string_q& name, size_t i) const { return ""; }
+        virtual const string_q   getStringAt(const string_q& fieldName, size_t i) const { return ""; }
+        virtual bool showEmptyField(const string_q& fn) const { return true; }
 
         void doExport(ostream& os) const;
 

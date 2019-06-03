@@ -1,9 +1,22 @@
-cacheMan argc: 3 [1:-l] [2:TipJar.acct.bin] 
-cacheMan -l TipJar.acct.bin 
-Listing cache: TipJar.acct.bin
-blockNum:    1235820 transID:       1
-blockNum:    1236136 transID:      14
-blockNum:    1244925 transID:       5
-blockNum:    1260081 transID:       3
-blockNum:    1325879 transID:       0
-blockNum:    1332455 transID:       2
+cacheMan argc: 3 [1:-l] [2:0x5555533333555553333355555333335555533333.acct.bin] 
+cacheMan -l 0x5555533333555553333355555333335555533333.acct.bin 
+Listing cache: 0x5555533333555553333355555333335555533333.acct.bin
+[{ "bn": 989198,"tx_id": 0}
+,{ "bn": 3,"tx_id": 0}
+,{ "bn": 989332,"tx_id": 0}
+,{ "bn": 2,"tx_id": 0}
+,{ "bn": 989345,"tx_id": 0}
+,{ "bn": 2,"tx_id": 0}
+,{ "bn": 992893,"tx_id": 0}
+,{ "bn": 13,"tx_id": 0}
+,{ "bn": 1001001,"tx_id": 0}
+,{ "bn": 1,"tx_id": 0}
+,{ "bn": 2001001,"tx_id": 0}
+,{ "bn": 2,"tx_id": 0}
+,{ "bn": 3001001,"tx_id": 0}
+,{ "bn": 3,"tx_id": 0}
+,{ "bn": 4001001,"tx_id": 0}
+,{ "bn": 4,"tx_id": 0}
+,{ "bn": 5001001,"tx_id": 0}
+,{ "bn": 5,"tx_id": 0}
+]

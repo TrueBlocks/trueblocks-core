@@ -4,7 +4,7 @@ getTrace 0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637853bb13a3ae1fe1328
   "blockHash": "0x9ee74ad50cb24017ee6fa90cdabc13d00e714ab3692a689a4a22716bdd2de5a4",
   "blockNumber": 3189962,
   "subtraces": 1,
-  "traceAddress": [],
+  "traceAddress": null,
   "transactionHash": "0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637853bb13a3ae1fe1328",
   "transactionPosition": 7,
   "type": "call",
@@ -27,14 +27,11 @@ getTrace 0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637853bb13a3ae1fe1328
     "gasUsed": 5437,
     "output": "0x"
   }
-},
-{
+},{
   "blockHash": "0x9ee74ad50cb24017ee6fa90cdabc13d00e714ab3692a689a4a22716bdd2de5a4",
   "blockNumber": 3189962,
   "subtraces": 0,
-  "traceAddress": [
-    "0"
-  ],
+  "traceAddress": "0",
   "transactionHash": "0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637853bb13a3ae1fe1328",
   "transactionPosition": 7,
   "type": "suicide",
@@ -57,5 +54,4 @@ getTrace 0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637853bb13a3ae1fe1328
     "gasUsed": 0,
     "output": ""
   }
-}
-]
+}]

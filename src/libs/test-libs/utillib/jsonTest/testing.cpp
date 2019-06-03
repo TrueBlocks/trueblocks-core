@@ -27,18 +27,15 @@ ostream& operator<<(ostream& os, const CTraceArray& array) {
 }
 
 //--------------------------------------------------------------
-int main(int argc, const char * argv[]) {
-
-    etherlib_init();
+int main(int argc, const char *argv[]) {
+    etherlib_init(quickQuitHandler);
 
     // Parse command line, allowing for command files
     COptions options;
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    // while (!options.commandList.empty())
-    {
-        string_q command = nextTokenClear(options.commandList, '\n');
+    for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
 

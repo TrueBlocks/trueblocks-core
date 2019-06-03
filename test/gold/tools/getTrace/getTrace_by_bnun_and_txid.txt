@@ -4,7 +4,7 @@ getTrace 4348290.92
   "blockHash": "0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73",
   "blockNumber": 4348290,
   "subtraces": 2,
-  "traceAddress": [],
+  "traceAddress": null,
   "transactionHash": "0x66e49e99a984cd88e097782a001afaac8c6ff786c936651895475dd88ec360f6",
   "transactionPosition": 92,
   "type": "call",
@@ -27,14 +27,11 @@ getTrace 4348290.92
     "gasUsed": 48838,
     "output": "0x"
   }
-},
-{
+},{
   "blockHash": "0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73",
   "blockNumber": 4348290,
   "subtraces": 0,
-  "traceAddress": [
-    "0"
-  ],
+  "traceAddress": "0",
   "transactionHash": "0x66e49e99a984cd88e097782a001afaac8c6ff786c936651895475dd88ec360f6",
   "transactionPosition": 92,
   "type": "call",
@@ -57,14 +54,11 @@ getTrace 4348290.92
     "gasUsed": 28693,
     "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
   }
-},
-{
+},{
   "blockHash": "0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73",
   "blockNumber": 4348290,
   "subtraces": 0,
-  "traceAddress": [
-    "1"
-  ],
+  "traceAddress": "1",
   "transactionHash": "0x66e49e99a984cd88e097782a001afaac8c6ff786c936651895475dd88ec360f6",
   "transactionPosition": 92,
   "type": "call",
@@ -87,5 +81,4 @@ getTrace 4348290.92
     "gasUsed": 0,
     "output": "0x"
   }
-}
-]
+}]

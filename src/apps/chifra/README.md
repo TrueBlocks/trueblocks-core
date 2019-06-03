@@ -22,16 +22,14 @@ Here is a screen shot of an interaction with Chifra building a smart contract mo
 
 #### Usage
 
-`Usage:`    chifra [-s|-v|-h] folder addrs  
-`Purpose:`  Interactively creates a QBlocks project to monitor an Ethereum address.
+`Usage:`    chifra [-v|-h] command  
+`Purpose:`  Create a TrueBlocks monitor configuration.
              
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | folder | name of the folder into which to store the monitor |
-|  | addrs | a list of one or more addresses to monitor (must start with '0x') |
-| -s | --silent | suppress all output from chifra (normally chifra is quite verbose) |
+|  | command | one of [ export &#124; list &#124; init &#124; leech &#124; daemon &#124; scrape &#124; ls &#124; name &#124; config ] |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
