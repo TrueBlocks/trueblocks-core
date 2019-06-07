@@ -84,8 +84,8 @@ namespace qblocks {
     string_q        getSha3                 (const string_q& hexIn);
 
     //-------------------------------------------------------------------------
-    extern string_q getBinaryCacheFilename  (cache_t ct, blknum_t bn, txnum_t txid=NOPOS, txnum_t tcid=NOPOS);
-    extern string_q getBinaryCachePath      (cache_t ct, blknum_t bn, txnum_t txid=NOPOS, txnum_t tcid=NOPOS);
+    extern string_q getBinaryCacheFilename  (cache_t ct, blknum_t bn, txnum_t txid=NOPOS, const string_q& trc_id="");
+    extern string_q getBinaryCachePath      (cache_t ct, blknum_t bn, txnum_t txid=NOPOS, const string_q& trc_id="");
     extern string_q getBinaryCacheFilename  (cache_t ct, const address_t& addr);
     extern string_q getBinaryCachePath      (cache_t ct, const address_t& addr);
 
