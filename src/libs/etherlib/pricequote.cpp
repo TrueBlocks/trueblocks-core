@@ -15,8 +15,8 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <algorithm>
-#include "pricesource.h"
 #include "pricequote.h"
+#include "pricesource.h"
 
 namespace qblocks {
 
@@ -57,7 +57,10 @@ string_q nextPricequoteChunk(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPriceQuote::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
+bool CPriceQuote::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+    string_q fieldName = fieldNameIn;
+    string_q fieldValue = fieldValueIn;
+
     // EXISTING_CODE
     if ( fieldName % "date" || fieldName % "timestamp" ) {
         timestamp = str_2_Int(fieldValue);

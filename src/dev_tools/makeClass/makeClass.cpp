@@ -458,7 +458,7 @@ string_q getCaseCode(const string_q& fieldCase, const string_q& ex) {
                         caseCode += ptrCase;
 
                     } else if (type == "bool") {
-                        caseCode += " return int_2_Str([{PTR}]" + field + ");";
+                        caseCode += " return bool_2_Str([{PTR}]" + field + ");";
 
                     } else if (type == "bloom") {
                         caseCode += " return bloom_2_Bytes([{PTR}]" + field + ");";

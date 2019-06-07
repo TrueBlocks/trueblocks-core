@@ -22,7 +22,7 @@
 namespace qblocks {
 
 // EXISTING_CODE
-enum cache_t { CT_BLOCKS, CT_BLOOMS, CT_TXS, CT_TRACES, CT_ACCTS, CT_MONITORS, CT_INDEX };
+enum cache_t { CT_BLOCKS = 0, CT_BLOOMS, CT_TXS, CT_TRACES, CT_ACCTS, CT_MONITORS, CT_INDEX };
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------

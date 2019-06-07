@@ -56,7 +56,10 @@ string_q nextAccountnameChunk(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAccountName::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
+bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+    string_q fieldName = fieldNameIn;
+    string_q fieldValue = fieldValueIn;
+
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -69,6 +72,9 @@ bool CAccountName::setValueByName(const string_q& fieldName, const string_q& fie
             break;
         case 'f':
             if ( fieldName % "fn" ) { fn = fieldValue; return true; }
+            break;
+        case 'i':
+            if ( fieldName % "isContract" ) { isContract = str_2_Bool(fieldValue); return true; }
             break;
         case 'l':
             if ( fieldName % "logo" ) { logo = fieldValue; return true; }
@@ -118,6 +124,7 @@ bool CAccountName::Serialize(CArchive& archive) {
     archive >> source;
     archive >> description;
     archive >> logo;
+    archive >> isContract;
     archive >> visible;
 //    archive >> fn;
 //    archive >> size;
@@ -141,6 +148,7 @@ bool CAccountName::SerializeC(CArchive& archive) const {
     archive << source;
     archive << description;
     archive << logo;
+    archive << isContract;
     archive << visible;
 //    archive << fn;
 //    archive << size;
@@ -187,6 +195,7 @@ void CAccountName::registerClass(void) {
     ADD_FIELD(CAccountName, "source", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "description", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "logo", T_TEXT, ++fieldNum);
+    ADD_FIELD(CAccountName, "isContract", T_BOOL, ++fieldNum);
     ADD_FIELD(CAccountName, "visible", T_BOOL, ++fieldNum);
     ADD_FIELD(CAccountName, "fn", T_TEXT, ++fieldNum);
     HIDE_FIELD(CAccountName, "fn");
@@ -259,6 +268,9 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
             break;
         case 'f':
             if ( fieldName % "fn" ) return fn;
+            break;
+        case 'i':
+            if ( fieldName % "isContract" ) return bool_2_Str(isContract);
             break;
         case 'l':
             if ( fieldName % "logo" ) return logo;

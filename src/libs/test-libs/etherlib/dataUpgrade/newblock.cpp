@@ -54,7 +54,10 @@ string_q nextNewblockChunk(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CNewBlock::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
+bool CNewBlock::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+    string_q fieldName = fieldNameIn;
+    string_q fieldValue = fieldValueIn;
+
     // EXISTING_CODE
     if (fieldName % "number") {
         *(string_q*)&fieldName = "blockNumber";  // NOLINT
@@ -330,7 +333,7 @@ string_q CNewBlock::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "difficulty" ) return uint_2_Str(difficulty);
             break;
         case 'f':
-            if ( fieldName % "finalized" ) return int_2_Str(finalized);
+            if ( fieldName % "finalized" ) return bool_2_Str(finalized);
             break;
         case 'g':
             if ( fieldName % "gasLimit" ) return gas_2_Str(gasLimit);

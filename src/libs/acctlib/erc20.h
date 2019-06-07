@@ -36,7 +36,7 @@ public:
     CTokenState_erc20(void);
     CTokenState_erc20(const CTokenState_erc20& to);
     virtual ~CTokenState_erc20(void);
-    CTokenState_erc20 &operator=(const CTokenState_erc20& to);
+    CTokenState_erc20& operator=(const CTokenState_erc20& to);
 
     DECLARE_NODE(CTokenState_erc20);
 
@@ -60,16 +60,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline CTokenState_erc20::CTokenState_erc20(void)
-{
+inline CTokenState_erc20::CTokenState_erc20(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CTokenState_erc20::CTokenState_erc20(const CTokenState_erc20& to)
-{
+inline CTokenState_erc20::CTokenState_erc20(const CTokenState_erc20& to) {
     // EXISTING_CODE
     // EXISTING_CODE
     duplicate(to);
@@ -79,23 +77,20 @@ inline CTokenState_erc20::CTokenState_erc20(const CTokenState_erc20& to)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CTokenState_erc20::~CTokenState_erc20(void)
-{
+inline CTokenState_erc20::~CTokenState_erc20(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CTokenState_erc20::clear(void)
-{
+inline void CTokenState_erc20::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CTokenState_erc20::initialize(void)
-{
+inline void CTokenState_erc20::initialize(void) {
     CAccountWatch::initialize();
 
     address = "";
@@ -110,8 +105,7 @@ inline void CTokenState_erc20::initialize(void)
 }
 
 //--------------------------------------------------------------------------
-inline void CTokenState_erc20::duplicate(const CTokenState_erc20& to)
-{
+inline void CTokenState_erc20::duplicate(const CTokenState_erc20& to) {
     clear();
     CAccountWatch::duplicate(to);
 
@@ -127,8 +121,7 @@ inline void CTokenState_erc20::duplicate(const CTokenState_erc20& to)
 }
 
 //--------------------------------------------------------------------------
-inline CTokenState_erc20 &CTokenState_erc20::operator=(const CTokenState_erc20& to)
-{
+inline CTokenState_erc20& CTokenState_erc20::operator=(const CTokenState_erc20& to) {
     duplicate(to);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -136,8 +129,7 @@ inline CTokenState_erc20 &CTokenState_erc20::operator=(const CTokenState_erc20& 
 }
 
 //-------------------------------------------------------------------------
-inline bool CTokenState_erc20::operator==(const CTokenState_erc20& item) const
-{
+inline bool CTokenState_erc20::operator==(const CTokenState_erc20& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -145,8 +137,7 @@ inline bool CTokenState_erc20::operator==(const CTokenState_erc20& item) const
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CTokenState_erc20& v1, const CTokenState_erc20& v2)
-{
+inline bool operator<(const CTokenState_erc20& v1, const CTokenState_erc20& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -166,3 +157,4 @@ extern CArchive& operator>>(CArchive& archive, CTokenState_erc20& tok);
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
+
