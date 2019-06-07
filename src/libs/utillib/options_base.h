@@ -36,6 +36,7 @@
 #define OPT_RUNONCE (1<<9)
 #define OPT_RAW     (1<<10)
 #define OPT_PREFUND (1<<11)
+#define OPT_OUTPUT  (1<<12)
 
 //-----------------------------------------------------------------------------
 enum format_t { NONE1 = 0, JSON1 = (1<<1), TXT1 = (1<<2), CSV1 = (1<<3), API1 = (1<<4) };
@@ -54,6 +55,12 @@ namespace qblocks {
         bool api_mode;
         format_t exportFmt;
         blkrange_t scanRange;
+
+        // redirecting cout for --output option
+        streambuf *origCout;
+        ostringstream strCout;
+        string_q outputFn;
+        void closeRedirect(void);
 
         CStringArray commandLines;
         uint64_t minArgs;

@@ -58,7 +58,10 @@ string_q nextAccountChunk(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAccount::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
+bool CAccount::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+    string_q fieldName = fieldNameIn;
+    string_q fieldValue = fieldValueIn;
+
     // EXISTING_CODE
     if ( fieldName % "latestTx" ) {
         string_q str = fieldValue;
