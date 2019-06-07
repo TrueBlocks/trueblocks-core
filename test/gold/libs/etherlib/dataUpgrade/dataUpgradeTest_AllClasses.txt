@@ -206,7 +206,7 @@ fm_mode             	1015	1	131122	T_TEXT TS_STRING
   },
   "stateHistory": [],
   "nodeBal": 0,
-  "enabled": 1
+  "enabled": true
 }
 
 --------------------------------------------------------------------------------
@@ -266,7 +266,7 @@ fm_mode             	1015	0	131122	T_TEXT TS_STRING
   },
   "stateHistory": [],
   "nodeBal": 0,
-  "enabled": 1,
+  "enabled": true,
   "abi_spec": {
     "schema": 5007,
     "deleted": 0,
@@ -461,6 +461,10 @@ transactionHash     	1014	1	131132	T_HASH TS_STRING
 transactionIndex    	1015	1	65561	T_NUMBER TS_NUMERAL
 transactionLogIndex 	1016	1	65561	T_NUMBER TS_NUMERAL
 type                	1017	1	131122	T_TEXT TS_STRING
+topic0              	1018	1	131132	T_HASH TS_STRING
+topic1              	1019	1	131132	T_HASH TS_STRING
+topic2              	1020	1	131132	T_HASH TS_STRING
+topic3              	1021	1	131132	T_HASH TS_STRING
 {
   "address": "0x0",
   "logIndex": 0,
@@ -487,6 +491,10 @@ transactionHash     	1014	1	131132	T_HASH TS_STRING
 transactionIndex    	1015	1	65561	T_NUMBER TS_NUMERAL
 transactionLogIndex 	1016	1	65561	T_NUMBER TS_NUMERAL
 type                	1017	1	131122	T_TEXT TS_STRING
+topic0              	1018	1	131132	T_HASH TS_STRING
+topic1              	1019	1	131132	T_HASH TS_STRING
+topic2              	1020	1	131132	T_HASH TS_STRING
+topic3              	1021	1	131132	T_HASH TS_STRING
 {
 }
 
@@ -510,6 +518,10 @@ transactionHash     	1014	0	131132	T_HASH TS_STRING
 transactionIndex    	1015	0	65561	T_NUMBER TS_NUMERAL
 transactionLogIndex 	1016	0	65561	T_NUMBER TS_NUMERAL
 type                	1017	0	131122	T_TEXT TS_STRING
+topic0              	1018	0	131132	T_HASH TS_STRING
+topic1              	1019	0	131132	T_HASH TS_STRING
+topic2              	1020	0	131132	T_HASH TS_STRING
+topic3              	1021	0	131132	T_HASH TS_STRING
 {
   "schema": 5007,
   "deleted": 0,
@@ -527,7 +539,7 @@ type                	1017	0	131122	T_TEXT TS_STRING
     "inputs": [],
     "outputs": []
   },
-  "compressedLog": "()",
+  "compressedLog": " (  )",
   "transactionLogIndex": 0
 }
 
