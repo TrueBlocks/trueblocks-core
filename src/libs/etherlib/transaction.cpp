@@ -536,7 +536,7 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
             break;
         case 'f':
             if ( fieldName % "from" ) return addr_2_Str(from);
-            if ( fieldName % "finalized" ) return int_2_Str(finalized);
+            if ( fieldName % "finalized" ) return bool_2_Str(finalized);
             break;
         case 'g':
             if ( fieldName % "gas" ) return gas_2_Str(gas);
@@ -642,6 +642,21 @@ bool sortTransactionsForWrite(const CTransaction& t1, const CTransaction& t2) {
     else if (t1.transactionIndex != t2.transactionIndex)
         return t1.transactionIndex < t2.transactionIndex;
     return t1.hash < t2.hash;
+}
+
+//-------------------------------------------------------------------------
+bool CTransaction::loadAsBlockReward(blknum_t bn, const address_t& addr) {
+    blockNumber = bn;
+    transactionIndex = 99999;
+    from = "0xBlockReward";
+    to = addr;
+    if (bn < byzantiumBlock)
+        value = str_2_Wei("5000000000000000000");
+    else if (bn < constantinopleBlock)
+        value = str_2_Wei("3000000000000000000");
+    else
+        value = str_2_Wei("2000000000000000000");
+    return true;
 }
 
 //-------------------------------------------------------------------------

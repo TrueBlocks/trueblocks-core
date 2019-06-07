@@ -24,14 +24,14 @@ int main(int argc, const char *argv[]) {
     os << getBinaryCacheFilename(CT_BLOCKS,   1001001) << endl;
     os << getBinaryCacheFilename(CT_BLOOMS,   1001001) << endl;
     os << getBinaryCacheFilename(CT_TXS,      1001001, 20) << endl;
-    os << getBinaryCacheFilename(CT_TRACES,   1001001, 20, 10) << endl;
+    os << getBinaryCacheFilename(CT_TRACES,   1001001, 20, "10") << endl;
     os << getBinaryCacheFilename(CT_ACCTS,    "0xc011a72400e58ecd99ee497cf89e3775d4bd732f") << endl;
     os << getBinaryCacheFilename(CT_MONITORS, "0xc011a72400e58ecd99ee497cf89e3775d4bd732f") << endl;
 
     os << getBinaryCachePath(CT_BLOCKS,   1001001) << endl;
     os << getBinaryCachePath(CT_BLOOMS,   1001001) << endl;
     os << getBinaryCachePath(CT_TXS,      1001001, 20) << endl;
-    os << getBinaryCachePath(CT_TRACES,   1001001, 20, 10) << endl;
+    os << getBinaryCachePath(CT_TRACES,   1001001, 20, "1,1") << endl;
     os << getBinaryCachePath(CT_ACCTS,    "0xc011a72400e58ecd99ee497cf89e3775d4bd732f") << endl;
     os << getBinaryCachePath(CT_MONITORS, "0xc011a72400e58ecd99ee497cf89e3775d4bd732f") << endl;
 

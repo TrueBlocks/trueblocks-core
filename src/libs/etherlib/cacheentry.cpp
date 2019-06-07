@@ -56,7 +56,10 @@ string_q nextCacheentryChunk(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CCacheEntry::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
+bool CCacheEntry::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+    string_q fieldName = fieldNameIn;
+    string_q fieldValue = fieldValueIn;
+
     // EXISTING_CODE
     // EXISTING_CODE
 

@@ -15,8 +15,9 @@
 
 namespace qblocks {
 
-#define byzantiumBlock   4370000
-#define firstTransaction 46147
+#define firstTransactionBlock   46147
+#define byzantiumBlock        4370000
+#define constantinopleBlock   7280000
 
     //-----------------------------------------------------------------------
     inline bool ddosRange(blknum_t bn) {

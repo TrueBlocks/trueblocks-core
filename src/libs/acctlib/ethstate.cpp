@@ -56,7 +56,10 @@ string_q nextEthstateChunk(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CEthState::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
+bool CEthState::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+    string_q fieldName = fieldNameIn;
+    string_q fieldValue = fieldValueIn;
+
     // EXISTING_CODE
     if ( fieldName % "ether" ) {
         balance = str_2_Wei(fieldValue)* weiPerEther();
@@ -294,7 +297,6 @@ ostream& operator<<(ostream& os, const CEthState& item) {
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-
 //-------------------------------------------------------------------------
 wei_t getBalanceAt(const string_q& addr, blknum_t num) {
     if (num == NOPOS)
@@ -427,3 +429,4 @@ blknum_t getDeployBlock(const address_t& addr) {
 }
 // EXISTING_CODE
 }  // namespace qblocks
+

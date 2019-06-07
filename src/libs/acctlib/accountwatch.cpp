@@ -56,7 +56,10 @@ string_q nextAccountwatchChunk(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAccountWatch::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
+bool CAccountWatch::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+    string_q fieldName = fieldNameIn;
+    string_q fieldValue = fieldValueIn;
+
     // EXISTING_CODE
     if (fieldName % "statement") {
         string_q str = fieldValue;
@@ -279,7 +282,7 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "color" ) return color;
             break;
         case 'e':
-            if ( fieldName % "enabled" ) return int_2_Str(enabled);
+            if ( fieldName % "enabled" ) return bool_2_Str(enabled);
             break;
         case 'f':
             if ( fieldName % "firstBlock" ) return uint_2_Str(firstBlock);

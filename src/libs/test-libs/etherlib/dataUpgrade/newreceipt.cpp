@@ -54,7 +54,10 @@ string_q nextNewreceiptChunk(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CNewReceipt::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
+bool CNewReceipt::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+    string_q fieldName = fieldNameIn;
+    string_q fieldValue = fieldValueIn;
+
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -243,7 +246,7 @@ string_q CNewReceipt::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "gasUsed" ) return gas_2_Str(gasUsed);
             break;
         case 'i':
-            if ( fieldName % "isError" ) return int_2_Str(isError);
+            if ( fieldName % "isError" ) return bool_2_Str(isError);
             break;
         case 'l':
             if ( fieldName % "logs" || fieldName % "logsCnt" ) {

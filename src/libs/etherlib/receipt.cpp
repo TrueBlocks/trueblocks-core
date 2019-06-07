@@ -86,8 +86,6 @@ bool CReceipt::setValueByName(const string_q& fieldNameIn, const string_q& field
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
-        case 'b':
-            break;
         case 'c':
             if ( fieldName % "contractAddress" ) { contractAddress = str_2_Addr(fieldValue); return true; }
             if ( fieldName % "cumulativeGasUsed" ) { cumulativeGasUsed = str_2_Wei(fieldValue); return true; }
@@ -311,11 +309,9 @@ CArchive& operator>>(CArchive& archive, CReceipt& rec) {
 }
 
 //---------------------------------------------------------------------------
-string_q CReceipt::getValueByName(const string_q& fieldNameIn) const {
-    string_q fieldName = fieldNameIn;
+string_q CReceipt::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
-    //SEP4("CReceipt::getValueByName(" + fieldName + ")");
     string_q ret = nextReceiptChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
@@ -354,10 +350,11 @@ string_q CReceipt::getValueByName(const string_q& fieldNameIn) const {
 
     // EXISTING_CODE
     if (fieldName != "schema" && fieldName != "deleted" && fieldName != "showing" && fieldName != "cname") {
-        if (fieldName == "transactionHash")
-            fieldName = "hash";  // NOLINT
+        string_q tmpName = fieldName;
+        if (tmpName == "transactionHash")
+            tmpName = "hash";  // NOLINT -- we want transction class to find this, so rename
         // See if this field belongs to the item's container
-        ret = nextTransactionChunk(fieldName, pTrans);
+        ret = nextTransactionChunk(tmpName, pTrans);
         //LOG4(fieldName, "=", ret, " from parent");
         if (contains(ret, "Field not found"))
             ret = "";
