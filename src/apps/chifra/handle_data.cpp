@@ -52,11 +52,11 @@ bool COptions::handle_data(void) {
 
     } else if (contains(tool_flags, "--logs")) {
         replaceAll(tool_flags, "--logs", "");
-        os << "getLogs "  << (api_mode ? (substitute(tool_flags, ",", " ") + " --raw") : tool_flags) << " ; ";
+        os << "getLogs "  << (api_mode ? substitute(tool_flags, ",", " ") : tool_flags) << " ; ";
 
     } else if (contains(tool_flags, "--traces")) {
         replaceAll(tool_flags, "--traces", "");
-        os << "getTrace " << (api_mode ? (substitute(tool_flags, ",", " ") + " --raw") : tool_flags) << " ; ";
+        os << "getTrace " << (api_mode ? substitute(tool_flags, ",", " ") : tool_flags) << " ; ";
 
     } else if (contains(tool_flags, "--slurp")) {
         replaceAll(tool_flags, "--slurp", "");
