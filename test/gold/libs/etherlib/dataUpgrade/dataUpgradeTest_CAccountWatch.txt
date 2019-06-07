@@ -32,7 +32,7 @@ fm_mode             	1015	1	131122	T_TEXT TS_STRING
   },
   "stateHistory": [],
   "nodeBal": 0,
-  "enabled": 1
+  "enabled": true
 }
 
 --------------------------------------------------------------------------------
@@ -92,7 +92,7 @@ fm_mode             	1015	0	131122	T_TEXT TS_STRING
   },
   "stateHistory": [],
   "nodeBal": 0,
-  "enabled": 1,
+  "enabled": true,
   "abi_spec": {
     "address": "0x0",
     "interfaces": []

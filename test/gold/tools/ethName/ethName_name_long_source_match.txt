@@ -572,6 +572,7 @@ addr	name	symbol	source
 0xa0d440c6da37892dc06ee7930b2eede0634fd681	MasterNet	MASH	Etherscan.io
 0xa13f0743951b4f6e3e3aa039f682e17279f52bc3	Sentinel Chain	SENC	Etherscan.io
 0xa15c7ebe1f07caf6bff097d8a589fb8ac49ae5b3	Pundi X Token	NPXS	Etherscan.io
+0xa1eb40c284c5b44419425c4202fa8dabff31006b	Proof of Attendance Token	POAP	Etherscan.io
 0xa31108e5bab5494560db34c95492658af239357c	DACSEE	DACS	Etherscan.io
 0xa3d58c4e56fedcae3a7c43a725aee9a71f0ece4e	Metronome	MET	Etherscan.io
 0xa3efef1a1e3d1ad72b9d0f4253e7c9c084c2c08b	Online.io	OIO	Etherscan.io

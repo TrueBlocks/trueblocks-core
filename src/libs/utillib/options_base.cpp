@@ -964,6 +964,10 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
                     namedAccounts.push_back(account);
             }
         }
+        if (names.size() == 0) {
+            cerr << "Something went wrong loading names file. Quitting...";
+            return false;
+        }
 
         CArchive nameCache(WRITING_ARCHIVE);
         if (nameCache.Lock(binFile, modeWriteCreate, LOCK_CREATE)) {

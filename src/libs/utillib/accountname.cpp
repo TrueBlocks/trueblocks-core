@@ -317,13 +317,16 @@ CAccountName::CAccountName(string_q& strIn) {
         name = nextTokenClear(source, '\t');
     } else {
         string str = substitute(substitute(trim(strIn, '\t'), "\n", ""), "\r", "");
-        addr = toLower(nextTokenClear(str, '\t'));
-        symbol = nextTokenClear(str, '\t');
-        source = nextTokenClear(str, '\t');
-        name = nextTokenClear(str, '\t');
-        logo = nextTokenClear(str, '\t');
-        description = nextTokenClear(str, '\t');
-        visible = str_2_Bool(str);
+        CStringArray parts;
+        explode(parts, str, '\t');
+        addr = toLower(parts[0]);
+        symbol = parts[1];
+        source = parts[2];
+        name = parts[3];
+        logo = parts[4];
+        description = parts[5];
+        isContract = str_2_Bool(parts[6]);
+        visible = str_2_Bool(parts[7]);
     }
 }
 // EXISTING_CODE

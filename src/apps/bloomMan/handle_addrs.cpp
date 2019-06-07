@@ -13,7 +13,7 @@ bool handle_addrs(blknum_t bn, void *data) {
 
     string_q path = getBinaryCacheFilename(CT_BLOOMS, bn);
     if (!fileExists(path)) {
-        if (verbose || bn < firstTransaction)
+        if (verbose || bn < firstTransactionBlock)
             cerr << "Skipping " << path << endl;
         return !shouldQuit();
     }
