@@ -620,13 +620,13 @@ extern void loadParseMap(void);
     }
 
     //-------------------------------------------------------------------------
-    string_q getBinaryCachePath(cache_t type, blknum_t bn, txnum_t txid, txnum_t tcid) {
-        return getFilename_local(type, padNum9(bn), padNum5(txid), padNum5(tcid), true);
+    string_q getBinaryCachePath(cache_t type, blknum_t bn, txnum_t txid, const string_q& trc_id) {
+        return getFilename_local(type, padNum9(bn), padNum5(txid), trc_id, true);
     }
 
     //-------------------------------------------------------------------------
-    string_q getBinaryCacheFilename(cache_t type, blknum_t bn, txnum_t txid, txnum_t tcid) {
-        return getFilename_local(type, padNum9(bn), padNum5(txid), padNum5(tcid), false);
+    string_q getBinaryCacheFilename(cache_t type, blknum_t bn, txnum_t txid, const string_q& trc_id) {
+        return getFilename_local(type, padNum9(bn), padNum5(txid), trc_id, false);
     }
 
     //-------------------------------------------------------------------------
