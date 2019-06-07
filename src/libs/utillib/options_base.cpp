@@ -292,6 +292,14 @@ namespace qblocks {
             isRaw = true;
         }
 
+        if (isEnabled(OPT_OUTPUT) && contains(cmdLine, "--output")) {
+            outputFn = configPath("cache/tmp/" + makeValidName(Now().Format(FMT_EXPORT)) + ".txt");
+            establishFolder(outputFn);
+            ASSERT(!fileExists(outputFn));
+            origCout = cout.rdbuf();
+            cout.rdbuf( strCout.rdbuf() );
+        }
+
         if (isEnabled(OPT_WEI) && contains(cmdLine, "--wei ")) {
             replaceAll(cmdLine, "--wei ", "");
             expContext().asEther = false;
@@ -348,6 +356,8 @@ namespace qblocks {
         if (isEnabled(OPT_ETHER) && arg == "--ether")
             return true;
         if (isEnabled(OPT_RAW) && arg == "--raw")
+            return true;
+        if (isEnabled(OPT_OUTPUT) && arg == "--output")
             return true;
         if (isEnabled(OPT_RAW) && arg == "--veryRaw")
             return true;
@@ -873,6 +883,18 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         namedAccounts.clear();
         pParams = NULL;
         cntParams = 0;
+        origCout = NULL;
+        strCout.clear();
+        outputFn = "";
+    }
+
+    //--------------------------------------------------------------------------------
+    void COptionsBase::closeRedirect(void) {
+        if (origCout != NULL) {
+            cout.rdbuf( origCout );
+            origCout = NULL;
+            stringToAsciiFile(outputFn, strCout.str());
+        }
     }
 
     //-----------------------------------------------------------------------
