@@ -51,8 +51,7 @@ cerr << "\tresult: \t[" << substitute(result, "\n", " ") << "]\n"; \
 cerr << "\tearlyAbort:\t" << earlyAbort << "\n"; \
 cerr << "\tcurlID: \t" << getCurlID() << "\n";
 #define PRINTQ(msg) \
-cerr << string_q(120, '-') << "\n" << ++x << "." << msg << "\n"; \
-cerr << "\tcurlID: \t" << getCurlID() << "\n";
+cerr << string_q(120, '-') << "\n" << ++x << "." << msg << "\n";
 #define PRINTL(msg) \
 cerr << string_q(120,'-') << "\n"; \
 PRINT(msg);
