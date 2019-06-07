@@ -33,6 +33,7 @@ public:
     string_q source;
     string_q description;
     string_q logo;
+    bool isContract;
     bool visible;
     string_q fn;
     double size;
@@ -105,6 +106,7 @@ inline void CAccountName::initialize(void) {
     source = "";
     description = "";
     logo = "";
+    isContract = 0;
     visible = true;
     fn = "";
     size = 0.0;
@@ -126,6 +128,7 @@ inline void CAccountName::duplicate(const CAccountName& ac) {
     source = ac.source;
     description = ac.description;
     logo = ac.logo;
+    isContract = ac.isContract;
     visible = ac.visible;
     fn = ac.fn;
     size = ac.size;

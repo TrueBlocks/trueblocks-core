@@ -56,7 +56,10 @@ string_q nextFunctionChunk(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CFunction::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
+bool CFunction::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+    string_q fieldName = fieldNameIn;
+    string_q fieldValue = fieldValueIn;
+
     // EXISTING_CODE
     if ( fieldName % "signature" ) {
         signature = getSignature(SIG_CANONICAL);
