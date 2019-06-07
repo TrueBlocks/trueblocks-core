@@ -1,6 +1,6 @@
 [settings]
 class       = CReceipt
-fields      = hash blockHash (nowrite)|blknum blockNumber (nowrite)|address contractAddress|wei cumulativeGasUsed (nowrite)|address from (nowrite)|gas gasUsed|CLogEntryArray logs|string logsBloom (nowrite)|bytes32 root (nowrite)|uint32 status=NO_STATUS|address to (nowrite)|hash transactionHash (nowrite)|blknum transactionIndex (nowrite)
+fields      = address contractAddress|wei cumulativeGasUsed (nowrite)|gas gasUsed|CLogEntryArray logs|string logsBloom (nowrite)|bytes32 root (nowrite)|uint32 status=NO_STATUS
 backfields1 = address contractAddress|gas gasUsed|CLogEntryArray logs|uint32 status=NO_STATUS
 backfields2 = version_030|address contractAddress|gas gasUsed|CLogEntryArray logs|bloom logsBloom|uint32 status=NO_STATUS
 backfields3 = version_020|address contractAddress|gas gasUsed|CLogEntryArray logs|bloom logsBloom

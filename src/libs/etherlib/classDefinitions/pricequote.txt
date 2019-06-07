@@ -2,4 +2,4 @@
 class     = CPriceQuote
 fields    = timestamp timestamp|double close
 includes  = abilib.h
-cIncs     = etherlib.h|pricesource.h
+cIncs     = pricesource.h
