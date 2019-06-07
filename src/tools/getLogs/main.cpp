@@ -80,7 +80,7 @@ bool visitTransaction(CTransaction& trans, void *data) {
             if (opt->api_mode) {
                 trans.receipt.pTrans = &trans;
                 log.pReceipt = &trans.receipt;
-#error - this should be at the header so we don't reload the ABI each time
+//#error - this should be at the header so we don't reload the ABI each time
                 CAbi abi;
                 abi.loadAbiByAddress(log.address);
                 abi.articulateLog(&log);

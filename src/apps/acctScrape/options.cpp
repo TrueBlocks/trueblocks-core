@@ -156,6 +156,7 @@ bool COptions::parseArguments(string_q& command) {
             cerr << "Freshening " << monitor.address << "\r";cerr.flush();
         }
     }
+
     return scanRange.first < lastInCache;
 }
 

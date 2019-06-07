@@ -8,6 +8,7 @@ ethName --matchCase * torj --fmt json
     "source": "Etherscan.io",
     "description": "Blockchain-based, end-to-end encrypted, distributed object storage, where only you have access to your data",
     "logo": "storj2.png",
+    "isContract": true,
     "visible": true
   }
 ]

@@ -19,7 +19,8 @@ public:
     bool skipDdos;
     size_t maxTraces;
     bool articulate;
-    CUintArray tsArray;
+    uint32_t *ts_array;
+    size_t ts_cnt;
 
     COptions(void);
     ~COptions(void);
@@ -29,7 +30,9 @@ public:
     string_q postProcess(const string_q& which, const string_q& str) const;
 
     map<uint32_t,address_t> prefundMap;
+    map<uint32_t,address_t> blkRewardMap;
     bool loadMonitorData(CAppearanceArray_base& apps, const address_t& addr);
     bool loadData(void);
     bool exportData(void);
+    bool freshenTsArray(blknum_t blk);
 };
