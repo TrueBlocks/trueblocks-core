@@ -19,6 +19,7 @@ namespace qblocks {
     //--------------------------------------------------------------------
     using string_q     = std::string;
     using CStringArray = vector<string_q>;
+    using CUintArray   = vector<uint64_t>;
     typedef bool (*APPLYFUNC)(string_q& line, void *data);
 
     //---------------------------------------------------------------------------------------
@@ -103,6 +104,7 @@ namespace qblocks {
     extern string_q nextTokenClear       (string_q& str, char delim, bool doClear = true);
     extern string_q snagFieldClear       (string_q& str, const string_q& tagName, const string_q& defVal = "");
     extern size_t   explode              (CStringArray& result, const string& input, char ch);
+    extern size_t   explode              (CUintArray& result, const string& input, char ch);
     extern size_t   forEveryExplodedItem (const string& input, char ch, APPLYFUNC func, void *data);
 
     //---------------------------------------------------------------------------

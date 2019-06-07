@@ -97,9 +97,11 @@ namespace qblocks {
     extern CArchive& operator<<(CArchive& archive, const CStringArray& array);
     extern CArchive& operator<<(CArchive& archive, const CBigUintArray& array);
     extern CArchive& operator<<(CArchive& archive, const CUintArray& array);
+    extern CArchive& operator<<(CArchive& archive, const CIntArray& array);
 
     extern CArchive& operator>>(CArchive& archive, CStringArray& array);
     extern CArchive& operator>>(CArchive& archive, CBigUintArray& array);
     extern CArchive& operator>>(CArchive& archive, CUintArray& array);
+    extern CArchive& operator>>(CArchive& archive, CIntArray& array);
 
 }  // namespace qblocks
