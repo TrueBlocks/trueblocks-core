@@ -28,3 +28,6 @@ public:
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 };
+
+//-----------------------------------------------------------------------------
+extern const char* STR_EXPORT_API;

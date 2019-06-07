@@ -17,6 +17,7 @@ static const COption params[] = {
     COption("~!trans_list",   "a space-separated list of one or more transaction identifiers "
                                 "(tx_hash, bn.txID, blk_hash.txID)"),
     COption("@address:<val>", "a list of addresses used to filter the results"),
+    COption("@output",        "redirect output to the given file"),
     COption("",               "Retrieve a transaction's logs from the local cache or a running node."),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -56,6 +57,9 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    if (api_mode && isRaw)
+        EXIT_USAGE("Raw mode is not available under the API.");
+
     if (!transList.hasTrans())
         EXIT_USAGE("Please specify at least one transaction identifier.");
 
@@ -64,7 +68,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    optionOn(OPT_RAW);
+    optionOn(OPT_RAW | OPT_OUTPUT);
     registerOptions(nParams, params);
 
     addresses.clear();
@@ -79,12 +83,12 @@ COptions::COptions(void) {
     sorts[0] = GETRUNTIME_CLASS(CBlock);
     sorts[1] = GETRUNTIME_CLASS(CTransaction);
     sorts[2] = GETRUNTIME_CLASS(CReceipt);
-
     Init();
 }
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+    closeRedirect();
 }
 
 //--------------------------------------------------------------------------------
@@ -105,4 +109,3 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
     }
     return str;
 }
-

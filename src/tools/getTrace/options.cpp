@@ -18,6 +18,7 @@ static const COption params[] = {
                                 "(tx_hash, bn.txID, blk_hash.txID)"),
     COption("-countOnly",     "show the number of traces for the transaction only"),
     COption("@address:<val>", "a list of addresses used to filter the results"),
+    COption("@output",        "redirect output to the given file"),
     COption("",               "Retrieve a transaction's traces from the local cache or a running node."),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -39,10 +40,10 @@ bool COptions::parseArguments(string_q& command) {
                 EXIT_USAGE(orig + " does not appear to be a valid Ethereum address.");
             addresses.push_back(arg + "|");
 
-       } else if (arg == "-c" || arg == "--countOnly") {
+        } else if (arg == "-c" || arg == "--countOnly") {
             countOnly = true;
 
-       } else if (startsWith(arg, '-')) {  // do not collapse
+        } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
                 EXIT_USAGE("Invalid option: " + arg);
@@ -60,6 +61,9 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    if (api_mode && isRaw)
+        EXIT_USAGE("Raw mode is not available under the API.");
+
     if (!transList.hasTrans())
         EXIT_USAGE("Please specify at least one transaction identifier.");
 
@@ -68,7 +72,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    optionOn(OPT_RAW);
+    optionOn(OPT_RAW | OPT_OUTPUT);
     registerOptions(nParams, params);
 
     addresses.clear();
@@ -84,12 +88,12 @@ COptions::COptions(void) {
     sorts[0] = GETRUNTIME_CLASS(CBlock);
     sorts[1] = GETRUNTIME_CLASS(CTransaction);
     sorts[2] = GETRUNTIME_CLASS(CReceipt);
-
     Init();
 }
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+    closeRedirect();
 }
 
 //--------------------------------------------------------------------------------
@@ -110,4 +114,3 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
     }
     return str;
 }
-

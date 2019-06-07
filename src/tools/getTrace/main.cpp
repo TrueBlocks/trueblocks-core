@@ -29,24 +29,38 @@ int main(int argc, const char *argv[]) {
         forEveryTransactionInList(visitTransaction, &options, options.transList.queries);
     }
 
-    size_t cnt = 0;
-    cout << "[";
-    for (auto item : options.items) {
-        if (cnt++ > 0)
-            cout << ",";
-        item.doExport(cout);
-    }
-    if (cnt && options.rawItems.size())
-        cout << ",\n";
+    if (options.api_mode) {
+        manageFields("CTrace:blockNumber,transactionPosition,traceAddress,error", true);
+        manageFields("CTraceAction:callType,from,to,value,input,gas", true);
+        manageFields("CTraceResult:gasUsed", true);
+        for (auto item : options.items)
+            cout << substitute(item.Format(STR_EXPORT_API), "null", " ") << endl;
+        // In api mode we've been writing to a string stream (TODO(tjayrush): should write directly to the file)
+        // so we need to close the redirect and start writing to cout again. We only write the location of the file.
+        options.closeRedirect();
+        cout << options.outputFn;
 
-    cnt = 0;
-    for (auto str : options.rawItems) {
-        if (cnt++ > 0)
+    } else {
+        size_t cnt = 0;
+        cout << "[";
+        for (auto item : options.items) {
+            if (cnt++ > 0)
+                cout << ",";
+            item.doExport(cout);
+        }
+        if (cnt && options.rawItems.size())
             cout << ",\n";
-        cout << str;
-    }
-    cout << "]";
 
+        cnt = 0;
+        for (auto str : options.rawItems) {
+            if (cnt++ > 0)
+                cout << ",\n";
+            cout << str;
+        }
+        cout << "]";
+    }
+
+    etherlib_cleanup();
     return 0;
 }
 
@@ -61,49 +75,45 @@ bool visitTransaction(CTransaction& trans, void *data) {
         return true;
     }
 
-    ENTER("visitTransaction");
     if (!opt->isRaw) {
-        LOG4("Not raw");
-        for (auto log : trans.receipt.logs)
-            opt->items.push_back(log);
-        EXIT_NOMSG(true);
+        if (opt->countOnly) {
+            cout << trans.hash << "\t" << getTraceCount(trans.hash) << "\n";
+        } else {
+            CTraceArray traces;
+            getTraces(traces, trans.getValueByName("hash"));
+            for (auto tr : traces) {
+                tr.pTrans = &trans;
+                opt->items.push_back(tr);
+            }
+         }
+        return true;
     }
 
     string_q fields =
         "CBlock:blockHash,blockNumber|"
         "CTransaction:to,from,blockHash,blockNumber|"
-        "CReceipt:to,from,blockHash,blockNumber,transactionHash,transactionIndex,cumulativeGasUsed,logsBloom,root|"
-        "CLogEntry:blockHash,blockNumber,transactionHash,transactionIndex,transactionLogIndex,removed,type";
+        "CTrace|blockHash,blockNumber,subtraces,traceAddress,transactionHash,transactionPosition,type,error,articulatedTrace,action,result,date|"
+        "CTraceAction:address,balance,callType,from,gas,init,input,refundAddress,to,value,ether|"
+        "CTraceResult:address,code,gasUsed,output|";
     manageFields(fields, true);
+
     string_q result;
-    queryRawLogs(result, trans.blockNumber, trans.blockNumber);
+    queryRawTrace(result, trans.getValueByName("hash"));
     if (opt->isVeryRaw) {
-        LOG4("very raw: " + result);
         opt->rawItems.push_back(result);
-        EXIT_NOMSG(true);
+        return true;
     }
     CRPCResult generic;
     generic.parseJson3(result);
     CBlock bl;
     CTransaction tt; tt.pBlock = &bl;
     CReceipt receipt; receipt.pTrans = &tt;
-    CLogEntry log; log.pReceipt = &receipt;
-    while (log.parseJson3(generic.result)) {
-        LOG4("log: " + substitute(log.Format(),"\n"," "));
-        if (log.getValueByName("transactionIndex") == uint_2_Str(trans.transactionIndex)) {
-            opt->rawItems.push_back(log.Format());
-        }
-        log = CLogEntry();
-        log.pReceipt = &receipt;
-    }
-    if (opt->rawItems.size() == 0) {
-        CReceipt receipt;
-        receipt.pTrans = &trans;
-        CLogEntry log;
-        log.pReceipt = &receipt;
-        log.address = "not_an_real_log";
-        opt->rawItems.push_back(log.Format());
-    }
-    LOG4("found ", opt->rawItems.size(), " logs");
-    EXIT_NOMSG(true);
+    CTrace trace; trace.pTrans = &tt;
+    trace.parseJson3(generic.result);
+    opt->rawItems.push_back(trace.Format());
+    return true;
 }
+
+//--------------------------------------------------------------
+const char* STR_EXPORT_API =
+"[{BLOCKNUMBER}]\t[{TRANSACTIONPOSITION}]\t[{TRACEADDRESS}]\t[{ACTION::CALLTYPE}]\t[{ERROR}]\t[{ACTION::FROM}]\t[{ACTION::TO}]\t[{ACTION::VALUE}]\t[{ACTION::GAS}]\t[{RESULT::GASUSED}]\t[{ACTION::INPUT}]";
