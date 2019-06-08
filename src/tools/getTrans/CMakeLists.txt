@@ -101,7 +101,7 @@ run_test("getTrans_bad_blkhash_msg_raw"  "--raw" "0x0b4c6fb75ded4b90218cf0346b08
 
 run_test("getTrans_revert_not_err" "0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c" " -a" " -v" " -t")
 
-#run_test("getTrans_message" "0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344" " -a" " -v")
+run_test("getTrans_message" "0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344" " -a" " -v")
 run_test("getTrans_core_dump_bug"      "0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10" " -avt")
 
 # Installation steps

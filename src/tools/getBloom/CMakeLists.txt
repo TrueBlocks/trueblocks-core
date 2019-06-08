@@ -68,21 +68,10 @@ run_test("getBloom_badopt15"        "4501030" " --eab" " --receipts" " --bitcoun
 
 run_test("getBloom_rawlast1"        "4501030" " --eab" " --raw")
 run_test("getBloom_rawlast2"        "4501030" " -e" " --raw")
-#run_test("getBloom_eablast1"        "4501030" " --raw" " -e")
-#run_test("getBloom_eablast2"        "4501030" " --raw" " -e")
-
-#run_test("getBloom_bars_raw"        "2501030-2501060" " --bars")
 run_test("getBloom_bitbars_raw"     "2501030-2501060" " --bitbars")
 run_test("getBloom_pctbars_raw"     "2501030-2501060" " --pctbars")
-#run_test("getBloom_bits_raw"        "4501030" " --bits")
-#run_test("getBloom_bars_eab"        "2501030-2501060" " --bars" " --eab")
-#run_test("getBloom_bitbars_eab"     "2501030-2501060" " --bitbars" " --eab")
-#run_test("getBloom_pctbars_eab"     "4501030-4501060" " --pctbars" " --eab")
-#run_test("getBloom_bits_eab"        "4501030" " --bits" " --eab" " --verbose")
-#run_test("getBloom_bars_block"      "2501030-2501060" " --bars" " --block")
 run_test("getBloom_bars_block2"     "2501030-2501060" " --bitbars" " --block")
 run_test("getBloom_bars_block3"     "2501030-2501060" " --pctbars" " --block")
-#run_test("getBloom_bars_receipt"    "2501030-2501060" " --bars" " --receipts")
 run_test("getBloom_bars_receipt2"   "2501030-2501060" " --bitbars" " --receipts")
 run_test("getBloom_bars_receipt3"   "2501030-2501060" " --pctbars" " --receipts")
 
@@ -97,16 +86,10 @@ run_test("getBloom_raw_02"          "--raw"    " 2768801" " 1995314" " 1958017")
 run_the_test(${TEST_PATH} ${GOLD_PATH} "getBloom_force_01" ${EXECUTABLE_OUTPUT_PATH}/getBlock " 2768801" " 1995314" " 1958017" " -o")
 
 # display a bunch of blocks from cache
-#run_test("getBloom_cache_01"        "--eab" " 2768801" " 1995314" " 1958017" " --parity" " --bitcount")
-#run_test("getBloom_cache_02"        "-e"    " 2768801" " 1995314" " 4501011" " --parity")
-
 run_test("getBloom_parity_hex"      "--parity" " 0x2e7721" " --block")
 run_test("getBloom_parity_num"      "--parity" " 728708")
 run_test("getBloom_parity_range"    "--parity" " 358450-0x5785a" " --bitcount")
-
-#run_test("getBloom_force_02"        " 2769609" " 2799895" " 2872831" " 3076260" " -o")
 run_test("getBloom_multi1"          "--parity" " --raw" " 2769609" " 2799895" " 2872831" " 3076260")
-#run_test("getBloom_multi2"         "--parity" " -e" " 2769609" " 2799895" " 2872831" " 3076260")
 
 run_test("getBloom_short_receipt"   "-c"         " 4001001")
 run_test("getBloom_long_receipt"    "--receipts" " 4001001")
