@@ -199,8 +199,7 @@ void COptions::applyFilter() {
         ASSERT(prefunds.size() == 8893);  // This is a known value
         for (auto prefund : prefunds) {
             string_q addr = nextTokenClear(prefund,'\t');
-            CAccountName item(addr);
-            item.name = "Prefund_" + padNum4(cnt++);
+            CAccountName item("80-Prefund\t" + addr + "\tPrefund_" + padNum4(cnt++));
             addIfUnique(item);
         }
     }

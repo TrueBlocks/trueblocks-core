@@ -35,10 +35,6 @@ int main(int argc, const char *argv[]) {
         manageFields("CTraceResult:gasUsed", true);
         for (auto item : options.items)
             cout << substitute(item.Format(STR_EXPORT_API), "null", " ") << endl;
-        // In api mode we've been writing to a string stream (TODO(tjayrush): should write directly to the file)
-        // so we need to close the redirect and start writing to cout again. We only write the location of the file.
-        options.closeRedirect();
-        cout << options.outputFn;
 
     } else {
         size_t cnt = 0;

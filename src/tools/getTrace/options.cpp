@@ -18,7 +18,6 @@ static const COption params[] = {
                                 "(tx_hash, bn.txID, blk_hash.txID)"),
     COption("-countOnly",     "show the number of traces for the transaction only"),
     COption("@address:<val>", "a list of addresses used to filter the results"),
-    COption("@output",        "redirect output to the given file"),
     COption("",               "Retrieve a transaction's traces from the local cache or a running node."),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -72,7 +71,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    optionOn(OPT_RAW | OPT_OUTPUT);
+    optionOn(OPT_RAW|OPT_OUTPUT);
     registerOptions(nParams, params);
 
     addresses.clear();
@@ -93,7 +92,6 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-    closeRedirect();
 }
 
 //--------------------------------------------------------------------------------

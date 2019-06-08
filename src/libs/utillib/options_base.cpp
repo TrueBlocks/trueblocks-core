@@ -894,6 +894,10 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             cout.rdbuf( origCout );
             origCout = NULL;
             stringToAsciiFile(outputFn, strCout.str());
+            if (isTestMode())
+                cout << "--output option is on - file written" << endl;
+            else
+                cout << outputFn;
         }
     }
 

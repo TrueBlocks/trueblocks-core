@@ -30,7 +30,7 @@ addr	name	symbol	source
 0x0743392132d1a03a902c477e5a176f256ba3220c	Coimatic 3.0	CTIC3	Etherscan.io
 0x076a93a40bf9e0d21d3f75dd1e0584ddbe0f9d1a	Qurito	QURO	Etherscan.io
 0x076c97e1c869072ee22f8c91978c99b4bcb02591	CommerceBlock	CBT	Etherscan.io
-0x0775c81a273b355e6a5b76e240bf708701f00279	Bulleon	BUL	Etherscan.io
+0x0775c81a273b355e6a5b76e240bf708701f00279	Bulleon Airdrop	BUL	Etherscan.io
 0x0784dbabb6c6834bddfb7cfee116ba049e5dafab	IBTC	IBTC	Etherscan.io
 0x07d9e49ea402194bf48a8276dafb16e4ed633317	DALECOIN	DALC	Etherscan.io
 0x07e3c70653548b04f0a75970c1f81b4cbbfb606f	Delta	DLT	Etherscan.io
@@ -47,7 +47,7 @@ addr	name	symbol	source
 0x0b76544f6c413a555f309bf76260d1e02377c02a	Internet Node Token	INT	Etherscan.io
 0x0bb217e40f8a5cb79adf04e1aab60e5abd0dfc1e	SwftCoin	SWFTC	Etherscan.io
 0x0bc61dded5f6710c637cf8288eb6058766ce1921	CEN	CEN	Etherscan.io
-0x0bef619cf38cf0c22967289b8419720fbd1db9f7	AEN.	AEN	Etherscan.io
+0x0bef619cf38cf0c22967289b8419720fbd1db9f7	AEN	AEN	Etherscan.io
 0x0c6e8a8358cbde54f8e4cd7f07d5ac38aec8c5a4	PlatonCoin	PLTC	Etherscan.io
 0x0cf0ee63788a0849fe5297f3407f701e122cc023	DATAcoin	DATA	Etherscan.io
 0x0d262e5dc4a06a0f1c90ce79c7a60c09dfc884e4	J8T	J8T	Etherscan.io
@@ -69,7 +69,7 @@ addr	name	symbol	source
 0x107c4504cd79c5d2696ea0030a8dd4e92601b82e	Bloom	BLT	Etherscan.io
 0x1122b6a0e00dce0563082b6e2953f3a943855c1f	Centrality Token	CENNZ	Etherscan.io
 0x1183f92a5624d68e85ffb9170f16bf0443b4c242	QVT	QVT	Etherscan.io
-0x1234567461d3f8db7496581774bd869c83d51c93	BitClave	CAT	Etherscan.io
+0x1234567461d3f8db7496581774bd869c83d51c93	BitClave Airdrop	CAT	Etherscan.io
 0x123ab195dd38b1b40510d467a6a359b201af056f	LGO	LGO	Etherscan.io
 0x1245ef80f4d9e02ed9425375e8f649b9221b31d8	ArbitrageCT	ARCT	Etherscan.io
 0x12759512d326303b45f1cec8f7b6fd96f387778e	TrakInvest Token	TRAK	Etherscan.io
@@ -483,7 +483,7 @@ addr	name	symbol	source
 0x88a3e4f35d64aad41a6d4030ac9afe4356cb84fa	Presearch	PRE	Etherscan.io
 0x88d50b466be55222019d71f9e8fae17f5f45fca1	Cryptaur	CPT	Etherscan.io
 0x88fcfbc22c6d3dbaa25af478c578978339bde77a	Katalyse	KAT	Etherscan.io
-0x89205a3a3b2a69de6dbf7f01ed13b2108b2c43e7	Unicorns	UNI	Ethereum.org
+0x89205a3a3b2a69de6dbf7f01ed13b2108b2c43e7	Unicorns Tokens	UNI	Ethereum.org
 0x89303500a7abfb178b274fd89f2469c264951e1f	RefToken	REF	Etherscan.io
 0x8971f9fd7196e5cee2c1032b50f656855af7dd26	Lambda	LAMB	Etherscan.io
 0x899338b84d25ac505a332adce7402d697d947494	WCOIN	WIN	Etherscan.io
@@ -678,6 +678,7 @@ addr	name	symbol	source
 0xbf2179859fc6d5bee9bf9158632dc51678a4100e	ELF	ELF	Etherscan.io
 0xbf52f2ab39e26e0951d2a02b49b7702abe30406a	ODEM Token	ODEM	Etherscan.io
 0xc011a72400e58ecd99ee497cf89e3775d4bd732f	Synthetix Network Token	SNX	Etherscan.io
+0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2	Wrapped Ether	WETH	TrueBlocks.io
 0xc05d14442a510de4d3d71a3d316585aa0ce32b50	LINA	LINA	Etherscan.io
 0xc0eb85285d83217cd7c891702bcbc0fc401e2d9d	Hiveterminal Token	HVN	Etherscan.io
 0xc12d099be31567add4e4e4d0d45691c3f58f5663	Auctus	AUC	Etherscan.io
@@ -692,7 +693,6 @@ addr	name	symbol	source
 0xc528c28fec0a90c083328bc45f587ee215760a0f	Endor Protocol Token	EDR	Etherscan.io
 0xc56b13ebbcffa67cfb7979b900b736b3fb480d78	Social Activity Token	SAT	Etherscan.io
 0xc5bbae50781be1669306b9e001eff57a2957b09d	Gifto	GTO	Etherscan.io
-0xc66ea802717bfb9833400264dd12c2bceaa34a6d	Maker-Old	MKR	Etherscan.io
 0xc6abf3c09341741ac6041b0b08195701bdfd460c	OSAToken	OSA	Etherscan.io
 0xc72ed4445b3fe9f0863106e344e241530d338906	Mallcoin Token	MLC	Etherscan.io
 0xc72fe8e3dd5bef0f9f31f259399f301272ef2a2d	Insights Network	INSTAR	Etherscan.io
@@ -726,7 +726,7 @@ addr	name	symbol	source
 0xd0929d411954c47438dc1d871dd6081f5c5e149c	Refereum	RFR	Etherscan.io
 0xd0a4b8946cb52f0661273bfbc6fd0e0c75fc6433	Storm	STORM	Etherscan.io
 0xd0d6d6c5fe4a677d343cc433536bb717bae167dd	AdToken	ADT	Etherscan.io
-0xd26114cd6ee289accf82350c8d8487fedb8a0c07	OmiseGO	OMG	Etherscan.io
+0xd26114cd6ee289accf82350c8d8487fedb8a0c07	OmiseGO Airdrop	OMG	Etherscan.io
 0xd2946be786f35c3cc402c29b323647abda799071	Vikky Token	VIKKY	Etherscan.io
 0xd2d6158683aee4cc838067727209a0aaf4359de3	Bounty0x	BNTY	Etherscan.io
 0xd2fa8f92ea72abb35dbd6deca57173d22db2ba49	Origami Network	ORI	Etherscan.io
@@ -838,7 +838,7 @@ addr	name	symbol	source
 0xf3d29fb98d2dc5e78c87198deef99377345fd6f1	BITPARK	BITPARK	Etherscan.io
 0xf3db5fa2c66b7af3eb0c0b782510816cbe4813b8	Everex	EVX	Etherscan.io
 0xf3db7560e820834658b590c96234c333cd3d5e5e	Poker Chips	CHP	Etherscan.io
-0xf3e014fe81267870624132ef3a646b8e83853a96	VIN	VIN	Etherscan.io
+0xf3e014fe81267870624132ef3a646b8e83853a96	VIN Airdrop	VIN	Etherscan.io
 0xf4134146af2d511dd5ea8cdb1c4ac88c57d60404	SunContract	SNC	Etherscan.io
 0xf41e5fbc2f6aac200dd8619e121ce1f05d150077	CryCash	CRC	Etherscan.io
 0xf433089366899d83a9f26a773d59ec7ecf30355e	Metal	MTL	Etherscan.io

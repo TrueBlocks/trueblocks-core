@@ -207,7 +207,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    optionOn(OPT_RAW);
+    optionOn(OPT_RAW|OPT_OUTPUT);
     registerOptions(nParams, params);
 
     parts = SIG_DEFAULT;
