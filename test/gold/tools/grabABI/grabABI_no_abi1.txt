@@ -1,12 +1,7 @@
 grabABI argc: 3 [1:0x1728039ce0d18a799c081c5c7fa2090dd365a8d0] [2:--raw] 
 grabABI 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0 --raw 
-
-Warning: Failed to grab the ABI. Etherscan returned:
-
-	{"status":"0","message":"NOTOK","result":"Contract source code not verified"}
-
-However, the ABI may actually be present on EtherScan. QBlocks will use it if
-you copy and paste the ABI json to this file:
-
-	./0x1728039ce0d18a799c081c5c7fa2090dd365a8d0.json
+00000001 TIME ~ CLOCK - <WARNG> : Could not get the ABI for address 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0. Etherscan returned: 
+00000002 TIME ~ CLOCK - <WARNG> : {"status":"0","message":"NOTOK","result":"Contract source code not verified"}
+00000003 TIME ~ CLOCK - <WARNG> : If you copy the ABI to the current folder, QBlocks will use it.
+ABI for address 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0
 

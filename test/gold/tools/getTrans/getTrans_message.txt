@@ -21,13 +21,13 @@ getTrans 0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344 -a -
   },
   "articulatedTx": {
     "name": "",
-    "message": "on July 11, 2016 this contract (0xb656b2a9c3b2416437a811e07466ca712f5a5b5a) which is the DAO creator contract sent a transaction to the DarkDOA (0x304a554a310c7e546dfe434669c62820b7d83490) that added the DAO's curator to the DarkDAO's whitelist. Here's the transaction ID: 0x9257c2e0a11de7b7427d4607f5908d6448278070bb73500139387930826fedc0. I'm writing this to the blockchain before anything happens to demonstrate the power of http://ethslurp.com software by Great Hill.",
+    "message": "on July 11, 2016 this contract (0xb656b2a9c3b2416437a811e07466ca712f5a5b5a) which is the DAO creator contract sent a transaction to the DarkDOA (0x304a554a310c7e546dfe434669c62820b7d83490) that added the DAO s curator to the DarkDAO s whitelist. Here s the transaction ID: 0x9257c2e0a11de7b7427d4607f5908d6448278070bb73500139387930826fedc0. I m writing this to the blockchain before anything happens to demonstrate the power of http://ethslurp.com software by Great Hill.",
     "inputs": [],
     "outputs": []
   },
+  "traces": [],
   "gasCost": 1066000000000000,
   "gasUsed": 53300,
   "date": "2016-07-11 20:58:05 UTC",
-  "ether": 0.001000000000000000,
-  "traces": []
+  "ether": 0.001000000000000000
 }]

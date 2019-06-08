@@ -1,3 +1,0 @@
-getTrans argc: 2 [1:latest] 
-getTrans latest 
-2019-05-09 18:57:09 UTC	1557428229	7728107	60	0xc6c0ff6d0c2f8ce45ac23988438edbf3002ea8c647e9a931f5792278eeaea4e5
