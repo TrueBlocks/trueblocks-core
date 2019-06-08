@@ -49,7 +49,7 @@ public:
     DECLARE_NODE(CAccountName);
 
     // EXISTING_CODE
-    explicit CAccountName(string_q& nameIn);
+    explicit CAccountName(const string_q& nameIn);
     // EXISTING_CODE
     bool operator==(const CAccountName& item) const;
     bool operator!=(const CAccountName& item) const { return !operator==(item); }

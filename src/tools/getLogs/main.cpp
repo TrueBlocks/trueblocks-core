@@ -34,13 +34,7 @@ int main(int argc, const char *argv[]) {
         forEveryTransactionInList(visitTransaction, &options, options.transList.queries);
     }
 
-    if (options.api_mode) {
-        // In api mode we've been writing to a string stream (TODO(tjayrush): should write directly to the file)
-        // so we need to close the redirect and start writing to cout again. We only write the location of the file.
-        options.closeRedirect();
-        cout << options.outputFn;
-
-    } else {
+    if (!options.api_mode) {
         size_t cnt = 0;
         cout << "[";
         for (auto item : options.items) {

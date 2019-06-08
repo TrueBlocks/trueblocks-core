@@ -218,7 +218,6 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-    closeRedirect();
 }
 
 //--------------------------------------------------------------------------------
@@ -282,10 +281,6 @@ bool COptions::loadData(void) {
 
     ENTER("loadData");
 
-    if (!freshenTsArray(items[items.size()-1].blk)) {
-        EXIT_FAIL("Could not open timestamp file.");
-    }
-
     CAppearanceArray_base tmp;
     for (auto monitor : monitors) {
         if (!loadMonitorData(tmp, monitor.address))
@@ -313,6 +308,10 @@ bool COptions::loadData(void) {
     LOG1("Items array: " + uint_2_Str(items.size()) + " - " + uint_2_Str(items.size() * sizeof(CAppearance_base)));
     if (hasFuture)
         LOG_WARN("Cache file contains blocks ahead of the chain. Some items will not be exported.");
+
+    if (!freshenTsArray(items[items.size()-1].blk)) {
+        EXIT_FAIL("Could not open timestamp file.");
+    }
 
     EXIT_NOMSG(true);
 }
