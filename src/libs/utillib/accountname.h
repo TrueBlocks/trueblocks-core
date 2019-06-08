@@ -34,7 +34,6 @@ public:
     string_q description;
     string_q logo;
     bool isContract;
-    bool visible;
     string_q fn;
     double size;
     blknum_t lb;
@@ -107,7 +106,6 @@ inline void CAccountName::initialize(void) {
     description = "";
     logo = "";
     isContract = 0;
-    visible = true;
     fn = "";
     size = 0.0;
     lb = 0;
@@ -129,7 +127,6 @@ inline void CAccountName::duplicate(const CAccountName& ac) {
     description = ac.description;
     logo = ac.logo;
     isContract = ac.isContract;
-    visible = ac.visible;
     fn = ac.fn;
     size = ac.size;
     lb = ac.lb;

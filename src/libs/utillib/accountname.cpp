@@ -89,9 +89,6 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
             if ( fieldName % "source" ) { source = fieldValue; return true; }
             if ( fieldName % "size" ) { size = str_2_Double(fieldValue); return true; }
             break;
-        case 'v':
-            if ( fieldName % "visible" ) { visible = str_2_Bool(fieldValue); return true; }
-            break;
         default:
             break;
     }
@@ -125,7 +122,6 @@ bool CAccountName::Serialize(CArchive& archive) {
     archive >> description;
     archive >> logo;
     archive >> isContract;
-    archive >> visible;
 //    archive >> fn;
 //    archive >> size;
 //    archive >> lb;
@@ -149,7 +145,6 @@ bool CAccountName::SerializeC(CArchive& archive) const {
     archive << description;
     archive << logo;
     archive << isContract;
-    archive << visible;
 //    archive << fn;
 //    archive << size;
 //    archive << lb;
@@ -196,7 +191,6 @@ void CAccountName::registerClass(void) {
     ADD_FIELD(CAccountName, "description", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "logo", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "isContract", T_BOOL, ++fieldNum);
-    ADD_FIELD(CAccountName, "visible", T_BOOL, ++fieldNum);
     ADD_FIELD(CAccountName, "fn", T_TEXT, ++fieldNum);
     HIDE_FIELD(CAccountName, "fn");
     ADD_FIELD(CAccountName, "size", T_DOUBLE, ++fieldNum);
@@ -284,9 +278,6 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "symbol" ) return symbol;
             if ( fieldName % "source" ) return source;
             if ( fieldName % "size" ) return double_2_Str(size);
-            break;
-        case 'v':
-            if ( fieldName % "visible" ) return bool_2_Str(visible);
             break;
     }
 
