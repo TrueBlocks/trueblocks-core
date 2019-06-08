@@ -9,6 +9,6 @@ ethName -l -s -a 0xb6 torj
     "description": "Blockchain-based, end-to-end encrypted, distributed object storage, where only you have access to your data",
     "logo": "storj2.png",
     "isContract": true,
-    "visible": true
+    "visible": false
   }
 ]

@@ -67,7 +67,7 @@ namespace qblocks {
         CRuntimeClass *sorts[5];
 
         COptionsBase(void);
-        virtual ~COptionsBase(void) { }
+        virtual ~COptionsBase(void) { closeRedirect(); }
 
         //--------------------------------------------------------------------------------
         static string_q g_progName;

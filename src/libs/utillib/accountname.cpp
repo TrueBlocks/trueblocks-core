@@ -309,25 +309,21 @@ ostream& operator<<(ostream& os, const CAccountName& item) {
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-CAccountName::CAccountName(string_q& strIn) {
-    if (countOf(strIn, '\t') == 2) {
-        // previous format
-        source = strIn;
-        addr = toLower(nextTokenClear(source, '\t'));
-        name = nextTokenClear(source, '\t');
-    } else {
-        string str = substitute(substitute(trim(strIn, '\t'), "\n", ""), "\r", "");
-        CStringArray parts;
-        explode(parts, str, '\t');
-        addr = toLower(parts[0]);
-        symbol = parts[1];
-        source = parts[2];
-        name = parts[3];
-        logo = parts[4];
-        description = parts[5];
-        isContract = str_2_Bool(parts[6]);
-        visible = str_2_Bool(parts[7]);
-    }
+CAccountName::CAccountName(const string_q& strIn) {
+    string str = substitute(substitute(trim(strIn, '\t'), "\n", ""), "\r", "");
+
+    CStringArray parts;
+    explode(parts, str, '\t');
+    if (parts.size() > 0) { /* group = parts[0] */ }
+    if (parts.size() > 1) { addr = toLower(parts[1]); }
+    if (parts.size() > 2) { name = parts[2]; }
+    if (parts.size() > 3) { description = parts[3]; }
+    if (parts.size() > 4) { symbol = parts[4]; }
+    if (parts.size() > 5) { source = parts[5]; }
+    if (parts.size() > 6) { logo = parts[6]; }
+    if (parts.size() > 7) { isContract = str_2_Bool(parts[7]); }
+    if (parts.size() > 8) { /* custom = parts[8] */ }
+    if (parts.size() > 9) { /* shared = str_2_Bool(parts[9]); */ }
 }
 // EXISTING_CODE
 }  // namespace qblocks

@@ -17,7 +17,6 @@ static const COption params[] = {
     COption("~!trans_list",   "a space-separated list of one or more transaction identifiers "
                                 "(tx_hash, bn.txID, blk_hash.txID)"),
     COption("@address:<val>", "a list of addresses used to filter the results"),
-    COption("@output",        "redirect output to the given file"),
     COption("",               "Retrieve a transaction's logs from the local cache or a running node."),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -88,7 +87,6 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-    closeRedirect();
 }
 
 //--------------------------------------------------------------------------------
