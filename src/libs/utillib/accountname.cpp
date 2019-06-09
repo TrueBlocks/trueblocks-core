@@ -67,11 +67,17 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
         case 'a':
             if ( fieldName % "addr" ) { addr = fieldValue; return true; }
             break;
+        case 'c':
+            if ( fieldName % "custom" ) { custom = str_2_Bool(fieldValue); return true; }
+            break;
         case 'd':
             if ( fieldName % "description" ) { description = fieldValue; return true; }
             break;
         case 'f':
             if ( fieldName % "fn" ) { fn = fieldValue; return true; }
+            break;
+        case 'g':
+            if ( fieldName % "group" ) { group = fieldValue; return true; }
             break;
         case 'i':
             if ( fieldName % "isContract" ) { isContract = str_2_Bool(fieldValue); return true; }
@@ -87,6 +93,7 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
         case 's':
             if ( fieldName % "symbol" ) { symbol = fieldValue; return true; }
             if ( fieldName % "source" ) { source = fieldValue; return true; }
+            if ( fieldName % "shared" ) { shared = fieldValue; return true; }
             if ( fieldName % "size" ) { size = str_2_Double(fieldValue); return true; }
             break;
         default:
@@ -115,6 +122,7 @@ bool CAccountName::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
+    archive >> group;
     archive >> addr;
     archive >> symbol;
     archive >> name;
@@ -122,6 +130,8 @@ bool CAccountName::Serialize(CArchive& archive) {
     archive >> description;
     archive >> logo;
     archive >> isContract;
+    archive >> custom;
+    archive >> shared;
 //    archive >> fn;
 //    archive >> size;
 //    archive >> lb;
@@ -138,6 +148,7 @@ bool CAccountName::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
+    archive << group;
     archive << addr;
     archive << symbol;
     archive << name;
@@ -145,6 +156,8 @@ bool CAccountName::SerializeC(CArchive& archive) const {
     archive << description;
     archive << logo;
     archive << isContract;
+    archive << custom;
+    archive << shared;
 //    archive << fn;
 //    archive << size;
 //    archive << lb;
@@ -184,6 +197,7 @@ void CAccountName::registerClass(void) {
     ADD_FIELD(CAccountName, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CAccountName, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CAccountName, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CAccountName, "group", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "addr", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "symbol", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "name", T_TEXT, ++fieldNum);
@@ -191,6 +205,8 @@ void CAccountName::registerClass(void) {
     ADD_FIELD(CAccountName, "description", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "logo", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "isContract", T_BOOL, ++fieldNum);
+    ADD_FIELD(CAccountName, "custom", T_BOOL, ++fieldNum);
+    ADD_FIELD(CAccountName, "shared", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "fn", T_TEXT, ++fieldNum);
     HIDE_FIELD(CAccountName, "fn");
     ADD_FIELD(CAccountName, "size", T_DOUBLE, ++fieldNum);
@@ -257,11 +273,17 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
         case 'a':
             if ( fieldName % "addr" ) return addr;
             break;
+        case 'c':
+            if ( fieldName % "custom" ) return bool_2_Str(custom);
+            break;
         case 'd':
             if ( fieldName % "description" ) return description;
             break;
         case 'f':
             if ( fieldName % "fn" ) return fn;
+            break;
+        case 'g':
+            if ( fieldName % "group" ) return group;
             break;
         case 'i':
             if ( fieldName % "isContract" ) return bool_2_Str(isContract);
@@ -277,6 +299,7 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
         case 's':
             if ( fieldName % "symbol" ) return symbol;
             if ( fieldName % "source" ) return source;
+            if ( fieldName % "shared" ) return shared;
             if ( fieldName % "size" ) return double_2_Str(size);
             break;
     }
@@ -305,7 +328,7 @@ CAccountName::CAccountName(const string_q& strIn) {
 
     CStringArray parts;
     explode(parts, str, '\t');
-    if (parts.size() > 0) { /* group = parts[0] */ }
+    if (parts.size() > 0) { group = parts[0]; }
     if (parts.size() > 1) { addr = toLower(parts[1]); }
     if (parts.size() > 2) { name = parts[2]; }
     if (parts.size() > 3) { description = parts[3]; }
@@ -313,8 +336,8 @@ CAccountName::CAccountName(const string_q& strIn) {
     if (parts.size() > 5) { source = parts[5]; }
     if (parts.size() > 6) { logo = parts[6]; }
     if (parts.size() > 7) { isContract = str_2_Bool(parts[7]); }
-    if (parts.size() > 8) { /* custom = parts[8] */ }
-    if (parts.size() > 9) { /* shared = str_2_Bool(parts[9]); */ }
+    if (parts.size() > 8) { custom = str_2_Bool(parts[8]); }
+    if (parts.size() > 9) { shared = parts[9]; }
 }
 // EXISTING_CODE
 }  // namespace qblocks

@@ -14,7 +14,7 @@
 
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-    acctlib_init(quickQuitHandler);
+    etherlib_init(quickQuitHandler);
 
     COptions options;
     if (!options.prepareArguments(argc, argv))
@@ -49,7 +49,7 @@ int main(int argc, const char *argv[]) {
         cout << exportPostamble(options.exportFmt, expContext().fmtMap["meta"]);
     }
 
-    acctlib_cleanup();
+    etherlib_cleanup();
     return 0;
 }
 

@@ -1,3 +1,0 @@
-ethName argc: 3 [1:--verbose] [2:no_torj] 
-ethName --verbose no_torj 
-00000001 TIME ~ CLOCK - <INFO>  : No results

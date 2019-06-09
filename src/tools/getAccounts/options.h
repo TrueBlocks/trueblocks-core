@@ -20,6 +20,9 @@ enum account_t { OWNED = (1<<1), CUSTOM = (1<<2), NAMED = (1<<3), PREFUND = (1<<
 class COptions : public COptionsBase {
 public:
     CAccountNameMap items;
+    CStringArray    searches;
+    string_q        searchFields;
+    bool            matchCase;
     uint64_t        types;
 
     COptions(void);

@@ -1,3 +1,0 @@
-ethName argc: 2 [1:0xCB1] 
-ethName 0xCB1 
-00000001 TIME ~ CLOCK - <INFO>  : No results

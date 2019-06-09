@@ -60,7 +60,9 @@ run_test("whereBlock_fmt_txt"           "1001001" " --fmt" " txt")
 run_test("whereBlock_fmt_csv"           "1001001" " --fmt" " csv")
 run_test("whereBlock_fmt_json"          "1001001" " --fmt" " json")
 run_test("whereBlock_fmt_api"           "1001001" " --fmt" " api")
+run_test("whereBlock_fmt_defaut"        "1001001" " --api_mode")
 run_test("whereBlock_fmt_api_mode"      "1001001" " --api_mode")
+run_test("whereBlock_fmt_api_mode_fmt"  "1001001" " --api_mode" " --fmt" " txt")
 run_test("whereBlock_fmt_junk"          "1001001" " --fmt" " junk")
 
 # Installation steps

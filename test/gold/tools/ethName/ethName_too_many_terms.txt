@@ -1,4 +1,0 @@
-ethName argc: 6 [1:88897] [2:torj] [3:scan] [4:etwork] [5:-s] 
-ethName 88897 torj scan etwork -s 
-addr	name	symbol	source
-0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac	Storj	STORJ	Etherscan.io

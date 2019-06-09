@@ -1,3 +1,0 @@
-ethName argc: 2 [1:torj_no_found] 
-ethName torj_no_found 
-00000001 TIME ~ CLOCK - <INFO>  : No results
