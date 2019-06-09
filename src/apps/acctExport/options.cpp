@@ -194,7 +194,7 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
-    optionOn(OPT_PREFUND);
+    optionOn(OPT_PREFUND | OPT_OUTPUT);
 
     monitors.clear();
 
