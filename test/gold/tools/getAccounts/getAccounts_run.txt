@@ -1,5 +1,5 @@
-getAccounts argc: 1 
-getAccounts 
+getAccounts argc: 2 [1:--owned] 
+getAccounts --owned 
 addr	name	symbol
 0x0000000000000000000000000000000000000001
 0x0000000000000000000000000000000000000002

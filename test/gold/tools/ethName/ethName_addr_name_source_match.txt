@@ -1,4 +1,0 @@
-ethName argc: 7 [1:-s] [2:cbCC] [3:Humaniq] [4:Ether] [5:--fmt] [6:csv] 
-ethName -s cbCC Humaniq Ether --fmt csv 
-"addr","name","symbol","source"
-"0xcbcc0f036ed4788f63fc0fee32873d6a7487b908","Humaniq","HMQ","Etherscan.io"

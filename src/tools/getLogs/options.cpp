@@ -16,7 +16,6 @@
 static const COption params[] = {
     COption("~!trans_list",   "a space-separated list of one or more transaction identifiers "
                                 "(tx_hash, bn.txID, blk_hash.txID)"),
-    COption("@address:<val>", "a list of addresses used to filter the results"),
     COption("",               "Retrieve a transaction's logs from the local cache or a running node."),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -32,13 +31,7 @@ bool COptions::parseArguments(string_q& command) {
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         string_q orig = arg;
-        if (startsWith(arg, "-a:") || startsWith(arg, "--address:")) {
-            arg = substitute(substitute(arg, "-a:", ""), "--address:", "");
-            if (!isAddress(arg))
-                EXIT_USAGE(orig + " does not appear to be a valid Ethereum address.");
-            addresses.push_back(arg + "|");
-
-        } else if (startsWith(arg, '-')) {  // do not collapse
+        if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
                 EXIT_USAGE("Invalid option: " + arg);
@@ -56,8 +49,12 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (api_mode && isRaw)
-        EXIT_USAGE("Raw mode is not available under the API.");
+    if (api_mode) {
+        if (isRaw)
+            EXIT_USAGE("Raw mode is not available under the API.");
+        manageFields("CLogEntry:all", false);
+        manageFields("CLogEntry:address,logIndex,type,compressedLog,topics,data", true);
+    }
 
     if (!transList.hasTrans())
         EXIT_USAGE("Please specify at least one transaction identifier.");
@@ -70,7 +67,6 @@ void COptions::Init(void) {
     optionOn(OPT_RAW | OPT_OUTPUT);
     registerOptions(nParams, params);
 
-    addresses.clear();
     transList.Init();
     items.reserve(5000);
     rawItems.reserve(5000);

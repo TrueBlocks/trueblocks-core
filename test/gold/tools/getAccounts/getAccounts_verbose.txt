@@ -1,5 +1,5 @@
-getAccounts argc: 2 [1:-v] 
-getAccounts -v 
+getAccounts argc: 3 [1:-v] [2:-o] 
+getAccounts -v -o 
 addr	name	symbol	source
 0x0000000000000000000000000000000000000001
 0x0000000000000000000000000000000000000002

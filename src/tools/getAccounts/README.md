@@ -36,7 +36,7 @@ Using ethName to find Singular's address, list tokens held by other token accoun
 | -c | --custom | Show custom addresses (see below) |
 | -p | --prefund | Show prefunded addresses |
 | -n | --named | Show named addresses (see ethName) |
-| -a | --addr_only | export only addresses, no names |
+| -a | --addr | export only addresses, no names |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

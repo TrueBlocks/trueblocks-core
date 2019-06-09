@@ -10,23 +10,15 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "etherlib.h"
 #include "options.h"
 
-extern bool visitTransaction(CTransaction& trans, void *data);
-//--------------------------------------------------------------
+//-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
     etherlib_init(quickQuitHandler);
 
-    // Parse command line, allowing for command files
     COptions options;
     if (!options.prepareArguments(argc, argv))
         return 0;
-
-    if (options.api_mode) {
-        manageFields("CLogEntry:all", false);
-        manageFields("CLogEntry:address,logIndex,type,compressedLog,topics,data", true);
-    }
 
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))

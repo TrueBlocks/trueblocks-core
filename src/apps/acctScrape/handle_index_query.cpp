@@ -30,6 +30,9 @@ bool visitFinalIndexFiles(const string_q& path, void *data) {
         if (options->lastBlockInFile != 0 && options->scanRange.first > options->lastBlockInFile)
             return !shouldQuit();
 
+        if (isTestMode() && options->lastBlockInFile > 5000000)
+            return !shouldQuit();
+
         return options->visitBinaryFile(path, data) && !shouldQuit();
     }
 
