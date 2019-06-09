@@ -54,6 +54,15 @@ run_test("whenBlock_customized_1"                         "myblock")  # customiz
 run_test("whenBlock_upgrade_test"                         "--help")  # customized
 run_test("whenBlock_blockByHash"                          "0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b")
 
+run_test("whenBlock_fmt_txt"                              "1001001" " --fmt" " txt")
+run_test("whenBlock_fmt_csv"                              "1001001" " --fmt" " csv")
+run_test("whenBlock_fmt_json"                             "1001001" " --fmt" " json")
+run_test("whenBlock_fmt_api"                              "1001001" " --fmt" " api")
+run_test("whenBlock_fmt_defaut"                           "1001001" " --api_mode")
+run_test("whenBlock_fmt_api_mode"                         "1001001" " --api_mode")
+run_test("whenBlock_fmt_api_mode_fmt"                     "1001001" " --api_mode" " --fmt" " txt")
+run_test("whenBlock_fmt_junk"                             "1001001" " --fmt" " junk")
+
 run_special_test("whenBlock_02"                           "--file:blocks.txt" " -v")
 run_special_test("whenBlock_03"                           "--file:dates.txt")
 run_special_test("whenBlock_invalid_option_1"             "-x")
@@ -97,7 +106,7 @@ run_special_test("whenBlock_combined_options_1"           "-v" " 10000")
 run_special_test("whenBlock_combined_options_2"           "--verbose" " 10000")
 run_special_test("whenBlock_combined_options_3"           "--verbose" " 10000")
 run_special_test("whenBlock_special_block_first"          "first" " -v")
-run_special_test("whenBlock_homestead_customized"         "homestead" " -v")  # customized
+run_special_test("whenBlock_homestead_customized"         "homestead" " -v" " --fmt" " json")  # customized
 run_special_test("whenBlock_special_block_daofund"        "daofund" " -v")
 run_special_test("whenBlock_special_block_tangerine"      "tangerine" " -v")
 run_special_test("whenBlock_special_block_stateclear"     "stateclear" " -v")

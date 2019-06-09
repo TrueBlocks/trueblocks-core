@@ -1,3 +1,0 @@
-ethName argc: 5 [1:-s] [2:cbCD] [3:Humaniq] [4:EtherScan] 
-ethName -s cbCD Humaniq EtherScan 
-00000001 TIME ~ CLOCK - <INFO>  : No results

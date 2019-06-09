@@ -16,7 +16,6 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    CAddressArray     addresses;
     COptionsTransList transList;
     CLogEntryArray     items;
     CStringArray      rawItems;
@@ -31,3 +30,4 @@ public:
 
 //-----------------------------------------------------------------------------
 extern const char* STR_EXPORT_API;
+extern bool visitTransaction(CTransaction& trans, void *data);

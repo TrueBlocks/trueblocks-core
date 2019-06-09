@@ -1,3 +1,0 @@
-ethName argc: 3 [1:0x01] [2:torj] 
-ethName 0x01 torj 
-00000001 TIME ~ CLOCK - <INFO>  : No results

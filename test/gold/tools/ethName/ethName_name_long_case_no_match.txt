@@ -1,3 +1,0 @@
-ethName argc: 3 [1:--matchCase] [2:torJ] 
-ethName --matchCase torJ 
-00000001 TIME ~ CLOCK - <INFO>  : No results

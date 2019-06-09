@@ -1,0 +1,8 @@
+getAccounts argc: 3 [1:--matchCase] [2:0xcb] 
+getAccounts --matchCase 0xcb 
+addr	name	symbol
+0xcb5a05bef3257613e984c17dbcf039952b6d883f	Sugar Exchange	SGR
+0xcb94be6f13a1182e4a4b6140cb7bf2025d28e41b	Trustcoin	TRST
+0xcb97e65f07da24d46bcdd078ebebd7c6e6e3d750	Bytom	BTM
+0xcbcc0f036ed4788f63fc0fee32873d6a7487b908	Humaniq	HMQ
+0xcbeaec699431857fdb4d37addbbdc20e132d4903	YOYOW	YOYOW

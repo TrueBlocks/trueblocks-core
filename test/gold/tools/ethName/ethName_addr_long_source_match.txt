@@ -1,3 +1,0 @@
-ethName argc: 4 [1:--source] [2:1e16] [3:ETHER] 
-ethName --source 1e16 ETHER 
-00000001 TIME ~ CLOCK - <INFO>  : No results

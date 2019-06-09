@@ -173,8 +173,8 @@ namespace qblocks {
                 exportFmt = API1;
                 args[i] = "";
 
-            } else if (startsWith(arg, "--fmt:")) {
-                arg = substitute(substitute(arg, "-f:", ""), "--fmt:", "");
+            } else if (startsWith(arg, "-x:") || startsWith(arg, "--fmt:")) {
+                arg = substitute(substitute(arg, "-x:", ""), "--fmt:", "");
                      if ( arg == "txt" ) { exportFmt = TXT1;  api_mode = false; }
                 else if ( arg == "csv" ) { exportFmt = CSV1;  api_mode = false; }
                 else if ( arg == "json") { exportFmt = JSON1; api_mode = false; }
