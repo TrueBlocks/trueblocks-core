@@ -10,15 +10,12 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "etherlib.h"
 #include "options.h"
-#include "sftime.h"
 
-//-----------------------------------------------------------------------------------
+//-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
     etherlib_init(defaultQuitHandler);
 
-    // Parse command line, allowing for command files
     COptions options;
     if (!options.prepareArguments(argc, argv))
         return 0;
@@ -64,5 +61,7 @@ int main(int argc, const char *argv[]) {
 
         }
     }
+
+    etherlib_cleanup();
     return 0;
 }

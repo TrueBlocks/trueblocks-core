@@ -75,14 +75,20 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    // Data wrangling
+    // None
+
+    // Display formatting
     switch (exportFmt) {
-        case NONE1: format = "[{ADDR}]\t[{NAME}]\t[{SYMBOL}]"; break;
-        case API1:
-        case JSON1: format = ""; break;
+        case NONE1:
         case TXT1:
         case CSV1:
             format = getGlobalConfig()->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
             manageFields("CAccountName:" + cleanFmt(format, exportFmt));
+            break;
+        case API1:
+        case JSON1:
+            format = "";
             break;
     }
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
@@ -134,4 +140,7 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
 }
 
 //-----------------------------------------------------------------------
-const char *STR_DISPLAY = "[{BLOCKNUMBER}]\t[{TIMESTAMP}]\t[{PRICE}]";
+const char *STR_DISPLAY =
+"[{BLOCKNUMBER}]\t"
+"[{TIMESTAMP}]\t"
+"[{PRICE}]";
