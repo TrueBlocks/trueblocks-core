@@ -104,7 +104,15 @@ namespace qblocks {
         CAbi *ncABI = (CAbi*)this;
         for (size_t i = 0 ; i < ncABI->interfaces.size() ; i++) {
             CFunction *funcPtr = &ncABI->interfaces[i];
-            if (topic_2_Str(p->topics[0]) % funcPtr->encoding) {
+#if 0
+//            // TODO(tjayrush): ISSUE #1160
+//            string_q padded = padRight(funcPtr->encoding, 66, '0');
+//            cout << padded << endl;
+//            cout << topic_2_Str(p->topics[0]) << endl;
+#else
+            string_q padded = funcPtr->encoding;
+#endif
+            if (topic_2_Str(p->topics[0]) % padded) {
 
                 // We found the topic we're looking for...work on a copy...
                 p->articulatedLog = CFunction(*funcPtr);

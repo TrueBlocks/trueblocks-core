@@ -165,6 +165,8 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
     // We want to be able to run this more than once
     // optionOn(OPT_RUNONCE);
+    // This app never actually writes to standard out, so we don't really need this
+    // optionOn(OPT_OUTPUT);
 
     minArgs         = 0;
     scrapeCnt       = 0;
