@@ -20,7 +20,7 @@ public:
     bool belongs;
     bool chkAsStr;
     COptionsTransList transList;
-    size_t index;
+    bool first;
     bool incTrace;
     string_q format;
     bool articulate;
@@ -33,3 +33,7 @@ public:
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 };
+
+extern bool visitTransaction(CTransaction& trans, void *data);
+extern bool checkBelongs(CTransaction& trans, void *data);
+extern bool checkBelongsDeep(CTransaction& trans, void *data);

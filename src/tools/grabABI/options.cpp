@@ -125,7 +125,7 @@ bool COptions::parseArguments(string_q& command) {
             if (!sol_2_Abi(abi, addr))
                 return usage("Could not find solidity file '" + addr + ".sol' in order to convert to ABI. Quitting...");
             bool first = true;
-            expContext().spcs = 4;
+            expContext().spcs = 2;
             ostringstream os;
             os << "[" << endl;
             incIndent();

@@ -1,6 +1,7 @@
-getTrans argc: 4 [1:0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4] [2:-v] [3:--parity] 
-getTrans 0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4 -v --parity 
-[{
+getTrans argc: 5 [1:0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4] [2:--fmt] [3:json] [4:--parity] 
+getTrans 0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4 --fmt json --parity 
+[
+  {
     "blockHash": "0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853",
     "blockNumber": "0x3d0900",
     "from": "0x4786d4f77ee23405ef7352796d0ee4f7f4a95c91",
@@ -12,22 +13,23 @@ getTrans 0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4 -v
     "isError": "0x0",
     "nonce": "0x1dc",
     "receipt": {
-        "contractAddress": "0x0",
-        "gasUsed": "0x76d0",
-        "logs": [
-            {
-                "address": "0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
-                "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
-                "logIndex": "0x3",
-                "topics": [
-                    "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
-                ]
-            }
-        ],
-        "status": null
+      "contractAddress": "0x0",
+      "gasUsed": "0x76d0",
+      "logs": [
+        {
+          "address": "0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
+          "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
+          "logIndex": "0x3",
+          "topics": [
+            "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
+          ]
+        }
+      ],
+      "status": null
     },
     "timestamp": "0x5962979f",
     "to": "0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
     "transactionIndex": "0x4",
     "value": "0xdda3a6b505a6800"
-}]
+  }
+]

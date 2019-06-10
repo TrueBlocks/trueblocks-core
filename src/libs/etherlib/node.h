@@ -105,6 +105,7 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     // forEvery functions
     extern bool forEveryBloomFile            (FILEVISITOR    func, void *data, uint64_t start, uint64_t count, uint64_t skip = 1);  // NOLINT
+
     //-------------------------------------------------------------------------
     // forEvery functions
     extern bool forEveryTransactionInList    (TRANSVISITFUNC func, void *data, const string_q& trans_list);

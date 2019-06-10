@@ -1,66 +1,68 @@
-getTrans argc: 3 [1:--file:cmd_file_1] [2:-v] 
-getTrans --file:cmd_file_1 -v 
-[{
-  "hash": "0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521",
-  "blockHash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",
-  "blockNumber": 1001001,
-  "transactionIndex": 3,
-  "nonce": 0,
-  "timestamp": 1455421883,
-  "from": "0x30d285941dfb8bbbe4ec72b02c8d166be01322d2",
-  "to": "0x9b0a028eafdecde3afc0fd00b7937098388b7c8a",
-  "value": 61848232647269079,
-  "gas": 21000,
-  "gasPrice": 50000000000,
-  "input": "0x",
-  "isError": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 21000,
-    "logs": [],
-    "status": null
-  },
-  "gasUsed": 21000
-},{
-  "hash": "0x5352c80aa2073e21ce6c4aa5488c38455f3519955ece7dca5af3e326797bcc63",
-  "blockHash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",
-  "blockNumber": 1001001,
-  "transactionIndex": 2,
-  "nonce": 0,
-  "timestamp": 1455421883,
-  "from": "0x9d72354fda3e2bcb4d23d1cf9d0c0385d1ab08fd",
-  "to": "0x8ce45c9dd072be275a9ab6c3736b086702d77413",
-  "value": 38120000000000000000,
-  "gas": 21000,
-  "gasPrice": 50000000000,
-  "input": "0x",
-  "isError": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 21000,
-    "logs": [],
-    "status": null
-  },
-  "gasUsed": 21000
-},{
-  "hash": "0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521",
-  "blockHash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",
-  "blockNumber": 1001001,
-  "transactionIndex": 3,
-  "nonce": 0,
-  "timestamp": 1455421883,
-  "from": "0x30d285941dfb8bbbe4ec72b02c8d166be01322d2",
-  "to": "0x9b0a028eafdecde3afc0fd00b7937098388b7c8a",
-  "value": 61848232647269079,
-  "gas": 21000,
-  "gasPrice": 50000000000,
-  "input": "0x",
-  "isError": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 21000,
-    "logs": [],
-    "status": null
-  },
-  "gasUsed": 21000
-}]
+getTrans argc: 4 [1:--file:cmd_file_1] [2:--fmt] [3:json] 
+getTrans --file:cmd_file_1 --fmt json 
+[
+  {
+    "hash": "0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521",
+    "blockHash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",
+    "blockNumber": 1001001,
+    "transactionIndex": 3,
+    "nonce": 0,
+    "timestamp": 1455421883,
+    "from": "0x30d285941dfb8bbbe4ec72b02c8d166be01322d2",
+    "to": "0x9b0a028eafdecde3afc0fd00b7937098388b7c8a",
+    "value": 61848232647269079,
+    "gas": 21000,
+    "gasPrice": 50000000000,
+    "input": "0x",
+    "isError": 0,
+    "receipt": {
+      "contractAddress": "0x0",
+      "gasUsed": 21000,
+      "logs": [],
+      "status": null
+    },
+    "gasUsed": 21000
+  },  {
+    "hash": "0x5352c80aa2073e21ce6c4aa5488c38455f3519955ece7dca5af3e326797bcc63",
+    "blockHash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",
+    "blockNumber": 1001001,
+    "transactionIndex": 2,
+    "nonce": 0,
+    "timestamp": 1455421883,
+    "from": "0x9d72354fda3e2bcb4d23d1cf9d0c0385d1ab08fd",
+    "to": "0x8ce45c9dd072be275a9ab6c3736b086702d77413",
+    "value": 38120000000000000000,
+    "gas": 21000,
+    "gasPrice": 50000000000,
+    "input": "0x",
+    "isError": 0,
+    "receipt": {
+      "contractAddress": "0x0",
+      "gasUsed": 21000,
+      "logs": [],
+      "status": null
+    },
+    "gasUsed": 21000
+  },  {
+    "hash": "0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521",
+    "blockHash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",
+    "blockNumber": 1001001,
+    "transactionIndex": 3,
+    "nonce": 0,
+    "timestamp": 1455421883,
+    "from": "0x30d285941dfb8bbbe4ec72b02c8d166be01322d2",
+    "to": "0x9b0a028eafdecde3afc0fd00b7937098388b7c8a",
+    "value": 61848232647269079,
+    "gas": 21000,
+    "gasPrice": 50000000000,
+    "input": "0x",
+    "isError": 0,
+    "receipt": {
+      "contractAddress": "0x0",
+      "gasUsed": 21000,
+      "logs": [],
+      "status": null
+    },
+    "gasUsed": 21000
+  }
+]

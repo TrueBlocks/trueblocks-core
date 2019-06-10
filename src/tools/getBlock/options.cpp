@@ -57,7 +57,7 @@ bool COptions::parseArguments(string_q& command) {
             setenv("TEST_MODE", "true", true);
             isCheck = true;
             quiet++;  // if both --check and --quiet are present, be very quiet...
-            expContext().spcs = 4;
+            expContext().spcs = 2;
             expContext().hexNums = true;
             expContext().quoteNums = true;
             RENAME_FIELD(CBlock, "blockNumber", "number");
@@ -270,8 +270,8 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
-    // Mimics python -m json.tool indenting.
-    expContext().spcs = 4;
+    // Mimics jq indenting
+    expContext().spcs = 2;
     expContext().hexNums = false;
     expContext().quoteNums = false;
 

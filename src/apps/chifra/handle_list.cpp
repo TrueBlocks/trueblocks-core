@@ -20,7 +20,6 @@ bool COptions::handle_list(void) {
     for (auto addr : addrs) {
         ostringstream os;
         os << "cd " << getMonitorPath("") << " ; ";
-        os << "cacheMan " << " --fix " << addr << ".acct.bin 1>/dev/null 2>/dev/null ; ";
         os << "cacheMan " << tool_flags << " -d " << addr << ".acct.bin ; ";
         LOG4("Calling " + os.str());
         if (isTestMode())

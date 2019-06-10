@@ -10,10 +10,6 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-/*
- * This file was generated with makeClass. Edit only those parts of the code inside
- * of 'EXISTING_CODE' tags.
- */
 #include <algorithm>
 #include "abi.h"
 #include "node.h"
@@ -481,6 +477,7 @@ namespace qblocks {
     bool decodeRLP(CParameterArray& interfaces, const string_q& desc, const string_q& inputStr) {
 
         string_q built;
+        // we use fast, simple routines for common patters if we can. This is purely for performance reasons
         NEXTCHUNKFUNC func = parseMap[desc];
         if (!func) {
             for (auto i : interfaces)

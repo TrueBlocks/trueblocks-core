@@ -120,7 +120,6 @@ bool COptions::parseArguments(string_q& command) {
             break;
     }
     manageFields("CBlock:" + cleanFmt((format.empty() ? STR_DISPLAY : format), exportFmt));
-    //expContext().fmtMap["meta"] = ", \"cachePath\": \"" + (isTestMode() ? "--" : getCachePath("")) + "\"";
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
     if (noHeader)
         expContext().fmtMap["header"] = "";

@@ -1,6 +1,7 @@
-getTrans argc: 4 [1:--file:cmd_file] [2:--verbose] [3:--parity] 
-getTrans --file:cmd_file --verbose --parity 
-[{
+getTrans argc: 5 [1:--file:cmd_file] [2:--fmt] [3:json] [4:--parity] 
+getTrans --file:cmd_file --fmt json --parity 
+[
+  {
     "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
     "blockNumber": "0x37cf08",
     "from": "0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5",
@@ -12,16 +13,16 @@ getTrans --file:cmd_file --verbose --parity
     "isError": "0x0",
     "nonce": "0x1aac8d",
     "receipt": {
-        "contractAddress": "0x0",
-        "gasUsed": "0x5208",
-        "logs": [],
-        "status": null
+      "contractAddress": "0x0",
+      "gasUsed": "0x5208",
+      "logs": [],
+      "status": null
     },
     "timestamp": "0x590d1c3b",
     "to": "0x8c222fb428f9f44715cf85349f79a18761c8e53c",
     "transactionIndex": "0x4e",
     "value": "0x33dec2ed262daa0"
-},{
+  },  {
     "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
     "blockNumber": "0x37cf08",
     "from": "0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5",
@@ -33,16 +34,16 @@ getTrans --file:cmd_file --verbose --parity
     "isError": "0x0",
     "nonce": "0x1aac8d",
     "receipt": {
-        "contractAddress": "0x0",
-        "gasUsed": "0x5208",
-        "logs": [],
-        "status": null
+      "contractAddress": "0x0",
+      "gasUsed": "0x5208",
+      "logs": [],
+      "status": null
     },
     "timestamp": "0x590d1c3b",
     "to": "0x8c222fb428f9f44715cf85349f79a18761c8e53c",
     "transactionIndex": "0x4e",
     "value": "0x33dec2ed262daa0"
-},{
+  },  {
     "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
     "blockNumber": "0x37cf08",
     "from": "0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5",
@@ -54,13 +55,14 @@ getTrans --file:cmd_file --verbose --parity
     "isError": "0x0",
     "nonce": "0x1aac8e",
     "receipt": {
-        "contractAddress": "0x0",
-        "gasUsed": "0x5208",
-        "logs": [],
-        "status": null
+      "contractAddress": "0x0",
+      "gasUsed": "0x5208",
+      "logs": [],
+      "status": null
     },
     "timestamp": "0x590d1c3b",
     "to": "0x85ac33fe36a146ca3651693c16fbb45b3832b3f6",
     "transactionIndex": "0x4f",
     "value": "0x2e056847f291e60"
-}]
+  }
+]

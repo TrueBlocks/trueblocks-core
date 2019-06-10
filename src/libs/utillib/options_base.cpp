@@ -316,7 +316,7 @@ namespace qblocks {
 
         if (isEnabled(OPT_PARITY) && contains(cmdLine, "--parity ")) {
             replaceAll(cmdLine, "--parity ", "");
-            expContext().spcs = 4;
+            expContext().spcs = 2;
             expContext().hexNums = true;
             expContext().quoteNums = true;
             expContext().isParity = true;
@@ -366,6 +366,8 @@ namespace qblocks {
         if (isEnabled(OPT_DOLLARS) && arg == "--dollars")
             return true;
         if (isEnabled(OPT_PARITY) && (arg == "--parity"))
+            return true;
+        if (startsWith(arg, "--fmt:"))
             return true;
         if (arg == "--version")
             return true;
