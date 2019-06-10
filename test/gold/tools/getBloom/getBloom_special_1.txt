@@ -1,6 +1,6 @@
 getBloom argc: 2 [1:first] 
 getBloom first 
 {
-    "logsBloom": "0x0",
-    "number": "0"
+  "logsBloom": "0x0",
+  "number": "0"
 }

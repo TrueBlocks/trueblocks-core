@@ -805,4 +805,4 @@ getAccounts 0x1 --fmt api
     "custom": false,
     "shared": "shared"
   }
-], "meta": {"pending": 18446744073709551615,"staging": 18446744073709551615,"finalized": 18446744073709551615,"client": 18446744073709551615, "namePath": "--" } }
+], "meta": {"pending": 0xdeadbeef,"staging": 0xdeadbeef,"finalized": 0xdeadbeef,"client": 0xdeadbeef, "namePath": "--" } }

@@ -214,8 +214,9 @@ void COptions::applyFilter() {
         } else {
             CStringArray addrs;
             getAccounts(addrs);
+            uint32_t cnt = 0;
             for (auto addr : addrs) {
-                CAccountName item(addr);
+                CAccountName item("00-Active\t" + addr + "\tOwned_" + padNum4(cnt++));
                 addIfUnique(item);
             }
         }
@@ -262,7 +263,7 @@ void COptions::applyFilter() {
 
     //------------------------
     if (types & OTHER) {
-        string_q contents = asciiFileToString("../src/tools/ethName/tests/other_names.txt");
+        string_q contents = asciiFileToString("../src/tools/getAccounts/tests/other_names.txt");
         if (!contents.empty()) {
             CStringArray fields;
             fields.push_back("addr");

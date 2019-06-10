@@ -14,21 +14,26 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("~!trans_list",    "a space-separated list of one or more transaction identifiers "
-                                  "(tx_hash, bn.txID, blk_hash.txID)"),
+    COption("~!trans_list",    "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
     COption("-trace",          "display the transaction's trace"),
-    COption("-articulate",     "articulate the transactions if an ABI is found"),
+    COption("-articulate",     "articulate the transactions if an ABI is found for the 'to' address"),
+#ifdef BELONGS
     COption("@belongs:<addr>", "report true or false if the given address is found anywhere in the transaction"),
     COption("@asStrs",         "when checking --belongs, treat input and log data as a string"),
+#endif
+    COption("@fmt:<fmt>",      "export format (one of [none|json|txt|csv|api])"),
     COption("",                "Retrieve an Ethereum transaction from the local cache or a running node."),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
+extern const char* STR_DISPLAY;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
+
+    bool noHeader = false;
 
     Init();
     explode(arguments, command, ' ');
@@ -38,8 +43,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
-            verbose = true;
+            exportFmt = JSON1;
 
+#ifdef BELONGS
         } else if (arg == "--asStrs") {
             chkAsStr = true;
 
@@ -49,6 +55,7 @@ bool COptions::parseArguments(string_q& command) {
             if (!isAddress(arg))
                 return usage(arg + " does not appear to be a valid Ethereum address.\n");
             filters.push_back(str_2_Addr(toLower(arg)));
+#endif
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -67,6 +74,19 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    // Data wrangling
+    if (chkAsStr && filters.size() == 0)
+        return usage("chkAsStr only works with a --belongs filter.");
+
+    if (!transList.hasTrans())
+        return usage("Please specify at least one transaction identifier.");
+
+    if (incTrace)
+        SHOW_FIELD(CTransaction, "traces");
+
+    if (isRaw || verbose)
+        exportFmt = JSON1;
+
     if (articulate) {
         // show certain fields and hide others
         manageFields(defHide, false);
@@ -74,31 +94,49 @@ bool COptions::parseArguments(string_q& command) {
         manageFields("CParameter:strDefault", false);  // hide
         manageFields("CTransaction:price", false);  // hide
         manageFields("CFunction:outputs", true);  // show
-        if (verbose) {
-            manageFields("CTransaction:input", true);  // show
-            manageFields("CLogEntry:topics", true);  // show
-        }
-
-        //    manageFields(toml.getConfigStr("fields", "hide", ""), false);
-        //    manageFields(toml.getConfigStr("fields", "show", ""), true );
+        manageFields("CTransaction:input", true);  // show
+        manageFields("CLogEntry:topics", true);  // show
         abi_spec.loadAbiKnown("all");
     }
 
-    if (!transList.hasTrans())
-        return usage("Please specify at least one transaction identifier.");
-
-extern const char* STR_DISPLAY_FORMAT;
-    format = getGlobalConfig("getTrans")->getDisplayStr(!verbose, (verbose ? "" : STR_DISPLAY_FORMAT));
-    if (api_mode) {
-        manageFields("CTransaction:hash,blockHash,timestamp,blockNumber,transactionIndex,from,to,value,gas,gasPrice,articulatedTx", false);
-        manageFields("CTransaction:articulatedTx", true);
-        manageFields("CReceipt:gasUsed,", false);
-        manageFields("CLogEntry:logIndex,topics,articulatedLog", false);
-        manageFields("CTraceAction:balance,gas", false);
-
-        manageFields("CLogEntry:compressedLog", true);
-//        manageFields("CTransaction:compressedTx", true);
+    // Display formatting
+    switch (exportFmt) {
+        case NONE1:
+        case TXT1:
+        case CSV1:
+            format = getGlobalConfig()->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
+            if (incTrace)
+                format += "\t[{TRACESCNT}]";
+            manageFields("CTransaction:" + cleanFmt(format, exportFmt));
+            break;
+        case API1:
+        case JSON1:
+            format = "";
+            break;
     }
+    expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
+    if (noHeader)
+        expContext().fmtMap["header"] = "";
+
+#ifdef BELONGS
+    if (options.filters.size() > 0) {
+        bool on = options.chkAsStr;
+        options.chkAsStr = false;
+        forEveryTransactionInList(checkBelongs, &options, options.transList.queries);
+        if (!options.belongs) {
+            if (on) {
+                options.chkAsStr = on;
+                forEveryTransactionInList(checkBelongsDeep, &options, options.transList.queries);
+            }
+            if (!options.belongs) {
+                for (auto addr : options.filters) {
+                    cout << "\taddress " << cRed << addr << cOff << " not found ";
+                    cout << options.transList.queries << "\n";
+                }
+            }
+        }
+    } else {
+#endif
 
     return true;
 }
@@ -126,9 +164,7 @@ COptions::COptions(void) {
     HIDE_FIELD(CTransaction, "cumulativeGasUsed");
 
     Init();
-    index = 0;
-    if (isTestMode())
-        UNHIDE_FIELD(CTransaction, "isError");
+    first = true;
 }
 
 //--------------------------------------------------------------------------------
@@ -155,4 +191,68 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
 }
 
 //--------------------------------------------------------------------------------
-const char* STR_DISPLAY_FORMAT = "[{DATE}][\t{TIMESTAMP}][\t{BLOCKNUMBER}][\t{TRANSACTIONINDEX}][\t{HASH}]\\n";
+const char* STR_DISPLAY = "[{DATE}]\t[{TIMESTAMP}]\t[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{HASH}]";
+
+#ifdef BELONGS
+//----------------------------------------------------------------
+bool visitAddrs(const CAppearance& item, void *data) {
+    COptions *opt = (COptions*)data;
+
+    if (opt->belongs)
+        return false;
+
+    for (auto addr : opt->filters) {
+        if (addr % item.addr) {
+            cout << "\t" << cGreen << " found at " << cTeal << item << cOff << "                     ";
+            if (verbose)
+                cout << "\n";
+            else
+                cout << "\r";
+            cout.flush();
+            opt->belongs = true;
+            return true;  // we're done
+        }
+    }
+    return true;
+}
+
+//--------------------------------------------------------------
+bool checkBelongs(CTransaction& trans, void *data) {
+    // if we've been told we're done (because we found the target), stop searching
+    if (!trans.forEveryAddress(visitAddrs, NULL, data))
+        return false;
+    return true;
+}
+
+//--------------------------------------------------------------
+bool checkBelongsDeep(CTransaction& trans, void *data) {
+    COptions *opt = (COptions*)data;
+    for (auto addr : opt->filters) {
+        string_q bytes = substitute(addr, "0x", "");
+        if (contains(trans.input, bytes)) {
+            cout << "\t" << cRed << addr << cOff << " found at input by string search at ";
+            cout << cTeal << trans.blockNumber << "." << trans.transactionIndex << cOff << "                       \n";
+            opt->belongs = true;
+            return false;
+        }
+        for (auto l : trans.receipt.logs) {
+            if (contains(l.data, bytes)) {
+                cout << "\t" << cRed << addr << cOff << " found at log by string search at ";
+                cout << cTeal << trans.blockNumber << "." << trans.transactionIndex << cOff << "                       \n";
+                opt->belongs = true;
+                return false;
+            }
+        }
+        getTraces(trans.traces, trans.hash);
+        for (auto trace : trans.traces) {
+            if (contains(trace.action.input, bytes)) {
+                cout << "\t" << cRed << addr << cOff << " found at trace by string search at ";
+                cout << cTeal << trans.blockNumber << "." << trans.transactionIndex << cOff << "                       \n";
+                opt->belongs = true;
+                return false;
+            }
+        }
+    }
+    return true;
+}
+#endif
