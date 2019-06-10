@@ -144,7 +144,7 @@ void COptions::Init(void) {
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
     // Mimics python -m json.tool indenting.
-    expContext().spcs = 4;
+    expContext().spcs = 2;
     expContext().hexNums = false;
     expContext().quoteNums = false;
 

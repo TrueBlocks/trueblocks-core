@@ -1015,6 +1015,15 @@ extern void loadParseMap(void);
     }
 
     //-----------------------------------------------------------------------
+    inline string_q dispNumOrHex(uint64_t num) {
+        if (!isTestMode())
+            return uint_2_Str(num);
+        ostringstream os;
+        os << "0x" << std::hex << num;
+        return os.str();
+    }
+
+    //-----------------------------------------------------------------------
     string_q exportPostamble(format_t fmt, const string_q& extra) {
         if (fmt != API1 && fmt != JSON1)
             return "";
@@ -1024,14 +1033,14 @@ extern void loadParseMap(void);
         uint64_t pending, staging, finalized, client;
         getLastBlocks(pending, staging, finalized, client);
         if (isTestMode())
-            pending = staging = finalized = client = NOPOS;
+            pending = staging = finalized = client = 0xdeadbeef;
 
         ostringstream os;
         os << "\n], \"meta\": {";
-        os << "\"pending\": " << pending << ",";
-        os << "\"staging\": " << staging << ",";
-        os << "\"finalized\": " << finalized << ",";
-        os << "\"client\": " << client;
+        os << "\"pending\": " << dispNumOrHex(pending) << ",";
+        os << "\"staging\": " << dispNumOrHex(staging) << ",";
+        os << "\"finalized\": " << dispNumOrHex(finalized) << ",";
+        os << "\"client\": " << dispNumOrHex(client);
         if (!extra.empty())
             os << extra;
         os << " } }";

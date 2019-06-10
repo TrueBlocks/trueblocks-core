@@ -90,8 +90,16 @@ bool COptions::exportData(void) {
             nExported++;
             first = false;
             HIDE_FIELD(CFunction, "message");
-            cerr << "   " << i << " of " << items.size() << ": " << trans.hash << "\r";
-            cerr.flush();
+            if (origCout == NULL) {  // we are not in --output mode
+                cerr << "   " << i << " of " << items.size() << ": " << trans.hash << "\r";
+                cerr.flush();
+            } else {
+                static size_t cnt = 0;
+                if (!(++cnt % 71)) { // not reporting every tx is way faster
+                    cerr << "   " << i << " of " << items.size() << ": " << trans.hash << "\r";
+                    cerr.flush();
+                }
+            }
 
 #if 0
 /*
