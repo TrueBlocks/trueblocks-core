@@ -13,8 +13,6 @@ getTrans -th
 | -a | --articulate | articulate the transactions if an ABI is found for the 'to' address |
 
 #### Hidden options (shown during testing only)
-| -b | --belongs val | report true or false if the given address is found anywhere in the transaction |
-| -a | --asStrs | when checking --belongs, treat input and log data as a string |
 | -x | --fmt val | export format (one of [none&#124;json&#124;txt&#124;csv&#124;api]) |
 #### Hidden options (shown during testing only)
 
