@@ -1019,7 +1019,7 @@ extern void loadParseMap(void);
         if (!isTestMode())
             return uint_2_Str(num);
         ostringstream os;
-        os << "0x" << std::hex << num;
+        os << "\"0x" << std::hex << num << "\"";
         return os.str();
     }
 

@@ -11401,4 +11401,4 @@ getAccounts --named --custom --owned --fmt api
     "custom": false,
     "shared": "shared"
   }
-], "meta": {"pending": 0xdeadbeef,"staging": 0xdeadbeef,"finalized": 0xdeadbeef,"client": 0xdeadbeef, "namePath": "--" } }
+], "meta": {"pending": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namePath": "--" } }

@@ -39,20 +39,32 @@ bool visitTransaction(CTransaction& trans, void *data) {
     COptions *opt = reinterpret_cast<COptions *>(data);
 
     bool isText = (opt->exportFmt & (TXT1|CSV1));
-    if (!isText && !opt->first)
-        cout << ",";
 
-    if (opt->isRaw) {
-        // Note: The transaction is already populated (if it's valid), but we need the raw data)
-        string_q results;
-        queryRawTransaction(results, trans.getValueByName("hash"));
-        cout << results;
+    if (contains(trans.hash, "invalid")) {
+        string_q hash = nextTokenClear(trans.hash, ' ');
+        if (isText) {
+            cout << cRed << "Transaction " << hash << " not found.\n" << cOff;
+        } else {
+            if (!opt->first)
+                cout << ",";
+            cout << cRed << "{ \"error\": \"Transaction " << hash << " not found.\" }\n" << cOff;
+        }
+        opt->first = false;
+        return true; // continue even with an invalid item
+    }
+
+    if (opt->isRaw || opt->isVeryRaw) {
+        string_q result;
+        queryRawTransaction(result, trans.getValueByName("hash"));
+        if (!isText && !opt->first)
+            cout << ",";
+        cout << result;
         opt->first = false;
         return true;
     }
 
     if (opt->incTrace)
-        getTraces(trans.traces, trans.hash);
+    getTraces(trans.traces, trans.getValueByName("hash"));
 
     if (opt->articulate) {
         opt->abi_spec.loadAbiByAddress(trans.to);
@@ -61,23 +73,16 @@ bool visitTransaction(CTransaction& trans, void *data) {
     manageFields("CFunction:message", !trans.articulatedTx.message.empty());
 
     if (isText) {
-        if (contains(trans.hash, "invalid")) {
-            cout << "Transaction " << nextTokenClear(trans.hash, ' ') << " not found.\n" << cOff;
-        } else {
-            cout << trim(trans.Format(expContext().fmtMap["format"]), '\t') << endl;
-        }
+        cout << trim(trans.Format(expContext().fmtMap["format"]), '\t') << endl;
 
     } else {
+        if (!opt->first)
+            cout << ",";
         cout << "  ";
         incIndent();
-        if (contains(trans.hash, "invalid")) {
-            cout << cRed << "{ \"error\": \"The transaction " << nextTokenClear(trans.hash, ' ') << " was not found.\" }\n" << cOff;
-        } else {
-            trans.doExport(cout);
-        }
+        trans.doExport(cout);
         decIndent();
     }
-
     opt->first = false;
     return true;
 }
