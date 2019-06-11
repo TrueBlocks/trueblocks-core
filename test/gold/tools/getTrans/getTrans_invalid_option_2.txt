@@ -3,12 +3,12 @@ getTrans --other
 
   Invalid option: --other
 
-  Usage:    getTrans [-t|-a|-v|-h] <transID> [transID...]  
+  Usage:    getTrans [-a|-t|-v|-h] <transID> [transID...]  
   Purpose:  Retrieve an Ethereum transaction from the local cache or a running node.  
   Where:  
 	trans_list            a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)
-	-t  (--trace)         display the transaction's trace
 	-a  (--articulate)    articulate the transactions if an ABI is found for the 'to' address
+	-t  (--trace)         display the transaction's trace
 
 #### Hidden options (shown during testing only)
 	-x  (--fmt val)       export format (one of [none|json|txt|csv|api])

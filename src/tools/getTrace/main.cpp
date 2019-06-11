@@ -10,15 +10,12 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "etherlib.h"
 #include "options.h"
 
-extern bool visitTransaction(CTransaction& trans, void *data);
-//--------------------------------------------------------------
+//-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
     etherlib_init(quickQuitHandler);
 
-    // Parse command line, allowing for command files
     COptions options;
     if (!options.prepareArguments(argc, argv))
         return 0;
@@ -26,35 +23,11 @@ int main(int argc, const char *argv[]) {
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
+        if (options.first)
+            cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], GETRUNTIME_CLASS(CTrace));
         forEveryTransactionInList(visitTransaction, &options, options.transList.queries);
     }
-
-    if (options.api_mode) {
-        manageFields("CTrace:blockNumber,transactionPosition,traceAddress,error", true);
-        manageFields("CTraceAction:callType,from,to,value,input,gas", true);
-        manageFields("CTraceResult:gasUsed", true);
-        for (auto item : options.items)
-            cout << substitute(item.Format(STR_EXPORT_API), "null", " ") << endl;
-
-    } else {
-        size_t cnt = 0;
-        cout << "[";
-        for (auto item : options.items) {
-            if (cnt++ > 0)
-                cout << ",";
-            item.doExport(cout);
-        }
-        if (cnt && options.rawItems.size())
-            cout << ",\n";
-
-        cnt = 0;
-        for (auto str : options.rawItems) {
-            if (cnt++ > 0)
-                cout << ",\n";
-            cout << str;
-        }
-        cout << "]";
-    }
+    cout << exportPostamble(options.exportFmt, expContext().fmtMap["meta"]);
 
     etherlib_cleanup();
     return 0;
@@ -62,54 +35,69 @@ int main(int argc, const char *argv[]) {
 
 //--------------------------------------------------------------
 bool visitTransaction(CTransaction& trans, void *data) {
-    COptions *opt = (COptions*)data;
+
+    COptions *opt = reinterpret_cast<COptions *>(data);
+
+    bool isText = (opt->exportFmt & (TXT1|CSV1));
+
     if (contains(trans.hash, "invalid")) {
-        ostringstream os;
-        os << cRed << "{ \"error\": \"The item you requested (";
-        os << nextTokenClear(trans.hash, ' ') << ") was not found.\" }" << cOff;
-        opt->rawItems.push_back(os.str());
-        return true;
-    }
-
-    if (!opt->isRaw) {
-        if (opt->countOnly) {
-            cout << trans.hash << "\t" << getTraceCount(trans.hash) << "\n";
+        string_q hash = nextTokenClear(trans.hash, ' ');
+        if (isText) {
+            cout << cRed << "Transaction " << hash << " not found.\n" << cOff;
         } else {
-            CTraceArray traces;
-            getTraces(traces, trans.getValueByName("hash"));
-            for (auto tr : traces) {
-                tr.pTrans = &trans;
-                opt->items.push_back(tr);
-            }
-         }
+            if (!opt->first)
+                cout << ",";
+            cout << cRed << "{ \"error\": \"Transaction " << hash << " not found.\" }\n" << cOff;
+        }
+        opt->first = false;
+        return true; // continue even with an invalid item
+    }
+
+    if (opt->isRaw || opt->isVeryRaw) {
+        string_q result;
+        queryRawTrace(result, trans.getValueByName("hash"));
+        if (!isText && !opt->first)
+            cout << ",";
+        replace(result, "[", "");
+        replaceReverse(result, "]", "");
+        cout << result;
+        opt->first = false;
         return true;
     }
 
-    string_q fields =
-        "CBlock:blockHash,blockNumber|"
-        "CTransaction:to,from,blockHash,blockNumber|"
-        "CTrace|blockHash,blockNumber,subtraces,traceAddress,transactionHash,transactionPosition,type,error,articulatedTrace,action,result,date|"
-        "CTraceAction:address,balance,callType,from,gas,init,input,refundAddress,to,value,ether|"
-        "CTraceResult:address,code,gasUsed,output|";
-    manageFields(fields, true);
-
-    string_q result;
-    queryRawTrace(result, trans.getValueByName("hash"));
-    if (opt->isVeryRaw) {
-        opt->rawItems.push_back(result);
+    if (opt->countOnly) {
+        uint64_t cnt = getTraceCount(trans.hash);
+        if (isText) {
+            cout << trans.hash << "\t" << cnt << endl;
+        } else {
+            if (!opt->first)
+                cout << ",";
+            cout << "{ \"hash\": \"" << trans.hash << "\", \"count\": \"" << cnt << " }";
+        }
+        opt->first = false;
         return true;
     }
-    CRPCResult generic;
-    generic.parseJson3(result);
-    CBlock bl;
-    CTransaction tt; tt.pBlock = &bl;
-    CReceipt receipt; receipt.pTrans = &tt;
-    CTrace trace; trace.pTrans = &tt;
-    trace.parseJson3(generic.result);
-    opt->rawItems.push_back(trace.Format());
+
+    getTraces(trans.traces, trans.getValueByName("hash"));
+
+    if (opt->articulate) {
+        opt->abi_spec.loadAbiByAddress(trans.to);
+        opt->abi_spec.articulateTransaction(&trans);
+    }
+    manageFields("CFunction:message", !trans.articulatedTx.message.empty());
+
+    for (auto trace : trans.traces) {
+        if (isText) {
+            cout << trim(trace.Format(expContext().fmtMap["format"]), '\t') << endl;
+        } else {
+            if (!opt->first)
+                cout << ",";
+            cout << "  ";
+            incIndent();
+            trace.doExport(cout);
+            decIndent();
+        }
+        opt->first = false;
+    }
     return true;
 }
-
-//--------------------------------------------------------------
-const char* STR_EXPORT_API =
-"[{BLOCKNUMBER}]\t[{TRANSACTIONPOSITION}]\t[{TRACEADDRESS}]\t[{ACTION::CALLTYPE}]\t[{ERROR}]\t[{ACTION::FROM}]\t[{ACTION::TO}]\t[{ACTION::VALUE}]\t[{ACTION::GAS}]\t[{RESULT::GASUSED}]\t[{ACTION::INPUT}]";

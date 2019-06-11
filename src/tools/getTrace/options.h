@@ -16,11 +16,11 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    CAddressArray     addresses;
     COptionsTransList transList;
-    CTraceArray       items;
-    CStringArray      rawItems;
-    bool              countOnly;
+    bool countOnly;
+    bool articulate;
+    CAbi abi_spec;
+    bool first;
 
     COptions(void);
     ~COptions(void);
@@ -31,4 +31,4 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-extern const char* STR_EXPORT_API;
+extern bool visitTransaction(CTransaction& trans, void *data);

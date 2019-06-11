@@ -15,12 +15,8 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     COption("~!trans_list",    "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
-    COption("-trace",          "display the transaction's trace"),
     COption("-articulate",     "articulate the transactions if an ABI is found for the 'to' address"),
-#ifdef BELONGS
-    COption("@belongs:<addr>", "report true or false if the given address is found anywhere in the transaction"),
-    COption("@asStrs",         "when checking --belongs, treat input and log data as a string"),
-#endif
+    COption("-trace",          "display the transaction's trace"),
     COption("@fmt:<fmt>",      "export format (one of [none|json|txt|csv|api])"),
     COption("",                "Retrieve an Ethereum transaction from the local cache or a running node."),
 };
@@ -45,18 +41,6 @@ bool COptions::parseArguments(string_q& command) {
             articulate = true;
             exportFmt = JSON1;
 
-#ifdef BELONGS
-        } else if (arg == "--asStrs") {
-            chkAsStr = true;
-
-        } else if (startsWith(arg, "--belongs:")) {
-            string_q orig = arg;
-            arg = substitute(arg, "--belongs:", "");
-            if (!isAddress(arg))
-                return usage(arg + " does not appear to be a valid Ethereum address.\n");
-            filters.push_back(str_2_Addr(toLower(arg)));
-#endif
-
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -75,9 +59,6 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // Data wrangling
-    if (chkAsStr && filters.size() == 0)
-        return usage("chkAsStr only works with a --belongs filter.");
-
     if (!transList.hasTrans())
         return usage("Please specify at least one transaction identifier.");
 
@@ -86,6 +67,16 @@ bool COptions::parseArguments(string_q& command) {
 
     if (isRaw || verbose)
         exportFmt = JSON1;
+
+    if (isRaw) {
+        string_q fields =
+            "CBlock:blockHash,blockNumber|"
+            "CTransaction:to,from,blockHash,blockNumber|"
+            "CTrace|blockHash,blockNumber,subtraces,traceAddress,transactionHash,transactionPosition,type,error,articulatedTrace,action,result,date|"
+            "CTraceAction:address,balance,callType,from,gas,init,input,refundAddress,to,value,ether|"
+            "CTraceResult:address,code,gasUsed,output|";
+        manageFields(fields, true);
+    }
 
     if (articulate) {
         // show certain fields and hide others
@@ -100,6 +91,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // Display formatting
+    string_q format;
     switch (exportFmt) {
         case NONE1:
         case TXT1:
@@ -118,41 +110,17 @@ bool COptions::parseArguments(string_q& command) {
     if (noHeader)
         expContext().fmtMap["header"] = "";
 
-#ifdef BELONGS
-    if (options.filters.size() > 0) {
-        bool on = options.chkAsStr;
-        options.chkAsStr = false;
-        forEveryTransactionInList(checkBelongs, &options, options.transList.queries);
-        if (!options.belongs) {
-            if (on) {
-                options.chkAsStr = on;
-                forEveryTransactionInList(checkBelongsDeep, &options, options.transList.queries);
-            }
-            if (!options.belongs) {
-                for (auto addr : options.filters) {
-                    cout << "\taddress " << cRed << addr << cOff << " not found ";
-                    cout << options.transList.queries << "\n";
-                }
-            }
-        }
-    } else {
-#endif
-
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    optionOn(OPT_RAW);
     registerOptions(nParams, params);
+    optionOn(OPT_RAW | OPT_OUTPUT);
 
     transList.Init();
     incTrace = false;
     articulate = false;
-    format = "";
-    filters.clear();
-    belongs = false;
-    chkAsStr = false;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -161,8 +129,6 @@ COptions::COptions(void) {
     sorts[0] = GETRUNTIME_CLASS(CBlock);
     sorts[1] = GETRUNTIME_CLASS(CTransaction);
     sorts[2] = GETRUNTIME_CLASS(CReceipt);
-    HIDE_FIELD(CTransaction, "cumulativeGasUsed");
-
     Init();
     first = true;
 }
@@ -191,10 +157,64 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
 }
 
 //--------------------------------------------------------------------------------
-const char* STR_DISPLAY = "[{DATE}]\t[{TIMESTAMP}]\t[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{HASH}]";
+const char* STR_DISPLAY =
+"[{DATE}]\t"
+"[{TIMESTAMP}]\t"
+"[{BLOCKNUMBER}]\t"
+"[{TRANSACTIONINDEX}]\t"
+"[{HASH}]";
 
+//--------------------------------------------------------------------------------
 #ifdef BELONGS
-//----------------------------------------------------------------
+    CAddressArray filters;
+    bool belongs;
+    bool chkAsStr;
+
+////////////////////////////////////////////////////////////
+    COption("@belongs:<addr>", "report true or false if the given address is found anywhere in the transaction"),
+    COption("@asStrs",         "when checking --belongs, treat input and log data as a string"),
+
+////////////////////////////////////////////////////////////
+        } else if (arg == "--asStrs") {
+            chkAsStr = true;
+
+        } else if (startsWith(arg, "--belongs:")) {
+            string_q orig = arg;
+            arg = substitute(arg, "--belongs:", "");
+            if (!isAddress(arg))
+                return usage(arg + " does not appear to be a valid Ethereum address.\n");
+            filters.push_back(str_2_Addr(toLower(arg)));
+
+////////////////////////////////////////////////////////////
+    if (chkAsStr && filters.size() == 0)
+        return usage("chkAsStr only works with a --belongs filter.");
+
+////////////////////////////////////////////////////////////
+    if (options.filters.size() > 0) {
+        bool on = options.chkAsStr;
+        options.chkAsStr = false;
+        forEveryTransactionInList(checkBelongs, &options, options.transList.queries);
+        if (!options.belongs) {
+            if (on) {
+                options.chkAsStr = on;
+                forEveryTransactionInList(checkBelongsDeep, &options, options.transList.queries);
+            }
+            if (!options.belongs) {
+                for (auto addr : options.filters) {
+                    cout << "\taddress " << cRed << addr << cOff << " not found ";
+                    cout << options.transList.queries << "\n";
+                }
+            }
+        }
+    } else {
+
+////////////////////////////////////////////////////////////
+    filters.clear();
+    belongs = false;
+    chkAsStr = false;
+
+////////////////////////////////////////////////////////////
+//--------------------------------------------------------------------------------
 bool visitAddrs(const CAppearance& item, void *data) {
     COptions *opt = (COptions*)data;
 
@@ -216,7 +236,7 @@ bool visitAddrs(const CAppearance& item, void *data) {
     return true;
 }
 
-//--------------------------------------------------------------
+//--------------------------------------------------------------------------------
 bool checkBelongs(CTransaction& trans, void *data) {
     // if we've been told we're done (because we found the target), stop searching
     if (!trans.forEveryAddress(visitAddrs, NULL, data))
@@ -224,7 +244,7 @@ bool checkBelongs(CTransaction& trans, void *data) {
     return true;
 }
 
-//--------------------------------------------------------------
+//--------------------------------------------------------------------------------
 bool checkBelongsDeep(CTransaction& trans, void *data) {
     COptions *opt = (COptions*)data;
     for (auto addr : opt->filters) {
