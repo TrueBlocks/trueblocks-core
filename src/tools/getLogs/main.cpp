@@ -20,31 +20,16 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
+    bool once = true;
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
+        if (once)
+            cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], GETRUNTIME_CLASS(CLogEntry));
         forEveryTransactionInList(visitTransaction, &options, options.transList.queries);
+        once = false;
     }
-
-    if (!options.api_mode) {
-        size_t cnt = 0;
-        cout << "[";
-        for (auto item : options.items) {
-            if (cnt++ > 0)
-                cout << ",";
-            item.doExport(cout);
-        }
-        if (cnt && options.rawItems.size())
-            cout << ",\n";
-
-        cnt = 0;
-        for (auto str : options.rawItems) {
-            if (cnt++ > 0)
-                cout << ",\n";
-            cout << str;
-        }
-        cout << "]";
-    }
+    cout << exportPostamble(options.exportFmt, expContext().fmtMap["meta"]);
 
     etherlib_cleanup();
     return 0;
@@ -52,69 +37,51 @@ int main(int argc, const char *argv[]) {
 
 //--------------------------------------------------------------
 bool visitTransaction(CTransaction& trans, void *data) {
-    COptions *opt = (COptions*)data;
+
+    COptions *opt = reinterpret_cast<COptions *>(data);
+    bool isText = (opt->exportFmt & (TXT1|CSV1));
+
     if (contains(trans.hash, "invalid")) {
-        ostringstream os;
-        os << cRed << "{ \"error\": \"The item you requested (";
-        os << nextTokenClear(trans.hash, ' ') << ") was not found.\" }" << cOff;
-        opt->rawItems.push_back(os.str());
+        string_q hash = nextTokenClear(trans.hash, ' ');
+        if (isText) {
+            cout << cRed << "Transaction " << hash << " not found.\n" << cOff;
+        } else {
+            if (!opt->first)
+                cout << ",";
+            cout << cRed << "{ \"error\": \"Transaction " << hash << " not found.\" }\n" << cOff;
+        }
+        opt->first = false;
+        return true; // continue even with an invalid item
+    }
+
+    if (opt->isRaw || opt->isVeryRaw) {
+        string_q result;
+        queryRawLogs(result, trans.blockNumber, trans.blockNumber);
+        if (!isText && !opt->first)
+            cout << ",";
+        cout << result;
+        opt->first = false;
         return true;
     }
 
-    if (!opt->isRaw) {
-        for (auto log : trans.receipt.logs) {
-            if (opt->api_mode) {
-                trans.receipt.pTrans = &trans;
-                log.pReceipt = &trans.receipt;
-//#error - this should be at the header so we don't reload the ABI each time
-                CAbi abi;
-                abi.loadAbiByAddress(log.address);
-                abi.articulateLog(&log);
-                cout << log.Format(STR_EXPORT_API) << endl;
-            } else {
-                log.pReceipt = &trans.receipt;
-                opt->items.push_back(log);
-            }
+    for (auto log : trans.receipt.logs) {
+        if (opt->articulate) {
+            opt->abi_spec.loadAbiByAddress(log.address);
+            opt->abi_spec.articulateLog(&log);
         }
-        return true;
-    }
+        manageFields("CFunction:message", !log.articulatedLog.message.empty());
 
-    string_q fields =
-        "CBlock:blockHash,blockNumber|"
-        "CTransaction:to,from,blockHash,blockNumber|"
-        "CReceipt:to,from,blockHash,blockNumber,transactionHash,transactionIndex,cumulativeGasUsed,logsBloom,root|"
-        "CLogEntry:blockHash,blockNumber,transactionHash,transactionIndex,transactionLogIndex,removed,type";
-    manageFields(fields, true);
-    string_q result;
-    queryRawLogs(result, trans.blockNumber, trans.blockNumber);
-    if (opt->isVeryRaw) {
-        opt->rawItems.push_back(result);
-        return true;
-    }
-    CRPCResult generic;
-    generic.parseJson3(result);
-    CBlock bl;
-    CTransaction tt; tt.pBlock = &bl;
-    CReceipt receipt; receipt.pTrans = &tt;
-    CLogEntry log; log.pReceipt = &receipt;
-    while (log.parseJson3(generic.result)) {
-        if (log.getValueByName("transactionIndex") == uint_2_Str(trans.transactionIndex)) {
-            opt->rawItems.push_back(log.Format());
+        if (isText) {
+            cout << trim(log.Format(expContext().fmtMap["format"]), '\t') << endl;
+        } else {
+            if (!opt->first)
+                cout << ",";
+            cout << "  ";
+            incIndent();
+            log.doExport(cout);
+            decIndent();
+            opt->first = false;
         }
-        log = CLogEntry();
-        log.pReceipt = &receipt;
-    }
-    if (opt->rawItems.size() == 0) {
-        CReceipt rr;
-        receipt.pTrans = &trans;
-        CLogEntry ll;
-        ll.pReceipt = &rr;
-        ll.address = "not_an_real_log";
-        opt->rawItems.push_back(ll.Format());
     }
     return true;
 }
-
-//--------------------------------------------------------------
-const char *STR_EXPORT_API =
-"[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{LOGINDEX}]\t[{ADDRESS}]\t[{TOPIC0}]\t[{TOPIC1}]\t[{TOPIC2}]\t[{TOPIC3}]\t[{DATA}]\t[{TYPE}]\t[{COMPRESSEDLOG}]";

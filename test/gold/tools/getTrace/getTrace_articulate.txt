@@ -141,7 +141,11 @@ getTrace -a -v 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd
   },  {
     "type": "call",
     "error": "",
-    "articulatedTrace": {},
+    "articulatedTrace": {
+      "name": "",
+      "inputs": [],
+      "outputs": []
+    },
     "action": {
       "address": "0x0",
       "balance": 0,

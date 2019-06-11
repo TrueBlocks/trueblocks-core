@@ -125,8 +125,10 @@ inline CTraceResult& CTraceResult::operator=(const CTraceResult& tr) {
 inline bool CTraceResult::operator==(const CTraceResult& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default equal operator in class definition, assume none are equal (so find fails)
-    return false;
+    return ((address == item.address) &&
+            (code == item.code) &&
+            (gasUsed == item.gasUsed) &&
+            (output == item.output));
 }
 
 //-------------------------------------------------------------------------

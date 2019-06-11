@@ -20,12 +20,14 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
+    bool once = true;
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
-        if (options.first)
+        if (once)
             cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], GETRUNTIME_CLASS(CTransaction));
         forEveryTransactionInList(visitTransaction, &options, options.transList.queries);
+        once = false;
     }
     cout << exportPostamble(options.exportFmt, expContext().fmtMap["meta"]);
 
@@ -37,7 +39,6 @@ int main(int argc, const char *argv[]) {
 bool visitTransaction(CTransaction& trans, void *data) {
 
     COptions *opt = reinterpret_cast<COptions *>(data);
-
     bool isText = (opt->exportFmt & (TXT1|CSV1));
 
     if (contains(trans.hash, "invalid")) {
@@ -64,25 +65,25 @@ bool visitTransaction(CTransaction& trans, void *data) {
     }
 
     if (opt->incTrace)
-    getTraces(trans.traces, trans.getValueByName("hash"));
+        getTraces(trans.traces, trans.getValueByName("hash"));
+    if (true) {
+        if (opt->articulate) {
+            opt->abi_spec.loadAbiByAddress(trans.to);
+            opt->abi_spec.articulateTransaction(&trans);
+        }
+        manageFields("CFunction:message", !trans.articulatedTx.message.empty());
 
-    if (opt->articulate) {
-        opt->abi_spec.loadAbiByAddress(trans.to);
-        opt->abi_spec.articulateTransaction(&trans);
+        if (isText) {
+            cout << trim(trans.Format(expContext().fmtMap["format"]), '\t') << endl;
+        } else {
+            if (!opt->first)
+                cout << ",";
+            cout << "  ";
+            incIndent();
+            trans.doExport(cout);
+            decIndent();
+            opt->first = false;
+        }
     }
-    manageFields("CFunction:message", !trans.articulatedTx.message.empty());
-
-    if (isText) {
-        cout << trim(trans.Format(expContext().fmtMap["format"]), '\t') << endl;
-
-    } else {
-        if (!opt->first)
-            cout << ",";
-        cout << "  ";
-        incIndent();
-        trans.doExport(cout);
-        decIndent();
-    }
-    opt->first = false;
     return true;
 }

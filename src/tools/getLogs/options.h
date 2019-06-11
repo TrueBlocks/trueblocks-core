@@ -17,8 +17,9 @@
 class COptions : public COptionsBase {
 public:
     COptionsTransList transList;
-    CLogEntryArray     items;
-    CStringArray      rawItems;
+    bool articulate;
+    CAbi abi_spec;
+    bool first;
 
     COptions(void);
     ~COptions(void);
@@ -29,5 +30,4 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-extern const char* STR_EXPORT_API;
 extern bool visitTransaction(CTransaction& trans, void *data);
