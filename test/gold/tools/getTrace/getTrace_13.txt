@@ -1,30 +1,32 @@
-getTrace argc: 2 [1:0x948a59164ab5f493074aed5345a1ff544bc1125dc0b265f17f032736fd145d22] 
-getTrace 0x948a59164ab5f493074aed5345a1ff544bc1125dc0b265f17f032736fd145d22 
-[{
-  "blockHash": "0x759de0be90043e350377c7d1be2f639ead0953b06a16c32552265659bd134f2d",
-  "blockNumber": 2229051,
-  "subtraces": 0,
-  "traceAddress": null,
-  "transactionHash": "0x948a59164ab5f493074aed5345a1ff544bc1125dc0b265f17f032736fd145d22",
-  "transactionPosition": 15,
-  "type": "call",
-  "error": "",
-  "action": {
-    "address": "0x0",
-    "balance": 0,
-    "callType": "call",
-    "from": "0xc78310231aa53bd3d0fea2f8c705c67730929d8f",
-    "gas": 0,
-    "init": "",
-    "input": "0x",
-    "refundAddress": "0x0",
-    "to": "0x608d2e149a4ac096f5029080415714fb51f93b99",
-    "value": 250000000000000000
-  },
-  "result": {
-    "address": "0x0",
-    "code": "",
-    "gasUsed": 0,
-    "output": "0x"
+getTrace argc: 4 [1:--fmt] [2:json] [3:0x948a59164ab5f493074aed5345a1ff544bc1125dc0b265f17f032736fd145d22] 
+getTrace --fmt json 0x948a59164ab5f493074aed5345a1ff544bc1125dc0b265f17f032736fd145d22 
+[
+  {
+    "blockHash": "0x759de0be90043e350377c7d1be2f639ead0953b06a16c32552265659bd134f2d",
+    "blockNumber": 2229051,
+    "subtraces": 0,
+    "traceAddress": null,
+    "transactionHash": "0x948a59164ab5f493074aed5345a1ff544bc1125dc0b265f17f032736fd145d22",
+    "transactionPosition": 15,
+    "type": "call",
+    "error": "",
+    "action": {
+      "address": "0x0",
+      "balance": 0,
+      "callType": "call",
+      "from": "0xc78310231aa53bd3d0fea2f8c705c67730929d8f",
+      "gas": 0,
+      "init": "",
+      "input": "0x",
+      "refundAddress": "0x0",
+      "to": "0x608d2e149a4ac096f5029080415714fb51f93b99",
+      "value": 250000000000000000
+    },
+    "result": {
+      "address": "0x0",
+      "code": "",
+      "gasUsed": 0,
+      "output": "0x"
+    }
   }
-}]
+]

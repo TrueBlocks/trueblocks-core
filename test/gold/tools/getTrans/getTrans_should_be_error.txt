@@ -23,4 +23,4 @@ getTrans 0xeec4ccd13fe05907f9d732a8ad245bcb7f918217157b89baaa23895c12eb329a --fm
     },
     "gasUsed": 50000
   }
-], "meta": {"pending": 0xdeadbeef,"staging": 0xdeadbeef,"finalized": 0xdeadbeef,"client": 0xdeadbeef } }
+], "meta": {"pending": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
