@@ -138,7 +138,11 @@ getTrace 3648669.24 -av
   },  {
     "type": "create",
     "error": "",
-    "articulatedTrace": {},
+    "articulatedTrace": {
+      "name": "",
+      "inputs": [],
+      "outputs": []
+    },
     "action": {
       "address": "0x0",
       "balance": 0,

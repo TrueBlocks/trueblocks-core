@@ -280,8 +280,18 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "articulatedTrace" ) { expContext().noFrst=true; return articulatedTrace.Format(); }
-            if ( fieldName % "action" ) { expContext().noFrst=true; return action.Format(); }
+            if ( fieldName % "articulatedTrace" ) {
+                if (articulatedTrace == CFunction())
+                    return "";
+                expContext().noFrst=true;
+                return articulatedTrace.Format();
+            }
+            if ( fieldName % "action" ) {
+                if (action == CTraceAction())
+                    return "";
+                expContext().noFrst=true;
+                return action.Format();
+            }
             break;
         case 'b':
             if ( fieldName % "blockHash" ) return hash_2_Str(blockHash);
@@ -291,7 +301,12 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "error" ) return error;
             break;
         case 'r':
-            if ( fieldName % "result" ) { expContext().noFrst=true; return result.Format(); }
+            if ( fieldName % "result" ) {
+                if (result == CTraceResult())
+                    return "";
+                expContext().noFrst=true;
+                return result.Format();
+            }
             break;
         case 's':
             if ( fieldName % "subtraces" ) return uint_2_Str(subtraces);

@@ -20,12 +20,14 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
+    bool once = true;
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
-        if (options.first)
+        if (once)
             cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], GETRUNTIME_CLASS(CTrace));
         forEveryTransactionInList(visitTransaction, &options, options.transList.queries);
+        once = false;
     }
     cout << exportPostamble(options.exportFmt, expContext().fmtMap["meta"]);
 
@@ -37,7 +39,6 @@ int main(int argc, const char *argv[]) {
 bool visitTransaction(CTransaction& trans, void *data) {
 
     COptions *opt = reinterpret_cast<COptions *>(data);
-
     bool isText = (opt->exportFmt & (TXT1|CSV1));
 
     if (contains(trans.hash, "invalid")) {
@@ -58,8 +59,8 @@ bool visitTransaction(CTransaction& trans, void *data) {
         queryRawTrace(result, trans.getValueByName("hash"));
         if (!isText && !opt->first)
             cout << ",";
-        replace(result, "[", "");
-        replaceReverse(result, "]", "");
+        replace(result, "[", "");  // not sure why we need this
+        replaceReverse(result, "]", "");  // not sure why we need this
         cout << result;
         opt->first = false;
         return true;
@@ -80,13 +81,12 @@ bool visitTransaction(CTransaction& trans, void *data) {
 
     getTraces(trans.traces, trans.getValueByName("hash"));
 
-    if (opt->articulate) {
-        opt->abi_spec.loadAbiByAddress(trans.to);
-        opt->abi_spec.articulateTransaction(&trans);
-    }
-    manageFields("CFunction:message", !trans.articulatedTx.message.empty());
-
     for (auto trace : trans.traces) {
+        if (opt->articulate) {
+            opt->abi_spec.loadAbiByAddress(trace.action.to);
+            opt->abi_spec.articulateTrace(&trace);
+        }
+        manageFields("CFunction:message", !trace.articulatedTrace.message.empty());
         if (isText) {
             cout << trim(trace.Format(expContext().fmtMap["format"]), '\t') << endl;
         } else {
@@ -96,8 +96,8 @@ bool visitTransaction(CTransaction& trans, void *data) {
             incIndent();
             trace.doExport(cout);
             decIndent();
+            opt->first = false;
         }
-        opt->first = false;
     }
     return true;
 }
