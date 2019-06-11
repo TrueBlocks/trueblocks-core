@@ -1,3 +1,0 @@
-getLogs argc: 2 [1:1001001.0.prev] 
-getLogs 1001001.0.prev 
-[]

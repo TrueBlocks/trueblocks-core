@@ -29,17 +29,15 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-    bool noHeader = false;
-
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if (arg == "-c" || arg == "--countOnly") {
-            countOnly = true;
-
-        } else if (arg == "-a" || arg == "--articulate") {
+        if (arg == "-a" || arg == "--articulate") {
             articulate = true;
             exportFmt = JSON1;
+
+        } else if (arg == "-c" || arg == "--countOnly") {
+            countOnly = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -64,16 +62,6 @@ bool COptions::parseArguments(string_q& command) {
 
     if (isRaw || verbose)
         exportFmt = JSON1;
-
-    if (isRaw) {
-        string_q fields =
-            "CBlock:blockHash,blockNumber|"
-            "CTransaction:to,from,blockHash,blockNumber|"
-            "CTrace|blockHash,blockNumber,subtraces,traceAddress,transactionHash,transactionPosition,type,error,articulatedTrace,action,result,date|"
-            "CTraceAction:address,balance,callType,from,gas,init,input,refundAddress,to,value,ether|"
-            "CTraceResult:address,code,gasUsed,output|";
-        manageFields(fields, true);
-    }
 
     if (articulate) {
         // show certain fields and hide others
@@ -105,8 +93,6 @@ bool COptions::parseArguments(string_q& command) {
             break;
     }
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
-    if (noHeader)
-        expContext().fmtMap["header"] = "";
 
     return true;
 }

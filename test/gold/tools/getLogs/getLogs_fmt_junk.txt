@@ -1,7 +1,7 @@
-getLogs argc: 2 [1:.whatever] 
-getLogs .whatever 
+getLogs argc: 5 [1:2222222.0] [2:2332332.0] [3:--fmt] [4:junk] 
+getLogs 2222222.0 2332332.0 --fmt junk 
 
-  .whatever does not appear to be a valid transaction index.
+  Export format must be one of [ json | txt | csv | api ]. Quitting...
 
   Usage:    getLogs [-a|-v|-h] <transID> [transID...]  
   Purpose:  Retrieve a transaction's logs from the local cache or a running node.  
