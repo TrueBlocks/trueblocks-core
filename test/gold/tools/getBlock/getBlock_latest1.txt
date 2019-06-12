@@ -1,7 +1,7 @@
 getBlock argc: 2 [1:--latest] 
 getBlock --latest 
   Client version:     --version--
-  Trueblocks Version: GHC-TrueBlocks//0.5.7-alpha--git-hash---git-ts-
+  Trueblocks Version: GHC-TrueBlocks//0.5.8-alpha--git-hash---git-ts-
   RPC Provider:       --rpc_provider--
   Cache location:     --cache_dir--
   Host (user):        --host (user)--

@@ -20,7 +20,7 @@ name = "data/098_Baddies"
 
 File contents after write
 [version]
-current = "0.5.7-alpha"
+current = "0.5.8-alpha"
 
 [settings]
 name = "data/098_Baddies"

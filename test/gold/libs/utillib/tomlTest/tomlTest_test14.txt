@@ -53,5 +53,5 @@ firstBlock_0 = 2321003
 color_0 = "bBlue"
 
 [version]
-current = "0.5.7-alpha"
+current = "0.5.8-alpha"
 
