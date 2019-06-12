@@ -48,7 +48,7 @@ bool visitTransaction(CTransaction& trans, void *data) {
         } else {
             if (!opt->first)
                 cout << ",";
-            cout << cRed << "{ \"error\": \"Transaction " << hash << " not found.\" }\n" << cOff;
+            cout << "{ \"error\": \"Transaction " << hash << " not found.\" }\n";
         }
         opt->first = false;
         return true; // continue even with an invalid item
@@ -64,6 +64,13 @@ bool visitTransaction(CTransaction& trans, void *data) {
         return true;
     }
 
+    //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
+
+    if (opt->articulate) {
+        opt->abi_spec.loadAbiByAddress(trans.to);
+        opt->abi_spec.articulateTransaction(&trans);
+    }
     for (auto log : trans.receipt.logs) {
         if (opt->articulate) {
             opt->abi_spec.loadAbiByAddress(log.address);

@@ -1,6 +1,6 @@
-getTrans argc: 4 [1:0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344] [2:-a] [3:-v] 
-getTrans 0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344 -a -v 
-[
+getTrans argc: 4 [1:0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344] [2:-a] [3:--api_mode] 
+getTrans 0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344 -a --api_mode 
+{ "type": "CTransaction", "data": [
   {
     "hash": "0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344",
     "blockHash": "0xccb6333a6bc02c0887f0614d9da2cb66520dbd5fc196c8c77c9d10fe7ca673d2",
@@ -32,4 +32,4 @@ getTrans 0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344 -a -
     "date": "2016-07-11 20:58:05 UTC",
     "ether": 0.001000000000000000
   }
-]
+], "meta": {"pending": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

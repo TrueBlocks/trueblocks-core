@@ -50,6 +50,7 @@ run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrace_preload_abi4" ${EXECUTABLE_OUTP
 run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrace_preload_abi5" ${EXECUTABLE_OUTPUT_PATH}/grabABI " 0x314159265dd8dbb310642f98f50c066173c1259c")
 run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrace_preload_abi6" ${EXECUTABLE_OUTPUT_PATH}/grabABI " 0x314159265dd8dbb310642f98f50c066173c1259b")
 run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrace_preload_abi7" ${EXECUTABLE_OUTPUT_PATH}/grabABI " 0x159cf1e9ae58211b588f5e3bf1d7e423952d959b")
+run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrace_preload_abi8" ${EXECUTABLE_OUTPUT_PATH}/grabABI " 0x8055d0504666e2b6942beb8d6014c964658ca591")
 
 # Enter one line for each individual test
 run_test("getTrace_README"              "-th")
@@ -83,25 +84,25 @@ run_test("getTrace_fmt_api_mode_fmt" "2222222.0" " 2332332.0" " --api_mode" " --
 run_test("getTrace_fmt_defaut"       "2222222.0" " 2332332.0")
 run_test("getTrace_fmt_junk"         "2222222.0" " 2332332.0" " --fmt" " junk")
 
-run_test("getTrace_articulate"         "-a" " -v" " 6513870.62" " 6687987.11" " 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12")
-run_test("getTrace_articulate_2"       "3648669.24" " -av")
-run_test("getTrace_articulate_arrays"  "0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f" " -va")
+run_test("getTrace_articulate"         "-a" " -x" "json" " 6513870.62" " 6687987.11" " 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12")
+run_test("getTrace_articulate_2"       "3648669.24" " -av" " --fmt" " csv")
+run_test("getTrace_articulate_arrays"  "0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f" " -ax" " api" " -v")
 
 #-----------------------------------------------------------------------------------------------------------------------------
 # Note: Full nodes do not support tracing, so help and error conditions are the only test run by default (i.e. non-special)
 #-----------------------------------------------------------------------------------------------------------------------------
 run_special_test("getTrace_by_filebad"          "--bad" " --file:cmd_file")
 run_special_test("getTrace_by_file"             "--file:cmd_file" " --api_mode")
-run_special_test("getTrace_by_file_long_v"      "--file:cmd_file" " --verbose" " --parity")
-run_special_test("getTrace_by_file_v"           "--verbose"       " --file:cmd_file")
+run_special_test("getTrace_by_file_long_v"      "--file:cmd_file" " --verbose" " --parity" " --fmt" " api")
+run_special_test("getTrace_by_file_v"           "--verbose" " --file:cmd_file" " --api_mode")
 
-run_special_test("getTrace_verbose_blk_idx1"    "-v" " 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3")
-run_special_test("getTrace_verbose_blk_idx2"    "--verbose" " 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3")
-run_special_test("getTrace_verbose_blk_idx3"    "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3" " -v")
+run_special_test("getTrace_verbose_blk_idx1"    "--fmt" " json" " 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3")
+run_special_test("getTrace_verbose_blk_idx2"    "--fmt" " api" " 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3")
+run_special_test("getTrace_verbose_blk_idx3"    "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3" " --api_mode" " --fmt" " txt")
 
 run_special_test("getTrace_by_txhash"           "0x66e49e99a984cd88e097782a001afaac8c6ff786c936651895475dd88ec360f6" " --fmt" " api")
 run_special_test("getTrace_by_bnun_and_txid"    "4348290.92" " --fmt" "api")
-run_special_test("getTrace_by_bhash_and_txid"   "0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73.92" " -v" " --parity")
+run_special_test("getTrace_by_bhash_and_txid"   "0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73.92" " --api_mode" " --parity")
 
 run_special_test("getTrace_by_blk_hash_good"    "0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55" " --verbose")
 run_special_test("getTrace_by_blk_hash_bad"     "0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.155" " -v")

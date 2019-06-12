@@ -34,10 +34,9 @@ bool COptions::parseArguments(string_q& command) {
     for (auto arg : arguments) {
         if (arg == "-a" || arg == "--articulate") {
             articulate = true;
-            exportFmt = JSON1;
 
         } else if (arg == "-c" || arg == "--countOnly") {
-            countOnly = true;
+            option1 = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -60,7 +59,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!transList.hasTrans())
         return usage("Please specify at least one transaction identifier.");
 
-    if (isRaw || verbose)
+    if (isRaw)
         exportFmt = JSON1;
 
     if (articulate) {
@@ -103,7 +102,7 @@ void COptions::Init(void) {
     optionOn(OPT_RAW | OPT_OUTPUT);
 
     transList.Init();
-    countOnly = false;
+    option1 = false;
     articulate = false;
 }
 
@@ -152,4 +151,5 @@ const char* STR_DISPLAY =
 "[{ACTION::VALUE}]\t"
 "[{ACTION::GAS}]\t"
 "[{RESULT::GASUSED}]\t"
-"[{ACTION::INPUT}]";
+"[{ACTION::INPUT}]\t"
+"[{COMPRESSEDTRACE}]";

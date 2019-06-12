@@ -80,9 +80,9 @@ run_test("getTrans_nav_next2"          " 1001001.3.next")
 run_test("getTrans_verbose_blk_idx1"   "--fmt" " json" " 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3")
 run_test("getTrans_verbose_blk_idx2"   "--fmt" " api" " 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.4")
 run_test("getTrans_verbose_blk_idx3"   "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3" " -t")
-run_test("getTrans_articulate"         "-a" " -v" " -t" " 6513870.62" " 6687987.11" " 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12")
-run_test("getTrans_articulate_2"       "3648669.24" " -avt")
-run_test("getTrans_articulate_arrays"  "0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f" " -vta")
+run_test("getTrans_articulate"         "-a" " -x" " api" " -t" " 6513870.62" " 6687987.11" " 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12")
+run_test("getTrans_articulate_2"       "3648669.24" " -avtx" " json" " --api_mode")
+run_test("getTrans_articulate_arrays"  "0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f" " -tax" " api")
 run_test("getTrans_by_blk_hash_good"   "0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55" " --api_mode")
 # this test case should fail, but it doesn't. It calls for a transaction (#155) that does not exist since this block only has 94 transactions
 #run_test("getTrans_by_blk_hash_bad"    "0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.155" " -v")
@@ -99,10 +99,10 @@ run_test("getTrans_bad_hash_msg_raw"     "--veryRaw" " 0x060e4cf9fa8d34a8b423b5b
 run_test("getTrans_bad_blkhash_msg"      "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1" " 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5" " 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.2")
 run_test("getTrans_bad_blkhash_msg_raw"  "--veryRaw" "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1" " 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5")
 
-run_test("getTrans_revert_not_err" "0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c" " -a" " -v" " -t")
+run_test("getTrans_revert_not_err" "0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c" " -a" " --fmt" " json" " -t")
 
-run_test("getTrans_message" "0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344" " -a" " -v")
-run_test("getTrans_core_dump_bug"      "0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10" " -avt")
+run_test("getTrans_message" "0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344" " -a" " --api_mode")
+run_test("getTrans_core_dump_bug"      "0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10" " -avtx" " api")
 
 run_test("getTrans_fmt_txt"          "2222222.0" " 2332332.0" " --fmt" " txt")
 run_test("getTrans_fmt_csv"          "2222222.0" " 2332332.0" " --fmt" " csv")

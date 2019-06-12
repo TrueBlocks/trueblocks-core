@@ -10,82 +10,81 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "etherlib.h"
 #include "options.h"
 
-extern bool visitTransaction(CTransaction& trans, void *data);
-//--------------------------------------------------------------
+//-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
     etherlib_init(quickQuitHandler);
 
-    // Parse command line, allowing for command files
     COptions options;
     if (!options.prepareArguments(argc, argv))
         return 0;
 
+    bool once = true;
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
+        if (once)
+            cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], GETRUNTIME_CLASS(CTransaction));
         forEveryTransactionInList(visitTransaction, &options, options.transList.queries);
+        once = false;
     }
+    cout << exportPostamble(options.exportFmt, expContext().fmtMap["meta"]);
 
-    size_t cnt = 0;
-    cout << "[";
-    for (auto item : options.items) {
-        if (cnt++ > 0)
-            cout << ",";
-        item.doExport(cout);
-    }
-    if (cnt && options.rawItems.size())
-        cout << ",\n";
-
-    cnt = 0;
-    for (auto str : options.rawItems) {
-        if (cnt++ > 0)
-            cout << ",\n";
-        cout << str;
-    }
-    cout << "]";
-
+    etherlib_cleanup();
     return 0;
 }
 
 //--------------------------------------------------------------
 bool visitTransaction(CTransaction& trans, void *data) {
-    COptions *opt = (COptions*)data;
+
+    COptions *opt = reinterpret_cast<COptions *>(data);
+    bool isText = (opt->exportFmt & (TXT1|CSV1));
+
     if (contains(trans.hash, "invalid")) {
-        ostringstream os;
-        os << cRed << "{ \"error\": \"The item you requested (";
-        os << nextTokenClear(trans.hash, ' ') << ") was not found.\" }" << cOff;
-        opt->rawItems.push_back(os.str());
+        string_q hash = nextTokenClear(trans.hash, ' ');
+        if (isText) {
+            cout << cRed << "Transaction " << hash << " not found.\n" << cOff;
+        } else {
+            if (!opt->first)
+                cout << ",";
+            cout << "{ \"error\": \"Transaction " << hash << " not found.\" }\n";
+        }
+        opt->first = false;
+        return true; // continue even with an invalid item
+    }
+
+    if (opt->isRaw || opt->isVeryRaw) {
+        string_q result;
+        queryRawReceipt(result, trans.getValueByName("hash"));
+        if (!isText && !opt->first)
+            cout << ",";
+        cout << result;
+        opt->first = false;
         return true;
     }
 
-    if (!opt->isRaw) {
-        opt->items.push_back(trans.receipt);
-        return true;
+    //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
+
+    if (true) {
+        if (opt->articulate) {
+            opt->abi_spec.loadAbiByAddress(trans.to);
+            opt->abi_spec.articulateTransaction(&trans);
+        }
+        manageFields("CFunction:message", !trans.articulatedTx.message.empty());
+
+        if (isText) {
+            cout << trim(trans.receipt.Format(expContext().fmtMap["format"]), '\t') << endl;
+        } else {
+            if (!opt->first)
+                cout << ",";
+            cout << "  ";
+            incIndent();
+            trans.receipt.doExport(cout);
+            decIndent();
+            opt->first = false;
+        }
     }
-
-    string_q fields =
-        "CBlock:blockHash,blockNumber|"
-        "CTransaction:to,from,blockHash,blockNumber|"
-        "CReceipt:to,from,blockHash,blockNumber,transactionHash,transactionIndex,cumulativeGasUsed,logsBloom,root|"
-        "CLogEntry:blockHash,blockNumber,transactionHash,transactionIndex,transactionLogIndex,removed,type";
-    manageFields(fields, true);
-
-    string_q result;
-    queryRawReceipt(result, trans.getValueByName("hash"));
-    if (opt->isVeryRaw) {
-        opt->rawItems.push_back(result);
-        return true;
-    }
-    CRPCResult generic;
-    generic.parseJson3(result);
-    CBlock bl;
-    CTransaction tt; tt.pBlock = &bl;
-    CReceipt receipt; receipt.pTrans = &tt;
-    receipt.parseJson3(generic.result);
-    opt->rawItems.push_back(receipt.Format());
-
     return true;
 }

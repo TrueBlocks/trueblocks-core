@@ -442,6 +442,9 @@ namespace qblocks {
             os << "#### Usage\n";
         }
 
+        if (api_mode)
+            cout << "{ \"error\": \"" << errMsg << "\" }" << endl;
+
         os << "\n";
         if (!errMsg.empty())
             os << cRed << "  " << errMsg << cOff << "\n\n";

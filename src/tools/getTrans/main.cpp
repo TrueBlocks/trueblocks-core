@@ -48,7 +48,7 @@ bool visitTransaction(CTransaction& trans, void *data) {
         } else {
             if (!opt->first)
                 cout << ",";
-            cout << cRed << "{ \"error\": \"Transaction " << hash << " not found.\" }\n" << cOff;
+            cout << "{ \"error\": \"Transaction " << hash << " not found.\" }\n";
         }
         opt->first = false;
         return true; // continue even with an invalid item
@@ -64,15 +64,17 @@ bool visitTransaction(CTransaction& trans, void *data) {
         return true;
     }
 
-    if (opt->incTrace)
+    //////////////////////////////////////////////////////
+    if (opt->option1)
         getTraces(trans.traces, trans.getValueByName("hash"));
-    if (true) {
-        if (opt->articulate) {
-            opt->abi_spec.loadAbiByAddress(trans.to);
-            opt->abi_spec.articulateTransaction(&trans);
-        }
-        manageFields("CFunction:message", !trans.articulatedTx.message.empty());
+    //////////////////////////////////////////////////////
 
+    if (opt->articulate) {
+        opt->abi_spec.loadAbiByAddress(trans.to);
+        opt->abi_spec.articulateTransaction(&trans);
+    }
+    manageFields("CFunction:message", !trans.articulatedTx.message.empty());
+    if (true) {
         if (isText) {
             cout << trim(trans.Format(expContext().fmtMap["format"]), '\t') << endl;
         } else {

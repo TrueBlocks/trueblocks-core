@@ -525,6 +525,18 @@ bool CFunction::fromDefinition(const string_q& lineIn) {
     finishParse();
     return true;
 }
+
+//-----------------------------------------------------------------------
+string_q CFunction::compressed(void) const {
+    if (name.empty())
+        return "";
+    string_q ret = name + " ( ";
+    for (auto input : inputs)
+        ret += (input.name + ": " + input.value + ", ");
+    ret = trim(trim(ret, ' '), ',');
+    ret += " )";
+    return ret;
+}
 // EXISTING_CODE
 }  // namespace qblocks
 
