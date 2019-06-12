@@ -66,10 +66,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "0x")) {
             if (!isAddress(arg))
                 return usage(arg + " does not appear to be a valid Ethereum address. Quitting...");
-            address_t l = toLower(arg);
-            CEthState record;
-            record.address = l;
-            items[l] = record;
+            addrs.push_back(toLower(arg));
 
         } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
@@ -92,7 +89,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!blocks.hasBlocks())
         blocks.numList.push_back(newestBlock);  // use 'latest'
 
-    if (!items.size())
+    if (!addrs.size())
         return usage("You must provide at least one Ethereum address.");
 
     deminimus = str_2_Wei(getGlobalConfig("getState")->getConfigStr("settings", "deminimus", "0"));
@@ -139,14 +136,15 @@ void COptions::Init(void) {
     prevBal = 0;
     mode = ST_BALANCE;
 
-    items.clear();
+    addrs.clear();
+    current = "";
     blocks.Init();
     CHistoryOptions::Init();
     newestBlock = oldestBlock = getLastBlock_client();
 }
 
 //---------------------------------------------------------------------------------------------------
-COptions::COptions(void) : CHistoryOptions(), item(NULL) {
+COptions::COptions(void) : CHistoryOptions() {
     sorts[0] = GETRUNTIME_CLASS(CBlock);
     sorts[1] = GETRUNTIME_CLASS(CTransaction);
     sorts[2] = GETRUNTIME_CLASS(CReceipt);
