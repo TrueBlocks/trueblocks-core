@@ -17,7 +17,7 @@ namespace qblocks {
 
 #define MAJOR 0
 #define MINOR 5
-#define BUILD 7
+#define BUILD 8
 #define SUBVERS "alpha"
 #define PRODUCT_NAME "GHC-TrueBlocks/""/"
     //--------------------------------------------------------------------------------
