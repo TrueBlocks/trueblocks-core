@@ -1,5 +1,5 @@
 [settings]
 class     = CTrace
-fields    = hash blockHash|blknum blockNumber|uint64 subtraces|CStringArray traceAddress|hash transactionHash|uint64 transactionPosition|string type|string error|CFunction articulatedTrace (nowrite)|CTraceAction action|CTraceResult result
+fields    = hash blockHash|blknum blockNumber|uint64 subtraces|CStringArray traceAddress|hash transactionHash|uint64 transactionPosition|string type|string error|CFunction articulatedTrace (nowrite)|string compressedTrace (nowrite)|CTraceAction action|CTraceResult result
 includes  = abilib.h|traceaction.h|traceresult.h
 cIncs     = transaction.h

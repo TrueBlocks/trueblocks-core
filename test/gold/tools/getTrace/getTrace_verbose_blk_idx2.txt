@@ -1,6 +1,6 @@
-getTrace argc: 3 [1:--verbose] [2:0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3] 
-getTrace --verbose 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 
-[
+getTrace argc: 4 [1:--fmt] [2:api] [3:0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3] 
+getTrace --fmt api 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 
+{ "type": "CTrace", "data": [
   {
     "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
     "blockNumber": 3657480,
@@ -29,4 +29,4 @@ getTrace --verbose 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234a
       "output": "0x"
     }
   }
-]
+], "meta": {"pending": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

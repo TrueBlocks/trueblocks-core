@@ -33,7 +33,6 @@ bool COptions::parseArguments(string_q& command) {
     for (auto arg : arguments) {
         if (arg == "-a" || arg == "--articulate") {
             articulate = true;
-            exportFmt = JSON1;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -56,7 +55,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!transList.hasTrans())
         return usage("Please specify at least one transaction identifier.");
 
-    if (isRaw || verbose)
+    if (isRaw)
         exportFmt = JSON1;
 
     if (articulate) {
@@ -101,6 +100,7 @@ void COptions::Init(void) {
     optionOn(OPT_RAW | OPT_OUTPUT);
 
     transList.Init();
+    option1 = false;
     articulate = false;
 }
 

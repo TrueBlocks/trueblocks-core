@@ -1,5 +1,5 @@
-getLogs argc: 4 [1:--file:cmd_file] [2:--verbose] [3:--parity] 
-getLogs --file:cmd_file --verbose --parity 
+getLogs argc: 6 [1:--file:cmd_file] [2:--verbose] [3:--parity] [4:--fmt] [5:json] 
+getLogs --file:cmd_file --verbose --parity --fmt json 
 [
   {
     "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",

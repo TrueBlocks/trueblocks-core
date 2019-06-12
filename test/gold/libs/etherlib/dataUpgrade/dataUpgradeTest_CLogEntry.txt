@@ -94,7 +94,6 @@ topic3              	1021	0	131132	T_HASH TS_STRING
     "inputs": [],
     "outputs": []
   },
-  "compressedLog": " (  )",
   "transactionLogIndex": 0
 }
 

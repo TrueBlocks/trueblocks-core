@@ -1,19 +1,4 @@
-getReceipt argc: 2 [1:4000000.5] 
-getReceipt 4000000.5 
-[{
-  "contractAddress": "0x0",
-  "gasUsed": 52616,
-  "logs": [
-    {
-      "address": "0x1a95b271b0535d15fa49932daba31ba612b52946",
-      "data": "0x000000000000000000000000000000000000000000000000000000000a21fe80",
-      "logIndex": 4,
-      "topics": [
-        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
-        "0x00000000000000000000000040584168524a928ae43b4e83893f963e467e9d73",
-        "0x00000000000000000000000043a4210390998945dc7658a20b43c6c4189ac7d4"
-      ]
-    }
-  ],
-  "status": null
-}]
+getReceipt argc: 3 [1:4000000.5] [2:--logs] 
+getReceipt 4000000.5 --logs 
+blocknumber	transactionindex	hash	gasused	status	iserror	logscnt
+4000000	5	0xfe52da8afe135e14a0855240e1ef4b44a0b4ebe374bd39de307cf0f3fabf0ff1	52616	null	0	1

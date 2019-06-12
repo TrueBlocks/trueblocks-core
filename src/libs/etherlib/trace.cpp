@@ -76,6 +76,9 @@ bool CTrace::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
             if ( fieldName % "blockHash" ) { blockHash = str_2_Hash(fieldValue); return true; }
             if ( fieldName % "blockNumber" ) { blockNumber = str_2_Uint(fieldValue); return true; }
             break;
+        case 'c':
+            if ( fieldName % "compressedTrace" ) { compressedTrace = fieldValue; return true; }
+            break;
         case 'e':
             if ( fieldName % "error" ) { error = fieldValue; return true; }
             break;
@@ -132,6 +135,7 @@ bool CTrace::Serialize(CArchive& archive) {
     archive >> type;
     archive >> error;
 //    archive >> articulatedTrace;
+//    archive >> compressedTrace;
     archive >> action;
     archive >> result;
     finishParse();
@@ -155,6 +159,7 @@ bool CTrace::SerializeC(CArchive& archive) const {
     archive << type;
     archive << error;
 //    archive << articulatedTrace;
+//    archive << compressedTrace;
     archive << action;
     archive << result;
 
@@ -202,6 +207,8 @@ void CTrace::registerClass(void) {
     ADD_FIELD(CTrace, "error", T_TEXT, ++fieldNum);
     ADD_FIELD(CTrace, "articulatedTrace", T_OBJECT, ++fieldNum);
     HIDE_FIELD(CTrace, "articulatedTrace");
+    ADD_FIELD(CTrace, "compressedTrace", T_TEXT, ++fieldNum);
+    HIDE_FIELD(CTrace, "compressedTrace");
     ADD_FIELD(CTrace, "action", T_OBJECT, ++fieldNum);
     ADD_FIELD(CTrace, "result", T_OBJECT, ++fieldNum);
 
@@ -225,6 +232,9 @@ string_q nextTraceChunk_custom(const string_q& fieldIn, const void *dataPtr) {
     if (tra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'c':
+                if ( fieldIn % "compressedTrace" ) return tra->articulatedTrace.compressed();
+                break;
             case 'd':
                 if (tra->pTrans) {
                     if (fieldIn % "date" || fieldIn % "datesh")
@@ -296,6 +306,9 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
         case 'b':
             if ( fieldName % "blockHash" ) return hash_2_Str(blockHash);
             if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
+            break;
+        case 'c':
+            if ( fieldName % "compressedTrace" ) return compressedTrace;
             break;
         case 'e':
             if ( fieldName % "error" ) return error;
