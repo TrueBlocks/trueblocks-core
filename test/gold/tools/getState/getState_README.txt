@@ -2,7 +2,7 @@ getState argc: 2 [1:-th]
 getState -th 
 #### Usage
 
-`Usage:`    getState [-n|-c|-m|-v|-h] &lt;address&gt; [address...] [block...]  
+`Usage:`    getState [-m|-n|-c|-v|-h] &lt;address&gt; [address...] [block...]  
 `Purpose:`  Retrieve the balance (in wei) for one or more addresses at the given block(s).
              
 `Where:`  
@@ -11,9 +11,9 @@ getState -th
 | -------: | :------- | :------- |
 |  | address_list | one or more addresses (0x...) from which to retrieve balances |
 |  | block_list | an optional list of one or more blocks at which to report balances, defaults to 'latest' |
+| -m | --mode val | control which state to export. One of [none&#124;some&#124;all&#124;balance&#124;nonce&#124;code&#124;storage&#124;deployed&#124;accttype] |
 | -n | --nozero | suppress the display of zero balance accounts |
 | -c | --changes | only report a balance when it changes from one block to the next |
-| -m | --mode val | control which state to export. One of [none&#124;some&#124;all&#124;balance&#124;nonce&#124;code&#124;storage&#124;deployed&#124;accttype] |
 
 #### Hidden options (shown during testing only)
 | -x | --fmt val | export format (one of [none&#124;json&#124;txt&#124;csv&#124;api]) |

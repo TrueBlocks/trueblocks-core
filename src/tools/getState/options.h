@@ -23,6 +23,7 @@ public:
     bool exclude_zero;
     bool changes;
     wei_t deminimus;
+    bool first;
 
     COptions(void);
     ~COptions(void);
