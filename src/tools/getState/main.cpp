@@ -20,7 +20,7 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    bool first = true;
+    bool once = true;
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
@@ -31,17 +31,22 @@ int main(int argc, const char *argv[]) {
 
         } else {
             for (auto item : options.items) {
-                if (first)
+                if (once)
                     cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], item.second.getRuntimeClass());
                 options.prevBal = 0;
                 options.item = (CEthState*)&item.second;
                 options.blocks.forEveryBlockNumber(visitBlock, &options);
-                first = false;
+                once = false;
             }
         }
-
-        if (options.hasHistory() && !nodeHasBalances())
-            LOG_WARN("Your node does not report historical state. The results presented above are incorrect.");
+        if (options.hasHistory() && !nodeHasBalances()) {
+            if (isText) {
+                cerr << "Your node does not report historical state. Results are incorrect." << endl;
+            } else {
+                expContext().fmtMap["meta"] =
+                ", \"warning\": \"Your node does not report historical state. Results are incorrect.\"";
+            }
+        }
         cout << exportPostamble(options.exportFmt, expContext().fmtMap["meta"]);
     }
 
@@ -52,51 +57,58 @@ int main(int argc, const char *argv[]) {
 //--------------------------------------------------------------
 bool visitBlock(uint64_t blockNum, void *data) {
 
-    if (!isTestMode()) { cerr << blockNum << "\r"; cerr.flush(); }
-    COptions *options = reinterpret_cast<COptions *>(data);
-    if (blockNum < options->oldestBlock)
-        options->oldestBlock = blockNum;
+    COptions *opt = reinterpret_cast<COptions *>(data);
+    bool isText = opt->exportFmt & (TXT1|CSV1);
 
-    wei_t balance = getBalanceAt(options->item->address, blockNum);
-    if (options->changes) {
-        if (balance == options->prevBal)
-            return !shouldQuit();
-        options->prevBal = balance;
+    if (!isTestMode()) {
+        cerr << blockNum << "\r";
+        cerr.flush();
     }
 
-    if (options->exclude_zero && balance <= options->deminimus)
+    if (blockNum < opt->oldestBlock)
+        opt->oldestBlock = blockNum;
+
+    wei_t balance = getBalanceAt(opt->item->address, blockNum);
+    if (opt->changes) {
+        if (balance == opt->prevBal)
+            return !shouldQuit();
+        opt->prevBal = balance;
+    }
+
+    if (opt->exclude_zero && balance <= opt->deminimus)
         return !shouldQuit();
 
-    options->item->blockNumber = blockNum;
-    if (options->mode & ST_BALANCE)
-        options->item->balance = balance;
-    if (options->mode & ST_NONCE)
-        options->item->nonce = getNonceAt(options->item->address, blockNum);
-    if (options->mode & ST_CODE) {
-        string_q code = getCodeAt(options->item->address);
-        options->item->code = code;
-        if (code.length() > 250)
-            options->item->code = code.substr(0,20) + "..." + code.substr(code.length()-20, 100);
+    opt->item->blockNumber = blockNum;
+    if (opt->mode & ST_BALANCE)
+        opt->item->balance = balance;
+    if (opt->mode & ST_NONCE)
+        opt->item->nonce = getNonceAt(opt->item->address, blockNum);
+    if (opt->mode & ST_CODE) {
+        string_q code = getCodeAt(opt->item->address);
+        opt->item->code = code;
+        if (code.length() > 250 && !verbose)
+            opt->item->code = code.substr(0,20) + "..." + code.substr(code.length()-20, 100);
     }
-    if (options->mode & ST_STORAGE)
-        options->item->storage = getStorageAt(options->item->address, 0);
-    if (options->mode & ST_DEPLOYED)
-        options->item->deployed = getDeployBlock(options->item->address);
-    if (options->mode & ST_ACCTTYPE)
-        options->item->accttype = (isContractAt(options->item->address) ? "Contract" : "EOA");
+    if (opt->mode & ST_STORAGE)
+        opt->item->storage = getStorageAt(opt->item->address, 0);
+    if (opt->mode & ST_DEPLOYED)
+        opt->item->deployed = getDeployBlock(opt->item->address);
+    if (opt->mode & ST_ACCTTYPE)
+        opt->item->accttype = (isContractAt(opt->item->address) ? "Contract" : "EOA");
 
-    if ((options->exportFmt & (TXT1|CSV1))) {
-        cout << options->item->Format(expContext().fmtMap["format"]) << endl;
+    if (true) {
+        if (isText) {
+            cout << opt->item->Format(expContext().fmtMap["format"]) << endl;
 
-    } else {
-        static bool first = true;
-        if (!first)
-            cout << "," << endl;
-        cout << "  ";
-        incIndent();
-        options->item->doExport(cout);
-        decIndent();
-        first = false;
+        } else {
+            if (!opt->first)
+                cout << "," << endl;
+            cout << "  ";
+            incIndent();
+            opt->item->doExport(cout);
+            decIndent();
+            opt->first = false;
+        }
     }
 
     return !shouldQuit();
