@@ -2,33 +2,15 @@ getState argc: 6 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:0xfb6916095ca
 getState 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 1500000 --fmt api 
 { "type": "CEthState", "data": [
   {
-    "schema": 5007,
-    "deleted": 0,
-    "showing": 1,
-    "cname": "EthState",
     "blockNumber": 1500000,
     "balance": 4420466920675732108465682,
-    "nonce": 0,
-    "code": "",
-    "storage": "",
     "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
-    "deployed": 0,
-    "accttype": "",
     "ether": 4420466.920675732108465682
   },
   {
-    "schema": 5007,
-    "deleted": 0,
-    "showing": 1,
-    "cname": "EthState",
     "blockNumber": 1500000,
     "balance": 2647815343985767974336,
-    "nonce": 0,
-    "code": "",
-    "storage": "",
     "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
-    "deployed": 0,
-    "accttype": "",
     "ether": 2647.815343985767974336
   }
 ], "meta": {"pending": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

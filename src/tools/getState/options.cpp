@@ -16,22 +16,21 @@
 static const COption params[] = {
     COption("~address_list", "one or more addresses (0x...) from which to retrieve balances"),
     COption("~!block_list",  "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
+    COption("-mode:<val>",   "control which state to export. One of [none|some|all|balance|nonce|code|storage|deployed|accttype]"),
     COption("-nozero",       "suppress the display of zero balance accounts"),
     COption("-changes",      "only report a balance when it changes from one block to the next"),
-    COption("-mode:<val>",   "control which state to export. One of [none|some|all|balance|nonce|code|storage|deployed|accttype]"),
     COption("@fmt:<fmt>",    "export format (one of [none|json|txt|csv|api])"),
     COption("",              "Retrieve the balance (in wei) for one or more addresses at the given block(s).\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-extern const char *STR_DISPLAY;
+extern const char* STR_DISPLAY;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
 
-    string_q format = STR_DISPLAY;
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
@@ -42,6 +41,7 @@ bool COptions::parseArguments(string_q& command) {
             changes = true;
 
         } else if (startsWith(arg, "-m:") || startsWith(arg, "--mode:")) {
+
             arg = substitute(substitute(arg, "-m:", ""), "--mode:", "");
             if (arg == "none") mode = ST_NONE;
             if (arg == "balance") mode = ethstate_t(mode|ST_BALANCE);
@@ -53,12 +53,8 @@ bool COptions::parseArguments(string_q& command) {
             if (arg == "some") mode = ethstate_t(mode|ST_SOME);
             if (arg == "all") mode = ethstate_t(mode|ST_ALL);
 
-        } else if (startsWith(arg, '-')) {  // do not collapse
-            if (!builtInCmd(arg)) {
-                return usage("Invalid option: " + arg);
-            }
-
         } else if (isHash(arg)) {
+
             string_q ret = blocks.parseBlockList(arg, newestBlock);
             if (endsWith(ret, "\n")) {
                 cerr << "\n  " << ret << "\n";
@@ -68,13 +64,17 @@ bool COptions::parseArguments(string_q& command) {
             }
 
         } else if (startsWith(arg, "0x")) {
-
             if (!isAddress(arg))
                 return usage(arg + " does not appear to be a valid Ethereum address. Quitting...");
             address_t l = toLower(arg);
             CEthState record;
             record.address = l;
             items[l] = record;
+
+        } else if (startsWith(arg, '-')) {  // do not collapse
+            if (!builtInCmd(arg)) {
+                return usage("Invalid option: " + arg);
+            }
 
         } else {
 
@@ -88,36 +88,42 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    deminimus = str_2_Bloom(getGlobalConfig("getState")->getConfigStr("settings", "deminimus", "0"));
-
+    // Data wrangling
     if (!blocks.hasBlocks())
         blocks.numList.push_back(newestBlock);  // use 'latest'
 
     if (!items.size())
         return usage("You must provide at least one Ethereum address.");
 
+    deminimus = str_2_Wei(getGlobalConfig("getState")->getConfigStr("settings", "deminimus", "0"));
+
     string_q add;
-    if (mode & ST_BALANCE)  { add += "\t[{BALANCE}]";  UNHIDE_FIELD(CEthState, "balance"); }
+    if (mode & ST_BALANCE)  { add += "\t[{BALANCE}]";  UNHIDE_FIELD(CEthState, "balance"); UNHIDE_FIELD(CEthState, "ether");}
     if (mode & ST_NONCE)    { add += "\t[{NONCE}]";    UNHIDE_FIELD(CEthState, "nonce");   }
     if (mode & ST_CODE)     { add += "\t[{CODE}]";     UNHIDE_FIELD(CEthState, "code");    }
     if (mode & ST_STORAGE)  { add += "\t[{STORGAGE}]"; UNHIDE_FIELD(CEthState, "storage"); }
     if (mode & ST_DEPLOYED) { add += "\t[{DEPLOYED}]"; UNHIDE_FIELD(CEthState, "deployed"); }
     if (mode & ST_ACCTTYPE) { add += "\t[{ACCTTYPE}]"; UNHIDE_FIELD(CEthState, "accttype"); }
-    format += add;
+    UNHIDE_FIELD(CEthState, "address");
 
+    // Display formatting
+    string_q format = (STR_DISPLAY + add);
     switch (exportFmt) {
-        case NONE1: break;
-        case API1:
-        case JSON1: format = ""; break;
+        case NONE1:
         case TXT1:
         case CSV1:
             format = getGlobalConfig()->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
-            manageFields("CAccountName:" + cleanFmt(format, exportFmt));
+            manageFields("CEthState:" + cleanFmt(format, exportFmt));
+            break;
+        case API1:
+        case JSON1:
+            format = "";
             break;
     }
-
-    if ( expContext().asEther   ) format = substitute(format, "{BALANCE}", "{ETHER}");
-    if ( expContext().asDollars ) format = substitute(format, "{BALANCE}", "{DOLLARS}");
+    if (expContext().asEther)
+        format = substitute(format, "{BALANCE}", "{ETHER}");
+    if (expContext().asDollars)
+        format = substitute(format, "{BALANCE}", "{DOLLARS}");
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
 
     return true;
@@ -126,6 +132,7 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
+    optionOn(OPT_RAW | OPT_OUTPUT);
 
     exclude_zero = false;
     changes = false;
@@ -136,8 +143,6 @@ void COptions::Init(void) {
     blocks.Init();
     CHistoryOptions::Init();
     newestBlock = oldestBlock = getLastBlock_client();
-
-    manageFields("CEthState:all", true);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -146,6 +151,7 @@ COptions::COptions(void) : CHistoryOptions(), item(NULL) {
     sorts[1] = GETRUNTIME_CLASS(CTransaction);
     sorts[2] = GETRUNTIME_CLASS(CReceipt);
     Init();
+    first = true;
 }
 
 //--------------------------------------------------------------------------------
@@ -172,4 +178,6 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
 }
 
 //--------------------------------------------------------------------------------
-const char *STR_DISPLAY = "[{ADDRESS}]\t[{BLOCKNUMBER}]";
+const char* STR_DISPLAY =
+"[{ADDRESS}]\t"
+"[{BLOCKNUMBER}]";
