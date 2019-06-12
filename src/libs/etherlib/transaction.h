@@ -47,6 +47,7 @@ public:
     uint64_t isInternal;
     CReceipt receipt;
     CFunction articulatedTx;
+    string_q compressedTx;
     bool finalized;
     CTraceArray traces;
 
@@ -66,6 +67,7 @@ public:
     bool forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC filt = NULL, void *data = NULL);
     bool forEveryUniqueAddressPerTx(ADDRESSFUNC func, TRANSFUNC filt = NULL, void *data = NULL);
     bool loadAsPrefund(const CStringArray& prefunds, const address_t& addr);
+    bool loadAsBlockReward(blknum_t bn, const address_t& addr);
     // EXISTING_CODE
     bool operator==(const CTransaction& item) const;
     bool operator!=(const CTransaction& item) const { return !operator==(item); }
@@ -133,6 +135,7 @@ inline void CTransaction::initialize(void) {
     isInternal = 0;
     receipt = CReceipt();
     articulatedTx = CFunction();
+    compressedTx = "";
     finalized = 0;
     traces.clear();
 
@@ -162,6 +165,7 @@ inline void CTransaction::duplicate(const CTransaction& tr) {
     isInternal = tr.isInternal;
     receipt = tr.receipt;
     articulatedTx = tr.articulatedTx;
+    compressedTx = tr.compressedTx;
     finalized = tr.finalized;
     traces = tr.traces;
 

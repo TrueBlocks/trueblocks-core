@@ -10,7 +10,7 @@ ABI for address 0x159cf1e9ae58211b588f5e3bf1d7e423952d959b
 	function acceptTheseAskRequestsAndBUY(uint256[] _keys,uint256[] _tokenAmounts,uint256[] _dollarPrices)
 	function acceptTheseBidRequestsAndSELL(uint256[] _keys,uint256[] _tokenAmounts,uint256[] _dollarPrices)
 	function add                        (uint256 a,uint256 b)
-	function affirmStatusAsAccreditedInvestor(address _account)
+	function affirmStatusAsAccreditedInvestor2(address _account)
 	function allowance                  (address _owner,address _spender)
 	function approve                    (address _spender,uint256 _amount)
 	function balanceOf                  (address tokenOwner)

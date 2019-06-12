@@ -14,68 +14,96 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("~!trans_list",   "a space-separated list of one or more transaction identifiers "
-                                "(tx_hash, bn.txID, blk_hash.txID)"),
-    COption("-countOnly",     "show the number of traces for the transaction only"),
-    COption("@address:<val>", "a list of addresses used to filter the results"),
-    COption("",               "Retrieve a transaction's traces from the local cache or a running node."),
+    COption("~!trans_list",    "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
+    COption("-articulate",     "articulate the transactions if an ABI is found for the 'to' address"),
+    COption("-countOnly",      "show the number of traces for the transaction only (fast)"),
+    COption("@fmt:<fmt>",      "export format (one of [none|json|txt|csv|api])"),
+    COption("",                "Retrieve a transaction's traces from the local cache or a running node."),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
+extern const char* STR_DISPLAY;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
 
-    ENTER4("parseArguments");
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        string_q orig = arg;
-        if (startsWith(arg, "-a:") || startsWith(arg, "--address:")) {
-            arg = substitute(substitute(arg, "-a:", ""), "--address:", "");
-            if (!isAddress(arg))
-                EXIT_USAGE(orig + " does not appear to be a valid Ethereum address.");
-            addresses.push_back(arg + "|");
+        if (arg == "-a" || arg == "--articulate") {
+            articulate = true;
 
-       } else if (arg == "-c" || arg == "--countOnly") {
-            countOnly = true;
+        } else if (arg == "-c" || arg == "--countOnly") {
+            option1 = true;
 
-       } else if (startsWith(arg, '-')) {  // do not collapse
+        } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
-                EXIT_USAGE("Invalid option: " + arg);
+                return usage("Invalid option: " + arg);
             }
 
         } else {
 
             string_q errorMsg;
             if (!wrangleTxId(arg, errorMsg))
-                EXIT_USAGE(errorMsg);
+                return usage(errorMsg);
             string_q ret = transList.parseTransList(arg);
             if (!ret.empty())
-                EXIT_USAGE(ret);
-
+                return usage(ret);
         }
     }
 
+    // Data wrangling
     if (!transList.hasTrans())
-        EXIT_USAGE("Please specify at least one transaction identifier.");
+        return usage("Please specify at least one transaction identifier.");
 
-    EXIT_NOMSG(true);
+    if (isRaw)
+        exportFmt = JSON1;
+
+    if (articulate) {
+        // show certain fields and hide others
+        manageFields(defHide, false);
+        manageFields(defShow, true);
+        manageFields("CParameter:strDefault", false);  // hide
+        manageFields("CTransaction:price", false);  // hide
+        manageFields("CFunction:outputs", true);  // show
+        manageFields("CTransaction:input", true);  // show
+        manageFields("CLogEntry:topics", true);  // show
+        abi_spec.loadAbiKnown("all");
+    }
+
+    // Display formatting
+    string_q format;
+    switch (exportFmt) {
+        case NONE1:
+        case TXT1:
+        case CSV1:
+            format = getGlobalConfig()->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
+            manageFields("CTransaction:" + cleanFmt(format, exportFmt));
+            manageFields("CTrace:" + cleanFmt(format, exportFmt));
+            manageFields("CTraceAction:" + substitute(cleanFmt(format, exportFmt), "ACTION::", ""));
+            manageFields("CTraceResult:" + substitute(cleanFmt(format, exportFmt), "RESULT::", ""));
+            break;
+        case API1:
+        case JSON1:
+            format = "";
+            break;
+    }
+    expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
+
+    return true;
 }
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    optionOn(OPT_RAW);
     registerOptions(nParams, params);
+    optionOn(OPT_RAW | OPT_OUTPUT);
 
-    addresses.clear();
     transList.Init();
-    items.reserve(5000);
-    rawItems.reserve(5000);
-    countOnly = false;
+    option1 = false;
+    articulate = false;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -84,8 +112,8 @@ COptions::COptions(void) {
     sorts[0] = GETRUNTIME_CLASS(CBlock);
     sorts[1] = GETRUNTIME_CLASS(CTransaction);
     sorts[2] = GETRUNTIME_CLASS(CReceipt);
-
     Init();
+    first = true;
 }
 
 //--------------------------------------------------------------------------------
@@ -111,3 +139,17 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
     return str;
 }
 
+//--------------------------------------------------------------------------------
+const char* STR_DISPLAY =
+"[{BLOCKNUMBER}]\t"
+"[{TRANSACTIONPOSITION}]\t"
+"[{TRACEADDRESS}]\t"
+"[{ACTION::CALLTYPE}]\t"
+"[{ERROR}]\t"
+"[{ACTION::FROM}]\t"
+"[{ACTION::TO}]\t"
+"[{ACTION::VALUE}]\t"
+"[{ACTION::GAS}]\t"
+"[{RESULT::GASUSED}]\t"
+"[{ACTION::INPUT}]\t"
+"[{COMPRESSEDTRACE}]";

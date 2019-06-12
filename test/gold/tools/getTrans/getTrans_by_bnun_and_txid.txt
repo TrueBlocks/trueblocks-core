@@ -1,3 +1,4 @@
 getTrans argc: 3 [1:4000002.5] [2:--trace] 
 getTrans 4000002.5 --trace 
-2017-07-09 20:52:54 UTC	1499633574	4000002	5	0x9ba401a48e378440f90e8d50feac2331f38a39fd9f33e3c6c213302cef3e5887	nTraces:1
+date	timestamp	blocknumber	transactionindex	hash	compressedtx	tracescnt
+2017-07-09 20:52:54 UTC	1499633574	4000002	5	0x9ba401a48e378440f90e8d50feac2331f38a39fd9f33e3c6c213302cef3e5887		1

@@ -1,16 +1,16 @@
 getLogs argc: 3 [1:--address] [2:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] 
 getLogs --address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 
-00000001 TIME ~ CLOCK - <ERROR> : Exit(parseArguments): 
 
-  Please specify at least one transaction identifier.
+  Invalid option: --address
 
-  Usage:    getLogs [-v|-h] <transID> [transID...]  
+  Usage:    getLogs [-a|-v|-h] <transID> [transID...]  
   Purpose:  Retrieve a transaction's logs from the local cache or a running node.  
   Where:  
 	trans_list            a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)
+	-a  (--articulate)    articulate the transactions if an ABI is found for the 'to' address
 
 #### Hidden options (shown during testing only)
-	-a  (--address val)   a list of addresses used to filter the results
+	-x  (--fmt val)       export format (one of [none|json|txt|csv|api])
 #### Hidden options (shown during testing only)
 
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level

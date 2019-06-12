@@ -31,4 +31,4 @@ getState 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 0xfb6916095ca1df60bb79ce92ce
     "accttype": "",
     "ether": 2647.815343985767974336
   }
-], "meta": {"pending": 18446744073709551615,"staging": 18446744073709551615,"finalized": 18446744073709551615,"client": 18446744073709551615 } }
+], "meta": {"pending": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

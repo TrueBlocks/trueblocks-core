@@ -1,0 +1,10 @@
+whenBlock argc: 3 [1:1001001] [2:--api_mode] 
+whenBlock 1001001 --api_mode 
+{ "type": "CBlock", "data": [
+  {
+    "blockNumber": 1001001,
+    "timestamp": 1455421883,
+    "name": "",
+    "date": "2016-02-14 03:51:23 UTC"
+  }
+], "meta": {"pending": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

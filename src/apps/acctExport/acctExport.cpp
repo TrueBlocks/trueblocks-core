@@ -50,7 +50,7 @@ bool COptions::exportData(void) {
 
     bool first = true;
     size_t nExported = 0;
-    for (size_t i = 0 ; i < items.size() && !shouldQuit() && i < MAX_TXS && i < tsArray.size() ; i++) {
+    for (size_t i = 0 ; i < items.size() && !shouldQuit() && i < MAX_TXS && items[i].blk < ts_cnt ; i++) {
         const CAppearance_base *item = &items[i];
         if (isInRange(item->blk, scanRange.first, scanRange.second)) {
 
@@ -63,19 +63,24 @@ bool COptions::exportData(void) {
                 readTransFromBinary(trans, txFilename);
                 trans.finishParse();
                 trans.pBlock = &block;
-                block.timestamp = trans.timestamp = (timestamp_t)tsArray[item->blk];
+                block.timestamp = trans.timestamp = (timestamp_t)ts_array[item->blk];
 
             } else {
                 if (item->blk == 0) {
                     trans.transactionIndex = item->txid;
                     trans.loadAsPrefund(prefunds, prefundMap[item->txid]);
 
+                } else if (item->txid == 99999) {
+                    trans.loadAsBlockReward(item->blk, blkRewardMap[item->blk]);
+                    trans.hash = uint_2_Hex(item->blk * 100000 + item->txid);
+                    block.blockNumber = item->blk;
+
                 } else {
                     getTransaction(trans, item->blk, item->txid);
                     getFullReceipt(&trans, true);
                 }
                 trans.pBlock = &block;
-                trans.timestamp = block.timestamp = (timestamp_t)tsArray[item->blk];
+                trans.timestamp = block.timestamp = (timestamp_t)ts_array[item->blk];
                 if (writeTrxs && !fileExists(txFilename))
                     writeTransToBinary(trans, txFilename);
             }
@@ -85,8 +90,16 @@ bool COptions::exportData(void) {
             nExported++;
             first = false;
             HIDE_FIELD(CFunction, "message");
-            cerr << "   " << i << " of " << items.size() << ": " << trans.hash << "\r";
-            cerr.flush();
+            if (origCout == NULL) {  // we are not in --output mode
+                cerr << "   " << i << " of " << items.size() << ": " << trans.hash << "\r";
+                cerr.flush();
+            } else {
+                static size_t cnt = 0;
+                if (!(++cnt % 71)) { // not reporting every tx is way faster
+                    cerr << "   " << i << " of " << items.size() << ": " << trans.hash << "\r";
+                    cerr.flush();
+                }
+            }
 
 #if 0
 /*
@@ -177,8 +190,8 @@ int main(int argc, const char *argv[]) {
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
-        options.loadData();
-        options.exportData();
+        if (options.loadData())
+            options.exportData();
     }
 
     acctlib_cleanup();

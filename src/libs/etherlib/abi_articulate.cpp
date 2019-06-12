@@ -10,10 +10,6 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-/*
- * This file was generated with makeClass. Edit only those parts of the code inside
- * of 'EXISTING_CODE' tags.
- */
 #include <algorithm>
 #include "abi.h"
 #include "node.h"
@@ -21,7 +17,7 @@
 //-----------------------------------------------------------------------
 namespace qblocks {
 
-    extern bool isPrintable(const string_q& inHex);
+    extern bool toPrintable(const string_q& inHex, string_q& result);
     //-----------------------------------------------------------------------
     bool CAbi::articulateTransaction(CTransaction *p) const {
 
@@ -56,8 +52,8 @@ namespace qblocks {
                 }
             }
 
-            if (isPrintable(p->input))
-                p->articulatedTx.message = hex_2_Str(p->input);
+            if (!toPrintable(p->input, p->articulatedTx.message))
+                p->articulatedTx.message = "";
         }
 
         EXIT_NOMSG(false);
@@ -104,7 +100,15 @@ namespace qblocks {
         CAbi *ncABI = (CAbi*)this;
         for (size_t i = 0 ; i < ncABI->interfaces.size() ; i++) {
             CFunction *funcPtr = &ncABI->interfaces[i];
-            if (topic_2_Str(p->topics[0]) % funcPtr->encoding) {
+#if 0
+//            // TODO(tjayrush): ISSUE #1160
+//            string_q padded = padRight(funcPtr->encoding, 66, '0');
+//            cout << padded << endl;
+//            cout << topic_2_Str(p->topics[0]) << endl;
+#else
+            string_q padded = funcPtr->encoding;
+#endif
+            if (topic_2_Str(p->topics[0]) % padded) {
 
                 // We found the topic we're looking for...work on a copy...
                 p->articulatedLog = CFunction(*funcPtr);
@@ -117,9 +121,7 @@ namespace qblocks {
                     if (param.indexed && p->topics.size() > which) {
                         string_q top = substitute(topic_2_Str(p->topics[which++]), "0x", "");
                         if (param.type == "string" || param.type == "bytes") {
-                            if (isPrintable(top))
-                                param.value = hex_2_Str("0x"+top);
-                            else
+                            if (!toPrintable(top, param.value))
                                 param.value = parse_by32(top);
 
                         } else if (contains(param.type, "[")) {
@@ -133,8 +135,6 @@ namespace qblocks {
                             else
                                 param = tmp[0];
                         }
-//                        cout << param << endl;
-//                        printf("");
                     } else {
                         dataParams.push_back(param);
                     }
@@ -146,7 +146,6 @@ namespace qblocks {
                             param.value = d.value;
                     }
                 }
-//                cout << p->articulatedLog << endl;
                 return (ret1 && ret2);
 
 #if 0
@@ -234,5 +233,31 @@ namespace qblocks {
         }
         EXIT_NOMSG(true);
     }
-}  // namespace qblocks
 
+    //----------------------------------------------------------------------------
+    // If we can reasonably convert this byte input into a string, do so, otherwise bail out
+    bool toPrintable(const string_q& inHex, string_q& result) {
+
+        bool hasControlChar = false;
+        string_q in = substitute(inHex, "0x", "");
+        while (!in.empty() && in.size() >= 2) {
+            string_q nibble = extract(in, 0, 2);
+            in = extract(in, 2);
+            char ch = (char)hex_2_Ascii(nibble[0], nibble[1]);  // NOLINT
+            if (ch == 0x19)
+                hasControlChar = true;
+            if (!isprint(ch) && !isspace(ch) && ch != 0x19)
+                return false;
+        }
+        result = hex_2_Str(inHex);
+        if (hasControlChar) {
+            // TODO(tjayrush): hack alert
+            string s;
+            s += (char)0x20;
+            s += (char)0x19;
+            result = substitute(result, s, "'");
+        }
+        return true;
+    }
+
+}  // namespace qblocks

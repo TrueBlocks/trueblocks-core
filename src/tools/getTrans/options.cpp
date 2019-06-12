@@ -14,16 +14,15 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("~!trans_list",    "a space-separated list of one or more transaction identifiers "
-                                  "(tx_hash, bn.txID, blk_hash.txID)"),
+    COption("~!trans_list",    "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
+    COption("-articulate",     "articulate the transactions if an ABI is found for the 'to' address"),
     COption("-trace",          "display the transaction's trace"),
-    COption("-articulate",     "articulate the transactions if an ABI is found"),
-    COption("@belongs:<addr>", "report true or false if the given address is found anywhere in the transaction"),
-    COption("@asStrs",         "when checking --belongs, treat input and log data as a string"),
+    COption("@fmt:<fmt>",      "export format (one of [none|json|txt|csv|api])"),
     COption("",                "Retrieve an Ethereum transaction from the local cache or a running node."),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
+extern const char* STR_DISPLAY;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
@@ -33,22 +32,11 @@ bool COptions::parseArguments(string_q& command) {
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if (arg == "-t" || arg == "--trace") {
-            incTrace = true;
-
-        } else if (arg == "-a" || arg == "--articulate") {
+        if (arg == "-a" || arg == "--articulate") {
             articulate = true;
-            verbose = true;
 
-        } else if (arg == "--asStrs") {
-            chkAsStr = true;
-
-        } else if (startsWith(arg, "--belongs:")) {
-            string_q orig = arg;
-            arg = substitute(arg, "--belongs:", "");
-            if (!isAddress(arg))
-                return usage(arg + " does not appear to be a valid Ethereum address.\n");
-            filters.push_back(str_2_Addr(toLower(arg)));
+        } else if (arg == "-t" || arg == "--trace") {
+            option1 = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -67,6 +55,16 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    // Data wrangling
+    if (!transList.hasTrans())
+        return usage("Please specify at least one transaction identifier.");
+
+    if (option1)
+        SHOW_FIELD(CTransaction, "traces");
+
+    if (isRaw)
+        exportFmt = JSON1;
+
     if (articulate) {
         // show certain fields and hide others
         manageFields(defHide, false);
@@ -74,47 +72,40 @@ bool COptions::parseArguments(string_q& command) {
         manageFields("CParameter:strDefault", false);  // hide
         manageFields("CTransaction:price", false);  // hide
         manageFields("CFunction:outputs", true);  // show
-        if (verbose) {
-            manageFields("CTransaction:input", true);  // show
-            manageFields("CLogEntry:topics", true);  // show
-        }
-
-        //    manageFields(toml.getConfigStr("fields", "hide", ""), false);
-        //    manageFields(toml.getConfigStr("fields", "show", ""), true );
+        manageFields("CTransaction:input", true);  // show
+        manageFields("CLogEntry:topics", true);  // show
         abi_spec.loadAbiKnown("all");
     }
 
-    if (!transList.hasTrans())
-        return usage("Please specify at least one transaction identifier.");
-
-extern const char* STR_DISPLAY_FORMAT;
-    format = getGlobalConfig("getTrans")->getDisplayStr(!verbose, (verbose ? "" : STR_DISPLAY_FORMAT));
-    if (api_mode) {
-        manageFields("CTransaction:hash,blockHash,timestamp,blockNumber,transactionIndex,from,to,value,gas,gasPrice,articulatedTx", false);
-        manageFields("CTransaction:articulatedTx", true);
-        manageFields("CReceipt:gasUsed,", false);
-        manageFields("CLogEntry:logIndex,topics,articulatedLog", false);
-        manageFields("CTraceAction:balance,gas", false);
-
-        manageFields("CLogEntry:compressedLog", true);
-//        manageFields("CTransaction:compressedTx", true);
+    // Display formatting
+    string_q format;
+    switch (exportFmt) {
+        case NONE1:
+        case TXT1:
+        case CSV1:
+            format = getGlobalConfig()->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
+            if (option1)
+                format += "\t[{TRACESCNT}]";
+            manageFields("CTransaction:" + cleanFmt(format, exportFmt));
+            break;
+        case API1:
+        case JSON1:
+            format = "";
+            break;
     }
+    expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
 
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    optionOn(OPT_RAW);
     registerOptions(nParams, params);
+    optionOn(OPT_RAW | OPT_OUTPUT);
 
     transList.Init();
-    incTrace = false;
+    option1 = false;
     articulate = false;
-    format = "";
-    filters.clear();
-    belongs = false;
-    chkAsStr = false;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -123,12 +114,8 @@ COptions::COptions(void) {
     sorts[0] = GETRUNTIME_CLASS(CBlock);
     sorts[1] = GETRUNTIME_CLASS(CTransaction);
     sorts[2] = GETRUNTIME_CLASS(CReceipt);
-    HIDE_FIELD(CTransaction, "cumulativeGasUsed");
-
     Init();
-    index = 0;
-    if (isTestMode())
-        UNHIDE_FIELD(CTransaction, "isError");
+    first = true;
 }
 
 //--------------------------------------------------------------------------------
@@ -155,4 +142,10 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
 }
 
 //--------------------------------------------------------------------------------
-const char* STR_DISPLAY_FORMAT = "[{DATE}][\t{TIMESTAMP}][\t{BLOCKNUMBER}][\t{TRANSACTIONINDEX}][\t{HASH}]\\n";
+const char* STR_DISPLAY =
+"[{DATE}]\t"
+"[{TIMESTAMP}]\t"
+"[{BLOCKNUMBER}]\t"
+"[{TRANSACTIONINDEX}]\t"
+"[{HASH}]\t"
+"[{COMPRESSEDTX}]";

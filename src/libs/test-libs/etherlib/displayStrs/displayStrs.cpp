@@ -120,6 +120,9 @@ bool testDisplayStr(COptions& options) {
         cout << b.transactions[0].receipt.logs[0].Format("[{p:ARTICULATEDLOG::ENCODING}]: [{ARTICULATEDLOG::ENCODING}]") << endl;
         cout << b.transactions[0].traces[0].Format("[{p:ACTION::init}]: [{ACTION::init}]") << endl;
 
+        CTrace t1;
+        cout << "Empty trace: " << t1 << endl;
+
     } else {
         cout << "Unknown node of type " << options.className << " not created.\n";
         return false;

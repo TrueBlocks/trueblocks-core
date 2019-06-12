@@ -56,7 +56,10 @@ string_q nextRpcresultChunk(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CRPCResult::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
+bool CRPCResult::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+    string_q fieldName = fieldNameIn;
+    string_q fieldValue = fieldValueIn;
+
     // EXISTING_CODE
     // Note: This class doubles as a name/value pair for json parsing
     if (fieldName == "name")

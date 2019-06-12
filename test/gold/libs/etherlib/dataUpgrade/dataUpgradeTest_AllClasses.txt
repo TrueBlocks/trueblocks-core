@@ -36,7 +36,7 @@ cname               	1004	0	131122	T_TEXT TS_STRING
 address             	1005	0	131127	T_ADDRESS TS_STRING
 interfaces          	1006	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 {
-  "schema": 5007,
+  "schema": 5008,
   "deleted": 0,
   "showing": 1,
   "cname": "Abi",
@@ -107,7 +107,7 @@ inputs              	1013	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 outputs             	1014	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 input_names         	1015	0	131122	T_TEXT TS_STRING
 {
-  "schema": 5007,
+  "schema": 5008,
   "deleted": 0,
   "showing": 1,
   "cname": "Function",
@@ -167,7 +167,7 @@ isObject            	1010	0	65556	T_BOOL TS_NUMERAL
 strDefault          	1011	0	131122	T_TEXT TS_STRING
 value               	1012	0	131122	T_TEXT TS_STRING
 {
-  "schema": 5007,
+  "schema": 5008,
   "deleted": 0,
   "showing": 1,
   "cname": "Parameter"
@@ -206,7 +206,7 @@ fm_mode             	1015	1	131122	T_TEXT TS_STRING
   },
   "stateHistory": [],
   "nodeBal": 0,
-  "enabled": 1
+  "enabled": true
 }
 
 --------------------------------------------------------------------------------
@@ -249,7 +249,7 @@ enabled             	1013	0	65556	T_BOOL TS_NUMERAL
 abi_spec            	1014	0	1048651	T_OBJECT TS_OBJECT
 fm_mode             	1015	0	131122	T_TEXT TS_STRING
 {
-  "schema": 5007,
+  "schema": 5008,
   "deleted": 0,
   "showing": 1,
   "cname": "AccountWatch",
@@ -266,9 +266,9 @@ fm_mode             	1015	0	131122	T_TEXT TS_STRING
   },
   "stateHistory": [],
   "nodeBal": 0,
-  "enabled": 1,
+  "enabled": true,
   "abi_spec": {
-    "schema": 5007,
+    "schema": 5008,
     "deleted": 0,
     "showing": 1,
     "cname": "Abi",
@@ -358,7 +358,7 @@ name                	1016	0	131122	T_TEXT TS_STRING
 date                	1017	0	262149	T_DATE TS_DATE
 age                 	1018	0	262149	T_DATE TS_DATE
 {
-  "schema": 5007,
+  "schema": 5008,
   "deleted": 0,
   "showing": 1,
   "cname": "Block",
@@ -429,7 +429,7 @@ gasCostInWei        	1008	0	65561	T_NUMBER TS_NUMERAL
 endBal              	1009	0	65561	T_NUMBER TS_NUMERAL
 blockNum            	1010	0	65561	T_NUMBER TS_NUMERAL
 {
-  "schema": 5007,
+  "schema": 5008,
   "deleted": 0,
   "showing": 1,
   "cname": "IncomeStatement",
@@ -461,6 +461,10 @@ transactionHash     	1014	1	131132	T_HASH TS_STRING
 transactionIndex    	1015	1	65561	T_NUMBER TS_NUMERAL
 transactionLogIndex 	1016	1	65561	T_NUMBER TS_NUMERAL
 type                	1017	1	131122	T_TEXT TS_STRING
+topic0              	1018	1	131132	T_HASH TS_STRING
+topic1              	1019	1	131132	T_HASH TS_STRING
+topic2              	1020	1	131132	T_HASH TS_STRING
+topic3              	1021	1	131132	T_HASH TS_STRING
 {
   "address": "0x0",
   "logIndex": 0,
@@ -487,6 +491,10 @@ transactionHash     	1014	1	131132	T_HASH TS_STRING
 transactionIndex    	1015	1	65561	T_NUMBER TS_NUMERAL
 transactionLogIndex 	1016	1	65561	T_NUMBER TS_NUMERAL
 type                	1017	1	131122	T_TEXT TS_STRING
+topic0              	1018	1	131132	T_HASH TS_STRING
+topic1              	1019	1	131132	T_HASH TS_STRING
+topic2              	1020	1	131132	T_HASH TS_STRING
+topic3              	1021	1	131132	T_HASH TS_STRING
 {
 }
 
@@ -510,8 +518,12 @@ transactionHash     	1014	0	131132	T_HASH TS_STRING
 transactionIndex    	1015	0	65561	T_NUMBER TS_NUMERAL
 transactionLogIndex 	1016	0	65561	T_NUMBER TS_NUMERAL
 type                	1017	0	131122	T_TEXT TS_STRING
+topic0              	1018	0	131132	T_HASH TS_STRING
+topic1              	1019	0	131132	T_HASH TS_STRING
+topic2              	1020	0	131132	T_HASH TS_STRING
+topic3              	1021	0	131132	T_HASH TS_STRING
 {
-  "schema": 5007,
+  "schema": 5008,
   "deleted": 0,
   "showing": 1,
   "cname": "LogEntry",
@@ -520,14 +532,13 @@ type                	1017	0	131122	T_TEXT TS_STRING
   "removed": false,
   "topics": [],
   "articulatedLog": {
-    "schema": 5007,
+    "schema": 5008,
     "deleted": 0,
     "showing": 1,
     "cname": "Function",
     "inputs": [],
     "outputs": []
   },
-  "compressedLog": "()",
   "transactionLogIndex": 0
 }
 
@@ -571,7 +582,7 @@ timestamp           	1005	0	65551	T_TIMESPAN TS_NUMERAL
 close               	1006	0	65566	T_DOUBLE TS_NUMERAL
 date                	1007	0	262149	T_DATE TS_DATE
 {
-  "schema": 5007,
+  "schema": 5008,
   "deleted": 0,
   "showing": 1,
   "cname": "PriceQuote",
@@ -651,7 +662,7 @@ to                  	1015	0	131127	T_ADDRESS TS_STRING
 transactionHash     	1016	0	131132	T_HASH TS_STRING
 transactionIndex    	1017	0	65561	T_NUMBER TS_NUMERAL
 {
-  "schema": 5007,
+  "schema": 5008,
   "deleted": 0,
   "showing": 1,
   "cname": "Receipt",
@@ -699,7 +710,7 @@ jsonrpc             	1005	0	131122	T_TEXT TS_STRING
 result              	1006	0	131122	T_TEXT TS_STRING
 id                  	1007	0	131122	T_TEXT TS_STRING
 {
-  "schema": 5007,
+  "schema": 5008,
   "deleted": 0,
   "showing": 1,
   "cname": "RPCResult"
@@ -721,29 +732,17 @@ transactionPosition 	1010	0	65561	T_NUMBER TS_NUMERAL
 type                	1011	0	131122	T_TEXT TS_STRING
 error               	1012	0	131122	T_TEXT TS_STRING
 articulatedTrace    	1013	1	1048651	T_OBJECT TS_OBJECT
-action              	1014	0	1048651	T_OBJECT TS_OBJECT
-result              	1015	0	1048651	T_OBJECT TS_OBJECT
-date                	1016	1	262149	T_DATE TS_DATE
+compressedTrace     	1014	1	131122	T_TEXT TS_STRING
+action              	1015	0	1048651	T_OBJECT TS_OBJECT
+result              	1016	0	1048651	T_OBJECT TS_OBJECT
+date                	1017	1	262149	T_DATE TS_DATE
 {
   "blockHash": "0x0",
   "blockNumber": 0,
   "subtraces": 0,
   "traceAddress": null,
   "transactionHash": "0x0",
-  "transactionPosition": 0,
-  "action": {
-    "address": "0x0",
-    "balance": 0,
-    "from": "0x0",
-    "gas": 0,
-    "refundAddress": "0x0",
-    "to": "0x0",
-    "value": 0
-  },
-  "result": {
-    "address": "0x0",
-    "gasUsed": 0
-  }
+  "transactionPosition": 0
 }
 
 --------------------------------------------------------------------------------
@@ -762,9 +761,10 @@ transactionPosition 	1010	1	65561	T_NUMBER TS_NUMERAL
 type                	1011	1	131122	T_TEXT TS_STRING
 error               	1012	1	131122	T_TEXT TS_STRING
 articulatedTrace    	1013	1	1048651	T_OBJECT TS_OBJECT
-action              	1014	1	1048651	T_OBJECT TS_OBJECT
-result              	1015	1	1048651	T_OBJECT TS_OBJECT
-date                	1016	1	262149	T_DATE TS_DATE
+compressedTrace     	1014	1	131122	T_TEXT TS_STRING
+action              	1015	1	1048651	T_OBJECT TS_OBJECT
+result              	1016	1	1048651	T_OBJECT TS_OBJECT
+date                	1017	1	262149	T_DATE TS_DATE
 {
 }
 
@@ -784,11 +784,12 @@ transactionPosition 	1010	0	65561	T_NUMBER TS_NUMERAL
 type                	1011	0	131122	T_TEXT TS_STRING
 error               	1012	0	131122	T_TEXT TS_STRING
 articulatedTrace    	1013	0	1048651	T_OBJECT TS_OBJECT
-action              	1014	0	1048651	T_OBJECT TS_OBJECT
-result              	1015	0	1048651	T_OBJECT TS_OBJECT
-date                	1016	0	262149	T_DATE TS_DATE
+compressedTrace     	1014	0	131122	T_TEXT TS_STRING
+action              	1015	0	1048651	T_OBJECT TS_OBJECT
+result              	1016	0	1048651	T_OBJECT TS_OBJECT
+date                	1017	0	262149	T_DATE TS_DATE
 {
-  "schema": 5007,
+  "schema": 5008,
   "deleted": 0,
   "showing": 1,
   "cname": "Trace",
@@ -797,28 +798,7 @@ date                	1016	0	262149	T_DATE TS_DATE
   "subtraces": 0,
   "traceAddress": null,
   "transactionHash": "0x0",
-  "transactionPosition": 0,
-  "articulatedTrace": {
-    "schema": 5007,
-    "deleted": 0,
-    "showing": 1,
-    "cname": "Function",
-    "inputs": [],
-    "outputs": []
-  },
-  "action": {
-    "address": "0x0",
-    "balance": 0,
-    "from": "0x0",
-    "gas": 0,
-    "refundAddress": "0x0",
-    "to": "0x0",
-    "value": 0
-  },
-  "result": {
-    "address": "0x0",
-    "gasUsed": 0
-  }
+  "transactionPosition": 0
 }
 
 --------------------------------------------------------------------------------
@@ -889,7 +869,7 @@ to                  	1013	0	131127	T_ADDRESS TS_STRING
 value               	1014	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 ether               	1015	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
 {
-  "schema": 5007,
+  "schema": 5008,
   "deleted": 0,
   "showing": 1,
   "cname": "TraceAction",
@@ -945,7 +925,7 @@ code                	1006	0	131122	T_TEXT TS_STRING
 gasUsed             	1007	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 output              	1008	0	131122	T_TEXT TS_STRING
 {
-  "schema": 5007,
+  "schema": 5008,
   "deleted": 0,
   "showing": 1,
   "cname": "TraceResult",
@@ -976,21 +956,22 @@ isError             	1017	0	65561	T_NUMBER TS_NUMERAL
 isInternal          	1018	1	65561	T_NUMBER TS_NUMERAL
 receipt             	1019	0	1048651	T_OBJECT TS_OBJECT
 articulatedTx       	1020	1	1048651	T_OBJECT TS_OBJECT
-finalized           	1021	1	65556	T_BOOL TS_NUMERAL
-traces              	1022	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-confirmations       	1023	1	65561	T_NUMBER TS_NUMERAL
-gasCost             	1024	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-etherGasCost        	1025	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-function            	1026	1	131122	T_TEXT TS_STRING
-events              	1027	1	131122	T_TEXT TS_STRING
-price               	1028	1	131122	T_TEXT TS_STRING
-gasUsed             	1029	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-date                	1030	1	262149	T_DATE TS_DATE
-datesh              	1031	1	262149	T_DATE TS_DATE
-time                	1032	1	262149	T_DATE TS_DATE
-age                 	1033	1	262149	T_DATE TS_DATE
-ether               	1034	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
-encoding            	1035	1	131122	T_TEXT TS_STRING
+compressedTx        	1021	1	131122	T_TEXT TS_STRING
+finalized           	1022	1	65556	T_BOOL TS_NUMERAL
+traces              	1023	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+confirmations       	1024	1	65561	T_NUMBER TS_NUMERAL
+gasCost             	1025	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+etherGasCost        	1026	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+function            	1027	1	131122	T_TEXT TS_STRING
+events              	1028	1	131122	T_TEXT TS_STRING
+price               	1029	1	131122	T_TEXT TS_STRING
+gasUsed             	1030	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+date                	1031	1	262149	T_DATE TS_DATE
+datesh              	1032	1	262149	T_DATE TS_DATE
+time                	1033	1	262149	T_DATE TS_DATE
+age                 	1034	1	262149	T_DATE TS_DATE
+ether               	1035	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+encoding            	1036	1	131122	T_TEXT TS_STRING
 {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -1005,7 +986,7 @@ encoding            	1035	1	131122	T_TEXT TS_STRING
   "gasPrice": 0,
   "isError": 0,
   "receipt": {
-    "schema": 5007,
+    "schema": 5008,
     "deleted": 0,
     "showing": 1,
     "cname": "Receipt",
@@ -1041,21 +1022,22 @@ isError             	1017	1	65561	T_NUMBER TS_NUMERAL
 isInternal          	1018	1	65561	T_NUMBER TS_NUMERAL
 receipt             	1019	1	1048651	T_OBJECT TS_OBJECT
 articulatedTx       	1020	1	1048651	T_OBJECT TS_OBJECT
-finalized           	1021	1	65556	T_BOOL TS_NUMERAL
-traces              	1022	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-confirmations       	1023	1	65561	T_NUMBER TS_NUMERAL
-gasCost             	1024	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-etherGasCost        	1025	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-function            	1026	1	131122	T_TEXT TS_STRING
-events              	1027	1	131122	T_TEXT TS_STRING
-price               	1028	1	131122	T_TEXT TS_STRING
-gasUsed             	1029	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-date                	1030	1	262149	T_DATE TS_DATE
-datesh              	1031	1	262149	T_DATE TS_DATE
-time                	1032	1	262149	T_DATE TS_DATE
-age                 	1033	1	262149	T_DATE TS_DATE
-ether               	1034	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
-encoding            	1035	1	131122	T_TEXT TS_STRING
+compressedTx        	1021	1	131122	T_TEXT TS_STRING
+finalized           	1022	1	65556	T_BOOL TS_NUMERAL
+traces              	1023	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+confirmations       	1024	1	65561	T_NUMBER TS_NUMERAL
+gasCost             	1025	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+etherGasCost        	1026	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+function            	1027	1	131122	T_TEXT TS_STRING
+events              	1028	1	131122	T_TEXT TS_STRING
+price               	1029	1	131122	T_TEXT TS_STRING
+gasUsed             	1030	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+date                	1031	1	262149	T_DATE TS_DATE
+datesh              	1032	1	262149	T_DATE TS_DATE
+time                	1033	1	262149	T_DATE TS_DATE
+age                 	1034	1	262149	T_DATE TS_DATE
+ether               	1035	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+encoding            	1036	1	131122	T_TEXT TS_STRING
 {
 }
 
@@ -1082,23 +1064,24 @@ isError             	1017	0	65561	T_NUMBER TS_NUMERAL
 isInternal          	1018	0	65561	T_NUMBER TS_NUMERAL
 receipt             	1019	0	1048651	T_OBJECT TS_OBJECT
 articulatedTx       	1020	0	1048651	T_OBJECT TS_OBJECT
-finalized           	1021	0	65556	T_BOOL TS_NUMERAL
-traces              	1022	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-confirmations       	1023	0	65561	T_NUMBER TS_NUMERAL
-gasCost             	1024	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-etherGasCost        	1025	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-function            	1026	0	131122	T_TEXT TS_STRING
-events              	1027	0	131122	T_TEXT TS_STRING
-price               	1028	0	131122	T_TEXT TS_STRING
-gasUsed             	1029	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-date                	1030	0	262149	T_DATE TS_DATE
-datesh              	1031	0	262149	T_DATE TS_DATE
-time                	1032	0	262149	T_DATE TS_DATE
-age                 	1033	0	262149	T_DATE TS_DATE
-ether               	1034	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
-encoding            	1035	0	131122	T_TEXT TS_STRING
+compressedTx        	1021	0	131122	T_TEXT TS_STRING
+finalized           	1022	0	65556	T_BOOL TS_NUMERAL
+traces              	1023	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+confirmations       	1024	0	65561	T_NUMBER TS_NUMERAL
+gasCost             	1025	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+etherGasCost        	1026	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+function            	1027	0	131122	T_TEXT TS_STRING
+events              	1028	0	131122	T_TEXT TS_STRING
+price               	1029	0	131122	T_TEXT TS_STRING
+gasUsed             	1030	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+date                	1031	0	262149	T_DATE TS_DATE
+datesh              	1032	0	262149	T_DATE TS_DATE
+time                	1033	0	262149	T_DATE TS_DATE
+age                 	1034	0	262149	T_DATE TS_DATE
+ether               	1035	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+encoding            	1036	0	131122	T_TEXT TS_STRING
 {
-  "schema": 5007,
+  "schema": 5008,
   "deleted": 0,
   "showing": 1,
   "cname": "Transaction",
@@ -1116,7 +1099,7 @@ encoding            	1035	0	131122	T_TEXT TS_STRING
   "isError": 0,
   "isInternal": 0,
   "receipt": {
-    "schema": 5007,
+    "schema": 5008,
     "deleted": 0,
     "showing": 1,
     "cname": "Receipt",
@@ -1211,7 +1194,7 @@ finalized           	1013	0	65556	T_BOOL TS_NUMERAL
 timestamp           	1014	0	65551	T_TIMESPAN TS_NUMERAL
 transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 {
-  "schema": 5007,
+  "schema": 5008,
   "deleted": 0,
   "showing": 1,
   "cname": "NewBlock",
@@ -1276,7 +1259,7 @@ logs                	1007	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 logsBloom           	1008	0	131137	T_BLOOM TS_STRING
 isError             	1009	0	65556	T_BOOL TS_NUMERAL
 {
-  "schema": 5007,
+  "schema": 5008,
   "deleted": 0,
   "showing": 1,
   "cname": "NewReceipt",

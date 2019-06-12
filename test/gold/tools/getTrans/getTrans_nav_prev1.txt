@@ -1,3 +1,4 @@
 getTrans argc: 2 [1:1001001.1.prev] 
 getTrans 1001001.1.prev 
+date	timestamp	blocknumber	transactionindex	hash	compressedtx
 2016-02-14 03:51:23 UTC	1455421883	1001001	0	0x730724cb08a6eb17bf6b3296359d261570d343ea7944a17a9d7287d77900db08

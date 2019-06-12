@@ -121,6 +121,9 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
             if ( fieldName % "blockHash" ) { blockHash = str_2_Hash(fieldValue); return true; }
             if ( fieldName % "blockNumber" ) { blockNumber = str_2_Uint(fieldValue); return true; }
             break;
+        case 'c':
+            if ( fieldName % "compressedTx" ) { compressedTx = fieldValue; return true; }
+            break;
         case 'f':
             if ( fieldName % "from" ) { from = str_2_Addr(fieldValue); return true; }
             if ( fieldName % "finalized" ) { finalized = str_2_Bool(fieldValue); return true; }
@@ -203,6 +206,7 @@ bool CTransaction::Serialize(CArchive& archive) {
     archive >> isInternal;
     archive >> receipt;
 //    archive >> articulatedTx;
+//    archive >> compressedTx;
 //    archive >> finalized;
 //    archive >> traces;
     finishParse();
@@ -233,6 +237,7 @@ bool CTransaction::SerializeC(CArchive& archive) const {
     archive << isInternal;
     archive << receipt;
 //    archive << articulatedTx;
+//    archive << compressedTx;
 //    archive << finalized;
 //    archive << traces;
 
@@ -287,6 +292,8 @@ void CTransaction::registerClass(void) {
     ADD_FIELD(CTransaction, "receipt", T_OBJECT, ++fieldNum);
     ADD_FIELD(CTransaction, "articulatedTx", T_OBJECT, ++fieldNum);
     HIDE_FIELD(CTransaction, "articulatedTx");
+    ADD_FIELD(CTransaction, "compressedTx", T_TEXT, ++fieldNum);
+    HIDE_FIELD(CTransaction, "compressedTx");
     ADD_FIELD(CTransaction, "finalized", T_BOOL, ++fieldNum);
     HIDE_FIELD(CTransaction, "finalized");
     ADD_FIELD(CTransaction, "traces", T_OBJECT|TS_ARRAY, ++fieldNum);
@@ -373,6 +380,7 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
                 break;
             case 'c':
                 if ( fieldIn % "contractAddress" ) return addr_2_Str(tra->receipt.contractAddress);
+                if ( fieldIn % "compressedTx" ) return tra->articulatedTx.compressed();
                 break;
             case 'd':
                 if (fieldIn % "date" || fieldIn % "datesh") {
@@ -534,6 +542,9 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "blockHash" ) return hash_2_Str(blockHash);
             if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
             break;
+        case 'c':
+            if ( fieldName % "compressedTx" ) return compressedTx;
+            break;
         case 'f':
             if ( fieldName % "from" ) return addr_2_Str(from);
             if ( fieldName % "finalized" ) return int_2_Str(finalized);
@@ -642,6 +653,21 @@ bool sortTransactionsForWrite(const CTransaction& t1, const CTransaction& t2) {
     else if (t1.transactionIndex != t2.transactionIndex)
         return t1.transactionIndex < t2.transactionIndex;
     return t1.hash < t2.hash;
+}
+
+//-------------------------------------------------------------------------
+bool CTransaction::loadAsBlockReward(blknum_t bn, const address_t& addr) {
+    blockNumber = bn;
+    transactionIndex = 99999;
+    from = "0xBlockReward";
+    to = addr;
+    if (bn < byzantiumBlock)
+        value = str_2_Wei("5000000000000000000");
+    else if (bn < constantinopleBlock)
+        value = str_2_Wei("3000000000000000000");
+    else
+        value = str_2_Wei("2000000000000000000");
+    return true;
 }
 
 //-------------------------------------------------------------------------

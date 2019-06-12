@@ -27,13 +27,16 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CAccountName : public CBaseNode {
 public:
+    string_q group;
     string_q addr;
     string_q symbol;
     string_q name;
     string_q source;
     string_q description;
     string_q logo;
-    bool visible;
+    bool isContract;
+    bool custom;
+    string_q shared;
     string_q fn;
     double size;
     blknum_t lb;
@@ -48,7 +51,7 @@ public:
     DECLARE_NODE(CAccountName);
 
     // EXISTING_CODE
-    explicit CAccountName(string_q& nameIn);
+    explicit CAccountName(const string_q& nameIn);
     // EXISTING_CODE
     bool operator==(const CAccountName& item) const;
     bool operator!=(const CAccountName& item) const { return !operator==(item); }
@@ -99,13 +102,16 @@ inline void CAccountName::clear(void) {
 inline void CAccountName::initialize(void) {
     CBaseNode::initialize();
 
+    group = "";
     addr = "";
     symbol = "";
     name = "";
     source = "";
     description = "";
     logo = "";
-    visible = true;
+    isContract = 0;
+    custom = 0;
+    shared = "";
     fn = "";
     size = 0.0;
     lb = 0;
@@ -120,13 +126,16 @@ inline void CAccountName::duplicate(const CAccountName& ac) {
     clear();
     CBaseNode::duplicate(ac);
 
+    group = ac.group;
     addr = ac.addr;
     symbol = ac.symbol;
     name = ac.name;
     source = ac.source;
     description = ac.description;
     logo = ac.logo;
-    visible = ac.visible;
+    isContract = ac.isContract;
+    custom = ac.custom;
+    shared = ac.shared;
     fn = ac.fn;
     size = ac.size;
     lb = ac.lb;

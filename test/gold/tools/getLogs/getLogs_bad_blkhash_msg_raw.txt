@@ -1,14 +1,7 @@
 getLogs argc: 4 [1:--raw] [2:0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1] [3:0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5] 
 getLogs --raw 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 
-[{
-  "address": "not_an_real_log",
-  "blockHash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",
-  "blockNumber": 1001001,
-  "logIndex": 0,
-  "removed": false,
-  "topics": [],
-  "transactionHash": "0xef2ea39c20ba09553b2f3cf02380406ac766039ca56612937eed5e7f3503fb3a",
-  "transactionIndex": 1,
-  "transactionLogIndex": 0
-},
-{ "error": "The item you requested (0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5) was not found." }]
+[
+{"jsonrpc":"2.0","result":[],"id":"1"}
+,{ "error": "Transaction 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 not found." }
+
+]

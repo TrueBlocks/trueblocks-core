@@ -32,7 +32,7 @@ fm_mode             	1015	1	131122	T_TEXT TS_STRING
   },
   "stateHistory": [],
   "nodeBal": 0,
-  "enabled": 1
+  "enabled": true
 }
 
 --------------------------------------------------------------------------------
@@ -75,7 +75,7 @@ enabled             	1013	0	65556	T_BOOL TS_NUMERAL
 abi_spec            	1014	0	1048651	T_OBJECT TS_OBJECT
 fm_mode             	1015	0	131122	T_TEXT TS_STRING
 {
-  "schema": 5007,
+  "schema": 5008,
   "deleted": 0,
   "showing": 1,
   "cname": "AccountWatch",
@@ -92,7 +92,7 @@ fm_mode             	1015	0	131122	T_TEXT TS_STRING
   },
   "stateHistory": [],
   "nodeBal": 0,
-  "enabled": 1,
+  "enabled": true,
   "abi_spec": {
     "address": "0x0",
     "interfaces": []

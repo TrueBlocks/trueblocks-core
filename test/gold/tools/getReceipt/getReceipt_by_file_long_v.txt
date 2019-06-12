@@ -1,18 +1,20 @@
-getReceipt argc: 4 [1:--file:cmd_file] [2:--verbose] [3:--parity] 
-getReceipt --file:cmd_file --verbose --parity 
-[{
+getReceipt argc: 5 [1:--file:cmd_file] [2:--verbose] [3:--parity] [4:--api_mode] 
+getReceipt --file:cmd_file --verbose --parity --api_mode 
+{ "type": "CTransaction", "data": [
+  {
     "contractAddress": "0x0",
     "gasUsed": "0x5208",
     "logs": [],
     "status": null
-},{
+  },  {
     "contractAddress": "0x0",
     "gasUsed": "0x5208",
     "logs": [],
     "status": null
-},{
+  },  {
     "contractAddress": "0x0",
     "gasUsed": "0x5208",
     "logs": [],
     "status": null
-}]
+  }
+], "meta": {"pending": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

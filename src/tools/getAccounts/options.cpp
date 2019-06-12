@@ -14,31 +14,43 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("-owned",     "Show owned addresses"),
-    COption("-custom",    "Show custom addresses (see below)"),
-    COption("-prefund",   "Show prefunded addresses"),
-    COption("-named",     "Show named addresses (see ethName)"),
-    COption("-addr_only", "export only addresses, no names"),
-    COption("@fmt:<fmt>", "export format (one of [none|json|txt|csv|api])"),
-    COption("@o(t)her",   "export other addresses if found"),
-    COption("",           "List known accounts ('owned' are shown by default)."),
+    COption("~terms",       "a space separated list of one or more search terms"),
+    COption("-expand",      "expand search to include all fields (default searches name, address, and symbol only)"),
+    COption("-matchCase",   "do case-sensitive search"),
+    COption("-owned",       "Include personal accounts in the search"),
+    COption("-custom",      "Include your custom named accounts"),
+    COption("-prefund",     "Include prefund accounts"),
+    COption("-named",       "Include well know token and airdrop addresses in the search"),
+    COption("-addr",        "display only addresses in the results (useful for scripting)"),
+    COption("@fmt:<fmt>",   "export format (one of [none|json|txt|csv|api])"),
+    COption("@o(t)her",     "export other addresses if found"),
+    COption("",             "Query addresses and/or names well known accounts.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
 extern const char* STR_DISPLAY;
+extern const char* STR_DISPLAY_ALL;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
 
-    string_q format = STR_DISPLAY;
-    bool deflt = true, noHeader = false;
+    bool noHeader = false;
+    string_q format;
+    bool deflt = true;
 
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if (arg == "-n" || arg == "--named") {
+        if (arg == "-e" || arg == "--expand") {
+            searchFields = STR_DISPLAY_ALL;
+            format = searchFields;
+
+        } else if (arg == "-m" || arg == "--matchCase") {
+            matchCase = true;
+
+        } else if (arg == "-n" || arg == "--named") {
             if (deflt) { types = 0; deflt = false; }
             types |= NAMED;
 
@@ -58,9 +70,10 @@ bool COptions::parseArguments(string_q& command) {
             if (deflt) { types = 0; deflt = false; }
             types |= OTHER;
 
-        } else if (arg == "-a" || arg == "--addr_only") {
+        } else if (arg == "-a" || arg == "--addr") {
             noHeader = true;
             format = "[{ADDR}]";
+            searchFields = "[{ADDR}]\t[{NAME}]";
 
         } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
@@ -68,26 +81,37 @@ bool COptions::parseArguments(string_q& command) {
             }
 
         } else {
-            return usage("Invalid option '" + arg + "'. Quitting...");
+            searches.push_back(arg);
+
         }
     }
+    if (verbose)
+        searchFields += "\t[{SOURCE}]";
 
+    // Data wrangling
+    // None
+
+    // Display formatting
     switch (exportFmt) {
-        case NONE1: format = "[{ADDR}][\t{NAME}][\t{SYMBOL}]"; if (verbose) format += "[\t{SOURCE}]"; break;
-        case API1:
-        case JSON1: format = ""; break;
+        case NONE1:
         case TXT1:
         case CSV1:
             format = getGlobalConfig()->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
-            if (verbose)
-                format += "[\t{SOURCE}]";
-            manageFields("CAccountName:" + cleanFmt(format, exportFmt));
+            if (verbose && !contains(format, "{SOURCE}"))
+                format += "\t[{SOURCE}]";
+            break;
+        case API1:
+        case JSON1:
+            format = "";
             break;
     }
+    manageFields("CAccountName:" + cleanFmt((format.empty() ? STR_DISPLAY_ALL : format), exportFmt));
+    expContext().fmtMap["meta"] = ", \"namePath\": \"" + (isTestMode() ? "--" : getCachePath("names/")) + "\"";
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
     if (noHeader)
         expContext().fmtMap["header"] = "";
 
+    // Collect results for later display
     applyFilter();
 
     return true;
@@ -96,11 +120,13 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
-    optionOn(OPT_PREFUND);
+    optionOn(OPT_PREFUND | OPT_OUTPUT);
 
     items.clear();
-    types = OWNED;
-
+    searches.clear();
+    searchFields = STR_DISPLAY;
+    matchCase = false;
+    types = NAMED;
     minArgs = 0;
 }
 
@@ -124,8 +150,19 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
-    if (which == "notes" && (verbose || COptions::isReadme))
-        return "To customize this list add an [{custom}] section to the config file (see documentation).\n";
+    if (which == "options") {
+        return substitute(str, "terms", "<term> [term...]");
+
+    } else if (which == "notes" && (verbose || COptions::isReadme)) {
+        string_q ret;
+        ret += "With a single search term, the tool searches both [{name}] and [{address}].\n";
+        ret += "With two search terms, the first term must match the [{address}] field, and the second term must match the [{name}] field.\n";
+        ret += "When there are two search terms, both must match.\n";
+        ret += "The [{--matchCase}] option requires case sensitive matching. It works with all other options.\n";
+        ret += "To customize the list of names add a [{custom}] section to the config file (see documentation).\n";
+        ret += "Name file: [{" + substitute(namesFile.getFullPath(), getHomeFolder(), "~/") + "}] (" + uint_2_Str(fileSize(namesFile.getFullPath())) + ")\n";
+        return ret;
+    }
     return str;
 }
 
@@ -140,8 +177,27 @@ bool COptions::addIfUnique(const CAccountName& item) {
             items[l].name = item.name;
         return false;
     }
-    items[l] = item;
-    return true;
+
+    if (!matchCase)
+        for (size_t i = 0 ; i < searches.size() ; i++)
+            searches[i] = toLower(searches[i]);
+
+    string_q search1 = searches.size() > 0 ? searches[0] : "";
+    string_q search2 = searches.size() > 1 ? searches[1] : "";
+    string_q search3 = searches.size() > 2 ? searches[2] : "";
+
+    string_q str = item.Format(searchFields);
+    if (!matchCase)
+        str = toLower(str);
+
+    if ((search1.empty() || search1 == "*" || contains(str, search1)) &&
+        (search2.empty() || search2 == "*" || contains(str, search2)) &&
+        (search3.empty() || search3 == "*" || contains(str, search3))) {
+        items[l] = item;
+        return true;
+    }
+    items.erase(l);
+    return false;
 }
 
 //-----------------------------------------------------------------------
@@ -158,8 +214,9 @@ void COptions::applyFilter() {
         } else {
             CStringArray addrs;
             getAccounts(addrs);
+            uint32_t cnt = 0;
             for (auto addr : addrs) {
-                CAccountName item(addr);
+                CAccountName item("00-Active\t" + addr + "\tOwned_" + padNum4(cnt++));
                 addIfUnique(item);
             }
         }
@@ -199,16 +256,14 @@ void COptions::applyFilter() {
         ASSERT(prefunds.size() == 8893);  // This is a known value
         for (auto prefund : prefunds) {
             string_q addr = nextTokenClear(prefund,'\t');
-            CAccountName item(addr);
-            item.name = "Prefund_" + padNum4(cnt++);
+            CAccountName item("80-Prefund\t" + addr + "\tPrefund_" + padNum4(cnt++));
             addIfUnique(item);
         }
     }
 
     //------------------------
     if (types & OTHER) {
-        cout << getCWD() << endl;
-        string_q contents = asciiFileToString("../src/tools/ethName/tests/other_names.txt");
+        string_q contents = asciiFileToString("../src/tools/getAccounts/tests/other_names.txt");
         if (!contents.empty()) {
             CStringArray fields;
             fields.push_back("addr");
@@ -225,4 +280,19 @@ void COptions::applyFilter() {
 
 //-----------------------------------------------------------------------
 const char* STR_DISPLAY =
-"[{ADDR}][\t{NAME}][\t{SYMBOL}]";
+"[{ADDR}]\t"
+"[{NAME}]\t"
+"[{SYMBOL}]";
+
+//-----------------------------------------------------------------------
+const char* STR_DISPLAY_ALL =
+"[{GROUP}]\t"
+"[{ADDR}]\t"
+"[{NAME}]\t"
+"[{SYMBOL}]\t"
+"[{SOURCE}]\t"
+"[{DESCRIPTION}]\t"
+"[{LOGO}]\t"
+"[{ISCONTRACT}]\t"
+"[{CUSTOM}]\t"
+"[{SHARED}]";

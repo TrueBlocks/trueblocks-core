@@ -1,4 +1,0 @@
-ethName argc: 4 [1:-v] [2:0xb6] [3:torj] 
-ethName -v 0xb6 torj 
-addr	name	symbol
-0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac	Storj	STORJ

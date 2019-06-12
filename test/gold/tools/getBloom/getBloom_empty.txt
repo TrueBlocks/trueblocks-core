@@ -1,6 +1,6 @@
 getBloom argc: 2 [1:1001001] 
 getBloom 1001001 
 {
-    "logsBloom": "0x0",
-    "number": "1001001"
+  "logsBloom": "0x0",
+  "number": "1001001"
 }

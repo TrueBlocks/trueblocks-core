@@ -1,6 +1,6 @@
 [settings]
 class       = CLogEntry
-fields      = address address|hash blockHash (nowrite)|blknum blockNumber (nowrite)|string data|uint64 logIndex|bool removed (nowrite)|CTopicArray topics|CFunction articulatedLog (nowrite)|string compressedLog (nowrite)|hash transactionHash (nowrite)|blknum transactionIndex (nowrite)|blknum transactionLogIndex (nowrite)|string type (nowrite)
+fields      = address address|string data|uint64 logIndex|bool removed (nowrite)|CTopicArray topics|CFunction articulatedLog (nowrite)|string compressedLog (nowrite)|blknum transactionLogIndex (nowrite)|string type (nowrite)
 backfields1 = address address|string data|uint64 logIndex|CTopicArray topics|CFunction articulatedLog (nowrite)
 includes    = abilib.h
 cIncs       = etherlib.h

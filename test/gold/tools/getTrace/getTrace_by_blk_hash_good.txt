@@ -1,30 +1,4 @@
 getTrace argc: 3 [1:0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55] [2:--verbose] 
 getTrace 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55 --verbose 
-[{
-  "blockHash": "0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f",
-  "blockNumber": 4001001,
-  "subtraces": 0,
-  "traceAddress": null,
-  "transactionHash": "0xe49b9d48866035a82b622e4900791210cbf36905194a7ae3dc38feedf8ca3762",
-  "transactionPosition": 55,
-  "type": "call",
-  "error": "",
-  "action": {
-    "address": "0x0",
-    "balance": 0,
-    "callType": "call",
-    "from": "0x4ad64328076e1220333a82a4e602b1aaddd215e3",
-    "gas": 228728,
-    "init": "",
-    "input": "0xd0e30db0",
-    "refundAddress": "0x0",
-    "to": "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819",
-    "value": 80000000000000000
-  },
-  "result": {
-    "address": "0x0",
-    "code": "",
-    "gasUsed": 23221,
-    "output": "0x"
-  }
-}]
+blocknumber	transactionposition	traceaddress	action::calltype	error	action::from	action::to	action::value	action::gas	result::gasused	action::input	compressedtrace
+4001001	55	null	call		0x4ad64328076e1220333a82a4e602b1aaddd215e3	0x8d12a197cb00d4747a1fe03395095ce2a5cc6819	80000000000000000	228728	23221	0xd0e30db0

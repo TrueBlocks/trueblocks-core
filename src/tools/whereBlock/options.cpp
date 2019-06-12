@@ -20,16 +20,19 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-extern const char *STR_DISPLAY;
+extern const char* STR_DISPLAY;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
-    string_q format = STR_DISPLAY;
-    blknum_t latestBlock = isNodeRunning() ? getLastBlock_client() : NOPOS;
     if (!standardOptions(command))
         return false;
 
+    bool noHeader = false;
+    string_q format = getGlobalConfig()->getConfigStr("display", "format", STR_DISPLAY);
     Init();
+    blknum_t latestBlock = getLastBlock_client();
+    if (!isNodeRunning()) // it's okay if it's not
+        latestBlock = NOPOS;
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         string_q orig = arg;
@@ -50,21 +53,27 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    // Data verifictions
     if (!blocks.hasBlocks())
         return usage("You must enter a valid block number. Quitting...");
 
+    // Display formatting
     switch (exportFmt) {
-        case NONE1: format = "[{ADDR}]\t[{NAME}]\t[{SYMBOL}]"; break;
+        case NONE1: format = STR_DISPLAY; break;
         case API1:
         case JSON1: format = ""; break;
         case TXT1:
         case CSV1:
             format = getGlobalConfig()->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
-            manageFields("CAccountName:" + cleanFmt(format, exportFmt));
             break;
     }
+    manageFields("CCacheEntry:" + cleanFmt((format.empty() ? STR_DISPLAY : format), exportFmt));
+    expContext().fmtMap["meta"] = ", \"cachePath\": \"" + (isTestMode() ? "--" : getCachePath("")) + "\"";
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
+    if (noHeader)
+        expContext().fmtMap["header"] = "";
 
+    // collect together results for later display
     applyFilter();
 
     return true;
@@ -74,6 +83,7 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     optionOff(OPT_DENOM);
     registerOptions(nParams, params);
+
     items.clear();
     blocks.Init();
     type = CT_BLOCKS;
@@ -97,14 +107,21 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
-    if (which == "options")
+    if (which == "options") {
         return substitute(str, "block_list", "<block> [block...]");
+
+    } else if (which == "notes") {
+        string_q ret = str;
+        if (verbose || COptions::isReadme) {
+            ret += "You may customize the location of your cache in the file ~/.quickBlocks/quickBlocks.toml.\n";
+        }
+        return ret;
+    }
     return str;
 }
 
 //--------------------------------------------------------------------------------
 void COptions::applyFilter() {
-
     string_q list = getBlockNumList();
     CStringArray blockStrs;
     explode(blockStrs, list, '|');
@@ -121,8 +138,7 @@ void COptions::applyFilter() {
             ce.path = substitute(substitute(ce.path, getVersionFromClient(), "--nodeVersion--"), getCachePath(""), "./");
         items[bn] = ce;
     }
-    expContext().fmtMap["meta"] = ", \"cachePath\": \"" + (isTestMode() ? "--" : getCachePath("")) + "\"";
 }
 
-//--------------------------------------------------------------------------------
-const char *STR_DISPLAY = "[{BLOCKNUMBER}]\t[{PATH}]\t[{CACHED}]";
+//-----------------------------------------------------------------------
+const char* STR_DISPLAY = "[{BLOCKNUMBER}]\t[{PATH}]\t[{CACHED}]";

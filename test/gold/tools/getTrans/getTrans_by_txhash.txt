@@ -1,3 +1,4 @@
 getTrans argc: 2 [1:0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765] 
 getTrans 0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765 
+date	timestamp	blocknumber	transactionindex	hash	compressedtx
 2017-07-09 20:52:47 UTC	1499633567	4000000	68	0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765

@@ -1,0 +1,3 @@
+getAccounts argc: 2 [1:-t] 
+getAccounts -t 
+00000001 TIME ~ CLOCK - <INFO>  : No results

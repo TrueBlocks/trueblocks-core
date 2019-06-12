@@ -1,58 +1,6 @@
 getTrace argc: 4 [1:0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521] [2:0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11] [3:0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521] 
 getTrace 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 
-[{
-  "blockHash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",
-  "blockNumber": 1001001,
-  "subtraces": 0,
-  "traceAddress": null,
-  "transactionHash": "0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521",
-  "transactionPosition": 3,
-  "type": "call",
-  "error": "",
-  "action": {
-    "address": "0x0",
-    "balance": 0,
-    "callType": "call",
-    "from": "0x30d285941dfb8bbbe4ec72b02c8d166be01322d2",
-    "gas": 0,
-    "init": "",
-    "input": "0x",
-    "refundAddress": "0x0",
-    "to": "0x9b0a028eafdecde3afc0fd00b7937098388b7c8a",
-    "value": 61848232647269079
-  },
-  "result": {
-    "address": "0x0",
-    "code": "",
-    "gasUsed": 0,
-    "output": "0x"
-  }
-},{
-  "blockHash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",
-  "blockNumber": 1001001,
-  "subtraces": 0,
-  "traceAddress": null,
-  "transactionHash": "0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521",
-  "transactionPosition": 3,
-  "type": "call",
-  "error": "",
-  "action": {
-    "address": "0x0",
-    "balance": 0,
-    "callType": "call",
-    "from": "0x30d285941dfb8bbbe4ec72b02c8d166be01322d2",
-    "gas": 0,
-    "init": "",
-    "input": "0x",
-    "refundAddress": "0x0",
-    "to": "0x9b0a028eafdecde3afc0fd00b7937098388b7c8a",
-    "value": 61848232647269079
-  },
-  "result": {
-    "address": "0x0",
-    "code": "",
-    "gasUsed": 0,
-    "output": "0x"
-  }
-},
-{ "error": "The item you requested (0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11) was not found." }]
+blocknumber	transactionposition	traceaddress	action::calltype	error	action::from	action::to	action::value	action::gas	result::gasused	action::input	compressedtrace
+1001001	3	null	call		0x30d285941dfb8bbbe4ec72b02c8d166be01322d2	0x9b0a028eafdecde3afc0fd00b7937098388b7c8a	61848232647269079	0	0	0x
+Transaction 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11 not found.
+1001001	3	null	call		0x30d285941dfb8bbbe4ec72b02c8d166be01322d2	0x9b0a028eafdecde3afc0fd00b7937098388b7c8a	61848232647269079	0	0	0x

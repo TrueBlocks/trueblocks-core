@@ -57,7 +57,10 @@ string_q nextTraceChunk(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTrace::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
+bool CTrace::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+    string_q fieldName = fieldNameIn;
+    string_q fieldValue = fieldValueIn;
+
     // EXISTING_CODE
     if (pTrans)
         if (((CTransaction*)pTrans)->setValueByName(fieldName, fieldValue))  // NOLINT
@@ -72,6 +75,9 @@ bool CTrace::setValueByName(const string_q& fieldName, const string_q& fieldValu
         case 'b':
             if ( fieldName % "blockHash" ) { blockHash = str_2_Hash(fieldValue); return true; }
             if ( fieldName % "blockNumber" ) { blockNumber = str_2_Uint(fieldValue); return true; }
+            break;
+        case 'c':
+            if ( fieldName % "compressedTrace" ) { compressedTrace = fieldValue; return true; }
             break;
         case 'e':
             if ( fieldName % "error" ) { error = fieldValue; return true; }
@@ -129,6 +135,7 @@ bool CTrace::Serialize(CArchive& archive) {
     archive >> type;
     archive >> error;
 //    archive >> articulatedTrace;
+//    archive >> compressedTrace;
     archive >> action;
     archive >> result;
     finishParse();
@@ -152,6 +159,7 @@ bool CTrace::SerializeC(CArchive& archive) const {
     archive << type;
     archive << error;
 //    archive << articulatedTrace;
+//    archive << compressedTrace;
     archive << action;
     archive << result;
 
@@ -199,6 +207,8 @@ void CTrace::registerClass(void) {
     ADD_FIELD(CTrace, "error", T_TEXT, ++fieldNum);
     ADD_FIELD(CTrace, "articulatedTrace", T_OBJECT, ++fieldNum);
     HIDE_FIELD(CTrace, "articulatedTrace");
+    ADD_FIELD(CTrace, "compressedTrace", T_TEXT, ++fieldNum);
+    HIDE_FIELD(CTrace, "compressedTrace");
     ADD_FIELD(CTrace, "action", T_OBJECT, ++fieldNum);
     ADD_FIELD(CTrace, "result", T_OBJECT, ++fieldNum);
 
@@ -222,6 +232,9 @@ string_q nextTraceChunk_custom(const string_q& fieldIn, const void *dataPtr) {
     if (tra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'c':
+                if ( fieldIn % "compressedTrace" ) return tra->articulatedTrace.compressed();
+                break;
             case 'd':
                 if (tra->pTrans) {
                     if (fieldIn % "date" || fieldIn % "datesh")
@@ -277,18 +290,36 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "articulatedTrace" ) { expContext().noFrst=true; return articulatedTrace.Format(); }
-            if ( fieldName % "action" ) { expContext().noFrst=true; return action.Format(); }
+            if ( fieldName % "articulatedTrace" ) {
+                if (articulatedTrace == CFunction())
+                    return "";
+                expContext().noFrst=true;
+                return articulatedTrace.Format();
+            }
+            if ( fieldName % "action" ) {
+                if (action == CTraceAction())
+                    return "";
+                expContext().noFrst=true;
+                return action.Format();
+            }
             break;
         case 'b':
             if ( fieldName % "blockHash" ) return hash_2_Str(blockHash);
             if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
             break;
+        case 'c':
+            if ( fieldName % "compressedTrace" ) return compressedTrace;
+            break;
         case 'e':
             if ( fieldName % "error" ) return error;
             break;
         case 'r':
-            if ( fieldName % "result" ) { expContext().noFrst=true; return result.Format(); }
+            if ( fieldName % "result" ) {
+                if (result == CTraceResult())
+                    return "";
+                expContext().noFrst=true;
+                return result.Format();
+            }
             break;
         case 's':
             if ( fieldName % "subtraces" ) return uint_2_Str(subtraces);

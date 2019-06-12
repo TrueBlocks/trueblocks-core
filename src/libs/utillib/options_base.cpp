@@ -173,8 +173,8 @@ namespace qblocks {
                 exportFmt = API1;
                 args[i] = "";
 
-            } else if (startsWith(arg, "--fmt:")) {
-                arg = substitute(substitute(arg, "-f:", ""), "--fmt:", "");
+            } else if (startsWith(arg, "-x:") || startsWith(arg, "--fmt:")) {
+                arg = substitute(substitute(arg, "-x:", ""), "--fmt:", "");
                      if ( arg == "txt" ) { exportFmt = TXT1;  api_mode = false; }
                 else if ( arg == "csv" ) { exportFmt = CSV1;  api_mode = false; }
                 else if ( arg == "json") { exportFmt = JSON1; api_mode = false; }
@@ -292,6 +292,14 @@ namespace qblocks {
             isRaw = true;
         }
 
+        if (isEnabled(OPT_OUTPUT) && contains(cmdLine, "--output")) {
+            outputFn = configPath("cache/tmp/" + makeValidName(Now().Format(FMT_EXPORT)) + ".txt");
+            establishFolder(outputFn);
+            ASSERT(!fileExists(outputFn));
+            origCout = cout.rdbuf();
+            cout.rdbuf( strCout.rdbuf() );
+        }
+
         if (isEnabled(OPT_WEI) && contains(cmdLine, "--wei ")) {
             replaceAll(cmdLine, "--wei ", "");
             expContext().asEther = false;
@@ -308,7 +316,7 @@ namespace qblocks {
 
         if (isEnabled(OPT_PARITY) && contains(cmdLine, "--parity ")) {
             replaceAll(cmdLine, "--parity ", "");
-            expContext().spcs = 4;
+            expContext().spcs = 2;
             expContext().hexNums = true;
             expContext().quoteNums = true;
             expContext().isParity = true;
@@ -349,6 +357,8 @@ namespace qblocks {
             return true;
         if (isEnabled(OPT_RAW) && arg == "--raw")
             return true;
+        if (isEnabled(OPT_OUTPUT) && arg == "--output")
+            return true;
         if (isEnabled(OPT_RAW) && arg == "--veryRaw")
             return true;
         if (isEnabled(OPT_WEI) && arg == "--wei")
@@ -356,6 +366,8 @@ namespace qblocks {
         if (isEnabled(OPT_DOLLARS) && arg == "--dollars")
             return true;
         if (isEnabled(OPT_PARITY) && (arg == "--parity"))
+            return true;
+        if (startsWith(arg, "--fmt:"))
             return true;
         if (arg == "--version")
             return true;
@@ -429,6 +441,9 @@ namespace qblocks {
             colorsOff();
             os << "#### Usage\n";
         }
+
+        if (api_mode)
+            cout << "{ \"error\": \"" << errMsg << "\" }" << endl;
 
         os << "\n";
         if (!errMsg.empty())
@@ -873,6 +888,22 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         namedAccounts.clear();
         pParams = NULL;
         cntParams = 0;
+        origCout = NULL;
+        strCout.clear();
+        outputFn = "";
+    }
+
+    //--------------------------------------------------------------------------------
+    void COptionsBase::closeRedirect(void) {
+        if (origCout != NULL) {
+            cout.rdbuf( origCout );
+            origCout = NULL;
+            stringToAsciiFile(outputFn, strCout.str());
+            if (isTestMode())
+                cout << "--output option is on - file written" << endl;
+            else
+                cout << outputFn;
+        }
     }
 
     //-----------------------------------------------------------------------
@@ -941,6 +972,10 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
                 if (isAddress(account.addr))
                     namedAccounts.push_back(account);
             }
+        }
+        if (names.size() == 0) {
+            cerr << "Something went wrong loading names file. Quitting...";
+            return false;
         }
 
         CArchive nameCache(WRITING_ARCHIVE);

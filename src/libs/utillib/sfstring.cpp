@@ -53,6 +53,25 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
+    size_t explode(CUintArray& result, const string& input, char needle) {
+        result.reserve(result.size() + countOf(input, needle) + 1); // maybe an append
+
+        string_q buffer{""};
+        for (auto ch : input) {
+            if (ch != needle) {
+                buffer += ch;
+            } else if (ch == needle) {
+                result.push_back(str_2_Uint(trimWhitespace(buffer)));
+                buffer = "";
+            }
+        }
+
+        if (buffer != "")
+            result.push_back(str_2_Uint(buffer));
+        return result.size();
+    }
+
+    //--------------------------------------------------------------------------------
     size_t forEveryExplodedItem(const string& input, char needle, APPLYFUNC func, void *data) {
 
         if (!func)

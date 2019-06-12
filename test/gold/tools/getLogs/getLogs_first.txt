@@ -1,3 +1,0 @@
-getLogs argc: 2 [1:40500.0.next] 
-getLogs 40500.0.next 
-[]

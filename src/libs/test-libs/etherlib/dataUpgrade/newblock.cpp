@@ -54,7 +54,10 @@ string_q nextNewblockChunk(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CNewBlock::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
+bool CNewBlock::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+    string_q fieldName = fieldNameIn;
+    string_q fieldValue = fieldValueIn;
+
     // EXISTING_CODE
     if (fieldName % "number") {
         *(string_q*)&fieldName = "blockNumber";  // NOLINT

@@ -1,18 +1,6 @@
 getReceipt argc: 2 [1:--file:cmd_file] 
 getReceipt --file:cmd_file 
-[{
-    "contractAddress": "0x0",
-    "gasUsed": "0x5208",
-    "logs": [],
-    "status": null
-},{
-    "contractAddress": "0x0",
-    "gasUsed": "0x5208",
-    "logs": [],
-    "status": null
-},{
-    "contractAddress": "0x0",
-    "gasUsed": "0x5208",
-    "logs": [],
-    "status": null
-}]
+blocknumber	transactionindex	hash	gasused	status	iserror
+3657480	78	0x1e4e4d62951733dea1cce59eca0ffaf89a7881f13c9bb8558d61f6a9e0928c4b	21000	null	0
+3657480	78	0x1e4e4d62951733dea1cce59eca0ffaf89a7881f13c9bb8558d61f6a9e0928c4b	21000	null	0
+3657480	79	0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad	21000	null	0

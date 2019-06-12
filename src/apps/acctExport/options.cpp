@@ -194,7 +194,7 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
-    optionOn(OPT_PREFUND);
+    optionOn(OPT_PREFUND | OPT_OUTPUT);
 
     monitors.clear();
 
@@ -210,6 +210,8 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
+    ts_array = NULL;
+    ts_cnt = 0;
     exportFmt = JSON1;
     Init();
 }
@@ -251,49 +253,34 @@ bool COptions::loadMonitorData(CAppearanceArray_base& apps, const address_t& add
             txCache.Read(buffer, sizeof(CAppearance_base), nRecords);
             txCache.Release();
         } else {
-            EXIT_FAIL("Could not open cache file.");
+            cerr << "Could not open cache file.";
+            return false;
         }
 
         // Add to the apps which may be non-empty
         apps.reserve(apps.size() + nRecords);
         for (size_t i = 0 ; i < nRecords ; i++) {
-            // TODO(tjayrush): MEGAHACK -- we need this when we export prefunds
             if (buffer[i].blk == 0)
                 prefundMap[buffer[i].txid] = addr;
+            if (buffer[i].txid == 99999)
+                blkRewardMap[buffer[i].blk] = addr;
             apps.push_back(buffer[i]);
         }
 
         delete [] buffer;
 
     } else {
-        EXIT_FAIL("Could not allocate memory for address " + addr);
-
+        cerr << "Could not allocate memory for address " << addr;
+        return false;
     }
-    EXIT_NOMSG(true);
+    return true;
 }
 
 //-----------------------------------------------------------------------
 bool COptions::loadData(void) {
 
-    tsArray.clear();
-
-    string_q zipFile = configPath("ts.bin.gz");
-    string_q tsFile = configPath("ts.bin");
-    if (fileExists(zipFile)) {
-        string_q cmd = "cd " + configPath("") + " ; gunzip ts.bin.gz";
-        cerr << doCommand(cmd) << endl;
-        ASSERT(!fileExists(zipFile));
-        ASSERT(fileExists(tsFile));
-    }
-
-    CArchive ts(READING_ARCHIVE);
-    if (ts.Lock(tsFile, modeReadOnly, LOCK_NOWAIT)) {
-        tsArray.reserve(fileSize(tsFile));
-        ts >> tsArray;
-        ts.Release();
-    }
-
     ENTER("loadData");
+
     CAppearanceArray_base tmp;
     for (auto monitor : monitors) {
         if (!loadMonitorData(tmp, monitor.address))
@@ -322,7 +309,62 @@ bool COptions::loadData(void) {
     if (hasFuture)
         LOG_WARN("Cache file contains blocks ahead of the chain. Some items will not be exported.");
 
+    if (!freshenTsArray(items[items.size()-1].blk)) {
+        EXIT_FAIL("Could not open timestamp file.");
+    }
+
     EXIT_NOMSG(true);
+}
+
+//-----------------------------------------------------------------------
+bool COptions::freshenTsArray(blknum_t last) {
+
+    string_q zipFile = configPath("ts.bin.gz");
+    if (fileExists(zipFile)) {  // is this first run since install?
+        string_q cmd = "cd " + configPath("") + " ; gunzip " + zipFile;
+        cerr << doCommand(cmd) << endl;
+        ASSERT(!fileExists(zipFile));
+    }
+
+    // We've been asked to freshen to the latest block in this address. If
+    // we're already there, do nothing.
+    string_q fn = configPath("ts.bin");
+    if (!fileExists(fn))
+        return false;
+
+    ts_cnt = fileSize(fn) / sizeof(uint32_t);
+    if (last >= ts_cnt) {
+        CArchive oo(WRITING_ARCHIVE);
+        if (oo.Lock(fn, modeWriteAppend, LOCK_WAIT)) {
+            for (blknum_t bl = ts_cnt ; bl < last ; bl++) {
+                CBlock block;
+                getBlock_light(block, bl);
+                oo << (uint32_t)block.timestamp;
+                oo.flush();
+                cerr << "Updating timestamp for block " << bl << " (" << block.timestamp << ") of " << last << " (" << (last - bl) << ")    \r";
+                cerr.flush();
+            }
+            oo.Release();
+        }
+    }
+
+    if (ts_array) {
+        delete [] ts_array;
+        ts_array = NULL;
+    }
+
+    ts_cnt = fileSize(fn) / sizeof(uint32_t);
+    ts_array = new uint32_t[ts_cnt];
+    if (!ts_array)
+        return false;
+
+    CArchive in(READING_ARCHIVE);
+    if (!in.Lock(fn, modeReadOnly, LOCK_NOWAIT))
+        return false;
+
+    in.Read(ts_array, sizeof(uint32_t), ts_cnt);
+    in.Release();
+    return true;
 }
 
 //-----------------------------------------------------------------------

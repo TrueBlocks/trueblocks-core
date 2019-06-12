@@ -84,8 +84,8 @@ namespace qblocks {
     string_q        getSha3                 (const string_q& hexIn);
 
     //-------------------------------------------------------------------------
-    extern string_q getBinaryCacheFilename  (cache_t ct, blknum_t bn, txnum_t txid=NOPOS, txnum_t tcid=NOPOS);
-    extern string_q getBinaryCachePath      (cache_t ct, blknum_t bn, txnum_t txid=NOPOS, txnum_t tcid=NOPOS);
+    extern string_q getBinaryCacheFilename  (cache_t ct, blknum_t bn, txnum_t txid=NOPOS, const string_q& trc_id="");
+    extern string_q getBinaryCachePath      (cache_t ct, blknum_t bn, txnum_t txid=NOPOS, const string_q& trc_id="");
     extern string_q getBinaryCacheFilename  (cache_t ct, const address_t& addr);
     extern string_q getBinaryCachePath      (cache_t ct, const address_t& addr);
 
@@ -105,6 +105,7 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     // forEvery functions
     extern bool forEveryBloomFile            (FILEVISITOR    func, void *data, uint64_t start, uint64_t count, uint64_t skip = 1);  // NOLINT
+
     //-------------------------------------------------------------------------
     // forEvery functions
     extern bool forEveryTransactionInList    (TRANSVISITFUNC func, void *data, const string_q& trans_list);

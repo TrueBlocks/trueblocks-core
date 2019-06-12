@@ -18,3 +18,7 @@ whereBlock -th
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
+`Notes:`
+
+- You may customize the location of your cache in the file ~/.quickBlocks/quickBlocks.toml.
+

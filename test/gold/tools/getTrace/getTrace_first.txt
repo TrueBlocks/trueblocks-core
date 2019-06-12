@@ -1,30 +1,4 @@
 getTrace argc: 2 [1:40500.0.next] 
 getTrace 40500.0.next 
-[{
-  "blockHash": "0x4e3a3754410177e6937ef1f84bba68ea139e8d1a2258c5f85db9f1cd715a1bdd",
-  "blockNumber": 46147,
-  "subtraces": 0,
-  "traceAddress": null,
-  "transactionHash": "0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060",
-  "transactionPosition": 0,
-  "type": "call",
-  "error": "",
-  "action": {
-    "address": "0x0",
-    "balance": 0,
-    "callType": "call",
-    "from": "0xa1e4380a3b1f749673e270229993ee55f35663b4",
-    "gas": 0,
-    "init": "",
-    "input": "0x",
-    "refundAddress": "0x0",
-    "to": "0x5df9b87991262f6ba471f09758cde1c0fc1de734",
-    "value": 31337
-  },
-  "result": {
-    "address": "0x0",
-    "code": "",
-    "gasUsed": 0,
-    "output": "0x"
-  }
-}]
+blocknumber	transactionposition	traceaddress	action::calltype	error	action::from	action::to	action::value	action::gas	result::gasused	action::input	compressedtrace
+46147	0	null	call		0xa1e4380a3b1f749673e270229993ee55f35663b4	0x5df9b87991262f6ba471f09758cde1c0fc1de734	31337	0	0	0x

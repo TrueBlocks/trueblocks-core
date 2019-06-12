@@ -56,7 +56,10 @@ string_q nextFunctionChunk(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CFunction::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
+bool CFunction::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+    string_q fieldName = fieldNameIn;
+    string_q fieldValue = fieldValueIn;
+
     // EXISTING_CODE
     if ( fieldName % "signature" ) {
         signature = getSignature(SIG_CANONICAL);
@@ -521,6 +524,18 @@ bool CFunction::fromDefinition(const string_q& lineIn) {
     }
     finishParse();
     return true;
+}
+
+//-----------------------------------------------------------------------
+string_q CFunction::compressed(void) const {
+    if (name.empty())
+        return "";
+    string_q ret = name + " ( ";
+    for (auto input : inputs)
+        ret += (input.name + ": " + input.value + ", ");
+    ret = trim(trim(ret, ' '), ',');
+    ret += " )";
+    return ret;
 }
 // EXISTING_CODE
 }  // namespace qblocks

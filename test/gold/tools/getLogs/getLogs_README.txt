@@ -2,16 +2,17 @@ getLogs argc: 2 [1:-th]
 getLogs -th 
 #### Usage
 
-`Usage:`    getLogs [-v|-h] &lt;transID&gt; [transID...]  
+`Usage:`    getLogs [-a|-v|-h] &lt;transID&gt; [transID...]  
 `Purpose:`  Retrieve a transaction's logs from the local cache or a running node.  
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | trans_list | a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) |
+| -a | --articulate | articulate the transactions if an ABI is found for the 'to' address |
 
 #### Hidden options (shown during testing only)
-| -a | --address val | a list of addresses used to filter the results |
+| -x | --fmt val | export format (one of [none&#124;json&#124;txt&#124;csv&#124;api]) |
 #### Hidden options (shown during testing only)
 
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |

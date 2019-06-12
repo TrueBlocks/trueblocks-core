@@ -1,16 +1,16 @@
 getLogs argc: 2 [1:.whatever] 
 getLogs .whatever 
-00000001 TIME ~ CLOCK - <ERROR> : Exit(parseArguments): 
 
   .whatever does not appear to be a valid transaction index.
 
-  Usage:    getLogs [-v|-h] <transID> [transID...]  
+  Usage:    getLogs [-a|-v|-h] <transID> [transID...]  
   Purpose:  Retrieve a transaction's logs from the local cache or a running node.  
   Where:  
 	trans_list            a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)
+	-a  (--articulate)    articulate the transactions if an ABI is found for the 'to' address
 
 #### Hidden options (shown during testing only)
-	-a  (--address val)   a list of addresses used to filter the results
+	-x  (--fmt val)       export format (one of [none|json|txt|csv|api])
 #### Hidden options (shown during testing only)
 
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level

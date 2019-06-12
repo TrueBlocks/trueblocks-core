@@ -1,0 +1,3 @@
+getTrace argc: 4 [1:-v] [2:3657480.79] [3:--output] 
+getTrace -v 3657480.79 --output 
+--output option is on - file written

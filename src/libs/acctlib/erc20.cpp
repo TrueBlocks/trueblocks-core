@@ -23,8 +23,8 @@ namespace qblocks {
 IMPLEMENT_NODE(CTokenState_erc20, CAccountWatch);
 
 //---------------------------------------------------------------------------
-extern string_q nextTokenState_erc20Chunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextTokenState_erc20Chunk_custom(const string_q& fieldIn, const void *dataPtr);
+extern string_q nextTokenstate_Erc20Chunk(const string_q& fieldIn, const void *dataPtr);
+static string_q nextTokenstate_Erc20Chunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
 void CTokenState_erc20::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
@@ -41,11 +41,11 @@ void CTokenState_erc20::Format(ostream& ctx, const string_q& fmtIn, void *dataPt
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextTokenState_erc20Chunk, this);
+        ctx << getNextChunk(fmt, nextTokenstate_Erc20Chunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextTokenState_erc20Chunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextTokenstate_Erc20Chunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
         return reinterpret_cast<const CTokenState_erc20 *>(dataPtr)->getValueByName(fieldIn);
 
@@ -56,7 +56,10 @@ string_q nextTokenState_erc20Chunk(const string_q& fieldIn, const void *dataPtr)
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CTokenState_erc20::setValueByName(const string_q& fieldName, const string_q& fieldValue) {
+bool CTokenState_erc20::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+    string_q fieldName = fieldNameIn;
+    string_q fieldValue = fieldValueIn;
+
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -196,7 +199,7 @@ void CTokenState_erc20::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q nextTokenState_erc20Chunk_custom(const string_q& fieldIn, const void *dataPtr) {
+string_q nextTokenstate_Erc20Chunk_custom(const string_q& fieldIn, const void *dataPtr) {
     const CTokenState_erc20 *tok = reinterpret_cast<const CTokenState_erc20 *>(dataPtr);
     if (tok) {
         switch (tolower(fieldIn[0])) {
@@ -243,7 +246,7 @@ CArchive& operator>>(CArchive& archive, CTokenState_erc20& tok) {
 string_q CTokenState_erc20::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
-    string_q ret = nextTokenState_erc20Chunk_custom(fieldName, this);
+    string_q ret = nextTokenstate_Erc20Chunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 

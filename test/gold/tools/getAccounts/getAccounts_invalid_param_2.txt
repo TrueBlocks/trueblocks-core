@@ -1,0 +1,27 @@
+getAccounts argc: 3 [1:-x] [2:torj] 
+getAccounts -x torj 
+
+  Export format must be one of [ json | txt | csv | api ]. Quitting...
+
+  Usage:    getAccounts [-e|-m|-o|-c|-p|-n|-a|-v|-h] <term> [term...]  
+  Purpose:  Query addresses and/or names well known accounts.
+             
+  Where:  
+	terms                 a space separated list of one or more search terms (required)
+	-e  (--expand)        expand search to include all fields (default searches name, address, and symbol only)
+	-m  (--matchCase)     do case-sensitive search
+	-o  (--owned)         Include personal accounts in the search
+	-c  (--custom)        Include your custom named accounts
+	-p  (--prefund)       Include prefund accounts
+	-n  (--named)         Include well know token and airdrop addresses in the search
+	-a  (--addr)          display only addresses in the results (useful for scripting)
+
+#### Hidden options (shown during testing only)
+	-x  (--fmt val)       export format (one of [none|json|txt|csv|api])
+	-t  (--other)         export other addresses if found
+#### Hidden options (shown during testing only)
+
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Powered by QBlocks

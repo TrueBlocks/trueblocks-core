@@ -1,6 +1,7 @@
-getTrace argc: 3 [1:0x590c575213aeec61ac15949f65b941ef2fb863479eb28a75d3a190278d88d1e7] [2:--parity] 
-getTrace 0x590c575213aeec61ac15949f65b941ef2fb863479eb28a75d3a190278d88d1e7 --parity 
-[{
+getTrace argc: 5 [1:--fmt] [2:json] [3:0x590c575213aeec61ac15949f65b941ef2fb863479eb28a75d3a190278d88d1e7] [4:--parity] 
+getTrace --fmt json 0x590c575213aeec61ac15949f65b941ef2fb863479eb28a75d3a190278d88d1e7 --parity 
+[
+  {
     "blockHash": "0x759de0be90043e350377c7d1be2f639ead0953b06a16c32552265659bd134f2d",
     "blockNumber": "0x22033b",
     "subtraces": "0x1",
@@ -10,24 +11,24 @@ getTrace 0x590c575213aeec61ac15949f65b941ef2fb863479eb28a75d3a190278d88d1e7 --pa
     "type": "call",
     "error": "",
     "action": {
-        "address": "0x0",
-        "balance": "0x0",
-        "callType": "call",
-        "from": "0xa0041de2c4411f6cb5721c47e129f7a6e534557e",
-        "gas": "0x37d78",
-        "init": "",
-        "input": "0xfc735e99",
-        "refundAddress": "0x0",
-        "to": "0x19ad2660ca7c239df82d2cb24b1cb9a8717ffc35",
-        "value": "0x0"
+      "address": "0x0",
+      "balance": "0x0",
+      "callType": "call",
+      "from": "0xa0041de2c4411f6cb5721c47e129f7a6e534557e",
+      "gas": "0x37d78",
+      "init": "",
+      "input": "0xfc735e99",
+      "refundAddress": "0x0",
+      "to": "0x19ad2660ca7c239df82d2cb24b1cb9a8717ffc35",
+      "value": "0x0"
     },
     "result": {
-        "address": "0x0",
-        "code": "",
-        "gasUsed": "0xb2fc",
-        "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
+      "address": "0x0",
+      "code": "",
+      "gasUsed": "0xb2fc",
+      "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
     }
-},{
+  },  {
     "blockHash": "0x759de0be90043e350377c7d1be2f639ead0953b06a16c32552265659bd134f2d",
     "blockNumber": "0x22033b",
     "subtraces": "0x0",
@@ -37,21 +38,22 @@ getTrace 0x590c575213aeec61ac15949f65b941ef2fb863479eb28a75d3a190278d88d1e7 --pa
     "type": "call",
     "error": "",
     "action": {
-        "address": "0x0",
-        "balance": "0x0",
-        "callType": "call",
-        "from": "0x19ad2660ca7c239df82d2cb24b1cb9a8717ffc35",
-        "gas": "0x8fc",
-        "init": "",
-        "input": "0x",
-        "refundAddress": "0x0",
-        "to": "0x46bafdde80bd641d9c5a3dc9f0f96e25f5477ae8",
-        "value": "0xb5e620f48000"
+      "address": "0x0",
+      "balance": "0x0",
+      "callType": "call",
+      "from": "0x19ad2660ca7c239df82d2cb24b1cb9a8717ffc35",
+      "gas": "0x8fc",
+      "init": "",
+      "input": "0x",
+      "refundAddress": "0x0",
+      "to": "0x46bafdde80bd641d9c5a3dc9f0f96e25f5477ae8",
+      "value": "0xb5e620f48000"
     },
     "result": {
-        "address": "0x0",
-        "code": "",
-        "gasUsed": "0x0",
-        "output": "0x"
+      "address": "0x0",
+      "code": "",
+      "gasUsed": "0x0",
+      "output": "0x"
     }
-}]
+  }
+]

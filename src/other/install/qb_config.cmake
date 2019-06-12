@@ -36,6 +36,9 @@ foreach(FILE ${NAMES_FILES} )
     message(STATUS "  Copied file to ${QUICKBLOCKS_HOME}/names/")
 	file(COPY "${FILE}" DESTINATION "${QUICKBLOCKS_HOME}/names/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 endforeach( FILE )
+set(NAMES_BIN "${QUICKBLOCKS_HOME}/names/names.bin")
+message(STATUS "Removing binary name file: ${NAMES_BIN}")
+file(REMOVE ${NAMES_BIN})
 
 # Copy the prices files
 message(STATUS "Copying price database to ${QUICKBLOCKS_HOME}/cache/prices/")

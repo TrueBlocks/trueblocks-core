@@ -1,3 +1,0 @@
-ethName argc: 3 [1:--verbose] [2:0xCB1] 
-ethName --verbose 0xCB1 
-00000001 TIME ~ CLOCK - <INFO>  : No results

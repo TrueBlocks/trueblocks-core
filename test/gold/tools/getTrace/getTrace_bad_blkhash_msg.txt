@@ -1,31 +1,5 @@
 getTrace argc: 3 [1:0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1] [2:0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5] 
 getTrace 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 
-[{
-  "blockHash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",
-  "blockNumber": 1001001,
-  "subtraces": 0,
-  "traceAddress": null,
-  "transactionHash": "0xef2ea39c20ba09553b2f3cf02380406ac766039ca56612937eed5e7f3503fb3a",
-  "transactionPosition": 1,
-  "type": "call",
-  "error": "",
-  "action": {
-    "address": "0x0",
-    "balance": 0,
-    "callType": "call",
-    "from": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
-    "gas": 69000,
-    "init": "",
-    "input": "0x",
-    "refundAddress": "0x0",
-    "to": "0xd77ba7ef37f87d5246f35de898133e09c92ecaca",
-    "value": 2148415350000000000
-  },
-  "result": {
-    "address": "0x0",
-    "code": "",
-    "gasUsed": 0,
-    "output": "0x"
-  }
-},
-{ "error": "The item you requested (0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5) was not found." }]
+blocknumber	transactionposition	traceaddress	action::calltype	error	action::from	action::to	action::value	action::gas	result::gasused	action::input	compressedtrace
+1001001	1	null	call		0x2a65aca4d5fc5b5c859090a6c34d164135398226	0xd77ba7ef37f87d5246f35de898133e09c92ecaca	2148415350000000000	69000	0	0x
+Transaction 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 not found.

@@ -2,4 +2,4 @@ getState argc: 5 [1:--nozero] [2:0xf27daff52c38b2c373ad2b9392652ddf433303c5] [3:
 getState --nozero 0xf27daff52c38b2c373ad2b9392652ddf433303c5 3500000 --api_mode 
 { "type": "CEthState", "data": [
 
-], "meta": {"pending": 18446744073709551615,"staging": 18446744073709551615,"finalized": 18446744073709551615,"client": 18446744073709551615 } }
+], "meta": {"pending": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

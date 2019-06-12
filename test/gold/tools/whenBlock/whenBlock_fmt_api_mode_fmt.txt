@@ -1,0 +1,4 @@
+whenBlock argc: 5 [1:1001001] [2:--api_mode] [3:--fmt] [4:txt] 
+whenBlock 1001001 --api_mode --fmt txt 
+blocknumber	timestamp	date	name
+1001001	1455421883	2016-02-14 03:51:23 UTC

@@ -1,0 +1,16 @@
+getLogs argc: 5 [1:2222222.0] [2:2332332.0] [3:--fmt] [4:api] 
+getLogs 2222222.0 2332332.0 --fmt api 
+{ "type": "CLogEntry", "data": [
+  {
+    "address": "0x37a9679c41e99db270bda88de8ff50c0cd23f326",
+    "data": "0x000000000000000000000000000000000000000000000000031d958f80134000",
+    "logIndex": 0,
+    "topics": [
+      "0x8b0c34a52f9e28d78caaa7066cd047b398dae74941a208b77777420f492bd7e1",
+      "0x000000000000000000000000db89587bb407b576134ff297d1848ea6d9066812",
+      "0x0000000000000000000000007d19317cc81c3ef06039ae5514679f8b12fd28e2"
+    ],
+    "compressedLog": "",
+    "type": "mined"
+  }
+], "meta": {"pending": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

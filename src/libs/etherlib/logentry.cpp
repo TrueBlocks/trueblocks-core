@@ -231,6 +231,14 @@ void CLogEntry::registerClass(void) {
     builtIns.push_back(_biCLogEntry);
 
     // EXISTING_CODE
+    ADD_FIELD(CLogEntry, "topic0", T_HASH, ++fieldNum);
+    ADD_FIELD(CLogEntry, "topic1", T_HASH, ++fieldNum);
+    ADD_FIELD(CLogEntry, "topic2", T_HASH, ++fieldNum);
+    ADD_FIELD(CLogEntry, "topic3", T_HASH, ++fieldNum);
+    HIDE_FIELD(CLogEntry, "topic0");
+    HIDE_FIELD(CLogEntry, "topic1");
+    HIDE_FIELD(CLogEntry, "topic2");
+    HIDE_FIELD(CLogEntry, "topic3");
     // EXISTING_CODE
 }
 
@@ -241,14 +249,14 @@ string_q nextLogentryChunk_custom(const string_q& fieldIn, const void *dataPtr) 
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'c':
-                if ( fieldIn % "compressedLog" ) {
-                    string_q ret = log->articulatedLog.name + "(";
-                    for (auto input : log->articulatedLog.inputs)
-                        ret += (input.name + ":" + input.value + ",");
-                    ret = trim(ret, ',');
-                    ret += ")";
-                    return ret;
-                }
+                if ( fieldIn % "compressedLog" ) return log->articulatedLog.compressed();
+                break;
+            case 't':
+                if ( fieldIn % "topic0") { return ((log->topics.size() > 0) ? topic_2_Str(log->topics[0]) : ""); }
+                if ( fieldIn % "topic1") { return ((log->topics.size() > 1) ? topic_2_Str(log->topics[1]) : ""); }
+                if ( fieldIn % "topic2") { return ((log->topics.size() > 2) ? topic_2_Str(log->topics[2]) : ""); }
+                if ( fieldIn % "topic3") { return ((log->topics.size() > 3) ? topic_2_Str(log->topics[3]) : ""); }
+                break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type

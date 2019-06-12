@@ -1,6 +1,0 @@
-ethName argc: 4 [1:-s] [2:cbCC] [3:Ether] 
-ethName -s cbCC Ether 
-addr	name	symbol	source
-0x56b6431f45d08eed55f34371386326c739eacbcc	Ethereum Meta	ETHM	Etherscan.io
-0x5d51fcced3114a8bb5e90cdd0f9d682bcbcc5393	B2BX	B2BX	Etherscan.io
-0xcbcc0f036ed4788f63fc0fee32873d6a7487b908	Humaniq	HMQ	Etherscan.io

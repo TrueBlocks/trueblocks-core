@@ -180,7 +180,7 @@
                 "type": "address"
             }
         ],
-        "name": "affirmStatusAsAccreditedInvestor",
+        "name": "affirmStatusAsAccreditedInvestor2",
         "outputs": [
             {
                 "name": "success",

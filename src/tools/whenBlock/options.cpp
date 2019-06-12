@@ -30,8 +30,8 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-    CNameValueArray requests;
-
+    bool noHeader = false;
+    string_q format = getGlobalConfig()->getConfigStr("display", "format", STR_DISPLAY);
     Init();
     blknum_t latestBlock = getLastBlock_client();
     explode(arguments, command, ' ');
@@ -105,43 +105,27 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    // Data verifictions
     if (requests.size() == 0)
         return usage("Please supply either a JSON formatted date or a blockNumber.");
 
-    string_q format = getGlobalConfig()->getConfigStr("display", "format", STR_DISPLAY);
-    if (format.empty())
-        exportFmt = JSON1;
-    if (!(exportFmt & (TXT1|CSV1))) {
-        manageFields("CBlock:" + cleanFmt(STR_DISPLAY, JSON1));
-    } else {
-        manageFields("CBlock:" + cleanFmt(format, exportFmt));
+    // Display formatting
+    switch (exportFmt) {
+        case NONE1: format = STR_DISPLAY; break;
+        case API1:
+        case JSON1: format = ""; break;
+        case TXT1:
+        case CSV1:
+            format = getGlobalConfig()->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
+            break;
     }
+    manageFields("CBlock:" + cleanFmt((format.empty() ? STR_DISPLAY : format), exportFmt));
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
+    if (noHeader)
+        expContext().fmtMap["header"] = "";
 
-    for (auto request : requests) {
-        CBlock block;
-        if (request.first == "block") {
-            string_q bn = nextTokenClear(request.second,'|');
-            if (request.second == "latest") {
-                if (isTestMode()) {
-                    continue;
-                }
-                queryBlock(block, "latest", false);
-            } else {
-                queryBlock(block, bn, false);
-            }
-            if (block.blockNumber == 0)
-                block.timestamp = 1438269960;
-            block.name = request.second;
-            items[block.blockNumber] = block;
-
-        } else if (request.first == "date") {
-            if (lookupDate(this, block, (timestamp_t)str_2_Uint(request.second)))
-                items[block.blockNumber] = block;
-            else
-                LOG_WARN("Could not find a block at date " + request.second);
-        }
-    }
+    // collect together results for later display
+    applyFilter();
 
     return true;
 }
@@ -150,7 +134,9 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     optionOff(OPT_DENOM);
     registerOptions(nParams, params);
+
     items.clear();
+    requests.clear();
     blocks.Init();
 }
 
@@ -200,6 +186,35 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
 }
 
 //--------------------------------------------------------------------------------
+void COptions::applyFilter() {
+    for (auto request : requests) {
+        CBlock block;
+        if (request.first == "block") {
+            string_q bn = nextTokenClear(request.second,'|');
+            if (request.second == "latest") {
+                if (isTestMode()) {
+                    continue;
+                }
+                queryBlock(block, "latest", false);
+            } else {
+                queryBlock(block, bn, false);
+            }
+            // TODO(tjayrush): this should be in the library so every request for zero block gets a valid blockNumber
+            if (block.blockNumber == 0)
+                block.timestamp = 1438269960;
+            block.name = request.second;
+            items[block.blockNumber] = block;
+
+        } else if (request.first == "date") {
+            if (lookupDate(this, block, (timestamp_t)str_2_Uint(request.second)))
+                items[block.blockNumber] = block;
+            else
+                LOG_WARN("Could not find a block at date " + request.second);
+        }
+    }
+}
+
+//--------------------------------------------------------------------------------
 bool showSpecials(CNameValue& pair, void *data) {
     ((CNameValueArray*)data)->push_back(CNameValue("block", pair.second + "|" + pair.first));
     return true;
@@ -243,8 +258,4 @@ string_q COptions::listSpecials(format_t fmt) const {
 }
 
 //-----------------------------------------------------------------------
-const char* STR_DISPLAY =
-"[{BLOCKNUMBER}]\t"
-"[{TIMESTAMP}]\t"
-"[{DATE}]"
-"[\t{NAME}]";
+const char* STR_DISPLAY = "[{BLOCKNUMBER}]\t[{TIMESTAMP}]\t[{DATE}][\t{NAME}]";

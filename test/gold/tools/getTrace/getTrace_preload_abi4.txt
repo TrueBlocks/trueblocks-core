@@ -1,0 +1,6 @@
+grabABI argc: 2 [1:0x2bd2326c993dfaef84f696526064ff22eba5b362] 
+grabABI 0x2bd2326c993dfaef84f696526064ff22eba5b362 
+ABI for address 0x2bd2326c993dfaef84f696526064ff22eba5b362
+	function forked                     ()
+	function update                     ()
+

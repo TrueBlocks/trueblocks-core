@@ -1,3 +1,4 @@
 getTrans argc: 2 [1:40500.0.next] 
 getTrans 40500.0.next 
+date	timestamp	blocknumber	transactionindex	hash	compressedtx
 2015-08-07 03:30:33 UTC	1438918233	46147	0	0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060

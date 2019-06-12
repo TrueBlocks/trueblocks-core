@@ -16,15 +16,11 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    CAddressArray filters;
-    bool belongs;
-    bool chkAsStr;
     COptionsTransList transList;
-    size_t index;
-    bool incTrace;
-    string_q format;
+    bool option1;
     bool articulate;
     CAbi abi_spec;
+    bool first;
 
     COptions(void);
     ~COptions(void);
@@ -33,3 +29,6 @@ public:
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 };
+
+//-----------------------------------------------------------------------------
+extern bool visitTransaction(CTransaction& trans, void *data);
