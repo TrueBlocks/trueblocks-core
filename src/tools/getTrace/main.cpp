@@ -48,7 +48,7 @@ bool visitTransaction(CTransaction& trans, void *data) {
         } else {
             if (!opt->first)
                 cout << ",";
-            cout << cRed << "{ \"error\": \"Transaction " << hash << " not found.\" }\n" << cOff;
+            cout << "{ \"error\": \"Transaction " << hash << " not found.\" }\n";
         }
         opt->first = false;
         return true; // continue even with an invalid item
@@ -66,7 +66,8 @@ bool visitTransaction(CTransaction& trans, void *data) {
         return true;
     }
 
-    if (opt->countOnly) {
+    //////////////////////////////////////////////////////
+    if (opt->option1) {
         uint64_t cnt = getTraceCount(trans.hash);
         if (isText) {
             cout << trans.hash << "\t" << cnt << endl;
@@ -78,9 +79,13 @@ bool visitTransaction(CTransaction& trans, void *data) {
         opt->first = false;
         return true;
     }
-
     getTraces(trans.traces, trans.getValueByName("hash"));
+    //////////////////////////////////////////////////////
 
+    if (opt->articulate) {
+        opt->abi_spec.loadAbiByAddress(trans.to);
+        opt->abi_spec.articulateTransaction(&trans);
+    }
     for (auto trace : trans.traces) {
         if (opt->articulate) {
             opt->abi_spec.loadAbiByAddress(trace.action.to);

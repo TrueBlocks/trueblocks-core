@@ -46,6 +46,7 @@ public:
     string_q type;
     string_q error;
     CFunction articulatedTrace;
+    string_q compressedTrace;
     CTraceAction action;
     CTraceResult result;
 
@@ -122,6 +123,7 @@ inline void CTrace::initialize(void) {
     type = "";
     error = "";
     articulatedTrace = CFunction();
+    compressedTrace = "";
     action = CTraceAction();
     result = CTraceResult();
 
@@ -144,6 +146,7 @@ inline void CTrace::duplicate(const CTrace& tr) {
     type = tr.type;
     error = tr.error;
     articulatedTrace = tr.articulatedTrace;
+    compressedTrace = tr.compressedTrace;
     action = tr.action;
     result = tr.result;
 

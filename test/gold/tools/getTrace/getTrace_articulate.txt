@@ -1,5 +1,5 @@
-getTrace argc: 6 [1:-a] [2:-v] [3:6513870.62] [4:6687987.11] [5:0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12] 
-getTrace -a -v 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12 
+getTrace argc: 7 [1:-a] [2:-x] [3:json] [4:6513870.62] [5:6687987.11] [6:0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12] 
+getTrace -a -x json 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12 
 [
   {
     "type": "call",
@@ -141,11 +141,7 @@ getTrace -a -v 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd
   },  {
     "type": "call",
     "error": "",
-    "articulatedTrace": {
-      "name": "",
-      "inputs": [],
-      "outputs": []
-    },
+    "articulatedTrace": {},
     "action": {
       "address": "0x0",
       "balance": 0,

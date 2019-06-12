@@ -1,6 +1,6 @@
-getTrans argc: 3 [1:3648669.24] [2:-avt] 
-getTrans 3648669.24 -avt 
-[
+getTrans argc: 5 [1:3648669.24] [2:-avtx] [3:json] [4:--api_mode] 
+getTrans 3648669.24 -avtx json --api_mode 
+{ "type": "CTransaction", "data": [
   {
     "hash": "0x811bb4494b3bbcfd6f0205f22b3e983792b21cb0a9689366903b843ec4d62531",
     "blockHash": "0x836c4866ea68fbe3b9786cdb3c2c8a36fa0c689e77b0f9fc441d37fb85489fad",
@@ -289,4 +289,4 @@ getTrans 3648669.24 -avt
     "date": "2017-05-04 11:27:22 UTC",
     "ether": 0.010000000000000000
   }
-]
+], "meta": {"pending": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

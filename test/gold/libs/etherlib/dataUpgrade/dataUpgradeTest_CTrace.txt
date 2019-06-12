@@ -16,9 +16,10 @@ transactionPosition 	1010	0	65561	T_NUMBER TS_NUMERAL
 type                	1011	0	131122	T_TEXT TS_STRING
 error               	1012	0	131122	T_TEXT TS_STRING
 articulatedTrace    	1013	1	1048651	T_OBJECT TS_OBJECT
-action              	1014	0	1048651	T_OBJECT TS_OBJECT
-result              	1015	0	1048651	T_OBJECT TS_OBJECT
-date                	1016	1	262149	T_DATE TS_DATE
+compressedTrace     	1014	1	131122	T_TEXT TS_STRING
+action              	1015	0	1048651	T_OBJECT TS_OBJECT
+result              	1016	0	1048651	T_OBJECT TS_OBJECT
+date                	1017	1	262149	T_DATE TS_DATE
 {
   "blockHash": "0x0",
   "blockNumber": 0,
@@ -44,9 +45,10 @@ transactionPosition 	1010	1	65561	T_NUMBER TS_NUMERAL
 type                	1011	1	131122	T_TEXT TS_STRING
 error               	1012	1	131122	T_TEXT TS_STRING
 articulatedTrace    	1013	1	1048651	T_OBJECT TS_OBJECT
-action              	1014	1	1048651	T_OBJECT TS_OBJECT
-result              	1015	1	1048651	T_OBJECT TS_OBJECT
-date                	1016	1	262149	T_DATE TS_DATE
+compressedTrace     	1014	1	131122	T_TEXT TS_STRING
+action              	1015	1	1048651	T_OBJECT TS_OBJECT
+result              	1016	1	1048651	T_OBJECT TS_OBJECT
+date                	1017	1	262149	T_DATE TS_DATE
 {
 }
 
@@ -66,9 +68,10 @@ transactionPosition 	1010	0	65561	T_NUMBER TS_NUMERAL
 type                	1011	0	131122	T_TEXT TS_STRING
 error               	1012	0	131122	T_TEXT TS_STRING
 articulatedTrace    	1013	0	1048651	T_OBJECT TS_OBJECT
-action              	1014	0	1048651	T_OBJECT TS_OBJECT
-result              	1015	0	1048651	T_OBJECT TS_OBJECT
-date                	1016	0	262149	T_DATE TS_DATE
+compressedTrace     	1014	0	131122	T_TEXT TS_STRING
+action              	1015	0	1048651	T_OBJECT TS_OBJECT
+result              	1016	0	1048651	T_OBJECT TS_OBJECT
+date                	1017	0	262149	T_DATE TS_DATE
 {
   "schema": 5007,
   "deleted": 0,

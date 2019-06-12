@@ -1,6 +1,6 @@
-getTrans argc: 3 [1:0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f] [2:-vta] 
-getTrans 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f -vta 
-[
+getTrans argc: 4 [1:0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f] [2:-tax] [3:api] 
+getTrans 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f -tax api 
+{ "type": "CTransaction", "data": [
   {
     "hash": "0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f",
     "blockHash": "0xc9d375441b8deb0ca5544234ccbe3f6a9f67361ec30128030401b0d16713b55a",
@@ -218,4 +218,4 @@ getTrans 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f -vta
     "date": "2018-11-16 00:10:08 UTC",
     "ether": 0.607298625296748300
   }
-]
+], "meta": {"pending": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

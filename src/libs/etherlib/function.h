@@ -62,6 +62,7 @@ public:
         return (showOutput || fn != "outputs");
     }
     bool fromDefinition(const string_q& lineIn);
+    string_q compressed(void) const;
     // EXISTING_CODE
     bool operator==(const CFunction& item) const;
     bool operator!=(const CFunction& item) const { return !operator==(item); }

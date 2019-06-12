@@ -61,8 +61,8 @@ run_test("getLogs_three_ways"          "0xbed082f2f6fb5f91924df74eb79ac37ea9490e
 run_test("getLogs_redir_output"        " -v" " 3657480.79" " --output")
 run_test("getLogs_by_filebad"          "--bad" " --file:cmd_file")
 run_test("getLogs_by_file"             "--file:cmd_file")
-run_test("getLogs_by_file_long_v"      "--file:cmd_file" " --verbose" " --parity")
-run_test("getLogs_by_file_v"           "--verbose"       " --file:cmd_file")
+run_test("getLogs_by_file_long_v"      "--file:cmd_file" " --verbose" " --parity" " --fmt" " json")
+run_test("getLogs_by_file_v"           "--verbose" " --file:cmd_file" " --fmt" " json")
 
 run_test("getLogs_verbose_blk_idx1"    "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.36" " --fmt" " csv")
 run_test("getLogs_verbose_blk_idx2"    "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.36" " --verbose")

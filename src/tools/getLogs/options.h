@@ -17,6 +17,7 @@
 class COptions : public COptionsBase {
 public:
     COptionsTransList transList;
+    bool option1;
     bool articulate;
     CAbi abi_spec;
     bool first;

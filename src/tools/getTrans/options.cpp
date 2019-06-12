@@ -34,10 +34,9 @@ bool COptions::parseArguments(string_q& command) {
     for (auto arg : arguments) {
         if (arg == "-a" || arg == "--articulate") {
             articulate = true;
-            exportFmt = JSON1;
 
         } else if (arg == "-t" || arg == "--trace") {
-            incTrace = true;
+            option1 = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -60,10 +59,10 @@ bool COptions::parseArguments(string_q& command) {
     if (!transList.hasTrans())
         return usage("Please specify at least one transaction identifier.");
 
-    if (incTrace)
+    if (option1)
         SHOW_FIELD(CTransaction, "traces");
 
-    if (isRaw || verbose)
+    if (isRaw)
         exportFmt = JSON1;
 
     if (articulate) {
@@ -85,7 +84,7 @@ bool COptions::parseArguments(string_q& command) {
         case TXT1:
         case CSV1:
             format = getGlobalConfig()->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
-            if (incTrace)
+            if (option1)
                 format += "\t[{TRACESCNT}]";
             manageFields("CTransaction:" + cleanFmt(format, exportFmt));
             break;
@@ -105,7 +104,7 @@ void COptions::Init(void) {
     optionOn(OPT_RAW | OPT_OUTPUT);
 
     transList.Init();
-    incTrace = false;
+    option1 = false;
     articulate = false;
 }
 
@@ -148,4 +147,5 @@ const char* STR_DISPLAY =
 "[{TIMESTAMP}]\t"
 "[{BLOCKNUMBER}]\t"
 "[{TRANSACTIONINDEX}]\t"
-"[{HASH}]";
+"[{HASH}]\t"
+"[{COMPRESSEDTX}]";

@@ -249,14 +249,8 @@ string_q nextLogentryChunk_custom(const string_q& fieldIn, const void *dataPtr) 
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'c':
-                if ( fieldIn % "compressedLog" ) {
-                    string_q ret = log->articulatedLog.name + " ( ";
-                    for (auto input : log->articulatedLog.inputs)
-                        ret += (input.name + ": " + input.value + ", ");
-                    ret = trim(ret, ',');
-                    ret += " )";
-                    return ret;
-                }
+                if ( fieldIn % "compressedLog" ) return log->articulatedLog.compressed();
+                break;
             case 't':
                 if ( fieldIn % "topic0") { return ((log->topics.size() > 0) ? topic_2_Str(log->topics[0]) : ""); }
                 if ( fieldIn % "topic1") { return ((log->topics.size() > 1) ? topic_2_Str(log->topics[1]) : ""); }

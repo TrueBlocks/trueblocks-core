@@ -10,7 +10,7 @@ getLogs 4279119.46 --fmt api --parity
       "0x0000000000000000000000008d12a197cb00d4747a1fe03395095ce2a5cc6819",
       "0x0000000000000000000000009fe00a70fd9a3a521835bd683297a94f39a6bf8b"
     ],
-    "compressedLog": " (  )",
+    "compressedLog": "",
     "type": "mined"
   },  {
     "address": "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819",
@@ -19,7 +19,7 @@ getLogs 4279119.46 --fmt api --parity
     "topics": [
       "0xf341246adaac6f497bc2a656f546ab9e182111d630394f0c57c710a59a2cb567"
     ],
-    "compressedLog": " (  )",
+    "compressedLog": "",
     "type": "mined"
   }
 ], "meta": {"pending": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

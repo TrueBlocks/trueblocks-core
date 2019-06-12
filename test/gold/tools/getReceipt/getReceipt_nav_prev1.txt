@@ -1,8 +1,0 @@
-getReceipt argc: 2 [1:1001001.1.prev] 
-getReceipt 1001001.1.prev 
-[{
-  "contractAddress": "0x0",
-  "gasUsed": 21000,
-  "logs": [],
-  "status": null
-}]
