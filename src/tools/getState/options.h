@@ -16,8 +16,8 @@
 //-----------------------------------------------------------------------------
 class COptions : public CHistoryOptions {
 public:
-    CEthStateMap items;
-    CEthState *item;
+    CAddressArray addrs;
+    address_t current;
     ethstate_t mode;
     biguint_t prevBal;
     bool exclude_zero;
