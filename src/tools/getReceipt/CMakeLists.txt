@@ -85,6 +85,7 @@ run_test("getReceipt_bad_blkhash_msg_raw"  "--raw" "0x0b4c6fb75ded4b90218cf0346b
 run_test("getReceipt_prev_bug2_1"         "4279119.46")
 run_test("getReceipt_prev_bug2_2"         "4279119.46" " --raw")
 
+run_test("getReceipt_star"             "1428993.*" " --api_mode")
 run_test("getReceipt_fmt_txt"          "2222222.0" " 2332332.0" " --fmt" " txt")
 run_test("getReceipt_fmt_csv"          "2222222.0" " 2332332.0" " --fmt" " csv")
 run_test("getReceipt_fmt_json"         "2222222.0" " 2332332.0" " --fmt" " json")

@@ -25,6 +25,19 @@ namespace qblocks {
     string_q COptionsTransList::parseTransList(const string_q& argIn) {
 
         string_q arg = argIn;
+        if (contains(arg, ".0-to-")) {
+            replace(arg, "-to-", ".");
+            CUintArray parts;
+            explode(parts, arg, '.');
+            for (uint64_t i = parts[1] ; i < parts[2] ; i++) {
+                arg = uint_2_Str(parts[0]) + "." + uint_2_Str(i);
+                string_q ret = parseTransList(arg);
+                if (!ret.empty())
+                    return ret;
+            }
+            return "";
+        }
+
         if (startsWith(arg, "0x")) {
 
             if (contains(arg, ".")) {
