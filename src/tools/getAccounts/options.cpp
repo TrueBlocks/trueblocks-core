@@ -173,7 +173,7 @@ bool COptions::addIfUnique(const CAccountName& item) {
 
     address_t l = toLower(item.addr);
     if (items[l].addr == l) {
-        if (!item.name.empty() && items[l].name != item.name) // last in wins
+        if (!item.name.empty() && (items[l].name != item.name || startsWith(items[l].name, "Owned_") || startsWith(items[l].name, "Prefund_"))) // last in wins
             items[l].name = item.name;
         return false;
     }
