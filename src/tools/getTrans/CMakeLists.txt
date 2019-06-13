@@ -104,6 +104,7 @@ run_test("getTrans_revert_not_err" "0x3551dac5e91df7f27c78118daa0da81211ad38acc5
 run_test("getTrans_message" "0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344" " -a" " --api_mode")
 run_test("getTrans_core_dump_bug"      "0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10" " -avtx" " api")
 
+run_test("getTrans_star"             "2222221.*" " --api_mode")
 run_test("getTrans_fmt_txt"          "2222222.0" " 2332332.0" " --fmt" " txt")
 run_test("getTrans_fmt_csv"          "2222222.0" " 2332332.0" " --fmt" " csv")
 run_test("getTrans_fmt_json"         "2222222.0" " 2332332.0" " --fmt" " json")

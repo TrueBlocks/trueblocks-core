@@ -86,6 +86,7 @@ run_test("getLogs_bad_blkhash_msg_raw"  "--raw" "0x0b4c6fb75ded4b90218cf0346b088
 run_test("getLogs_prev_bug2_1"         "4279119.46" " --fmt" " api" " --parity")
 run_test("getLogs_prev_bug2_2"         "4279119.46" " --raw")
 
+run_test("getLogs_star"             "1428993.*" " --api_mode")
 run_test("getLogs_fmt_txt"          "2222222.0" " 2332332.0" " --fmt" " txt")
 run_test("getLogs_fmt_csv"          "2222222.0" " 2332332.0" " --fmt" " csv")
 run_test("getLogs_fmt_json"         "2222222.0" " 2332332.0" " --fmt" " json")

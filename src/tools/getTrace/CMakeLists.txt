@@ -75,6 +75,7 @@ run_test("getTrace_nav_next2"           " 1001001.3.next")
 run_test("getTrace_three_ways"          "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.79" " -v" " 3657480.79" " 0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad")
 run_test("getTrace_redir_output"        " -v" " 3657480.79" " --output")
 
+run_test("getTrace_star"             "2222221.*" " --api_mode")
 run_test("getTrace_fmt_txt"          "2222222.0" " 2332332.0" " --fmt" " txt")
 run_test("getTrace_fmt_csv"          "2222222.0" " 2332332.0" " --fmt" " csv")
 run_test("getTrace_fmt_json"         "2222222.0" " 2332332.0" " --fmt" " json")

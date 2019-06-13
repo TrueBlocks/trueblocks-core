@@ -90,6 +90,15 @@ bool wrangleTxId(string_q& argOut, string_q& errorMsg) {
     CStringArray parts;
     explode(parts, argOut, '.');
 
+    if ((parts.size() == 2) && endsWith(argOut, ".*")) {
+        CBlock block;
+        getBlock_light(block, str_2_Uint(parts[0]));
+        argOut = parts[0] + ".0";
+        if (block.transactions.size() > 0)
+            argOut += ("-to-" + uint_2_Str(block.transactions.size()));
+        return true;
+    }
+
     //txnum_t txid;
     if (parts.size() == 0 ||  // there are not enough
         (parts.size() == 1 && parts[0] != "latest") ||  // there's only one and it's not 'latest'
