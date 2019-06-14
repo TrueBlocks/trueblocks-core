@@ -107,6 +107,10 @@ bool COptions::parseArguments(string_q& command) {
     }
     manageFields("CAccountName:" + cleanFmt((format.empty() ? STR_DISPLAY_ALL : format), exportFmt));
     expContext().fmtMap["meta"] = ", \"namePath\": \"" + (isTestMode() ? "--" : getCachePath("names/")) + "\"";
+    if (expContext().asEther)
+        format = substitute(format, "{BALANCE}", "{ETHER}");
+    if (expContext().asDollars)
+        format = substitute(format, "{BALANCE}", "{DOLLARS}");
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
     if (noHeader)
         expContext().fmtMap["header"] = "";
