@@ -369,4 +369,4 @@ bool COptions::freshenTsArray(blknum_t last) {
 
 //-----------------------------------------------------------------------
 const char* STR_DISPLAY =
-"[{HASH}]\t[{TIMESTAMP}]\t[{FROM}]\t[{TO}]\t[{ETHER}]\t[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{ETHERGASCOST}]\t[{GASUSED}]\t[{ISERROR}]\t[{ENCODING}]";
+"[{HASH}]\t[{TIMESTAMP}]\t[{FROM}]\t[{TO}]\t[{ETHER}]\t[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{ETHERGASPRICE}]\t[{GASUSED}]\t[{ISERROR}]\t[{ENCODING}]";
