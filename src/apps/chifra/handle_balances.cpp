@@ -35,7 +35,7 @@ bool COptions::handle_balances(void) {
         for (auto line : inLines) {
             CUintArray parts;
             explode(parts, line, '\t');
-            cout << addr << "\t" << parts[0] << "\t" << parts[1] << "\t" << getBalanceAt(addr, parts[0]) << endl;
+            cout << addr << "\t" << parts[0] << "\t" << parts[1] << "\t" << wei_2_Ether(bnu_2_Str(getBalanceAt(addr, parts[0]))) << endl;
         }
     }
 
