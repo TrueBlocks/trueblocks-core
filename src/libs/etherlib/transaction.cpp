@@ -318,6 +318,7 @@ void CTransaction::registerClass(void) {
     // Add custom fields
     ADD_FIELD(CTransaction, "gasCost", T_WEI, ++fieldNum);
     ADD_FIELD(CTransaction, "etherGasCost", T_WEI, ++fieldNum);
+    ADD_FIELD(CTransaction, "etherPrice", T_WEI, ++fieldNum);
     ADD_FIELD(CTransaction, "function", T_TEXT, ++fieldNum);
     ADD_FIELD(CTransaction, "events", T_TEXT, ++fieldNum);
     ADD_FIELD(CTransaction, "price", T_TEXT, ++fieldNum);
@@ -336,6 +337,7 @@ void CTransaction::registerClass(void) {
     HIDE_FIELD(CTransaction, "encoding");
     HIDE_FIELD(CTransaction, "gasCost");
     HIDE_FIELD(CTransaction, "etherGasCost");
+    HIDE_FIELD(CTransaction, "etherGasPrice");
     HIDE_FIELD(CTransaction, "isError");
     HIDE_FIELD(CTransaction, "isInternal");
     HIDE_FIELD(CTransaction, "date");
@@ -429,6 +431,7 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
                     biguint_t price = tra->gasPrice;
                     return wei_2_Ether(bnu_2_Str(used * price));
                 }
+                if ( fieldIn % "etherGasPrice" ) { return wei_2_Ether(bnu_2_Str(tra->gasPrice)); }
                 break;
             case 'f':
                 if ( fieldIn % "function" ) {
