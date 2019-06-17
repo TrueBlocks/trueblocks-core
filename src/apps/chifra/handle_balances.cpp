@@ -22,17 +22,20 @@ bool COptions::handle_balances(void) {
     for (auto addr : addrs) {
         ostringstream os;
         os << "cd " << getMonitorPath("") << " ; ";
-        os << "cacheMan " << " -d " << addr << ".acct.bin | cut -f1 | sed 's/^/getState --noHeader --ether " << tool_flags << " " << addr << " /' >/tmp/results ; ";
+        os << "cacheMan " << " -d " << addr << ".acct.bin >/tmp/results ; ";
         LOG1("Calling " + os.str());
         if (isTestMode())
             cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
         else
             if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
-        CStringArray lines;
-        asciiFileToLines("/tmp/results", lines);
-        for (auto line : lines) {
-            if (system(line.c_str())) { }  // Don't remove. Silences compiler warnings
-            usleep(50000); // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
+
+        CStringArray inLines, out;
+        asciiFileToLines("/tmp/results", inLines);
+        out.reserve(inLines.size());
+        for (auto line : inLines) {
+            CUintArray parts;
+            explode(parts, line, '\t');
+            cout << addr << "\t" << parts[0] << "\t" << parts[1] << "\t" << getBalanceAt(addr, parts[0]) << endl;
         }
     }
 
