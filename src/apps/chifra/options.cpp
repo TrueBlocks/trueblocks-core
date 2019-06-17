@@ -10,7 +10,7 @@
 static const COption params[] = {
     COption("~command", "one of [ "
                             "leech | scrape | daemon | "
-                            "list | export | stats | ls | rm | "
+                            "list | export | balances | stats | ls | rm | "
                             "accounts | config | slurp | quotes | data | "
                             "blocks | trans | receipts | logs | traces "
                             "]"),

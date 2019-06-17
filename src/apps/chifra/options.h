@@ -26,8 +26,9 @@ public:
     void Init(void);
     bool createConfigFile(const address_t& addr);
 
-    bool handle_export   (void);
     bool handle_list     (void);
+    bool handle_export   (void);
+    bool handle_balances (void);
     bool handle_leech    (void);
     bool handle_daemon   (void);
     bool handle_scrape   (void);
