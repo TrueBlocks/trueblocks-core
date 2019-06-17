@@ -32,7 +32,7 @@ bool COptions::handle_balances(void) {
         asciiFileToLines("/tmp/results", lines);
         for (auto line : lines) {
             if (system(line.c_str())) { }  // Don't remove. Silences compiler warnings
-            usleep(100000); // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
+            usleep(50000); // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
         }
     }
 
