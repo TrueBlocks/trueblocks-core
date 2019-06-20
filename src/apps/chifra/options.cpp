@@ -49,7 +49,20 @@ bool COptions::parseArguments(string_q& command) {
                     stats = true;
                 }
 
+            } else if (contains(arg, ",") && isAddress(arg.substr(0,42))) {
+                if (contains(arg, ",--start=") && mode == "list") {
+                    CStringArray parts;
+                    explode(parts, arg, ',');
+                    arg = parts[0];
+                    freshen_flags = substitute(parts[1], "=", ":");
+
+                } else if (!isAddress(arg)) {
+                    EXIT_USAGE("Invalid address: " + arg);
+                }
+                addrs.push_back(toLower(arg));
+
             } else if (isAddress(arg)) {
+
                 addrs.push_back(toLower(arg));
 
             } else {

@@ -898,6 +898,8 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         if (origCout != NULL) {
             cout.rdbuf( origCout );
             origCout = NULL;
+            if (exportFmt == CSV1)
+                replace(outputFn, ".txt", ".csv");
             stringToAsciiFile(outputFn, strCout.str());
             if (isTestMode())
                 cout << "--output option is on - file written" << endl;
