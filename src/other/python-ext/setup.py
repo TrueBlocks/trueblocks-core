@@ -1,8 +1,13 @@
 from setuptools import find_packages
 from distutils.core import setup, Extension
 
+static_lib_dir='/usr/local/qblocks/lib'
+static_libraries=['acct', 'ether','util']
+extra_objects = ['{}/lib{}.a'.format(static_lib_dir, l) for l in static_libraries]
+
 extension = Extension(name='_quickblocks',
         include_dirs = ['/usr/local/include', '/usr/include/python3.6','/usr/local/qblocks/include', '../../libs/etherlib', '../../libs/utillib' ],
+        extra_objects=extra_objects,
         libraries = ['pthread'],
         sources = ['extension.cpp'],
         language='c++',
