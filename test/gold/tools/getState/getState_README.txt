@@ -16,6 +16,7 @@ getState -th
 | -c | --changes | only report a balance when it changes from one block to the next |
 
 #### Hidden options (shown during testing only)
+| -o | --noHeader | hide the header in txt and csv mode |
 | -x | --fmt val | export format (one of [none&#124;json&#124;txt&#124;csv&#124;api]) |
 #### Hidden options (shown during testing only)
 

@@ -318,7 +318,6 @@ void CTransaction::registerClass(void) {
     // Add custom fields
     ADD_FIELD(CTransaction, "gasCost", T_WEI, ++fieldNum);
     ADD_FIELD(CTransaction, "etherGasCost", T_WEI, ++fieldNum);
-    ADD_FIELD(CTransaction, "etherPrice", T_WEI, ++fieldNum);
     ADD_FIELD(CTransaction, "function", T_TEXT, ++fieldNum);
     ADD_FIELD(CTransaction, "events", T_TEXT, ++fieldNum);
     ADD_FIELD(CTransaction, "price", T_TEXT, ++fieldNum);

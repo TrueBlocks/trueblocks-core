@@ -149,6 +149,7 @@ const char* STR_DISPLAY =
 "[{ACTION::FROM}]\t"
 "[{ACTION::TO}]\t"
 "[{ACTION::VALUE}]\t"
+"[{ACTION::ETHER}]\t"
 "[{ACTION::GAS}]\t"
 "[{RESULT::GASUSED}]\t"
 "[{ACTION::INPUT}]\t"

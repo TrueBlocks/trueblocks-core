@@ -92,6 +92,15 @@ bool visitTransaction(CTransaction& trans, void *data) {
             opt->abi_spec.articulateTrace(&trace);
         }
         manageFields("CFunction:message", !trace.articulatedTrace.message.empty());
+        if (trace.action.refundAddress != "" && !getEnvStr("API_MODE").empty()) {
+            trace.action.from = trace.action.address;
+            trace.action.to = trace.action.refundAddress;
+            trace.action.callType = "suicide";
+            trace.action.value = trace.action.balance;
+            trace.traceAddress.push_back("s");
+            trace.transactionHash = uint_2_Hex(trace.blockNumber * 100000 + trace.transactionPosition);
+            trace.action.input = "0x";
+        }
         if (isText) {
             cout << trim(trace.Format(expContext().fmtMap["format"]), '\t') << endl;
         } else {
