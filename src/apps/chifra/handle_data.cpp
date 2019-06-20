@@ -66,6 +66,13 @@ bool COptions::handle_data(void) {
         replaceAll(tool_flags, "--quotes", "");
         return handle_quotes();
 
+    } else if (contains(tool_flags, "--message")) {
+        replaceAll(tool_flags, "--message ", "");
+extern string_q toPrintable_force(const string_q& inHex);
+        if (tool_flags != "0x")
+            cout << "message: " << toPrintable_force(tool_flags);
+        return true;
+
     } else {
         EXIT_FAIL("Invalid option: " + tool_flags);
 
@@ -75,4 +82,21 @@ bool COptions::handle_data(void) {
     if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
 
     EXIT_NOMSG4(true);
+}
+
+//----------------------------------------------------------------------------
+// If we can reasonably convert this byte input into a string, do so, otherwise bail out
+string_q toPrintable_force(const string_q& inHex) {
+    string_q res;
+    string_q in = substitute(inHex, "0x", "");
+    while (!in.empty() && in.size() >= 2) {
+        string_q nibble = extract(in, 0, 2);
+        in = extract(in, 2);
+        char ch = (char)hex_2_Ascii(nibble[0], nibble[1]);  // NOLINT
+        if (isprint(ch) || isspace(ch))
+            res += ch;
+        else
+            res += ".";
+    }
+    return res;
 }
