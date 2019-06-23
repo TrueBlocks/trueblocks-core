@@ -34,6 +34,8 @@ namespace qblocks {
         curlHandle   = NULL;
         headerPtr    = NULL;
 //      source       = "binary";
+//      methodMap    = "";
+        methodCnt    = 0;
     }
 
     //-------------------------------------------------------------------------
@@ -189,7 +191,8 @@ static const char *STR_CURLRESEMPTY =
     string_q CCurlContext::perform(const string_q& method, const string_q& params, bool raw) {
 
 PRINTL("perform:\n\tmethod:\t\t" + method + params + "\n\tsource:\t\t" + provider);
-
+        getCurlContext()->methodMap[method]++;
+        getCurlContext()->methodCnt++;
         getCurlContext()->setPostData(method, params);
         CURLcode res = curl_easy_perform(curlHandle);
         if (res != CURLE_OK && !earlyAbort) {

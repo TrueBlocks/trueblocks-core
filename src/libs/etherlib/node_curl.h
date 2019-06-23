@@ -18,18 +18,20 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     class CCurlContext {
     public:
-        string_q          baseURL;
-        bool              nodeRequired;
-        CURLCALLBACKFUNC  callBackFunc;
-        CURLCALLBACKFUNC  curlNoteFunc;
-        bool              earlyAbort;
-        string_q          postData;
-        string_q          result;
-        string_q          provider;
-        bool              is_error;
-        size_t            theID;
+        string_q           baseURL;
+        bool               nodeRequired;
+        CURLCALLBACKFUNC   callBackFunc;
+        CURLCALLBACKFUNC   curlNoteFunc;
+        bool               earlyAbort;
+        string_q           postData;
+        string_q           result;
+        string_q           provider;
+        bool               is_error;
+        size_t             theID;
         CURL              *curlHandle;
         struct curl_slist *headerPtr;
+        CCounterMap        methodMap;
+        uint64_t           methodCnt;
 
         CCurlContext(void);
 
