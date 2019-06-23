@@ -46,3 +46,4 @@ extern void foundPotential(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t t
 #define MARKER 50
 #define MINER_MARKER 99999
 #define SIZE_REPORT 50
+#define DEFAULT_MAX_INDEX_ROWS 350000

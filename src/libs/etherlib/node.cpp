@@ -473,7 +473,7 @@ extern void loadParseMap(void);
 
     //-------------------------------------------------------------------------
     bool nodeHasTraces(void) {
-        // At block 50871 transaction 0, (hash: 0x6df0b4a0d15ae3b925b9819646a0cff4d1bc0a53b294c0d84d884865302d13a5)
+        // At block 50871 (firstTraceBlock) transaction 0, (hash: 0x6df0b4a0d15ae3b925b9819646a0cff4d1bc0a53b294c0d84d884865302d13a5)
         // we know there were exactly 23 traces as per Parity. We check that here to see if the node is
         // running with --tracing enabled. Not sure how this works with Geth
         size_t count = getTraceCount("0x6df0b4a0d15ae3b925b9819646a0cff4d1bc0a53b294c0d84d884865302d13a5");
