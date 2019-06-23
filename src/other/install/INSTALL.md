@@ -78,7 +78,6 @@ mkdir build
 cd build
 cmake ../src
 make
-sudo make install
 ```
 
 The installation installs the QBlocks command line tools in the folder /usr/local/qblocks/bin. You may wish to add this path to your ${PATH} environment variable.
