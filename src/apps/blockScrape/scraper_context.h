@@ -45,3 +45,4 @@ extern void foundPotential(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t t
 #define lastPrecompile address_t("0x0000000000000000000000000000000000000008")
 #define MARKER 50
 #define MINER_MARKER 99999
+#define SIZE_REPORT 50

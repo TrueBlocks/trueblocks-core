@@ -319,6 +319,7 @@ void foundPotential(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blkn
 string_q CScraper::report(uint64_t last) {
 
     time_q blkDate = ts_2_Date(block.timestamp);
+    time_q nowDate = Now();
     double age = double(options->latestBlockTs - block.timestamp) / 60.;
 
     cerr << ((block.finalized ? greenCheck : whiteStar) + " ");
@@ -330,6 +331,7 @@ string_q CScraper::report(uint64_t last) {
     ostringstream os; os.precision(4);
     os << fixed << setprecision(3);
     os << bBlack;
+    os << nowDate.Format(FMT_EXPORT)  << "\t";
     os << blkDate.Format(FMT_EXPORT)  << "\t";
     os << age                         << "\t";
     os << TIC()                       << "\t" << cYellow;
@@ -341,6 +343,11 @@ string_q CScraper::report(uint64_t last) {
     os << dashIfNA(nUniq)             << "\t";
     os << padNum6(curLines)           << "\t" << cTeal;
     os << status                      << cOff;
+    if (status == "final" && !(block.blockNumber % SIZE_REPORT)) { // every 1,000 blocks we write extra informat
+        string_q path = getGlobalConfig("")->getConfigStr("settings", "parityPath", "");
+        string_q res = substitute(doCommand("du -k -d0 " + path), "\t", " ");
+        os << "\tsize: " << nextTokenClear(res, ' ');
+    }
 
     return os.str();
 }
