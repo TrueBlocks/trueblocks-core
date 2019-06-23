@@ -23,3 +23,8 @@ class QuickBlocks(object):
 
     def __del__(self):
         qbe.cleanup()
+        
+        
+     def getTransaction(self,Hash):
+        
+        return json.loads(qbe.get_trans(Hash))    
