@@ -17,6 +17,7 @@ static const COption params[] = {
     COption("~!trans_list",    "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
     COption("-articulate",     "articulate the transactions if an ABI is found for the 'to' address"),
     COption("-countOnly",      "show the number of traces for the transaction only (fast)"),
+    COption("-noHeader",       "do not show the header row"),
     COption("@fmt:<fmt>",      "export format (one of [none|json|txt|csv|api])"),
     COption("",                "Retrieve a transaction's traces from the local cache or a running node."),
 };
@@ -29,6 +30,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
+    bool noHeader = false;
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
@@ -37,6 +39,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-c" || arg == "--countOnly") {
             option1 = true;
+
+        } else if (arg == "-n" || arg == "--noHeader") {
+            noHeader = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -92,6 +97,10 @@ bool COptions::parseArguments(string_q& command) {
             break;
     }
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
+    if (option1)
+        expContext().fmtMap["format"] = expContext().fmtMap["header"] = "[{HASH}]\t[{TRACESCNT}]";
+    if (noHeader)
+        expContext().fmtMap["header"] = "";
 
     return true;
 }

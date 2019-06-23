@@ -31,4 +31,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-extern bool visitTransaction(CTransaction& trans, void *data);
+extern bool visitTransaction (CTransaction& trans, void *data);
+extern bool displayAsCreation(COptions *opt, const CTrace& trace);
+extern bool displayAsSuicide (COptions *opt, const CTrace& trace);
+extern bool displayAsTrace   (COptions *opt, const CTrace& trace);
