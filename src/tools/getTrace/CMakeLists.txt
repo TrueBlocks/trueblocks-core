@@ -85,6 +85,8 @@ run_test("getTrace_fmt_api_mode_fmt" "2222222.0" " 2332332.0" " --api_mode" " --
 run_test("getTrace_fmt_defaut"       "2222222.0" " 2332332.0")
 run_test("getTrace_fmt_junk"         "2222222.0" " 2332332.0" " --fmt" " junk")
 
+run_test("getTrace_suicidesend_1"    "0x343ba476313771d4431018d7d2e935eba2bfe26d5be3e6cb84af6817fd0e4309" " --fmt" " txt")
+
 run_test("getTrace_articulate"         "-a" " -x" "json" " 6513870.62" " 6687987.11" " 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12")
 run_test("getTrace_articulate_2"       "3648669.24" " -av" " --fmt" " csv")
 run_test("getTrace_articulate_arrays"  "0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f" " -ax" " api" " -v")
