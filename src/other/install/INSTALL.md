@@ -72,8 +72,8 @@ sudo apt install build-essential git cmake python python-dev libcurl3-dev
 Open a terminal and change to whatever folder you normally store GitHub repos. Then:
 
 ```bash
-git clone https://github.com/Great-Hill-Corporation/quickBlocks.git
-cd quickBlocks
+git clone https://github.com/Great-Hill-Corporation/trueblocks-core.git
+cd trueblocks-core
 mkdir build
 cd build
 cmake ../src
