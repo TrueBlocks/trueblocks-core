@@ -60,7 +60,7 @@ bool COptions::parseArguments(string_q& command) {
     establishFolder(indexFolder_finalized);
     establishFolder(indexFolder_staging);
     establishFolder(indexFolder_pending);
-    establishFolder(configPath("cache/tmp"));
+    establishFolder(configPath("cache/tmp/"));
     if (writeBlocks)
         establishFolder(blockFolder);
 
@@ -110,8 +110,14 @@ bool COptions::parseArguments(string_q& command) {
     // No more than maxBlocks after start
     endBlock = min(endBlock, startBlock + maxBlocks);
 
-    if (!isParity() || !nodeHasTraces())
-        return usage("This tool will only run if it is running against a Parity node that has tracing enabled. Quitting...");
+    if (!isParity() || !nodeHasTraces()) {
+        if (latestBlockNum < firstTraceBlock) {
+            cerr << "Waiting for first trace block..." << endl;
+            return false;
+        }
+        else
+            return usage("This tool will only run if it is running against a Parity node that has tracing enabled. Quitting...");
+    }
 
     maxIndexRows = getGlobalConfig("blockScrape")->getConfigInt("settings", "maxIndexRows", maxIndexRows);
 
@@ -147,7 +153,7 @@ void COptions::Init(void) {
     maxBlocks    = NOPOS;
     writeBlocks  = false;
     minArgs      = 0;
-    maxIndexRows = 350000;
+    maxIndexRows = DEFAULT_MAX_INDEX_ROWS;
 }
 
 //---------------------------------------------------------------------------------------------------

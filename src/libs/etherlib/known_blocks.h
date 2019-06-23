@@ -16,6 +16,7 @@
 namespace qblocks {
 
 #define firstTransactionBlock   46147
+#define firstTraceBlock         50871
 #define byzantiumBlock        4370000
 #define constantinopleBlock   7280000
 
