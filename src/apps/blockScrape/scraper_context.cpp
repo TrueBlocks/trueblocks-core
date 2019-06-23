@@ -156,7 +156,6 @@ bool CScraper::scrapeTransaction(void) {
     return true;
 }
 
-#define lastPrecompile address_t("0x0000000000000000000000000000000000000008")
 //----------------------------------------------------------------------------------
 bool isPrecompile(const address_t& addr) {
     return (addr <= lastPrecompile);
@@ -182,7 +181,7 @@ void CScraper::noteAddress(const address_t& addr, bool isMiner) {
     app.addr = addr;
     app.bn = block.blockNumber;
     if (isMiner) {
-        app.tx = 99999;
+        app.tx = MINER_MARKER;
     } else {
         ASSERT(pTrans);
         app.tx = pTrans->transactionIndex;
@@ -218,7 +217,6 @@ bool CScraper::addToPendingList(void) {
     return writeList(pendingName, "");
 }
 
-#define MARKER 50
 //--------------------------------------------------------------------------
 bool CScraper::addToStagingList(void) {
 
