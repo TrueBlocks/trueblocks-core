@@ -14,6 +14,7 @@ public:
     blknum_t    endBlock;
     blknum_t    maxBlocks;
     timestamp_t latestBlockTs;
+    blknum_t    latestBlockNum;
     uint64_t    maxIndexRows;
     bool        writeBlocks;
 

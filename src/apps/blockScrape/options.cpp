@@ -67,6 +67,7 @@ bool COptions::parseArguments(string_q& command) {
     CBlock latest;
     getBlock_light(latest, "latest");
     latestBlockTs = latest.timestamp;
+    latestBlockNum = latest.blockNumber;
 
     blknum_t pending, staging, finalized, client;
     getLastBlocks(pending, staging, finalized, client);
