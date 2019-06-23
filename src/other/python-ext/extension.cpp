@@ -16,7 +16,7 @@
 static PyObject* init(PyObject* self, PyObject *args) {
     const char *baseURL;
     PyArg_ParseTuple(args, "s", &baseURL);
-    get CurlContext()->baseURL = baseURL;
+    getCurlContext()->baseURL = baseURL;
     etherlib_init(quickQuitHandler);
     Py_INCREF(Py_None);
     return Py_None;
