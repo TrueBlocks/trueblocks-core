@@ -148,8 +148,7 @@ extern bool loadMonitorData(CAppearanceArray_base& items, const address_t& addr)
                 }
 
                 blknum_t lastBlock = 0;
-                CFilename lbFn(watch->name);
-                string_q lbFileName = lbFn.getPath() + "lastBlock.txt";
+                string_q lbFileName = getMonitorLast(watch->address);
                 string_q contents;
                 asciiFileToString(lbFileName, contents);
                 blknum_t prevLastBlock = str_2_Uint(contents);
