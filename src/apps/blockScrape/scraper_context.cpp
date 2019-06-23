@@ -300,7 +300,7 @@ void CScraper::finalizeIndexChunk(void) {
             cerr << "."; cerr.flush();
         }
     }
-    putc(7,stdout);
+    putc(7,stderr);
 }
 
 //-------------------------------------------------------------------------
@@ -346,7 +346,7 @@ string_q CScraper::report(uint64_t last) {
     if (status == "final" && !(block.blockNumber % SIZE_REPORT)) { // every 1,000 blocks we write extra informat
         string_q path = getGlobalConfig("")->getConfigStr("settings", "parityPath", "");
         string_q res = substitute(doCommand("du -k -d0 " + path), "\t", " ");
-        os << "\tbn: " << options->latestBlockNum << "\tsize: " << nextTokenClear(res, ' ');
+        os << "\text: " << options->latestBlockNum << "\t" << (options->latestBlockNum - block.blockNumber) << "\t" << nextTokenClear(res, ' ');
     }
 
     return os.str();
