@@ -346,7 +346,7 @@ string_q CScraper::report(uint64_t last) {
     if (status == "final" && !(block.blockNumber % SIZE_REPORT)) { // every 1,000 blocks we write extra informat
         string_q path = getGlobalConfig("")->getConfigStr("settings", "parityPath", "");
         string_q res = substitute(doCommand("du -k -d0 " + path), "\t", " ");
-        os << "\tsize: " << nextTokenClear(res, ' ');
+        os << "\tbn: " << options->latestBlockNum << "\tsize: " << nextTokenClear(res, ' ');
     }
 
     return os.str();
