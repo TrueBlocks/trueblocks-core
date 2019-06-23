@@ -79,6 +79,7 @@ namespace qblocks {
     typedef pair<string_q, string_q> CNameValue;
     typedef vector<CNameValue> CNameValueArray;
     typedef map<string_q, string_q> CNameValueMap;
+    typedef map<string_q, uint64_t> CCounterMap;
 
     //-------------------------------------------------------------------------
     typedef bool (*APPLYFUNC)     (string_q& line, void *data);

@@ -16,12 +16,10 @@ int main(int argc, const char *argv[]) {
 
     for (auto command : options.commandLines) {
         if (options.parseArguments(command)) {
-
             cerr << bGreen << "Scraping new blocks..." << "\n" << cOff;
             if (!handle_scrape(options))
                 cerr << "\tThe tool ended with an error.";
             cerr << bGreen << "...done\n" << cOff;
-
         }
     }
 
