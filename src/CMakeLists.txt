@@ -2,7 +2,7 @@
 # This file belongs to the QuickBlocks project from QuickBlocks.io
 # ---------------------------------------------------------------------------------------
 # Minimum cmake version supported
-cmake_minimum_required (VERSION 2.6)
+cmake_minimum_required (VERSION 3.0)
 
 # ----------------------------------------------------------------------------------------
 # Define default installation PATH
@@ -19,6 +19,10 @@ project (quickBlocks)
 # ----------------------------------------------------------------------------------------
 # Debug msg
 # message(DEBUG  "Building src")
+
+# ----------------------------------------------------------------------------------------
+# Add support for building some go programs
+include(other/build_scripts/GolangSimple.cmake)
 
 # ----------------------------------------------------------------------------------------
 # Allow targets in cascade
@@ -155,6 +159,7 @@ endfunction(run_the_state_test)
 add_subdirectory (libs)
 add_subdirectory (tools)
 add_subdirectory (apps)
+add_subdirectory (go-apps)
 add_subdirectory (dev_tools)
 add_subdirectory (examples)
 add_subdirectory (other)
