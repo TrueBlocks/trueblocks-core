@@ -162,4 +162,5 @@ const char* STR_DISPLAY =
 "[{ACTION::GAS}]\t"
 "[{RESULT::GASUSED}]\t"
 "[{ACTION::INPUT}]\t"
-"[{COMPRESSEDTRACE}]";
+"[{COMPRESSEDTRACE}]\t"
+"[{RESULT::OUTPUT}]";
