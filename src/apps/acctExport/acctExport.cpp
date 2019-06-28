@@ -90,7 +90,7 @@ bool COptions::exportData(void) {
             nExported++;
             first = false;
             HIDE_FIELD(CFunction, "message");
-            if (origCout == NULL) {  // we are not in --output mode
+            if (coutBackup == NULL) {  // we are not in --output mode
                 cerr << "   " << i << " of " << items.size() << ": " << trans.hash << "\r";
                 cerr.flush();
             } else {

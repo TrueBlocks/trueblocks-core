@@ -66,8 +66,12 @@ bool COptions::parseArguments(string_q& command) {
                 addrs.push_back(toLower(arg));
 
             } else {
+                static format_t fmt = TXT1;
+                if (arg == "csv")
+                    fmt = CSV1;
+                if (arg == "--to_file")
+                    arg = "--output:" + configPath("cache/tmp/" + makeValidName(Now().Format(FMT_EXPORT)) + (fmt == CSV1 ? ".csv" : ".txt"));
                 tool_flags += (arg + " ");
-
             }
         }
     }

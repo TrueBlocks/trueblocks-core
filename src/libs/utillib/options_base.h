@@ -56,10 +56,9 @@ namespace qblocks {
         format_t exportFmt;
         blkrange_t scanRange;
 
-        // redirecting cout for --output option
-        streambuf *origCout;
-        ostringstream strCout;
-        string_q outputFn;
+        streambuf *coutBackup; // saves original cout buffer
+        ofstream redirStream; // the redirected stream (if any)
+        string_q redirFilename;
         void closeRedirect(void);
 
         CStringArray commandLines;
@@ -67,7 +66,7 @@ namespace qblocks {
         CRuntimeClass *sorts[5];
 
         COptionsBase(void);
-        virtual ~COptionsBase(void) { closeRedirect(); }
+        virtual ~COptionsBase(void);
 
         //--------------------------------------------------------------------------------
         static string_q g_progName;
