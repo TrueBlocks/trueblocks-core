@@ -17,7 +17,7 @@ bool COptions::exportData(void) {
     size_t nExported = 0;
     for (size_t i = 0 ; i < items.size() && !shouldQuit() && i < MAX_TXS && items[i].blk < ts_cnt ; i++) {
         const CAppearance_base *item = &items[i];
-        if (inRange(item->blk, scanRange.first, scanRange.second)) {
+        if (inRange((blknum_t)item->blk, scanRange.first, scanRange.second)) {
 
             CBlock block; // do not move this from this scope
             CTransaction trans;
