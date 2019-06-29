@@ -21,6 +21,7 @@ public:
     bool articulate;
     uint32_t *ts_array;
     size_t ts_cnt;
+    bool doLogs;
 
     COptions(void);
     ~COptions(void);
@@ -36,3 +37,7 @@ public:
     bool exportData(void);
     bool freshenTsArray(blknum_t blk);
 };
+
+//-----------------------------------------------------------------------
+extern bool isInTrace(CTrace& trace, const address_t& addr);
+extern bool excludeTrace(const CTransaction *trans, size_t maxTraces);
