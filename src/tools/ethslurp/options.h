@@ -36,8 +36,3 @@ public:
     string_q getFormatString(const string_q& name, bool ignoreBlank);
     void buildDisplayStrings(void);
 };
-
-//---------------------------------------------------------------------------------------------
-inline bool isInRange(blknum_t ref, blknum_t start, blknum_t end) {
-    return (start <= ref && end >= ref);
-}
