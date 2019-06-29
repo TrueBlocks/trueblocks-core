@@ -60,6 +60,7 @@ namespace qblocks {
         ofstream redirStream; // the redirected stream (if any)
         string_q redirFilename;
         void closeRedirect(void);
+        bool isRedirected(void) const;
 
         CStringArray commandLines;
         uint64_t minArgs;
