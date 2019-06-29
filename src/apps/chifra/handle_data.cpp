@@ -59,19 +59,6 @@ bool COptions::handle_data(void) {
         replaceAll(tool_flags, "--logs", "");
         os << "getLogs "  << (api_mode ? substitute(tool_flags, ",", " ") : tool_flags) << " ; ";
 
-    } else if (contains(tool_flags, "--all_logs")) {
-//        replaceAll(tool_flags, "--all_logs", "");
-//        string_q tmpPath = configPath("cache/tmp/" + makeValidName(Now().Format(FMT_EXPORT)) + "_tmp.txt");
-//        if (!freshen_internal(FM_PRODUCTION, addrs, "", freshen_flags))
-//            EXIT_FAIL("'chifra list' freshen_internal returned false");
-//        os << "rm -f " << tmpPath << " ; ";
-//        for (auto addr : addrs) {
-//            os << "cd " << getMonitorPath("") << " ; ";
-//            os << "cacheMan " << " -d " << addr << ".acct.bin | tr '\t' '.' >> " << tmpPath << " ; ";
-//        }
-//        os << "getLogs --file:" << tmpPath << " " << (api_mode ? substitute(tool_flags, ",", " ") : tool_flags) << " ; ";
-//        os << "rm -f " << tmpPath;
-
     } else if (contains(tool_flags, "--traces")) {
         replaceAll(tool_flags, "--traces", "");
         os << "getTrace " << (api_mode ? substitute(tool_flags, ",", " ") : tool_flags) << " ; ";
