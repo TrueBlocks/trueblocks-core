@@ -43,7 +43,7 @@ int main(int argc, const char *argv[]) {
         if (!options.silent) {
             for (size_t i = 0 ; i < theAccount.transactions.size() ; i++) {
                 CTransaction *trans = &theAccount.transactions[i];
-                trans->m_showing = isInRange(trans->blockNumber, options.blocks.start, options.blocks.stop);
+                trans->m_showing = inRange(trans->blockNumber, options.blocks.start, options.blocks.stop);
             }
             theAccount.displayString = options.displayString;
             ostringstream os;

@@ -907,6 +907,11 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     }
 
     //--------------------------------------------------------------------------------
+    bool COptionsBase::isRedirected(void) const {
+        return (coutBackup != NULL);
+    }
+
+    //--------------------------------------------------------------------------------
     void COptionsBase::closeRedirect(void) {
         if (coutBackup != NULL) {
             cout.rdbuf( coutBackup ); // restore cout's original streambuf
