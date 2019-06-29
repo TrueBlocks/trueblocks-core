@@ -11,6 +11,7 @@ static const COption params[] = {
     COption("~address_list",      "one or more addresses (0x...) to export"),
     COption("-fmt:<fmt>",         "export format (one of [json|txt|csv])"),
     COption("-articulate",        "articulate transactions, traces, logs, and outputs"),
+    COption("-logs",              "export logs instead of transactions"),
     COption("@blocks:<on/off>",   "write blocks to the binary cache ('off' by default)"),
     COption("@txs:<on/off>",      "write transactions to the binary cache ('on' by default)"),
     COption("@t(r)aces:<on/off>", "write traces to the binary cache ('off' by default)"),
@@ -23,6 +24,7 @@ static const COption params[] = {
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
 extern const char* STR_DISPLAY;
+extern const char* STR_LOG_DISPLAY;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
@@ -63,6 +65,9 @@ bool COptions::parseArguments(string_q& command) {
             if (!isNumeral(arg))
                 return usage("Please provide a number (you provided " + arg + ") for --maxTraces. Quitting...");
             maxTraces = str_2_Uint(arg);
+
+        } else if (arg == "-l" || arg == "--logs") {
+            doLogs = true;
 
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
@@ -183,7 +188,7 @@ bool COptions::parseArguments(string_q& command) {
         format = toml.getConfigStr("formats", "trace_fmt", deflt);
         expContext().fmtMap["trace_fmt"] = cleanFmt(format, exportFmt);
 
-        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "log", "{LOGS}");
+        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "log", STR_LOG_DISPLAY);
         format = toml.getConfigStr("formats", "logentry_fmt", deflt);
         expContext().fmtMap["logentry_fmt"] = cleanFmt(format, exportFmt);
     }
@@ -204,6 +209,7 @@ void COptions::Init(void) {
     skipDdos = true;
     maxTraces = 250;
     articulate = false;
+    doLogs = false;
 
     minArgs = 0;
 }
@@ -369,4 +375,28 @@ bool COptions::freshenTsArray(blknum_t last) {
 
 //-----------------------------------------------------------------------
 const char* STR_DISPLAY =
-"[{HASH}]\t[{TIMESTAMP}]\t[{FROM}]\t[{TO}]\t[{ETHER}]\t[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t[{ETHERGASPRICE}]\t[{GASUSED}]\t[{ISERROR}]\t[{ENCODING}]";
+"[{HASH}]\t"
+"[{TIMESTAMP}]\t"
+"[{FROM}]\t"
+"[{TO}]\t"
+"[{ETHER}]\t"
+"[{BLOCKNUMBER}]\t"
+"[{TRANSACTIONINDEX}]\t"
+"[{ETHERGASPRICE}]\t"
+"[{GASUSED}]\t"
+"[{ISERROR}]\t"
+"[{ENCODING}]";
+
+//--------------------------------------------------------------------------------
+const char* STR_LOG_DISPLAY =
+"[{BLOCKNUMBER}]\t"
+"[{TRANSACTIONINDEX}]\t"
+"[{LOGINDEX}]\t"
+"[{ADDRESS}]\t"
+"[{TOPIC0}]\t"
+"[{TOPIC1}]\t"
+"[{TOPIC2}]\t"
+"[{TOPIC3}]\t"
+"[{DATA}]\t"
+"[{TYPE}]\t"
+"[{COMPRESSEDLOG}]";
