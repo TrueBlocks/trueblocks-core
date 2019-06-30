@@ -12,7 +12,7 @@ Public License along with this program. If not, see http://www.gnu.org/licenses/
 
 import _quickblocks as qbe
 import json
-
+from quickblocks.Timer import my_timer
 class QuickBlocks(object):
     def __init__(self, url, cache):
         qbe.init(url)
@@ -23,8 +23,12 @@ class QuickBlocks(object):
 
     def __del__(self):
         qbe.cleanup()
+
+    @my_timer   
+    def getTransaction(self, **kwargs):
+        if(kwargs.get('txhash')):
+            result=qbe.get_trans(kwargs.get('txhash'))
         
         
-     def getTransaction(self,Hash):
-        
-        return json.loads(qbe.get_trans(Hash))    
+        return result  
+
