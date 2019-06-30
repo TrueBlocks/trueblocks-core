@@ -18,6 +18,6 @@ setup(name = 'QuickBlocks',
         version = '0.1.0',
         description = '',
         author = 'Mike Zhai',
-        scripts=['bin/print_blocks.py'],
+        scripts=['print_blocks.py'],
         packages=find_packages(),
         ext_modules=[extension])
