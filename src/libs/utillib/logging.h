@@ -66,18 +66,23 @@ namespace qblocks {
     class logger {
 
         //----------------------------------------------------------------
-        string_q get_logline_header() {
+        stringstream log_stream;
+        log_policy* policy;
+        mutex write_mutex;
 
-            static unsigned log_line_number = 0;
+        //----------------------------------------------------------------
+        string_q get_logline_header(void) {
+//           static unsigned log_line_number = 0;
 
             stringstream header;
-            header.fill('0');header.width(7);
-            header << bBlack << ++log_line_number << " ";
+//          header.fill('0');header.width(7);
+//           header << bBlack << ++log_line_number << " ";
             if (isTestMode()) {
                 header << "TIME ~ CLOCK - ";
             } else {
-                header << Now().Format(FMT_EXPORT) << " ~ ";
-#define LOG_TIMING true
+//                header << Now().Format(FMT_EXPORT) << " ~ ";
+                header << date_2_Ts(Now()) << " ~ ";
+#define LOG_TIMING false
 #define LOG_THREAD false
                 if (LOG_TIMING) {
                     header.fill('0');header.width(7);
@@ -89,18 +94,8 @@ namespace qblocks {
                 }
             }
             header << cOff;
-
             return header.str();
         }
-
-        //----------------------------------------------------------------
-        stringstream log_stream;
-
-        //----------------------------------------------------------------
-        log_policy* policy;
-
-        //----------------------------------------------------------------
-        mutex write_mutex;
 
         //----------------------------------------------------------------
         void print_impl() {
