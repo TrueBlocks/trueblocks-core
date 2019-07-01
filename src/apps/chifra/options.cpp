@@ -98,11 +98,11 @@ bool COptions::parseArguments(string_q& command) {
     tool_flags = trim(tool_flags, ' ');
     freshen_flags = trim(freshen_flags, ' ');
 
-    LOG4("API_MODE", getEnvStr("API_MODE"));
-    LOG4("IPFS_PATH", getEnvStr("IPFS_PATH"));
-    LOG4("TEST_MODE", getEnvStr("TEST_MODE"));
-    LOG4("NO_COLOR", getEnvStr("NO_COLOR"));
-    LOG4("EDITOR", getEnvStr("EDITOR"));
+    LOG4("API_MODE=", getEnvStr("API_MODE"));
+    LOG4("IPFS_PATH=", getEnvStr("IPFS_PATH"));
+    LOG4("TEST_MODE=", getEnvStr("TEST_MODE"));
+    LOG4("NO_COLOR=", getEnvStr("NO_COLOR"));
+    LOG4("EDITOR=", getEnvStr("EDITOR"));
 
     EXIT_NOMSG4(true);
 }
