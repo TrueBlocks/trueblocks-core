@@ -52,11 +52,15 @@ bool COptions::exportData(void) {
 
             if (exportFmt == JSON1 && !first)
                 cout << ", ";
-            if (doLogs) {
-                for (auto log : trans.receipt.logs)
-                    cout << log.Format() << endl;
+            bool doTraces = false;
+            if (doTraces) {
             } else {
-                cout << trans.Format() << endl;
+                if (doLogs) {
+                    for (auto log : trans.receipt.logs)
+                        cout << log.Format() << endl;
+                } else {
+                    cout << trans.Format() << endl;
+                }
             }
             nExported++;
             first = false;
