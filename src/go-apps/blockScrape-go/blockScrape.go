@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"bytes"
 	"encoding/json"
 	"fmt"
@@ -10,6 +11,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"sync"
 )
 
 // Params - used in calls to the RPC
@@ -98,7 +100,7 @@ type TraceAndLogs struct {
 	Logs   []byte
 }
 
-func getTraceAndLogs(blocks chan int, traceAndLogs chan TraceAndLogs) {
+func getTraceAndLogs(blocks chan int, traceAndLogs chan TraceAndLogs, tracewg *sync.WaitGroup) {
 	// Get blocks received on the blocks channel
 	for blockNum := range blocks {
 		traces, err := getTracesForBlock(blockNum)
@@ -111,6 +113,8 @@ func getTraceAndLogs(blocks chan int, traceAndLogs chan TraceAndLogs) {
 		}
 		traceAndLogs <- TraceAndLogs{traces, logs}
 	}
+	// decrement wait group
+	tracewg.Done()
 }
 
 // BlockTraces - all traces in a block
@@ -400,11 +404,7 @@ func writeAddresses(blockNum string, addresses map[string]bool) {
 	sort.Strings(addressArray)
 	toWrite := []byte(strings.Join(addressArray[:], "\n") + "\n")
 
-	if _, err := os.Stat("/path/to/whatever"); os.IsNotExist(err) {
-		// path/to/whatever does not exist
-	}
-
-	folderPath := "blocks/" + string(blockNum[:3]) + "/" + string(blockNum[3:6])
+	folderPath := "blocks" //+ string(blockNum[:3]) + "/" + string(blockNum[3:6])
 
 	if _, err := os.Stat(folderPath); os.IsNotExist(err) {
 		os.MkdirAll(folderPath, os.ModePerm)
@@ -418,7 +418,7 @@ func writeAddresses(blockNum string, addresses map[string]bool) {
 	fmt.Print("Finished Block Processing:", blockNum, "\n")
 }
 
-func getAddress(traceAndLogs chan TraceAndLogs) {
+func getAddress(traceAndLogs chan TraceAndLogs, addresswg *sync.WaitGroup) {
 	for blockTraceAndLog := range traceAndLogs {
 		//fmt.Println("Beginning Block Processing...")
 		// Set of 'address \t block \t txIdx'
@@ -442,8 +442,9 @@ func getAddress(traceAndLogs chan TraceAndLogs) {
 		getLogAddresses(addresses, &logs, blockNum)
 
 		// Write all of these addresses out to a file
-		go writeAddresses(blockNum, addresses)
+		writeAddresses(blockNum, addresses)
 	}
+	addresswg.Done()
 }
 
 // Searching!
@@ -470,7 +471,7 @@ func testSearch() {
 	sightings := make(chan AddrSighting)
 
 	for i := 0; i < 10; i++ {
-		go searchForAddress("0xe3e1d847f4d369faa89b01393b34a8193da6dead", fileNames, sightings)
+		go searchForAddress("0xe3e1d84`f4d369faa89b01393b34a8193da6dead", fileNames, sightings)
 	}
 
 	for i := 6000000; i < 6000000+10000; i++ {
@@ -482,32 +483,166 @@ func testSearch() {
 	<-done
 }
 
-func main() {
-    print("Hello world\n")
+func readLines(path string) ([]string, error) {
+	file, err := os.Open(path)
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+
+	var lines []string
+	// TODO: get file size, then make the slice that number of lines
+
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		text := scanner.Text()
+		lines = append(lines, text)
+	}
+	return lines, scanner.Err()
+}
+
+func writeLines(lines []string, path string) error {
+	file, err := os.Create(path)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	w := bufio.NewWriter(file)
+	for _, line := range lines {
+		fmt.Fprintln(w, line)
+	}
+	return w.Flush()
+}
+
 /*
-	//testSearch()
+type BlockRecSize struct {
+	blockNum int
+	numRecords int
+}
 
-	startBlock := 224793
-	numBlocks := 1 //00
+type MaxContigious struct {
+	done []int
+	contigiousTo int
+	contigiousSum int
+}
 
-	blocks := make(chan int)
-	traceAndLogs := make(chan TraceAndLogs)
+func newContiguous(size int) MaxContigious {
+	done := make([]int, size)
+	for i := 0; i < size; i++ {
+		done[i] = -1
+	}
+	return MaxContigious{done, 0, 0}
+}
 
-	// make a bunch of block trace getters
-	for i := 0; i < 20; i++ {
-		go getTraceAndLogs(blocks, traceAndLogs)
+func (c *MaxContigious) Finish(idx int, val int)  {
+	if idx < 0 || idx >= len(c.done) {
+		fmt.Println("Out of range")
+		// todo: actually return error
+		return
 	}
 
-	for i := 0; i < 100; i++ {
-		go getAddress(traceAndLogs)
+	c.done[idx] = val
+	if c.contigiousTo == idx - 1 {
+		newContig := idx
+		addSum := val
+		for i := idx; i < len(c.done); i++ {
+			newContig = i
+			addSum += c.done[i] // TODO: maybe an off by one here
+			if c.done[i] == -1 {
+				break
+			}
+		}
+		c.contigiousTo = newContig
+		c.contigiousSum += addSum
+	}
+}
+
+func contigious(size int) {}
+
+func consolidator(startBlock int, numBlocks int, numRecords int, finishedBlocks chan BlockRecSize) {
+	maxContigious := newContiguous(numBlocks)
+
+	for blockRecSize := range finishedBlocks {
+		maxContigious.Finish(blockRecSize.blockNum - startBlock, blockRecSize.numRecords)
+		if maxContigious.contigiousSum > numRecords {
+			//TODO
+		}
+		contigiousTo = maxContigious.contigiousTo
+
+
 	}
 
-	for block := startBlock; block < startBlock+numBlocks; block++ {
-		blocks <- block
-	}
+} */
 
-	// blah, just wait around for ever (have to manuall terminate the process...)
-	done := make(chan int)
-	<-done
-*/
+func consolidate(startBlock int, endBlock int, numRecords int) {
+	currRecords := make([]string, 0)
+	numCurrRecords := 0
+	currStartBlock := startBlock
+	for i := startBlock; i < endBlock; i++ {
+		// read in file, and figure out number of records
+		addressSightings, err := readLines("blocks/" + leftZero(strconv.Itoa(i), 9) + ".txt")
+		if err != nil {
+			fmt.Println("ERROR:", err)
+		}
+		currRecords = append(currRecords, addressSightings...)
+		numCurrRecords += len(addressSightings)
+		if numCurrRecords > numRecords {
+			// sort, and then write file
+			sort.Strings(currRecords)
+			// TODO: can sort in linear time, as compared to log linear (b/c already sorted)
+			writeLines(currRecords, "blocks/"+leftZero("a"+strconv.Itoa(currStartBlock), 9)+"-"+leftZero(strconv.Itoa(i), 9)+".txt")
+
+			currRecords = make([]string, 0)
+			numCurrRecords = 0
+			currStartBlock = i + 1
+		}
+	}
+	sort.Strings(currRecords)
+	writeLines(currRecords, "blocks/"+leftZero("a"+strconv.Itoa(currStartBlock), 9)+"-"+leftZero(strconv.Itoa(endBlock), 9)+".txt")
+}
+
+func main() {
+	startBlock := 2000000
+	numBlocks := 2000
+
+	consolidate(startBlock, startBlock+numBlocks, 20000)
+
+	/*
+		numTraceLogGetters := 20
+		numGetAddresses := 100
+
+		blocks := make(chan int)
+		traceAndLogs := make(chan TraceAndLogs)
+
+		// make a bunch of block trace getters
+		var tracewg sync.WaitGroup
+		tracewg.Add(numTraceLogGetters)
+		for i := 0; i < numTraceLogGetters; i++ {
+			go getTraceAndLogs(blocks, traceAndLogs, &tracewg)
+		}
+
+		var addresswg sync.WaitGroup
+		addresswg.Add(numGetAddresses)
+		for i := 0; i < numGetAddresses; i++ {
+			go getAddress(traceAndLogs, &addresswg)
+		}
+
+		for block := startBlock; block < startBlock+numBlocks; block++ {
+			blocks <- block
+		}
+		// close the channel here
+		close(blocks)
+		tracewg.Wait()
+
+		// once all blocks have been processed
+		close(traceAndLogs)
+		addresswg.Wait() */
+
+	// TODO: we can have a "finished blocks channel"
+	// then, we can maintain a "finished" int array for when blocks are finished
+	// the array stores the number of records in a block
+	// then, we can maintain the "finished upto" variable
+	// and the number of records that that contains
+	// then, once we can process that, we do process that
 }
