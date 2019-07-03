@@ -606,38 +606,37 @@ func main() {
 	startBlock := 2000000
 	numBlocks := 2000
 
-	consolidate(startBlock, startBlock+numBlocks, 20000)
+	//consolidate(startBlock, startBlock+numBlocks, 20000)
 
-	/*
-		numTraceLogGetters := 20
-		numGetAddresses := 100
+	numTraceLogGetters := 20
+	numGetAddresses := 100
 
-		blocks := make(chan int)
-		traceAndLogs := make(chan TraceAndLogs)
+	blocks := make(chan int)
+	traceAndLogs := make(chan TraceAndLogs)
 
-		// make a bunch of block trace getters
-		var tracewg sync.WaitGroup
-		tracewg.Add(numTraceLogGetters)
-		for i := 0; i < numTraceLogGetters; i++ {
-			go getTraceAndLogs(blocks, traceAndLogs, &tracewg)
-		}
+	// make a bunch of block trace getters
+	var tracewg sync.WaitGroup
+	tracewg.Add(numTraceLogGetters)
+	for i := 0; i < numTraceLogGetters; i++ {
+		go getTraceAndLogs(blocks, traceAndLogs, &tracewg)
+	}
 
-		var addresswg sync.WaitGroup
-		addresswg.Add(numGetAddresses)
-		for i := 0; i < numGetAddresses; i++ {
-			go getAddress(traceAndLogs, &addresswg)
-		}
+	var addresswg sync.WaitGroup
+	addresswg.Add(numGetAddresses)
+	for i := 0; i < numGetAddresses; i++ {
+		go getAddress(traceAndLogs, &addresswg)
+	}
 
-		for block := startBlock; block < startBlock+numBlocks; block++ {
-			blocks <- block
-		}
-		// close the channel here
-		close(blocks)
-		tracewg.Wait()
+	for block := startBlock; block < startBlock+numBlocks; block++ {
+		blocks <- block
+	}
+	// close the channel here
+	close(blocks)
+	tracewg.Wait()
 
-		// once all blocks have been processed
-		close(traceAndLogs)
-		addresswg.Wait() */
+	// once all blocks have been processed
+	close(traceAndLogs)
+	addresswg.Wait() 
 
 	// TODO: we can have a "finished blocks channel"
 	// then, we can maintain a "finished" int array for when blocks are finished
