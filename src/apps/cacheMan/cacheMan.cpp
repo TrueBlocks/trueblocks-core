@@ -121,7 +121,7 @@ extern bool loadMonitorData(CAppearanceArray_base& items, const address_t& addr)
                                         cout << "}\n";
                                         first = false;
                                     } else {
-                                        cout << (options.api_mode ? watch->address + "\t" : "") << item.blk << "\t" << item.txid << endl; // Format(fmtStr);
+                                        cout << (!getEnvStr("API_MODE").empty() ? watch->address + "\t" : "") << item.blk << "\t" << item.txid << endl; // Format(fmtStr);
                                     }
                                 }
 

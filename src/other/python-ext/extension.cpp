@@ -43,6 +43,7 @@ static PyObject* get_block(PyObject* self, PyObject *args) {
     }
     return Py_BuildValue("s", block.Format().c_str());
 }
+
 static PyObject* get_trans(PyObject* self, PyObject *args) {
     char *hash;
     if (!PyArg_ParseTuple(args, "s", &hash)) {
@@ -53,6 +54,7 @@ static PyObject* get_trans(PyObject* self, PyObject *args) {
     getTransaction(trans, hash);
     return Py_BuildValue("s", trans.Format().c_str());
 }
+
 static PyMethodDef _quickblocks_methods[] = {
     {"get_block", get_block, METH_VARARGS, "get_block"},
     {"get_trans", get_trans, METH_VARARGS, "get_trans"},

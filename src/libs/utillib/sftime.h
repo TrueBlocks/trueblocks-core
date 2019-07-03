@@ -207,11 +207,6 @@ public:
     }
 
     //---------------------------------------------------------------------------------------------
-    inline bool isInRange(const time_q& ref, const time_q& start, const time_q& end) {
-        return (start <= ref && end >= ref);
-    }
-
-    //---------------------------------------------------------------------------------------------
     inline time_q earlierOf(const time_q& one, const time_q& two) {
         if (one < two)
             return one;

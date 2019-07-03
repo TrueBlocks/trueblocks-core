@@ -11,6 +11,7 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "utillib.h"
+#include "logging.h"
 
 namespace qblocks {
     static logger<file_log> flog("");

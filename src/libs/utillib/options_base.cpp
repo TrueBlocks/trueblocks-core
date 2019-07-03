@@ -242,6 +242,7 @@ namespace qblocks {
 
         // Note: check each item individual in case more than one appears on the command line
         cmdLine += " ";
+        replace(cmdLine, "--output ", "--output:");
 
         if (contains(cmdLine, "--noop ")) {
             // do nothing
@@ -284,20 +285,27 @@ namespace qblocks {
         }
 
         if (isEnabled(OPT_RAW) && contains(cmdLine, "--veryRaw ")) {
+            replaceAll(cmdLine, "--veryRaw ", "");
             isRaw = true;
             isVeryRaw = true;
         }
 
         if (isEnabled(OPT_RAW) && contains(cmdLine, "--raw ")) {
+            replaceAll(cmdLine, "--raw ", "");
             isRaw = true;
         }
 
-        if (isEnabled(OPT_OUTPUT) && contains(cmdLine, "--output")) {
-            outputFn = configPath("cache/tmp/" + makeValidName(Now().Format(FMT_EXPORT)) + ".txt");
-            establishFolder(outputFn);
-            ASSERT(!fileExists(outputFn));
-            origCout = cout.rdbuf();
-            cout.rdbuf( strCout.rdbuf() );
+        if (isEnabled(OPT_OUTPUT) && contains(cmdLine, "--output:")) {
+            redirFilename = substitute(cmdLine, "--output:", "|");
+            nextTokenClear(redirFilename, '|');
+            redirFilename = nextTokenClear(redirFilename, ' ');
+            establishFolder(redirFilename);
+            ASSERT(!folderExists(outputFn));
+            redirStream.open(redirFilename.c_str());
+            if ( redirStream.is_open() ) {
+                coutBackup = cout.rdbuf();     // back up cout's streambuf
+                cout.rdbuf( redirStream.rdbuf() );         // assign streambuf to cout
+            }
         }
 
         if (isEnabled(OPT_WEI) && contains(cmdLine, "--wei ")) {
@@ -357,7 +365,7 @@ namespace qblocks {
             return true;
         if (isEnabled(OPT_RAW) && arg == "--raw")
             return true;
-        if (isEnabled(OPT_OUTPUT) && arg == "--output")
+        if (isEnabled(OPT_OUTPUT) && startsWith(arg, "--output:"))
             return true;
         if (isEnabled(OPT_RAW) && arg == "--veryRaw")
             return true;
@@ -888,23 +896,32 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         namedAccounts.clear();
         pParams = NULL;
         cntParams = 0;
-        origCout = NULL;
-        strCout.clear();
-        outputFn = "";
+        coutBackup = NULL;
+        redirFilename = "";
+        //redirStream
+    }
+
+    //--------------------------------------------------------------------------------
+    COptionsBase::~COptionsBase(void) {
+        closeRedirect();
+    }
+
+    //--------------------------------------------------------------------------------
+    bool COptionsBase::isRedirected(void) const {
+        return (coutBackup != NULL);
     }
 
     //--------------------------------------------------------------------------------
     void COptionsBase::closeRedirect(void) {
-        if (origCout != NULL) {
-            cout.rdbuf( origCout );
-            origCout = NULL;
-            if (exportFmt == CSV1)
-                replace(outputFn, ".txt", ".csv");
-            stringToAsciiFile(outputFn, strCout.str());
+        if (coutBackup != NULL) {
+            cout.rdbuf( coutBackup ); // restore cout's original streambuf
+            redirStream.close();
+            coutBackup = NULL;
             if (isTestMode())
                 cout << "--output option is on - file written" << endl;
             else
-                cout << outputFn;
+                cout << redirFilename;
+            redirFilename = "";
         }
     }
 
