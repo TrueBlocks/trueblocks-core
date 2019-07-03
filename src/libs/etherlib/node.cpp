@@ -612,7 +612,7 @@ extern void loadParseMap(void);
             if (!asPath) {
                 os << bn;
                 os << ((type == CT_TRACES || type == CT_TXS) ? "-" + txid : "");
-                os << ( type == CT_TRACES ? "-" + tcid : "");
+                os << ( type == CT_TRACES && !tcid.empty() ? "-" + tcid : "");
                 os << ".bin";
             }
         }

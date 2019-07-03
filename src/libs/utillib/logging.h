@@ -66,18 +66,23 @@ namespace qblocks {
     class logger {
 
         //----------------------------------------------------------------
-        string_q get_logline_header() {
+        stringstream log_stream;
+        log_policy* policy;
+        mutex write_mutex;
 
-            static unsigned log_line_number = 0;
+        //----------------------------------------------------------------
+        string_q get_logline_header(void) {
+//           static unsigned log_line_number = 0;
 
             stringstream header;
-            header.fill('0');header.width(7);
-            header << bBlack << ++log_line_number << " ";
+//          header.fill('0');header.width(7);
+//           header << bBlack << ++log_line_number << " ";
             if (isTestMode()) {
                 header << "TIME ~ CLOCK - ";
             } else {
-                header << Now().Format(FMT_EXPORT) << " ~ ";
-#define LOG_TIMING true
+//                header << Now().Format(FMT_EXPORT) << " ~ ";
+                header << date_2_Ts(Now()) << " ~ ";
+#define LOG_TIMING false
 #define LOG_THREAD false
                 if (LOG_TIMING) {
                     header.fill('0');header.width(7);
@@ -89,18 +94,8 @@ namespace qblocks {
                 }
             }
             header << cOff;
-
             return header.str();
         }
-
-        //----------------------------------------------------------------
-        stringstream log_stream;
-
-        //----------------------------------------------------------------
-        log_policy* policy;
-
-        //----------------------------------------------------------------
-        mutex write_mutex;
 
         //----------------------------------------------------------------
         void print_impl() {
@@ -136,16 +131,16 @@ namespace qblocks {
                 return;
             write_mutex.lock();
             switch( severity ) {
-                case sev_debug0:  log_stream << cWhite   << "<DEBUG>" << cOff << " : "; break;
-                case sev_debug1:  log_stream << cWhite   << "<DEBUG>" << cOff << " : |-"; break;
-                case sev_debug2:  log_stream << cGreen   << "<TRACE>" << cOff << " : |--"; break;
-                case sev_debug3:  log_stream << cYellow  << "<TRACE>" << cOff << " : |---"; break;
-                case sev_debug4:  log_stream << cRed     << "<TRACE>" << cOff << " : |----"; break;
-                case sev_debug5:  log_stream << cTeal    << "<TRACE>" << cOff << " : |-----"; break;
-                case sev_info:    log_stream << bGreen   << "<INFO> " << cOff << " : "; break;
-                case sev_warning: log_stream << bYellow  << "<WARNG>" << cOff << " : "; break;
-                case sev_error:   log_stream << bRed     << "<ERROR>" << cOff << " : "; break;
-                case sev_fatal:   log_stream << bTeal    << "<FATAL>" << cOff << " : "; break;
+                case sev_debug0:  log_stream << cWhite   << "<DEBUG0>" << cOff << " : "; break;
+                case sev_debug1:  log_stream << cWhite   << "<DEBUG1>" << cOff << " : |-"; break;
+                case sev_debug2:  log_stream << cGreen   << "<DEBUG2>" << cOff << " : |--"; break;
+                case sev_debug3:  log_stream << cYellow  << "<DEBUG3>" << cOff << " : |---"; break;
+                case sev_debug4:  log_stream << cRed     << "<DEBUG4>" << cOff << " : |----"; break;
+                case sev_debug5:  log_stream << cTeal    << "<DEBUG5>" << cOff << " : |-----"; break;
+                case sev_info:    log_stream << bGreen   << "<INFO>  " << cOff << " : "; break;
+                case sev_warning: log_stream << bYellow  << "<WARNG> " << cOff << " : "; break;
+                case sev_error:   log_stream << bRed     << "<ERROR> " << cOff << " : "; break;
+                case sev_fatal:   log_stream << bTeal    << "<FATAL> " << cOff << " : "; break;
             };
             print_impl( args... );
             write_mutex.unlock();

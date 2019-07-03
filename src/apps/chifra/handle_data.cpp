@@ -6,6 +6,7 @@
 #include "options.h"
 #include "question.h"
 
+extern string_q toPrintable_force(const string_q& inHex);
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_data(void) {
 
@@ -15,6 +16,10 @@ bool COptions::handle_data(void) {
 
     if (!contains(tool_flags, "--edit")) // weird cleanup of --edit/edit confusion
         tool_flags = substitute(tool_flags, "edit", "--edit");
+
+    string_q addr_list;
+    for (auto addr : addrs)
+        addr_list += (addr + " ");
 
     ostringstream os;
     if (contains(tool_flags, "--when")) {
@@ -68,14 +73,12 @@ bool COptions::handle_data(void) {
 
     } else if (contains(tool_flags, "--message")) {
         replaceAll(tool_flags, "--message ", "");
-extern string_q toPrintable_force(const string_q& inHex);
         if (tool_flags != "0x")
             cout << "message: " << toPrintable_force(tool_flags);
         return true;
 
     } else {
-        EXIT_FAIL("Invalid option: " + tool_flags);
-
+        EXIT_FAIL("Invalid option: data " + tool_flags + " " + addr_list);
     }
 
     LOG4("command: " + os.str());
