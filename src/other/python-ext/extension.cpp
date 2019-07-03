@@ -16,7 +16,7 @@
 static PyObject* init(PyObject* self, PyObject *args) {
     const char *baseURL;
     PyArg_ParseTuple(args, "s", &baseURL);
-    get CurlContext()->baseURL = baseURL;
+    getCurlContext()->baseURL = baseURL;
     etherlib_init(quickQuitHandler);
     Py_INCREF(Py_None);
     return Py_None;
@@ -44,8 +44,7 @@ static PyObject* get_block(PyObject* self, PyObject *args) {
     return Py_BuildValue("s", block.Format().c_str());
 }
 static PyObject* get_trans(PyObject* self, PyObject *args) {
-    hash_t hash;
-    
+    char *hash;
     if (!PyArg_ParseTuple(args, "s", &hash)) {
         return NULL;
     }
