@@ -515,66 +515,6 @@ func writeLines(lines []string, path string) error {
 	return w.Flush()
 }
 
-/*
-type BlockRecSize struct {
-	blockNum int
-	numRecords int
-}
-
-type MaxContigious struct {
-	done []int
-	contigiousTo int
-	contigiousSum int
-}
-
-func newContiguous(size int) MaxContigious {
-	done := make([]int, size)
-	for i := 0; i < size; i++ {
-		done[i] = -1
-	}
-	return MaxContigious{done, 0, 0}
-}
-
-func (c *MaxContigious) Finish(idx int, val int)  {
-	if idx < 0 || idx >= len(c.done) {
-		fmt.Println("Out of range")
-		// todo: actually return error
-		return
-	}
-
-	c.done[idx] = val
-	if c.contigiousTo == idx - 1 {
-		newContig := idx
-		addSum := val
-		for i := idx; i < len(c.done); i++ {
-			newContig = i
-			addSum += c.done[i] // TODO: maybe an off by one here
-			if c.done[i] == -1 {
-				break
-			}
-		}
-		c.contigiousTo = newContig
-		c.contigiousSum += addSum
-	}
-}
-
-func contigious(size int) {}
-
-func consolidator(startBlock int, numBlocks int, numRecords int, finishedBlocks chan BlockRecSize) {
-	maxContigious := newContiguous(numBlocks)
-
-	for blockRecSize := range finishedBlocks {
-		maxContigious.Finish(blockRecSize.blockNum - startBlock, blockRecSize.numRecords)
-		if maxContigious.contigiousSum > numRecords {
-			//TODO
-		}
-		contigiousTo = maxContigious.contigiousTo
-
-
-	}
-
-} */
-
 func consolidate(startBlock int, endBlock int, numRecords int) {
 	currRecords := make([]string, 0)
 	numCurrRecords := 0
