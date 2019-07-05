@@ -4,8 +4,8 @@ cmake_minimum_required (VERSION 2.6)
 # application project
 project (blockScrape-go)
 
-#GO_GET(go_redis github.com/hoisie/redis)
-ADD_GO_INSTALLABLE_PROGRAM(blockScrape-go blockScrape.go)
+GO_GET(leveldb github.com/syndtr/goleveldb/leveldb)
+ADD_GO_INSTALLABLE_PROGRAM(blockScrape-go *.go)
 
 # Define the executable to be generated
 set(TOOL_NAME "blockScrape-go")
@@ -22,11 +22,12 @@ build_readme(${CMAKE_CURRENT_SOURCE_DIR} ${TOOL_NAME})
 
 # Function to run an individual test case
 function(run_test testName)
-    message(MESSAGE "TEST_PATH: " ${TEST_PATH})
-    message(MESSAGE "GOLD_PATH: "  ${GOLD_PATH})
-    message(MESSAGE "testName: " ${testName})
-    message(MESSAGE "TEST_EXE: " ${TEST_EXE})
-     run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+#    message(MESSAGE " TEST_PATH: " ${TEST_PATH})
+#    message(MESSAGE " GOLD_PATH: "  ${GOLD_PATH})
+#    message(MESSAGE " testName: " ${testName})
+#    message(MESSAGE " TEST_EXE: " ${TEST_EXE})
+#    message(MESSAGE " GOPATH: " ${GO_PATH})
+    run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
 endfunction(run_test)
 
 run_test("blockScrape-go" "none")

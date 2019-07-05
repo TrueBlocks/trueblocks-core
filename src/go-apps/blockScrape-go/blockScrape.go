@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bufio"
 	"bytes"
 	"encoding/json"
 	"fmt"
@@ -12,6 +11,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"time"
 )
 
 // Params - used in calls to the RPC
@@ -94,15 +94,8 @@ func getTransactionReceipt(hash string) ([]byte, error) {
 	return nil, err
 }
 
-// TraceAndLogs - carries both the traces and the logs for a block
-type TraceAndLogs struct {
-	Traces []byte
-	Logs   []byte
-}
-
-func getTraceAndLogs(blocks chan int, traceAndLogs chan TraceAndLogs, tracewg *sync.WaitGroup) {
-	// Get blocks received on the blocks channel
-	for blockNum := range blocks {
+func extractInternals(blockChannel chan int, addressChannel chan BlockInternals, blockWG *sync.WaitGroup) {
+	for blockNum := range blockChannel {
 		traces, err := getTracesForBlock(blockNum)
 		if err != nil {
 			panic(err)
@@ -111,10 +104,9 @@ func getTraceAndLogs(blocks chan int, traceAndLogs chan TraceAndLogs, tracewg *s
 		if err != nil {
 			panic(err)
 		}
-		traceAndLogs <- TraceAndLogs{traces, logs}
+		addressChannel <- BlockInternals{traces, logs}
 	}
-	// decrement wait group
-	tracewg.Done()
+	blockWG.Done()
 }
 
 // BlockTraces - all traces in a block
@@ -192,43 +184,17 @@ type TransReceipt struct {
 	ID int `json:"id"`
 }
 
-func leftZero(str string, totalLen int) string {
-	// Assume len(str) < totalLen
-	zeros := ""
-	for i := 0; i < totalLen-len(str); i++ {
-		zeros += "0"
-	}
-	return zeros + str
-}
-
-func isGood(addr string) bool {
-	if addr < "0x0000000000000000000000000000000000000009" {
-		return false
-	}
-	return true
-}
-
-func isPotentialAddress(addr string) bool {
-
-	small := "00000000000000000000000000000000000000ffffffffffffffffffffffffff"
-	largePrefix := "000000000000000000000000"
-
-	if addr <= small || !strings.HasPrefix(addr, largePrefix) {
-		return false
-	}
-
-	if strings.HasSuffix(addr, "00000000") {
-		return false
-	}
-
-	return true
+// BlockInternals - carries both the traces and the logs for a block
+type BlockInternals struct {
+	Traces []byte
+	Logs   []byte
 }
 
 func getTraceAddresses(addresses map[string]bool, traces *BlockTraces, blockNum string) {
 
 	for i := 0; i < len(traces.Result); i++ {
 
-		idx := leftZero(strconv.Itoa(traces.Result[i].TransactionPosition), 5)
+		idx := PadLeft(strconv.Itoa(traces.Result[i].TransactionPosition), 5)
 
 		blockAndIdx := "\t" + blockNum + "\t" + idx
 		// Try to get addresses from the input data
@@ -237,9 +203,9 @@ func getTraceAddresses(addresses map[string]bool, traces *BlockTraces, blockNum 
 			//fmt.Println("Input data:", inputData, len(inputData))
 			for i := 0; i < len(inputData)/64; i++ {
 				addr := string(inputData[i*64 : (i+1)*64])
-				if isPotentialAddress(addr) {
+				if PotentialAddress(addr) {
 					addr = "0x" + string(addr[24:])
-					if isGood(addr) {
+					if GoodAddr(addr) {
 						addresses[addr+blockAndIdx] = true
 					}
 				}
@@ -249,24 +215,24 @@ func getTraceAddresses(addresses map[string]bool, traces *BlockTraces, blockNum 
 		if traces.Result[i].Type == "call" {
 			// If it's a call, get the to and from
 			from := traces.Result[i].Action.From
-			if isGood(from) {
+			if GoodAddr(from) {
 				addresses[from+blockAndIdx] = true
 			}
 			to := traces.Result[i].Action.To
-			if isGood(to) {
+			if GoodAddr(to) {
 				addresses[to+blockAndIdx] = true
 			}
 
 		} else if traces.Result[i].Type == "reward" {
 			if traces.Result[i].Action.RewardType == "block" {
 				author := traces.Result[i].Action.Author
-				if isGood(author) {
+				if GoodAddr(author) {
 					addresses[author+"\t"+blockNum+"\t"+"99999"] = true
 				}
 			} else if traces.Result[i].Action.RewardType == "uncle" {
 
 				//author := traces.Result[i].Action.Author
-				//if isGood(author) {
+				//if GoodAddr(author) {
 				//  addresses[author + "\t" + blockNum + "\t" + "99998"] = true
 				//}
 			} else {
@@ -275,22 +241,22 @@ func getTraceAddresses(addresses map[string]bool, traces *BlockTraces, blockNum 
 		} else if traces.Result[i].Type == "suicide" {
 			// add the contract that died, and where it sent it's money
 			address := traces.Result[i].Action.Address
-			if isGood(address) {
+			if GoodAddr(address) {
 				addresses[address+blockAndIdx] = true
 			}
 			refundAddress := traces.Result[i].Action.RefundAddress
-			if isGood(refundAddress) {
+			if GoodAddr(refundAddress) {
 				addresses[refundAddress+blockAndIdx] = true
 			}
 
 		} else if traces.Result[i].Type == "create" {
 			// add the creator, and the new address name
 			from := traces.Result[i].Action.From
-			if isGood(from) {
+			if GoodAddr(from) {
 				addresses[from+blockAndIdx] = true
 			}
 			address := traces.Result[i].Result.Address
-			if isGood(address) {
+			if GoodAddr(address) {
 				addresses[address+blockAndIdx] = true
 			}
 
@@ -301,9 +267,9 @@ func getTraceAddresses(addresses map[string]bool, traces *BlockTraces, blockNum 
 					initData := traces.Result[i].Action.Init[10:]
 					for i := 0; i < len(initData)/64; i++ {
 						addr := string(initData[i*64 : (i+1)*64])
-						if isPotentialAddress(addr) {
+						if PotentialAddress(addr) {
 							addr = "0x" + string(addr[24:])
-							if isGood(addr) {
+							if GoodAddr(addr) {
 								addresses[addr+blockAndIdx] = true
 							}
 						}
@@ -329,7 +295,7 @@ func getTraceAddresses(addresses map[string]bool, traces *BlockTraces, blockNum 
 							panic(err)
 						}
 						addr := receipt.Result.ContractAddress
-						if isGood(addr) {
+						if GoodAddr(addr) {
 							addresses[addr+blockAndIdx] = true
 						}
 					}
@@ -338,17 +304,18 @@ func getTraceAddresses(addresses map[string]bool, traces *BlockTraces, blockNum 
 
 		} else {
 			fmt.Println("New trace type:", traces.Result[i].Type)
+			err := ""
+			panic(err)
 		}
 
 		// Parse output of trace
 		if len(traces.Result[i].Result.Output) > 2 {
 			outputData := traces.Result[i].Result.Output[2:]
-			//fmt.Println("Input data:", inputData, len(inputData))
 			for i := 0; i < len(outputData)/64; i++ {
 				addr := string(outputData[i*64 : (i+1)*64])
-				if isPotentialAddress(addr) {
+				if PotentialAddress(addr) {
 					addr = "0x" + string(addr[24:])
-					if isGood(addr) {
+					if GoodAddr(addr) {
 						addresses[addr+blockAndIdx] = true
 					}
 				}
@@ -364,15 +331,15 @@ func getLogAddresses(addresses map[string]bool, logs *BlockLogs, blockNum string
 		if err != nil {
 			fmt.Println("Error:", err)
 		}
-		idx := leftZero(strconv.FormatInt(idxInt, 10), 5)
+		idx := PadLeft(strconv.FormatInt(idxInt, 10), 5)
 
 		blockAndIdx := "\t" + blockNum + "\t" + idx
 
 		for j := 0; j < len(logs.Result[i].Topics); j++ {
 			addr := string(logs.Result[i].Topics[j][2:])
-			if isPotentialAddress(addr) {
+			if PotentialAddress(addr) {
 				addr = "0x" + string(addr[24:])
-				if isGood(addr) {
+				if GoodAddr(addr) {
 					addresses[addr+blockAndIdx] = true
 				}
 			}
@@ -382,9 +349,9 @@ func getLogAddresses(addresses map[string]bool, logs *BlockLogs, blockNum string
 			inputData := logs.Result[i].Data[2:]
 			for i := 0; i < len(inputData)/64; i++ {
 				addr := string(inputData[i*64 : (i+1)*64])
-				if isPotentialAddress(addr) {
+				if PotentialAddress(addr) {
 					addr = "0x" + string(addr[24:])
-					if isGood(addr) {
+					if GoodAddr(addr) {
 						addresses[addr+blockAndIdx] = true
 					}
 				}
@@ -404,8 +371,7 @@ func writeAddresses(blockNum string, addresses map[string]bool) {
 	sort.Strings(addressArray)
 	toWrite := []byte(strings.Join(addressArray[:], "\n") + "\n")
 
-	folderPath := "blocks" //+ string(blockNum[:3]) + "/" + string(blockNum[3:6])
-
+	folderPath := "data" //+ string(blockNum[:3]) + "/" + string(blockNum[3:6])
 	if _, err := os.Stat(folderPath); os.IsNotExist(err) {
 		os.MkdirAll(folderPath, os.ModePerm)
 	}
@@ -415,11 +381,11 @@ func writeAddresses(blockNum string, addresses map[string]bool) {
 	if err != nil {
 		fmt.Println("Error writing file:", err)
 	}
-	fmt.Print("Finished Block Processing:", blockNum, "\n")
+//	fmt.Print(blockNum, "\t", len(addresses), "     \r")
 }
 
-func getAddress(traceAndLogs chan TraceAndLogs, addresswg *sync.WaitGroup) {
-	for blockTraceAndLog := range traceAndLogs {
+func extractAddresses(addressChannel chan BlockInternals, addressWG *sync.WaitGroup) {
+	for blockTraceAndLog := range addressChannel {
 		//fmt.Println("Beginning Block Processing...")
 		// Set of 'address \t block \t txIdx'
 		addresses := make(map[string]bool)
@@ -430,8 +396,12 @@ func getAddress(traceAndLogs chan TraceAndLogs, addresswg *sync.WaitGroup) {
 		if err != nil {
 			panic(err)
 		}
-		blockNum := leftZero(strconv.Itoa(traces.Result[0].BlockNumber), 9)
-		getTraceAddresses(addresses, &traces, blockNum)
+
+		blockNum := ""
+		if traces.Result != nil && len(traces.Result) > 0 {
+			blockNum = PadLeft(strconv.Itoa(traces.Result[0].BlockNumber), 9)
+			getTraceAddresses(addresses, &traces, blockNum)
+		}
 
 		// Now, parse log data
 		var logs BlockLogs
@@ -439,149 +409,65 @@ func getAddress(traceAndLogs chan TraceAndLogs, addresswg *sync.WaitGroup) {
 		if err != nil {
 			panic(err)
 		}
-		getLogAddresses(addresses, &logs, blockNum)
-
-		// Write all of these addresses out to a file
-		writeAddresses(blockNum, addresses)
-	}
-	addresswg.Done()
-}
-
-// Searching!
-
-// AddrSighting - An appearance of an address
-type AddrSighting struct {
-	block int
-	txIdx int
-}
-
-func searchForAddress(address string, fileNames chan string, sightings chan AddrSighting) {
-	for fileName := range fileNames {
-		data, err := ioutil.ReadFile("block/" + fileName)
-		if err != nil {
-			fmt.Println("Error:", err)
+		if blockNum == "" && len(logs.Result) > 0 {
+			blockNum = PadLeft(logs.Result[0].BlockNumber, 9)
 		}
-		fmt.Print(string(data))
-		sightings <- AddrSighting{0, 0}
-	}
-}
-
-func testSearch() {
-	fileNames := make(chan string)
-	sightings := make(chan AddrSighting)
-
-	for i := 0; i < 10; i++ {
-		go searchForAddress("0xe3e1d84`f4d369faa89b01393b34a8193da6dead", fileNames, sightings)
-	}
-
-	for i := 6000000; i < 6000000+10000; i++ {
-		fileName := leftZero(strconv.Itoa(i), 9) + ".txt"
-		fileNames <- fileName
-	}
-
-	done := make(chan int)
-	<-done
-}
-
-func readLines(path string) ([]string, error) {
-	file, err := os.Open(path)
-	if err != nil {
-		return nil, err
-	}
-	defer file.Close()
-
-	var lines []string
-	// TODO: get file size, then make the slice that number of lines
-
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		text := scanner.Text()
-		lines = append(lines, text)
-	}
-	return lines, scanner.Err()
-}
-
-func writeLines(lines []string, path string) error {
-	file, err := os.Create(path)
-	if err != nil {
-		return err
-	}
-	defer file.Close()
-
-	w := bufio.NewWriter(file)
-	for _, line := range lines {
-		fmt.Fprintln(w, line)
-	}
-	return w.Flush()
-}
-
-func consolidate(startBlock int, endBlock int, numRecords int) {
-	currRecords := make([]string, 0)
-	numCurrRecords := 0
-	currStartBlock := startBlock
-	for i := startBlock; i < endBlock; i++ {
-		// read in file, and figure out number of records
-		addressSightings, err := readLines("blocks/" + leftZero(strconv.Itoa(i), 9) + ".txt")
-		if err != nil {
-			fmt.Println("ERROR:", err)
-		}
-		currRecords = append(currRecords, addressSightings...)
-		numCurrRecords += len(addressSightings)
-		if numCurrRecords > numRecords {
-			// sort, and then write file
-			sort.Strings(currRecords)
-			// TODO: can sort in linear time, as compared to log linear (b/c already sorted)
-			writeLines(currRecords, "blocks/"+leftZero("a"+strconv.Itoa(currStartBlock), 9)+"-"+leftZero(strconv.Itoa(i), 9)+".txt")
-
-			currRecords = make([]string, 0)
-			numCurrRecords = 0
-			currStartBlock = i + 1
+		if blockNum != "" {
+			getLogAddresses(addresses, &logs, blockNum)
+			writeAddresses(blockNum, addresses)
 		}
 	}
-	sort.Strings(currRecords)
-	writeLines(currRecords, "blocks/"+leftZero("a"+strconv.Itoa(currStartBlock), 9)+"-"+leftZero(strconv.Itoa(endBlock), 9)+".txt")
+	addressWG.Done()
+}
+
+func processBlocks(startBlock int, numBlocks int, skip int, nBlockProcesses int, nAddressProcesses int) {
+
+	blockChannel := make(chan int)
+	addressChannel := make(chan BlockInternals)
+
+	var blockWG sync.WaitGroup
+	blockWG.Add(nBlockProcesses)
+	for i := 0; i < nBlockProcesses; i++ {
+		go extractInternals(blockChannel, addressChannel, &blockWG)
+	}
+
+	var addressWG sync.WaitGroup
+	addressWG.Add(nAddressProcesses)
+	for i := 0; i < nAddressProcesses; i++ {
+		go extractAddresses(addressChannel, &addressWG)
+	}
+
+	for block := startBlock; block < startBlock+numBlocks; block = block + skip {
+		blockChannel <- block
+	}
+
+	close(blockChannel)
+	blockWG.Wait()
+
+	close(addressChannel)
+	addressWG.Wait()
 }
 
 func main() {
-	startBlock := 2000000
-	numBlocks := 2000
-
-	//consolidate(startBlock, startBlock+numBlocks, 20000)
-
-	numTraceLogGetters := 20
-	numGetAddresses := 100
-
-	blocks := make(chan int)
-	traceAndLogs := make(chan TraceAndLogs)
-
-	// make a bunch of block trace getters
-	var tracewg sync.WaitGroup
-	tracewg.Add(numTraceLogGetters)
-	for i := 0; i < numTraceLogGetters; i++ {
-		go getTraceAndLogs(blocks, traceAndLogs, &tracewg)
+	start := 0
+	n := 8000000
+	skip := 20000
+	bPs := 0
+	aPs := 0
+    fmt.Print("\t");
+    for aPs = 1 ; aPs < 100 ; aPs = aPs + 2 {
+        fmt.Print(aPs, "\t")
+    }
+    fmt.Print("\n");
+	for bPs = 1; bPs < 50; bPs = bPs + 2 {
+        fmt.Print(bPs, "\t")
+		for aPs = 1; aPs < 100; aPs = aPs + 2 {
+			startTime := time.Now()
+			processBlocks(start, n, skip, bPs, aPs)
+//			fmt.Println(start, " ", n, " ", skip, " ", ((n - start) / skip), " ", bPs, " ", aPs, " ", time.Since(startTime))
+			fmt.Print(time.Since(startTime).Nanoseconds() / 1000., "\t")
+		}
+        fmt.Print("\n")
 	}
-
-	var addresswg sync.WaitGroup
-	addresswg.Add(numGetAddresses)
-	for i := 0; i < numGetAddresses; i++ {
-		go getAddress(traceAndLogs, &addresswg)
-	}
-
-	for block := startBlock; block < startBlock+numBlocks; block++ {
-		blocks <- block
-	}
-	// close the channel here
-	close(blocks)
-	tracewg.Wait()
-
-	// once all blocks have been processed
-	close(traceAndLogs)
-	addresswg.Wait() 
-
-	// TODO: we can have a "finished blocks channel"
-	// then, we can maintain a "finished" int array for when blocks are finished
-	// the array stores the number of records in a block
-	// then, we can maintain the "finished upto" variable
-	// and the number of records that that contains
-	// then, once we can process that, we do process that
+	os.Exit(1)
 }
