@@ -2,7 +2,9 @@ set(GOPATH "${CMAKE_CURRENT_BINARY_DIR}/go")
 file(MAKE_DIRECTORY ${GOPATH})
 
 function(GO_GET TARG)
-  add_custom_target(${TARG} env GOPATH=${GOPATH} go get ${ARGN})
+    message(MESSAGE " GO_PATH: " ${GOPATH})
+    message(MESSAGE " ARGN: " ${ARGN})
+    add_custom_target(${TARG} env GOPATH=${GOPATH} go get ${ARGN})
 endfunction(GO_GET)
 
 function(ADD_GO_INSTALLABLE_PROGRAM NAME MAIN_SRC)
