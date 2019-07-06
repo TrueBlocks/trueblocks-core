@@ -17,8 +17,8 @@ import (
 // Params - used in calls to the RPC
 type Params []interface{}
 
-// JSONPayload - used to build requests to the RPC
-type JSONPayload struct {
+// RPCPayload - used to build requests to the RPC
+type RPCPayload struct {
 	Jsonrpc string `json:"jsonrpc"`
 	Method  string `json:"method"`
 	Params  `json:"params"`
@@ -27,7 +27,7 @@ type JSONPayload struct {
 
 // getTracesForBlock - Returns all traces for a given block
 func getTracesForBlock(blockNum int) ([]byte, error) {
-	payloadBytes, err := json.Marshal(JSONPayload{"2.0", "trace_block", Params{fmt.Sprintf("0x%x", blockNum)}, 2})
+	payloadBytes, err := json.Marshal(RPCPayload{"2.0", "trace_block", Params{fmt.Sprintf("0x%x", blockNum)}, 2})
 	if err == nil {
 		body := bytes.NewReader(payloadBytes)
 		req, err := http.NewRequest("POST", "http://localhost:8545", body)
@@ -54,7 +54,7 @@ type Filter struct {
 
 // Returns all logs for a given block
 func getLogsForBlock(blockNum int) ([]byte, error) {
-	payloadBytes, err := json.Marshal(JSONPayload{"2.0", "eth_getLogs", Params{Filter{fmt.Sprintf("0x%x", blockNum), fmt.Sprintf("0x%x", blockNum)}}, 2})
+	payloadBytes, err := json.Marshal(RPCPayload{"2.0", "eth_getLogs", Params{Filter{fmt.Sprintf("0x%x", blockNum), fmt.Sprintf("0x%x", blockNum)}}, 2})
 	if err == nil {
 		body := bytes.NewReader(payloadBytes)
 		req, err := http.NewRequest("POST", "http://localhost:8545", body)
@@ -75,7 +75,7 @@ func getLogsForBlock(blockNum int) ([]byte, error) {
 
 // Returns recipt for a given transaction -- only used in errored contract creations
 func getTransactionReceipt(hash string) ([]byte, error) {
-	payloadBytes, err := json.Marshal(JSONPayload{"2.0", "eth_getTransactionReceipt", Params{hash}, 2})
+	payloadBytes, err := json.Marshal(RPCPayload{"2.0", "eth_getTransactionReceipt", Params{hash}, 2})
 	if err == nil {
 		body := bytes.NewReader(payloadBytes)
 		req, err := http.NewRequest("POST", "http://localhost:8545", body)
@@ -381,7 +381,7 @@ func writeAddresses(blockNum string, addresses map[string]bool) {
 	if err != nil {
 		fmt.Println("Error writing file:", err)
 	}
-//	fmt.Print(blockNum, "\t", len(addresses), "     \r")
+	//	fmt.Print(blockNum, "\t", len(addresses), "     \r")
 }
 
 func extractAddresses(addressChannel chan BlockInternals, addressWG *sync.WaitGroup) {
@@ -449,25 +449,26 @@ func processBlocks(startBlock int, numBlocks int, skip int, nBlockProcesses int,
 }
 
 func main() {
-	start := 0
-	n := 8000000
-	skip := 20000
+	start := 100000
+	n := 200000
+	skip := 10000
 	bPs := 0
 	aPs := 0
-    fmt.Print("\t");
-    for aPs = 1 ; aPs < 100 ; aPs = aPs + 2 {
-        fmt.Print(aPs, "\t")
-    }
-    fmt.Print("\n");
-	for bPs = 1; bPs < 50; bPs = bPs + 2 {
-        fmt.Print(bPs, "\t")
-		for aPs = 1; aPs < 100; aPs = aPs + 2 {
+	sPs := 10
+	fmt.Print("\t")
+	for aPs = 1; aPs < 100; aPs = aPs + sPs {
+		fmt.Print(aPs, "\t")
+	}
+	fmt.Print("\n")
+	for bPs = 1; bPs < 100; bPs = bPs + sPs {
+		fmt.Print(bPs, "\t")
+		for aPs = 1; aPs < 100; aPs = aPs + sPs {
 			startTime := time.Now()
 			processBlocks(start, n, skip, bPs, aPs)
-//			fmt.Println(start, " ", n, " ", skip, " ", ((n - start) / skip), " ", bPs, " ", aPs, " ", time.Since(startTime))
-			fmt.Print(time.Since(startTime).Nanoseconds() / 1000., "\t")
+			//			fmt.Println(start, " ", n, " ", skip, " ", ((n - start) / skip), " ", bPs, " ", aPs, " ", time.Since(startTime))
+			fmt.Print(time.Since(startTime).Nanoseconds()/1000., "\t")
 		}
-        fmt.Print("\n")
+		fmt.Print("\n")
 	}
 	os.Exit(1)
 }
