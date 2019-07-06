@@ -12,3 +12,4 @@ include_directories(${BASE_INCLUDE})
 
 # Compilation order of the src subdirectories
 #add_subdirectory(blockScrape-go)
+#add_subdirectory(blaze)
