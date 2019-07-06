@@ -1,4 +1,4 @@
-package main
+package cmd
 
 import (
 	"bytes"
@@ -11,8 +11,54 @@ import (
 	"strconv"
 	"strings"
 	"sync"
-	"time"
+
+	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
+
+var scrapeCmd = &cobra.Command{
+	Use:   "scrape",
+	Short: "Freshen the index to the front of the chain",
+	Long: `
+Description:
+
+  The 'scrape' subcommand freshens the TrueBlocks index, picking up where it last
+  left off. 'Scrape' visits every block, queries that block's traces and logs
+  looking for addresses, and writes an index of those addresses per transaction.
+  This allows for lightning fast querying of transaction histories, something
+  that is not practically possible directly against the node.`,
+	Run: func(cmd *cobra.Command, args []string) {
+		start := viper.GetInt("startBlock")
+		if start < 0 {
+			start = 0
+		}
+		n := viper.GetInt("nBlocks")
+		skip := 1
+		bPs := 10
+		aPs := 20
+		fmt.Println("rpcProvider: ", viper.GetString("settings.rpcProvider"))
+		fmt.Println("cachePath: ", viper.GetString("settings.cachePath"))
+		fmt.Println("startBlock: ", start)
+		fmt.Println("nBlocks: ", n)
+		processBlocks(start, n, skip, bPs, aPs)
+	},
+}
+
+var maxBlocks int
+
+func init() {
+	rootCmd.AddCommand(scrapeCmd)
+
+	// Here you will define your flags and configuration settings.
+
+	// Cobra supports Persistent Flags which will work for this command
+	// and all subcommands, e.g.:
+	scrapeCmd.PersistentFlags().IntVarP(&maxBlocks, "maxBlocks", "m", 0, "The maximum number of blocks to scrape (default is to catch up).")
+
+	// Cobra supports local flags which will only run when this command
+	// is called directly, e.g.:
+	// scrapeCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+}
 
 // Params - used in calls to the RPC
 type Params []interface{}
@@ -30,7 +76,7 @@ func getTracesForBlock(blockNum int) ([]byte, error) {
 	payloadBytes, err := json.Marshal(RPCPayload{"2.0", "trace_block", Params{fmt.Sprintf("0x%x", blockNum)}, 2})
 	if err == nil {
 		body := bytes.NewReader(payloadBytes)
-		req, err := http.NewRequest("POST", "http://localhost:8545", body)
+		req, err := http.NewRequest("POST", viper.GetString("settings.rpcProvider"), body)
 		if err == nil {
 			req.Header.Set("Content-Type", "application/json")
 			resp, err := http.DefaultClient.Do(req)
@@ -57,7 +103,7 @@ func getLogsForBlock(blockNum int) ([]byte, error) {
 	payloadBytes, err := json.Marshal(RPCPayload{"2.0", "eth_getLogs", Params{Filter{fmt.Sprintf("0x%x", blockNum), fmt.Sprintf("0x%x", blockNum)}}, 2})
 	if err == nil {
 		body := bytes.NewReader(payloadBytes)
-		req, err := http.NewRequest("POST", "http://localhost:8545", body)
+		req, err := http.NewRequest("POST", viper.GetString("settings.rpcProvider"), body)
 		if err == nil {
 			req.Header.Set("Content-Type", "application/json")
 			resp, err := http.DefaultClient.Do(req)
@@ -78,7 +124,7 @@ func getTransactionReceipt(hash string) ([]byte, error) {
 	payloadBytes, err := json.Marshal(RPCPayload{"2.0", "eth_getTransactionReceipt", Params{hash}, 2})
 	if err == nil {
 		body := bytes.NewReader(payloadBytes)
-		req, err := http.NewRequest("POST", "http://localhost:8545", body)
+		req, err := http.NewRequest("POST", viper.GetString("settings.rpcProvider"), body)
 		if err == nil {
 			req.Header.Set("Content-Type", "application/json")
 			resp, err := http.DefaultClient.Do(req)
@@ -194,7 +240,7 @@ func getTraceAddresses(addresses map[string]bool, traces *BlockTraces, blockNum 
 
 	for i := 0; i < len(traces.Result); i++ {
 
-		idx := PadLeft(strconv.Itoa(traces.Result[i].TransactionPosition), 5)
+		idx := padLeft(strconv.Itoa(traces.Result[i].TransactionPosition), 5)
 
 		blockAndIdx := "\t" + blockNum + "\t" + idx
 		// Try to get addresses from the input data
@@ -203,9 +249,9 @@ func getTraceAddresses(addresses map[string]bool, traces *BlockTraces, blockNum 
 			//fmt.Println("Input data:", inputData, len(inputData))
 			for i := 0; i < len(inputData)/64; i++ {
 				addr := string(inputData[i*64 : (i+1)*64])
-				if PotentialAddress(addr) {
+				if potentialAddress(addr) {
 					addr = "0x" + string(addr[24:])
-					if GoodAddr(addr) {
+					if goodAddr(addr) {
 						addresses[addr+blockAndIdx] = true
 					}
 				}
@@ -215,24 +261,24 @@ func getTraceAddresses(addresses map[string]bool, traces *BlockTraces, blockNum 
 		if traces.Result[i].Type == "call" {
 			// If it's a call, get the to and from
 			from := traces.Result[i].Action.From
-			if GoodAddr(from) {
+			if goodAddr(from) {
 				addresses[from+blockAndIdx] = true
 			}
 			to := traces.Result[i].Action.To
-			if GoodAddr(to) {
+			if goodAddr(to) {
 				addresses[to+blockAndIdx] = true
 			}
 
 		} else if traces.Result[i].Type == "reward" {
 			if traces.Result[i].Action.RewardType == "block" {
 				author := traces.Result[i].Action.Author
-				if GoodAddr(author) {
+				if goodAddr(author) {
 					addresses[author+"\t"+blockNum+"\t"+"99999"] = true
 				}
 			} else if traces.Result[i].Action.RewardType == "uncle" {
 
 				//author := traces.Result[i].Action.Author
-				//if GoodAddr(author) {
+				//if goodAddr(author) {
 				//  addresses[author + "\t" + blockNum + "\t" + "99998"] = true
 				//}
 			} else {
@@ -241,22 +287,22 @@ func getTraceAddresses(addresses map[string]bool, traces *BlockTraces, blockNum 
 		} else if traces.Result[i].Type == "suicide" {
 			// add the contract that died, and where it sent it's money
 			address := traces.Result[i].Action.Address
-			if GoodAddr(address) {
+			if goodAddr(address) {
 				addresses[address+blockAndIdx] = true
 			}
 			refundAddress := traces.Result[i].Action.RefundAddress
-			if GoodAddr(refundAddress) {
+			if goodAddr(refundAddress) {
 				addresses[refundAddress+blockAndIdx] = true
 			}
 
 		} else if traces.Result[i].Type == "create" {
 			// add the creator, and the new address name
 			from := traces.Result[i].Action.From
-			if GoodAddr(from) {
+			if goodAddr(from) {
 				addresses[from+blockAndIdx] = true
 			}
 			address := traces.Result[i].Result.Address
-			if GoodAddr(address) {
+			if goodAddr(address) {
 				addresses[address+blockAndIdx] = true
 			}
 
@@ -267,9 +313,9 @@ func getTraceAddresses(addresses map[string]bool, traces *BlockTraces, blockNum 
 					initData := traces.Result[i].Action.Init[10:]
 					for i := 0; i < len(initData)/64; i++ {
 						addr := string(initData[i*64 : (i+1)*64])
-						if PotentialAddress(addr) {
+						if potentialAddress(addr) {
 							addr = "0x" + string(addr[24:])
-							if GoodAddr(addr) {
+							if goodAddr(addr) {
 								addresses[addr+blockAndIdx] = true
 							}
 						}
@@ -295,7 +341,7 @@ func getTraceAddresses(addresses map[string]bool, traces *BlockTraces, blockNum 
 							panic(err)
 						}
 						addr := receipt.Result.ContractAddress
-						if GoodAddr(addr) {
+						if goodAddr(addr) {
 							addresses[addr+blockAndIdx] = true
 						}
 					}
@@ -313,9 +359,9 @@ func getTraceAddresses(addresses map[string]bool, traces *BlockTraces, blockNum 
 			outputData := traces.Result[i].Result.Output[2:]
 			for i := 0; i < len(outputData)/64; i++ {
 				addr := string(outputData[i*64 : (i+1)*64])
-				if PotentialAddress(addr) {
+				if potentialAddress(addr) {
 					addr = "0x" + string(addr[24:])
-					if GoodAddr(addr) {
+					if goodAddr(addr) {
 						addresses[addr+blockAndIdx] = true
 					}
 				}
@@ -331,15 +377,15 @@ func getLogAddresses(addresses map[string]bool, logs *BlockLogs, blockNum string
 		if err != nil {
 			fmt.Println("Error:", err)
 		}
-		idx := PadLeft(strconv.FormatInt(idxInt, 10), 5)
+		idx := padLeft(strconv.FormatInt(idxInt, 10), 5)
 
 		blockAndIdx := "\t" + blockNum + "\t" + idx
 
 		for j := 0; j < len(logs.Result[i].Topics); j++ {
 			addr := string(logs.Result[i].Topics[j][2:])
-			if PotentialAddress(addr) {
+			if potentialAddress(addr) {
 				addr = "0x" + string(addr[24:])
-				if GoodAddr(addr) {
+				if goodAddr(addr) {
 					addresses[addr+blockAndIdx] = true
 				}
 			}
@@ -349,9 +395,9 @@ func getLogAddresses(addresses map[string]bool, logs *BlockLogs, blockNum string
 			inputData := logs.Result[i].Data[2:]
 			for i := 0; i < len(inputData)/64; i++ {
 				addr := string(inputData[i*64 : (i+1)*64])
-				if PotentialAddress(addr) {
+				if potentialAddress(addr) {
 					addr = "0x" + string(addr[24:])
-					if GoodAddr(addr) {
+					if goodAddr(addr) {
 						addresses[addr+blockAndIdx] = true
 					}
 				}
@@ -371,7 +417,7 @@ func writeAddresses(blockNum string, addresses map[string]bool) {
 	sort.Strings(addressArray)
 	toWrite := []byte(strings.Join(addressArray[:], "\n") + "\n")
 
-	folderPath := "data" //+ string(blockNum[:3]) + "/" + string(blockNum[3:6])
+	folderPath := viper.GetString("settings.cachePath") + "new_index/" //"data" //+ string(blockNum[:3]) + "/" + string(blockNum[3:6])
 	if _, err := os.Stat(folderPath); os.IsNotExist(err) {
 		os.MkdirAll(folderPath, os.ModePerm)
 	}
@@ -381,7 +427,7 @@ func writeAddresses(blockNum string, addresses map[string]bool) {
 	if err != nil {
 		fmt.Println("Error writing file:", err)
 	}
-	//	fmt.Print(blockNum, "\t", len(addresses), "     \r")
+	fmt.Print(blockNum, "\t", len(addresses), "     \r")
 }
 
 func extractAddresses(addressChannel chan BlockInternals, addressWG *sync.WaitGroup) {
@@ -399,7 +445,7 @@ func extractAddresses(addressChannel chan BlockInternals, addressWG *sync.WaitGr
 
 		blockNum := ""
 		if traces.Result != nil && len(traces.Result) > 0 {
-			blockNum = PadLeft(strconv.Itoa(traces.Result[0].BlockNumber), 9)
+			blockNum = padLeft(strconv.Itoa(traces.Result[0].BlockNumber), 9)
 			getTraceAddresses(addresses, &traces, blockNum)
 		}
 
@@ -410,7 +456,7 @@ func extractAddresses(addressChannel chan BlockInternals, addressWG *sync.WaitGr
 			panic(err)
 		}
 		if blockNum == "" && len(logs.Result) > 0 {
-			blockNum = PadLeft(logs.Result[0].BlockNumber, 9)
+			blockNum = padLeft(logs.Result[0].BlockNumber, 9)
 		}
 		if blockNum != "" {
 			getLogAddresses(addresses, &logs, blockNum)
@@ -448,27 +494,32 @@ func processBlocks(startBlock int, numBlocks int, skip int, nBlockProcesses int,
 	addressWG.Wait()
 }
 
-func main() {
-	start := 100000
-	n := 200000
-	skip := 10000
-	bPs := 0
-	aPs := 0
-	sPs := 10
-	fmt.Print("\t")
-	for aPs = 1; aPs < 100; aPs = aPs + sPs {
-		fmt.Print(aPs, "\t")
+func padLeft(str string, totalLen int) string {
+	if len(str) >= totalLen {
+		return str
 	}
-	fmt.Print("\n")
-	for bPs = 1; bPs < 100; bPs = bPs + sPs {
-		fmt.Print(bPs, "\t")
-		for aPs = 1; aPs < 100; aPs = aPs + sPs {
-			startTime := time.Now()
-			processBlocks(start, n, skip, bPs, aPs)
-			//			fmt.Println(start, " ", n, " ", skip, " ", ((n - start) / skip), " ", bPs, " ", aPs, " ", time.Since(startTime))
-			fmt.Print(time.Since(startTime).Nanoseconds()/1000., "\t")
-		}
-		fmt.Print("\n")
+	zeros := ""
+	for i := 0; i < totalLen-len(str); i++ {
+		zeros += "0"
 	}
-	os.Exit(1)
+	return zeros + str
+}
+
+func goodAddr(addr string) bool {
+	if addr < "0x0000000000000000000000000000000000000009" {
+		return false
+	}
+	return true
+}
+
+func potentialAddress(addr string) bool {
+	small := "00000000000000000000000000000000000000ffffffffffffffffffffffffff"
+	largePrefix := "000000000000000000000000"
+	if addr <= small || !strings.HasPrefix(addr, largePrefix) {
+		return false
+	}
+	if strings.HasSuffix(addr, "00000000") {
+		return false
+	}
+	return true
 }
