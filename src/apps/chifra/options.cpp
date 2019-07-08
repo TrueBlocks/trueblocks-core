@@ -87,8 +87,10 @@ bool COptions::parseArguments(string_q& command) {
 
     if (mode.empty())
         EXIT_USAGE("Please specify " + params[0].description + ".");
-    establishFolder(getMonitorPath("", FM_PRODUCTION));
-    establishFolder(getMonitorPath("", FM_STAGING));
+    if (mode != "scrape") {
+        establishFolder(getMonitorPath("", FM_PRODUCTION));
+        establishFolder(getMonitorPath("", FM_STAGING));
+    }
 
     if (verbose && !contains(tool_flags, "-v"))
         tool_flags += (" -v:" + uint_2_Str(verbose));
