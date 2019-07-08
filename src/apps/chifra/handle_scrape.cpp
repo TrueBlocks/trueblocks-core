@@ -54,9 +54,13 @@ bool COptions::handle_scrape(void) {
                 if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
             }
 
-            cerr << "Sleeping for " << sleep << " seconds" << endl;
-            if (!isTestMode())
+            if (sleep != 0)
+                cerr << "Sleeping for " << sleep << " seconds" << endl;
+            if (!isTestMode()) {
                 usleep((unsigned int)sleep * 1000000);
+                if (sleep == 0)
+                    usleep(500000); // stay responsive to cntrl+C
+            }
         }
     }
     return true;

@@ -56,6 +56,8 @@ func init() {
 	rootCmd.PersistentFlags().String("cachePath", "", "The location of TrueBlocks' cache")
 	rootCmd.PersistentFlags().IntP("startBlock", "s", -1, "First block to visit")
 	rootCmd.PersistentFlags().IntP("nBlocks", "n", 5000, "The number of blocks to scrape during this invocation")
+	rootCmd.PersistentFlags().IntP("nBlockChans", "", 50, "The number of block processor go routines to create")
+	rootCmd.PersistentFlags().IntP("nAddrChans", "", 100, "The number of address processor go routines to create")
 }
 
 // initConfig reads in config file and ENV variables if set.
@@ -79,7 +81,7 @@ func initConfig() {
 
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
-		fmt.Println("Using config file:", viper.ConfigFileUsed())
+		//		fmt.Println("Using config file:", viper.ConfigFileUsed())
 	} else {
 		fmt.Println(err)
 	}
@@ -92,5 +94,7 @@ func initConfig() {
 	viper.BindPFlag("settings.cachePath", rootCmd.PersistentFlags().Lookup("cachePath"))
 	viper.BindPFlag("startBlock", rootCmd.PersistentFlags().Lookup("startBlock"))
 	viper.BindPFlag("nBlocks", rootCmd.PersistentFlags().Lookup("nBlocks"))
+	viper.BindPFlag("nBlockChans", rootCmd.PersistentFlags().Lookup("nBlockChans"))
+	viper.BindPFlag("nAddrChans", rootCmd.PersistentFlags().Lookup("nAddrChans"))
 	viper.SetEnvKeyReplacer(strings.NewReplacer("SETTINGS.", ""))
 }

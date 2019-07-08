@@ -135,8 +135,8 @@ namespace qblocks {
     #define bloomFolder           (getCachePath("blooms/"))
 
     #define indexFolder           (getCachePath("addr_index/"))
-    #define indexFolder_finalized (configPath  ("cache/addr_index/finalized/"))
-    #define indexFolder_blooms    (configPath  ("cache/addr_index/blooms/"))
+    #define indexFolder_finalized (getCachePath("addr_index/finalized/"))
+    #define indexFolder_blooms    (getCachePath("addr_index/blooms/"))
     #define indexFolder_staging   (getCachePath("addr_index/staging/"))
     #define indexFolder_pending   (getCachePath("addr_index/pending/"))
     #define indexFolder_zips      (getCachePath("addr_index/zips/"))
