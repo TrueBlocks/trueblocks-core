@@ -21,13 +21,14 @@ bool COptions::handle_balances(void) {
 
     for (auto addr : addrs) {
         ostringstream os;
-        if (getGlobalConfig("chifra")->getConfigBool("api", "remote_bals", false)) {
-            string_q cmd = "/Users/jrush/src.GitHub/quickBlocks/build/get_balances.sh " + addr;
-            cout << cmd << endl;
-            if (system(cmd.c_str())) { }  // Don't remove. Silences compiler warnings
-//            cout << "/Users/jrush/Desktop/files/" + addr + ".bals.txt";
-
-        } else {
+//        if (getGlobalConfig("chifra")->getConfigBool("api", "remote_bals", false)) {
+//            string_q cmd = "/Users/jrush/src.GitHub/quickBlocks/build/get_balances.sh " + addr;
+//            cout << cmd << endl;
+//            if (system(cmd.c_str())) { }  // Don't remove. Silences compiler warnings
+////            cout << "/Users/jrush/Desktop/files/" + addr + ".bals.txt";
+//
+//        } else
+          {
             string_q fn = "/tmp/results";
             os << "cd " << getMonitorPath("") << " ; ";
             os << "cacheMan " << " -d " << addr << ".acct.bin >" + fn + " ; ";
@@ -44,7 +45,7 @@ bool COptions::handle_balances(void) {
                 explode(parts, line, '\t');
                 cout << addr << "\t" << parts[0] << "\t" << parts[1] << "\t" << wei_2_Ether(bnu_2_Str(getBalanceAt(addr, parts[0]))) << endl;
             }
-            ::remove("/tmp/results");
+            ::remove(fn.c_str());
         }
     }
 
