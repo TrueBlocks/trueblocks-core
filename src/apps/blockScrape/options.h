@@ -10,12 +10,19 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    timestamp_t  latestBlockTs;
-    blknum_t     latestBlockNum;
-    uint64_t     maxIndexRows;
-    blknum_t     nBlocks;
-    size_t       nBlockChans;
-    size_t       nAddrChans;
+    timestamp_t latestBlockTs;
+    blknum_t    latestBlockNum;
+    uint64_t    maxIndexRows;
+#ifdef OLD_CODE
+    blknum_t    maxBlocks;
+    bool        writeBlocks;
+    blknum_t    startBlock;
+    blknum_t    endBlock;
+#else
+    blknum_t    nBlocks;
+    size_t      nBlockChans;
+    size_t      nAddrChans;
+#endif
 
     COptions(void);
     ~COptions(void);

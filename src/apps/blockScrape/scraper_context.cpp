@@ -145,13 +145,15 @@ bool CScraper::scrapeTransaction(void) {
     }
 
     // If we're writing blocks, we need an error code on the transaction
-//    if (options->writeBlocks) {
-//        if (block.blockNumber < byzantiumBlock) {
-//            pTrans->isError = hasError;
-//        } else {
-//            pTrans->isError = (pTrans->receipt.status == 0); // status contains zero on fail
-//        }
-//    }
+#ifdef OLD_CODE
+    if (options->writeBlocks) {
+        if (block.blockNumber < byzantiumBlock) {
+            pTrans->isError = hasError;
+        } else {
+            pTrans->isError = (pTrans->receipt.status == 0); // status contains zero on fail
+        }
+    }
+#endif
 
     return true;
 }
