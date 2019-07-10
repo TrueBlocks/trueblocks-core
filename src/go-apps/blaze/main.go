@@ -2,7 +2,7 @@ package main
 
 import (
 	"os"
-	"./cmd"
+	"github.com/Great-Hill-Corporation/trueblocks-core/src/go-apps/blaze/cmd"
 )
 
 func main() {
