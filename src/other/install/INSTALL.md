@@ -1,6 +1,6 @@
 ## Installation Instructions
 
-The only dependencies for QBlocks are (1) a locally-running Ethereum node (or a remote Ethereum node such as [Infura](http://infura.io)), (2) the `curl` libraries, and (3) build tools such as `git`, `cmake`, and `python`.  Below we give specific instructions for your operating sytem. Following that are instructions for how to build and install QBlocks and further steps.
+The only dependencies for QBlocks are (1) a locally-running Ethereum node (or a remote Ethereum node such as [Infura](http://infura.io)), (2) the `curl` libraries, and (3) build tools such as `git`, `cmake`, `python`, and `go`.  Below we give specific instructions for your operating sytem. Following that are instructions for how to build and install QBlocks and further steps.
 
 The [ethslurp tool](../../apps/ethslurp/README.md) will not run without an API key from [EtherScan.io](http://etherscan.io/apis) (registration is required). The tool will request a key from that site before running.
 
@@ -17,6 +17,8 @@ sudo yum groupinstall "Development Tools"
 sudo yum install cmake python python-devel libcurl-devel
 ```
 
+Additionally, please [install Go](https://golang.org/doc/install).
+
 [Continue below](#finish) to build and install QBlocks
 
 ***
@@ -28,6 +30,8 @@ sudo dnf group install 'Development Tools'
 sudo dnf install cmake python python-devel libcurl-devel
 yum -y install qt-devel cmake
 ```
+
+Additionally, please [install Go](https://golang.org/doc/install).
 
 [Continue below](#finish) to build and install QBlocks
 
@@ -43,6 +47,8 @@ export CPLUS_INCLUDE_PATH=/usr/local/include/:${CPLUS_INCLUDE_PATH}
 export LIBRARY_PATH=/usr/local/lib/:${LIBRARY_PATH}
 ```
 
+Additionally, please [install Go](https://golang.org/doc/install).
+
 [Continue below](#finish) to build and install QBlocks
 
 ***
@@ -53,6 +59,8 @@ export LIBRARY_PATH=/usr/local/lib/:${LIBRARY_PATH}
 sudo apt install build-essential git cmake python python-dev libcurl3-dev
 ```
 
+Additionally, please [install Go](https://golang.org/doc/install).
+
 [Continue below](#finish) to build and install QBlocks
 
 ***
@@ -62,6 +70,8 @@ sudo apt install build-essential git cmake python python-dev libcurl3-dev
    > `curl/libcurl` and `python` are already installed  
    > Install `cmake` [using these instructions](https://cmake.org/download/) or `brew install cmake`  
    > Install `git` [using these instructions](https://git-scm.com/download/mac).
+
+Additionally, please [install Go](https://golang.org/doc/install).
 
 [Continue below](#finish) to build and install QBlocks
 
