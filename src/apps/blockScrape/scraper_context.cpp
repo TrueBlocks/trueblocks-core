@@ -101,7 +101,9 @@ bool CScraper::scrapeTransaction(void) {
     fields.reserve(countOf(traces, '+') + 10); // extra room
 
     explode(fields, traces, '+');
+#ifdef OLD_CODE
     bool hasError = false;
+#endif
     for (auto v : fields) {
         v = trim(v);
 
@@ -136,9 +138,10 @@ bool CScraper::scrapeTransaction(void) {
         if (startsWith(v, "traceAddress"))
             maxTraceDepth = max(maxTraceDepth, (uint64_t)(countOf(v, '|') + 1));
 
+#ifdef OLD_CODE
         if (startsWith(v, "error"))
             hasError = true;
-
+#endif
         // We ignore 'code' and 'init'
         // if (startsWith(v, "code") cout << v << endl;
         // if (startsWith(v, "init") cout << v << endl;
