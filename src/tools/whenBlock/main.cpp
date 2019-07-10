@@ -53,34 +53,6 @@ int main(int argc, const char *argv[]) {
     return 0;
 }
 
-//--------------------------------------------------------------
-bool findTimestamp_binarySearch(CBlock& block, size_t first, size_t last) {
-
-    string_q t("|/-\\|/-\\");
-    static int i = 0;
-    if (!isTestMode()) { cerr << "\r" << cGreen << t[(i++%8)] << " working" << cOff; cerr.flush(); }
-
-    if (last > first) {
-        size_t mid = first + ((last - first) / 2);
-        CBlock b1, b2;
-        getBlock(b1, mid);
-        getBlock(b2, mid+1);
-        bool atMid  = (b1.timestamp <= block.timestamp);
-        bool atMid1 = (b2.timestamp <= block.timestamp);
-        if (atMid && !atMid1) {
-            block = b1;
-            return true;
-        } else if (!atMid) {
-            // we're too high, so search below
-            return findTimestamp_binarySearch(block, first, mid-1);
-        }
-        // we're too low, so search above
-        return findTimestamp_binarySearch(block, mid+1, last);
-    }
-    getBlock(block, first);
-    return true;
-}
-
 //---------------------------------------------------------------
 bool lookupDate(const COptions *options, CBlock& block, const timestamp_t& ts) {
     time_q date = ts_2_Date(ts);
@@ -98,7 +70,7 @@ bool lookupDate(const COptions *options, CBlock& block, const timestamp_t& ts) {
     }
 
     block.timestamp = ts;
-    bool ret = findTimestamp_binarySearch(block, start, stop);
+    bool ret = findTimestamp_binarySearch(block, start, stop, true);
     if (!isTestMode()) { cerr << "\r"; cerr.flush(); }
     return ret;
 }

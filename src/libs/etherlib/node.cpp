@@ -1047,6 +1047,33 @@ extern void loadParseMap(void);
         return os.str();
     }
 
+    //--------------------------------------------------------------
+    bool findTimestamp_binarySearch(CBlock& block, size_t first, size_t last, bool progress) {
+        string_q t("|/-\\|/-\\");
+        static int i = 0;
+        if (progress && !isTestMode()) { cerr << "\r" << cGreen << t[(i++%8)] << " working" << cOff; cerr.flush(); }
+
+        if (last > first) {
+            size_t mid = first + ((last - first) / 2);
+            CBlock b1, b2;
+            getBlock(b1, mid);
+            getBlock(b2, mid+1);
+            bool atMid  = (b1.timestamp <= block.timestamp);
+            bool atMid1 = (b2.timestamp <= block.timestamp);
+            if (atMid && !atMid1) {
+                block = b1;
+                return true;
+            } else if (!atMid) {
+                // we're too high, so search below
+                return findTimestamp_binarySearch(block, first, mid-1);
+            }
+            // we're too low, so search above
+            return findTimestamp_binarySearch(block, mid+1, last);
+        }
+        getBlock(block, first);
+        return true;
+    }
+
     //-----------------------------------------------------------------------
     const string_q defHide =
     "CTransaction: price, nonce, input"

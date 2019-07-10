@@ -12,6 +12,7 @@
  *-------------------------------------------------------------------------------------------*/
 #include "acctlib.h"
 
+uint64_t cnt = 0;
 #define indexFolder_sorted (getCachePath("addr_index/sorted/"))
 //----------------------------------------------------------------
 bool visitFile(const string_q& path, void *data) {
@@ -21,65 +22,79 @@ bool visitFile(const string_q& path, void *data) {
 
     } else {
 
-        string_q asciiFn = substitute(path, indexFolder_sorted, "./output-ascii/");
+        string_q asciiFn = substitute(path, indexFolder_sorted, "./ascii/");
         bool asciiExists = fileExists(asciiFn);
 
-        string_q binaryFn = substitute(substitute(path, indexFolder_sorted, indexFolder_finalized), ".txt", ".bin");
+        string_q binaryFn = substitute(substitute(path, indexFolder_sorted, "./finalized/"), ".txt", ".bin");
         bool binaryExists = fileExists(binaryFn);
 
-        string_q bloomFn = substitute(substitute(path, indexFolder_sorted, indexFolder_blooms), ".txt", ".bloom");
+        string_q bloomFn = substitute(substitute(path, indexFolder_sorted, "./blooms/"), ".txt", ".bloom");
         bool bloomExists = fileExists(bloomFn);
 
-        CStringArray lines;
-        if (!asciiExists || !binaryExists || !bloomExists) {
-            cerr << endl << cGreen << "Processing file: " << cTeal << path << cOff << endl;
-
-            cerr << "\tReading..." << endl;
-            asciiFileToLines(path, lines);
-
-            cerr << "\tSorting..." << endl;
-            sort(lines.begin(), lines.end());
+        if (asciiExists && binaryExists && bloomExists) {
+            cerr << cGreen << cnt++ << ": Completed: " << cTeal << path << cOff << endl;
+            return true;
         }
 
-        if (asciiExists) {
+        CStringArray lines;
+        cerr << endl << cGreen << cnt++ << ": Processing file: " << cTeal << path << cOff << endl;
+
+        cerr << "\tReading..." << endl;
+        asciiFileToLines(path, lines);
+
+        cerr << "\tSorting..." << endl;
+        sort(lines.begin(), lines.end());
+
+        lockSection(true);
+        if (asciiExists)
             cerr << "\t" << greenCheck << " Ascii file " << asciiFn << " exists..." << endl;
-        } else {
-            writeIndexAsAscii(asciiFn, lines);
-            // We now copy again to build the IPFS cache file. We zip the data first to make it as small as possible
-            cerr << "\tCopying zip files..." << endl;
-            string_q zipPath = substitute(asciiFn, "/output-ascii/", "/output-azips/");
-            string_q cmd = "cp -p " + asciiFn + " " + zipPath + " ; ";
-            cerr << "\t" << cmd << endl;
-            if (!doCommand(cmd).empty())
-                cerr << "\t" << redX << " command failed.";
+        if (!asciiExists) {
+            writeIndexAsAscii(asciiFn, lines);asciiExists=true;
+            string_q zipPath = substitute(asciiFn, "/ascii/", "/ascii.zips/");
+            if (!fileExists(zipPath)) {
+                cerr << "\tCopying zip files..." << endl;
+                string_q cmd = "cp -p " + asciiFn + " " + zipPath + " ; ";
+                cerr << "\t" << cmd << endl;
+                if (!doCommand(cmd).empty())
+                    cerr << "\t" << redX << " command failed." << endl;
+                cmd = " cd ./ascii.zips/ ; gzip *.txt ;";
+                if (!doCommand(cmd).empty())
+                    cerr << "\t" << redX << " command failed." << endl;
+            }
         }
 
         if (binaryExists)
             cerr << "\t" << greenCheck << " Binary file " << binaryFn << " exists..." << endl;
         if (bloomExists)
             cerr << "\t" << greenCheck << " Bloom file " << bloomFn << " exists..." << endl;
-
         if (!binaryExists || !bloomExists) {
             // writes both bin and bloom
             writeIndexAsBinary(binaryFn, lines);
 
             // We now copy again to build the IPFS cache file. We zip the data first to make it as small as possible
             cerr << "\tCopying zip files..." << endl;
-            string_q zipPath = substitute(binaryFn, indexFolder_finalized, "./output-bzips/");
+            string_q zipPath = substitute(binaryFn, "/finalized/", "/finalized.zips/");
             string_q cmd = "cp -p " + binaryFn + " " + zipPath + " ; ";
             cerr << "\t" << cmd << endl;
             if (!doCommand(cmd).empty())
                 cerr << "\t" << redX << " command failed.";
+            cmd = " cd ./finalized.zips/ ; gzip *.bin ;";
+            if (!doCommand(cmd).empty())
+                cerr << "\t" << redX << " command failed." << endl;
 
-            zipPath = substitute(bloomFn, indexFolder_blooms, "./output-czips/");
+            zipPath = substitute(bloomFn, "/blooms/", "/blooms.zips/");
             cmd = "cp -p " + bloomFn + " " + zipPath + " ; ";
             cerr << "\t" << cmd << endl;
             if (!doCommand(cmd).empty())
                 cerr << "\t" << redX << " command failed.";
+            cmd = " cd ./blooms.zips/ ; gzip *.bloom ;";
+            if (!doCommand(cmd).empty())
+                cerr << "\t" << redX << " command failed." << endl;
         }
+        lockSection(false);
     }
 
-    return true;
+    return !shouldQuit();
 }
 
 //----------------------------------------------------------------
