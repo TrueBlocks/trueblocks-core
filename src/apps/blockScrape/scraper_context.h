@@ -43,7 +43,12 @@ extern bool notePotential(const CAppearance& item, void *data);
 extern void foundPotential(ADDRESSFUNC func, void *data, blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList);
 
 #define lastPrecompile address_t("0x0000000000000000000000000000000000000008")
-#define MARKER 50
 #define MINER_MARKER 99999
 #define SIZE_REPORT 50
+#ifdef OLD_CODE
+#define MARKER 50
 #define DEFAULT_MAX_INDEX_ROWS 350000
+#else
+#define MARKER 5
+#define DEFAULT_MAX_INDEX_ROWS 500000
+#endif
