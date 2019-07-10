@@ -6,6 +6,8 @@
 #include "acctlib.h"
 #include "options.h"
 
+#ifdef OLD_CODE
+#else
 extern void finalizeIndexChunk2(COptions *options, CStringArray& stage);
 extern blknum_t getLastBlockInFolder(const string_q& folder);
 extern blknum_t firstUnripe(void);
@@ -15,9 +17,11 @@ extern blknum_t firstUnripe(void);
 #define MARKER 2
 #define SS(a) { cerr << bBlue << padLeft(padRight((a),22,'.'),28) << cOff << "\r"; }
 #define ES()  { cerr << "\t\t\t\t" << TIC() << cOff << bBlue << " ...done                      " << endl; }
+#endif
 //--------------------------------------------------------------------------
 bool handle_scrape(COptions &options) {
 
+#ifndef OLD_CODE
     options.maxIndexRows = 500000;
 
     // We do not want to be running if the user is scraping an account
@@ -68,9 +72,6 @@ bool handle_scrape(COptions &options) {
     }
     ES();
 
-#if 0
-//    stringToAsciiFile(indexFolder_sorted + padNum9(endBlock) + ".txt", "x");
-#else
     SS("Grouping");
     string_q newLines;
     blknum_t endBlock = min(unripe, startBlock + options.nBlocks);  // we only move ripe blocks to the indexes
@@ -113,9 +114,7 @@ bool handle_scrape(COptions &options) {
     explode(newRecords, newLines, '\n');
     ES();
     finalizeIndexChunk2(&options, newRecords);
-#endif
-
-#if 0
+#else
     //
     //  Determine most recently finalized block (lastFinal)
     //      'startBlock' = lastFinal + 1
@@ -151,6 +150,8 @@ bool handle_scrape(COptions &options) {
     //      Else
     //          Write the non-final block to non-final index
     //          Write the block to the binary cache (it may be removed later)
+
+    bool acctScrRunning = isRunning("acctScrape", false);
     for (blknum_t num = options.startBlock ; num < options.endBlock && !shouldQuit() && !acctScrRunning ; num++) {
         CScraper scraper(&options, num);
         scraper.status = "scan";
@@ -217,6 +218,7 @@ bool handle_scrape(COptions &options) {
     return true;
 }
 
+#ifndef OLD_CODE
 //-------------------------------------------------------------------------------------------------------------
 inline bool waitForCreate(const string_q& filename) {
     size_t mx = 1000;
@@ -315,14 +317,14 @@ void finalizeIndexChunk2(COptions *options, CStringArray& stage) {
             cerr << cGreen << "\t\t" << 0 << ": " << lines[0] << cOff << endl;
             cerr << cGreen << "\t\t" << 1 << ": " << lines[1] << cOff << endl;
             for (uint64_t record = 0 ; record <= where ; record++) {
-                if (verbose) {
+                if (verbose > 2) {
                     cerr << bBlue << "\t\t" << record << ": " << lines[record] << cOff << "\r";
                     if (record == where - 1)
                         cerr << endl;
                 }
                 consolidatedLines.push_back(lines[record]);
             }
-            if (verbose) {
+            if (verbose > 2) {
                 cerr << endl;
                 cerr << bTeal << "\t\t" << (where+1) << ": " << lines[where+1] << cOff << endl;
             } else {
@@ -344,14 +346,14 @@ void finalizeIndexChunk2(COptions *options, CStringArray& stage) {
             cerr << cGreen << "\t\t" << where << ": " << lines[where] << cOff << endl;
             cerr << cGreen << "\t\t" << where+1 << ": " << lines[where+1] << cOff << endl;
             for (uint64_t record = where ; record < lines.size() ; record++) {
-                if (verbose) {
+                if (verbose > 2) {
                     cerr << bBlue << "\t\t" << record << ": " << lines[record] << cOff << "\r";
                     if (record == lines.size() - 2)
                         cerr << endl;
                 }
                 remainingLines.push_back(lines[record]);
             }
-            if (verbose)
+            if (verbose > 2)
                 cerr << endl;
             else {
                 cerr << bBlue << "\t\t" << (where-1) << ": " << lines[where-1] << cOff << endl;
@@ -369,60 +371,6 @@ void finalizeIndexChunk2(COptions *options, CStringArray& stage) {
     } else {
         cerr << bRed << "\tDid not consolidate: " << curSize << " of " << options->maxIndexRows << cOff << endl;
     }
-
-#if 0
-    blknum_t first = str_2_Uint(substitute(getFirstFileInFolder(indexFolder_staging, false), indexFolder_staging, ""));
-    blknum_t last  = str_2_Uint(substitute(getLastFileInFolder (indexFolder_staging, false), indexFolder_staging, ""));
-
-    string_q asciiFile = indexFolder_sorted + padNum9(first)+"-"+padNum9(last) + ".txt";
-    string_q binFile = indexFolder_finalized + padNum9(first)+"-"+padNum9(last) + ".bin";
-
-    CStringArray appearances;
-    appearances.reserve(options->maxIndexRows + 100);
-
-    cerr << "Processing index.";
-    cerr.flush();
-
-    for (blknum_t i = first ; i <= last ; i++) {
-        string_q stagingList;
-        string_q file = indexFolder_staging + padNum9(i) + ".txt";
-        asciiFileToString(file, stagingList);
-        CStringArray lns;
-        explode(lns, stagingList, '\n');
-        for (auto ln : lns) {
-            appearances.push_back(ln);
-            if (!(appearances.size() % (options->maxIndexRows / 10))) {
-                cerr << "."; cerr.flush();
-            }
-        }
-    }
-    sort(appearances.begin(), appearances.end());
-
-    size_t cnt = 0;
-    ostringstream os;
-    for (auto app : appearances) {
-        os << app << "\n";
-        if (!(++cnt % (options->maxIndexRows / 10))) {
-            cerr << "."; cerr.flush();
-        }
-    }
-    // TODO(jayrush): should this be stringToAsciiFile not append?
-    appendToAsciiFile(asciiFile, os.str());
-    writeIndexAsBinary(binFile, appearances); // also writes the bloom file
-
-    string_q countFile = indexFolder + "counts.txt";
-    ::remove(countFile.c_str());
-    cnt = 0;
-    cerr << "\ncleaning up"; cerr.flush();
-    for (blknum_t i = first ; i <= last ; i++) {
-        string_q fn = indexFolder_staging + padNum9(i) + ".txt";
-        ::remove(fn.c_str());
-        if (!(++cnt % (options->maxIndexRows / 10))) {
-            cerr << "."; cerr.flush();
-        }
-    }
-    putc(7,stderr);
-#endif
 }
 
 //--------------------------------------------------------------------------
@@ -445,3 +393,4 @@ blknum_t firstUnripe(void) {
     cerr << block.Format("[{BLOCKNUMBER}]\t[{TIMESTAMP}]\t[{AGE}]\t[{DATE}]") << endl;
     return block.blockNumber;
 }
+#endif
