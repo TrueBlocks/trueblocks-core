@@ -4,7 +4,7 @@ cmake_minimum_required (VERSION 2.6)
 # application project
 project (blockScrape-go)
 
-GO_GET(leveldb github.com/syndtr/goleveldb/leveldb)
+# GO_GET(leveldb github.com/syndtr/goleveldb/leveldb)
 ADD_GO_INSTALLABLE_PROGRAM(blockScrape-go *.go)
 
 # Define the executable to be generated
