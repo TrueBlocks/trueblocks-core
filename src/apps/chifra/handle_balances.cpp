@@ -21,13 +21,13 @@ bool COptions::handle_balances(void) {
 
     for (auto addr : addrs) {
         ostringstream os;
-//        if (getGlobalConfig("chifra")->getConfigBool("api", "remote_bals", false)) {
-//            string_q cmd = "/Users/jrush/src.GitHub/quickBlocks/build/get_balances.sh " + addr;
-//            cout << cmd << endl;
-//            if (system(cmd.c_str())) { }  // Don't remove. Silences compiler warnings
-////            cout << "/Users/jrush/Desktop/files/" + addr + ".bals.txt";
-//
-//        } else
+        if (getGlobalConfig("chifra")->getConfigBool("api", "remote_bals", false)) {
+            string_q cmd = "/Users/jrush/src.GitHub/quickBlocks/build/get_balances.sh " + addr;
+            cout << cmd << endl;
+            if (system(cmd.c_str())) { }  // Don't remove. Silences compiler warnings
+//            cout << "/Users/jrush/Desktop/files/" + addr + ".bals.txt";
+
+        } else
           {
             string_q fn = "/tmp/results";
             os << "cd " << getMonitorPath("") << " ; ";

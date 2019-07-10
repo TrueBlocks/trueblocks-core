@@ -11,5 +11,5 @@ include_directories(${BASE_INCLUDE})
 # message (WARNING  "*** Entering apps folder ***")
 
 # Compilation order of the src subdirectories
-#add_subdirectory(blockScrape-go)
-#add_subdirectory(blaze)
+add_subdirectory(blockScrape-go)
+add_subdirectory(blaze)

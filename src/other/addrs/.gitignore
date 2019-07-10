@@ -1,3 +1,8 @@
 counts
 *.xlsx
 x*
+ascii*
+blooms*
+finalized*
+sorted*
+output*

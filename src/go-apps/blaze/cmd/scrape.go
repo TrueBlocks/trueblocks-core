@@ -2,11 +2,13 @@ package cmd
 
 import (
 	"bytes"
+//	"encoding/csv"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
+//	"path/filepath"
 	"sort"
 	"strconv"
 	"strings"
@@ -117,64 +119,85 @@ type BlockInternals struct {
 // getTracesFromBlock Returns all traces for a given block.
 func getTracesFromBlock(blockNum int) ([]byte, error) {
 	payloadBytes, err := json.Marshal(RPCPayload{"2.0", "trace_block", Params{fmt.Sprintf("0x%x", blockNum)}, 2})
-	if err == nil {
-		body := bytes.NewReader(payloadBytes)
-		req, err := http.NewRequest("POST", viper.GetString("settings.rpcProvider"), body)
-		if err == nil {
-			req.Header.Set("Content-Type", "application/json")
-			resp, err := http.DefaultClient.Do(req)
-			if err == nil {
-				tracesBody, err := ioutil.ReadAll(resp.Body)
-				if err == nil {
-					defer resp.Body.Close()
-					return tracesBody, nil
-				}
-			}
-		}
+	if err != nil {
+		return nil, err
 	}
-	return nil, err
+
+	body := bytes.NewReader(payloadBytes)
+	req, err := http.NewRequest("POST", viper.GetString("settings.rpcProvider"), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return nil, err
+	}
+
+	tracesBody, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	defer resp.Body.Close()
+	return tracesBody, nil
 }
 
 // getLogsFromBlock Returns all logs for a given block.
 func getLogsFromBlock(blockNum int) ([]byte, error) {
 	payloadBytes, err := json.Marshal(RPCPayload{"2.0", "eth_getLogs", Params{Filter{fmt.Sprintf("0x%x", blockNum), fmt.Sprintf("0x%x", blockNum)}}, 2})
-	if err == nil {
-		body := bytes.NewReader(payloadBytes)
-		req, err := http.NewRequest("POST", viper.GetString("settings.rpcProvider"), body)
-		if err == nil {
-			req.Header.Set("Content-Type", "application/json")
-			resp, err := http.DefaultClient.Do(req)
-			if err == nil {
-				logsBody, err := ioutil.ReadAll(resp.Body)
-				if err == nil {
-					defer resp.Body.Close()
-					return logsBody, nil
-				}
-			}
-		}
+	if err != nil {
+		return nil, err
 	}
-	return nil, err
+
+	body := bytes.NewReader(payloadBytes)
+	req, err := http.NewRequest("POST", viper.GetString("settings.rpcProvider"), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return nil, err
+	}
+
+	logsBody, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	defer resp.Body.Close()
+	return logsBody, nil
 }
 
-// Returns recipt for a given transaction -- only used in errored contract creations
+// getTransactionReceipt Returns recipt for a given transaction -- only used in errored contract creations
 func getTransactionReceipt(hash string) ([]byte, error) {
 	payloadBytes, err := json.Marshal(RPCPayload{"2.0", "eth_getTransactionReceipt", Params{hash}, 2})
-	if err == nil {
-		body := bytes.NewReader(payloadBytes)
-		req, err := http.NewRequest("POST", viper.GetString("settings.rpcProvider"), body)
-		if err == nil {
-			req.Header.Set("Content-Type", "application/json")
-			resp, err := http.DefaultClient.Do(req)
-			if err == nil {
-				receiptBody, err := ioutil.ReadAll(resp.Body)
-				if err == nil {
-					defer resp.Body.Close()
-					return receiptBody, nil
-				}
-			}
-		}
+	if err != nil {
+		return nil, err
 	}
-	return nil, err
+
+	body := bytes.NewReader(payloadBytes)
+	req, err := http.NewRequest("POST", viper.GetString("settings.rpcProvider"), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return nil, err
+	}
+
+	receiptBody, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	defer resp.Body.Close()
+	return receiptBody, nil
 }
 
 // getTracesAndLogs Process the block channel and for each block query the node for both traces and logs. Send results to addressChannel
@@ -398,6 +421,7 @@ func extractAddressesFromLogs(addressMap map[string]bool, logs *BlockLogs, block
 }
 
 var counter = 0
+
 func writeAddresses(blockNum string, addressMap map[string]bool) {
 
 	addressArray := make([]string, len(addressMap))
@@ -414,13 +438,13 @@ func writeAddresses(blockNum string, addressMap map[string]bool) {
 		os.MkdirAll(folderPath, os.ModePerm)
 	}
 
-	fileName := folderPath + "/" + blockNum + ".txt"
+	fileName := folderPath + blockNum + ".txt"
 	err := ioutil.WriteFile(fileName, toWrite, 0777)
 	if err != nil {
 		fmt.Println("Error writing file:", err)
 	}
-	fmt.Fprint(os.Stderr, "\t\t\t\t", blockNum, " ", len(addressMap), " - ", counter, "\r") // \r
-    counter = counter + 1
+	fmt.Fprint(os.Stderr, "\t\t\t\t", blockNum, " ", len(addressMap), " - ", counter, "    \r") // \r
+	counter = counter + 1
 }
 
 func processBlocks(startBlock int, numBlocks int, skip int, nBlockProcesses int, nAddressProcesses int) {
@@ -451,6 +475,62 @@ func processBlocks(startBlock int, numBlocks int, skip int, nBlockProcesses int,
 	addressWG.Wait()
 }
 
+/*
+func getAllSightings(sightings chan AddrSighting) {
+	for sighting := range sightings {
+		fmt.Println(sighting)
+	}
+}
+
+func searchForAddress(address string, fileNames chan string, sightings chan AddrSighting) {
+	for fileName := range fileNames {
+		//fmt.Println(fileName)
+
+		f, err := os.Open(fileName)
+		if err != nil {
+			fmt.Println("ERROR:", err)
+		}
+
+		lines, err := csv.NewReader(f).ReadAll()
+		if err != nil {
+			fmt.Println("ERROR:", err)
+		}
+		f.Close()
+
+		// Binary search for addresses
+		i := sort.Search(len(lines), func(i int) bool { return lines[i][0] >= address })
+		if i < len(lines) && lines[i][0] == address {
+			// found the address
+			block, err := strconv.Atoi(lines[i][1])
+			txIdx, err := strconv.Atoi(lines[i][2])
+			if err != nil {
+				fmt.Println("ERROR:", err)
+			}
+
+			// TODO: note that we didn't find every block it was included in
+			sightings <- AddrSighting{block, txIdx}
+		}
+	}
+
+	for i := 0; i < 10; i++ {
+		go searchForAddress("0xc8883059be00EC5F708398369B857A7487130317", fileNames, sightings)
+	}
+
+	go getAllSightings(sightings)
+
+	root := "/home/jrush/goblocks/blocks"
+	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
+		if strings.HasSuffix(path, ".txt") {
+			fileNames <- path
+		}
+		return nil
+	})
+	if err != nil {
+		panic(err)
+	}
+}
+*/
+
 func padLeft(str string, totalLen int) string {
 	if len(str) >= totalLen {
 		return str
@@ -467,7 +547,6 @@ func goodAddr(addr string) bool {
 	// As per EIP 1352, all addresses less than the following value are reserved
 	// for pre-compiles. We don't index precompiles.
 	if addr < "0x000000000000000000000000000000000000ffff" {
-//	if addr < "0x0000000000000000000000000000000000000009" {
 		return false
 	}
 	return true
@@ -504,9 +583,7 @@ Description:
 
   The 'scrape' subcommand freshens the TrueBlocks index, picking up where it last
   left off. 'Scrape' visits every block, queries that block's traces and logs
-  looking for addresses, and writes an index of those addresses per transaction.
-  This allows for lightning fast querying of transaction histories, something
-  that is not practically possible directly against the node.`,
+  looking for addresses, and writes an index of those addresses per transaction.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		start := viper.GetInt("startBlock")
 		if start < 0 {
@@ -514,15 +591,15 @@ Description:
 		}
 		n := viper.GetInt("nBlocks")
 		skip := 1
-		blockChans := viper.GetInt("nBlockChans")
-		addrChans := viper.GetInt("nAddrChans")
+		nBlockProcesses := viper.GetInt("nBlockProcesses")
+		nAddrProcesses := viper.GetInt("nAddrProcesses")
 		//		fmt.Println("rpcProvider: ", viper.GetString("settings.rpcProvider"))
 		//		fmt.Println("cachePath: ", viper.GetString("settings.cachePath"))
 		//		fmt.Println("startBlock: ", start)
 		//		fmt.Println("nBlocks: ", n)
-		//      fmt.Println("nBlockChains: ", blockChans)
-		//      fmt.Println("nAddrChans: ", addrChans)
-		processBlocks(start, n, skip, blockChans, addrChans)
+		//      fmt.Println("nBlockChains: ", nBlockProcesses)
+		//      fmt.Println("nAddrProcesses: ", nAddrProcesses)
+		processBlocks(start, n, skip, nBlockProcesses, nAddrProcesses)
 	},
 }
 
@@ -530,14 +607,5 @@ var maxBlocks int
 
 func init() {
 	rootCmd.AddCommand(scrapeCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
 	scrapeCmd.PersistentFlags().IntVarP(&maxBlocks, "maxBlocks", "m", 0, "The maximum number of blocks to scrape (default is to catch up).")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// scrapeCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
