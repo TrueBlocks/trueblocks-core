@@ -154,6 +154,9 @@ namespace qblocks {
     string_q exportPreamble(format_t fmt, const string_q& format, const CRuntimeClass *pClass);
     string_q exportPostamble(format_t fmt, const string_q& extra);
 
+    //-------------------------------------------------------------------------
+    bool findTimestamp_binarySearch(CBlock& block, size_t first, size_t last, bool progress=false);
+
 }  // namespace qblocks
 
 //-------------------------------------------------------------------------

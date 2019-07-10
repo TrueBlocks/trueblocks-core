@@ -16,6 +16,7 @@ int main(int argc, const char *argv[]) {
 
     for (auto command : options.commandLines) {
         if (options.parseArguments(command)) {
+            verbose = false;
             cerr << bGreen << "Scraping new blocks..." << "\n" << cOff;
             if (!handle_scrape(options))
                 cerr << "\tThe tool ended with an error.";
@@ -23,8 +24,8 @@ int main(int argc, const char *argv[]) {
         }
     }
 
-    if (verbose)
-        cerr << scraperStatus();
+//    if (verbose)
+//        cerr << scraperStatus();
 
     etherlib_cleanup();
 
