@@ -1,10 +1,10 @@
 cacheMan argc: 3 [1:-r] [2:merged.acct.bin] 
 cacheMan -r merged.acct.bin 
 Found removal file...
-00000001 TIME ~ CLOCK - <INFO>  : 	removal instruction: 1-989198.3
-00000002 TIME ~ CLOCK - <INFO>  : 	removal instruction: 2-989332.2
-00000003 TIME ~ CLOCK - <INFO>  : 	removal instruction: 3-989345.2
-00000004 TIME ~ CLOCK - <INFO>  : 	removal instruction: 4-992893.13
+TIME ~ CLOCK - <INFO>   : 	removal instruction: 1-989198.3
+TIME ~ CLOCK - <INFO>   : 	removal instruction: 2-989332.2
+TIME ~ CLOCK - <INFO>   : 	removal instruction: 3-989345.2
+TIME ~ CLOCK - <INFO>   : 	removal instruction: 4-992893.13
 	Reading cache: merged.acct.bin...30 existing records read.
 	Sorting...done
 	Will remove item 989198.3 if found

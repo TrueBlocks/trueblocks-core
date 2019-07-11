@@ -299,6 +299,8 @@ namespace qblocks {
             redirFilename = substitute(cmdLine, "--output:", "|");
             nextTokenClear(redirFilename, '|');
             redirFilename = nextTokenClear(redirFilename, ' ');
+            if (redirFilename.empty())
+                return usage("Please provide a filename for the --output option. Quitting...");
             establishFolder(redirFilename);
             ASSERT(!folderExists(outputFn));
             redirStream.open(redirFilename.c_str());
@@ -917,10 +919,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             cout.rdbuf( coutBackup ); // restore cout's original streambuf
             redirStream.close();
             coutBackup = NULL;
-            if (isTestMode())
-                cout << "--output option is on - file written" << endl;
-            else
-                cout << redirFilename;
+            cout << redirFilename;
             redirFilename = "";
         }
     }

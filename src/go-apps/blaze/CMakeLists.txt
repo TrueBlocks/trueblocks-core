@@ -29,5 +29,4 @@ function(run_test testName)
 #    message(MESSAGE " GOPATH: " ${GO_PATH})
     run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
 endfunction(run_test)
-
-run_test("blaze" "none")
+#run_test("blaze" "none")
