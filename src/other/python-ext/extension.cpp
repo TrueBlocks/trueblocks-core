@@ -15,6 +15,7 @@
 
 static PyObject* init(PyObject* self, PyObject *args) {
     const char *baseURL;
+  
     PyArg_ParseTuple(args, "s", &baseURL);
     getCurlContext()->baseURL = baseURL;
     etherlib_init(quickQuitHandler);
@@ -45,19 +46,25 @@ static PyObject* get_block(PyObject* self, PyObject *args) {
 }
 
 static PyObject* get_trans(PyObject* self, PyObject *args) {
-    char *hash;
-    if (!PyArg_ParseTuple(args, "s", &hash)) {
-        return NULL;
-    }
     CTransaction trans;
-    trans.finalized=true;
+    char* hash;
+
+      
+    if (!PyArg_ParseTuple(args, "z", &hash)) {         
+        return NULL;
+    } 
+      
+   
     getTransaction(trans, hash);
+   
     return Py_BuildValue("s", trans.Format().c_str());
 }
 
 static PyMethodDef _quickblocks_methods[] = {
     {"get_block", get_block, METH_VARARGS, "get_block"},
     {"get_trans", get_trans, METH_VARARGS, "get_trans"},
+    //{"get_transBlockNumberIndex", get_transBlockNumberIndex, METH_VARARGS, "get_transBLockNumberIndex"},
+   // {"get_transBlockHashIndex", get_transBlockHashIndex, METH_VARARGS, "get_transBLockHashIndex"},
     {"init", init, METH_VARARGS, "init"},
     {"cleanup", cleanup, METH_VARARGS, "cleanup"},
     {NULL, NULL, 0, NULL}
