@@ -597,7 +597,7 @@ Description:
 		//		fmt.Println("cachePath: ", viper.GetString("settings.cachePath"))
 		//		fmt.Println("startBlock: ", start)
 		//		fmt.Println("nBlocks: ", n)
-		//      fmt.Println("nBlockChains: ", nBlockProcesses)
+		//      fmt.Println("nBlockProcesses: ", nBlockProcesses)
 		//      fmt.Println("nAddrProcesses: ", nAddrProcesses)
 		processBlocks(start, n, skip, nBlockProcesses, nAddrProcesses)
 	},

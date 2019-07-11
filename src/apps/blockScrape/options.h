@@ -20,8 +20,8 @@ public:
     blknum_t    endBlock;
 #else
     blknum_t    nBlocks;
-    size_t      nBlockChans;
-    size_t      nAddrChans;
+    size_t      nBlockProcesses;
+    size_t      nAddrProcesses;
 #endif
 
     COptions(void);
