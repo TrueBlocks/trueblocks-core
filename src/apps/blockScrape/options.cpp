@@ -13,8 +13,8 @@ static const COption params[] = {
     COption("-maxBlocks:<num>",   "maximum number of blocks to process (defaults to 5000)"),
 #else
     COption("-nBlocks:<num>",     "maximum number of blocks to process (defaults to 5000)"),
-    COption("@nBlockChans:<num>", "number of block channels for blaze"),
-    COption("@nAddrChans:<num>",  "number of address channels for blaze"),
+    COption("@nBlockProcs:<num>", "number of block channels for blaze"),
+    COption("@nAddrProcs:<num>",  "number of address channels for blaze"),
 #endif
     COption("",                   "Decentralized blockchain scraper and block cache.\n"),
 };
@@ -48,17 +48,17 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("--maxBlocks must be a non-negative number. Quitting...");
             maxBlocks = str_2_Uint(arg);
 #else
-        if (startsWith(arg, "--nBlockChans:")) {
-            arg = substitute(arg, "--nBlockChans:", "");
+        if (startsWith(arg, "--nBlockProcs:")) {
+            arg = substitute(arg, "--nBlockProcs:", "");
             if (!isUnsigned(arg))
-                return usage("--nBlockChans must be a non-negative number. Quitting...");
-            nBlockChans = str_2_Uint(arg);
+                return usage("--nBlockProcs must be a non-negative number. Quitting...");
+            nBlockProcesses = str_2_Uint(arg);
 
-        } else if (startsWith(arg, "--nAddrChans:")) {
-            arg = substitute(arg, "--nAddrChans:", "");
+        } else if (startsWith(arg, "--nAddrProcs:")) {
+            arg = substitute(arg, "--nAddrProcs:", "");
             if (!isUnsigned(arg))
-                return usage("--nAddrChans must be a non-negative number. Quitting...");
-            nAddrChans = str_2_Uint(arg);
+                return usage("--nAddrProcs must be a non-negative number. Quitting...");
+            nAddrProcesses = str_2_Uint(arg);
 
         } else if (startsWith(arg, "-n:") || startsWith(arg, "--nBlocks:")) {
             arg = substitute(substitute(arg, "-n:", ""), "--nBlocks:", "");
@@ -189,9 +189,9 @@ void COptions::Init(void) {
     maxBlocks    = NOPOS;
     writeBlocks  = false;
 #else
-    nBlockChans  = NOPOS;
-    nAddrChans   = NOPOS;
-    nBlocks      = 1000;
+    nBlockProcesses = NOPOS;
+    nAddrProcesses  = NOPOS;
+    nBlocks         = 1000;
 #endif
     minArgs      = 0;
     maxIndexRows = DEFAULT_MAX_INDEX_ROWS;

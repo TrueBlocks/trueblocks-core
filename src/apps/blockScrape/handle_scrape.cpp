@@ -60,10 +60,10 @@ bool handle_scrape(COptions &options) {
 
     ostringstream os;
     os << "blaze scrape --startBlock " << startBlock << " --nBlocks " << options.nBlocks;
-    if (options.nBlockChans != NOPOS)
-        os << " --nBlockChans " << options.nBlockChans;
-    if (options.nAddrChans != NOPOS)
-        os << " --nAddrChans " << options.nAddrChans;
+    if (options.nBlockProcesses != NOPOS)
+        os << " --nBlockProcesses " << options.nBlockProcesses;
+    if (options.nAddrProcesses != NOPOS)
+        os << " --nAddrProcesses " << options.nAddrProcesses;
     cerr << cGreen << "\t" << os.str() << cOff << " (" << (startBlock + options.nBlocks) << ")" << endl;
     SS("Scraping");
     if (system(os.str().c_str()) != 0) {
