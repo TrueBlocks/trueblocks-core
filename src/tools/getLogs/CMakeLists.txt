@@ -42,6 +42,7 @@ endfunction(run_test)
 
 # Weird, but we have to call the getBlock code to make sure the block is in the cache
 run_the_test(${TEST_PATH} ${GOLD_PATH} "getLogs_preload" ${EXECUTABLE_OUTPUT_PATH}/getBlock " 3657480" " -o")
+run_the_test(${TEST_PATH} ${GOLD_PATH} "getLogs_preload_abi" ${EXECUTABLE_OUTPUT_PATH}/grabABI " 0x51ffc1b089392a5bb65bf24eaf04d07d0e6f88b5")
 
 # Enter one line for each individual test
 run_test("getLogs_README"              "-th")
@@ -109,7 +110,7 @@ run_test("getLogs_block_range_addr"    "1718400-1718420" " 0xbb9bc244d798123fde7
 # queryRawLogs(string_q& results, const hash_t& hash) { address_t unused1; CTopicArray unused2; return queryRawLogs(results, hash, unused1, unused2); }
 
 run_test("getLogs_three_ways"          "0xbed082f2f6fb5f91924df74eb79ac37ea9490e49dda0b29a01db27d171efb424" " 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.36" " -v" " 3657480.36" " 1001010.12" " 0xbed082f2f6fb5f91924df74eb79ac37ea9490e49dda0b29a01db27d171efb422")
-run_test("getLogs_redir_output"        " -v" " 3657480.79" " --output")
+run_test("getLogs_redir_output"        " -v" " 3657480.79" " --output" " testing_file")
 run_test("getLogs_by_filebad"          "--bad" " --file:cmd_file")
 run_test("getLogs_by_file"             "--file:cmd_file")
 run_test("getLogs_by_file_long_v"      "--file:cmd_file" " --verbose" " --parity" " --fmt" " json")

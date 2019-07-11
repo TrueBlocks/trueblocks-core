@@ -42,6 +42,7 @@ endfunction(run_test)
 
 # Weird, but we have to call the getBlock code to make sure the block is in the cache
 run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrans_preload" ${EXECUTABLE_OUTPUT_PATH}/getBlock " 3657480" " -o")
+
 # Weird, but we have to get ABIs so the articulation tests work
 run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrans_preload_abi1" ${EXECUTABLE_OUTPUT_PATH}/grabABI " 0x1234567812345678123456781234567812345678")
 run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrans_preload_abi2" ${EXECUTABLE_OUTPUT_PATH}/grabABI " 0x6090a6e47849629b7245dfa1ca21d94cd15878ef")
@@ -50,6 +51,7 @@ run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrans_preload_abi4" ${EXECUTABLE_OUTP
 run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrans_preload_abi5" ${EXECUTABLE_OUTPUT_PATH}/grabABI " 0x314159265dd8dbb310642f98f50c066173c1259c")
 run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrans_preload_abi6" ${EXECUTABLE_OUTPUT_PATH}/grabABI " 0x314159265dd8dbb310642f98f50c066173c1259b")
 run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrans_preload_abi7" ${EXECUTABLE_OUTPUT_PATH}/grabABI " 0x159cf1e9ae58211b588f5e3bf1d7e423952d959b")
+run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrans_preload_abi8" ${EXECUTABLE_OUTPUT_PATH}/grabABI " 0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373")
 
 run_test("getTrans_README"            "-th")
 run_test("getTrans_no_input"          )

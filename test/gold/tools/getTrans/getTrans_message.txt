@@ -26,7 +26,9 @@ getTrans 0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344 -a -
       "inputs": [],
       "outputs": []
     },
-    "traces": [],
+    "traces": [
+      ""
+    ],
     "gasCost": 1066000000000000,
     "gasUsed": 53300,
     "date": "2016-07-11 20:58:05 UTC",
