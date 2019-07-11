@@ -1,4 +1,4 @@
 cacheMan argc: 3 [1:-l] [2:merged.acct.bin] 
 cacheMan -l merged.acct.bin 
-00000001 TIME ~ CLOCK - <WARNG> : Exit(loadMonitorData): 
+TIME ~ CLOCK - <WARNG>  : Exit(loadMonitorData): 
 Could not open cache file.Could not open file: merged.acct.bin
