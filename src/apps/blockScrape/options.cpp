@@ -84,6 +84,13 @@ bool COptions::parseArguments(string_q& command) {
 #endif
 
     // Establish the folders that hold the data...
+    establishFolder(getCachePath("addr_index/ascii/"));
+    establishFolder(getCachePath("addr_index/ascii.zips/"));
+    establishFolder(getCachePath("addr_index/blooms/"));
+    establishFolder(getCachePath("addr_index/blooms.zips/"));
+    establishFolder(getCachePath("addr_index/finalized.zips/"));
+    establishFolder(getCachePath("addr_index/sorted/"));
+
     establishFolder(indexFolder_sorted);
     establishFolder(indexFolder_finalized);
     establishFolder(indexFolder_staging);
