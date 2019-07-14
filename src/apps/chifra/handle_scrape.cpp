@@ -13,8 +13,18 @@ bool COptions::handle_scrape(void) {
 
     string_q tmpFile = configPath("cache/tmp/scraper-wait.txt");
     bool wait = fileExists(tmpFile);
+    if (!scrape_mode.empty()) {
+        if (scrape_mode == "start") {
+            ::remove(tmpFile.c_str());
+            cerr << cYellow << "Starting scraper..." << cOff << endl;
+        } else {
+            stringToAsciiFile(tmpFile, Now().Format(FMT_EXPORT));
+            cerr << cYellow << "Stopping scraper..." << cOff << endl;
+        }
+        return true;
+    }
 
-    size_t sleep = 14;
+    size_t sleep = 2;
     CStringArray commands;
     explode(commands, tool_flags, ' ');
     for (size_t i = 0; i < commands.size() ; i++) {
@@ -41,9 +51,10 @@ bool COptions::handle_scrape(void) {
     while (nRuns++ < maxRuns && !shouldQuit()) {
 
         if (wait) {
-            cerr << "Your scraper is not enabled. Sleeping for one minute...";
-            usleep(((unsigned int)60) * 1000000);
-            wait = fileExists(tmpFile);
+            static int cnt = 0;
+            if (!(++cnt%5))
+                cerr << cTeal << "Your scraper is not enabled. Sleeping shortly..." << cOff << endl;
+            usleep(((unsigned int)5) * 1000000);
 
         } else {
             ostringstream os;
@@ -55,13 +66,14 @@ bool COptions::handle_scrape(void) {
             }
 
             if (sleep != 0)
-                cerr << "Sleeping for " << sleep << " seconds" << endl;
+                cerr << Now().Format(FMT_EXPORT) << " - sleeping for " << sleep << " seconds" << endl;
             if (!isTestMode()) {
                 usleep((unsigned int)sleep * 1000000);
                 if (sleep == 0)
                     usleep(500000); // stay responsive to cntrl+C
             }
         }
+        wait = fileExists(tmpFile);
     }
     return true;
 }

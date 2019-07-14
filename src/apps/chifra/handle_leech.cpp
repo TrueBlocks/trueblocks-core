@@ -9,6 +9,7 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_leech(void) {
 
+#if 0
     // leech mode does not require a running node
     nodeNotRequired();
     // TODO(tjayrush): We should check that IPFS is running here (in much the same way we do for the node)
@@ -19,7 +20,7 @@ bool COptions::handle_leech(void) {
     establishFolder(indexFolder_zips);
 
     string_q contents;
-    string_q source = configPath("chifra/ipfs_get.sh");
+    string_q source = configPath("chifra/ipf s_get.sh");
     asciiFileToString(source, contents);
 
     CStringArray cmds;
@@ -89,5 +90,6 @@ bool COptions::handle_leech(void) {
         }
     }
     cerr << cGreen << "The index cache has been leeched." << cOff << endl;
+#endif
     return true;
 }

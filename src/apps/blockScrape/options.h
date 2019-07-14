@@ -5,24 +5,16 @@
  * All Rights Reserved.
  *------------------------------------------------------------------------*/
 #include "acctlib.h"
-#include "scraper_context.h"
 
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
     timestamp_t latestBlockTs;
     blknum_t    latestBlockNum;
-    uint64_t    maxIndexRows;
-#ifdef OLD_CODE
-    blknum_t    maxBlocks;
-    bool        writeBlocks;
-    blknum_t    startBlock;
-    blknum_t    endBlock;
-#else
+
     blknum_t    nBlocks;
-    size_t      nBlockProcesses;
+    size_t      nBlockProcs;
     size_t      nAddrProcesses;
-#endif
 
     COptions(void);
     ~COptions(void);
@@ -33,4 +25,4 @@ public:
 
 //-------------------------------------------------------------------------
 extern bool handle_scrape(COptions &options);
-#define indexFolder_sorted    (getCachePath("addr_index/sorted/"))
+

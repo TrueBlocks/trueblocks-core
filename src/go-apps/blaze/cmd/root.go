@@ -25,14 +25,13 @@ var rootCmd = &cobra.Command{
 	Short: "Build, query, or share an index of Ethereum addresses per block",
 	Long: `
 Description:
-  Blaze watches the front edge of the Ethereum blockchain and accumulates a
-  list of every addresses as it appears anywhere on the chain. You may query
-  this index to produce a list of <blockNumber,transactionId> pairs many orders
-  of magnitude faster than querying the blockchain directly. Armed with this
-  list of pairs, you may then call "acctExport" to detail the full transaction
-  history for any account including external and internal transactions, logs,
-  and traces. Blaze also allows you to seed (share the index) or leech (retrieve
-  the index from others) via IPFS.`,
+  Blaze watches the front edge of the blockchain and accumulates a list
+  of every addresses as it appears anywhere on the chain. You may query
+  this index many orders of magnitude faster than querying the blockchain
+  directly. The query produces a list of <blk,tx_id> pairs. Armed with this
+  list of pairs, you may then call "acctExport" which produces the full
+  transactionhistory for any account including external transactions, 
+  message calls, logs, and traces.`,
 	Version: "GHC-TrueBlocks, LLC//0.0.1-alpha",
 }
 
@@ -53,8 +52,8 @@ func init() {
 	rootCmd.PersistentFlags().String("cachePath", "", "The location of TrueBlocks' cache")
 	rootCmd.PersistentFlags().IntP("startBlock", "s", -1, "First block to visit")
 	rootCmd.PersistentFlags().IntP("nBlocks", "n", 5000, "The number of blocks to scrape during this invocation")
-	rootCmd.PersistentFlags().IntP("nBlockProcesses", "", 50, "The number of block processor go routines to create")
-	rootCmd.PersistentFlags().IntP("nAddrProcesses", "", 100, "The number of address processor go routines to create")
+	rootCmd.PersistentFlags().IntP("nBlockProcs", "", 50, "The number of block processor go routines to create")
+	rootCmd.PersistentFlags().IntP("nAddrProcs", "", 100, "The number of address processor go routines to create")
 }
 
 // initConfig reads in config file and ENV variables if set.
@@ -91,7 +90,7 @@ func initConfig() {
 	viper.BindPFlag("settings.cachePath", rootCmd.PersistentFlags().Lookup("cachePath"))
 	viper.BindPFlag("startBlock", rootCmd.PersistentFlags().Lookup("startBlock"))
 	viper.BindPFlag("nBlocks", rootCmd.PersistentFlags().Lookup("nBlocks"))
-	viper.BindPFlag("nBlockProcesses", rootCmd.PersistentFlags().Lookup("nBlockProcesses"))
-	viper.BindPFlag("nAddrProcesses", rootCmd.PersistentFlags().Lookup("nAddrProcesses"))
+	viper.BindPFlag("nBlockProcs", rootCmd.PersistentFlags().Lookup("nBlockProcs"))
+	viper.BindPFlag("nAddrProcs", rootCmd.PersistentFlags().Lookup("nAddrProcs"))
 	viper.SetEnvKeyReplacer(strings.NewReplacer("SETTINGS.", ""))
 }

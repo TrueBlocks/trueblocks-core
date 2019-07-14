@@ -67,11 +67,19 @@ bool COptions::parseArguments(string_q& command) {
 
             } else {
                 static format_t fmt = TXT1;
-                if (arg == "csv")
+                if (arg == "csv") {
                     fmt = CSV1;
-                if (arg == "--to_file")
-                    arg = "--output:" + configPath("cache/tmp/" + makeValidName(Now().Format(FMT_EXPORT)) + (fmt == CSV1 ? ".csv" : ".txt"));
-                tool_flags += (arg + " ");
+                    tool_flags += (arg + " ");
+                } else if (arg == "--to_file") {
+                    if (getEnvStr("DOCKER_MODE").empty()) {
+                        arg = "--output:" + configPath("cache/tmp/" + makeValidName(Now().Format(FMT_EXPORT)) + (fmt == CSV1 ? ".csv" : ".txt"));
+                        tool_flags += (arg + " ");
+                    } else {
+                        // ignore --to_file flag in docker mode
+                    }
+                } else {
+                    tool_flags += (arg + " ");
+                }
             }
         }
     }
@@ -83,6 +91,18 @@ bool COptions::parseArguments(string_q& command) {
     	mode == "traces") {
         tool_flags += (" --" + mode);
         mode = "data";
+    }
+
+    if (mode == "scrape" && !tool_flags.empty()) {
+        if (contains(tool_flags, "--mode start")) {
+            scrape_mode = "start";
+            replace(tool_flags, "--mode start", "");
+        } else if (contains(tool_flags, "--mode stop")) {
+            scrape_mode = "stop";
+            replace(tool_flags, "--mode start", "");
+        } else {
+            EXIT_USAGE("Invalid option to scrape mode " + tool_flags);
+        }
     }
 
     if (mode.empty())
@@ -101,6 +121,7 @@ bool COptions::parseArguments(string_q& command) {
     freshen_flags = trim(freshen_flags, ' ');
 
     LOG4("API_MODE=", getEnvStr("API_MODE"));
+    LOG4("DOCKER_MODE=", getEnvStr("DOCKER_MODE"));
     LOG4("IPFS_PATH=", getEnvStr("IPFS_PATH"));
     LOG4("TEST_MODE=", getEnvStr("TEST_MODE"));
     LOG4("NO_COLOR=", getEnvStr("NO_COLOR"));
@@ -119,6 +140,7 @@ void COptions::Init(void) {
     mode          = "";
     stats         = false;
     minArgs       = 0;
+    scrape_mode   = "";
 }
 
 //---------------------------------------------------------------------------------------------------
