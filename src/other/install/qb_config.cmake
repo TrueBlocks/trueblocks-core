@@ -11,7 +11,7 @@ file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}/cache/abis")
 file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}/cache/prices")
 file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}/cache/tmp")
 file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}/known_abis")
-file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}/makeClass")
+#file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}/makeClass")
 file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}/grabABI")
 file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}/chifra")
 
@@ -62,14 +62,14 @@ if (NOT EXISTS "${QUICKBLOCKS_PREFUND_FILE}")
     file(COPY "${CMAKE_SOURCE_DIR}/../../../src/other/install/prefunds.txt" DESTINATION "${QUICKBLOCKS_HOME}/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 endif()
 
-# makeClass content
-message(STATUS "Copying makeClass templates to ${QUICKBLOCKS_HOME}/makeClass/")
-file(COPY "${CMAKE_SOURCE_DIR}/../../../bin/makeClass" DESTINATION "${QUICKBLOCKS_HOME}/makeClass")
-file(GLOB TARGET_FILES "${CMAKE_SOURCE_DIR}/../../../src/dev_tools/makeClass/templates/blank*")
-foreach(FILE ${TARGET_FILES} )
-    message(STATUS "  Copied file to ${QUICKBLOCKS_HOME}/makeClass/")
-	file(COPY "${FILE}" DESTINATION "${QUICKBLOCKS_HOME}/makeClass/")
-endforeach( FILE )
+## makeClass content
+#message(STATUS "Copying makeClass templates to ${QUICKBLOCKS_HOME}/makeClass/")
+#file(COPY "${CMAKE_SOURCE_DIR}/../../../bin/makeClass" DESTINATION "${QUICKBLOCKS_HOME}/makeClass")
+#file(GLOB TARGET_FILES "${CMAKE_SOURCE_DIR}/../../../src/dev_tools/makeClass/templates/blank*")
+#foreach(FILE ${TARGET_FILES} )
+#    message(STATUS "  Copied file to ${QUICKBLOCKS_HOME}/makeClass/")
+#	file(COPY "${FILE}" DESTINATION "${QUICKBLOCKS_HOME}/makeClass/")
+#endforeach( FILE )
 
 # grabABI content
 message(STATUS "Copying grabABI templates to ${QUICKBLOCKS_HOME}/grabABI/")
