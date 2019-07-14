@@ -22,7 +22,3 @@ public:
     bool parseArguments(string_q& command);
     void Init(void);
 };
-
-//-------------------------------------------------------------------------
-extern bool handle_scrape(COptions &options);
-
