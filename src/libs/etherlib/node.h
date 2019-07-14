@@ -122,8 +122,8 @@ namespace qblocks {
     extern blknum_t getLastBlock_client       (void);
     extern blknum_t getLastBlock_cache_final  (void);
     extern blknum_t getLastBlock_cache_staging(void);
-    extern blknum_t getLastBlock_cache_pending(void);
-    extern bool     getLastBlocks             (blknum_t& pending, blknum_t& staging, blknum_t& final, blknum_t& client);
+    extern blknum_t getLastBlock_cache_unripe (void);
+    extern bool     getLastBlocks             (blknum_t& unripe, blknum_t& staging, blknum_t& final, blknum_t& client);
 
     //-------------------------------------------------------------------------
     extern string_q getCachePath            (const string_q& _part);
@@ -138,7 +138,7 @@ namespace qblocks {
     #define indexFolder_finalized (getCachePath("addr_index/finalized/"))
     #define indexFolder_blooms    (getCachePath("addr_index/blooms/"))
     #define indexFolder_staging   (getCachePath("addr_index/staging/"))
-    #define indexFolder_pending   (getCachePath("addr_index/pending/"))
+    #define indexFolder_unripe    (getCachePath("addr_index/unripe/"))
     #define indexFolder_zips      (getCachePath("addr_index/zips/"))
 
     //-------------------------------------------------------------------------
