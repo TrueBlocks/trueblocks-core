@@ -6,8 +6,6 @@
 #include "acctlib.h"
 #include "options.h"
 
-#ifdef OLD_CODE
-#else
 extern void finalizeIndexChunk2(COptions *options, CStringArray& stage);
 extern blknum_t getLastBlockInFolder(const string_q& folder);
 extern blknum_t firstUnripe(void);
@@ -15,14 +13,10 @@ extern blknum_t firstUnripe(void);
 #define indexFolder_unripe (getCachePath("addr_index/unripe/"))
 #undef MARKER
 #define MARKER 2
-#define SS(a) { cerr << bBlue << padLeft(padRight((a),22,'.'),28) << cOff << "\r"; }
+#define SS(a) { cerr << bBlue << padLeft(padRight((a),22,'.'),75) << cOff << "\r"; cerr.flush(); }
 #define ES()  { cerr << "\t\t\t\t" << TIC() << cOff << bBlue << " ...done                      " << endl; }
-#endif
 //--------------------------------------------------------------------------
 bool handle_scrape(COptions &options) {
-
-#ifndef OLD_CODE
-    options.maxIndexRows = 500000;
 
     // We do not want to be running if the user is scraping an account
     bool mustQuit = isRunning("acctScrape", false);
@@ -38,7 +32,7 @@ bool handle_scrape(COptions &options) {
     // Find the last visited block (if not in staging folder, then check finalized folder) or zero if none
     blknum_t lastVisit = getLastBlockInFolder(indexFolder_staging);
     if (lastVisit == 0)
-        lastVisit = getLastBlockInFolder(indexFolder_sorted); //getLastBlockInFolder(indexFolder_finalized);
+        lastVisit = getLastBlockInFolder(indexFolder_finalized); //getLastBlockInFolder(indexFolder_finalized);
 
     blknum_t client = getLastBlock_client();
     blknum_t unripe = firstUnripe();
@@ -49,10 +43,25 @@ bool handle_scrape(COptions &options) {
         return false;
     }
 
+    ostringstream addit;
+    if (options.nBlockProcs != NOPOS)
+        addit << " --nBlockProcs " << options.nBlockProcs;
+    if (options.nAddrProcesses != NOPOS)
+        addit << " --nAddrProcesses " << options.nAddrProcesses;
+
     if (startBlock < firstTransactionBlock)
         options.nBlocks = 5000;
-//    else if (ddosRange(startBlock))
-//        options.nBlocks = 200;
+    else if (ddosRange(startBlock))
+        options.nBlocks = 200;
+    if (getEnvStr("DOCKER_MODE") == "true") {
+        if (ddosRange(startBlock)) {
+            options.nBlocks = 100;
+            if (addit.str().empty()) {
+                addit << " --nBlockProcs " << 10;
+                addit << " --nAddrProcesses " << 20;
+            }
+        }
+    }
 
     //2287592
     //2288192
@@ -60,10 +69,7 @@ bool handle_scrape(COptions &options) {
 
     ostringstream os;
     os << "blaze scrape --startBlock " << startBlock << " --nBlocks " << options.nBlocks;
-    if (options.nBlockProcesses != NOPOS)
-        os << " --nBlockProcesses " << options.nBlockProcesses;
-    if (options.nAddrProcesses != NOPOS)
-        os << " --nAddrProcesses " << options.nAddrProcesses;
+    os << " " << addit.str();
     cerr << cGreen << "\t" << os.str() << cOff << " (" << (startBlock + options.nBlocks) << ")" << endl;
     SS("Scraping");
     if (system(os.str().c_str()) != 0) {
@@ -82,7 +88,7 @@ bool handle_scrape(COptions &options) {
         if (nLines) {
             newLines.reserve((newLines.size() + nLines) * 59);
             newLines += asciiFileToString(rawName);
-            cerr << "\t\t\t\t" << bn << " - " << (endBlock-bn) << "     \r";
+            cerr << "\t\t\t\t" << bn << " - " << (endBlock-bn) << "     \r"; cerr.flush();
             //mustQuit = isRunning("acctScrape", false);
         } else {
             // blaze failed for some reason (may have been control+C). Quit accumulating here
@@ -114,111 +120,9 @@ bool handle_scrape(COptions &options) {
     explode(newRecords, newLines, '\n');
     ES();
     finalizeIndexChunk2(&options, newRecords);
-#else
-    //
-    //  Determine most recently finalized block (lastFinal)
-    //      'startBlock' = lastFinal + 1
-    //      'endBlock' is front of chain at start of run or startBlock + maxBlocks
-    //
-    //  For each block between startBlock and endBlock
-    //      Assume we need to scrape the block
-    //      If block is in binary cache (we've seen it before)
-    //          Read the block from cache (faster than querying the node)
-    //          Query node for block hash only
-    //          If hashes are different
-    //              We need to re-scan this block
-    //      Else
-    //          We need to scan this block
-    //
-    //      If we need to scan the block
-    //          Scan the block
-    //
-    //      If the block is final (i.e. five minutes old)
-    //          If we do not have a full block, scrape the block here
-    //          If the block has no transations
-    //              Remove it from the cache
-    //          Else if we are not storing blocks permanantly (default is to not store blocks)
-    //              Remove the block from cache
-    //          Else if the block is not in the cache, but we're writing blocks
-    //              Write the block to the cache
-    //          Write the finalized block to the index
-    //          If the index is 'big enough'
-    //              Sort the index
-    //              Compress the index
-    //              Create the bloom
-    //              (Optionally) store the index and the bloom in IPFS
-    //      Else
-    //          Write the non-final block to non-final index
-    //          Write the block to the binary cache (it may be removed later)
-
-    bool acctScrRunning = isRunning("acctScrape", false);
-    for (blknum_t num = options.startBlock ; num < options.endBlock && !shouldQuit() && !acctScrRunning ; num++) {
-        CScraper scraper(&options, num);
-        scraper.status = "scan";
-        bool needToScrape = true;
-
-        string_q fn = getBinaryCacheFilename(CT_BLOCKS, num);
-        if (fileExists(fn)) {
-            readBlockFromBinary(scraper.block, fn);
-            if (scraper.block.hash != getRawBlockHash(num)) {
-                needToScrape = true;
-                scraper.status = "rescan";
-            } else {
-                needToScrape = false;
-                scraper.status = "cache";
-            }
-        }
-
-        if (needToScrape)
-            scraper.scrapeBlock();
-
-        scraper.block.finalized = isBlockFinal(scraper.block.timestamp, options.latestBlockTs);
-        if (scraper.block.finalized) {
-            scraper.status = "final";
-            lockSection(true);
-            // If we haven't scraped yet, we need to scrape it here
-            if (!needToScrape)
-                scraper.scrapeBlock();
-            // Process the block cache...
-            if (scraper.block.transactions.size() == 0) {
-                // We never keep empty blocks
-                ::remove(fn.c_str());
-            } else if (!options.writeBlocks) {
-                // If we're not writing blocks, remove this one
-                if (fileExists(fn.c_str()))
-                    ::remove(fn.c_str());
-            } else if (!fileExists(fn)) {
-                // We may not yet have written this block (it was final the first time we saw it), so write it
-                writeBlockToBinary(scraper.block, fn);
-            }
-            if (!scraper.addToStagingList()) {
-                lockSection(false);
-                return false;
-            }
-            lockSection(false);
-
-        } else {
-            // We want to avoid rescraping the block if we can, so we store it here. We may delete it when the
-            // block gets finalized if we're not supposed to be writing blocks
-
-            // TODO(tjayrush): Should I be writing this block to binary even if it exists (especially if it was a rescan)
-            scraper.addToPendingList();
-            if (!fileExists(fn)) {
-                lockSection(true);
-                writeBlockToBinary(scraper.block, fn);
-                lockSection(false);
-            }
-        }
-
-        cout << scraper.report(options.endBlock) << endl;
-        acctScrRunning = isRunning("acctScrape", false);
-    }
-#endif
-
     return true;
 }
 
-#ifndef OLD_CODE
 //-------------------------------------------------------------------------------------------------------------
 inline bool waitForCreate(const string_q& filename) {
     size_t mx = 1000;
@@ -272,11 +176,12 @@ void finalizeIndexChunk2(COptions *options, CStringArray& stage) {
     }
 
     lockSection(false);
-    if (curSize > options->maxIndexRows) {
+    blknum_t maxIndexRows = 500000;
+    if (curSize > maxIndexRows) {
 
         // We need to continue to process until curSize is less than maxIndexRows. This may mean more than once
         size_t pass = 0;
-        while (curSize > options->maxIndexRows && !shouldQuit()) {
+        while (curSize > maxIndexRows && !shouldQuit()) {
             lockSection(true);
             SS("Consolodate (pass " + uint_2_Str(pass++) + ")"); cerr << endl;
             CStringArray lines;
@@ -285,14 +190,15 @@ void finalizeIndexChunk2(COptions *options, CStringArray& stage) {
             cerr << "\tstagingNew: " << stagingNew << ": " << lines.size() << endl;
 
             string_q prev;
-            cerr << "\tSearching from " << (options->maxIndexRows-1) << " to " << lines.size() << endl;
-            cerr << cGreen << "\t\t" << (options->maxIndexRows-1) << ": " << lines[options->maxIndexRows-1] << cOff << endl;
-            cerr << cGreen << "\t\t" << (options->maxIndexRows) << ": " << lines[options->maxIndexRows] << cOff << endl;
+            cerr << "\tSearching from " << (maxIndexRows-1) << " to " << lines.size() << endl;
+            cerr << cGreen << "\t\t" << (maxIndexRows-1) << ": " << lines[maxIndexRows-1] << cOff << endl;
+            cerr << cGreen << "\t\t" << (maxIndexRows) << ": " << lines[maxIndexRows] << cOff << endl;
             size_t where = 0;
-            for (uint64_t record = (options->maxIndexRows-1) ; record < lines.size() && where == 0; record++) {
+            for (uint64_t record = (maxIndexRows-1) ; record < lines.size() && where == 0; record++) {
                 CStringArray pParts;
                 explode(pParts, lines[record], '\t');
                 cerr << bBlue << "\t\t" << record << ": " << pParts[0] << " -- " << pParts[1] << " -- " << pParts[2] << cOff << "\r";
+                cerr.flush();
                 if (record == lines.size() - 2)
                     cerr << endl;
                 if (prev != pParts[1]) {
@@ -318,7 +224,7 @@ void finalizeIndexChunk2(COptions *options, CStringArray& stage) {
             cerr << cGreen << "\t\t" << 1 << ": " << lines[1] << cOff << endl;
             for (uint64_t record = 0 ; record <= where ; record++) {
                 if (verbose > 2) {
-                    cerr << bBlue << "\t\t" << record << ": " << lines[record] << cOff << "\r";
+                    cerr << bBlue << "\t\t" << record << ": " << lines[record] << cOff << "\r"; cerr.flush();
                     if (record == where - 1)
                         cerr << endl;
                 }
@@ -335,19 +241,28 @@ void finalizeIndexChunk2(COptions *options, CStringArray& stage) {
             explode(p1, consolidatedLines[0], '\t');
             CStringArray p2;
             explode(p2, consolidatedLines[consolidatedLines.size()-1], '\t');
-            string_q ll = indexFolder_sorted + p1[1] + "-" + p2[1] + ".txt";
-            linesToAsciiFile(ll, consolidatedLines, true);
-            cerr << "\tWrote " << bYellow << consolidatedLines.size() << cOff << " records to " << ll << endl;
+
+
+//            string_q ll = indexFolder_sorted + p1[1] + "-" + p2[1] + ".txt";
+//            linesToAsciiFile(ll, consolidatedLines, true);
+//            cerr << "\tWrote " << bYellow << consolidatedLines.size() << cOff << " records to " << ll << endl;
+//            string_q asciiFile = substitute(ll, indexFolder_sorted, indexFolder_ascii);
+//            writeIndexAsAscii(asciiFile, consolidatedLines);
+//            cerr << "\tWrote " << bYellow << consolidatedLines.size() << cOff << " records to " << asciiFile << endl;
+            string_q binFile = indexFolder_finalized + p1[1] + "-" + p2[1] + ".txt";
+//            string_q binFile = substitute(substitute(ll, indexFolder_sorted, indexFolder_finalized),".txt",".bin");
+            writeIndexAsBinary(binFile, consolidatedLines);
+            cerr << "\tWrote " << bYellow << consolidatedLines.size() << cOff << " records to " << binFile << endl;
 
             where += 1;
             CStringArray remainingLines;
-            remainingLines.reserve(options->maxIndexRows+100);
+            remainingLines.reserve(maxIndexRows+100);
             cerr << "\tExtract records " << where << " to " << lines.size() << " of " << lines.size() << endl;
             cerr << cGreen << "\t\t" << where << ": " << lines[where] << cOff << endl;
             cerr << cGreen << "\t\t" << where+1 << ": " << lines[where+1] << cOff << endl;
             for (uint64_t record = where ; record < lines.size() ; record++) {
                 if (verbose > 2) {
-                    cerr << bBlue << "\t\t" << record << ": " << lines[record] << cOff << "\r";
+                    cerr << bBlue << "\t\t" << record << ": " << lines[record] << cOff << "\r"; cerr.flush();
                     if (record == lines.size() - 2)
                         cerr << endl;
                 }
@@ -369,7 +284,7 @@ void finalizeIndexChunk2(COptions *options, CStringArray& stage) {
         }
 
     } else {
-        cerr << bRed << "\tDid not consolidate: " << curSize << " of " << options->maxIndexRows << cOff << endl;
+        cerr << bRed << "\tDid not consolidate: " << curSize << " of " << maxIndexRows << cOff << endl;
     }
 }
 
@@ -392,5 +307,108 @@ blknum_t firstUnripe(void) {
     findTimestamp_binarySearch(block, eightAgo, last);
     cerr << block.Format("[{BLOCKNUMBER}]\t[{TIMESTAMP}]\t[{AGE}]\t[{DATE}]") << endl;
     return block.blockNumber;
+}
+
+#ifdef OLD_CODE
+if (startBlock > client)
+cerr << cTeal << "INFO: " << cOff << "The scraper is at the front of the chain." << endl;
+return startBlock <= client;
+//
+//  Determine most recently finalized block (lastFinal)
+//      'startBlock' = lastFinal + 1
+//      'endBlock' is front of chain at start of run or startBlock + maxBlocks
+//
+//  For each block between startBlock and endBlock
+//      Assume we need to scrape the block
+//      If block is in binary cache (we've seen it before)
+//          Read the block from cache (faster than querying the node)
+//          Query node for block hash only
+//          If hashes are different
+//              We need to re-scan this block
+//      Else
+//          We need to scan this block
+//
+//      If we need to scan the block
+//          Scan the block
+//
+//      If the block is final (i.e. five minutes old)
+//          If we do not have a full block, scrape the block here
+//          If the block has no transations
+//              Remove it from the cache
+//          Else if we are not storing blocks permanantly (default is to not store blocks)
+//              Remove the block from cache
+//          Else if the block is not in the cache, but we're writing blocks
+//              Write the block to the cache
+//          Write the finalized block to the index
+//          If the index is 'big enough'
+//              Sort the index
+//              Compress the index
+//              Create the bloom
+//              (Optionally) store the index and the bloom in IPFS
+//      Else
+//          Write the non-final block to non-final index
+//          Write the block to the binary cache (it may be removed later)
+
+bool acctScrRunning = isRunning("acctScrape", false);
+for (blknum_t num = options.startBlock ; num < options.endBlock && !shouldQuit() && !acctScrRunning ; num++) {
+    CScraper scraper(&options, num);
+    scraper.status = "scan";
+    bool needToScrape = true;
+
+    string_q fn = getBinaryCacheFilename(CT_BLOCKS, num);
+    if (fileExists(fn)) {
+        readBlockFromBinary(scraper.block, fn);
+        if (scraper.block.hash != getRawBlockHash(num)) {
+            needToScrape = true;
+            scraper.status = "rescan";
+        } else {
+            needToScrape = false;
+            scraper.status = "cache";
+        }
+    }
+
+    if (needToScrape)
+        scraper.scrapeBlock();
+
+    scraper.block.finalized = isBlockFinal(scraper.block.timestamp, options.latestBlockTs);
+    if (scraper.block.finalized) {
+        scraper.status = "final";
+        lockSection(true);
+        // If we haven't scraped yet, we need to scrape it here
+        if (!needToScrape)
+            scraper.scrapeBlock();
+        // Process the block cache...
+        if (scraper.block.transactions.size() == 0) {
+            // We never keep empty blocks
+            ::remove(fn.c_str());
+        } else if (!options.writeBlocks) {
+            // If we're not writing blocks, remove this one
+            if (fileExists(fn.c_str()))
+                ::remove(fn.c_str());
+        } else if (!fileExists(fn)) {
+            // We may not yet have written this block (it was final the first time we saw it), so write it
+            writeBlockToBinary(scraper.block, fn);
+        }
+        if (!scraper.addToStagingList()) {
+            lockSection(false);
+            return false;
+        }
+        lockSection(false);
+
+    } else {
+        // We want to avoid rescraping the block if we can, so we store it here. We may delete it when the
+        // block gets finalized if we're not supposed to be writing blocks
+
+        // TODO(tjayrush): Should I be writing this block to binary even if it exists (especially if it was a rescan)
+        scraper.addToPendingList();
+        if (!fileExists(fn)) {
+            lockSection(true);
+            writeBlockToBinary(scraper.block, fn);
+            lockSection(false);
+        }
+    }
+
+    cout << scraper.report(options.endBlock) << endl;
+    acctScrRunning = isRunning("acctScrape", false);
 }
 #endif

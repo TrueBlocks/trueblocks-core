@@ -2,13 +2,14 @@ package cmd
 
 import (
 	"bytes"
-//	"encoding/csv"
+	//	"encoding/csv"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
-//	"path/filepath"
+
+	//	"path/filepath"
 	"sort"
 	"strconv"
 	"strings"
@@ -447,20 +448,20 @@ func writeAddresses(blockNum string, addressMap map[string]bool) {
 	counter = counter + 1
 }
 
-func processBlocks(startBlock int, numBlocks int, skip int, nBlockProcesses int, nAddressProcesses int) {
+func processBlocks(startBlock int, numBlocks int, skip int, nBlockProcs int, nAddrProcs int) {
 
 	blockChannel := make(chan int)
 	addressChannel := make(chan BlockInternals)
 
 	var blockWG sync.WaitGroup
-	blockWG.Add(nBlockProcesses)
-	for i := 0; i < nBlockProcesses; i++ {
+	blockWG.Add(nBlockProcs)
+	for i := 0; i < nBlockProcs; i++ {
 		go getTracesAndLogs(blockChannel, addressChannel, &blockWG)
 	}
 
 	var addressWG sync.WaitGroup
-	addressWG.Add(nAddressProcesses)
-	for i := 0; i < nAddressProcesses; i++ {
+	addressWG.Add(nAddrProcs)
+	for i := 0; i < nAddrProcs; i++ {
 		go extractAddresses(addressChannel, &addressWG)
 	}
 
@@ -591,21 +592,18 @@ Description:
 		}
 		n := viper.GetInt("nBlocks")
 		skip := 1
-		nBlockProcesses := viper.GetInt("nBlockProcesses")
-		nAddrProcesses := viper.GetInt("nAddrProcesses")
+		nBlockProcs := viper.GetInt("nBlockProcs")
+		nAddrProcs := viper.GetInt("nAddrProcs")
 		//		fmt.Println("rpcProvider: ", viper.GetString("settings.rpcProvider"))
 		//		fmt.Println("cachePath: ", viper.GetString("settings.cachePath"))
 		//		fmt.Println("startBlock: ", start)
 		//		fmt.Println("nBlocks: ", n)
-		//      fmt.Println("nBlockProcesses: ", nBlockProcesses)
-		//      fmt.Println("nAddrProcesses: ", nAddrProcesses)
-		processBlocks(start, n, skip, nBlockProcesses, nAddrProcesses)
+		//      fmt.Println("nBlockProcs: ", nBlockProcs)
+		//      fmt.Println("nAddrProcs: ", nAddrProcs)
+		processBlocks(start, n, skip, nBlockProcs, nAddrProcs)
 	},
 }
 
-var maxBlocks int
-
 func init() {
 	rootCmd.AddCommand(scrapeCmd)
-	scrapeCmd.PersistentFlags().IntVarP(&maxBlocks, "maxBlocks", "m", 0, "The maximum number of blocks to scrape (default is to catch up).")
 }
