@@ -53,7 +53,7 @@ bool COptions::parseArguments(string_q& command) {
     establishFolder(indexFolder_sorted);
     establishFolder(indexFolder_finalized);
     establishFolder(indexFolder_staging);
-    establishFolder(indexFolder_pending);
+    establishFolder(indexFolder_unripe);
     establishFolder(configPath("cache/tmp/"));
 
     CBlock latest;
