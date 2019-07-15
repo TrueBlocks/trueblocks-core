@@ -8,12 +8,7 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("~command", "one of [ "
-                            "leech | scrape | daemon | "
-                            "list | export | balances | stats | ls | rm | "
-                            "accounts | config | slurp | quotes | data | "
-                            "blocks | trans | receipts | logs | traces "
-                            "]"),
+    COption("~command", "one of [ leech | scrape | daemon | list | export | balances | stats | ls | rm | accounts | config | slurp | quotes | data | blocks | trans | receipts | logs | traces ]"),
     COption("",         "Create a TrueBlocks monitor configuration.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
