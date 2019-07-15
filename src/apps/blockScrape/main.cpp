@@ -8,7 +8,6 @@
 #define SS(a) { cerr << bBlue << padLeft(padRight((a),22,'.'),75) << cOff << "\r"; cerr.flush(); }
 
 //--------------------------------------------------------------------------
-extern blknum_t getLastBlockInFolder(const string_q& folder);
 extern bool waitForCreate(const string_q& filename);
 extern void finalizeIndexChunk2(COptions *options, CStringArray& stage);
 
@@ -55,22 +54,25 @@ bool handle_scrape(COptions &options) {
     //2356992
 #endif
 
-    // At some point, we need to stop re-visiting blocks. We call this point the 'ripe' block. In this
-    // version, the 'ripe' block is 28 blocks away from the current head (a bit more than five minutes
-    // under normal operation). Note that, if the index is caught up and the difficulty is high (time bomb),
-    // we will get further away from the front of the chain than normal.
+    // At some point, we need to stop re-visiting blocks. We call this point the 'ripe' block. Here,
+    // the 'ripe' block is 28 blocks before the current head (a bit more than five minutes under normal
+    // operation). Note that, if the index is caught up to the head and the difficulty is high (we're
+    // in the time bomb), we will receed from the front of the chain than normal. (28 blocks, when blocks
+    // take longer, is a longer amount of time.)
     blknum_t ripeBlock = client - 28;
 
     ostringstream os;
     os << "blaze scrape";
     os << " --startBlock " << startBlock;
     os << " --nBlocks " << options.nBlocks;
-    os << " --ripeBlock " << ripeBlock;
     os << " --nBlockProcs " << options.nBlockProcs;
     os << " --nAddrProcs " << options.nAddrProcs;
 
-    cerr << endl << cTeal << Now().Format(FMT_EXPORT) << endl;
+    cerr << endl << cTeal << "\t" << Now().Format(FMT_EXPORT) << endl;
     cerr << cGreen << "\t" << os.str() << cOff << " (" << (startBlock + options.nBlocks) << ")" << endl;
+
+    // We don't need to show ripeBlock...
+    os << " --ripeBlock " << ripeBlock;
     if (system(os.str().c_str()) != 0) {
         cerr << cRed << "\tBlaze quit without finishing. Reprocessing..." << cOff << endl;
         return false;
@@ -123,13 +125,6 @@ bool handle_scrape(COptions &options) {
 #endif
 
     return true;
-}
-
-//--------------------------------------------------------------------------
-blknum_t getLastBlockInFolder(const string_q& folder) {
-    string_q fileName = getLastFileInFolder(folder, false);
-    fileName = substitute(fileName, folder, "");
-    return str_2_Uint(fileName);
 }
 
 //-------------------------------------------------------------------------------------------------------------
