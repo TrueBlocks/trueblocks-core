@@ -567,7 +567,7 @@ Description:
 			toScreen("dockerMode:", "true", true)
 		}
 		toScreen("  processing", "", false)
-		processBlocks()
+//		processBlocks()
 		fmt.Println("")
 	},
 }
