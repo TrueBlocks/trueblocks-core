@@ -23,9 +23,9 @@ bool handle_scrape(COptions &options) {
     cleanFolder(indexFolder_unripe);
 
     // Find the last visited block (it's either in staging or finalized)
-    blknum_t unused1, unused2, staging, finalized, client;
-    getLastBlocks(unused1, unused2, staging, finalized, client);
-    blknum_t lastVisit = max(staging, finalized);
+    blknum_t unused1, ripe, staging, finalized, client;
+    getLastBlocks(unused1, ripe, staging, finalized, client);
+    blknum_t lastVisit = max(ripe, max(staging, finalized));
     blknum_t startBlock = lastVisit + 1;
 
     // In some cases (if the user is re-syncing his/her node from scratch for example) the index may be
@@ -37,11 +37,6 @@ bool handle_scrape(COptions &options) {
         return false;
     }
 
-#if 0
-    //2287592
-    //2288192
-    //2356992
-
     if (startBlock < firstTransactionBlock)
         options.nBlocks = 5000;
     else if (ddosRange(startBlock))
@@ -49,10 +44,15 @@ bool handle_scrape(COptions &options) {
     if (getEnvStr("DOCKER_MODE") == "true") {
         if (ddosRange(startBlock)) {
             options.nBlocks = 100;
-            options.nBlockProcs = 10;
+            options.nBlockProcs = 5;
             options.nAddrProcs = 20;
         }
     }
+
+#if 0
+    //2287592
+    //2288192
+    //2356992
 #endif
 
     // At some point, we need to stop re-visiting blocks. We call this point the 'ripe' block. In this
