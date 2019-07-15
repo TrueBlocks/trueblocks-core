@@ -28,8 +28,8 @@ public:
 
 #define VIS_FINAL   (1<<1)
 #define VIS_STAGING (1<<2)
-#define VIS_PENDING (1<<3)
+#define VIS_UNRIPE (1<<3)
 
 extern bool visitFinalIndexFiles(const string_q& path, void *data);
 extern bool visitStagingIndexFiles(const string_q& path, void *data);
-extern bool visitPendingIndexFiles(const string_q& path, void *data);
+extern bool visitUnripeIndexFiles(const string_q& path, void *data);

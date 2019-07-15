@@ -19,8 +19,7 @@ static const COption params[] = {
     COption("-byAcct",       "consider each address an ERC20 token except the last, whose balance is reported for each token"),
     COption("-nozero",       "suppress the display of zero balance accounts"),
     COption("@info:<val>",   "retreive information [name|decimals|totalSupply|version|symbol|all] about the token"),
-    COption("",              "Retrieve the token balance(s) for one or more addresses at the given (or "
-                                "latest) block(s).\n"),
+    COption("",              "Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 

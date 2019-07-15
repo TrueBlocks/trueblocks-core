@@ -22,19 +22,12 @@ static const COption params[] = {
     COption("-uni(q)Tx",           "display only uniq addresses found per transaction"),
     COption("-nu(m)ber",           "display address counts (alterntively --addrCnt, --uniqTxCnt, or --uniqCnt)"),
     COption("-fi(l)ter:<addr>",    "useful only for --addrs or --uniq, only display this address in results"),
-//    COption("-trac(e)s",         "include transaction traces in the export"),
-//    COption("-addresses:<val>",  "display addresses included in block as one of: [ all | to | from |\n\t\t\t\t"
-//            "self-destruct | create | log-topic | log-data | input-data |\n\t\t\t\t"
-//            "trace-to | trace-from | trace-data | trace-call ]"),
     COption("@latest",             "display the latest blocks at both the node and the cache"),
     COption("@f(o)rce",            "force a re-write of the block to the cache"),
     COption("@quiet",              "do not print results to screen, used for speed testing and data checking"),
-    COption("@source:[c|r]",       "either :c(a)che or :(r)aw, source for data retrival. (shortcuts "
-                                    "-c = qblocks, -r = node)"),
-    COption("@fields:[a|m|c|r]",   "either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output "
-                                    "(all is default)"),
-    COption("@normalize",          "normalize (remove un-common fields and sort) for comparison with other "
-                                    "results (testing)"),
+    COption("@source:[c|r]",       "either :c(a)che or :(r)aw, source for data retrival. (shortcuts -c = qblocks, -r = node)"),
+    COption("@fields:[a|m|c|r]",   "either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default)"),
+    COption("@normalize",          "normalize (remove un-common fields and sort) for comparison with other results (testing)"),
     COption("",                    "Returns block(s) from local cache or directly from a running node.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);

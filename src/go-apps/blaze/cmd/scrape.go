@@ -2,21 +2,18 @@ package cmd
 
 import (
 	"bytes"
-	//	"encoding/csv"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
 
-	//	"path/filepath"
 	"sort"
 	"strconv"
 	"strings"
 	"sync"
 
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 )
 
 // Params Parameters used during calls to the RPC.
@@ -117,6 +114,18 @@ type BlockInternals struct {
 	Logs   []byte
 }
 
+// toScreen Sends a prompt and a value to the screen (adjusts spacing if running from docker)
+func toScreen(prompt string, value string, newLine bool) {
+	space1 := "\t"
+	if Options.dockerMode {
+		space1 = "   "
+	}
+	fmt.Print(space1, prompt, "\t", value)
+	if newLine {
+		fmt.Println("")
+	}
+}
+
 // getTracesFromBlock Returns all traces for a given block.
 func getTracesFromBlock(blockNum int) ([]byte, error) {
 	payloadBytes, err := json.Marshal(RPCPayload{"2.0", "trace_block", Params{fmt.Sprintf("0x%x", blockNum)}, 2})
@@ -125,7 +134,7 @@ func getTracesFromBlock(blockNum int) ([]byte, error) {
 	}
 
 	body := bytes.NewReader(payloadBytes)
-	req, err := http.NewRequest("POST", viper.GetString("settings.rpcProvider"), body)
+	req, err := http.NewRequest("POST", Options.rpcProvider, body)
 	if err != nil {
 		return nil, err
 	}
@@ -153,7 +162,7 @@ func getLogsFromBlock(blockNum int) ([]byte, error) {
 	}
 
 	body := bytes.NewReader(payloadBytes)
-	req, err := http.NewRequest("POST", viper.GetString("settings.rpcProvider"), body)
+	req, err := http.NewRequest("POST", Options.rpcProvider, body)
 	if err != nil {
 		return nil, err
 	}
@@ -181,7 +190,7 @@ func getTransactionReceipt(hash string) ([]byte, error) {
 	}
 
 	body := bytes.NewReader(payloadBytes)
-	req, err := http.NewRequest("POST", viper.GetString("settings.rpcProvider"), body)
+	req, err := http.NewRequest("POST", Options.rpcProvider, body)
 	if err != nil {
 		return nil, err
 	}
@@ -201,17 +210,29 @@ func getTransactionReceipt(hash string) ([]byte, error) {
 	return receiptBody, nil
 }
 
+//var blockPanicCnt = 0
+
 // getTracesAndLogs Process the block channel and for each block query the node for both traces and logs. Send results to addressChannel
 func getTracesAndLogs(blockChannel chan int, addressChannel chan BlockInternals, blockWG *sync.WaitGroup) {
 
 	for blockNum := range blockChannel {
 		traces, err := getTracesFromBlock(blockNum)
 		if err != nil {
-			panic(err)
+			//			blockPanicCnt++
+			//			if blockPanicCnt < 3 {
+			//				fmt.Println("getTracesFromBlock returned error - pushing back")
+			//				if blockChannel.op
+			//				blockChannel <- blockNum
+			//				return
+			//			}
+			//			fmt.Println("getTracesFromBlock errored three times - not pushing back")
+			//			return
+			os.Exit(1) // caller will start over if this process exits with non-zero value
+			//			panic(err)
 		}
 		logs, err := getLogsFromBlock(blockNum)
 		if err != nil {
-			panic(err)
+			os.Exit(1) // caller will start over if this process exits with non-zero value
 		}
 		addressChannel <- BlockInternals{traces, logs}
 	}
@@ -273,8 +294,19 @@ func extractAddressesFromTraces(addressMap map[string]bool, traces *BlockTraces,
 		} else if traces.Result[i].Type == "reward" {
 			if traces.Result[i].Action.RewardType == "block" {
 				author := traces.Result[i].Action.Author
-				if goodAddr(author) {
-					addressMap[author+"\t"+blockNum+"\t"+"99999"] = true
+				if author == "0x0" {
+					// In the early blocks, it was possible to misconfigure
+					// your mining node, win a block, but get no block reward.
+					// In that case, the miner comes through as '0x0' which
+					// (of course) is impossible. We enter a false record
+					// with a false tx_id to account for this.
+					author = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
+					addressMap[author+"\t"+blockNum+"\t"+"99997"] = true
+
+				} else {
+					if goodAddr(author) {
+						addressMap[author+"\t"+blockNum+"\t"+"99999"] = true
+					}
 				}
 
 			} else if traces.Result[i].Action.RewardType == "uncle" {
@@ -434,38 +466,44 @@ func writeAddresses(blockNum string, addressMap map[string]bool) {
 	sort.Strings(addressArray)
 	toWrite := []byte(strings.Join(addressArray[:], "\n") + "\n")
 
-	folderPath := viper.GetString("settings.cachePath") + "addr_index/raw/"
-	if _, err := os.Stat(folderPath); os.IsNotExist(err) {
-		os.MkdirAll(folderPath, os.ModePerm)
+	fileName := Options.ripePath + blockNum + ".txt"
+	bn, _ := strconv.Atoi(blockNum)
+	if bn > Options.ripeBlock {
+		fileName = Options.unripePath + blockNum + ".txt"
 	}
-
-	fileName := folderPath + blockNum + ".txt"
 	err := ioutil.WriteFile(fileName, toWrite, 0777)
 	if err != nil {
 		fmt.Println("Error writing file:", err)
 	}
-	fmt.Fprint(os.Stderr, "\t\t\t\t", blockNum, " ", len(addressMap), " - ", counter, "    \r") // \r
-	counter = counter + 1
+	// Show twenty-five dots no matter how many blocks we're scraping
+	skip := Options.nBlocks / 25
+	if skip < 1 {
+		skip = 1
+	}
+	counter++
+	if counter%skip == 0 {
+		fmt.Print(".")
+	}
 }
 
-func processBlocks(startBlock int, numBlocks int, skip int, nBlockProcs int, nAddrProcs int) {
+func processBlocks() {
 
 	blockChannel := make(chan int)
 	addressChannel := make(chan BlockInternals)
 
 	var blockWG sync.WaitGroup
-	blockWG.Add(nBlockProcs)
-	for i := 0; i < nBlockProcs; i++ {
+	blockWG.Add(Options.nBlockProcs)
+	for i := 0; i < Options.nBlockProcs; i++ {
 		go getTracesAndLogs(blockChannel, addressChannel, &blockWG)
 	}
 
 	var addressWG sync.WaitGroup
-	addressWG.Add(nAddrProcs)
-	for i := 0; i < nAddrProcs; i++ {
+	addressWG.Add(Options.nAddrProcs)
+	for i := 0; i < Options.nAddrProcs; i++ {
 		go extractAddresses(addressChannel, &addressWG)
 	}
 
-	for block := startBlock; block < startBlock+numBlocks; block = block + skip {
+	for block := Options.startBlock; block < Options.startBlock+Options.nBlocks; block++ {
 		blockChannel <- block
 	}
 
@@ -475,62 +513,6 @@ func processBlocks(startBlock int, numBlocks int, skip int, nBlockProcs int, nAd
 	close(addressChannel)
 	addressWG.Wait()
 }
-
-/*
-func getAllSightings(sightings chan AddrSighting) {
-	for sighting := range sightings {
-		fmt.Println(sighting)
-	}
-}
-
-func searchForAddress(address string, fileNames chan string, sightings chan AddrSighting) {
-	for fileName := range fileNames {
-		//fmt.Println(fileName)
-
-		f, err := os.Open(fileName)
-		if err != nil {
-			fmt.Println("ERROR:", err)
-		}
-
-		lines, err := csv.NewReader(f).ReadAll()
-		if err != nil {
-			fmt.Println("ERROR:", err)
-		}
-		f.Close()
-
-		// Binary search for addresses
-		i := sort.Search(len(lines), func(i int) bool { return lines[i][0] >= address })
-		if i < len(lines) && lines[i][0] == address {
-			// found the address
-			block, err := strconv.Atoi(lines[i][1])
-			txIdx, err := strconv.Atoi(lines[i][2])
-			if err != nil {
-				fmt.Println("ERROR:", err)
-			}
-
-			// TODO: note that we didn't find every block it was included in
-			sightings <- AddrSighting{block, txIdx}
-		}
-	}
-
-	for i := 0; i < 10; i++ {
-		go searchForAddress("0xc8883059be00EC5F708398369B857A7487130317", fileNames, sightings)
-	}
-
-	go getAllSightings(sightings)
-
-	root := "/home/jrush/goblocks/blocks"
-	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
-		if strings.HasSuffix(path, ".txt") {
-			fileNames <- path
-		}
-		return nil
-	})
-	if err != nil {
-		panic(err)
-	}
-}
-*/
 
 func padLeft(str string, totalLen int) string {
 	if len(str) >= totalLen {
@@ -586,21 +568,21 @@ Description:
   left off. 'Scrape' visits every block, queries that block's traces and logs
   looking for addresses, and writes an index of those addresses per transaction.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		start := viper.GetInt("startBlock")
-		if start < 0 {
-			start = 1
+		toScreen("  rpcProvider:", Options.rpcProvider, true)
+		toScreen("  startBlock:", strconv.Itoa(Options.startBlock), true)
+		toScreen("  nBlocks:", strconv.Itoa(Options.nBlocks), true)
+		toScreen("  nBlockProcs:", strconv.Itoa(Options.nBlockProcs), true)
+		toScreen("  nAddrProcs:", strconv.Itoa(Options.nAddrProcs), true)
+		toScreen("  ripeBlock:", strconv.Itoa(Options.ripeBlock), true)
+		toScreen("  cachePath:", Options.cachePath, true)
+		toScreen("  ripePath:", Options.ripePath, true)
+		toScreen("  unripePath:", Options.unripePath, true)
+		if Options.dockerMode {
+			toScreen("  dockerMode:", "true", true)
 		}
-		n := viper.GetInt("nBlocks")
-		skip := 1
-		nBlockProcs := viper.GetInt("nBlockProcs")
-		nAddrProcs := viper.GetInt("nAddrProcs")
-		//		fmt.Println("rpcProvider: ", viper.GetString("settings.rpcProvider"))
-		//		fmt.Println("cachePath: ", viper.GetString("settings.cachePath"))
-		//		fmt.Println("startBlock: ", start)
-		//		fmt.Println("nBlocks: ", n)
-		//      fmt.Println("nBlockProcs: ", nBlockProcs)
-		//      fmt.Println("nAddrProcs: ", nAddrProcs)
-		processBlocks(start, n, skip, nBlockProcs, nAddrProcs)
+		toScreen("  processing", "", false)
+		processBlocks()
+		fmt.Println("")
 	},
 }
 
