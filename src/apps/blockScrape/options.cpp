@@ -52,6 +52,7 @@ bool COptions::parseArguments(string_q& command) {
     // Establish the folders that hold the data...
     establishFolder(indexFolder_sorted);
     establishFolder(indexFolder_finalized);
+    establishFolder(indexFolder_blooms);
     establishFolder(indexFolder_staging);
     establishFolder(indexFolder_unripe);
     establishFolder(indexFolder_ripe);

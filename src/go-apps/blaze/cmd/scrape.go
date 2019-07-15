@@ -294,8 +294,19 @@ func extractAddressesFromTraces(addressMap map[string]bool, traces *BlockTraces,
 		} else if traces.Result[i].Type == "reward" {
 			if traces.Result[i].Action.RewardType == "block" {
 				author := traces.Result[i].Action.Author
-				if goodAddr(author) {
-					addressMap[author+"\t"+blockNum+"\t"+"99999"] = true
+				if author == "0x0" {
+					// In the early blocks, it was possible to misconfigure
+					// your mining node, win a block, but get no block reward.
+					// In that case, the miner comes through as '0x0' which
+					// (of course) is impossible. We enter a false record
+					// with a false tx_id to account for this.
+					author = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
+					addressMap[author+"\t"+blockNum+"\t"+"99997"] = true
+
+				} else {
+					if goodAddr(author) {
+						addressMap[author+"\t"+blockNum+"\t"+"99999"] = true
+					}
 				}
 
 			} else if traces.Result[i].Action.RewardType == "uncle" {
