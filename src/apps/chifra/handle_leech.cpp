@@ -16,7 +16,7 @@ bool COptions::handle_leech(void) {
 
     establishFolder(indexFolder_finalized);
     establishFolder(indexFolder_staging);
-    establishFolder(indexFolder_pending);
+    establishFolder(indexFolder_unripe);
     establishFolder(indexFolder_zips);
 
     string_q contents;

@@ -18,8 +18,7 @@ static const COption params[] = {
     COption("-start:<uint>",   "the first block to process"),
     COption("-end:<uint>",     "the last block (less one) to process"),
     COption("-nblocks:<uint>", "the number of blocks to visit (ignored for -a)"),
-    COption("",                "Build an account tree listing first transaction, latest transaction, and "
-                               "node balance for each account.\n"),
+    COption("",                "Build an account tree listing first transaction, latest transaction, and node balance for each account.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 

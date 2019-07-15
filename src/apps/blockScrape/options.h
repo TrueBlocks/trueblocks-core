@@ -14,7 +14,7 @@ public:
 
     blknum_t    nBlocks;
     size_t      nBlockProcs;
-    size_t      nAddrProcesses;
+    size_t      nAddrProcs;
 
     COptions(void);
     ~COptions(void);
@@ -22,7 +22,3 @@ public:
     bool parseArguments(string_q& command);
     void Init(void);
 };
-
-//-------------------------------------------------------------------------
-extern bool handle_scrape(COptions &options);
-
