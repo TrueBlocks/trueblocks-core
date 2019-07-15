@@ -20,8 +20,7 @@ static const COption params[] = {
     COption("-fmt:<str>",       "pretty print, optionally add ':txt,' ':csv,' or ':html'"),
     COption("-blocks:<range>",  "export records in block range (:0[:max])"),
     COption("-silent",          "Run silently (only freshen the data, do not display it)"),
-    COption("",                 "Fetches data from EtherScan for an arbitrary address. Formats "
-                                    "the output to your specification.\n"),
+    COption("",                 "Fetches data from EtherScan for an arbitrary address. Formats the output to your specification.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
