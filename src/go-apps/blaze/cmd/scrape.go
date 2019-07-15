@@ -456,6 +456,10 @@ func writeAddresses(blockNum string, addressMap map[string]bool) {
 	toWrite := []byte(strings.Join(addressArray[:], "\n") + "\n")
 
 	fileName := Options.ripePath + blockNum + ".txt"
+	bn, _ := strconv.Atoi(blockNum)
+	if bn > Options.ripeBlock {
+		fileName = Options.unripePath + blockNum + ".txt"
+	}
 	err := ioutil.WriteFile(fileName, toWrite, 0777)
 	if err != nil {
 		fmt.Println("Error writing file:", err)
@@ -468,7 +472,6 @@ func writeAddresses(blockNum string, addressMap map[string]bool) {
 	counter++
 	if counter%skip == 0 {
 		fmt.Print(".")
-        os.Stdout.Sync();
 	}
 }
 
@@ -567,7 +570,7 @@ Description:
 			toScreen("  dockerMode:", "true", true)
 		}
 		toScreen("  processing", "", false)
-//		processBlocks()
+		processBlocks()
 		fmt.Println("")
 	},
 }

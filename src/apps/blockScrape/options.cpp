@@ -89,7 +89,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     const CToml *config = getGlobalConfig("blockScrape");
-    nBlocks     = config->getConfigInt("settings", "nBlocks",     (nBlocks     == NOPOS ? 2000 : nBlocks    ));
+    nBlocks     = config->getConfigInt("settings", "nBlocks",     (nBlocks     == NOPOS ? 1000 : nBlocks    ));
     nBlockProcs = config->getConfigInt("settings", "nBlockProcs", (nBlockProcs == NOPOS ?   20 : nBlockProcs));
     nAddrProcs  = config->getConfigInt("settings", "nAddrProcs",  (nAddrProcs  == NOPOS ?   60 : nAddrProcs ));
 
