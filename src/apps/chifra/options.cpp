@@ -93,20 +93,9 @@ bool COptions::parseArguments(string_q& command) {
         mode = "data";
     }
 
-    if (mode == "scrape" && !tool_flags.empty()) {
-        if (contains(tool_flags, "--mode start")) {
-            scrape_mode = "start";
-            replace(tool_flags, "--mode start", "");
-        } else if (contains(tool_flags, "--mode stop")) {
-            scrape_mode = "stop";
-            replace(tool_flags, "--mode start", "");
-        } else {
-            EXIT_USAGE("Invalid option to scrape mode " + tool_flags);
-        }
-    }
-
     if (mode.empty())
         EXIT_USAGE("Please specify " + params[0].description + ".");
+
     if (mode != "scrape") {
         establishFolder(getMonitorPath("", FM_PRODUCTION));
         establishFolder(getMonitorPath("", FM_STAGING));
@@ -126,6 +115,8 @@ bool COptions::parseArguments(string_q& command) {
     LOG4("TEST_MODE=", getEnvStr("TEST_MODE"));
     LOG4("NO_COLOR=", getEnvStr("NO_COLOR"));
     LOG4("EDITOR=", getEnvStr("EDITOR"));
+    LOG4("tool_flags=", tool_flags);
+    LOG4("freshen_flags=", freshen_flags);
 
     EXIT_NOMSG4(true);
 }
@@ -140,7 +131,6 @@ void COptions::Init(void) {
     mode          = "";
     stats         = false;
     minArgs       = 0;
-    scrape_mode   = "";
 }
 
 //---------------------------------------------------------------------------------------------------

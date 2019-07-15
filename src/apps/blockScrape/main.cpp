@@ -6,11 +6,9 @@
 #include "options.h"
 
 #define SS(a) { cerr << bBlue << padLeft(padRight((a),22,'.'),75) << cOff << "\r"; cerr.flush(); }
-#define ES()  { cerr << "\t\t\t\t" << TIC() << cOff << bBlue << " ...done                      " << endl; }
 
 //--------------------------------------------------------------------------
 extern blknum_t getLastBlockInFolder(const string_q& folder);
-extern blknum_t firstUnripe(void);
 extern bool waitForCreate(const string_q& filename);
 extern void finalizeIndexChunk2(COptions *options, CStringArray& stage);
 
@@ -24,25 +22,25 @@ bool handle_scrape(COptions &options) {
     // Remove any blocks that were not 'ripe' the last time we ran
     cleanFolder(indexFolder_unripe);
 
-    // Find the last visited block (if not in staging folder, then check finalized folder) or zero if none
-    blknum_t lastVisit = getLastBlockInFolder(indexFolder_staging);
-    if (lastVisit == 0)
-        lastVisit = getLastBlockInFolder(indexFolder_finalized);
-
-    blknum_t client = getLastBlock_client();
-    blknum_t unripe = firstUnripe();
-    cerr << (client - unripe) << endl;
+    // Find the last visited block (it's either in staging or finalized)
+    blknum_t unused1, unused2, staging, finalized, client;
+    getLastBlocks(unused1, unused2, staging, finalized, client);
+    blknum_t lastVisit = max(staging, finalized);
     blknum_t startBlock = lastVisit + 1;
-    if (startBlock >= unripe) {
-        cerr << "No ripe blocks to process" << endl;
+
+    // In some cases (if the user is re-syncing his/her node from scratch for example) the index may be
+    // ahead of tip of the chain. In this case, we return without processign anything.
+    if (startBlock > client) {
+        cerr << cTeal << "INFO: " << cOff;
+        cerr << "The index (" << startBlock << ") is caught up to the tip of the chain (" << client << ").";
+        cerr << endl;
         return false;
     }
 
-    ostringstream addit;
-    if (options.nBlockProcs != NOPOS)
-        addit << " --nBlockProcs " << options.nBlockProcs;
-    if (options.nAddrProcesses != NOPOS)
-        addit << " --nAddrProcesses " << options.nAddrProcesses;
+#if 0
+    //2287592
+    //2288192
+    //2356992
 
     if (startBlock < firstTransactionBlock)
         options.nBlocks = 5000;
@@ -51,28 +49,34 @@ bool handle_scrape(COptions &options) {
     if (getEnvStr("DOCKER_MODE") == "true") {
         if (ddosRange(startBlock)) {
             options.nBlocks = 100;
-            if (addit.str().empty()) {
-                addit << " --nBlockProcs " << 10;
-                addit << " --nAddrProcesses " << 20;
-            }
+            options.nBlockProcs = 10;
+            options.nAddrProcs = 20;
         }
     }
+#endif
 
-    //2287592
-    //2288192
-    //2356992
+    // At some point, we need to stop re-visiting blocks. We call this point the 'ripe' block. In this
+    // version, the 'ripe' block is 28 blocks away from the current head (a bit more than five minutes
+    // under normal operation). Note that, if the index is caught up and the difficulty is high (time bomb),
+    // we will get further away from the front of the chain than normal.
+    blknum_t ripeBlock = client - 28;
 
     ostringstream os;
-    os << "blaze scrape --startBlock " << startBlock << " --nBlocks " << options.nBlocks;
-    os << " " << addit.str();
+    os << "blaze scrape";
+    os << " --startBlock " << startBlock;
+    os << " --nBlocks " << options.nBlocks;
+    os << " --ripeBlock " << ripeBlock;
+    os << " --nBlockProcs " << options.nBlockProcs;
+    os << " --nAddrProcs " << options.nAddrProcs;
+
     cerr << cGreen << "\t" << os.str() << cOff << " (" << (startBlock + options.nBlocks) << ")" << endl;
     SS("Scraping");
     if (system(os.str().c_str()) != 0) {
         cerr << cRed << "\t\t\t\tBlaze quit unexpectedly. Quitting..." << cOff << endl;
         return false;
     }
-    ES();
 
+#if 0
     SS("Grouping");
     string_q newLines;
     blknum_t endBlock = min(unripe, startBlock + options.nBlocks);  // we only move ripe blocks to the indexes
@@ -116,32 +120,9 @@ bool handle_scrape(COptions &options) {
     explode(newRecords, newLines, '\n');
     ES();
     finalizeIndexChunk2(&options, newRecords);
+#endif
+
     return true;
-}
-
-//----------------------------------------------------------------------------------
-int main(int argc, const char *argv[]) {
-    etherlib_init("local",  defaultQuitHandler);
-
-    COptions options;
-    if (!options.prepareArguments(argc, argv))
-        return 0;
-
-    for (auto command : options.commandLines) {
-        if (options.parseArguments(command)) {
-            cerr << bGreen << "Scraping new blocks..." << "\n" << cOff;
-            if (!handle_scrape(options))
-                cerr << "\tThe tool ended with an error.";
-            cerr << bGreen << "...done\n" << cOff;
-        }
-    }
-
-    if (verbose)
-        cerr << scraperStatus();
-
-    etherlib_cleanup();
-
-    return 0;
 }
 
 //--------------------------------------------------------------------------
@@ -149,19 +130,6 @@ blknum_t getLastBlockInFolder(const string_q& folder) {
     string_q fileName = getLastFileInFolder(folder, false);
     fileName = substitute(fileName, folder, "");
     return str_2_Uint(fileName);
-}
-
-//--------------------------------------------------------------------------
-blknum_t firstUnripe(void) {
-    CBlock block;
-    getBlock(block, "latest"); // the latest block at the client
-    cerr << block.Format("[{BLOCKNUMBER}]\t[{TIMESTAMP}]\t[{AGE}]\t[{DATE}]") << endl;
-    blknum_t eightAgo = block.blockNumber - blknum_t( ( 60 / 14. ) * 8 + 1); // eight mintes ago (client time!) rounded up
-    blknum_t last = block.blockNumber - blknum_t( ( 60 / 14. ) * 2 + 1); // two mintes ago (client time!) rounded up
-    block.timestamp = block.timestamp - ( 60 * 5 );  // we're looking for the block at least five minutes ago
-    findTimestamp_binarySearch(block, eightAgo, last);
-    cerr << block.Format("[{BLOCKNUMBER}]\t[{TIMESTAMP}]\t[{AGE}]\t[{DATE}]") << endl;
-    return block.blockNumber;
 }
 
 //-------------------------------------------------------------------------------------------------------------
@@ -199,11 +167,9 @@ void finalizeIndexChunk2(COptions *options, CStringArray& stage) {
     if (fileExists(stagingOld)) {
         ::rename(stagingOld.c_str(),stagingNew.c_str());
     }
-    ES()
 
     SS("Growing");
     linesToAsciiFile(stagingNew, stage, true);
-    ES()
 
     size_t curSize = fileSize(stagingNew) / 59;
     cerr << "\t" << cYellow << stagingOld << "\t" << prevSize << cOff << endl;
@@ -321,10 +287,34 @@ void finalizeIndexChunk2(COptions *options, CStringArray& stage) {
 
             curSize = fileSize(stagingNew) / 59;
             lockSection(false);
-            ES();
         }
 
     } else {
         cerr << bRed << "\tDid not consolidate: " << curSize << " of " << maxIndexRows << cOff << endl;
     }
 }
+
+//----------------------------------------------------------------------------------
+int main(int argc, const char *argv[]) {
+    etherlib_init("local",  defaultQuitHandler);
+
+    COptions options;
+    if (!options.prepareArguments(argc, argv))
+        return 0;
+
+    for (auto command : options.commandLines) {
+        if (options.parseArguments(command)) {
+            //                       cerr << bGreen << "Scraping new blocks..." << "\n" << cOff;
+            handle_scrape(options);
+            //                       cerr << bGreen << "...done\n" << cOff;
+        }
+    }
+
+    //    if (verbose)
+    //        cerr << scraperStatus();
+
+    etherlib_cleanup();
+
+    return 0;
+}
+
