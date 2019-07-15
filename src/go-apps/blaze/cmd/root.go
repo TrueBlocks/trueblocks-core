@@ -17,13 +17,13 @@ var rootCmd = &cobra.Command{
 	Short: "Build, query, or share an index of Ethereum addresses per block",
 	Long: `
 Description:
-  Blaze is an internal-use-only component called by blockScrape to 
+  Blaze is an internal-use-only component called by 'blockScrape' to 
   index blocks from the last visited block (startBlock) to the front
   of the chain (or for nBlocks if specified). It accumulates an index
-  of every addresses as they appears anywhere on the chain. You may
+  of every address as it appears anywhere in the data. You may
   later query this index (with acctScrape) many orders of magnitude
-  more quickly than scanning the blockchain directly. The component
-  has four required command line options.`,
+  more quickly than scanning the blockchain directly. All of the
+  component's numeric command line options are required.`,
 	Version: "GHC-TrueBlocks, LLC//0.0.1-alpha",
 }
 
@@ -45,6 +45,9 @@ type optionsT struct {
 	nBlocks     int
 	nBlockProcs int
 	nAddrProcs  int
+	ripeBlock   int
+	ripePath    string
+	unripePath  string
 	dockerMode  bool
 }
 
@@ -55,17 +58,18 @@ var Options optionsT
 func init() {
 	cobra.OnInitialize(initConfig)
 
-	rootCmd.PersistentFlags().StringVarP(&Options.rpcProvider, "rpcProvider", "r", "http://localhost:8545", "The location of the node's RPC")
-	rootCmd.PersistentFlags().StringVarP(&Options.cachePath, "cachePath", "c", "", "The location of TrueBlocks' cache")
-
+	rootCmd.PersistentFlags().StringVarP(&Options.rpcProvider, "rpcProvider", "r", "http://localhost:8545", "URL to the node's RPC")
+	rootCmd.PersistentFlags().StringVarP(&Options.cachePath, "cachePath", "c", "", "The location of TrueBlocks' cache (default \"~/.quickBlocks/cache/\")")
 	rootCmd.PersistentFlags().IntVarP(&Options.startBlock, "startBlock", "s", 0, "First block to visit (required)")
+	rootCmd.PersistentFlags().IntVarP(&Options.nBlocks, "nBlocks", "n", 0, "The number of blocks to scrape (required)")
+	rootCmd.PersistentFlags().IntVarP(&Options.nBlockProcs, "nBlockProcs", "b", 0, "The number of block processors to create (required)")
+	rootCmd.PersistentFlags().IntVarP(&Options.nAddrProcs, "nAddrProcs", "a", 0, "The number of address processors to create (required)")
+	rootCmd.PersistentFlags().IntVarP(&Options.ripeBlock, "ripeBlock", "e", 0, "Blocks prior to this value are written to 'ripe' folder (required)")
 	rootCmd.MarkPersistentFlagRequired("startBlock")
-	rootCmd.PersistentFlags().IntVarP(&Options.nBlocks, "nBlocks", "n", 2500, "The number of blocks to scrape during this invocation (required)")
 	rootCmd.MarkPersistentFlagRequired("nBlocks")
-	rootCmd.PersistentFlags().IntVarP(&Options.nBlockProcs, "nBlockProcs", "b", 50, "The number of block processor go routines to create (required)")
 	rootCmd.MarkPersistentFlagRequired("nBlockProcs")
-	rootCmd.PersistentFlags().IntVarP(&Options.nAddrProcs, "nAddrProcs", "a", 100, "The number of address processor go routines to create (required)")
 	rootCmd.MarkPersistentFlagRequired("nAddrProcs")
+	rootCmd.MarkPersistentFlagRequired("ripeBlock")
 
 	Options.dockerMode = (os.Getenv("DOCKER_MODE") != "")
 }
@@ -117,5 +121,15 @@ func initConfig() {
 	}
 	if Options.cachePath[len(Options.cachePath)-1] != '/' {
 		Options.cachePath += "/"
+	}
+
+	Options.ripePath = Options.cachePath + "addr_index/ripe/"
+	if _, err := os.Stat(Options.ripePath); os.IsNotExist(err) {
+		os.MkdirAll(Options.ripePath, 0777)
+	}
+
+	Options.unripePath = Options.cachePath + "addr_index/unripe/"
+	if _, err := os.Stat(Options.unripePath); os.IsNotExist(err) {
+		os.MkdirAll(Options.unripePath, 0777)
 	}
 }

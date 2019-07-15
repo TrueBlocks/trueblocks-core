@@ -14,7 +14,7 @@ public:
 
     blknum_t    nBlocks;
     size_t      nBlockProcs;
-    size_t      nAddrProcesses;
+    size_t      nAddrProcs;
 
     COptions(void);
     ~COptions(void);

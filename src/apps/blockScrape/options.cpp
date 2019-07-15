@@ -40,7 +40,7 @@ bool COptions::parseArguments(string_q& command) {
             arg = substitute(arg, "--nAddrProcs:", "");
             if (!isUnsigned(arg))
                 return usage("--nAddrProcs must be a non-negative number. Quitting...");
-            nAddrProcesses = str_2_Uint(arg);
+            nAddrProcs = str_2_Uint(arg);
 
         } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
@@ -54,6 +54,7 @@ bool COptions::parseArguments(string_q& command) {
     establishFolder(indexFolder_finalized);
     establishFolder(indexFolder_staging);
     establishFolder(indexFolder_unripe);
+    establishFolder(indexFolder_ripe);
     establishFolder(configPath("cache/tmp/"));
 
     CBlock latest;
@@ -95,10 +96,10 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOn(OPT_RUNONCE | OPT_PREFUND);
 
-    nBlockProcs = NOPOS;
-    nAddrProcesses  = NOPOS;
-    nBlocks         = 1000;
-    minArgs         = 0;
+    nBlockProcs = 30;
+    nAddrProcs  = 90;
+    nBlocks     = 2000;
+    minArgs     = 0;
 }
 
 //---------------------------------------------------------------------------------------------------

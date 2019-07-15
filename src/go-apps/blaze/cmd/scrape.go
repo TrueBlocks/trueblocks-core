@@ -455,12 +455,7 @@ func writeAddresses(blockNum string, addressMap map[string]bool) {
 	sort.Strings(addressArray)
 	toWrite := []byte(strings.Join(addressArray[:], "\n") + "\n")
 
-	folderPath := Options.cachePath + "addr_index/unripe/"
-	if _, err := os.Stat(folderPath); os.IsNotExist(err) {
-		os.MkdirAll(folderPath, os.ModePerm)
-	}
-
-	fileName := folderPath + blockNum + ".txt"
+	fileName := Options.ripePath + blockNum + ".txt"
 	err := ioutil.WriteFile(fileName, toWrite, 0777)
 	if err != nil {
 		fmt.Println("Error writing file:", err)
@@ -473,27 +468,28 @@ func writeAddresses(blockNum string, addressMap map[string]bool) {
 	counter++
 	if counter%skip == 0 {
 		fmt.Print(".")
+        os.Stdout.Sync();
 	}
 }
 
-func processBlocks(startBlock int, numBlocks int, nBlockProcs int, nAddrProcs int) {
+func processBlocks() {
 
 	blockChannel := make(chan int)
 	addressChannel := make(chan BlockInternals)
 
 	var blockWG sync.WaitGroup
-	blockWG.Add(nBlockProcs)
-	for i := 0; i < nBlockProcs; i++ {
+	blockWG.Add(Options.nBlockProcs)
+	for i := 0; i < Options.nBlockProcs; i++ {
 		go getTracesAndLogs(blockChannel, addressChannel, &blockWG)
 	}
 
 	var addressWG sync.WaitGroup
-	addressWG.Add(nAddrProcs)
-	for i := 0; i < nAddrProcs; i++ {
+	addressWG.Add(Options.nAddrProcs)
+	for i := 0; i < Options.nAddrProcs; i++ {
 		go extractAddresses(addressChannel, &addressWG)
 	}
 
-	for block := startBlock; block < startBlock+numBlocks; block++ {
+	for block := Options.startBlock; block < Options.startBlock+Options.nBlocks; block++ {
 		blockChannel <- block
 	}
 
@@ -558,17 +554,20 @@ Description:
   left off. 'Scrape' visits every block, queries that block's traces and logs
   looking for addresses, and writes an index of those addresses per transaction.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		toScreen("rpcProvider:", Options.rpcProvider, true)
-		toScreen("cachePath:", Options.cachePath, true)
-		toScreen("startBlock:", strconv.Itoa(Options.startBlock), true)
-		toScreen("nBlocks:", strconv.Itoa(Options.nBlocks), true)
-		toScreen("nBlockProcs:", strconv.Itoa(Options.nBlockProcs), true)
-		toScreen("nAddrProcs:", strconv.Itoa(Options.nAddrProcs), true)
+		toScreen("  rpcProvider:", Options.rpcProvider, true)
+		toScreen("  startBlock:", strconv.Itoa(Options.startBlock), true)
+		toScreen("  nBlocks:", strconv.Itoa(Options.nBlocks), true)
+		toScreen("  nBlockProcs:", strconv.Itoa(Options.nBlockProcs), true)
+		toScreen("  nAddrProcs:", strconv.Itoa(Options.nAddrProcs), true)
+		toScreen("  ripeBlock:", strconv.Itoa(Options.ripeBlock), true)
+		toScreen("  cachePath:", Options.cachePath, true)
+		toScreen("  ripePath:", Options.ripePath, true)
+		toScreen("  unripePath:", Options.unripePath, true)
 		if Options.dockerMode {
 			toScreen("dockerMode:", "true", true)
 		}
-		toScreen("processing", "", false)
-		processBlocks(Options.startBlock, Options.nBlocks, Options.nBlockProcs, Options.nAddrProcs)
+		toScreen("  processing", "", false)
+		processBlocks()
 		fmt.Println("")
 	},
 }

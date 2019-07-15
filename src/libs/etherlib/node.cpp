@@ -402,12 +402,21 @@ extern void loadParseMap(void);
     }
 
     //--------------------------------------------------------------------------
+    blknum_t getLastBlock_cache_ripe(void) {
+        string_q ripeLast = getLastFileInFolder(indexFolder_ripe, false);
+        // Files in this folder are n.txt, if empty, we fall back on staging folder
+        if (!ripeLast.empty())
+            return bnFromPath(ripeLast);
+        return getLastBlock_cache_staging();
+    }
+
+    //--------------------------------------------------------------------------
     blknum_t getLastBlock_cache_unripe(void) {
         string_q unripeLast = getLastFileInFolder(indexFolder_unripe, false);
-        // Files in this folder are n.txt, if empty, we fall back on staging folder
+        // Files in this folder are n.txt, if empty, we fall back on ripe folder
         if (!unripeLast.empty())
             return bnFromPath(unripeLast);
-        return getLastBlock_cache_staging();
+        return getLastBlock_cache_ripe();
     }
 
     //-------------------------------------------------------------------------
@@ -428,7 +437,8 @@ extern void loadParseMap(void);
     }
 
     //--------------------------------------------------------------------------
-    bool getLastBlocks(blknum_t& unripe, blknum_t& staging, blknum_t& finalized, blknum_t& client) {
+    bool getLastBlocks(blknum_t& unripe, blknum_t& ripe, blknum_t& staging, blknum_t& finalized, blknum_t& client) {
+        ripe      = getLastBlock_cache_ripe();
         unripe    = getLastBlock_cache_unripe();
         staging   = getLastBlock_cache_staging();
         finalized = getLastBlock_cache_final();
@@ -841,8 +851,8 @@ extern void loadParseMap(void);
         string_q tmpStore = configPath("cache/tmp/scraper-status.txt");
 
         uint64_t prevDiff = str_2_Uint(asciiFileToString(tmpStore));
-        uint64_t unripe, staging, finalized, client;
-        getLastBlocks(unripe, staging, finalized, client);
+        uint64_t unripe, ripe, staging, finalized, client;
+        getLastBlocks(unripe, ripe, staging, finalized, client);
 
         uint64_t currDiff = finalized > client ? finalized - client : client - finalized;
         stringToAsciiFile(tmpStore, uint_2_Str(currDiff));  // so we can use it next time
@@ -1030,8 +1040,8 @@ extern void loadParseMap(void);
         if (fmt != API1)
             return "\n]";
 
-        uint64_t unripe, staging, finalized, client;
-        getLastBlocks(unripe, staging, finalized, client);
+        uint64_t unripe, ripe, staging, finalized, client;
+        getLastBlocks(unripe, ripe, staging, finalized, client);
         if (isTestMode())
             unripe = staging = finalized = client = 0xdeadbeef;
 
