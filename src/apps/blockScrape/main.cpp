@@ -69,10 +69,10 @@ bool handle_scrape(COptions &options) {
     os << " --nBlockProcs " << options.nBlockProcs;
     os << " --nAddrProcs " << options.nAddrProcs;
 
+    cerr << endl << cTeal << Now().Format(FMT_EXPORT) << endl;
     cerr << cGreen << "\t" << os.str() << cOff << " (" << (startBlock + options.nBlocks) << ")" << endl;
-    SS("Scraping");
     if (system(os.str().c_str()) != 0) {
-        cerr << cRed << "\t\t\t\tBlaze quit unexpectedly. Quitting..." << cOff << endl;
+        cerr << cRed << "\tBlaze quit without finishing. Reprocessing..." << cOff << endl;
         return false;
     }
 
