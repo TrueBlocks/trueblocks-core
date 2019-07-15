@@ -88,6 +88,11 @@ bool COptions::parseArguments(string_q& command) {
         writeIndexAsBinary(zeroBin, appearances); // also writes the bloom file
     }
 
+    const CToml *config = getGlobalConfig("blockScrape");
+    nBlocks     = config->getConfigInt("settings", "nBlocks",     (nBlocks     == NOPOS ? 2000 : nBlocks    ));
+    nBlockProcs = config->getConfigInt("settings", "nBlockProcs", (nBlockProcs == NOPOS ?   20 : nBlockProcs));
+    nAddrProcs  = config->getConfigInt("settings", "nAddrProcs",  (nAddrProcs  == NOPOS ?   60 : nAddrProcs ));
+
     return true;
 }
 
@@ -96,9 +101,9 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOn(OPT_RUNONCE | OPT_PREFUND);
 
-    nBlockProcs = 30;
-    nAddrProcs  = 90;
-    nBlocks     = 2000;
+    nBlockProcs = NOPOS;
+    nAddrProcs  = NOPOS;
+    nBlocks     = NOPOS;
     minArgs     = 0;
 }
 
