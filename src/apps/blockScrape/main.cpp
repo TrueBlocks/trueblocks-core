@@ -8,8 +8,51 @@
 #define SS(a) { cerr << bBlue << padLeft(padRight((a),22,'.'),75) << cOff << "\r"; cerr.flush(); }
 
 //--------------------------------------------------------------------------
+class CConsolidator {
+public:
+    ofstream output;
+    blknum_t lastBlock;
+    CConsolidator(const string_q& fileName) {
+        output.open(fileName, ios::out | ios::app);
+        lastBlock = NOPOS;
+    }
+private:
+    CConsolidator(void) {}
+};
+
+//--------------------------------------------------------------------------
+bool copyToStaging(const string_q& path, void *data) {
+
+    if (endsWith(path, '/'))
+        return forEveryFileInFolder(path + "*", copyToStaging, data);
+
+    else {
+        blknum_t bn = bnFromPath(path);
+        CConsolidator *con = (CConsolidator *)data;
+        if ((con->lastBlock + 1) != bn) {
+            // For some reason, we're missing a file. Quit and try again next time
+            return false;
+        }
+        ifstream inputStream(path, ios::in);
+        if (!inputStream.is_open()) {
+            // Something went wrong, try again next time
+            return false;
+        }
+
+        lockSection(true);
+        con->output << inputStream.rdbuf();
+        con->output.flush();
+        ::remove(path.c_str());
+        con->lastBlock = bn;
+        lockSection(false);
+    }
+
+    return !shouldQuit();
+}
+
+//--------------------------------------------------------------------------
 extern bool waitForCreate(const string_q& filename);
-extern void finalizeIndexChunk2(COptions *options, CStringArray& stage);
+extern void finalizeIndexChunk2(COptions *options, CConsolidator *cons);
 
 //--------------------------------------------------------------------------
 bool handle_scrape(COptions &options) {
@@ -36,7 +79,7 @@ bool handle_scrape(COptions &options) {
         return false;
     }
 
-    if (startBlock < firstTransactionBlock)
+    if (startBlock < 150000) //firstTransactionBlock)
         options.nBlocks = 5000;
     else if (ddosRange(startBlock))
         options.nBlocks = 200;
@@ -47,7 +90,6 @@ bool handle_scrape(COptions &options) {
             options.nAddrProcs = 20;
         }
     }
-
 #if 0
     //2287592
     //2288192
@@ -60,6 +102,9 @@ bool handle_scrape(COptions &options) {
     // in the time bomb), we will receed from the front of the chain than normal. (28 blocks, when blocks
     // take longer, is a longer amount of time.)
     blknum_t ripeBlock = client - 28;
+
+    //    options.nBlocks = 150;
+//    options.nBlocks = 15;
 
     ostringstream os;
     os << "blaze scrape";
@@ -77,48 +122,32 @@ bool handle_scrape(COptions &options) {
         cerr << cRed << "\tBlaze quit without finishing. Reprocessing..." << cOff << endl;
         return false;
     }
+    // If blaze returned '0', it sucessfully ran through all the blocks in the range. The ripe
+    // folder holds finalized, individual blocks. The unripe folder holds blocks (if any) that
+    // are less than 28 blocks from the head of the chain. We don't process them any further.
 
-    string_q newLines;
-    blknum_t endBlock = min(ripeBlock, startBlock + options.nBlocks);  // we only move ripe blocks to the indexes
+    // If the user starts using the account scraper or hit's control+c, we want to quit the processing.
+    // We use this variable. Note - the following code must handle control+c properly without disturbing
+    // the data. This means it has to process each block atomically.
     bool mustQuit = isRunning("acctScrape", false);
-    for (blknum_t bn = startBlock ; bn < endBlock && !shouldQuit() && !mustQuit ; bn++) {
-        lockSection(true); // no control+C during this phase
-        string_q rawName = indexFolder_ripe + padNum9(bn) + ".txt";
-        size_t nLines = fileSize(rawName) / 59;
-        if (nLines) {
-            newLines.reserve((newLines.size() + nLines) * 59);
-            newLines += asciiFileToString(rawName);
-            cerr << "\t\t\t\t" << bn << " - " << (endBlock-bn) << "     \r"; cerr.flush();
-            mustQuit = isRunning("acctScrape", false);
-        } else {
-            // blaze failed for some reason (may have been control+C). Quit accumulating here
-            // and start again next time, but check first if it's just a misconfigured miner
-            CBlock block;
-            getBlock(block, bn);
-            if (block.miner == "0x0") {
-                // some early blocks had no miner by mistake, skip over them
-                // put a false record here to skip over this block and quit
-                ostringstream os1;
-                os1 << "0xdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef\t" << padNum9(bn) << "\t" << padNum5(99997) << endl;
-                newLines += os1.str();
-                cerr << "\n" << cRed << "No miner: " << os1.str() << cOff;
-                mustQuit = isRunning("acctScrape", false);
-            } else {
-                mustQuit = true;
-            }
-        }
-        if (fileExists(rawName))
-            ::remove(rawName.c_str());
-        lockSection(false); // no control+C during this phase
-        usleep(25000); // stay responsive to cntrl+C
+    if (mustQuit)
+        return false;
+
+    // This processes one file at a time copying the data from the ripe file into the staging file.
+    // It flushes the data and then removes the ripe file. If it doesn't complete, it removes cleans up
+    // the ripe folder and the temp staging file
+    CConsolidator cons(indexFolder_staging + "000000000-temp.txt");
+    cons.lastBlock = (staging == NOPOS ? (finalized == NOPOS ? 0 : finalized) : staging);
+    if (!forEveryFileInFolder(indexFolder_ripe, copyToStaging, &cons)) {
+        // Something went wrong (either control+c or a non-sequential list of files). Clean up everything and start over.
+        cleanFolder(indexFolder_ripe);
+        ::remove((indexFolder_staging + "000000000-temp.txt").c_str());
+        return false;
     }
 
-    // The stage now contains all non-sorted records (actually, they are sorted naturally by
-    // block number). Next, we pick off a chunk if we can, finalize it, and re-write any
-    // unfinalized records back to the stage (still sorted by block number)
-    CStringArray newRecords;
-    explode(newRecords, newLines, '\n');
-    finalizeIndexChunk2(&options, newRecords);
+    // The stage now contains all non-consolidated records. Next, we pick off chunks if we can, consolidate them,
+    // and re-write any unfinalized records back to the stage (naturally sorted by block number)
+    finalizeIndexChunk2(&options, &cons);
 
     return true;
 }
@@ -133,47 +162,28 @@ bool waitForCreate(const string_q& filename) {
     return fileExists(filename);
 }
 //--------------------------------------------------------------------------
-void finalizeIndexChunk2(COptions *options, CStringArray& stage) {
+void finalizeIndexChunk2(COptions *options, CConsolidator *cons) {
+
+    string_q stagedFile = indexFolder_staging + "000000000-temp.txt";
+    string_q prevFile = getLastFileInFolder(indexFolder_staging, false);
+
+    CStringArray stage;
+    if (prevFile != stagedFile && fileExists(prevFile))
+        asciiFileToLines(prevFile, stage);
+    asciiFileToLines(stagedFile, stage);
 
     lockSection(true);
-    string_q stagingOld = getLastFileInFolder(indexFolder_staging, false);
-    size_t prevSize = fileSize(stagingOld) / 59;
-
-    if (stage.size() == 0) {
-        cerr << "\t" << cTeal << "Nothing to stage. Quitting..." << cOff << endl;
-        exit(0);
-    }
-    string_q lastLine = stage[stage.size()-1];
-
-    CStringArray parts;
-    explode(parts, lastLine, '\t');
-    if (parts.size() != 3 || !isNumeral(parts[1])) {
-        cerr << "\t" << cRed << "Invalid last line. Quitting..." << lastLine << cOff << endl;
-        exit(0);
-        return;
-    }
-
-    SS("Moving");
-    string_q stagingNew = indexFolder_staging + parts[1] + ".txt";
-    if (fileExists(stagingOld)) {
-        ::rename(stagingOld.c_str(),stagingNew.c_str());
-    }
-
-    SS("Growing");
-    linesToAsciiFile(stagingNew, stage, true);
-
-    size_t curSize = fileSize(stagingNew) / 59;
-    cerr << "\t" << cYellow << stagingOld << "\t" << prevSize << cOff << endl;
-    cerr << "\t" << cYellow << stagingNew << "\t" << curSize << cOff << " (" << (curSize - prevSize) << ")" << endl;
-
-    if (curSize < prevSize) {
-        // Something went wrong. Remove the new file and start over
-        cerr << cRed << "\tSomething went wrong. Replacing old file.";
-        ::rename(stagingNew.c_str(), stagingOld.c_str());
-        return;
-    }
-
+    string_q newFile = indexFolder_staging + padNum9(cons->lastBlock) + ".txt";
+    linesToAsciiFile(newFile, stage, true);
+    if (prevFile != stagedFile && fileExists(prevFile))
+        ::remove(prevFile.c_str());
+    if (fileExists(stagedFile))
+        ::remove(stagedFile.c_str());
     lockSection(false);
+
+    // newFile contains all un-consolidated, but staged records
+    size_t curSize = fileSize(newFile) / 59;
+
     blknum_t maxIndexRows = 500000;
     if (curSize > maxIndexRows) {
 
@@ -184,8 +194,8 @@ void finalizeIndexChunk2(COptions *options, CStringArray& stage) {
             SS("Consolodate (pass " + uint_2_Str(pass++) + ")"); cerr << endl;
             CStringArray lines;
             lines.reserve(curSize + 100);
-            asciiFileToLines(stagingNew, lines);
-            cerr << "\tstagingNew: " << stagingNew << ": " << lines.size() << endl;
+            asciiFileToLines(newFile, lines);
+            cerr << "\tnewFile: " << newFile << ": " << lines.size() << endl;
 
             string_q prev;
             cerr << "\tSearching from " << (maxIndexRows-1) << " to " << lines.size() << endl;
@@ -241,14 +251,7 @@ void finalizeIndexChunk2(COptions *options, CStringArray& stage) {
             explode(p2, consolidatedLines[consolidatedLines.size()-1], '\t');
 
 
-            //            string_q ll = indexFolder_sorted + p1[1] + "-" + p2[1] + ".txt";
-            //            linesToAsciiFile(ll, consolidatedLines, true);
-            //            cerr << "\tWrote " << bYellow << consolidatedLines.size() << cOff << " records to " << ll << endl;
-            //            string_q asciiFile = substitute(ll, indexFolder_sorted, indexFolder_ascii);
-            //            writeIndexAsAscii(asciiFile, consolidatedLines);
-            //            cerr << "\tWrote " << bYellow << consolidatedLines.size() << cOff << " records to " << asciiFile << endl;
-            string_q binFile = indexFolder_finalized + p1[1] + "-" + p2[1] + ".txt";
-            //            string_q binFile = substitute(substitute(ll, indexFolder_sorted, indexFolder_finalized),".txt",".bin");
+            string_q binFile = indexFolder_finalized + p1[1] + "-" + p2[1] + ".bin";
             writeIndexAsBinary(binFile, consolidatedLines);
             cerr << "\tWrote " << bYellow << consolidatedLines.size() << cOff << " records to " << binFile << endl;
 
@@ -272,16 +275,16 @@ void finalizeIndexChunk2(COptions *options, CStringArray& stage) {
                 cerr << bBlue << "\t\t" << (where-1) << ": " << lines[where-1] << cOff << endl;
                 cerr << bTeal << "\t\t" << (where) << ": " << lines[where] << cOff << endl;
             }
-            ::remove(stagingNew.c_str());
-            linesToAsciiFile(stagingNew, remainingLines, true);
-            cerr << "\tWrote " << bMagenta << remainingLines.size() << cOff << " records to " << stagingNew << endl;
+            ::remove(newFile.c_str());
+            linesToAsciiFile(newFile, remainingLines, true);
+            cerr << "\tWrote " << bMagenta << remainingLines.size() << cOff << " records to " << newFile << endl;
 
-            curSize = fileSize(stagingNew) / 59;
+            curSize = fileSize(newFile) / 59;
             lockSection(false);
         }
 
     } else {
-        cerr << bRed << "\tDid not consolidate: " << curSize << " of " << maxIndexRows << cOff << endl;
+        cerr << bTeal << "\t  Will consolidate in " << (maxIndexRows - curSize) << " rows (" << curSize << " of " << maxIndexRows << ")" << cOff << endl;
     }
 }
 
@@ -308,4 +311,3 @@ int main(int argc, const char *argv[]) {
 
     return 0;
 }
-
