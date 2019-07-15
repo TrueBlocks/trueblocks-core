@@ -251,11 +251,18 @@ namespace qblocks {
 
     //----------------------------------------------------------------------------
     bool isRunning(const string_q& progName, bool excludeSelf) {
-        string_q cmd = "ps -ef | grep -i " + progName + " | grep -v grep | grep -v \"sh -c \" | wc -l";
+        string_q cmd = "ps -ef | grep -i \"" + progName + "\" | grep -v grep | grep -v \"sh -c \" | wc -l";
         string_q result = doCommand(cmd);
         uint64_t cnt = str_2_Uint(result);
         if (!cnt || !contains(result, getEffectiveUserName())) // not running or not running by this user
             return false;
         return (!excludeSelf || cnt > 1);
+    }
+
+    //----------------------------------------------------------------------------
+    size_t nRunning(const string_q& progName) {
+        string_q cmd = "ps -ef | grep -i \"" + progName + "\" | grep -v grep | grep -v \"sh -c \" | wc -l";
+        string_q result = doCommand(cmd);
+        return str_2_Uint(result);
     }
 }  // namespace qblocks

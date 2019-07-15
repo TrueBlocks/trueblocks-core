@@ -191,6 +191,6 @@ bool visitStagingIndexFiles(const string_q& path, void *data) {
 }
 
 //---------------------------------------------------------------
-bool visitPendingIndexFiles(const string_q& path, void *data) {
+bool visitUnripeIndexFiles(const string_q& path, void *data) {
     return false;
 }
