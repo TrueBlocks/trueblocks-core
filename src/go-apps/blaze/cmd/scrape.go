@@ -564,7 +564,7 @@ Description:
 		toScreen("  ripePath:", Options.ripePath, true)
 		toScreen("  unripePath:", Options.unripePath, true)
 		if Options.dockerMode {
-			toScreen("dockerMode:", "true", true)
+			toScreen("  dockerMode:", "true", true)
 		}
 		toScreen("  processing", "", false)
 //		processBlocks()
