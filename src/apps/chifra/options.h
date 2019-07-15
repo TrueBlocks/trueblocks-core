@@ -14,7 +14,6 @@ public:
     blknum_t minWatchBlock;
     blknum_t maxWatchBlock;
     CArchive txCache;
-    string_q scrape_mode;
 
     string_q freshen_flags;
     string_q tool_flags;
