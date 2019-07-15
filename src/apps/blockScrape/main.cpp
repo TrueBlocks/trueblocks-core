@@ -78,23 +78,21 @@ bool handle_scrape(COptions &options) {
         return false;
     }
 
-#if 0
-    SS("Grouping");
     string_q newLines;
-    blknum_t endBlock = min(unripe, startBlock + options.nBlocks);  // we only move ripe blocks to the indexes
+    blknum_t endBlock = min(ripeBlock, startBlock + options.nBlocks);  // we only move ripe blocks to the indexes
     bool mustQuit = isRunning("acctScrape", false);
     for (blknum_t bn = startBlock ; bn < endBlock && !shouldQuit() && !mustQuit ; bn++) {
         lockSection(true); // no control+C during this phase
-        string_q rawName = indexFolder_unripe + padNum9(bn) + ".txt";
+        string_q rawName = indexFolder_ripe + padNum9(bn) + ".txt";
         size_t nLines = fileSize(rawName) / 59;
         if (nLines) {
             newLines.reserve((newLines.size() + nLines) * 59);
             newLines += asciiFileToString(rawName);
             cerr << "\t\t\t\t" << bn << " - " << (endBlock-bn) << "     \r"; cerr.flush();
-            //mustQuit = isRunning("acctScrape", false);
+            mustQuit = isRunning("acctScrape", false);
         } else {
             // blaze failed for some reason (may have been control+C). Quit accumulating here
-            // and start again next time.
+            // and start again next time, but check first if it's just a misconfigured miner
             CBlock block;
             getBlock(block, bn);
             if (block.miner == "0x0") {
@@ -104,6 +102,7 @@ bool handle_scrape(COptions &options) {
                 os1 << "0xdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef\t" << padNum9(bn) << "\t" << padNum5(99997) << endl;
                 newLines += os1.str();
                 cerr << "\n" << cRed << "No miner: " << os1.str() << cOff;
+                mustQuit = isRunning("acctScrape", false);
             } else {
                 mustQuit = true;
             }
@@ -111,18 +110,15 @@ bool handle_scrape(COptions &options) {
         if (fileExists(rawName))
             ::remove(rawName.c_str());
         lockSection(false); // no control+C during this phase
+        usleep(25000); // stay responsive to cntrl+C
     }
-    ES();
 
     // The stage now contains all non-sorted records (actually, they are sorted naturally by
     // block number). Next, we pick off a chunk if we can, finalize it, and re-write any
     // unfinalized records back to the stage (still sorted by block number)
     CStringArray newRecords;
-    SS("Exploding");
     explode(newRecords, newLines, '\n');
-    ES();
     finalizeIndexChunk2(&options, newRecords);
-#endif
 
     return true;
 }
