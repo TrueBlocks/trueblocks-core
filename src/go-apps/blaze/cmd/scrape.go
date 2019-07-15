@@ -118,7 +118,7 @@ type BlockInternals struct {
 func toScreen(prompt string, value string, newLine bool) {
 	space1 := "\t"
 	if Options.dockerMode {
-		space1 = "\t\t\t\t   "
+		space1 = "   "
 	}
 	fmt.Print(space1, prompt, "\t", value)
 	if newLine {
