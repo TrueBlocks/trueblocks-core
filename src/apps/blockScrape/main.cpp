@@ -110,8 +110,10 @@ bool handle_scrape(COptions &options) {
     os << "blaze scrape";
     os << " --startBlock " << startBlock;
     os << " --nBlocks " << options.nBlocks;
-    os << " --nBlockProcs " << options.nBlockProcs;
-    os << " --nAddrProcs " << options.nAddrProcs;
+    if (options.nBlockProcs != 20)
+        os << " --nBlockProcs " << options.nBlockProcs;
+    if (options.nAddrProcs != 60)
+        os << " --nAddrProcs " << options.nAddrProcs;
 
     cerr << endl << cTeal << "\t" << Now().Format(FMT_EXPORT) << endl;
     cerr << cGreen << "\t" << os.str() << cOff << " (" << (startBlock + options.nBlocks) << ")" << endl;
