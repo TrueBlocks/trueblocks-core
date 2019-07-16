@@ -66,7 +66,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!isParity() || !nodeHasTraces()) {
         string_q errMsg = "You must run Parity with --tracing on for this tool to work.";
         if (getEnvStr("DOCKER_MODE") == "true")
-            return usage(" Under docker, enable remote rpc (see Parity help).");
+            errMsg += " Under docker, enable remote rpc (see Parity help).";
         return usage(errMsg);
     }
 
