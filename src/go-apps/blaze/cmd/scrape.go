@@ -471,7 +471,7 @@ func writeAddresses(blockNum string, addressMap map[string]bool) {
 	if bn > Options.ripeBlock {
 		fileName = Options.unripePath + blockNum + ".txt"
 	}
-	err := ioutil.WriteFile(fileName, toWrite, 0777)
+	err := ioutil.WriteFile(fileName, toWrite, 0744)
 	if err != nil {
 		fmt.Println("Error writing file:", err)
 	}
