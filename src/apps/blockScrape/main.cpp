@@ -80,7 +80,7 @@ bool handle_scrape(COptions &options) {
     }
 
     if (startBlock < 150000) //firstTransactionBlock)
-        options.nBlocks = 5000;
+        options.nBlocks = max((blknum_t)5000, options.nBlocks);
     else if (ddosRange(startBlock))
         options.nBlocks = 200;
     if (getEnvStr("DOCKER_MODE") == "true") {
@@ -252,7 +252,7 @@ void finalizeIndexChunk2(COptions *options, CConsolidator *cons) {
             CStringArray p2;
             explode(p2, consolidatedLines[consolidatedLines.size()-1], '\t');
 
-
+            sort(consolidatedLines.begin(), consolidatedLines.end());
             string_q binFile = indexFolder_finalized + p1[1] + "-" + p2[1] + ".bin";
             writeIndexAsBinary(binFile, consolidatedLines);
             cerr << "\tWrote " << bYellow << consolidatedLines.size() << cOff << " records to " << binFile << endl;
