@@ -85,9 +85,9 @@ bool handle_scrape(COptions &options) {
         options.nBlocks = 200;
     if (getEnvStr("DOCKER_MODE") == "true") {
         if (ddosRange(startBlock)) {
-            options.nBlocks = 100;
-            options.nBlockProcs = 5;
-            options.nAddrProcs = 20;
+            options.nBlocks = 40;
+            options.nBlockProcs = 2;
+            options.nAddrProcs = 4;
         }
     }
 #if 0
