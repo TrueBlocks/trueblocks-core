@@ -40,7 +40,7 @@ bool COptions::parseArguments(string_q& command) {
             arg = substitute(arg, "--nAddrProcs:", "");
             if (!isUnsigned(arg))
                 return usage("--nAddrProcs must be a non-negative number. Quitting...");
-            nAddrProcesses = str_2_Uint(arg);
+            nAddrProcs = str_2_Uint(arg);
 
         } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
@@ -52,8 +52,10 @@ bool COptions::parseArguments(string_q& command) {
     // Establish the folders that hold the data...
     establishFolder(indexFolder_sorted);
     establishFolder(indexFolder_finalized);
+    establishFolder(indexFolder_blooms);
     establishFolder(indexFolder_staging);
-    establishFolder(indexFolder_pending);
+    establishFolder(indexFolder_unripe);
+    establishFolder(indexFolder_ripe);
     establishFolder(configPath("cache/tmp/"));
 
     CBlock latest;
@@ -87,6 +89,11 @@ bool COptions::parseArguments(string_q& command) {
         writeIndexAsBinary(zeroBin, appearances); // also writes the bloom file
     }
 
+    const CToml *config = getGlobalConfig("blockScrape");
+    nBlocks     = config->getConfigInt("settings", "nBlocks",     (nBlocks     == NOPOS ? 1000 : nBlocks    ));
+    nBlockProcs = config->getConfigInt("settings", "nBlockProcs", (nBlockProcs == NOPOS ?   20 : nBlockProcs));
+    nAddrProcs  = config->getConfigInt("settings", "nAddrProcs",  (nAddrProcs  == NOPOS ?   60 : nAddrProcs ));
+
     return true;
 }
 
@@ -96,9 +103,9 @@ void COptions::Init(void) {
     optionOn(OPT_RUNONCE | OPT_PREFUND);
 
     nBlockProcs = NOPOS;
-    nAddrProcesses  = NOPOS;
-    nBlocks         = 1000;
-    minArgs         = 0;
+    nAddrProcs  = NOPOS;
+    nBlocks     = NOPOS;
+    minArgs     = 0;
 }
 
 //---------------------------------------------------------------------------------------------------

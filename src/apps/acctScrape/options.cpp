@@ -8,7 +8,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     COption("-maxBlocks:<val>", "scan at most --maxBlocks blocks ('all' implies scan to end of chain)"),
-    COption("@pending",         "visit pending but not yet staged or finalized blocks"),
+    COption("@unripe",          "visit unripe (not yet staged or finalized) blocks"),
     COption("@noBlooms",        "turn off bloom filters for performance testing"),
     COption("@staging",         "produce results in the staging folder instead of production folder"),
     COption("@start:<num>",     "first block to check"),
@@ -49,8 +49,8 @@ bool COptions::parseArguments(string_q& command) {
             else
                 return usage("Please provide an integer value for start. Quitting...");
 
-        } else if (arg == "-p" || arg == "--pending") {
-            visitTypes |= VIS_PENDING;
+        } else if (arg == "-u" || arg == "--unripe") {
+            visitTypes |= VIS_UNRIPE;
 
         } else if (arg == "-n" || arg == "--noBlooms") {
             useBlooms = false;

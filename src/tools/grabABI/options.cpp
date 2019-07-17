@@ -27,9 +27,7 @@ static const COption params[] = {
     COption("@silent",     "if ABI cannot be acquired, fail silently (useful for scripting)"),
     COption("@nodec",      "do not decorate duplicate names"),
     COption("@known",      "load common 'known' ABIs from cache"),
-//    COption("@freshen",   "regenerate the binary database version of all ABIs in the abi cache"),
-    COption("",            "Fetches the ABI for a smart contract. Optionally generates C++ source code "
-                           "representing that ABI.\n"),
+    COption("",            "Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
