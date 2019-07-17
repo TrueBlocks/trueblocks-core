@@ -8,5 +8,3 @@ project (dev_tools)
 # message (WARNING  "*** Entering other folder ***")
 
 # Compilation order of the src subdirectories
-#add_subdirectory(makeClass) # do this first
-#add_subdirectory(bytesUsed)
