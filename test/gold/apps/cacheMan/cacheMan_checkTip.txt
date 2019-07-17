@@ -9,5 +9,5 @@ Checking cache: 0x5555533333555553333355555333335555533333.acct.bin
 	Reversal at record 12, current 2	0, previous 2001001	0
 	Reversal at record 14, current 3	0, previous 3001001	0
 	Reversal at record 16, current 4	0, previous 4001001	0
-	Reversal at record 18, current 5	0, previous 5001001	0
-	The cache has 9 reversals.
+	cur: 5001001	0 prev: 4	0
+	Block number larger than latestBlock (4826387) found at record: 17 current: 5001001	0. Your file is probably currupted. Quitting...
