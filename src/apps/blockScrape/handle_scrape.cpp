@@ -106,4 +106,50 @@ for (blknum_t num = options.startBlock ; num < options.endBlock && !shouldQuit()
     cout << scraper.report(options.endBlock) << endl;
     acctScrRunning = isRunning("acctScrape", false);
 }
+
+/*
+do we handle the case where 0x00000...000000 represents as 0x0
+statistics reporting
+maxIndexRows = getGlobalConfig("blockScrape")->getConfigInt("settings", "maxIndexRows", 350000);
+used to call scraperStatus at end
+marked miners (99999) but not uncle miners (99998) and not non-miners (99997)
+we no longer 'snap to grid'
+firstBlock is removed as an option since we always start where we last left off
+endBlock is removed as an option since we always use nBlocks
+maxBlocks was renamed to nBlocks
+the program should only run once
+we used to report on the fact that the index was ahead of the chain
+check that acctScrape is not running at every spin
+stats: traceCount, maxTraceDepth, nAddrsInBlock;
+we used to do timing results
+we used to store blocks in a binary cache - no longer - not even an option
+#define dashIfNA(val) (status == "cache" ? "-" : uint_2_Str((val)))
+    ostringstream os;
+    os.precision(4);
+    cerr << ((block.finalized ? greenCheck : whiteStar) + " ");
+    cerr << padRight(uint_2_Str(last - block.blockNumber), 4) << ": ";
+    os << fixed << setprecision(3);
+    os << bBlack;
+    os << Now().Format(FMT_EXPORT) << "\t";
+    os << ts_2_Date(block.timestamp).Format(FMT_EXPORT) << "\t";
+    os << (double(options->latestBlockTs - block.timestamp) / 60.) << "\t";
+    os << TIC()                       << "\t" << cYellow;
+    os << block.blockNumber           << "\t";
+    os << block.transactions.size()   << "\t";
+    os << dashIfNA(traceCount)        << "\t";
+    os << dashIfNA(maxTraceDepth)     << "\t";
+    os << dashIfNA(nAddrsInBlock)     << "\t";
+    os << dashIfNA(addrList.addrTxMap->size()) << "\t";
+    os << padNum6(curLines)           << "\t" << cTeal;
+    os << status                      << cOff;
+    if (status == "final" && !(block.blockNumber % SIZE_REPORT)) { // every 1,000 blocks we write extra informat
+        string_q path = getGlobalConfig("")->getConfigStr("settings", "parityPath", "");
+        string_q res = substitute(doCommand("du -k -d0 " + path), "\t", " ");
+        os << "\text: " << options->latestBlockNum << "\t" << (options->latestBlockNum - block.blockNumber) << "\t" << nextTokenClear(res, ' ');
+    }
+    
+    return os.str();
+}
+*/
+
 #endif

@@ -11,70 +11,107 @@ bool COptions::handle_scrape(void) {
     // scrape mode requires a running node
     nodeRequired();
 
+    // syntactic sugar
+    tool_flags = substitute(substitute(" "+tool_flags, "--start", " start"), " start", "");
+
+    // The presence of 'waitFile' will either pause of kill the scraper. If 'waitFile'
+    // disappears, the scraper will resume
     string_q waitFile = configPath("cache/tmp/scraper-off.txt");
+    bool wasPaused = fileExists(waitFile);
+    if (wasPaused)
+        cerr << cYellow << "The scraper is currently paused" << cOff << endl;
+
     if (contains(tool_flags, "restart")) {
-        ::remove(waitFile.c_str());
+        // If it's not running, we can't restart it
         if (nRunning("chifra scrape") < 2) {
             cerr << cYellow << "Scraper is not running. Cannot restart..." << cOff << endl;
             return true;
         }
-        cerr << cYellow << "Scraper is restarting..." << cOff << endl;
-        return true;
-    } else if (contains(tool_flags, "pause")) {
-        stringToAsciiFile(waitFile, Now().Format(FMT_EXPORT));
-        cerr << cYellow << "Scraper is pausing..." << cOff << endl;
-        return true;
-    } else if (contains(tool_flags, "quit")) {
-        stringToAsciiFile(waitFile, "quit");
-        cerr << cYellow << "Scraper is quitting..." << cOff << endl;
-        return true;
-    }
 
-    if (nRunning("chifra scrape") > 1) {
-        cerr << "'chifra scrape' is already running. Quitting..." << endl;
-        return false;
-    }
+        // It's running, so we can restart it (even if it's not currently paused -- won't hurt)
+        ::remove(waitFile.c_str());
 
-    useconds_t sleep = 0;
-    CStringArray commands;
-    explode(commands, tool_flags, ' ');
-    for (size_t i = 0; i < commands.size() ; i++) {
-        if (commands[i] == "--sleep" && i < commands.size() - 1) {
-            sleep = (useconds_t)str_2_Uint(commands[i+1]);
-            commands[i] = commands[i+1] = "";
-            i++;
-        } else if (commands[i] == "--start") {
-            commands[i] = "";
-            i++;
+        // If it's not paused, let the user know
+        if (!wasPaused) {
+            cerr << cYellow << "Scraper is not paused. Cannot restart..." << cOff << endl;
+            return true;
         }
+
+        // We will restart pause the next time we get a chance
+        cerr << cYellow << "Scraper will restart shortly..." << cOff << endl;
+        return true;
+
+    } else if (contains(tool_flags, "pause")) {
+        // If it's not running, we can't pause it
+        if (nRunning("chifra scrape") < 2) {
+            cerr << cYellow << "Scraper is not running. Cannot pause..." << cOff << endl;
+            return true;
+        }
+
+        // It's running, so we can pause it (even if it's already paused -- won't hurt)
+        stringToAsciiFile(waitFile, Now().Format(FMT_EXPORT));
+
+        // If it's paused already, let the user know
+        if (wasPaused) {
+            cerr << cYellow << "Scraper is aleardy paused..." << cOff << endl;
+            return true;
+        }
+
+        // We will pause the next time we get a chance
+        cerr << cYellow << "Scraper will pause shortly..." << cOff << endl;
+        return true;
+
+    } else if (contains(tool_flags, "quit")) {
+        // If it's not running, we can't kill it
+        if (nRunning("chifra scrape") < 2) {
+            cerr << cYellow << "Scraper is not running. Cannot quit..." << cOff << endl;
+            return true;
+        }
+
+        // Kill it whether it's currently paused or not
+        stringToAsciiFile(waitFile, "quit");
+
+        // We will pause the next time we get a chance
+        cerr << cYellow << "Scraper will quit shortly..." << cOff << endl;
+        return true;
+
+    } else {
+        // Look for unknown options that we can't pass on to blockScrape...
+        CStringArray optList;
+        explode(optList, tool_flags, ' ');
+        tool_flags = "";
+        for (auto opt : optList) {
+            if (!opt.empty() && !startsWith(opt, "-") && !isNumeral(opt)) {
+                cerr << "Invalid command " << cYellow << opt << cOff << " to chifra scrape." << endl;
+                return false;
+            }
+            tool_flags += (opt + " ");
+        }
+
+        if (nRunning("chifra scrape") > 1) {
+            cerr << "'chifra scrape' is already running." << endl;
+            return false;
+        }
+
+        cerr << cYellow << "Scraper is starting with " << tool_flags << "..." << cOff << endl;
     }
 
-    // pass through
-    tool_flags = "";
-    for (auto cmd : commands)
-        tool_flags += (cmd + " ");
-
-    // The waitFile is used to pause and re-engage the scraper in docker mode
+    // Run forever...unless told to pause or stop (shouldQuit is true if control+C was hit.
     bool waitFileExists = fileExists(waitFile);
-    if (waitFileExists)
-        cerr << cYellow << "\tThe scraper is paused" << cOff << endl;
-    bool paused = waitFileExists;
-
-    // Run forever...
-    size_t maxRuns = (isTestMode() ? 1 : UINT64_MAX);
     size_t nRuns = 0;
+    size_t maxRuns = (isTestMode() ? 1 : UINT64_MAX);
     while (nRuns++ < maxRuns && !shouldQuit()) {
 
         if (waitFileExists) {
-            if (!paused)
+            if (!wasPaused)
                 cerr << cYellow << "\tScraper paused..." << cOff << endl;
-            paused = true;
-            usleep(max(useconds_t(5), sleep) * 1000000); // sleep for five seconds
+            wasPaused = true;
+            usleep(max(useconds_t(5), scrapeSleep) * 1000000); // sleep for at least five seconds
 
         } else {
-            if (paused)
+            if (wasPaused)
                 cerr << cYellow << "\tScraper restarted..." << cOff << endl;
-            paused = false;
+            wasPaused = false;
             ostringstream os;
             os << "blockScrape " << tool_flags;
             if (isTestMode())
@@ -84,15 +121,18 @@ bool COptions::handle_scrape(void) {
             }
 
             if (!isTestMode())
-                usleep(sleep == 0 ? 500000 : sleep * 1000000); // stay responsive to cntrl+C
+                usleep(scrapeSleep == 0 ? 500000 : scrapeSleep * 1000000); // stay responsive to cntrl+C
         }
 
         waitFileExists = fileExists(waitFile);
-        if (asciiFileToString(waitFile) == "quit") {
-            ::remove(waitFile.c_str());
-            cerr << cYellow << "\tScraper killed..." << cOff << endl;
-            return true;
+        if (waitFileExists) {
+            if (asciiFileToString(waitFile) == "quit") {
+                ::remove(waitFile.c_str());
+                cerr << cYellow << "\tScraper quitting..." << cOff << endl;
+                return true;
+            }
         }
     }
+
     return true;
 }

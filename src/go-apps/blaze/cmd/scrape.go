@@ -210,25 +210,13 @@ func getTransactionReceipt(hash string) ([]byte, error) {
 	return receiptBody, nil
 }
 
-//var blockPanicCnt = 0
-
 // getTracesAndLogs Process the block channel and for each block query the node for both traces and logs. Send results to addressChannel
 func getTracesAndLogs(blockChannel chan int, addressChannel chan BlockInternals, blockWG *sync.WaitGroup) {
 
 	for blockNum := range blockChannel {
 		traces, err := getTracesFromBlock(blockNum)
 		if err != nil {
-			//			blockPanicCnt++
-			//			if blockPanicCnt < 3 {
-			//				fmt.Println("getTracesFromBlock returned error - pushing back")
-			//				if blockChannel.op
-			//				blockChannel <- blockNum
-			//				return
-			//			}
-			//			fmt.Println("getTracesFromBlock errored three times - not pushing back")
-			//			return
 			os.Exit(1) // caller will start over if this process exits with non-zero value
-			//			panic(err)
 		}
 		logs, err := getLogsFromBlock(blockNum)
 		if err != nil {
@@ -471,12 +459,12 @@ func writeAddresses(blockNum string, addressMap map[string]bool) {
 	if bn > Options.ripeBlock {
 		fileName = Options.unripePath + blockNum + ".txt"
 	}
-	err := ioutil.WriteFile(fileName, toWrite, 0777)
+	err := ioutil.WriteFile(fileName, toWrite, 0744)
 	if err != nil {
 		fmt.Println("Error writing file:", err)
 	}
 	// Show twenty-five dots no matter how many blocks we're scraping
-	skip := Options.nBlocks / 25
+	skip := Options.nBlocks / 50
 	if skip < 1 {
 		skip = 1
 	}
