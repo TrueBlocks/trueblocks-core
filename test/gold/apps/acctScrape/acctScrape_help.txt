@@ -12,7 +12,8 @@ acctScrape -th
 | -m | --maxBlocks val | scan at most --maxBlocks blocks ('all' implies scan to end of chain) |
 
 #### Hidden options (shown during testing only)
-| -p | --pending | visit pending but not yet staged or finalized blocks |
+| -r | --ripe | visit ripe (old enough, but not yet staged or finalized) blocks |
+| -u | --unripe | visit unripe (not old enough and not yet staged or finalized) blocks |
 | -n | --noBlooms | turn off bloom filters for performance testing |
 | -s | --staging | produce results in the staging folder instead of production folder |
 | -s | --start val | first block to check |

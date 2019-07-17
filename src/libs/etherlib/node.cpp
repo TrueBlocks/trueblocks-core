@@ -840,7 +840,8 @@ extern void loadParseMap(void);
 #define showOne(a, b) cYellow << (isTestMode() ? a : b) << cOff
 #define showOne1(a) showOne(a, a)
         ostringstream cos;
-        cos << showOne("--final--, --staging--, --unripe--", uint_2_Str(finalized)+", "+uint_2_Str(staging)+", "+uint_2_Str(unripe));
+        cos << showOne("--final--, --staging--, --ripe--, --unripe--", 
+                        uint_2_Str(finalized)+", "+uint_2_Str(staging)+", "+uint_2_Str(ripe)+", "+uint_2_Str(unripe));
 
         ostringstream dos;
         dos << showOne("--diff--", (currDiff>prevDiff?"-":"+") + uint_2_Str(currDiff));
@@ -1023,11 +1024,12 @@ extern void loadParseMap(void);
         uint64_t unripe, ripe, staging, finalized, client;
         getLastBlocks(unripe, ripe, staging, finalized, client);
         if (isTestMode())
-            unripe = staging = finalized = client = 0xdeadbeef;
+            unripe = ripe = staging = finalized = client = 0xdeadbeef;
 
         ostringstream os;
         os << "\n], \"meta\": {";
         os << "\"unripe\": " << dispNumOrHex(unripe) << ",";
+        os << "\"ripe\": " << dispNumOrHex(ripe) << ",";
         os << "\"staging\": " << dispNumOrHex(staging) << ",";
         os << "\"finalized\": " << dispNumOrHex(finalized) << ",";
         os << "\"client\": " << dispNumOrHex(client);

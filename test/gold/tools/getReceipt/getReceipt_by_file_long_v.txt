@@ -17,4 +17,4 @@ getReceipt --file:cmd_file --verbose --parity --api_mode
     "logs": [],
     "status": null
   }
-], "meta": {"pending": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
+], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

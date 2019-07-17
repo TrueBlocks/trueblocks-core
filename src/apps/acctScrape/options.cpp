@@ -8,7 +8,8 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     COption("-maxBlocks:<val>", "scan at most --maxBlocks blocks ('all' implies scan to end of chain)"),
-    COption("@unripe",          "visit unripe (not yet staged or finalized) blocks"),
+    COption("@ripe",            "visit ripe (old enough, but not yet staged or finalized) blocks"),
+    COption("@unripe",          "visit unripe (not old enough and not yet staged or finalized) blocks"),
     COption("@noBlooms",        "turn off bloom filters for performance testing"),
     COption("@staging",         "produce results in the staging folder instead of production folder"),
     COption("@start:<num>",     "first block to check"),
