@@ -64,12 +64,10 @@ bool COptions::parseArguments(string_q& command) {
     latestBlockNum = latest.blockNumber;
 
     if (!isParity() || !nodeHasTraces()) {
-        if (latestBlockNum < firstTraceBlock) {
-            cerr << "Waiting for first trace block..." << endl;
-            return false;
-        }
-        else
-            return usage("This tool will only run if it is running against a Parity node that has tracing enabled. Quitting...");
+        string_q errMsg = "You must run Parity with --tracing on for this tool to work.";
+        if (getEnvStr("DOCKER_MODE") == "true")
+            errMsg += " Under docker, enable remote rpc (see Parity help).";
+        return usage(errMsg);
     }
 
     string_q zeroBin = indexFolder_finalized + padNum9(0) + "-" + padNum9(0) + ".bin";

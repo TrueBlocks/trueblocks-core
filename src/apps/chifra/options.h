@@ -9,11 +9,9 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    bool     stats;
-    string_q mode;
-    blknum_t minWatchBlock;
-    blknum_t maxWatchBlock;
-    CArchive txCache;
+    bool       stats;
+    string_q   mode;
+    useconds_t scrapeSleep;
 
     string_q freshen_flags;
     string_q tool_flags;
