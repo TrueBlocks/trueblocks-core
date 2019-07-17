@@ -9,6 +9,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     COption("~command", "one of [ leech | scrape | daemon | list | export | balances | stats | ls | rm | accounts | config | slurp | quotes | data | blocks | trans | receipts | logs | traces ]"),
+    COption("-sleep",   "for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 0)"),
     COption("",         "Create a TrueBlocks monitor configuration.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -25,7 +26,13 @@ bool COptions::parseArguments(string_q& command) {
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if (arg == "--tool_help" || (api_mode && arg == "--help")) {
+        if (startsWith(arg, "-s:") || startsWith(arg, "--sleep:")) {
+            arg = substitute(substitute(arg, "-s:", ""), "--sleep:", "");
+            if (!isUnsigned(arg))
+                return usage("--nBlocks must be a non-negative number. Quitting...");
+            scrapeSleep = (useconds_t)str_2_Uint(arg);
+
+        } else if (arg == "--tool_help" || (api_mode && arg == "--help")) {
             tool_flags += (" --help");
 
         } else if (mode.empty() && startsWith(arg, '-')) {
@@ -57,7 +64,6 @@ bool COptions::parseArguments(string_q& command) {
                 addrs.push_back(toLower(arg));
 
             } else if (isAddress(arg)) {
-
                 addrs.push_back(toLower(arg));
 
             } else {
@@ -82,6 +88,7 @@ bool COptions::parseArguments(string_q& command) {
     if (mode == "blocks" ||
     	mode == "trans" ||
     	mode == "receipts" ||
+        mode == "accounts" ||
     	mode == "logs" ||
     	mode == "traces") {
         tool_flags += (" --" + mode);
@@ -125,11 +132,12 @@ void COptions::Init(void) {
     freshen_flags = "";
     mode          = "";
     stats         = false;
+    scrapeSleep   = 0;
     minArgs       = 0;
 }
 
 //---------------------------------------------------------------------------------------------------
-COptions::COptions(void) : txCache(WRITING_ARCHIVE) {
+COptions::COptions(void) {
     Init();
 }
 
