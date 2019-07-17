@@ -18,8 +18,7 @@ static const COption params[] = {
     COption("~!date",     "one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]"),
     COption("-list",      "export all the named blocks"),
     COption("@fmt:<fmt>", "export format (one of [none|json|txt|csv|api])"),
-    COption("",           "Finds the nearest block prior to a date, or the nearest date prior to a block.\n"
-                          " Alternatively, search for one of special 'named' blocks.\n"),
+    COption("",           "Finds the nearest block prior to a date, or the nearest date prior to a block.\n Alternatively, search for one of special 'named' blocks.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
