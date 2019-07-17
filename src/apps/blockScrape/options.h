@@ -6,6 +6,19 @@
  *------------------------------------------------------------------------*/
 #include "acctlib.h"
 
+//--------------------------------------------------------------------------
+class CConsolidator {
+public:
+    ofstream output;
+    blknum_t prevBlock;
+    CConsolidator(const string_q& fileName) {
+        output.open(fileName, ios::out | ios::app);
+        prevBlock = NOPOS;
+    }
+private:
+    CConsolidator(void) {}
+};
+
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
@@ -21,4 +34,10 @@ public:
 
     bool parseArguments(string_q& command);
     void Init(void);
+
+    bool handle_scrape(void);
+    void finalize_chunks(CConsolidator *cons);
 };
+
+//-----------------------------------------------------------------------------
+extern bool copyRipeToStage(const string_q& path, void *data);
