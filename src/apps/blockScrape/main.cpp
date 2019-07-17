@@ -5,57 +5,28 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
-#define SS(a) { cerr << bBlue << padLeft(padRight((a),22,'.'),75) << cOff << "\r"; cerr.flush(); }
+//----------------------------------------------------------------------------------
+int main(int argc, const char *argv[]) {
 
-//--------------------------------------------------------------------------
-class CConsolidator {
-public:
-    ofstream output;
-    blknum_t lastBlock;
-    CConsolidator(const string_q& fileName) {
-        output.open(fileName, ios::out | ios::app);
-        lastBlock = NOPOS;
-    }
-private:
-    CConsolidator(void) {}
-};
+    acctlib_init(defaultQuitHandler);
 
-//--------------------------------------------------------------------------
-bool copyToStaging(const string_q& path, void *data) {
+    COptions options;
+    if (!options.prepareArguments(argc, argv))
+        return 0;
 
-    if (endsWith(path, '/'))
-        return forEveryFileInFolder(path + "*", copyToStaging, data);
-
-    else {
-        blknum_t bn = bnFromPath(path);
-        CConsolidator *con = (CConsolidator *)data;
-        if ((con->lastBlock + 1) != bn) {
-            // For some reason, we're missing a file. Quit and try again next time
-            return false;
+    for (auto command : options.commandLines) {
+        if (options.parseArguments(command)) {
+            options.handle_scrape();
         }
-        ifstream inputStream(path, ios::in);
-        if (!inputStream.is_open()) {
-            // Something went wrong, try again next time
-            return false;
-        }
-
-        lockSection(true);
-        con->output << inputStream.rdbuf();
-        con->output.flush();
-        ::remove(path.c_str());
-        con->lastBlock = bn;
-        lockSection(false);
     }
 
-    return !shouldQuit();
+    acctlib_cleanup();
+
+    return 0;
 }
 
 //--------------------------------------------------------------------------
-extern bool waitForCreate(const string_q& filename);
-extern void finalizeIndexChunk2(COptions *options, CConsolidator *cons);
-
-//--------------------------------------------------------------------------
-bool handle_scrape(COptions &options) {
+bool COptions::handle_scrape(void) {
 
     // Do not run if someone is searching the index
     if (isRunning("acctScrape", false))
@@ -80,14 +51,14 @@ bool handle_scrape(COptions &options) {
     }
 
     if (startBlock < 150000) //firstTransactionBlock)
-        options.nBlocks = max((blknum_t)5000, options.nBlocks);
+        nBlocks = max((blknum_t)5000, nBlocks);
     else if (ddosRange(startBlock))
-        options.nBlocks = 200;
+        nBlocks = 200;
     if (getEnvStr("DOCKER_MODE") == "true") {
         if (ddosRange(startBlock)) {
-            options.nBlocks = 40;
-            options.nBlockProcs = 2;
-            options.nAddrProcs = 4;
+            nBlocks = 40;
+            nBlockProcs = 2;
+            nAddrProcs = 4;
         }
     }
 #if 0
@@ -103,20 +74,20 @@ bool handle_scrape(COptions &options) {
     // take longer, is a longer amount of time.)
     blknum_t ripeBlock = client - 28;
 
-    //    options.nBlocks = 150;
-//    options.nBlocks = 15;
+    //    nBlocks = 150;
+//    nBlocks = 15;
 
     ostringstream os;
     os << "blaze scrape";
     os << " --startBlock " << startBlock;
-    os << " --nBlocks " << options.nBlocks;
-    if (options.nBlockProcs != 20)
-        os << " --nBlockProcs " << options.nBlockProcs;
-    if (options.nAddrProcs != 60)
-        os << " --nAddrProcs " << options.nAddrProcs;
+    os << " --nBlocks " << nBlocks;
+    if (nBlockProcs != 20)
+        os << " --nBlockProcs " << nBlockProcs;
+    if (nAddrProcs != 60)
+        os << " --nAddrProcs " << nAddrProcs;
 
-    cerr << endl << cTeal << "\t" << Now().Format(FMT_EXPORT) << endl;
-    cerr << cGreen << "\t" << os.str() << cOff << " (" << (startBlock + options.nBlocks) << ")" << endl;
+    cerr << endl << cTeal << "\t" << string_q(10,'-') << Now().Format(FMT_EXPORT) << string(40, '-') << cOff << endl;
+    cerr << cGreen << "\t" << os.str() << cOff << " (" << (startBlock + nBlocks) << ")" << endl;
 
     // We don't need to show ripeBlock...
     os << " --ripeBlock " << ripeBlock;
@@ -132,15 +103,17 @@ bool handle_scrape(COptions &options) {
     // We use this variable. Note - the following code must handle control+c properly without disturbing
     // the data. This means it has to process each block atomically.
     bool mustQuit = isRunning("acctScrape", false);
-    if (mustQuit)
+    if (mustQuit) {
+        cerr << cRed << "\tacctScrape is running. blockScrape will re-run in a moment." << cOff << endl;
         return false;
+    }
 
-    // This processes one file at a time copying the data from the ripe file into the staging file.
+    // Processes one file at a time by copying the data from the ripe file into the staging file.
     // It flushes the data and then removes the ripe file. If it doesn't complete, it removes cleans up
     // the ripe folder and the temp staging file
     CConsolidator cons(indexFolder_staging + "000000000-temp.txt");
-    cons.lastBlock = (staging == NOPOS ? (finalized == NOPOS ? 0 : finalized) : staging);
-    if (!forEveryFileInFolder(indexFolder_ripe, copyToStaging, &cons)) {
+    cons.prevBlock = (staging == NOPOS ? (finalized == NOPOS ? 0 : finalized) : staging);
+    if (!forEveryFileInFolder(indexFolder_ripe, copyRipeToStage, &cons)) {
         // Something went wrong (either control+c or a non-sequential list of files). Clean up everything and start over.
         cleanFolder(indexFolder_ripe);
         ::remove((indexFolder_staging + "000000000-temp.txt").c_str());
@@ -149,22 +122,13 @@ bool handle_scrape(COptions &options) {
 
     // The stage now contains all non-consolidated records. Next, we pick off chunks if we can, consolidate them,
     // and re-write any unfinalized records back to the stage (naturally sorted by block number)
-    finalizeIndexChunk2(&options, &cons);
+    finalize_chunks(&cons);
 
     return true;
 }
 
-//-------------------------------------------------------------------------------------------------------------
-bool waitForCreate(const string_q& filename) {
-    size_t mx = 1000;
-    size_t cnt = 0;
-    while (cnt < mx && !fileExists(filename))
-        cnt++;
-
-    return fileExists(filename);
-}
 //--------------------------------------------------------------------------
-void finalizeIndexChunk2(COptions *options, CConsolidator *cons) {
+void COptions::finalize_chunks(CConsolidator *cons) {
 
     string_q stagedFile = indexFolder_staging + "000000000-temp.txt";
     string_q prevFile = getLastFileInFolder(indexFolder_staging, false);
@@ -175,7 +139,7 @@ void finalizeIndexChunk2(COptions *options, CConsolidator *cons) {
     asciiFileToLines(stagedFile, stage);
 
     lockSection(true);
-    string_q newFile = indexFolder_staging + padNum9(cons->lastBlock) + ".txt";
+    string_q newFile = indexFolder_staging + padNum9(cons->prevBlock) + ".txt";
     linesToAsciiFile(newFile, stage, true);
     if (prevFile != stagedFile && fileExists(prevFile))
         ::remove(prevFile.c_str());
@@ -193,7 +157,7 @@ void finalizeIndexChunk2(COptions *options, CConsolidator *cons) {
         size_t pass = 0;
         while (curSize > maxIndexRows && !shouldQuit()) {
             lockSection(true);
-            SS("Consolodate (pass " + uint_2_Str(pass++) + ")"); cerr << endl;
+            cerr << bBlue << "\tConsolodate (pass " + uint_2_Str(pass++) + ")" << endl;
             CStringArray lines;
             lines.reserve(curSize + 100);
             asciiFileToLines(newFile, lines);
@@ -290,26 +254,34 @@ void finalizeIndexChunk2(COptions *options, CConsolidator *cons) {
     }
 }
 
-//----------------------------------------------------------------------------------
-int main(int argc, const char *argv[]) {
-    etherlib_init("local",  defaultQuitHandler);
+//--------------------------------------------------------------------------
+bool copyRipeToStage(const string_q& path, void *data) {
 
-    COptions options;
-    if (!options.prepareArguments(argc, argv))
-        return 0;
+    if (endsWith(path, '/'))
+        return forEveryFileInFolder(path + "*", copyRipeToStage, data);
 
-    for (auto command : options.commandLines) {
-        if (options.parseArguments(command)) {
-            //                       cerr << bGreen << "Scraping new blocks..." << "\n" << cOff;
-            handle_scrape(options);
-            //                       cerr << bGreen << "...done\n" << cOff;
+    else {
+        blknum_t bn = bnFromPath(path);
+        CConsolidator *con = (CConsolidator *)data;
+        if ((con->prevBlock + 1) != bn) {
+            // For some reason, we're missing a file. Quit and try again next time
+            cerr << cRed << "Current file (" << path << ") does not sequentially follow previous file " << con->prevBlock << "." << cOff << endl;
+            return false;
         }
+        ifstream inputStream(path, ios::in);
+        if (!inputStream.is_open()) {
+            // Something went wrong, try again next time
+            cerr << cRed << "Could not open input stream " << path << cOff << endl;
+            return false;
+        }
+        lockSection(true);
+        con->output << inputStream.rdbuf();
+        con->output.flush();
+        ::remove(path.c_str());
+        con->prevBlock = bn;
+        lockSection(false);
+        inputStream.close();
     }
 
-    //    if (verbose)
-    //        cerr << scraperStatus();
-
-    etherlib_cleanup();
-
-    return 0;
+    return !shouldQuit();
 }
