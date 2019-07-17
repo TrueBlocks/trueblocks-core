@@ -695,26 +695,6 @@ extern void loadParseMap(void);
     }
 
     //-------------------------------------------------------------------------
-    bool forEveryBloomFile(FILEVISITOR func, void *data, uint64_t start, uint64_t count, uint64_t skip) {
-
-        // If the caller does not specify start/end block numbers, visit every bloom file
-        if (start == 0 || count == (uint64_t)-1)
-            return forEveryFileInFolder(bloomFolder, func, data);
-
-        // The user is asking for certain files and not others. The bext we can do is limit which folders
-        // to visit, which we do here. Caller must protect against too early or too late files by number.
-        // Use interger math to figure out which folders to visit
-        blknum_t st = (start / 1000) * 1000;
-        blknum_t ed = ((start+count+1000) / 1000) * 1000;
-        for (blknum_t b = st ; b < ed ; b += 1000) {
-            string_q path = getBinaryCachePath(CT_BLOOMS, b);
-            if (!forEveryFileInFolder(path, func, data))
-                return false;
-        }
-        return true;
-    }
-
-    //-------------------------------------------------------------------------
     bool forEveryTraceInTransaction(TRACEVISITFUNC func, void *data, const CTransaction& trans) {
 
         if (!func)

@@ -9,4 +9,3 @@ project (dev_tools)
 
 # Compilation order of the src subdirectories
 add_subdirectory(makeClass) # do this first
-add_subdirectory(bytesUsed)
