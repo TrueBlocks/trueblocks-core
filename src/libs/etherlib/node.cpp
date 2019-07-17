@@ -402,12 +402,21 @@ extern void loadParseMap(void);
     }
 
     //--------------------------------------------------------------------------
-    blknum_t getLastBlock_cache_pending(void) {
-        string_q pendLast = getLastFileInFolder(indexFolder_pending, false);
-        // Files in this folder are n.txt, if empty, we fall back on finalized folder
-        if (!pendLast.empty())
-            return bnFromPath(pendLast);
+    blknum_t getLastBlock_cache_ripe(void) {
+        string_q ripeLast = getLastFileInFolder(indexFolder_ripe, false);
+        // Files in this folder are n.txt, if empty, we fall back on staging folder
+        if (!ripeLast.empty())
+            return bnFromPath(ripeLast);
         return getLastBlock_cache_staging();
+    }
+
+    //--------------------------------------------------------------------------
+    blknum_t getLastBlock_cache_unripe(void) {
+        string_q unripeLast = getLastFileInFolder(indexFolder_unripe, false);
+        // Files in this folder are n.txt, if empty, we fall back on ripe folder
+        if (!unripeLast.empty())
+            return bnFromPath(unripeLast);
+        return getLastBlock_cache_ripe();
     }
 
     //-------------------------------------------------------------------------
@@ -428,8 +437,9 @@ extern void loadParseMap(void);
     }
 
     //--------------------------------------------------------------------------
-    bool getLastBlocks(blknum_t& pending, blknum_t& staging, blknum_t& finalized, blknum_t& client) {
-        pending   = getLastBlock_cache_pending();
+    bool getLastBlocks(blknum_t& unripe, blknum_t& ripe, blknum_t& staging, blknum_t& finalized, blknum_t& client) {
+        ripe      = getLastBlock_cache_ripe();
+        unripe    = getLastBlock_cache_unripe();
         staging   = getLastBlock_cache_staging();
         finalized = getLastBlock_cache_final();
         client    = getLastBlock_client();
@@ -841,8 +851,8 @@ extern void loadParseMap(void);
         string_q tmpStore = configPath("cache/tmp/scraper-status.txt");
 
         uint64_t prevDiff = str_2_Uint(asciiFileToString(tmpStore));
-        uint64_t pending, staging, finalized, client;
-        getLastBlocks(pending, staging, finalized, client);
+        uint64_t unripe, ripe, staging, finalized, client;
+        getLastBlocks(unripe, ripe, staging, finalized, client);
 
         uint64_t currDiff = finalized > client ? finalized - client : client - finalized;
         stringToAsciiFile(tmpStore, uint_2_Str(currDiff));  // so we can use it next time
@@ -850,7 +860,7 @@ extern void loadParseMap(void);
 #define showOne(a, b) cYellow << (isTestMode() ? a : b) << cOff
 #define showOne1(a) showOne(a, a)
         ostringstream cos;
-        cos << showOne("--final--, --staging--, --pending--", uint_2_Str(finalized)+", "+uint_2_Str(staging)+", "+uint_2_Str(pending));
+        cos << showOne("--final--, --staging--, --unripe--", uint_2_Str(finalized)+", "+uint_2_Str(staging)+", "+uint_2_Str(unripe));
 
         ostringstream dos;
         dos << showOne("--diff--", (currDiff>prevDiff?"-":"+") + uint_2_Str(currDiff));
@@ -1030,14 +1040,14 @@ extern void loadParseMap(void);
         if (fmt != API1)
             return "\n]";
 
-        uint64_t pending, staging, finalized, client;
-        getLastBlocks(pending, staging, finalized, client);
+        uint64_t unripe, ripe, staging, finalized, client;
+        getLastBlocks(unripe, ripe, staging, finalized, client);
         if (isTestMode())
-            pending = staging = finalized = client = 0xdeadbeef;
+            unripe = staging = finalized = client = 0xdeadbeef;
 
         ostringstream os;
         os << "\n], \"meta\": {";
-        os << "\"pending\": " << dispNumOrHex(pending) << ",";
+        os << "\"unripe\": " << dispNumOrHex(unripe) << ",";
         os << "\"staging\": " << dispNumOrHex(staging) << ",";
         os << "\"finalized\": " << dispNumOrHex(finalized) << ",";
         os << "\"client\": " << dispNumOrHex(client);

@@ -30,8 +30,8 @@ int main(int argc, const char *argv[]) {
         if (options.visitTypes & VIS_STAGING)
             forEveryFileInFolder(indexFolder_staging, visitStagingIndexFiles, &options);
 
-        if (options.visitTypes & VIS_PENDING)
-            forEveryFileInFolder(indexFolder_pending, visitPendingIndexFiles, &options);
+        if (options.visitTypes & VIS_UNRIPE)
+            forEveryFileInFolder(indexFolder_unripe, visitUnripeIndexFiles, &options);
 
         options.moveToProduction();
     }
