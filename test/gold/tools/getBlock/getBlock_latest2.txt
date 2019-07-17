@@ -5,6 +5,6 @@ getBlock --latest 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e
   RPC Provider:       --rpc_provider--
   Cache location:     --cache_dir--
   Host (user):        --host (user)--
-  Latest cache:       --final--, --staging--, --pending--
+  Latest cache:       --final--, --staging--, --ripe--, --unripe--
   Latest client:      --client--
   Dist from head:     --diff----diffdiff--

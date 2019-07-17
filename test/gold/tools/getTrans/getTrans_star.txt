@@ -86,4 +86,4 @@ getTrans 2222221.* --api_mode
     },
     "gasUsed": 21000
   }
-], "meta": {"pending": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
+], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
