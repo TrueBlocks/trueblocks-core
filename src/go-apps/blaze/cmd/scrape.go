@@ -282,7 +282,7 @@ func extractAddressesFromTraces(addressMap map[string]bool, traces *BlockTraces,
 		} else if traces.Result[i].Type == "reward" {
 			if traces.Result[i].Action.RewardType == "block" {
 				author := traces.Result[i].Action.Author
-				if author == "0x0" {
+				if author == "0x0" || author == "0x0000000000000000000000000000000000000000" {
 					// In the early blocks, it was possible to misconfigure
 					// your mining node, win a block, but get no block reward.
 					// In that case, the miner comes through as '0x0' which
@@ -556,19 +556,14 @@ Description:
   left off. 'Scrape' visits every block, queries that block's traces and logs
   looking for addresses, and writes an index of those addresses per transaction.`,
 	Run: func(cmd *cobra.Command, args []string) {
+		toScreen("  options:", strconv.Itoa(Options.startBlock) + "/" + strconv.Itoa(Options.nBlocks) + "/" + strconv.Itoa(Options.ripeBlock), true)
+		toScreen("  processes:", strconv.Itoa(Options.nBlockProcs) + "/" + strconv.Itoa(Options.nAddrProcs), true)
 		toScreen("  rpcProvider:", Options.rpcProvider, true)
-		toScreen("  startBlock:", strconv.Itoa(Options.startBlock), true)
-		toScreen("  nBlocks:", strconv.Itoa(Options.nBlocks), true)
-		toScreen("  nBlockProcs:", strconv.Itoa(Options.nBlockProcs), true)
-		toScreen("  nAddrProcs:", strconv.Itoa(Options.nAddrProcs), true)
-		toScreen("  ripeBlock:", strconv.Itoa(Options.ripeBlock), true)
 		toScreen("  cachePath:", Options.cachePath, true)
-		toScreen("  ripePath:", Options.ripePath, true)
-		toScreen("  unripePath:", Options.unripePath, true)
 		if Options.dockerMode {
 			toScreen("  dockerMode:", "true", true)
 		}
-		toScreen("  processing", "", false)
+		toScreen("  scraping:", "", false)
 		processBlocks()
 		fmt.Println("")
 	},
