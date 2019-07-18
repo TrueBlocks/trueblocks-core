@@ -73,6 +73,7 @@ bool COptions::parseArguments(string_q& command) {
     string_q zeroBin = indexFolder_finalized + padNum9(0) + "-" + padNum9(0) + ".bin";
     if (!fileExists(zeroBin)) {
         ASSERT(prefunds.size() == 8893);  // This is a known value
+        cerr << "\tBuilding origin block index" << endl;
         CStringArray appearances;
         for (auto prefund : prefunds) {
             CStringArray parts;
@@ -88,7 +89,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     const CToml *config = getGlobalConfig("blockScrape");
-    nBlocks     = config->getConfigInt("settings", "nBlocks",     (nBlocks     == NOPOS ? 1000 : nBlocks    ));
+    nBlocks     = config->getConfigInt("settings", "nBlocks",     (nBlocks     == NOPOS ? 2000 : nBlocks    ));
     nBlockProcs = config->getConfigInt("settings", "nBlockProcs", (nBlockProcs == NOPOS ?   20 : nBlockProcs));
     nAddrProcs  = config->getConfigInt("settings", "nAddrProcs",  (nAddrProcs  == NOPOS ?   60 : nAddrProcs ));
 
