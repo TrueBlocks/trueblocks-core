@@ -127,16 +127,17 @@ bool COptions::parseArguments(string_q& command) {
             }
 
         } else {
-            string_q path = arg;
-            if (!endsWith(path, ".acct.bin"))
-                path += ".acct.bin";
-            if (!fileExists(path))
-                EXIT_USAGE("Cannot open monitor file for '" + arg + "'.");
-            address_t addr = substitute(path, ".acct.bin", "");
-            if (contains(addr, "0x") && !startsWith(addr, "0x"))
-                addr = addr.substr(addr.find("0x"));
+            address_t addr = substitute(arg, ".acct.bin", "");
+            if (isTestMode()) cerr << addr << endl;
             if (!isTestMode() && !isAddress(addr))
-                EXIT_USAGE("Filename '" + arg + "' does not appear to contain an Ethereum address.");
+                EXIT_USAGE("Option '" + arg + "' does not appear to be an address.");
+
+            // Command line and chifra send in straight addresses, some test cases may send a local file...
+            string_q path = (fileExists(arg + ".acct.bin") ? (arg + ".acct.bin") : getMonitorPath(addr));
+            if (isTestMode()) cerr << path << endl;
+            if (!fileExists(path)) // Hack alert: some weird test cases send in 'merged' as the address.
+                EXIT_USAGE("Monitor file for '" + arg + "' does not exist.");
+
             monitors.push_back(CAccountWatch(addr, path));
         }
     }
@@ -208,8 +209,11 @@ COptions::~COptions(void) {
 bool loadMonitorData(CAppearanceArray_base& items, const address_t& addr) {
     ENTER("loadMonitorData");
     string_q fn = getMonitorPath(addr);
-    if (isTestMode())
+    if (isTestMode()) {
         replace(fn, getMonitorPath(""), "./");
+        if (!contains(fn, ".acct.bin"))
+            fn += ".acct.bin";
+    }
     size_t nRecords = (fileSize(fn) / sizeof(CAppearance_base));
     ASSERT(nRecords);
     CAppearance_base *buffer = new CAppearance_base[nRecords];
