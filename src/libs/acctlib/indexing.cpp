@@ -97,27 +97,25 @@ namespace qblocks {
         archive.Write((uint32_t)blockTable.size());  // not accurate yet
         for (size_t l = 0 ; l < lines.size() ; l++) { //auto line : lines) {
             string_q line = lines[l];
-            if (countOf(line, '\t') != 2) {
-                cerr << "[" << line << "]";
-            } else {
-                CStringArray parts;
-                explode(parts, line, '\t');
-                CAppearance_base rec(parts[1], parts[2]);
-                blockTable.push_back(rec);
-                if (!prev.empty() && parts[0] != prev) {
-                    addToSet(blooms, prev);
-                    addrbytes_t bytes = addr_2_Bytes(prev);
-                    archive.Write(bytes.data(), bytes.size(), sizeof(uint8_t));
-                    archive.Write(offset);
-                    archive.Write(cnt);
-                    offset += cnt;
-                    cnt = 0;
-                    nAddrs++;
-                }
-                cnt++;
-                prev = parts[0];
+            ASSERT(countOf(line, '\t') == 2);
+            CStringArray parts;
+            explode(parts, line, '\t');
+            CAppearance_base rec(parts[1], parts[2]);
+            blockTable.push_back(rec);
+            if (!prev.empty() && parts[0] != prev) {
+                addToSet(blooms, prev);
+                addrbytes_t bytes = addr_2_Bytes(prev);
+                archive.Write(bytes.data(), bytes.size(), sizeof(uint8_t));
+                archive.Write(offset);
+                archive.Write(cnt);
+                offset += cnt;
+                cnt = 0;
+                nAddrs++;
             }
+            cnt++;
+            prev = parts[0];
         }
+
         // The above algo always misses the last address, so we add it here
         addToSet(blooms, prev);
         addrbytes_t bytes = addr_2_Bytes(prev);

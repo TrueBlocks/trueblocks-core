@@ -36,7 +36,7 @@ public:
     void Init(void);
 
     bool handle_scrape(void);
-    void finalize_chunks(CConsolidator *cons);
+    bool finalize_chunks(CConsolidator *cons);
 };
 
 //-----------------------------------------------------------------------------
