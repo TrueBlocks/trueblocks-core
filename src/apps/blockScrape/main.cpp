@@ -59,12 +59,14 @@ bool COptions::handle_scrape(void) {
         // ...or slow things down...
     } else if (ddosRange(startBlock)) {
         nBlocks = 200;
-        if (getEnvStr("DOCKER_MODE") == "true") {
-            // ...or really slow things down in docker mode. Docker kills us if we're too greedy.
-            nBlocks = 40;
-            nBlockProcs = 3;
-            nAddrProcs = 6;
-        }
+    }
+
+    // Docker will kill blaze if it uses too many resources, so we need to seriously dial it down
+    if (getEnvStr("DOCKER_MODE") == "true") {
+        // ...slow things down for docker
+        nBlocks = 40;
+        nBlockProcs = 3;
+        nAddrProcs = 6;
     }
 
     // If a block is more than 28 blocks from the head we consider it 'ripe.' A ripe block will
