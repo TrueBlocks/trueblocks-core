@@ -1,5 +1,7 @@
-cacheMan argc: 3 [1:-i] [2:merged.acct.bin] 
-cacheMan -i merged.acct.bin 
+cacheMan argc: 3 [1:-i] [2:merged] 
+cacheMan -i merged 
+merged
+merged.acct.bin
 	Reading cache: merged.acct.bin...22 existing records read.
 	Importing record 26 of 4
 	Sorting...done
