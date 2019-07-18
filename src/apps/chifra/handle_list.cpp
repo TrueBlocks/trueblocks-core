@@ -19,9 +19,8 @@ bool COptions::handle_list(void) {
 
     for (auto addr : addrs) {
         ostringstream os;
-        os << "cd " << getMonitorPath("") << " ; ";
-        os << "cacheMan " << " --fix " << addr << ".acct.bin >&2 ; ";
-        os << "cacheMan " << tool_flags << " -d " << addr << ".acct.bin ; ";
+        os << "cacheMan " << " --fix " << addr << " >&2 ; ";
+        os << "cacheMan " << tool_flags << " -d " << addr << " ; ";
         LOG4("Calling " + os.str());
         if (isTestMode())
             cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;

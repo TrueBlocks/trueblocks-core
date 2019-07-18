@@ -30,8 +30,7 @@ bool COptions::handle_balances(void) {
         } else
           {
             string_q fn = "/tmp/results";
-            os << "cd " << getMonitorPath("") << " ; ";
-            os << "cacheMan " << " -d " << addr << ".acct.bin >" + fn + " ; ";
+            os << "cacheMan " << " -d " << addr << " >" + fn + " ; ";
             LOG1("Calling " + os.str());
             if (isTestMode())
                 cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
