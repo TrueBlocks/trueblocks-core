@@ -863,6 +863,14 @@ extern void loadParseMap(void);
     }
 
     //-------------------------------------------------------------------------
+    string_q getIndexPath(const string_q& _part) {
+        string_q indexPath = getGlobalConfig()->getConfigStr("settings", "indexPath", "<not-set>");
+        if (indexPath == "<not-set>" || !folderExists(indexPath))
+            return getCachePath("addr_index/" + _part);
+        return indexPath + _part;
+    }
+
+    //-------------------------------------------------------------------------
     string_q getCachePath(const string_q& _part) {
 
         //TODO(tjayrush): global data
