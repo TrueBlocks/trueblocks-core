@@ -88,7 +88,7 @@ bool COptions::parseArguments(string_q& command) {
         writeIndexAsBinary(zeroBin, appearances); // also writes the bloom file
     }
 
-    blknum_t def = (getEnvStr("DOCKER_MODE") == "true" ? 1000 : 2000);
+    blknum_t def = (getEnvStr("DOCKER_MODE") == "true" ? 100 : 2000);
     const CToml *config = getGlobalConfig("blockScrape");
     nBlocks     = config->getConfigInt("settings", "nBlocks",     (nBlocks     == NOPOS ? def : nBlocks    ));
     nBlockProcs = config->getConfigInt("settings", "nBlockProcs", (nBlockProcs == NOPOS ?  20 : nBlockProcs));
