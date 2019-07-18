@@ -121,18 +121,19 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     extern string_q getCachePath            (const string_q& _part);
+    extern string_q getIndexPath            (const string_q& _part);
     extern string_q scraperStatus           (void);
     #define cleanPath(path_) (isTestMode() ? substitute(path_, getCachePath(""), "$CACHE_PATH/") : path_)
 
     //-------------------------------------------------------------------------
     #define blockFolder           (getCachePath("blocks/"))
 
-    #define indexFolder           (getCachePath("addr_index/"))
-    #define indexFolder_finalized (getCachePath("addr_index/finalized/"))
-    #define indexFolder_blooms    (getCachePath("addr_index/blooms/"))
-    #define indexFolder_staging   (getCachePath("addr_index/staging/"))
-    #define indexFolder_unripe    (getCachePath("addr_index/unripe/"))
-    #define indexFolder_ripe      (getCachePath("addr_index/ripe/"))
+    #define indexFolder           (getIndexPath(""))
+    #define indexFolder_staging   (getIndexPath("staging/"))
+    #define indexFolder_unripe    (getIndexPath("unripe/"))
+    #define indexFolder_ripe      (getIndexPath("ripe/"))
+    #define indexFolder_finalized (getIndexPath("finalized/"))
+    #define indexFolder_blooms    (getIndexPath("blooms/"))
 
     //-------------------------------------------------------------------------
     extern biguint_t weiPerEther(void);
