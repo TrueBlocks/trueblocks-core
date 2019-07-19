@@ -111,7 +111,6 @@ for (blknum_t num = options.startBlock ; num < options.endBlock && !shouldQuit()
 do we handle the case where 0x00000...000000 represents as 0x0
 statistics reporting
 maxIndexRows = getGlobalConfig("blockScrape")->getConfigInt("settings", "maxIndexRows", 350000);
-used to call scraperStatus at end
 marked miners (99999) but not uncle miners (99998) and not non-miners (99997)
 we no longer 'snap to grid'
 firstBlock is removed as an option since we always start where we last left off

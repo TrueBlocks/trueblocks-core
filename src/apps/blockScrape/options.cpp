@@ -14,7 +14,7 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-#define indexFolder_sorted (getCachePath("addr_index/sorted/"))
+#define indexFolder_sorted (getIndexPath("sorted/"))
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
