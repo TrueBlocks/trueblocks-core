@@ -842,12 +842,19 @@ extern void loadParseMap(void);
     }
 
     //-------------------------------------------------------------------------
-    inline string_q showLastBlocks(const blknum_t& u, const blknum_t& r, const blknum_t& s, const blknum_t& f, const blknum_t& c) {
+    inline string_q showLastBlocks(const blknum_t u, const blknum_t r, const blknum_t s, const blknum_t f, const blknum_t c) {
         ostringstream os;
         if (isTestMode())
             os << "--final--, --staging--, --ripe--, --unripe--, --client--";
-        else
-            os << cYellow << ((int64_t)f) << ", " << ((int64_t)s) << ", " << ((int64_t)r) << ", " << ((int64_t)u) << ", " << ((int64_t)c) << cOff;
+        else {
+            os << cYellow;
+            os << padNum9T((int64_t)f) << ", ";
+            os << padNum9T((int64_t)s) << ", ";
+            os << padNum9T((int64_t)r) << ", ";
+            os << padNum9T((int64_t)u) << ", ";
+            os << padNum9T((int64_t)c);
+            os << cOff;
+        }
         return os.str();
     }
 
@@ -872,11 +879,17 @@ extern void loadParseMap(void);
         ostringstream heights;
         heights << showLastBlocks(unripe, ripe, staging, finalized, client);
 
+        ostringstream pHeights;
+        pHeights << showLastBlocks(pUnripe, pRipe, pStaging, pFinalized, pClient);
+
         ostringstream distances;
-        distances << showLastBlocks(client-finalized, client-staging, client-ripe, client-unripe, client-client);
+        distances << showLastBlocks(client-unripe, client-ripe, client-staging, client-finalized, client-client);
 
         ostringstream diffs;
-        diffs << showLastBlocks(finalized-pFinalized, staging-pStaging, ripe-pRipe, unripe-pUnripe, client-pClient);
+        diffs << showLastBlocks(pClient-pUnripe, pClient-pRipe, pClient-pStaging, pClient-pFinalized, pClient-pClient);
+
+        ostringstream pNeighbors;
+        pNeighbors << showLastBlocks(pRipe-pUnripe, pStaging-pRipe, pFinalized-pStaging, 0, pUnripe-pClient);
 
         string_q rpcProvider = getCurlContext()->baseURL;
 
@@ -891,12 +904,16 @@ extern void loadParseMap(void);
             os << cGreen << "  Cache location:     " << showOne("--cache_dir--", getCachePath(""))     << endl;
             os << cGreen << "  Host (user):        " << showOne("--host (user)--", hostUser)           << endl;
             os << cGreen << "  Heights:            " << heights.str()                                  << endl;
+            os << cGreen << "  Previous Heights:   " << pHeights.str()                                 << endl;
             os << cGreen << "  Distances:          " << distances.str()                                << endl;
-            os << cGreen << "  Diffs:              " << diffs.str()                                << endl;
+            os << cGreen << "  Diffs:              " << diffs.str()                                    << endl;
+            os << cGreen << "  Neighbors:          " << pNeighbors.str()                               << endl;
         } else {
-            os << "\t  heights:\t"   << heights.str()   << endl;
-            os << "\t  distances:\t" << distances.str() << endl;
-            os << "\t  diffs:\t" << diffs.str() << endl;
+            os << "\t  heights:\t"      << heights.str()    << endl;
+            os << "\t  prev heights:\t" << pHeights.str()   << endl;
+            os << "\t  distances:\t"    << distances.str()  << endl;
+            os << "\t  diffs:\t"        << diffs.str()      << endl;
+            os << "\t  neighbors:\t"    << pNeighbors.str() << endl;
         }
         return os.str();
     }
