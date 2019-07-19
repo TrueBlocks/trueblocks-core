@@ -111,7 +111,10 @@ func initConfig() {
 
 	Options.indexPath = viper.GetString("settings.indexPath")
 	if Options.indexPath == "" {
-		Options.indexPath = home + "/.quickBlocks/cache/addr_index/"
+		Options.indexPath = viper.GetString("settings.cachePath") + "addr_index"
+		if Options.indexPath == "" {
+			Options.indexPath = home + "/.quickBlocks/cache/addr_index/"
+		}
 	}
 	if Options.indexPath[len(Options.indexPath)-1] != '/' {
 		Options.indexPath += "/"
