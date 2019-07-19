@@ -40,14 +40,14 @@ func Execute() {
 // options_t Structure to carry command line and config file options
 type optionsT struct {
 	rpcProvider string
-	cachePath   string
+	indexPath   string
+	ripePath    string
+	unripePath  string
 	startBlock  int
 	nBlocks     int
 	nBlockProcs int
 	nAddrProcs  int
 	ripeBlock   int
-	ripePath    string
-	unripePath  string
 	dockerMode  bool
 }
 
@@ -59,7 +59,7 @@ func init() {
 	cobra.OnInitialize(initConfig)
 
 	rootCmd.PersistentFlags().StringVarP(&Options.rpcProvider, "rpcProvider", "r", "http://localhost:8545", "URL to the node's RPC")
-	rootCmd.PersistentFlags().StringVarP(&Options.cachePath, "cachePath", "c", "", "The location of TrueBlocks' cache (default \"~/.quickBlocks/cache/\")")
+	rootCmd.PersistentFlags().StringVarP(&Options.indexPath, "indexPath", "c", "", "The location of TrueBlocks' appearance cache (default \"~/.quickBlocks/cache/addr_index\")")
 	rootCmd.PersistentFlags().IntVarP(&Options.startBlock, "startBlock", "s", 0, "First block to visit (required)")
 	rootCmd.PersistentFlags().IntVarP(&Options.nBlocks, "nBlocks", "n", 0, "The number of blocks to scrape (required)")
 	rootCmd.PersistentFlags().IntVarP(&Options.nBlockProcs, "nBlockProcs", "b", 20, "The number of block processors to create (required)")
@@ -95,9 +95,9 @@ func initConfig() {
 	viper.SetEnvKeyReplacer(strings.NewReplacer("SETTINGS.", ""))
 	viper.AutomaticEnv()
 	viper.BindPFlag("settings.rpcProvider", rootCmd.PersistentFlags().Lookup("rpcProvider"))
-	viper.BindPFlag("settings.cachePath", rootCmd.PersistentFlags().Lookup("cachePath"))
+	viper.BindPFlag("settings.indexPath", rootCmd.PersistentFlags().Lookup("indexPath"))
 	viper.BindEnv("rpcProvider")
-	viper.BindEnv("cachePath")
+	viper.BindEnv("indexPath")
 
 	// Cleanup
 	Options.rpcProvider = viper.GetString("settings.rpcProvider")
@@ -109,24 +109,24 @@ func initConfig() {
 		Options.rpcProvider += "/"
 	}
 
-	Options.cachePath = viper.GetString("settings.cachePath")
-	if len(Options.cachePath) == 0 {
-		fmt.Println("Your cachePath is empty. Quitting...")
+	Options.indexPath = viper.GetString("settings.indexPath")
+	if len(Options.indexPath) == 0 {
+		fmt.Println("Your indexPath is empty. Quitting...")
 		os.Exit(1)
 	}
-	if Options.cachePath == "" {
-		Options.cachePath = home + "/.quickBlocks/cache/"
+	if Options.indexPath == "" {
+		Options.indexPath = home + "/.quickBlocks/cache/addr_index/"
 	}
-	if Options.cachePath[len(Options.cachePath)-1] != '/' {
-		Options.cachePath += "/"
+	if Options.indexPath[len(Options.indexPath)-1] != '/' {
+		Options.indexPath += "/"
 	}
 
-	Options.ripePath = Options.cachePath + "addr_index/ripe/"
+	Options.ripePath = Options.indexPath + "ripe/"
 	if _, err := os.Stat(Options.ripePath); os.IsNotExist(err) {
 		os.MkdirAll(Options.ripePath, 0777)
 	}
 
-	Options.unripePath = Options.cachePath + "addr_index/unripe/"
+	Options.unripePath = Options.indexPath + "unripe/"
 	if _, err := os.Stat(Options.unripePath); os.IsNotExist(err) {
 		os.MkdirAll(Options.unripePath, 0777)
 	}
