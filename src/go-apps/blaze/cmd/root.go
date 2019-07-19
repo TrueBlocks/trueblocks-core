@@ -110,10 +110,6 @@ func initConfig() {
 	}
 
 	Options.indexPath = viper.GetString("settings.indexPath")
-	if len(Options.indexPath) == 0 {
-		fmt.Println("Your indexPath is empty. Quitting...")
-		os.Exit(1)
-	}
 	if Options.indexPath == "" {
 		Options.indexPath = home + "/.quickBlocks/cache/addr_index/"
 	}
