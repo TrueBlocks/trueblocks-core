@@ -74,7 +74,7 @@ bool COptions::parseArguments(string_q& command) {
             normalize = true;
 
         } else if (arg == "-l" || arg == "--latest") {
-            cout << scraperStatus();
+            cout << scraperStatus(false);
             return false;
 
         } else if (startsWith(arg, "--source:")) {

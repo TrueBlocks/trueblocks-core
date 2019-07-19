@@ -122,8 +122,7 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     extern string_q getCachePath            (const string_q& _part);
     extern string_q getIndexPath            (const string_q& _part);
-    extern string_q scraperStatus           (void);
-    #define cleanPath(path_) (isTestMode() ? substitute(path_, getCachePath(""), "$CACHE_PATH/") : path_)
+    extern string_q scraperStatus           (bool terse);
 
     //-------------------------------------------------------------------------
     #define blockFolder           (getCachePath("blocks/"))
