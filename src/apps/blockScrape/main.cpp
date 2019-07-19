@@ -117,6 +117,10 @@ bool COptions::handle_scrape(void) {
         return false;
     }
 
+//cout << indexFolder_staging << ": " << folderExists(indexFolder_staging) << endl;
+//cout << indexFolder_ripe << ": " << folderExists(indexFolder_ripe) << endl;
+//cout << indexFolder_unripe << ": " << folderExists(indexFolder_unripe) << endl;
+
     // From this point until the end of the invocation, the processing must be able to stop abruptly
     // without resulting in corrupted data (control+c for example). This means we must process a single
     // file at a time in order. Processing means moving files from ripe files into the staging file
@@ -169,6 +173,11 @@ bool COptions::finalize_chunks(CConsolidator *cons) {
     string_q oldStage = getLastFileInFolder(indexFolder_staging, false);
     string_q tempStage = indexFolder_staging + "000000000-temp.txt";
     string_q newStage = indexFolder_staging + padNum9(cons->prevBlock) + ".txt";
+//#define FF(a) { cerr << padRight(#a, 12) << padRight(a,70) << ": " << cYellow << (fileSize(a)/59) << cOff << endl; }
+//#define FF1(a) cerr << bBlue << (a) << cOff << endl << endl;
+#define FF(a)
+#define FF1(a)
+    FF(tmpFile); FF(oldStage); FF(tempStage); FF(newStage); FF1("Prior to anything");
     if (oldStage == newStage) {
         blknum_t curSize = fileSize(newStage) / 59;
         cerr << bTeal;
@@ -177,11 +186,6 @@ bool COptions::finalize_chunks(CConsolidator *cons) {
         cerr << " rows (" << curSize << " of " << maxIndexRows << ")" << cOff << endl;
         return true;
     }
-//#define FF(a) { cerr << padRight(#a, 12) << padRight(a,70) << ": " << cYellow << (fileSize(a)/59) << cOff << endl; }
-//#define FF1(a) cerr << bBlue << "Prior to anything" << cOff << endl << endl;
-#define FF(a)
-#define FF1(a)
-    FF(tmpFile); FF(oldStage); FF(tempStage); FF(newStage); FF1("Prior to anything");
     if (oldStage != tempStage) {
         if (!appendFile(tmpFile, oldStage)) {
             // oldStage is still valid. Caller will clean up the rest
@@ -352,10 +356,10 @@ bool copyRipeToStage(const string_q& path, void *data) {
         lockSection(true);
         con->output << inputStream.rdbuf();
         con->output.flush();
+        inputStream.close();
         ::remove(path.c_str());
         con->prevBlock = bn;
         lockSection(false);
-        inputStream.close();
     }
 
     return !shouldQuit();
