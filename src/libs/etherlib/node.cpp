@@ -821,6 +821,36 @@ extern void loadParseMap(void);
         return true;
     }
 
+    //--------------------------------------------------------------------------
+    inline bool prevLastBlocks(blknum_t& u, blknum_t& r, blknum_t& s, blknum_t& f, blknum_t& c, bool write) {
+        string_q fn = configPath("cache/tmp/scraper-status.txt");
+        if (write) {
+            ostringstream os;
+            os << u << "\t" << r << "\t" << s << "\t" << f << "\t" << c << endl;
+            stringToAsciiFile(fn, os.str());
+        } else {
+            string_q contents = asciiFileToString(fn);
+            CUintArray parts;
+            explode(parts, contents, '\t');
+            if (parts.size()) {
+                u = parts[0]; r = parts[1]; s = parts[2]; f = parts[3]; c = parts[4];
+            } else {
+                u = r = s = f = c = NOPOS;
+            }
+        }
+        return true;
+    }
+
+    //-------------------------------------------------------------------------
+    inline string_q showLastBlocks(const blknum_t& u, const blknum_t& r, const blknum_t& s, const blknum_t& f, const blknum_t& c) {
+        ostringstream os;
+        if (isTestMode())
+            os << "--final--, --staging--, --ripe--, --unripe--, --client--";
+        else
+            os << cYellow << ((int64_t)f) << ", " << ((int64_t)s) << ", " << ((int64_t)r) << ", " << ((int64_t)u) << ", " << ((int64_t)c) << cOff;
+        return os.str();
+    }
+
     //-------------------------------------------------------------------------
     string_q scraperStatus(bool terse) {
 
@@ -828,29 +858,30 @@ extern void loadParseMap(void);
         char username[LOGIN_NAME_MAX]; getlogin_r(username, LOGIN_NAME_MAX);
         string_q hostUser = string_q(hostname) + " (" + username + ")";
 
-        string_q tmpStore = configPath("cache/tmp/scraper-status.txt");
-
-        uint64_t prevDiff = str_2_Uint(asciiFileToString(tmpStore));
         uint64_t unripe, ripe, staging, finalized, client;
-        getLastBlocks(unripe, ripe, staging, finalized, client);
+        uint64_t pUnripe, pRipe, pStaging, pFinalized, pClient;
 
-        uint64_t currDiff = finalized > client ? finalized - client : client - finalized;
-        stringToAsciiFile(tmpStore, uint_2_Str(currDiff));  // so we can use it next time
+        getLastBlocks(unripe, ripe, staging, finalized, client);
+        if (fileExists(configPath("cache/tmp/scraper-status.txt"))) {
+            prevLastBlocks(pUnripe, pRipe, pStaging, pFinalized, pClient, false);
+        } else {
+            pUnripe = unripe; pRipe = ripe; pStaging = staging; pFinalized = finalized; pClient = client;
+        }
+        prevLastBlocks(unripe, ripe, staging, finalized, client, true);
+
+        ostringstream heights;
+        heights << showLastBlocks(unripe, ripe, staging, finalized, client);
+
+        ostringstream distances;
+        distances << showLastBlocks(client-finalized, client-staging, client-ripe, client-unripe, client-client);
+
+        ostringstream diffs;
+        diffs << showLastBlocks(finalized-pFinalized, staging-pStaging, ripe-pRipe, unripe-pUnripe, client-pClient);
+
+        string_q rpcProvider = getCurlContext()->baseURL;
 
 #define showOne(a, b) cYellow << (isTestMode() ? a : b) << cOff
 #define showOne1(a) showOne(a, a)
-        ostringstream cos;
-        cos << showOne("--final--, --staging--, --ripe--, --unripe--, --client--",
-                        uint_2_Str(finalized)+", "+uint_2_Str(staging)+", "+uint_2_Str(ripe)+", "+uint_2_Str(unripe)+", "+uint_2_Str(client));
-        ostringstream cos1;
-        cos1 << showOne("--dfin--, --dstag--, --dripe--, --dunripe--, --dclient--",
-                       uint_2_Str(client-finalized)+", "+uint_2_Str(client-staging)+", "+uint_2_Str(client-ripe)+", "+uint_2_Str(client-unripe)+", "+uint_2_Str(client-client));
-
-        ostringstream dos;
-        dos << showOne("--diff--", (currDiff>prevDiff?"-":"+") + uint_2_Str(currDiff));
-        dos << showOne("--diffdiff--", (currDiff > prevDiff ? " (-" + uint_2_Str(currDiff-prevDiff) : " (+"+uint_2_Str(prevDiff-currDiff)) + ")");
-
-        string_q rpcProvider = getCurlContext()->baseURL;
 
         ostringstream os;
         if (!terse) {
@@ -859,11 +890,13 @@ extern void loadParseMap(void);
             os << cGreen << "  RPC provider:       " << showOne("--rpc_provider--", rpcProvider)       << endl;
             os << cGreen << "  Cache location:     " << showOne("--cache_dir--", getCachePath(""))     << endl;
             os << cGreen << "  Host (user):        " << showOne("--host (user)--", hostUser)           << endl;
-            os << cGreen << "  Heights:            " << cos.str()                                      << endl;
-            os << cGreen << "  Distances:          " << cos1.str()                                     << endl;
+            os << cGreen << "  Heights:            " << heights.str()                                  << endl;
+            os << cGreen << "  Distances:          " << distances.str()                                << endl;
+            os << cGreen << "  Diffs:              " << diffs.str()                                << endl;
         } else {
-            os << "\t  Heights:\t" << cos.str() << endl;
-            os << "\t  Distances:\t" << cos1.str() << endl;
+            os << "\t  heights:\t"   << heights.str()   << endl;
+            os << "\t  distances:\t" << distances.str() << endl;
+            os << "\t  diffs:\t" << diffs.str() << endl;
         }
         return os.str();
     }
