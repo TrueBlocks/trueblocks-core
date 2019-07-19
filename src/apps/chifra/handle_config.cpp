@@ -6,6 +6,7 @@
 #include "options.h"
 #include "question.h"
 
+#define cleanPath(path_) (isTestMode() ? substitute(path_, getCachePath(""), "$CACHE_PATH/") : path_)
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_config(void) {
 
