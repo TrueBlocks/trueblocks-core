@@ -822,7 +822,7 @@ extern void loadParseMap(void);
     }
 
     //-------------------------------------------------------------------------
-    string_q scraperStatus(void) {
+    string_q scraperStatus(bool terse) {
 
         char hostname[HOST_NAME_MAX];  gethostname(hostname, HOST_NAME_MAX);
         char username[LOGIN_NAME_MAX]; getlogin_r(username, LOGIN_NAME_MAX);
@@ -840,8 +840,11 @@ extern void loadParseMap(void);
 #define showOne(a, b) cYellow << (isTestMode() ? a : b) << cOff
 #define showOne1(a) showOne(a, a)
         ostringstream cos;
-        cos << showOne("--final--, --staging--, --ripe--, --unripe--", 
-                        uint_2_Str(finalized)+", "+uint_2_Str(staging)+", "+uint_2_Str(ripe)+", "+uint_2_Str(unripe));
+        cos << showOne("--final--, --staging--, --ripe--, --unripe--, --client--",
+                        uint_2_Str(finalized)+", "+uint_2_Str(staging)+", "+uint_2_Str(ripe)+", "+uint_2_Str(unripe)+", "+uint_2_Str(client));
+        ostringstream cos1;
+        cos1 << showOne("--dfin--, --dstag--, --dripe--, --dunripe--, --dclient--",
+                       uint_2_Str(client-finalized)+", "+uint_2_Str(client-staging)+", "+uint_2_Str(client-ripe)+", "+uint_2_Str(client-unripe)+", "+uint_2_Str(client-client));
 
         ostringstream dos;
         dos << showOne("--diff--", (currDiff>prevDiff?"-":"+") + uint_2_Str(currDiff));
@@ -850,15 +853,18 @@ extern void loadParseMap(void);
         string_q rpcProvider = getCurlContext()->baseURL;
 
         ostringstream os;
-        os << cGreen << "  Client version:     " << showOne("--version--", getVersionFromClient())    << endl;
-        os << cGreen << "  Trueblocks Version: " << showOne1(getVersionStr())                         << endl;
-        os << cGreen << "  RPC Provider:       " << showOne("--rpc_provider--", rpcProvider)          << endl;
-        os << cGreen << "  Cache location:     " << showOne("--cache_dir--", getCachePath(""))        << endl;
-        os << cGreen << "  Host (user):        " << showOne("--host (user)--", hostUser)              << endl;
-        os << cGreen << "  Latest cache:       " << cos.str()                                         << endl;
-        os << cGreen << "  Latest client:      " << showOne("--client--", uint_2_Str(client))         << endl;
-        os << cGreen << "  Dist from head:     " << dos.str()                                         << endl;
-
+        if (!terse) {
+            os << cGreen << "  Client version:     " << showOne("--version--", getVersionFromClient()) << endl;
+            os << cGreen << "  Trueblocks version: " << showOne1(getVersionStr())                      << endl;
+            os << cGreen << "  RPC provider:       " << showOne("--rpc_provider--", rpcProvider)       << endl;
+            os << cGreen << "  Cache location:     " << showOne("--cache_dir--", getCachePath(""))     << endl;
+            os << cGreen << "  Host (user):        " << showOne("--host (user)--", hostUser)           << endl;
+            os << cGreen << "  Heights:            " << cos.str()                                      << endl;
+            os << cGreen << "  Distances:          " << cos1.str()                                     << endl;
+        } else {
+            os << "\t  Heights:\t" << cos.str() << endl;
+            os << "\t  Distances:\t" << cos1.str() << endl;
+        }
         return os.str();
     }
 
