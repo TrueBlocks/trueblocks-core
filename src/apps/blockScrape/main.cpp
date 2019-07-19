@@ -19,6 +19,7 @@ int main(int argc, const char *argv[]) {
             options.handle_scrape();
         }
     }
+    cerr << scraperStatus(true);
 
     acctlib_cleanup();
 
@@ -144,6 +145,7 @@ bool COptions::handle_scrape(void) {
     // off chunks of 500,000 records if we can, consolidate them (write them to a binary relational
     // table), and re-write any unfinalized records back onto the stage. Again, if anything goes wrong
     // we clean up.
+    cerr << bTeal << "\t  Attempting to finalize blocks" << cOff << endl;
     if (!finalize_chunks(&cons)) {
         cleanFolder(indexFolder_unripe);
         cleanFolder(indexFolder_ripe);
@@ -163,13 +165,30 @@ bool COptions::finalize_chunks(CConsolidator *cons) {
     // records in these two files. We need to process in a way that will allow for interruption.
 
     // ...we want to work with a temporary file so if anything goes wrong, we can recover...
-    string_q tmpFile = getCachePath("addr_index/temp.txt");
+    string_q tmpFile = getIndexPath("temp.txt");
     string_q oldStage = getLastFileInFolder(indexFolder_staging, false);
     string_q tempStage = indexFolder_staging + "000000000-temp.txt";
-    if (oldStage != tempStage && !appendFile(tmpFile, oldStage)) {
-        // oldStage is still valid. Caller will clean up the rest
-        cerr << cRed << "Could not append oldStage to temp.fil" << cOff << endl;
-        return false;
+    string_q newStage = indexFolder_staging + padNum9(cons->prevBlock) + ".txt";
+    if (oldStage == newStage) {
+        blknum_t curSize = fileSize(newStage) / 59;
+        cerr << bTeal;
+        cerr << "\t  Nothing new to process." << endl;
+        cerr << "\t  Will consolidate in " << (maxIndexRows - curSize);
+        cerr << " rows (" << curSize << " of " << maxIndexRows << ")" << cOff << endl;
+        return true;
+    }
+//#define FF(a) { cerr << padRight(#a, 12) << padRight(a,70) << ": " << cYellow << (fileSize(a)/59) << cOff << endl; }
+//#define FF1(a) cerr << bBlue << "Prior to anything" << cOff << endl << endl;
+#define FF(a)
+#define FF1(a)
+    FF(tmpFile); FF(oldStage); FF(tempStage); FF(newStage); FF1("Prior to anything");
+    if (oldStage != tempStage) {
+        if (!appendFile(tmpFile, oldStage)) {
+            // oldStage is still valid. Caller will clean up the rest
+            cerr << cRed << "Could not append oldStage to temp.fil" << cOff << endl;
+            return false;
+        }
+        FF(tmpFile); FF(oldStage); FF(tempStage); FF(newStage); FF1("Append oldStage to tmpFile");
     }
 
     // ...next we append the new ripe records if we can...
@@ -179,17 +198,19 @@ bool COptions::finalize_chunks(CConsolidator *cons) {
         cerr << cRed << "Could not append tempStage to temp.fil" << cOff << endl;
         return false;
     }
+    FF(tmpFile); FF(oldStage); FF(tempStage); FF(newStage); FF1("Appending tempStage to tmpFile");
 
     // ...finally, we move the temp file to the new stage without allowing user to hit control+c
     lockSection(true);
-    string_q newStage = indexFolder_staging + padNum9(cons->prevBlock) + ".txt";
     ::rename(tmpFile.c_str(), newStage.c_str());
-    ::remove(oldStage.c_str());
+    if (oldStage != tempStage && oldStage != newStage)
+        ::remove(oldStage.c_str());
     ::remove(tempStage.c_str());
     lockSection(false);
+    FF(tmpFile); FF(oldStage); FF(tempStage); FF(newStage); FF1("Renaming tmp to new, removing old and temp");
 
     // We are now in a valid state with all records in the properly name newStage
-    size_t curSize = fileSize(newStage) / 59;
+    blknum_t curSize = fileSize(newStage) / 59;
 
     // Did user hit control+c?
     if (shouldQuit())
