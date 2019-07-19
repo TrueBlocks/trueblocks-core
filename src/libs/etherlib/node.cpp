@@ -886,10 +886,10 @@ extern void loadParseMap(void);
         distances << showLastBlocks(client-unripe, client-ripe, client-staging, client-finalized, client-client);
 
         ostringstream diffs;
-        diffs << showLastBlocks(pClient-pUnripe, pClient-pRipe, pClient-pStaging, pClient-pFinalized, pClient-pClient);
+        diffs << showLastBlocks(unripe-pUnripe, ripe-pRipe, staging-pStaging, finalized-pFinalized, client-pClient);
 
         ostringstream pNeighbors;
-        pNeighbors << showLastBlocks(pRipe-pUnripe, pStaging-pRipe, pFinalized-pStaging, 0, pUnripe-pClient);
+        pNeighbors << showLastBlocks(pRipe-pUnripe, pStaging-pRipe, pFinalized-pStaging, 0, 0);
 
         string_q rpcProvider = getCurlContext()->baseURL;
 
