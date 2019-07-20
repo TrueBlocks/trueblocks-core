@@ -7,6 +7,7 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
+    COption("~addr_list",       "one or more Ethereum addresses"),
     COption("-maxBlocks:<val>", "scan at most --maxBlocks blocks ('all' implies scan to end of chain)"),
     COption("@ripe",            "visit ripe (old enough, but not yet staged or finalized) blocks"),
     COption("@unripe",          "visit unripe (not old enough and not yet staged or finalized) blocks"),
