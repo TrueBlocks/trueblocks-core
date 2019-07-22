@@ -14,7 +14,7 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("~address_list", "one or more addresses (0x...) from which to retrieve balances"),
+    COption("~addr_list",    "one or more addresses (0x...) from which to retrieve balances"),
     COption("~!block_list",  "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
     COption("-mode:<val>",   "control which state to export. One of [none|some|all|balance|nonce|code|storage|deployed|accttype]"),
     COption("-nozero",       "suppress the display of zero balance accounts"),
@@ -167,7 +167,7 @@ COptions::~COptions(void) {
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
     if (which == "options") {
-        return substitute(str, "address_list block_list", "<address> [address...] [block...]");
+        return substitute(str, "addr_list block_list", "<address> [address...] [block...]");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
         string_q ret;

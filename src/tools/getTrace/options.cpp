@@ -148,6 +148,11 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
     return str;
 }
 
+#if 0
+    COption("@to_file",     "send results to a temporary file and return the filename"),
+    COption("@output:<fn>", "send results to file 'fn' and return the filename"),
+#endif
+
 //--------------------------------------------------------------------------------
 const char* STR_DISPLAY =
 "[{BLOCKNUMBER}]\t"
