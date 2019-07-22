@@ -8,7 +8,7 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("~command", "one of [ leech | scrape | daemon | list | export | balances | stats | ls | rm | accounts | config | slurp | quotes | data | blocks | trans | receipts | logs | traces ]"),
+    COption("~command", "one of [ leech | scrape | daemon | list | export | balances | stats | ls | rm | accounts | config | slurp | quotes | data | blocks | trans | receipts | logs | traces | state | abi ]"),
     COption("-sleep:<num>", "for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 0)"),
     COption("",         "Create a TrueBlocks monitor configuration.\n"),
 };
@@ -87,11 +87,19 @@ bool COptions::parseArguments(string_q& command) {
 
     if (mode == "blocks" ||
     	mode == "trans" ||
-    	mode == "receipts" ||
+        mode == "receipts" ||
         mode == "accounts" ||
     	mode == "logs" ||
-    	mode == "traces") {
+        mode == "traces" ||
+        mode == "abi") {
         tool_flags += (" --" + mode);
+        mode = "data";
+    }
+
+    if (mode == "state") {
+        replace(tool_flags, "--mode code", "--mode some --code");
+        replace(tool_flags, "--mode nonce", "--mode some --nonce");
+        replace(tool_flags, "--mode balance", "--mode some --balance");
         mode = "data";
     }
 

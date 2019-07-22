@@ -15,7 +15,7 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("~addr",       "the address(es) of the smart contract(s) to grab"),
+    COption("~addr_list",  "list of one or more smart contracts whose ABI to grab from EtherScan"),
     COption("-canonical",  "convert all types to their canonical represenation and remove all spaces from display"),
     COption("-generate",   "generate C++ code into the current folder for all functions and events found in the ABI"),
     COption("-data",       "export the display as data"),
