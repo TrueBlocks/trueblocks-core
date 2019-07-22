@@ -33,6 +33,33 @@ type Filter struct {
 	Toblock   string `json:"toBlock"`
 }
 
+// BlockHeader Returned value from the RPC of the block header
+type BlockHeader struct {
+	ID      int    `json:"id"`
+	Jsonrpc string `json:"jsonrpc"`
+	Result  struct {
+		Author           string   `json:"author"`
+		Difficulty       string   `json:"difficulty"`
+		ExtraData        string   `json:"extraData"`
+		GasLimit         string   `json:"gasLimit"`
+		GasUsed          string   `json:"gasUsed"`
+		Hash             string   `json:"hash"`
+		LogsBloom        string   `json:"logsBloom"`
+		Miner            string   `json:"miner"`
+		MixHash          string   `json:"mixHash"`
+		Nonce            string   `json:"nonce"`
+		Number           string   `json:"number"`
+		ParentHash       string   `json:"parentHash"`
+		ReceiptsRoot     string   `json:"receiptsRoot"`
+		SealFields       []string `json:"sealFields"`
+		Sha3Uncles       string   `json:"sha3Uncles"`
+		Size             string   `json:"size"`
+		StateRoot        string   `json:"stateRoot"`
+		Timestamp        string   `json:"timestamp"`
+		TransactionsRoot string   `json:"transactionsRoot"`
+	} `json:"result"`
+}
+
 // BlockTraces Returned value from the RPC containing all the traces for a given block.
 type BlockTraces struct {
 	Jsonrpc string `json:"jsonrpc"`
@@ -124,6 +151,38 @@ func toScreen(prompt string, value string, newLine bool) {
 	if newLine {
 		fmt.Println("")
 	}
+}
+
+// getBlockHeader Returns the block header for a given block.
+func getBlockHeader(blockNum int) ([]byte, error) {
+	payloadBytes, err := json.Marshal(RPCPayload{"2.0", "parity_getBlockHeaderByNumber", Params{fmt.Sprintf("0x%x", blockNum)}, 2})
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
+	body := bytes.NewReader(payloadBytes)
+	req, err := http.NewRequest("POST", Options.rpcProvider, body)
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
+	blockHeaderBody, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
+	defer resp.Body.Close()
+	return blockHeaderBody, nil
 }
 
 // getTracesFromBlock Returns all traces for a given block.
@@ -473,11 +532,27 @@ func writeAddresses(blockNum string, addressMap map[string]bool) {
 	sort.Strings(addressArray)
 	toWrite := []byte(strings.Join(addressArray[:], "\n") + "\n")
 
+//	bn, _ := strconv.Atoi(blockNum)
+//	blockHeaderBytes, err := getBlockHeader(bn)
+//	if err != nil {
+//		fmt.Println(err)
+//		os.Exit(1) // caller will start over if this process exits with non-zero value
+//	}
+//
+//	var header BlockHeader
+//	err = json.Unmarshal(blockHeaderBytes, &header)
+//	if err != nil {
+//		fmt.Println(err)
+//		os.Exit(1) // caller will start over if this process exits with non-zero value
+//	}
+//
+//	fileName := Options.ripePath + blockNum + "_ts" + header.Result.Timestamp + ".txt"
 	fileName := Options.ripePath + blockNum + ".txt"
 	bn, _ := strconv.Atoi(blockNum)
 	if bn > Options.ripeBlock {
 		fileName = Options.unripePath + blockNum + ".txt"
 	}
+
 	err := ioutil.WriteFile(fileName, toWrite, 0744)
 	if err != nil {
 		fmt.Println(err)

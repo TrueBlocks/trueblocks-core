@@ -8,7 +8,7 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("~address_list",      "one or more addresses (0x...) to export"),
+    COption("~addr_list",         "one or more addresses (0x...) to export"),
     COption("-fmt:<fmt>",         "export format (one of [json|txt|csv])"),
     COption("-articulate",        "articulate transactions, traces, logs, and outputs"),
     COption("-logs",              "export logs instead of transactions"),
@@ -315,7 +315,7 @@ bool COptions::loadData(void) {
     if (hasFuture)
         LOG_WARN("Cache file contains blocks ahead of the chain. Some items will not be exported.");
 
-    if (!freshenTsArray(items[items.size()-1].blk)) {
+    if (!loadTsArray(items[items.size()-1].blk)) {
         EXIT_FAIL("Could not open timestamp file.");
     }
 
@@ -323,42 +323,19 @@ bool COptions::loadData(void) {
 }
 
 //-----------------------------------------------------------------------
-bool COptions::freshenTsArray(blknum_t last) {
+bool COptions::loadTsArray(blknum_t last) {
 
-    string_q zipFile = configPath("ts.bin.gz");
-    if (fileExists(zipFile)) {  // is this first run since install?
-        string_q cmd = "cd " + configPath("") + " ; gunzip " + zipFile;
-        cerr << doCommand(cmd) << endl;
-        ASSERT(!fileExists(zipFile));
-    }
-
-    // We've been asked to freshen to the latest block in this address. If
-    // we're already there, do nothing.
-    string_q fn = configPath("ts.bin");
-    if (!fileExists(fn))
+    CUintArray unused;
+    if (!freshenTsDatabase(last, unused))
         return false;
-
-    ts_cnt = fileSize(fn) / sizeof(uint32_t);
-    if (last >= ts_cnt) {
-        CArchive oo(WRITING_ARCHIVE);
-        if (oo.Lock(fn, modeWriteAppend, LOCK_WAIT)) {
-            for (blknum_t bl = ts_cnt ; bl < last ; bl++) {
-                CBlock block;
-                getBlock_light(block, bl);
-                oo << (uint32_t)block.timestamp;
-                oo.flush();
-                cerr << "Updating timestamp for block " << bl << " (" << block.timestamp << ") of " << last << " (" << (last - bl) << ")    \r";
-                cerr.flush();
-            }
-            oo.Release();
-        }
-    }
 
     if (ts_array) {
         delete [] ts_array;
         ts_array = NULL;
+        ts_cnt = 0;
     }
 
+    string_q fn = configPath("ts.bin");
     ts_cnt = fileSize(fn) / sizeof(uint32_t);
     ts_array = new uint32_t[ts_cnt];
     if (!ts_array)
@@ -372,6 +349,52 @@ bool COptions::freshenTsArray(blknum_t last) {
     in.Release();
     return true;
 }
+
+//-----------------------------------------------------------------------
+bool freshenTsDatabase(blknum_t last, CUintArray& tsArray) {
+
+    string_q tsFile = configPath("ts.bin");
+    if (!fileExists(tsFile)) {
+        // Try to unpack the zip file if there is one
+        string_q zipFile = configPath("ts.bin.gz");
+        if (fileExists(zipFile)) { // first run since install? Let's try to get some timestamps
+            string_q cmd = "cd " + configPath("") + " ; gunzip " + zipFile;
+            cerr << doCommand(cmd) << endl;
+            ASSERT(!fileExists(zipFile));
+        }
+    }
+
+    size_t cnt = fileSize(tsFile) / sizeof(uint32_t);
+    if (last >= cnt) {
+        CArchive oo(WRITING_ARCHIVE);
+        if (oo.Lock(tsFile, modeWriteAppend, LOCK_WAIT)) {
+            if (tsArray.size() > 0) {
+                for (auto ts : tsArray) {
+                    oo << (uint32_t)ts;
+                    cerr << "Adding timestamp " << ts << "    \r";
+                    cerr.flush();
+                }
+            } else {
+                for (blknum_t bl = cnt ; bl <= last ; bl++) {  // we want to process 'last'
+                    CBlock block;
+                    getBlock_light(block, bl);
+                    oo << (uint32_t)block.timestamp;
+                    oo.flush();
+                    cerr << "Adding timestamp " << bl << " (" << block.timestamp << ") of " << last << " (" << (last - bl) << ")    \r";
+                    cerr.flush();
+                }
+            }
+            oo.Release();
+        }
+    }
+
+    return true;
+}
+
+#if 0
+    COption("@to_file",     "send results to a temporary file and return the filename"),
+    COption("@output:<fn>", "send results to file 'fn' and return the filename"),
+#endif
 
 //-----------------------------------------------------------------------
 const char* STR_DISPLAY =
