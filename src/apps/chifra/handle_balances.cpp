@@ -36,13 +36,21 @@ bool COptions::handle_balances(void) {
                 cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
             else
                 if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
-            CStringArray inLines, out;
+
+            CStringArray inLines;
             asciiFileToLines(fn, inLines);
-            out.reserve(inLines.size());
             for (auto line : inLines) {
                 CUintArray parts;
                 explode(parts, line, '\t');
-                cout << addr << "\t" << parts[0] << "\t" << parts[1] << "\t" << wei_2_Ether(bnu_2_Str(getBalanceAt(addr, parts[0]))) << endl;
+                cout << addr << "\t";
+                cout << parts[0] << "\t";
+                cout << parts[1] << "\t";
+                if (parts[0] > 0)
+                    cout << wei_2_Ether(bnu_2_Str(getBalanceAt(addr, parts[0]-1))) << "\t";
+                else
+                    cout << wei_2_Ether("0") << "\t";
+                cout << wei_2_Ether(bnu_2_Str(getBalanceAt(addr, parts[0])));
+                cout << endl;
             }
             ::remove(fn.c_str());
         }
