@@ -19,9 +19,9 @@ public:
     bool skipDdos;
     size_t maxTraces;
     bool articulate;
+    bool doLogs;
     uint32_t *ts_array;
     size_t ts_cnt;
-    bool doLogs;
 
     COptions(void);
     ~COptions(void);
@@ -35,9 +35,10 @@ public:
     bool loadMonitorData(CAppearanceArray_base& apps, const address_t& addr);
     bool loadData(void);
     bool exportData(void);
-    bool freshenTsArray(blknum_t blk);
+    bool loadTsArray(blknum_t blk);
 };
 
 //-----------------------------------------------------------------------
 extern bool isInTrace(CTrace& trace, const address_t& addr);
 extern bool excludeTrace(const CTransaction *trans, size_t maxTraces);
+extern bool freshenTsDatabase(blknum_t blk, CUintArray& tsArray);  // array may be empty in which case we query the node

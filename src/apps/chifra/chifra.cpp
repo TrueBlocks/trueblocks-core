@@ -41,4 +41,3 @@ int main(int argc, const char *argv[]) {
     acctlib_cleanup();
     EXIT_NOMSG(0);
 }
-

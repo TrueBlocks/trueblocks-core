@@ -149,7 +149,7 @@ bool COptions::handle_scrape(void) {
     // off chunks of 500,000 records if we can, consolidate them (write them to a binary relational
     // table), and re-write any unfinalized records back onto the stage. Again, if anything goes wrong
     // we clean up.
-    cerr << bTeal << "\t  Attempting to finalize blocks" << cOff << endl;
+    cerr << bTeal << "\t  Attempting to consolidate blocks" << cOff << endl;
     if (!finalize_chunks(&cons)) {
         cleanFolder(indexFolder_unripe);
         cleanFolder(indexFolder_ripe);
