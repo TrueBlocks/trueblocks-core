@@ -111,6 +111,13 @@ bool COptions::parseArguments(string_q& command) {
     tool_flags = trim(tool_flags, ' ');
     freshen_flags = trim(freshen_flags, ' ');
 
+    blknum_t unripe, ripe, staging, finalized, client;
+    getLastBlocks(unripe, ripe, staging, finalized, client);
+    if ((client - finalized) > 5000) {
+        cerr << "Sleeping zero: " << scrapeSleep << " " << endl;
+        scrapeSleep = 0;
+    }
+
     LOG4("API_MODE=", getEnvStr("API_MODE"));
     LOG4("DOCKER_MODE=", getEnvStr("DOCKER_MODE"));
     LOG4("IPFS_PATH=", getEnvStr("IPFS_PATH"));

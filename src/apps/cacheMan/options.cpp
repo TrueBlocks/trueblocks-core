@@ -236,3 +236,8 @@ bool loadMonitorData(CAppearanceArray_base& items, const address_t& addr) {
     }
     EXIT_NOMSG(true);
 }
+
+#if 0
+    COption("@to_file",     "send results to a temporary file and return the filename"),
+    COption("@output:<fn>", "send results to file 'fn' and return the filename"),
+#endif
