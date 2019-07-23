@@ -7,6 +7,27 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------
+bool COptions::loadTraces(CTransaction& trans, const CAppearance_base *item) {
+    string_q trcFilename = getBinaryCacheFilename(CT_TRACES, item->blk, item->txid, "");
+    if (fileExists(trcFilename)) {
+        CArchive traceCache(READING_ARCHIVE);
+        if (traceCache.Lock(trcFilename, modeReadOnly, LOCK_NOWAIT)) {
+            traceCache >> trans.traces;
+            traceCache.Release();
+        }
+    } else {
+        getTraces(trans.traces, trans.getValueByName("hash"));
+        establishFolder(trcFilename);
+        CArchive traceCache(WRITING_ARCHIVE);
+        if (traceCache.Lock(trcFilename, modeWriteCreate, LOCK_NOWAIT)) {
+            traceCache << trans.traces;
+            traceCache.Release();
+        }
+    }
+    return true;
+}
+
+//-----------------------------------------------------------------------
 bool COptions::exportData(void) {
 
     ENTER("exportData");
@@ -50,20 +71,67 @@ bool COptions::exportData(void) {
                     writeTransToBinary(trans, txFilename);
             }
 
-            if (exportFmt == JSON1 && !first)
-                cout << ", ";
-            bool doTraces = false;
             if (doTraces) {
+                loadTraces(trans, item);
+                for (auto trace : trans.traces) {
+
+                    bool isSuicide = trace.action.address != "";
+                    bool isCreation = trace.result.address != "";
+
+                    if (!isSuicide) {
+                        if (exportFmt == JSON1 && !first)
+                            cout << ", ";
+                        cout << trace.Format() << endl;
+                        first = false;
+                    }
+
+                    if (isSuicide) { // suicide
+                        CTrace copy = trace;
+                        copy.action.from = trace.action.address;
+                        copy.action.to = trace.action.refundAddress;
+                        copy.action.callType = "suicide";
+                        copy.action.value = trace.action.balance;
+                        copy.traceAddress.push_back("s");
+                        copy.transactionHash = uint_2_Hex(trace.blockNumber * 100000 + trace.transactionPosition);
+                        copy.action.input = "0x";
+                        if (exportFmt == JSON1 && !first)
+                            cout << ", ";
+                        cout << copy.Format() << endl;
+                    }
+
+                    if (isCreation) { // contract creation
+                        CTrace copy = trace;
+                        copy.action.from = "0x0";
+                        copy.action.to = trace.result.address;
+                        copy.action.callType = "creation";
+                        copy.action.value = trace.action.value;
+                        if (copy.traceAddress.size() == 0)
+                            copy.traceAddress.push_back("null");
+                        copy.traceAddress.push_back("s");
+                        copy.transactionHash = uint_2_Hex(trace.blockNumber * 100000 + trace.transactionPosition);
+                        copy.action.input = trace.action.input;
+                        if (exportFmt == JSON1 && !first)
+                            cout << ", ";
+                        cout << copy.Format() << endl;
+                    }
+                }
+
             } else {
                 if (doLogs) {
-                    for (auto log : trans.receipt.logs)
+                    for (auto log : trans.receipt.logs) {
+                        if (exportFmt == JSON1 && !first)
+                            cout << ", ";
                         cout << log.Format() << endl;
+                        first = false;
+                    }
                 } else {
+                    if (exportFmt == JSON1 && !first)
+                        cout << ", ";
                     cout << trans.Format() << endl;
+                    first = false;
                 }
             }
             nExported++;
-            first = false;
             HIDE_FIELD(CFunction, "message");
             if (isRedirected()) {  // we are not in --output mode
                 cerr << "   " << i << " of " << items.size() << ": " << trans.hash << "\r";
