@@ -15,11 +15,12 @@ public:
     CAppearanceArray_base items;
     bool writeBlocks;
     bool writeTrxs;
-    bool writeTraces;
+    bool writeTrcs;
     bool skipDdos;
     size_t maxTraces;
     bool articulate;
     bool doLogs;
+    bool doTraces;
     uint32_t *ts_array;
     size_t ts_cnt;
 
@@ -35,6 +36,7 @@ public:
     bool loadMonitorData(CAppearanceArray_base& apps, const address_t& addr);
     bool loadData(void);
     bool exportData(void);
+    bool loadTraces(CTransaction& trans, const CAppearance_base *item);
     bool loadTsArray(blknum_t blk);
 };
 
