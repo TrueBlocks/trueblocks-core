@@ -12,9 +12,10 @@ static const COption params[] = {
     COption("-fmt:<fmt>",         "export format (one of [json|txt|csv])"),
     COption("-articulate",        "articulate transactions, traces, logs, and outputs"),
     COption("-logs",              "export logs instead of transactions"),
+    COption("-traces",            "export traces instead of transactions"),
     COption("@blocks:<on/off>",   "write blocks to the binary cache ('off' by default)"),
-    COption("@txs:<on/off>",      "write transactions to the binary cache ('on' by default)"),
-    COption("@t(r)aces:<on/off>", "write traces to the binary cache ('off' by default)"),
+    COption("@tx(s):<on/off>",    "write transactions to the binary cache ('on' by default)"),
+    COption("@t(r)c:<on/off>",    "write traces to the binary cache ('off' by default)"),
     COption("@ddos:<on/off>",     "skip over dDos transactions in export ('on' by default)"),
     COption("@maxTraces:<num>",   "if --ddos:on, the number of traces defining a dDos (default = 250)"),
     COption("@start:<num>",       "first block to export (inclusive)"),
@@ -25,6 +26,7 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 
 extern const char* STR_DISPLAY;
 extern const char* STR_LOG_DISPLAY;
+extern const char* STR_TRACE_DISPLAY;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
@@ -42,17 +44,17 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Please provide either 'on' or 'off' for the --blocks options. Quitting...");
             writeBlocks = (arg == "on" ? true : false);
 
-        } else if (startsWith(arg, "-t") || startsWith(arg, "--txs")) {
-            arg = substitute(substitute(arg, "-t:", ""), "--txs:", "");
+        } else if (startsWith(arg, "-s") || startsWith(arg, "--txs")) {
+            arg = substitute(substitute(arg, "-s:", ""), "--txs:", "");
             if (arg != "on" && arg != "off")
                 return usage("Please provide either 'on' or 'off' for the --txs options. Quitting...");
             writeTrxs = (arg == "on" ? true : false);
 
-        } else if (startsWith(arg, "-r") || startsWith(arg, "--traces")) {
-            arg = substitute(substitute(arg, "-r:", ""), "--traces:", "");
+        } else if (startsWith(arg, "-r") || startsWith(arg, "--trc")) {
+            arg = substitute(substitute(arg, "-r:", ""), "--trc:", "");
             if (arg != "on" && arg != "off")
-                return usage("Please provide either 'on' or 'off' for the --trace options. Quitting...");
-            writeTraces = (arg == "on" ? true : false);
+                return usage("Please provide either 'on' or 'off' for the --trc options. Quitting...");
+            writeTrcs = (arg == "on" ? true : false);
 
         } else if (startsWith(arg, "-d") || startsWith(arg, "--ddos")) {
             arg = substitute(substitute(arg, "-d:", ""), "--ddos:", "");
@@ -68,6 +70,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-l" || arg == "--logs") {
             doLogs = true;
+
+        } else if (arg == "-t" || arg == "--traces") {
+            doTraces = true;
 
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
@@ -125,6 +130,9 @@ bool COptions::parseArguments(string_q& command) {
 
     SHOW_FIELD(CTransaction, "traces");
 
+    if (doLogs && doTraces)
+        return usage("Please export either logs or traces, not both. Quitting...");
+
     if (monitors.size() == 0)
         return usage("You must provide at least one Ethereum address. Quitting...");
 
@@ -168,7 +176,7 @@ bool COptions::parseArguments(string_q& command) {
 
     writeBlocks = getGlobalConfig("acctExport")->getConfigBool("settings", "writeBlocks", writeBlocks);;
     writeTrxs   = getGlobalConfig("acctExport")->getConfigBool("settings", "writeTrxs", writeTrxs);;
-    writeTraces = getGlobalConfig("acctExport")->getConfigBool("settings", "writeTraces", writeTraces);;
+    writeTrcs   = getGlobalConfig("acctExport")->getConfigBool("settings", "writeTraces", writeTrcs);;
     skipDdos    = getGlobalConfig("acctExport")->getConfigBool("settings", "skipDdos", skipDdos);;
     maxTraces   = getGlobalConfig("acctExport")->getConfigBool("settings", "maxTraces", maxTraces);;
 
@@ -184,7 +192,7 @@ bool COptions::parseArguments(string_q& command) {
         if (!contains(toLower(format), "trace"))
             HIDE_FIELD(CTransaction, "traces");
 
-        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "trace", "{TRACES}");
+        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "trace", STR_TRACE_DISPLAY);
         format = toml.getConfigStr("formats", "trace_fmt", deflt);
         expContext().fmtMap["trace_fmt"] = cleanFmt(format, exportFmt);
 
@@ -205,11 +213,12 @@ void COptions::Init(void) {
 
     writeBlocks = false;
     writeTrxs = true;
-    writeTraces = false;
+    writeTrcs = false;
     skipDdos = true;
     maxTraces = 250;
     articulate = false;
     doLogs = false;
+    doTraces = false;
 
     minArgs = 0;
 }
@@ -423,3 +432,47 @@ const char* STR_LOG_DISPLAY =
 "[{DATA}]\t"
 "[{TYPE}]\t"
 "[{COMPRESSEDLOG}]";
+
+//--------------------------------------------------------------------------------
+const char* STR_TRACE_DISPLAY =
+"[{BLOCKNUMBER}]\t"
+"[{TRANSACTIONPOSITION}]\t"
+"[{TRACEADDRESS}]\t"
+"[{ACTION::CALLTYPE}]\t"
+"[{ERROR}]\t"
+"[{ACTION::FROM}]\t"
+"[{ACTION::TO}]\t"
+"[{ACTION::VALUE}]\t"
+"[{ACTION::ETHER}]\t"
+"[{ACTION::GAS}]\t"
+"[{RESULT::GASUSED}]\t"
+"[{ACTION::INPUT}]\t"
+"[{COMPRESSEDTRACE}]\t"
+"[{RESULT::OUTPUT}]";
+
+/*
+"[{BLOCKHASH}]\t"
+"[{BLOCKNUMBER}]\t"
+"[{SUBTRACES}]\t"
+"[{TRACEADDRESS}]\t"
+"[{TRANSACTIONHASH}]\t"
+"[{TRANSACTIONPOSITION}]\t"
+"[{TYPE}]\t"
+"[{ERROR}]\t"
+"[{ARTICULATEDTRACE}]\t"
+"[{COMPRESSEDTRACE}]\t"
+"[{ACTION::ADDRESS}]\t"
+"[{ACTION::BALANCE}]\t"
+"[{ACTION::CALLTYPE}]\t"
+"[{ACTION::FROM}]\t"
+"[{ACTION::GAS}]\t"
+"[{ACTION::INIT}]\t"
+"[{ACTION::INPUT}]\t"
+"[{ACTION::REFUNDADDRESS}]\t"
+"[{ACTION::TO}]\t"
+"[{ACTION::VALUE}]\t"
+"[{RESULT::ADDRESS}]\t"
+"[{RESULT::CODE}]\t"
+"[{RESULT::GASUSED}]\t"
+"[{RESULT::OUTPUT}]";
+*/

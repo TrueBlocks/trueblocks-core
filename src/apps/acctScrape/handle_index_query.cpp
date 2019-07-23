@@ -82,7 +82,7 @@ bool COptions::visitBinaryFile(const string_q& path, void *data) {
         if (!hit) {
             if (! ( ++n % BREAK_PT)) {
                 qblocks::eLogger->setEndline('\r');
-                LOG_INFO("Skipping blocks:  ",substitute(path, indexFolder_finalized, "./"));
+                LOG_INFO("Skip blocks:  ",substitute(path, indexFolder_finalized, "./"));
                 qblocks::eLogger->setEndline('\n');
             }
             // none of them hit, so write last block for each of them
@@ -94,7 +94,7 @@ bool COptions::visitBinaryFile(const string_q& path, void *data) {
 
     if (! ( ++n % BREAK_PT)) {
         qblocks::eLogger->setEndline('\r');
-        LOG_INFO("Searching blocks:  ",substitute(path, indexFolder_finalized, "./"));
+        LOG_INFO("Scan blocks:  ",substitute(path, indexFolder_finalized, "./"));
         qblocks::eLogger->setEndline('\n');
     }
 
