@@ -3,18 +3,16 @@ acctScrape
 
   You must provide at least one Ethereum address. Quitting...
 
-  Usage:    acctScrape [-m|-v|-h]  
+  Usage:    acctScrape [-v|-h] <address> [address...]  
   Purpose:  Index transactions for a given Ethereum address (or series of addresses).
              
   Where:  
-	-m  (--maxBlocks val) scan at most --maxBlocks blocks ('all' implies scan to end of chain)
+	addr_list             one or more Ethereum addresses (required)
 
 #### Hidden options (shown during testing only)
-	-r  (--ripe)          visit ripe (old enough, but not yet staged or finalized) blocks
-	-u  (--unripe)        visit unripe (not old enough and not yet staged or finalized) blocks
 	-n  (--noBlooms)      turn off bloom filters for performance testing
 	-s  (--staging)       produce results in the staging folder instead of production folder
-	-s  (--start val)     first block to check
+	-u  (--unripe)        visit unripe (not old enough and not yet staged or finalized) blocks
 #### Hidden options (shown during testing only)
 
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
