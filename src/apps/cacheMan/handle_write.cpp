@@ -5,13 +5,6 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
-class CWriteItem {
-public:
-    blknum_t bn;
-    blknum_t tx;
-    CWriteItem(blknum_t b, blknum_t t) : bn(b), tx(t) {}
-};
-typedef vector<CWriteItem> CWriteItemArray;
 //-------------------------------------------------------------------------
 bool COptions::handleWrite(const string_q& outputFilename, const CAppearanceArray_base& dataArray, APPEARANCEFILTERFUNC filterFunc) const {
 
@@ -27,14 +20,14 @@ bool COptions::handleWrite(const string_q& outputFilename, const CAppearanceArra
     // Now that we know we can write to the file, we can make a write array. We do this for two reasons: filtering
     // removals and removing duplicates. It's just easier that way.
     blknum_t newLastItem = currentLastItem;
-    CWriteItemArray writeArray;
+    CAppearanceArray_base writeArray;
     for (size_t i = 0 ; i < dataArray.size() && !shouldQuit() ; i++) {
         // filterFunc (if present) returns true if we should include the record
         if (!filterFunc || (*filterFunc)(((COptions*)this)->removals, dataArray[i])) {
             if (i == 0 || dataArray[i-1].blk != dataArray[i].blk || dataArray[i-1].txid != dataArray[i].txid) {  // removes dups
                 if (dataArray[i].blk > currentLastItem)  // update last item
                     newLastItem = dataArray[i].blk;
-                writeArray.push_back(CWriteItem(dataArray[i].blk, dataArray[i].txid));
+                writeArray.push_back(dataArray[i]);
                 cerr << (!(writeArray.size() % 5000) ? "." : "");
             }
         }
@@ -43,7 +36,7 @@ bool COptions::handleWrite(const string_q& outputFilename, const CAppearanceArra
     // Now write the entire array in a single write to the hard drive
     if (!shouldQuit()) {
         lockSection(true);
-        txCache.Write(writeArray.data(), sizeof(CWriteItem), writeArray.size());
+        txCache.Write(writeArray.data(), sizeof(CAppearance_base), writeArray.size());
         if (!filterFunc) { // we only write the last block marker if we're not removing records
             CAccountWatch monitor;
             monitor.address = address;

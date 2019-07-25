@@ -127,7 +127,7 @@ bool COptions::parseArguments(string_q& command) {
             }
 
         } else {
-            address_t addr = substitute(arg, ".acct.bin", "");
+            address_t addr = toLower(substitute(arg, ".acct.bin", ""));
             if (isTestMode()) cerr << addr << endl;
             if (!isTestMode() && !isAddress(addr))
                 EXIT_USAGE("Option '" + arg + "' does not appear to be an address.");
@@ -237,6 +237,7 @@ bool loadMonitorData(CAppearanceArray_base& items, const address_t& addr) {
     EXIT_NOMSG(true);
 }
 
+//OLD_CODE
 #if 0
     COption("@to_file",     "send results to a temporary file and return the filename"),
     COption("@output:<fn>", "send results to file 'fn' and return the filename"),
