@@ -86,8 +86,13 @@ bool COptions::visitBinaryFile(const string_q& path, void *data) {
                 qblocks::eLogger->setEndline('\n');
             }
             // none of them hit, so write last block for each of them
-            for (size_t a = 0 ; a < monitors.size() && !hit ; a++)
-                monitors[a].writeLastBlock(lastBlockInFile + 1);
+            for (size_t ac = 0 ; ac < monitors.size() && !hit ; ac++) {
+                CAccountWatch *acct = &monitors[ac];
+                string_q filename = getMonitorPath(acct->address);
+                bool exists = fileExists(filename);
+                acct->fm_mode = (exists ? FM_PRODUCTION : FM_STAGING);
+                acct->writeLastBlock(lastBlockInFile + 1);
+            }
             return true;
         }
     }
@@ -187,6 +192,22 @@ bool COptions::visitBinaryFile(const string_q& path, void *data) {
 
 //---------------------------------------------------------------
 bool visitStagingIndexFiles(const string_q& path, void *data) {
+    if (endsWith(path, "/")) {
+        return forEveryFileInFolder(path + "*", visitFinalIndexFiles, data);
+
+    } else {
+        cout << path << endl;
+        // Pick up some useful data from the options
+        COptions *options = reinterpret_cast<COptions*>(data);
+
+        // Filenames in the staging folder take the form 'end.bin' where both 'end' is the
+        // latest block in teh file. Silently skips unknown files (such as shell scripts).
+        if (!startsWith(path, "0") || !endsWith(path, ".txt"))
+            return !shouldQuit();
+
+        cout << options->useBlooms << " " << path << endl;
+    }
+
     return false;
 }
 

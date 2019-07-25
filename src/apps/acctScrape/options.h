@@ -10,9 +10,7 @@
 class COptions : public COptionsBase {
 public:
 
-    blknum_t           scrapeCnt;
     CAccountWatchArray monitors;
-    CAccountWatch      primary;
     blknum_t           lastBlockInFile;
     size_t             visitTypes;
     bool               useBlooms;
@@ -22,13 +20,15 @@ public:
 
     bool parseArguments(string_q& command);
     void Init(void);
+    string_q postProcess(const string_q& which, const string_q& str) const;
+
     bool visitBinaryFile(const string_q& path, void *data);
     void moveToProduction(void);
 };
 
 #define VIS_FINAL   (1<<1)
 #define VIS_STAGING (1<<2)
-#define VIS_UNRIPE (1<<3)
+#define VIS_UNRIPE  (1<<3)
 
 extern bool visitFinalIndexFiles(const string_q& path, void *data);
 extern bool visitStagingIndexFiles(const string_q& path, void *data);
