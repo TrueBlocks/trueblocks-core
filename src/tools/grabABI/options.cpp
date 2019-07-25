@@ -230,7 +230,7 @@ COptions::~COptions(void) {
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
     if (which == "options") {
-        return str;
+        return substitute(str, "addr_list", "<address> [address...]");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
         string_q ret;
