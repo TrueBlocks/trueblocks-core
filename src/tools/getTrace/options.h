@@ -21,6 +21,7 @@ public:
     bool articulate;
     CAbi abi_spec;
     bool first;
+    bool skipDdos;
 
     COptions(void);
     ~COptions(void);

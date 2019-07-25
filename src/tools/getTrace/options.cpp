@@ -19,6 +19,7 @@ static const COption params[] = {
     COption("-countOnly",      "show the number of traces for the transaction only (fast)"),
     COption("-noHeader",       "do not show the header row"),
     COption("@fmt:<fmt>",      "export format (one of [none|json|txt|csv|api])"),
+    COption("@ddos:<on/off>",  "skip over dDos transactions in export ('on' by default)"),
     COption("",                "Retrieve a transaction's traces from the local cache or a running node."),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -42,6 +43,12 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-n" || arg == "--noHeader") {
             noHeader = true;
+
+        } else if (startsWith(arg, "-d") || startsWith(arg, "--ddos")) {
+            arg = substitute(substitute(arg, "-d:", ""), "--ddos:", "");
+            if (arg != "on" && arg != "off")
+                return usage("Please provide either 'on' or 'off' for the --ddos options. Quitting...");
+            skipDdos = (arg == "on" ? true : false);
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -102,6 +109,8 @@ bool COptions::parseArguments(string_q& command) {
     if (noHeader)
         expContext().fmtMap["header"] = "";
 
+    skipDdos    = getGlobalConfig("acctExport")->getConfigBool("settings", "skipDdos", skipDdos);;
+
     return true;
 }
 
@@ -113,6 +122,7 @@ void COptions::Init(void) {
     transList.Init();
     option1 = false;
     articulate = false;
+    skipDdos = false;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -148,6 +158,7 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
     return str;
 }
 
+//OLD_CODE
 #if 0
     COption("@to_file",     "send results to a temporary file and return the filename"),
     COption("@output:<fn>", "send results to file 'fn' and return the filename"),
