@@ -79,22 +79,9 @@ bool visitTransaction(CTransaction& trans, void *data) {
         opt->first = false;
         return true;
     }
-    string_q fn = getBinaryCacheFilename(CT_TRACES, trans.blockNumber, trans.transactionIndex, "");
-    if (fileExists(fn)) {
-        CArchive traceCache(READING_ARCHIVE);
-        if (traceCache.Lock(fn, modeReadOnly, LOCK_NOWAIT)) {
-            traceCache >> trans.traces;
-            traceCache.Release();
-        }
-    } else {
-        getTraces(trans.traces, trans.getValueByName("hash"));
-        establishFolder(fn);
-        CArchive traceCache(WRITING_ARCHIVE);
-        if (traceCache.Lock(fn, modeWriteCreate, LOCK_NOWAIT)) {
-            traceCache << trans.traces;
-            traceCache.Release();
-        }
-    }
+
+    loadTraces(trans, trans.blockNumber, trans.transactionIndex, true, (opt->skipDdos && excludeTrace(&trans, 250))); //maxTraces)));
+
     //////////////////////////////////////////////////////
 
     if (opt->articulate) {
