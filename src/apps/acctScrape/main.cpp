@@ -57,6 +57,9 @@ void doMoveFile(const string_q& from, const string_q& to) {
 void COptions::moveToProduction(void) {
     for (auto acct : monitors) {
         if (acct.fm_mode == FM_STAGING) {
+            acct.fm_mode = FM_PRODUCTION;
+            if (acct.tx_cache)
+                acct.tx_cache->Release();
             lockSection(true);
             doMoveFile(getMonitorPath(acct.address, FM_STAGING), getMonitorPath(acct.address));
             doMoveFile(getMonitorLast(acct.address, FM_STAGING), getMonitorLast(acct.address));
