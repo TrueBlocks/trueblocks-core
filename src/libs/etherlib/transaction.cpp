@@ -659,17 +659,13 @@ bool sortTransactionsForWrite(const CTransaction& t1, const CTransaction& t2) {
 }
 
 //-------------------------------------------------------------------------
-bool CTransaction::loadAsBlockReward(blknum_t bn, const address_t& addr) {
+bool CTransaction::loadAsBlockReward(blknum_t bn, blknum_t txid, const address_t& addr) {
     blockNumber = bn;
-    transactionIndex = 99999;
-    from = "0xBlockReward";
+    transactionIndex = txid;
+    hash = uint_2_Hex(bn * 100000 + txid);
     to = addr;
-    if (bn < byzantiumBlock)
-        value = str_2_Wei("5000000000000000000");
-    else if (bn < constantinopleBlock)
-        value = str_2_Wei("3000000000000000000");
-    else
-        value = str_2_Wei("2000000000000000000");
+    from = (txid == 99999 ? "0xBlockReward" : "0xUncleReward");
+    value = blockReward(bn, txid, false);
     return true;
 }
 

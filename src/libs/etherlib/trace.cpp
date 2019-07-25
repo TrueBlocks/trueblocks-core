@@ -410,6 +410,49 @@ const string_q CTrace::getStringAt(const string_q& fieldName, size_t i) const {
 bool CTrace::isError(void) const {
     return !error.empty();
 }
+
+extern wei_t blockReward(blknum_t bn, blknum_t txid, bool txFee);
+//---------------------------------------------------------------------------
+void CTrace::loadAsBlockReward(const CTransaction& trans, blknum_t bn, blknum_t txid) {
+    blockNumber = bn;
+    transactionPosition = txid;
+    action.from = (txid == 99998 ? "0xUncleReward" : "0xBlockReward");
+    action.to = trans.to;
+    action.callType = (txid == 99998 ? "uncle-reward" : "block-reward");
+    action.value = blockReward(bn, txid, false);
+    traceAddress.push_back((txid == 99998 ? "null-u-s" : "null-b-s"));
+    transactionHash = uint_2_Hex(bn * 100000 + txid);
+    action.input = "0x";
+    pTrans = &trans;
+}
+
+//---------------------------------------------------------------------------
+void CTrace::loadAsTransactionFee(const CTransaction& trans, blknum_t bn, blknum_t txid) {
+    blockNumber = bn;
+    transactionPosition = txid;
+    action.from = "0xTransactionFee";
+    action.to = trans.to;
+    action.callType = "tx-fee";
+    action.value = blockReward(bn, txid, true);
+    traceAddress.push_back("null-f-s");
+    transactionHash = uint_2_Hex(bn * 100000 + txid);
+    action.input = "0x";
+    pTrans = &trans;
+}
+
+//---------------------------------------------------------------------------
+void CTrace::loadAsDdos(const CTransaction& trans, blknum_t bn, blknum_t txid) {
+    blockNumber = bn;
+    transactionPosition = txid;
+    action.from = "0xdd05dd05dd05dd05dd05dd05dd05dd05";
+    action.to = "0xdd05dd05dd05dd05dd05dd05dd05dd05";
+    action.callType = "ddos";
+    action.value = trans.value;
+    traceAddress.push_back("s");
+    transactionHash = uint_2_Hex(bn * 100000 + txid);
+    action.input = "0xdd05";
+    pTrans = &trans;
+}
 // EXISTING_CODE
 }  // namespace qblocks
 

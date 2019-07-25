@@ -10,6 +10,7 @@
 //-----------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
+    CAbi abis;
     CAccountWatchArray monitors;
     CAccountWatchArray named;
     CAppearanceArray_base items;
@@ -36,11 +37,8 @@ public:
     bool loadMonitorData(CAppearanceArray_base& apps, const address_t& addr);
     bool loadData(void);
     bool exportData(void);
-    bool loadTraces(CTransaction& trans, const CAppearance_base *item);
     bool loadTsArray(blknum_t blk);
 };
 
 //-----------------------------------------------------------------------
-extern bool isInTrace(CTrace& trace, const address_t& addr);
-extern bool excludeTrace(const CTransaction *trans, size_t maxTraces);
 extern bool freshenTsDatabase(blknum_t blk, CUintArray& tsArray);  // array may be empty in which case we query the node
