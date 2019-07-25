@@ -7,27 +7,6 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------
-bool COptions::loadTraces(CTransaction& trans, const CAppearance_base *item) {
-    string_q trcFilename = getBinaryCacheFilename(CT_TRACES, item->blk, item->txid, "");
-    if (fileExists(trcFilename)) {
-        CArchive traceCache(READING_ARCHIVE);
-        if (traceCache.Lock(trcFilename, modeReadOnly, LOCK_NOWAIT)) {
-            traceCache >> trans.traces;
-            traceCache.Release();
-        }
-    } else {
-        getTraces(trans.traces, trans.getValueByName("hash"));
-        establishFolder(trcFilename);
-        CArchive traceCache(WRITING_ARCHIVE);
-        if (traceCache.Lock(trcFilename, modeWriteCreate, LOCK_NOWAIT)) {
-            traceCache << trans.traces;
-            traceCache.Release();
-        }
-    }
-    return true;
-}
-
-//-----------------------------------------------------------------------
 bool COptions::exportData(void) {
 
     ENTER("exportData");
@@ -41,6 +20,7 @@ bool COptions::exportData(void) {
         if (inRange((blknum_t)item->blk, scanRange.first, scanRange.second)) {
 
             CBlock block; // do not move this from this scope
+            block.blockNumber = item->blk;
             CTransaction trans;
             trans.pBlock = &block;
 
@@ -56,10 +36,8 @@ bool COptions::exportData(void) {
                     trans.transactionIndex = item->txid;
                     trans.loadAsPrefund(prefunds, prefundMap[item->txid]);
 
-                } else if (item->txid == 99999) {
-                    trans.loadAsBlockReward(item->blk, blkRewardMap[item->blk]);
-                    trans.hash = uint_2_Hex(item->blk * 100000 + item->txid);
-                    block.blockNumber = item->blk;
+                } else if (item->txid == 99998 || item->txid == 99999) {
+                    trans.loadAsBlockReward(item->blk, item->txid, blkRewardMap[item->blk]);
 
                 } else {
                     getTransaction(trans, item->blk, item->txid);
@@ -72,7 +50,8 @@ bool COptions::exportData(void) {
             }
 
             if (doTraces) {
-                loadTraces(trans, item);
+
+                loadTraces(trans, item->blk, item->txid, true, (skipDdos && excludeTrace(&trans, maxTraces)));
                 for (auto trace : trans.traces) {
 
                     bool isSuicide = trace.action.address != "";
@@ -81,6 +60,8 @@ bool COptions::exportData(void) {
                     if (!isSuicide) {
                         if (exportFmt == JSON1 && !first)
                             cout << ", ";
+                        if (articulate)
+                            abis.articulateTrace(&trace);
                         cout << trace.Format() << endl;
                         first = false;
                     }
@@ -121,12 +102,18 @@ bool COptions::exportData(void) {
                     for (auto log : trans.receipt.logs) {
                         if (exportFmt == JSON1 && !first)
                             cout << ", ";
+                        if (articulate)
+                            abis.articulateLog(&log);
                         cout << log.Format() << endl;
                         first = false;
                     }
                 } else {
-                    if (exportFmt == JSON1 && !first)
+                    if (exportFmt == JSON1 && !first) {
                         cout << ", ";
+                        // we only articulate the transaction if we're JSON
+                        if (articulate)
+                            abis.articulateTransaction(&trans);
+                    }
                     cout << trans.Format() << endl;
                     first = false;
                 }
@@ -134,7 +121,7 @@ bool COptions::exportData(void) {
             nExported++;
             HIDE_FIELD(CFunction, "message");
             if (isRedirected()) {  // we are not in --output mode
-                cerr << "   " << i << " of " << items.size() << ": " << trans.hash << "\r";
+                cerr << "   " << i << " of " << items.size() << " (" << trans.blockNumber << "): " << trans.hash << "\r";
                 cerr.flush();
             } else {
                 static size_t cnt = 0;
@@ -149,7 +136,6 @@ bool COptions::exportData(void) {
 /*
 Do we really need to store both trace 0 and the transaction? I think not, so we store only trace 1 and on
 writeNodeToBinary but do so as an array and start at item 1 not item 0
-we need to articulate
 We need to handle the non-txt case where we're exporting the fully articulated transaction, all it's traces, all its data
 We want to name everything we can name
 What about the header in trace mode -- different for each trace, trans, receipt, log
@@ -173,42 +159,19 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
+    bool once = true;
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
-        if (options.loadData())
+        if (options.loadData()) {
+            if (once)
+                cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], GETRUNTIME_CLASS(CLogEntry));
             options.exportData();
+            once = false;
+        }
     }
+    cout << exportPostamble(options.exportFmt, expContext().fmtMap["meta"]);
 
     acctlib_cleanup();
     return 0;
-}
-
-//----------------------------------------------------------------
-bool isInTrace(CTrace& trace, const address_t& addr) {
-    string_q justBytes = toLower(extract(addr, 2));
-    if (contains(trace.action.from, justBytes)) return true;
-    if (contains(trace.action.to, justBytes)) return true;
-    if (contains(trace.action.refundAddress, justBytes)) return true;
-    if (contains(trace.action.address, justBytes)) return true;
-    if (contains(trace.result.address, justBytes)) return true;
-    if (contains(trace.action.input, justBytes)) return true;
-    if (contains(trace.result.output, justBytes)) return true;
-    return false;
-}
-
-//----------------------------------------------------------------
-bool excludeTrace(const CTransaction *trans, size_t maxTraces) {
-    if (!ddosRange(trans->blockNumber))
-        return false; // be careful, it's backwards
-    static string_q exclusions;
-    if (getGlobalConfig("blockScrape")->getConfigBool("exclusions", "enabled", false)) {
-        if (exclusions.empty())
-            exclusions = getGlobalConfig("blockScrape")->getConfigStr("exclusions", "list", "");
-        if (contains(exclusions, trans->to))
-            return true;
-        if (contains(exclusions, trans->from))
-            return true;
-    }
-    return (getTraceCount(trans->hash) > maxTraces);
 }

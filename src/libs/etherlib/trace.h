@@ -64,6 +64,9 @@ public:
     // EXISTING_CODE
     bool isError(void) const;
     const CTransaction *pTrans;
+    void loadAsBlockReward(const CTransaction& trans, blknum_t bn, blknum_t txid);
+    void loadAsTransactionFee(const CTransaction& trans, blknum_t bn, blknum_t txid);
+    void loadAsDdos(const CTransaction& trans, blknum_t bn, blknum_t txid);
     // EXISTING_CODE
     bool operator==(const CTrace& item) const;
     bool operator!=(const CTrace& item) const { return !operator==(item); }

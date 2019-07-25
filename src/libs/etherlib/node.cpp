@@ -224,6 +224,52 @@ extern void loadParseMap(void);
         }
     }
 
+    //-----------------------------------------------------------------------
+    bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool useCache, bool skipDdos) {
+        string_q trcFilename = getBinaryCacheFilename(CT_TRACES, bn, txid, "");
+        if (fileExists(trcFilename)) {
+            CArchive traceCache(READING_ARCHIVE);
+            if (traceCache.Lock(trcFilename, modeReadOnly, LOCK_NOWAIT)) {
+                traceCache >> trans.traces;
+                traceCache.Release();
+            }
+
+        } else {
+
+            if (skipDdos) {
+
+                CTrace dDos;
+                dDos.loadAsDdos(trans, bn, txid);
+                trans.traces.push_back(dDos);
+
+            } else if (txid == 99998 || txid == 99999) {
+
+                CTrace blockReward;
+                blockReward.loadAsBlockReward(trans, bn, txid);
+                trans.traces.push_back(blockReward);
+
+                if (txid == 99999) {
+                    CTrace txFee;
+                    txFee.loadAsTransactionFee(trans, bn, txid);
+                    trans.traces.push_back(txFee);
+                }
+
+            } else {
+
+                getTraces(trans.traces, trans.getValueByName("hash"));
+
+            }
+
+            establishFolder(trcFilename);
+            CArchive traceCache(WRITING_ARCHIVE);
+            if (traceCache.Lock(trcFilename, modeWriteCreate, LOCK_NOWAIT)) {
+                traceCache << trans.traces;
+                traceCache.Release();
+            }
+        }
+        return true;
+    }
+
     //-------------------------------------------------------------------------
     bool getFullReceipt(CTransaction *trans, bool needsTrace) {
 
@@ -1128,6 +1174,37 @@ extern void loadParseMap(void);
         }
         getBlock(block, first);
         return true;
+    }
+
+    //-------------------------------------------------------------------------
+    wei_t blockReward(blknum_t bn, blknum_t txid, bool txFee) {
+        if (txFee || txid == 99998)
+            return str_2_Wei("0000000000000000000");
+
+        if (bn < byzantiumBlock) {
+            return str_2_Wei("5000000000000000000");
+        } else if (bn < constantinopleBlock) {
+            return str_2_Wei("3000000000000000000");
+        } else {
+            return str_2_Wei("2000000000000000000");
+        }
+    }
+
+    //----------------------------------------------------------------
+    bool excludeTrace(const CTransaction *trans, size_t maxTraces) {
+        if (!ddosRange(trans->blockNumber))
+            return false; // be careful, it's backwards
+
+        static string_q exclusions;
+        if (getGlobalConfig("blockScrape")->getConfigBool("exclusions", "enabled", false)) {
+            if (exclusions.empty())
+                exclusions = getGlobalConfig("blockScrape")->getConfigStr("exclusions", "list", "");
+            if (contains(exclusions, trans->to))
+                return true;
+            if (contains(exclusions, trans->from))
+                return true;
+        }
+        return (getTraceCount(trans->hash) > maxTraces);
     }
 
     //-----------------------------------------------------------------------
