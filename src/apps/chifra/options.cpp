@@ -121,7 +121,7 @@ bool COptions::parseArguments(string_q& command) {
 
     blknum_t unripe, ripe, staging, finalized, client;
     getLastBlocks(unripe, ripe, staging, finalized, client);
-    if ((client - finalized) > 5000) {
+    if ((client - finalized) > 2500) {
         cerr << "Sleeping zero: " << scrapeSleep << " " << endl;
         scrapeSleep = 0;
     }
@@ -147,7 +147,7 @@ void COptions::Init(void) {
     freshen_flags = "";
     mode          = "";
     stats         = false;
-    scrapeSleep   = 0;
+    scrapeSleep   = 14;
     minArgs       = 0;
 }
 
