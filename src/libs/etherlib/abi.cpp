@@ -294,6 +294,13 @@ bool CAbi::loadAbiKnown(const string_q& which) {
 }
 
 //---------------------------------------------------------------------------
+bool CAbi::loadCachedAbis(const string_q& which) {
+    if (which == "all")
+        return forEveryFileInFolder(getCachePath("abis/""*"), visitABI, this);
+    return loadAbiFromFile(getCachePath("abis/" + which + ".json"), true);
+}
+
+//---------------------------------------------------------------------------
 bool CAbi::loadAbiByAddress(address_t addrIn) {
     if (isZeroAddr(addrIn))
         return false;

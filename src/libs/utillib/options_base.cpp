@@ -301,7 +301,7 @@ namespace qblocks {
             redirFilename = nextTokenClear(redirFilename, ' ');
             if (redirFilename.empty())
                 return usage("Please provide a filename for the --output option. Quitting...");
-            if (!startsWith(redirFilename, '/'))
+            if (!isTestMode() && !startsWith(redirFilename, '/'))
                 return usage("Output file (" + redirFilename + ") must be a fully qualified path. Quitting...");
             establishFolder(redirFilename);
             ASSERT(!folderExists(outputFn));
