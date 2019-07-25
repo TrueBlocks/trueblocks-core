@@ -18,6 +18,7 @@ static const COption params[] = {
     COption("@t(r)c:<on/off>",    "write traces to the binary cache ('off' by default)"),
     COption("@ddos:<on/off>",     "skip over dDos transactions in export ('on' by default)"),
     COption("@maxTraces:<num>",   "if --ddos:on, the number of traces defining a dDos (default = 250)"),
+    COption("@noHeader",          "do not show the header row"),
     COption("@start:<num>",       "first block to export (inclusive)"),
     COption("@end:<num>",         "last block to export (inclusive)"),
     COption("",                   "Export full detail of transactions for one or more Ethereum addresses.\n"),
@@ -35,6 +36,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
+    bool noHeader = false;
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
@@ -67,6 +69,9 @@ bool COptions::parseArguments(string_q& command) {
             if (!isNumeral(arg))
                 return usage("Please provide a number (you provided " + arg + ") for --maxTraces. Quitting...");
             maxTraces = str_2_Uint(arg);
+
+        } else if (arg == "-n" || arg == "--noHeader") {
+            noHeader = true;
 
         } else if (arg == "-l" || arg == "--logs") {
             doLogs = true;
@@ -148,14 +153,17 @@ bool COptions::parseArguments(string_q& command) {
     SEP4("field showing: " + toml.getConfigStr("fields", "show", ""));
     manageFields(toml.getConfigStr("fields", "show", ""), true );
 
+    // Load as many ABI files as we have
+    abis.loadAbiKnown("all");
+//    abis.loadCachedAbis("all");
+
     // Try to articulate the watched addresses
     for (size_t i = 0 ; i < monitors.size() ; i++) {
         CAccountWatch *watch = &monitors[i];
-        watch->abi_spec.loadAbiByAddress(watch->address);
-        watch->abi_spec.loadAbiKnown("all");
+        abis.loadAbiByAddress(watch->address);
+        //abis.loadAbiKnown("all");
         string_q path = getMonitorPath(watch->address + ".toml");
-        if (fileExists(path)) { // if there's a config file, let's use it
-                                // user can tell us the names of other addresses
+        if (fileExists(path)) { // if there's a config file, let's use it user can tell us the names of other addresses
             CToml thisToml(path);
             string_q str = substitute(substitute(thisToml.getConfigJson("named", "list", ""),"[",""),"=",":");
             CAccountWatch item;
@@ -165,7 +173,7 @@ bool COptions::parseArguments(string_q& command) {
                 item.extra_data = getVersionStr() + "/" + item.address;
                 item.finishParse();
                 named.push_back(item);
-                watch->abi_spec.loadAbiByAddress(item.address);
+                abis.loadAbiByAddress(item.address);
                 item = CAccountWatch();
             }
         }
@@ -199,6 +207,16 @@ bool COptions::parseArguments(string_q& command) {
         deflt = getGlobalConfig("acctExport")->getConfigStr("display", "log", STR_LOG_DISPLAY);
         format = toml.getConfigStr("formats", "logentry_fmt", deflt);
         expContext().fmtMap["logentry_fmt"] = cleanFmt(format, exportFmt);
+
+    }
+
+    if (!noHeader) {
+        if (doTraces)
+            expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["trace_fmt"], exportFmt);
+        else if (doLogs)
+            expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["logentry_fmt"], exportFmt);
+        else
+            expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["transaction_fmt"], exportFmt);
     }
 
     return true;
@@ -239,7 +257,7 @@ COptions::~COptions(void) {
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
 
     if (which == "options") {
-        return substitute(str, "address_list", "<address> [address...]");
+        return substitute(str, "addr_list", "<address> [address...]");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 
@@ -277,7 +295,7 @@ bool COptions::loadMonitorData(CAppearanceArray_base& apps, const address_t& add
         for (size_t i = 0 ; i < nRecords ; i++) {
             if (buffer[i].blk == 0)
                 prefundMap[buffer[i].txid] = addr;
-            if (buffer[i].txid == 99999)
+            if (buffer[i].txid == 99999 || buffer[i].txid == 99998)
                 blkRewardMap[buffer[i].blk] = addr;
             apps.push_back(buffer[i]);
         }
@@ -451,28 +469,28 @@ const char* STR_TRACE_DISPLAY =
 "[{RESULT::OUTPUT}]";
 
 /*
-"[{BLOCKHASH}]\t"
-"[{BLOCKNUMBER}]\t"
-"[{SUBTRACES}]\t"
-"[{TRACEADDRESS}]\t"
-"[{TRANSACTIONHASH}]\t"
-"[{TRANSACTIONPOSITION}]\t"
-"[{TYPE}]\t"
-"[{ERROR}]\t"
-"[{ARTICULATEDTRACE}]\t"
-"[{COMPRESSEDTRACE}]\t"
-"[{ACTION::ADDRESS}]\t"
-"[{ACTION::BALANCE}]\t"
-"[{ACTION::CALLTYPE}]\t"
-"[{ACTION::FROM}]\t"
-"[{ACTION::GAS}]\t"
-"[{ACTION::INIT}]\t"
-"[{ACTION::INPUT}]\t"
-"[{ACTION::REFUNDADDRESS}]\t"
-"[{ACTION::TO}]\t"
-"[{ACTION::VALUE}]\t"
-"[{RESULT::ADDRESS}]\t"
-"[{RESULT::CODE}]\t"
-"[{RESULT::GASUSED}]\t"
-"[{RESULT::OUTPUT}]";
-*/
+ "[{BLOCKHASH}]\t"
+ "[{BLOCKNUMBER}]\t"
+ "[{SUBTRACES}]\t"
+ "[{TRACEADDRESS}]\t"
+ "[{TRANSACTIONHASH}]\t"
+ "[{TRANSACTIONPOSITION}]\t"
+ "[{TYPE}]\t"
+ "[{ERROR}]\t"
+ "[{ARTICULATEDTRACE}]\t"
+ "[{COMPRESSEDTRACE}]\t"
+ "[{ACTION::ADDRESS}]\t"
+ "[{ACTION::BALANCE}]\t"
+ "[{ACTION::CALLTYPE}]\t"
+ "[{ACTION::FROM}]\t"
+ "[{ACTION::GAS}]\t"
+ "[{ACTION::INIT}]\t"
+ "[{ACTION::INPUT}]\t"
+ "[{ACTION::REFUNDADDRESS}]\t"
+ "[{ACTION::TO}]\t"
+ "[{ACTION::VALUE}]\t"
+ "[{RESULT::ADDRESS}]\t"
+ "[{RESULT::CODE}]\t"
+ "[{RESULT::GASUSED}]\t"
+ "[{RESULT::OUTPUT}]";
+ */

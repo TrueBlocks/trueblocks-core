@@ -34,6 +34,7 @@ namespace qblocks {
     extern bool     getLogEntry             (CLogEntry& log,      const hash_t& txHash);
     extern void     getTraces               (CTraceArray& traces, const hash_t& txHash);
     extern size_t   getTraceCount           (const hash_t& hashIn);
+    extern bool     loadTraces              (CTransaction& trans, blknum_t bn, blknum_t txid, bool useCache, bool skipDdos);
     extern bool     getFullReceipt          (CTransaction *trans, bool needsTrace);
 
     //-------------------------------------------------------------------------
@@ -149,6 +150,10 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     bool findTimestamp_binarySearch(CBlock& block, size_t first, size_t last, bool progress=false);
+
+    //-------------------------------------------------------------------------
+    extern wei_t blockReward(blknum_t bn, blknum_t txid, bool txFee);
+    extern bool excludeTrace(const CTransaction *trans, size_t maxTraces);
 
 }  // namespace qblocks
 
