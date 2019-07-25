@@ -3,21 +3,23 @@ acctExport 0x001d14804b399c6ef80e64576f657660804fec0b
 
   File not found './0x001d14804b399c6ef80e64576f657660804fec0b.acct.bin. Quitting...
 
-  Usage:    acctExport [-x|-a|-l|-v|-h] <address> [address...]  
+  Usage:    acctExport [-x|-a|-l|-t|-v|-h] <address> [address...]  
   Purpose:  Export full detail of transactions for one or more Ethereum addresses.
              
   Where:  
-	address_list          one or more addresses (0x...) to export (required)
+	addr_list             one or more addresses (0x...) to export (required)
 	-x  (--fmt val)       export format (one of [json|txt|csv])
 	-a  (--articulate)    articulate transactions, traces, logs, and outputs
 	-l  (--logs)          export logs instead of transactions
+	-t  (--traces)        export traces instead of transactions
 
 #### Hidden options (shown during testing only)
 	-b  (--blocks on/off) write blocks to the binary cache ('off' by default)
-	-t  (--txs on/off)    write transactions to the binary cache ('on' by default)
-	-r  (--traces on/off) write traces to the binary cache ('off' by default)
+	-s  (--txs on/off)    write transactions to the binary cache ('on' by default)
+	-r  (--trc on/off)    write traces to the binary cache ('off' by default)
 	-d  (--ddos on/off)   skip over dDos transactions in export ('on' by default)
 	-m  (--maxTraces val) if --ddos:on, the number of traces defining a dDos (default = 250)
+	-n  (--noHeader)      do not show the header row
 	-s  (--start val)     first block to export (inclusive)
 	-e  (--end val)       last block to export (inclusive)
 #### Hidden options (shown during testing only)

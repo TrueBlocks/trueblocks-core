@@ -2,14 +2,14 @@ grabABI argc: 2 [1:-th]
 grabABI -th 
 #### Usage
 
-`Usage:`    grabABI [-c|-g|-d|-e|-j|-n|-o|-l|-v|-h] addr  
+`Usage:`    grabABI [-c|-g|-d|-e|-j|-n|-o|-l|-v|-h] &lt;address&gt; [address...]  
 `Purpose:`  Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
              
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | addr | the address(es) of the smart contract(s) to grab |
+|  | addr_list | list of one or more smart contracts whose ABI to grab from EtherScan |
 | -c | --canonical | convert all types to their canonical represenation and remove all spaces from display |
 | -g | --generate | generate C++ code into the current folder for all functions and events found in the ABI |
 | -d | --data | export the display as data |

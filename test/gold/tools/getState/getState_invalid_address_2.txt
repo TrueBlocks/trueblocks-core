@@ -7,7 +7,7 @@ getState 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d3592
   Purpose:  Retrieve the balance (in wei) for one or more addresses at the given block(s).
              
   Where:  
-	address_list          one or more addresses (0x...) from which to retrieve balances (required)
+	addr_list             one or more addresses (0x...) from which to retrieve balances (required)
 	block_list            an optional list of one or more blocks at which to report balances, defaults to 'latest'
 	-m  (--mode val)      control which state to export. One of [none|some|all|balance|nonce|code|storage|deployed|accttype]
 	-n  (--nozero)        suppress the display of zero balance accounts

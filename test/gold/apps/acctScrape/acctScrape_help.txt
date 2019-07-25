@@ -2,24 +2,26 @@ acctScrape argc: 2 [1:-th]
 acctScrape -th 
 #### Usage
 
-`Usage:`    acctScrape [-m|-v|-h]  
+`Usage:`    acctScrape [-v|-h] &lt;address&gt; [address...]  
 `Purpose:`  Index transactions for a given Ethereum address (or series of addresses).
              
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-| -m | --maxBlocks val | scan at most --maxBlocks blocks ('all' implies scan to end of chain) |
+|  | addr_list | one or more Ethereum addresses |
 
 #### Hidden options (shown during testing only)
-| -r | --ripe | visit ripe (old enough, but not yet staged or finalized) blocks |
-| -u | --unripe | visit unripe (not old enough and not yet staged or finalized) blocks |
 | -n | --noBlooms | turn off bloom filters for performance testing |
 | -s | --staging | produce results in the staging folder instead of production folder |
-| -s | --start val | first block to check |
+| -u | --unripe | visit unripe (not old enough and not yet staged or finalized) blocks |
 #### Hidden options (shown during testing only)
 
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
+
+`Notes:`
+
+- `addresses` must start with '0x' and be forty two characters long.
 
                                                                                                                                                       
