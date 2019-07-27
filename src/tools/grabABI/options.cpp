@@ -22,8 +22,8 @@ static const COption params[] = {
     COption("-encode",     "generate the encodings for the functions / events in the ABI"),
     COption("-json",       "print the ABI to the screen as json"),
     COption("-noconst",    "generate encodings for non-constant functions and events only (always true when generating)"), // NOLINT
-    COption("-open",       "open the ABI file for editing, download if not already present"),
     COption("-so(l):<fn>", "create the ABI file from a .sol file in the local directory"),
+    COption("@open",       "open the ABI file for editing, download if not already present"),
     COption("@silent",     "if ABI cannot be acquired, fail silently (useful for scripting)"),
     COption("@nodec",      "do not decorate duplicate names"),
     COption("@known",      "load common 'known' ABIs from cache"),

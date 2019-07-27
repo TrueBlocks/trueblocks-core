@@ -14,8 +14,8 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("~addrs",           "one or more addresses to slurp"),
-    COption("-blocks:<range>",   "an optional range of blocks to slurp"),
+    COption("~addr_list",       "one or more addresses to slurp"),
+    COption("-blocks:<range>",  "an optional range of blocks to slurp"),
     COption("-type:<tx_type>",  "extract either [ ext | int | token | miner | all ] type of transactions"),
     COption("-fmt:<str>",       "pretty print, optionally add ':txt,' ':csv,' or ':html'"),
     COption("-blocks:<range>",  "export records in block range (:0[:max])"),
