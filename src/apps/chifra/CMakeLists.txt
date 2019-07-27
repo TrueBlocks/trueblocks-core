@@ -52,9 +52,9 @@ endfunction(run_special_test)
 #run_test("chifra_config_edit"         "config" " edit" " 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359")
 #run_test("chifra_config_show_tip_v"   "config" " show" " 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359" " --verbose:3")
 
-#run_test("chifra_daemon_noparms"      "daemon")
-#run_test("chifra_daemon_badparms"     "daemon" " --not_an_option")
-#run_test("chifra_daemon"             "daemon" " --sleep 10" " --filter 0x1,0x2")
+#run_test("chifra_daemon_noparms"      "scrape" "--daemon")
+#run_test("chifra_daemon_badparms"     "scrape" "--daemon" " --not_an_option")
+#run_test("chifra_daemon"              "scrape" "--daemon" " --sleep 10" " --filter 0x1,0x2")
 
 #run_test("chifra_scrape"           "scrape")
 
