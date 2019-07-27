@@ -127,6 +127,10 @@ bool COptions::parseArguments(string_q& command) {
     if ((client - finalized) > 2500) {
         cerr << "Sleeping zero: " << scrapeSleep << " " << endl;
         scrapeSleep = 0;
+    } else {
+        if (mode == "scrape") {
+            cerr << "Sleeping every " << scrapeSleep << " seconds." << endl;
+        }
     }
 
     LOG4("API_MODE=", getEnvStr("API_MODE"));
