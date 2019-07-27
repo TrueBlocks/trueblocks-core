@@ -29,7 +29,7 @@ Here is a screen shot of an interaction with Chifra building a smart contract mo
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | command | one of [ export &#124; list &#124; init &#124; leech &#124; daemon &#124; scrape &#124; ls &#124; name &#124; config ] |
+|  | command | one of [ export &#124; list &#124; init &#124; leech &#124; scrape &#124; ls &#124; name &#124; config ] |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
