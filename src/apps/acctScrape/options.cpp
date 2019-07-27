@@ -11,6 +11,7 @@ static const COption params[] = {
     COption("@noBlooms",        "turn off bloom filters for performance testing"),
     COption("@staging",         "produce results in the staging folder instead of production folder"),
     COption("@unripe",          "visit unripe (not old enough and not yet staged or finalized) blocks"),
+    COption("@daemon",          "we are being call in daemon mode which causes us to print results differently"),
     COption("",                 "Index transactions for a given Ethereum address (or series of addresses).\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -20,6 +21,8 @@ bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
+
+    bool daemonMode = false;
 
     Init();
     explode(arguments, command, ' ');
@@ -31,7 +34,11 @@ bool COptions::parseArguments(string_q& command) {
             visitTypes |= VIS_STAGING;
 
         } else if (arg == "-n" || arg == "--noBlooms") {
+            cerr << "Turning off blooms" << endl;
             useBlooms = false;
+
+        } else if (arg == "-d" || arg == "--daemon") {
+            daemonMode = true;
 
         } else if (startsWith(arg, "0x")) {
             if (!isAddress(arg))
@@ -74,6 +81,7 @@ bool COptions::parseArguments(string_q& command) {
     establishFolder(indexFolder_staging);
     establishFolder(indexFolder_ripe);
 
+    string_q dTabs = (daemonMode ? "\t  " : "");
     scanRange.first = UINT_MAX;
     for (auto monitor : monitors) {
         string_q fn1 = getMonitorPath(monitor.address);
@@ -82,7 +90,7 @@ bool COptions::parseArguments(string_q& command) {
         string_q fn2 = getMonitorLast(monitor.address);
         if (fileExists(fn2 + ".lck"))
             return usage("The last block file '" + fn2 + "' is locked. Quitting...");
-        cerr << "freshening " << monitor.address << "..." << endl;
+        cerr << dTabs << "freshening: " << cYellow << monitor.address << cOff << "..." << endl;
         // If file doesn't exist, this will report '0'
         scanRange.first = min(scanRange.first, str_2_Uint(asciiFileToString(fn2)));
     }
@@ -99,7 +107,9 @@ bool COptions::parseArguments(string_q& command) {
     // This would fail, for example, if the accounts are scraped further than the blocks (i.e. we
     // cleared the block index cache, but we didn't clear the account monitor cache
     if (scanRange.first >= scanRange.second) {
-        cerr << "Account scrape is up to date." << endl;
+        cerr << dTabs << "account scrape is up to date.";
+        if (!daemonMode)
+            cerr << endl;
         return false;
     }
     return true;
