@@ -79,7 +79,10 @@ bool COptions::parseArguments(string_q& command) {
                         // ignore --to_file flag in docker mode
                     }
                 } else {
-                    tool_flags += (arg + " ");
+                    if (arg == "--noBlooms")
+                        freshen_flags = arg;
+                    else
+                        tool_flags += (arg + " ");
                 }
             }
         }
