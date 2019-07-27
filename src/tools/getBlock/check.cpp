@@ -69,7 +69,7 @@ const string_q removes[] = {
     "totalDifficulty", "transactionsRoot", "uncles", "v", "logsBloom",
     // fields in QBlocks but not in RPC
     "contractAddress", "cumulativeGasUsed", "receipt", "address", "data", "logIndex", "topics",
-    "price", "finalized", "isError",
+    "price", "finalized", "isError", "age", "date",
 
     // WARNING: status must be last because we only use it after byzan
     "status",

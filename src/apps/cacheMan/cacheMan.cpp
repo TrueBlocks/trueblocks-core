@@ -189,7 +189,8 @@ extern bool loadMonitorData(CAppearanceArray_base& items, const address_t& addr)
                     cout << cMagenta << "\tThe cache was repaired and a backup created.\n" << cOff;
 
                 } else if (mode == "fix") {
-                    cout << cMagenta << "\tThere was nothing to fix (" << lastItem.blk << ").\n" << cOff;
+                    if (!options.api_mode)
+                        cout << cMagenta << "\tThere was nothing to fix (" << lastItem.blk << ").\n" << cOff;
                     // write the last block to file
                     if (!isTestMode()) {
                         if (lastItem.blk > prevLastBlock || options.stats.nTruncs) {
