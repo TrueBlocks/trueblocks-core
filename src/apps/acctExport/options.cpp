@@ -19,6 +19,7 @@ static const COption params[] = {
     COption("@ddos:<on/off>",     "skip over dDos transactions in export ('on' by default)"),
     COption("@maxTraces:<num>",   "if --ddos:on, the number of traces defining a dDos (default = 250)"),
     COption("@noHeader",          "do not show the header row"),
+    COption("@allABIs",           "load all previously cached abi files"),
     COption("@start:<num>",       "first block to export (inclusive)"),
     COption("@end:<num>",         "last block to export (inclusive)"),
     COption("",                   "Export full detail of transactions for one or more Ethereum addresses.\n"),
@@ -36,7 +37,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-    bool noHeader = false;
+    bool noHeader = false, allABIs = false;
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
@@ -72,6 +73,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-n" || arg == "--noHeader") {
             noHeader = true;
+
+        } else if (arg == "-n" || arg == "--allABIs") {
+            allABIs = true;
 
         } else if (arg == "-l" || arg == "--logs") {
             doLogs = true;
@@ -155,7 +159,8 @@ bool COptions::parseArguments(string_q& command) {
 
     // Load as many ABI files as we have
     abis.loadAbiKnown("all");
-//    abis.loadCachedAbis("all");
+    if (allABIs)
+        abis.loadCachedAbis("all");
 
     // Try to articulate the watched addresses
     for (size_t i = 0 ; i < monitors.size() ; i++) {
