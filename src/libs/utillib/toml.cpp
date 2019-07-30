@@ -19,7 +19,6 @@
 
 namespace qblocks {
 
-//#ifndef NEW_TOML
     //-------------------------------------------------------------------------
     CToml::CToml(const string_q& fileName) : CSharedResource() {
         setFilename(fileName);
@@ -47,7 +46,6 @@ namespace qblocks {
 
     //-------------------------------------------------------------------------
     CToml::CTomlGroup *CToml::findGroup(const string_q& group) const {
-//        string_q search = (group.empty() ? "root-level" : group);
         for (size_t i = 0 ; i < groups.size() ; i++) {
             if (groups[i].groupName == group) {
                 return &((CToml*)this)->groups[i];  // NOLINT
@@ -124,10 +122,6 @@ extern string_q collapseArrays(const string_q& inStr);
                 }
             }
         }
-//        sort(groups.begin(), groups.end());
-//        for (auto& group : groups)
-//            sort(group.keys.begin(), group.keys.end());
-//
         return true;
     }
 
@@ -254,7 +248,6 @@ extern string_q collapseArrays(const string_q& inStr);
 
     //-------------------------------------------------------------------------
     string_q CToml::getDisplayStr(bool terse, const string_q& def, const string_q& color) const {
-//        string_q color = (colorIn.empty() ? cTeal : colorIn);
         string_q fmt = getConfigStr("display", (terse ? "terse" : "format"), "<not_set>");
         if (fmt == "<not_set>")
             fmt = def;
@@ -331,15 +324,6 @@ extern string_q collapseArrays(const string_q& inStr);
         }
         return os;
     }
-
-#if 0
-    //-------------------------------------------------------------------------
-    ostream& operator<<(ostream& os, const CToml& tomlIn) {
-        for (auto group : tomlIn.groups)
-            os << group;
-        return os;
-    }
-#endif
 
     //-------------------------------------------------------------------------
     CToml::CTomlKey::CTomlKey() : comment(false) {
@@ -440,33 +424,6 @@ extern string_q collapseArrays(const string_q& inStr);
             return inStr;
 
         string_q ret;
-#if 0
-        enum { OUT, IN };
-        size_t state = OUT;
-        string_q str = substitute(substitute(inStr,"[[","+ARRAY+"),"]]\n","-ARRAY-\n`");
-        for (auto& ch : str) {
-            switch (state) {
-                case OUT:
-                    if (ch == '`')
-                        state = IN;
-                    break;
-                case IN:
-                    if (ch == ']')
-                        state = OUT;
-                    else if (ch == '\n')
-                        ch = ' ';
-                    break;
-                default:
-                    break;
-            }
-            ret += ch;
-        }
-        replaceAll(ret,"+ARRAY+", "[");
-        replaceAll(ret,"-ARRAY-", "]");
-        replaceAll(ret,"`", "");
-        cout << ret << endl;
-        return ret;
-#endif
         string_q str = substitute(inStr, "  ", " ");
         replace(str, "[[", "`");
         string_q front = nextTokenClear(str, '`');
@@ -491,172 +448,4 @@ extern string_q collapseArrays(const string_q& inStr);
         }
         return front + ret;
     }
-
-//#endif
-#if 0
-    CNewToml::CNewToml(const string_q& path) {
-        setFilename(path);
-        if (!path.empty())
-            readFile(path);
-    }
-
-    bool CNewToml::writeFile(void) {
-        return true;
-    }
-
-    bool CNewToml::readFile(const string_q& filename) {
-        toml = parse_file(filename);
-        return true;
-    }
-
-    void CNewToml::mergeFile(CNewToml *tomlIn) {
-    }
-
-    string_q CNewToml::getConfigStr(const string_q& group, const string_q& key, const string_q& def) const {
-        string_q env = getEnvStr(toUpper(group + "_" + key));
-        if (!env.empty())
-            return env;
-        auto val = (group.empty() ? toml->get_as<string>(key) : toml->get_qualified_as<string>(group+"."+key));
-        if (val)
-            return *val;
-        return def;
-    }
-
-    class toml_test_writer {
-    public:
-        toml_test_writer(std::ostream& s) : stream_(s) { }
-        void visit(const tomlvalue_t<string_q>& v) {
-            stream_ << "{\"type\":\"string\",\"value\":\"" << CTomlWriter::escape_string(v.get()) << "\"}";
-        }
-        void visit(const tomlvalue_t<int64_t>& v) {
-            stream_ << "{\"type\":\"integer\",\"value\":\"" << v.get() << "\"}";
-        }
-        void visit(const tomlvalue_t<double>& v) {
-            stream_ << "{\"type\":\"float\",\"value\":\"" << v.get() << "\"}";
-        }
-        void visit(const tomlvalue_t<loc_date_t>& v) {
-            stream_ << "{\"type\":\"local_date\",\"value\":\"" << v.get() << "\"}";
-        }
-        void visit(const tomlvalue_t<loc_time_t>& v) {
-            stream_ << "{\"type\":\"local_time\",\"value\":\"" << v.get() << "\"}";
-        }
-        void visit(const tomlvalue_t<loc_datetime_t>& v) {
-            stream_ << "{\"type\":\"local_datetime\",\"value\":\"" << v.get() << "\"}";
-        }
-        void visit(const tomlvalue_t<off_datetime_t>& v) {
-            stream_ << "{\"type\":\"datetime\",\"value\":\"" << v.get() << "\"}";
-        }
-        void visit(const tomlvalue_t<bool>& v) {
-            stream_ << "{\"type\":\"bool\",\"value\":\"" << v << "\"}";
-        }
-        void visit(const tomlarray_t& arr) {
-            stream_ << "{\"type\":\"array\",\"value\":[";
-            auto it = arr.get().begin();
-            while (it != arr.get().end()) {
-                (*it)->accept(*this);
-                if (++it != arr.get().end())
-                    stream_ << ", ";
-            }
-            stream_ << "]}";
-        }
-        void visit(const tomltablearray_t& tarr) {
-            stream_ << "[";
-            auto arr = tarr.get();
-            auto ait = arr.begin();
-            while (ait != arr.end()) {
-                (*ait)->accept(*this);
-                if (++ait != arr.end())
-                    stream_ << ", ";
-            }
-            stream_ << "]";
-        }
-        void visit(const tomltable_t& t) {
-            stream_ << "{";
-            auto it = t.begin();
-            while (it != t.end()) {
-                stream_ << '"' << CTomlWriter::escape_string(it->first)
-                << "\":";
-                it->second->accept(*this);
-                if (++it != t.end())
-                    stream_ << ", ";
-            }
-            stream_ << "}";
-        }
-    private:
-        std::ostream& stream_;
-    };
-
-    string_q CNewToml::getConfigJson(const string_q& group, const string_q& key, const string_q& def) const {
-        string_q env = getEnvStr(toUpper(group + "_" + key));
-        if (!env.empty())
-            return env;
-        ostringstream os;
-        toml_test_writer writer{os};
-        toml->accept(writer);
-        os << endl;
-        return os.str();
-    }
-
-    uint64_t CNewToml::getConfigInt(const string_q& group, const string_q& key, uint64_t def) const {
-        string_q env = getEnvStr(toUpper(group + "_" + key));
-        if (!env.empty())
-            return str_2_Uint(env);
-        string_q search = (group.empty() ? key : group + "." + key);
-        auto val = toml->get_as<uint64_t>(search);
-        if (val)
-            return *val;
-        return def;
-    }
-
-    bool CNewToml::getConfigBool(const string_q& group, const string_q& key, bool def) const {
-        string_q env = getEnvStr(toUpper(group + "_" + key));
-        if (!env.empty())
-            return str_2_Bool(env);
-        string_q search = (group.empty() ? key : group + "." + key);
-        auto val = toml->get_as<bool>(search);
-        if (val)
-            return *val;
-        return def;
-    }
-
-    //-------------------------------------------------------------------------
-    string_q CNewToml::getDisplayStr(bool terse, const string_q& def, const string_q& colorIn) const {
-        string_q color = (colorIn.empty() ? cTeal : colorIn);
-        string_q fmt = getConfigStr("display", (terse ? "terse" : "format"), "<not_set>");
-        if (fmt == "<not_set>")
-            fmt = def;
-        if (!color.empty()) {
-            replaceAll(fmt, "{", color+"{");
-            replaceAll(fmt, "}", "}"+cOff);
-        }
-
-        string_q ret = substitute(fmt, "\\n\\\n", "\\n");
-        ret = substitute(ret, "\n", "");
-        ret = substitute(ret, "\\n", "\n");
-        ret = substitute(ret, "\\t", "\t");
-        ret = substitute(ret, "\\r", "\r");
-        return ret;
-    }
-
-    //-------------------------------------------------------------------------
-    uint64_t CNewToml::getVersion(void) const {
-        // handle older ways of stroring version. Note: after 0.6.0, always stored as [version]current
-        string_q value = getConfigStr("version", "current", getConfigStr("", "version", "0.0.0"));
-        uint16_t v1 = (uint16_t)str_2_Uint(nextTokenClear(value, '.'));
-        uint16_t v2 = (uint16_t)str_2_Uint(nextTokenClear(value, '.'));
-        uint16_t v3 = (uint16_t)str_2_Uint(nextTokenClear(value, '.'));
-        return getVersionNum(v1, v2, v3);
-    }
-
-    //-------------------------------------------------------------------------
-    void CNewToml::setConfigArray(const string_q& group, const string_q& key, const string_q& value) {
-    }
-
-    void CNewToml::setConfigStr(const string_q& group, const string_q& key, const string_q& value) {
-    }
-
-    void CNewToml::setFilename(const string_q& fn) {
-        m_filename = fn;
-    }
-#endif
 }  // namespace qblocks
