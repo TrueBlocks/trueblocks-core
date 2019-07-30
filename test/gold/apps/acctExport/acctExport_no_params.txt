@@ -20,6 +20,8 @@ acctExport
 	-d  (--ddos on/off)   skip over dDos transactions in export ('on' by default)
 	-m  (--maxTraces val) if --ddos:on, the number of traces defining a dDos (default = 250)
 	-n  (--noHeader)      do not show the header row
+	-a  (--allABIs)       load all previously cached abi files
+	-g  (--grabABIs)      using each trace's 'to' address, grab the abi for that address (improves articulation)
 	-s  (--start val)     first block to export (inclusive)
 	-e  (--end val)       last block to export (inclusive)
 #### Hidden options (shown during testing only)
