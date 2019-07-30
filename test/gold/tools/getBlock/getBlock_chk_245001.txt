@@ -43,7 +43,7 @@ from QBlocks:
 
 --------------------------------------------------------------------------------
 Hidden fields:
-author, condition, creates, extraData, mixHash, networkId, chainId, nonce, nonce, publicKey, r, raw, receiptsRoot, s, sealFields, sha3Uncles, size, standardV, stateRoot, totalDifficulty, transactionsRoot, uncles, v, logsBloom, contractAddress, cumulativeGasUsed, receipt, address, data, logIndex, topics, price, finalized, isError, status
+author, condition, creates, extraData, mixHash, networkId, chainId, nonce, nonce, publicKey, r, raw, receiptsRoot, s, sealFields, sha3Uncles, size, standardV, stateRoot, totalDifficulty, transactionsRoot, uncles, v, logsBloom, contractAddress, cumulativeGasUsed, receipt, address, data, logIndex, topics, price, finalized, isError, age, date, status
 
 The strings are the same
 
