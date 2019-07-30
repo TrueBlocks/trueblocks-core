@@ -232,7 +232,7 @@ bool COptions::finalize_chunks(CConsolidator *cons) {
     while (curSize > maxIndexRows && !shouldQuit()) {
 
         lockSection(true);
-        cerr << bBlue << "\tConsolodate (pass " + uint_2_Str(pass++) + ")" << endl;
+        cerr << bBlue << "\tConsolidate (pass " + uint_2_Str(pass++) + ")" << endl;
         CStringArray lines;
         lines.reserve(curSize + 100);
         asciiFileToLines(newStage, lines);
