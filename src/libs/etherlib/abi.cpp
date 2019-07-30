@@ -332,6 +332,85 @@ bool CAbi::loadAbiFromString(const string_q& in, bool builtIn) {
 }
 
 //-----------------------------------------------------------------------
+void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, bool silent, bool decNames) {
+
+    if (isZeroAddr(addr))
+        return;
+
+    string_q results;
+    string_q fileName = getCachePath("abis/" + addr + ".json");
+
+    string_q localFile("./" + addr + ".json");
+    if (fileExists(localFile) && localFile != fileName) {
+        cerr << "Local file copied to cache\n";
+        copyFile(localFile, fileName);
+    }
+
+    string_q dispName = substitute(fileName, getCachePath(""), "$BLOCK_CACHE/");
+    if (fileExists(fileName) && !raw) {
+
+        if (verbose) {
+            cerr << "Reading ABI for address " << addr << " from " << (isTestMode() ? "--" : "cache") << "\r";
+            cerr.flush();
+        }
+        asciiFileToString(fileName, results);
+
+    } else {
+
+        if (verbose) {
+            cerr << "Reading ABI for address " << addr << " from " << (isTestMode() ? "--" : "EtherScan") << "\r";
+            cerr.flush();
+        }
+        string_q url = string_q("http:/""/api.etherscan.io/api?module=contract&action=getabi&address=") + addr;
+        results = substitute(urlToString(url), "\\", "");
+
+        if (!contains(results, "NOTOK")) {
+            if (!isTestMode()) {
+                if (verbose)
+                    cerr << results << endl;
+                cerr << "Caching abi in " << dispName << endl;
+            }
+            replace(results, "\"result\":\"", "<extract>");
+            replaceReverse(results, "\"}", "</extract>");
+            results = snagFieldClear(results, "extract", "");
+            establishFolder(fileName);
+            stringToAsciiFile(fileName, results);
+
+        } else if (contains(toLower(results), "source code not verified")) {
+
+            if (!silent) {
+                LOG_WARN("Could not get the ABI for address ", addr, ". Etherscan returned: ");
+                LOG_WARN(results);
+                LOG_WARN("If you copy the ABI to the current folder, QBlocks will use it.");
+                //quickQuitHandler(0);
+            }
+            return;
+
+        } else {
+
+            if (!silent) {
+                cerr << "Etherscan returned " << results << "\n";
+                cerr << "Could not grab ABI for " + addr + " from etherscan.io.\n";
+                //quickQuitHandler(0);
+            }
+
+            // TODO(tjayrush): If we store the ABI here even if empty, we won't have to get it again, but then
+            // what happens if user later posts the ABI? Need a 'refresh' option or clear cache option
+            establishFolder(fileName);
+            stringToAsciiFile(fileName, "[]");
+            return;
+        }
+    }
+
+    CFunction func;
+    while (func.parseJson3(results)) {
+        abi.addIfUnique(addr, func, decNames);
+        func = CFunction();  // reset
+    }
+    return;
+}
+
+//-----------------------------------------------------------------------
 bool CAbi::addIfUnique(const string_q& addr, CFunction& func, bool decorateNames) {
     if (func.name.empty())  // && func.type != "constructor")
         return false;
