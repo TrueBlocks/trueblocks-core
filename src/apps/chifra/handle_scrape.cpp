@@ -142,6 +142,7 @@ bool COptions::handle_scrape(void) {
                     }
                     if (runs.size())
                         freshen_internal(FM_PRODUCTION, runs, "--daemon", freshen_flags);
+                    cerr << "\t  freshening: " << cYellow << "    finished." << cOff << "                                          " << endl;
                 }
             }
 
