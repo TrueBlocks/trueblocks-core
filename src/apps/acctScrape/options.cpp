@@ -16,13 +16,13 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
+string_q dTabs;
+bool daemonMode = false;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
-
-    bool daemonMode = false;
 
     Init();
     explode(arguments, command, ' ');
@@ -81,7 +81,8 @@ bool COptions::parseArguments(string_q& command) {
     establishFolder(indexFolder_staging);
     establishFolder(indexFolder_ripe);
 
-    string_q dTabs = (daemonMode ? "\t  " : "");
+    dTabs = (daemonMode ? "\t  " : "");
+    string_q endLine = (daemonMode ? "\r" : "\n");
     scanRange.first = UINT_MAX;
     for (auto monitor : monitors) {
         string_q fn1 = getMonitorPath(monitor.address);
@@ -90,7 +91,7 @@ bool COptions::parseArguments(string_q& command) {
         string_q fn2 = getMonitorLast(monitor.address);
         if (fileExists(fn2 + ".lck"))
             return usage("The last block file '" + fn2 + "' is locked. Quitting...");
-        cerr << dTabs << "freshening: " << cYellow << monitor.address << cOff << "..." << endl;
+        cerr << dTabs << "freshening: " << cYellow << monitor.address << cOff << "..." << endLine; cerr.flush();
         // If file doesn't exist, this will report '0'
         scanRange.first = min(scanRange.first, str_2_Uint(asciiFileToString(fn2)));
     }
@@ -107,9 +108,6 @@ bool COptions::parseArguments(string_q& command) {
     // This would fail, for example, if the accounts are scraped further than the blocks (i.e. we
     // cleared the block index cache, but we didn't clear the account monitor cache
     if (scanRange.first >= scanRange.second) {
-        cerr << dTabs << "account scrape is up to date.";
-        if (!daemonMode)
-            cerr << endl;
         return false;
     }
     return true;
@@ -123,9 +121,9 @@ void COptions::Init(void) {
     // This app never actually writes to standard out, so we don't really need this
     // optionOn(OPT_OUTPUT);
 
-    minArgs         = 0;
-    visitTypes      = VIS_FINAL;
-    useBlooms       = true;
+    minArgs    = 0;
+    visitTypes = VIS_FINAL;
+    useBlooms  = true;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -136,7 +134,8 @@ COptions::COptions(void) {
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
     // just some cleanup of the screen
-    cerr << string_q(150,' ') << "\r";
+    if (!daemonMode)
+        cerr << dTabs << "account scraper is finished.                 " << endl;
 }
 
 //--------------------------------------------------------------------------------
