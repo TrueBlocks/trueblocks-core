@@ -2,7 +2,7 @@ grabABI argc: 2 [1:-th]
 grabABI -th 
 #### Usage
 
-`Usage:`    grabABI [-c|-g|-d|-e|-j|-n|-o|-l|-v|-h] &lt;address&gt; [address...]  
+`Usage:`    grabABI [-c|-g|-d|-e|-j|-n|-l|-v|-h] &lt;address&gt; [address...]  
 `Purpose:`  Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
              
 `Where:`  
@@ -16,10 +16,10 @@ grabABI -th
 | -e | --encode | generate the encodings for the functions / events in the ABI |
 | -j | --json | print the ABI to the screen as json |
 | -n | --noconst | generate encodings for non-constant functions and events only (always true when generating) |
-| -o | --open | open the ABI file for editing, download if not already present |
 | -l | --sol fn | create the ABI file from a .sol file in the local directory |
 
 #### Hidden options (shown during testing only)
+| -o | --open | open the ABI file for editing, download if not already present |
 | -s | --silent | if ABI cannot be acquired, fail silently (useful for scripting) |
 | -n | --nodec | do not decorate duplicate names |
 | -k | --known | load common 'known' ABIs from cache |
