@@ -20,6 +20,7 @@ static const COption params[] = {
     COption("@maxTraces:<num>",   "if --ddos:on, the number of traces defining a dDos (default = 250)"),
     COption("@noHeader",          "do not show the header row"),
     COption("@allABIs",           "load all previously cached abi files"),
+    COption("@grabABIs",          "using each trace's 'to' address, grab the abi for that address (improves articulation)"),
     COption("@start:<num>",       "first block to export (inclusive)"),
     COption("@end:<num>",         "last block to export (inclusive)"),
     COption("",                   "Export full detail of transactions for one or more Ethereum addresses.\n"),
@@ -82,6 +83,10 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-t" || arg == "--traces") {
             doTraces = true;
+
+        } else if (arg == "-g" || arg == "--grabABIs") {
+            doTraces = true;
+            doABIs = true;
 
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
@@ -216,9 +221,9 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (!noHeader) {
-        if (doTraces)
+        if (doTraces) {
             expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["trace_fmt"], exportFmt);
-        else if (doLogs)
+        } else if (doLogs)
             expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["logentry_fmt"], exportFmt);
         else
             expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["transaction_fmt"], exportFmt);
@@ -242,6 +247,7 @@ void COptions::Init(void) {
     articulate = false;
     doLogs = false;
     doTraces = false;
+    doABIs = false;
 
     minArgs = 0;
 }
