@@ -22,6 +22,10 @@ public:
     bool articulate;
     bool doLogs;
     bool doTraces;
+    bool doABIs;
+    map<uint32_t,address_t> prefundMap;
+    map<uint32_t,address_t> blkRewardMap;
+    map<address_t,bool>     abiMap;
     uint32_t *ts_array;
     size_t ts_cnt;
 
@@ -32,8 +36,6 @@ public:
     void Init(void);
     string_q postProcess(const string_q& which, const string_q& str) const;
 
-    map<uint32_t,address_t> prefundMap;
-    map<uint32_t,address_t> blkRewardMap;
     bool loadMonitorData(CAppearanceArray_base& apps, const address_t& addr);
     bool loadData(void);
     bool exportData(void);

@@ -58,12 +58,16 @@ bool COptions::exportData(void) {
                     bool isCreation = trace.result.address != "";
 
                     if (!isSuicide) {
-                        if (exportFmt == JSON1 && !first)
-                            cout << ", ";
-                        if (articulate)
-                            abis.articulateTrace(&trace);
-                        cout << trace.Format() << endl;
-                        first = false;
+                        if (doABIs) {
+                            abiMap[trace.action.to] = true;
+                        } else {
+                            if (exportFmt == JSON1 && !first)
+                                cout << ", ";
+                            if (articulate)
+                                abis.articulateTrace(&trace);
+                            cout << trace.Format() << endl;
+                            first = false;
+                        }
                     }
 
                     if (isSuicide) { // suicide
@@ -75,9 +79,13 @@ bool COptions::exportData(void) {
                         copy.traceAddress.push_back("s");
                         copy.transactionHash = uint_2_Hex(trace.blockNumber * 100000 + trace.transactionPosition);
                         copy.action.input = "0x";
-                        if (exportFmt == JSON1 && !first)
-                            cout << ", ";
-                        cout << copy.Format() << endl;
+                        if (doABIs) {
+                            abiMap[trace.action.to] = true;
+                        } else {
+                            if (exportFmt == JSON1 && !first)
+                                cout << ", ";
+                            cout << copy.Format() << endl;
+                        }
                     }
 
                     if (isCreation) { // contract creation
@@ -91,9 +99,14 @@ bool COptions::exportData(void) {
                         copy.traceAddress.push_back("s");
                         copy.transactionHash = uint_2_Hex(trace.blockNumber * 100000 + trace.transactionPosition);
                         copy.action.input = trace.action.input;
-                        if (exportFmt == JSON1 && !first)
-                            cout << ", ";
-                        cout << copy.Format() << endl;
+                        if (doABIs) {
+                            abiMap[trace.action.to] = true;
+
+                        } else {
+                            if (exportFmt == JSON1 && !first)
+                                cout << ", ";
+                            cout << copy.Format() << endl;
+                        }
                     }
                 }
 
@@ -118,6 +131,7 @@ bool COptions::exportData(void) {
                     first = false;
                 }
             }
+
             nExported++;
             HIDE_FIELD(CFunction, "message");
             if (isRedirected()) {  // we are not in --output mode
@@ -132,14 +146,26 @@ bool COptions::exportData(void) {
             }
         }
     }
+
+    if (doABIs) {
+        for (pair<address_t,bool> item : abiMap) {
+            if (isContractAt(item.first)) {
+                CAbi unused;
+                loadAbiAndCache(unused, item.first, false, true, false);
+                cout << "ABI for " << item.first << " ";
+                cout << (fileExists(getCachePath("abis/" + item.first + ".json")) ? "cached" : "not cached") << endl;
+            }
+        }
+    }
+
 #if 0
-/*
-Do we really need to store both trace 0 and the transaction? I think not, so we store only trace 1 and on
-writeNodeToBinary but do so as an array and start at item 1 not item 0
-We need to handle the non-txt case where we're exporting the fully articulated transaction, all it's traces, all its data
-We want to name everything we can name
-What about the header in trace mode -- different for each trace, trans, receipt, log
-*/
+    /*
+     Do we really need to store both trace 0 and the transaction? I think not, so we store only trace 1 and on
+     writeNodeToBinary but do so as an array and start at item 1 not item 0
+     We need to handle the non-txt case where we're exporting the fully articulated transaction, all it's traces, all its data
+     We want to name everything we can name
+     What about the header in trace mode -- different for each trace, trans, receipt, log
+     */
 #endif
 
     cerr << "Exported " << nExported << " of " << items.size() << " records." << string_q(45,' ') << "\n";
