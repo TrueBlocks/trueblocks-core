@@ -124,8 +124,11 @@ bool COptions::parseArguments(string_q& command) {
 
     blknum_t unripe, ripe, staging, finalized, client;
     getLastBlocks(unripe, ripe, staging, finalized, client);
-    if ((client - finalized) > 2500) {
-        cerr << "Sleeping zero: " << scrapeSleep << " " << endl;
+    if (client < finalized) {
+        cerr << "Sleeping: " << scrapeSleep << " " << endl;
+
+    } else if ((client - finalized) > 2500) {
+        cerr << "Sleeping: " << scrapeSleep << " " << endl;
         scrapeSleep = 0;
     } else {
         if (mode == "scrape") {
