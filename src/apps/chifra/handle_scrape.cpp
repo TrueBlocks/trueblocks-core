@@ -123,7 +123,7 @@ bool COptions::handle_scrape(void) {
                 cerr << cYellow << "\tScraper restarted..." << cOff << endl;
             wasPaused = false;
             ostringstream os;
-            os << "blockScrape " << tool_flags;
+            os << "blockScrape " << tool_flags << " ; ";
             if (isTestMode())
                 cout << os.str() << endl;
             else {
