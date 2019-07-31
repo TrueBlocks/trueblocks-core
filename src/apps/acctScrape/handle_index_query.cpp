@@ -22,8 +22,9 @@ bool visitFinalIndexFiles(const string_q& path, void *data) {
         if (!contains(path, "-") || !endsWith(path, ".bin"))
             return !shouldQuit();
 
+        timestamp_t ts;
 //        blknum_t unused =
-            bnFromPath(path, options->lastBlockInFile);
+            bnFromPath(path, options->lastBlockInFile, ts);
         ASSERT(unused != NOPOS);
         ASSERT(options->lastBlockInFile != NOPOS);
 

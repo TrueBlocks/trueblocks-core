@@ -340,7 +340,9 @@ bool copyRipeToStage(const string_q& path, void *data) {
         return forEveryFileInFolder(path + "*", copyRipeToStage, data);
 
     else {
-        blknum_t bn = bnFromPath(path);
+        blknum_t e_unused;
+        timestamp_t ts;
+        blknum_t bn = bnFromPath(path, e_unused, ts);
         CConsolidator *con = (CConsolidator *)data;
         if ((con->prevBlock + 1) != bn) {
             // For some reason, we're missing a file. Quit and try again next time

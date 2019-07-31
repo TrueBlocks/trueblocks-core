@@ -582,12 +582,20 @@ bool isBlockFinal(timestamp_t ts_block, timestamp_t ts_chain) {
     return ((ts_chain - ts_block) > (60 * 5));
 }
 
-    //---------------------------------------------------------------------------
-blknum_t bnFromPath(const string_q& path, blknum_t& endOut) {
+//---------------------------------------------------------------------------
+blknum_t bnFromPath(const string_q& path, blknum_t& endOut, timestamp_t& ts) {
     // comes in of the form first_blk-last_blk.X or blknum.X
     CStringArray parts;
     explode(parts, path, '/');
-    string_q e = nextTokenClear(parts[parts.size()-1], '.');
+    ts = 0;
+    string_q e;
+    if (contains(path, "_ts")) {
+        e = nextTokenClear(parts[parts.size()-1], '_');
+        string_q t = substitute(substitute(parts[parts.size()-1], "ts", ""), ".txt", "");
+        ts = str_2_Ts(t);
+    } else {
+        e = nextTokenClear(parts[parts.size()-1], '.');
+    }
     string_q b = nextTokenClear(e, '-');
     endOut = (e.empty() || !isNumeral(e) ? NOPOS : str_2_Uint(e));
     return (b.empty() || !isNumeral(b) ? NOPOS : str_2_Uint(b));
