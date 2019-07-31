@@ -432,7 +432,8 @@ extern void loadParseMap(void);
         if (!finLast.empty()) {
             // Files in this folder are n-m.bin
             blknum_t last;
-            bnFromPath(finLast, last);
+            timestamp_t unused;
+            bnFromPath(finLast, last, unused);
             return last;
         }
         return 0;

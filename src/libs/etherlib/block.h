@@ -181,10 +181,11 @@ extern CArchive& operator>>(CArchive& archive, CBlock& blo);
 // EXISTING_CODE
 typedef map<blknum_t, CBlock> CBlockMap;
 //---------------------------------------------------------------------------
-extern blknum_t bnFromPath(const string_q& path, blknum_t& endOut);
+extern blknum_t bnFromPath(const string_q& path, blknum_t& endOut, timestamp_t& ts);
 inline blknum_t bnFromPath(const string_q& path) {
     blknum_t unused = NOPOS;
-    return bnFromPath(path, unused);
+    timestamp_t unused_ts;
+    return bnFromPath(path, unused, unused_ts);
 }
 
 //---------------------------------------------------------------------------
