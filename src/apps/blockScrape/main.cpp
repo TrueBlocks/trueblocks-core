@@ -134,8 +134,8 @@ bool COptions::handle_scrape(void) {
     // over kill, but it's safer. In effect, we start over at startBlock the next time through.
     // The value `prevBlock` points to the last completed staging block. The last block in the file
     // ../staged/{prevBlock}.txt.
-    CConsolidator cons(indexFolder_staging + "000000000-temp.txt");
-    cons.prevBlock = (staging == NOPOS ? (finalized == NOPOS ? 0 : finalized) : staging);
+    blknum_t p = (staging == NOPOS ? (finalized == NOPOS ? 0 : finalized) : staging);
+    CConsolidator cons(indexFolder_staging + "000000000-temp.txt", p);
     if (!forEveryFileInFolder(indexFolder_ripe, copyRipeToStage, &cons)) {
         // Something went wrong with the copy (the user hit control+c or we encountered a non-sequential
         // list of files). We clean up everything and start over the next time through.
@@ -144,6 +144,10 @@ bool COptions::handle_scrape(void) {
         ::remove((indexFolder_staging + "000000000-temp.txt").c_str());
         return false;
     }
+    cons.ts_output.close();
+    string_q tsFile = configPath("ts.bin");
+    size_t sz = (fileSize(tsFile) / sizeof(uint32_t));
+    cerr << bTeal << "\t  Bn: " << cons.ts_bn << " # Ts: " << sz << " Diff: " << (sz - cons.ts_bn) << endl;
 
     // The stage now contains all non-consolidated records. Ripe shuld be empty. Next, we try to pick
     // off chunks of 500,000 records if we can, consolidate them (write them to a binary relational
@@ -361,6 +365,16 @@ bool copyRipeToStage(const string_q& path, void *data) {
         inputStream.close();
         ::remove(path.c_str());
         con->prevBlock = bn;
+        if (con->ts_bn < bn) {
+            if ((con->ts_bn + 1) != bn) {
+                // For some reason, we're missing a file. Quit and try again next time
+                cerr << cRed << "Timestamps are out of sync. Current file (" << path << ") Previous file (" << con->ts_bn << ")." << cOff << endl;
+                return false;
+            }
+            con->ts_bn = bn;
+            con->ts_output << (uint32_t)ts;
+            con->ts_output.flush();
+        }
         lockSection(false);
     }
 
@@ -385,4 +399,25 @@ bool appendFile(const string_q& toFile, const string_q& fromFile) {
     input.close();
 
     return true;
+}
+
+//--------------------------------------------------------------------------
+CConsolidator::CConsolidator(const string_q& fileName, blknum_t p) {
+    prevBlock = p;
+
+    output.open(fileName, ios::out | ios::app);
+
+    string_q tsFile = configPath("ts.bin");
+    if (!fileExists(tsFile)) {
+        // Try to unpack the zip file if there is one
+        string_q zipFile = configPath("ts.bin.gz");
+        if (fileExists(zipFile)) { // first run since install? Let's try to get some timestamps
+            string_q cmd = "cd " + configPath("") + " ; gunzip " + zipFile;
+            cerr << doCommand(cmd) << endl;
+            ASSERT(!fileExists(zipFile));
+        }
+    }
+
+    ts_bn = fileSize(tsFile) / sizeof(uint32_t);
+    ts_output.open(tsFile, ios::out | ios::app);
 }

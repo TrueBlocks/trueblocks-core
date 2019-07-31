@@ -363,10 +363,6 @@ bool COptions::loadData(void) {
 //-----------------------------------------------------------------------
 bool COptions::loadTsArray(blknum_t last) {
 
-    CUintArray unused;
-    if (!freshenTsDatabase(last, unused))
-        return false;
-
     if (ts_array) {
         delete [] ts_array;
         ts_array = NULL;
@@ -385,47 +381,6 @@ bool COptions::loadTsArray(blknum_t last) {
 
     in.Read(ts_array, sizeof(uint32_t), ts_cnt);
     in.Release();
-    return true;
-}
-
-//-----------------------------------------------------------------------
-bool freshenTsDatabase(blknum_t last, CUintArray& tsArray) {
-
-    string_q tsFile = configPath("ts.bin");
-    if (!fileExists(tsFile)) {
-        // Try to unpack the zip file if there is one
-        string_q zipFile = configPath("ts.bin.gz");
-        if (fileExists(zipFile)) { // first run since install? Let's try to get some timestamps
-            string_q cmd = "cd " + configPath("") + " ; gunzip " + zipFile;
-            cerr << doCommand(cmd) << endl;
-            ASSERT(!fileExists(zipFile));
-        }
-    }
-
-    size_t cnt = fileSize(tsFile) / sizeof(uint32_t);
-    if (last >= cnt) {
-        CArchive oo(WRITING_ARCHIVE);
-        if (oo.Lock(tsFile, modeWriteAppend, LOCK_WAIT)) {
-            if (tsArray.size() > 0) {
-                for (auto ts : tsArray) {
-                    oo << (uint32_t)ts;
-                    cerr << "Adding timestamp " << ts << "    \r";
-                    cerr.flush();
-                }
-            } else {
-                for (blknum_t bl = cnt ; bl <= last ; bl++) {  // we want to process 'last'
-                    CBlock block;
-                    getBlock_light(block, bl);
-                    oo << (uint32_t)block.timestamp;
-                    oo.flush();
-                    cerr << "Adding timestamp " << bl << " (" << block.timestamp << ") of " << last << " (" << (last - bl) << ")    \r";
-                    cerr.flush();
-                }
-            }
-            oo.Release();
-        }
-    }
-
     return true;
 }
 
