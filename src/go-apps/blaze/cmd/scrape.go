@@ -532,28 +532,28 @@ func writeAddresses(blockNum string, addressMap map[string]bool) {
 	sort.Strings(addressArray)
 	toWrite := []byte(strings.Join(addressArray[:], "\n") + "\n")
 
-//	bn, _ := strconv.Atoi(blockNum)
-//	blockHeaderBytes, err := getBlockHeader(bn)
-//	if err != nil {
-//		fmt.Println(err)
-//		os.Exit(1) // caller will start over if this process exits with non-zero value
-//	}
-//
-//	var header BlockHeader
-//	err = json.Unmarshal(blockHeaderBytes, &header)
-//	if err != nil {
-//		fmt.Println(err)
-//		os.Exit(1) // caller will start over if this process exits with non-zero value
-//	}
-//
-//	fileName := Options.ripePath + blockNum + "_ts" + header.Result.Timestamp + ".txt"
-	fileName := Options.ripePath + blockNum + ".txt"
 	bn, _ := strconv.Atoi(blockNum)
+	blockHeaderBytes, err := getBlockHeader(bn)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1) // caller will start over if this process exits with non-zero value
+	}
+
+	var header BlockHeader
+	err = json.Unmarshal(blockHeaderBytes, &header)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1) // caller will start over if this process exits with non-zero value
+	}
+
+	fileName := Options.ripePath + blockNum + "_ts" + header.Result.Timestamp + ".txt"
+	//	fileName := Options.ripePath + blockNum + ".txt"
+	//	bn, _ = strconv.Atoi(blockNum)
 	if bn > Options.ripeBlock {
 		fileName = Options.unripePath + blockNum + ".txt"
 	}
 
-	err := ioutil.WriteFile(fileName, toWrite, 0744)
+	err = ioutil.WriteFile(fileName, toWrite, 0744)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1) // caller will start over if this process exits with non-zero value

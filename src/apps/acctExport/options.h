@@ -41,6 +41,3 @@ public:
     bool exportData(void);
     bool loadTsArray(blknum_t blk);
 };
-
-//-----------------------------------------------------------------------
-extern bool freshenTsDatabase(blknum_t blk, CUintArray& tsArray);  // array may be empty in which case we query the node

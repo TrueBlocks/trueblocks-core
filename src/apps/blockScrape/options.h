@@ -10,11 +10,11 @@
 class CConsolidator {
 public:
     ofstream output;
+    ofstream ts_output;
+    blknum_t ts_bn;
     blknum_t prevBlock;
-    CConsolidator(const string_q& fileName) {
-        output.open(fileName, ios::out | ios::app);
-        prevBlock = NOPOS;
-    }
+    CConsolidator(const string_q& fileName, blknum_t p);
+
 private:
     CConsolidator(void) {}
 };
