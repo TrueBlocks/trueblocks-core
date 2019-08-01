@@ -61,6 +61,8 @@ namespace qblocks {
     //-----------------------------------------------------------------------
     extern bool     getBlock_light          (CBlock& block, const string_q& val);
     extern bool     getBlock_light          (CBlock& block, blknum_t num);
+    extern bool     getBlock_header         (CBlock& block, const string_q& val);
+    extern bool     getBlock_header         (CBlock& block, blknum_t num);
 
     //-----------------------------------------------------------------------
     extern void     writeToJson             (const CBaseNode& node, const string_q& fileName);
@@ -118,6 +120,8 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     extern blknum_t getLastBlock_client       (void);
     extern blknum_t getLastBlock_cache_final  (void);
+    extern blknum_t getLastBlock_cache_staging(void);
+    extern blknum_t getLastBlock_cache_ripe   (void);
     extern bool     getLastBlocks             (blknum_t& unripe, blknum_t& ripe, blknum_t& staging, blknum_t& final, blknum_t& client);
 
     //-------------------------------------------------------------------------
@@ -149,7 +153,8 @@ namespace qblocks {
     string_q exportPostamble(format_t fmt, const string_q& extra);
 
     //-------------------------------------------------------------------------
-    bool findTimestamp_binarySearch(CBlock& block, size_t first, size_t last, bool progress=false);
+    extern bool findTimestamp_binarySearch(CBlock& block, size_t first, size_t last, bool progress=false);
+    extern bool freshenTimestampFile(blknum_t minBlock);
 
     //-------------------------------------------------------------------------
     extern wei_t blockReward(blknum_t bn, blknum_t txid, bool txFee);

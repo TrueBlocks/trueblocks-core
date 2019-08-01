@@ -33,7 +33,7 @@ bool COptions::handle_scrape(void) {
     if (isRunning("acctScrape", false))
         return false;
 
-    // Remove anything that may be residule from the last run if the user hit control+c
+    // Remove anything that may be residule from the last run. (For example, if the user hit control+c)
     ::remove((indexFolder_staging + "000000000-temp.txt").c_str());
     cleanFolder(indexFolder_unripe);
 
@@ -44,7 +44,7 @@ bool COptions::handle_scrape(void) {
     blknum_t startBlock = lastVisit + 1;
 
     // In some cases (the user is re-syncing his/her node from scratch, but has a partial
-    // index, for example) the index may be ahead of tip of the chain. In this case, we
+    // index) and, therefore, the index may be ahead of tip of the chain. In this case, we
     // return without doing anything...
     if (startBlock > client) {
         cerr << cTeal << "INFO: " << cOff;
@@ -70,47 +70,45 @@ bool COptions::handle_scrape(void) {
         nAddrProcs = 6;
     }
 
-    // If a block is more than 28 blocks from the head we consider it 'ripe.' A ripe block will
-    // no longer be reconsidered. It is ready to be consolidated (staged). 28 blocks is an
-    // arbitrarily chosen value, but is a bit more than six minutes under normal operation
-    // ((14 * 28) / 60 == 6.5). If the index is at the head and the difficulty level is high
-    // (the time bomb is exploding), the time will extend.
+    // If a block is more than 28 blocks from the head we consider it 'ripe.' Once a block
+    // goes ripe, we no longer ask the node about it. We try to move it to staging. Staging
+    // means it's ready to be consolidated (finalized). 28 blocks is an arbitrarily chosen value,
+    // but is a bit more than six minutes under normal operation ((14 * 28) / 60 == 6.5). If the
+    // index is near the head of the chain and the difficulty level is high (the time bomb is
+    // exploding), the time will extend, but the final nature is the same.
     blknum_t ripeBlock = client - 28;
 
-    // We're ready to scrape, so build the command line...
+    // We're ready to scrape, so build the blaze command line...
     ostringstream os;
-    os << "blaze scrape";
-    os << " --startBlock " << startBlock;
-    os << " --nBlocks " << nBlocks;
+    os << "blaze scrape" << " --startBlock " << startBlock << " --nBlocks " << nBlocks;
     if (nBlockProcs != 20)
         os << " --nBlockProcs " << nBlockProcs;
     if (nAddrProcs != 60)
         os << " --nAddrProcs " << nAddrProcs;
 
-    // ...tell the user...
+    // reporting...
     cerr << endl << cTeal << "\t" << string_q(10,'-') << Now().Format(FMT_EXPORT) << string(40, '-') << cOff << endl;
     cerr << cGreen << "\t" << os.str() << cOff << " (" << (startBlock + nBlocks) << ")" << endl;
 
     os << " --ripeBlock " << ripeBlock;
     // ...and make the call to blaze.
     if (system(os.str().c_str()) != 0) {
-        // if blaze returns non-zero, it did not complete sucessfully. We need to remove
-        // any files in the 'ripe' folder because there may be missing blocks (blaze's
-        // go processes do not run in order). We blindly clean every ripe file, which is
-        // a bit of overill, but it's easy and it works. Next time we run, it will start over
-        // at the last staged block.
+        // if blaze returns non-zero, it did not complete sucessfully. We need to remove files
+        // in the 'ripe' folder because they're inconsistent (blaze's 'go' processes do not run
+        // in sequence). We blindly clean all ripe files, which is a bit of overill, but it's easy
+        // and it works. Next time we run, it will start over at the last staged block.
         cleanFolder(indexFolder_ripe);
         cerr << cRed << "\tBlaze quit without finishing. Reprocessing..." << cOff << endl;
         return false;
     }
 
     // If blaze returned '0', it has sucessfully run through all the blocks between 'startBlock'
-    // and 'startBlock + nBlocks'. The ripe folder will contain individual files for each block
-    // containing a list of addresses that appear in that block (unique per transaction). The
-    // unripe folder holds blocks that are less than 28 blocks old. We do nothing further with
-    // them here, but the query tool (acctScrape) may use them. acctScrape is responsible to
-    // report to the user that the unripe data may be unsafe to use. Here, we quit if acctScrape
-    // is running. We can quit safely without cleaning up. The next run will pick up where we left off.
+    // and 'startBlock + nBlocks'. The ripe folder contains individual files, one for each block,
+    // containing lists of addresses that appear in that block. The unripe folder holds blocks that
+    // are less than 28 blocks old. We do nothing further with them here, but the query tool (acctScrape)
+    // may use them. acctScrape is responsible to report to the user that the unripe data may be
+    // unsafe to use. Here, we quit if acctScrape is running. We can quit safely without cleaning
+    // up. The next run will pick up where we left off.
     bool mustQuit = isRunning("acctScrape", false);
     if (mustQuit) {
         cerr << cRed << "\tacctScrape is running. blockScrape will re-run in a moment." << cOff << endl;
@@ -123,41 +121,69 @@ bool COptions::handle_scrape(void) {
 
     // From this point until the end of the invocation, the processing must be able to stop abruptly
     // without resulting in corrupted data (control+c for example). This means we must process a single
-    // file at a time in order. Processing means moving files from ripe files into the staging file
-    // and then (if applicable) from the staging file into a finalized chunk. If we stop processing
+    // file at a time in sequential order. Processing means moving files from a ripe file into the staging
+    // file and then (if applicable) from the staging file into a finalized chunk. If we stop processing
     // at any point, we want to leave the data in a state where the next invocation of this program
-    // can pick up un-interrupted.
+    // can either clean up or pick up where it left off.
 
-    // Next, we processes one file in the ripe folder at a time by appending its data to the staging
-    // file. We flush the data after each append and then remove the ripe file. If this process
+    // Next, we processes one file in the ripe folder at a time by appending its data to a temporary
+    // staging file. We flush the data after each append and then remove the ripe file. If this process
     // is interrupted, we clean up both the ripe folder and the temporary staging file. This may be
-    // over kill, but it's safer. In effect, we start over at startBlock the next time through.
-    // The value `prevBlock` points to the last completed staging block. The last block in the file
-    // ../staged/{prevBlock}.txt.
+    // over kill, but it's safer. In effect, we start over at the most recently successfully staged block
+    // the next time through. The value `prevBlock` points to the last completed staging block. The last
+    // block in the file is ../staged/{prevBlock}.txt. We're also processing time stamps (which can get
+    // ahead of the scraper) at the same time.
+
+    // Pick up the latest of zero, finalized, or staging...
     blknum_t p = (staging == NOPOS ? (finalized == NOPOS ? 0 : finalized) : staging);
-    CConsolidator cons(indexFolder_staging + "000000000-temp.txt", p);
-    if (!forEveryFileInFolder(indexFolder_ripe, copyRipeToStage, &cons)) {
-        // Something went wrong with the copy (the user hit control+c or we encountered a non-sequential
-        // list of files). We clean up everything and start over the next time through.
-        cleanFolder(indexFolder_unripe);
-        cleanFolder(indexFolder_ripe);
-        ::remove((indexFolder_staging + "000000000-temp.txt").c_str());
+
+    // Carries state we need to process the blocks
+    CConsolidator cons(p);
+    if (!cons.tmp_file.is_open()) {
+        cerr << cRed << "\tCould not open temporary staging file." << cOff << endl;
         return false;
     }
-    cons.ts_output.close();
-    string_q tsFile = configPath("ts.bin");
-    size_t sz = (fileSize(tsFile) / sizeof(uint32_t));
-    cerr << bTeal << "\t  Bn: " << cons.ts_bn << " # Ts: " << sz << " Diff: " << (sz - cons.ts_bn) << endl;
+// TS_SCRAPER
+//    if (!cons.ts_file.is_open()) {
+//        cerr << cRed << "\tCould not open timestamp file." << cOff << endl;
+//        return false;
+//    }
 
-    // The stage now contains all non-consolidated records. Ripe shuld be empty. Next, we try to pick
-    // off chunks of 500,000 records if we can, consolidate them (write them to a binary relational
-    // table), and re-write any unfinalized records back onto the stage. Again, if anything goes wrong
-    // we clean up.
-    cerr << bTeal << "\t  Attempting to consolidate blocks" << cOff << endl;
+    // Spin through 'ripe' files and process as we go. Note: it's okay to allow the timestamp file to get
+    // ahead of the staged blocks. We only write when the block number is a new one not already in the file.
+    if (!forEveryFileInFolder(indexFolder_ripe, copyRipeToStage, &cons)) {
+        // Something went wrong with copying the ripe blocks to staging. (i.e. the user hit control+c or we
+        // encountered a non-sequential list of files). We clean up and start over the next time through.
+        cleanFolder(indexFolder_unripe);
+        cleanFolder(indexFolder_ripe);
+// TS_SCRAPER
+//        cons.ts_file.close();
+        cons.tmp_file.close();
+        ::remove(cons.tmp_fn.c_str());
+        return false;
+    }
+    cons.tmp_file.close();
+// TS_SCRAPER
+//    cons.ts_file.close();
+//    if (!cons.checkTimestamps()) {
+//        cerr << cRed << "\tInconsistent timestamp file." << cOff << endl;
+//        return false;
+//    }
+//
+//    // reporting...
+//    size_t ts_cnt = (fileSize(cons.ts_fn) / sizeof(uint32_t)) / 2;  // bn and timestamp for each block
+//    cerr << bTeal << "\t  Bn: " << cons.ts_bn << " # Ts: " << ts_cnt << " Diff: " << (ts_cnt - cons.ts_bn) << endl;
+
+    // The stage now contains all non-consolidated records. Ripe should be empty. All files are closed.
+
+    // Next, we try to pick off chunks of 500,000 records (maxIndexRows) if we can, consolidate them (write
+    // them to a binary relational table), and re-write any unfinalized records back onto the stage. Again, if
+    // anything goes wrong we need clean up and leave the data in a recoverable state.
+    cerr << bTeal << "\t  attempting to consolidate blocks" << cOff << endl;
     if (!finalize_chunks(&cons)) {
         cleanFolder(indexFolder_unripe);
         cleanFolder(indexFolder_ripe);
-        ::remove((indexFolder_staging + "000000000-temp.txt").c_str());
+        ::remove(cons.tmp_fn.c_str());
     }
 
     return true;
@@ -169,13 +195,13 @@ const static blknum_t maxIndexRows = 500000;
 bool COptions::finalize_chunks(CConsolidator *cons) {
 
     // 'oldStage' contains staged but not yet consolidated records. 'tempStage' contains
-    // newly scraped ripe blocks. 'newStage' is empty, but where we will be putting the
-    // records in these two files. We need to process in a way that will allow for interruption.
+    // newly scraped ripe blocks. 'newStage' is empty. This temporary file is where we will put
+    // the records from these two files. We need to process in a way that will allow for interruption.
 
     // ...we want to work with a temporary file so if anything goes wrong, we can recover...
     string_q tmpFile = getIndexPath("temp.txt");
     string_q oldStage = getLastFileInFolder(indexFolder_staging, false);
-    string_q tempStage = indexFolder_staging + "000000000-temp.txt";
+    string_q tempStage = cons->tmp_fn;
     string_q newStage = indexFolder_staging + padNum9(cons->prevBlock) + ".txt";
 //#define FF(a) { cerr << padRight(#a, 12) << padRight(a,70) << ": " << cYellow << (fileSize(a)/59) << cOff << endl; }
 //#define FF1(a) cerr << bBlue << (a) << cOff << endl << endl;
@@ -185,11 +211,12 @@ bool COptions::finalize_chunks(CConsolidator *cons) {
     if (oldStage == newStage) {
         blknum_t curSize = fileSize(newStage) / 59;
         cerr << bTeal;
-        cerr << "\t  Nothing new to process." << endl;
-        cerr << "\t  Will consolidate in " << (maxIndexRows - curSize);
+        cerr << "\t  nothing new to process." << endl;
+        cerr << "\t  will consolidate in " << (maxIndexRows - curSize);
         cerr << " rows (" << curSize << " of " << maxIndexRows << ")" << cOff << endl;
         return true;
     }
+
     if (oldStage != tempStage) {
         if (!appendFile(tmpFile, oldStage)) {
             // oldStage is still valid. Caller will clean up the rest
@@ -217,7 +244,7 @@ bool COptions::finalize_chunks(CConsolidator *cons) {
     lockSection(false);
     FF(tmpFile); FF(oldStage); FF(tempStage); FF(newStage); FF1("Renaming tmp to new, removing old and temp");
 
-    // We are now in a valid state with all records in the properly name newStage
+    // We are now in a valid state with all records in the properly named newStage
     blknum_t curSize = fileSize(newStage) / 59;
 
     // Did user hit control+c?
@@ -226,7 +253,7 @@ bool COptions::finalize_chunks(CConsolidator *cons) {
 
     // If we don't have enough records to consolidate, tell the user and return...
     if (curSize <= maxIndexRows) {
-        cerr << bTeal << "\t  Will consolidate in " << (maxIndexRows - curSize);
+        cerr << bTeal << "\t  will consolidate in " << (maxIndexRows - curSize);
         cerr << " rows (" << curSize << " of " << maxIndexRows << ")" << cOff << endl;
         return true;
     }
@@ -236,14 +263,14 @@ bool COptions::finalize_chunks(CConsolidator *cons) {
     while (curSize > maxIndexRows && !shouldQuit()) {
 
         lockSection(true);
-        cerr << bBlue << "\tConsolidate (pass " + uint_2_Str(pass++) + ")" << endl;
+        cerr << bBlue << "\tconsolidate (pass " + uint_2_Str(pass++) + ")" << endl;
         CStringArray lines;
         lines.reserve(curSize + 100);
         asciiFileToLines(newStage, lines);
         cerr << "\tnewStage: " << newStage << ": " << lines.size() << endl;
 
         string_q prev;
-        cerr << "\tSearching from " << (maxIndexRows-1) << " to " << lines.size() << endl;
+        cerr << "\tsearching from " << (maxIndexRows-1) << " to " << lines.size() << endl;
         cerr << cGreen << "\t\t" << (maxIndexRows-1) << ": " << lines[maxIndexRows-1] << cOff << endl;
         cerr << cGreen << "\t\t" << (maxIndexRows) << ": " << lines[maxIndexRows] << cOff << endl;
         size_t where = 0;
@@ -265,11 +292,11 @@ bool COptions::finalize_chunks(CConsolidator *cons) {
             where = lines.size() - 1;
         }
         cerr << endl;
-        cerr << "\tFound break at " << where << ": " << bBlue << lines[where] << cOff << endl;
+        cerr << "\tfound break at " << where << ": " << bBlue << lines[where] << cOff << endl;
 
         CStringArray consolidatedLines;
         consolidatedLines.reserve(lines.size());
-        cerr << "\tExtract records 0 to " << where << " (inclusive) of " << lines.size() << endl;
+        cerr << "\textract records 0 to " << where << " (inclusive) of " << lines.size() << endl;
         cerr << cGreen << "\t\t" << 0 << ": " << lines[0] << cOff << endl;
         cerr << cGreen << "\t\t" << 1 << ": " << lines[1] << cOff << endl;
         for (uint64_t record = 0 ; record <= where ; record++) {
@@ -305,12 +332,12 @@ bool COptions::finalize_chunks(CConsolidator *cons) {
         sort(consolidatedLines.begin(), consolidatedLines.end());
         string_q binFile = indexFolder_finalized + p1[1] + "-" + p2[1] + ".bin";
         writeIndexAsBinary(binFile, consolidatedLines);
-        cerr << "\tWrote " << bYellow << consolidatedLines.size() << cOff << " records to " << binFile << endl;
+        cerr << "\twrote " << bYellow << consolidatedLines.size() << cOff << " records to " << binFile << endl;
 
         where += 1;
         CStringArray remainingLines;
         remainingLines.reserve(maxIndexRows+100);
-        cerr << "\tExtract records " << where << " to " << lines.size() << " of " << lines.size() << endl;
+        cerr << "\textract records " << where << " to " << lines.size() << " of " << lines.size() << endl;
         cerr << cGreen << "\t\t" << where << ": " << lines[where] << cOff << endl;
         cerr << cGreen << "\t\t" << where+1 << ": " << lines[where+1] << cOff << endl;
         for (uint64_t record = where ; record < lines.size() ; record++) {
@@ -329,7 +356,7 @@ bool COptions::finalize_chunks(CConsolidator *cons) {
         }
         ::remove(newStage.c_str());
         linesToAsciiFile(newStage, remainingLines, true);
-        cerr << "\tWrote " << bMagenta << remainingLines.size() << cOff << " records to " << newStage << endl;
+        cerr << "\twrote " << bMagenta << remainingLines.size() << cOff << " records to " << newStage << endl;
 
         curSize = fileSize(newStage) / 59;
         lockSection(false);
@@ -348,9 +375,12 @@ bool copyRipeToStage(const string_q& path, void *data) {
         timestamp_t ts;
         blknum_t bn = bnFromPath(path, e_unused, ts);
         CConsolidator *con = (CConsolidator *)data;
+        // If we're not one behind, we have a problem
         if ((con->prevBlock + 1) != bn) {
             // For some reason, we're missing a file. Quit and try again next time
             cerr << cRed << "Current file (" << path << ") does not sequentially follow previous file " << con->prevBlock << "." << cOff << endl;
+//            cerr << "Press enter to continue: ";
+//            getchar();
             return false;
         }
         ifstream inputStream(path, ios::in);
@@ -360,21 +390,25 @@ bool copyRipeToStage(const string_q& path, void *data) {
             return false;
         }
         lockSection(true);
-        con->output << inputStream.rdbuf();
-        con->output.flush();
+        con->tmp_file << inputStream.rdbuf();
+        con->tmp_file.flush();
         inputStream.close();
         ::remove(path.c_str());
         con->prevBlock = bn;
-        if (con->ts_bn < bn) {
-            if ((con->ts_bn + 1) != bn) {
-                // For some reason, we're missing a file. Quit and try again next time
-                cerr << cRed << "Timestamps are out of sync. Current file (" << path << ") Previous file (" << con->ts_bn << ")." << cOff << endl;
-                return false;
-            }
-            con->ts_bn = bn;
-            con->ts_output << (uint32_t)ts;
-            con->ts_output.flush();
-        }
+// TS_SCRAPER
+//        if (con->ts_bn < bn) {
+//            // If it's not one less, we have a problem
+//            if ((con->ts_bn + 1) != bn) {
+//                // For some reason, we're missing a file. Quit and try again next time
+//                cerr << cRed << "Timestamps are out of sync. Current file (" << path << ") Previous file (" << con->ts_bn << ")." << cOff << endl;
+//                cerr << "Press enter to continue: ";
+//                getchar();
+//                return false;
+//            }
+//            con->ts_bn = bn;
+//            con->ts_file << (uint32_t)bn << (uint32_t)ts;
+//            con->ts_file.flush();
+//        }
         lockSection(false);
     }
 
@@ -402,22 +436,58 @@ bool appendFile(const string_q& toFile, const string_q& fromFile) {
 }
 
 //--------------------------------------------------------------------------
-CConsolidator::CConsolidator(const string_q& fileName, blknum_t p) {
+CConsolidator::CConsolidator(blknum_t p) {
     prevBlock = p;
+    tmp_fn = indexFolder_staging + "000000000-temp.txt";
+    tmp_file.open(tmp_fn, ios::out | ios::trunc);
 
-    output.open(fileName, ios::out | ios::app);
-
-    string_q tsFile = configPath("ts.bin");
-    if (!fileExists(tsFile)) {
-        // Try to unpack the zip file if there is one
-        string_q zipFile = configPath("ts.bin.gz");
-        if (fileExists(zipFile)) { // first run since install? Let's try to get some timestamps
-            string_q cmd = "cd " + configPath("") + " ; gunzip " + zipFile;
-            cerr << doCommand(cmd) << endl;
-            ASSERT(!fileExists(zipFile));
-        }
-    }
-
-    ts_bn = fileSize(tsFile) / sizeof(uint32_t);
-    ts_output.open(tsFile, ios::out | ios::app);
+// TS_SCRAPER
+//    if (tmp_file.is_open()) {
+//        ts_fn = configPath("ts.bin");
+//        copyFile(ts_fn, ts_fn + ".bak");
+//        if (!fileExists(ts_fn)) {
+//            string_q zipFile = configPath("ts.bin.gz");
+//            if (fileExists(zipFile)) { // first run since install? Let's try to get some timestamps
+//                string_q cmd = "cd " + configPath("") + " ; gunzip " + zipFile;
+//                cerr << doCommand(cmd) << endl;
+//                ASSERT(!fileExists(zipFile));
+//                ASSERT(fileExists(ts_fn));
+//            }
+//        }
+//        ts_bn = fileSize(ts_fn) / sizeof(uint32_t) / 2;
+//        ts_file.open(ts_fn, ios::out | ios::app);
+//    }
 }
+
+// TS_SCRAPER
+//--------------------------------------------------------------------------
+//bool CConsolidator::checkTimestamps(void) {
+//    string_q fn = configPath("ts.bin");
+//    CArchive file(READING_ARCHIVE);
+//    if (!file.Lock(fn, modeReadOnly, LOCK_NOWAIT))
+//        return false;
+//    size_t ts_cnt = ((fileSize(fn) / sizeof(uint32_t)) / 2);
+//    uint32_t *ts_array = new uint32_t[ts_cnt * 2];  // blknum - timestamp
+//    if (!ts_array)
+//        return false;
+//    file.Read(ts_array, sizeof(uint32_t) * 2, ts_cnt);
+//    file.Release();
+//
+//    for (blknum_t bn = ts_cnt - 200 ; bn < ts_cnt ; bn++) {
+//        CBlock block;
+//        getBlock_header(block, bn);
+//        if (block.blockNumber != ts_array[bn*2]) {
+//            cout << "Mismatch on blockNumber at: " << block.blockNumber << " " << ts_array[bn*2] << endl;
+//            delete [] ts_array;
+//            return false;
+//        }
+//        if (block.timestamp != ts_array[bn*2+1]) {
+//            cout << "Mismatch on timestamp at: " << block.timestamp << " " << ts_array[bn*2+1] << endl;
+//            delete [] ts_array;
+//            return false;
+//        }
+//    }
+//
+//    delete [] ts_array;
+//    return true;
+//}
