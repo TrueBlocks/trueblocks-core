@@ -88,7 +88,9 @@ bool COptions::parseArguments(string_q& command) {
             string_q orig = arg;
             arg = substitute(substitute(arg, "-l:", ""), "--sol:", "");
             if (!fileExists(arg))
-                EXIT_USAGE("Solidity file " + arg + " not found in local folder.");
+                arg += ".sol";
+            if (!fileExists(arg))
+                EXIT_USAGE("Solidity file " + orig + " not found in local folder.");
             fromSol = true;
             addrs.push_back(substitute(arg, ".sol", ""));
 

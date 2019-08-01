@@ -27,6 +27,7 @@ bool sol_2_Abi(CAbi& abi, const string_q& addr) {
     replaceAll(contents, "\r", "\n");
     replaceAll(contents, "function ", "~function ");
     replaceAll(contents, "event ", "~event ");
+    replaceAll(contents, " memory ", " ");
     replaceAll(contents, "{", ";");
     cleanString(contents, true);
     snagSignatures(contents);
