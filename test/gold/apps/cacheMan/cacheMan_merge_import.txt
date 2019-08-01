@@ -2,9 +2,9 @@ cacheMan argc: 3 [1:-i] [2:merged]
 cacheMan -i merged 
 merged
 merged.acct.bin
-	Reading cache: merged.acct.bin...22 existing records read.
-	Importing record 26 of 4
+	Reading cache: merged.acct.bin...26 existing records read.
+
 	Sorting...done
 	Writing...Would have written to merged.last.txt with 5001001
-26 records written, 0 records ignored.
+26 records written, 4 records ignored.
 	Written to merged.acct.bin
