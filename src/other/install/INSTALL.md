@@ -13,6 +13,8 @@ If you are the `root` user on your system, you do not need to use `sudo` below. 
 ### for Centos
 
 ```bash
+yum update
+yum upgrade
 sudo yum groupinstall "Development Tools"  
 sudo yum install cmake python python-devel libcurl-devel
 ```
