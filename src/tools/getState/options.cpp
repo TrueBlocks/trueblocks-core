@@ -17,14 +17,14 @@
 static const COption params[] = {
 //#define NEW_CODE
 #ifdef NEW_CODE
-ssssCOption2("addr_list",	null,	"flag",	true,	true,	"one or more addresses (0x...) from which to retrieve balances"),
-ssssCOption2("block_list",	null,	"flag",	true,	true,	"an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
-ssssCOption2("mode",	null,	"<val>",	false,	true,	"control which state to export. One of [none|some|all|balance|nonce|code|storage|deployed|accttype]"),
-ssssCOption2("nozero",	null,	"flag",	false,	true,	"suppress the display of zero balance accounts"),
-ssssCOption2("changes",	null,	"flag",	false,	true,	"only report a balance when it changes from one block to the next"),
-ssssCOption2("noHeader",	null,	"flag",	false,	false,	"hide the header in txt and csv mode"),
-ssssCOption2("fmt",	null,	"<fmt>",	false,	false,	"export format (one of [none|json|txt|csv|api])"),
-ssssCOption2("",	null,	"",	false,	true,	"Retrieve the balance (in wei) for one or more addresses at the given block(s)."),
+    COption2("addr_list",	null,	"flag",	true,	true,	"one or more addresses (0x...) from which to retrieve balances"),
+    COption2("block_list",	null,	"flag",	true,	true,	"an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
+    COption2("mode",	null,	"<val>",	false,	true,	"control which state to export. One of [none|some|all|balance|nonce|code|storage|deployed|accttype]"),
+    COption2("nozero",	null,	"flag",	false,	true,	"suppress the display of zero balance accounts"),
+    COption2("changes",	null,	"flag",	false,	true,	"only report a balance when it changes from one block to the next"),
+    COption2("noHeader",	null,	"flag",	false,	false,	"hide the header in txt and csv mode"),
+    COption2("fmt",	null,	"<fmt>",	false,	false,	"export format (one of [none|json|txt|csv|api])"),
+    COption2("",	null,	"",	false,	true,	"Retrieve the balance (in wei) for one or more addresses at the given block(s)."),
 
 #else // NEW_CODE
     COption("~addr_list",    "one or more addresses (0x...) from which to retrieve balances"),

@@ -17,12 +17,12 @@
 static const COption params[] = {
 //#define NEW_CODE
 #ifdef NEW_CODE
-ssssCOption2("trans_list",	null,	"flag",	true,	true,	"a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
-ssssCOption2("articulate",	null,	"flag",	false,	true,	"articulate the transactions if an ABI is found for the 'to' address"),
-ssssCOption2("fmt",	null,	"<fmt>",	false,	false,	"export format (one of [none|json|txt|csv|api])"),
-ssssCOption2("",	null,	"flag",	false,	true,	"Retrieve a transaction's logs from the local cache or a running node."),
-ssssCOption2("to_file",	null,	"flag",	false,	false,	"send results to a temporary file and return the filename"),
-ssssCOption2("output",	null,	"<fn>",	false,	false,	"send results to file 'fn' and return the filename"),
+    COption2("trans_list",	null,	"flag",	true,	true,	"a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
+    COption2("articulate",	null,	"flag",	false,	true,	"articulate the transactions if an ABI is found for the 'to' address"),
+    COption2("fmt",	null,	"<fmt>",	false,	false,	"export format (one of [none|json|txt|csv|api])"),
+    COption2("",	null,	"flag",	false,	true,	"Retrieve a transaction's logs from the local cache or a running node."),
+    COption2("to_file",	null,	"flag",	false,	false,	"send results to a temporary file and return the filename"),
+    COption2("output",	null,	"<fn>",	false,	false,	"send results to file 'fn' and return the filename"),
 
 #else // NEW_CODE
     COption("~!trans_list",    "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
