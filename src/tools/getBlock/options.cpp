@@ -13,7 +13,15 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
+// BEG_CODE_OPTIONS
 static const COption params[] = {
+//#define NEW_CODE
+#ifdef NEW_CODE
+    // PUT YOUR CODE HERE -- IT WON'T COMPILE UNLESS I UN-COMMENT THE LINE TWO PREVIOUS
+example-->
+    COption2("-hash_only", "n", "flag", true, false, "display only transaction hashes, default is to display full transaction detail"),
+    ...etc
+#else // NEW_CODE
     COption("~block_list",         "a space-separated list of one or more blocks to retrieve"),
     COption("-hash_o(n)ly",        "display only transaction hashes, default is to display full transaction detail"),
     COption("-check",              "compare results between qblocks and Ethereum node, report differences, if any"),
@@ -29,8 +37,10 @@ static const COption params[] = {
     COption("@fields:[a|m|c|r]",   "either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default)"),
     COption("@normalize",          "normalize (remove un-common fields and sort) for comparison with other results (testing)"),
     COption("",                    "Returns block(s) from local cache or directly from a running node.\n"),
+#endif // NEW_CODE
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
+// END_CODE_OPTIONS
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
