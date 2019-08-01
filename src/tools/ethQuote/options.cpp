@@ -17,13 +17,13 @@
 static const COption params[] = {
 //#define NEW_CODE
 #ifdef NEW_CODE
-    COption2("at",	null,	"<timestamp>",	false,	true,	"Report the price since nearest five minutes to the given timestamp"),
-    COption2("current",	null,	"flag",	false,	true,	"Report on the current price (i.e. -at:now)"),
-    COption2("data",	null,	"flag",	false,	true,	"Export prices as JSON data"),
-    COption2("freshen",	null,	"flag",	false,	true,	"Freshen database (append new data)"),
-    COption2("period",	null,	"<5|15|30|*120|240|1440>",	false,	true,	"Display prices in this increment. One of [5|15|30|120*|240|1440]"),
-    COption2("pair",	null,	"<val>",	false,	true,	"Which price pair to freshen or list (see Poloniex)"),
-    COption2("",	null,	"",	false,	true,	"Freshen and/or display Ethereum price data and other purposes."),
+    COption2("at", "", "<timestamp>", false, true, "Report the price since nearest five minutes to the given timestamp"),
+    COption2("current", "", "flag", false, true, "Report on the current price (i.e. -at:now)"),
+    COption2("data", "", "flag", false, true, "Export prices as JSON data"),
+    COption2("freshen", "", "flag", false, true, "Freshen database (append new data)"),
+    COption2("period", "", "<5|15|30|*120|240|1440>", false, true, "Display prices in this increment. One of [5|15|30|120*|240|1440]"),
+    COption2("pair", "", "<val>", false, true, "Which price pair to freshen or list (see Poloniex)"),
+    COption2("", "", "", false, true, "Freshen and/or display Ethereum price data and other purposes."),
 #else // NEW_CODE
     COption("-at:<timestamp>",                 "Report the price since nearest five minutes to the given timestamp"),
     COption("-current",                        "Report on the current price (i.e. -at:now)"),
