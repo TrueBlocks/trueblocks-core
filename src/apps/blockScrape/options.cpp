@@ -71,13 +71,6 @@ bool COptions::parseArguments(string_q& command) {
     latestBlockTs = latest.timestamp;
     latestBlockNum = latest.blockNumber;
 
-    if (!isParity() || !nodeHasTraces()) {
-        string_q errMsg = "You must run Parity with --tracing on for this tool to work.";
-        if (getEnvStr("DOCKER_MODE") == "true")
-            errMsg += " Under docker, enable remote rpc (see Parity help).";
-        return usage(errMsg);
-    }
-
     string_q zeroBin = indexFolder_finalized + padNum9(0) + "-" + padNum9(0) + ".bin";
     if (!fileExists(zeroBin)) {
         ASSERT(prefunds.size() == 8893);  // This is a known value
@@ -97,6 +90,22 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     const CToml *config = getGlobalConfig("blockScrape");
+    bool needsParity = config->getConfigBool("requires", "parity", true);
+    if (needsParity && !isParity())
+        return usage("This tool requires Parity. Quitting...");
+
+    bool needsTracing = config->getConfigBool("requires", "tracing", true);
+    if (needsTracing && !nodeHasTraces()) {
+        string_q errMsg = "You must be running Parity with `--tracing on` for this tool to work properly.";
+        if (getEnvStr("DOCKER_MODE") == "true")
+            errMsg += " If you're running docker, enable remote RPC endpoints (see Parity help).";
+        return usage(errMsg);
+    }
+
+    bool needsBalances = config->getConfigBool("requires", "balances", false);
+    if (needsBalances && !nodeHasBalances())
+        return usage("This tool requires an --archive node with historical balances. Quitting...");
+
     nBlocks     = config->getConfigInt("settings", "nBlocks",     (nBlocks     == NOPOS ? 2000 : nBlocks    ));
     nBlockProcs = config->getConfigInt("settings", "nBlockProcs", (nBlockProcs == NOPOS ?   10 : nBlockProcs));
     nAddrProcs  = config->getConfigInt("settings", "nAddrProcs",  (nAddrProcs  == NOPOS ?   20 : nAddrProcs ));
