@@ -18,19 +18,20 @@
 static const COption params[] = {
 //#define NEW_CODE
 #ifdef NEW_CODE
-	COption2("addr_list",	null,	"flag",	true,	true,	"list of one or more smart contracts whose ABI to grab from EtherScan"),
-	COption2("canonical",	null,	"flag",	false,	true,	"convert all types to their canonical represenation and remove all spaces from display"),
-	COption2("generate",	null,	"flag",	false,	true,	"generate C++ code into the current folder for all functions and events found in the ABI"),
-	COption2("data",	null,	"flag",	false,	true,	"export the display as data"),
-	COption2("encode",	null,	"flag",	false,	true,	"generate the encodings for the functions / events in the ABI"),
-	COption2("json",	null,	"flag",	false,	true,	"print the ABI to the screen as json"),
-	COption2("noconst",	null,	"flag",	false,	true,	"generate encodings for non-constant functions and events only (always true when generating)"),
-	COption2("sol",	null,	"<fn>",	false,	true,	"create the ABI file from a .sol file in the local directory"),
-	COption2("open",	null,	"flag",	false,	false,	"open the ABI file for editing, download if not already present"),
-	COption2("silent",	null,	"flag",	false,	false,	"if ABI cannot be acquired, fail silently (useful for scripting)"),
-	COption2("nodec",	null,	"flag",	false,	false,	"do not decorate duplicate names"),
-	COption2("known",	null,	"flag",	false,	false,	"load common 'known' ABIs from cache"),
-	COption2("",	null,	"",	false,	true,	"Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.")
+ssssCOption2("addr_list",	null,	"flag",	true,	true,	"list of one or more smart contracts whose ABI to grab from EtherScan"),
+ssssCOption2("canonical",	null,	"flag",	false,	true,	"convert all types to their canonical represenation and remove all spaces from display"),
+ssssCOption2("generate",	null,	"flag",	false,	true,	"generate C++ code into the current folder for all functions and events found in the ABI"),
+ssssCOption2("data",	null,	"flag",	false,	true,	"export the display as data"),
+ssssCOption2("encode",	null,	"flag",	false,	true,	"generate the encodings for the functions / events in the ABI"),
+ssssCOption2("json",	null,	"flag",	false,	true,	"print the ABI to the screen as json"),
+ssssCOption2("noconst",	null,	"flag",	false,	true,	"generate encodings for non-constant functions and events only (always true when generating)"),
+ssssCOption2("sol",	null,	"<fn>",	false,	true,	"create the ABI file from a .sol file in the local directory"),
+ssssCOption2("open",	null,	"flag",	false,	false,	"open the ABI file for editing, download if not already present"),
+ssssCOption2("silent",	null,	"flag",	false,	false,	"if ABI cannot be acquired, fail silently (useful for scripting)"),
+ssssCOption2("nodec",	null,	"flag",	false,	false,	"do not decorate duplicate names"),
+ssssCOption2("known",	null,	"flag",	false,	false,	"load common 'known' ABIs from cache"),
+ssssCOption2("",	null,	"",	false,	true,	"Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI."),
+
 #else // NEW_CODE
     COption("~addr_list",  "list of one or more smart contracts whose ABI to grab from EtherScan"),
     COption("-canonical",  "convert all types to their canonical represenation and remove all spaces from display"),
