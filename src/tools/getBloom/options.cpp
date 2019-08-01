@@ -17,17 +17,17 @@
 static const COption params[] = {
 //#define NEW_CODE
 #ifdef NEW_CODE
-    COption2("block_list",	null,	"flag",	true,	true,	"a space-separated list of one or more blocks for which to retrieve blooms"),
-    COption2("eab",	null,	"flag",	false,	true,	"pull the enhanced adaptive blooms from QBlocks cache"),
-    COption2("block",	null,	"flag",	false,	true,	"show only the block-level bloom (--raw only)"),
-    COption2("receipts",	null,	"flag",	false,	true,	"show only the receipt-level blooms (--raw only)"),
-    COption2("bits",	null,	"flag",	false,	true,	"display blooms as bits instead of hex"),
-    COption2("bars",	null,	"flag",	false,	true,	"display blooms as bar chart instead of hex"),
-    COption2("bitbars",	null,	"flag",	false,	true,	"display nBits as a bar chart"),
-    COption2("pctbars",	null,	"flag",	false,	true,	"display nBits as a percentage of bloom space"),
-    COption2("bitcount",	null,	"flag",	false,	true,	"display the number of bits lit per bloom"),
-    COption2("force",	null,	"flag",	false,	false,	"force a re-write of the bloom to the cache"),
-    COption2("",	null,	"",	false,	true,	"Returns bloom filter(s) from running node (the default) or as EAB from QBlocks."),
+    COption2("block_list", "", "flag", true, true, "a space-separated list of one or more blocks for which to retrieve blooms"),
+    COption2("eab", "", "flag", false, true, "pull the enhanced adaptive blooms from QBlocks cache"),
+    COption2("block", "", "flag", false, true, "show only the block-level bloom (--raw only)"),
+    COption2("receipts", "", "flag", false, true, "show only the receipt-level blooms (--raw only)"),
+    COption2("bits", "", "flag", false, true, "display blooms as bits instead of hex"),
+    COption2("bars", "", "flag", false, true, "display blooms as bar chart instead of hex"),
+    COption2("bitbars", "", "flag", false, true, "display nBits as a bar chart"),
+    COption2("pctbars", "", "flag", false, true, "display nBits as a percentage of bloom space"),
+    COption2("bitcount", "", "flag", false, true, "display the number of bits lit per bloom"),
+    COption2("force", "", "flag", false, false, "force a re-write of the bloom to the cache"),
+    COption2("", "", "", false, true, "Returns bloom filter(s) from running node (the default) or as EAB from QBlocks."),
 #else // NEW_CODE
     COption("~block_list",  "a space-separated list of one or more blocks for which to retrieve blooms"),
     COption("-eab",         "pull the enhanced adaptive blooms from QBlocks cache"),
