@@ -15,6 +15,10 @@
 
 namespace qblocks {
 
+// known timestamps
+#define blockZeroTs        1438269960
+
+// known blocks
 #define firstTransactionBlock   46147
 #define firstTraceBlock         50871
 #define byzantiumBlock        4370000

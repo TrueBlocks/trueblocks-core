@@ -126,7 +126,7 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
             queryBlock(gold, numStr, (opt.api_mode ? false : true));
         }
         if (gold.blockNumber == 0 && gold.timestamp == 0)
-            gold.timestamp = 1438269960;
+            gold.timestamp = blockZeroTs;
         gold.finalized = isBlockFinal(gold.timestamp, opt.latest.timestamp);
 
         if (opt.force) {  // turn this on to force a write of the block to the disc
