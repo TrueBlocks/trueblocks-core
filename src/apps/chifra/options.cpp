@@ -7,12 +7,18 @@
 #include "question.h"
 
 //---------------------------------------------------------------------------------------------------
+// BEG_CODE_OPTIONS
 static const COption params[] = {
+//#define NEW_CODE
+#ifdef NEW_CODE
+#else // NEW_CODE
     COption("~command", "one of [ leech | scrape | list | export | balances | stats | ls | rm | accounts | config | slurp | quotes | data | blocks | trans | receipts | logs | traces | state | abi ]"),
     COption("-sleep:<num>", "for the 'scrape' command, the number of seconds chifra should sleep between runs (default 14 if caught up, zero otherwise)"),
     COption("",         "Create a TrueBlocks monitor configuration.\n"),
+#endif
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
+// END_CODE_OPTIONS
 
 extern bool visitIndexFiles(const string_q& path, void *data);
 //---------------------------------------------------------------------------------------------------

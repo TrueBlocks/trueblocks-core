@@ -13,7 +13,12 @@
 #include "utillib.h"
 #include "options.h"
 
+//---------------------------------------------------------------------------------------------------
+// BEG_CODE_OPTIONS
 static const COption params[] = {
+//#define NEW_CODE
+#ifdef NEW_CODE
+#else // NEW_CODE
     COption("~className",          "name of C++ class(es) to process"),
     COption("-open",               "edit <className(s)> definition file in local folder"),
     COption("-run",                "run the class maker on associated <className(s)>"),
@@ -27,8 +32,10 @@ static const COption params[] = {
     COption("-all",                "clear, edit, list, or run all class definitions found in the local folder"),
     COption("@edit",               "edit <className(s)> definition file in local folder"),
     COption("",                    "Creates C++ code based on definition file at ./classDefinition/<className>.\n"),
+#endif
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
+// END_CODE_OPTIONS
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

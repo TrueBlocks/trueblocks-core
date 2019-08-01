@@ -13,7 +13,11 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
+// BEG_CODE_OPTIONS
 static const COption params[] = {
+//#define NEW_CODE
+#ifdef NEW_CODE
+#else // NEW_CODE
     COption("-at:<timestamp>",                 "Report the price since nearest five minutes to the given timestamp"),
     COption("-current",                        "Report on the current price (i.e. -at:now)"),
     COption("-data",                           "Export prices as JSON data"),
@@ -21,8 +25,10 @@ static const COption params[] = {
     COption("-period:<5|15|30|*120|240|1440>", "Display prices in this increment. One of [5|15|30|120*|240|1440]"),
     COption("-pair:<val>",                     "Which price pair to freshen or list (see Poloniex)"),
     COption("",                                "Freshen and/or display Ethereum price data and other purposes.\n"),
+#endif
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
+// END_CODE_OPTIONS
 
 extern const char* STR_DISPLAY;
 //---------------------------------------------------------------------------------------------------
