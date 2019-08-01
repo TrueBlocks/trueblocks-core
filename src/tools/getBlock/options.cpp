@@ -17,6 +17,21 @@
 static const COption params[] = {
 //#define NEW_CODE
 #ifdef NEW_CODE
+	COption2("block_list",	null,	"flag",	true,	true,	"a space-separated list of one or more blocks to retrieve"),
+	COption2("hash_only",	null,	"flag",	false,	true,	"display only transaction hashes, default is to display full transaction detail"),
+	COption2("check",	null,	"flag",	false,	true,	"compare results between qblocks and Ethereum node, report differences, if any"),
+	COption2("addrs",	null,	"flag",	false,	true,	"display all addresses included in the block"),
+	COption2("uniq",	null,	"flag",	false,	true,	"display only uniq addresses found per block"),
+	COption2("uniqTx",	null,	"flag",	false,	true,	"display only uniq addresses found per transaction"),
+	COption2("number",	null,	"flag",	false,	true,	"display address counts (alterntively --addrCnt, --uniqTxCnt, or --uniqCnt)"),
+	COption2("filter",	null,	"<addr>",	false,	true,	"useful only for --addrs or --uniq, only display this address in results"),
+	COption2("latest",	null,	"flag",	false,	false,	"display the latest blocks at both the node and the cache"),
+	COption2("force",	null,	"flag",	false,	false,	"force a re-write of the block to the cache"),
+	COption2("quiet",	null,	"flag",	false,	false,	"do not print results to screen, used for speed testing and data checking"),
+	COption2("source",	null,	"[c|r]",	false,	false,	"either :c(a)che or :(r)aw, source for data retrival. (shortcuts -c = qblocks, -r = node)"),
+	COption2("fields",	null,	"[a|m|c|r]",	false,	false,	"either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default)"),
+	COption2("normalize",	null,	"flag",	false,	false,	"normalize (remove un-common fields and sort) for comparison with other results (testing)"),
+	COption2("",	null,	"",	false,	true,	"Returns block(s) from local cache or directly from a running node.")
 #else // NEW_CODE
     COption("~block_list",         "a space-separated list of one or more blocks to retrieve"),
     COption("-hash_o(n)ly",        "display only transaction hashes, default is to display full transaction detail"),
