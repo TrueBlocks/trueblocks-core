@@ -17,11 +17,11 @@
 static const COption params[] = {
 //#define NEW_CODE
 #ifdef NEW_CODE
-ssssCOption2("block",	null,	"flag",	true,	true,	"one or more block numbers (or a 'special' block), or..."),
-ssssCOption2("date",	null,	"flag",	true,	true,	"one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]"),
-ssssCOption2("list",	null,	"flag",	false,	true,	"export all the named blocks"),
-ssssCOption2("fmt",	null,	"<fmt>",	false,	false,	"export format (one of [none|json|txt|csv|api])"),
-ssssCOption2("",	null,	"",	false,	true,	"Finds the nearest block prior to a date, or the nearest date prior to a block.\n Alternatively, search for one of special 'named' blocks."),
+    COption2("block",	null,	"flag",	true,	true,	"one or more block numbers (or a 'special' block), or..."),
+    COption2("date",	null,	"flag",	true,	true,	"one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]"),
+    COption2("list",	null,	"flag",	false,	true,	"export all the named blocks"),
+    COption2("fmt",	null,	"<fmt>",	false,	false,	"export format (one of [none|json|txt|csv|api])"),
+    COption2("",	null,	"",	false,	true,	"Finds the nearest block prior to a date, or the nearest date prior to a block.\n Alternatively, search for one of special 'named' blocks."),
 
 #else // NEW_CODE
     COption("~!block",    "one or more block numbers (or a 'special' block), or..."),

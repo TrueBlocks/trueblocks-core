@@ -11,9 +11,9 @@
 static const COption params[] = {
 //#define NEW_CODE
 #ifdef NEW_CODE
-ssssCOption2("command",	null,	"flag",	true,	true,	"one of [ leech | scrape | daemon | list | export | balances | stats | ls | rm | accounts | config | slurp | quotes | data | blocks | trans | receipts | logs | traces | state | abi ]"),
-ssssCOption2("sleep",	null,	"<num>",	false,	true,	"for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 0)"),
-ssssCOption2("",	null,	"",	false,	true,	"Create a TrueBlocks monitor configuration."),
+    COption2("command",	null,	"flag",	true,	true,	"one of [ leech | scrape | daemon | list | export | balances | stats | ls | rm | accounts | config | slurp | quotes | data | blocks | trans | receipts | logs | traces | state | abi ]"),
+    COption2("sleep",	null,	"<num>",	false,	true,	"for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 0)"),
+    COption2("",	null,	"",	false,	true,	"Create a TrueBlocks monitor configuration."),
 
 #else // NEW_CODE
     COption("~command", "one of [ leech | scrape | list | export | balances | stats | ls | rm | accounts | config | slurp | quotes | data | blocks | trans | receipts | logs | traces | state | abi ]"),
