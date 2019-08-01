@@ -17,17 +17,18 @@
 static const COption params[] = {
 //#define NEW_CODE
 #ifdef NEW_CODE
-	COption2("terms",	null,	"flag",	true,	true,	"a space separated list of one or more search terms"),
-	COption2("expand",	null,	"flag",	false,	true,	"expand search to include all fields (default searches name, address, and symbol only)"),
-	COption2("matchCase",	null,	"flag",	false,	true,	"do case-sensitive search"),
-	COption2("owned",	null,	"flag",	false,	true,	"Include personal accounts in the search"),
-	COption2("custom",	null,	"flag",	false,	true,	"Include your custom named accounts"),
-	COption2("prefund",	null,	"flag",	false,	true,	"Include prefund accounts"),
-	COption2("named",	null,	"flag",	false,	true,	"Include well know token and airdrop addresses in the search"),
-	COption2("addr",	null,	"flag",	false,	true,	"display only addresses in the results (useful for scripting)"),
-	COption2("fmt",	null,	"<fmt>",	false,	false,	"export format (one of [none|json|txt|csv|api])"),
-	COption2("other",	null,	"flag",	false,	false,	"export other addresses if found"),
-	COption2("",	null,	"flag",	false,	true,	"Query addresses and/or names well known accounts.\n")
+ssssCOption2("terms",	null,	"flag",	true,	true,	"a space separated list of one or more search terms"),
+ssssCOption2("expand",	null,	"flag",	false,	true,	"expand search to include all fields (default searches name, address, and symbol only)"),
+ssssCOption2("matchCase",	null,	"flag",	false,	true,	"do case-sensitive search"),
+ssssCOption2("owned",	null,	"flag",	false,	true,	"Include personal accounts in the search"),
+ssssCOption2("custom",	null,	"flag",	false,	true,	"Include your custom named accounts"),
+ssssCOption2("prefund",	null,	"flag",	false,	true,	"Include prefund accounts"),
+ssssCOption2("named",	null,	"flag",	false,	true,	"Include well know token and airdrop addresses in the search"),
+ssssCOption2("addr",	null,	"flag",	false,	true,	"display only addresses in the results (useful for scripting)"),
+ssssCOption2("fmt",	null,	"<fmt>",	false,	false,	"export format (one of [none|json|txt|csv|api])"),
+ssssCOption2("other",	null,	"flag",	false,	false,	"export other addresses if found"),
+ssssCOption2("",	null,	"flag",	false,	true,	"Query addresses and/or names well known accounts.\n"),
+
 #else // NEW_CODE
     COption("~terms",       "a space separated list of one or more search terms"),
     COption("-expand",      "expand search to include all fields (default searches name, address, and symbol only)"),
