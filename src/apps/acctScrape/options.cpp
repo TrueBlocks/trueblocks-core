@@ -75,11 +75,6 @@ bool COptions::parseArguments(string_q& command) {
     if (monitors.size() == 0)
         return usage("You must provide at least one Ethereum address. Quitting...");
 
-    if (getCurlContext()->nodeRequired) {
-        if (!isParity() || !nodeHasTraces())
-            return usage("This tool requires a running Parity node with --tracing enabled. Quitting...");
-    }
-
     establishFolder(getMonitorPath("", FM_PRODUCTION));
     establishFolder(getMonitorPath("", FM_STAGING));
     establishFolder(indexFolder_finalized);
