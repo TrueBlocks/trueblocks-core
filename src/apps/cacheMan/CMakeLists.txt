@@ -65,12 +65,12 @@ run_special_test("cacheMan_txtTip"         "--fmt"  " txt" " 0x55555333335555533
 run_special_test("cacheMan_csvTip"         "--fmt"  " csv" " 0x5555533333555553333355555333335555533333")
 run_special_test("cacheMan_jsonTip"        "--fmt"  " json" " 0x5555533333555553333355555333335555533333")
 
-run_special_test("cacheMan_merge"          "-md" " 0x5555533333555553333355555333335555533333" " 0x9876543210987654321098765432109876543210")
-run_special_test("cacheMan_merge_list"     "-l"  " merged")
-run_special_test("cacheMan_merge_remove"   "-r"  " merged")
-run_special_test("cacheMan_merge_rlist"    "-l"  " merged")
-run_special_test("cacheMan_merge_import"   "-i"  " merged")
-run_special_test("cacheMan_merge_ilist"    "-l"  " merged")
+#run_special_test("cacheMan_merge"          "-md" " 0x5555533333555553333355555333335555533333" " 0x9876543210987654321098765432109876543210")
+#run_special_test("cacheMan_merge_list"     "-l"  " merged")
+#run_special_test("cacheMan_merge_remove"   "-r"  " merged")
+#run_special_test("cacheMan_merge_rlist"    "-l"  " merged")
+#run_special_test("cacheMan_merge_import"   "-i"  " merged")
+#run_special_test("cacheMan_merge_ilist"    "-l"  " merged")
 
 #run_special_test("cacheMan_extract"        "-e"  " 0" " 0x5555533333555553333355555333335555533333" " 0x9876543210987654321098765432109876543210" " --list" " --data")
 #run_special_test("cacheMan_extract_list"   "-l"  " extract" " --data")
