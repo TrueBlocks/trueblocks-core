@@ -200,7 +200,7 @@ void COptions::applyFilter() {
             }
             // TODO(tjayrush): this should be in the library so every request for zero block gets a valid blockNumber
             if (block.blockNumber == 0)
-                block.timestamp = 1438269960;
+                block.timestamp = blockZeroTs;
             block.name = request.second;
             items[block.blockNumber] = block;
 
