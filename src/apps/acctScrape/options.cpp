@@ -10,6 +10,13 @@
 static const COption params[] = {
 //#define NEW_CODE
 #ifdef NEW_CODE
+	COption2("addr_list",	null,	"flag",	true,	true,	"one or more Ethereum addresses"),
+	COption2("noBlooms",	null,	"flag",	false,	false,	"turn off bloom filters for performance testing"),
+	COption2("staging",	null,	"flag",	false,	false,	"produce results in the staging folder instead of production folder"),
+	COption2("unripe",	null,	"flag",	false,	false,	"visit unripe (not old enough and not yet staged or finalized) blocks"),
+	COption2("daemon",	null,	"flag",	false,	false,	"we are being called in daemon mode which causes us to print results differently"),
+	COption2("start",	null,	"<num>",	false,	false,	"first block to check"),
+	COption2("",	null,	"flag",	false,	true,	"Index transactions for a given Ethereum address (or series of addresses).")
 #else // NEW_CODE
     COption("~addr_list",       "one or more Ethereum addresses"),
     COption("@noBlooms",        "turn off bloom filters for performance testing"),
