@@ -26,7 +26,6 @@ static const COption params[] = {
     COption2("kBlock",	null,	"<num>",	false,	true,	"start processing at block :k"),
     COption2("offset",	null,	"<num>",	false,	true,	"offset to kBlock"),
     COption2("",	null,	"flag",	false,	true,	"Index transactions for a given Ethereum address (or series of addresses)."),
-
 #else // NEW_CODE
     COption("-parse",        "display parsed input data"),
     COption("-lo(g)s",       "display smart contract lo(g)s or events"),
