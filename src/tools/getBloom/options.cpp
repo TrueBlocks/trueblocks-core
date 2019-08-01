@@ -28,7 +28,6 @@ static const COption params[] = {
     COption2("bitcount",	null,	"flag",	false,	true,	"display the number of bits lit per bloom"),
     COption2("force",	null,	"flag",	false,	false,	"force a re-write of the bloom to the cache"),
     COption2("",	null,	"",	false,	true,	"Returns bloom filter(s) from running node (the default) or as EAB from QBlocks."),
-
 #else // NEW_CODE
     COption("~block_list",  "a space-separated list of one or more blocks for which to retrieve blooms"),
     COption("-eab",         "pull the enhanced adaptive blooms from QBlocks cache"),

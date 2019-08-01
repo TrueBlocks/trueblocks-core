@@ -29,7 +29,6 @@ static const COption params[] = {
     COption2("",	null,	"",	false,	true,	"Export full detail of transactions for one or more Ethereum addresses."),
     COption2("to_file",	null,	"flag",	false,	false,	"send results to a temporary file and return the filename"),
     COption2("output",	null,	"<fn>",	false,	false,	"send results to file 'fn' and return the filename"),
-
 #else // NEW_CODE
     COption("~addr_list",         "one or more addresses (0x...) to export"),
     COption("-fmt:<fmt>",         "export format (one of [json|txt|csv])"),

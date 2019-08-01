@@ -32,7 +32,6 @@ static const COption params[] = {
     COption2("fields",	null,	"[a|m|c|r]",	false,	false,	"either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default)"),
     COption2("normalize",	null,	"flag",	false,	false,	"normalize (remove un-common fields and sort) for comparison with other results (testing)"),
     COption2("",	null,	"",	false,	true,	"Returns block(s) from local cache or directly from a running node."),
-
 #else // NEW_CODE
     COption("~block_list",         "a space-separated list of one or more blocks to retrieve"),
     COption("-hash_o(n)ly",        "display only transaction hashes, default is to display full transaction detail"),

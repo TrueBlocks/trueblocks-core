@@ -25,7 +25,6 @@ static const COption params[] = {
     COption2("noHeader",	null,	"flag",	false,	false,	"hide the header in txt and csv mode"),
     COption2("fmt",	null,	"<fmt>",	false,	false,	"export format (one of [none|json|txt|csv|api])"),
     COption2("",	null,	"",	false,	true,	"Retrieve the balance (in wei) for one or more addresses at the given block(s)."),
-
 #else // NEW_CODE
     COption("~addr_list",    "one or more addresses (0x...) from which to retrieve balances"),
     COption("~!block_list",  "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),

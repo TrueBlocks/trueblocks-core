@@ -17,7 +17,6 @@ static const COption params[] = {
     COption2("daemon",	null,	"flag",	false,	false,	"we are being called in daemon mode which causes us to print results differently"),
     COption2("start",	null,	"<num>",	false,	false,	"first block to check"),
     COption2("",	null,	"flag",	false,	true,	"Index transactions for a given Ethereum address (or series of addresses)."),
-
 #else // NEW_CODE
     COption("~addr_list",       "one or more Ethereum addresses"),
     COption("@noBlooms",        "turn off bloom filters for performance testing"),

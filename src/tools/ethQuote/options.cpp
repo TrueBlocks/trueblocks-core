@@ -24,7 +24,6 @@ static const COption params[] = {
     COption2("period",	null,	"<5|15|30|*120|240|1440>",	false,	true,	"Display prices in this increment. One of [5|15|30|120*|240|1440]"),
     COption2("pair",	null,	"<val>",	false,	true,	"Which price pair to freshen or list (see Poloniex)"),
     COption2("",	null,	"",	false,	true,	"Freshen and/or display Ethereum price data and other purposes."),
-
 #else // NEW_CODE
     COption("-at:<timestamp>",                 "Report the price since nearest five minutes to the given timestamp"),
     COption("-current",                        "Report on the current price (i.e. -at:now)"),

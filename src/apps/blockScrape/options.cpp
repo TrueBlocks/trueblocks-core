@@ -14,7 +14,6 @@ static const COption params[] = {
     COption2("nBlockProcs",	null,	"<num>",	false,	false,	"number of block channels for blaze"),
     COption2("nAddrProcs",	null,	"<num>",	false,	false,	"number of address channels for blaze"),
     COption2("",	null,	"",	false,	true,	"Decentralized blockchain scraper and block cache."),
-
 #else // NEW_CODE
     COption("-nBlocks:<num>",     "maximum number of blocks to process (defaults to 5000)"),
     COption("@nBlockProcs:<num>", "number of block channels for blaze"),
