@@ -125,6 +125,19 @@ extern void loadParseMap(void);
         return getBlock_light(block, uint_2_Hex(num));
     }
 
+    //--------------------------------------------------------------------------------
+    bool getBlock_header(CBlock& block, const string_q& val) {
+        getObjectViaRPC(block, "parity_getBlockHeaderByNumber", "["+quote(val)+"]");
+        return true;
+    }
+
+    //--------------------------------------------------------------------------------
+    bool getBlock_header(CBlock& block, blknum_t bn) {
+        if (fileSize(getBinaryCacheFilename(CT_BLOCKS, bn)) > 0)
+            return readBlockFromBinary(block, getBinaryCacheFilename(CT_BLOCKS, bn));
+        return getBlock_header(block, uint_2_Hex(bn));
+    }
+
     //-------------------------------------------------------------------------
     bool getBlock(CBlock& block, blknum_t blockNum) {
         getCurlContext()->provider = fileExists(getBinaryCacheFilename(CT_BLOCKS, blockNum)) ? "binary" : "local";
@@ -1206,6 +1219,64 @@ extern void loadParseMap(void);
                 return true;
         }
         return (getTraceCount(trans->hash) > maxTraces);
+    }
+
+    //-----------------------------------------------------------------------
+    bool freshenTimestampFile(blknum_t minBlock) {
+
+        string_q fn = configPath("ts.bin");
+        if (!fileExists(fn)) {
+            string_q zipFile = configPath("ts.bin.gz");
+            if (fileExists(zipFile)) { // first run since install? Let's try to get some timestamps
+                string_q cmd = "cd " + configPath("") + " ; gunzip " + zipFile;
+                cerr << doCommand(cmd) << endl;
+                ASSERT(!fileExists(zipFile));
+                ASSERT(fileExists(fn));
+            }
+        }
+
+        size_t nRecords = ((fileSize(fn) / sizeof(uint32_t)) / 2);
+        if (nRecords >= minBlock)
+            return true;
+
+        if (fileExists(fn + ".lck"))  // it's being updated elsewhere
+            return true;
+
+        CArchive file(WRITING_ARCHIVE);
+        if (!file.Lock(fn, modeWriteAppend, LOCK_NOWAIT)) {
+            cerr << "Failed to open ts.bin" << endl;
+            return false;
+        }
+
+        if (nRecords == 0) {
+            file << (uint32_t)0 << (uint32_t)blockZeroTs;
+            file.flush();
+            cerr << "\t" << padNum9(0) << "\t";
+            cerr << blockZeroTs << "\t";
+            cerr << ts_2_Date(blockZeroTs).Format(FMT_EXPORT);
+            cerr << "          \r";
+            cerr.flush();
+        }
+
+        CBlock block;
+        for (blknum_t bn = nRecords ; bn <= minBlock ; bn++) {
+            block = CBlock(); // reset
+            getBlock_header(block, bn);
+            file << ((uint32_t)block.blockNumber) << ((uint32_t)block.timestamp);
+            file.flush();
+            cerr << "\t" << padNum9(block.blockNumber) << "\t";
+            cerr << block.timestamp << "\t";
+            cerr << ts_2_Date(block.timestamp).Format(FMT_EXPORT);
+            cerr << "          \r";
+            cerr.flush();
+        }
+        cerr << cTeal << "\t  updated " << (minBlock - nRecords);
+        cerr << " timestamps to " << block.blockNumber << " (";
+        cerr << block.timestamp << " - ";
+        cerr << ts_2_Date(block.timestamp).Format(FMT_EXPORT) << ")" << cOff << endl;
+
+        file.Release();
+        return true;
     }
 
     //-----------------------------------------------------------------------

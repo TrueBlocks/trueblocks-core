@@ -353,7 +353,11 @@ bool COptions::loadData(void) {
     if (hasFuture)
         LOG_WARN("Cache file contains blocks ahead of the chain. Some items will not be exported.");
 
-    if (!loadTsArray(items[items.size()-1].blk)) {
+    if (!freshenTimestampFile(items[items.size()-1].blk)) {
+        EXIT_FAIL("Could not freshen timestamp file.");
+    }
+
+    if (!loadTsArray()) {
         EXIT_FAIL("Could not open timestamp file.");
     }
 
@@ -361,7 +365,7 @@ bool COptions::loadData(void) {
 }
 
 //-----------------------------------------------------------------------
-bool COptions::loadTsArray(blknum_t last) {
+bool COptions::loadTsArray() {
 
     if (ts_array) {
         delete [] ts_array;
@@ -370,8 +374,8 @@ bool COptions::loadTsArray(blknum_t last) {
     }
 
     string_q fn = configPath("ts.bin");
-    ts_cnt = fileSize(fn) / sizeof(uint32_t);
-    ts_array = new uint32_t[ts_cnt];
+    ts_cnt = ((fileSize(fn) / sizeof(uint32_t)) / 2);
+    ts_array = new uint32_t[ts_cnt * 2];  // blknum - timestamp
     if (!ts_array)
         return false;
 
@@ -379,8 +383,9 @@ bool COptions::loadTsArray(blknum_t last) {
     if (!in.Lock(fn, modeReadOnly, LOCK_NOWAIT))
         return false;
 
-    in.Read(ts_array, sizeof(uint32_t), ts_cnt);
+    in.Read(ts_array, sizeof(uint32_t) * 2, ts_cnt);
     in.Release();
+
     return true;
 }
 

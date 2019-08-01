@@ -9,11 +9,18 @@
 //--------------------------------------------------------------------------
 class CConsolidator {
 public:
-    ofstream output;
-    ofstream ts_output;
-    blknum_t ts_bn;
+    ofstream tmp_file;
+    string_q tmp_fn;
+
+// TS_SCRAPER
+//    string_q ts_fn;
+//    ofstream ts_file;
+//    blknum_t ts_bn;
+
     blknum_t prevBlock;
-    CConsolidator(const string_q& fileName, blknum_t p);
+    CConsolidator(blknum_t p);
+// TS_SCRAPER
+//    bool checkTimestamps(void);
 
 private:
     CConsolidator(void) {}

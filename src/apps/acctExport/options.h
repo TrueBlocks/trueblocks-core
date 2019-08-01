@@ -39,5 +39,5 @@ public:
     bool loadMonitorData(CAppearanceArray_base& apps, const address_t& addr);
     bool loadData(void);
     bool exportData(void);
-    bool loadTsArray(blknum_t blk);
+    bool loadTsArray(void);
 };
