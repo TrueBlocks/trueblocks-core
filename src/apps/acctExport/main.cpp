@@ -29,7 +29,7 @@ bool COptions::exportData(void) {
                 readTransFromBinary(trans, txFilename);
                 trans.finishParse();
                 trans.pBlock = &block;
-                block.timestamp = trans.timestamp = (timestamp_t)ts_array[item->blk];
+                block.timestamp = trans.timestamp = (timestamp_t)ts_array[(item->blk*2)+1];
 
             } else {
                 if (item->blk == 0) {
@@ -44,7 +44,7 @@ bool COptions::exportData(void) {
                     getFullReceipt(&trans, true);
                 }
                 trans.pBlock = &block;
-                trans.timestamp = block.timestamp = (timestamp_t)ts_array[item->blk];
+                trans.timestamp = block.timestamp = (timestamp_t)ts_array[(item->blk*2)+1];
                 if (writeTrxs && !fileExists(txFilename))
                     writeTransToBinary(trans, txFilename);
             }
@@ -159,13 +159,7 @@ bool COptions::exportData(void) {
     }
 
 #if 0
-    /*
-     Do we really need to store both trace 0 and the transaction? I think not, so we store only trace 1 and on
-     writeNodeToBinary but do so as an array and start at item 1 not item 0
-     We need to handle the non-txt case where we're exporting the fully articulated transaction, all it's traces, all its data
-     We want to name everything we can name
-     What about the header in trace mode -- different for each trace, trans, receipt, log
-     */
+/* We need to handle the non-txt case where we're exporting the fully articulated transaction, all it's traces, all its data */
 #endif
 
     cerr << "Exported " << nExported << " of " << items.size() << " records." << string_q(45,' ') << "\n";

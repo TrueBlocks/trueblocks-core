@@ -128,21 +128,25 @@ bool COptions::handle_scrape(void) {
                 cout << os.str() << endl;
             else {
                 if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
-            }
 
-            if (daemonMode) {
-                CStringArray files;
-                listFilesInFolder(files, getMonitorPath("*.acct.bin"), false);
-                CAddressArray runs;
-                if (files.size()) {
-                    for (auto file : files) {
-                        file = substitute(substitute(file, getMonitorPath(""), ""), ".acct.bin", "");
-                        if (isAddress(file))
-                            runs.push_back(file);
+                // always catch the timestamp file up to the scraper
+                freshenTimestampFile(getLastBlock_cache_ripe());
+
+                // sometimes catch the monitors addresses up to the scraper
+                if (daemonMode) {
+                    CStringArray files;
+                    listFilesInFolder(files, getMonitorPath("*.acct.bin"), false);
+                    CAddressArray runs;
+                    if (files.size()) {
+                        for (auto file : files) {
+                            file = substitute(substitute(file, getMonitorPath(""), ""), ".acct.bin", "");
+                            if (isAddress(file))
+                                runs.push_back(file);
+                        }
+                        if (runs.size())
+                            freshen_internal(FM_PRODUCTION, runs, "--daemon", freshen_flags);
+                        cerr << "\t  freshening: " << cYellow << "    finished." << cOff << "                                          " << endl;
                     }
-                    if (runs.size())
-                        freshen_internal(FM_PRODUCTION, runs, "--daemon", freshen_flags);
-                    cerr << "\t  freshening: " << cYellow << "    finished." << cOff << "                                          " << endl;
                 }
             }
 

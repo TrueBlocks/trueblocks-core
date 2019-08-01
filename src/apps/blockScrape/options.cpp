@@ -14,7 +14,6 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-#define indexFolder_sorted (getIndexPath("sorted/"))
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
@@ -50,7 +49,10 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // Establish the folders that hold the data...
-    establishFolder(indexFolder_sorted);
+    // Do not collapse -- getIndexPath does not create it if it doesn't exist
+    string_q indexPath = getGlobalConfig()->getConfigStr("settings", "indexPath", "<not-set>");
+    if (indexPath != "<not-set>")
+        establishFolder(indexPath);
     establishFolder(indexFolder_finalized);
     establishFolder(indexFolder_blooms);
     establishFolder(indexFolder_staging);
