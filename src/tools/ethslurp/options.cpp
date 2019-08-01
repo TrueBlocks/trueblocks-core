@@ -13,7 +13,11 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
+// BEG_CODE_OPTIONS
 static const COption params[] = {
+//#define NEW_CODE
+#ifdef NEW_CODE
+#else // NEW_CODE
     COption("~addr_list",       "one or more addresses to slurp"),
     COption("-blocks:<range>",  "an optional range of blocks to slurp"),
     COption("-type:<tx_type>",  "extract either [ ext | int | token | miner | all ] type of transactions"),
@@ -21,8 +25,10 @@ static const COption params[] = {
     COption("-blocks:<range>",  "export records in block range (:0[:max])"),
     COption("-silent",          "Run silently (only freshen the data, do not display it)"),
     COption("",                 "Fetches data from EtherScan for an arbitrary address. Formats the output to your specification.\n"),
+#endif
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
+// END_CODE_OPTIONS
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

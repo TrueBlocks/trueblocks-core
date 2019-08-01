@@ -13,15 +13,21 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
+// BEG_CODE_OPTIONS
 static const COption params[] = {
+//#define NEW_CODE
+#ifdef NEW_CODE
+#else // NEW_CODE
     COption("~address_list", "two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported"),
     COption("~!block_list",  "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
     COption("-byAcct",       "consider each address an ERC20 token except the last, whose balance is reported for each token"),
     COption("-nozero",       "suppress the display of zero balance accounts"),
     COption("@info:<val>",   "retreive information [name|decimals|totalSupply|version|symbol|all] about the token"),
     COption("",              "Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).\n"),
+#endif
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
+// END_CODE_OPTIONS
 
 extern bool isTokenContract(const address_t& addr);
 //---------------------------------------------------------------------------------------------------

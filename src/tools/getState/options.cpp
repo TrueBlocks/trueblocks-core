@@ -13,7 +13,11 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
+// BEG_CODE_OPTIONS
 static const COption params[] = {
+//#define NEW_CODE
+#ifdef NEW_CODE
+#else // NEW_CODE
     COption("~addr_list",    "one or more addresses (0x...) from which to retrieve balances"),
     COption("~!block_list",  "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
     COption("-mode:<val>",   "control which state to export. One of [none|some|all|balance|nonce|code|storage|deployed|accttype]"),
@@ -22,8 +26,10 @@ static const COption params[] = {
     COption("@n(o)Header",   "hide the header in txt and csv mode"),
     COption("@fmt:<fmt>",    "export format (one of [none|json|txt|csv|api])"),
     COption("",              "Retrieve the balance (in wei) for one or more addresses at the given block(s).\n"),
+#endif
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
+// END_CODE_OPTIONS
 
 extern const char* STR_DISPLAY;
 //---------------------------------------------------------------------------------------------------

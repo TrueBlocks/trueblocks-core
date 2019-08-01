@@ -6,13 +6,19 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
+// BEG_CODE_OPTIONS
 static const COption params[] = {
+//#define NEW_CODE
+#ifdef NEW_CODE
+#else // NEW_CODE
     COption("-nBlocks:<num>",     "maximum number of blocks to process (defaults to 5000)"),
     COption("@nBlockProcs:<num>", "number of block channels for blaze"),
     COption("@nAddrProcs:<num>",  "number of address channels for blaze"),
     COption("",                   "Decentralized blockchain scraper and block cache.\n"),
+#endif
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
+// END_CODE_OPTIONS
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

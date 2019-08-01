@@ -13,12 +13,18 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
+// BEG_CODE_OPTIONS
 static const COption params[] = {
+//#define NEW_CODE
+#ifdef NEW_CODE
+#else // NEW_CODE
     COption("~block_list", "a space-separated list of one or more blocks to search for"),
     COption("@fmt:<fmt>",  "export format (one of [none|json|txt|csv|api])"),
     COption("",            "Reports if a block was found in the cache, at a local, or at a remote node.\n"),
+#endif
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
+// END_CODE_OPTIONS
 
 extern const char* STR_DISPLAY;
 //---------------------------------------------------------------------------------------------------

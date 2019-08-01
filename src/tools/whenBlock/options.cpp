@@ -13,14 +13,20 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
+// BEG_CODE_OPTIONS
 static const COption params[] = {
+//#define NEW_CODE
+#ifdef NEW_CODE
+#else // NEW_CODE
     COption("~!block",    "one or more block numbers (or a 'special' block), or..."),
     COption("~!date",     "one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]"),
     COption("-list",      "export all the named blocks"),
     COption("@fmt:<fmt>", "export format (one of [none|json|txt|csv|api])"),
     COption("",           "Finds the nearest block prior to a date, or the nearest date prior to a block.\n Alternatively, search for one of special 'named' blocks.\n"),
+#endif
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
+// END_CODE_OPTIONS
 
 extern const char* STR_DISPLAY;
 //---------------------------------------------------------------------------------------------------

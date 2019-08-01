@@ -14,7 +14,11 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
+// BEG_CODE_OPTIONS
 static const COption params[] = {
+//#define NEW_CODE
+#ifdef NEW_CODE
+#else // NEW_CODE
     COption("~addr_list",  "list of one or more smart contracts whose ABI to grab from EtherScan"),
     COption("-canonical",  "convert all types to their canonical represenation and remove all spaces from display"),
     COption("-generate",   "generate C++ code into the current folder for all functions and events found in the ABI"),
@@ -28,8 +32,10 @@ static const COption params[] = {
     COption("@nodec",      "do not decorate duplicate names"),
     COption("@known",      "load common 'known' ABIs from cache"),
     COption("",            "Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.\n"),
+#endif
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
+// END_CODE_OPTIONS
 
 extern bool sortByFuncName(const CFunction& f1, const CFunction& f2);
 //---------------------------------------------------------------------------------------------------

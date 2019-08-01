@@ -6,15 +6,21 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
+// BEG_CODE_OPTIONS
 static const COption params[] = {
+//#define NEW_CODE
+#ifdef NEW_CODE
+#else // NEW_CODE
     COption("~addr_list",       "one or more Ethereum addresses"),
     COption("@noBlooms",        "turn off bloom filters for performance testing"),
     COption("@staging",         "produce results in the staging folder instead of production folder"),
     COption("@unripe",          "visit unripe (not old enough and not yet staged or finalized) blocks"),
     COption("@daemon",          "we are being call in daemon mode which causes us to print results differently"),
     COption("",                 "Index transactions for a given Ethereum address (or series of addresses).\n"),
+#endif
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
+// END_CODE_OPTIONS
 
 string_q dTabs;
 bool daemonMode = false;

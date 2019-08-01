@@ -13,7 +13,11 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
+// BEG_CODE_OPTIONS
 static const COption params[] = {
+//#define NEW_CODE
+#ifdef NEW_CODE
+#else // NEW_CODE
     COption("~block_list",  "a space-separated list of one or more blocks for which to retrieve blooms"),
     COption("-eab",         "pull the enhanced adaptive blooms from QBlocks cache"),
     COption("-block",       "show only the block-level bloom (--raw only)"),
@@ -25,8 +29,10 @@ static const COption params[] = {
     COption("-bitcou(n)t",  "display the number of bits lit per bloom"),
     COption("@force",       "force a re-write of the bloom to the cache"),
     COption("",             "Returns bloom filter(s) from running node (the default) or as EAB from QBlocks.\n"),
+#endif
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
+// END_CODE_OPTIONS
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

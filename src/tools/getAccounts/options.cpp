@@ -13,7 +13,11 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
+// BEG_CODE_OPTIONS
 static const COption params[] = {
+//#define NEW_CODE
+#ifdef NEW_CODE
+#else // NEW_CODE
     COption("~terms",       "a space separated list of one or more search terms"),
     COption("-expand",      "expand search to include all fields (default searches name, address, and symbol only)"),
     COption("-matchCase",   "do case-sensitive search"),
@@ -25,8 +29,10 @@ static const COption params[] = {
     COption("@fmt:<fmt>",   "export format (one of [none|json|txt|csv|api])"),
     COption("@o(t)her",     "export other addresses if found"),
     COption("",             "Query addresses and/or names well known accounts.\n"),
+#endif
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
+// END_CODE_OPTIONS
 
 extern const char* STR_DISPLAY;
 extern const char* STR_DISPLAY_ALL;

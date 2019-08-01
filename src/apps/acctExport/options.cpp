@@ -7,7 +7,11 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
+// BEG_CODE_OPTIONS
 static const COption params[] = {
+//#define NEW_CODE
+#ifdef NEW_CODE
+#else // NEW_CODE
     COption("~addr_list",         "one or more addresses (0x...) to export"),
     COption("-fmt:<fmt>",         "export format (one of [json|txt|csv])"),
     COption("-articulate",        "articulate transactions, traces, logs, and outputs"),
@@ -24,8 +28,10 @@ static const COption params[] = {
     COption("@start:<num>",       "first block to export (inclusive)"),
     COption("@end:<num>",         "last block to export (inclusive)"),
     COption("",                   "Export full detail of transactions for one or more Ethereum addresses.\n"),
+#endif
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
+// END_CODE_OPTIONS
 
 extern const char* STR_DISPLAY;
 extern const char* STR_LOG_DISPLAY;

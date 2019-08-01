@@ -6,7 +6,11 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
+// BEG_CODE_OPTIONS
 static const COption params[] = {
+//#define NEW_CODE
+#ifdef NEW_CODE
+#else // NEW_CODE
     COption("~filenames",        "path(s) of files to check, merge, fix or display (default=display)"),
     COption("-check",            "check for duplicates and other problems in the cache"),
     COption("-data",             "in 'list' mode, render results as data (i.e export mode)"),
@@ -24,8 +28,10 @@ static const COption params[] = {
     COption("@s(k)ip",           "skip value for testing"),
     COption("@start:<num>",      "un-used hidden value - do not remove"),
     COption("",                  "Show the contents of an account cache and/or fix it by removing duplicate records.\n"),
+#endif
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
+// END_CODE_OPTIONS
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
