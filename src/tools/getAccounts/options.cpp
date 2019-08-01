@@ -28,7 +28,6 @@ static const COption params[] = {
     COption2("fmt",	null,	"<fmt>",	false,	false,	"export format (one of [none|json|txt|csv|api])"),
     COption2("other",	null,	"flag",	false,	false,	"export other addresses if found"),
     COption2("",	null,	"flag",	false,	true,	"Query addresses and/or names well known accounts.\n"),
-
 #else // NEW_CODE
     COption("~terms",       "a space separated list of one or more search terms"),
     COption("-expand",      "expand search to include all fields (default searches name, address, and symbol only)"),

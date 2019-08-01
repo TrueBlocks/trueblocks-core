@@ -29,7 +29,6 @@ static const COption params[] = {
     COption2("",	null,	"",	false,	true,	"Show the contents of an account cache and/or fix it by removing duplicate records.\n"),
     COption2("to_file",	null,	"flag",	false,	false,	"send results to a temporary file and return the filename"),
     COption2("output",	null,	"<fn>",	false,	false,	"send results to file 'fn' and return the filename"),
-
 #else // NEW_CODE
     COption("~filenames",        "path(s) of files to check, merge, fix or display (default=display)"),
     COption("-check",            "check for duplicates and other problems in the cache"),

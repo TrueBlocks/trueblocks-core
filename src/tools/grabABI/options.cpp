@@ -31,7 +31,6 @@ static const COption params[] = {
     COption2("nodec",	null,	"flag",	false,	false,	"do not decorate duplicate names"),
     COption2("known",	null,	"flag",	false,	false,	"load common 'known' ABIs from cache"),
     COption2("",	null,	"",	false,	true,	"Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI."),
-
 #else // NEW_CODE
     COption("~addr_list",  "list of one or more smart contracts whose ABI to grab from EtherScan"),
     COption("-canonical",  "convert all types to their canonical represenation and remove all spaces from display"),

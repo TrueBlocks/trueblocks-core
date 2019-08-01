@@ -22,7 +22,6 @@ static const COption params[] = {
     COption2("trace",	null,	"flag",	false,	true,	"display the transaction's trace"),
     COption2("fmt",	null,	"<fmt>",	false,	false,	"export format (one of [none|json|txt|csv|api])"),
     COption2("",	null,	"",	false,	true,	"Retrieve an Ethereum transaction from the local cache or a running node."),
-
 #else // NEW_CODE
     COption("~!trans_list",    "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
     COption("-articulate",     "articulate the transactions if an ABI is found for the 'to' address"),

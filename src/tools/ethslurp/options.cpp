@@ -24,7 +24,6 @@ static const COption params[] = {
     COption2("blocks",	null,	"<range>",	false,	true,	"export records in block range (:0[:max])"),
     COption2("silent",	null,	"flag",	false,	true,	"Run silently (only freshen the data, do not display it)"),
     COption2("",	null,	"",	false,	true,	"Fetches data from EtherScan for an arbitrary address. Formats the output to your specification."),
-
 #else // NEW_CODE
     COption("~addr_list",       "one or more addresses to slurp"),
     COption("-blocks:<range>",  "an optional range of blocks to slurp"),

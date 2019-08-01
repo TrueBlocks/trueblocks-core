@@ -26,7 +26,6 @@ static const COption params[] = {
     COption2("",	null,	"",	false,	true,	"Retrieve a transaction's traces from the local cache or a running node."),
     COption2("to_file",	null,	"flag",	false,	false,	"send results to a temporary file and return the filename"),
     COption2("output",	null,	"<fn>",	false,	false,	"send results to file 'fn' and return the filename"),
-
 #else // NEW_CODE
     COption("~!trans_list",    "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
     COption("-articulate",     "articulate the transactions if an ABI is found for the 'to' address"),
