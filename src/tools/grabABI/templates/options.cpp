@@ -8,7 +8,11 @@
 #include "main.h"
 
 //---------------------------------------------------------------------------------------------------
+// BEG_CODE_OPTIONS
 static const COption params[] = {
+//#define NEW_CODE
+#ifdef NEW_CODE
+#else // NEW_CODE
     COption("-parse",        "display parsed input data"),
     COption("-lo(g)s",       "display smart contract lo(g)s or events"),
     COption("-trace",        "display smart contract internal traces"),
@@ -25,8 +29,10 @@ static const COption params[] = {
     COption("-kBlock:<num>", "start processing at block :k"),
     COption("-offset:<num>", "offset to kBlock"),
     COption("",              "Index transactions for a given Ethereum address (or series of addresses).\r\n"),
+#endif
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
+// END_CODE_OPTIONS
 
 extern const char* defTransFmt;
 extern const char* defTraceFmt;
