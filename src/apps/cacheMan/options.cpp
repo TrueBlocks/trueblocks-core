@@ -10,6 +10,25 @@
 static const COption params[] = {
 //#define NEW_CODE
 #ifdef NEW_CODE
+    COption2("filenames", "", "", OPT_REQUIRED | OPT_FLAG, "path(s) of files to check, merge, fix or display (default=display)"),
+    COption2("check", "", "", OPT_FLAG, "check for duplicates and other problems in the cache"),
+    COption2("data", "", "", OPT_FLAG, "in 'list' mode, render results as data (i.e export mode)"),
+    COption2("sort", "", "", OPT_FLAG, "sort the list of transactions and re-write (precludes other modes, other than --dedup)"),
+    COption2("fix", "", "", OPT_FLAG, "remove duplicates from the cache (if any)"),
+    COption2("list", "", "", OPT_FLAG, "list the contents of the cache (the default if no other option)"),
+    COption2("cacheBals", "", "", OPT_FLAG, "cache per block account balances for each account"),
+    COption2("balances", "", "", OPT_FLAG, "export account balances for each account"),
+    COption2("import", "", "", OPT_FLAG, "import transactions if import.txt file exists in current folder"),
+    COption2("remove", "", "", OPT_FLAG, "remove transactions if remove.txt file exists in current folder"),
+    COption2("truncate", "", "<num>", 0, "truncate the cache at block :n (keeps block 'n' and before, implies --fix)"),
+    COption2("maxBlock", "", "<num>", 0, "for testing, max block to visit"),
+    COption2("merge", "", "", OPT_FLAG, "merge two or more caches into a single cache"),
+    COption2("fmt", "", "<fmt>", 0, "export format (one of [json|txt|csv])"),
+    COption2("skip", "", "", OPT_HIDDEN | OPT_FLAG, "skip value for testing"),
+    COption2("start", "", "<num>", OPT_HIDDEN, "un-used hidden value - do not remove"),
+    COption2("", "", "", 0, "Show the contents of an account cache and/or fix it by removing duplicate records.\n"),
+    COption2("to_file", "", "", OPT_HIDDEN | OPT_FLAG, "send results to a temporary file and return the filename"),
+    COption2("output", "", "<fn>", OPT_HIDDEN, "send results to file 'fn' and return the filename"),
 #else // NEW_CODE
     COption("~filenames",        "path(s) of files to check, merge, fix or display (default=display)"),
     COption("-check",            "check for duplicates and other problems in the cache"),

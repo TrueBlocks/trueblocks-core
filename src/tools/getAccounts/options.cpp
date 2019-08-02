@@ -17,6 +17,17 @@
 static const COption params[] = {
 //#define NEW_CODE
 #ifdef NEW_CODE
+    COption2("terms", "", "", OPT_REQUIRED | OPT_FLAG, "a space separated list of one or more search terms"),
+    COption2("expand", "", "", OPT_FLAG, "expand search to include all fields (default searches name, address, and symbol only)"),
+    COption2("matchCase", "", "", OPT_FLAG, "do case-sensitive search"),
+    COption2("owned", "", "", OPT_FLAG, "Include personal accounts in the search"),
+    COption2("custom", "", "", OPT_FLAG, "Include your custom named accounts"),
+    COption2("prefund", "", "", OPT_FLAG, "Include prefund accounts"),
+    COption2("named", "", "", OPT_FLAG, "Include well know token and airdrop addresses in the search"),
+    COption2("addr", "", "", OPT_FLAG, "display only addresses in the results (useful for scripting)"),
+    COption2("fmt", "", "<fmt>", OPT_HIDDEN, "export format (one of [none|json|txt|csv|api])"),
+    COption2("other", "", "", OPT_HIDDEN | OPT_FLAG, "export other addresses if found"),
+    COption2("", "", "", OPT_FLAG, "Query addresses and/or names well known accounts.\n"),
 #else // NEW_CODE
     COption("~terms",       "a space separated list of one or more search terms"),
     COption("-expand",      "expand search to include all fields (default searches name, address, and symbol only)"),
