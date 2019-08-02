@@ -16,11 +16,6 @@
 #include "filenames.h"
 #include "toml.h"
 
-#if 0
-if (permitted != "range" && permitted != "list" && permitted != "fn" && permitted != "mode" && permitted != "on/off")
-    permitted = "val";
-#endif
-
 // #define PROVING 1
 // Bit flags to enable / disable various options
 #define OPT_HELP     (1<<1)
