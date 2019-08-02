@@ -8,10 +8,8 @@
 #include "main.h"
 
 //---------------------------------------------------------------------------------------------------
-// BEG_CODE_OPTIONS
 static const COption params[] = {
-//#define NEW_CODE
-#ifdef NEW_CODE
+// BEG_CODE_OPTIONS
     COption2("parse", "", "", OPT_FLAG, "display parsed input data"),
     COption2("logs", "", "", OPT_FLAG, "display smart contract lo(g)s or events"),
     COption2("trace", "", "", OPT_FLAG, "display smart contract internal traces"),
@@ -26,27 +24,9 @@ static const COption params[] = {
     COption2("kBlock", "", "<num>", 0, "start processing at block :k"),
     COption2("offset", "", "<num>", 0, "offset to kBlock"),
     COption2("", "", "", OPT_FLAG, "Index transactions for a given Ethereum address (or series of addresses)."),
-#else // NEW_CODE
-    COption("-parse",        "display parsed input data"),
-    COption("-lo(g)s",       "display smart contract lo(g)s or events"),
-    COption("-trace",        "display smart contract internal traces"),
-    COption("-accounting",   "display credits and debits per account and reconcile at each block"),
-#ifdef DEBUGGER_ON
-    COption("-no_check",     "do not do balance check at each block"),
-    COption("-debug",        "enter debug mode (pause after each transaction)"),
-#endif
-    COption("-single",       "if debugging is enable, single step through transactions"),
-    COption("-export",       "export the transactions to export file"),
-    COption("-json",         "ignore export format and export as json"),
-    COption("-bals",         "if a balance does not reconcile, export a message to a file"),
-    COption("-list",         "display list of monitored accounts"),
-    COption("-kBlock:<num>", "start processing at block :k"),
-    COption("-offset:<num>", "offset to kBlock"),
-    COption("",              "Index transactions for a given Ethereum address (or series of addresses).\r\n"),
-#endif
+// END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
-// END_CODE_OPTIONS
 
 extern const char* defTransFmt;
 extern const char* defTraceFmt;
