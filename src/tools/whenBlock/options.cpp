@@ -17,11 +17,11 @@
 static const COption params[] = {
 //#define NEW_CODE
 #ifdef NEW_CODE
-    COption2("block", "", "flag", true, true, "one or more block numbers (or a 'special' block), or..."),
-    COption2("date", "", "flag", true, true, "one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]"),
-    COption2("list", "", "flag", false, true, "export all the named blocks"),
-    COption2("fmt", "", "<fmt>", false, false, "export format (one of [none|json|txt|csv|api])"),
-    COption2("", "", "", false, true, "Finds the nearest block prior to a date, or the nearest date prior to a block.\n Alternatively, search for one of special 'named' blocks."),
+    COption2("block", "", "", OPT_REQUIRED | OPT_FLAG, "one or more block numbers (or a 'special' block), or..."),
+    COption2("date", "", "", OPT_REQUIRED | OPT_FLAG, "one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]"),
+    COption2("list", "", "", OPT_FLAG, "export all the named blocks"),
+    COption2("fmt", "", "<fmt>", OPT_HIDDEN, "export format (one of [none|json|txt|csv|api])"),
+    COption2("", "", "", 0, "Finds the nearest block prior to a date, or the nearest date prior to a block.\n Alternatively, search for one of special 'named' blocks."),
 #else // NEW_CODE
     COption("~!block",    "one or more block numbers (or a 'special' block), or..."),
     COption("~!date",     "one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]"),
