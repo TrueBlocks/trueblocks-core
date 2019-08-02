@@ -11,6 +11,24 @@
 static const COption params[] = {
 //#define NEW_CODE
 #ifdef NEW_CODE
+    COption2("addr_list", "", "", OPT_REQUIRED | OPT_FLAG, "one or more addresses (0x...) to export"),
+    COption2("fmt", "", "<fmt>", 0, "export format (one of [json|txt|csv])"),
+    COption2("articulate", "", "", OPT_FLAG, "articulate transactions, traces, logs, and outputs"),
+    COption2("logs", "", "", OPT_FLAG, "export logs instead of transactions"),
+    COption2("traces", "", "", OPT_FLAG, "export traces instead of transactions"),
+    COption2("blocks", "", "<on/off>", OPT_HIDDEN, "write blocks to the binary cache ('off' by default)"),
+    COption2("txs", "", "<on/off>", OPT_HIDDEN, "write transactions to the binary cache ('on' by default)"),
+    COption2("trc", "", "<on/off>", OPT_HIDDEN, "write traces to the binary cache ('off' by default)"),
+    COption2("ddos", "", "<on/off>", OPT_HIDDEN, "skip over dDos transactions in export ('on' by default)"),
+    COption2("maxTraces", "", "<num>", OPT_HIDDEN, "if --ddos:on, the number of traces defining a dDos (default = 250)"),
+    COption2("noHeader", "", "", OPT_HIDDEN, "do not show the header row"),
+    COption2("allABIs", "", "", OPT_HIDDEN, "load all previously cached abi files"),
+    COption2("grabABIs", "", "", OPT_HIDDEN, "using each trace's 'to' address grab the abi for that address (improved articulation)"),
+    COption2("start", "", "<num>", OPT_HIDDEN, "first block to export (inclusive)"),
+    COption2("end", "", "<num>", OPT_HIDDEN, "last block to export (inclusive)"),
+    COption2("", "", "", 0, "Export full detail of transactions for one or more Ethereum addresses."),
+    COption2("to_file", "", "", OPT_HIDDEN | OPT_FLAG, "send results to a temporary file and return the filename"),
+    COption2("output", "", "<fn>", OPT_HIDDEN, "send results to file 'fn' and return the filename"),
 #else // NEW_CODE
     COption("~addr_list",         "one or more addresses (0x...) to export"),
     COption("-fmt:<fmt>",         "export format (one of [json|txt|csv])"),
