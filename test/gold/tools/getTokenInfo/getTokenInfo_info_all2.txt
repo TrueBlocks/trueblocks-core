@@ -11,7 +11,7 @@ getTokenInfo 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29
 ,
 {
 	"name": "Swarm City Token",
-	"totalSupply": "8472924883587160871653166",
+	"totalSupply": "8536072883587160871653166",
 	"decimals": "18",
 	"version": "MMT_0.1",
 	"symbol": "SWT"
