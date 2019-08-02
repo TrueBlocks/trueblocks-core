@@ -4,7 +4,7 @@ grabABI -th
 
 `Usage:`    grabABI [-c|-g|-d|-e|-j|-n|-l|-v|-h] &lt;address&gt; [address...]  
 `Purpose:`  Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
-             
+        
 `Where:`  
 
 | Short Cut | Option | Description |

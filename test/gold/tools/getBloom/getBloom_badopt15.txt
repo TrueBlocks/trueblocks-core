@@ -5,7 +5,7 @@ getBloom 4501030 --eab --receipts --bitcount
 
   Usage:    getBloom [-e|-b|-c|-i|-a|-s|-p|-n|-v|-h] <block> [block...]  
   Purpose:  Returns bloom filter(s) from running node (the default) or as EAB from QBlocks.
-             
+        
   Where:  
 	block_list            a space-separated list of one or more blocks for which to retrieve blooms (required)
 	-e  (--eab)           pull the enhanced adaptive blooms from QBlocks cache

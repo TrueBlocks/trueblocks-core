@@ -4,7 +4,7 @@ makeClass -th
 
 `Usage:`    makeClass [-o|-r|-j|-f|-l|-h|-c|-n|-s|-a|-v|-h] className  
 `Purpose:`  Creates C++ code based on definition file at ./classDefinition/<className>.
-             
+        
 `Where:`  
 
 | Short Cut | Option | Description |

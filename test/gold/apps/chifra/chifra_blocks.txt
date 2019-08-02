@@ -7,7 +7,7 @@ getBlock -d
 
   Usage:    getBlock [-n|-c|-a|-u|-q|-m|-l|-v|-h] <block> [block...]  
   Purpose:  Returns block(s) from local cache or directly from a running node.
-             
+        
   Where:  
 	block_list            a space-separated list of one or more blocks to retrieve (required)
 	-n  (--hash_only)     display only transaction hashes, default is to display full transaction detail

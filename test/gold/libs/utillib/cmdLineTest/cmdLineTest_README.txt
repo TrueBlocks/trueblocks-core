@@ -4,7 +4,7 @@ cmdLineTest -th
 
 `Usage:`    cmdLineTest [-b|-i|-u|-s|-r|-l|-v|-h] testNum optionalMode  
 `Purpose:`  Tests various command line behavior.
-             
+        
 `Where:`  
 
 | Short Cut | Option | Description |

@@ -4,7 +4,7 @@ getState -th
 
 `Usage:`    getState [-m|-n|-c|-v|-h] &lt;address&gt; [address...] [block...]  
 `Purpose:`  Retrieve the balance (in wei) for one or more addresses at the given block(s).
-             
+        
 `Where:`  
 
 | Short Cut | Option | Description |

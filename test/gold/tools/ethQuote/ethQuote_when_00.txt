@@ -5,7 +5,7 @@ ethQuote -w 14
 
   Usage:    ethQuote -a|-c|-d|-f|-p|-p|-v|-h  
   Purpose:  Freshen and/or display Ethereum price data and other purposes.
-             
+        
   Where:  
 	-a  (--at val)        Report the price since nearest five minutes to the given timestamp
 	-c  (--current)       Report on the current price (i.e. -at:now)

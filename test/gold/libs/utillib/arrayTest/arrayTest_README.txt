@@ -4,7 +4,7 @@ arrayTest -th
 
 `Usage:`    arrayTest [-v|-h] mode  
 `Purpose:`  Test 'c' library strings against QBlocks strings.
-             
+        
 `Where:`  
 
 | Short Cut | Option | Description |

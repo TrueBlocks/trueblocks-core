@@ -3,7 +3,7 @@ getState --help -v
 
   Usage:    getState [-m|-n|-c|-v|-h] <address> [address...] [block...]  
   Purpose:  Retrieve the balance (in wei) for one or more addresses at the given block(s).
-             
+        
   Where:  
 	addr_list             one or more addresses (0x...) from which to retrieve balances (required)
 	block_list            an optional list of one or more blocks at which to report balances, defaults to 'latest'
