@@ -400,15 +400,15 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     COption::COption(const string_q& nameIn, const string_q& descr) {
 
+        longName    = nameIn;
+        shortName   = nameIn;
+        hidden      = startsWith(nameIn, "@");
+        mode        = startsWith(nameIn, "~");
+        optional    = contains  (nameIn, "!");
         description = descr;
         if (nameIn.empty())
             return;
 
-        hidden      = startsWith(nameIn, "@");
-        mode        = startsWith(nameIn, "~");
-        optional    = contains  (nameIn, "!");
-
-        shortName   = nameIn;
         replaceAll(shortName, "-", "");
         replaceAll(shortName, "~", "");
         replaceAll(shortName, "@", "");
@@ -441,9 +441,8 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     COption2::COption2(const string_q& ln, const string_q& sn, const string_q& type, size_t opts, const string_q& d)
-        : COption("","")
+        : COption(ln,d)
     {
-        description = d;
         if (ln.empty())
             return;
         mode = (opts & OPT_ARG);
