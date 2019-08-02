@@ -12,6 +12,20 @@
 static const COption params[] = {
 //#define NEW_CODE
 #ifdef NEW_CODE
+    COption2("parse", "", "", OPT_FLAG, "display parsed input data"),
+    COption2("logs", "", "", OPT_FLAG, "display smart contract lo(g)s or events"),
+    COption2("trace", "", "", OPT_FLAG, "display smart contract internal traces"),
+    COption2("accounting", "", "", OPT_FLAG, "display credits and debits per account and reconcile at each block"),
+    COption2("no_check", "", "", OPT_FLAG, "do not do balance check at each block"),
+    COption2("debug", "", "", OPT_FLAG, "enter debug mode (pause after each transaction)"),
+    COption2("single", "", "", OPT_FLAG, "if debugging is enable, single step through transactions"),
+    COption2("export", "", "", OPT_FLAG, "export the transactions to export file"),
+    COption2("json", "", "", OPT_FLAG, "ignore export format and export as json"),
+    COption2("bals", "", "", OPT_FLAG, "if a balance does not reconcile, export a message to a file"),
+    COption2("list", "", "", OPT_FLAG, "display list of monitored accounts"),
+    COption2("kBlock", "", "<num>", 0, "start processing at block :k"),
+    COption2("offset", "", "<num>", 0, "offset to kBlock"),
+    COption2("", "", "", OPT_FLAG, "Index transactions for a given Ethereum address (or series of addresses)."),
 #else // NEW_CODE
     COption("-parse",        "display parsed input data"),
     COption("-lo(g)s",       "display smart contract lo(g)s or events"),
