@@ -1270,8 +1270,7 @@ extern void loadParseMap(void);
             cerr << "          \r";
             cerr.flush();
         }
-        cerr << cTeal << "\t  updated " << (minBlock - nRecords);
-        cerr << " timestamps to " << block.blockNumber << " (";
+        cerr << cTeal << "\t  updated timestamps to " << block.blockNumber << " (";
         cerr << block.timestamp << " - ";
         cerr << ts_2_Date(block.timestamp).Format(FMT_EXPORT) << ")" << cOff << endl;
 
