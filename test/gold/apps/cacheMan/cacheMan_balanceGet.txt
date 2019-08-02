@@ -1,3 +1,5 @@
-cacheMan argc: 3 [1:0x001d14804b399c6ef80e64576f657660804fec0b.acct.bin] [2:--cacheBals] 
-cacheMan 0x001d14804b399c6ef80e64576f657660804fec0b.acct.bin --cacheBals 
+cacheMan argc: 3 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--cacheBals] 
+cacheMan 0x001d14804b399c6ef80e64576f657660804fec0b --cacheBals 
+0x001d14804b399c6ef80e64576f657660804fec0b
+0x001d14804b399c6ef80e64576f657660804fec0b.acct.bin
 Reading transactions: 202249.0                    Reading transactions: 1501459.0                    Reading transactions: 2.0                                                            	0x001d14804b399c6ef80e64576f657660804fec0b (1/0/4) 1 4200000000000000000000                    	0x001d14804b399c6ef80e64576f657660804fec0b (1/1/4) 2 4200000000000000000000                    	0x001d14804b399c6ef80e64576f657660804fec0b (2/2/4) 202249 74679320489077336                    	0x001d14804b399c6ef80e64576f657660804fec0b (3/3/4) 1501459 0                    	Wrote     3 balances to binary file ./balances/0x001d14804b399c6ef80e64576f657660804fec0b.bals.bin                    
