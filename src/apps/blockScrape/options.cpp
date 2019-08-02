@@ -10,10 +10,10 @@
 static const COption params[] = {
 //#define NEW_CODE
 #ifdef NEW_CODE
-    COption2("nBlocks", "", "<num>", false, true, "maximum number of blocks to process (defaults to 5000)"),
-    COption2("nBlockProcs", "", "<num>", false, false, "number of block channels for blaze"),
-    COption2("nAddrProcs", "", "<num>", false, false, "number of address channels for blaze"),
-    COption2("", "", "", false, true, "Decentralized blockchain scraper and block cache."),
+    COption2("nBlocks", "", "<num>", 0, "maximum number of blocks to process (defaults to 5000)"),
+    COption2("nBlockProcs", "", "<num>", OPT_HIDDEN, "number of block channels for blaze"),
+    COption2("nAddrProcs", "", "<num>", OPT_HIDDEN, "number of address channels for blaze"),
+    COption2("", "", "", 0, "Decentralized blockchain scraper and block cache."),
 #else // NEW_CODE
     COption("-nBlocks:<num>",     "maximum number of blocks to process (defaults to 5000)"),
     COption("@nBlockProcs:<num>", "number of block channels for blaze"),

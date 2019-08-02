@@ -17,11 +17,11 @@
 static const COption params[] = {
 //#define NEW_CODE
 #ifdef NEW_CODE
-    COption2("trans_list", "", "flag", true, true, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
-    COption2("articulate", "", "flag", false, true, "articulate the transactions if an ABI is found for the 'to' address"),
-    COption2("logs", "", "flag", false, true, "display the receipt's logs"),
-    COption2("fmt", "", "<fmt>", false, false, "export format (one of [none|json|txt|csv|api])"),
-    COption2("", "", "", false, true, "Retrieve a transaction's receipt from the local cache or a running node."),
+    COption2("trans_list", "", "", OPT_REQUIRED | OPT_FLAG, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
+    COption2("articulate", "", "", OPT_FLAG, "articulate the transactions if an ABI is found for the 'to' address"),
+    COption2("logs", "", "", OPT_FLAG, "display the receipt's logs"),
+    COption2("fmt", "", "<fmt>", OPT_HIDDEN, "export format (one of [none|json|txt|csv|api])"),
+    COption2("", "", "", 0, "Retrieve a transaction's receipt from the local cache or a running node."),
 #else // NEW_CODE
     COption("~!trans_list",    "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
     COption("-articulate",     "articulate the transactions if an ABI is found for the 'to' address"),

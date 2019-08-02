@@ -17,12 +17,12 @@
 static const COption params[] = {
 //#define NEW_CODE
 #ifdef NEW_CODE
-    COption2("address_list", "", "flag", true, true, "two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported"),
-    COption2("block_list", "", "flag", true, true, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
-    COption2("byAcct", "", "flag", false, true, "consider each address an ERC20 token except the last, whose balance is reported for each token"),
-    COption2("nozero", "", "flag", false, true, "suppress the display of zero balance accounts"),
-    COption2("info", "", "<val>", false, false, "retreive information [name|decimals|totalSupply|version|symbol|all] about the token"),
-    COption2("", "", "", false, true, "Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s)."),
+    COption2("address_list", "", "", OPT_REQUIRED | OPT_FLAG, "two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported"),
+    COption2("block_list", "", "", OPT_REQUIRED | OPT_FLAG, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
+    COption2("byAcct", "", "", OPT_FLAG, "consider each address an ERC20 token except the last, whose balance is reported for each token"),
+    COption2("nozero", "", "", OPT_FLAG, "suppress the display of zero balance accounts"),
+    COption2("info", "", "<val>", OPT_HIDDEN, "retreive information [name|decimals|totalSupply|version|symbol|all] about the token"),
+    COption2("", "", "", 0, "Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s)."),
 #else // NEW_CODE
     COption("~address_list", "two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported"),
     COption("~!block_list",  "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),

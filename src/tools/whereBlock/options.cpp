@@ -17,9 +17,9 @@
 static const COption params[] = {
 //#define NEW_CODE
 #ifdef NEW_CODE
-    COption2("block_list", "", "flag", true, true, "a space-separated list of one or more blocks to search for"),
-    COption2("fmt", "", "<fmt>", false, false, "export format (one of [none|json|txt|csv|api])"),
-    COption2("", "", "", false, true, "Reports if a block was found in the cache, at a local, or at a remote node."),
+    COption2("block_list", "", "", OPT_REQUIRED | OPT_FLAG, "a space-separated list of one or more blocks to search for"),
+    COption2("fmt", "", "<fmt>", OPT_HIDDEN, "export format (one of [none|json|txt|csv|api])"),
+    COption2("", "", "", 0, "Reports if a block was found in the cache, at a local, or at a remote node."),
 #else // NEW_CODE
     COption("~block_list", "a space-separated list of one or more blocks to search for"),
     COption("@fmt:<fmt>",  "export format (one of [none|json|txt|csv|api])"),
