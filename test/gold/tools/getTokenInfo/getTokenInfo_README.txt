@@ -4,12 +4,12 @@ getTokenInfo -th
 
 `Usage:`    getTokenInfo [-b|-n|-v|-h] &lt;address&gt; &lt;address&gt; [address...] [block...]  
 `Purpose:`  Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).
-        
+
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | address_list | two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported |
+|  | address_list | two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported (required) |
 |  | block_list | an optional list of one or more blocks at which to report balances, defaults to 'latest' |
 | -b | --byAcct | consider each address an ERC20 token except the last, whose balance is reported for each token |
 | -n | --nozero | suppress the display of zero balance accounts |

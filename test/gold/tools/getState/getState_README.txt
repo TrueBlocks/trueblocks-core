@@ -4,12 +4,12 @@ getState -th
 
 `Usage:`    getState [-m|-n|-c|-v|-h] &lt;address&gt; [address...] [block...]  
 `Purpose:`  Retrieve the balance (in wei) for one or more addresses at the given block(s).
-        
+
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | addr_list | one or more addresses (0x...) from which to retrieve balances |
+|  | addr_list | one or more addresses (0x...) from which to retrieve balances (required) |
 |  | block_list | an optional list of one or more blocks at which to report balances, defaults to 'latest' |
 | -m | --mode val | control which state to export. One of [none&#124;some&#124;all&#124;balance&#124;nonce&#124;code&#124;storage&#124;deployed&#124;accttype] |
 | -n | --nozero | suppress the display of zero balance accounts |

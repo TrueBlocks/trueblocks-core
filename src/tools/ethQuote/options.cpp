@@ -13,29 +13,18 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-// BEG_CODE_OPTIONS
 static const COption params[] = {
-//#define NEW_CODE
-#ifdef NEW_CODE
-    COption2("at", "", "<timestamp>", 0, "Report the price since nearest five minutes to the given timestamp"),
-    COption2("current", "", "", OPT_FLAG, "Report on the current price (i.e. -at:now)"),
-    COption2("data", "", "", OPT_FLAG, "Export prices as JSON data"),
-    COption2("freshen", "", "", OPT_FLAG, "Freshen database (append new data)"),
-    COption2("period", "", "<5|15|30|*120|240|1440>", 0, "Display prices in this increment. One of [5|15|30|120*|240|1440]"),
-    COption2("pair", "", "<val>", 0, "Which price pair to freshen or list (see Poloniex)"),
+// BEG_CODE_OPTIONS
+    COption2("at", "a", "val", OPT_FLAG, "Report the price since nearest five minutes to the given timestamp"),
+    COption2("current", "c", "", OPT_FLAG, "Report on the current price (i.e. -at:now)"),
+    COption2("data", "d", "", OPT_FLAG, "Export prices as JSON data"),
+    COption2("freshen", "f", "", OPT_FLAG, "Freshen database (append new data)"),
+    COption2("period", "p", "val", 0, "Display prices in this increment. One of [5|15|30|120*|240|1440]"),
+    COption2("pair", "p", "val", 0, "Which price pair to freshen or list (see Poloniex)"),
     COption2("", "", "", 0, "Freshen and/or display Ethereum price data and other purposes."),
-#else // NEW_CODE
-    COption("-at:<timestamp>",                 "Report the price since nearest five minutes to the given timestamp"),
-    COption("-current",                        "Report on the current price (i.e. -at:now)"),
-    COption("-data",                           "Export prices as JSON data"),
-    COption("-freshen",                        "Freshen database (append new data)"),
-    COption("-period:<5|15|30|*120|240|1440>", "Display prices in this increment. One of [5|15|30|120*|240|1440]"),
-    COption("-pair:<val>",                     "Which price pair to freshen or list (see Poloniex)"),
-    COption("",                                "Freshen and/or display Ethereum price data and other purposes.\n"),
-#endif
+// END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
-// END_CODE_OPTIONS
 
 extern const char* STR_DISPLAY;
 //---------------------------------------------------------------------------------------------------

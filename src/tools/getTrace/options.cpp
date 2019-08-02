@@ -13,31 +13,18 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-// BEG_CODE_OPTIONS
 static const COption params[] = {
-//#define NEW_CODE
-#ifdef NEW_CODE
-    COption2("trans_list", "", "", OPT_REQUIRED | OPT_FLAG, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
-    COption2("articulate", "", "", OPT_FLAG, "articulate the transactions if an ABI is found for the 'to' address"),
-    COption2("countOnly", "", "", OPT_FLAG, "show the number of traces for the transaction only (fast)"),
-    COption2("noHeader", "", "", OPT_FLAG, "do not show the header row"),
-    COption2("fmt", "", "<fmt>", OPT_HIDDEN, "export format (one of [none|json|txt|csv|api])"),
-    COption2("ddos", "", "", OPT_HIDDEN, "skip over dDos transactions in export (on by default"),
+// BEG_CODE_OPTIONS
+    COption2("trans_list", "", "", OPT_REQUIRED | OPT_ARG, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
+    COption2("articulate", "a", "", OPT_FLAG, "articulate the transactions if an ABI is found for the 'to' address"),
+    COption2("countOnly", "c", "", OPT_FLAG, "show the number of traces for the transaction only (fast)"),
+    COption2("noHeader", "n", "", OPT_FLAG, "do not show the header row"),
+    COption2("fmt", "x", "val", OPT_HIDDEN, "export format (one of [none|json|txt|csv|api])"),
+    COption2("ddos", "d", "on/off", OPT_HIDDEN, "skip over dDos transactions in export ('on' by default)"),
     COption2("", "", "", 0, "Retrieve a transaction's traces from the local cache or a running node."),
-    COption2("to_file", "", "", OPT_HIDDEN | OPT_FLAG, "send results to a temporary file and return the filename"),
-    COption2("output", "", "<fn>", OPT_HIDDEN, "send results to file 'fn' and return the filename"),
-#else // NEW_CODE
-    COption("~!trans_list",    "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
-    COption("-articulate",     "articulate the transactions if an ABI is found for the 'to' address"),
-    COption("-countOnly",      "show the number of traces for the transaction only (fast)"),
-    COption("-noHeader",       "do not show the header row"),
-    COption("@fmt:<fmt>",      "export format (one of [none|json|txt|csv|api])"),
-    COption("@ddos:<on/off>",  "skip over dDos transactions in export ('on' by default)"),
-    COption("",                "Retrieve a transaction's traces from the local cache or a running node."),
-#endif
+// END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
-// END_CODE_OPTIONS
 
 extern const char* STR_DISPLAY;
 //---------------------------------------------------------------------------------------------------

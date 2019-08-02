@@ -13,29 +13,18 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-// BEG_CODE_OPTIONS
 static const COption params[] = {
-//#define NEW_CODE
-#ifdef NEW_CODE
-    COption2("addrs", "", "", OPT_REQUIRED | OPT_FLAG, "one or more addresses to slurp"),
-    COption2("blocks", "", "<range>", 0, "an optional range of blocks to slurp"),
-    COption2("type", "", "<tx_type>", 0, "extract either [ ext | int | token | miner | all ] type of transactions"),
-    COption2("fmt", "", "<str>", 0, "pretty print, optionally add ':txt,' ':csv,' or ':html'"),
-    COption2("blocks", "", "<range>", 0, "export records in block range (:0[:max])"),
-    COption2("silent", "", "", OPT_FLAG, "Run silently (only freshen the data, do not display it)"),
+// BEG_CODE_OPTIONS
+    COption2("addr_list", "", "", OPT_REQUIRED | OPT_ARG, "one or more addresses to slurp"),
+    COption2("block_list", "", "", OPT_OPTIONAL | OPT_ARG, "an optional range of blocks to slurp"),
+    COption2("type", "t", "val", 0, "extract either [ ext | int | token | miner | all ] type of transactions"),
+    COption2("blocks", "b", "range", 0, "export records in block range (:0[:max])"),
+    COption2("silent", "s", "", OPT_FLAG, "Run silently (only freshen the data, do not display it)"),
+    COption2("fmt", "x", "val", 0, "pretty print, optionally add ':txt,' ':csv,' or ':html'"),
     COption2("", "", "", 0, "Fetches data from EtherScan for an arbitrary address. Formats the output to your specification."),
-#else // NEW_CODE
-    COption("~addr_list",       "one or more addresses to slurp"),
-    COption("-blocks:<range>",  "an optional range of blocks to slurp"),
-    COption("-type:<tx_type>",  "extract either [ ext | int | token | miner | all ] type of transactions"),
-    COption("-fmt:<str>",       "pretty print, optionally add ':txt,' ':csv,' or ':html'"),
-    COption("-blocks:<range>",  "export records in block range (:0[:max])"),
-    COption("-silent",          "Run silently (only freshen the data, do not display it)"),
-    COption("",                 "Fetches data from EtherScan for an arbitrary address. Formats the output to your specification.\n"),
-#endif
+// END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
-// END_CODE_OPTIONS
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

@@ -4,7 +4,7 @@ ethQuote -th
 
 `Usage:`    ethQuote -a|-c|-d|-f|-p|-p|-v|-h  
 `Purpose:`  Freshen and/or display Ethereum price data and other purposes.
-        
+
 `Where:`  
 
 | Short Cut | Option | Description |

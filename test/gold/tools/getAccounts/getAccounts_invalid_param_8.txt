@@ -17,8 +17,8 @@ getAccounts --verboses 0xb6 torj other
 	-a  (--addr)          display only addresses in the results (useful for scripting)
 
 #### Hidden options (shown during testing only)
-	-x  (--fmt val)       export format (one of [none|json|txt|csv|api])
 	-t  (--other)         export other addresses if found
+	-x  (--fmt val)       export format (one of [none|json|txt|csv|api])
 #### Hidden options (shown during testing only)
 
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
