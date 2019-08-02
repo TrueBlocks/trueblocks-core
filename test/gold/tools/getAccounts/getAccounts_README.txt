@@ -9,7 +9,7 @@ getAccounts -th
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | terms | a space separated list of one or more search terms |
+|  | terms | a space separated list of one or more search terms (required) |
 | -e | --expand | expand search to include all fields (default searches name, address, and symbol only) |
 | -m | --matchCase | do case-sensitive search |
 | -o | --owned | Include personal accounts in the search |
@@ -19,8 +19,8 @@ getAccounts -th
 | -a | --addr | display only addresses in the results (useful for scripting) |
 
 #### Hidden options (shown during testing only)
-| -x | --fmt val | export format (one of [none&#124;json&#124;txt&#124;csv&#124;api]) |
 | -t | --other | export other addresses if found |
+| -x | --fmt val | export format (one of [none&#124;json&#124;txt&#124;csv&#124;api]) |
 #### Hidden options (shown during testing only)
 
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |

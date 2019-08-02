@@ -13,25 +13,16 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-// BEG_CODE_OPTIONS
 static const COption params[] = {
-//#define NEW_CODE
-#ifdef NEW_CODE
-    COption2("trans_list", "", "", OPT_REQUIRED | OPT_FLAG, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
-    COption2("articulate", "", "", OPT_FLAG, "articulate the transactions if an ABI is found for the 'to' address"),
-    COption2("trace", "", "", OPT_FLAG, "display the transaction's trace"),
-    COption2("fmt", "", "<fmt>", OPT_HIDDEN, "export format (one of [none|json|txt|csv|api])"),
+// BEG_CODE_OPTIONS
+    COption2("trans_list", "", "", OPT_REQUIRED | OPT_ARG, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
+    COption2("articulate", "a", "", OPT_FLAG, "articulate the transactions if an ABI is found for the 'to' address"),
+    COption2("trace", "t", "", OPT_FLAG, "display the transaction's trace"),
+    COption2("fmt", "x", "val", OPT_HIDDEN, "export format (one of [none|json|txt|csv|api])"),
     COption2("", "", "", 0, "Retrieve an Ethereum transaction from the local cache or a running node."),
-#else // NEW_CODE
-    COption("~!trans_list",    "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
-    COption("-articulate",     "articulate the transactions if an ABI is found for the 'to' address"),
-    COption("-trace",          "display the transaction's trace"),
-    COption("@fmt:<fmt>",      "export format (one of [none|json|txt|csv|api])"),
-    COption("",                "Retrieve an Ethereum transaction from the local cache or a running node."),
-#endif
+// END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
-// END_CODE_OPTIONS
 
 extern const char* STR_DISPLAY;
 //---------------------------------------------------------------------------------------------------

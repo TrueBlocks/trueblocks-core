@@ -4,16 +4,20 @@ Processing: invalid
 
   Please provide a valid Ethereum address. Quitting...
 
-  Usage:    ethslurp [-b|-t|-x|-b|-s|-v|-h] addr_list  
+  Usage:    ethslurp [-t|-b|-s|-x|-v|-h] addr_list block_list  
   Purpose:  Fetches data from EtherScan for an arbitrary address. Formats the output to your specification.
-        
+
   Where:  
 	addr_list             one or more addresses to slurp (required)
-	-b  (--blocks range)  an optional range of blocks to slurp
+	block_list            an optional range of blocks to slurp
 	-t  (--type val)      extract either [ ext | int | token | miner | all ] type of transactions
-	-x  (--fmt val)       pretty print, optionally add ':txt,' ':csv,' or ':html'
 	-b  (--blocks range)  export records in block range (:0[:max])
 	-s  (--silent)        Run silently (only freshen the data, do not display it)
+	-x  (--fmt val)       pretty print, optionally add ':txt,' ':csv,' or ':html'
+
+#### Hidden options (shown during testing only)
+#### Hidden options (shown during testing only)
+
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 

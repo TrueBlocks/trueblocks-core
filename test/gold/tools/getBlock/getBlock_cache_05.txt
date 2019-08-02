@@ -1,5 +1,5 @@
-getBlock argc: 7 [1:-d] [2:2768801] [3:1995314] [4:1958017] [5:--normalize] [6:--parity] 
-getBlock -d 2768801 1995314 1958017 --normalize --parity 
+getBlock argc: 7 [1:-k] [2:2768801] [3:1995314] [4:1958017] [5:--normalize] [6:--parity] 
+getBlock -k 2768801 1995314 1958017 --normalize --parity 
 ["address":"0x37a9679c41e99db270bda88de8ff50c0cd23f326"
 "blockHash":"0x55d9959f2d782dceb3986fcfd0a695007e4f4df3cd3aade5fef2049c21d93d88"
 "blockNumber":"0x2a3fa1"

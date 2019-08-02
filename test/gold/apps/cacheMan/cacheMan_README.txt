@@ -9,7 +9,7 @@ cacheMan -th
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | filenames | path(s) of files to check, merge, fix or display (default=display) |
+|  | filenames | path(s) of files to check, merge, fix or display (default=display) (required) |
 | -c | --check | check for duplicates and other problems in the cache |
 | -d | --data | in 'list' mode, render results as data (i.e export mode) |
 | -s | --sort | sort the list of transactions and re-write (precludes other modes, other than --dedup) |

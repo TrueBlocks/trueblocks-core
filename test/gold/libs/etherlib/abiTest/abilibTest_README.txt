@@ -10,7 +10,7 @@ abiTest -th
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | mode | Mode of operation. One or more of 'encoding' or 'generation'.
- |
+ (required) |
 | -s | --sub val | sub mode |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |

@@ -9,7 +9,7 @@ cmdLineTest -th
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | testNum | the number of the test to run |
+|  | testNum | the number of the test to run (required) |
 |  | optionalMode | an optional mode with ~! start |
 | -b | --bool val | enter a boolean value (either '0', '1', 'false', or 'true') |
 | -i | --int val | enter any numeric value |
