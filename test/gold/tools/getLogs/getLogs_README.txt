@@ -3,7 +3,8 @@ getLogs -th
 #### Usage
 
 `Usage:`    getLogs [-a|-v|-h] &lt;transID&gt; [transID...]  
-`Purpose:`  Retrieve a transaction's logs from the local cache or a running node.  
+`Purpose:`  Retrieve a transaction's logs from the local cache or a running node.
+
 `Where:`  
 
 | Short Cut | Option | Description |

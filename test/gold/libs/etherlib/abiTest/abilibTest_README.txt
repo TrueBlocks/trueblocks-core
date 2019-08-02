@@ -4,7 +4,7 @@ abiTest -th
 
 `Usage:`    abiTest [-s|-v|-h] mode  
 `Purpose:`  Simple program to illustrate how to encode function and event signatures.
-             
+        
 `Where:`  
 
 | Short Cut | Option | Description |

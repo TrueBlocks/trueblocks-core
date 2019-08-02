@@ -2,7 +2,8 @@ getTrans argc: 2 [1:-h]
 getTrans -h 
 
   Usage:    getTrans [-a|-t|-v|-h] <transID> [transID...]  
-  Purpose:  Retrieve an Ethereum transaction from the local cache or a running node.  
+  Purpose:  Retrieve an Ethereum transaction from the local cache or a running node.
+
   Where:  
 	trans_list            a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)
 	-a  (--articulate)    articulate the transactions if an ABI is found for the 'to' address

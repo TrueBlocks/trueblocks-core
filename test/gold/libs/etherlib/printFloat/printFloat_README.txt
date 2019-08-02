@@ -4,7 +4,7 @@ printFloat -th
 
 `Usage:`    printFloat [-t|-v|-h]  
 `Purpose:`  This program tests floating point printing and conversions.
-             
+        
 `Where:`  
 
 | Short Cut | Option | Description |

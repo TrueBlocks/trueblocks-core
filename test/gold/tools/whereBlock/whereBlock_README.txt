@@ -4,7 +4,7 @@ whereBlock -th
 
 `Usage:`    whereBlock [-v|-h] &lt;block&gt; [block...]  
 `Purpose:`  Reports if a block was found in the cache, at a local, or at a remote node.
-             
+
 `Where:`  
 
 | Short Cut | Option | Description |

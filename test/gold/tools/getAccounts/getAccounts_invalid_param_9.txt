@@ -5,7 +5,7 @@ getAccounts --VERBOSE 0xb6 torj other
 
   Usage:    getAccounts [-e|-m|-o|-c|-p|-n|-a|-v|-h] <term> [term...]  
   Purpose:  Query addresses and/or names well known accounts.
-             
+        
   Where:  
 	terms                 a space separated list of one or more search terms (required)
 	-e  (--expand)        expand search to include all fields (default searches name, address, and symbol only)

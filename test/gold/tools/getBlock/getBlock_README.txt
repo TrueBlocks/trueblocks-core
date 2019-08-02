@@ -4,7 +4,7 @@ getBlock -th
 
 `Usage:`    getBlock [-n|-c|-a|-u|-q|-m|-l|-v|-h] &lt;block&gt; [block...]  
 `Purpose:`  Returns block(s) from local cache or directly from a running node.
-             
+        
 `Where:`  
 
 | Short Cut | Option | Description |

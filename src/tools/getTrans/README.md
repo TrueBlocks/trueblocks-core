@@ -4,15 +4,15 @@ The `getTrans` tool retrieves transactions from the running Ethereum node (using
 
 #### Usage
 
-`Usage:`    getTrans [-t|-a|-v|-h] &lt;transID&gt; [transID...]  
+`Usage:`    getTrans [-a|-t|-v|-h] &lt;transID&gt; [transID...]  
 `Purpose:`  Retrieve an Ethereum transaction from the local cache or a running node.  
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | trans_list | a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) |
+| -a | --articulate | articulate the transactions if an ABI is found for the 'to' address |
 | -t | --trace | display the transaction's trace |
-| -a | --articulate | articulate the transactions if an ABI is found |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
@@ -44,6 +44,8 @@ All **QBlocks** command-line tools support the following commands (although in s
     --veryRaw   |   report JSON data from node with zero processing
     --fmt       |   export format (where appropriate). One of [none|txt|csv|json|api]
     --api_mode  |   simulate api_mode for testing
+    --to_file   |   write the results to a temporary file and return the filename
+    --output:fn |   write the results to file 'fn' and return the filename
     --file:fn   |   specify multiple sets of command line options in a file.
 
 <small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>

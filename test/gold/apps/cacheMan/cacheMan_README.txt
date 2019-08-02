@@ -4,7 +4,7 @@ cacheMan -th
 
 `Usage:`    cacheMan [-c|-d|-s|-f|-l|-a|-b|-i|-r|-t|-k|-m|-x|-v|-h] filenames  
 `Purpose:`  Show the contents of an account cache and/or fix it by removing duplicate records.
-             
+        
 `Where:`  
 
 | Short Cut | Option | Description |

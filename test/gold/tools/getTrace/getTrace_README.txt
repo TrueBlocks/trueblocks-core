@@ -3,7 +3,8 @@ getTrace -th
 #### Usage
 
 `Usage:`    getTrace [-a|-c|-n|-v|-h] &lt;transID&gt; [transID...]  
-`Purpose:`  Retrieve a transaction's traces from the local cache or a running node.  
+`Purpose:`  Retrieve a transaction's traces from the local cache or a running node.
+
 `Where:`  
 
 | Short Cut | Option | Description |

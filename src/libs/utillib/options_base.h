@@ -16,6 +16,11 @@
 #include "filenames.h"
 #include "toml.h"
 
+#if 0
+if (permitted != "range" && permitted != "list" && permitted != "fn" && permitted != "mode" && permitted != "on/off")
+    permitted = "val";
+#endif
+
 // #define PROVING 1
 // Bit flags to enable / disable various options
 #define OPT_HELP    (1<<1)
@@ -37,6 +42,12 @@
 #define OPT_RAW     (1<<10)
 #define OPT_PREFUND (1<<11)
 #define OPT_OUTPUT  (1<<12)
+
+#define OPT_REQUIRED (1<<14)
+#define OPT_FLAG     (1<<15)
+#define OPT_HIDDEN   (1<<16)
+#define OPT_ARG      (1<<17)
+#define OPT_OPTIONAL (1<<18)
 
 //-----------------------------------------------------------------------------
 enum format_t { NONE1 = 0, JSON1 = (1<<1), TXT1 = (1<<2), CSV1 = (1<<3), API1 = (1<<4) };
@@ -136,6 +147,24 @@ namespace qblocks {
         bool      mode;
         bool      optional;
         COption(const string_q& name, const string_q& descr);
+    };
+
+    //--------------------------------------------------------------------------------
+    class COption2 : public COption {
+    public:
+        COption2(const string_q& ln, const string_q& sn, const string_q& type, size_t opts, const string_q& d) : COption("","") {
+            description = d;
+            if (ln.empty())
+                return;
+            mode = (opts & OPT_ARG);
+            hidden = (opts & OPT_HIDDEN);
+            optional = (opts & OPT_OPTIONAL);
+            longName = "--" + ln + (type.empty() ? "" : " " + type);
+            shortName = (sn.empty() ? "" : "-" + sn);
+            if (mode)
+                longName = shortName = ln;
+            permitted = type;
+        }
     };
 
     //--------------------------------------------------------------------------------

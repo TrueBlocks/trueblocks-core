@@ -4,7 +4,7 @@ getAccounts -th
 
 `Usage:`    getAccounts [-e|-m|-o|-c|-p|-n|-a|-v|-h] &lt;term&gt; [term...]  
 `Purpose:`  Query addresses and/or names well known accounts.
-             
+        
 `Where:`  
 
 | Short Cut | Option | Description |

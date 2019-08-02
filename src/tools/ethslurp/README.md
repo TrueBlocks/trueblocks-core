@@ -6,14 +6,14 @@ While `ethslurp` does have its shortcomings, it also provides some nice features
 
 #### Usage
 
-`Usage:`    ethslurp [-b|-t|-x|-b|-s|-v|-h] addrs  
+`Usage:`    ethslurp [-b|-t|-x|-b|-s|-v|-h] addr_list  
 `Purpose:`  Fetches data from EtherScan for an arbitrary address. Formats the output to your specification.
              
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | addrs | one or more addresses to slurp |
+|  | addr_list | one or more addresses to slurp |
 | -b | --blocks range | an optional range of blocks to slurp |
 | -t | --type val | extract either [ ext &#124; int &#124; token &#124; miner &#124; all ] type of transactions |
 | -x | --fmt val | pretty print, optionally add ':txt,' ':csv,' or ':html' |
@@ -41,6 +41,8 @@ All **QBlocks** command-line tools support the following commands (although in s
     --veryRaw   |   report JSON data from node with zero processing
     --fmt       |   export format (where appropriate). One of [none|txt|csv|json|api]
     --api_mode  |   simulate api_mode for testing
+    --to_file   |   write the results to a temporary file and return the filename
+    --output:fn |   write the results to file 'fn' and return the filename
     --file:fn   |   specify multiple sets of command line options in a file.
 
 <small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>

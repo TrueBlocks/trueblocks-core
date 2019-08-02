@@ -481,7 +481,7 @@ namespace qblocks {
             os << "[";
         for (uint64_t i = 0 ; i < cntParams ; i++) {
             if (pParams[i].mode) {
-                required += (" " + pParams[i].longName);
+                required += (pParams[i].longName.empty() ? "" : (" " + pParams[i].longName));
 
             } else if (pParams[i].hidden) {
                 // invisible option
@@ -501,7 +501,7 @@ namespace qblocks {
             os << "]";
         os << required;
 
-        string_q ret = postProcess("options", os.str().c_str());
+        string_q ret = postProcess("options", os.str());
         if (isReadme)
             ret = substitute(substitute(ret, "<", "&lt;"), ">", "&gt;");
         return ret;
@@ -509,21 +509,16 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     string_q COptionsBase::purpose(void) const {
-        string_q purpose;
-        for (uint64_t i = 0 ; i < cntParams ; i++)
-            if (pParams[i].shortName.empty())
-                purpose += ("\n           " + pParams[i].description);
-
         ostringstream os;
-        if (!purpose.empty()) {
-            replace(purpose, "\n           ", "");
-            string_q xxx;
-            xxx = substitute(purpose, "\n", "\n           ");
-            os << hiUp1 << "Purpose:" << hiDown << "  ";
-            os << xxx;
-            os << "  \n";
-        }
-        return postProcess("purpose", os.str().c_str());
+        os << hiUp1 << "Purpose:" << hiDown << "  ";
+        string_q purpose;
+        for (size_t p = 0 ; p < cntParams ; p++)
+            if (pParams[p].longName.empty()) // program description
+                purpose = pParams[p].description;
+        os << substitute(purpose, "\n", "\n        ") << "\n";
+        if (!endsWith(purpose, "\n"))
+            os << "\n";
+        return postProcess("purpose", os.str());
     }
 
     //--------------------------------------------------------------------------------
