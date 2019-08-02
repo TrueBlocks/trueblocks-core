@@ -4,7 +4,7 @@ getBloom -th
 
 `Usage:`    getBloom [-e|-b|-c|-i|-a|-s|-p|-n|-v|-h] &lt;block&gt; [block...]  
 `Purpose:`  Returns bloom filter(s) from running node (the default) or as EAB from QBlocks.
-             
+        
 `Where:`  
 
 | Short Cut | Option | Description |

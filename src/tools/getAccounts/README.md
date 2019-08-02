@@ -26,23 +26,32 @@ Using ethName to find Singular's address, list tokens held by other token accoun
 
 #### Usage
 
-`Usage:`    getAccounts [-o|-c|-p|-n|-a|-v|-h]  
-`Purpose:`  List known accounts ('owned' are shown by default).  
+`Usage:`    getAccounts [-e|-m|-o|-c|-p|-n|-a|-v|-h] &lt;term&gt; [term...]  
+`Purpose:`  Query addresses and/or names well known accounts.
+             
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-| -o | --owned | Show owned addresses |
-| -c | --custom | Show custom addresses (see below) |
-| -p | --prefund | Show prefunded addresses |
-| -n | --named | Show named addresses (see ethName) |
-| -a | --addr | export only addresses, no names |
+|  | terms | a space separated list of one or more search terms |
+| -e | --expand | expand search to include all fields (default searches name, address, and symbol only) |
+| -m | --matchCase | do case-sensitive search |
+| -o | --owned | Include personal accounts in the search |
+| -c | --custom | Include your custom named accounts |
+| -p | --prefund | Include prefund accounts |
+| -n | --named | Include well know token and airdrop addresses in the search |
+| -a | --addr | display only addresses in the results (useful for scripting) |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
 `Notes:`
 
-- To customize this list add an `custom` section to the config file (see documentation).
+- With a single search term, the tool searches both `name` and `address`.
+- With two search terms, the first term must match the `address` field, and the second term must match the `name` field.
+- When there are two search terms, both must match.
+- The `--matchCase` option requires case sensitive matching. It works with all other options.
+- To customize the list of names add a `custom` section to the config file (see documentation).
+- Name file: `~/.quickBlocks/names/names.txt` (195222)
 
 #### Other Options
 
@@ -59,6 +68,8 @@ All **QBlocks** command-line tools support the following commands (although in s
     --veryRaw   |   report JSON data from node with zero processing
     --fmt       |   export format (where appropriate). One of [none|txt|csv|json|api]
     --api_mode  |   simulate api_mode for testing
+    --to_file   |   write the results to a temporary file and return the filename
+    --output:fn |   write the results to file 'fn' and return the filename
     --file:fn   |   specify multiple sets of command line options in a file.
 
 <small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>

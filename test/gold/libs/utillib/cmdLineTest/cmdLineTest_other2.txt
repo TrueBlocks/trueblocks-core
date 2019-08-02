@@ -37,7 +37,7 @@ testNum: 8
 
   Usage:    cmdLineTest [-b|-i|-u|-s|-r|-l|-v|-h] testNum optionalMode  
   Purpose:  Tests various command line behavior.
-             
+        
   Where:  
 	testNum               the number of the test to run (required)
 	optionalMode          an optional mode with ~! start

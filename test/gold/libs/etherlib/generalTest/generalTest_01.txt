@@ -5,7 +5,7 @@ generalTest -t
 
   Usage:    generalTest [-v|-h]  
   Purpose:  Testing code for the general functionality of etherlib.
-             
+        
   Where:  
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen

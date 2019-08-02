@@ -5,7 +5,7 @@ acctScrape --list
 
   Usage:    acctScrape [-v|-h] <address> [address...]  
   Purpose:  Index transactions for a given Ethereum address (or series of addresses).
-             
+        
   Where:  
 	addr_list             one or more Ethereum addresses (required)
 

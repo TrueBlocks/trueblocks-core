@@ -4,7 +4,7 @@ acctTree -th
 
 `Usage:`    acctTree [-a|-s|-e|-n|-v|-h]  
 `Purpose:`  Build an account tree listing first transaction, latest transaction, and node balance for each account.
-             
+        
 `Where:`  
 
 | Short Cut | Option | Description |

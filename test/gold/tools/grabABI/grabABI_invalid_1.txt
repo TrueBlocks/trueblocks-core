@@ -6,7 +6,7 @@ grabABI 0x00001
 
   Usage:    grabABI [-c|-g|-d|-e|-j|-n|-l|-v|-h] <address> [address...]  
   Purpose:  Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
-             
+        
   Where:  
 	addr_list             list of one or more smart contracts whose ABI to grab from EtherScan (required)
 	-c  (--canonical)     convert all types to their canonical represenation and remove all spaces from display

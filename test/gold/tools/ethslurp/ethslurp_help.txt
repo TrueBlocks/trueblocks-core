@@ -4,7 +4,7 @@ Processing: -h
 
   Usage:    ethslurp [-b|-t|-x|-b|-s|-v|-h] addr_list  
   Purpose:  Fetches data from EtherScan for an arbitrary address. Formats the output to your specification.
-             
+        
   Where:  
 	addr_list             one or more addresses to slurp (required)
 	-b  (--blocks range)  an optional range of blocks to slurp
