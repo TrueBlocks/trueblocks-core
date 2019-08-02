@@ -440,6 +440,23 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
+    COption2::COption2(const string_q& ln, const string_q& sn, const string_q& type, size_t opts, const string_q& d)
+        : COption("","")
+    {
+        description = d;
+        if (ln.empty())
+            return;
+        mode = (opts & OPT_ARG);
+        hidden = (opts & OPT_HIDDEN);
+        optional = (opts & OPT_OPTIONAL);
+        longName = "--" + ln + (type.empty() ? "" : " " + type);
+        shortName = (sn.empty() ? "" : "-" + sn);
+        if (mode)
+            longName = shortName = ln;
+        permitted = type;
+    }
+
+    //--------------------------------------------------------------------------------
     bool COptionsBase::usage(const string_q& errMsg) const {
         cerr << usageStr(errMsg);
         return false;
@@ -532,7 +549,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             string_q line = STR_ONE_LINE;
             replace(line, "{S}", sN);
             replace(line, "{L}", lN);
-            replace(line, "{D}", substitute(d, "|", "&#124;"));
+            replace(line, "{D}", substitute((d + (required && isMode ? " (required)" : "")), "|", "&#124;"));
             os << line;
 
         } else {

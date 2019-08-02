@@ -13,37 +13,22 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-// BEG_CODE_OPTIONS
 static const COption params[] = {
-//#define NEW_CODE
-#ifdef NEW_CODE
-    COption2("block_list", "", "", OPT_REQUIRED | OPT_FLAG, "a space-separated list of one or more blocks for which to retrieve blooms"),
-    COption2("eab", "", "", OPT_FLAG, "pull the enhanced adaptive blooms from QBlocks cache"),
-    COption2("block", "", "", OPT_FLAG, "show only the block-level bloom (--raw only)"),
-    COption2("receipts", "", "", OPT_FLAG, "show only the receipt-level blooms (--raw only)"),
-    COption2("bits", "", "", OPT_FLAG, "display blooms as bits instead of hex"),
-    COption2("bars", "", "", OPT_FLAG, "display blooms as bar chart instead of hex"),
-    COption2("bitbars", "", "", OPT_FLAG, "display nBits as a bar chart"),
-    COption2("pctbars", "", "", OPT_FLAG, "display nBits as a percentage of bloom space"),
-    COption2("bitcount", "", "", OPT_FLAG, "display the number of bits lit per bloom"),
-    COption2("force", "", "", OPT_HIDDEN | OPT_FLAG, "force a re-write of the bloom to the cache"),
+// BEG_CODE_OPTIONS
+    COption2("block_list", "", "", OPT_REQUIRED | OPT_ARG, "a space-separated list of one or more blocks for which to retrieve blooms"),
+    COption2("eab", "e", "", OPT_FLAG, "pull the enhanced adaptive blooms from QBlocks cache"),
+    COption2("block", "b", "", OPT_FLAG, "show only the block-level bloom (--raw only)"),
+    COption2("receipts", "c", "", OPT_FLAG, "show only the receipt-level blooms (--raw only)"),
+    COption2("bits", "i", "", OPT_FLAG, "display blooms as bits instead of hex"),
+    COption2("bars", "a", "", OPT_FLAG, "display blooms as bar chart instead of hex"),
+    COption2("bitbars", "s", "", OPT_FLAG, "display nBits as a bar chart"),
+    COption2("pctbars", "p", "", OPT_FLAG, "display nBits as a percentage of bloom space"),
+    COption2("bitcount", "n", "", OPT_FLAG, "display the number of bits lit per bloom"),
+    COption2("force", "f", "", OPT_HIDDEN | OPT_FLAG, "force a re-write of the bloom to the cache"),
     COption2("", "", "", 0, "Returns bloom filter(s) from running node (the default) or as EAB from QBlocks."),
-#else // NEW_CODE
-    COption("~block_list",  "a space-separated list of one or more blocks for which to retrieve blooms"),
-    COption("-eab",         "pull the enhanced adaptive blooms from QBlocks cache"),
-    COption("-block",       "show only the block-level bloom (--raw only)"),
-    COption("-re(c)eipts",  "show only the receipt-level blooms (--raw only)"),
-    COption("-b(i)ts",      "display blooms as bits instead of hex"),
-    COption("-b(a)rs",      "display blooms as bar chart instead of hex"),
-    COption("-bitbar(s)",   "display nBits as a bar chart"),
-    COption("-pctbars",     "display nBits as a percentage of bloom space"),
-    COption("-bitcou(n)t",  "display the number of bits lit per bloom"),
-    COption("@force",       "force a re-write of the bloom to the cache"),
-    COption("",             "Returns bloom filter(s) from running node (the default) or as EAB from QBlocks.\n"),
-#endif
+// END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
-// END_CODE_OPTIONS
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {

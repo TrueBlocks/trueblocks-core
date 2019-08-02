@@ -9,7 +9,7 @@ makeClass -th
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | className | name of C++ class(es) to process |
+|  | className | name of C++ class(es) to process (required) |
 | -o | --open | edit <className(s)> definition file in local folder |
 | -r | --run | run the class maker on associated <className(s)> |
 | -j | --js val | export javaScript components for 'class' |

@@ -13,45 +13,26 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-// BEG_CODE_OPTIONS
 static const COption params[] = {
-//#define NEW_CODE
-#ifdef NEW_CODE
-    COption2("block_list", "", "", OPT_REQUIRED | OPT_FLAG, "a space-separated list of one or more blocks to retrieve"),
-    COption2("hash_only", "", "", OPT_FLAG, "display only transaction hashes, default is to display full transaction detail"),
-    COption2("check", "", "", OPT_FLAG, "compare results between qblocks and Ethereum node, report differences, if any"),
-    COption2("addrs", "", "", OPT_FLAG, "display all addresses included in the block"),
-    COption2("uniq", "", "", OPT_FLAG, "display only uniq addresses found per block"),
-    COption2("uniqTx", "", "", OPT_FLAG, "display only uniq addresses found per transaction"),
-    COption2("number", "", "", OPT_FLAG, "display address counts (alterntively --addrCnt, --uniqTxCnt, or --uniqCnt)"),
-    COption2("filter", "", "<addr>", 0, "useful only for --addrs or --uniq, only display this address in results"),
-    COption2("latest", "", "", OPT_HIDDEN | OPT_FLAG, "display the latest blocks at both the node and the cache"),
-    COption2("force", "", "", OPT_HIDDEN | OPT_FLAG, "force a re-write of the block to the cache"),
-    COption2("quiet", "", "", OPT_HIDDEN | OPT_FLAG, "do not print results to screen, used for speed testing and data checking"),
-    COption2("source", "", "[c|r]", OPT_HIDDEN, "either :c(a)che or :(r)aw, source for data retrival. (shortcuts -c = qblocks, -r = node)"),
-    COption2("fields", "", "[a|m|c|r]", OPT_HIDDEN, "either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default)"),
-    COption2("normalize", "", "", OPT_HIDDEN | OPT_FLAG, "normalize (remove un-common fields and sort) for comparison with other results (testing)"),
+// BEG_CODE_OPTIONS
+    COption2("block_list", "", "", OPT_REQUIRED | OPT_ARG, "a space-separated list of one or more blocks to retrieve"),
+    COption2("hash_only", "n", "", OPT_FLAG, "display only transaction hashes, default is to display full transaction detail"),
+    COption2("check", "c", "", OPT_FLAG, "compare results between qblocks and Ethereum node, report differences, if any"),
+    COption2("addrs", "a", "", OPT_FLAG, "display all addresses included in the block"),
+    COption2("uniq", "u", "", OPT_FLAG, "display only uniq addresses found per block"),
+    COption2("uniqTx", "q", "", OPT_FLAG, "display only uniq addresses found per transaction"),
+    COption2("number", "m", "", OPT_FLAG, "display address counts (alterntively --addrCnt, --uniqTxCnt, or --uniqCnt)"),
+    COption2("filter", "l", "addr", 0, "useful only for --addrs or --uniq, only display this address in results"),
+    COption2("latest", "l", "", OPT_HIDDEN | OPT_FLAG, "display the latest blocks at both the node and the cache"),
+    COption2("force", "o", "", OPT_HIDDEN | OPT_FLAG, "force a re-write of the block to the cache"),
+    COption2("quiet", "q", "", OPT_HIDDEN | OPT_FLAG, "do not print results to screen, used for speed testing and data checking"),
+    COption2("source", "s", "val", OPT_HIDDEN, "either :c(a)che or :(r)aw, source for data retrival. (shortcuts -k = qblocks, -r = node)"),
+    COption2("fields", "f", "val", OPT_HIDDEN, "either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default)"),
+    COption2("normalize", "n", "", OPT_HIDDEN | OPT_FLAG, "normalize (remove un-common fields and sort) for comparison with other results (testing)"),
     COption2("", "", "", 0, "Returns block(s) from local cache or directly from a running node."),
-#else // NEW_CODE
-    COption("~block_list",         "a space-separated list of one or more blocks to retrieve"),
-    COption("-hash_o(n)ly",        "display only transaction hashes, default is to display full transaction detail"),
-    COption("-check",              "compare results between qblocks and Ethereum node, report differences, if any"),
-    COption("-addrs",              "display all addresses included in the block"),
-    COption("-uniq",               "display only uniq addresses found per block"),
-    COption("-uni(q)Tx",           "display only uniq addresses found per transaction"),
-    COption("-nu(m)ber",           "display address counts (alterntively --addrCnt, --uniqTxCnt, or --uniqCnt)"),
-    COption("-fi(l)ter:<addr>",    "useful only for --addrs or --uniq, only display this address in results"),
-    COption("@latest",             "display the latest blocks at both the node and the cache"),
-    COption("@f(o)rce",            "force a re-write of the block to the cache"),
-    COption("@quiet",              "do not print results to screen, used for speed testing and data checking"),
-    COption("@source:[c|r]",       "either :c(a)che or :(r)aw, source for data retrival. (shortcuts -c = qblocks, -r = node)"),
-    COption("@fields:[a|m|c|r]",   "either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default)"),
-    COption("@normalize",          "normalize (remove un-common fields and sort) for comparison with other results (testing)"),
-    COption("",                    "Returns block(s) from local cache or directly from a running node.\n"),
-#endif
+// END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
-// END_CODE_OPTIONS
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -64,7 +45,7 @@ bool COptions::parseArguments(string_q& command) {
     for (auto arg : arguments) {
         // shortcuts
         if (arg == "-r" || arg == "--raw")   { arg = "--source:raw";   }
-        if (arg == "-d" || arg == "--cache") { arg = "--source:cache"; }
+        if (arg == "-k" || arg == "--cache") { arg = "--source:cache"; }
 
         // do not collapse
         if (arg == "-c" || arg == "--check") {

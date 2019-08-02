@@ -13,37 +13,22 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-// BEG_CODE_OPTIONS
 static const COption params[] = {
-//#define NEW_CODE
-#ifdef NEW_CODE
-    COption2("terms", "", "", OPT_REQUIRED | OPT_FLAG, "a space separated list of one or more search terms"),
-    COption2("expand", "", "", OPT_FLAG, "expand search to include all fields (default searches name, address, and symbol only)"),
-    COption2("matchCase", "", "", OPT_FLAG, "do case-sensitive search"),
-    COption2("owned", "", "", OPT_FLAG, "Include personal accounts in the search"),
-    COption2("custom", "", "", OPT_FLAG, "Include your custom named accounts"),
-    COption2("prefund", "", "", OPT_FLAG, "Include prefund accounts"),
-    COption2("named", "", "", OPT_FLAG, "Include well know token and airdrop addresses in the search"),
-    COption2("addr", "", "", OPT_FLAG, "display only addresses in the results (useful for scripting)"),
-    COption2("fmt", "", "<fmt>", OPT_HIDDEN, "export format (one of [none|json|txt|csv|api])"),
-    COption2("other", "", "", OPT_HIDDEN | OPT_FLAG, "export other addresses if found"),
+// BEG_CODE_OPTIONS
+    COption2("terms", "", "", OPT_REQUIRED | OPT_ARG, "a space separated list of one or more search terms"),
+    COption2("expand", "e", "", OPT_FLAG, "expand search to include all fields (default searches name, address, and symbol only)"),
+    COption2("matchCase", "m", "", OPT_FLAG, "do case-sensitive search"),
+    COption2("owned", "o", "", OPT_FLAG, "Include personal accounts in the search"),
+    COption2("custom", "c", "", OPT_FLAG, "Include your custom named accounts"),
+    COption2("prefund", "p", "", OPT_FLAG, "Include prefund accounts"),
+    COption2("named", "n", "", OPT_FLAG, "Include well know token and airdrop addresses in the search"),
+    COption2("addr", "a", "", OPT_FLAG, "display only addresses in the results (useful for scripting)"),
+    COption2("other", "t", "", OPT_HIDDEN | OPT_FLAG, "export other addresses if found"),
+    COption2("fmt", "x", "val", OPT_HIDDEN, "export format (one of [none|json|txt|csv|api])"),
     COption2("", "", "", OPT_FLAG, "Query addresses and/or names well known accounts.\n"),
-#else // NEW_CODE
-    COption("~terms",       "a space separated list of one or more search terms"),
-    COption("-expand",      "expand search to include all fields (default searches name, address, and symbol only)"),
-    COption("-matchCase",   "do case-sensitive search"),
-    COption("-owned",       "Include personal accounts in the search"),
-    COption("-custom",      "Include your custom named accounts"),
-    COption("-prefund",     "Include prefund accounts"),
-    COption("-named",       "Include well know token and airdrop addresses in the search"),
-    COption("-addr",        "display only addresses in the results (useful for scripting)"),
-    COption("@fmt:<fmt>",   "export format (one of [none|json|txt|csv|api])"),
-    COption("@o(t)her",     "export other addresses if found"),
-    COption("",             "Query addresses and/or names well known accounts.\n"),
-#endif
+// END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
-// END_CODE_OPTIONS
 
 extern const char* STR_DISPLAY;
 extern const char* STR_DISPLAY_ALL;

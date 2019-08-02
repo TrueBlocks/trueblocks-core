@@ -13,31 +13,19 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-// BEG_CODE_OPTIONS
 static const COption params[] = {
-//#define NEW_CODE
-#ifdef NEW_CODE
-    COption2("addr_list", "", "", OPT_REQUIRED | OPT_FLAG, "one or more addresses (0x...) from which to retrieve balances"),
-    COption2("block_list", "", "", OPT_REQUIRED | OPT_FLAG, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
-    COption2("mode", "", "<val>", 0, "control which state to export. One of [none|some|all|balance|nonce|code|storage|deployed|accttype]"),
-    COption2("nozero", "", "", OPT_FLAG, "suppress the display of zero balance accounts"),
-    COption2("changes", "", "", OPT_FLAG, "only report a balance when it changes from one block to the next"),
-    COption2("noHeader", "", "", OPT_HIDDEN | OPT_FLAG, "hide the header in txt and csv mode"),
-    COption2("fmt", "", "<fmt>", OPT_HIDDEN, "export format (one of [none|json|txt|csv|api])"),
+// BEG_CODE_OPTIONS
+    COption2("addr_list", "", "", OPT_REQUIRED | OPT_ARG, "one or more addresses (0x...) from which to retrieve balances"),
+    COption2("block_list", "", "", OPT_OPTIONAL | OPT_ARG, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
+    COption2("mode", "m", "val", 0, "control which state to export. One of [none|some|all|balance|nonce|code|storage|deployed|accttype]"),
+    COption2("nozero", "n", "", OPT_FLAG, "suppress the display of zero balance accounts"),
+    COption2("changes", "c", "", OPT_FLAG, "only report a balance when it changes from one block to the next"),
+    COption2("noHeader", "o", "", OPT_HIDDEN | OPT_FLAG, "hide the header in txt and csv mode"),
+    COption2("fmt", "x", "val", OPT_HIDDEN, "export format (one of [none|json|txt|csv|api])"),
     COption2("", "", "", 0, "Retrieve the balance (in wei) for one or more addresses at the given block(s)."),
-#else // NEW_CODE
-    COption("~addr_list",    "one or more addresses (0x...) from which to retrieve balances"),
-    COption("~!block_list",  "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
-    COption("-mode:<val>",   "control which state to export. One of [none|some|all|balance|nonce|code|storage|deployed|accttype]"),
-    COption("-nozero",       "suppress the display of zero balance accounts"),
-    COption("-changes",      "only report a balance when it changes from one block to the next"),
-    COption("@n(o)Header",   "hide the header in txt and csv mode"),
-    COption("@fmt:<fmt>",    "export format (one of [none|json|txt|csv|api])"),
-    COption("",              "Retrieve the balance (in wei) for one or more addresses at the given block(s).\n"),
-#endif
+// END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
-// END_CODE_OPTIONS
 
 extern const char* STR_DISPLAY;
 //---------------------------------------------------------------------------------------------------

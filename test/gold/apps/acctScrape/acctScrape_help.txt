@@ -9,7 +9,7 @@ acctScrape -th
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | addr_list | one or more Ethereum addresses |
+|  | addr_list | one or more Ethereum addresses (required) |
 
 #### Hidden options (shown during testing only)
 | -n | --noBlooms | turn off bloom filters for performance testing |

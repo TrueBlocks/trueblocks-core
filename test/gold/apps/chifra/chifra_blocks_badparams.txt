@@ -7,7 +7,7 @@ getBlock --not_an_option
 
   Usage:    getBlock [-n|-c|-a|-u|-q|-m|-l|-v|-h] <block> [block...]  
   Purpose:  Returns block(s) from local cache or directly from a running node.
-        
+
   Where:  
 	block_list            a space-separated list of one or more blocks to retrieve (required)
 	-n  (--hash_only)     display only transaction hashes, default is to display full transaction detail
@@ -16,13 +16,13 @@ getBlock --not_an_option
 	-u  (--uniq)          display only uniq addresses found per block
 	-q  (--uniqTx)        display only uniq addresses found per transaction
 	-m  (--number)        display address counts (alterntively --addrCnt, --uniqTxCnt, or --uniqCnt)
-	-l  (--filter val)    useful only for --addrs or --uniq, only display this address in results
+	-l  (--filter addr)   useful only for --addrs or --uniq, only display this address in results
 
 #### Hidden options (shown during testing only)
 	-l  (--latest)        display the latest blocks at both the node and the cache
 	-o  (--force)         force a re-write of the block to the cache
 	-q  (--quiet)         do not print results to screen, used for speed testing and data checking
-	-s  (--source val)    either :c(a)che or :(r)aw, source for data retrival. (shortcuts -c = qblocks, -r = node)
+	-s  (--source val)    either :c(a)che or :(r)aw, source for data retrival. (shortcuts -k = qblocks, -r = node)
 	-f  (--fields val)    either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default)
 	-n  (--normalize)     normalize (remove un-common fields and sort) for comparison with other results (testing)
 #### Hidden options (shown during testing only)
