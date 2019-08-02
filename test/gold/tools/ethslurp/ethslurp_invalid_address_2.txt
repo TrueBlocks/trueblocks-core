@@ -14,10 +14,6 @@ Processing: 0x63c8c29af409bd31ec7ddeea58f
 	-b  (--blocks range)  export records in block range (:0[:max])
 	-s  (--silent)        Run silently (only freshen the data, do not display it)
 	-x  (--fmt val)       pretty print, optionally add ':txt,' ':csv,' or ':html'
-
-#### Hidden options (shown during testing only)
-#### Hidden options (shown during testing only)
-
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 
