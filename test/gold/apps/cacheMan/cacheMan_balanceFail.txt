@@ -1,8 +1,10 @@
-cacheMan argc: 3 [1:0x001d14804b399c6ef80e64576f657660804fabcd.acct.bin] [2:--cacheBals] 
-cacheMan 0x001d14804b399c6ef80e64576f657660804fabcd.acct.bin --cacheBals 
-00000001 TIME ~ CLOCK - <ERROR> : Exit(parseArguments): 
+cacheMan argc: 3 [1:0x001d14804b399c6ef80e64576f657660804fabcd] [2:--cacheBals] 
+cacheMan 0x001d14804b399c6ef80e64576f657660804fabcd --cacheBals 
+0x001d14804b399c6ef80e64576f657660804fabcd
+/media/jrush/ext-drive/scraper/monitors/0x001d14804b399c6ef80e64576f657660804fabcd.acct.bin
+TIME ~ CLOCK - <ERROR>  : Exit(parseArguments): 
 
-  Cannot open monitor file for '0x001d14804b399c6ef80e64576f657660804fabcd.acct.bin'.
+  Monitor file for '0x001d14804b399c6ef80e64576f657660804fabcd' does not exist.
 
   Usage:    cacheMan [-c|-d|-s|-f|-l|-a|-b|-i|-r|-t|-k|-m|-x|-v|-h] filenames  
   Purpose:  Show the contents of an account cache and/or fix it by removing duplicate records.
