@@ -13,7 +13,7 @@ getTrace 0x0012
 	-n  (--noHeader)      do not show the header row
 
 #### Hidden options (shown during testing only)
-	-x  (--fmt val)       export format (one of [none|json|txt|csv|api])
+	-x  (--fmt <fmt>)     export format (one of [none|json|txt|csv|api])
 	-d  (--ddos on/off)   skip over dDos transactions in export ('on' by default)
 #### Hidden options (shown during testing only)
 

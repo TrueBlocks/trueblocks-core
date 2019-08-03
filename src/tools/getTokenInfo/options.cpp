@@ -19,7 +19,7 @@ static const COption params[] = {
     COption2("block_list", "", "", OPT_OPTIONAL | OPT_ARG, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
     COption2("byAcct", "b", "", OPT_FLAG, "consider each address an ERC20 token except the last, whose balance is reported for each token"),
     COption2("nozero", "n", "", OPT_FLAG, "suppress the display of zero balance accounts"),
-    COption2("info", "i", "val", OPT_HIDDEN, "retreive information [name|decimals|totalSupply|version|symbol|all] about the token"),
+    COption2("info", "i", "<val>", OPT_HIDDEN, "retreive information [name|decimals|totalSupply|version|symbol|all] about the token"),
     COption2("", "", "", 0, "Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s)."),
 // END_CODE_OPTIONS
 };

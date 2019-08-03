@@ -18,7 +18,7 @@ static const COption params[] = {
     COption2("trans_list", "", "", OPT_REQUIRED | OPT_ARG, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
     COption2("articulate", "a", "", OPT_FLAG, "articulate the transactions if an ABI is found for the 'to' address"),
     COption2("logs", "l", "", OPT_FLAG, "display the receipt's logs"),
-    COption2("fmt", "x", "val", OPT_HIDDEN, "export format (one of [none|json|txt|csv|api])"),
+    COption2("fmt", "x", "<fmt>", OPT_HIDDEN, "export format (one of [none|json|txt|csv|api])"),
     COption2("", "", "", 0, "Retrieve a transaction's receipt from the local cache or a running node."),
 // END_CODE_OPTIONS
 };

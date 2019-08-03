@@ -10,7 +10,7 @@
 static const COption params[] = {
 // BEG_CODE_OPTIONS
     COption2("addr_list", "", "", OPT_REQUIRED | OPT_ARG, "one or more addresses (0x...) to export"),
-    COption2("fmt", "x", "val", 0, "export format (one of [json|txt|csv])"),
+    COption2("fmt", "x", "<fmt>", 0, "export format (one of [json|txt|csv])"),
     COption2("articulate", "a", "", OPT_FLAG, "articulate transactions, traces, logs, and outputs"),
     COption2("logs", "l", "", OPT_FLAG, "export logs instead of transactions"),
     COption2("traces", "t", "", OPT_FLAG, "export traces instead of transactions"),
@@ -18,12 +18,12 @@ static const COption params[] = {
     COption2("txs", "s", "on/off", OPT_HIDDEN, "write transactions to the binary cache ('on' by default)"),
     COption2("trc", "r", "on/off", OPT_HIDDEN, "write traces to the binary cache ('off' by default)"),
     COption2("ddos", "d", "on/off", OPT_HIDDEN, "skip over dDos transactions in export ('on' by default)"),
-    COption2("maxTraces", "m", "val", OPT_HIDDEN, "if --ddos:on, the number of traces defining a dDos (default = 250)"),
+    COption2("maxTraces", "m", "<num>", OPT_HIDDEN, "if --ddos:on, the number of traces defining a dDos (default = 250)"),
     COption2("noHeader", "n", "", OPT_HIDDEN, "do not show the header row"),
     COption2("allABIs", "a", "", OPT_HIDDEN, "load all previously cached abi files"),
     COption2("grabABIs", "g", "", OPT_HIDDEN, "using each trace's 'to' address, grab the abi for that address (improves articulation)"),
-    COption2("start", "s", "val", OPT_HIDDEN, "first block to export (inclusive)"),
-    COption2("end", "e", "val", OPT_HIDDEN, "last block to export (inclusive)"),
+    COption2("start", "s", "<num>", OPT_HIDDEN, "first block to export (inclusive)"),
+    COption2("end", "e", "<num>", OPT_HIDDEN, "last block to export (inclusive)"),
     COption2("", "", "", 0, "Export full detail of transactions for one or more Ethereum addresses."),
 // END_CODE_OPTIONS
 };
