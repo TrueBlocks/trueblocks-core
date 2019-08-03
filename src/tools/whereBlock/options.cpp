@@ -15,7 +15,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption2("block_list", "b", "", OPT_REQUIRED | OPT_ARG, "a space-separated list of one or more blocks to search for"),
+    COption2("block_list", "", "", OPT_REQUIRED | OPT_ARG, "a space-separated list of one or more blocks to search for"),
     COption2("fmt", "x", "<fmt>", OPT_HIDDEN, "export format (one of [none|json|txt|csv|api])"),
     COption2("", "", "", 0, "Reports if a block was found in the cache, at a local, or at a remote node."),
 // END_CODE_OPTIONS

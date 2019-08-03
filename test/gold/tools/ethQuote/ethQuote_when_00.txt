@@ -7,7 +7,7 @@ ethQuote -w 14
   Purpose:  Freshen and/or display Ethereum price data and other purposes.
 
   Where:  
-	-a  (--at val)        Report the price since nearest five minutes to the given timestamp
+	-a  (--at <ts>)       Report the price since nearest five minutes to the given timestamp
 	-c  (--current)       Report on the current price (i.e. -at:now)
 	-d  (--data)          Export prices as JSON data
 	-f  (--freshen)       Freshen database (append new data)
