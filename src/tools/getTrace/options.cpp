@@ -20,7 +20,7 @@ static const COption params[] = {
     COption2("countOnly", "c", "", OPT_FLAG, "show the number of traces for the transaction only (fast)"),
     COption2("noHeader", "n", "", OPT_FLAG, "do not show the header row"),
     COption2("fmt", "x", "<fmt>", OPT_HIDDEN, "export format (one of [none|json|txt|csv|api])"),
-    COption2("ddos", "d", "on/off", OPT_HIDDEN, "skip over dDos transactions in export ('on' by default)"),
+    COption2("ddos", "d", "<on/off>", OPT_HIDDEN, "skip over dDos transactions in export ('on' by default)"),
     COption2("", "", "", 0, "Retrieve a transaction's traces from the local cache or a running node."),
 // END_CODE_OPTIONS
 };

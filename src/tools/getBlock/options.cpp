@@ -22,7 +22,7 @@ static const COption params[] = {
     COption2("uniq", "u", "", OPT_FLAG, "display only uniq addresses found per block"),
     COption2("uniqTx", "q", "", OPT_FLAG, "display only uniq addresses found per transaction"),
     COption2("number", "m", "", OPT_FLAG, "display address counts (alterntively --addrCnt, --uniqTxCnt, or --uniqCnt)"),
-    COption2("filter", "l", "addr", 0, "useful only for --addrs or --uniq, only display this address in results"),
+    COption2("filter", "l", "<addr>", 0, "useful only for --addrs or --uniq, only display this address in results"),
     COption2("latest", "l", "", OPT_HIDDEN | OPT_FLAG, "display the latest blocks at both the node and the cache"),
     COption2("force", "o", "", OPT_HIDDEN | OPT_FLAG, "force a re-write of the block to the cache"),
     COption2("quiet", "q", "", OPT_HIDDEN | OPT_FLAG, "do not print results to screen, used for speed testing and data checking"),
