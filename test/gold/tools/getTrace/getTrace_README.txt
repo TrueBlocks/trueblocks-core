@@ -15,7 +15,7 @@ getTrace -th
 | -n | --noHeader | do not show the header row |
 
 #### Hidden options (shown during testing only)
-| -x | --fmt val | export format (one of [none&#124;json&#124;txt&#124;csv&#124;api]) |
+| -x | --fmt <fmt> | export format (one of [none&#124;json&#124;txt&#124;csv&#124;api]) |
 | -d | --ddos on/off | skip over dDos transactions in export ('on' by default) |
 #### Hidden options (shown during testing only)
 

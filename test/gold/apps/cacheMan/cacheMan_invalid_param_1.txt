@@ -18,14 +18,14 @@ TIME ~ CLOCK - <ERROR>  : Exit(parseArguments):
 	-b  (--balances)      export account balances for each account
 	-i  (--import)        import transactions if import.txt file exists in current folder
 	-r  (--remove)        remove transactions if remove.txt file exists in current folder
-	-t  (--truncate val)  truncate the cache at block :n (keeps block 'n' and before, implies --fix)
-	-k  (--maxBlock val)  for testing, max block to visit
+	-t  (--truncate <num>)truncate the cache at block :n (keeps block 'n' and before, implies --fix)
+	-k  (--maxBlock <num>)for testing, max block to visit
 	-m  (--merge)         merge two or more caches into a single cache
-	-x  (--fmt val)       export format (one of [json|txt|csv])
+	-x  (--fmt <fmt>)     export format (one of [json|txt|csv])
 
 #### Hidden options (shown during testing only)
 	-k  (--skip)          skip value for testing
-	-s  (--start val)     un-used hidden value - do not remove
+	-s  (--start <num>)   un-used hidden value - do not remove
 #### Hidden options (shown during testing only)
 
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
