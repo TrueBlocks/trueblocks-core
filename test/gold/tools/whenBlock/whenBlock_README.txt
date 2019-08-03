@@ -15,7 +15,7 @@ whenBlock -th
 | -l | --list | export all the named blocks |
 
 #### Hidden options (shown during testing only)
-| -x | --fmt val | export format (one of [none&#124;json&#124;txt&#124;csv&#124;api]) |
+| -x | --fmt <fmt> | export format (one of [none&#124;json&#124;txt&#124;csv&#124;api]) |
 #### Hidden options (shown during testing only)
 
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |

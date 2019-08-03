@@ -18,12 +18,12 @@ static const COption params[] = {
     COption2("balances", "b", "", OPT_FLAG, "export account balances for each account"),
     COption2("import", "i", "", OPT_FLAG, "import transactions if import.txt file exists in current folder"),
     COption2("remove", "r", "", OPT_FLAG, "remove transactions if remove.txt file exists in current folder"),
-    COption2("truncate", "t", "val", 0, "truncate the cache at block :n (keeps block 'n' and before, implies --fix)"),
-    COption2("maxBlock", "k", "val", 0, "for testing, max block to visit"),
+    COption2("truncate", "t", "<num>", 0, "truncate the cache at block :n (keeps block 'n' and before, implies --fix)"),
+    COption2("maxBlock", "k", "<num>", 0, "for testing, max block to visit"),
     COption2("merge", "m", "", OPT_FLAG, "merge two or more caches into a single cache"),
-    COption2("fmt", "x", "val", 0, "export format (one of [json|txt|csv])"),
+    COption2("fmt", "x", "<fmt>", 0, "export format (one of [json|txt|csv])"),
     COption2("skip", "k", "", OPT_HIDDEN | OPT_FLAG, "skip value for testing"),
-    COption2("start", "s", "val", OPT_HIDDEN, "un-used hidden value - do not remove"),
+    COption2("start", "s", "<num>", OPT_HIDDEN, "un-used hidden value - do not remove"),
     COption2("", "", "", 0, "Show the contents of an account cache and/or fix it by removing duplicate records.\n"),
 // END_CODE_OPTIONS
 };

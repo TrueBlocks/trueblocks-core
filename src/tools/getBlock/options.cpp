@@ -26,8 +26,8 @@ static const COption params[] = {
     COption2("latest", "l", "", OPT_HIDDEN | OPT_FLAG, "display the latest blocks at both the node and the cache"),
     COption2("force", "o", "", OPT_HIDDEN | OPT_FLAG, "force a re-write of the block to the cache"),
     COption2("quiet", "q", "", OPT_HIDDEN | OPT_FLAG, "do not print results to screen, used for speed testing and data checking"),
-    COption2("source", "s", "val", OPT_HIDDEN, "either :c(a)che or :(r)aw, source for data retrival. (shortcuts -k = qblocks, -r = node)"),
-    COption2("fields", "f", "val", OPT_HIDDEN, "either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default)"),
+    COption2("source", "s", "[c|r]", OPT_HIDDEN, "either :c(a)che or :(r)aw, source for data retrival. (shortcuts -k = qblocks, -r = node)"),
+    COption2("fields", "f", "[a|m|c|r]", OPT_HIDDEN, "either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default)"),
     COption2("normalize", "n", "", OPT_HIDDEN | OPT_FLAG, "normalize (remove un-common fields and sort) for comparison with other results (testing)"),
     COption2("", "", "", 0, "Returns block(s) from local cache or directly from a running node."),
 // END_CODE_OPTIONS

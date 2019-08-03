@@ -20,7 +20,7 @@ static const COption params[] = {
     COption2("type", "t", "val", 0, "extract either [ ext | int | token | miner | all ] type of transactions"),
     COption2("blocks", "b", "range", 0, "export records in block range (:0[:max])"),
     COption2("silent", "s", "", OPT_FLAG, "Run silently (only freshen the data, do not display it)"),
-    COption2("fmt", "x", "val", 0, "pretty print, optionally add ':txt,' ':csv,' or ':html'"),
+    COption2("fmt", "x", "<fmt>", 0, "pretty print, optionally add ':txt,' ':csv,' or ':html'"),
     COption2("", "", "", 0, "Fetches data from EtherScan for an arbitrary address. Formats the output to your specification."),
 // END_CODE_OPTIONS
 };

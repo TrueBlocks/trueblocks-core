@@ -18,7 +18,7 @@ getAccounts -x torj 0xbf4ed7b27f1d666546e30d74d50d173d20bca754
 
 #### Hidden options (shown during testing only)
 	-t  (--other)         export other addresses if found
-	-x  (--fmt val)       export format (one of [none|json|txt|csv|api])
+	-x  (--fmt <fmt>)     export format (one of [none|json|txt|csv|api])
 #### Hidden options (shown during testing only)
 
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
