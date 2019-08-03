@@ -21,7 +21,7 @@ static const COption params[] = {
     COption2("maxTraces", "m", "<num>", OPT_HIDDEN, "if --ddos:on, the number of traces defining a dDos (default = 250)"),
     COption2("noHeader", "n", "", OPT_HIDDEN | OPT_FLAG, "do not show the header row"),
     COption2("allABIs", "a", "", OPT_HIDDEN | OPT_FLAG, "load all previously cached abi files"),
-    COption2("grabABIs", "g", "", OPT_HIDDEN | OPT_FLAG, "using each trace's 'to' address grab the abi for that address (improves articulation)"),
+    COption2("grabABIs", "g", "", OPT_HIDDEN | OPT_FLAG, "using each trace's 'to' address, grab the abi for that address (improves articulation)"),
     COption2("start", "s", "<num>", OPT_HIDDEN, "first block to export (inclusive)"),
     COption2("end", "e", "<num>", OPT_HIDDEN, "last block to export (inclusive)"),
     COption2("", "", "", 0, "Export full detail of transactions for one or more Ethereum addresses."),
