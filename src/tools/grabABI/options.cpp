@@ -16,18 +16,18 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption2("addr_list", "", "list<addr>", OPT_REQUIRED, "list of one or more smart contracts whose ABI to grab from EtherScan"),
-    COption2("canonical", "c", "", OPT_FLAG, "convert all types to their canonical represenation and remove all spaces from display"),
-    COption2("generate", "g", "", OPT_FLAG, "generate C++ code into the current folder for all functions and events found in the ABI"),
-    COption2("data", "d", "", OPT_FLAG, "export the display as data"),
-    COption2("encode", "e", "", OPT_FLAG, "generate the encodings for the functions / events in the ABI"),
-    COption2("json", "j", "", OPT_FLAG, "print the ABI to the screen as json"),
-    COption2("noconst", "n", "", OPT_FLAG, "generate encodings for non-constant functions and events only (always true when generating)"),
-    COption2("sol", "l", "<fn>", 0, "create the ABI file from a .sol file in the local directory"),
-    COption2("open", "o", "", OPT_HIDDEN | OPT_FLAG, "open the ABI file for editing, download if not already present"),
-    COption2("silent", "s", "", OPT_HIDDEN | OPT_FLAG, "if ABI cannot be acquired, fail silently (useful for scripting)"),
-    COption2("nodec", "n", "", OPT_HIDDEN | OPT_FLAG, "do not decorate duplicate names"),
-    COption2("known", "k", "", OPT_HIDDEN | OPT_FLAG, "load common 'known' ABIs from cache"),
+    COption2("addr_list", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "list of one or more smart contracts whose ABI to grab from EtherScan"),
+    COption2("canonical", "c", "", OPT_SWITCH, "convert all types to their canonical represenation and remove all spaces from display"),
+    COption2("generate", "g", "", OPT_SWITCH, "generate C++ code into the current folder for all functions and events found in the ABI"),
+    COption2("data", "d", "", OPT_SWITCH, "export the display as data"),
+    COption2("encode", "e", "", OPT_SWITCH, "generate the encodings for the functions / events in the ABI"),
+    COption2("json", "j", "", OPT_SWITCH, "print the ABI to the screen as json"),
+    COption2("noconst", "n", "", OPT_SWITCH, "generate encodings for non-constant functions and events only (always true when generating)"),
+    COption2("sol", "l", "<fn>", OPT_FLAG, "create the ABI file from a .sol file in the local directory"),
+    COption2("open", "o", "", OPT_HIDDEN | OPT_SWITCH, "open the ABI file for editing, download if not already present"),
+    COption2("silent", "s", "", OPT_HIDDEN | OPT_SWITCH, "if ABI cannot be acquired, fail silently (useful for scripting)"),
+    COption2("nodec", "n", "", OPT_HIDDEN | OPT_SWITCH, "do not decorate duplicate names"),
+    COption2("known", "k", "", OPT_HIDDEN | OPT_SWITCH, "load common 'known' ABIs from cache"),
     COption2("", "", "", 0, "Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI."),
 // END_CODE_OPTIONS
 };

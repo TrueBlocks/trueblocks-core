@@ -15,13 +15,13 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption2("addr_list", "", "list<addr>", OPT_REQUIRED, "one or more addresses (0x...) from which to retrieve balances"),
-    COption2("block_list", "", "list<block>", OPT_REQUIRED, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
-    COption2("mode", "m", "<val>", 0, "control which state to export. One of [none|some|all|balance|nonce|code|storage|deployed|accttype]"),
-    COption2("nozero", "n", "", OPT_FLAG, "suppress the display of zero balance accounts"),
-    COption2("changes", "c", "", OPT_FLAG, "only report a balance when it changes from one block to the next"),
-    COption2("noHeader", "o", "", OPT_HIDDEN | OPT_FLAG, "hide the header in txt and csv mode"),
-    COption2("fmt", "x", "<fmt>", OPT_HIDDEN, "export format (one of [none|json|txt|csv|api])"),
+    COption2("addr_list", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) from which to retrieve balances"),
+    COption2("block_list", "", "list<block>", OPT_POSITIONAL, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
+    COption2("mode", "m", "enum[none|some|all|balance|nonce|code|storage|deployed|accttype]", OPT_FLAG, "control which state to export. One of [none|some|all|balance|nonce|code|storage|deployed|accttype]"),
+    COption2("nozero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
+    COption2("changes", "c", "", OPT_SWITCH, "only report a balance when it changes from one block to the next"),
+    COption2("noHeader", "o", "", OPT_HIDDEN | OPT_SWITCH, "hide the header in txt and csv mode"),
+    COption2("fmt", "x", "<fmt>", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json|txt|csv|api])"),
     COption2("", "", "", 0, "Retrieve the balance (in wei) for one or more addresses at the given block(s)."),
 // END_CODE_OPTIONS
 };

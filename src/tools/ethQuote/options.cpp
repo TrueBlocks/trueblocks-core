@@ -15,12 +15,12 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption2("at", "a", "<ts>", 0, "Report the price since nearest five minutes to the given timestamp"),
-    COption2("current", "c", "", OPT_FLAG, "Report on the current price (i.e. -at:now)"),
-    COption2("data", "d", "", OPT_FLAG, "Export prices as JSON data"),
-    COption2("freshen", "f", "", OPT_FLAG, "Freshen database (append new data)"),
-    COption2("period", "p", "<5|15|30|*120|240|1440>", 0, "Display prices in this increment. One of [5|15|30|120*|240|1440]"),
-    COption2("pair", "p", "<val>", 0, "Which price pair to freshen or list (see Poloniex)"),
+    COption2("at", "a", "<ts>", OPT_FLAG, "Report the price since nearest five minutes to the given timestamp"),
+    COption2("current", "c", "", OPT_SWITCH, "Report on the current price (i.e. -at:now)"),
+    COption2("data", "d", "", OPT_SWITCH, "Export prices as JSON data"),
+    COption2("freshen", "f", "", OPT_SWITCH, "Freshen database (append new data)"),
+    COption2("period", "p", "enum<5|15|30|*120|240|1440>", OPT_FLAG, "Display prices in this increment. One of [5|15|30|120*|240|1440]"),
+    COption2("pair", "p", "<val>", OPT_FLAG, "Which price pair to freshen or list (see Poloniex)"),
     COption2("", "", "", 0, "Freshen and/or display Ethereum price data and other purposes."),
 // END_CODE_OPTIONS
 };

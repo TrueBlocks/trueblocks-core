@@ -15,17 +15,17 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption2("terms", "", "list<term>", OPT_REQUIRED, "a space separated list of one or more search terms"),
-    COption2("expand", "e", "", OPT_FLAG, "expand search to include all fields (default searches name, address, and symbol only)"),
-    COption2("matchCase", "m", "", OPT_FLAG, "do case-sensitive search"),
-    COption2("owned", "o", "", OPT_FLAG, "Include personal accounts in the search"),
-    COption2("custom", "c", "", OPT_FLAG, "Include your custom named accounts"),
-    COption2("prefund", "p", "", OPT_FLAG, "Include prefund accounts"),
-    COption2("named", "n", "", OPT_FLAG, "Include well know token and airdrop addresses in the search"),
-    COption2("addr", "a", "", OPT_FLAG, "display only addresses in the results (useful for scripting)"),
-    COption2("other", "t", "", OPT_HIDDEN | OPT_FLAG, "export other addresses if found"),
-    COption2("fmt", "x", "<fmt>", OPT_HIDDEN, "export format (one of [none|json|txt|csv|api])"),
-    COption2("", "", "", OPT_FLAG, "Query addresses and/or names well known accounts.\n"),
+    COption2("terms", "", "list<term>", OPT_REQUIRED | OPT_POSITIONAL, "a space separated list of one or more search terms"),
+    COption2("expand", "e", "", OPT_SWITCH, "expand search to include all fields (default searches name, address, and symbol only)"),
+    COption2("matchCase", "m", "", OPT_SWITCH, "do case-sensitive search"),
+    COption2("owned", "o", "", OPT_SWITCH, "Include personal accounts in the search"),
+    COption2("custom", "c", "", OPT_SWITCH, "Include your custom named accounts"),
+    COption2("prefund", "p", "", OPT_SWITCH, "Include prefund accounts"),
+    COption2("named", "n", "", OPT_SWITCH, "Include well know token and airdrop addresses in the search"),
+    COption2("addr", "a", "", OPT_SWITCH, "display only addresses in the results (useful for scripting)"),
+    COption2("other", "t", "", OPT_HIDDEN | OPT_SWITCH, "export other addresses if found"),
+    COption2("fmt", "x", "<fmt>", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json|txt|csv|api])"),
+    COption2("", "", "", 0, "Query addresses and/or names well known accounts.\n"),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);

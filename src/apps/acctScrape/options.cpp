@@ -8,12 +8,12 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption2("addr_list", "", "list<addr>", OPT_REQUIRED, "one or more Ethereum addresses"),
-    COption2("noBlooms", "n", "", OPT_HIDDEN | OPT_FLAG, "turn off bloom filters for performance testing"),
-    COption2("staging", "s", "", OPT_HIDDEN | OPT_FLAG, "produce results in the staging folder instead of production folder"),
-    COption2("unripe", "u", "", OPT_HIDDEN | OPT_FLAG, "visit unripe (not old enough and not yet staged or finalized) blocks"),
-    COption2("daemon", "d", "", OPT_HIDDEN | OPT_FLAG, "we are being called in daemon mode which causes us to print results differently"),
-    COption2("", "", "", OPT_FLAG, "Index transactions for a given Ethereum address (or series of addresses)."),
+    COption2("addr_list", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more Ethereum addresses"),
+    COption2("noBlooms", "n", "", OPT_HIDDEN | OPT_SWITCH, "turn off bloom filters for performance testing"),
+    COption2("staging", "s", "", OPT_HIDDEN | OPT_SWITCH, "produce results in the staging folder instead of production folder"),
+    COption2("unripe", "u", "", OPT_HIDDEN | OPT_SWITCH, "visit unripe (not old enough and not yet staged or finalized) blocks"),
+    COption2("daemon", "d", "", OPT_HIDDEN | OPT_SWITCH, "we are being called in daemon mode which causes us to print results differently"),
+    COption2("", "", "", 0, "Index transactions for a given Ethereum address (or series of addresses)."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
