@@ -8,7 +8,7 @@ TIME ~ CLOCK - <ERROR>  : Exit(parseArguments):
 
   Usage:    cacheMan [-c|-d|-s|-f|-l|-a|-b|-i|-r|-t|-k|-m|-x|-v|-h] filenames  
   Purpose:  Show the contents of an account cache and/or fix it by removing duplicate records.
-             
+        
   Where:  
 	filenames             path(s) of files to check, merge, fix or display (default=display) (required)
 	-c  (--check)         check for duplicates and other problems in the cache
