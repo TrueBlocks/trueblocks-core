@@ -6,7 +6,7 @@ getTrans 3648669.24 -avtx json --api_mode
     "blockHash": "0x836c4866ea68fbe3b9786cdb3c2c8a36fa0c689e77b0f9fc441d37fb85489fad",
     "blockNumber": 3648669,
     "transactionIndex": 24,
-    "timestamp": 1493897268,
+    "timestamp": 1493897242,
     "from": "0xd1220a0cf47c7b9be7a2e6ba89f429762e7b9adb",
     "to": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
     "value": 10000000000000000,
@@ -230,7 +230,7 @@ getTrans 3648669.24 -avtx json --api_mode
     ],
     "gasCost": 10849501969331551,
     "gasUsed": 533321,
-    "date": "2017-05-04 11:27:48 UTC",
+    "date": "2017-05-04 11:27:22 UTC",
     "ether": 0.010000000000000000
   }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
