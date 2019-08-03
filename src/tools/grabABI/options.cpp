@@ -16,7 +16,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption2("addr_list", "", "", OPT_REQUIRED | OPT_ARG, "list of one or more smart contracts whose ABI to grab from EtherScan"),
+    COption2("addr_list", "", "list<addr>", OPT_REQUIRED, "list of one or more smart contracts whose ABI to grab from EtherScan"),
     COption2("canonical", "c", "", OPT_FLAG, "convert all types to their canonical represenation and remove all spaces from display"),
     COption2("generate", "g", "", OPT_FLAG, "generate C++ code into the current folder for all functions and events found in the ABI"),
     COption2("data", "d", "", OPT_FLAG, "export the display as data"),

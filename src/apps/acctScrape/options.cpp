@@ -8,7 +8,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption2("addr_list", "", "", OPT_REQUIRED | OPT_ARG, "one or more Ethereum addresses"),
+    COption2("addr_list", "", "list<addr>", OPT_REQUIRED, "one or more Ethereum addresses"),
     COption2("noBlooms", "n", "", OPT_HIDDEN | OPT_FLAG, "turn off bloom filters for performance testing"),
     COption2("staging", "s", "", OPT_HIDDEN | OPT_FLAG, "produce results in the staging folder instead of production folder"),
     COption2("unripe", "u", "", OPT_HIDDEN | OPT_FLAG, "visit unripe (not old enough and not yet staged or finalized) blocks"),

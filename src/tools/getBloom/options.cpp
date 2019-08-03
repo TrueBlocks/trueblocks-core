@@ -15,7 +15,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption2("block_list", "", "", OPT_REQUIRED | OPT_ARG, "a space-separated list of one or more blocks for which to retrieve blooms"),
+    COption2("block_list", "", "list<block>", OPT_REQUIRED, "a space-separated list of one or more blocks for which to retrieve blooms"),
     COption2("eab", "e", "", OPT_FLAG, "pull the enhanced adaptive blooms from QBlocks cache"),
     COption2("block", "b", "", OPT_FLAG, "show only the block-level bloom (--raw only)"),
     COption2("receipts", "c", "", OPT_FLAG, "show only the receipt-level blooms (--raw only)"),

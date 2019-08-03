@@ -15,8 +15,8 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption2("addr_list", "", "", OPT_REQUIRED | OPT_ARG, "one or more addresses to slurp"),
-    COption2("block_list", "", "", OPT_OPTIONAL | OPT_ARG, "an optional range of blocks to slurp"),
+    COption2("addr_list", "", "list<addr>", OPT_REQUIRED, "one or more addresses to slurp"),
+    COption2("block_list", "", "list<block>", 0, "an optional range of blocks to slurp"),
     COption2("type", "t", "<tx_type>", 0, "extract either [ ext | int | token | miner | all ] type of transactions"),
     COption2("blocks", "b", "<range>", 0, "export records in block range (:0[:max])"),
     COption2("silent", "s", "", OPT_FLAG, "Run silently (only freshen the data, do not display it)"),

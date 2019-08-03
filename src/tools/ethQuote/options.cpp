@@ -15,7 +15,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption2("at", "a", "<ts>", OPT_FLAG, "Report the price since nearest five minutes to the given timestamp"),
+    COption2("at", "a", "<ts>", 0, "Report the price since nearest five minutes to the given timestamp"),
     COption2("current", "c", "", OPT_FLAG, "Report on the current price (i.e. -at:now)"),
     COption2("data", "d", "", OPT_FLAG, "Export prices as JSON data"),
     COption2("freshen", "f", "", OPT_FLAG, "Freshen database (append new data)"),

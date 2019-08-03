@@ -15,8 +15,8 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption2("block", "", "", OPT_OPTIONAL | OPT_ARG, "one or more block numbers (or a 'special' block), or..."),
-    COption2("date", "", "", OPT_OPTIONAL | OPT_ARG, "one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]"),
+    COption2("block", "", "list<block>", OPT_REQUIRED, "one or more block numbers (or a 'special' block), or..."),
+    COption2("date", "", "list<date>", OPT_REQUIRED, "one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]"),
     COption2("list", "l", "", OPT_FLAG, "export all the named blocks"),
     COption2("fmt", "x", "<fmt>", OPT_HIDDEN, "export format (one of [none|json|txt|csv|api])"),
     COption2("", "", "", 0, "Finds the nearest block prior to a date, or the nearest date prior to a block.\n Alternatively, search for one of special 'named' blocks."),

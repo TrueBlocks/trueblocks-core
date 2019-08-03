@@ -15,7 +15,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption2("block_list", "", "", OPT_REQUIRED | OPT_ARG, "a space-separated list of one or more blocks to retrieve"),
+    COption2("block_list", "", "list<block>", OPT_REQUIRED, "a space-separated list of one or more blocks to retrieve"),
     COption2("hash_only", "n", "", OPT_FLAG, "display only transaction hashes, default is to display full transaction detail"),
     COption2("check", "c", "", OPT_FLAG, "compare results between qblocks and Ethereum node, report differences, if any"),
     COption2("addrs", "a", "", OPT_FLAG, "display all addresses included in the block"),

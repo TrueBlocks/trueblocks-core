@@ -8,7 +8,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption2("filenames", "", "", OPT_REQUIRED | OPT_ARG, "path(s) of files to check, merge, fix or display (default=display)"),
+    COption2("filenames", "", "list<fn>", OPT_REQUIRED, "path(s) of files to check, merge, fix or display (default=display)"),
     COption2("check", "c", "", OPT_FLAG, "check for duplicates and other problems in the cache"),
     COption2("data", "d", "", OPT_FLAG, "in 'list' mode, render results as data (i.e export mode)"),
     COption2("sort", "s", "", OPT_FLAG, "sort the list of transactions and re-write (precludes other modes, other than --dedup)"),
