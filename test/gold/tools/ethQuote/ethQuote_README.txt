@@ -9,7 +9,7 @@ ethQuote -th
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-| -a | --at val | Report the price since nearest five minutes to the given timestamp |
+| -a | --at <ts> | Report the price since nearest five minutes to the given timestamp |
 | -c | --current | Report on the current price (i.e. -at:now) |
 | -d | --data | Export prices as JSON data |
 | -f | --freshen | Freshen database (append new data) |
