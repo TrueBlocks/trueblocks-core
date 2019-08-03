@@ -5,7 +5,7 @@ getTokenInfo 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 --fmt json 2000000 --dol
 
   Usage:    getTokenInfo [-b|-n|-v|-h] <address> <address> [address...] [block...]  
   Purpose:  Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).
-             
+
   Where:  
 	address_list          two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported (required)
 	block_list            an optional list of one or more blocks at which to report balances, defaults to 'latest'
