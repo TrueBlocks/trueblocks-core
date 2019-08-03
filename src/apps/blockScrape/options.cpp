@@ -6,23 +6,15 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-// BEG_CODE_OPTIONS
 static const COption params[] = {
-//#define NEW_CODE
-#ifdef NEW_CODE
-    COption2("nBlocks", "", "<num>", 0, "maximum number of blocks to process (defaults to 5000)"),
-    COption2("nBlockProcs", "", "<num>", OPT_HIDDEN, "number of block channels for blaze"),
-    COption2("nAddrProcs", "", "<num>", OPT_HIDDEN, "number of address channels for blaze"),
+// BEG_CODE_OPTIONS
+    COption2("nBlocks", "n", "val", OPT_FLAG, "maximum number of blocks to process (defaults to 5000)"),
+    COption2("nBlockProcs", "b", "val", OPT_HIDDEN | OPT_FLAG, "number of block channels for blaze"),
+    COption2("nAddrProcs", "a", "val", OPT_HIDDEN | OPT_FLAG, "number of address channels for blaze"),
     COption2("", "", "", 0, "Decentralized blockchain scraper and block cache."),
-#else // NEW_CODE
-    COption("-nBlocks:<num>",     "maximum number of blocks to process (defaults to 5000)"),
-    COption("@nBlockProcs:<num>", "number of block channels for blaze"),
-    COption("@nAddrProcs:<num>",  "number of address channels for blaze"),
-    COption("",                   "Decentralized blockchain scraper and block cache.\n"),
-#endif
+// END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
-// END_CODE_OPTIONS
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -39,14 +31,14 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("--nBlocks must be a non-negative number. Quitting...");
             nBlocks = str_2_Uint(arg);
 
-        } else if (startsWith(arg, "--nBlockProcs:")) {
-            arg = substitute(arg, "--nBlockProcs:", "");
+        } else if (startsWith(arg, "-b:") || startsWith(arg, "--nBlockProcs:")) {
+            arg = substitute(substitute(arg, "--nBlockProcs:", ""), "-b:", "");
             if (!isUnsigned(arg))
                 return usage("--nBlockProcs must be a non-negative number. Quitting...");
             nBlockProcs = str_2_Uint(arg);
 
-        } else if (startsWith(arg, "--nAddrProcs:")) {
-            arg = substitute(arg, "--nAddrProcs:", "");
+        } else if (startsWith(arg, "-a:") || startsWith(arg, "--nAddrProcs:")) {
+            arg = substitute(substitute(arg, "--nAddrProcs:", ""), "-a:", "");
             if (!isUnsigned(arg))
                 return usage("--nAddrProcs must be a non-negative number. Quitting...");
             nAddrProcs = str_2_Uint(arg);

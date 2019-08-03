@@ -41,6 +41,9 @@ function(run_test testName)
 endfunction(run_test)
 
 # Enter one line for each individual test
+run_test("blockScrape_README"     "-th")
+run_test("blockScrape_help_short" "-h")
+run_test("blockScrape_help_long"  "--help")
 
 # Installation steps, this tool is renamed at installation
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

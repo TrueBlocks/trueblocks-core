@@ -7,21 +7,14 @@
 #include "question.h"
 
 //---------------------------------------------------------------------------------------------------
-// BEG_CODE_OPTIONS
 static const COption params[] = {
-//#define NEW_CODE
-#ifdef NEW_CODE
-    COption2("command", "", "", OPT_REQUIRED | OPT_FLAG, "one of [ leech | scrape | daemon | list | export | balances | stats | ls | rm | accounts | config | slurp | quotes | data | blocks | trans | receipts | logs | traces | state | abi ]"),
-    COption2("sleep", "", "<num>", 0, "for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 0)"),
+// BEG_CODE_OPTIONS
+    COption2("command", "", "", OPT_REQUIRED | OPT_ARG, "one of [ leech | scrape | daemon | list | export | balances | stats | ls | rm | accounts | config | slurp | quotes | data | blocks | trans | receipts | logs | traces | state | abi ]"),
+    COption2("sleep", "", "val", 0, "for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 0)"),
     COption2("", "", "", 0, "Create a TrueBlocks monitor configuration."),
-#else // NEW_CODE
-    COption("~command", "one of [ leech | scrape | list | export | balances | stats | ls | rm | accounts | config | slurp | quotes | data | blocks | trans | receipts | logs | traces | state | abi ]"),
-    COption("-sleep:<num>", "for the 'scrape' command, the number of seconds chifra should sleep between runs (default 14 if caught up, zero otherwise)"),
-    COption("",         "Create a TrueBlocks monitor configuration.\n"),
-#endif
+// END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
-// END_CODE_OPTIONS
 
 extern bool visitIndexFiles(const string_q& path, void *data);
 //---------------------------------------------------------------------------------------------------
