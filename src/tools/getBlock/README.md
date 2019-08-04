@@ -8,19 +8,19 @@ The tool may also be used to double check that the results produced from the QBl
 
 `Usage:`    getBlock [-n|-c|-a|-u|-q|-m|-l|-v|-h] &lt;block&gt; [block...]  
 `Purpose:`  Returns block(s) from local cache or directly from a running node.
-             
+
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | block_list | a space-separated list of one or more blocks to retrieve |
+|  | block_list | a space-separated list of one or more blocks to retrieve (required) |
 | -n | --hash_only | display only transaction hashes, default is to display full transaction detail |
 | -c | --check | compare results between qblocks and Ethereum node, report differences, if any |
 | -a | --addrs | display all addresses included in the block |
 | -u | --uniq | display only uniq addresses found per block |
 | -q | --uniqTx | display only uniq addresses found per transaction |
 | -m | --number | display address counts (alterntively --addrCnt, --uniqTxCnt, or --uniqCnt) |
-| -l | --filter val | useful only for --addrs or --uniq, only display this address in results |
+| -l | --filter <addr> | useful only for --addrs or --uniq, only display this address in results |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

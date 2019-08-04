@@ -6,12 +6,12 @@
 
 `Usage:`    getBloom [-e|-b|-c|-i|-a|-s|-p|-n|-v|-h] &lt;block&gt; [block...]  
 `Purpose:`  Returns bloom filter(s) from running node (the default) or as EAB from QBlocks.
-             
+
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | block_list | a space-separated list of one or more blocks for which to retrieve blooms |
+|  | block_list | a space-separated list of one or more blocks for which to retrieve blooms (required) |
 | -e | --eab | pull the enhanced adaptive blooms from QBlocks cache |
 | -b | --block | show only the block-level bloom (--raw only) |
 | -c | --receipts | show only the receipt-level blooms (--raw only) |

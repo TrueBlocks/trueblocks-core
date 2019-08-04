@@ -8,13 +8,14 @@ This tool is intended mostly as an aid in developing and debugging QBlocks tools
 
 #### Usage
 
-`Usage:`    whereBlock [-v|-h] &lt;block&gt; [block...]   
-`Purpose:`  Reports if a block was found in the cache, at a local, or at a remote node.  
+`Usage:`    whereBlock [-v|-h] &lt;block&gt; [block...]  
+`Purpose:`  Reports if a block was found in the cache, at a local, or at a remote node.
+
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | block_list | a space-separated list of one or more blocks to search for |
+|  | block_list | a space-separated list of one or more blocks to search for (required) |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

@@ -5,17 +5,17 @@ The `ethQuote` tool provides Ethereum price data to various tools or for other p
 
 `Usage:`    ethQuote -a|-c|-d|-f|-p|-p|-v|-h  
 `Purpose:`  Freshen and/or display Ethereum price data and other purposes.
-             
+
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-| -a | --at val | Report the price since nearest five minutes to the given timestamp |
+| -a | --at <ts> | Report the price since nearest five minutes to the given timestamp |
 | -c | --current | Report on the current price (i.e. -at:now) |
 | -d | --data | Export prices as JSON data |
 | -f | --freshen | Freshen database (append new data) |
-| -p | --period val | Display prices in this increment. One of [5&#124;15&#124;30&#124;120*&#124;240&#124;1440] |
-| -p | --pair val | Which price pair to freshen or list (see Poloniex) |
+| -p | --period enum<5|15|30|*120|240|1440> | Display prices in this increment. One of [5&#124;15&#124;30&#124;120*&#124;240&#124;1440] |
+| -p | --pair <val> | Which price pair to freshen or list (see Poloniex) |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

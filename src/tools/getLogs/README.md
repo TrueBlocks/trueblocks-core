@@ -4,13 +4,14 @@
 
 #### Usage
 
-`Usage:`    getLogs [-a|-v|-h] &lt;transID&gt; [transID...]  
-`Purpose:`  Retrieve a transaction's logs from the local cache or a running node.  
+`Usage:`    getLogs [-a|-v|-h] &lt;tx_id&gt; [tx_id...]  
+`Purpose:`  Retrieve a transaction's logs from the local cache or a running node.
+
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | trans_list | a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) |
+|  | trans_list | a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) (required) |
 | -a | --articulate | articulate the transactions if an ABI is found for the 'to' address |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |

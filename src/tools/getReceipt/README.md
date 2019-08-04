@@ -4,13 +4,14 @@
 
 #### Usage
 
-`Usage:`    getReceipt [-a|-l|-v|-h] &lt;transID&gt; [transID...]  
-`Purpose:`  Retrieve a transaction's receipt from the local cache or a running node.  
+`Usage:`    getReceipt [-a|-l|-v|-h] &lt;tx_id&gt; [tx_id...]  
+`Purpose:`  Retrieve a transaction's receipt from the local cache or a running node.
+
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | trans_list | a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) |
+|  | trans_list | a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) (required) |
 | -a | --articulate | articulate the transactions if an ABI is found for the 'to' address |
 | -l | --logs | display the receipt's logs |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |

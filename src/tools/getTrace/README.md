@@ -4,13 +4,14 @@
 
 #### Usage
 
-`Usage:`    getTrace [-a|-c|-n|-v|-h] &lt;transID&gt; [transID...]  
-`Purpose:`  Retrieve a transaction's traces from the local cache or a running node.  
+`Usage:`    getTrace [-a|-c|-n|-v|-h] &lt;tx_id&gt; [tx_id...]  
+`Purpose:`  Retrieve a transaction's traces from the local cache or a running node.
+
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | trans_list | a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) |
+|  | trans_list | a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) (required) |
 | -a | --articulate | articulate the transactions if an ABI is found for the 'to' address |
 | -c | --countOnly | show the number of traces for the transaction only (fast) |
 | -n | --noHeader | do not show the header row |
