@@ -14,10 +14,10 @@ acctExport 0x001d14804b399c6ef80e64576f657660804fec0b
 	-t  (--traces)        export traces instead of transactions
 
 #### Hidden options (shown during testing only)
-	-b  (--blocks <on/off>)write blocks to the binary cache ('off' by default)
-	-s  (--txs <on/off>)  write transactions to the binary cache ('on' by default)
-	-r  (--trc <on/off>)  write traces to the binary cache ('off' by default)
-	-d  (--ddos <on/off>) skip over dDos transactions in export ('on' by default)
+	-b  (--blocks enum<on/off>)write blocks to the binary cache ('off' by default)
+	-s  (--txs enum<on/off>)write transactions to the binary cache ('on' by default)
+	-r  (--trc enum<on/off>)write traces to the binary cache ('off' by default)
+	-d  (--ddos enum<on/off>)skip over dDos transactions in export ('on' by default)
 	-m  (--maxTraces <num>)if --ddos:on, the number of traces defining a dDos (default = 250)
 	-n  (--noHeader)      do not show the header row
 	-a  (--allABIs)       load all previously cached abi files

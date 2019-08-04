@@ -15,9 +15,9 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption2("trans_list", "", "", OPT_REQUIRED | OPT_ARG, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
-    COption2("articulate", "a", "", OPT_FLAG, "articulate the transactions if an ABI is found for the 'to' address"),
-    COption2("fmt", "x", "<fmt>", OPT_HIDDEN, "export format (one of [none|json|txt|csv|api])"),
+    COption2("trans_list", "", "list<trans>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
+    COption2("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
+    COption2("fmt", "x", "<fmt>", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json|txt|csv|api])"),
     COption2("", "", "", 0, "Retrieve a transaction's logs from the local cache or a running node."),
 // END_CODE_OPTIONS
 };

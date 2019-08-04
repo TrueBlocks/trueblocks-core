@@ -10,8 +10,8 @@ whenBlock -th
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | block | one or more block numbers (or a 'special' block), or... |
-|  | date | one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]] |
+|  | block_list | one or more block numbers (or a 'special' block), or... |
+|  | date_list | one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]] |
 | -l | --list | export all the named blocks |
 
 #### Hidden options (shown during testing only)
