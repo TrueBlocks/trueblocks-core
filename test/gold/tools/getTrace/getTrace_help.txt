@@ -1,7 +1,7 @@
 getTrace argc: 2 [1:-h] 
 getTrace -h 
 
-  Usage:    getTrace [-a|-c|-n|-v|-h] <transID> [transID...]  
+  Usage:    getTrace [-a|-c|-n|-v|-h] <tx_id> [tx_id...]  
   Purpose:  Retrieve a transaction's traces from the local cache or a running node.
 
   Where:  

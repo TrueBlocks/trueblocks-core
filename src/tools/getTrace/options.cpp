@@ -144,7 +144,7 @@ COptions::~COptions(void) {
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
     if (which == "options") {
-        return substitute(str, "trans_list", "<transID> [transID...]");
+        return substitute(str, "trans_list", "<tx_id> [tx_id...]");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 

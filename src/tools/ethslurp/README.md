@@ -6,7 +6,7 @@ While `ethslurp` does have its shortcomings, it also provides some nice features
 
 #### Usage
 
-`Usage:`    ethslurp [-t|-b|-s|-x|-v|-h] &lt;address&gt; [address...] [block...]
+`Usage:`    ethslurp [-t|-b|-s|-x|-v|-h] &lt;address&gt; [address...] [block...]  
 `Purpose:`  Fetches data from EtherScan for an arbitrary address. Formats the output to your specification.
 
 `Where:`  

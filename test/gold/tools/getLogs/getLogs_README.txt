@@ -2,7 +2,7 @@ getLogs argc: 2 [1:-th]
 getLogs -th 
 #### Usage
 
-`Usage:`    getLogs [-a|-v|-h] &lt;transID&gt; [transID...]  
+`Usage:`    getLogs [-a|-v|-h] &lt;tx_id&gt; [tx_id...]  
 `Purpose:`  Retrieve a transaction's logs from the local cache or a running node.
 
 `Where:`  
