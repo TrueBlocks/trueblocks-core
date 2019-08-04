@@ -12,14 +12,14 @@ You may name your own blocks (for example, to denote the start of an ICO perhaps
 
 `Usage:`    whenBlock [-l|-v|-h] &lt; block | date &gt; [ block... | date... ]  
 `Purpose:`  Finds the nearest block prior to a date, or the nearest date prior to a block.
-            Alternatively, search for one of special 'named' blocks.
-             
+         Alternatively, search for one of special 'named' blocks.
+
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | block | one or more block numbers (or a 'special' block), or... |
-|  | date | one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]] |
+|  | block_list | one or more block numbers (or a 'special' block), or... |
+|  | date_list | one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]] |
 | -l | --list | export all the named blocks |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |

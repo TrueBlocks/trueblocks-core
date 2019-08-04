@@ -4,13 +4,14 @@ The `getTrans` tool retrieves transactions from the running Ethereum node (using
 
 #### Usage
 
-`Usage:`    getTrans [-a|-t|-v|-h] &lt;transID&gt; [transID...]  
-`Purpose:`  Retrieve an Ethereum transaction from the local cache or a running node.  
+`Usage:`    getTrans [-a|-t|-v|-h] &lt;tx_id&gt; [tx_id...]  
+`Purpose:`  Retrieve an Ethereum transaction from the local cache or a running node.
+
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | trans_list | a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) |
+|  | trans_list | a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) (required) |
 | -a | --articulate | articulate the transactions if an ABI is found for the 'to' address |
 | -t | --trace | display the transaction's trace |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
