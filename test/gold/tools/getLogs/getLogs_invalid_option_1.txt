@@ -3,7 +3,7 @@ getLogs -p
 
   Invalid option: -p
 
-  Usage:    getLogs [-a|-v|-h] <transID> [transID...]  
+  Usage:    getLogs [-a|-v|-h] <tx_id> [tx_id...]  
   Purpose:  Retrieve a transaction's logs from the local cache or a running node.
 
   Where:  

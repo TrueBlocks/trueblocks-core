@@ -8,12 +8,12 @@ The format of the classDefinition file is described below.
 
 `Usage:`    makeClass [-o|-r|-j|-f|-l|-h|-c|-n|-s|-a|-v|-h] className  
 `Purpose:`  Creates C++ code based on definition file at ./classDefinition/<className>.
-             
+        
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | className | name of C++ class(es) to process |
+|  | className | name of C++ class(es) to process (required) |
 | -o | --open | edit <className(s)> definition file in local folder |
 | -r | --run | run the class maker on associated <className(s)> |
 | -j | --js val | export javaScript components for 'class' |

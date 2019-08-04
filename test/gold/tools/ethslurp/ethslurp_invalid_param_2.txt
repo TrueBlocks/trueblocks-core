@@ -4,7 +4,7 @@ Processing: --
 
   Invalid option: --
 
-  Usage:    ethslurp [-t|-b|-s|-x|-v|-h] addr_list block_list  
+  Usage:    ethslurp [-t|-b|-s|-x|-v|-h] <address> [address...] [block...]  
   Purpose:  Fetches data from EtherScan for an arbitrary address. Formats the output to your specification.
 
   Where:  

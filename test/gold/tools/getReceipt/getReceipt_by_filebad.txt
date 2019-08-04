@@ -3,7 +3,7 @@ getReceipt --bad --file:cmd_file
 
   Invalid option: --bad
 
-  Usage:    getReceipt [-a|-l|-v|-h] <transID> [transID...]  
+  Usage:    getReceipt [-a|-l|-v|-h] <tx_id> [tx_id...]  
   Purpose:  Retrieve a transaction's receipt from the local cache or a running node.
 
   Where:  

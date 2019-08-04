@@ -3,7 +3,7 @@ getLogs 1718400-1718420 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 
   1718400-1718420 does not appear to be a valid transaction index.
 
-  Usage:    getLogs [-a|-v|-h] <transID> [transID...]  
+  Usage:    getLogs [-a|-v|-h] <tx_id> [tx_id...]  
   Purpose:  Retrieve a transaction's logs from the local cache or a running node.
 
   Where:  

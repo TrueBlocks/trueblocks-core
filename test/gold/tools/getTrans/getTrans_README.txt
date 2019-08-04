@@ -2,7 +2,7 @@ getTrans argc: 2 [1:-th]
 getTrans -th 
 #### Usage
 
-`Usage:`    getTrans [-a|-t|-v|-h] &lt;transID&gt; [transID...]  
+`Usage:`    getTrans [-a|-t|-v|-h] &lt;tx_id&gt; [tx_id...]  
 `Purpose:`  Retrieve an Ethereum transaction from the local cache or a running node.
 
 `Where:`  

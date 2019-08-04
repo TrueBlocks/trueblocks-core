@@ -3,7 +3,7 @@ getTrace 2222222.0 2332332.0 --fmt junk
 
   Export format must be one of [ json | txt | csv | api ]. Quitting...
 
-  Usage:    getTrace [-a|-c|-n|-v|-h] <transID> [transID...]  
+  Usage:    getTrace [-a|-c|-n|-v|-h] <tx_id> [tx_id...]  
   Purpose:  Retrieve a transaction's traces from the local cache or a running node.
 
   Where:  
