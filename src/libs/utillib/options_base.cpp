@@ -445,9 +445,9 @@ namespace qblocks {
     {
         if (ln.empty())
             return;
-        mode = (opts & OPT_ARG);
+        mode = (opts & OPT_POSITIONAL);
         hidden = (opts & OPT_HIDDEN);
-        optional = (opts & OPT_OPTIONAL);
+        optional = !(opts & OPT_REQUIRED);
         longName = "--" + ln + (type.empty() ? "" : " " + type);
         shortName = (sn.empty() ? "" : "-" + sn);
         if (mode)
