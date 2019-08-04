@@ -28,12 +28,12 @@ Using ethName to find Singular's address, list tokens held by other token accoun
 
 `Usage:`    getAccounts [-e|-m|-o|-c|-p|-n|-a|-v|-h] &lt;term&gt; [term...]  
 `Purpose:`  Query addresses and/or names well known accounts.
-             
+        
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | terms | a space separated list of one or more search terms |
+|  | terms | a space separated list of one or more search terms (required) |
 | -e | --expand | expand search to include all fields (default searches name, address, and symbol only) |
 | -m | --matchCase | do case-sensitive search |
 | -o | --owned | Include personal accounts in the search |

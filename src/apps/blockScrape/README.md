@@ -8,12 +8,12 @@ Using operating system tools such as Linux's `cron` you can easily maintain a  c
 
 `Usage:`    blockScrape [-n|-v|-h]  
 `Purpose:`  Decentralized blockchain scraper and block cache.
-             
+
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-| -n | --nBlocks val | maximum number of blocks to process (defaults to 5000) |
+| -n | --nBlocks <num> | maximum number of blocks to process (defaults to 5000) |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
