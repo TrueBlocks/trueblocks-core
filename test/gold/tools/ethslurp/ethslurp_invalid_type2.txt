@@ -4,7 +4,7 @@ Processing: 0x1324e7b922b30B49Ab8EA81086341cc41C249346 -t:junk
 
   Type must be either 'int', 'ext', 'token', 'miner' or 'all'. Quitting...
 
-  Usage:    ethslurp [-t|-b|-s|-x|-v|-h] addr_list block_list  
+  Usage:    ethslurp [-t|-b|-s|-x|-v|-h] <address> [address...] [block...]  
   Purpose:  Fetches data from EtherScan for an arbitrary address. Formats the output to your specification.
 
   Where:  

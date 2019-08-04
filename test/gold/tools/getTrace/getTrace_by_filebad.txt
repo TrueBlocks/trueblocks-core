@@ -3,7 +3,7 @@ getTrace --bad --file:cmd_file
 
   Invalid option: --bad
 
-  Usage:    getTrace [-a|-c|-n|-v|-h] <transID> [transID...]  
+  Usage:    getTrace [-a|-c|-n|-v|-h] <tx_id> [tx_id...]  
   Purpose:  Retrieve a transaction's traces from the local cache or a running node.
 
   Where:  
@@ -14,7 +14,7 @@ getTrace --bad --file:cmd_file
 
 #### Hidden options (shown during testing only)
 	-x  (--fmt <fmt>)     export format (one of [none|json|txt|csv|api])
-	-d  (--ddos enum<on/off>) skip over dDos transactions in export ('on' by default)
+	-d  (--ddos enum<on/off>)skip over dDos transactions in export ('on' by default)
 #### Hidden options (shown during testing only)
 
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level

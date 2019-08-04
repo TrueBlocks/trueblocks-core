@@ -2,7 +2,7 @@ getReceipt argc: 2 [1:-th]
 getReceipt -th 
 #### Usage
 
-`Usage:`    getReceipt [-a|-l|-v|-h] &lt;transID&gt; [transID...]  
+`Usage:`    getReceipt [-a|-l|-v|-h] &lt;tx_id&gt; [tx_id...]  
 `Purpose:`  Retrieve a transaction's receipt from the local cache or a running node.
 
 `Where:`  

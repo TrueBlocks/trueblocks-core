@@ -3,7 +3,7 @@ getTrace 0x0012
 
   The argument '0x0012' is not properly formatted. Is it the right length?
 
-  Usage:    getTrace [-a|-c|-n|-v|-h] <transID> [transID...]  
+  Usage:    getTrace [-a|-c|-n|-v|-h] <tx_id> [tx_id...]  
   Purpose:  Retrieve a transaction's traces from the local cache or a running node.
 
   Where:  

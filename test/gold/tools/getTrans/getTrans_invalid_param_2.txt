@@ -3,7 +3,7 @@ getTrans .whatever
 
   .whatever does not appear to be a valid transaction index.
 
-  Usage:    getTrans [-a|-t|-v|-h] <transID> [transID...]  
+  Usage:    getTrans [-a|-t|-v|-h] <tx_id> [tx_id...]  
   Purpose:  Retrieve an Ethereum transaction from the local cache or a running node.
 
   Where:  

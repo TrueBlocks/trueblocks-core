@@ -3,7 +3,7 @@ getTrans
 
   Not enough arguments presented.
 
-  Usage:    getTrans [-a|-t|-v|-h] <transID> [transID...]  
+  Usage:    getTrans [-a|-t|-v|-h] <tx_id> [tx_id...]  
   Purpose:  Retrieve an Ethereum transaction from the local cache or a running node.
 
   Where:  

@@ -3,7 +3,7 @@ getReceipt 0x0012
 
   The argument '0x0012' is not properly formatted. Is it the right length?
 
-  Usage:    getReceipt [-a|-l|-v|-h] <transID> [transID...]  
+  Usage:    getReceipt [-a|-l|-v|-h] <tx_id> [tx_id...]  
   Purpose:  Retrieve a transaction's receipt from the local cache or a running node.
 
   Where:  
