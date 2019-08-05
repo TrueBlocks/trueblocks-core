@@ -300,7 +300,7 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
                     "or any combination.\n";
         ret += "This tool retrieves information from the local node or rpcProvider if configured "
                     "(see documentation).\n";
-        ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + ".\n";
+        ret += "[{special}] blocks are detailed under [{whenBlock --list}].\n";
         return ret;
     }
     return str;
