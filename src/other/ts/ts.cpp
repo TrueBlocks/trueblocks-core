@@ -15,18 +15,18 @@
 extern void regenerate(void);
 extern void check(void);
 extern void truncate(void);
-extern void move(void);
+extern void list(void);
 //----------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
-    cout << (fileSize(configPath("ts.bin")) / sizeof(uint32_t) / 2) << endl;
+//    cout << (fileSize(configPath("ts.bin")) / sizeof(uint32_t) / 2) << endl;
 
-    size_t path = 1;
+    size_t path = 3;
     switch (path) {
         case 0: regenerate(); break;
         case 1: check(); break;
         case 2: truncate(); break;
-        case 3: move(); break;
+        case 3: list(); break;
         default: { }// nothing
     }
     return 1;
@@ -36,7 +36,7 @@ void regenerate(void) {
     freshenTimestampFile(getLastBlock_client());
 }
 
-void move(void) {
+void list(void) {
     string_q fn = configPath("ts.bin");
 
     CArchive file(READING_ARCHIVE);
@@ -51,6 +51,8 @@ void move(void) {
     file.Read(ts_array, sizeof(uint32_t) * 2, ts_cnt);
     file.Release();
 
+    for (size_t i = 0 ; i < ts_cnt ; i++)
+        cout << ts_array[2*i] << "\t" << ts_array[2*i+1] << "\t" << ts_2_Date(ts_array[2*i+1]).Format(FMT_EXPORT) << endl;
 }
 
 void check(void) {
