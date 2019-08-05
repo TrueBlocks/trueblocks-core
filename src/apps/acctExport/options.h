@@ -23,6 +23,7 @@ public:
     bool doLogs;
     bool doTraces;
     bool doABIs;
+    bool freshenOnly;
     map<uint32_t,address_t> prefundMap;
     map<uint32_t,address_t> blkRewardMap;
     map<address_t,bool>     abiMap;

@@ -40,6 +40,7 @@ public:
     string_q fn;
     double size;
     blknum_t lb;
+    blknum_t le;
     uint64_t nrecs;
 
 public:
@@ -115,6 +116,7 @@ inline void CAccountName::initialize(void) {
     fn = "";
     size = 0.0;
     lb = 0;
+    le = 0;
     nrecs = 0;
 
     // EXISTING_CODE
@@ -139,6 +141,7 @@ inline void CAccountName::duplicate(const CAccountName& ac) {
     fn = ac.fn;
     size = ac.size;
     lb = ac.lb;
+    le = ac.le;
     nrecs = ac.nrecs;
 
     // EXISTING_CODE

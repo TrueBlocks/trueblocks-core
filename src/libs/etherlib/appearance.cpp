@@ -160,6 +160,17 @@ namespace qblocks {
         }
         return getCachePath(base + addr + ".last.txt");
     }
+
+    //---------------------------------------------------------------------------
+    string_q getMonitorExpt(const string_q& addr, freshen_t mode) {
+        string_q base = ((mode == FM_STAGING) ? "monitors/staging/" : "monitors/");
+        if (!isTestMode() && !isAddress(addr)) {
+            cerr << "Not an address: " << addr << endl;
+            quickQuitHandler(0);
+        }
+        return getCachePath(base + addr + ".expt.txt");
+    }
+
     //---------------------------------------------------------------------------
     string_q getMonitorPath(const string_q& addr, freshen_t mode) {
         string_q base = ((mode == FM_STAGING) ? "monitors/staging/" : "monitors/");

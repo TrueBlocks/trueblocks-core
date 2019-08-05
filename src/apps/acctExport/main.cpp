@@ -10,7 +10,8 @@
 bool COptions::exportData(void) {
 
     ENTER("exportData");
-    if (exportFmt == JSON1)
+
+    if (exportFmt == JSON1 && !freshenOnly)
         cout << "[";
 
     bool first = true;
@@ -61,11 +62,12 @@ bool COptions::exportData(void) {
                         if (doABIs) {
                             abiMap[trace.action.to] = true;
                         } else {
-                            if (exportFmt == JSON1 && !first)
+                            if (exportFmt == JSON1 && !first && !freshenOnly)
                                 cout << ", ";
                             if (articulate)
                                 abis.articulateTrace(&trace);
-                            cout << trace.Format() << endl;
+                            if (!freshenOnly)
+                                cout << trace.Format() << endl;
                             first = false;
                         }
                     }
@@ -82,9 +84,10 @@ bool COptions::exportData(void) {
                         if (doABIs) {
                             abiMap[trace.action.to] = true;
                         } else {
-                            if (exportFmt == JSON1 && !first)
+                            if (exportFmt == JSON1 && !first && !freshenOnly)
                                 cout << ", ";
-                            cout << copy.Format() << endl;
+                            if (!freshenOnly)
+                                cout << copy.Format() << endl;
                         }
                     }
 
@@ -103,9 +106,10 @@ bool COptions::exportData(void) {
                             abiMap[trace.action.to] = true;
 
                         } else {
-                            if (exportFmt == JSON1 && !first)
+                            if (exportFmt == JSON1 && !first && !freshenOnly)
                                 cout << ", ";
-                            cout << copy.Format() << endl;
+                            if (!freshenOnly)
+                                cout << copy.Format() << endl;
                         }
                     }
                 }
@@ -113,21 +117,24 @@ bool COptions::exportData(void) {
             } else {
                 if (doLogs) {
                     for (auto log : trans.receipt.logs) {
-                        if (exportFmt == JSON1 && !first)
+                        if (exportFmt == JSON1 && !first && !freshenOnly)
                             cout << ", ";
                         if (articulate)
                             abis.articulateLog(&log);
-                        cout << log.Format() << endl;
+                        if (!freshenOnly)
+                            cout << log.Format() << endl;
                         first = false;
                     }
                 } else {
                     if (exportFmt == JSON1 && !first) {
-                        cout << ", ";
+                        if (!freshenOnly)
+                            cout << ", ";
                         // we only articulate the transaction if we're JSON
                         if (articulate)
                             abis.articulateTransaction(&trans);
                     }
-                    cout << trans.Format() << endl;
+                    if (!freshenOnly)
+                        cout << trans.Format() << endl;
                     first = false;
                 }
             }
@@ -162,10 +169,14 @@ bool COptions::exportData(void) {
 /* We need to handle the non-txt case where we're exporting the fully articulated transaction, all it's traces, all its data */
 #endif
 
-    cerr << "Exported " << nExported << " of " << items.size() << " records." << string_q(45,' ') << "\n";
+    if (!freshenOnly)
+        cerr << "exported " << nExported << " of " << items.size() << " records." << string_q(45,' ') << "\n";
     cerr.flush();
-    if (exportFmt == JSON1)
+    if (exportFmt == JSON1 && !freshenOnly)
         cout << "]";
+
+    for (auto watch : monitors)
+        watch.writeLastExport(items[items.size()-1].blk);
 
     EXIT_NOMSG(true);
 }
@@ -184,13 +195,14 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
         if (options.loadData()) {
-            if (once)
+            if (once && !options.freshenOnly)
                 cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], GETRUNTIME_CLASS(CLogEntry));
             options.exportData();
             once = false;
         }
     }
-    cout << exportPostamble(options.exportFmt, expContext().fmtMap["meta"]);
+    if (!options.freshenOnly)
+        cout << exportPostamble(options.exportFmt, expContext().fmtMap["meta"]);
 
     acctlib_cleanup();
     return 0;
