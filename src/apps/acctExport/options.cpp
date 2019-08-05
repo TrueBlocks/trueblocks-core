@@ -22,6 +22,7 @@ static const COption params[] = {
     COption2("noHeader", "n", "", OPT_HIDDEN | OPT_SWITCH, "do not show the header row"),
     COption2("allABIs", "a", "", OPT_HIDDEN | OPT_SWITCH, "load all previously cached abi files"),
     COption2("grabABIs", "g", "", OPT_HIDDEN | OPT_SWITCH, "using each trace's 'to' address, grab the abi for that address (improves articulation)"),
+    COption2("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
     COption2("start", "s", "<num>", OPT_HIDDEN | OPT_FLAG, "first block to export (inclusive)"),
     COption2("end", "e", "<num>", OPT_HIDDEN | OPT_FLAG, "last block to export (inclusive)"),
     COption2("", "", "", 0, "Export full detail of transactions for one or more Ethereum addresses."),
@@ -34,8 +35,6 @@ extern const char* STR_LOG_DISPLAY;
 extern const char* STR_TRACE_DISPLAY;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-
-    CAccountWatch::registerClass();
 
     if (!standardOptions(command))
         return false;
@@ -74,6 +73,18 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Please provide a number (you provided " + arg + ") for --maxTraces. Quitting...");
             maxTraces = str_2_Uint(arg);
 
+        } else if (startsWith(arg, "-s") || startsWith(arg, "--start")) {
+            arg = substitute(substitute(arg, "-s:", ""), "--start:", "");
+            if (!isNumeral(arg))
+                return usage("Not a number for --startBlock: " + arg + ". Quitting.");
+            scanRange.first = str_2_Uint(arg);
+
+        } else if (startsWith(arg, "-e") || startsWith(arg, "--end")) {
+            arg = substitute(substitute(arg, "-e:", ""), "--end:", "");
+            if (!isNumeral(arg))
+                return usage("Not a number for --endBlock: " + arg + ". Quitting.");
+            scanRange.second = str_2_Uint(arg);
+
         } else if (arg == "-n" || arg == "--noHeader") {
             noHeader = true;
 
@@ -90,20 +101,11 @@ bool COptions::parseArguments(string_q& command) {
             doTraces = true;
             doABIs = true;
 
+        } else if (arg == "-f" || arg == "--freshen") {
+            freshenOnly = true;
+
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
-
-        } else if (startsWith(arg, "-s") || startsWith(arg, "--start")) {
-            arg = substitute(substitute(arg, "-s:", ""), "--start:", "");
-            if (!isNumeral(arg))
-                return usage("Not a number for --startBlock: " + arg + ". Quitting.");
-            scanRange.first = str_2_Uint(arg);
-
-        } else if (startsWith(arg, "-e") || startsWith(arg, "--end")) {
-            arg = substitute(substitute(arg, "-e:", ""), "--end:", "");
-            if (!isNumeral(arg))
-                return usage("Not a number for --endBlock: " + arg + ". Quitting.");
-            scanRange.second = str_2_Uint(arg);
 
         } else if (startsWith(arg, "0x")) {
 
@@ -250,6 +252,8 @@ void COptions::Init(void) {
     doLogs = false;
     doTraces = false;
     doABIs = false;
+    freshenOnly = false;
+    scanRange.second = getLastBlock_cache_ripe();
 
     minArgs = 0;
 }
@@ -319,6 +323,7 @@ bool COptions::loadMonitorData(CAppearanceArray_base& apps, const address_t& add
         cerr << "Could not allocate memory for address " << addr;
         return false;
     }
+
     return true;
 }
 
@@ -331,6 +336,14 @@ bool COptions::loadData(void) {
     for (auto monitor : monitors) {
         if (!loadMonitorData(tmp, monitor.address))
             EXIT_FAIL("Could not load data.");
+        if (freshenOnly) {
+            // If we're freshening...
+            blknum_t lastExport = str_2_Uint(asciiFileToString(getMonitorExpt(monitor.address)));
+            if (scanRange.first == 0) // we can start where the last export happened on any address...
+                scanRange.first = lastExport;
+            if (lastExport < scanRange.first) // ...but the eariest of the last exports is where we start
+                scanRange.first = lastExport;
+        }
     }
     if (tmp.size() == 0)
         EXIT_MSG("Nothing to export.", false);

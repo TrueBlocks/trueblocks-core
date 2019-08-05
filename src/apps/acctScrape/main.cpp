@@ -62,6 +62,7 @@ void COptions::moveToProduction(void) {
             lockSection(true);
             doMoveFile(getMonitorPath(acct.address, FM_STAGING), getMonitorPath(acct.address));
             doMoveFile(getMonitorLast(acct.address, FM_STAGING), getMonitorLast(acct.address));
+            doMoveFile(getMonitorExpt(acct.address, FM_STAGING), getMonitorExpt(acct.address));
             lockSection(false);
         }
     }

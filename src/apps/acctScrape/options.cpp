@@ -88,6 +88,9 @@ bool COptions::parseArguments(string_q& command) {
         string_q fn2 = getMonitorLast(monitor.address);
         if (fileExists(fn2 + ".lck"))
             return usage("The last block file '" + fn2 + "' is locked. Quitting...");
+        string_q fn3 = getMonitorExpt(monitor.address);
+        if (fileExists(fn3 + ".lck"))
+            return usage("The last export file '" + fn2 + "' is locked. Quitting...");
         cerr << dTabs << "freshening: " << cYellow << monitor.address << cOff << "..." << endLine; cerr.flush();
         // If file doesn't exist, this will report '0'
         scanRange.first = min(scanRange.first, str_2_Uint(asciiFileToString(fn2)));

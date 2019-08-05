@@ -143,9 +143,19 @@ bool COptions::handle_scrape(void) {
                             if (isAddress(file))
                                 runs.push_back(file);
                         }
-                        if (runs.size())
+                        if (runs.size()) {
                             freshen_internal(FM_PRODUCTION, runs, "--daemon", freshen_flags);
-                        cerr << "\t  freshening: " << cYellow << "    finished." << cOff << "                                          " << endl;
+                            for (auto addr : runs) {
+                                ostringstream os1;
+                                os1 << "acctExport " << addr << " --freshen"; // << " >/dev/null";
+                                if (isTestMode()) {
+                                    cout << substitute(os1.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
+                                } else {
+                                    if (system(os1.str().c_str())) { }  // Don't remove. Silences compiler warnings
+                                }
+                            }
+                        }
+                        cerr << "\t  freshening: " << cYellow << "    finished." << cOff << "                                                           " << endl;
                     }
                 }
             }

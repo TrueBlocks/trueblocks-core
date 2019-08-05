@@ -1,4 +1,4 @@
 [settings]
 class    = CAccountName
-fields   = string group|string addr|string symbol|string name|string source|string description|string logo|bool isContract|bool custom|string shared|string fn (nowrite)|double size (nowrite)|blknum lb (nowrite)|uint64 nrecs (nowrite)
+fields   = string group|string addr|string symbol|string name|string source|string description|string logo|bool isContract|bool custom|string shared|string fn (nowrite)|double size (nowrite)|blknum lb (nowrite)|blknum le (nowrite)|uint64 nrecs (nowrite)
 includes = basetypes.h|basenode.h|sfarchive.h

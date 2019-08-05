@@ -467,6 +467,15 @@ void CAccountWatch::writeLastBlock(blknum_t bn) {
 }
 
 //-------------------------------------------------------------------------
+void CAccountWatch::writeLastExport(blknum_t bn) {
+    if (isTestMode()) {
+        cerr << "Would have written to " << address << ".expt.txt with " << bn << endl;
+        return;
+    }
+    stringToAsciiFile(getMonitorExpt(address, fm_mode), uint_2_Str(bn) + "\n");
+}
+
+//-------------------------------------------------------------------------
 void CAccountWatch::writeARecord(blknum_t bn, blknum_t tx_id) {
     if (tx_cache == NULL)
         return;

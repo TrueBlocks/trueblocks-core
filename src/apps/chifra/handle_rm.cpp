@@ -21,7 +21,8 @@ bool COptions::handle_rm(void) {
     for (auto addr : addrs) {
         string_q fn = getMonitorPath(addr);
         string_q fnLast = getMonitorLast(addr);
-        if (!fileExists(fn) && !fileExists(fnLast)) {
+        string_q fnExpt = getMonitorExpt(addr);
+        if (!fileExists(fn) && !fileExists(fnLast) && !fileExists(fnExpt)) {
             LOG_WARN("Monitor not found for address " + addr + ".");
 
         } else {
