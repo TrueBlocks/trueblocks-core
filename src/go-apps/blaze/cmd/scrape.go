@@ -611,9 +611,9 @@ func padLeft(str string, totalLen int) string {
 
 // goodAddr Returns true if the address is not a precompile and not zero
 func goodAddr(addr string) bool {
-	// As per EIP 1352, all addresses less than the following value are reserved
-	// for pre-compiles. We don't index precompiles.
-	if addr < "0x000000000000000000000000000000000000ffff" {
+	// As per EIP 1352, all addresses less or equal to the following
+	// value are reserved for pre-compiles. We don't index precompiles.
+	if addr <= "0x000000000000000000000000000000000000ffff" {
 		return false
 	}
 	return true
