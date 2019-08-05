@@ -58,6 +58,7 @@ public:
     CArchive *tx_cache;
     string_q extra_data;
     void writeLastBlock(blknum_t bn);
+    void writeLastExport(blknum_t bn);
     void writeAnArray(const CAppearanceArray_base& array);
     void writeARecord(blknum_t bn, blknum_t tx_id);
     bool openCacheFile1(void);

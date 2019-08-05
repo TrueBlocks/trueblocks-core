@@ -49,6 +49,7 @@ bool COptions::handle_ls(void) {
             item.fn = substitute(getMonitorPath(item.addr), getCachePath(""), "./");
             item.size = fileSize(getMonitorPath(item.addr));
             item.lb = str_2_Uint(asciiFileToString(getMonitorLast(item.addr)));
+            item.le = str_2_Uint(asciiFileToString(getMonitorExpt(item.addr)));
             item.nrecs = fileSize(getMonitorPath(item.addr)) / sizeof(CAppearance_base);
             accounts.push_back(item);
         }
@@ -70,6 +71,7 @@ bool COptions::handle_ls(void) {
         SHOW_FIELD(CAccountName, "fn");
         SHOW_FIELD(CAccountName, "size");
         SHOW_FIELD(CAccountName, "lb");
+        SHOW_FIELD(CAccountName, "le");
         SHOW_FIELD(CAccountName, "nrecs");
         ostringstream oss;
         if (accounts.size() > 1)
@@ -90,12 +92,13 @@ bool COptions::handle_ls(void) {
     if (stats) {
         for (auto acct : accounts) {
             string_q fmt =
-                "[Address: -c1-{ADDR}-off-\n]"
-                "[\tName:       -c2-{NAME}-off-\n]"
-                "[\tFile name:  -c2-{FN}-off-\n]"
-                "[\tFile size:  -c2-{SIZE}-off-\n]"
-                "[\tLast block: -c2-{LB}-off-\n]"
-                "[\tnRecords:   -c2-{NRECS}-off-\n]";
+                "[Address:  -c1-{ADDR}-off-\n]"
+                "[\tName:        -c2-{NAME}-off-\n]"
+                "[\tFile name:   -c2-{FN}-off-\n]"
+                "[\tFile size:   -c2-{SIZE}-off-\n]"
+                "[\tLast block:  -c2-{LB}-off-\n]"
+                "[\tLast export: -c2-{LE}-off-\n]"
+                "[\tnRecords:    -c2-{NRECS}-off-\n]";
             replaceAll(fmt, "-c1-", cTeal);
             replaceAll(fmt, "-c2-", cYellow);
             replaceAll(fmt, "-off-", cOff);

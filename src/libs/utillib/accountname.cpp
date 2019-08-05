@@ -85,6 +85,7 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
         case 'l':
             if ( fieldName % "logo" ) { logo = fieldValue; return true; }
             if ( fieldName % "lb" ) { lb = str_2_Uint(fieldValue); return true; }
+            if ( fieldName % "le" ) { le = str_2_Uint(fieldValue); return true; }
             break;
         case 'n':
             if ( fieldName % "name" ) { name = fieldValue; return true; }
@@ -135,6 +136,7 @@ bool CAccountName::Serialize(CArchive& archive) {
 //    archive >> fn;
 //    archive >> size;
 //    archive >> lb;
+//    archive >> le;
 //    archive >> nrecs;
     finishParse();
     return true;
@@ -161,6 +163,7 @@ bool CAccountName::SerializeC(CArchive& archive) const {
 //    archive << fn;
 //    archive << size;
 //    archive << lb;
+//    archive << le;
 //    archive << nrecs;
 
     return true;
@@ -213,6 +216,8 @@ void CAccountName::registerClass(void) {
     HIDE_FIELD(CAccountName, "size");
     ADD_FIELD(CAccountName, "lb", T_NUMBER, ++fieldNum);
     HIDE_FIELD(CAccountName, "lb");
+    ADD_FIELD(CAccountName, "le", T_NUMBER, ++fieldNum);
+    HIDE_FIELD(CAccountName, "le");
     ADD_FIELD(CAccountName, "nrecs", T_NUMBER, ++fieldNum);
     HIDE_FIELD(CAccountName, "nrecs");
 
@@ -291,6 +296,7 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
         case 'l':
             if ( fieldName % "logo" ) return logo;
             if ( fieldName % "lb" ) return uint_2_Str(lb);
+            if ( fieldName % "le" ) return uint_2_Str(le);
             break;
         case 'n':
             if ( fieldName % "name" ) return name;

@@ -125,5 +125,6 @@ namespace qblocks {
     typedef enum { FM_PRODUCTION, FM_STAGING } freshen_t;
     extern string_q getMonitorPath(const string_q& addr, freshen_t mode=FM_PRODUCTION);
     extern string_q getMonitorLast(const string_q& addr, freshen_t mode=FM_PRODUCTION);
+    extern string_q getMonitorExpt(const string_q& addr, freshen_t mode=FM_PRODUCTION);
 
 }  // namespace qblocks
