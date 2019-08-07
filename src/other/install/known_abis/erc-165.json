@@ -1,0 +1,23 @@
+[
+
+
+    {
+    "name": "supportsInterface",
+    "type": "function",
+    "constant": true,
+    "signature": "supportsInterface(bytes4)",
+    "encoding": "0x01ffc9a7",
+    "inputs": [
+      {
+        "name": "interfaceID",
+        "type": "bytes4"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "bool"
+      }
+    ]
+  }
+]
