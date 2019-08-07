@@ -22,7 +22,7 @@ project (quickBlocks)
 
 # ----------------------------------------------------------------------------------------
 # Add support for building some go programs
-include(other/build_scripts/GolangSimple.cmake)
+include(other/build_assets/GolangSimple.cmake)
 
 # ----------------------------------------------------------------------------------------
 # Allow targets in cascade
