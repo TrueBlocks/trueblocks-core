@@ -71,9 +71,11 @@ bool COptions::handle_data(void) {
         return handle_quotes();
 
     } else if (contains(tool_flags, "--message")) {
-        replaceAll(tool_flags, "--message ", "");
-        if (tool_flags != "0x")
+        tool_flags = trim(substitute(substitute(substitute(tool_flags, "--message", ""), "--chars", ""), "--bytes", ""));
+        if (contains(tool_flags, "0x"))
             cout << "message: " << toPrintable_force(tool_flags);
+        else
+            cout << "message: " << chr_2_HexStr(tool_flags);
         return true;
 
     } else {

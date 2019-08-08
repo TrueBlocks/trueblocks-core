@@ -9,7 +9,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("command", "", "enum[leech|scrape|daemon|list|export|balances|stats|ls|rm|accounts|config|slurp|quotes|data|blocks|trans|receipts|logs|traces|state|abi|status]", OPT_REQUIRED | OPT_POSITIONAL, "one of [leech|scrape|daemon|list|export|balances|stats|ls|rm|accounts|config|slurp|quotes|data|blocks|trans|receipts|logs|traces|state|abi|status]"),
+    COption("command", "", "enum[leech|scrape|daemon|list|export|stats|ls|rm|accounts|config|slurp|quotes|data|blocks|trans|receipts|logs|traces|state|abi|message|status]", OPT_REQUIRED | OPT_POSITIONAL, "one of [leech|scrape|daemon|list|export|stats|ls|rm|accounts|config|slurp|quotes|data|blocks|trans|receipts|logs|traces|state|abi|message|status]"),
     COption("sleep", "", "<seconds>", OPT_FLAG, "for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 0)"),
     COption("", "", "", 0, "Create a TrueBlocks monitor configuration."),
 // END_CODE_OPTIONS
@@ -97,6 +97,7 @@ bool COptions::parseArguments(string_q& command) {
         mode == "accounts" ||
     	mode == "logs" ||
         mode == "traces" ||
+        mode == "message" ||
         mode == "abi") {
         tool_flags += (" --" + mode);
         mode = "data";
