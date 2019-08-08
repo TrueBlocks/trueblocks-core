@@ -21,7 +21,7 @@ static const COption params[] = {
     COption2("nozero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
     COption2("changes", "c", "", OPT_SWITCH, "only report a balance when it changes from one block to the next"),
     COption2("noHeader", "o", "", OPT_HIDDEN | OPT_SWITCH, "hide the header in txt and csv mode"),
-    COption2("fmt", "x", "<fmt>", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json|txt|csv|api])"),
+    COption2("fmt", "x", "enum[none|json|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json|txt|csv|api])"),
     COption2("", "", "", 0, "Retrieve the balance (in wei) for one or more addresses at the given block(s)."),
 // END_CODE_OPTIONS
 };
