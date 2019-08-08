@@ -6,17 +6,17 @@ acctExport -h
 
   Where:  
 	addr_list             one or more addresses (0x...) to export (required)
-	-x  (--fmt <fmt>)     export format (one of [json|txt|csv])
+	-x  (--fmt <fmt>)     export format (one of [json*|txt|csv])
 	-a  (--articulate)    articulate transactions, traces, logs, and outputs
 	-l  (--logs)          export logs instead of transaction list
 	-t  (--traces)        export traces instead of transaction list
 
 #### Hidden options (shown during testing only)
 	-c  (--balances)      export balance history instead of transaction list
-	-b  (--blocks enum[on|off])write blocks to the binary cache ('off' by default)
-	-s  (--txs enum[on|off])write transactions to the binary cache ('on' by default)
-	-r  (--trc enum[on|off])write traces to the binary cache ('off' by default)
-	-d  (--ddos enum[on|off])skip over dDos transactions in export ('on' by default)
+	-b  (--blocks enum[on|off*])write blocks to the binary cache ('off' by default)
+	-s  (--txs enum[on*|off])write transactions to the binary cache ('on' by default)
+	-r  (--trc enum[on|off*])write traces to the binary cache ('off' by default)
+	-d  (--ddos enum[on*|off])skip over dDos transactions in export ('on' by default)
 	-m  (--maxTraces <uint>)if --ddos:on, the number of traces defining a dDos (default = 250)
 	-n  (--noHeader)      do not show the header row
 	-a  (--allABIs)       load all previously cached abi files
