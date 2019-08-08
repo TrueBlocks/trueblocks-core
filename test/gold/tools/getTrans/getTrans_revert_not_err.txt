@@ -199,13 +199,13 @@ getTrans 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c -a -
           "name": "balanceOf",
           "inputs": [
             {
-              "name": "_owner",
+              "name": "_tokenOwner",
               "value": "0xc14830e53aa344e8c14603a91229a0b925b0b262"
             }
           ],
           "outputs": [
             {
-              "name": "out",
+              "name": "ret_0",
               "value": "0"
             }
           ]
@@ -234,13 +234,13 @@ getTrans 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c -a -
           "name": "balanceOf",
           "inputs": [
             {
-              "name": "_owner",
+              "name": "_tokenOwner",
               "value": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28"
             }
           ],
           "outputs": [
             {
-              "name": "out",
+              "name": "ret_0",
               "value": "0"
             }
           ]
@@ -269,13 +269,13 @@ getTrans 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c -a -
           "name": "balanceOf",
           "inputs": [
             {
-              "name": "_owner",
+              "name": "_tokenOwner",
               "value": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a"
             }
           ],
           "outputs": [
             {
-              "name": "out",
+              "name": "ret_0",
               "value": "100000000"
             }
           ]
@@ -304,13 +304,13 @@ getTrans 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c -a -
           "name": "balanceOf",
           "inputs": [
             {
-              "name": "_owner",
+              "name": "_tokenOwner",
               "value": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28"
             }
           ],
           "outputs": [
             {
-              "name": "out",
+              "name": "ret_0",
               "value": "100000000"
             }
           ]
@@ -339,13 +339,13 @@ getTrans 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c -a -
           "name": "balanceOf",
           "inputs": [
             {
-              "name": "_owner",
+              "name": "_tokenOwner",
               "value": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a"
             }
           ],
           "outputs": [
             {
-              "name": "out",
+              "name": "ret_0",
               "value": "100000000"
             }
           ]

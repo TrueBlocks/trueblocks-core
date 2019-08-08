@@ -24,7 +24,7 @@ static const COption params[] = {
     COption2("named", "n", "", OPT_SWITCH, "Include well know token and airdrop addresses in the search"),
     COption2("addr", "a", "", OPT_SWITCH, "display only addresses in the results (useful for scripting)"),
     COption2("other", "t", "", OPT_HIDDEN | OPT_SWITCH, "export other addresses if found"),
-    COption2("fmt", "x", "<fmt>", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json|txt|csv|api])"),
+    COption2("fmt", "x", "enum[none|json|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json|txt|csv|api])"),
     COption2("", "", "", 0, "Query addresses and/or names well known accounts.\n"),
 // END_CODE_OPTIONS
 };
