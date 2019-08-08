@@ -14,16 +14,16 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("~testNum",         "the number of the test to run"),
-    COption("~!optionalMode",   "an optional mode with ~! start"),
-    COption("-bool:<bool>",     "enter a boolean value (either '0', '1', 'false', or 'true')"),
-    COption("-int:<int>",       "enter any numeric value"),
-    COption("-uint:<uint>",     "enter any numeric value greater than or equal to zero"),
-    COption("-string:<string>", "enter any value"),
-    COption("-range:<range>",   "enter a range of numeric values"),
-    COption("-list:<list>",     "enter a list of value separated by commas (no spaces or quoted)"),
-    COption("@hid(d)enOption",  "a hidden option with an alternative hot key"),
-    COption("",                 "Tests various command line behavior.\n"),
+    COption("testNum", "t", "", OPT_REQUIRED | OPT_POSITIONAL, "the number of the test to run"),
+    COption("optionalMode", "o", "", OPT_POSITIONAL, "an optional mode with ~! start"),
+    COption("bool", "b", "<bool>", OPT_FLAG, "enter a boolean value (either '0', '1', 'false', or 'true')"),
+    COption("int", "i", "<int>", OPT_FLAG, "enter any numeric value"),
+    COption("uint", "u", "<uint>", OPT_FLAG, "enter any numeric value greater than or equal to zero"),
+    COption("string", "s", "<string>", OPT_FLAG, "enter any value"),
+    COption("range", "r", "<range>", OPT_FLAG, "enter a range of numeric values"),
+    COption("list", "l", "<list>", OPT_FLAG, "enter a list of value separated by commas (no spaces or quoted)"),
+    COption("hiddenOption", "d", "", OPT_HIDDEN, "a hidden option with an alternative hot key"),
+    COption("", "", "", 0, "Tests various command line behavior.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 

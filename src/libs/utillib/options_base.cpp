@@ -440,11 +440,12 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    COption2::COption2(const string_q& ln, const string_q& sn, const string_q& type, size_t opts, const string_q& d)
-        : COption(ln,d)
+    COption::COption(const string_q& ln, const string_q& sn, const string_q& type, size_t opts, const string_q& d)
     {
+        description = d;
         if (ln.empty())
             return;
+
         mode = (opts & OPT_POSITIONAL);
         hidden = (opts & OPT_HIDDEN);
         optional = !(opts & OPT_REQUIRED);

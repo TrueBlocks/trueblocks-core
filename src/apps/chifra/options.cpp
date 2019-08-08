@@ -9,9 +9,9 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption2("command", "", "enum[leech|scrape|daemon|list|export|balances|stats|ls|rm|accounts|config|slurp|quotes|data|blocks|trans|receipts|logs|traces|state|abi]", OPT_REQUIRED | OPT_POSITIONAL, "one of [leech|scrape|daemon|list|export|balances|stats|ls|rm|accounts|config|slurp|quotes|data|blocks|trans|receipts|logs|traces|state|abi]"),
-    COption2("sleep", "", "<seconds>", OPT_FLAG, "for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 0)"),
-    COption2("", "", "", 0, "Create a TrueBlocks monitor configuration."),
+    COption("command", "", "enum[leech|scrape|daemon|list|export|balances|stats|ls|rm|accounts|config|slurp|quotes|data|blocks|trans|receipts|logs|traces|state|abi|status]", OPT_REQUIRED | OPT_POSITIONAL, "one of [leech|scrape|daemon|list|export|balances|stats|ls|rm|accounts|config|slurp|quotes|data|blocks|trans|receipts|logs|traces|state|abi|status]"),
+    COption("sleep", "", "<seconds>", OPT_FLAG, "for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 0)"),
+    COption("", "", "", 0, "Create a TrueBlocks monitor configuration."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);

@@ -141,13 +141,9 @@ namespace qblocks {
         bool      hidden;
         bool      mode;
         bool      optional;
+        COption(const string_q& ln, const string_q& sn, const string_q& type, size_t opts, const string_q& d);
+    private:
         COption(const string_q& name, const string_q& descr);
-    };
-
-    //--------------------------------------------------------------------------------
-    class COption2 : public COption {
-    public:
-        COption2(const string_q& ln, const string_q& sn, const string_q& type, size_t opts, const string_q& d);
     };
 
     //--------------------------------------------------------------------------------

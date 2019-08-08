@@ -8,23 +8,23 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption2("filenames", "", "list<fn>", OPT_REQUIRED | OPT_POSITIONAL, "path(s) of files to check, merge, fix or display (default=display)"),
-    COption2("check", "c", "", OPT_SWITCH, "check for duplicates and other problems in the cache"),
-    COption2("data", "d", "", OPT_SWITCH, "in 'list' mode, render results as data (i.e export mode)"),
-    COption2("sort", "s", "", OPT_SWITCH, "sort the list of transactions and re-write (precludes other modes, other than --dedup)"),
-    COption2("fix", "f", "", OPT_SWITCH, "remove duplicates from the cache (if any)"),
-    COption2("list", "l", "", OPT_SWITCH, "list the contents of the cache (the default if no other option)"),
-    COption2("cacheBals", "a", "", OPT_SWITCH, "cache per block account balances for each account"),
-    COption2("balances", "b", "", OPT_SWITCH, "export account balances for each account"),
-    COption2("import", "i", "", OPT_SWITCH, "import transactions if import.txt file exists in current folder"),
-    COption2("remove", "r", "", OPT_SWITCH, "remove transactions if remove.txt file exists in current folder"),
-    COption2("truncate", "t", "<blknum>", OPT_FLAG, "truncate the cache at block :n (keeps block 'n' and before, implies --fix)"),
-    COption2("maxBlock", "k", "<blknum>", OPT_FLAG, "for testing, max block to visit"),
-    COption2("merge", "m", "", OPT_SWITCH, "merge two or more caches into a single cache"),
-    COption2("fmt", "x", "enum[none|json|txt|csv|api]", OPT_FLAG, "export format (one of [json|txt|csv])"),
-    COption2("skip", "k", "", OPT_HIDDEN | OPT_SWITCH, "skip value for testing"),
-    COption2("start", "s", "<blknum>", OPT_HIDDEN | OPT_FLAG, "un-used hidden value - do not remove"),
-    COption2("", "", "", 0, "Show the contents of an account cache and/or fix it by removing duplicate records.\n"),
+    COption("filenames", "", "list<fn>", OPT_REQUIRED | OPT_POSITIONAL, "path(s) of files to check, merge, fix or display (default=display)"),
+    COption("check", "c", "", OPT_SWITCH, "check for duplicates and other problems in the cache"),
+    COption("data", "d", "", OPT_SWITCH, "in 'list' mode, render results as data (i.e export mode)"),
+    COption("sort", "s", "", OPT_SWITCH, "sort the list of transactions and re-write (precludes other modes, other than --dedup)"),
+    COption("fix", "f", "", OPT_SWITCH, "remove duplicates from the cache (if any)"),
+    COption("list", "l", "", OPT_SWITCH, "list the contents of the cache (the default if no other option)"),
+    COption("cacheBals", "a", "", OPT_SWITCH, "cache per block account balances for each account"),
+    COption("balances", "b", "", OPT_SWITCH, "export account balances for each account"),
+    COption("import", "i", "", OPT_SWITCH, "import transactions if import.txt file exists in current folder"),
+    COption("remove", "r", "", OPT_SWITCH, "remove transactions if remove.txt file exists in current folder"),
+    COption("truncate", "t", "<blknum>", OPT_FLAG, "truncate the cache at block :n (keeps block 'n' and before, implies --fix)"),
+    COption("maxBlock", "k", "<blknum>", OPT_FLAG, "for testing, max block to visit"),
+    COption("merge", "m", "", OPT_SWITCH, "merge two or more caches into a single cache"),
+    COption("fmt", "x", "enum[none|json|txt|csv|api]", OPT_FLAG, "export format (one of [json|txt|csv])"),
+    COption("skip", "k", "", OPT_HIDDEN | OPT_SWITCH, "skip value for testing"),
+    COption("start", "s", "<blknum>", OPT_HIDDEN | OPT_FLAG, "un-used hidden value - do not remove"),
+    COption("", "", "", 0, "Show the contents of an account cache and/or fix it by removing duplicate records.\n"),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -238,9 +238,3 @@ bool loadMonitorData(CAppearanceArray_base& items, const address_t& addr) {
     }
     EXIT_NOMSG(true);
 }
-
-//OLD_CODE
-#if 0
-    COption("@to_file",     "send results to a temporary file and return the filename"),
-    COption("@output:<fn>", "send results to file 'fn' and return the filename"),
-#endif

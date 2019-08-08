@@ -14,8 +14,8 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("~mode", "a number between 0 and 2 inclusive"),
-    COption("",      "Test 'c' library strings against QBlocks strings.\n"),
+    COption("mode", "m", "[0..2]", OPT_REQUIRED | OPT_POSITIONAL, "a number between 0 and 2 inclusive"),
+    COption("", "", "", 0, "Test 'c' library strings against QBlocks strings.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 

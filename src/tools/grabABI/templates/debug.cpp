@@ -7,20 +7,20 @@
 #ifdef DEBUGGER_ON
 //---------------------------------------------------------------------
 static const COption debugCmds[] = {
-    COption("-(c)orrect",     "Correct the current imbalance and continue to the next imbalance"),
-    COption("-(a)utocorrect", "Turn on or off autocorrect (allows pressing enter to correct)"),
-    COption("-(e)thscan",     "Open a block, account, or transaction in http://ethscan.io"),
-    COption("-(s)ource",      "View the smart contract's source code (if found)"),
-    COption("-(b)uffer",      "Show the transaction buffer (including transaction hashes)"),
-    COption("-(l)ist",        "Show the list of accounts being debugged"),
-    COption("-confi(g)",      "Edit the config file"),
-    COption("-si(n)gle",      "Toggle single step"),
-    COption("-(t)race",       "Toggle display of trace"),
-    COption("-(d)ollars",     "Display US dollars as well"),
-    COption("-!cmd",          "Run a system command"),
-    COption("-(q)uit",        "Quit the current monitor program"),
-    COption("-(h)elp",        "Display this screen"),
-    COption("",               "Press enter to continue without correction, up or down arrows to recall commands"),
+    COption("-(c)orrect", "c", "", OPT_SWITCH, "Correct the current imbalance and continue to the next imbalance"),
+    COption("-(a)utocorrect", "a", "", OPT_SWITCH, "Turn on or off autocorrect (allows pressing enter to correct)"),
+    COption("-(e)thscan", "e", "", OPT_SWITCH, "Open a block, account, or transaction in http://ethscan.io"),
+    COption("-(s)ource", "s", "", OPT_SWITCH, "View the smart contract's source code (if found)"),
+    COption("-(b)uffer", "b", "", OPT_SWITCH, "Show the transaction buffer (including transaction hashes)"),
+    COption("-(l)ist", "l", "", OPT_SWITCH, "Show the list of accounts being debugged"),
+    COption("-confi(g)", "g", "", OPT_SWITCH, "Edit the config file"),
+    COption("-si(n)gle", "n", "", OPT_SWITCH, "Toggle single step"),
+    COption("-(t)race", "t", "", OPT_SWITCH, "Toggle display of trace"),
+    COption("-(d)ollars", "d", "", OPT_SWITCH, "Display US dollars as well"),
+    COption("-!cmd", "c", "<cmd>", OPT_FLAG, "Run a system command"),
+    COption("-(q)uit", "q", "", OPT_SWITCH, "Quit the current monitor program"),
+    COption("-(h)elp", "h", "", OPT_SWITCH, "Display this screen"),
+    COption("", "", "", 0, "Press enter to continue without correction, up or down arrows to recall commands"),
 };
 static const size_t nDebugCmds = sizeof(debugCmds) / sizeof(COption);
 

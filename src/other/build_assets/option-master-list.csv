@@ -158,7 +158,7 @@ n,group,api_route,tool,order,command,command_short,data_type,option_kind,default
 157,apps,export,acctExport,,start,s,<blknum>,flag,,first block to export (inclusive),,FALSE,FALSE,FALSE,FALSE,FALSE,
 158,apps,export,acctExport,,end,e,<blknum>,flag,,last block to export (inclusive),,FALSE,FALSE,FALSE,FALSE,FALSE,
 159,apps,export,acctExport,,,,,description,,Export full detail of transactions for one or more Ethereum addresses.,,TRUE,FALSE,TRUE,FALSE,TRUE,
-160,apps,,chifra,,command,,enum[leech|scrape|daemon|list|export|balances|stats|ls|rm|accounts|config|slurp|quotes|data|blocks|trans|receipts|logs|traces|state|abi],positional,,one of [leech|scrape|daemon|list|export|balances|stats|ls|rm|accounts|config|slurp|quotes|data|blocks|trans|receipts|logs|traces|state|abi],,TRUE,TRUE,TRUE,TRUE,TRUE,
+160,apps,,chifra,,command,,enum[leech|scrape|daemon|list|export|balances|stats|ls|rm|accounts|config|slurp|quotes|data|blocks|trans|receipts|logs|traces|state|abi|status],positional,,one of [leech|scrape|daemon|list|export|balances|stats|ls|rm|accounts|config|slurp|quotes|data|blocks|trans|receipts|logs|traces|state|abi|status],,TRUE,TRUE,TRUE,TRUE,TRUE,
 161,apps,,chifra,,sleep,,<seconds>,flag,,"for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 0)",,TRUE,FALSE,TRUE,FALSE,TRUE,
 162,apps,,chifra,,,,,description,,Create a TrueBlocks monitor configuration.,,TRUE,FALSE,TRUE,FALSE,TRUE,
 163,apps,"export,list",acctScrape,,addr_list,,list<addr>,positional,,one or more Ethereum addresses,,TRUE,TRUE,TRUE,TRUE,TRUE,
