@@ -153,6 +153,9 @@ bool COptions::handle_scrape(void) {
                                 } else {
                                     if (system(os1.str().c_str())) { }  // Don't remove. Silences compiler warnings
                                 }
+                                usleep(250000); // stay responsive to cntrl+C
+                                if (shouldQuit())
+                                    continue;
                             }
                         }
                         cerr << "\t  freshening: " << cYellow << "    finished." << cOff << "                                                           " << endl;
