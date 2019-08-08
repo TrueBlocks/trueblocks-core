@@ -9,8 +9,8 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption2("command", "", "enum[ leech | scrape | daemon | list | export | balances | stats | ls | rm | accounts | config | slurp | quotes | data | blocks | trans | receipts | logs | traces | state | abi ]", OPT_REQUIRED | OPT_POSITIONAL, "one of [ leech | scrape | daemon | list | export | balances | stats | ls | rm | accounts | config | slurp | quotes | data | blocks | trans | receipts | logs | traces | state | abi ]"),
-    COption2("sleep", "", "<num>", OPT_FLAG, "for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 0)"),
+    COption2("command", "", "enum[leech|scrape|daemon|list|export|balances|stats|ls|rm|accounts|config|slurp|quotes|data|blocks|trans|receipts|logs|traces|state|abi]", OPT_REQUIRED | OPT_POSITIONAL, "one of [leech|scrape|daemon|list|export|balances|stats|ls|rm|accounts|config|slurp|quotes|data|blocks|trans|receipts|logs|traces|state|abi]"),
+    COption2("sleep", "", "<seconds>", OPT_FLAG, "for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 0)"),
     COption2("", "", "", 0, "Create a TrueBlocks monitor configuration."),
 // END_CODE_OPTIONS
 };
@@ -44,7 +44,8 @@ bool COptions::parseArguments(string_q& command) {
 
         } else {
 
-            if (contains(params[0].description, " " + arg + " ")) {
+            string descr = substitute(substitute(params[0].description, "[", "|"), "]", "|");
+            if (contains(descr, "|" + arg + "|")) {
                 if (!mode.empty())
                     EXIT_USAGE("Please specify " + params[0].description + ". " + mode + ":" + arg);
                 mode = arg;
@@ -81,7 +82,7 @@ bool COptions::parseArguments(string_q& command) {
                         // ignore --to_file flag in docker mode
                     }
                 } else {
-                    if (arg == "--noBlooms")
+                    if (arg == "--noBlooms" || arg == "--staging")
                         freshen_flags = arg;
                     else
                         tool_flags += (arg + " ");

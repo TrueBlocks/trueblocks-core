@@ -12,8 +12,8 @@ blockScrape -th
 | -n | --nBlocks <num> | maximum number of blocks to process (defaults to 5000) |
 
 #### Hidden options (shown during testing only)
-| -b | --nBlockProcs <num> | number of block channels for blaze |
-| -a | --nAddrProcs <num> | number of address channels for blaze |
+| -b | --nBlockProcs <uint> | number of block channels for blaze |
+| -a | --nAddrProcs <uint> | number of address channels for blaze |
 #### Hidden options (shown during testing only)
 
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |

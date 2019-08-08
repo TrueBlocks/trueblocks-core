@@ -19,7 +19,7 @@ static const COption params[] = {
     COption2("current", "c", "", OPT_SWITCH, "Report on the current price (i.e. -at:now)"),
     COption2("data", "d", "", OPT_SWITCH, "Export prices as JSON data"),
     COption2("freshen", "f", "", OPT_SWITCH, "Freshen database (append new data)"),
-    COption2("period", "p", "enum<5|15|30|*120|240|1440>", OPT_FLAG, "Display prices in this increment. One of [5|15|30|120*|240|1440]"),
+    COption2("period", "p", "enum[5|15|30|*120|240|1440]", OPT_FLAG, "Display prices in this increment. One of [5|15|30|120*|240|1440]"),
     COption2("pair", "p", "<val>", OPT_FLAG, "Which price pair to freshen or list (see Poloniex)"),
     COption2("", "", "", 0, "Freshen and/or display Ethereum price data and other purposes."),
 // END_CODE_OPTIONS

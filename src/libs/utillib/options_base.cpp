@@ -448,11 +448,15 @@ namespace qblocks {
         mode = (opts & OPT_POSITIONAL);
         hidden = (opts & OPT_HIDDEN);
         optional = !(opts & OPT_REQUIRED);
-        longName = "--" + ln + (type.empty() ? "" : " " + type);
+
+        permitted = type;
+        permitted = substitute(permitted, "enum[none|json|txt|csv|api]", "<fmt>");
+        permitted = substitute(permitted, "<blknum>", "<num>");
+
+        longName = "--" + ln + (permitted.empty() ? "" : " " + permitted);
         shortName = (sn.empty() ? "" : "-" + sn);
         if (mode)
             longName = shortName = ln;
-        permitted = type;
     }
 
     //--------------------------------------------------------------------------------
