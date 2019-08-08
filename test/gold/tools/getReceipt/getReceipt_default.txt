@@ -12,7 +12,7 @@ getReceipt --address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 	-l  (--logs)          display the receipt's logs
 
 #### Hidden options (shown during testing only)
-	-x  (--fmt <fmt>)     export format (one of [none|json|txt|csv|api])
+	-x  (--fmt <fmt>)     export format (one of [none|json*|txt|csv|api])
 #### Hidden options (shown during testing only)
 
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level

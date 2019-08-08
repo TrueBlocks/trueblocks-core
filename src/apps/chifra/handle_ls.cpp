@@ -10,7 +10,7 @@
 #include "question.h"
 
 //------------------------------------------------------------------------------------------------
-bool COptions::handle_ls(void) {
+bool COptions::handle_status(void) {
 
     ENTER4("handle_" + mode);
     nodeNotRequired();
@@ -18,7 +18,7 @@ bool COptions::handle_ls(void) {
     ostringstream os;
     os << cGreen << "Monitor path: " << cWhite << getMonitorPath("") << endl;
 
-    stats = (stats || contains(tool_flags, "-l"));
+    bool stats = contains(tool_flags, "-l") || contains(tool_flags, "--long");
 
     CStringArray files;
     if (isTestMode()) {

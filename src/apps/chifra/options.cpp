@@ -9,7 +9,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("command", "", "enum[leech|scrape|daemon|list|export|stats|ls|rm|accounts|config|slurp|quotes|data|blocks|trans|receipts|logs|traces|state|abi|message|status]", OPT_REQUIRED | OPT_POSITIONAL, "one of [leech|scrape|daemon|list|export|stats|ls|rm|accounts|config|slurp|quotes|data|blocks|trans|receipts|logs|traces|state|abi|message|status]"),
+    COption("command", "", "enum[scrape|list|export|accounts|slurp|quotes|data|blocks|trans|receipts|logs|traces|state|abi|status|message|rm|config|leech|seed]", OPT_REQUIRED | OPT_POSITIONAL, "one of [scrape|list|export|accounts|slurp|quotes|data|blocks|trans|receipts|logs|traces|state|abi|status|message|rm|config|leech|seed]"),
     COption("sleep", "", "<seconds>", OPT_FLAG, "for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 0)"),
     COption("", "", "", 0, "Create a TrueBlocks monitor configuration."),
 // END_CODE_OPTIONS
@@ -49,10 +49,6 @@ bool COptions::parseArguments(string_q& command) {
                 if (!mode.empty())
                     EXIT_USAGE("Please specify " + params[0].description + ". " + mode + ":" + arg);
                 mode = arg;
-                if (mode == "stats") {
-                    mode = "ls";
-                    stats = true;
-                }
 
             } else if (contains(arg, ",") && isAddress(arg.substr(0,42))) {
                 if (contains(arg, ",--start=") && mode == "list") {
@@ -163,7 +159,6 @@ void COptions::Init(void) {
     tool_flags    = "";
     freshen_flags = "";
     mode          = "";
-    stats         = false;
     scrapeSleep   = 14;
     minArgs       = 0;
 }

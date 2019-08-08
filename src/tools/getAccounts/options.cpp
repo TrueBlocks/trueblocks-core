@@ -15,7 +15,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("terms", "", "list<term>", OPT_REQUIRED | OPT_POSITIONAL, "a space separated list of one or more search terms"),
+    COption("term_list", "", "list<term>", OPT_REQUIRED | OPT_POSITIONAL, "a space separated list of one or more search terms"),
     COption("expand", "e", "", OPT_SWITCH, "expand search to include all fields (default searches name, address, and symbol only)"),
     COption("matchCase", "m", "", OPT_SWITCH, "do case-sensitive search"),
     COption("owned", "o", "", OPT_SWITCH, "Include personal accounts in the search"),
@@ -24,7 +24,7 @@ static const COption params[] = {
     COption("named", "n", "", OPT_SWITCH, "Include well know token and airdrop addresses in the search"),
     COption("addr", "a", "", OPT_SWITCH, "display only addresses in the results (useful for scripting)"),
     COption("other", "t", "", OPT_HIDDEN | OPT_SWITCH, "export other addresses if found"),
-    COption("fmt", "x", "enum[none|json|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json|txt|csv|api])"),
+    COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),
     COption("", "", "", 0, "Query addresses and/or names well known accounts.\n"),
 // END_CODE_OPTIONS
 };
@@ -157,7 +157,7 @@ COptions::~COptions(void) {
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
     if (which == "options") {
-        return substitute(str, "terms", "<term> [term...]");
+        return substitute(str, "term_list", "<term> [term...]");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
         string_q ret;

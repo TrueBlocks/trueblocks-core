@@ -19,8 +19,8 @@ static const COption params[] = {
     COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
     COption("countOnly", "c", "", OPT_SWITCH, "show the number of traces for the transaction only (fast)"),
     COption("noHeader", "n", "", OPT_SWITCH, "do not show the header row"),
-    COption("fmt", "x", "enum[none|json|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json|txt|csv|api])"),
-    COption("ddos", "d", "enum[on/off]", OPT_HIDDEN | OPT_FLAG, "skip over dDos transactions in export ('on' by default)"),
+    COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),
+    COption("ddos", "d", "enum[on*/off]", OPT_HIDDEN | OPT_FLAG, "skip over dDos transactions in export ('on' by default)"),
     COption("", "", "", 0, "Retrieve a transaction's traces from the local cache or a running node."),
 // END_CODE_OPTIONS
 };

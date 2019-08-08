@@ -451,7 +451,7 @@ namespace qblocks {
         optional = !(opts & OPT_REQUIRED);
 
         permitted = type;
-        permitted = substitute(permitted, "enum[none|json|txt|csv|api]", "<fmt>");
+        permitted = substitute(permitted, "enum[none|json*|txt|csv|api]", "<fmt>");
         permitted = substitute(permitted, "<blknum>", "<num>");
 
         longName = "--" + ln + (permitted.empty() ? "" : " " + permitted);
