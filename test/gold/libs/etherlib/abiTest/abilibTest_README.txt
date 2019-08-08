@@ -11,7 +11,7 @@ abiTest -th
 | -------: | :------- | :------- |
 |  | mode | Mode of operation. One or more of 'encoding' or 'generation'.
  (required) |
-| -s | --sub val | sub mode |
+| -s | --sub <num> | sub mode |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

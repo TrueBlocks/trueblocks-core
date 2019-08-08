@@ -14,8 +14,8 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("~mode:[0-5]", "either a number between 0 and 5, a C++ QBlocks class name, the word 'upgradeTest'"),
-    COption("",            "Test upgrading binary data to new format.\n"),
+    COption("mode", "m", "[0-5]", OPT_REQUIRED | OPT_POSITIONAL, "either a number between 0 and 5, a C++ QBlocks class name, the word 'upgradeTest'"),
+    COption("", "", "", 0, "Test upgrading binary data to new format.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 

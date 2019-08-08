@@ -10,20 +10,20 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption2("parse", "p", "", OPT_SWITCH, "display parsed input data"),
-    COption2("logs", "g", "", OPT_SWITCH, "display smart contract lo(g)s or events"),
-    COption2("trace", "t", "", OPT_SWITCH, "display smart contract internal traces"),
-    COption2("accounting", "a", "", OPT_SWITCH, "display credits and debits per account and reconcile at each block"),
-    COption2("no_check", "n", "", OPT_SWITCH, "do not do balance check at each block"),
-    COption2("debug", "d", "", OPT_SWITCH, "enter debug mode (pause after each transaction)"),
-    COption2("single", "s", "", OPT_SWITCH, "if debugging is enable, single step through transactions"),
-    COption2("export", "e", "", OPT_SWITCH, "export the transactions to export file"),
-    COption2("json", "j", "", OPT_SWITCH, "ignore export format and export as json"),
-    COption2("bals", "b", "", OPT_SWITCH, "if a balance does not reconcile, export a message to a file"),
-    COption2("list", "l", "", OPT_SWITCH, "display list of monitored accounts"),
-    COption2("kBlock", "k", "<blknum>", OPT_FLAG, "start processing at block :k"),
-    COption2("offset", "o", "<blknum>", OPT_FLAG, "offset to kBlock"),
-    COption2("", "", "", 0, "Index transactions for a given Ethereum address (or series of addresses)."),
+    COption("parse", "p", "", OPT_SWITCH, "display parsed input data"),
+    COption("logs", "g", "", OPT_SWITCH, "display smart contract lo(g)s or events"),
+    COption("trace", "t", "", OPT_SWITCH, "display smart contract internal traces"),
+    COption("accounting", "a", "", OPT_SWITCH, "display credits and debits per account and reconcile at each block"),
+    COption("no_check", "n", "", OPT_SWITCH, "do not do balance check at each block"),
+    COption("debug", "d", "", OPT_SWITCH, "enter debug mode (pause after each transaction)"),
+    COption("single", "s", "", OPT_SWITCH, "if debugging is enable, single step through transactions"),
+    COption("export", "e", "", OPT_SWITCH, "export the transactions to export file"),
+    COption("json", "j", "", OPT_SWITCH, "ignore export format and export as json"),
+    COption("bals", "b", "", OPT_SWITCH, "if a balance does not reconcile, export a message to a file"),
+    COption("list", "l", "", OPT_SWITCH, "display list of monitored accounts"),
+    COption("kBlock", "k", "<blknum>", OPT_FLAG, "start processing at block :k"),
+    COption("offset", "o", "<blknum>", OPT_FLAG, "offset to kBlock"),
+    COption("", "", "", 0, "Index transactions for a given Ethereum address (or series of addresses)."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);

@@ -6,8 +6,8 @@
     bool chkAsStr;
 
 ////////////////////////////////////////////////////////////
-    COption("@belongs:<addr>", "report true or false if the given address is found anywhere in the transaction"),
-    COption("@asStrs",         "when checking --belongs, treat input and log data as a string"),
+    COption("belongs", "b", "<addr>", OPT_HIDDEN | OPT_FLAG, "report true or false if the given address is found anywhere in the transaction"),
+    COption("asStrs", "a", "", OPT_HIDDEN | OPT_SWITCH, "when checking --belongs, treat input and log data as a string"),
 
 ////////////////////////////////////////////////////////////
         } else if (arg == "--asStrs") {

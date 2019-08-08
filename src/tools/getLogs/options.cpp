@@ -15,10 +15,10 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption2("trans_list", "", "list<trans>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
-    COption2("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
-    COption2("fmt", "x", "enum[none|json|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json|txt|csv|api])"),
-    COption2("", "", "", 0, "Retrieve a transaction's logs from the local cache or a running node."),
+    COption("trans_list", "", "list<trans>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
+    COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
+    COption("fmt", "x", "enum[none|json|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json|txt|csv|api])"),
+    COption("", "", "", 0, "Retrieve a transaction's logs from the local cache or a running node."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -138,12 +138,6 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
     }
     return str;
 }
-
-//OLD_CODE
-#if 0
-    COption("@to_file",     "send results to a temporary file and return the filename"),
-    COption("@output:<fn>", "send results to file 'fn' and return the filename"),
-#endif
 
 //--------------------------------------------------------------------------------
 const char* STR_DISPLAY =
