@@ -14,7 +14,7 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("",        "Test harness for QBlocks.\n"),
+    COption("", "", "", 0, "Test harness for QBlocks.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 

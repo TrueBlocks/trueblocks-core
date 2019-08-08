@@ -9,23 +9,23 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption2("addr_list", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) to export"),
-    COption2("fmt", "x", "enum[none|json|txt|csv|api]", OPT_FLAG, "export format (one of [json|txt|csv])"),
-    COption2("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
-    COption2("logs", "l", "", OPT_SWITCH, "export logs instead of transactions"),
-    COption2("traces", "t", "", OPT_SWITCH, "export traces instead of transactions"),
-    COption2("blocks", "b", "enum[on|off]", OPT_HIDDEN | OPT_FLAG, "write blocks to the binary cache ('off' by default)"),
-    COption2("txs", "s", "enum[on|off]", OPT_HIDDEN | OPT_FLAG, "write transactions to the binary cache ('on' by default)"),
-    COption2("trc", "r", "enum[on|off]", OPT_HIDDEN | OPT_FLAG, "write traces to the binary cache ('off' by default)"),
-    COption2("ddos", "d", "enum[on|off]", OPT_HIDDEN | OPT_FLAG, "skip over dDos transactions in export ('on' by default)"),
-    COption2("maxTraces", "m", "<uint>", OPT_HIDDEN | OPT_FLAG, "if --ddos:on, the number of traces defining a dDos (default = 250)"),
-    COption2("noHeader", "n", "", OPT_HIDDEN | OPT_SWITCH, "do not show the header row"),
-    COption2("allABIs", "a", "", OPT_HIDDEN | OPT_SWITCH, "load all previously cached abi files"),
-    COption2("grabABIs", "g", "", OPT_HIDDEN | OPT_SWITCH, "using each trace's 'to' address, grab the abi for that address (improves articulation)"),
-    COption2("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
-    COption2("start", "s", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to export (inclusive)"),
-    COption2("end", "e", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to export (inclusive)"),
-    COption2("", "", "", 0, "Export full detail of transactions for one or more Ethereum addresses."),
+    COption("addr_list", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) to export"),
+    COption("fmt", "x", "enum[none|json|txt|csv|api]", OPT_FLAG, "export format (one of [json|txt|csv])"),
+    COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
+    COption("logs", "l", "", OPT_SWITCH, "export logs instead of transactions"),
+    COption("traces", "t", "", OPT_SWITCH, "export traces instead of transactions"),
+    COption("blocks", "b", "enum[on|off]", OPT_HIDDEN | OPT_FLAG, "write blocks to the binary cache ('off' by default)"),
+    COption("txs", "s", "enum[on|off]", OPT_HIDDEN | OPT_FLAG, "write transactions to the binary cache ('on' by default)"),
+    COption("trc", "r", "enum[on|off]", OPT_HIDDEN | OPT_FLAG, "write traces to the binary cache ('off' by default)"),
+    COption("ddos", "d", "enum[on|off]", OPT_HIDDEN | OPT_FLAG, "skip over dDos transactions in export ('on' by default)"),
+    COption("maxTraces", "m", "<uint>", OPT_HIDDEN | OPT_FLAG, "if --ddos:on, the number of traces defining a dDos (default = 250)"),
+    COption("noHeader", "n", "", OPT_HIDDEN | OPT_SWITCH, "do not show the header row"),
+    COption("allABIs", "a", "", OPT_HIDDEN | OPT_SWITCH, "load all previously cached abi files"),
+    COption("grabABIs", "g", "", OPT_HIDDEN | OPT_SWITCH, "using each trace's 'to' address, grab the abi for that address (improves articulation)"),
+    COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
+    COption("start", "s", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to export (inclusive)"),
+    COption("end", "e", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to export (inclusive)"),
+    COption("", "", "", 0, "Export full detail of transactions for one or more Ethereum addresses."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -403,11 +403,6 @@ bool COptions::loadTsArray() {
 
     return true;
 }
-
-#if 0
-    COption("@to_file",     "send results to a temporary file and return the filename"),
-    COption("@output:<fn>", "send results to file 'fn' and return the filename"),
-#endif
 
 //-----------------------------------------------------------------------
 const char* STR_DISPLAY =

@@ -15,17 +15,17 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption2("block_list", "", "list<block>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks for which to retrieve blooms"),
-    COption2("eab", "e", "", OPT_SWITCH, "pull the enhanced adaptive blooms from QBlocks cache"),
-    COption2("block", "b", "", OPT_SWITCH, "show only the block-level bloom (--raw only)"),
-    COption2("receipts", "c", "", OPT_SWITCH, "show only the receipt-level blooms (--raw only)"),
-    COption2("bits", "i", "", OPT_SWITCH, "display blooms as bits instead of hex"),
-    COption2("bars", "a", "", OPT_SWITCH, "display blooms as bar chart instead of hex"),
-    COption2("bitbars", "s", "", OPT_SWITCH, "display nBits as a bar chart"),
-    COption2("pctbars", "p", "", OPT_SWITCH, "display nBits as a percentage of bloom space"),
-    COption2("bitcount", "n", "", OPT_SWITCH, "display the number of bits lit per bloom"),
-    COption2("force", "f", "", OPT_HIDDEN | OPT_SWITCH, "force a re-write of the bloom to the cache"),
-    COption2("", "", "", 0, "Returns bloom filter(s) from running node (the default) or as EAB from QBlocks."),
+    COption("block_list", "", "list<block>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks for which to retrieve blooms"),
+    COption("eab", "e", "", OPT_SWITCH, "pull the enhanced adaptive blooms from QBlocks cache"),
+    COption("block", "b", "", OPT_SWITCH, "show only the block-level bloom (--raw only)"),
+    COption("receipts", "c", "", OPT_SWITCH, "show only the receipt-level blooms (--raw only)"),
+    COption("bits", "i", "", OPT_SWITCH, "display blooms as bits instead of hex"),
+    COption("bars", "a", "", OPT_SWITCH, "display blooms as bar chart instead of hex"),
+    COption("bitbars", "s", "", OPT_SWITCH, "display nBits as a bar chart"),
+    COption("pctbars", "p", "", OPT_SWITCH, "display nBits as a percentage of bloom space"),
+    COption("bitcount", "n", "", OPT_SWITCH, "display the number of bits lit per bloom"),
+    COption("force", "f", "", OPT_HIDDEN | OPT_SWITCH, "force a re-write of the bloom to the cache"),
+    COption("", "", "", 0, "Returns bloom filter(s) from running node (the default) or as EAB from QBlocks."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);

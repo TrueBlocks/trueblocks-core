@@ -8,10 +8,10 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption2("nBlocks", "n", "<blknum>", OPT_FLAG, "maximum number of blocks to process (defaults to 5000)"),
-    COption2("nBlockProcs", "b", "<uint>", OPT_HIDDEN | OPT_FLAG, "number of block channels for blaze"),
-    COption2("nAddrProcs", "a", "<uint>", OPT_HIDDEN | OPT_FLAG, "number of address channels for blaze"),
-    COption2("", "", "", 0, "Decentralized blockchain scraper and block cache."),
+    COption("nBlocks", "n", "<blknum>", OPT_FLAG, "maximum number of blocks to process (defaults to 5000)"),
+    COption("nBlockProcs", "b", "<uint>", OPT_HIDDEN | OPT_FLAG, "number of block channels for blaze"),
+    COption("nAddrProcs", "a", "<uint>", OPT_HIDDEN | OPT_FLAG, "number of address channels for blaze"),
+    COption("", "", "", 0, "Decentralized blockchain scraper and block cache."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);

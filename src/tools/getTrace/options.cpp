@@ -15,13 +15,13 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption2("trans_list", "", "list<trans>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
-    COption2("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
-    COption2("countOnly", "c", "", OPT_SWITCH, "show the number of traces for the transaction only (fast)"),
-    COption2("noHeader", "n", "", OPT_SWITCH, "do not show the header row"),
-    COption2("fmt", "x", "enum[none|json|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json|txt|csv|api])"),
-    COption2("ddos", "d", "enum[on/off]", OPT_HIDDEN | OPT_FLAG, "skip over dDos transactions in export ('on' by default)"),
-    COption2("", "", "", 0, "Retrieve a transaction's traces from the local cache or a running node."),
+    COption("trans_list", "", "list<trans>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
+    COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
+    COption("countOnly", "c", "", OPT_SWITCH, "show the number of traces for the transaction only (fast)"),
+    COption("noHeader", "n", "", OPT_SWITCH, "do not show the header row"),
+    COption("fmt", "x", "enum[none|json|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json|txt|csv|api])"),
+    COption("ddos", "d", "enum[on/off]", OPT_HIDDEN | OPT_FLAG, "skip over dDos transactions in export ('on' by default)"),
+    COption("", "", "", 0, "Retrieve a transaction's traces from the local cache or a running node."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -159,12 +159,6 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
     }
     return str;
 }
-
-//OLD_CODE
-#if 0
-    COption("@to_file",     "send results to a temporary file and return the filename"),
-    COption("@output:<fn>", "send results to file 'fn' and return the filename"),
-#endif
 
 //--------------------------------------------------------------------------------
 const char* STR_DISPLAY =

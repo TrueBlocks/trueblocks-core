@@ -14,28 +14,24 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-// BEG_CODE_OPTIONS
 static const COption params[] = {
-//#define NEW_CODE
-#ifdef NEW_CODE
-#else // NEW_CODE
-    COption("~className",          "name of C++ class(es) to process"),
-    COption("-open",               "edit <className(s)> definition file in local folder"),
-    COption("-run",                "run the class maker on associated <className(s)>"),
-    COption("-js:<class>",         "export javaScript components for 'class'"),
-    COption("-filter:<string>",    "process only files with :filter in their names"),
-    COption("-list",               "list all definition files found in the local folder"),
-    COption("-header",             "write headers files only"),
-    COption("-sour(c)e",           "write source files only"),
-    COption("-namespace:<string>", "surround the code with a --namespace:ns"),
-    COption("-silent",             "on error (no classDefinition file) exit silently"),
-    COption("-all",                "clear, edit, list, or run all class definitions found in the local folder"),
-    COption("@edit",               "edit <className(s)> definition file in local folder"),
-    COption("",                    "Creates C++ code based on definition file at ./classDefinition/<className>.\n"),
-#endif
+// BEG_CODE_OPTIONS
+    COption("className", "", "", OPT_REQUIRED | OPT_POSITIONAL, "name of C++ class(es) to process"),
+    COption("open", "o", "", OPT_SWITCH, "edit <className(s)> definition file in local folder"),
+    COption("run", "r", "", OPT_SWITCH, "run the class maker on associated <className(s)>"),
+    COption("js", "j", "<class>", OPT_FLAG, "export javaScript components for 'class'"),
+    COption("filter", "f", "<string>", OPT_FLAG, "process only files with :filter in their names"),
+    COption("list", "l", "", OPT_SWITCH, "list all definition files found in the local folder"),
+    COption("header", "h", "", OPT_SWITCH, "write headers files only"),
+    COption("source", "c", "", OPT_SWITCH, "write source files only"),
+    COption("namespace", "n", "<string>", OPT_FLAG, "surround the code with a --namespace:ns"),
+    COption("silent", "s", "", OPT_SWITCH, "on error (no classDefinition file) exit silently"),
+    COption("all", "a", "", OPT_SWITCH, "clear, edit, list, or run all class definitions found in the local folder"),
+    COption("edit", "e", "", OPT_SWITCH | OPT_HIDDEN, "edit <className(s)> definition file in local folder"),
+    COption("", "", "", 0, "Creates C++ code based on definition file at ./classDefinition/<className>.\n"),
+// END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
-// END_CODE_OPTIONS
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
