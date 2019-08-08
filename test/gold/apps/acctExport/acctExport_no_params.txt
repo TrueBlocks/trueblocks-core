@@ -10,10 +10,11 @@ acctExport
 	addr_list             one or more addresses (0x...) to export (required)
 	-x  (--fmt <fmt>)     export format (one of [json|txt|csv])
 	-a  (--articulate)    articulate transactions, traces, logs, and outputs
-	-l  (--logs)          export logs instead of transactions
-	-t  (--traces)        export traces instead of transactions
+	-l  (--logs)          export logs instead of transaction list
+	-t  (--traces)        export traces instead of transaction list
 
 #### Hidden options (shown during testing only)
+	-c  (--balances)      export balance history instead of transaction list
 	-b  (--blocks enum[on|off])write blocks to the binary cache ('off' by default)
 	-s  (--txs enum[on|off])write transactions to the binary cache ('on' by default)
 	-r  (--trc enum[on|off])write traces to the binary cache ('off' by default)

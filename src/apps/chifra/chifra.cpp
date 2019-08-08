@@ -25,7 +25,6 @@ int main(int argc, const char *argv[]) {
 
              if (options.mode == "list")      RETURN(options.handle_list())
         else if (options.mode == "export")    RETURN(options.handle_export())
-        else if (options.mode == "balances")  RETURN(options.handle_balances())
         else if (options.mode == "leech")     RETURN(options.handle_leech())
         else if (options.mode == "scrape")    RETURN(options.handle_scrape())
         else if (options.mode == "slurp")     RETURN(options.handle_slurp())

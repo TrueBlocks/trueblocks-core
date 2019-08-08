@@ -12,8 +12,9 @@ static const COption params[] = {
     COption("addr_list", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) to export"),
     COption("fmt", "x", "enum[none|json|txt|csv|api]", OPT_FLAG, "export format (one of [json|txt|csv])"),
     COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
-    COption("logs", "l", "", OPT_SWITCH, "export logs instead of transactions"),
-    COption("traces", "t", "", OPT_SWITCH, "export traces instead of transactions"),
+    COption("logs", "l", "", OPT_SWITCH, "export logs instead of transaction list"),
+    COption("traces", "t", "", OPT_SWITCH, "export traces instead of transaction list"),
+    COption("balances", "c", "", OPT_HIDDEN | OPT_SWITCH, "export balance history instead of transaction list"),
     COption("blocks", "b", "enum[on|off]", OPT_HIDDEN | OPT_FLAG, "write blocks to the binary cache ('off' by default)"),
     COption("txs", "s", "enum[on|off]", OPT_HIDDEN | OPT_FLAG, "write transactions to the binary cache ('on' by default)"),
     COption("trc", "r", "enum[on|off]", OPT_HIDDEN | OPT_FLAG, "write traces to the binary cache ('off' by default)"),
@@ -475,3 +476,60 @@ const char* STR_TRACE_DISPLAY =
  "[{RESULT::GASUSED}]\t"
  "[{RESULT::OUTPUT}]";
  */
+
+
+#if 0
+#error
+//------------------------------------------------------------------------------------------------
+bool COptions::handle_balances(void) {
+
+    ENTER4("handle_" + mode);
+    nodeRequired();
+    //if (!nodeHasBalances())
+    //    EXIT_USAGE("This function requires an Ethereum archive node to work.");
+
+    if (addrs.empty())
+        EXIT_USAGE("This function requires an address.");
+
+    if (!freshen_internal(FM_PRODUCTION, addrs, "", freshen_flags))
+        EXIT_FAIL("'chifra export' freshen_internal returned false");
+
+    for (auto addr : addrs) {
+        ostringstream os;
+        if (getGlobalConfig("chifra")->getConfigBool("api", "remote_bals", false)) {
+            string_q cmd = "/Users/jrush/src.GitHub/trueblocks-core/build/get_balances.sh " + addr;
+            if (system(cmd.c_str())) { }  // Don't remove. Silences compiler warnings
+//            cout << "/Users/jrush/Desktop/files/" + addr + ".bals.txt";
+
+        } else
+          {
+            string_q fn = "/tmp/results";
+            os << "cacheMan " << " -d " << addr << " >" + fn + " ; ";
+            LOG1("Calling " + os.str());
+            if (isTestMode())
+                cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
+            else
+                if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+
+            CStringArray inLines;
+            asciiFileToLines(fn, inLines);
+            for (auto line : inLines) {
+                CUintArray parts;
+                explode(parts, line, '\t');
+                cout << addr << "\t";
+                cout << parts[0] << "\t";
+                cout << parts[1] << "\t";
+                if (parts[0] > 0)
+                    cout << wei_2_Ether(bnu_2_Str(getBalanceAt(addr, parts[0]-1))) << "\t";
+                else
+                    cout << wei_2_Ether("0") << "\t";
+                cout << wei_2_Ether(bnu_2_Str(getBalanceAt(addr, parts[0])));
+                cout << endl;
+            }
+            ::remove(fn.c_str());
+        }
+    }
+
+    EXIT_NOMSG4(true);
+}
+#endif
