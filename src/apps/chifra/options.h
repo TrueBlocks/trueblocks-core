@@ -9,7 +9,6 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    bool       stats;
     string_q   mode;
     useconds_t scrapeSleep;
 
@@ -30,7 +29,7 @@ public:
     bool handle_scrape   (void);
     bool handle_slurp    (void);
     bool handle_quotes   (void);
-    bool handle_ls       (void);
+    bool handle_status   (void);
     bool handle_rm       (void);
     bool handle_data     (void);
     bool handle_config   (void);

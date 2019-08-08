@@ -26,10 +26,13 @@ bool COptions::handle_rm(void) {
             LOG_WARN("Monitor not found for address " + addr + ".");
 
         } else {
-            cerr << "Remove monitor for " << addr << "? (y=yes) >";
-            cerr.flush();
-            int ch = getchar();
-            if (ch == 'y' || ch == 'Y') {
+            int ch = 'n';
+            if (!api_mode) {
+                cerr << "Remove monitor for " << addr << "? (y=yes) >";
+                cerr.flush();
+                ch = getchar();
+            }
+            if (ch == 'y' || ch == 'Y' || contains(tool_flags, "--yes")) {
                 ostringstream os;
                 os << "cd " << getMonitorPath("") << " ; ";
                 os << "rm -f " << addr << ".* ; ";
@@ -39,7 +42,7 @@ bool COptions::handle_rm(void) {
                     if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
 
             } else {
-                LOG_INFO("Monitor not removed.");
+                EXIT_USAGE("Monitor not removed.");
 
             }
         }
