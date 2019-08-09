@@ -14,8 +14,6 @@ static const COption params[] = {
     COption("sort", "s", "", OPT_SWITCH, "sort the list of transactions and re-write (precludes other modes, other than --dedup)"),
     COption("fix", "f", "", OPT_SWITCH, "remove duplicates from the cache (if any)"),
     COption("list", "l", "", OPT_SWITCH, "list the contents of the cache (the default if no other option)"),
-    COption("cacheBals", "a", "", OPT_SWITCH, "cache per block account balances for each account"),
-    COption("balances", "b", "", OPT_SWITCH, "export account balances for each account"),
     COption("import", "i", "", OPT_SWITCH, "import transactions if import.txt file exists in current folder"),
     COption("remove", "r", "", OPT_SWITCH, "remove transactions if remove.txt file exists in current folder"),
     COption("truncate", "t", "<blknum>", OPT_FLAG, "truncate the cache at block :n (keeps block 'n' and before, implies --fix)"),
@@ -36,7 +34,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         EXIT_NOMSG(false);
 
-    bool isMerge = false, isSort = false, isCacheBal = false, isBals = false;
+    bool isMerge = false, isSort = false;
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
@@ -76,12 +74,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-m" || arg == "--merge") {
             isMerge = true;
-
-        } else if (arg == "-b" || arg == "--balances") {
-            isBals = true;
-
-        } else if (arg == "-a" || arg == "--cacheBals") {
-            isCacheBal = true;
 
         } else if (arg == "-i" || arg == "--import") {
             if (!fileExists("./import.txt"))
@@ -144,24 +136,16 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (!isBals && monitors.size() == 0 && !isImport)
+    if (monitors.size() == 0 && !isImport)
         EXIT_USAGE("You must provide at least one filename.");
     if (mode.empty())
         mode = "list|";
     if (isMerge && monitors.size() < 2)
         EXIT_USAGE("Merge command needs at least two filenames.");
-    if ((isSort || isRemove || isCacheBal) && monitors.size() != 1)
+    if ((isSort || isRemove) && monitors.size() != 1)
         EXIT_USAGE("Command requires a single filename.");
 
-    if (isBals) {
-        listBalances(*this);
-        EXIT_NOMSG(false);
-
-    } else if (isCacheBal) {
-        handleCacheBals(*this);
-        EXIT_NOMSG(false);
-
-    } else if (isSort) {
+    if (isSort) {
         handleSort();
         EXIT_NOMSG(false);
 
