@@ -1105,7 +1105,7 @@ extern void loadParseMap(void);
         ostringstream os;
         switch (fmt) {
             case NONE1:
-                break;
+                return "";
             case TXT1:
                 if (format.empty())
                     return "";
@@ -1140,7 +1140,7 @@ extern void loadParseMap(void);
 
     //-----------------------------------------------------------------------
     string_q exportPostamble(format_t fmt, const string_q& extra) {
-        if (fmt != API1 && fmt != JSON1)
+        if ((fmt != API1 && fmt != JSON1) || fmt == NONE1)
             return "";
         if (fmt != API1)
             return "\n]";
