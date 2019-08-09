@@ -13,6 +13,7 @@ static const COption params[] = {
     COption("staging", "s", "", OPT_HIDDEN | OPT_SWITCH, "produce results in the staging folder instead of production folder"),
     COption("unripe", "u", "", OPT_HIDDEN | OPT_SWITCH, "visit unripe (not old enough and not yet staged or finalized) blocks"),
     COption("daemon", "d", "", OPT_HIDDEN | OPT_SWITCH, "we are being called in daemon mode which causes us to print results differently"),
+    COption("noHeader", "o", "", OPT_HIDDEN | OPT_SWITCH, "do not show the header row"),
     COption("", "", "", 0, "Index transactions for a given Ethereum address (or series of addresses)."),
 // END_CODE_OPTIONS
 };
@@ -25,6 +26,8 @@ bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
+
+    bool noHeader = false;
 
     Init();
     explode(arguments, command, ' ');
@@ -41,6 +44,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-d" || arg == "--daemon") {
             daemonMode = true;
+
+        } else if (arg == "-o" || arg == "--noHeader") {
+            noHeader = true;
 
         } else if (startsWith(arg, "0x")) {
             if (!isAddress(arg))
@@ -105,11 +111,15 @@ bool COptions::parseArguments(string_q& command) {
     if (visitTypes & VIS_UNRIPE)
         scanRange.second = unripe;
 
+    if (noHeader)
+        expContext().fmtMap["header"] = "";
+
     // This would fail, for example, if the accounts are scraped further than the blocks (i.e. we
     // cleared the block index cache, but we didn't clear the account monitor cache
     if (scanRange.first >= scanRange.second) {
         return false;
     }
+
     return true;
 }
 
@@ -152,4 +162,3 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
     }
     return str;
 }
-
