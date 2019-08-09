@@ -14,6 +14,7 @@ acctScrape --list 0x1234567890123456789012345678901234567890
 	-s  (--staging)       produce results in the staging folder instead of production folder
 	-u  (--unripe)        visit unripe (not old enough and not yet staged or finalized) blocks
 	-d  (--daemon)        we are being called in daemon mode which causes us to print results differently
+	-o  (--noHeader)      do not show the header row
 #### Hidden options (shown during testing only)
 
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
