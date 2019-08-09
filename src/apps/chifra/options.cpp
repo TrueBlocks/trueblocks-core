@@ -119,6 +119,9 @@ bool COptions::parseArguments(string_q& command) {
     if (verbose && !contains(freshen_flags, "-v"))
         freshen_flags += (" -v:" + uint_2_Str(verbose));
 
+    if (expContext().asEther) tool_flags += (" --ether");
+    if (expContext().asDollars) tool_flags += (" --dollars");
+
     tool_flags = trim(tool_flags, ' ');
     freshen_flags = trim(freshen_flags, ' ');
 
