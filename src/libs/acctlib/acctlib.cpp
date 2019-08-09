@@ -27,6 +27,7 @@ void acctlib_init(QUITHANDLER qh) {
     CInfix::registerClass();
     CBranch::registerClass();
     CLeaf::registerClass();
+    CBalanceRecord::registerClass();
 }
 
 //-------------------------------------------------------------------------
