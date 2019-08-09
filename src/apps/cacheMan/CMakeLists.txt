@@ -75,10 +75,6 @@ run_special_test("cacheMan_jsonTip"        "--fmt"  " json" " 0x5555533333555553
 #run_special_test("cacheMan_extract"        "-e"  " 0" " 0x5555533333555553333355555333335555533333" " 0x9876543210987654321098765432109876543210" " --list" " --data")
 #run_special_test("cacheMan_extract_list"   "-l"  " extract" " --data")
 
-run_state_test("cacheMan_balanceFail" "0x001d14804b399c6ef80e64576f657660804fabcd" " --cacheBals")
-run_state_test("cacheMan_balanceGet" "0x001d14804b399c6ef80e64576f657660804fec0b" " --cacheBals")
-#run_state_test("cacheMan_balances" "0x001d14804b399c6ef80e64576f657660804fec0b" " --balances")
-
 # COption("-truncate:<num>", "truncate the cache at block :n (keeps block 'n' and before, implies --fix)"),
 # COption("@s(k)ip",         "skip value for testing"),
 

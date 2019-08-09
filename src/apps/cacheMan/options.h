@@ -54,8 +54,6 @@ public:
 //-------------------------------------------------------------------------
 extern bool handleList      (COptions& options);
 extern bool handleFix       (COptions& options);
-extern bool handleCacheBals (COptions& options);
-extern bool listBalances    (COptions& options);
 extern int  sortByBlock     (const void *v1, const void *v2);
 
 //-------------------------------------------------------------------------
