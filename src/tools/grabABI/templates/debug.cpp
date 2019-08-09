@@ -57,7 +57,7 @@ bool COptions::enterDebugger(const CBlock& block) {
     size_t cursor=0;
     bool showKeys = false;
 
-    establishFolder(configPath("cache/tmp"));
+    establishFolder(configPath("cache/tmp/"));
 
     cout << ">> ";
     cout.flush();
