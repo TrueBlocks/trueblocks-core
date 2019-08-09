@@ -13,7 +13,7 @@ static const COption params[] = {
     COption("staging", "s", "", OPT_HIDDEN | OPT_SWITCH, "produce results in the staging folder instead of production folder"),
     COption("unripe", "u", "", OPT_HIDDEN | OPT_SWITCH, "visit unripe (not old enough and not yet staged or finalized) blocks"),
     COption("daemon", "d", "", OPT_HIDDEN | OPT_SWITCH, "we are being called in daemon mode which causes us to print results differently"),
-    COption("noHeader", "o", "", OPT_HIDDEN | OPT_SWITCH, "do not show the header row"),
+    COption("noHeader", "o", "", OPT_SWITCH, "do not show the header row"),
     COption("", "", "", 0, "Index transactions for a given Ethereum address (or series of addresses)."),
 // END_CODE_OPTIONS
 };
