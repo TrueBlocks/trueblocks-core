@@ -1,0 +1,5 @@
+[settings]
+class     = CBalanceRecord
+fields    = address address (nowrite)|blknum blockNum|blknum tx_id|wei priorBalance|wei balance
+includes  = etherlib.h
+serialize = true
