@@ -2,7 +2,7 @@ cacheMan argc: 2 [1:-th]
 cacheMan -th 
 #### Usage
 
-`Usage:`    cacheMan [-c|-d|-s|-f|-l|-a|-b|-i|-r|-t|-k|-m|-x|-v|-h] fn_list  
+`Usage:`    cacheMan [-c|-d|-s|-f|-l|-i|-r|-t|-k|-m|-x|-v|-h] fn_list  
 `Purpose:`  Show the contents of an account cache and/or fix it by removing duplicate records.
         
 `Where:`  
@@ -15,8 +15,6 @@ cacheMan -th
 | -s | --sort | sort the list of transactions and re-write (precludes other modes, other than --dedup) |
 | -f | --fix | remove duplicates from the cache (if any) |
 | -l | --list | list the contents of the cache (the default if no other option) |
-| -a | --cacheBals | cache per block account balances for each account |
-| -b | --balances | export account balances for each account |
 | -i | --import | import transactions if import.txt file exists in current folder |
 | -r | --remove | remove transactions if remove.txt file exists in current folder |
 | -t | --truncate <num> | truncate the cache at block :n (keeps block 'n' and before, implies --fix) |
