@@ -22,6 +22,7 @@ public:
     bool articulate;
     bool doLogs;
     bool doTraces;
+    bool doBalances;
     bool doABIs;
     bool freshenOnly;
     map<uint32_t,address_t> prefundMap;
@@ -37,8 +38,9 @@ public:
     void Init(void);
     string_q postProcess(const string_q& which, const string_q& str) const;
 
-    bool loadMonitorData(CAppearanceArray_base& apps, const address_t& addr);
-    bool loadData(void);
+    bool loadOneAddress(CAppearanceArray_base& apps, const address_t& addr);
+    bool loadAllAppearances(void);
     bool exportData(void);
+    bool exportBalances(void);
     bool loadTsArray(void);
 };

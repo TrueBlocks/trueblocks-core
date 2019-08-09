@@ -34,6 +34,7 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 extern const char* STR_DISPLAY;
 extern const char* STR_LOG_DISPLAY;
 extern const char* STR_TRACE_DISPLAY;
+extern const char* STR_BALRECORD_DISPLAY;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
@@ -98,6 +99,9 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-t" || arg == "--traces") {
             doTraces = true;
 
+        } else if (arg == "-c" || arg == "--balances") {
+            doBalances = true;
+
         } else if (arg == "-g" || arg == "--grabABIs") {
             doTraces = true;
             doABIs = true;
@@ -149,8 +153,8 @@ bool COptions::parseArguments(string_q& command) {
 
     SHOW_FIELD(CTransaction, "traces");
 
-    if (doLogs && doTraces)
-        return usage("Please export either logs or traces, not both. Quitting...");
+    if ((doLogs + doTraces + doBalances) > 1)
+        return usage("Please export only one of logs, traces, or balances. Quitting...");
 
     if (monitors.size() == 0)
         return usage("You must provide at least one Ethereum address. Quitting...");
@@ -223,16 +227,35 @@ bool COptions::parseArguments(string_q& command) {
         format = toml.getConfigStr("formats", "logentry_fmt", deflt);
         expContext().fmtMap["logentry_fmt"] = cleanFmt(format, exportFmt);
 
+        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "balance", STR_BALRECORD_DISPLAY);
+        format = toml.getConfigStr("formats", "balancerecord_fmt", deflt);
+        if (expContext().asEther) {
+            format = substitute(format, "{BALANCE}", "{ETHER}");
+            format = substitute(format, "{PRIORBALANCE}", "{ETHERPRIOR}");
+        }
+        if (expContext().asDollars) {
+            format = substitute(format, "{BALANCE}", "{DOLLARS}");
+            format = substitute(format, "{PRIORBALANCE}", "{DOLLARSPRIOR}");
+        }
+        expContext().fmtMap["balancerecord_fmt"] = cleanFmt(format, exportFmt);
     }
 
+    expContext().fmtMap["header"] = "";
     if (!noHeader) {
         if (doTraces) {
             expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["trace_fmt"], exportFmt);
-        } else if (doLogs)
+        } else if (doLogs) {
             expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["logentry_fmt"], exportFmt);
-        else
+        } else if (doBalances) {
+            expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["balancerecord_fmt"], exportFmt);
+            SHOW_FIELD(CBalanceRecord, "address");
+        } else {
             expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["transaction_fmt"], exportFmt);
+        }
     }
+
+    if (freshenOnly)
+        exportFmt = NONE1;
 
     return true;
 }
@@ -252,6 +275,7 @@ void COptions::Init(void) {
     articulate = false;
     doLogs = false;
     doTraces = false;
+    doBalances = false;
     doABIs = false;
     freshenOnly = false;
     scanRange.second = getLastBlock_cache_ripe();
@@ -287,9 +311,9 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
 }
 
 //-----------------------------------------------------------------------
-bool COptions::loadMonitorData(CAppearanceArray_base& apps, const address_t& addr) {
+bool COptions::loadOneAddress(CAppearanceArray_base& apps, const address_t& addr) {
 
-    ENTER("loadMonitorData");
+    ENTER("loadOneAddress");
     string_q fn = getMonitorPath(addr);
 
     size_t nRecords = (fileSize(fn) / sizeof(CAppearance_base));
@@ -329,13 +353,13 @@ bool COptions::loadMonitorData(CAppearanceArray_base& apps, const address_t& add
 }
 
 //-----------------------------------------------------------------------
-bool COptions::loadData(void) {
+bool COptions::loadAllAppearances(void) {
 
-    ENTER("loadData");
+    ENTER("loadAllAppearances");
 
     CAppearanceArray_base tmp;
     for (auto monitor : monitors) {
-        if (!loadMonitorData(tmp, monitor.address))
+        if (!loadOneAddress(tmp, monitor.address))
             EXIT_FAIL("Could not load data.");
         if (freshenOnly) {
             // If we're freshening...
@@ -450,6 +474,14 @@ const char* STR_TRACE_DISPLAY =
 "[{COMPRESSEDTRACE}]\t"
 "[{RESULT::OUTPUT}]";
 
+//--------------------------------------------------------------------------------
+const char* STR_BALRECORD_DISPLAY =
+"[{ADDRESS}]\t"
+"[{BLOCKNUM}]\t"
+"[{TX_ID}]\t"
+"[{PRIORBALANCE}]\t"
+"[{BALANCE}]";
+
 /*
  "[{BLOCKHASH}]\t"
  "[{BLOCKNUMBER}]\t"
@@ -476,60 +508,3 @@ const char* STR_TRACE_DISPLAY =
  "[{RESULT::GASUSED}]\t"
  "[{RESULT::OUTPUT}]";
  */
-
-
-#if 0
-#error
-//------------------------------------------------------------------------------------------------
-bool COptions::handle_balances(void) {
-
-    ENTER4("handle_" + mode);
-    nodeRequired();
-    //if (!nodeHasBalances())
-    //    EXIT_USAGE("This function requires an Ethereum archive node to work.");
-
-    if (addrs.empty())
-        EXIT_USAGE("This function requires an address.");
-
-    if (!freshen_internal(FM_PRODUCTION, addrs, "", freshen_flags))
-        EXIT_FAIL("'chifra export' freshen_internal returned false");
-
-    for (auto addr : addrs) {
-        ostringstream os;
-        if (getGlobalConfig("chifra")->getConfigBool("api", "remote_bals", false)) {
-            string_q cmd = "/Users/jrush/src.GitHub/trueblocks-core/build/get_balances.sh " + addr;
-            if (system(cmd.c_str())) { }  // Don't remove. Silences compiler warnings
-//            cout << "/Users/jrush/Desktop/files/" + addr + ".bals.txt";
-
-        } else
-          {
-            string_q fn = "/tmp/results";
-            os << "cacheMan " << " -d " << addr << " >" + fn + " ; ";
-            LOG1("Calling " + os.str());
-            if (isTestMode())
-                cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
-            else
-                if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
-
-            CStringArray inLines;
-            asciiFileToLines(fn, inLines);
-            for (auto line : inLines) {
-                CUintArray parts;
-                explode(parts, line, '\t');
-                cout << addr << "\t";
-                cout << parts[0] << "\t";
-                cout << parts[1] << "\t";
-                if (parts[0] > 0)
-                    cout << wei_2_Ether(bnu_2_Str(getBalanceAt(addr, parts[0]-1))) << "\t";
-                else
-                    cout << wei_2_Ether("0") << "\t";
-                cout << wei_2_Ether(bnu_2_Str(getBalanceAt(addr, parts[0])));
-                cout << endl;
-            }
-            ::remove(fn.c_str());
-        }
-    }
-
-    EXIT_NOMSG4(true);
-}
-#endif
