@@ -7,15 +7,6 @@ namespace qblocks {
 #define N_RAND_ADDR ((120000)-1)
 #define MAX_INSERTS 50000
 #define N_BYTES (1048576 / 8)
-#define K 10
-#define NIBBLE_WID 8
-
-//#define N_RAND_ADDR (5000)
-//#define MAX_INSERTS 30000
-//#define N_BYTES (1048576 / 8 / 2 / 2)
-//#define K 10
-//#define NIBBLE_WID 8
-#define N_TESTS (3500/2)
 
 //---------------------------------------------------------------------------
 class bloom_nt {

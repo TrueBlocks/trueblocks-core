@@ -22,6 +22,7 @@ address_t randomAddress(void) {
     return bytes_2_Addr(bytes);
 }
 
+#define N_TESTS (3500/2)
 //----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 

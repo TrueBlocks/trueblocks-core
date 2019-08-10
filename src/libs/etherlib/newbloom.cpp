@@ -14,6 +14,9 @@
 
 namespace qblocks {
 
+#define K 10
+#define NIBBLE_WID 8
+
 //---------------------------------------------------------------------------
 size_t bloom_nt::nBitsHit(void) const {
     size_t cnt = 0;
