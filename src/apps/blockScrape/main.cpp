@@ -53,21 +53,16 @@ bool COptions::handle_scrape(void) {
         return false;
     }
 
-    // A few overrides on nBlocks to speed things up...
-    if (startBlock < 450000) {
-        nBlocks = max((blknum_t)4000, nBlocks);
+    // Docker will kill blaze if it uses too many resources...
+    if (getEnvStr("DOCKER_MODE") != "true") {
+        // ...so we only override on nBlocks to speed things up if not docker...
+        if (startBlock < 450000) {
+            nBlocks = max((blknum_t)4000, nBlocks);
 
-        // ...or slow things down...
-    } else if (ddosRange(startBlock)) {
-        nBlocks = 200;
-    }
-
-    // Docker will kill blaze if it uses too many resources, so we need to seriously dial it down
-    if (getEnvStr("DOCKER_MODE") == "true") {
-        // ...slow things down for docker
-        nBlocks = 40;
-        nBlockProcs = 3;
-        nAddrProcs = 6;
+        } else if (ddosRange(startBlock)) {
+            // ...or slow things down...
+            nBlocks = 200;
+        }
     }
 
     // If a block is more than 28 blocks from the head we consider it 'ripe.' Once a block
