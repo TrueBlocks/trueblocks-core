@@ -22,6 +22,7 @@ static const COption params[] = {
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_FLAG, "export format (one of [json*|txt|csv])"),
     COption("skip", "k", "", OPT_HIDDEN | OPT_SWITCH, "skip value for testing"),
     COption("start", "s", "<blknum>", OPT_HIDDEN | OPT_FLAG, "un-used hidden value - do not remove"),
+    COption("noHeader", "o", "", OPT_HIDDEN | OPT_SWITCH, "do not show header row of data"),
     COption("", "", "", 0, "Show the contents of an account cache and/or fix it by removing duplicate records.\n"),
 // END_CODE_OPTIONS
 };
@@ -108,6 +109,9 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-d" || arg == "--data") {
             asData = true;
             colorsOff();
+
+        } else if (arg == "-o" || arg == "--noHeader") {
+            // do nothing
 
         } else if (startsWith(arg, "-k:") || startsWith(arg, "--skip:")) {
             string_q arg1 = substitute(substitute(arg, "-k:", ""), "--skip:", "");
