@@ -114,9 +114,16 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOn(OPT_RUNONCE | OPT_PREFUND);
 
-    nBlockProcs = NOPOS;
-    nAddrProcs  = NOPOS;
-    nBlocks     = NOPOS;
+    if (getEnvStr("DOCKER_MODE") == "true") {
+        nBlocks     = 100;
+        nBlockProcs = 5;
+        nAddrProcs  = 10;
+    } else {
+        nBlocks     = NOPOS;
+        nBlockProcs = NOPOS;
+        nAddrProcs  = NOPOS;
+    }
+
     minArgs     = 0;
 }
 
