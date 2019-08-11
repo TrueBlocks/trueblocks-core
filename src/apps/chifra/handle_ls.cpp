@@ -43,21 +43,21 @@ bool COptions::handle_status(void) {
         if (endsWith(file, ".acct.bin")) {
             replace(file, getMonitorPath(""), "");
             CAccountName item;
-            item.addr = nextTokenClear(file, '.');
-            getNamedAccount(item, item.addr);
+            item.address = nextTokenClear(file, '.');
+            getNamedAccount(item, item.address);
             item.name = substitute(substitute(item.name, "(", ""), ")", "");
-            item.fn = substitute(getMonitorPath(item.addr), getCachePath(""), "./");
-            item.size = fileSize(getMonitorPath(item.addr));
-            item.lb = str_2_Uint(asciiFileToString(getMonitorLast(item.addr)));
-            item.le = str_2_Uint(asciiFileToString(getMonitorExpt(item.addr)));
-            item.nrecs = fileSize(getMonitorPath(item.addr)) / sizeof(CAppearance_base);
+            item.path = substitute(getMonitorPath(item.address), getCachePath(""), "./");
+            item.sizeInBytes = fileSize(getMonitorPath(item.address));
+            item.lastAppearance = str_2_Uint(asciiFileToString(getMonitorLast(item.address)));
+            item.lastExport = str_2_Uint(asciiFileToString(getMonitorExpt(item.address)));
+            item.nRecords = fileSize(getMonitorPath(item.address)) / sizeof(CAppearance_base);
             accounts.push_back(item);
         }
     }
     if (accounts.size() == 0) {
         if (api_mode) {
             CAccountName item;
-            item.addr = "0x0";
+            item.address = "0x0";
             item.name = "none";
             accounts.push_back(item);
         } else {
@@ -68,11 +68,11 @@ bool COptions::handle_status(void) {
     sort(accounts.begin(), accounts.end());
 
     if (api_mode) {
-        SHOW_FIELD(CAccountName, "fn");
-        SHOW_FIELD(CAccountName, "size");
-        SHOW_FIELD(CAccountName, "lb");
-        SHOW_FIELD(CAccountName, "le");
-        SHOW_FIELD(CAccountName, "nrecs");
+        SHOW_FIELD(CAccountName, "path");
+        SHOW_FIELD(CAccountName, "sizeInBytes");
+        SHOW_FIELD(CAccountName, "lastAppearance");
+        SHOW_FIELD(CAccountName, "lastExport");
+        SHOW_FIELD(CAccountName, "nRecords");
         ostringstream oss;
         if (accounts.size() > 1)
             oss << "[";
@@ -80,7 +80,7 @@ bool COptions::handle_status(void) {
         for (auto acct : accounts) {
             if (!first)
                 oss << ",";
-            oss << acct;
+            oss << acct.Format();
             first = false;
         }
         if (accounts.size() > 1)
@@ -92,13 +92,13 @@ bool COptions::handle_status(void) {
     if (stats) {
         for (auto acct : accounts) {
             string_q fmt =
-                "[Address:  -c1-{ADDR}-off-\n]"
+                "[Address:  -c1-{ADDRESS}-off-\n]"
                 "[\tName:        -c2-{NAME}-off-\n]"
-                "[\tFile name:   -c2-{FN}-off-\n]"
-                "[\tFile size:   -c2-{SIZE}-off-\n]"
-                "[\tLast block:  -c2-{LB}-off-\n]"
-                "[\tLast export: -c2-{LE}-off-\n]"
-                "[\tnRecords:    -c2-{NRECS}-off-\n]";
+                "[\tFile name:   -c2-{PATH}-off-\n]"
+                "[\tFile size:   -c2-{SIZEINBYTES}-off-\n]"
+                "[\tLast block:  -c2-{LASTAPPEARANCE}-off-\n]"
+                "[\tLast export: -c2-{LASTEXPORT}-off-\n]"
+                "[\tnRecords:    -c2-{NRECORDS}-off-\n]";
             replaceAll(fmt, "-c1-", cTeal);
             replaceAll(fmt, "-c2-", cYellow);
             replaceAll(fmt, "-off-", cOff);
@@ -132,7 +132,7 @@ bool COptions::handle_status(void) {
             string_q name = acct.name;
             if (!name.empty())
                 name = "(" + name.substr(0,20) + ") ";
-            os << " " << cTeal << acct.addr << " " << padRight(name, longest);
+            os << " " << cTeal << acct.address << " " << padRight(name, longest);
             if (!(++cnt % ncols))
                 os << endl;
         }

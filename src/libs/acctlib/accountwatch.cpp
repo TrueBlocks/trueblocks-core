@@ -87,11 +87,11 @@ bool CAccountWatch::setValueByName(const string_q& fieldNameIn, const string_q& 
             if ( fieldName % "enabled" ) { enabled = str_2_Bool(fieldValue); return true; }
             break;
         case 'f':
-            if ( fieldName % "firstBlock" ) { firstBlock = str_2_Uint(fieldValue); return true; }
+            if ( fieldName % "firstAppearance" ) { firstAppearance = str_2_Uint(fieldValue); return true; }
 //            if ( fieldName % "fm_mode" ) { fm_mode = fieldValue; return true; }
             break;
         case 'l':
-            if ( fieldName % "lastBlock" ) { lastBlock = str_2_Uint(fieldValue); return true; }
+            if ( fieldName % "lastAppearance" ) { lastAppearance = str_2_Uint(fieldValue); return true; }
             break;
         case 'n':
             if ( fieldName % "name" ) { name = fieldValue; return true; }
@@ -140,8 +140,8 @@ bool CAccountWatch::Serialize(CArchive& archive) {
     archive >> address;
     archive >> name;
     archive >> color;
-    archive >> firstBlock;
-    archive >> lastBlock;
+    archive >> firstAppearance;
+    archive >> lastAppearance;
     archive >> statement;
     archive >> stateHistory;
     archive >> nodeBal;
@@ -163,8 +163,8 @@ bool CAccountWatch::SerializeC(CArchive& archive) const {
     archive << address;
     archive << name;
     archive << color;
-    archive << firstBlock;
-    archive << lastBlock;
+    archive << firstAppearance;
+    archive << lastAppearance;
     archive << statement;
     archive << stateHistory;
     archive << nodeBal;
@@ -209,8 +209,8 @@ void CAccountWatch::registerClass(void) {
     ADD_FIELD(CAccountWatch, "address", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CAccountWatch, "name", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountWatch, "color", T_TEXT, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "firstBlock", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "lastBlock", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CAccountWatch, "firstAppearance", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CAccountWatch, "lastAppearance", T_NUMBER, ++fieldNum);
     ADD_FIELD(CAccountWatch, "statement", T_OBJECT, ++fieldNum);
     ADD_FIELD(CAccountWatch, "stateHistory", T_OBJECT|TS_ARRAY, ++fieldNum);
     ADD_FIELD(CAccountWatch, "nodeBal", T_WEI, ++fieldNum);
@@ -285,11 +285,11 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "enabled" ) return bool_2_Str(enabled);
             break;
         case 'f':
-            if ( fieldName % "firstBlock" ) return uint_2_Str(firstBlock);
+            if ( fieldName % "firstAppearance" ) return uint_2_Str(firstAppearance);
 //            if ( fieldName % "fm_mode" ) return fm_mode;
             break;
         case 'l':
-            if ( fieldName % "lastBlock" ) return uint_2_Str(lastBlock);
+            if ( fieldName % "lastAppearance" ) return uint_2_Str(lastAppearance);
             break;
         case 'n':
             if ( fieldName % "name" ) return name;

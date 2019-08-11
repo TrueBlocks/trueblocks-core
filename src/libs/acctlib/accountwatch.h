@@ -26,18 +26,13 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CAccountWatch : public CBaseNode {
+class CAccountWatch : public CAccountName {
 public:
-    address_t address;
-    string_q name;
-    string_q color;
-    blknum_t firstBlock;
-    blknum_t lastBlock;
+    CAbi abi_spec;
     CIncomeStatement statement;
     CEthStateArray stateHistory;
     wei_t nodeBal;
     bool enabled;
-    CAbi abi_spec;
     freshen_t fm_mode;
 
 public:
@@ -100,8 +95,8 @@ inline CAccountWatch::CAccountWatch(const string_q& _addr, const string_q& _name
     address = toLower(_addr);
     name = _name;
     color = _color;
-    firstBlock = fB;
-    lastBlock = lB;
+    firstAppearance = fB;
+    lastAppearance = lB;
 }
 
 //--------------------------------------------------------------------------
@@ -110,8 +105,8 @@ inline CAccountWatch::CAccountWatch(const address_t& _addr, const string_q& _nam
     address = toLower(_addr);
     name = _name;
     color = cBlue;
-    firstBlock = 0;
-    lastBlock = 0;
+    firstAppearance = 0;
+    lastAppearance = 0;
 }
 // EXISTING_CODE
 
@@ -140,8 +135,8 @@ inline void CAccountWatch::initialize(void) {
     address = "";
     name = "";
     color = "";
-    firstBlock = 0;
-    lastBlock = 0;
+    firstAppearance = 0;
+    lastAppearance = 0;
     statement = CIncomeStatement();
     stateHistory.clear();
     nodeBal = 0;
@@ -150,7 +145,7 @@ inline void CAccountWatch::initialize(void) {
     fm_mode = FM_PRODUCTION;
 
     // EXISTING_CODE
-    lastBlock = UINT_MAX;
+    lastAppearance = UINT_MAX;
     bloom = 0;
     inBlock = false;
     tx_cache = NULL;
@@ -166,8 +161,8 @@ inline void CAccountWatch::duplicate(const CAccountWatch& ac) {
     address = ac.address;
     name = ac.name;
     color = ac.color;
-    firstBlock = ac.firstBlock;
-    lastBlock = ac.lastBlock;
+    firstAppearance = ac.firstAppearance;
+    lastAppearance = ac.lastAppearance;
     statement = ac.statement;
     stateHistory = ac.stateHistory;
     nodeBal = ac.nodeBal;
@@ -176,7 +171,7 @@ inline void CAccountWatch::duplicate(const CAccountWatch& ac) {
     fm_mode = ac.fm_mode;
 
     // EXISTING_CODE
-    lastBlock = ac.lastBlock;
+    lastAppearance = ac.lastAppearance;
     bloom = ac.bloom;
     inBlock = ac.inBlock;
     tx_cache = NULL; // we do not copy the tx_cache

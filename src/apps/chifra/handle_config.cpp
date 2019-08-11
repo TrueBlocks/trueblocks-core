@@ -57,7 +57,7 @@ uint64_t nColors = sizeof(colors) / sizeof(string_q);
 
 //----------------------------------------------------------------
 const char* STR_WATCH =
-"    { address = \"{ADDR}\", name = \"{NAME}\", firstBlock = {FB}, color = \"{COLOR}\" },\n";
+"    { address = \"{ADDRESS}\", name = \"{NAME}\", firstBlock = {FB}, color = \"{COLOR}\" },\n";
 
 //----------------------------------------------------------------
 bool COptions::createConfigFile(const address_t& addr) {
@@ -75,7 +75,7 @@ bool COptions::createConfigFile(const address_t& addr) {
 
     LOG_INFO("\tAdding monitor for address: " + addr);
     string_q watch = STR_WATCH;
-    replaceAll(watch, "{ADDR}",  addr);
+    replaceAll(watch, "{ADDRESS}",  addr);
     replaceAll(watch, "{NAME}",  name);
     replaceAll(watch, "{FB}",    uint_2_Str(0));
     time_q now = Now();
