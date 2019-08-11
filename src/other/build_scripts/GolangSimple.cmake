@@ -21,7 +21,7 @@ function(ADD_GO_INSTALLABLE_PROGRAM NAME MAIN_SRC)
   # endforeach()
   add_custom_target(${NAME}_all ALL DEPENDS ${NAME})
 
-  install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/${NAME} DESTINATION bin)
+  install(PROGRAMS ${CMAKE_SOURCE_DIR}/../bin/${NAME} DESTINATION bin)
 endfunction(ADD_GO_INSTALLABLE_PROGRAM)
 
 #"${CMAKE_CURRENT_BINARY_DIR}/../../../bin/${NAME}"
