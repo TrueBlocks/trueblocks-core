@@ -74,8 +74,8 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-a" || arg == "--addr") {
             noHeader = true;
-            format = "[{ADDR}]";
-            searchFields = "[{ADDR}]\t[{NAME}]";
+            format = "[{ADDRESS}]";
+            searchFields = "[{ADDRESS}]\t[{NAME}]";
 
         } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
@@ -174,13 +174,13 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
 
 //-----------------------------------------------------------------------
 bool COptions::addIfUnique(const CAccountName& item) {
-    if (isZeroAddr(item.addr))
+    if (isZeroAddr(item.address))
         return false;
 
-    address_t l = toLower(item.addr);
-    if (items[l].addr == l) {
-        if (!item.name.empty() && (items[l].name != item.name || startsWith(items[l].name, "Owned_") || startsWith(items[l].name, "Prefund_"))) // last in wins
-            items[l].name = item.name;
+    address_t key = toLower(item.address);
+    if (items[key].address == key) {
+        if (!item.name.empty() && (items[kay].name != item.name || startsWith(items[key].name, "Owned_") || startsWith(items[key].name, "Prefund_"))) // last in wins
+            items[key].name = item.name;
         return false;
     }
 
@@ -199,10 +199,10 @@ bool COptions::addIfUnique(const CAccountName& item) {
     if ((search1.empty() || search1 == "*" || contains(str, search1)) &&
         (search2.empty() || search2 == "*" || contains(str, search2)) &&
         (search3.empty() || search3 == "*" || contains(str, search3))) {
-        items[l] = item;
+        items[key] = item;
         return true;
     }
-    items.erase(l);
+    items.erase(key);
     return false;
 }
 
@@ -214,7 +214,7 @@ void COptions::applyFilter() {
         if (isTestMode()) {
             for (uint32_t i = 1 ; i < 5 ; i++) {
                 CAccountName item;
-                item.addr = "0x000000000000000000000000000000000000000" + uint_2_Str(i);
+                item.address = "0x000000000000000000000000000000000000000" + uint_2_Str(i);
                 addIfUnique(item);
             }
         } else {
@@ -233,7 +233,7 @@ void COptions::applyFilter() {
         if (isTestMode()) {
             for (uint32_t i = 1 ; i < 5 ; i++) {
                 CAccountName item;
-                item.addr = "0x000000000000000000000000000000000000000" + uint_2_Str(i);
+                item.address = "0x000000000000000000000000000000000000000" + uint_2_Str(i);
                 item.name = "Account_" + uint_2_Str(i);
                 if (!(i%2))
                     item.symbol = "AC_" + uint_2_Str(i);
@@ -272,7 +272,7 @@ void COptions::applyFilter() {
         string_q contents = asciiFileToString("../src/tools/getAccounts/tests/other_names.txt");
         if (!contents.empty()) {
             CStringArray fields;
-            fields.push_back("addr");
+            fields.push_back("address");
             fields.push_back("name");
             fields.push_back("source");
             CAccountName item;
@@ -286,14 +286,14 @@ void COptions::applyFilter() {
 
 //-----------------------------------------------------------------------
 const char* STR_DISPLAY =
-"[{ADDR}]\t"
+"[{ADDRESS}]\t"
 "[{NAME}]\t"
 "[{SYMBOL}]";
 
 //-----------------------------------------------------------------------
 const char* STR_DISPLAY_ALL =
 "[{GROUP}]\t"
-"[{ADDR}]\t"
+"[{ADDRESS}]\t"
 "[{NAME}]\t"
 "[{SYMBOL}]\t"
 "[{SOURCE}]\t"

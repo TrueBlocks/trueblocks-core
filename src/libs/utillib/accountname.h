@@ -28,20 +28,22 @@ namespace qblocks {
 class CAccountName : public CBaseNode {
 public:
     string_q group;
-    string_q addr;
-    string_q symbol;
     string_q name;
-    string_q source;
+    string_q address;
+    string_q symbol;
     string_q description;
+    string_q source;
     string_q logo;
-    bool isContract;
-    bool custom;
-    string_q shared;
-    string_q fn;
-    double size;
-    blknum_t lb;
-    blknum_t le;
-    uint64_t nrecs;
+    string_q path;
+    string_q color;
+    bool is_contract;
+    bool is_custom;
+    bool is_shared;
+    blknum_t firstAppearance;
+    blknum_t lastAppearance;
+    blknum_t lastExport;
+    uint64_t nRecords;
+    uint64_t sizeInBytes;
 
 public:
     CAccountName(void);
@@ -104,20 +106,22 @@ inline void CAccountName::initialize(void) {
     CBaseNode::initialize();
 
     group = "";
-    addr = "";
-    symbol = "";
     name = "";
-    source = "";
+    address = "";
+    symbol = "";
     description = "";
+    source = "";
     logo = "";
-    isContract = 0;
-    custom = 0;
-    shared = "";
-    fn = "";
-    size = 0.0;
-    lb = 0;
-    le = 0;
-    nrecs = 0;
+    path = "";
+    color = "";
+    is_contract = 0;
+    is_custom = 0;
+    is_shared = 0;
+    firstAppearance = 0;
+    lastAppearance = 0;
+    lastExport = 0;
+    nRecords = 0;
+    sizeInBytes = 0;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -129,20 +133,22 @@ inline void CAccountName::duplicate(const CAccountName& ac) {
     CBaseNode::duplicate(ac);
 
     group = ac.group;
-    addr = ac.addr;
-    symbol = ac.symbol;
     name = ac.name;
-    source = ac.source;
+    address = ac.address;
+    symbol = ac.symbol;
     description = ac.description;
+    source = ac.source;
     logo = ac.logo;
-    isContract = ac.isContract;
-    custom = ac.custom;
-    shared = ac.shared;
-    fn = ac.fn;
-    size = ac.size;
-    lb = ac.lb;
-    le = ac.le;
-    nrecs = ac.nrecs;
+    path = ac.path;
+    color = ac.color;
+    is_contract = ac.is_contract;
+    is_custom = ac.is_custom;
+    is_shared = ac.is_shared;
+    firstAppearance = ac.firstAppearance;
+    lastAppearance = ac.lastAppearance;
+    lastExport = ac.lastExport;
+    nRecords = ac.nRecords;
+    sizeInBytes = ac.sizeInBytes;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -167,7 +173,7 @@ inline bool CAccountName::operator==(const CAccountName& item) const {
 //-------------------------------------------------------------------------
 inline bool operator<(const CAccountName& v1, const CAccountName& v2) {
     // EXISTING_CODE
-    return v1.addr < v2.addr;
+    return v1.address < v2.address;
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;

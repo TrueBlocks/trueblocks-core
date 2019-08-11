@@ -189,7 +189,7 @@ void COptions::handle_generate(void) {
     string_q parseInit = "parselib_init(QUITHANDLER qh)";
     if (!isBuiltIn())
         replaceAll(headerCode, "[{PREFIX}]_init(void)", parseInit);
-    //replaceAll(headerCode, "[{ADDR}]", substitute(primaryAddr, "0x", ""));
+    //replaceAll(headerCode, "[{ADDRESS}]", substitute(primaryAddr, "0x", ""));
     replaceAll(headerCode, "[{HEADER_SIGS}]", isBuiltIn() ? "" : STR_HEADER_SIGS);
     replaceAll(headerCode, "[{PREFIX}]", toLower(prefix));
     string_q pprefix = (isBuiltIn() ? substitute(toProper(prefix), "lib", "") : "Func");
@@ -233,7 +233,7 @@ void COptions::handle_generate(void) {
     }
     replace(sourceCode, "[{BLKPATH}]", isBuiltIn() ? "" : STR_BLOCK_PATH);
     replaceAll(sourceCode, "[{CODE_SIGS}]", (isBuiltIn() ? "" : STR_CODE_SIGS));
-    //replaceAll(sourceCode, "[{ADDR}]", substitute(primaryAddr, "0x", ""));
+    //replaceAll(sourceCode, "[{ADDRESS}]", substitute(primaryAddr, "0x", ""));
     replaceAll(sourceCode, "[{ABI}]", ""); //theABI);
     replaceAll(sourceCode, "[{REGISTERS}]", registers);
     string_q chainInit = (isToken() ?
