@@ -1,0 +1,7 @@
+[settings]
+class     = CPriceCache
+baseClass = CCache
+fields    = CPriceCacheItemArray pairs
+includes  = cache.h|pricecacheitem.h
+cIncs     = 
+serialize = true

@@ -1,0 +1,7 @@
+[settings]
+class     = CSlurpCache
+baseClass = CCache
+fields    = CMonitorCacheItemArray monitors
+includes  = cache.h|monitorcacheitem.h
+cIncs     = 
+serialize = true
