@@ -1,0 +1,146 @@
+#pragma once
+/*-------------------------------------------------------------------------------------------
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ *
+ * This program is free software: you may redistribute it and/or modify it under the terms
+ * of the GNU General Public License as published by the Free Software Foundation, either
+ * version 3 of the License, or (at your option) any later version. This program is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details. You should have received a copy of the GNU General
+ * Public License along with this program. If not, see http://www.gnu.org/licenses/.
+ *-------------------------------------------------------------------------------------------*/
+/*
+ * This file was generated with makeClass. Edit only those parts of the code inside
+ * of 'EXISTING_CODE' tags.
+ */
+#include "cache.h"
+#include "monitorcacheitem.h"
+
+namespace qblocks {
+
+// EXISTING_CODE
+// EXISTING_CODE
+
+//--------------------------------------------------------------------------
+class CSlurpCache : public CCache {
+public:
+    CMonitorCacheItemArray monitors;
+
+public:
+    CSlurpCache(void);
+    CSlurpCache(const CSlurpCache& sl);
+    virtual ~CSlurpCache(void);
+    CSlurpCache& operator=(const CSlurpCache& sl);
+
+    DECLARE_NODE(CSlurpCache);
+
+    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+    bool operator==(const CSlurpCache& item) const;
+    bool operator!=(const CSlurpCache& item) const { return !operator==(item); }
+    friend bool operator<(const CSlurpCache& v1, const CSlurpCache& v2);
+    friend ostream& operator<<(ostream& os, const CSlurpCache& item);
+
+protected:
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CSlurpCache& sl);
+    bool readBackLevel(CArchive& archive) override;
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+};
+
+//--------------------------------------------------------------------------
+inline CSlurpCache::CSlurpCache(void) {
+    initialize();
+    // EXISTING_CODE
+    // EXISTING_CODE
+}
+
+//--------------------------------------------------------------------------
+inline CSlurpCache::CSlurpCache(const CSlurpCache& sl) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    duplicate(sl);
+}
+
+// EXISTING_CODE
+// EXISTING_CODE
+
+//--------------------------------------------------------------------------
+inline CSlurpCache::~CSlurpCache(void) {
+    clear();
+    // EXISTING_CODE
+    // EXISTING_CODE
+}
+
+//--------------------------------------------------------------------------
+inline void CSlurpCache::clear(void) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+}
+
+//--------------------------------------------------------------------------
+inline void CSlurpCache::initialize(void) {
+    CCache::initialize();
+
+    monitors.clear();
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+}
+
+//--------------------------------------------------------------------------
+inline void CSlurpCache::duplicate(const CSlurpCache& sl) {
+    clear();
+    CCache::duplicate(sl);
+
+    monitors = sl.monitors;
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+}
+
+//--------------------------------------------------------------------------
+inline CSlurpCache& CSlurpCache::operator=(const CSlurpCache& sl) {
+    duplicate(sl);
+    // EXISTING_CODE
+    // EXISTING_CODE
+    return *this;
+}
+
+//-------------------------------------------------------------------------
+inline bool CSlurpCache::operator==(const CSlurpCache& item) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
+inline bool operator<(const CSlurpCache& v1, const CSlurpCache& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted, preserve ordering
+    return true;
+}
+
+//---------------------------------------------------------------------------
+typedef vector<CSlurpCache> CSlurpCacheArray;
+extern CArchive& operator>>(CArchive& archive, CSlurpCacheArray& array);
+extern CArchive& operator<<(CArchive& archive, const CSlurpCacheArray& array);
+
+//---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CSlurpCache& slu);
+extern CArchive& operator>>(CArchive& archive, CSlurpCache& slu);
+
+//---------------------------------------------------------------------------
+// EXISTING_CODE
+// EXISTING_CODE
+}  // namespace qblocks
+

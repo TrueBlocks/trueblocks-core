@@ -1,0 +1,7 @@
+[settings]
+class     = CChainCache
+baseClass = CCache
+fields    = string range|
+includes  = cache.h
+cIncs     = 
+serialize = true

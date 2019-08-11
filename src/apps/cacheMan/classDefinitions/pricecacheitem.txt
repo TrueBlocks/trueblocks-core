@@ -1,0 +1,6 @@
+[settings]
+class     = CPriceCacheItem
+fields    = string type|string pair|string range|uint64 nRecords|uint64 sizeInBytes
+includes  = etherlib.h
+cIncs     = 
+serialize = true
