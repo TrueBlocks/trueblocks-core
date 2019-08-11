@@ -1,6 +1,6 @@
 getAccounts argc: 3 [1:etwork] [2:-v] 
 getAccounts etwork -v 
-addr	name	symbol	source
+address	name	symbol	source
 0x08f5a9235b08173b7569f83645d2c7fb55e8ccd8	Tierion Network Token	TNT	Etherscan.io
 0x20f7a3ddf244dc9299975b4da1c39f8d5d75f05a	Sapien Network	SPN	Etherscan.io
 0x2233799ee2683d75dfefacbcd2a26c78d34b470d	Network	NTWK	Etherscan.io

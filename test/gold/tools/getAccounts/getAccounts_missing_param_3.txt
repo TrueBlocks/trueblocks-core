@@ -1,6 +1,6 @@
 getAccounts argc: 2 [1:-v] 
 getAccounts -v 
-addr	name	symbol	source
+address	name	symbol	source
 0x0000000000085d4780b73119b644ae5ecd22b376	TrueUSD	TUSD	Etherscan.io
 0x001f0aa5da15585e5b2305dbab2bac425ea71007	IPSX	IPSX	Etherscan.io
 0x006bea43baa3f7a6f765f14f10a1a1b08334ef45	Stox	STX	Etherscan.io
