@@ -136,9 +136,9 @@ bool CAccountName::Serialize(CArchive& archive) {
     archive >> logo;
 //    archive >> path;
 //    archive >> color;
-//    archive >> is_contract;
-//    archive >> is_custom;
-//    archive >> is_shared;
+    archive >> is_contract;
+    archive >> is_custom;
+    archive >> is_shared;
 //    archive >> firstAppearance;
 //    archive >> lastAppearance;
 //    archive >> lastExport;
@@ -165,9 +165,9 @@ bool CAccountName::SerializeC(CArchive& archive) const {
     archive << logo;
 //    archive << path;
 //    archive << color;
-//    archive << is_contract;
-//    archive << is_custom;
-//    archive << is_shared;
+    archive << is_contract;
+    archive << is_custom;
+    archive << is_shared;
 //    archive << firstAppearance;
 //    archive << lastAppearance;
 //    archive << lastExport;
@@ -220,11 +220,8 @@ void CAccountName::registerClass(void) {
     ADD_FIELD(CAccountName, "color", T_TEXT, ++fieldNum);
     HIDE_FIELD(CAccountName, "color");
     ADD_FIELD(CAccountName, "is_contract", T_BOOL, ++fieldNum);
-    HIDE_FIELD(CAccountName, "is_contract");
     ADD_FIELD(CAccountName, "is_custom", T_BOOL, ++fieldNum);
-    HIDE_FIELD(CAccountName, "is_custom");
     ADD_FIELD(CAccountName, "is_shared", T_BOOL, ++fieldNum);
-    HIDE_FIELD(CAccountName, "is_shared");
     ADD_FIELD(CAccountName, "firstAppearance", T_NUMBER, ++fieldNum);
     HIDE_FIELD(CAccountName, "firstAppearance");
     ADD_FIELD(CAccountName, "lastAppearance", T_NUMBER, ++fieldNum);
