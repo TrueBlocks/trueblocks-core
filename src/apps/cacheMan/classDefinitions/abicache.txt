@@ -1,0 +1,7 @@
+[settings]
+class     = CAbiCache
+baseClass = CCache
+fields    = 
+includes  = cache.h
+cIncs     = 
+serialize = true
