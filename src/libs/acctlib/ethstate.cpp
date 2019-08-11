@@ -301,8 +301,8 @@ ostream& operator<<(ostream& os, const CEthState& item) {
 wei_t getBalanceAt(const string_q& addr, blknum_t num) {
     if (num == NOPOS)
         num = getLastBlock_client();
-    string_q params = "[\"[{ADDR}]\",\"[{NUM}]\"]";
-    replace(params, "[{ADDR}]", str_2_Addr(addr));
+    string_q params = "[\"[{ADDRESS}]\",\"[{NUM}]\"]";
+    replace(params, "[{ADDRESS}]", str_2_Addr(addr));
     replace(params, "[{NUM}]",  uint_2_Hex(num));
     return str_2_Wei(callRPC("eth_getBalance", params, false));
 }
@@ -324,8 +324,8 @@ bool nodeHasBalances(void) {
 string_q getCodeAt(const string_q& addr, blknum_t num) {
     if (num == NOPOS)
         num = getLastBlock_client();
-    string_q params = "[\"[{ADDR}]\",\"[{NUM}]\"]";
-    replace(params, "[{ADDR}]", str_2_Addr(addr));
+    string_q params = "[\"[{ADDRESS}]\",\"[{NUM}]\"]";
+    replace(params, "[{ADDRESS}]", str_2_Addr(addr));
     replace(params, "[{NUM}]",  uint_2_Hex(num));
     return callRPC("eth_getCode", params, false);
 }
@@ -339,8 +339,8 @@ bool isContractAt(const address_t& addr, blknum_t num) {
 uint64_t getNonceAt(const address_t& addr, blknum_t num) {
     if (num == NOPOS)
         num = getLastBlock_client();
-    string_q params = "[\"[{ADDR}]\",\"[{NUM}]\"]";
-    replace(params, "[{ADDR}]", str_2_Addr(addr));
+    string_q params = "[\"[{ADDRESS}]\",\"[{NUM}]\"]";
+    replace(params, "[{ADDRESS}]", str_2_Addr(addr));
     replace(params, "[{NUM}]",  uint_2_Hex(num));
     return str_2_Uint(callRPC("eth_getTransactionCount", params, false));
 }
@@ -349,8 +349,8 @@ uint64_t getNonceAt(const address_t& addr, blknum_t num) {
 string_q getStorageAt(const string_q& addr, uint64_t pos, blknum_t num) {
     if (num == NOPOS)
         num = getLastBlock_client();
-    string_q params = "[\"[{ADDR}]\",\"[{POS}]\",\"[{NUM}]\"]";
-    replace(params, "[{ADDR}]", str_2_Addr(addr));
+    string_q params = "[\"[{ADDRESS}]\",\"[{POS}]\",\"[{NUM}]\"]";
+    replace(params, "[{ADDRESS}]", str_2_Addr(addr));
     replace(params, "[{POS}]",  uint_2_Hex(pos));
     replace(params, "[{NUM}]",  uint_2_Hex(num));
     return callRPC("eth_getStorageAt", params, false);

@@ -160,7 +160,7 @@ n,group,api_route,tool,order,command,command_short,data_type,option_kind,default
 160,apps,,chifra,,command,,enum[scrape|list|export|accounts|slurp|quotes|data|blocks|trans|receipts|logs|traces|state|abi|status|message|rm|config|leech|seed],positional,,one of [scrape|list|export|accounts|slurp|quotes|data|blocks|trans|receipts|logs|traces|state|abi|status|message|rm|config|leech|seed],,TRUE,TRUE,TRUE,TRUE,TRUE,
 161,apps,,chifra,,sleep,,<seconds>,flag,,"for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 0)",,TRUE,FALSE,TRUE,FALSE,TRUE,
 162,apps,,chifra,,,,,description,,Create a TrueBlocks monitor configuration.,,TRUE,FALSE,TRUE,FALSE,TRUE,
-162.1,apps,status,,,,,enum[scraper|daemon|names|abis|prices|cache|all*],,,report on the status of one of [scraper|daemon|names|abis|prices|cache|all*],,TRUE,TRUE,FALSE,FALSE,TRUE,
+162.1,apps,status,,,,,enum[scraper|daemon|names|abis|prices|cache|all*],,,report on the status of one of [scraper|daemon|names|abis|prices|cache|all*],,TRUE,TRUE,TRUE,FALSE,TRUE,
 162.1,apps,status,,,long,l,boolean,switch,,increase detail of status report,,TRUE,FALSE,FALSE,FALSE,TRUE,
 162.2,apps,message,,,bytes,b,string,positional,,convert the given bytes into an ascii string,,TRUE,FALSE,FALSE,FALSE,TRUE,
 162.3,apps,message,,,chars,c,string,positional,,convert the given string into bytes,,TRUE,FALSE,FALSE,FALSE,TRUE,

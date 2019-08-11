@@ -954,7 +954,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         }
 
         for (size_t i = 0 ; i < namedAccounts.size() ; i++) {
-            if (namedAccounts[i].addr % addr) {
+            if (namedAccounts[i].address % addr) {
                 acct = namedAccounts[i];
                 return true;
             }
@@ -965,8 +965,8 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     //-----------------------------------------------------------------------
     string_q COptionsBase::getNamedAccount(const string_q& addr) const {
         CAccountName item;
-        item.addr = addr;
-        getNamedAccount(item, item.addr);
+        item.address = addr;
+        getNamedAccount(item, item.address);
         return substitute(substitute(item.name, "(", ""), ")", "");
     }
 
@@ -1005,7 +1005,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         for (auto name : names) {
             if (!startsWith(name, "#") && !name.empty()) {
                 CAccountName account(name);
-                if (isAddress(account.addr))
+                if (isAddress(account.address))
                     namedAccounts.push_back(account);
             }
         }
