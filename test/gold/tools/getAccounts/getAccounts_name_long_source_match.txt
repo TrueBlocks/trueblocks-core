@@ -451,7 +451,7 @@ group	address	name	symbol	source	description	logo	is_contract	is_custom	is_share
 50-Tokens	0x818fc6c2ec5986bc6e2cbf00939d90556ab12ce5	Kin	KIN	Etherscan.io	The vision for Kin is rooted in the belief that a broad group of participants can come together to create an open ecosystem of tools for digital communication and commerce that prioritizes consumer experience, bringing a fair and user-oriented model for digital services to the market.	kin_28_3.png	true	false	true
 50-Tokens	0x81b4d08645da11374a03749ab170836e4e539767	Paymon	PMNT	Etherscan.io	Blockchain platform that includes several innovative products.	paymon_28.png	true	false	true
 50-Tokens	0x81c9151de0c8bafcd325a57e3db5a5df1cebf79c	Datum	DAT	Etherscan.io	Datum is the decentralized marketplace for social and IoT data.	datum.png	true	false	true
-50-Tokens	0x81e74a3ea4bab2277aa3b941e9d9f37b08ac5374	Ifoods Token	IFOOD	Etherscan.io	Make true eco for global foods	ifoods_28.png	true	false	true
+50-Tokens	0x81e74a3ea4bab2277aa3b941e9d9f37b08ac5374	Ifoods Token	IFOOD	Etherscan.io	Make shared eco for global foods	ifoods_28.png	true	false	true
 50-Tokens	0x82b0e50478eeafde392d45d1259ed1071b6fda81	DNA	DNA	Etherscan.io	Genomic Data Encryption.	encrypgen2_28.png	true	false	true
 50-Tokens	0x832904863978b94802123106e6eb491bdf0df928	OptiToken	OPTI	Etherscan.io	An algorithmically traded hyper-deflationary cryptocurrency	optitoken_28.png	true	false	true
 50-Tokens	0x83984d6142934bb535793a82adb0a46ef0f66b6d	REMME	REM	Etherscan.io	Distributed Public Key Infrastructure (PKI) protocol with a set of DApps to enable passwordless authentication	remme_28.png	true	false	true
@@ -482,7 +482,7 @@ group	address	name	symbol	source	description	logo	is_contract	is_custom	is_share
 50-Tokens	0x884181554dfa9e578d36379919c05c25dc4a15bb	Gene Source Code Chain	Gene	Etherscan.io	The distributed storage network blockchain system that provides genetic data and individual health data integrated interface.	gene_28.png	true	false	true
 50-Tokens	0x888666ca69e0f178ded6d75b5726cee99a87d698	ICONOMI	ICN	Etherscan.io	ICONOMI Digital Assets Management platform enables simple access to a variety of digital assets and combined Digital Asset Arrays	iconomi_28_2.png	true	false	true
 50-Tokens	0x88a3e4f35d64aad41a6d4030ac9afe4356cb84fa	Presearch	PRE	Etherscan.io	Presearch is a decentralized search engine, powered by the community.	presearchtoken_28.png	true	false	true
-50-Tokens	0x88d50b466be55222019d71f9e8fae17f5f45fca1	Cryptaur	CPT	Etherscan.io	Cryptaur is a decentralized applications store with a mission to transform and ultimately allow for the implementation of a reinvented true economic system.	cryptaur1_28.png	true	false	true
+50-Tokens	0x88d50b466be55222019d71f9e8fae17f5f45fca1	Cryptaur	CPT	Etherscan.io	Cryptaur is a decentralized applications store with a mission to transform and ultimately allow for the implementation of a reinvented shared economic system.	cryptaur1_28.png	true	false	true
 50-Tokens	0x88fcfbc22c6d3dbaa25af478c578978339bde77a	Katalyse	KAT	Etherscan.io	FundYourselfNow is a simple platform to allow project creators/promoters to raise funds for their projects using cryptocurrencies without the need of technical knowledge.	katalyse_28.png	true	false	true
 50-Tokens	0x89205a3a3b2a69de6dbf7f01ed13b2108b2c43e7	Unicorns Tokens	UNI	Ethereum.org	Ethereum tip jar unicorn tokens		true	false	true
 50-Tokens	0x89303500a7abfb178b274fd89f2469c264951e1f	RefToken	REF	Etherscan.io	Decentralized Affiliate platform	reftoken_28.png	true	false	true
