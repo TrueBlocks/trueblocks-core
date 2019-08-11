@@ -1000,16 +1000,16 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             cout << "Reading from text database\n";
 
         // Read the data from the names database and clean it up if needed
-        CStringArray names;
-        asciiFileToLines(textFile, names);
-        for (auto name : names) {
-            if (!startsWith(name, "#") && !name.empty()) {
-                CAccountName account(name);
+        CStringArray lines;
+        asciiFileToLines(textFile, lines);
+        for (auto line : lines) {
+            if (!startsWith(line, '#') && contains(line, "0x")) {
+                CAccountName account(line);
                 if (isAddress(account.address))
                     namedAccounts.push_back(account);
             }
         }
-        if (names.size() == 0) {
+        if (lines.size() == 0) {
             cerr << "Something went wrong loading names file. Quitting...";
             return false;
         }

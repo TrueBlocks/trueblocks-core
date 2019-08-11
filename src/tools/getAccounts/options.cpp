@@ -178,9 +178,11 @@ bool COptions::addIfUnique(const CAccountName& item) {
         return false;
 
     address_t key = toLower(item.address);
-    if (items[key].address == key) {
-        if (!item.name.empty() && (items[kay].name != item.name || startsWith(items[key].name, "Owned_") || startsWith(items[key].name, "Prefund_"))) // last in wins
+    if (items[key].address == key) {  // it's already in the map, but we want the last in name to win
+        if (!item.name.empty() &&
+            (items[key].name != item.name || startsWith(items[key].name, "Owned_") || startsWith(items[key].name, "Prefund_"))) {
             items[key].name = item.name;
+        }
         return false;
     }
 
@@ -299,6 +301,6 @@ const char* STR_DISPLAY_ALL =
 "[{SOURCE}]\t"
 "[{DESCRIPTION}]\t"
 "[{LOGO}]\t"
-"[{ISCONTRACT}]\t"
-"[{CUSTOM}]\t"
-"[{SHARED}]";
+"[{IS_CONTRACT}]\t"
+"[{IS_CUSTOM}]\t"
+"[{IS_SHARED}]";
