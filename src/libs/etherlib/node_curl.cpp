@@ -23,9 +23,6 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     CCurlContext::CCurlContext(void) {
         baseURL      = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
-//#error
-        if (baseURL.empty() && (getEnvStr("DOCKER_MODE") == "true"))
-            baseURL = "http:/""/my.ethchain.dnp.dappnode.eth:8545";
         callBackFunc = writeCallback;
         curlNoteFunc = NULL;
         theID        = 1;

@@ -134,6 +134,7 @@ n,group,api_route,tool,order,command,command_short,data_type,option_kind,default
 135,apps,,cacheMan,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format (one of [json*|txt|csv]),,TRUE,FALSE,FALSE,FALSE,FALSE,
 136,apps,,cacheMan,,skip,k,boolean,switch,,skip value for testing,,FALSE,FALSE,FALSE,FALSE,FALSE,
 137,apps,,cacheMan,,start,s,<blknum>,flag,,un-used hidden value - do not remove,,FALSE,FALSE,FALSE,FALSE,FALSE,
+137.1,apps,,cacheMan,,noHeader,o,boolean,switch,,do not show header row of data,,FALSE,FALSE,FALSE,FALSE,FALSE,
 138,apps,,cacheMan,,,,,description,,Show the contents of an account cache and/or fix it by removing duplicate records.\n,,TRUE,FALSE,FALSE,FALSE,FALSE,
 139,apps,scrape,blockScrape,,nBlocks,n,<blknum>,flag,,maximum number of blocks to process (defaults to 5000),,TRUE,FALSE,TRUE,FALSE,TRUE,
 140,apps,scrape,blockScrape,,nBlockProcs,b,<uint>,flag,,number of block channels for blaze,,FALSE,FALSE,FALSE,FALSE,FALSE,
