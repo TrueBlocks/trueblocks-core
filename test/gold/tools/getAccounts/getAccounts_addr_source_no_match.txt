@@ -1,4 +1,4 @@
 getAccounts argc: 4 [1:-v] [2:cbCD] [3:an.io] 
 getAccounts -v cbCD an.io 
-addr	name	symbol	source
+address	name	symbol	source
 0x2233799ee2683d75dfefacbcd2a26c78d34b470d	Network	NTWK	Etherscan.io

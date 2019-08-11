@@ -1,4 +1,4 @@
 getAccounts argc: 3 [1:-v] [2:torj] 
 getAccounts -v torj 
-addr	name	symbol	source
+address	name	symbol	source
 0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac	Storj	STORJ	Etherscan.io
