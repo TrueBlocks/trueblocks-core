@@ -1,4 +1,4 @@
 getAccounts argc: 2 [1:88897] 
 getAccounts 88897 
-addr	name	symbol
+address	name	symbol
 0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac	Storj	STORJ

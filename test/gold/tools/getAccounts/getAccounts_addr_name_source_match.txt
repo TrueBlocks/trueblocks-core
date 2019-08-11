@@ -1,4 +1,4 @@
 getAccounts argc: 7 [1:cbCC] [2:Humaniq] [3:Ether] [4:--fmt] [5:csv] [6:--expand] 
 getAccounts cbCC Humaniq Ether --fmt csv --expand 
-"group","addr","name","symbol","source","description","logo","iscontract","custom","shared"
-"50-Tokens","0xcbcc0f036ed4788f63fc0fee32873d6a7487b908","Humaniq","HMQ","Etherscan.io","Humaniq aims to be a simple and secure 4th generation mobile bank.","humaniq.png","true","false","shared"
+"group","address","name","symbol","source","description","logo","is_contract","is_custom","is_shared"
+"50-Tokens","0xcbcc0f036ed4788f63fc0fee32873d6a7487b908","Humaniq","HMQ","Etherscan.io","Humaniq aims to be a simple and secure 4th generation mobile bank.","humaniq.png","true","false","true"

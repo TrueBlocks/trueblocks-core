@@ -3,14 +3,14 @@ getAccounts -m * torj --fmt json
 [
   {
     "group": "50-Tokens",
-    "addr": "0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac",
-    "symbol": "STORJ",
     "name": "Storj",
-    "source": "Etherscan.io",
+    "address": "0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac",
+    "symbol": "STORJ",
     "description": "Blockchain-based, end-to-end encrypted, distributed object storage, where only you have access to your data",
+    "source": "Etherscan.io",
     "logo": "storj2.png",
-    "isContract": true,
-    "custom": false,
-    "shared": "shared"
+    "is_contract": true,
+    "is_custom": false,
+    "is_shared": true
   }
 ]

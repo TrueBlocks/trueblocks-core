@@ -1,6 +1,6 @@
 getAccounts argc: 6 [1:--named] [2:--custom] [3:--owned] [4:--fmt] [5:csv] 
 getAccounts --named --custom --owned --fmt csv 
-"addr","name","symbol"
+"address","name","symbol"
 "0x0000000000000000000000000000000000000001","Account_1",""
 "0x0000000000000000000000000000000000000002","Account_2",""
 "0x0000000000000000000000000000000000000003","Account_3",""

@@ -1,6 +1,6 @@
 getAccounts argc: 2 [1:--prefund] 
 getAccounts --prefund 
-addr	name	symbol
+address	name	symbol
 0x000d836201318ec6899a67540690382780743280	Prefund_0000
 0x001762430ea9c3a26e5749afdb70da5f78ddbb8c	Prefund_0001
 0x001d14804b399c6ef80e64576f657660804fec0b	Prefund_0002
