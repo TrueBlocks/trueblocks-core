@@ -1,5 +1,0 @@
-bloomMan argc: 5 [1:4001010-4001020] [2:-b] [3:5] [4:--stats] 
-bloomMan 4001010-4001020 -b 5 --stats 
-                                                                                bn	nVisits	nFiles	nEmpty	nBlooms	nBytes	nBits
-4001015	5	5	0	24	6376	4279
-4001020	5	5	0	23	6096	4043
