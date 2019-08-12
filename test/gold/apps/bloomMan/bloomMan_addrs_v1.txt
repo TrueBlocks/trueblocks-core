@@ -1,5 +1,0 @@
-bloomMan argc: 4 [1:4001001] [2:0xec513881d33cfec3a961e214f24be49b177b4578] [3:-v] 
-bloomMan 4001001 0xec513881d33cfec3a961e214f24be49b177b4578 -v 
-Checking: 4001001
-   address: 0xec513881d33cfec3a961e214f24be49b177b4578 X (miss) ✓ (hit) 
-

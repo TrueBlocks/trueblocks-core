@@ -1,8 +1,0 @@
-bloomMan argc: 3 [1:--raw] [2:3231401-3231402] 
-bloomMan --raw 3231401-3231402 
-getBloom argc: 3 [1:3231401] [2:--raw] 
-getBloom 3231401 --raw 
-{
-    "logsBloom": "0x0",
-    "number": "3231401"
-}
