@@ -20,7 +20,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CPriceCacheItem, CBaseNode);
+IMPLEMENT_NODE(CPriceCacheItem, CAccountName);
 
 //---------------------------------------------------------------------------
 static string_q nextPricecacheitemChunk(const string_q& fieldIn, const void *dataPtr);
@@ -63,18 +63,12 @@ bool CPriceCacheItem::setValueByName(const string_q& fieldNameIn, const string_q
     // EXISTING_CODE
     // EXISTING_CODE
 
+    if (CAccountName::setValueByName(fieldName, fieldValue))
+        return true;
+
     switch (tolower(fieldName[0])) {
-        case 'n':
-            if ( fieldName % "nRecords" ) { nRecords = str_2_Uint(fieldValue); return true; }
-            break;
         case 'p':
             if ( fieldName % "pair" ) { pair = fieldValue; return true; }
-            break;
-        case 'r':
-            if ( fieldName % "range" ) { range = fieldValue; return true; }
-            break;
-        case 's':
-            if ( fieldName % "sizeInBytes" ) { sizeInBytes = str_2_Uint(fieldValue); return true; }
             break;
         case 't':
             if ( fieldName % "type" ) { type = fieldValue; return true; }
@@ -99,7 +93,7 @@ bool CPriceCacheItem::Serialize(CArchive& archive) {
 
     // Always read the base class (it will handle its own backLevels if any, then
     // read this object's back level (if any) or the current version.
-    CBaseNode::Serialize(archive);
+    CAccountName::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -107,9 +101,6 @@ bool CPriceCacheItem::Serialize(CArchive& archive) {
     // EXISTING_CODE
     archive >> type;
     archive >> pair;
-    archive >> range;
-    archive >> nRecords;
-    archive >> sizeInBytes;
     finishParse();
     return true;
 }
@@ -118,15 +109,12 @@ bool CPriceCacheItem::Serialize(CArchive& archive) {
 bool CPriceCacheItem::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
-    CBaseNode::SerializeC(archive);
+    CAccountName::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
     archive << type;
     archive << pair;
-    archive << range;
-    archive << nRecords;
-    archive << sizeInBytes;
 
     return true;
 }
@@ -157,6 +145,8 @@ void CPriceCacheItem::registerClass(void) {
     // only do this once
     if (HAS_FIELD(CPriceCacheItem, "schema")) return;
 
+    CAccountName::registerClass();
+
     size_t fieldNum = 1000;
     ADD_FIELD(CPriceCacheItem, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CPriceCacheItem, "deleted", T_BOOL,  ++fieldNum);
@@ -164,9 +154,6 @@ void CPriceCacheItem::registerClass(void) {
     ADD_FIELD(CPriceCacheItem, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CPriceCacheItem, "type", T_TEXT, ++fieldNum);
     ADD_FIELD(CPriceCacheItem, "pair", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPriceCacheItem, "range", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPriceCacheItem, "nRecords", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CPriceCacheItem, "sizeInBytes", T_NUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CPriceCacheItem, "schema");
@@ -234,17 +221,8 @@ string_q CPriceCacheItem::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
-        case 'n':
-            if ( fieldName % "nRecords" ) return uint_2_Str(nRecords);
-            break;
         case 'p':
             if ( fieldName % "pair" ) return pair;
-            break;
-        case 'r':
-            if ( fieldName % "range" ) return range;
-            break;
-        case 's':
-            if ( fieldName % "sizeInBytes" ) return uint_2_Str(sizeInBytes);
             break;
         case 't':
             if ( fieldName % "type" ) return type;
@@ -252,10 +230,12 @@ string_q CPriceCacheItem::getValueByName(const string_q& fieldName) const {
     }
 
     // EXISTING_CODE
+    if ( fieldName % "firstAppearance" || fieldName % "latestAppearance" )
+        return "";
     // EXISTING_CODE
 
     // Finally, give the parent class a chance
-    return CBaseNode::getValueByName(fieldName);
+    return CAccountName::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

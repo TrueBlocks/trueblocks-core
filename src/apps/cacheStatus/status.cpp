@@ -69,13 +69,10 @@ bool CStatus::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
             break;
         case 'b':
             if ( fieldName % "balance_provider" ) { balance_provider = fieldValue; return true; }
-            if ( fieldName % "bytes_on_disk_client" ) { bytes_on_disk_client = str_2_Uint(fieldValue); return true; }
-            if ( fieldName % "bytes_on_disk_trueblocks" ) { bytes_on_disk_trueblocks = str_2_Uint(fieldValue); return true; }
             break;
         case 'c':
             if ( fieldName % "client_version" ) { client_version = fieldValue; return true; }
             if ( fieldName % "cache_location" ) { cache_location = fieldValue; return true; }
-            if ( fieldName % "caches" ) { caches = fieldValue; return true; }
             break;
         case 'h':
             if ( fieldName % "host" ) { host = fieldValue; return true; }
@@ -125,9 +122,6 @@ bool CStatus::Serialize(CArchive& archive) {
     archive >> index_location;
     archive >> host;
     archive >> is_scraping;
-    archive >> bytes_on_disk_client;
-    archive >> bytes_on_disk_trueblocks;
-    archive >> caches;
     finishParse();
     return true;
 }
@@ -149,9 +143,6 @@ bool CStatus::SerializeC(CArchive& archive) const {
     archive << index_location;
     archive << host;
     archive << is_scraping;
-    archive << bytes_on_disk_client;
-    archive << bytes_on_disk_trueblocks;
-    archive << caches;
 
     return true;
 }
@@ -196,9 +187,6 @@ void CStatus::registerClass(void) {
     ADD_FIELD(CStatus, "index_location", T_TEXT, ++fieldNum);
     ADD_FIELD(CStatus, "host", T_TEXT, ++fieldNum);
     ADD_FIELD(CStatus, "is_scraping", T_BOOL, ++fieldNum);
-    ADD_FIELD(CStatus, "bytes_on_disk_client", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CStatus, "bytes_on_disk_trueblocks", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CStatus, "caches", T_TEXT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CStatus, "schema");
@@ -209,6 +197,7 @@ void CStatus::registerClass(void) {
     builtIns.push_back(_biCStatus);
 
     // EXISTING_CODE
+    ADD_FIELD(CStatus, "caches", T_POINTER|TS_ARRAY, ++fieldNum);
     // EXISTING_CODE
 }
 
@@ -218,6 +207,19 @@ string_q nextStatusChunk_custom(const string_q& fieldIn, const void *dataPtr) {
     if (sta) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'c':
+                if ( fieldIn % "caches" ) {
+                    bool first = true;
+                    ostringstream os;
+                    for (auto cachePtr : sta->caches) {
+                        if (!first)
+                            os << ",";
+                        os << *cachePtr << endl;
+                        first = false;
+                    }
+                    return os.str();
+                }
+                break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
@@ -271,13 +273,10 @@ string_q CStatus::getValueByName(const string_q& fieldName) const {
             break;
         case 'b':
             if ( fieldName % "balance_provider" ) return balance_provider;
-            if ( fieldName % "bytes_on_disk_client" ) return uint_2_Str(bytes_on_disk_client);
-            if ( fieldName % "bytes_on_disk_trueblocks" ) return uint_2_Str(bytes_on_disk_trueblocks);
             break;
         case 'c':
             if ( fieldName % "client_version" ) return client_version;
             if ( fieldName % "cache_location" ) return cache_location;
-            if ( fieldName % "caches" ) return caches;
             break;
         case 'h':
             if ( fieldName % "host" ) return host;

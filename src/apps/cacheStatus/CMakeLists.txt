@@ -49,34 +49,33 @@ function(run_state_test testName)
 endfunction(run_state_test)
 
 # Enter one line for each individual test
-run_test("cacheStatus_README"                 "-th")
-run_test("cacheStatus_no_params"              )
-run_test("cacheStatus_invalid_param_1"        "--junk" )
-run_test("cacheStatus_invalid_param_2"        "-l" " --junk" )
-run_test("cacheStatus_noFile"                 "--stats")
+run_test("cacheStatus_README"           "-th")
+run_test("cacheStatus_no_params"        )
+run_test("cacheStatus_invalid_param_1"  "--junk" )
+run_test("cacheStatus_invalid_param_2"  "-l" " --junk" )
 
 # depends on fullblockIndex
-run_special_test("cacheStatus_list"           "-l"  " 0x9876543210987654321098765432109876543210")
-run_special_test("cacheStatus_check"          "-c"  " 0x9876543210987654321098765432109876543210")
-run_special_test("cacheStatus_listTip"        "-l"  " 0x5555533333555553333355555333335555533333")
-run_special_test("cacheStatus_checkTip"       "-c"  " 0x5555533333555553333355555333335555533333")
-run_special_test("cacheStatus_fixTip"         "--fix" " 0x5555533333555553333355555333335555533333")
-run_special_test("cacheStatus_txtTip"         "--fmt"  " txt" " 0x5555533333555553333355555333335555533333")
-run_special_test("cacheStatus_csvTip"         "--fmt"  " csv" " 0x5555533333555553333355555333335555533333")
-run_special_test("cacheStatus_jsonTip"        "--fmt"  " json" " 0x5555533333555553333355555333335555533333")
+run_test("cacheStatus_scraper"          "scraper")
+run_test("cacheStatus_monitors"         "monitors")
+run_test("cacheStatus_names"           "names")
+run_test("cacheStatus_abis"             "abis")
+run_test("cacheStatus_blocks"          "blocks")
+#run_test("cacheStatus_txs"             "txs")
+#run_test("cacheStatus_traces"          "traces")
+run_test("cacheStatus_slurps"           "slurps")
+run_test("cacheStatus_prices"           "prices")
+run_test("cacheStatus_some"             "some")
+run_state_test("cacheStatus_all"              "all")
 
-#run_special_test("cacheStatus_merge"          "-md" " 0x5555533333555553333355555333335555533333" " 0x9876543210987654321098765432109876543210")
-#run_special_test("cacheStatus_merge_list"     "-l"  " merged")
-#run_special_test("cacheStatus_merge_remove"   "-r"  " merged")
-#run_special_test("cacheStatus_merge_rlist"    "-l"  " merged")
-#run_special_test("cacheStatus_merge_import"   "-i"  " merged")
-#run_special_test("cacheStatus_merge_ilist"    "-l"  " merged")
+run_special_test("cacheStatus_items_monitors"          "monitors" " --details")
+run_special_test("cacheStatus_items_abis"              "abis"     " --details")
+run_special_test("cacheStatus_items_slurps"            "slurps"   " --details")
+run_special_test("cacheStatus_items_prices"            "prices"   " --details")
+run_special_test("cacheStatus_items_some"              "some"     " --details")
+run_special_test("cacheStatus_items_scraper_monitors" "scraper"   " monitors" " --details")
 
-#run_special_test("cacheStatus_extract"        "-e"  " 0" " 0x5555533333555553333355555333335555533333" " 0x9876543210987654321098765432109876543210" " --list" " --data")
-#run_special_test("cacheStatus_extract_list"   "-l"  " extract" " --data")
-
-# COption("-truncate:<num>", "truncate the cache at block :n (keeps block 'n' and before, implies --fix)"),
-# COption("@s(k)ip",         "skip value for testing"),
+run_special_test("cacheStatus_three"                   "abis"     " slurps" " monitors")
+run_special_test("cacheStatus_items_three"             "abis"     " slurps" " monitors" " --details")
 
 # Installation steps, this tool is renamed at installation
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

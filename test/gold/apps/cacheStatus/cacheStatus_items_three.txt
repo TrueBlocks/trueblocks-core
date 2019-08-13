@@ -1,0 +1,1909 @@
+cacheStatus argc: 5 [1:abis] [2:slurps] [3:monitors] [4:--details] 
+cacheStatus abis slurps monitors --details 
+[
+{
+  "client_version": "Parity-Ethereum//v2.3.4-beta-0e95db11d-20190220/x86_64-macos/rustc1.32.0",
+  "trueblocks_version": "GHC-TrueBlocks//0.5.8-alpha--git-hash---git-ts-",
+  "rpc_provider": "--providers--",
+  "api_provider": "--providers--",
+  "balance_provider": "--providers--",
+  "host": "--hostname-- (--username--)",
+  "is_scraping": false,
+  "caches": [
+    {
+      "items": [
+        {
+          "type": "CMonitorCacheItem",
+          "enabled": true,
+          "address": "0x35ca7ae854338dcbc154066f0ea00b636d38e431",
+          "firstAppearance": 1001001,
+          "latestAppearance": 8101001,
+          "nRecords": 7,
+          "sizeInBytes": 56
+        },
+        {
+          "type": "CMonitorCacheItem",
+          "enabled": true,
+          "group": "30-Contracts",
+          "name": "Camp Decentral Donations (Giveth)",
+          "address": "0x37f25bd26848cf02614c29338dd71a4d03b62218",
+          "source": "Giveth website",
+          "firstAppearance": 1001001,
+          "latestAppearance": 8101001,
+          "nRecords": 155,
+          "sizeInBytes": 1240
+        },
+        {
+          "type": "CMonitorCacheItem",
+          "enabled": true,
+          "group": "50-Tokens",
+          "name": "White Hat Donations (Giveth)",
+          "address": "0xd556caf704e39fc728058557a113b226207d2212",
+          "source": "Giveth website",
+          "firstAppearance": 1001001,
+          "latestAppearance": 8101001,
+          "nRecords": 76,
+          "sizeInBytes": 608
+        },
+        {
+          "type": "CMonitorCacheItem",
+          "enabled": true,
+          "address": "0xe27438944187b49ef0005554a15b913b11baa08c",
+          "firstAppearance": 1001001,
+          "latestAppearance": 8101001,
+          "nRecords": 27,
+          "sizeInBytes": 216
+        }
+      ],
+      "type": "CMonitorCache",
+      "path": "/Volumes/Samsung_T7/testing/monitors/",
+      "nFiles": 4,
+      "nFolders": 1,
+      "sizeInBytes": 2120,
+      "valid_counts": true
+    }
+
+,{
+      "items": [
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 14,
+          "nEvents": 2,
+          "nOther": 0,
+          "address": "0x0000000000b3f879cb30fe243b4dfee438691c04",
+          "sizeInBytes": 3132
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 26,
+          "nEvents": 10,
+          "nOther": 2,
+          "name": "dAppNode Donations (Giveth)",
+          "address": "0x00cf36853aa4024fb5bf5cc377dfd85844b411a0",
+          "sizeInBytes": 6517
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 17,
+          "nEvents": 6,
+          "nOther": 1,
+          "address": "0x012233b3c8177f0778d910ed88170b82de3bfe57",
+          "sizeInBytes": 4285
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 8,
+          "nEvents": 1,
+          "nOther": 1,
+          "name": "HEALP Airdrop",
+          "address": "0x06b2387c7f56ecb61009bb31375b84e4be7f80b3",
+          "sizeInBytes": 1616
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 14,
+          "nEvents": 2,
+          "nOther": 2,
+          "address": "0x075c60ee2cd308ff47873b38bd9a0fa5853382c4",
+          "sizeInBytes": 3175
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 36,
+          "nEvents": 6,
+          "nOther": 1,
+          "address": "0x097b3b7cb01945ba7e76804ddc2fdda2cce6ef43",
+          "sizeInBytes": 8646
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 12,
+          "nEvents": 0,
+          "nOther": 2,
+          "address": "0x0c564ca7b948008fb324268d8baedaeb1bd47bce",
+          "sizeInBytes": 2070
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 11,
+          "nEvents": 3,
+          "nOther": 1,
+          "address": "0x0ece224fbc24d40b446c6a94a142dc41fae76f2d",
+          "sizeInBytes": 3854
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 4,
+          "nEvents": 1,
+          "nOther": 0,
+          "address": "0x1043fbd15c10a3234664cbdd944a16a204f945e6",
+          "sizeInBytes": 878
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 52,
+          "nEvents": 15,
+          "nOther": 0,
+          "address": "0x1234567812345678123456781234567812345678",
+          "sizeInBytes": 26926
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 18,
+          "nEvents": 3,
+          "nOther": 1,
+          "address": "0x12459c951127e0c374ff9105dda097662a027093",
+          "sizeInBytes": 5983
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 21,
+          "nEvents": 8,
+          "nOther": 0,
+          "address": "0x138a35ee20e40f019e7e7c00386ab2ef42d66d1e",
+          "sizeInBytes": 4807
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 51,
+          "nEvents": 18,
+          "nOther": 1,
+          "address": "0x14fbca95be7e99c15cc2996c6c9d841e54b79425",
+          "sizeInBytes": 14918
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 52,
+          "nEvents": 15,
+          "nOther": 0,
+          "address": "0x159cf1e9ae58211b588f5e3bf1d7e423952d959b",
+          "sizeInBytes": 27360
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 9,
+          "nEvents": 2,
+          "nOther": 2,
+          "name": "RHOC",
+          "address": "0x168296bb09e24a88805cb9c33356536b980d3fc5",
+          "sizeInBytes": 2057
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 1,
+          "nEvents": 0,
+          "nOther": 0,
+          "name": "LPT Airdrop",
+          "address": "0x182ebf4c80b28efc45ad992ecbb9f730e31e8c7f",
+          "sizeInBytes": 262
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 36,
+          "nEvents": 6,
+          "nOther": 1,
+          "address": "0x19b32a79edfda406b1070a98a11f8bf7170c3a75",
+          "sizeInBytes": 8646
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 4,
+          "nEvents": 0,
+          "nOther": 1,
+          "address": "0x1d3b2638a7cc9f2cb3d298a3da7a90b67e5506ed",
+          "sizeInBytes": 487
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 19,
+          "nEvents": 2,
+          "nOther": 0,
+          "address": "0x1d9bdf492e59a306dda59e5aa13e7f1c7d89197a",
+          "sizeInBytes": 4072
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 11,
+          "nEvents": 5,
+          "nOther": 1,
+          "address": "0x1da022710df5002339274aadee8d58218e9d6ab5",
+          "sizeInBytes": 2872
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 49,
+          "nEvents": 2,
+          "nOther": 1,
+          "address": "0x1e0447b19bb6ecfdae1e4ae1694b0c3659614e4e",
+          "sizeInBytes": 15846
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 20,
+          "nEvents": 6,
+          "nOther": 1,
+          "name": "Bancor",
+          "address": "0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c",
+          "sizeInBytes": 4080
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 30,
+          "nEvents": 13,
+          "nOther": 2,
+          "address": "0x21433dec9cb634a23c6a4bbcce08c83f5ac2ec18",
+          "sizeInBytes": 8695
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 26,
+          "nEvents": 10,
+          "nOther": 2,
+          "address": "0x2156e9ed357fcc134161b7df0edfe26591d8d329",
+          "sizeInBytes": 6517
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 35,
+          "nEvents": 6,
+          "nOther": 0,
+          "name": "Uniswap Exchange Template",
+          "address": "0x2157a7894439191e520825fe9399ab8655e0f708",
+          "sizeInBytes": 9955
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 9,
+          "nEvents": 2,
+          "nOther": 1,
+          "address": "0x2240dab907db71e64d3e0dba4800c83b5c502d4e",
+          "sizeInBytes": 1976
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 5,
+          "nEvents": 2,
+          "nOther": 2,
+          "address": "0x22c1f6050e56d2876009903609a2cc3fef83b415",
+          "sizeInBytes": 1398
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 22,
+          "nEvents": 2,
+          "nOther": 0,
+          "address": "0x22ee96d6770a233b7d4363f770999331dd7c0fad",
+          "sizeInBytes": 4075
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 11,
+          "nEvents": 2,
+          "nOther": 1,
+          "address": "0x23b608675a2b2fb1890d3abbd85c5775c51691d5",
+          "sizeInBytes": 2448
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 12,
+          "nEvents": 0,
+          "nOther": 2,
+          "address": "0x23e97a06f452120e2b1bf2a6713bb3833d7afdcf",
+          "sizeInBytes": 2070
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 12,
+          "nEvents": 0,
+          "nOther": 2,
+          "address": "0x266bfdb2124a68beb6769dc887bd655f78778923",
+          "sizeInBytes": 2070
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 19,
+          "nEvents": 6,
+          "nOther": 1,
+          "name": "AirSwap",
+          "address": "0x27054b13b1b798b345b591a4d22e6562d47ea75a",
+          "sizeInBytes": 4614
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 35,
+          "nEvents": 10,
+          "nOther": 1,
+          "address": "0x273f7f8e6489682df756151f5525576e322d51a3",
+          "sizeInBytes": 7741
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 6,
+          "nEvents": 0,
+          "nOther": 1,
+          "address": "0x279594b6843014376a422ebb26a6eab7a30e36f0",
+          "sizeInBytes": 2075
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 1,
+          "nEvents": 0,
+          "nOther": 0,
+          "address": "0x289ba1701c2f088cf0faf8b3705246331cb8a839",
+          "sizeInBytes": 249
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 12,
+          "nEvents": 0,
+          "nOther": 2,
+          "address": "0x294888d97308d7ce3445d83d90268b29282863f7",
+          "sizeInBytes": 2070
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 25,
+          "nEvents": 6,
+          "nOther": 2,
+          "address": "0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208",
+          "sizeInBytes": 7351
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 2,
+          "nEvents": 2,
+          "nOther": 2,
+          "address": "0x2aa3645dd23acf7c3056c8d7b5c4d0904976dd1d",
+          "sizeInBytes": 1163
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 17,
+          "nEvents": 0,
+          "nOther": 2,
+          "address": "0x2adfade02249632c0b5c9f9acab4b9db493c9067",
+          "sizeInBytes": 3125
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 24,
+          "nEvents": 11,
+          "nOther": 1,
+          "address": "0x2af47a65da8cd66729b4209c22017d6a5c2d2400",
+          "sizeInBytes": 7952
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 2,
+          "nEvents": 0,
+          "nOther": 0,
+          "address": "0x2bd2326c993dfaef84f696526064ff22eba5b362",
+          "sizeInBytes": 181
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 12,
+          "nEvents": 3,
+          "nOther": 1,
+          "address": "0x2c33f5fde437ad4c1de85d5d5cb864921ab583af",
+          "sizeInBytes": 3157
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 8,
+          "nEvents": 3,
+          "nOther": 2,
+          "address": "0x2d0c564d4fb45e38a7460e31907e536026f4354f",
+          "sizeInBytes": 2207
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 7,
+          "nEvents": 4,
+          "nOther": 0,
+          "address": "0x314159265dd8dbb310642f98f50c066173c1259b",
+          "sizeInBytes": 1846
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 10,
+          "nEvents": 4,
+          "nOther": 0,
+          "address": "0x315cbb88168396d12e1a255f9cb935408fe80710",
+          "sizeInBytes": 2540
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 26,
+          "nEvents": 10,
+          "nOther": 2,
+          "name": "Camp Decentral Donations (Giveth)",
+          "address": "0x37f25bd26848cf02614c29338dd71a4d03b62218",
+          "sizeInBytes": 6517
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 26,
+          "nEvents": 10,
+          "nOther": 2,
+          "address": "0x38298ef8a8306579e21246d5227694b5560d9cb5",
+          "sizeInBytes": 6517
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 48,
+          "nEvents": 16,
+          "nOther": 1,
+          "address": "0x39755357759ce0d7f32dc8dc45414cca409ae24e",
+          "sizeInBytes": 13799
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 44,
+          "nEvents": 7,
+          "nOther": 1,
+          "address": "0x3dbdc81a6edc94c720b0b88fb65dbd7e395fdcf6",
+          "sizeInBytes": 12400
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 20,
+          "nEvents": 5,
+          "nOther": 1,
+          "name": "OCoin",
+          "address": "0x4092678e4e78230f46a1534c0fbc8fa39780892b",
+          "sizeInBytes": 4435
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 18,
+          "nEvents": 4,
+          "nOther": 2,
+          "address": "0x42b03689fbaa9635edbc10ad1fdc7ea5feefbb70",
+          "sizeInBytes": 4087
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 60,
+          "nEvents": 4,
+          "nOther": 1,
+          "address": "0x448a5065aebb8e423f0896e6c5d525c040f59af3",
+          "sizeInBytes": 10513
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 3,
+          "nEvents": 0,
+          "nOther": 1,
+          "address": "0x4678f0a6958e4d2bc4f1baf7bc52e8f3564f3fe4",
+          "sizeInBytes": 641
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 25,
+          "nEvents": 10,
+          "nOther": 0,
+          "address": "0x46fc7b42f4522bfbd8b4565130aaed1e407d9957",
+          "sizeInBytes": 5906
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 8,
+          "nEvents": 3,
+          "nOther": 2,
+          "address": "0x49b81578b56ccaef3116b464efd4790947037751",
+          "sizeInBytes": 2207
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 16,
+          "nEvents": 6,
+          "nOther": 0,
+          "address": "0x4b9f5347c489d9ee91787b7e9f678d354324878f",
+          "sizeInBytes": 3334
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 28,
+          "nEvents": 12,
+          "nOther": 2,
+          "address": "0x4d864b5b4f866f65f53cbaad32eb9574760865e6",
+          "sizeInBytes": 8144
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 35,
+          "nEvents": 5,
+          "nOther": 1,
+          "address": "0x4f833a24e1f95d70f028921e27040ca56e09ab0b",
+          "sizeInBytes": 20759
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 12,
+          "nEvents": 2,
+          "nOther": 1,
+          "name": "VIU",
+          "address": "0x519475b31653e46d20cd09f9fdcf3b12bdacb4f5",
+          "sizeInBytes": 2850
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 8,
+          "nEvents": 3,
+          "nOther": 2,
+          "address": "0x51ffc1b089392a5bb65bf24eaf04d07d0e6f88b5",
+          "sizeInBytes": 1581
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 26,
+          "nEvents": 10,
+          "nOther": 2,
+          "address": "0x527621278422fff45a66f7086baeac770cf12b69",
+          "sizeInBytes": 6517
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 20,
+          "nEvents": 2,
+          "nOther": 1,
+          "address": "0x52ae12abe5d8bd778bd5397f99ca900624cfadd4",
+          "sizeInBytes": 3714
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 2,
+          "nEvents": 2,
+          "nOther": 1,
+          "address": "0x563172281800b139f69fb038cc2c08cad56ce699",
+          "sizeInBytes": 864
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 0,
+          "nEvents": 0,
+          "nOther": 0,
+          "address": "0x56e7d4520abfecf10b38368b00723d9bd3c21ee1",
+          "sizeInBytes": 2
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 54,
+          "nEvents": 5,
+          "nOther": 2,
+          "address": "0x587044b74004e3d5ef2d453b7f8d198d9e4cb558",
+          "sizeInBytes": 12083
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 18,
+          "nEvents": 6,
+          "nOther": 0,
+          "address": "0x58b6a8a3302369daec383334672404ee733ab239",
+          "sizeInBytes": 4307
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 18,
+          "nEvents": 10,
+          "nOther": 1,
+          "address": "0x5901deb2c898d5dbe5923e05e510e95968a35067",
+          "sizeInBytes": 4357
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 12,
+          "nEvents": 6,
+          "nOther": 2,
+          "name": "Giveth Donations Vault",
+          "address": "0x5adf43dd006c6c36506e2b2dfa352e60002d22dc",
+          "sizeInBytes": 3132
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 17,
+          "nEvents": 4,
+          "nOther": 1,
+          "address": "0x5c1fc813d9c1b5ebb93889b3d63ba24984ca44b7",
+          "sizeInBytes": 3277
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 12,
+          "nEvents": 3,
+          "nOther": 2,
+          "address": "0x5d60d8d7ef6d37e16ebabc324de3be57f135e0bc",
+          "sizeInBytes": 3340
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 21,
+          "nEvents": 5,
+          "nOther": 1,
+          "address": "0x5eef0e02b6f84f5b13543ed41df975b751b33182",
+          "sizeInBytes": 4891
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 9,
+          "nEvents": 3,
+          "nOther": 2,
+          "address": "0x5f332210ef64665ec4cdd639306485810b283100",
+          "sizeInBytes": 2178
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 14,
+          "nEvents": 1,
+          "nOther": 1,
+          "address": "0x5f742383b6d1298980030d6af943b76cdd902143",
+          "sizeInBytes": 4892
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 13,
+          "nEvents": 6,
+          "nOther": 1,
+          "address": "0x5ffc014343cd971b7eb70732021e26c35b744cc4",
+          "sizeInBytes": 3462
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 7,
+          "nEvents": 1,
+          "nOther": 1,
+          "address": "0x607a5c47978e2eb6d59c6c6f51bc0bf411f4b85a",
+          "sizeInBytes": 1374
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 23,
+          "nEvents": 6,
+          "nOther": 1,
+          "name": "ENS Related",
+          "address": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
+          "sizeInBytes": 5281
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 28,
+          "nEvents": 12,
+          "nOther": 2,
+          "address": "0x63825c174ab367968ec60f061753d3bbd36a0d8f",
+          "sizeInBytes": 8144
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 35,
+          "nEvents": 1,
+          "nOther": 1,
+          "address": "0x6690819cb98c1211a8e38790d6cd48316ed518db",
+          "sizeInBytes": 8051
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 23,
+          "nEvents": 2,
+          "nOther": 0,
+          "address": "0x67905d283b5214fe49319a5c305e67c7d9e86d36",
+          "sizeInBytes": 4800
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 26,
+          "nEvents": 10,
+          "nOther": 2,
+          "address": "0x68085e7f88e90fa9247489c83fab30b177ebccb3",
+          "sizeInBytes": 6517
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 9,
+          "nEvents": 2,
+          "nOther": 1,
+          "name": "Gnosis",
+          "address": "0x6810e776880c02933d47db1b9fc05908e5386b96",
+          "sizeInBytes": 2029
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 45,
+          "nEvents": 4,
+          "nOther": 2,
+          "address": "0x6b431a7a99780819473722161ee9145e5649c5e2",
+          "sizeInBytes": 10351
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 15,
+          "nEvents": 4,
+          "nOther": 1,
+          "address": "0x6b92d76c9d0d40e53019ffa51b6f0c9b6bc657c9",
+          "sizeInBytes": 3261
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 23,
+          "nEvents": 9,
+          "nOther": 1,
+          "address": "0x6e106a75d369d09a9ea1dcc16da844792aa669a3",
+          "sizeInBytes": 5621
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 10,
+          "nEvents": 2,
+          "nOther": 1,
+          "address": "0x7148b1c9154bcf273a2c7d7b90e3edc6fee395e6",
+          "sizeInBytes": 2151
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 20,
+          "nEvents": 3,
+          "nOther": 0,
+          "address": "0x729d19f657bd0614b4985cf1d82531c67569197b",
+          "sizeInBytes": 3124
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 25,
+          "nEvents": 4,
+          "nOther": 2,
+          "address": "0x73fe188039dcef74ae137db377278443981b3d1c",
+          "sizeInBytes": 6111
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 8,
+          "nEvents": 3,
+          "nOther": 2,
+          "address": "0x75dbc43188128e89b0ea464e6014b07588a95ace",
+          "sizeInBytes": 2207
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 17,
+          "nEvents": 0,
+          "nOther": 2,
+          "address": "0x775dde5b7e7681c79ba71f911cb387952b12dad1",
+          "sizeInBytes": 3125
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 22,
+          "nEvents": 2,
+          "nOther": 1,
+          "address": "0x787f552bdc17332c98aa360748884513e3cb401a",
+          "sizeInBytes": 5117
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 12,
+          "nEvents": 0,
+          "nOther": 2,
+          "address": "0x793ebbe21607e4f04788f89c7a9b97320773ec59",
+          "sizeInBytes": 4528
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 36,
+          "nEvents": 6,
+          "nOther": 1,
+          "address": "0x798abda6cc246d0edba912092a2a3dbd3d11191b",
+          "sizeInBytes": 8646
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 25,
+          "nEvents": 7,
+          "nOther": 1,
+          "address": "0x79f6d0f646706e1261acf0b93dcb864f357d4680",
+          "sizeInBytes": 5710
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 16,
+          "nEvents": 5,
+          "nOther": 1,
+          "name": "HEALP Airdrop",
+          "address": "0x7b2f9706cd8473b4f5b7758b0171a9933fc6c4d6",
+          "sizeInBytes": 3988
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 12,
+          "nEvents": 2,
+          "nOther": 1,
+          "address": "0x7e184e30f311745286c21406123cf5760fd38fc4",
+          "sizeInBytes": 2820
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 15,
+          "nEvents": 5,
+          "nOther": 2,
+          "address": "0x8055d0504666e2b6942beb8d6014c964658ca591",
+          "sizeInBytes": 3146
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 27,
+          "nEvents": 8,
+          "nOther": 1,
+          "address": "0x818e6fecd516ecc3849daf6845e3ec868087b755",
+          "sizeInBytes": 7337
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 26,
+          "nEvents": 10,
+          "nOther": 2,
+          "address": "0x851b7f3ab81bd8df354f0d7640efcd7288553419",
+          "sizeInBytes": 5754
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 55,
+          "nEvents": 8,
+          "nOther": 2,
+          "address": "0x880d6adb5bb4c8a7f578d31a4ddb0c48bc590fa3",
+          "sizeInBytes": 11868
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 12,
+          "nEvents": 0,
+          "nOther": 2,
+          "address": "0x89d0a07b792754460faa49e57437b40aa33fb757",
+          "sizeInBytes": 2070
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 25,
+          "nEvents": 7,
+          "nOther": 1,
+          "name": "Dai Stablecoin v1.0",
+          "address": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+          "sizeInBytes": 5710
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 30,
+          "nEvents": 11,
+          "nOther": 2,
+          "address": "0x8bf5c569ecfd167f96fae6d9610e17571568a6a1",
+          "sizeInBytes": 7584
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 9,
+          "nEvents": 2,
+          "nOther": 0,
+          "address": "0x8ce87f39c30396fdfe7f25378363307b3ba3002d",
+          "sizeInBytes": 3619
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 26,
+          "nEvents": 5,
+          "nOther": 2,
+          "address": "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819",
+          "sizeInBytes": 7765
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 8,
+          "nEvents": 2,
+          "nOther": 0,
+          "address": "0x8da0d80f5007ef1e431dd2127178d224e32c2ef4",
+          "sizeInBytes": 1612
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 15,
+          "nEvents": 1,
+          "nOther": 1,
+          "address": "0x8e306b005773bee6ba6a6e8972bc79d766cc15c8",
+          "sizeInBytes": 3230
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 21,
+          "nEvents": 9,
+          "nOther": 2,
+          "address": "0x8f684ad5dc8237960a4661381022ae8030a5cd31",
+          "sizeInBytes": 4942
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 21,
+          "nEvents": 9,
+          "nOther": 2,
+          "name": "Giveth Donations",
+          "address": "0x8f951903c9360345b4e1b536c7f5ae8f88a64e79",
+          "sizeInBytes": 4942
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 46,
+          "nEvents": 11,
+          "nOther": 2,
+          "address": "0x91a502c678605fbce581eae053319747482276b9",
+          "sizeInBytes": 11176
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 24,
+          "nEvents": 8,
+          "nOther": 0,
+          "address": "0x946048a75af11c300a274344887ec39452218b3d",
+          "sizeInBytes": 6191
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 15,
+          "nEvents": 1,
+          "nOther": 0,
+          "address": "0x95b9067d07d6c96a63a3119285b0aa6092e32a4b",
+          "sizeInBytes": 3357
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 20,
+          "nEvents": 2,
+          "nOther": 0,
+          "address": "0x96f041b96708813b1d789606926c524e78543664",
+          "sizeInBytes": 4789
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 17,
+          "nEvents": 0,
+          "nOther": 2,
+          "address": "0x96fa5620d10154430e6d48027b5a26d966379eea",
+          "sizeInBytes": 3125
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 3,
+          "nEvents": 0,
+          "nOther": 0,
+          "address": "0x99fbbfb44c53ba981e1d835313bd5e0043441c3e",
+          "sizeInBytes": 698
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 14,
+          "nEvents": 3,
+          "nOther": 1,
+          "address": "0x9b0f70df76165442ca6092939132bbaea77f2d7a",
+          "sizeInBytes": 2813
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 30,
+          "nEvents": 6,
+          "nOther": 1,
+          "address": "0x9b2558cfeb54364011df8de24ebe7423533e6b09",
+          "sizeInBytes": 6649
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 21,
+          "nEvents": 9,
+          "nOther": 2,
+          "address": "0x9b984d5a03980d8dc0a24506c968465424c81dbe",
+          "sizeInBytes": 5574
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 25,
+          "nEvents": 7,
+          "nOther": 1,
+          "name": "Maker",
+          "address": "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2",
+          "sizeInBytes": 5720
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 26,
+          "nEvents": 10,
+          "nOther": 2,
+          "address": "0xa07b3c21ed817f94149231a431d3d4b421648121",
+          "sizeInBytes": 6517
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 17,
+          "nEvents": 0,
+          "nOther": 2,
+          "address": "0xa0a791098895faf51868e501a4b368363d6489ca",
+          "sizeInBytes": 3125
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 26,
+          "nEvents": 10,
+          "nOther": 2,
+          "address": "0xa19fcdad77c1f0fd184689aca88babcf68010347",
+          "sizeInBytes": 6517
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 24,
+          "nEvents": 10,
+          "nOther": 1,
+          "address": "0xa1d2c7e6de2fa512f1fdf486ca17ab79b4dc5d01",
+          "sizeInBytes": 6567
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 4,
+          "nEvents": 1,
+          "nOther": 0,
+          "address": "0xa26e15c895efc0616177b7c1e7270a4c7d51c997",
+          "sizeInBytes": 927
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 29,
+          "nEvents": 13,
+          "nOther": 1,
+          "address": "0xa30cbce69f520bf2a34c5c15193b7f5afe427a26",
+          "sizeInBytes": 6477
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 17,
+          "nEvents": 0,
+          "nOther": 2,
+          "address": "0xa61fdcb853971f71c775f820db1a2d16b06288c4",
+          "sizeInBytes": 3125
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 18,
+          "nEvents": 10,
+          "nOther": 1,
+          "address": "0xa68780dd261cfea0d479728db3ed318940bfa9f9",
+          "sizeInBytes": 4357
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 3,
+          "nEvents": 0,
+          "nOther": 2,
+          "address": "0xa8b39829ce2246f89b31c013b8cde15506fb9a76",
+          "sizeInBytes": 1304
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 4,
+          "nEvents": 0,
+          "nOther": 1,
+          "address": "0xaa63c8683647ef91b3fdab4b4989ee9588da297b",
+          "sizeInBytes": 850
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 44,
+          "nEvents": 3,
+          "nOther": 1,
+          "name": "TokenCard",
+          "address": "0xaaaf91d9b90df800df4f55c205fd6989c977e73a",
+          "sizeInBytes": 6819
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 4,
+          "nEvents": 0,
+          "nOther": 1,
+          "address": "0xab33e884ec8fed4f5867246e4300228f3d666561",
+          "sizeInBytes": 1246
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 10,
+          "nEvents": 2,
+          "nOther": 1,
+          "name": "XENON",
+          "address": "0xab95e915c123fded5bdfb6325e35ef5515f1ea69",
+          "sizeInBytes": 2062
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 36,
+          "nEvents": 9,
+          "nOther": 2,
+          "name": "Blockchain Certified Data Token",
+          "address": "0xacfa209fb73bf3dd5bbfb1101b9bc999c49062a5",
+          "sizeInBytes": 8295
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 3,
+          "nEvents": 0,
+          "nOther": 1,
+          "address": "0xae089c1c5de5ea6a1e8e77069c7a787172b2e460",
+          "sizeInBytes": 818
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 3,
+          "nEvents": 0,
+          "nOther": 0,
+          "name": "XNN Airdrop",
+          "address": "0xb59fdff77a6175dfa4fe7af4281a52f61611eaa2",
+          "sizeInBytes": 498
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 47,
+          "nEvents": 16,
+          "nOther": 1,
+          "address": "0xb7ac09c2c0217b07d7c103029b4918a2c401eecb",
+          "sizeInBytes": 13653
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 63,
+          "nEvents": 6,
+          "nOther": 1,
+          "address": "0xb89570f6ad742cb1fd440a930d6c2a2ea29c51ee",
+          "sizeInBytes": 13633
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 6,
+          "nEvents": 2,
+          "nOther": 0,
+          "address": "0xb91f14a4d5b798dfe738b3f484553ced7370b4b1",
+          "sizeInBytes": 1228
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 24,
+          "nEvents": 3,
+          "nOther": 2,
+          "name": "SwarmCity",
+          "address": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",
+          "sizeInBytes": 5008
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 41,
+          "nEvents": 11,
+          "nOther": 1,
+          "address": "0xba3ed686cc32ffa8664628b1e96d8022e40543de",
+          "sizeInBytes": 11519
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 17,
+          "nEvents": 5,
+          "nOther": 1,
+          "address": "0xba51ff3802aa3170ce7ac7ac001831ca3eb6eeea",
+          "sizeInBytes": 3862
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 3,
+          "nEvents": 0,
+          "nOther": 0,
+          "address": "0xbb530108497bd5007b74443119a8de8f33cc98bf",
+          "sizeInBytes": 498
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 46,
+          "nEvents": 10,
+          "nOther": 1,
+          "name": "The DAO",
+          "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+          "sizeInBytes": 9450
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 17,
+          "nEvents": 0,
+          "nOther": 2,
+          "address": "0xbcb4480ae6cadf963c70d4f2c34e66ce80107e25",
+          "sizeInBytes": 3125
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 26,
+          "nEvents": 3,
+          "nOther": 1,
+          "address": "0xbda109309f9fafa6dd6a9cb9f1df4085b27ee8ef",
+          "sizeInBytes": 4609
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 11,
+          "nEvents": 4,
+          "nOther": 1,
+          "name": "Wrapped Ether",
+          "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+          "sizeInBytes": 2723
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 18,
+          "nEvents": 6,
+          "nOther": 1,
+          "address": "0xc03e171941fc829416f801b0a4fbb70cdce8d563",
+          "sizeInBytes": 4336
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 20,
+          "nEvents": 6,
+          "nOther": 1,
+          "address": "0xc06c1d8dba472e5f9b1e45cbd3dadc1d79874d4c",
+          "sizeInBytes": 4754
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 18,
+          "nEvents": 5,
+          "nOther": 2,
+          "address": "0xc0829421c1d260bd3cb3e0f06cfe2d52db2ce315",
+          "sizeInBytes": 4132
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 14,
+          "nEvents": 1,
+          "nOther": 2,
+          "address": "0xc0a1f89bbcaddab4b736e786b6b16c67bc92ed35",
+          "sizeInBytes": 2546
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 7,
+          "nEvents": 1,
+          "nOther": 0,
+          "name": "Uniswap Factory Contract",
+          "address": "0xc0a47dfe034b400b47bdad5fecda2621de6c4d95",
+          "sizeInBytes": 1305
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 38,
+          "nEvents": 10,
+          "nOther": 1,
+          "address": "0xc0ffeee61948d8993864a73a099c0e38d887d3f4",
+          "sizeInBytes": 7828
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 12,
+          "nEvents": 2,
+          "nOther": 1,
+          "name": "ERC20",
+          "address": "0xc3761eb917cd790b30dad99f6cc5b4ff93c4f9ea",
+          "sizeInBytes": 2908
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 21,
+          "nEvents": 9,
+          "nOther": 2,
+          "address": "0xc5cdcd5470aef35fc33bddff3f8ecec027f95b1d",
+          "sizeInBytes": 5574
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 26,
+          "nEvents": 10,
+          "nOther": 2,
+          "address": "0xc8b186ed4780143ba9116387611063a0e96d7b8f",
+          "sizeInBytes": 6517
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 36,
+          "nEvents": 6,
+          "nOther": 1,
+          "address": "0xcac90c1c886ac0d8491c87f5f51c8524e527eff4",
+          "sizeInBytes": 8646
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 28,
+          "nEvents": 12,
+          "nOther": 2,
+          "address": "0xcb57809435c66006d16db062c285be9e890c96fc",
+          "sizeInBytes": 8144
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 65,
+          "nEvents": 6,
+          "nOther": 1,
+          "address": "0xcbc6a023eb975a1e2630223a7959988948e664f3",
+          "sizeInBytes": 14188
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 20,
+          "nEvents": 3,
+          "nOther": 2,
+          "address": "0xcce629ba507d7256cce7d30628279a155c5309c5",
+          "sizeInBytes": 4564
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 3,
+          "nEvents": 0,
+          "nOther": 0,
+          "address": "0xd152f549545093347a162dce210e7293f1452150",
+          "sizeInBytes": 698
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 6,
+          "nEvents": 2,
+          "nOther": 1,
+          "address": "0xd1997064f0fef8748c1de9b5ba53468c548738b3",
+          "sizeInBytes": 1455
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 5,
+          "nEvents": 1,
+          "nOther": 2,
+          "address": "0xd25def1db4f994e2800e438ebb29eae300d56151",
+          "sizeInBytes": 1185
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 18,
+          "nEvents": 6,
+          "nOther": 0,
+          "name": "OmiseGO Airdrop",
+          "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
+          "sizeInBytes": 3450
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 16,
+          "nEvents": 4,
+          "nOther": 1,
+          "name": "BULLEON Airdrop",
+          "address": "0xd4de05944572d142fbf70f3f010891a35ac15188",
+          "sizeInBytes": 3579
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 25,
+          "nEvents": 4,
+          "nOther": 2,
+          "name": "White Hat Donations (Giveth)",
+          "address": "0xd556caf704e39fc728058557a113b226207d2212",
+          "sizeInBytes": 5367
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 19,
+          "nEvents": 4,
+          "nOther": 2,
+          "address": "0xd717b75404022fb1c8582adf1c66b9a553811754",
+          "sizeInBytes": 4549
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 3,
+          "nEvents": 1,
+          "nOther": 1,
+          "address": "0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373",
+          "sizeInBytes": 746
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 43,
+          "nEvents": 9,
+          "nOther": 1,
+          "address": "0xd9a8cfe21c232d485065cb62a96866799d4645f7",
+          "sizeInBytes": 8700
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 32,
+          "nEvents": 11,
+          "nOther": 1,
+          "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+          "sizeInBytes": 7075
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 36,
+          "nEvents": 10,
+          "nOther": 1,
+          "address": "0xdceaf1652a131f32a821468dc03a92df0edd86ea",
+          "sizeInBytes": 7949
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 17,
+          "nEvents": 3,
+          "nOther": 1,
+          "name": "KyberNetwork",
+          "address": "0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
+          "sizeInBytes": 3415
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 8,
+          "nEvents": 3,
+          "nOther": 2,
+          "address": "0xdda3ce7cedb6073cd61bca36e83b0b33daa75fea",
+          "sizeInBytes": 2207
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 8,
+          "nEvents": 3,
+          "nOther": 2,
+          "address": "0xde1bb901d3546e2fd48c6aaeb17d7dd762966585",
+          "sizeInBytes": 2207
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 27,
+          "nEvents": 12,
+          "nOther": 1,
+          "address": "0xdee34cd48d77183b3e70f4f9ea2718c89bfefeb4",
+          "sizeInBytes": 6158
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 18,
+          "nEvents": 6,
+          "nOther": 1,
+          "address": "0xdfc85c08d5e5924ab49750e006cf8a826ffb7b13",
+          "sizeInBytes": 4336
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 12,
+          "nEvents": 0,
+          "nOther": 2,
+          "address": "0xe27438944187b49ef0005554a15b913b11baa08c",
+          "sizeInBytes": 2070
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 9,
+          "nEvents": 2,
+          "nOther": 1,
+          "name": "ZRX",
+          "address": "0xe41d2489571d322189246dafa5ebde1f4699f498",
+          "sizeInBytes": 1921
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 11,
+          "nEvents": 2,
+          "nOther": 1,
+          "address": "0xe5b826ca2ca02f09c1725e9bd98d9a8874c30532",
+          "sizeInBytes": 2666
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 29,
+          "nEvents": 14,
+          "nOther": 1,
+          "address": "0xe7f69ea2a79521136ee0bf3c50f6b5f1ea0ab0cd",
+          "sizeInBytes": 12610
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 19,
+          "nEvents": 5,
+          "nOther": 1,
+          "name": "Augur (Reputation)",
+          "address": "0xe94327d07fc17907b4db788e5adf2ed424addff6",
+          "sizeInBytes": 3699
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 1,
+          "nEvents": 0,
+          "nOther": 0,
+          "address": "0xebf2bf80c3ddb0b6ac2f88be8dceec7bf12dff22",
+          "sizeInBytes": 182
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 32,
+          "nEvents": 15,
+          "nOther": 1,
+          "address": "0xed4f53268bfdff39b36e8786247ba3a02cf34b04",
+          "sizeInBytes": 8668
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 20,
+          "nEvents": 6,
+          "nOther": 1,
+          "address": "0xee01b3ab5f6728adc137be101d99c678938e6e72",
+          "sizeInBytes": 4665
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 17,
+          "nEvents": 5,
+          "nOther": 1,
+          "address": "0xee9d859eeaec3d8e3ff176a89b18edfc62c23728",
+          "sizeInBytes": 4240
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 18,
+          "nEvents": 10,
+          "nOther": 1,
+          "address": "0xef638b4305b8a1620f4e0e562e127f1181ae16d2",
+          "sizeInBytes": 4357
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 57,
+          "nEvents": 19,
+          "nOther": 1,
+          "address": "0xefabe332d31c3982b76f8630a306c960169bd5b3",
+          "sizeInBytes": 17940
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 2,
+          "nEvents": 0,
+          "nOther": 0,
+          "address": "0xf1e1d750137ae5c1bd91fe7bd0da692a3ed1d553",
+          "sizeInBytes": 733
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 25,
+          "nEvents": 1,
+          "nOther": 1,
+          "address": "0xf20b9e713a33f61fa38792d2afaf1cd30339126a",
+          "sizeInBytes": 5707
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 20,
+          "nEvents": 6,
+          "nOther": 1,
+          "address": "0xf22fb05ac032fcaf3273f50af8db2753888bdd48",
+          "sizeInBytes": 4663
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 14,
+          "nEvents": 2,
+          "nOther": 1,
+          "address": "0xf230b790e05390fc8295f4d3f60332c93bed42e2",
+          "sizeInBytes": 2947
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 11,
+          "nEvents": 1,
+          "nOther": 1,
+          "address": "0xf46002c37af6fb078ae1833fd447698a0c9012f7",
+          "sizeInBytes": 2192
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 25,
+          "nEvents": 7,
+          "nOther": 1,
+          "address": "0xf53ad2c6851052a81b42133467480961b2321c09",
+          "sizeInBytes": 5710
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 3,
+          "nEvents": 0,
+          "nOther": 1,
+          "address": "0xf61ae328463cd997c7b58e7045cdc613e1cfdb69",
+          "sizeInBytes": 644
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 36,
+          "nEvents": 6,
+          "nOther": 1,
+          "name": "Starbase",
+          "address": "0xf70a642bd387f94380ffb90451c2c81d4eb82cbc",
+          "sizeInBytes": 8487
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 11,
+          "nEvents": 2,
+          "nOther": 1,
+          "address": "0xf7a5a8a95491ec170738434963b649671b563b88",
+          "sizeInBytes": 2448
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 17,
+          "nEvents": 5,
+          "nOther": 0,
+          "name": "RipioCreditNetwork",
+          "address": "0xf970b8e36e23f7fc3fd752eea86f8be8d83375a6",
+          "sizeInBytes": 3516
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 12,
+          "nEvents": 5,
+          "nOther": 1,
+          "address": "0xfa6512358d241b636edf5f8ccaaf86676dec21a7",
+          "sizeInBytes": 3695
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 9,
+          "nEvents": 0,
+          "nOther": 1,
+          "address": "0xfa7b9770ca4cb04296cac84f37736d4041251cdf",
+          "sizeInBytes": 1530
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 19,
+          "nEvents": 5,
+          "nOther": 1,
+          "name": "Etherum Tip Jar",
+          "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
+          "sizeInBytes": 5235
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 26,
+          "nEvents": 10,
+          "nOther": 2,
+          "address": "0xfcd819c8a13de2d9e409fdf7d61161091f58dd63",
+          "sizeInBytes": 6517
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 8,
+          "nEvents": 0,
+          "nOther": 2,
+          "address": "0xfcdedc0397603346788b2567fb5e6d9fd2aedf4c",
+          "sizeInBytes": 1428
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 15,
+          "nEvents": 3,
+          "nOther": 1,
+          "address": "0xfce10cbf5171dc12c215bbcca5dd75cbaea72506",
+          "sizeInBytes": 2829
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 20,
+          "nEvents": 6,
+          "nOther": 1,
+          "address": "0xfd0174784ebce943bdb8832ecdea9fea30e7c7a9",
+          "sizeInBytes": 4135
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 10,
+          "nEvents": 2,
+          "nOther": 1,
+          "name": "PureLifeCoin",
+          "address": "0xff18dbc487b4c2e3222d115952babfda8ba52f5f",
+          "sizeInBytes": 2216
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 8,
+          "nEvents": 4,
+          "nOther": 1,
+          "name": "Blockchain Capital",
+          "address": "0xff3519eeeea3e76f1f699ccce5e23ee0bdda41ac",
+          "sizeInBytes": 1981
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 26,
+          "nEvents": 10,
+          "nOther": 2,
+          "address": "0xff6417ced7095444ad6a6a756446ba51ad334a30",
+          "sizeInBytes": 6517
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 4,
+          "nEvents": 0,
+          "nOther": 1,
+          "address": "0xffd2de852b694f88656e91d9defa6b425c454742",
+          "sizeInBytes": 1280
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 8,
+          "nEvents": 2,
+          "nOther": 0,
+          "address": "erc-1594",
+          "sizeInBytes": 4665
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 1,
+          "nEvents": 0,
+          "nOther": 0,
+          "address": "erc-165",
+          "sizeInBytes": 353
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 13,
+          "nEvents": 3,
+          "nOther": 0,
+          "address": "erc-721",
+          "sizeInBytes": 6281
+        },
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 128,
+          "nEvents": 8,
+          "nOther": 0,
+          "address": "erc-998",
+          "sizeInBytes": 62670
+        }
+      ],
+      "type": "CAbiCache",
+      "path": "/Volumes/Samsung_T7/testing/abis/",
+      "nFiles": 210,
+      "nFolders": 1,
+      "sizeInBytes": 1100024,
+      "valid_counts": true
+    }
+
+,{
+      "items": [
+        {
+          "type": "CMonitorCacheItem",
+          "enabled": true,
+          "address": "0x05a56e2d52c817161883f50c441c3228cfe54d9f.miner",
+          "firstAppearance": 1001001,
+          "latestAppearance": 8101001,
+          "nRecords": 69,
+          "sizeInBytes": 554
+        },
+        {
+          "type": "CMonitorCacheItem",
+          "enabled": true,
+          "address": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
+          "firstAppearance": 1001001,
+          "latestAppearance": 8101001,
+          "nRecords": 2731,
+          "sizeInBytes": 21854
+        },
+        {
+          "type": "CMonitorCacheItem",
+          "enabled": true,
+          "address": "0x1324e7b922b30b49ab8ea81086341cc41c249346.int",
+          "firstAppearance": 1001001,
+          "latestAppearance": 8101001,
+          "nRecords": 188,
+          "sizeInBytes": 1509
+        },
+        {
+          "type": "CMonitorCacheItem",
+          "enabled": true,
+          "address": "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0",
+          "firstAppearance": 1001001,
+          "latestAppearance": 8101001,
+          "nRecords": 383,
+          "sizeInBytes": 3064
+        },
+        {
+          "type": "CMonitorCacheItem",
+          "enabled": true,
+          "group": "30-Contracts",
+          "name": "The DAO",
+          "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+          "symbol": "DAO",
+          "description": "The infamous DAO smart contract",
+          "source": "Etherscan.io",
+          "firstAppearance": 1001001,
+          "latestAppearance": 8101001,
+          "nRecords": 11894829,
+          "sizeInBytes": 95158637
+        },
+        {
+          "type": "CMonitorCacheItem",
+          "enabled": true,
+          "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413.token",
+          "firstAppearance": 1001001,
+          "latestAppearance": 8101001,
+          "nRecords": 90550,
+          "sizeInBytes": 724405
+        },
+        {
+          "type": "CMonitorCacheItem",
+          "enabled": true,
+          "group": "30-Contracts",
+          "name": "Etherum Tip Jar",
+          "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
+          "symbol": "TIP",
+          "description": "The ethereum tip jar",
+          "source": "Ethereum.org",
+          "firstAppearance": 1001001,
+          "latestAppearance": 8101001,
+          "nRecords": 81273,
+          "sizeInBytes": 650187
+        },
+        {
+          "type": "CMonitorCacheItem",
+          "enabled": true,
+          "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359.int",
+          "firstAppearance": 1001001,
+          "latestAppearance": 8101001,
+          "nRecords": 63278,
+          "sizeInBytes": 506224
+        },
+        {
+          "type": "CMonitorCacheItem",
+          "enabled": true,
+          "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359.token",
+          "firstAppearance": 1001001,
+          "latestAppearance": 8101001,
+          "nRecords": 148118,
+          "sizeInBytes": 1184951
+        },
+        {
+          "type": "CMonitorCacheItem",
+          "enabled": true,
+          "address": "0xfd23407a31f54413e32043adb7b1ee61a6e04027",
+          "firstAppearance": 1001001,
+          "latestAppearance": 8101001,
+          "nRecords": 797,
+          "sizeInBytes": 6379
+        }
+      ],
+      "type": "CSlurpCache",
+      "path": "/Volumes/Samsung_T7/testing/slurps/",
+      "nFiles": 10,
+      "nFolders": 1,
+      "sizeInBytes": 98257764,
+      "valid_counts": true
+    }
+
+  ]
+}
+
+
+]

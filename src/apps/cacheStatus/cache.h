@@ -30,6 +30,7 @@ public:
     uint64_t nFiles;
     uint64_t nFolders;
     uint64_t sizeInBytes;
+    bool valid_counts;
 
 public:
     CCache(void);
@@ -40,6 +41,9 @@ public:
     DECLARE_NODE(CCache);
 
     // EXISTING_CODE
+    void noteFile(const string_q& p) { nFiles++; sizeInBytes += fileSize(p); }
+    void noteFolder(const string_q& p) { nFolders++; }
+    void reset(void) { initialize(); }
     // EXISTING_CODE
     bool operator==(const CCache& item) const;
     bool operator!=(const CCache& item) const { return !operator==(item); }
@@ -95,6 +99,7 @@ inline void CCache::initialize(void) {
     nFiles = 0;
     nFolders = 0;
     sizeInBytes = 0;
+    valid_counts = false;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -110,6 +115,7 @@ inline void CCache::duplicate(const CCache& ca) {
     nFiles = ca.nFiles;
     nFolders = ca.nFolders;
     sizeInBytes = ca.sizeInBytes;
+    valid_counts = ca.valid_counts;
 
     // EXISTING_CODE
     // EXISTING_CODE
