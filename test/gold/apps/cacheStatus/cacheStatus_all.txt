@@ -1,5 +1,5 @@
-cacheStatus argc: 1 
-cacheStatus 
+cacheStatus argc: 2 [1:all] 
+cacheStatus all 
 [
 {
   "client_version": "Parity-Ethereum//v2.3.4-beta-0e95db11d-20190220/x86_64-macos/rustc1.32.0",
@@ -34,6 +34,33 @@ cacheStatus
       "nFiles": 210,
       "nFolders": 1,
       "sizeInBytes": 1100024,
+      "valid_counts": true
+    }
+
+,{
+      "type": "CChainCache",
+      "path": "/Volumes/Samsung_T7/testing/blocks/",
+      "nFiles": 101,
+      "nFolders": 80,
+      "sizeInBytes": 390150,
+      "valid_counts": true
+    }
+
+,{
+      "type": "CChainCache",
+      "path": "/Volumes/Samsung_T7/testing/txs/",
+      "nFiles": 336034,
+      "nFolders": 5239,
+      "sizeInBytes": 379522314,
+      "valid_counts": true
+    }
+
+,{
+      "type": "CChainCache",
+      "path": "/Volumes/Samsung_T7/testing/traces/",
+      "nFiles": 31252,
+      "nFolders": 3362,
+      "sizeInBytes": 84572508,
       "valid_counts": true
     }
 

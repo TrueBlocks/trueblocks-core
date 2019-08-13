@@ -15,54 +15,36 @@
 #include "slurpcache.h"
 
 //-------------------------------------------------------------------------
-class CStats {
-public:
-    uint64_t nDups;
-    uint64_t nReversals;
-    uint64_t nFixed;
-    uint64_t nRecords;
-    uint64_t nTruncs;
-    CStats(void) : nDups(0), nReversals(0), nFixed(0), nRecords(0), nTruncs(0)
-        {}
-};
-
-//-------------------------------------------------------------------------
-class COptions;
-typedef bool (*APPEARANCEFILTERFUNC)(CAppearanceArray_base& dataArray, const CAppearance_base& item);
-
-//-------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    CStats stats;
-    CAccountWatchArray monitors;
+    CStatus status;
     string_q mode;
-    blknum_t trunc;
-    blknum_t maxBlock;
-    bool asData;
-    uint64_t skip;
-    bool isImport;
-    bool isRemove;
-    CAppearanceArray_base removals;
+    bool details;
 
     COptions(void);
     ~COptions(void);
 
-    bool handleMerge    (void) const;
-    bool handleSort     (void) const;
-    bool handleImport   (void) const;
-    bool handleRemove   (void) const;
-    bool handleRead     (const string_q& mode, size_t filesToUse, CAppearanceArray_base& dataArray) const;
-    bool handleWrite    (const string_q& outputFilename, const CAppearanceArray_base& dataArray, APPEARANCEFILTERFUNC filterFunc) const;
-
     bool parseArguments(string_q& command);
     void Init(void);
+
+    void getStatus(ostream& os);
 };
 
 //-------------------------------------------------------------------------
-extern bool handleList      (COptions& options);
-extern bool handleFix       (COptions& options);
-extern int  sortByBlock     (const void *v1, const void *v2);
+extern bool countFiles(const string_q& path, void *data);
+extern bool noteMonitor(const string_q& path, void *data);
+extern bool noteABI(const string_q& path, void *data);
+extern bool notePrice(const string_q& path, void *data);
 
 //-------------------------------------------------------------------------
-extern const char *STR_DEFAULT_DISPLAY;
-extern const char *STR_DATA_DISPLAY;
+class CItemCounter : public CCache {
+public:
+    COptions *options;
+    CCache *cachePtr;
+    CMonitorCacheItemArray *monitorArray;
+    CAbiCacheItemArray *abiArray;
+    CPriceCacheItemArray *priceArray;
+    CItemCounter(COptions *opt) : CCache(), options(opt) { cachePtr = NULL; monitorArray = NULL; abiArray = NULL; priceArray = NULL; }
+public:
+    CItemCounter(void) : CCache() {}
+};

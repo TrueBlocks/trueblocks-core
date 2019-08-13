@@ -20,7 +20,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CAccountWatch, CBaseNode);
+IMPLEMENT_NODE(CAccountWatch, CAccountName);
 
 //---------------------------------------------------------------------------
 static string_q nextAccountwatchChunk(const string_q& fieldIn, const void *dataPtr);
@@ -75,26 +75,20 @@ bool CAccountWatch::setValueByName(const string_q& fieldNameIn, const string_q& 
     }
     // EXISTING_CODE
 
+    if (CAccountName::setValueByName(fieldName, fieldValue))
+        return true;
+
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "address" ) { address = str_2_Addr(fieldValue); return true; }
             if ( fieldName % "abi_spec" ) { /* abi_spec = fieldValue; */ return false; }
-            break;
-        case 'c':
-            if ( fieldName % "color" ) { color = fieldValue; return true; }
             break;
         case 'e':
             if ( fieldName % "enabled" ) { enabled = str_2_Bool(fieldValue); return true; }
             break;
         case 'f':
-            if ( fieldName % "firstAppearance" ) { firstAppearance = str_2_Uint(fieldValue); return true; }
 //            if ( fieldName % "fm_mode" ) { fm_mode = fieldValue; return true; }
             break;
-        case 'l':
-            if ( fieldName % "lastAppearance" ) { lastAppearance = str_2_Uint(fieldValue); return true; }
-            break;
         case 'n':
-            if ( fieldName % "name" ) { name = fieldValue; return true; }
             if ( fieldName % "nodeBal" ) { nodeBal = str_2_Wei(fieldValue); return true; }
             break;
         case 's':
@@ -131,22 +125,17 @@ bool CAccountWatch::Serialize(CArchive& archive) {
 
     // Always read the base class (it will handle its own backLevels if any, then
     // read this object's back level (if any) or the current version.
-    CBaseNode::Serialize(archive);
+    CAccountName::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> address;
-    archive >> name;
-    archive >> color;
-    archive >> firstAppearance;
-    archive >> lastAppearance;
+    archive >> abi_spec;
     archive >> statement;
     archive >> stateHistory;
     archive >> nodeBal;
     archive >> enabled;
-//    archive >> abi_spec;
 //    archive >> fm_mode;
     finishParse();
     return true;
@@ -156,20 +145,15 @@ bool CAccountWatch::Serialize(CArchive& archive) {
 bool CAccountWatch::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
-    CBaseNode::SerializeC(archive);
+    CAccountName::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << address;
-    archive << name;
-    archive << color;
-    archive << firstAppearance;
-    archive << lastAppearance;
+    archive << abi_spec;
     archive << statement;
     archive << stateHistory;
     archive << nodeBal;
     archive << enabled;
-//    archive << abi_spec;
 //    archive << fm_mode;
 
     return true;
@@ -201,22 +185,18 @@ void CAccountWatch::registerClass(void) {
     // only do this once
     if (HAS_FIELD(CAccountWatch, "schema")) return;
 
+    CAccountName::registerClass();
+
     size_t fieldNum = 1000;
     ADD_FIELD(CAccountWatch, "schema",  T_NUMBER, ++fieldNum);
     ADD_FIELD(CAccountWatch, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CAccountWatch, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CAccountWatch, "cname", T_TEXT,  ++fieldNum);
-    ADD_FIELD(CAccountWatch, "address", T_ADDRESS, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "name", T_TEXT, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "color", T_TEXT, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "firstAppearance", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "lastAppearance", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CAccountWatch, "abi_spec", T_OBJECT, ++fieldNum);
     ADD_FIELD(CAccountWatch, "statement", T_OBJECT, ++fieldNum);
     ADD_FIELD(CAccountWatch, "stateHistory", T_OBJECT|TS_ARRAY, ++fieldNum);
     ADD_FIELD(CAccountWatch, "nodeBal", T_WEI, ++fieldNum);
     ADD_FIELD(CAccountWatch, "enabled", T_BOOL, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "abi_spec", T_OBJECT, ++fieldNum);
-    HIDE_FIELD(CAccountWatch, "abi_spec");
     ADD_FIELD(CAccountWatch, "fm_mode", T_TEXT, ++fieldNum);
     HIDE_FIELD(CAccountWatch, "fm_mode");
 
@@ -275,24 +255,15 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "address" ) return addr_2_Str(address);
             if ( fieldName % "abi_spec" ) { expContext().noFrst=true; return abi_spec.Format(); }
-            break;
-        case 'c':
-            if ( fieldName % "color" ) return color;
             break;
         case 'e':
             if ( fieldName % "enabled" ) return bool_2_Str(enabled);
             break;
         case 'f':
-            if ( fieldName % "firstAppearance" ) return uint_2_Str(firstAppearance);
 //            if ( fieldName % "fm_mode" ) return fm_mode;
             break;
-        case 'l':
-            if ( fieldName % "lastAppearance" ) return uint_2_Str(lastAppearance);
-            break;
         case 'n':
-            if ( fieldName % "name" ) return name;
             if ( fieldName % "nodeBal" ) return wei_2_Str(nodeBal);
             break;
         case 's':
@@ -316,14 +287,6 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
 
     string_q s;
-    s = toUpper(string_q("statement")) + "::";
-    if (contains(fieldName, s)) {
-        string_q f = fieldName;
-        replaceAll(f, s, "");
-        f = statement.getValueByName(f);
-        return f;
-    }
-
     s = toUpper(string_q("abi_spec")) + "::";
     if (contains(fieldName, s)) {
         string_q f = fieldName;
@@ -332,8 +295,16 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
         return f;
     }
 
+    s = toUpper(string_q("statement")) + "::";
+    if (contains(fieldName, s)) {
+        string_q f = fieldName;
+        replaceAll(f, s, "");
+        f = statement.getValueByName(f);
+        return f;
+    }
+
     // Finally, give the parent class a chance
-    return CBaseNode::getValueByName(fieldName);
+    return CAccountName::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------
@@ -348,12 +319,12 @@ ostream& operator<<(ostream& os, const CAccountWatch& item) {
 
 //---------------------------------------------------------------------------
 const CBaseNode *CAccountWatch::getObjectAt(const string_q& fieldName, size_t index) const {
+    if ( fieldName % "abi_spec" )
+        return &abi_spec;
     if ( fieldName % "statement" )
         return &statement;
     if ( fieldName % "stateHistory" && index < stateHistory.size() )
         return &stateHistory[index];
-    if ( fieldName % "abi_spec" )
-        return &abi_spec;
     return NULL;
 }
 

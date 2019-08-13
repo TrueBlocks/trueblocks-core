@@ -67,12 +67,12 @@ bool CMonitorCache::setValueByName(const string_q& fieldNameIn, const string_q& 
         return true;
 
     switch (tolower(fieldName[0])) {
-        case 'm':
-            if ( fieldName % "monitors" ) {
+        case 'i':
+            if ( fieldName % "items" ) {
                 CMonitorCacheItem item;
                 string_q str = fieldValue;
                 while (item.parseJson3(str)) {
-                    monitors.push_back(item);
+                    items.push_back(item);
                     item = CMonitorCacheItem();  // reset
                 }
                 return true;
@@ -104,7 +104,7 @@ bool CMonitorCache::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> monitors;
+    archive >> items;
     finishParse();
     return true;
 }
@@ -117,7 +117,7 @@ bool CMonitorCache::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << monitors;
+    archive << items;
 
     return true;
 }
@@ -155,7 +155,7 @@ void CMonitorCache::registerClass(void) {
     ADD_FIELD(CMonitorCache, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CMonitorCache, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CMonitorCache, "cname", T_TEXT,  ++fieldNum);
-    ADD_FIELD(CMonitorCache, "monitors", T_OBJECT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CMonitorCache, "items", T_OBJECT|TS_ARRAY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CMonitorCache, "schema");
@@ -223,15 +223,15 @@ string_q CMonitorCache::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
-        case 'm':
-            if ( fieldName % "monitors" || fieldName % "monitorsCnt" ) {
-                size_t cnt = monitors.size();
+        case 'i':
+            if ( fieldName % "items" || fieldName % "itemsCnt" ) {
+                size_t cnt = items.size();
                 if (endsWith(toLower(fieldName), "cnt"))
                     return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {
-                    retS += monitors[i].Format();
+                    retS += items[i].Format();
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
                 }
                 return retS;
@@ -258,8 +258,8 @@ ostream& operator<<(ostream& os, const CMonitorCache& item) {
 
 //---------------------------------------------------------------------------
 const CBaseNode *CMonitorCache::getObjectAt(const string_q& fieldName, size_t index) const {
-    if ( fieldName % "monitors" && index < monitors.size() )
-        return &monitors[index];
+    if ( fieldName % "items" && index < items.size() )
+        return &items[index];
     return NULL;
 }
 

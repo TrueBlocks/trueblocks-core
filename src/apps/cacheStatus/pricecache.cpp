@@ -67,12 +67,12 @@ bool CPriceCache::setValueByName(const string_q& fieldNameIn, const string_q& fi
         return true;
 
     switch (tolower(fieldName[0])) {
-        case 'p':
-            if ( fieldName % "pairs" ) {
+        case 'i':
+            if ( fieldName % "items" ) {
                 CPriceCacheItem item;
                 string_q str = fieldValue;
                 while (item.parseJson3(str)) {
-                    pairs.push_back(item);
+                    items.push_back(item);
                     item = CPriceCacheItem();  // reset
                 }
                 return true;
@@ -104,7 +104,7 @@ bool CPriceCache::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> pairs;
+    archive >> items;
     finishParse();
     return true;
 }
@@ -117,7 +117,7 @@ bool CPriceCache::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << pairs;
+    archive << items;
 
     return true;
 }
@@ -155,7 +155,7 @@ void CPriceCache::registerClass(void) {
     ADD_FIELD(CPriceCache, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CPriceCache, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CPriceCache, "cname", T_TEXT,  ++fieldNum);
-    ADD_FIELD(CPriceCache, "pairs", T_OBJECT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CPriceCache, "items", T_OBJECT|TS_ARRAY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CPriceCache, "schema");
@@ -223,15 +223,15 @@ string_q CPriceCache::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
-        case 'p':
-            if ( fieldName % "pairs" || fieldName % "pairsCnt" ) {
-                size_t cnt = pairs.size();
+        case 'i':
+            if ( fieldName % "items" || fieldName % "itemsCnt" ) {
+                size_t cnt = items.size();
                 if (endsWith(toLower(fieldName), "cnt"))
                     return uint_2_Str(cnt);
                 if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {
-                    retS += pairs[i].Format();
+                    retS += items[i].Format();
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
                 }
                 return retS;
@@ -258,8 +258,8 @@ ostream& operator<<(ostream& os, const CPriceCache& item) {
 
 //---------------------------------------------------------------------------
 const CBaseNode *CPriceCache::getObjectAt(const string_q& fieldName, size_t index) const {
-    if ( fieldName % "pairs" && index < pairs.size() )
-        return &pairs[index];
+    if ( fieldName % "items" && index < items.size() )
+        return &items[index];
     return NULL;
 }
 

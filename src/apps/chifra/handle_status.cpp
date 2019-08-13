@@ -48,7 +48,7 @@ bool COptions::handle_status(void) {
             item.name = substitute(substitute(item.name, "(", ""), ")", "");
             item.path = substitute(getMonitorPath(item.address), getCachePath(""), "./");
             item.sizeInBytes = fileSize(getMonitorPath(item.address));
-            item.lastAppearance = str_2_Uint(asciiFileToString(getMonitorLast(item.address)));
+            item.latestAppearance = str_2_Uint(asciiFileToString(getMonitorLast(item.address)));
             item.lastExport = str_2_Uint(asciiFileToString(getMonitorExpt(item.address)));
             item.nRecords = fileSize(getMonitorPath(item.address)) / sizeof(CAppearance_base);
             accounts.push_back(item);
@@ -70,7 +70,7 @@ bool COptions::handle_status(void) {
     if (api_mode) {
         SHOW_FIELD(CAccountName, "path");
         SHOW_FIELD(CAccountName, "sizeInBytes");
-        SHOW_FIELD(CAccountName, "lastAppearance");
+        SHOW_FIELD(CAccountName, "latestAppearance");
         SHOW_FIELD(CAccountName, "lastExport");
         SHOW_FIELD(CAccountName, "nRecords");
         ostringstream oss;
@@ -96,7 +96,7 @@ bool COptions::handle_status(void) {
                 "[\tName:        -c2-{NAME}-off-\n]"
                 "[\tFile name:   -c2-{PATH}-off-\n]"
                 "[\tFile size:   -c2-{SIZEINBYTES}-off-\n]"
-                "[\tLast block:  -c2-{LASTAPPEARANCE}-off-\n]"
+                "[\tLast block:  -c2-{LATESTAPPEARANCE}-off-\n]"
                 "[\tLast export: -c2-{LASTEXPORT}-off-\n]"
                 "[\tnRecords:    -c2-{NRECORDS}-off-\n]";
             replaceAll(fmt, "-c1-", cTeal);

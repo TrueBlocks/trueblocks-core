@@ -40,7 +40,7 @@ public:
     bool is_custom;
     bool is_shared;
     blknum_t firstAppearance;
-    blknum_t lastAppearance;
+    blknum_t latestAppearance;
     blknum_t lastExport;
     uint64_t nRecords;
     uint64_t sizeInBytes;
@@ -118,7 +118,7 @@ inline void CAccountName::initialize(void) {
     is_custom = 0;
     is_shared = 0;
     firstAppearance = 0;
-    lastAppearance = 0;
+    latestAppearance = 0;
     lastExport = 0;
     nRecords = 0;
     sizeInBytes = 0;
@@ -145,7 +145,7 @@ inline void CAccountName::duplicate(const CAccountName& ac) {
     is_custom = ac.is_custom;
     is_shared = ac.is_shared;
     firstAppearance = ac.firstAppearance;
-    lastAppearance = ac.lastAppearance;
+    latestAppearance = ac.latestAppearance;
     lastExport = ac.lastExport;
     nRecords = ac.nRecords;
     sizeInBytes = ac.sizeInBytes;

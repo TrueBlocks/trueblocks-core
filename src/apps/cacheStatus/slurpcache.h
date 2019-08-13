@@ -26,7 +26,7 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CSlurpCache : public CCache {
 public:
-    CMonitorCacheItemArray monitors;
+    CMonitorCacheItemArray items;
 
 public:
     CSlurpCache(void);
@@ -89,7 +89,7 @@ inline void CSlurpCache::clear(void) {
 inline void CSlurpCache::initialize(void) {
     CCache::initialize();
 
-    monitors.clear();
+    items.clear();
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -100,7 +100,7 @@ inline void CSlurpCache::duplicate(const CSlurpCache& sl) {
     clear();
     CCache::duplicate(sl);
 
-    monitors = sl.monitors;
+    items = sl.items;
 
     // EXISTING_CODE
     // EXISTING_CODE

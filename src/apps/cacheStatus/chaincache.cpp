@@ -67,9 +67,6 @@ bool CChainCache::setValueByName(const string_q& fieldNameIn, const string_q& fi
         return true;
 
     switch (tolower(fieldName[0])) {
-        case 'r':
-            if ( fieldName % "range" ) { range = fieldValue; return true; }
-            break;
         default:
             break;
     }
@@ -96,7 +93,6 @@ bool CChainCache::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> range;
     finishParse();
     return true;
 }
@@ -109,7 +105,6 @@ bool CChainCache::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << range;
 
     return true;
 }
@@ -147,7 +142,6 @@ void CChainCache::registerClass(void) {
     ADD_FIELD(CChainCache, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CChainCache, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CChainCache, "cname", T_TEXT,  ++fieldNum);
-    ADD_FIELD(CChainCache, "range", T_TEXT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CChainCache, "schema");
@@ -213,12 +207,7 @@ string_q CChainCache::getValueByName(const string_q& fieldName) const {
     if (!ret.empty())
         return ret;
 
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'r':
-            if ( fieldName % "range" ) return range;
-            break;
-    }
+    // No fields
 
     // EXISTING_CODE
     // EXISTING_CODE
