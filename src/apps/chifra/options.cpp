@@ -17,6 +17,7 @@ static const COption params[] = {
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
 extern bool visitIndexFiles(const string_q& path, void *data);
+extern string_q addExportMode(bool api_mode, format_t fmt);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
@@ -114,13 +115,12 @@ bool COptions::parseArguments(string_q& command) {
         establishFolder(getMonitorPath("", FM_STAGING));
     }
 
-    if (verbose && !contains(tool_flags, "-v"))
-        tool_flags += (" -v:" + uint_2_Str(verbose));
-    if (verbose && !contains(freshen_flags, "-v"))
-        freshen_flags += (" -v:" + uint_2_Str(verbose));
+    if (verbose && !contains(tool_flags,    "-v")) tool_flags    += (" -v:" + uint_2_Str(verbose));
+    if (verbose && !contains(freshen_flags, "-v")) freshen_flags += (" -v:" + uint_2_Str(verbose));
 
-    if (expContext().asEther) tool_flags += (" --ether");
+    if (expContext().asEther)   tool_flags += (" --ether");
     if (expContext().asDollars) tool_flags += (" --dollars");
+    tool_flags += (" " + addExportMode(api_mode, exportFmt));
 
     tool_flags = trim(tool_flags, ' ');
     freshen_flags = trim(freshen_flags, ' ');
@@ -173,4 +173,22 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+}
+
+//--------------------------------------------------------------------------------
+string_q addExportMode(bool api_mode, format_t fmt) {
+    if (api_mode && fmt == API1)
+        return "";
+    if (!api_mode && fmt == TXT1)
+        return "";
+    switch (fmt) {
+        case NONE1: return "--fmt none";
+        case JSON1: return "--fmt json";
+        case TXT1: return "--fmt txt";
+        case CSV1: return "--fmt csv";
+        case API1: return "--fmt api";
+        default:
+            break;
+    }
+    return "";
 }

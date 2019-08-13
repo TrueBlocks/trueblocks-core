@@ -13,9 +13,9 @@ cacheStatus scraper
     {
       "type": "CAddressCache",
       "path": "/Users/jrush/.quickBlocks/cache/addr_index/",
-      "nFiles": 4435,
+      "nFiles": 4437,
       "nFolders": 6,
-      "sizeInBytes": 26185334528,
+      "sizeInBytes": 26200363780,
       "valid_counts": true
     }
 

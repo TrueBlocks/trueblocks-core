@@ -19,8 +19,12 @@ bool COptions::exportBalances(void) {
         CBalanceRecordArray balances;
         if (!nodeHasBalances()) {
             if (getGlobalConfig("acctExport")->getConfigBool("balances", "remote", false)) {
-                string_q cmd = "/Users/jrush/src.GitHub/trueblocks-core/build/get_balances.sh " + monitor.address + (" --start " + uint_2_Str(scanRange.first));
-                if (system(cmd.c_str())) { }
+                ostringstream os;
+                os << "/Users/jrush/src.GitHub/trueblocks-core/build/get_balances.sh ";
+                os << monitor.address;
+                os << (" --start " + uint_2_Str(scanRange.first));
+                if (system(os.str().c_str())) { }
+
                 string_q contents = asciiFileToString("/Users/jrush/Desktop/files/" + monitor.address + ".bals.txt");
                 CStringArray lines;
                 explode(lines, contents, '\n');
@@ -116,17 +120,5 @@ bool COptions::exportBalances(void) {
 
     EXIT_NOMSG4(true);
 }
-© 2019 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Help
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
 #endif
 

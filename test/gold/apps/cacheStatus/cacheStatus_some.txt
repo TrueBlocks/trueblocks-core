@@ -13,27 +13,27 @@ cacheStatus some
     {
       "type": "CAddressCache",
       "path": "/Users/jrush/.quickBlocks/cache/addr_index/",
-      "nFiles": 4435,
+      "nFiles": 4437,
       "nFolders": 6,
-      "sizeInBytes": 26185334528,
+      "sizeInBytes": 26200363780,
       "valid_counts": true
     }
 
 ,{
       "type": "CMonitorCache",
       "path": "/Volumes/Samsung_T7/testing/monitors/",
-      "nFiles": 4,
+      "nFiles": 5,
       "nFolders": 1,
-      "sizeInBytes": 2120,
+      "sizeInBytes": 2512,
       "valid_counts": true
     }
 
 ,{
       "type": "CAbiCache",
       "path": "/Volumes/Samsung_T7/testing/abis/",
-      "nFiles": 210,
+      "nFiles": 211,
       "nFolders": 1,
-      "sizeInBytes": 1100024,
+      "sizeInBytes": 1105449,
       "valid_counts": true
     }
 
