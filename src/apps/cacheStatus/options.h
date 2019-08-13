@@ -20,6 +20,7 @@ public:
     CStatus status;
     string_q mode;
     bool details;
+    bool ls;
 
     COptions(void);
     ~COptions(void);

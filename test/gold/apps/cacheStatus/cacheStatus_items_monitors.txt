@@ -36,6 +36,15 @@ cacheStatus monitors --details
         {
           "type": "CMonitorCacheItem",
           "enabled": true,
+          "address": "0xc0a1f89bbcaddab4b736e786b6b16c67bc92ed35",
+          "firstAppearance": 1001001,
+          "latestAppearance": 8101001,
+          "nRecords": 49,
+          "sizeInBytes": 392
+        },
+        {
+          "type": "CMonitorCacheItem",
+          "enabled": true,
           "group": "50-Tokens",
           "name": "White Hat Donations (Giveth)",
           "address": "0xd556caf704e39fc728058557a113b226207d2212",
@@ -57,9 +66,9 @@ cacheStatus monitors --details
       ],
       "type": "CMonitorCache",
       "path": "/Volumes/Samsung_T7/testing/monitors/",
-      "nFiles": 4,
+      "nFiles": 5,
       "nFolders": 1,
-      "sizeInBytes": 2120,
+      "sizeInBytes": 2512,
       "valid_counts": true
     }
 
