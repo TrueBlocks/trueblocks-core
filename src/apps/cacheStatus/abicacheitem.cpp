@@ -15,23 +15,23 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <algorithm>
-#include "cache.h"
+#include "abicacheitem.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CCache, CBaseNode);
+IMPLEMENT_NODE(CAbiCacheItem, CAccountName);
 
 //---------------------------------------------------------------------------
-static string_q nextCacheChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextCacheChunk_custom(const string_q& fieldIn, const void *dataPtr);
+static string_q nextAbicacheitemChunk(const string_q& fieldIn, const void *dataPtr);
+static string_q nextAbicacheitemChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CCache::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CAbiCacheItem::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
-    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["cache_fmt"] : fmtIn);
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["abicacheitem_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();
         return;
@@ -41,13 +41,13 @@ void CCache::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextCacheChunk, this);
+        ctx << getNextChunk(fmt, nextAbicacheitemChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextCacheChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextAbicacheitemChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CCache *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CAbiCacheItem *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -56,29 +56,24 @@ string_q nextCacheChunk(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CCache::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+bool CAbiCacheItem::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
     // EXISTING_CODE
 
+    if (CAccountName::setValueByName(fieldName, fieldValue))
+        return true;
+
     switch (tolower(fieldName[0])) {
         case 'n':
-            if ( fieldName % "nFiles" ) { nFiles = str_2_Uint(fieldValue); return true; }
-            if ( fieldName % "nFolders" ) { nFolders = str_2_Uint(fieldValue); return true; }
-            break;
-        case 'p':
-            if ( fieldName % "path" ) { path = fieldValue; return true; }
-            break;
-        case 's':
-            if ( fieldName % "sizeInBytes" ) { sizeInBytes = str_2_Uint(fieldValue); return true; }
+            if ( fieldName % "nFunctions" ) { nFunctions = str_2_Uint(fieldValue); return true; }
+            if ( fieldName % "nEvents" ) { nEvents = str_2_Uint(fieldValue); return true; }
+            if ( fieldName % "nOther" ) { nOther = str_2_Uint(fieldValue); return true; }
             break;
         case 't':
             if ( fieldName % "type" ) { type = fieldValue; return true; }
-            break;
-        case 'v':
-            if ( fieldName % "valid_counts" ) { valid_counts = str_2_Bool(fieldValue); return true; }
             break;
         default:
             break;
@@ -87,55 +82,51 @@ bool CCache::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
 }
 
 //---------------------------------------------------------------------------------------------------
-void CCache::finishParse() {
+void CAbiCacheItem::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CCache::Serialize(CArchive& archive) {
+bool CAbiCacheItem::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
 
     // Always read the base class (it will handle its own backLevels if any, then
     // read this object's back level (if any) or the current version.
-    CBaseNode::Serialize(archive);
+    CAccountName::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
     // EXISTING_CODE
     // EXISTING_CODE
     archive >> type;
-    archive >> path;
-    archive >> nFiles;
-    archive >> nFolders;
-    archive >> sizeInBytes;
-    archive >> valid_counts;
+    archive >> nFunctions;
+    archive >> nEvents;
+    archive >> nOther;
     finishParse();
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CCache::SerializeC(CArchive& archive) const {
+bool CAbiCacheItem::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
-    CBaseNode::SerializeC(archive);
+    CAccountName::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
     archive << type;
-    archive << path;
-    archive << nFiles;
-    archive << nFolders;
-    archive << sizeInBytes;
-    archive << valid_counts;
+    archive << nFunctions;
+    archive << nEvents;
+    archive << nOther;
 
     return true;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CCacheArray& array) {
+CArchive& operator>>(CArchive& archive, CAbiCacheItemArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -147,7 +138,7 @@ CArchive& operator>>(CArchive& archive, CCacheArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CCacheArray& array) {
+CArchive& operator<<(CArchive& archive, const CAbiCacheItemArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -156,45 +147,45 @@ CArchive& operator<<(CArchive& archive, const CCacheArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void CCache::registerClass(void) {
+void CAbiCacheItem::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CCache, "schema")) return;
+    if (HAS_FIELD(CAbiCacheItem, "schema")) return;
+
+    CAccountName::registerClass();
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CCache, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CCache, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CCache, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CCache, "cname", T_TEXT,  ++fieldNum);
-    ADD_FIELD(CCache, "type", T_TEXT, ++fieldNum);
-    ADD_FIELD(CCache, "path", T_TEXT, ++fieldNum);
-    ADD_FIELD(CCache, "nFiles", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CCache, "nFolders", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CCache, "sizeInBytes", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CCache, "valid_counts", T_BOOL, ++fieldNum);
+    ADD_FIELD(CAbiCacheItem, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CAbiCacheItem, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CAbiCacheItem, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CAbiCacheItem, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CAbiCacheItem, "type", T_TEXT, ++fieldNum);
+    ADD_FIELD(CAbiCacheItem, "nFunctions", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CAbiCacheItem, "nEvents", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CAbiCacheItem, "nOther", T_NUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CCache, "schema");
-    HIDE_FIELD(CCache, "deleted");
-    HIDE_FIELD(CCache, "showing");
-    HIDE_FIELD(CCache, "cname");
+    HIDE_FIELD(CAbiCacheItem, "schema");
+    HIDE_FIELD(CAbiCacheItem, "deleted");
+    HIDE_FIELD(CAbiCacheItem, "showing");
+    HIDE_FIELD(CAbiCacheItem, "cname");
 
-    builtIns.push_back(_biCCache);
+    builtIns.push_back(_biCAbiCacheItem);
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextCacheChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CCache *cac = reinterpret_cast<const CCache *>(dataPtr);
-    if (cac) {
+string_q nextAbicacheitemChunk_custom(const string_q& fieldIn, const void *dataPtr) {
+    const CAbiCacheItem *abi = reinterpret_cast<const CAbiCacheItem *>(dataPtr);
+    if (abi) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, cac);
+                    return nextBasenodeChunk(fieldIn, abi);
                 // EXISTING_CODE
                 // EXISTING_CODE
                 break;
@@ -208,7 +199,7 @@ string_q nextCacheChunk_custom(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-bool CCache::readBackLevel(CArchive& archive) {
+bool CAbiCacheItem::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE
@@ -217,54 +208,48 @@ bool CCache::readBackLevel(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CCache& cac) {
-    cac.SerializeC(archive);
+CArchive& operator<<(CArchive& archive, const CAbiCacheItem& abi) {
+    abi.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CCache& cac) {
-    cac.Serialize(archive);
+CArchive& operator>>(CArchive& archive, CAbiCacheItem& abi) {
+    abi.Serialize(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-string_q CCache::getValueByName(const string_q& fieldName) const {
+string_q CAbiCacheItem::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
-    string_q ret = nextCacheChunk_custom(fieldName, this);
+    string_q ret = nextAbicacheitemChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'n':
-            if ( fieldName % "nFiles" ) return uint_2_Str(nFiles);
-            if ( fieldName % "nFolders" ) return uint_2_Str(nFolders);
-            break;
-        case 'p':
-            if ( fieldName % "path" ) return path;
-            break;
-        case 's':
-            if ( fieldName % "sizeInBytes" ) return uint_2_Str(sizeInBytes);
+            if ( fieldName % "nFunctions" ) return uint_2_Str(nFunctions);
+            if ( fieldName % "nEvents" ) return uint_2_Str(nEvents);
+            if ( fieldName % "nOther" ) return uint_2_Str(nOther);
             break;
         case 't':
             if ( fieldName % "type" ) return type;
             break;
-        case 'v':
-            if ( fieldName % "valid_counts" ) return bool_2_Str(valid_counts);
-            break;
     }
 
     // EXISTING_CODE
+    if ( fieldName % "firstAppearance" || fieldName % "latestAppearance" || fieldName % "nRecords" )
+        return "";
     // EXISTING_CODE
 
     // Finally, give the parent class a chance
-    return CBaseNode::getValueByName(fieldName);
+    return CAccountName::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CCache& item) {
+ostream& operator<<(ostream& os, const CAbiCacheItem& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 

@@ -1,0 +1,79 @@
+cacheStatus argc: 4 [1:scraper] [2:monitors] [3:--details] 
+cacheStatus scraper monitors --details 
+[
+{
+  "client_version": "Parity-Ethereum//v2.3.4-beta-0e95db11d-20190220/x86_64-macos/rustc1.32.0",
+  "trueblocks_version": "GHC-TrueBlocks//0.5.8-alpha--git-hash---git-ts-",
+  "rpc_provider": "--providers--",
+  "api_provider": "--providers--",
+  "balance_provider": "--providers--",
+  "host": "--hostname-- (--username--)",
+  "is_scraping": false,
+  "caches": [
+    {
+      "type": "CAddressCache",
+      "path": "/Users/jrush/.quickBlocks/cache/addr_index/",
+      "nFiles": 4435,
+      "nFolders": 6,
+      "sizeInBytes": 26185334528,
+      "valid_counts": true
+    }
+
+,{
+      "items": [
+        {
+          "type": "CMonitorCacheItem",
+          "enabled": true,
+          "address": "0x35ca7ae854338dcbc154066f0ea00b636d38e431",
+          "firstAppearance": 1001001,
+          "latestAppearance": 8101001,
+          "nRecords": 7,
+          "sizeInBytes": 56
+        },
+        {
+          "type": "CMonitorCacheItem",
+          "enabled": true,
+          "group": "30-Contracts",
+          "name": "Camp Decentral Donations (Giveth)",
+          "address": "0x37f25bd26848cf02614c29338dd71a4d03b62218",
+          "source": "Giveth website",
+          "firstAppearance": 1001001,
+          "latestAppearance": 8101001,
+          "nRecords": 155,
+          "sizeInBytes": 1240
+        },
+        {
+          "type": "CMonitorCacheItem",
+          "enabled": true,
+          "group": "50-Tokens",
+          "name": "White Hat Donations (Giveth)",
+          "address": "0xd556caf704e39fc728058557a113b226207d2212",
+          "source": "Giveth website",
+          "firstAppearance": 1001001,
+          "latestAppearance": 8101001,
+          "nRecords": 76,
+          "sizeInBytes": 608
+        },
+        {
+          "type": "CMonitorCacheItem",
+          "enabled": true,
+          "address": "0xe27438944187b49ef0005554a15b913b11baa08c",
+          "firstAppearance": 1001001,
+          "latestAppearance": 8101001,
+          "nRecords": 27,
+          "sizeInBytes": 216
+        }
+      ],
+      "type": "CMonitorCache",
+      "path": "/Volumes/Samsung_T7/testing/monitors/",
+      "nFiles": 4,
+      "nFolders": 1,
+      "sizeInBytes": 2120,
+      "valid_counts": true
+    }
+
+  ]
+}
+
+
+]

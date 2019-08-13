@@ -26,7 +26,7 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CPriceCache : public CCache {
 public:
-    CPriceCacheItemArray pairs;
+    CPriceCacheItemArray items;
 
 public:
     CPriceCache(void);
@@ -89,7 +89,7 @@ inline void CPriceCache::clear(void) {
 inline void CPriceCache::initialize(void) {
     CCache::initialize();
 
-    pairs.clear();
+    items.clear();
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -100,7 +100,7 @@ inline void CPriceCache::duplicate(const CPriceCache& pr) {
     clear();
     CCache::duplicate(pr);
 
-    pairs = pr.pairs;
+    items = pr.items;
 
     // EXISTING_CODE
     // EXISTING_CODE

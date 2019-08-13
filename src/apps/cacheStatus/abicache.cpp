@@ -67,6 +67,17 @@ bool CAbiCache::setValueByName(const string_q& fieldNameIn, const string_q& fiel
         return true;
 
     switch (tolower(fieldName[0])) {
+        case 'i':
+            if ( fieldName % "items" ) {
+                CAbiCacheItem item;
+                string_q str = fieldValue;
+                while (item.parseJson3(str)) {
+                    items.push_back(item);
+                    item = CAbiCacheItem();  // reset
+                }
+                return true;
+            }
+            break;
         default:
             break;
     }
@@ -93,6 +104,7 @@ bool CAbiCache::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
+    archive >> items;
     finishParse();
     return true;
 }
@@ -105,6 +117,7 @@ bool CAbiCache::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
+    archive << items;
 
     return true;
 }
@@ -142,6 +155,7 @@ void CAbiCache::registerClass(void) {
     ADD_FIELD(CAbiCache, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CAbiCache, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CAbiCache, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CAbiCache, "items", T_OBJECT|TS_ARRAY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAbiCache, "schema");
@@ -207,7 +221,23 @@ string_q CAbiCache::getValueByName(const string_q& fieldName) const {
     if (!ret.empty())
         return ret;
 
-    // No fields
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'i':
+            if ( fieldName % "items" || fieldName % "itemsCnt" ) {
+                size_t cnt = items.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt) return "";
+                string_q retS;
+                for (size_t i = 0 ; i < cnt ; i++) {
+                    retS += items[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
+            break;
+    }
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -224,6 +254,13 @@ ostream& operator<<(ostream& os, const CAbiCache& item) {
     item.Format(os, "", nullptr);
     os << "\n";
     return os;
+}
+
+//---------------------------------------------------------------------------
+const CBaseNode *CAbiCache::getObjectAt(const string_q& fieldName, size_t index) const {
+    if ( fieldName % "items" && index < items.size() )
+        return &items[index];
+    return NULL;
 }
 
 //---------------------------------------------------------------------------

@@ -23,30 +23,32 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CPriceCacheItem : public CAccountName {
+class CAbiCacheItem : public CAccountName {
 public:
     string_q type;
-    string_q pair;
+    uint64_t nFunctions;
+    uint64_t nEvents;
+    uint64_t nOther;
 
 public:
-    CPriceCacheItem(void);
-    CPriceCacheItem(const CPriceCacheItem& pr);
-    virtual ~CPriceCacheItem(void);
-    CPriceCacheItem& operator=(const CPriceCacheItem& pr);
+    CAbiCacheItem(void);
+    CAbiCacheItem(const CAbiCacheItem& ab);
+    virtual ~CAbiCacheItem(void);
+    CAbiCacheItem& operator=(const CAbiCacheItem& ab);
 
-    DECLARE_NODE(CPriceCacheItem);
+    DECLARE_NODE(CAbiCacheItem);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CPriceCacheItem& item) const;
-    bool operator!=(const CPriceCacheItem& item) const { return !operator==(item); }
-    friend bool operator<(const CPriceCacheItem& v1, const CPriceCacheItem& v2);
-    friend ostream& operator<<(ostream& os, const CPriceCacheItem& item);
+    bool operator==(const CAbiCacheItem& item) const;
+    bool operator!=(const CAbiCacheItem& item) const { return !operator==(item); }
+    friend bool operator<(const CAbiCacheItem& v1, const CAbiCacheItem& v2);
+    friend ostream& operator<<(ostream& os, const CAbiCacheItem& item);
 
 protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CPriceCacheItem& pr);
+    void duplicate(const CAbiCacheItem& ab);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -54,68 +56,72 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline CPriceCacheItem::CPriceCacheItem(void) {
+inline CAbiCacheItem::CAbiCacheItem(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CPriceCacheItem::CPriceCacheItem(const CPriceCacheItem& pr) {
+inline CAbiCacheItem::CAbiCacheItem(const CAbiCacheItem& ab) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(pr);
+    duplicate(ab);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CPriceCacheItem::~CPriceCacheItem(void) {
+inline CAbiCacheItem::~CAbiCacheItem(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPriceCacheItem::clear(void) {
+inline void CAbiCacheItem::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPriceCacheItem::initialize(void) {
+inline void CAbiCacheItem::initialize(void) {
     CAccountName::initialize();
 
     type = "";
-    pair = "";
+    nFunctions = 0;
+    nEvents = 0;
+    nOther = 0;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPriceCacheItem::duplicate(const CPriceCacheItem& pr) {
+inline void CAbiCacheItem::duplicate(const CAbiCacheItem& ab) {
     clear();
-    CAccountName::duplicate(pr);
+    CAccountName::duplicate(ab);
 
-    type = pr.type;
-    pair = pr.pair;
+    type = ab.type;
+    nFunctions = ab.nFunctions;
+    nEvents = ab.nEvents;
+    nOther = ab.nOther;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CPriceCacheItem& CPriceCacheItem::operator=(const CPriceCacheItem& pr) {
-    duplicate(pr);
+inline CAbiCacheItem& CAbiCacheItem::operator=(const CAbiCacheItem& ab) {
+    duplicate(ab);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CPriceCacheItem::operator==(const CPriceCacheItem& item) const {
+inline bool CAbiCacheItem::operator==(const CAbiCacheItem& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -123,7 +129,7 @@ inline bool CPriceCacheItem::operator==(const CPriceCacheItem& item) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CPriceCacheItem& v1, const CPriceCacheItem& v2) {
+inline bool operator<(const CAbiCacheItem& v1, const CAbiCacheItem& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -131,13 +137,13 @@ inline bool operator<(const CPriceCacheItem& v1, const CPriceCacheItem& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CPriceCacheItem> CPriceCacheItemArray;
-extern CArchive& operator>>(CArchive& archive, CPriceCacheItemArray& array);
-extern CArchive& operator<<(CArchive& archive, const CPriceCacheItemArray& array);
+typedef vector<CAbiCacheItem> CAbiCacheItemArray;
+extern CArchive& operator>>(CArchive& archive, CAbiCacheItemArray& array);
+extern CArchive& operator<<(CArchive& archive, const CAbiCacheItemArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CPriceCacheItem& pri);
-extern CArchive& operator>>(CArchive& archive, CPriceCacheItem& pri);
+extern CArchive& operator<<(CArchive& archive, const CAbiCacheItem& abi);
+extern CArchive& operator>>(CArchive& archive, CAbiCacheItem& abi);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

@@ -1,4 +1,5 @@
 [settings]
 class     = CAccountWatch
-fields    = address address|string name|string color|blknum firstAppearance|blknum lastAppearance|CIncomeStatement statement|CEthStateArray stateHistory|wei nodeBal|bool enabled=true|CAbi abi_spec (nowrite)|freshen_t fm_mode=FM_PRODUCTION (nowrite)
+baseClass = CAccountName
+fields    = CAbi abi_spec|CIncomeStatement statement|CEthStateArray stateHistory|wei nodeBal|bool enabled=true|freshen_t fm_mode=FM_PRODUCTION (nowrite)
 includes  = etherlib.h|transaction.h|incomestatement.h|ethstate.h

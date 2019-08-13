@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include "cache.h"
+#include "abicacheitem.h"
 
 namespace qblocks {
 
@@ -25,12 +26,17 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CAbiCache : public CCache {
 public:
+    CAbiCacheItemArray items;
+
+public:
     CAbiCache(void);
     CAbiCache(const CAbiCache& ab);
     virtual ~CAbiCache(void);
     CAbiCache& operator=(const CAbiCache& ab);
 
     DECLARE_NODE(CAbiCache);
+
+    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -83,6 +89,8 @@ inline void CAbiCache::clear(void) {
 inline void CAbiCache::initialize(void) {
     CCache::initialize();
 
+    items.clear();
+
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -91,6 +99,8 @@ inline void CAbiCache::initialize(void) {
 inline void CAbiCache::duplicate(const CAbiCache& ab) {
     clear();
     CCache::duplicate(ab);
+
+    items = ab.items;
 
     // EXISTING_CODE
     // EXISTING_CODE

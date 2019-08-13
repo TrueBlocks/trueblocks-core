@@ -59,6 +59,9 @@ public:
     bool operator!=(const CAbi& item) const { return !operator==(item); }
     friend bool operator<(const CAbi& v1, const CAbi& v2);
     friend ostream& operator<<(ostream& os, const CAbi& item);
+    size_t nFunctions(void) const { size_t cnt = 0; for (auto i : interfaces) if (i.type == "function") cnt++; return cnt; }
+    size_t nEvents(void) const { size_t cnt = 0; for (auto i : interfaces) if (i.type == "event") cnt++; return cnt; }
+    size_t nOther(void) const { return interfaces.size() - nFunctions() - nEvents(); }
 
 protected:
     void clear(void);

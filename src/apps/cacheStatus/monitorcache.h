@@ -26,7 +26,7 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CMonitorCache : public CCache {
 public:
-    CMonitorCacheItemArray monitors;
+    CMonitorCacheItemArray items;
 
 public:
     CMonitorCache(void);
@@ -89,7 +89,7 @@ inline void CMonitorCache::clear(void) {
 inline void CMonitorCache::initialize(void) {
     CCache::initialize();
 
-    monitors.clear();
+    items.clear();
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -100,7 +100,7 @@ inline void CMonitorCache::duplicate(const CMonitorCache& mo) {
     clear();
     CCache::duplicate(mo);
 
-    monitors = mo.monitors;
+    items = mo.items;
 
     // EXISTING_CODE
     // EXISTING_CODE

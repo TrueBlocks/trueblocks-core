@@ -96,7 +96,7 @@ inline CAccountWatch::CAccountWatch(const string_q& _addr, const string_q& _name
     name = _name;
     color = _color;
     firstAppearance = fB;
-    lastAppearance = lB;
+    latestAppearance = lB;
 }
 
 //--------------------------------------------------------------------------
@@ -106,7 +106,7 @@ inline CAccountWatch::CAccountWatch(const address_t& _addr, const string_q& _nam
     name = _name;
     color = cBlue;
     firstAppearance = 0;
-    lastAppearance = 0;
+    latestAppearance = 0;
 }
 // EXISTING_CODE
 
@@ -130,22 +130,17 @@ inline void CAccountWatch::clear(void) {
 
 //--------------------------------------------------------------------------
 inline void CAccountWatch::initialize(void) {
-    CBaseNode::initialize();
+    CAccountName::initialize();
 
-    address = "";
-    name = "";
-    color = "";
-    firstAppearance = 0;
-    lastAppearance = 0;
+    abi_spec = CAbi();
     statement = CIncomeStatement();
     stateHistory.clear();
     nodeBal = 0;
     enabled = true;
-    abi_spec = CAbi();
     fm_mode = FM_PRODUCTION;
 
     // EXISTING_CODE
-    lastAppearance = UINT_MAX;
+    latestAppearance = UINT_MAX;
     bloom = 0;
     inBlock = false;
     tx_cache = NULL;
@@ -156,22 +151,17 @@ inline void CAccountWatch::initialize(void) {
 //--------------------------------------------------------------------------
 inline void CAccountWatch::duplicate(const CAccountWatch& ac) {
     clear();
-    CBaseNode::duplicate(ac);
+    CAccountName::duplicate(ac);
 
-    address = ac.address;
-    name = ac.name;
-    color = ac.color;
-    firstAppearance = ac.firstAppearance;
-    lastAppearance = ac.lastAppearance;
+    abi_spec = ac.abi_spec;
     statement = ac.statement;
     stateHistory = ac.stateHistory;
     nodeBal = ac.nodeBal;
     enabled = ac.enabled;
-    abi_spec = ac.abi_spec;
     fm_mode = ac.fm_mode;
 
     // EXISTING_CODE
-    lastAppearance = ac.lastAppearance;
+    latestAppearance = ac.latestAppearance;
     bloom = ac.bloom;
     inBlock = ac.inBlock;
     tx_cache = NULL; // we do not copy the tx_cache

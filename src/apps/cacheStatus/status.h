@@ -35,9 +35,6 @@ public:
     string_q index_location;
     string_q host;
     bool is_scraping;
-    uint64_t bytes_on_disk_client;
-    uint64_t bytes_on_disk_trueblocks;
-    string_q caches;
 
 public:
     CStatus(void);
@@ -48,6 +45,7 @@ public:
     DECLARE_NODE(CStatus);
 
     // EXISTING_CODE
+    CCachePtrArray caches;
     // EXISTING_CODE
     bool operator==(const CStatus& item) const;
     bool operator!=(const CStatus& item) const { return !operator==(item); }
@@ -107,9 +105,6 @@ inline void CStatus::initialize(void) {
     index_location = "";
     host = "";
     is_scraping = 0;
-    bytes_on_disk_client = 0;
-    bytes_on_disk_trueblocks = 0;
-    caches = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -129,9 +124,6 @@ inline void CStatus::duplicate(const CStatus& st) {
     index_location = st.index_location;
     host = st.host;
     is_scraping = st.is_scraping;
-    bytes_on_disk_client = st.bytes_on_disk_client;
-    bytes_on_disk_trueblocks = st.bytes_on_disk_trueblocks;
-    caches = st.caches;
 
     // EXISTING_CODE
     // EXISTING_CODE

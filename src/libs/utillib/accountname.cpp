@@ -86,7 +86,7 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
             break;
         case 'l':
             if ( fieldName % "logo" ) { logo = fieldValue; return true; }
-            if ( fieldName % "lastAppearance" ) { lastAppearance = str_2_Uint(fieldValue); return true; }
+            if ( fieldName % "latestAppearance" ) { latestAppearance = str_2_Uint(fieldValue); return true; }
             if ( fieldName % "lastExport" ) { lastExport = str_2_Uint(fieldValue); return true; }
             break;
         case 'n':
@@ -140,7 +140,7 @@ bool CAccountName::Serialize(CArchive& archive) {
     archive >> is_custom;
     archive >> is_shared;
 //    archive >> firstAppearance;
-//    archive >> lastAppearance;
+//    archive >> latestAppearance;
 //    archive >> lastExport;
 //    archive >> nRecords;
 //    archive >> sizeInBytes;
@@ -169,7 +169,7 @@ bool CAccountName::SerializeC(CArchive& archive) const {
     archive << is_custom;
     archive << is_shared;
 //    archive << firstAppearance;
-//    archive << lastAppearance;
+//    archive << latestAppearance;
 //    archive << lastExport;
 //    archive << nRecords;
 //    archive << sizeInBytes;
@@ -224,8 +224,8 @@ void CAccountName::registerClass(void) {
     ADD_FIELD(CAccountName, "is_shared", T_BOOL, ++fieldNum);
     ADD_FIELD(CAccountName, "firstAppearance", T_NUMBER, ++fieldNum);
     HIDE_FIELD(CAccountName, "firstAppearance");
-    ADD_FIELD(CAccountName, "lastAppearance", T_NUMBER, ++fieldNum);
-    HIDE_FIELD(CAccountName, "lastAppearance");
+    ADD_FIELD(CAccountName, "latestAppearance", T_NUMBER, ++fieldNum);
+    HIDE_FIELD(CAccountName, "latestAppearance");
     ADD_FIELD(CAccountName, "lastExport", T_NUMBER, ++fieldNum);
     HIDE_FIELD(CAccountName, "lastExport");
     ADD_FIELD(CAccountName, "nRecords", T_NUMBER, ++fieldNum);
@@ -309,7 +309,7 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
             break;
         case 'l':
             if ( fieldName % "logo" ) return logo;
-            if ( fieldName % "lastAppearance" ) return uint_2_Str(lastAppearance);
+            if ( fieldName % "latestAppearance" ) return uint_2_Str(latestAppearance);
             if ( fieldName % "lastExport" ) return uint_2_Str(lastExport);
             break;
         case 'n':

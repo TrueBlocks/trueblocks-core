@@ -25,9 +25,6 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CChainCache : public CCache {
 public:
-    string_q range;
-
-public:
     CChainCache(void);
     CChainCache(const CChainCache& ch);
     virtual ~CChainCache(void);
@@ -86,8 +83,6 @@ inline void CChainCache::clear(void) {
 inline void CChainCache::initialize(void) {
     CCache::initialize();
 
-    range = "";
-
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -96,8 +91,6 @@ inline void CChainCache::initialize(void) {
 inline void CChainCache::duplicate(const CChainCache& ch) {
     clear();
     CCache::duplicate(ch);
-
-    range = ch.range;
 
     // EXISTING_CODE
     // EXISTING_CODE
