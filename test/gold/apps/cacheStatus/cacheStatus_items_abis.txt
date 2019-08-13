@@ -1304,6 +1304,15 @@ cacheStatus abis --details
         },
         {
           "type": "CAbiCacheItem",
+          "nFunctions": 23,
+          "nEvents": 6,
+          "nOther": 1,
+          "name": "Storm",
+          "address": "0xd0a4b8946cb52f0661273bfbc6fd0e0c75fc6433",
+          "sizeInBytes": 5425
+        },
+        {
+          "type": "CAbiCacheItem",
           "nFunctions": 3,
           "nEvents": 0,
           "nOther": 0,
@@ -1732,9 +1741,9 @@ cacheStatus abis --details
       ],
       "type": "CAbiCache",
       "path": "/Volumes/Samsung_T7/testing/abis/",
-      "nFiles": 210,
+      "nFiles": 211,
       "nFolders": 1,
-      "sizeInBytes": 1100024,
+      "sizeInBytes": 1105449,
       "valid_counts": true
     }
 

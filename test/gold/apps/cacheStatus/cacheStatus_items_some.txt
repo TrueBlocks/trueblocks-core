@@ -13,9 +13,9 @@ cacheStatus some --details
     {
       "type": "CAddressCache",
       "path": "/Users/jrush/.quickBlocks/cache/addr_index/",
-      "nFiles": 4435,
+      "nFiles": 4437,
       "nFolders": 6,
-      "sizeInBytes": 26185334528,
+      "sizeInBytes": 26200363780,
       "valid_counts": true
     }
 
@@ -45,6 +45,15 @@ cacheStatus some --details
         {
           "type": "CMonitorCacheItem",
           "enabled": true,
+          "address": "0xc0a1f89bbcaddab4b736e786b6b16c67bc92ed35",
+          "firstAppearance": 1001001,
+          "latestAppearance": 8101001,
+          "nRecords": 49,
+          "sizeInBytes": 392
+        },
+        {
+          "type": "CMonitorCacheItem",
+          "enabled": true,
           "group": "50-Tokens",
           "name": "White Hat Donations (Giveth)",
           "address": "0xd556caf704e39fc728058557a113b226207d2212",
@@ -66,9 +75,9 @@ cacheStatus some --details
       ],
       "type": "CMonitorCache",
       "path": "/Volumes/Samsung_T7/testing/monitors/",
-      "nFiles": 4,
+      "nFiles": 5,
       "nFolders": 1,
-      "sizeInBytes": 2120,
+      "sizeInBytes": 2512,
       "valid_counts": true
     }
 
@@ -1366,6 +1375,15 @@ cacheStatus some --details
         },
         {
           "type": "CAbiCacheItem",
+          "nFunctions": 23,
+          "nEvents": 6,
+          "nOther": 1,
+          "name": "Storm",
+          "address": "0xd0a4b8946cb52f0661273bfbc6fd0e0c75fc6433",
+          "sizeInBytes": 5425
+        },
+        {
+          "type": "CAbiCacheItem",
           "nFunctions": 3,
           "nEvents": 0,
           "nOther": 0,
@@ -1794,9 +1812,9 @@ cacheStatus some --details
       ],
       "type": "CAbiCache",
       "path": "/Volumes/Samsung_T7/testing/abis/",
-      "nFiles": 210,
+      "nFiles": 211,
       "nFolders": 1,
-      "sizeInBytes": 1100024,
+      "sizeInBytes": 1105449,
       "valid_counts": true
     }
 

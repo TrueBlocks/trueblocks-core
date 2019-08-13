@@ -1,14 +1,20 @@
 cacheStatus argc: 3 [1:-l] [2:--junk] 
 cacheStatus -l --junk 
 
-  Please provide one of one of [scraper|monitors|names|abis|blocks|txs|traces|slurps|prices|some*|all] for --mode. Quitting.
+  Provided value for 'mode' (--junk) not one or more of [scraper|monitors|names|abis|blocks|txs|traces|slurps|prices|some*|all]. Quitting.
 
-  Usage:    cacheStatus [-d|-h] mode  
-  Purpose:  Display JSON information about the various TrueBlocks caches.
-        
+  Usage:    cacheStatus [-d|-l|-h] mode_list  
+  Purpose:  Report on status of one or more TrueBlocks caches.
+
   Where:  
-	mode                  one of enum[scraper|monitors|names|abis|blocks|txs|traces|slurps|prices|some*|all] (required)
-	-d  (--details boolean)include details about items found in monitors, slurp, abi, or price caches
+	mode_list             one or more of [scraper|monitors|names|abis|blocks|txs|traces|slurps|prices|some*|all] (required)
+	-d  (--details)       include details about items found in monitors, slurps, abis, or price caches
+	-l  (--list)          display results in Linux ls -l format (assumes --detail)
+
+#### Hidden options (shown during testing only)
+	-x  (--fmt <fmt>)     export format (one of [none|json*|txt|csv|api])
+#### Hidden options (shown during testing only)
+
 	-h  (--help)          display this help screen
 
   Powered by QBlocks
