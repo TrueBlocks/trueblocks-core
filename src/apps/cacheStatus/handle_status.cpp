@@ -22,11 +22,13 @@ void COptions::doStatus(ostream& os) {
         md.path = getCachePath("monitors/");
         forEveryFileInFolder(md.path, countFiles, &md);
         status.caches.push_back(&md);
+        CItemCounter counter(this);
+        counter.cachePtr = &md;
+        counter.monitorArray = &md.items;
         if (details) {
-            CItemCounter counter(this);
-            counter.cachePtr = &md;
-            counter.monitorArray = &md.items;
             forEveryFileInFolder(md.path, noteMonitor, &counter);
+        } else {
+            forEveryFileInFolder(md.path, noteMonitor_light, &counter);
         }
     }
 
@@ -76,11 +78,13 @@ void COptions::doStatus(ostream& os) {
         slurps.path = getCachePath("slurps/");
         forEveryFileInFolder(slurps.path, countFiles, &slurps);
         status.caches.push_back(&slurps);
+        CItemCounter counter(this);
+        counter.cachePtr = &md;
+        counter.monitorArray = &md.items;
         if (details) {
-            CItemCounter counter(this);
-            counter.cachePtr = &slurps;
-            counter.monitorArray = &slurps.items;
-            forEveryFileInFolder(slurps.path, noteMonitor, &counter);
+            forEveryFileInFolder(md.path, noteMonitor, &counter);
+        } else {
+            forEveryFileInFolder(md.path, noteMonitor_light, &counter);
         }
     }
 
@@ -123,6 +127,29 @@ bool countFiles(const string_q& path, void *data) {
         counter->noteFile(path);
         counter->valid_counts = true;
 
+    }
+    return true;
+}
+
+//---------------------------------------------------------------------------
+bool noteMonitor_light(const string_q& path, void *data) {
+
+    if (contains(path, "/staging"))
+        return true;
+
+    if (endsWith(path, '/')) {
+        return forEveryFileInFolder(path + "*", noteMonitor_light, data);
+
+    } else if (endsWith(path, ".bin") || endsWith(path, ".json")) {
+
+        CItemCounter *counter = (CItemCounter*)data;
+        ASSERT(counter->options);
+
+        if (isTestMode()) {
+            ((CMonitorCache*)counter->cachePtr)->addrs.push_back("0xTesting");
+            return false;
+        }
+        ((CMonitorCache*)counter->cachePtr)->addrs.push_back(substitute(substitute(substitute(substitute(path, counter->cachePtr->path, ""),".acct", ""),".bin", ""), ".json", ""));
     }
     return true;
 }
