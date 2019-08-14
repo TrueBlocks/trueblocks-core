@@ -13,14 +13,35 @@ cacheStatus scraper monitors --details
     {
       "type": "CAddressCache",
       "path": "/Users/jrush/.quickBlocks/cache/addr_index/",
-      "nFiles": 4437,
+      "nFiles": 4439,
       "nFolders": 6,
-      "sizeInBytes": 26200363780,
+      "sizeInBytes": 26215344768,
       "valid_counts": true
     }
 
 ,{
       "items": [
+        {
+          "type": "CMonitorCacheItem",
+          "enabled": true,
+          "address": "0x00a3819199113fc6a6e6ba1298afde7377e2009b",
+          "firstAppearance": 1001001,
+          "latestAppearance": 8101001,
+          "nRecords": 85,
+          "sizeInBytes": 680
+        },
+        {
+          "type": "CMonitorCacheItem",
+          "enabled": true,
+          "group": "50-Tokens",
+          "name": "DevCon 2 - Token 1",
+          "address": "0x0a43edfe106d295e7c1e591a4b04b5598af9474c",
+          "source": "TrueBlocks.io",
+          "firstAppearance": 1001001,
+          "latestAppearance": 8101001,
+          "nRecords": 1502,
+          "sizeInBytes": 12016
+        },
         {
           "type": "CMonitorCacheItem",
           "enabled": true,
@@ -50,34 +71,13 @@ cacheStatus scraper monitors --details
           "latestAppearance": 8101001,
           "nRecords": 49,
           "sizeInBytes": 392
-        },
-        {
-          "type": "CMonitorCacheItem",
-          "enabled": true,
-          "group": "50-Tokens",
-          "name": "White Hat Donations (Giveth)",
-          "address": "0xd556caf704e39fc728058557a113b226207d2212",
-          "source": "Giveth website",
-          "firstAppearance": 1001001,
-          "latestAppearance": 8101001,
-          "nRecords": 76,
-          "sizeInBytes": 608
-        },
-        {
-          "type": "CMonitorCacheItem",
-          "enabled": true,
-          "address": "0xe27438944187b49ef0005554a15b913b11baa08c",
-          "firstAppearance": 1001001,
-          "latestAppearance": 8101001,
-          "nRecords": 27,
-          "sizeInBytes": 216
         }
       ],
       "type": "CMonitorCache",
       "path": "/Volumes/Samsung_T7/testing/monitors/",
       "nFiles": 5,
       "nFolders": 1,
-      "sizeInBytes": 2512,
+      "sizeInBytes": 14384,
       "valid_counts": true
     }
 
