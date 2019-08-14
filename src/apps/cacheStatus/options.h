@@ -34,6 +34,7 @@ public:
 
 //-------------------------------------------------------------------------
 extern bool countFiles(const string_q& path, void *data);
+extern bool noteMonitor_light(const string_q& path, void *data);
 extern bool noteMonitor(const string_q& path, void *data);
 extern bool noteABI(const string_q& path, void *data);
 extern bool notePrice(const string_q& path, void *data);

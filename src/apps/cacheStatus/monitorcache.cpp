@@ -67,6 +67,15 @@ bool CMonitorCache::setValueByName(const string_q& fieldNameIn, const string_q& 
         return true;
 
     switch (tolower(fieldName[0])) {
+        case 'a':
+            if ( fieldName % "addrs" ) {
+                string_q str = fieldValue;
+                while (!str.empty()) {
+                    addrs.push_back(str_2_Addr(nextTokenClear(str, ',')));
+                }
+                return true;
+            }
+            break;
         case 'i':
             if ( fieldName % "items" ) {
                 CMonitorCacheItem item;
@@ -104,6 +113,7 @@ bool CMonitorCache::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
+    archive >> addrs;
     archive >> items;
     finishParse();
     return true;
@@ -117,6 +127,7 @@ bool CMonitorCache::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
+    archive << addrs;
     archive << items;
 
     return true;
@@ -155,6 +166,7 @@ void CMonitorCache::registerClass(void) {
     ADD_FIELD(CMonitorCache, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CMonitorCache, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CMonitorCache, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CMonitorCache, "addrs", T_ADDRESS|TS_ARRAY, ++fieldNum);
     ADD_FIELD(CMonitorCache, "items", T_OBJECT|TS_ARRAY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
@@ -223,6 +235,20 @@ string_q CMonitorCache::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
+        case 'a':
+            if ( fieldName % "addrs" || fieldName % "addrsCnt" ) {
+                size_t cnt = addrs.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt) return "";
+                string_q retS;
+                for (size_t i = 0 ; i < cnt ; i++) {
+                    retS += ("\"" + addrs[i] + "\"");
+                    retS += ((i < cnt - 1) ? ",\n" + indent() : "\n");
+                }
+                return retS;
+            }
+            break;
         case 'i':
             if ( fieldName % "items" || fieldName % "itemsCnt" ) {
                 size_t cnt = items.size();
@@ -261,6 +287,13 @@ const CBaseNode *CMonitorCache::getObjectAt(const string_q& fieldName, size_t in
     if ( fieldName % "items" && index < items.size() )
         return &items[index];
     return NULL;
+}
+
+//---------------------------------------------------------------------------
+const string_q CMonitorCache::getStringAt(const string_q& fieldName, size_t i) const {
+    if ( fieldName % "addrs" && i < addrs.size() )
+        return (addrs[i]);
+    return "";
 }
 
 //---------------------------------------------------------------------------
