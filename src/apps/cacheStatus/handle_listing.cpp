@@ -130,7 +130,7 @@ void COptions::doListing(ostream& os) {
             string_q name = acct.name;
             if (!name.empty())
                 name = "(" + name.substr(0,20) + ") ";
-            os << " " << cTeal << acct.address << " " << padRight(name, longest);
+            os << " " << cTeal << acct.address << " " << setw((int)longest) << name;
             if (!(++cnt % ncols))
                 os << endl;
         }
