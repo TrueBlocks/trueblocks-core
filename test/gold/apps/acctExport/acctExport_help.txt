@@ -14,8 +14,8 @@ acctExport -h
 #### Hidden options (shown during testing only)
 	-c  (--balances)      export balance history instead of transaction list
 	-b  (--blocks enum[on|off*])write blocks to the binary cache ('off' by default)
-	-s  (--txs enum[on*|off])write transactions to the binary cache ('on' by default)
-	-r  (--trc enum[on|off*])write traces to the binary cache ('off' by default)
+	-s  (--writeTxs enum[on*|off])write transactions to the binary cache ('on' by default)
+	-r  (--writeTraces enum[on*|off])write traces to the binary cache ('on' by default)
 	-d  (--ddos enum[on*|off])skip over dDos transactions in export ('on' by default)
 	-m  (--maxTraces <uint>)if --ddos:on, the number of traces defining a dDos (default = 250)
 	-n  (--noHeader)      do not show the header row
