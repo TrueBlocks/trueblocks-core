@@ -16,7 +16,7 @@ int main(int argc, const char *argv[]) {
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
-        options.getStatus(cout);
+        options.ls ? options.doListing(cout) : options.doStatus(cout);
     }
 
     acctlib_cleanup();

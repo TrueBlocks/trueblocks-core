@@ -28,7 +28,8 @@ public:
     bool parseArguments(string_q& command);
     void Init(void);
 
-    void getStatus(ostream& os);
+    void doStatus(ostream& os);
+    void doListing(ostream& os);
 };
 
 //-------------------------------------------------------------------------
