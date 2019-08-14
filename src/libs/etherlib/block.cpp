@@ -575,14 +575,6 @@ bool CTransaction::forEveryUniqueAddressPerTx(ADDRESSFUNC funcy, TRANSFUNC filt,
 }
 
 //---------------------------------------------------------------------------
-bool isBlockFinal(timestamp_t ts_block, timestamp_t ts_chain) {
-    // If the distance from the front of the node's current view of the front of the chain
-    // is more than the number of seconds provided, consider the block final (even if it isn't
-    // in a perfectly mathematical sense)
-    return ((ts_chain - ts_block) > (60 * 5));
-}
-
-//---------------------------------------------------------------------------
 blknum_t bnFromPath(const string_q& path, blknum_t& endOut, timestamp_t& ts) {
     // comes in of the form first_blk-last_blk.X or blknum.X
     CStringArray parts;

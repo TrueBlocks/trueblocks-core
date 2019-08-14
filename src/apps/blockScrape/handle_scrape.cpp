@@ -65,7 +65,7 @@ for (blknum_t num = options.startBlock ; num < options.endBlock && !shouldQuit()
     if (needToScrape)
         scraper.scrapeBlock();
 
-    scraper.block.finalized = isBlockFinal(scraper.block.timestamp, options.latestBlockTs);
+    scraper.block.finalized = i sBlockFinal(scraper.block.timestamp, options.latestBlockTs, (60 * 5));
     if (scraper.block.finalized) {
         scraper.status = "final";
         lockSection(true);
