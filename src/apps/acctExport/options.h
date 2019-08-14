@@ -14,9 +14,8 @@ public:
     CAccountWatchArray monitors;
     CAccountWatchArray named;
     CAppearanceArray_base items;
-    bool writeBlocks;
-    bool writeTrxs;
-    bool writeTrcs;
+    bool writeTxs;
+    bool writeTraces;
     bool skipDdos;
     size_t maxTraces;
     bool articulate;

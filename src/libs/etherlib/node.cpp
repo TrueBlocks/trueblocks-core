@@ -273,11 +273,13 @@ extern void loadParseMap(void);
 
             }
 
-            establishFolder(trcFilename);
-            CArchive traceCache(WRITING_ARCHIVE);
-            if (traceCache.Lock(trcFilename, modeWriteCreate, LOCK_NOWAIT)) {
-                traceCache << trans.traces;
-                traceCache.Release();
+            if (useCache) {
+                establishFolder(trcFilename);
+                CArchive traceCache(WRITING_ARCHIVE);
+                if (traceCache.Lock(trcFilename, modeWriteCreate, LOCK_NOWAIT)) {
+                    traceCache << trans.traces;
+                    traceCache.Release();
+                }
             }
         }
         return true;
