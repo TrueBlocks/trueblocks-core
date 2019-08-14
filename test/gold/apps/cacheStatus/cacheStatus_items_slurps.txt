@@ -15,109 +15,18 @@ cacheStatus slurps --details
         {
           "type": "CMonitorCacheItem",
           "enabled": true,
-          "address": "0x05a56e2d52c817161883f50c441c3228cfe54d9f.miner",
+          "address": "0xTesting",
           "firstAppearance": 1001001,
           "latestAppearance": 8101001,
-          "nRecords": 69,
-          "sizeInBytes": 554
-        },
-        {
-          "type": "CMonitorCacheItem",
-          "enabled": true,
-          "address": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
-          "firstAppearance": 1001001,
-          "latestAppearance": 8101001,
-          "nRecords": 2731,
-          "sizeInBytes": 21854
-        },
-        {
-          "type": "CMonitorCacheItem",
-          "enabled": true,
-          "address": "0x1324e7b922b30b49ab8ea81086341cc41c249346.int",
-          "firstAppearance": 1001001,
-          "latestAppearance": 8101001,
-          "nRecords": 188,
-          "sizeInBytes": 1509
-        },
-        {
-          "type": "CMonitorCacheItem",
-          "enabled": true,
-          "address": "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0",
-          "firstAppearance": 1001001,
-          "latestAppearance": 8101001,
-          "nRecords": 383,
-          "sizeInBytes": 3064
-        },
-        {
-          "type": "CMonitorCacheItem",
-          "enabled": true,
-          "group": "30-Contracts",
-          "name": "The DAO",
-          "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
-          "symbol": "DAO",
-          "description": "The infamous DAO smart contract",
-          "source": "Etherscan.io",
-          "firstAppearance": 1001001,
-          "latestAppearance": 8101001,
-          "nRecords": 11894829,
-          "sizeInBytes": 95158637
-        },
-        {
-          "type": "CMonitorCacheItem",
-          "enabled": true,
-          "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413.token",
-          "firstAppearance": 1001001,
-          "latestAppearance": 8101001,
-          "nRecords": 90550,
-          "sizeInBytes": 724405
-        },
-        {
-          "type": "CMonitorCacheItem",
-          "enabled": true,
-          "group": "30-Contracts",
-          "name": "Etherum Tip Jar",
-          "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
-          "symbol": "TIP",
-          "description": "The ethereum tip jar",
-          "source": "Ethereum.org",
-          "firstAppearance": 1001001,
-          "latestAppearance": 8101001,
-          "nRecords": 81273,
-          "sizeInBytes": 650187
-        },
-        {
-          "type": "CMonitorCacheItem",
-          "enabled": true,
-          "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359.int",
-          "firstAppearance": 1001001,
-          "latestAppearance": 8101001,
-          "nRecords": 63278,
-          "sizeInBytes": 506224
-        },
-        {
-          "type": "CMonitorCacheItem",
-          "enabled": true,
-          "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359.token",
-          "firstAppearance": 1001001,
-          "latestAppearance": 8101001,
-          "nRecords": 148118,
-          "sizeInBytes": 1184951
-        },
-        {
-          "type": "CMonitorCacheItem",
-          "enabled": true,
-          "address": "0xfd23407a31f54413e32043adb7b1ee61a6e04027",
-          "firstAppearance": 1001001,
-          "latestAppearance": 8101001,
-          "nRecords": 797,
-          "sizeInBytes": 6379
+          "nRecords": 1001,
+          "sizeInBytes": 1002
         }
       ],
       "type": "CSlurpCache",
       "path": "/Volumes/Samsung_T7/testing/slurps/",
-      "nFiles": 10,
-      "nFolders": 1,
-      "sizeInBytes": 98257764,
+      "nFiles": 1,
+      "nFolders": 0,
+      "sizeInBytes": 0,
       "valid_counts": true
     }
 

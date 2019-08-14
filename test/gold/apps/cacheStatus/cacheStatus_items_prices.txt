@@ -14,16 +14,16 @@ cacheStatus prices --details
       "items": [
         {
           "type": "CPriceCacheItem",
-          "pair": "poloniex_USDT_ETH",
-          "nRecords": 444434,
-          "sizeInBytes": 24888353
+          "address": "0xTesting",
+          "nRecords": 1001,
+          "sizeInBytes": 1002
         }
       ],
       "type": "CPriceCache",
       "path": "/Volumes/Samsung_T7/testing/prices/",
       "nFiles": 1,
-      "nFolders": 1,
-      "sizeInBytes": 24888353,
+      "nFolders": 0,
+      "sizeInBytes": 0,
       "valid_counts": true
     }
 
