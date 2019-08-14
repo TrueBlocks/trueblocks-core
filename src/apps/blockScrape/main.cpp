@@ -198,7 +198,7 @@ bool COptions::finalize_chunks(CConsolidator *cons) {
     string_q oldStage = getLastFileInFolder(indexFolder_staging, false);
     string_q tempStage = cons->tmp_fn;
     string_q newStage = indexFolder_staging + padNum9(cons->prevBlock) + ".txt";
-//#define FF(a) { cerr << padRight(#a, 12) << padRight(a,70) << ": " << cYellow << (fileSize(a)/59) << cOff << endl; }
+//#define FF(a) { cerr << setw(12) << #a << setw(70) << a << ": " << cYellow << (fileSize(a)/59) << cOff << endl; }
 //#define FF1(a) cerr << bBlue << (a) << cOff << endl << endl;
 #define FF(a)
 #define FF1(a)

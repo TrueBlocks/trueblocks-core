@@ -102,7 +102,7 @@ namespace qblocks {
             CFunction *funcPtr = &ncABI->interfaces[i];
 #if 0
 //            // TODO(tjayrush): ISSUE #1160
-//            string_q padded = padRight(funcPtr->encoding, 66, '0');
+//            string_q padded = p adRight(funcPtr->encoding, 66, '0');
 //            cout << padded << endl;
 //            cout << topic_2_Str(p->topics[0]) << endl;
 #else
