@@ -60,7 +60,7 @@ int main(int argc, const char *argv[]) {
 inline void screenMsg(const string_q& msg) {
     if (isTestMode())
         return;
-    cerr << "\t" << padRight(msg, 85) << "\r";
+    cerr << "\t" << setw(85) << msg << "\r";
     cerr.flush();
 }
 

@@ -368,13 +368,13 @@ void contentTest(void) {
             string_q v1 = substitute(v, "00", "ff");
             string_q v2 = substitute(v, "00", "");
 
-            cout << padRight("u"+type, 7) << ": " << padRight(v,  64, ' ') << " : " << str_2_BigUint("0x" + v) << endl;
-            cout << padRight("u"+type, 7) << ": " << padRight(v1, 64, ' ') << " : " << str_2_BigUint("0x" + v1, bits) << endl;
-            cout << padRight("u"+type, 7) << ": " << padRight(v2, 64, ' ') << " : " << str_2_BigUint("0x" + v2) << endl;
+            cout << setw(7) << ("u"+type) << ": " << setw(64) << v << ": " << str_2_BigUint("0x" + v) << endl;
+            cout << setw(7) << ("u"+type) << ": " << setw(64) << v1 << ": " << str_2_BigUint("0x" + v1, bits) << endl;
+            cout << setw(7) << ("u"+type) << ": " << setw(64) << v2 << ": " << str_2_BigUint("0x" + v2) << endl;
 
-            cout << padRight(" "+type, 7) << ": " << padRight(v,  64, ' ') << " : " << str_2_BigInt ("0x" + v)        << endl;
-            cout << padRight(" "+type, 7) << ": " << padRight(v1, 64, ' ') << " : " << str_2_BigInt ("0x" + v1, bits) << endl;
-            cout << padRight(" "+type, 7) << ": " << padRight(v2, 64, ' ') << " : " << str_2_BigInt ("0x" + v2)       << endl;
+            cout << setw(7) << type << ": " << setw(64) << v << ": " << str_2_BigInt ("0x" + v)        << endl;
+            cout << setw(7) << type << ": " << setw(64) << v1 << ": " << str_2_BigInt ("0x" + v1, bits) << endl;
+            cout << setw(7) << type << ": " << setw(64) << v2 << ": " << str_2_BigInt ("0x" + v2)       << endl;
 
             done = (v == "00000000000000000000000000000000000000000000000000000000000000f2");
             replace(v, "ff", "00");
