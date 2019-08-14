@@ -75,6 +75,10 @@ void COptions::Init(void) {
     mode = "";
     char hostname[HOST_NAME_MAX];  gethostname(hostname, HOST_NAME_MAX);
     char username[LOGIN_NAME_MAX]; getlogin_r(username, LOGIN_NAME_MAX);
+    if (!getEnvStr("DOCKER_MODE").empty()) {
+        memset(username, 0, LOGIN_NAME_MAX);
+        strncpy(username, "nobody", 6);
+    }
 
     if (isTestMode()) {
         status.host = "--hostname-- (--username--)";
