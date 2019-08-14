@@ -176,227 +176,227 @@ Test 165 [--modexp(10, 9, uint64_t(10000000000) ) * modexp(10, 9, uint64_t(10000
 1: 1
 1
 
-uint256: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 115792089237316195423570985008687907853269984665640564039457584007913129639922
-uint256: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 115792089237316195423570985008687907853269984665640564039457584007913129639922
-uint256: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 115792089237316195423570985008687907853269984665640564039457584007913129639922
- int256: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int256: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int256: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
+uint256: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 115792089237316195423570985008687907853269984665640564039457584007913129639922
+uint256: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 115792089237316195423570985008687907853269984665640564039457584007913129639922
+uint256: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 115792089237316195423570985008687907853269984665640564039457584007913129639922
+ int256: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+ int256: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+ int256: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
 
-uint248: 00fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 452312848583266388373324160190187140051835877600158453279131187530910662642
-uint248: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 452312848583266388373324160190187140051835877600158453279131187530910662642
-uint248: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2   : 452312848583266388373324160190187140051835877600158453279131187530910662642
- int248: 00fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int248: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int248: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2   : -14
+uint248: 00fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 452312848583266388373324160190187140051835877600158453279131187530910662642
+uint248: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 452312848583266388373324160190187140051835877600158453279131187530910662642
+uint248:   fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 452312848583266388373324160190187140051835877600158453279131187530910662642
+ int248: 00fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+ int248: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+ int248:   fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
 
-uint240: 0000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 1766847064778384329583297500742918515827483896875618958121606201292619762
-uint240: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 1766847064778384329583297500742918515827483896875618958121606201292619762
-uint240: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2     : 1766847064778384329583297500742918515827483896875618958121606201292619762
- int240: 0000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int240: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int240: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2     : -14
+uint240: 0000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 1766847064778384329583297500742918515827483896875618958121606201292619762
+uint240: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 1766847064778384329583297500742918515827483896875618958121606201292619762
+uint240:     fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 1766847064778384329583297500742918515827483896875618958121606201292619762
+ int240: 0000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+ int240: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+ int240:     fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
 
-uint232: 000000fffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 6901746346790563787434755862277025452451108972170386555162524223799282
-uint232: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 6901746346790563787434755862277025452451108972170386555162524223799282
-uint232: fffffffffffffffffffffffffffffffffffffffffffffffffffffffff2       : 6901746346790563787434755862277025452451108972170386555162524223799282
- int232: 000000fffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int232: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int232: fffffffffffffffffffffffffffffffffffffffffffffffffffffffff2       : -14
+uint232: 000000fffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 6901746346790563787434755862277025452451108972170386555162524223799282
+uint232: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 6901746346790563787434755862277025452451108972170386555162524223799282
+uint232:       fffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 6901746346790563787434755862277025452451108972170386555162524223799282
+ int232: 000000fffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+ int232: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+ int232:       fffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
 
-uint224: 00000000fffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 26959946667150639794667015087019630673637144422540572481103610249202
-uint224: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 26959946667150639794667015087019630673637144422540572481103610249202
-uint224: fffffffffffffffffffffffffffffffffffffffffffffffffffffff2         : 26959946667150639794667015087019630673637144422540572481103610249202
- int224: 00000000fffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int224: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int224: fffffffffffffffffffffffffffffffffffffffffffffffffffffff2         : -14
+uint224: 00000000fffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 26959946667150639794667015087019630673637144422540572481103610249202
+uint224: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 26959946667150639794667015087019630673637144422540572481103610249202
+uint224:         fffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 26959946667150639794667015087019630673637144422540572481103610249202
+ int224: 00000000fffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+ int224: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+ int224:         fffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
 
-uint216: 0000000000fffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 105312291668557186697918027683670432318895095400549111254310977522
-uint216: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 105312291668557186697918027683670432318895095400549111254310977522
-uint216: fffffffffffffffffffffffffffffffffffffffffffffffffffff2           : 105312291668557186697918027683670432318895095400549111254310977522
- int216: 0000000000fffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int216: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int216: fffffffffffffffffffffffffffffffffffffffffffffffffffff2           : -14
+uint216: 0000000000fffffffffffffffffffffffffffffffffffffffffffffffffffff2: 105312291668557186697918027683670432318895095400549111254310977522
+uint216: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 105312291668557186697918027683670432318895095400549111254310977522
+uint216:           fffffffffffffffffffffffffffffffffffffffffffffffffffff2: 105312291668557186697918027683670432318895095400549111254310977522
+ int216: 0000000000fffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+ int216: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+ int216:           fffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
 
-uint208: 000000000000fffffffffffffffffffffffffffffffffffffffffffffffffff2 : 411376139330301510538742295639337626245683966408394965837152242
-uint208: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 411376139330301510538742295639337626245683966408394965837152242
-uint208: fffffffffffffffffffffffffffffffffffffffffffffffffff2             : 411376139330301510538742295639337626245683966408394965837152242
- int208: 000000000000fffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int208: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int208: fffffffffffffffffffffffffffffffffffffffffffffffffff2             : -14
+uint208: 000000000000fffffffffffffffffffffffffffffffffffffffffffffffffff2: 411376139330301510538742295639337626245683966408394965837152242
+uint208: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 411376139330301510538742295639337626245683966408394965837152242
+uint208:             fffffffffffffffffffffffffffffffffffffffffffffffffff2: 411376139330301510538742295639337626245683966408394965837152242
+ int208: 000000000000fffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+ int208: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+ int208:             fffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
 
-uint200: 00000000000000fffffffffffffffffffffffffffffffffffffffffffffffff2 : 1606938044258990275541962092341162602522202993782792835301362
-uint200: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 1606938044258990275541962092341162602522202993782792835301362
-uint200: fffffffffffffffffffffffffffffffffffffffffffffffff2               : 1606938044258990275541962092341162602522202993782792835301362
- int200: 00000000000000fffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int200: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int200: fffffffffffffffffffffffffffffffffffffffffffffffff2               : -14
+uint200: 00000000000000fffffffffffffffffffffffffffffffffffffffffffffffff2: 1606938044258990275541962092341162602522202993782792835301362
+uint200: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 1606938044258990275541962092341162602522202993782792835301362
+uint200:               fffffffffffffffffffffffffffffffffffffffffffffffff2: 1606938044258990275541962092341162602522202993782792835301362
+ int200: 00000000000000fffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+ int200: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+ int200:               fffffffffffffffffffffffffffffffffffffffffffffffff2: -14
 
-uint192: 0000000000000000fffffffffffffffffffffffffffffffffffffffffffffff2 : 6277101735386680763835789423207666416102355444464034512882
-uint192: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 6277101735386680763835789423207666416102355444464034512882
-uint192: fffffffffffffffffffffffffffffffffffffffffffffff2                 : 6277101735386680763835789423207666416102355444464034512882
- int192: 0000000000000000fffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int192: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int192: fffffffffffffffffffffffffffffffffffffffffffffff2                 : -14
+uint192: 0000000000000000fffffffffffffffffffffffffffffffffffffffffffffff2: 6277101735386680763835789423207666416102355444464034512882
+uint192: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 6277101735386680763835789423207666416102355444464034512882
+uint192:                 fffffffffffffffffffffffffffffffffffffffffffffff2: 6277101735386680763835789423207666416102355444464034512882
+ int192: 0000000000000000fffffffffffffffffffffffffffffffffffffffffffffff2: -14
+ int192: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+ int192:                 fffffffffffffffffffffffffffffffffffffffffffffff2: -14
 
-uint184: 000000000000000000fffffffffffffffffffffffffffffffffffffffffffff2 : 24519928653854221733733552434404946937899825954937634802
-uint184: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 24519928653854221733733552434404946937899825954937634802
-uint184: fffffffffffffffffffffffffffffffffffffffffffff2                   : 24519928653854221733733552434404946937899825954937634802
- int184: 000000000000000000fffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int184: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int184: fffffffffffffffffffffffffffffffffffffffffffff2                   : -14
+uint184: 000000000000000000fffffffffffffffffffffffffffffffffffffffffffff2: 24519928653854221733733552434404946937899825954937634802
+uint184: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 24519928653854221733733552434404946937899825954937634802
+uint184:                   fffffffffffffffffffffffffffffffffffffffffffff2: 24519928653854221733733552434404946937899825954937634802
+ int184: 000000000000000000fffffffffffffffffffffffffffffffffffffffffffff2: -14
+ int184: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+ int184:                   fffffffffffffffffffffffffffffffffffffffffffff2: -14
 
-uint176: 00000000000000000000fffffffffffffffffffffffffffffffffffffffffff2 : 95780971304118053647396689196894323976171195136475122
-uint176: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 95780971304118053647396689196894323976171195136475122
-uint176: fffffffffffffffffffffffffffffffffffffffffff2                     : 95780971304118053647396689196894323976171195136475122
- int176: 00000000000000000000fffffffffffffffffffffffffffffffffffffffffff2 : -14
- int176: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int176: fffffffffffffffffffffffffffffffffffffffffff2                     : -14
+uint176: 00000000000000000000fffffffffffffffffffffffffffffffffffffffffff2: 95780971304118053647396689196894323976171195136475122
+uint176: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 95780971304118053647396689196894323976171195136475122
+uint176:                     fffffffffffffffffffffffffffffffffffffffffff2: 95780971304118053647396689196894323976171195136475122
+ int176: 00000000000000000000fffffffffffffffffffffffffffffffffffffffffff2: -14
+ int176: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+ int176:                     fffffffffffffffffffffffffffffffffffffffffff2: -14
 
-uint168: 0000000000000000000000fffffffffffffffffffffffffffffffffffffffff2 : 374144419156711147060143317175368453031918731001842
-uint168: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 374144419156711147060143317175368453031918731001842
-uint168: fffffffffffffffffffffffffffffffffffffffff2                       : 374144419156711147060143317175368453031918731001842
- int168: 0000000000000000000000fffffffffffffffffffffffffffffffffffffffff2 : -14
- int168: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int168: fffffffffffffffffffffffffffffffffffffffff2                       : -14
+uint168: 0000000000000000000000fffffffffffffffffffffffffffffffffffffffff2: 374144419156711147060143317175368453031918731001842
+uint168: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 374144419156711147060143317175368453031918731001842
+uint168:                       fffffffffffffffffffffffffffffffffffffffff2: 374144419156711147060143317175368453031918731001842
+ int168: 0000000000000000000000fffffffffffffffffffffffffffffffffffffffff2: -14
+ int168: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+ int168:                       fffffffffffffffffffffffffffffffffffffffff2: -14
 
-uint160: 000000000000000000000000fffffffffffffffffffffffffffffffffffffff2 : 1461501637330902918203684832716283019655932542962
-uint160: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 1461501637330902918203684832716283019655932542962
-uint160: fffffffffffffffffffffffffffffffffffffff2                         : 1461501637330902918203684832716283019655932542962
- int160: 000000000000000000000000fffffffffffffffffffffffffffffffffffffff2 : -14
- int160: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int160: fffffffffffffffffffffffffffffffffffffff2                         : -14
+uint160: 000000000000000000000000fffffffffffffffffffffffffffffffffffffff2: 1461501637330902918203684832716283019655932542962
+uint160: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 1461501637330902918203684832716283019655932542962
+uint160:                         fffffffffffffffffffffffffffffffffffffff2: 1461501637330902918203684832716283019655932542962
+ int160: 000000000000000000000000fffffffffffffffffffffffffffffffffffffff2: -14
+ int160: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+ int160:                         fffffffffffffffffffffffffffffffffffffff2: -14
 
-uint152: 00000000000000000000000000fffffffffffffffffffffffffffffffffffff2 : 5708990770823839524233143877797980545530986482
-uint152: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 5708990770823839524233143877797980545530986482
-uint152: fffffffffffffffffffffffffffffffffffff2                           : 5708990770823839524233143877797980545530986482
- int152: 00000000000000000000000000fffffffffffffffffffffffffffffffffffff2 : -14
- int152: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int152: fffffffffffffffffffffffffffffffffffff2                           : -14
+uint152: 00000000000000000000000000fffffffffffffffffffffffffffffffffffff2: 5708990770823839524233143877797980545530986482
+uint152: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 5708990770823839524233143877797980545530986482
+uint152:                           fffffffffffffffffffffffffffffffffffff2: 5708990770823839524233143877797980545530986482
+ int152: 00000000000000000000000000fffffffffffffffffffffffffffffffffffff2: -14
+ int152: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+ int152:                           fffffffffffffffffffffffffffffffffffff2: -14
 
-uint144: 0000000000000000000000000000fffffffffffffffffffffffffffffffffff2 : 22300745198530623141535718272648361505980402
-uint144: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 22300745198530623141535718272648361505980402
-uint144: fffffffffffffffffffffffffffffffffff2                             : 22300745198530623141535718272648361505980402
- int144: 0000000000000000000000000000fffffffffffffffffffffffffffffffffff2 : -14
- int144: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int144: fffffffffffffffffffffffffffffffffff2                             : -14
+uint144: 0000000000000000000000000000fffffffffffffffffffffffffffffffffff2: 22300745198530623141535718272648361505980402
+uint144: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 22300745198530623141535718272648361505980402
+uint144:                             fffffffffffffffffffffffffffffffffff2: 22300745198530623141535718272648361505980402
+ int144: 0000000000000000000000000000fffffffffffffffffffffffffffffffffff2: -14
+ int144: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+ int144:                             fffffffffffffffffffffffffffffffffff2: -14
 
-uint136: 000000000000000000000000000000fffffffffffffffffffffffffffffffff2 : 87112285931760246646623899502532662132722
-uint136: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 87112285931760246646623899502532662132722
-uint136: fffffffffffffffffffffffffffffffff2                               : 87112285931760246646623899502532662132722
- int136: 000000000000000000000000000000fffffffffffffffffffffffffffffffff2 : -14
- int136: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int136: fffffffffffffffffffffffffffffffff2                               : -14
+uint136: 000000000000000000000000000000fffffffffffffffffffffffffffffffff2: 87112285931760246646623899502532662132722
+uint136: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 87112285931760246646623899502532662132722
+uint136:                               fffffffffffffffffffffffffffffffff2: 87112285931760246646623899502532662132722
+ int136: 000000000000000000000000000000fffffffffffffffffffffffffffffffff2: -14
+ int136: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+ int136:                               fffffffffffffffffffffffffffffffff2: -14
 
-uint128: 00000000000000000000000000000000fffffffffffffffffffffffffffffff2 : 340282366920938463463374607431768211442
-uint128: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 340282366920938463463374607431768211442
-uint128: fffffffffffffffffffffffffffffff2                                 : 340282366920938463463374607431768211442
- int128: 00000000000000000000000000000000fffffffffffffffffffffffffffffff2 : -14
- int128: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int128: fffffffffffffffffffffffffffffff2                                 : -14
+uint128: 00000000000000000000000000000000fffffffffffffffffffffffffffffff2: 340282366920938463463374607431768211442
+uint128: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 340282366920938463463374607431768211442
+uint128:                                 fffffffffffffffffffffffffffffff2: 340282366920938463463374607431768211442
+ int128: 00000000000000000000000000000000fffffffffffffffffffffffffffffff2: -14
+ int128: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+ int128:                                 fffffffffffffffffffffffffffffff2: -14
 
-uint120: 0000000000000000000000000000000000fffffffffffffffffffffffffffff2 : 1329227995784915872903807060280344562
-uint120: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 1329227995784915872903807060280344562
-uint120: fffffffffffffffffffffffffffff2                                   : 1329227995784915872903807060280344562
- int120: 0000000000000000000000000000000000fffffffffffffffffffffffffffff2 : -14
- int120: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int120: fffffffffffffffffffffffffffff2                                   : -14
+uint120: 0000000000000000000000000000000000fffffffffffffffffffffffffffff2: 1329227995784915872903807060280344562
+uint120: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 1329227995784915872903807060280344562
+uint120:                                   fffffffffffffffffffffffffffff2: 1329227995784915872903807060280344562
+ int120: 0000000000000000000000000000000000fffffffffffffffffffffffffffff2: -14
+ int120: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+ int120:                                   fffffffffffffffffffffffffffff2: -14
 
-uint112: 000000000000000000000000000000000000fffffffffffffffffffffffffff2 : 5192296858534827628530496329220082
-uint112: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 5192296858534827628530496329220082
-uint112: fffffffffffffffffffffffffff2                                     : 5192296858534827628530496329220082
- int112: 000000000000000000000000000000000000fffffffffffffffffffffffffff2 : -14
- int112: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int112: fffffffffffffffffffffffffff2                                     : -14
+uint112: 000000000000000000000000000000000000fffffffffffffffffffffffffff2: 5192296858534827628530496329220082
+uint112: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 5192296858534827628530496329220082
+uint112:                                     fffffffffffffffffffffffffff2: 5192296858534827628530496329220082
+ int112: 000000000000000000000000000000000000fffffffffffffffffffffffffff2: -14
+ int112: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+ int112:                                     fffffffffffffffffffffffffff2: -14
 
-uint104: 00000000000000000000000000000000000000fffffffffffffffffffffffff2 : 20282409603651670423947251286002
-uint104: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 20282409603651670423947251286002
-uint104: fffffffffffffffffffffffff2                                       : 20282409603651670423947251286002
- int104: 00000000000000000000000000000000000000fffffffffffffffffffffffff2 : -14
- int104: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int104: fffffffffffffffffffffffff2                                       : -14
+uint104: 00000000000000000000000000000000000000fffffffffffffffffffffffff2: 20282409603651670423947251286002
+uint104: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 20282409603651670423947251286002
+uint104:                                       fffffffffffffffffffffffff2: 20282409603651670423947251286002
+ int104: 00000000000000000000000000000000000000fffffffffffffffffffffffff2: -14
+ int104: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+ int104:                                       fffffffffffffffffffffffff2: -14
 
-uint96 : 0000000000000000000000000000000000000000fffffffffffffffffffffff2 : 79228162514264337593543950322
-uint96 : fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 79228162514264337593543950322
-uint96 : fffffffffffffffffffffff2                                         : 79228162514264337593543950322
- int96 : 0000000000000000000000000000000000000000fffffffffffffffffffffff2 : -14
- int96 : fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int96 : fffffffffffffffffffffff2                                         : -14
+ uint96: 0000000000000000000000000000000000000000fffffffffffffffffffffff2: 79228162514264337593543950322
+ uint96: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 79228162514264337593543950322
+ uint96:                                         fffffffffffffffffffffff2: 79228162514264337593543950322
+  int96: 0000000000000000000000000000000000000000fffffffffffffffffffffff2: -14
+  int96: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+  int96:                                         fffffffffffffffffffffff2: -14
 
-uint88 : 000000000000000000000000000000000000000000fffffffffffffffffffff2 : 309485009821345068724781042
-uint88 : fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 309485009821345068724781042
-uint88 : fffffffffffffffffffff2                                           : 309485009821345068724781042
- int88 : 000000000000000000000000000000000000000000fffffffffffffffffffff2 : -14
- int88 : fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int88 : fffffffffffffffffffff2                                           : -14
+ uint88: 000000000000000000000000000000000000000000fffffffffffffffffffff2: 309485009821345068724781042
+ uint88: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 309485009821345068724781042
+ uint88:                                           fffffffffffffffffffff2: 309485009821345068724781042
+  int88: 000000000000000000000000000000000000000000fffffffffffffffffffff2: -14
+  int88: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+  int88:                                           fffffffffffffffffffff2: -14
 
-uint80 : 00000000000000000000000000000000000000000000fffffffffffffffffff2 : 1208925819614629174706162
-uint80 : fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 1208925819614629174706162
-uint80 : fffffffffffffffffff2                                             : 1208925819614629174706162
- int80 : 00000000000000000000000000000000000000000000fffffffffffffffffff2 : -14
- int80 : fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int80 : fffffffffffffffffff2                                             : -14
+ uint80: 00000000000000000000000000000000000000000000fffffffffffffffffff2: 1208925819614629174706162
+ uint80: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 1208925819614629174706162
+ uint80:                                             fffffffffffffffffff2: 1208925819614629174706162
+  int80: 00000000000000000000000000000000000000000000fffffffffffffffffff2: -14
+  int80: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+  int80:                                             fffffffffffffffffff2: -14
 
-uint72 : 0000000000000000000000000000000000000000000000fffffffffffffffff2 : 4722366482869645213682
-uint72 : fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 4722366482869645213682
-uint72 : fffffffffffffffff2                                               : 4722366482869645213682
- int72 : 0000000000000000000000000000000000000000000000fffffffffffffffff2 : -14
- int72 : fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int72 : fffffffffffffffff2                                               : -14
+ uint72: 0000000000000000000000000000000000000000000000fffffffffffffffff2: 4722366482869645213682
+ uint72: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 4722366482869645213682
+ uint72:                                               fffffffffffffffff2: 4722366482869645213682
+  int72: 0000000000000000000000000000000000000000000000fffffffffffffffff2: -14
+  int72: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+  int72:                                               fffffffffffffffff2: -14
 
-uint64 : 000000000000000000000000000000000000000000000000fffffffffffffff2 : 18446744073709551602
-uint64 : fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 18446744073709551602
-uint64 : fffffffffffffff2                                                 : 18446744073709551602
- int64 : 000000000000000000000000000000000000000000000000fffffffffffffff2 : -14
- int64 : fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int64 : fffffffffffffff2                                                 : -14
+ uint64: 000000000000000000000000000000000000000000000000fffffffffffffff2: 18446744073709551602
+ uint64: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 18446744073709551602
+ uint64:                                                 fffffffffffffff2: 18446744073709551602
+  int64: 000000000000000000000000000000000000000000000000fffffffffffffff2: -14
+  int64: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+  int64:                                                 fffffffffffffff2: -14
 
-uint56 : 00000000000000000000000000000000000000000000000000fffffffffffff2 : 72057594037927922
-uint56 : fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 72057594037927922
-uint56 : fffffffffffff2                                                   : 72057594037927922
- int56 : 00000000000000000000000000000000000000000000000000fffffffffffff2 : -14
- int56 : fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int56 : fffffffffffff2                                                   : -14
+ uint56: 00000000000000000000000000000000000000000000000000fffffffffffff2: 72057594037927922
+ uint56: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 72057594037927922
+ uint56:                                                   fffffffffffff2: 72057594037927922
+  int56: 00000000000000000000000000000000000000000000000000fffffffffffff2: -14
+  int56: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+  int56:                                                   fffffffffffff2: -14
 
-uint48 : 0000000000000000000000000000000000000000000000000000fffffffffff2 : 281474976710642
-uint48 : fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 281474976710642
-uint48 : fffffffffff2                                                     : 281474976710642
- int48 : 0000000000000000000000000000000000000000000000000000fffffffffff2 : -14
- int48 : fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int48 : fffffffffff2                                                     : -14
+ uint48: 0000000000000000000000000000000000000000000000000000fffffffffff2: 281474976710642
+ uint48: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 281474976710642
+ uint48:                                                     fffffffffff2: 281474976710642
+  int48: 0000000000000000000000000000000000000000000000000000fffffffffff2: -14
+  int48: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+  int48:                                                     fffffffffff2: -14
 
-uint40 : 000000000000000000000000000000000000000000000000000000fffffffff2 : 1099511627762
-uint40 : fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 1099511627762
-uint40 : fffffffff2                                                       : 1099511627762
- int40 : 000000000000000000000000000000000000000000000000000000fffffffff2 : -14
- int40 : fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int40 : fffffffff2                                                       : -14
+ uint40: 000000000000000000000000000000000000000000000000000000fffffffff2: 1099511627762
+ uint40: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 1099511627762
+ uint40:                                                       fffffffff2: 1099511627762
+  int40: 000000000000000000000000000000000000000000000000000000fffffffff2: -14
+  int40: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+  int40:                                                       fffffffff2: -14
 
-uint32 : 00000000000000000000000000000000000000000000000000000000fffffff2 : 4294967282
-uint32 : fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 4294967282
-uint32 : fffffff2                                                         : 4294967282
- int32 : 00000000000000000000000000000000000000000000000000000000fffffff2 : -14
- int32 : fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int32 : fffffff2                                                         : -14
+ uint32: 00000000000000000000000000000000000000000000000000000000fffffff2: 4294967282
+ uint32: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 4294967282
+ uint32:                                                         fffffff2: 4294967282
+  int32: 00000000000000000000000000000000000000000000000000000000fffffff2: -14
+  int32: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+  int32:                                                         fffffff2: -14
 
-uint24 : 0000000000000000000000000000000000000000000000000000000000fffff2 : 16777202
-uint24 : fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 16777202
-uint24 : fffff2                                                           : 16777202
- int24 : 0000000000000000000000000000000000000000000000000000000000fffff2 : -14
- int24 : fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int24 : fffff2                                                           : -14
+ uint24: 0000000000000000000000000000000000000000000000000000000000fffff2: 16777202
+ uint24: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 16777202
+ uint24:                                                           fffff2: 16777202
+  int24: 0000000000000000000000000000000000000000000000000000000000fffff2: -14
+  int24: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+  int24:                                                           fffff2: -14
 
-uint16 : 000000000000000000000000000000000000000000000000000000000000fff2 : 65522
-uint16 : fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 65522
-uint16 : fff2                                                             : 65522
- int16 : 000000000000000000000000000000000000000000000000000000000000fff2 : -14
- int16 : fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int16 : fff2                                                             : -14
+ uint16: 000000000000000000000000000000000000000000000000000000000000fff2: 65522
+ uint16: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 65522
+ uint16:                                                             fff2: 65522
+  int16: 000000000000000000000000000000000000000000000000000000000000fff2: -14
+  int16: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+  int16:                                                             fff2: -14
 
-uint8  : 00000000000000000000000000000000000000000000000000000000000000f2 : 242
-uint8  : fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : 242
-uint8  : f2                                                               : 242
- int8  : 00000000000000000000000000000000000000000000000000000000000000f2 : -14
- int8  : fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2 : -14
- int8  : f2                                                               : -14
+  uint8: 00000000000000000000000000000000000000000000000000000000000000f2: 242
+  uint8: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: 242
+  uint8:                                                               f2: 242
+   int8: 00000000000000000000000000000000000000000000000000000000000000f2: -14
+   int8: fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2: -14
+   int8:                                                               f2: -14
 
