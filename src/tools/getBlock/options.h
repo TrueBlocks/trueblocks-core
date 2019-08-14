@@ -31,6 +31,7 @@ public:
     uint64_t addrCnt;
     string_q filterType;
     CAddressArray filters;
+    timestamp_t secsFinal;
 
     COptions(void);
     ~COptions(void);

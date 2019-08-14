@@ -187,9 +187,6 @@ inline blknum_t bnFromPath(const string_q& path) {
     timestamp_t unused_ts;
     return bnFromPath(path, unused, unused_ts);
 }
-
-//---------------------------------------------------------------------------
-extern bool isBlockFinal(timestamp_t ts_block, timestamp_t ts_chain);
 // EXISTING_CODE
 }  // namespace qblocks
 

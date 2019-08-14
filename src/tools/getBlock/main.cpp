@@ -13,6 +13,7 @@
 #include "etherlib.h"
 #include "options.h"
 
+extern bool isBlockFinal(timestamp_t ts_block, timestamp_t ts_chain, timestamp_t distance);
 //------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
@@ -107,7 +108,7 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
                 result = generic.result;
                 if (gold.parseJson3(result)) {
                     string_q fileName = getBinaryCacheFilename(CT_BLOCKS, num);
-                    gold.finalized = isBlockFinal(gold.timestamp, opt.latest.timestamp);
+                    gold.finalized = isBlockFinal(gold.timestamp, opt.latest.timestamp, opt.secsFinal);
                     writeBlockToBinary(gold, fileName);
                 }
             }
@@ -127,7 +128,7 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
         }
         if (gold.blockNumber == 0 && gold.timestamp == 0)
             gold.timestamp = blockZeroTs;
-        gold.finalized = isBlockFinal(gold.timestamp, opt.latest.timestamp);
+        gold.finalized = isBlockFinal(gold.timestamp, opt.latest.timestamp, opt.secsFinal);
 
         if (opt.force) {  // turn this on to force a write of the block to the disc
             writeBlockToBinary(gold, fileName);
@@ -289,4 +290,12 @@ bool transFilter(const CTransaction *trans, void *data) {
     if (!ddosRange(trans->blockNumber))
         return false;
     return (getTraceCount(trans->hash) > 250);
+}
+
+//---------------------------------------------------------------------------
+bool isBlockFinal(timestamp_t ts_block, timestamp_t ts_chain, timestamp_t distance) {
+    // If the distance from the front of the node's current view of the front of the chain
+    // is more than the number of seconds provided, consider the block final (even if it isn't
+    // in a perfectly mathematical sense)
+    return ((ts_chain - ts_block) > distance);
 }
