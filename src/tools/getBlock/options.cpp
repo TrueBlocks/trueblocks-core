@@ -236,6 +236,8 @@ bool COptions::parseArguments(string_q& command) {
 //        priceBlocks = true;
     }
 
+    secsFinal = (timestamp_t)getGlobalConfig("getBlock")->getConfigInt("settings", "secs_when_final", (uint64_t)secsFinal);
+
     showZeroTrace = getGlobalConfig("getBlock")->getConfigBool("display", "showZeroTrace", false);
     return true;
 }
@@ -245,6 +247,7 @@ void COptions::Init(void) {
     optionOn(OPT_RAW);
     registerOptions(nParams, params);
 
+    secsFinal     = (60 * 5);
     isCheck       = false;
     isCache       = false;
     hashes        = false;
