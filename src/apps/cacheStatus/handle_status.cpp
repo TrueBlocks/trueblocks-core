@@ -29,6 +29,8 @@ void COptions::doStatus(ostream& os) {
             forEveryFileInFolder(md.path, noteMonitor, &counter);
         } else {
             forEveryFileInFolder(md.path, noteMonitor_light, &counter);
+            if (md.addrs.size() == 0)
+                md.valid_counts = true;
         }
     }
 
@@ -85,6 +87,8 @@ void COptions::doStatus(ostream& os) {
             forEveryFileInFolder(md.path, noteMonitor, &counter);
         } else {
             forEveryFileInFolder(md.path, noteMonitor_light, &counter);
+            if (md.addrs.size() == 0)
+                md.valid_counts = true;
         }
     }
 
