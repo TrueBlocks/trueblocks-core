@@ -45,13 +45,13 @@ bool COptions::exportData(void) {
                 }
                 trans.pBlock = &block;
                 trans.timestamp = block.timestamp = (timestamp_t)ts_array[(item->blk*2)+1];
-                if (writeTrxs && !fileExists(txFilename))
+                if (writeTxs && !fileExists(txFilename))
                     writeTransToBinary(trans, txFilename);
             }
 
             if (doTraces) {
 
-                loadTraces(trans, item->blk, item->txid, true, (skipDdos && excludeTrace(&trans, maxTraces)));
+                loadTraces(trans, item->blk, item->txid, writeTraces, (skipDdos && excludeTrace(&trans, maxTraces)));
                 for (auto trace : trans.traces) {
 
                     bool isSuicide = trace.action.address != "";

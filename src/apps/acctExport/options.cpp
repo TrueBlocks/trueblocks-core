@@ -16,8 +16,8 @@ static const COption params[] = {
     COption("traces", "t", "", OPT_SWITCH, "export traces instead of transaction list"),
     COption("balances", "c", "", OPT_HIDDEN | OPT_SWITCH, "export balance history instead of transaction list"),
     COption("blocks", "b", "enum[on|off*]", OPT_HIDDEN | OPT_FLAG, "write blocks to the binary cache ('off' by default)"),
-    COption("txs", "s", "enum[on*|off]", OPT_HIDDEN | OPT_FLAG, "write transactions to the binary cache ('on' by default)"),
-    COption("trc", "r", "enum[on|off*]", OPT_HIDDEN | OPT_FLAG, "write traces to the binary cache ('off' by default)"),
+    COption("writeTxs", "s", "enum[on*|off]", OPT_HIDDEN | OPT_FLAG, "write transactions to the binary cache ('on' by default)"),
+    COption("writeTraces", "r", "enum[on*|off]", OPT_HIDDEN | OPT_FLAG, "write traces to the binary cache ('on' by default)"),
     COption("ddos", "d", "enum[on*|off]", OPT_HIDDEN | OPT_FLAG, "skip over dDos transactions in export ('on' by default)"),
     COption("maxTraces", "m", "<uint>", OPT_HIDDEN | OPT_FLAG, "if --ddos:on, the number of traces defining a dDos (default = 250)"),
     COption("noHeader", "n", "", OPT_HIDDEN | OPT_SWITCH, "do not show the header row"),
@@ -45,23 +45,17 @@ bool COptions::parseArguments(string_q& command) {
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if (startsWith(arg, "-b") || startsWith(arg, "--blocks")) {
-            arg = substitute(substitute(arg, "-b:", ""), "--blocks:", "");
+        if (startsWith(arg, "-s") || startsWith(arg, "--writeTxs")) {
+            arg = substitute(substitute(arg, "-s:", ""), "--writeTxs:", "");
             if (arg != "on" && arg != "off")
-                return usage("Please provide either 'on' or 'off' for the --blocks options. Quitting...");
-            writeBlocks = (arg == "on" ? true : false);
+                return usage("Please provide either 'on' or 'off' for the --writeTxs options. Quitting...");
+            writeTxs = (arg == "on" ? true : false);
 
-        } else if (startsWith(arg, "-s") || startsWith(arg, "--txs")) {
-            arg = substitute(substitute(arg, "-s:", ""), "--txs:", "");
+        } else if (startsWith(arg, "-r") || startsWith(arg, "--writeTraces")) {
+            arg = substitute(substitute(arg, "-r:", ""), "--writeTraces:", "");
             if (arg != "on" && arg != "off")
-                return usage("Please provide either 'on' or 'off' for the --txs options. Quitting...");
-            writeTrxs = (arg == "on" ? true : false);
-
-        } else if (startsWith(arg, "-r") || startsWith(arg, "--trc")) {
-            arg = substitute(substitute(arg, "-r:", ""), "--trc:", "");
-            if (arg != "on" && arg != "off")
-                return usage("Please provide either 'on' or 'off' for the --trc options. Quitting...");
-            writeTrcs = (arg == "on" ? true : false);
+                return usage("Please provide either 'on' or 'off' for the --writeTraces options. Quitting...");
+            writeTraces = (arg == "on" ? true : false);
 
         } else if (startsWith(arg, "-d") || startsWith(arg, "--ddos")) {
             arg = substitute(substitute(arg, "-d:", ""), "--ddos:", "");
@@ -201,9 +195,8 @@ bool COptions::parseArguments(string_q& command) {
     if (api_mode)
         exportFmt = TXT1;
 
-    writeBlocks = getGlobalConfig("acctExport")->getConfigBool("settings", "writeBlocks", writeBlocks);;
-    writeTrxs   = getGlobalConfig("acctExport")->getConfigBool("settings", "writeTrxs", writeTrxs);;
-    writeTrcs   = getGlobalConfig("acctExport")->getConfigBool("settings", "writeTraces", writeTrcs);;
+    writeTxs    = getGlobalConfig("acctExport")->getConfigBool("settings", "writeTxs", writeTxs);;
+    writeTraces = getGlobalConfig("acctExport")->getConfigBool("settings", "writeTraces", writeTraces);;
     skipDdos    = getGlobalConfig("acctExport")->getConfigBool("settings", "skipDdos", skipDdos);;
     maxTraces   = getGlobalConfig("acctExport")->getConfigBool("settings", "maxTraces", maxTraces);;
 
@@ -267,9 +260,8 @@ void COptions::Init(void) {
 
     monitors.clear();
 
-    writeBlocks = false;
-    writeTrxs = true;
-    writeTrcs = false;
+    writeTxs = true;
+    writeTraces = true;
     skipDdos = true;
     maxTraces = 250;
     articulate = false;
