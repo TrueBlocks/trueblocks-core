@@ -11,6 +11,7 @@ cacheStatus slurps --details
   "is_scraping": false,
   "caches": [
     {
+      "addrs": [],
       "items": [],
       "type": "CSlurpCache",
       "path": "SlurpPath",

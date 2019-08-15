@@ -11,12 +11,13 @@ cacheStatus slurps
   "is_scraping": false,
   "caches": [
     {
+      "addrs": [],
       "type": "CSlurpCache",
       "path": "SlurpPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": false
+      "valid_counts": true
     }
 
   ]
