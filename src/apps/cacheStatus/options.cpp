@@ -89,7 +89,7 @@ void COptions::Init(void) {
         status.api_provider = getGlobalConfig()->getConfigStr("settings", "apiProvider", "http://localhost:8080");
         status.balance_provider = getGlobalConfig()->getConfigStr("settings", "balanceProvider", status.api_provider);
     }
-    status.client_version = getVersionFromClient();
+    status.client_version = (isTestMode() ? "Parity version" : getVersionFromClient());
     status.trueblocks_version = getVersionStr();
     status.is_scraping = isRunning("chifra scrape", true);
 }
