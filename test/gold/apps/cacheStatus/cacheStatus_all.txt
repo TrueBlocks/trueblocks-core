@@ -66,12 +66,13 @@ cacheStatus all
     }
 
 ,{
+      "addrs": [],
       "type": "CSlurpCache",
       "path": "SlurpPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": false
+      "valid_counts": true
     }
 
 ,{
