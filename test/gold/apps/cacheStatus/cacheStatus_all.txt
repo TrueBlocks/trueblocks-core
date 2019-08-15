@@ -2,7 +2,7 @@ cacheStatus argc: 2 [1:all]
 cacheStatus all 
 [
 {
-  "client_version": "Parity-Ethereum//v2.3.4-beta-0e95db11d-20190220/x86_64-macos/rustc1.32.0",
+  "client_version": "Parity version",
   "trueblocks_version": "GHC-TrueBlocks//0.5.8-alpha--git-hash---git-ts-",
   "rpc_provider": "--providers--",
   "api_provider": "--providers--",
@@ -12,74 +12,75 @@ cacheStatus all
   "caches": [
     {
       "type": "CAddressCache",
-      "path": "/Users/jrush/.quickBlocks/cache/addr_index/",
-      "nFiles": 4435,
-      "nFolders": 6,
-      "sizeInBytes": 26185334528,
-      "valid_counts": true
+      "path": "IndexPath",
+      "nFiles": 0,
+      "nFolders": 0,
+      "sizeInBytes": 0,
+      "valid_counts": false
     }
 
 ,{
+      "addrs": [],
       "type": "CMonitorCache",
-      "path": "/Volumes/Samsung_T7/testing/monitors/",
-      "nFiles": 4,
-      "nFolders": 1,
-      "sizeInBytes": 2120,
+      "path": "CachePath",
+      "nFiles": 0,
+      "nFolders": 0,
+      "sizeInBytes": 0,
       "valid_counts": true
     }
 
 ,{
       "type": "CAbiCache",
-      "path": "/Volumes/Samsung_T7/testing/abis/",
-      "nFiles": 210,
-      "nFolders": 1,
-      "sizeInBytes": 1100024,
-      "valid_counts": true
+      "path": "CachePath",
+      "nFiles": 0,
+      "nFolders": 0,
+      "sizeInBytes": 0,
+      "valid_counts": false
     }
 
 ,{
       "type": "CChainCache",
-      "path": "/Volumes/Samsung_T7/testing/blocks/",
-      "nFiles": 101,
-      "nFolders": 80,
-      "sizeInBytes": 390150,
-      "valid_counts": true
+      "path": "BlockPath",
+      "nFiles": 0,
+      "nFolders": 0,
+      "sizeInBytes": 0,
+      "valid_counts": false
     }
 
 ,{
       "type": "CChainCache",
-      "path": "/Volumes/Samsung_T7/testing/txs/",
-      "nFiles": 336034,
-      "nFolders": 5239,
-      "sizeInBytes": 379522314,
-      "valid_counts": true
+      "path": "TxPath",
+      "nFiles": 0,
+      "nFolders": 0,
+      "sizeInBytes": 0,
+      "valid_counts": false
     }
 
 ,{
       "type": "CChainCache",
-      "path": "/Volumes/Samsung_T7/testing/traces/",
-      "nFiles": 31252,
-      "nFolders": 3362,
-      "sizeInBytes": 84572508,
-      "valid_counts": true
+      "path": "TracePath",
+      "nFiles": 0,
+      "nFolders": 0,
+      "sizeInBytes": 0,
+      "valid_counts": false
     }
 
 ,{
       "type": "CSlurpCache",
-      "path": "/Volumes/Samsung_T7/testing/slurps/",
-      "nFiles": 10,
-      "nFolders": 1,
-      "sizeInBytes": 98257764,
-      "valid_counts": true
+      "path": "SlurpPath",
+      "nFiles": 0,
+      "nFolders": 0,
+      "sizeInBytes": 0,
+      "valid_counts": false
     }
 
 ,{
       "type": "CPriceCache",
-      "path": "/Volumes/Samsung_T7/testing/prices/",
-      "nFiles": 1,
-      "nFolders": 1,
-      "sizeInBytes": 24888353,
-      "valid_counts": true
+      "path": "PricePath",
+      "nFiles": 0,
+      "nFolders": 0,
+      "sizeInBytes": 0,
+      "valid_counts": false
     }
 
   ]
