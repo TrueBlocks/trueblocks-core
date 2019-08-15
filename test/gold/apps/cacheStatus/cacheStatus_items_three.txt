@@ -32,6 +32,7 @@ cacheStatus abis slurps monitors --details
     }
 
 ,{
+      "addrs": [],
       "items": [],
       "type": "CSlurpCache",
       "path": "SlurpPath",

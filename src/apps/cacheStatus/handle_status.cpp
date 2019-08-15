@@ -81,14 +81,14 @@ void COptions::doStatus(ostream& os) {
         forEveryFileInFolder(getCachePath("slurps/"), countFiles, &slurps);
         status.caches.push_back(&slurps);
         CItemCounter counter(this);
-        counter.cachePtr = &md;
-        counter.monitorArray = &md.items;
+        counter.cachePtr = &slurps;
+        counter.monitorArray = &slurps.items;
         if (details) {
             forEveryFileInFolder(getCachePath("slurps/"), noteMonitor, &counter);
         } else {
             forEveryFileInFolder(getCachePath("slurps/"), noteMonitor_light, &counter);
-            if (md.addrs.size() == 0)
-                md.valid_counts = true;
+            if (slurps.addrs.size() == 0)
+                slurps.valid_counts = true;
         }
     }
 
@@ -131,7 +131,7 @@ bool countFiles(const string_q& path, void *data) {
         counter->valid_counts = true;
 
     }
-    return true;
+    return !shouldQuit();
 }
 
 //---------------------------------------------------------------------------
@@ -141,7 +141,7 @@ bool noteMonitor_light(const string_q& path, void *data) {
         return false;
 
     if (contains(path, "/staging"))
-        return true;
+        return !shouldQuit();
 
     if (endsWith(path, '/')) {
         return forEveryFileInFolder(path + "*", noteMonitor_light, data);
@@ -151,7 +151,7 @@ bool noteMonitor_light(const string_q& path, void *data) {
         ASSERT(counter->options);
         ((CMonitorCache*)counter->cachePtr)->addrs.push_back(substitute(substitute(substitute(substitute(path, counter->cachePtr->path, ""),".acct", ""),".bin", ""), ".json", ""));
     }
-    return true;
+    return !shouldQuit();
 }
 
 //---------------------------------------------------------------------------
@@ -161,7 +161,7 @@ bool noteMonitor(const string_q& path, void *data) {
         return false;
 
     if (contains(path, "/staging"))
-        return true;
+        return !shouldQuit();
 
     if (endsWith(path, '/')) {
         return forEveryFileInFolder(path + "*", noteMonitor, data);
@@ -180,7 +180,7 @@ bool noteMonitor(const string_q& path, void *data) {
         counter->monitorArray->push_back(mdi);
 
     }
-    return true;
+    return !shouldQuit();
 }
 
 //---------------------------------------------------------------------------
@@ -190,7 +190,7 @@ bool noteABI(const string_q& path, void *data) {
         return false;
 
     if (contains(path, "/staging"))
-        return true;
+        return !shouldQuit();
 
     if (endsWith(path, '/')) {
         return forEveryFileInFolder(path + "*", noteABI, data);
@@ -215,7 +215,7 @@ bool noteABI(const string_q& path, void *data) {
         counter->abiArray->push_back(abii);
 
     }
-    return true;
+    return !shouldQuit();
 }
 
 //---------------------------------------------------------------------------
@@ -239,5 +239,5 @@ bool notePrice(const string_q& path, void *data) {
         price.nRecords = fileSize(path) / sizeof(CPriceQuote);
         counter->priceArray->push_back(price);
     }
-    return true;
+    return !shouldQuit();
 }

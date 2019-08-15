@@ -41,6 +41,7 @@ cacheStatus some --details
     }
 
 ,{
+      "addrs": [],
       "items": [],
       "type": "CSlurpCache",
       "path": "SlurpPath",

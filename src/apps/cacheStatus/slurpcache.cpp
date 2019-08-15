@@ -67,6 +67,15 @@ bool CSlurpCache::setValueByName(const string_q& fieldNameIn, const string_q& fi
         return true;
 
     switch (tolower(fieldName[0])) {
+        case 'a':
+            if ( fieldName % "addrs" ) {
+                string_q str = fieldValue;
+                while (!str.empty()) {
+                    addrs.push_back(str_2_Addr(nextTokenClear(str, ',')));
+                }
+                return true;
+            }
+            break;
         case 'i':
             if ( fieldName % "items" ) {
                 CMonitorCacheItem item;
@@ -104,6 +113,7 @@ bool CSlurpCache::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
+    archive >> addrs;
     archive >> items;
     finishParse();
     return true;
@@ -117,6 +127,7 @@ bool CSlurpCache::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
+    archive << addrs;
     archive << items;
 
     return true;
@@ -155,6 +166,7 @@ void CSlurpCache::registerClass(void) {
     ADD_FIELD(CSlurpCache, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CSlurpCache, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CSlurpCache, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CSlurpCache, "addrs", T_ADDRESS|TS_ARRAY, ++fieldNum);
     ADD_FIELD(CSlurpCache, "items", T_OBJECT|TS_ARRAY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
@@ -223,6 +235,20 @@ string_q CSlurpCache::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
+        case 'a':
+            if ( fieldName % "addrs" || fieldName % "addrsCnt" ) {
+                size_t cnt = addrs.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt) return "";
+                string_q retS;
+                for (size_t i = 0 ; i < cnt ; i++) {
+                    retS += ("\"" + addrs[i] + "\"");
+                    retS += ((i < cnt - 1) ? ",\n" + indent() : "\n");
+                }
+                return retS;
+            }
+            break;
         case 'i':
             if ( fieldName % "items" || fieldName % "itemsCnt" ) {
                 size_t cnt = items.size();
@@ -261,6 +287,13 @@ const CBaseNode *CSlurpCache::getObjectAt(const string_q& fieldName, size_t inde
     if ( fieldName % "items" && index < items.size() )
         return &items[index];
     return NULL;
+}
+
+//---------------------------------------------------------------------------
+const string_q CSlurpCache::getStringAt(const string_q& fieldName, size_t i) const {
+    if ( fieldName % "addrs" && i < addrs.size() )
+        return (addrs[i]);
+    return "";
 }
 
 //---------------------------------------------------------------------------

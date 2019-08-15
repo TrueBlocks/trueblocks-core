@@ -26,6 +26,7 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CSlurpCache : public CCache {
 public:
+    CAddressArray addrs;
     CMonitorCacheItemArray items;
 
 public:
@@ -37,6 +38,7 @@ public:
     DECLARE_NODE(CSlurpCache);
 
     const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
+    const string_q getStringAt(const string_q& fieldName, size_t i) const override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -89,6 +91,7 @@ inline void CSlurpCache::clear(void) {
 inline void CSlurpCache::initialize(void) {
     CCache::initialize();
 
+    addrs.clear();
     items.clear();
 
     // EXISTING_CODE
@@ -100,6 +103,7 @@ inline void CSlurpCache::duplicate(const CSlurpCache& sl) {
     clear();
     CCache::duplicate(sl);
 
+    addrs = sl.addrs;
     items = sl.items;
 
     // EXISTING_CODE
