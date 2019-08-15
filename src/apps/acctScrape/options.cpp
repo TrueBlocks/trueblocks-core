@@ -14,6 +14,7 @@ static const COption params[] = {
     COption("unripe", "u", "", OPT_HIDDEN | OPT_SWITCH, "visit unripe (not old enough and not yet staged or finalized) blocks"),
     COption("daemon", "d", "", OPT_HIDDEN | OPT_SWITCH, "we are being called in daemon mode which causes us to print results differently"),
     COption("noHeader", "o", "", OPT_SWITCH, "do not show the header row"),
+    COption("start", "r", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to query"),
     COption("", "", "", 0, "Index transactions for a given Ethereum address (or series of addresses)."),
 // END_CODE_OPTIONS
 };
@@ -27,6 +28,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
+    scanRange.first = UINT_MAX;
     bool noHeader = false;
 
     Init();
@@ -41,6 +43,12 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-n" || arg == "--noBlooms") {
             cerr << "Turning off blooms" << endl;
             useBlooms = false;
+
+        } else if (startsWith(arg, "-r:") || startsWith(arg, "--start:")) {
+            arg = substitute(substitute(arg, "-r:", ""), "--start:", "");
+            if (!isNumeral(arg))
+                return usage("Value to --start parameter (" + arg + ") must be a number. Quitting...");
+            scanRange.first = str_2_Uint(arg);
 
         } else if (arg == "-d" || arg == "--daemon") {
             daemonMode = true;
@@ -86,7 +94,6 @@ bool COptions::parseArguments(string_q& command) {
 
     dTabs = (daemonMode ? "\t  " : "");
     string_q endLine = (daemonMode ? "\r" : "\n");
-    scanRange.first = UINT_MAX;
     for (auto monitor : monitors) {
         string_q fn1 = getMonitorPath(monitor.address);
         if (fileExists(fn1 + ".lck"))
@@ -99,7 +106,8 @@ bool COptions::parseArguments(string_q& command) {
             return usage("The last export file '" + fn2 + "' is locked. Quitting...");
         cerr << dTabs << "freshening: " << cYellow << monitor.address << cOff << "..." << endLine; cerr.flush();
         // If file doesn't exist, this will report '0'
-        scanRange.first = min(scanRange.first, str_2_Uint(asciiFileToString(fn2)));
+        if (scanRange.first == UINT_MAX)
+            scanRange.first = min(scanRange.first, str_2_Uint(asciiFileToString(fn2)));
     }
 
     blknum_t unripe, ripe, staging, finalized, client;
