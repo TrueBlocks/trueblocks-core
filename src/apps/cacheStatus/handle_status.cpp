@@ -11,24 +11,24 @@ void COptions::doStatus(ostream& os) {
     CAddressCache aid;
     if (contains(mode, "|scraper|")) {
         aid.type = aid.getRuntimeClass()->m_ClassName;
-        aid.path = getIndexPath("");
-        forEveryFileInFolder(aid.path, countFiles, &aid);
+        aid.path = (isTestMode() ? "IndexPath" : getIndexPath(""));
+        forEveryFileInFolder(getIndexPath(""), countFiles, &aid);
         status.caches.push_back(&aid);
     }
 
     CMonitorCache md;
     if (contains(mode, "|monitors|")) {
         md.type = md.getRuntimeClass()->m_ClassName;
-        md.path = getCachePath("monitors/");
-        forEveryFileInFolder(md.path, countFiles, &md);
+        md.path = (isTestMode() ? "CachePath" : getCachePath("monitors/"));
+        forEveryFileInFolder(getCachePath("monitors/"), countFiles, &md);
         status.caches.push_back(&md);
         CItemCounter counter(this);
         counter.cachePtr = &md;
         counter.monitorArray = &md.items;
         if (details) {
-            forEveryFileInFolder(md.path, noteMonitor, &counter);
+            forEveryFileInFolder(getCachePath("monitors/"), noteMonitor, &counter);
         } else {
-            forEveryFileInFolder(md.path, noteMonitor_light, &counter);
+            forEveryFileInFolder(getCachePath("monitors/"), noteMonitor_light, &counter);
             if (md.addrs.size() == 0)
                 md.valid_counts = true;
         }
@@ -39,54 +39,54 @@ void COptions::doStatus(ostream& os) {
     CAbiCache abi;
     if (contains(mode, "|abis|")) {
         abi.type = abi.getRuntimeClass()->m_ClassName;
-        abi.path = getCachePath("abis/");
-        forEveryFileInFolder(abi.path, countFiles, &abi);
+        abi.path = (isTestMode() ? "CachePath" : getCachePath("abis/"));
+        forEveryFileInFolder(getCachePath("abis/"), countFiles, &abi);
         status.caches.push_back(&abi);
         if (details) {
             CItemCounter counter(this);
             counter.cachePtr = &abi;
             counter.abiArray = &abi.items;
-            forEveryFileInFolder(abi.path, noteABI, &counter);
+            forEveryFileInFolder(getCachePath("abis/"), noteABI, &counter);
         }
     }
 
     CChainCache cd_blocks;
     if (contains(mode, "|blocks|")) {
         cd_blocks.type = cd_blocks.getRuntimeClass()->m_ClassName;
-        cd_blocks.path = getCachePath("blocks/");
-        forEveryFileInFolder(cd_blocks.path, countFiles, &cd_blocks);
+        cd_blocks.path = (isTestMode() ? "BlockPath" : getCachePath("blocks/"));
+        forEveryFileInFolder(getCachePath("blocks/"), countFiles, &cd_blocks);
         status.caches.push_back(&cd_blocks);
     }
 
     CChainCache cd_txs;
     if (contains(mode, "|txs|")) {
         cd_txs.type = cd_txs.getRuntimeClass()->m_ClassName;
-        cd_txs.path = getCachePath("txs/");
-        forEveryFileInFolder(cd_txs.path, countFiles, &cd_txs);
+        cd_txs.path = (isTestMode() ? "TxPath" : getCachePath("txs/"));
+        forEveryFileInFolder(getCachePath("txs/"), countFiles, &cd_txs);
         status.caches.push_back(&cd_txs);
     }
 
     CChainCache cd_traces;
     if (contains(mode, "|traces|")) {
         cd_traces.type = cd_traces.getRuntimeClass()->m_ClassName;
-        cd_traces.path = getCachePath("traces/");
-        forEveryFileInFolder(cd_traces.path, countFiles, &cd_traces);
+        cd_traces.path = (isTestMode() ? "TracePath" : getCachePath("traces/"));
+        forEveryFileInFolder(getCachePath("traces/"), countFiles, &cd_traces);
         status.caches.push_back(&cd_traces);
     }
 
     CSlurpCache slurps;
     if (contains(mode, "|slurps|")) {
         slurps.type = slurps.getRuntimeClass()->m_ClassName;
-        slurps.path = getCachePath("slurps/");
-        forEveryFileInFolder(slurps.path, countFiles, &slurps);
+        slurps.path = (isTestMode() ? "SlurpPath" : getCachePath("slurps/"));
+        forEveryFileInFolder(getCachePath("slurps/"), countFiles, &slurps);
         status.caches.push_back(&slurps);
         CItemCounter counter(this);
         counter.cachePtr = &md;
         counter.monitorArray = &md.items;
         if (details) {
-            forEveryFileInFolder(md.path, noteMonitor, &counter);
+            forEveryFileInFolder(getCachePath("slurps/"), noteMonitor, &counter);
         } else {
-            forEveryFileInFolder(md.path, noteMonitor_light, &counter);
+            forEveryFileInFolder(getCachePath("slurps/"), noteMonitor_light, &counter);
             if (md.addrs.size() == 0)
                 md.valid_counts = true;
         }
@@ -95,14 +95,14 @@ void COptions::doStatus(ostream& os) {
     CPriceCache pd;
     if (contains(mode, "|prices|")) {
         pd.type = pd.getRuntimeClass()->m_ClassName;
-        pd.path = getCachePath("prices/");
-        forEveryFileInFolder(pd.path, countFiles, &pd);
+        pd.path = (isTestMode() ? "PricePath" : getCachePath("prices/"));
+        forEveryFileInFolder(getCachePath("prices/"), countFiles, &pd);
         status.caches.push_back(&pd);
         if (details) {
             CItemCounter counter(this);
             counter.cachePtr = &pd;
             counter.priceArray = &pd.items;
-            forEveryFileInFolder(pd.path, notePrice, &counter);
+            forEveryFileInFolder(getCachePath("prices/"), notePrice, &counter);
         }
     }
 

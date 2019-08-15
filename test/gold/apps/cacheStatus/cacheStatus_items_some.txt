@@ -12,7 +12,7 @@ cacheStatus some --details
   "caches": [
     {
       "type": "CAddressCache",
-      "path": "/Users/jrush/.quickBlocks/cache/addr_index/",
+      "path": "IndexPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
@@ -23,7 +23,7 @@ cacheStatus some --details
       "addrs": [],
       "items": [],
       "type": "CMonitorCache",
-      "path": "/Volumes/Samsung_T7/testing/monitors/",
+      "path": "CachePath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
@@ -33,7 +33,7 @@ cacheStatus some --details
 ,{
       "items": [],
       "type": "CAbiCache",
-      "path": "/Volumes/Samsung_T7/testing/abis/",
+      "path": "CachePath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
@@ -43,7 +43,7 @@ cacheStatus some --details
 ,{
       "items": [],
       "type": "CSlurpCache",
-      "path": "/Volumes/Samsung_T7/testing/slurps/",
+      "path": "SlurpPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
@@ -53,7 +53,7 @@ cacheStatus some --details
 ,{
       "items": [],
       "type": "CPriceCache",
-      "path": "/Volumes/Samsung_T7/testing/prices/",
+      "path": "PricePath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,

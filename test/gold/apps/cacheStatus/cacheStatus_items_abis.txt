@@ -13,7 +13,7 @@ cacheStatus abis --details
     {
       "items": [],
       "type": "CAbiCache",
-      "path": "/Volumes/Samsung_T7/testing/abis/",
+      "path": "CachePath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
