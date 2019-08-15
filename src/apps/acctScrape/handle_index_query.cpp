@@ -28,7 +28,7 @@ bool visitFinalIndexFiles(const string_q& path, void *data) {
         ASSERT(unused != NOPOS);
         ASSERT(options->lastBlockInFile != NOPOS);
 
-        if (options->lastBlockInFile != 0 && options->scanRange.first > options->lastBlockInFile)
+        if (options->lastBlockInFile != 0 && options->lastBlockInFile < options->scanRange.first)
             return !shouldQuit();
 
         if (isTestMode() && options->lastBlockInFile > 5000000)
