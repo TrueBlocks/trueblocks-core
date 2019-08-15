@@ -2,7 +2,7 @@ cacheStatus argc: 2 [1:names]
 cacheStatus names 
 [
 {
-  "client_version": "Parity-Ethereum//v2.3.4-beta-0e95db11d-20190220/x86_64-macos/rustc1.32.0",
+  "client_version": "Parity version",
   "trueblocks_version": "GHC-TrueBlocks//0.5.8-alpha--git-hash---git-ts-",
   "rpc_provider": "--providers--",
   "api_provider": "--providers--",
