@@ -15,7 +15,7 @@ acctScrape --list
 	-s  (--staging)       produce results in the staging folder instead of production folder
 	-u  (--unripe)        visit unripe (not old enough and not yet staged or finalized) blocks
 	-d  (--daemon)        we are being called in daemon mode which causes us to print results differently
-	-r  (--start <num>)   first block to query
+	-r  (--start <num>)   start block for scan of appearances
 #### Hidden options (shown during testing only)
 
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
