@@ -11,23 +11,13 @@ cacheStatus slurps --details
   "is_scraping": false,
   "caches": [
     {
-      "items": [
-        {
-          "type": "CMonitorCacheItem",
-          "enabled": true,
-          "address": "0xTesting",
-          "firstAppearance": 1001001,
-          "latestAppearance": 8101001,
-          "nRecords": 1001,
-          "sizeInBytes": 1002
-        }
-      ],
+      "items": [],
       "type": "CSlurpCache",
       "path": "/Volumes/Samsung_T7/testing/slurps/",
-      "nFiles": 1,
+      "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": true
+      "valid_counts": false
     }
 
   ]

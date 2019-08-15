@@ -116,18 +116,17 @@ void COptions::doStatus(ostream& os) {
 //---------------------------------------------------------------------------
 bool countFiles(const string_q& path, void *data) {
 
+    if (isTestMode())
+        return false;
+
     CCache *counter = (CCache *)data;
     if (endsWith(path, '/')) {
-        if (!contains(path, "monitors/staging") && !isTestMode())
+        if (!contains(path, "monitors/staging"))
             counter->noteFolder(path);
         return forEveryFileInFolder(path + "*", countFiles, data);
 
     } else if (endsWith(path, ".bin") || endsWith(path, ".json")) {
-        if (isTestMode()) {
-            counter->noteFile("testing");
-            counter->valid_counts = true;
-            return false;
-        }
+
         counter->noteFile(path);
         counter->valid_counts = true;
 
@@ -138,6 +137,9 @@ bool countFiles(const string_q& path, void *data) {
 //---------------------------------------------------------------------------
 bool noteMonitor_light(const string_q& path, void *data) {
 
+    if (isTestMode())
+        return false;
+
     if (contains(path, "/staging"))
         return true;
 
@@ -145,14 +147,8 @@ bool noteMonitor_light(const string_q& path, void *data) {
         return forEveryFileInFolder(path + "*", noteMonitor_light, data);
 
     } else if (endsWith(path, ".bin") || endsWith(path, ".json")) {
-
         CItemCounter *counter = (CItemCounter*)data;
         ASSERT(counter->options);
-
-        if (isTestMode()) {
-            ((CMonitorCache*)counter->cachePtr)->addrs.push_back("0xTesting");
-            return false;
-        }
         ((CMonitorCache*)counter->cachePtr)->addrs.push_back(substitute(substitute(substitute(substitute(path, counter->cachePtr->path, ""),".acct", ""),".bin", ""), ".json", ""));
     }
     return true;
@@ -161,6 +157,9 @@ bool noteMonitor_light(const string_q& path, void *data) {
 //---------------------------------------------------------------------------
 bool noteMonitor(const string_q& path, void *data) {
 
+    if (isTestMode())
+        return false;
+
     if (contains(path, "/staging"))
         return true;
 
@@ -168,22 +167,9 @@ bool noteMonitor(const string_q& path, void *data) {
         return forEveryFileInFolder(path + "*", noteMonitor, data);
 
     } else if (endsWith(path, ".bin") || endsWith(path, ".json")) {
-
         CItemCounter *counter = (CItemCounter*)data;
         ASSERT(counter->options);
-
         CMonitorCacheItem mdi;
-        if (isTestMode()) {
-            mdi.type = mdi.getRuntimeClass()->m_ClassName;
-            mdi.address = "0xTesting";
-            mdi.firstAppearance = 1001001;
-            mdi.latestAppearance = 8101001;
-            mdi.nRecords = 1001;
-            mdi.sizeInBytes = 1002;
-            counter->monitorArray->push_back(mdi);
-            return false;
-        }
-
         mdi.type = mdi.getRuntimeClass()->m_ClassName;
         mdi.address = substitute(substitute(substitute(substitute(path, counter->cachePtr->path, ""),".acct", ""),".bin", ""), ".json", "");
         counter->options->getNamedAccount(mdi, mdi.address);
@@ -200,6 +186,9 @@ bool noteMonitor(const string_q& path, void *data) {
 //---------------------------------------------------------------------------
 bool noteABI(const string_q& path, void *data) {
 
+    if (isTestMode())
+        return false;
+
     if (contains(path, "/staging"))
         return true;
 
@@ -212,17 +201,6 @@ bool noteABI(const string_q& path, void *data) {
         ASSERT(counter->options);
 
         CAbiCacheItem abii;
-        if (isTestMode()) {
-            abii.type = abii.getRuntimeClass()->m_ClassName;
-            abii.address = "0xTesting";
-            abii.firstAppearance = 1001001;
-            abii.latestAppearance = 8101001;
-            abii.nRecords = 1001;
-            abii.sizeInBytes = 1002;
-            counter->abiArray->push_back(abii);
-            return false;
-        }
-
         abii.type = abii.getRuntimeClass()->m_ClassName;
         abii.address = substitute(substitute(substitute(substitute(path, counter->cachePtr->path, ""),".acct", ""),".bin", ""), ".json", "");
         CAccountName n;
@@ -243,6 +221,9 @@ bool noteABI(const string_q& path, void *data) {
 //---------------------------------------------------------------------------
 bool notePrice(const string_q& path, void *data) {
 
+    if (isTestMode())
+        return false;
+
     if (endsWith(path, '/')) {
         return forEveryFileInFolder(path + "*", notePrice, data);
 
@@ -252,16 +233,6 @@ bool notePrice(const string_q& path, void *data) {
         ASSERT(counter->options);
 
         CPriceCacheItem price;
-        if (isTestMode()) {
-            price.type = price.getRuntimeClass()->m_ClassName;
-            price.address = "0xTesting";
-            price.firstAppearance = 1001001;
-            price.latestAppearance = 8101001;
-            price.nRecords = 1001;
-            price.sizeInBytes = 1002;
-            counter->priceArray->push_back(price);
-            return false;
-        }
         price.type = price.getRuntimeClass()->m_ClassName;
         price.pair = substitute(substitute(substitute(substitute(path, counter->cachePtr->path, ""),".acct", ""),".bin", ""), ".json", "");
         price.sizeInBytes = fileSize(path);

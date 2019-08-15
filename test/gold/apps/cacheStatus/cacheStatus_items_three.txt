@@ -11,62 +11,34 @@ cacheStatus abis slurps monitors --details
   "is_scraping": false,
   "caches": [
     {
-      "items": [
-        {
-          "type": "CMonitorCacheItem",
-          "enabled": true,
-          "address": "0xTesting",
-          "firstAppearance": 1001001,
-          "latestAppearance": 8101001,
-          "nRecords": 1001,
-          "sizeInBytes": 1002
-        }
-      ],
+      "addrs": [],
+      "items": [],
       "type": "CMonitorCache",
       "path": "/Volumes/Samsung_T7/testing/monitors/",
-      "nFiles": 1,
+      "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": true
+      "valid_counts": false
     }
 
 ,{
-      "items": [
-        {
-          "type": "CAbiCacheItem",
-          "nFunctions": 0,
-          "nEvents": 0,
-          "nOther": 0,
-          "address": "0xTesting",
-          "sizeInBytes": 1002
-        }
-      ],
+      "items": [],
       "type": "CAbiCache",
       "path": "/Volumes/Samsung_T7/testing/abis/",
-      "nFiles": 1,
+      "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": true
+      "valid_counts": false
     }
 
 ,{
-      "items": [
-        {
-          "type": "CMonitorCacheItem",
-          "enabled": true,
-          "address": "0xTesting",
-          "firstAppearance": 1001001,
-          "latestAppearance": 8101001,
-          "nRecords": 1001,
-          "sizeInBytes": 1002
-        }
-      ],
+      "items": [],
       "type": "CSlurpCache",
       "path": "/Volumes/Samsung_T7/testing/slurps/",
-      "nFiles": 1,
+      "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": true
+      "valid_counts": false
     }
 
   ]

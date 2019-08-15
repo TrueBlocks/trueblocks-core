@@ -13,10 +13,10 @@ cacheStatus some
     {
       "type": "CAddressCache",
       "path": "/Users/jrush/.quickBlocks/cache/addr_index/",
-      "nFiles": 1,
+      "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": true
+      "valid_counts": false
     }
 
 ,{
@@ -32,28 +32,28 @@ cacheStatus some
 ,{
       "type": "CAbiCache",
       "path": "/Volumes/Samsung_T7/testing/abis/",
-      "nFiles": 1,
+      "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": true
+      "valid_counts": false
     }
 
 ,{
       "type": "CSlurpCache",
       "path": "/Volumes/Samsung_T7/testing/slurps/",
-      "nFiles": 1,
+      "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": true
+      "valid_counts": false
     }
 
 ,{
       "type": "CPriceCache",
       "path": "/Volumes/Samsung_T7/testing/prices/",
-      "nFiles": 1,
+      "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": true
+      "valid_counts": false
     }
 
   ]
