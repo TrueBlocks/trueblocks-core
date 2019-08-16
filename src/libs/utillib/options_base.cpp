@@ -476,7 +476,7 @@ namespace qblocks {
         }
 
         if (api_mode)
-            cout << "{ \"error\": \"" << errMsg << "\" }" << endl;
+            cout << "{ \"cmd\": \"" + getProgName() + "\", \"error\": \"" << errMsg << "\" }" << endl;
 
         os << "\n";
         if (!errMsg.empty())
