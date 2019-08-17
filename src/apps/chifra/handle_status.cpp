@@ -16,8 +16,10 @@ bool COptions::handle_status(void) {
     os << "cacheStatus " << tool_flags << " ; ";
     if (isTestMode())
         cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
-    else
+    else {
+        LOG_INFO("chifra calling: ", os.str());
         if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+    }
 
     EXIT_NOMSG4(true);
 }

@@ -238,11 +238,50 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
+    void COptionsBase::cleanupVerbose(string_q& cmdLine) {
+        if (!contains(cmdLine, "-v"))
+            return;
+
+        // if the verbose marker is not at the end of the line..
+        cmdLine += "-";
+        if (contains(cmdLine, "-v -") || contains(cmdLine, "--verbose -")) {
+            replaceAll(cmdLine, "-v -", "-v:1 -");
+            replaceAll(cmdLine, "--verbose -", "--verbose:1 -");
+        }
+        cmdLine = trimTrailing(cmdLine, '-');
+
+        // ...check inside the line (and only if the bare -v is followed by a number under 10) convert
+        if (contains(cmdLine, "-v ") || contains(cmdLine, "--verbose ")) {
+            while (contains(cmdLine, "-v ")) {
+                string_q after = cmdLine.substr(cmdLine.find("-v ") + 3);
+                uint64_t num = str_2_Uint(after);
+                if (num > 0 && num < 11) {
+                    replaceAll(cmdLine, "-v ", "-v:");
+                } else {
+                    replaceAll(cmdLine, "-v ", "-v:1 ");
+                }
+            }
+            while (contains(cmdLine, "--verbose ")) {
+                string_q after = cmdLine.substr(cmdLine.find("--verbose ") + 10);
+                uint64_t num = str_2_Uint(after);
+                if (num > 0 && num < 11) {
+                    replaceAll(cmdLine, "--verbose ", "--verbose:");
+                } else {
+                    replaceAll(cmdLine, "--verbose ", "--verbose:1 ");
+                }
+            }
+        }
+        return;
+    }
+
+    //--------------------------------------------------------------------------------
     bool COptionsBase::standardOptions(string_q& cmdLine) {
 
         // Note: check each item individual in case more than one appears on the command line
         cmdLine += " ";
         replace(cmdLine, "--output ", "--output:");
+
+        cleanupVerbose(cmdLine);
 
         if (contains(cmdLine, "--noop ")) {
             // do nothing
@@ -357,8 +396,12 @@ namespace qblocks {
     bool COptionsBase::builtInCmd(const string_q& arg) {
         if (isEnabled(OPT_HELP) && (arg == "-h" || arg == "--help"))
             return true;
-        if (isEnabled(OPT_VERBOSE) && (arg == "-v" || startsWith(arg, "-v:") || startsWith(arg, "--verbose")))
-            return true;
+
+        if (isEnabled(OPT_VERBOSE)) {
+            if (startsWith(arg, "-v:") || startsWith(arg, "--verbose:"))
+                return true;
+        }
+
 #ifdef PROVING
         if (isEnabled(OPT_PROVE) && arg == "--prove")
             return true;
