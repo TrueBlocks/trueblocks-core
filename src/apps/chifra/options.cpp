@@ -122,14 +122,14 @@ bool COptions::parseArguments(string_q& command) {
         establishFolder(getMonitorPath("", FM_STAGING));
     }
 
-    if (verbose) freshen_flags += (" -v:" + uint_2_Str(verbose));
-                 freshen_flags += addExportMode(api_mode, exportFmt);
+    if (verbose) { freshen_flags += (" -v:" + uint_2_Str(verbose)); }
+    freshen_flags += addExportMode(api_mode, exportFmt);
     freshen_flags = trim(freshen_flags, ' ');
 
-    if (verbose)                tool_flags += (" -v:" + uint_2_Str(verbose));
-    if (expContext().asEther)   tool_flags += " --ether";
-    if (expContext().asDollars) tool_flags += " --dollars";
-                                tool_flags += addExportMode(api_mode, exportFmt);
+    if (verbose) { tool_flags += (" -v:" + uint_2_Str(verbose)); }
+    if (expContext().asEther) { tool_flags += " --ether"; }
+    if (expContext().asDollars) { tool_flags += " --dollars"; }
+    tool_flags += addExportMode(api_mode, exportFmt);
     tool_flags = trim(tool_flags, ' ');
 
     blknum_t unripe, ripe, staging, finalized, client;
