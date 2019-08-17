@@ -132,20 +132,22 @@ bool COptions::parseArguments(string_q& command) {
     tool_flags += addExportMode(api_mode, exportFmt);
     tool_flags = trim(tool_flags, ' ');
 
-    blknum_t unripe, ripe, staging, finalized, client;
-    getLastBlocks(unripe, ripe, staging, finalized, client);
-    if (client < finalized) {
-        if (!isTestMode())
-            cerr << "Sleeping: " << scrapeSleep << " " << endl;
-
-    } else if ((client - finalized) > 2500) {
-        if (!isTestMode())
-            cerr << "Sleeping: " << scrapeSleep << " " << endl;
-        scrapeSleep = 0;
-    } else {
-        if (mode == "scrape") {
+    if (isNodeRunning()) {
+        blknum_t unripe, ripe, staging, finalized, client;
+        getLastBlocks(unripe, ripe, staging, finalized, client);
+        if (client < finalized) {
             if (!isTestMode())
-                cerr << "Sleeping every " << scrapeSleep << " seconds." << endl;
+                cerr << "Sleeping: " << scrapeSleep << " " << endl;
+
+        } else if ((client - finalized) > 2500) {
+            if (!isTestMode())
+                cerr << "Sleeping: " << scrapeSleep << " " << endl;
+            scrapeSleep = 0;
+        } else {
+            if (mode == "scrape") {
+                if (!isTestMode())
+                    cerr << "Sleeping every " << scrapeSleep << " seconds." << endl;
+            }
         }
     }
 
