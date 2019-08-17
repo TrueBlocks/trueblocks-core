@@ -8,7 +8,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("mode_list", "", "list<enum[scraper|monitors|names|abis|blocks|txs|traces|slurps|prices|some*|all]>", OPT_POSITIONAL, "one or more of [scraper|monitors|names|abis|blocks|txs|traces|slurps|prices|some*|all]"),
+    COption("mode_list", "", "list<enum[scraper|monitors|names|abis|blocks|txs|traces|slurps|prices|some*|all]>", OPT_REQUIRED | OPT_POSITIONAL, "one or more of [scraper|monitors|names|abis|blocks|txs|traces|slurps|prices|some*|all]"),
     COption("details", "d", "", OPT_SWITCH, "include details about items found in monitors, slurps, abis, or price caches"),
     COption("list", "l", "", OPT_SWITCH, "display results in Linux ls -l format (assumes --detail)"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),
@@ -88,7 +88,11 @@ void COptions::Init(void) {
         status.api_provider = getGlobalConfig()->getConfigStr("settings", "apiProvider", "http://localhost:8080");
         status.balance_provider = getGlobalConfig()->getConfigStr("settings", "balanceProvider", status.api_provider);
     }
-    status.client_version = (isTestMode() ? "Parity version" : getVersionFromClient());
+    if (!isNodeRunning()) {
+        status.client_version = "Not running";
+    } else {
+        status.client_version = (isTestMode() ? "Parity version" : getVersionFromClient());
+    }
     status.trueblocks_version = getVersionStr();
     status.is_scraping = isRunning("chifra scrape", true);
 }
