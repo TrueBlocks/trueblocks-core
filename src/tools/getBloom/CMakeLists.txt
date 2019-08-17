@@ -75,7 +75,7 @@ run_test("getBloom_bars_block3"     "2501030-2501060" " --pctbars" " --block")
 run_test("getBloom_bars_receipt2"   "2501030-2501060" " --bitbars" " --receipts")
 run_test("getBloom_bars_receipt3"   "2501030-2501060" " --pctbars" " --receipts")
 
-run_test("getBloom_combo_one_range" "1590000 4000001-4000002 1001001 1234567 --receipts --verbose")
+run_test("getBloom_combo_one_range" "1590000" " 4000001-4000002" " 1001001 1234567" " --receipts" " --verbose")
 run_test("getBloom_combo_two_range" "1590000" " 4000001-4000002" " 1001001-1001100" " 1234567")
 
 # display a bunch of blocks raw
