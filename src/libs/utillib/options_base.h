@@ -83,7 +83,6 @@ namespace qblocks {
         virtual bool parseArguments(string_q& command) = 0;
         bool builtInCmd(const string_q& arg);
         bool standardOptions(string_q& cmdLine);
-        void cleanupVerbose(string_q& cmdLine);
 
         // supporting special block names
         typedef bool (*NAMEVALFUNC)(CNameValue& pair, void *data);
