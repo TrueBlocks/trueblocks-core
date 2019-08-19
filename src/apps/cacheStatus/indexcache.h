@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include "cache.h"
+#include "addresscacheitem.h"
 
 namespace qblocks {
 
@@ -25,12 +26,17 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CAddressCache : public CCache {
 public:
+    CAddressCacheItemArray items;
+
+public:
     CAddressCache(void);
     CAddressCache(const CAddressCache& ad);
     virtual ~CAddressCache(void);
     CAddressCache& operator=(const CAddressCache& ad);
 
     DECLARE_NODE(CAddressCache);
+
+    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -83,6 +89,8 @@ inline void CAddressCache::clear(void) {
 inline void CAddressCache::initialize(void) {
     CCache::initialize();
 
+    items.clear();
+
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -91,6 +99,8 @@ inline void CAddressCache::initialize(void) {
 inline void CAddressCache::duplicate(const CAddressCache& ad) {
     clear();
     CCache::duplicate(ad);
+
+    items = ad.items;
 
     // EXISTING_CODE
     // EXISTING_CODE

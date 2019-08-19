@@ -1,7 +1,7 @@
 [settings]
 class     = CAddressCache
 baseClass = CCache
-fields    = 
-includes  = cache.h
+fields    = CAddressCacheItemArray items
+includes  = cache.h|addresscacheitem.h
 cIncs     = 
 serialize = true
