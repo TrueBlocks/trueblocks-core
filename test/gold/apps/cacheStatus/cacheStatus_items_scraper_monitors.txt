@@ -1,5 +1,5 @@
-cacheStatus argc: 4 [1:scraper] [2:monitors] [3:--details] 
-cacheStatus scraper monitors --details 
+cacheStatus argc: 4 [1:index] [2:monitors] [3:--details] 
+cacheStatus index monitors --details 
 [
 {
   "client_version": "Parity version",
@@ -11,15 +11,15 @@ cacheStatus scraper monitors --details
   "is_scraping": false,
   "caches": [
     {
-      "type": "CAddressCache",
+      "items": [],
+      "type": "CIndexCache",
       "path": "IndexPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
       "valid_counts": false
-    }
-
-,{
+    },
+    {
       "addrs": [],
       "items": [],
       "type": "CMonitorCache",
@@ -29,7 +29,6 @@ cacheStatus scraper monitors --details
       "sizeInBytes": 0,
       "valid_counts": false
     }
-
   ]
 }
 

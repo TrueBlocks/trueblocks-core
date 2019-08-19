@@ -18,7 +18,6 @@ cacheStatus blocks
       "sizeInBytes": 0,
       "valid_counts": false
     }
-
   ]
 }
 

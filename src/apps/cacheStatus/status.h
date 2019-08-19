@@ -35,6 +35,7 @@ public:
     string_q index_location;
     string_q host;
     bool is_scraping;
+    CCachePtrArray caches;
 
 public:
     CStatus(void);
@@ -44,8 +45,9 @@ public:
 
     DECLARE_NODE(CStatus);
 
+    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
+
     // EXISTING_CODE
-    CCachePtrArray caches;
     // EXISTING_CODE
     bool operator==(const CStatus& item) const;
     bool operator!=(const CStatus& item) const { return !operator==(item); }
@@ -105,6 +107,7 @@ inline void CStatus::initialize(void) {
     index_location = "";
     host = "";
     is_scraping = 0;
+    caches.clear();
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -124,6 +127,7 @@ inline void CStatus::duplicate(const CStatus& st) {
     index_location = st.index_location;
     host = st.host;
     is_scraping = st.is_scraping;
+    caches = st.caches;
 
     // EXISTING_CODE
     // EXISTING_CODE

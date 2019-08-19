@@ -26,7 +26,27 @@ date                	1017	1	262149	T_DATE TS_DATE
   "subtraces": 0,
   "traceAddress": null,
   "transactionHash": "0x0",
-  "transactionPosition": 0
+  "transactionPosition": 0,
+  "type": "",
+  "error": "",
+  "action": {
+    "address": "0x0",
+    "balance": 0,
+    "callType": "",
+    "from": "0x0",
+    "gas": 0,
+    "init": "",
+    "input": "",
+    "refundAddress": "0x0",
+    "to": "0x0",
+    "value": 0
+  },
+  "result": {
+    "address": "0x0",
+    "code": "",
+    "gasUsed": 0,
+    "output": ""
+  }
 }
 
 --------------------------------------------------------------------------------
@@ -82,6 +102,38 @@ date                	1017	0	262149	T_DATE TS_DATE
   "subtraces": 0,
   "traceAddress": null,
   "transactionHash": "0x0",
-  "transactionPosition": 0
+  "transactionPosition": 0,
+  "type": "",
+  "error": "",
+  "articulatedTrace": {
+    "name": "",
+    "type": "",
+    "constant": ,
+    "payable": ,
+    "signature": "",
+    "encoding": "",
+    "inputs": [],
+    "outputs": []
+  },
+  "compressedTrace": "",
+  "action": {
+    "address": "0x0",
+    "balance": 0,
+    "callType": "",
+    "from": "0x0",
+    "gas": 0,
+    "init": "",
+    "input": "",
+    "refundAddress": "0x0",
+    "to": "0x0",
+    "value": 0
+  },
+  "result": {
+    "address": "0x0",
+    "code": "",
+    "gasUsed": 0,
+    "output": ""
+  },
+  "date": ""
 }
 

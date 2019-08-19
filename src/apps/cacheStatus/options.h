@@ -10,7 +10,7 @@
 #include "chaincache.h"
 #include "pricecache.h"
 #include "monitorcache.h"
-#include "addresscache.h"
+#include "indexcache.h"
 #include "abicache.h"
 #include "slurpcache.h"
 
@@ -38,16 +38,25 @@ extern bool noteMonitor_light(const string_q& path, void *data);
 extern bool noteMonitor(const string_q& path, void *data);
 extern bool noteABI(const string_q& path, void *data);
 extern bool notePrice(const string_q& path, void *data);
+extern bool noteIndex(const string_q& path, void *data);
+extern void getIndexMetrics(const string_q& path, uint32_t& nRecords, uint32_t& nAddresses);
 
 //-------------------------------------------------------------------------
 class CItemCounter : public CCache {
 public:
     COptions *options;
     CCache *cachePtr;
+    CIndexCacheItemArray *indexArray;
     CMonitorCacheItemArray *monitorArray;
     CAbiCacheItemArray *abiArray;
     CPriceCacheItemArray *priceArray;
-    CItemCounter(COptions *opt) : CCache(), options(opt) { cachePtr = NULL; monitorArray = NULL; abiArray = NULL; priceArray = NULL; }
+    CItemCounter(COptions *opt) : CCache(), options(opt) {
+        cachePtr = NULL;
+        indexArray = NULL;
+        monitorArray = NULL;
+        abiArray = NULL;
+        priceArray = NULL;
+    }
 public:
     CItemCounter(void) : CCache() {}
 };

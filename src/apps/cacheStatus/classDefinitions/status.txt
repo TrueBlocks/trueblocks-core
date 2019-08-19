@@ -1,6 +1,6 @@
 [settings]
 class     = CStatus
-fields    = string client_version|string trueblocks_version|string rpc_provider|string api_provider|string balance_provider|string cache_location|string index_location|string host|bool is_scraping
+fields    = string client_version|string trueblocks_version|string rpc_provider|string api_provider|string balance_provider|string cache_location|string index_location|string host|bool is_scraping|CCachePtrArray caches
 includes  = etherlib.h|cache.h
 cIncs     = 
 serialize = true

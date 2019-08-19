@@ -55,7 +55,7 @@ run_test("cacheStatus_invalid_param_1"  "--junk" )
 run_test("cacheStatus_invalid_param_2"  "-l" " --junk" )
 
 # depends on fullblockIndex
-run_test("cacheStatus_scraper"          "scraper")
+run_test("cacheStatus_scraper"          "index")
 run_test("cacheStatus_monitors"         "monitors")
 run_test("cacheStatus_names"           "names")
 run_test("cacheStatus_abis"             "abis")
@@ -72,7 +72,7 @@ run_special_test("cacheStatus_items_abis"              "abis"     " --details")
 run_special_test("cacheStatus_items_slurps"            "slurps"   " --details")
 run_special_test("cacheStatus_items_prices"            "prices"   " --details")
 run_special_test("cacheStatus_items_some"              "some"     " --details")
-run_special_test("cacheStatus_items_scraper_monitors" "scraper"   " monitors" " --details")
+run_special_test("cacheStatus_items_scraper_monitors" "index"   " monitors" " --details")
 
 run_special_test("cacheStatus_three"                   "abis"     " slurps" " monitors")
 run_special_test("cacheStatus_items_three"             "abis"     " slurps" " monitors" " --details")

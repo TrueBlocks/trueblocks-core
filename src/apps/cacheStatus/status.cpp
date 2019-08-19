@@ -73,6 +73,15 @@ bool CStatus::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
         case 'c':
             if ( fieldName % "client_version" ) { client_version = fieldValue; return true; }
             if ( fieldName % "cache_location" ) { cache_location = fieldValue; return true; }
+            if ( fieldName % "caches" ) {
+//                CCachePtr item;
+//                string_q str = fieldValue;
+//                while (item.parseJson3(str)) {
+//                    caches.push_back(item);
+//                    item = CCachePtr();  // reset
+//                }
+                return true;
+            }
             break;
         case 'h':
             if ( fieldName % "host" ) { host = fieldValue; return true; }
@@ -122,6 +131,7 @@ bool CStatus::Serialize(CArchive& archive) {
     archive >> index_location;
     archive >> host;
     archive >> is_scraping;
+//    archive >> caches;
     finishParse();
     return true;
 }
@@ -143,6 +153,7 @@ bool CStatus::SerializeC(CArchive& archive) const {
     archive << index_location;
     archive << host;
     archive << is_scraping;
+//    archive << caches;
 
     return true;
 }
@@ -187,6 +198,7 @@ void CStatus::registerClass(void) {
     ADD_FIELD(CStatus, "index_location", T_TEXT, ++fieldNum);
     ADD_FIELD(CStatus, "host", T_TEXT, ++fieldNum);
     ADD_FIELD(CStatus, "is_scraping", T_BOOL, ++fieldNum);
+    ADD_FIELD(CStatus, "caches", T_OBJECT|TS_ARRAY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CStatus, "schema");
@@ -197,7 +209,6 @@ void CStatus::registerClass(void) {
     builtIns.push_back(_biCStatus);
 
     // EXISTING_CODE
-    ADD_FIELD(CStatus, "caches", T_POINTER|TS_ARRAY, ++fieldNum);
     // EXISTING_CODE
 }
 
@@ -207,19 +218,6 @@ string_q nextStatusChunk_custom(const string_q& fieldIn, const void *dataPtr) {
     if (sta) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
-            case 'c':
-                if ( fieldIn % "caches" ) {
-                    bool first = true;
-                    ostringstream os;
-                    for (auto cachePtr : sta->caches) {
-                        if (!first)
-                            os << ",";
-                        os << *cachePtr << endl;
-                        first = false;
-                    }
-                    return os.str();
-                }
-                break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
@@ -277,6 +275,18 @@ string_q CStatus::getValueByName(const string_q& fieldName) const {
         case 'c':
             if ( fieldName % "client_version" ) return client_version;
             if ( fieldName % "cache_location" ) return cache_location;
+            if ( fieldName % "caches" || fieldName % "cachesCnt" ) {
+                size_t cnt = caches.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt) return "";
+                string_q retS;
+                for (size_t i = 0 ; i < cnt ; i++) {
+                    retS += caches[i]->Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
             break;
         case 'h':
             if ( fieldName % "host" ) return host;
@@ -308,6 +318,13 @@ ostream& operator<<(ostream& os, const CStatus& item) {
     item.Format(os, "", nullptr);
     os << "\n";
     return os;
+}
+
+//---------------------------------------------------------------------------
+const CBaseNode *CStatus::getObjectAt(const string_q& fieldName, size_t index) const {
+    if ( fieldName % "caches" && index < caches.size() )
+        return caches[index];
+    return NULL;
 }
 
 //---------------------------------------------------------------------------

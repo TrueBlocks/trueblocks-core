@@ -31,7 +31,7 @@ getBlock --cache 2768801 1995314 1958017 --normalize --parity
 "parentHash":"0xabc3e2787669f48ad8ab2e521cf914d779e6514f296914d12b0668af5b2f97d0"
 "price":"0x0"
 "receipt":
-"status":"null"
+"status":null
 "timestamp":"0x5848fe6f"
 "to":"0x198e145d2e525fc0b95d0ab75471756bc1de8d7a"
 "to":"0x37a9679c41e99db270bda88de8ff50c0cd23f326"
@@ -71,7 +71,7 @@ getBlock --cache 2768801 1995314 1958017 --normalize --parity
 "parentHash":"0xe19aa0276eee73e6d548e457eff67797dfec9142a8c9044b7494cf19fd5c55e4"
 "price":"0x0"
 "receipt":
-"status":"null"
+"status":null
 "timestamp":"0x57a004c3"
 "to":"0x1486fbea918866846bb267e85be8b73a5486f29e"
 "to":"0x39de77332944a568fa1e565053cac8dbdfc4c0eb"
@@ -108,7 +108,7 @@ getBlock --cache 2768801 1995314 1958017 --normalize --parity
 "parentHash":"0x6b218fa2bfd0e3c331c5f442dc559208a1ee41e8a01c2c689b0f338a107d3708"
 "price":"0x0"
 "receipt":
-"status":"null"
+"status":null
 "timestamp":"0x5797db28"
 "to":"0x24d570d6b723b7da877c4fcd0138a27222b68894"
 "to":"0x7ed1e469fcb3ee19c0366d829e291451be638e59"

@@ -19,7 +19,6 @@ cacheStatus slurps
       "sizeInBytes": 0,
       "valid_counts": true
     }
-
   ]
 }
 

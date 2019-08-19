@@ -26,7 +26,7 @@ getBlock --parity -k 2769609 2799895 2872831 3076260
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": "null"
+        "status": null
       },
       "to": "0x8335db4288a6d98d49f7db2e415f7c0652ee4fb5",
       "transactionIndex": "0x0",
@@ -46,7 +46,7 @@ getBlock --parity -k 2769609 2799895 2872831 3076260
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": "null"
+        "status": null
       },
       "to": "0x7ed1e469fcb3ee19c0366d829e291451be638e59",
       "transactionIndex": "0x1",
@@ -77,7 +77,7 @@ getBlock --parity -k 2769609 2799895 2872831 3076260
             ]
           }
         ],
-        "status": "null"
+        "status": null
       },
       "to": "0x37a9679c41e99db270bda88de8ff50c0cd23f326",
       "transactionIndex": "0x2",
@@ -97,7 +97,7 @@ getBlock --parity -k 2769609 2799895 2872831 3076260
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": "null"
+        "status": null
       },
       "to": "0x2c23f3487d476da262189d2659df7225745e5a97",
       "transactionIndex": "0x3",
@@ -117,7 +117,7 @@ getBlock --parity -k 2769609 2799895 2872831 3076260
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": "null"
+        "status": null
       },
       "to": "0x5c70eb0e8923cc0c416e8fa002ad165c9cfcfb24",
       "transactionIndex": "0x4",
@@ -137,7 +137,7 @@ getBlock --parity -k 2769609 2799895 2872831 3076260
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": "null"
+        "status": null
       },
       "to": "0x5c70eb0e8923cc0c416e8fa002ad165c9cfcfb24",
       "transactionIndex": "0x5",
@@ -168,7 +168,7 @@ getBlock --parity -k 2769609 2799895 2872831 3076260
             ]
           }
         ],
-        "status": "null"
+        "status": null
       },
       "to": "0x3d5fb40d096ff8327ba7b8885ad3b6bb3c1c4533",
       "transactionIndex": "0x6",
