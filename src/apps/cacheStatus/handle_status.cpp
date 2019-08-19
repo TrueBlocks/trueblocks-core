@@ -18,33 +18,11 @@ void COptions::doStatus(ostream& os) {
         counter.cachePtr = &aid;
         counter.indexArray = &aid.items;
         if (details) {
-
-            string_q fn = getCachePath("tmp/status.bin");
-            if (false) { //fileExists(fn)) {
-                CArchive archive(READING_ARCHIVE);
-                if (archive.Lock(fn, modeReadOnly, LOCK_NOWAIT)) {
-                    archive >> aid.items;
-                    archive.Release();
-                }
-            }
-            if (aid.items.size() == 0) {
-                forEveryFileInFolder(getIndexPath(""), noteIndex, &counter);
-                CArchive archive(WRITING_ARCHIVE);
-                if (archive.Lock(fn, modeWriteCreate, LOCK_NOWAIT)) {
-                    archive << aid.items;
-                    archive.Release();
-                }
-            }
-
+            forEveryFileInFolder(getIndexPath(""), noteIndex, &counter);
         } else {
 //            forEveryFileInFolder(getCachePath("monitors/"), noteMonitor_light, &counter);
 //            if (aid.metrics.size() == 0)
 //                aid.valid_counts = true;
-            HIDE_FIELD(CIndexCacheItem, "firstAppearance");
-            HIDE_FIELD(CIndexCacheItem, "latestAppearance");
-            HIDE_FIELD(CIndexCacheItem, "nAppearances");
-            HIDE_FIELD(CIndexCacheItem, "nAddresses");
-            HIDE_FIELD(CIndexCacheItem, "sizeInBytes");
         }
     }
 
