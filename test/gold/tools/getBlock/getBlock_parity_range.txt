@@ -26,7 +26,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0xc47aaa860008be6f65b58c6c6e02a84e666efe31",
       "transactionIndex": "0x0",
@@ -46,7 +46,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0xc47aaa860008be6f65b58c6c6e02a84e666efe31",
       "transactionIndex": "0x1",
@@ -66,7 +66,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0xc47aaa860008be6f65b58c6c6e02a84e666efe31",
       "transactionIndex": "0x2",
@@ -86,7 +86,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0xb1abce2918e21ddb93aa452731a12672a3d9f75a",
       "transactionIndex": "0x3",
@@ -106,7 +106,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x7c5080988c6d91d090c23d54740f856c69450b29",
       "transactionIndex": "0x4",
@@ -140,7 +140,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x2b5c412bce54d17cc805f928e1dff4a42ff370c7",
       "transactionIndex": "0x0",
@@ -187,7 +187,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0xfffbca3a38c3c5fcb3adbb8e63c04c3e629aafce",
       "transactionIndex": "0x0",
@@ -234,7 +234,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x362db1e4830bf2c401d7f9f45034f5e6e1c46a0b",
       "transactionIndex": "0x0",
@@ -268,7 +268,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x7c5080988c6d91d090c23d54740f856c69450b29",
       "transactionIndex": "0x0",
@@ -302,7 +302,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
       "transactionIndex": "0x0",
@@ -322,7 +322,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0xc8fea4ab769162f6f7eafb8c2bd49734a03c60ef",
       "transactionIndex": "0x1",
@@ -342,7 +342,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
       "transactionIndex": "0x2",
@@ -362,7 +362,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
       "transactionIndex": "0x3",
@@ -382,7 +382,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x54cec426307c1acaa63b25aa48fade5df9e5d418",
       "transactionIndex": "0x4",
@@ -402,7 +402,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
       "transactionIndex": "0x5",
@@ -422,7 +422,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
       "transactionIndex": "0x6",
@@ -442,7 +442,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0xe9b9a8b234ffa8a31cec82b4071ad017bbe73e5d",
       "transactionIndex": "0x7",
@@ -462,7 +462,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
       "transactionIndex": "0x8",
@@ -496,7 +496,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0xcb8a03674aa31c84ac3cb372cd960e79d61b1725",
       "transactionIndex": "0x0",
@@ -516,7 +516,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0xfc32cdcfc3ac1c189bc06467a35f603e64b29a6c",
       "transactionIndex": "0x1",
@@ -576,7 +576,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x605c4282130e22ae43d0e95728788988fa800894",
       "transactionIndex": "0x0",
@@ -596,7 +596,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0xd6463b514443dc308ca70d69dda2b13f494ef882",
       "transactionIndex": "0x1",
@@ -616,7 +616,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0xa50ec0d39fa913e62f1bae7074e6f36caa71855b",
       "transactionIndex": "0x2",
@@ -650,7 +650,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98",
       "transactionIndex": "0x0",
@@ -684,7 +684,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0xa36c32dc26de774ee6876c8ed04aa519f10fdf94",
       "transactionIndex": "0x0",
@@ -704,7 +704,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0xc47aaa860008be6f65b58c6c6e02a84e666efe31",
       "transactionIndex": "0x1",
@@ -724,7 +724,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0xc47aaa860008be6f65b58c6c6e02a84e666efe31",
       "transactionIndex": "0x2",
@@ -758,7 +758,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x00a6e86fb108f769c349cbccd6bd8f43096570a2",
       "transactionIndex": "0x0",
@@ -818,7 +818,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x61e20833179ba2eccc2065e5f733cc8cda7394c0",
       "transactionIndex": "0x0",
@@ -852,7 +852,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x7c5080988c6d91d090c23d54740f856c69450b29",
       "transactionIndex": "0x0",
@@ -886,7 +886,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
       "transactionIndex": "0x0",
@@ -906,7 +906,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0xaa656e51565979f6893797a72fcd06716a15eab8",
       "transactionIndex": "0x1",
@@ -953,7 +953,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x004b878a2bf81783569e92c9769d9528d3641d5f",
       "transactionIndex": "0x0",
@@ -973,7 +973,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x54cec426307c1acaa63b25aa48fade5df9e5d418",
       "transactionIndex": "0x1",
@@ -1007,7 +1007,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x6a8cc233e14f874983bb2f37d1de706f6910ef0b",
       "transactionIndex": "0x0",
@@ -1067,7 +1067,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x1d0991db028630c0f7b49edad406665fe45e1821",
       "transactionIndex": "0x0",
@@ -1087,7 +1087,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x7cb73d69f6e24e9e0ae812f2c036058415893644",
       "transactionIndex": "0x1",
@@ -1107,7 +1107,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x98f2c2754c77b49993eea4dcd2d9aba71b696b60",
       "transactionIndex": "0x2",
@@ -1141,7 +1141,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0xd4d979b6c0c797d4d5dc80baaa0972dc413bd533",
       "transactionIndex": "0x0",
@@ -1161,7 +1161,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x716d4adb710b0d102fa584bf0091de0f5acff747",
       "transactionIndex": "0x1",
@@ -1181,7 +1181,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x14db64d45ef2e27925a9f1553db750902e19b337",
       "transactionIndex": "0x2",
@@ -1201,7 +1201,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x04719524a3f646f9cf42a0480013944813c1c31b",
       "transactionIndex": "0x3",
@@ -1221,7 +1221,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x9d84e42cc974bbd0cb4134506123c68277cf5546",
       "transactionIndex": "0x4",
@@ -1241,7 +1241,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0xb0e2bfee1cdc80a77c6ed0bb29d9a8f9c018dd42",
       "transactionIndex": "0x5",
@@ -1261,7 +1261,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x33228b774dcbddc7158a2fe647453443d8c87e72",
       "transactionIndex": "0x6",
@@ -1281,7 +1281,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x994bae53bca3e41c8f4d53ff04ecd4529b0cd748",
       "transactionIndex": "0x7",
@@ -1301,7 +1301,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0xe241c26ee286b1614bb1b0a5969e1a93a6f0080e",
       "transactionIndex": "0x8",
@@ -1321,7 +1321,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x0f7a2e98afa6918d4d52f95c1fc1e57160d5f877",
       "transactionIndex": "0x9",
@@ -1341,7 +1341,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x4dbfc5cd4d88480476f951dbcd591396773ae56c",
       "transactionIndex": "0xa",
@@ -1361,7 +1361,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x707868ea3bfb73007106cfd30f678fdb94d12173",
       "transactionIndex": "0xb",
@@ -1381,7 +1381,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0xf2cc0eeaaaed313542cb262b0b8c3972425143f0",
       "transactionIndex": "0xc",
@@ -1401,7 +1401,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x2b8e8c560281d2686c63c45bec73f5d2b84004c3",
       "transactionIndex": "0xd",
@@ -1461,7 +1461,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x3a52d",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x1194e966965418c7d73a42cceeb254d875860356",
       "transactionIndex": "0x0",
@@ -1481,7 +1481,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x1543667b9bad3e41865c3233e1764d8dda8e1f3d",
       "transactionIndex": "0x1",
@@ -1515,7 +1515,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0xc47aaa860008be6f65b58c6c6e02a84e666efe31",
       "transactionIndex": "0x0",
@@ -1535,7 +1535,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0xc47aaa860008be6f65b58c6c6e02a84e666efe31",
       "transactionIndex": "0x1",
@@ -1555,7 +1555,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x444dc0ce10bd7321689dd12315e8e0a9644a2c0c",
       "transactionIndex": "0x2",
@@ -1575,7 +1575,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x7c5080988c6d91d090c23d54740f856c69450b29",
       "transactionIndex": "0x3",
@@ -1622,7 +1622,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x1049cb6c4223942bb3ed14e47b27c7478449deb2",
       "transactionIndex": "0x0",
@@ -1682,7 +1682,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
       "transactionIndex": "0x0",
@@ -1702,7 +1702,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
       "transactionIndex": "0x1",
@@ -1722,7 +1722,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
       "transactionIndex": "0x2",
@@ -1742,7 +1742,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x7c5080988c6d91d090c23d54740f856c69450b29",
       "transactionIndex": "0x3",
@@ -1776,7 +1776,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
       "transactionIndex": "0x0",
@@ -1796,7 +1796,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
       "transactionIndex": "0x1",
@@ -1816,7 +1816,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0xbb701b920aa9244505a7a7922186441f5e7c623a",
       "transactionIndex": "0x2",
@@ -1836,7 +1836,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
       "transactionIndex": "0x3",
@@ -1856,7 +1856,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
       "transactionIndex": "0x4",
@@ -1876,7 +1876,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
       "transactionIndex": "0x5",
@@ -1896,7 +1896,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
       "transactionIndex": "0x6",
@@ -1930,7 +1930,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
       "transactionIndex": "0x0",
@@ -1950,7 +1950,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
       "transactionIndex": "0x1",
@@ -1970,7 +1970,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
       "transactionIndex": "0x2",
@@ -1990,7 +1990,7 @@ getBlock --parity 358450-0x5785a --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x54cec426307c1acaa63b25aa48fade5df9e5d418",
       "transactionIndex": "0x3",

@@ -26,7 +26,7 @@ getBlock --parity 0x2e7721 --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0xdfe84ccf90221689393f3c15918a51bd8aaee3eb",
       "transactionIndex": "0x0",
@@ -46,7 +46,7 @@ getBlock --parity 0x2e7721 --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0xbcea34b591db7951b01259782c1d3a38bac77cf0",
       "transactionIndex": "0x1",
@@ -76,7 +76,7 @@ getBlock --parity 0x2e7721 --force
             ]
           }
         ],
-        "status": null
+        "status": "null"
       },
       "to": "0xecf8f87f810ecf450940c9f60066b4a7a501d6a7",
       "transactionIndex": "0x2",
@@ -96,7 +96,7 @@ getBlock --parity 0x2e7721 --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x6394421a777d714a127601dd225c3294e360b9c2",
       "transactionIndex": "0x3",
@@ -116,7 +116,7 @@ getBlock --parity 0x2e7721 --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x3e937dffd79d0b493a923a7a8e7abe69d45ef6b0",
       "transactionIndex": "0x4",
@@ -136,7 +136,7 @@ getBlock --parity 0x2e7721 --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x8ecd73a951d2363924be8fda02fef910149eb455",
       "transactionIndex": "0x5",
@@ -156,7 +156,7 @@ getBlock --parity 0x2e7721 --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x8223836ca547eed16127b9437cf3fc127b3008d0",
       "transactionIndex": "0x6",
@@ -176,7 +176,7 @@ getBlock --parity 0x2e7721 --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0xe62686e71a7484ad17eaabc520175e5a2847f264",
       "transactionIndex": "0x7",
@@ -196,7 +196,7 @@ getBlock --parity 0x2e7721 --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x9bfa8241e32c158f31d80bad5542bb750863ca15",
       "transactionIndex": "0x8",
@@ -216,7 +216,7 @@ getBlock --parity 0x2e7721 --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x7a0593e86e4ff431184faa96dc84f582efd8be13",
       "transactionIndex": "0x9",
@@ -236,7 +236,7 @@ getBlock --parity 0x2e7721 --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0xe97bd9a1c8b9c18ba5d2fc8891e3c6c0dba4e383",
       "transactionIndex": "0xa",
@@ -256,7 +256,7 @@ getBlock --parity 0x2e7721 --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0x9b9fac527ef803b9122b568dad73179518ccdf72",
       "transactionIndex": "0xb",
@@ -276,7 +276,7 @@ getBlock --parity 0x2e7721 --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0xf91a6e0a861e8b3c53c29f2772871588afd49ce6",
       "transactionIndex": "0xc",
@@ -296,7 +296,7 @@ getBlock --parity 0x2e7721 --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0xfe350f199f244ac9a79038d254400b632a633225",
       "transactionIndex": "0xd",
@@ -316,7 +316,7 @@ getBlock --parity 0x2e7721 --force
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
         "logs": [],
-        "status": null
+        "status": "null"
       },
       "to": "0xdc3e78fdc5a2784dead276ba114ca8b6c3465ded",
       "transactionIndex": "0xe",
