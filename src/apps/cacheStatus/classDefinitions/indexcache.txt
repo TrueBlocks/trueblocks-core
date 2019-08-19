@@ -1,7 +1,7 @@
 [settings]
-class     = CAddressCache
+class     = CIndexCache
 baseClass = CCache
-fields    = CAddressCacheItemArray items
-includes  = cache.h|addresscacheitem.h
+fields    = CIndexCacheItemArray items
+includes  = cache.h|indexcacheitem.h
 cIncs     = 
 serialize = true

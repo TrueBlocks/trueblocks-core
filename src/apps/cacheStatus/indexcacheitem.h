@@ -15,40 +15,45 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "cache.h"
-#include "indexcacheitem.h"
+#include "etherlib.h"
+#include "accountwatch.h"
 
 namespace qblocks {
 
 // EXISTING_CODE
+typedef vector<uint32_t> CUint32Array;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CIndexCache : public CCache {
+class CIndexCacheItem : public CBaseNode {
 public:
-    CIndexCacheItemArray items;
+    string_q type;
+    uint32_t nAddresses;
+    uint32_t nAppearances;
+    uint32_t firstAppearance;
+    uint32_t latestAppearance;
+    string_q path;
+    uint32_t sizeInBytes;
 
 public:
-    CIndexCache(void);
-    CIndexCache(const CIndexCache& in);
-    virtual ~CIndexCache(void);
-    CIndexCache& operator=(const CIndexCache& in);
+    CIndexCacheItem(void);
+    CIndexCacheItem(const CIndexCacheItem& in);
+    virtual ~CIndexCacheItem(void);
+    CIndexCacheItem& operator=(const CIndexCacheItem& in);
 
-    DECLARE_NODE(CIndexCache);
-
-    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
+    DECLARE_NODE(CIndexCacheItem);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CIndexCache& item) const;
-    bool operator!=(const CIndexCache& item) const { return !operator==(item); }
-    friend bool operator<(const CIndexCache& v1, const CIndexCache& v2);
-    friend ostream& operator<<(ostream& os, const CIndexCache& item);
+    bool operator==(const CIndexCacheItem& item) const;
+    bool operator!=(const CIndexCacheItem& item) const { return !operator==(item); }
+    friend bool operator<(const CIndexCacheItem& v1, const CIndexCacheItem& v2);
+    friend ostream& operator<<(ostream& os, const CIndexCacheItem& item);
 
 protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CIndexCache& in);
+    void duplicate(const CIndexCacheItem& in);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -56,14 +61,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline CIndexCache::CIndexCache(void) {
+inline CIndexCacheItem::CIndexCacheItem(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CIndexCache::CIndexCache(const CIndexCache& in) {
+inline CIndexCacheItem::CIndexCacheItem(const CIndexCacheItem& in) {
     // EXISTING_CODE
     // EXISTING_CODE
     duplicate(in);
@@ -73,41 +78,53 @@ inline CIndexCache::CIndexCache(const CIndexCache& in) {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CIndexCache::~CIndexCache(void) {
+inline CIndexCacheItem::~CIndexCacheItem(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CIndexCache::clear(void) {
+inline void CIndexCacheItem::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CIndexCache::initialize(void) {
-    CCache::initialize();
+inline void CIndexCacheItem::initialize(void) {
+    CBaseNode::initialize();
 
-    items.clear();
+    type = "";
+    nAddresses = 0;
+    nAppearances = 0;
+    firstAppearance = 0;
+    latestAppearance = 0;
+    path = "";
+    sizeInBytes = 0;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CIndexCache::duplicate(const CIndexCache& in) {
+inline void CIndexCacheItem::duplicate(const CIndexCacheItem& in) {
     clear();
-    CCache::duplicate(in);
+    CBaseNode::duplicate(in);
 
-    items = in.items;
+    type = in.type;
+    nAddresses = in.nAddresses;
+    nAppearances = in.nAppearances;
+    firstAppearance = in.firstAppearance;
+    latestAppearance = in.latestAppearance;
+    path = in.path;
+    sizeInBytes = in.sizeInBytes;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CIndexCache& CIndexCache::operator=(const CIndexCache& in) {
+inline CIndexCacheItem& CIndexCacheItem::operator=(const CIndexCacheItem& in) {
     duplicate(in);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -115,7 +132,7 @@ inline CIndexCache& CIndexCache::operator=(const CIndexCache& in) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CIndexCache::operator==(const CIndexCache& item) const {
+inline bool CIndexCacheItem::operator==(const CIndexCacheItem& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -123,7 +140,7 @@ inline bool CIndexCache::operator==(const CIndexCache& item) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CIndexCache& v1, const CIndexCache& v2) {
+inline bool operator<(const CIndexCacheItem& v1, const CIndexCacheItem& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -131,13 +148,13 @@ inline bool operator<(const CIndexCache& v1, const CIndexCache& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CIndexCache> CIndexCacheArray;
-extern CArchive& operator>>(CArchive& archive, CIndexCacheArray& array);
-extern CArchive& operator<<(CArchive& archive, const CIndexCacheArray& array);
+typedef vector<CIndexCacheItem> CIndexCacheItemArray;
+extern CArchive& operator>>(CArchive& archive, CIndexCacheItemArray& array);
+extern CArchive& operator<<(CArchive& archive, const CIndexCacheItemArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CIndexCache& ind);
-extern CArchive& operator>>(CArchive& archive, CIndexCache& ind);
+extern CArchive& operator<<(CArchive& archive, const CIndexCacheItem& ind);
+extern CArchive& operator>>(CArchive& archive, CIndexCacheItem& ind);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

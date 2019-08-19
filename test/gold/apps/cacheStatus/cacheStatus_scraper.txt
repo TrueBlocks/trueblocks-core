@@ -1,5 +1,5 @@
-cacheStatus argc: 2 [1:scraper] 
-cacheStatus scraper 
+cacheStatus argc: 2 [1:index] 
+cacheStatus index 
 [
 {
   "client_version": "Parity version",
@@ -11,14 +11,14 @@ cacheStatus scraper
   "is_scraping": false,
   "caches": [
     {
-      "type": "CAddressCache",
+      "items": [],
+      "type": "CIndexCache",
       "path": "IndexPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
       "valid_counts": false
     }
-
   ]
 }
 

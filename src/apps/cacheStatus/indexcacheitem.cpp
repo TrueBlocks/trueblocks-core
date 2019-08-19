@@ -15,23 +15,23 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <algorithm>
-#include "indexcache.h"
+#include "indexcacheitem.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CIndexCache, CCache);
+IMPLEMENT_NODE(CIndexCacheItem, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextIndexcacheChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextIndexcacheChunk_custom(const string_q& fieldIn, const void *dataPtr);
+static string_q nextIndexcacheitemChunk(const string_q& fieldIn, const void *dataPtr);
+static string_q nextIndexcacheitemChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CIndexCache::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CIndexCacheItem::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
-    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["indexcache_fmt"] : fmtIn);
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["indexcacheitem_fmt"] : fmtIn);
     if (fmt.empty()) {
         doExport(ctx);
         return;
@@ -41,13 +41,13 @@ void CIndexCache::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) con
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextIndexcacheChunk, this);
+        ctx << getNextChunk(fmt, nextIndexcacheitemChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextIndexcacheChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextIndexcacheitemChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CIndexCache *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CIndexCacheItem *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -56,27 +56,32 @@ string_q nextIndexcacheChunk(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CIndexCache::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+bool CIndexCacheItem::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
     // EXISTING_CODE
 
-    if (CCache::setValueByName(fieldName, fieldValue))
-        return true;
-
     switch (tolower(fieldName[0])) {
-        case 'i':
-            if ( fieldName % "items" ) {
-                CIndexCacheItem item;
-                string_q str = fieldValue;
-                while (item.parseJson3(str)) {
-                    items.push_back(item);
-                    item = CIndexCacheItem();  // reset
-                }
-                return true;
-            }
+        case 'f':
+            if ( fieldName % "firstAppearance" ) { firstAppearance = (uint32_t)str_2_Uint(fieldValue); return true; }
+            break;
+        case 'l':
+            if ( fieldName % "latestAppearance" ) { latestAppearance = (uint32_t)str_2_Uint(fieldValue); return true; }
+            break;
+        case 'n':
+            if ( fieldName % "nAddresses" ) { nAddresses = (uint32_t)str_2_Uint(fieldValue); return true; }
+            if ( fieldName % "nAppearances" ) { nAppearances = (uint32_t)str_2_Uint(fieldValue); return true; }
+            break;
+        case 'p':
+            if ( fieldName % "path" ) { path = fieldValue; return true; }
+            break;
+        case 's':
+            if ( fieldName % "sizeInBytes" ) { sizeInBytes = (uint32_t)str_2_Uint(fieldValue); return true; }
+            break;
+        case 't':
+            if ( fieldName % "type" ) { type = fieldValue; return true; }
             break;
         default:
             break;
@@ -85,45 +90,57 @@ bool CIndexCache::setValueByName(const string_q& fieldNameIn, const string_q& fi
 }
 
 //---------------------------------------------------------------------------------------------------
-void CIndexCache::finishParse() {
+void CIndexCacheItem::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CIndexCache::Serialize(CArchive& archive) {
+bool CIndexCacheItem::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
 
     // Always read the base class (it will handle its own backLevels if any, then
     // read this object's back level (if any) or the current version.
-    CCache::Serialize(archive);
+    CBaseNode::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> items;
+    archive >> type;
+    archive >> nAddresses;
+    archive >> nAppearances;
+    archive >> firstAppearance;
+    archive >> latestAppearance;
+    archive >> path;
+    archive >> sizeInBytes;
     finishParse();
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CIndexCache::SerializeC(CArchive& archive) const {
+bool CIndexCacheItem::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
-    CCache::SerializeC(archive);
+    CBaseNode::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << items;
+    archive << type;
+    archive << nAddresses;
+    archive << nAppearances;
+    archive << firstAppearance;
+    archive << latestAppearance;
+    archive << path;
+    archive << sizeInBytes;
 
     return true;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CIndexCacheArray& array) {
+CArchive& operator>>(CArchive& archive, CIndexCacheItemArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -135,7 +152,7 @@ CArchive& operator>>(CArchive& archive, CIndexCacheArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CIndexCacheArray& array) {
+CArchive& operator<<(CArchive& archive, const CIndexCacheItemArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -144,40 +161,38 @@ CArchive& operator<<(CArchive& archive, const CIndexCacheArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void CIndexCache::registerClass(void) {
+void CIndexCacheItem::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CIndexCache, "schema")) return;
-
-    CCache::registerClass();
+    if (HAS_FIELD(CIndexCacheItem, "schema")) return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CIndexCache, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CIndexCache, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CIndexCache, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CIndexCache, "cname", T_TEXT,  ++fieldNum);
-    ADD_FIELD(CIndexCache, "items", T_OBJECT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CIndexCacheItem, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CIndexCacheItem, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CIndexCacheItem, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CIndexCacheItem, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CIndexCacheItem, "type", T_TEXT, ++fieldNum);
+    ADD_FIELD(CIndexCacheItem, "nAddresses", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CIndexCacheItem, "nAppearances", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CIndexCacheItem, "firstAppearance", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CIndexCacheItem, "latestAppearance", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CIndexCacheItem, "path", T_TEXT, ++fieldNum);
+    ADD_FIELD(CIndexCacheItem, "sizeInBytes", T_NUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CIndexCache, "schema");
-    HIDE_FIELD(CIndexCache, "deleted");
-    HIDE_FIELD(CIndexCache, "showing");
-    HIDE_FIELD(CIndexCache, "cname");
+    HIDE_FIELD(CIndexCacheItem, "schema");
+    HIDE_FIELD(CIndexCacheItem, "deleted");
+    HIDE_FIELD(CIndexCacheItem, "showing");
+    HIDE_FIELD(CIndexCacheItem, "cname");
 
-    builtIns.push_back(_biCIndexCache);
+    builtIns.push_back(_biCIndexCacheItem);
 
     // EXISTING_CODE
-    ADD_FIELD(CIndexCache, "type", T_TEXT, ++fieldNum);
-    ADD_FIELD(CIndexCache, "path", T_TEXT, ++fieldNum);
-    ADD_FIELD(CIndexCache, "nFiles", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CIndexCache, "nFolders", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CIndexCache, "sizeInBytes", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CIndexCache, "valid_counts", T_BOOL, ++fieldNum);
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextIndexcacheChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CIndexCache *ind = reinterpret_cast<const CIndexCache *>(dataPtr);
+string_q nextIndexcacheitemChunk_custom(const string_q& fieldIn, const void *dataPtr) {
+    const CIndexCacheItem *ind = reinterpret_cast<const CIndexCacheItem *>(dataPtr);
     if (ind) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -199,7 +214,7 @@ string_q nextIndexcacheChunk_custom(const string_q& fieldIn, const void *dataPtr
 }
 
 //---------------------------------------------------------------------------
-bool CIndexCache::readBackLevel(CArchive& archive) {
+bool CIndexCacheItem::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE
@@ -208,40 +223,45 @@ bool CIndexCache::readBackLevel(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CIndexCache& ind) {
+CArchive& operator<<(CArchive& archive, const CIndexCacheItem& ind) {
     ind.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CIndexCache& ind) {
+CArchive& operator>>(CArchive& archive, CIndexCacheItem& ind) {
     ind.Serialize(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-string_q CIndexCache::getValueByName(const string_q& fieldName) const {
+string_q CIndexCacheItem::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
-    string_q ret = nextIndexcacheChunk_custom(fieldName, this);
+    string_q ret = nextIndexcacheitemChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
     // Return field values
     switch (tolower(fieldName[0])) {
-        case 'i':
-            if ( fieldName % "items" || fieldName % "itemsCnt" ) {
-                size_t cnt = items.size();
-                if (endsWith(toLower(fieldName), "cnt"))
-                    return uint_2_Str(cnt);
-                if (!cnt) return "";
-                string_q retS;
-                for (size_t i = 0 ; i < cnt ; i++) {
-                    retS += items[i].Format();
-                    retS += ((i < cnt - 1) ? ",\n" : "\n");
-                }
-                return retS;
-            }
+        case 'f':
+            if ( fieldName % "firstAppearance" ) return uint_2_Str(firstAppearance);
+            break;
+        case 'l':
+            if ( fieldName % "latestAppearance" ) return uint_2_Str(latestAppearance);
+            break;
+        case 'n':
+            if ( fieldName % "nAddresses" ) return uint_2_Str(nAddresses);
+            if ( fieldName % "nAppearances" ) return uint_2_Str(nAppearances);
+            break;
+        case 'p':
+            if ( fieldName % "path" ) return path;
+            break;
+        case 's':
+            if ( fieldName % "sizeInBytes" ) return uint_2_Str(sizeInBytes);
+            break;
+        case 't':
+            if ( fieldName % "type" ) return type;
             break;
     }
 
@@ -249,24 +269,17 @@ string_q CIndexCache::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
 
     // Finally, give the parent class a chance
-    return CCache::getValueByName(fieldName);
+    return CBaseNode::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CIndexCache& item) {
+ostream& operator<<(ostream& os, const CIndexCacheItem& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
     item.Format(os, "", nullptr);
     os << "\n";
     return os;
-}
-
-//---------------------------------------------------------------------------
-const CBaseNode *CIndexCache::getObjectAt(const string_q& fieldName, size_t index) const {
-    if ( fieldName % "items" && index < items.size() )
-        return &items[index];
-    return NULL;
 }
 
 //---------------------------------------------------------------------------

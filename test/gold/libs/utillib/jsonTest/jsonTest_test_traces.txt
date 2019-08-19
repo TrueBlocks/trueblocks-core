@@ -9,12 +9,14 @@ tests/traces.json
   "transactionHash": "0x6b37abd2b3fcffb64df6f6c039e8ef1bed3212b9c5f88db72fea1e189718164e",
   "transactionPosition": 193,
   "type": "call",
+  "error": "",
   "action": {
     "address": "0x0",
     "balance": 0,
     "callType": "call",
     "from": "0xcb6fffa7041e469d3041ae94347a2a44fd5c9022",
     "gas": 0,
+    "init": "",
     "input": "0x",
     "refundAddress": "0x0",
     "to": "0x1574e31a7051f405126b4f9c2843f1e755b6c55f",
@@ -22,6 +24,7 @@ tests/traces.json
   },
   "result": {
     "address": "0x0",
+    "code": "",
     "gasUsed": 0,
     "output": "0x"
   }
