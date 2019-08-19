@@ -51,7 +51,6 @@ encoding            	1036	1	131122	T_TEXT TS_STRING
   "value": 0,
   "gas": 0,
   "gasPrice": 0,
-  "input": "",
   "isError": 0,
   "receipt": {
     "contractAddress": "0x0",
@@ -159,7 +158,6 @@ encoding            	1036	0	131122	T_TEXT TS_STRING
   "value": 0,
   "gas": 0,
   "gasPrice": 0,
-  "input": "",
   "isError": 0,
   "isInternal": 0,
   "receipt": {
@@ -168,33 +166,16 @@ encoding            	1036	0	131122	T_TEXT TS_STRING
     "logs": [],
     "status": null
   },
-  "articulatedTx": {
-    "name": "",
-    "type": "",
-    "constant": ,
-    "payable": ,
-    "signature": "",
-    "encoding": "",
-    "inputs": [],
-    "outputs": []
-  },
-  "compressedTx": "",
   "finalized": 0,
-  "traces": [
-    ""
-  ],
-  "confirmations": ,
+  "traces": [],
   "gasCost": 0,
   "etherGasCost": 0.000000000000000000,
-  "function": "",
-  "events": "",
   "price": "1.400000000000000000",
   "gasUsed": 0,
   "date": "1970-01-01 00:00:00 UTC",
   "datesh": "1970-01-01",
   "time": "0:00:00 UTC",
   "age": "100",
-  "ether": 0.000000000000000000,
-  "encoding": ""
+  "ether": 0.000000000000000000
 }
 

@@ -9,7 +9,6 @@ tests/random.json
     "callType": "call",
     "from": "0xf85368c3e85d5806459b427dfba3d25f1d51e779",
     "gas": "0x2ba2b",
-    "init": "",
     "input": "0xb61d27f6000000000000000000000000bb9bc244d798123fde783fcc1c72d3bb8c18941300000000000000000000000000000000000000000000000ad78ebc5ac6200000000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
     "refundAddress": "0x0",
     "to": "0x8a6d821613ef32e0f9527d8cb3a8cecb8fe22b0d",
@@ -17,10 +16,8 @@ tests/random.json
   },
   "blockHash": "0x2223bf3cdb89d610fa7201b099f01085087768152169b9effd03ce4df69cea56",
   "blockNumber": "0x15d5ee",
-  "error": "",
   "result": {
     "address": "0x0",
-    "code": "",
     "gasUsed": "0x16e23",
     "output": "0x0000000000000000000000000000000000000000000000000000000000000000"
   },
@@ -37,7 +34,6 @@ tests/random.json
     "callType": "callcode",
     "from": "0x8a6d821613ef32e0f9527d8cb3a8cecb8fe22b0d",
     "gas": "0x2968d",
-    "init": "",
     "input": "0xb61d27f6000000000000000000000000bb9bc244d798123fde783fcc1c72d3bb8c18941300000000000000000000000000000000000000000000000ad78ebc5ac6200000000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
     "refundAddress": "0x0",
     "to": "0x8a6d821613ef32e0f9527d8cb3a8cecb8fe22b0d",
@@ -45,10 +41,8 @@ tests/random.json
   },
   "blockHash": "0x2223bf3cdb89d610fa7201b099f01085087768152169b9effd03ce4df69cea56",
   "blockNumber": "0x15d5ee",
-  "error": "",
   "result": {
     "address": "0x0",
-    "code": "",
     "gasUsed": "0x16d9e",
     "output": "0x0000000000000000000000000000000000000000000000000000000000000000"
   },
@@ -65,7 +59,6 @@ tests/random.json
     "callType": "call",
     "from": "0x8a6d821613ef32e0f9527d8cb3a8cecb8fe22b0d",
     "gas": "0x196c3",
-    "init": "",
     "input": "0x",
     "refundAddress": "0x0",
     "to": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
@@ -73,10 +66,8 @@ tests/random.json
   },
   "blockHash": "0x2223bf3cdb89d610fa7201b099f01085087768152169b9effd03ce4df69cea56",
   "blockNumber": "0x15d5ee",
-  "error": "",
   "result": {
     "address": "0x0",
-    "code": "",
     "gasUsed": "0xcf23",
     "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
   },
@@ -93,7 +84,6 @@ tests/random.json
     "callType": "call",
     "from": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
     "gas": "0x10e83",
-    "init": "",
     "input": "0x",
     "refundAddress": "0x0",
     "to": "0x807640a13483f8ac783c557fcdf27be11ea4ac7a",
@@ -101,10 +91,8 @@ tests/random.json
   },
   "blockHash": "0x2223bf3cdb89d610fa7201b099f01085087768152169b9effd03ce4df69cea56",
   "blockNumber": "0x15d5ee",
-  "error": "",
   "result": {
     "address": "0x0",
-    "code": "",
     "gasUsed": "0x13f9",
     "output": "0x"
   },

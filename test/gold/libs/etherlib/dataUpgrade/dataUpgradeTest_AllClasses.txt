@@ -463,7 +463,6 @@ topic2              	1020	1	131132	T_HASH TS_STRING
 topic3              	1021	1	131132	T_HASH TS_STRING
 {
   "address": "0x0",
-  "data": "",
   "logIndex": 0,
   "topics": []
 }
@@ -525,9 +524,6 @@ topic3              	1021	0	131132	T_HASH TS_STRING
   "showing": 1,
   "cname": "LogEntry",
   "address": "0x0",
-  "blockHash": "",
-  "blockNumber": ,
-  "data": "",
   "logIndex": 0,
   "removed": false,
   "topics": [],
@@ -536,27 +532,10 @@ topic3              	1021	0	131132	T_HASH TS_STRING
     "deleted": 0,
     "showing": 1,
     "cname": "Function",
-    "name": "",
-    "type": "",
-    "anonymous": ,
-    "constant": ,
-    "payable": ,
-    "signature": "",
-    "encoding": "",
-    "message": "",
     "inputs": [],
-    "outputs": [],
-    "input_names": ""
+    "outputs": []
   },
-  "compressedLog": "",
-  "transactionHash": "",
-  "transactionIndex": ,
-  "transactionLogIndex": 0,
-  "type": "",
-  "topic0": "",
-  "topic1": "",
-  "topic2": "",
-  "topic3": ""
+  "transactionLogIndex": 0
 }
 
 --------------------------------------------------------------------------------
@@ -759,27 +738,7 @@ date                	1017	1	262149	T_DATE TS_DATE
   "subtraces": 0,
   "traceAddress": null,
   "transactionHash": "0x0",
-  "transactionPosition": 0,
-  "type": "",
-  "error": "",
-  "action": {
-    "address": "0x0",
-    "balance": 0,
-    "callType": "",
-    "from": "0x0",
-    "gas": 0,
-    "init": "",
-    "input": "",
-    "refundAddress": "0x0",
-    "to": "0x0",
-    "value": 0
-  },
-  "result": {
-    "address": "0x0",
-    "code": "",
-    "gasUsed": 0,
-    "output": ""
-  }
+  "transactionPosition": 0
 }
 
 --------------------------------------------------------------------------------
@@ -835,46 +794,7 @@ date                	1017	0	262149	T_DATE TS_DATE
   "subtraces": 0,
   "traceAddress": null,
   "transactionHash": "0x0",
-  "transactionPosition": 0,
-  "type": "",
-  "error": "",
-  "articulatedTrace": {
-    "schema": 5008,
-    "deleted": 0,
-    "showing": 1,
-    "cname": "Function",
-    "name": "",
-    "type": "",
-    "anonymous": ,
-    "constant": ,
-    "payable": ,
-    "signature": "",
-    "encoding": "",
-    "message": "",
-    "inputs": [],
-    "outputs": [],
-    "input_names": ""
-  },
-  "compressedTrace": "",
-  "action": {
-    "address": "0x0",
-    "balance": 0,
-    "callType": "",
-    "from": "0x0",
-    "gas": 0,
-    "init": "",
-    "input": "",
-    "refundAddress": "0x0",
-    "to": "0x0",
-    "value": 0
-  },
-  "result": {
-    "address": "0x0",
-    "code": "",
-    "gasUsed": 0,
-    "output": ""
-  },
-  "date": ""
+  "transactionPosition": 0
 }
 
 --------------------------------------------------------------------------------
@@ -1060,26 +980,17 @@ encoding            	1036	1	131122	T_TEXT TS_STRING
   "value": 0,
   "gas": 0,
   "gasPrice": 0,
-  "input": "",
   "isError": 0,
   "receipt": {
     "schema": 5008,
     "deleted": 0,
     "showing": 1,
     "cname": "Receipt",
-    "blockHash": "",
-    "blockNumber": ,
     "contractAddress": "0x0",
     "cumulativeGasUsed": 0,
-    "from": "",
     "gasUsed": 0,
     "logs": [],
-    "logsBloom": "",
-    "root": "",
-    "status": null,
-    "to": "",
-    "transactionHash": "",
-    "transactionIndex": 
+    "status": null
   },
   "gasUsed": 0
 }
@@ -1181,7 +1092,6 @@ encoding            	1036	0	131122	T_TEXT TS_STRING
   "value": 0,
   "gas": 0,
   "gasPrice": 0,
-  "input": "",
   "isError": 0,
   "isInternal": 0,
   "receipt": {
@@ -1189,55 +1099,23 @@ encoding            	1036	0	131122	T_TEXT TS_STRING
     "deleted": 0,
     "showing": 1,
     "cname": "Receipt",
-    "blockHash": "",
-    "blockNumber": ,
     "contractAddress": "0x0",
     "cumulativeGasUsed": 0,
-    "from": "",
     "gasUsed": 0,
     "logs": [],
-    "logsBloom": "",
-    "root": "",
-    "status": null,
-    "to": "",
-    "transactionHash": "",
-    "transactionIndex": 
+    "status": null
   },
-  "articulatedTx": {
-    "schema": 5008,
-    "deleted": 0,
-    "showing": 1,
-    "cname": "Function",
-    "name": "",
-    "type": "",
-    "anonymous": ,
-    "constant": ,
-    "payable": ,
-    "signature": "",
-    "encoding": "",
-    "message": "",
-    "inputs": [],
-    "outputs": [],
-    "input_names": ""
-  },
-  "compressedTx": "",
   "finalized": 0,
-  "traces": [
-    ""
-  ],
-  "confirmations": ,
+  "traces": [],
   "gasCost": 0,
   "etherGasCost": 0.000000000000000000,
-  "function": "",
-  "events": "",
   "price": "1.400000000000000000",
   "gasUsed": 0,
   "date": "1970-01-01 00:00:00 UTC",
   "datesh": "1970-01-01",
   "time": "0:00:00 UTC",
   "age": "100",
-  "ether": 0.000000000000000000,
-  "encoding": ""
+  "ether": 0.000000000000000000
 }
 
 --------------------------------------------------------------------------------

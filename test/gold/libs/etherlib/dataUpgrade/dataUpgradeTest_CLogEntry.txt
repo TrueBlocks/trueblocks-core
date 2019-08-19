@@ -26,7 +26,6 @@ topic2              	1020	1	131132	T_HASH TS_STRING
 topic3              	1021	1	131132	T_HASH TS_STRING
 {
   "address": "0x0",
-  "data": "",
   "logIndex": 0,
   "topics": []
 }
@@ -88,30 +87,13 @@ topic3              	1021	0	131132	T_HASH TS_STRING
   "showing": 1,
   "cname": "LogEntry",
   "address": "0x0",
-  "blockHash": "",
-  "blockNumber": ,
-  "data": "",
   "logIndex": 0,
   "removed": false,
   "topics": [],
   "articulatedLog": {
-    "name": "",
-    "type": "",
-    "constant": ,
-    "payable": ,
-    "signature": "",
-    "encoding": "",
     "inputs": [],
     "outputs": []
   },
-  "compressedLog": "",
-  "transactionHash": "",
-  "transactionIndex": ,
-  "transactionLogIndex": 0,
-  "type": "",
-  "topic0": "",
-  "topic1": "",
-  "topic2": "",
-  "topic3": ""
+  "transactionLogIndex": 0
 }
 

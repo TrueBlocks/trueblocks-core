@@ -94,7 +94,10 @@ void COptions::Init(void) {
         status.client_version = (isTestMode() ? "Parity version" : getVersionFromClient());
     }
     status.trueblocks_version = getVersionStr();
-    status.is_scraping = contains(listRunning("chifra scrape"), "chifra scrape"); }
+    status.is_scraping = contains(listRunning("chifra scrape"), "chifra scrape");
+    if (isTestMode())
+        status.is_scraping = false;
+}
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
