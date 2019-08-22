@@ -15,40 +15,42 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "etherlib.h"
-#include "accountwatch.h"
+#include "cache.h"
+#include "monitorcacheitem.h"
 
 namespace qblocks {
 
 // EXISTING_CODE
-#define CNameCacheItem CMonitorCacheItem
-#define CNameCacheItemArray CMonitorCacheItemArray
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CMonitorCacheItem : public CAccountWatch {
+class CNameCache : public CCache {
 public:
-    string_q type;
+    CAddressArray addrs;
+    CNameCacheItemArray items;
 
 public:
-    CMonitorCacheItem(void);
-    CMonitorCacheItem(const CMonitorCacheItem& mo);
-    virtual ~CMonitorCacheItem(void);
-    CMonitorCacheItem& operator=(const CMonitorCacheItem& mo);
+    CNameCache(void);
+    CNameCache(const CNameCache& na);
+    virtual ~CNameCache(void);
+    CNameCache& operator=(const CNameCache& na);
 
-    DECLARE_NODE(CMonitorCacheItem);
+    DECLARE_NODE(CNameCache);
+
+    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
+    const string_q getStringAt(const string_q& fieldName, size_t i) const override;
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CMonitorCacheItem& item) const;
-    bool operator!=(const CMonitorCacheItem& item) const { return !operator==(item); }
-    friend bool operator<(const CMonitorCacheItem& v1, const CMonitorCacheItem& v2);
-    friend ostream& operator<<(ostream& os, const CMonitorCacheItem& item);
+    bool operator==(const CNameCache& item) const;
+    bool operator!=(const CNameCache& item) const { return !operator==(item); }
+    friend bool operator<(const CNameCache& v1, const CNameCache& v2);
+    friend ostream& operator<<(ostream& os, const CNameCache& item);
 
 protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CMonitorCacheItem& mo);
+    void duplicate(const CNameCache& na);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -56,66 +58,68 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline CMonitorCacheItem::CMonitorCacheItem(void) {
+inline CNameCache::CNameCache(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CMonitorCacheItem::CMonitorCacheItem(const CMonitorCacheItem& mo) {
+inline CNameCache::CNameCache(const CNameCache& na) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(mo);
+    duplicate(na);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CMonitorCacheItem::~CMonitorCacheItem(void) {
+inline CNameCache::~CNameCache(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CMonitorCacheItem::clear(void) {
+inline void CNameCache::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CMonitorCacheItem::initialize(void) {
-    CAccountWatch::initialize();
+inline void CNameCache::initialize(void) {
+    CCache::initialize();
 
-    type = "";
+    addrs.clear();
+    items.clear();
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CMonitorCacheItem::duplicate(const CMonitorCacheItem& mo) {
+inline void CNameCache::duplicate(const CNameCache& na) {
     clear();
-    CAccountWatch::duplicate(mo);
+    CCache::duplicate(na);
 
-    type = mo.type;
+    addrs = na.addrs;
+    items = na.items;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CMonitorCacheItem& CMonitorCacheItem::operator=(const CMonitorCacheItem& mo) {
-    duplicate(mo);
+inline CNameCache& CNameCache::operator=(const CNameCache& na) {
+    duplicate(na);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CMonitorCacheItem::operator==(const CMonitorCacheItem& item) const {
+inline bool CNameCache::operator==(const CNameCache& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -123,7 +127,7 @@ inline bool CMonitorCacheItem::operator==(const CMonitorCacheItem& item) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CMonitorCacheItem& v1, const CMonitorCacheItem& v2) {
+inline bool operator<(const CNameCache& v1, const CNameCache& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -131,13 +135,13 @@ inline bool operator<(const CMonitorCacheItem& v1, const CMonitorCacheItem& v2) 
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CMonitorCacheItem> CMonitorCacheItemArray;
-extern CArchive& operator>>(CArchive& archive, CMonitorCacheItemArray& array);
-extern CArchive& operator<<(CArchive& archive, const CMonitorCacheItemArray& array);
+typedef vector<CNameCache> CNameCacheArray;
+extern CArchive& operator>>(CArchive& archive, CNameCacheArray& array);
+extern CArchive& operator<<(CArchive& archive, const CNameCacheArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CMonitorCacheItem& mon);
-extern CArchive& operator>>(CArchive& archive, CMonitorCacheItem& mon);
+extern CArchive& operator<<(CArchive& archive, const CNameCache& nam);
+extern CArchive& operator>>(CArchive& archive, CNameCache& nam);
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

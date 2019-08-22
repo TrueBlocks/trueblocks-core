@@ -44,7 +44,23 @@ void COptions::doStatus(ostream& os) {
         }
     }
 
-//names
+    CNameCache nc;
+    if (contains(mode, "|names|")) {
+        nc.type = nc.getRuntimeClass()->m_ClassName;
+        nc.path = (isTestMode() ? "CachePath" : getCachePath("monitors/"));
+        forEveryFileInFolder(getCachePath("monitors/"), countFiles, &nc);
+        status.caches.push_back(&nc);
+        CItemCounter counter(this);
+        counter.cachePtr = &nc;
+        counter.monitorArray = &nc.items;
+        if (details) {
+            forEveryFileInFolder(getCachePath("monitors/"), noteMonitor, &counter);
+        } else {
+            forEveryFileInFolder(getCachePath("monitors/"), noteMonitor_light, &counter);
+            if (nc.addrs.size() == 0)
+                nc.valid_counts = true;
+        }
+    }
 
     CAbiCache abi;
     if (contains(mode, "|abis|")) {

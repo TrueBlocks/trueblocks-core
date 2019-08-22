@@ -13,6 +13,7 @@
 #include "indexcache.h"
 #include "abicache.h"
 #include "slurpcache.h"
+#include "namecache.h"
 
 //-------------------------------------------------------------------------
 class COptions : public COptionsBase {
