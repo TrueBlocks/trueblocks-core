@@ -471,8 +471,8 @@ bool CFunction::checkTypes(void) const {
 string_q CFunction::encodeItem(void) const {
     if (encoding == "()")  // optimization
         return "0x861731d5";
-//    if (!encoding.empty())
-//        return encoding;
+    if (!encoding.empty()) // optimization
+        return encoding;
 extern string_q getSha3(const string_q& hexIn);
     string_q ret = getSha3(chr_2_HexStr(signature));
     return (type == "event" ? ret : extract(ret, 0, 10));
