@@ -158,10 +158,10 @@ n,group,api_route,tool,order,command,command_short,data_type,option_kind,default
 157,apps,export,acctExport,,start,s,<blknum>,flag,,first block to export (inclusive),,FALSE,FALSE,FALSE
 158,apps,export,acctExport,,end,e,<blknum>,flag,,last block to export (inclusive),,FALSE,FALSE,FALSE
 159,apps,export,acctExport,,,,,description,,Export full detail of transactions for one or more Ethereum addresses.,,FALSE,TRUE,TRUE
-160,apps,,chifra,,command,,enum[index|list|export|accounts|slurp|quotes|data|blocks|transactions|receipts|logs|traces|state|abi|status|message|rm|config|leech|seed],positional,,one of [index|list|export|accounts|slurp|quotes|data|blocks|transactions|receipts|logs|traces|state|abi|status|message|rm|config|leech|seed],,TRUE,TRUE,TRUE
+160,apps,,chifra,,command,,enum[scrape|list|export|accounts|slurp|quotes|data|blocks|transactions|receipts|logs|traces|state|abi|status|message|rm|config|leech|seed],positional,,one of [scrape|list|export|accounts|slurp|quotes|data|blocks|transactions|receipts|logs|traces|state|abi|status|message|rm|config|leech|seed],,TRUE,TRUE,TRUE
 161,apps,,chifra,,sleep,,<seconds>,flag,,"for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 0)",,FALSE,TRUE,TRUE
 162,apps,,chifra,,,,,description,,Create a TrueBlocks monitor configuration.,,FALSE,TRUE,TRUE
-162.11,apps,status,cacheStatus,,mode_list,,list<enum[scraper|monitors|names|abis|blocks|txs|traces|slurps|prices|some*|all]>,positional,,one or more of [scraper|monitors|names|abis|blocks|txs|traces|slurps|prices|some*|all],,FALSE,TRUE,TRUE
+162.11,apps,status,cacheStatus,,mode_list,,list<enum[index|monitors|names|abis|blocks|txs|traces|slurps|prices|some*|all]>,positional,,one or more of [index|monitors|names|abis|blocks|txs|traces|slurps|prices|some*|all],,FALSE,TRUE,TRUE
 162.12,apps,status,cacheStatus,,details,d,boolean,switch,,"include details about items found in monitors, slurps, abis, or price caches",,FALSE,TRUE,TRUE
 162.13,apps,status,cacheStatus,,list,l,boolean,switch,,display results in Linux ls -l format (assumes --detail),,FALSE,TRUE,TRUE
 162.14,apps,status,cacheStatus,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format (one of [none|json*|txt|csv|api]),,FALSE,FALSE,FALSE
