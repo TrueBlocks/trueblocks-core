@@ -17,10 +17,11 @@
 class COptions : public COptionsBase {
 public:
     COptionsTransList transList;
-    bool option1;
+    bool useTrace;
     bool articulate;
     CAbi abi_spec;
     bool first;
+    bool force;
 
     COptions(void);
     ~COptions(void);
