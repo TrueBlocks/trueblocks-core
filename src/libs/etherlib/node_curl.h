@@ -19,6 +19,7 @@ namespace qblocks {
     class CCurlContext {
     public:
         string_q           baseURL;
+        bool               debugging;
         bool               nodeRequired;
         CURLCALLBACKFUNC   callBackFunc;
         CURLCALLBACKFUNC   curlNoteFunc;
