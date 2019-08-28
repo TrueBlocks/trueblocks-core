@@ -23,6 +23,7 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     CCurlContext::CCurlContext(void) {
         baseURL      = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
+        debugging    = getGlobalConfig()->getConfigBool("debugging", "curl", false);
         callBackFunc = writeCallback;
         curlNoteFunc = NULL;
         theID        = 1;
@@ -44,19 +45,20 @@ namespace qblocks {
     }
 
 //-------------------------------------------------------------------------
-//#define DEBUG_RPC
+#define DEBUG_RPC
 #ifdef DEBUG_RPC
-int x = 0;
 #define PRINT(msg) \
-cerr << string_q(120, '-') << "\n" << ++x << "." << msg << "\n"; \
-cerr << "\tresult: \t[" << substitute(result, "\n", " ") << "]\n"; \
-cerr << "\tearlyAbort:\t" << earlyAbort << "\n"; \
-cerr << "\tcurlID: \t" << getCurlID() << "\n";
+if (debugging) { \
+cerr << string_q(120, '-') << "\n" << "." << msg << "\n"; \
+cerr << cGreen << "\tresult: " << cOff << "\t[" << substitute(result, "\n", " ") << "]\n"; \
+cerr << cGreen << "\tearlyAbort: " << cOff << "\t" << earlyAbort << "\n"; \
+cerr << cGreen << "\tcurlID: " << cOff << "\t" << getCurlID() << "\n"; \
+}
 #define PRINTQ(msg) \
-cerr << string_q(120, '-') << "\n" << ++x << "." << msg << "\n";
+if (data->debugging) { cerr << string_q(120, '-') << "\n" << "." << msg << "\n"; }
 #define PRINTL(msg) \
-cerr << string_q(120,'-') << "\n"; \
-PRINT(msg);
+if (debugging) { cerr << string_q(120,'-') << "\n"; \
+PRINT(msg); }
 #else  // DEBUG_RPC
 #define PRINTQ(msg)
 #define PRINT(msg)
@@ -212,7 +214,6 @@ PRINT("CURL returned CURLE_OK")
 
 PRINTL("Received: " + result);
 #ifdef DEBUG_RPC
-x = 0;
 #endif
         if (raw)
             return result;
