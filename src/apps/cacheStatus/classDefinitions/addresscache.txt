@@ -1,7 +1,0 @@
-[settings]
-class     = CAddressCache
-baseClass = CCache
-fields    = 
-includes  = cache.h
-cIncs     = 
-serialize = true

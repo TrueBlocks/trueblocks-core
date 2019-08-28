@@ -250,6 +250,12 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------------
+    string_q listRunning(const string_q& progName) {
+        string_q cmd = "ps -ef | grep -i \"" + progName + "\" | grep -v grep | grep -v \"sh -c \"";
+        return doCommand(cmd);
+    }
+
+    //----------------------------------------------------------------------------
     bool isRunning(const string_q& progName, bool excludeSelf) {
         string_q cmd = "ps -ef | grep -i \"" + progName + "\" | grep -v grep | grep -v \"sh -c \" | wc -l";
         string_q result = doCommand(cmd);

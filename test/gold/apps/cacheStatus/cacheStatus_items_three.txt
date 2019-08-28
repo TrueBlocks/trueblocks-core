@@ -19,9 +19,8 @@ cacheStatus abis slurps monitors --details
       "nFolders": 0,
       "sizeInBytes": 0,
       "valid_counts": false
-    }
-
-,{
+    },
+    {
       "items": [],
       "type": "CAbiCache",
       "path": "CachePath",
@@ -29,9 +28,8 @@ cacheStatus abis slurps monitors --details
       "nFolders": 0,
       "sizeInBytes": 0,
       "valid_counts": false
-    }
-
-,{
+    },
+    {
       "addrs": [],
       "items": [],
       "type": "CSlurpCache",
@@ -41,7 +39,6 @@ cacheStatus abis slurps monitors --details
       "sizeInBytes": 0,
       "valid_counts": false
     }
-
   ]
 }
 

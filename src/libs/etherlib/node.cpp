@@ -114,6 +114,7 @@ extern void loadParseMap(void);
 
     //--------------------------------------------------------------------------------
     bool getBlock_light(CBlock& block, const string_q& val) {
+        block.light = true;
         getObjectViaRPC(block, "eth_getBlockByNumber", "["+quote(val)+",false]");
         return true;
     }
@@ -255,7 +256,7 @@ extern void loadParseMap(void);
                 dDos.loadAsDdos(trans, bn, txid);
                 trans.traces.push_back(dDos);
 
-            } else if (txid == 99998 || txid == 99999) {
+            } else if (txid == 99997 || txid == 99998 || txid == 99999) {
 
                 CTrace blockReward;
                 blockReward.loadAsBlockReward(trans, bn, txid);
@@ -273,7 +274,10 @@ extern void loadParseMap(void);
 
             }
 
-            if (useCache) {
+            // Write traces if we're told to and there are traces. Remember: every transaction has at
+            // least one trace, so if we've gotten here without traces, then the node is not a tracing node.
+            // Don't write anything in that case.
+            if (useCache && trans.traces.size() > 0) {
                 establishFolder(trcFilename);
                 CArchive traceCache(WRITING_ARCHIVE);
                 if (traceCache.Lock(trcFilename, modeWriteCreate, LOCK_NOWAIT)) {
@@ -1199,7 +1203,7 @@ extern void loadParseMap(void);
 
     //-------------------------------------------------------------------------
     wei_t blockReward(blknum_t bn, blknum_t txid, bool txFee) {
-        if (txFee || txid == 99998)
+        if (txFee || txid == 99998)  // TODO(tjayrush): figure out uncle mining reward
             return str_2_Wei("0000000000000000000");
 
         if (bn < byzantiumBlock) {

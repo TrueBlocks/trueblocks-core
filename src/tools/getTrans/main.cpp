@@ -65,7 +65,7 @@ bool visitTransaction(CTransaction& trans, void *data) {
     }
 
     //////////////////////////////////////////////////////
-    if (opt->option1)
+    if (opt->useTrace)
         getTraces(trans.traces, trans.getValueByName("hash"));
     //////////////////////////////////////////////////////
 
@@ -87,5 +87,20 @@ bool visitTransaction(CTransaction& trans, void *data) {
             opt->first = false;
         }
     }
+
+    if (opt->force) {
+        string_q txFilename = getBinaryCacheFilename(CT_TXS, trans.blockNumber, trans.transactionIndex);
+        if (!fileExists(txFilename)) {
+            CBlock block;
+            getBlock_light(block, trans.blockNumber);
+            trans.timestamp = block.timestamp;
+            trans.receipt.status = NO_STATUS;
+            trans.pBlock = &block;
+            if (trans.blockNumber >= byzantiumBlock)
+                getReceipt(trans.receipt, trans.hash);
+            writeTransToBinary(trans, txFilename);
+        }
+    }
+
     return true;
 }

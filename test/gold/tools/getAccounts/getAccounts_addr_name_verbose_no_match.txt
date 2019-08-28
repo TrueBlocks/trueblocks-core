@@ -1,3 +1,4 @@
 getAccounts argc: 4 [1:-v] [2:0x01] [3:torj] 
 getAccounts -v 0x01 torj 
-TIME ~ CLOCK - <INFO>   : No results
+address	name	symbol	source
+0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac	Storj	STORJ	Etherscan.io

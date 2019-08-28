@@ -9,7 +9,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("command", "", "enum[scrape|list|export|accounts|slurp|quotes|data|blocks|trans|receipts|logs|traces|state|abi|status|message|rm|config|leech|seed]", OPT_REQUIRED | OPT_POSITIONAL, "one of [scrape|list|export|accounts|slurp|quotes|data|blocks|trans|receipts|logs|traces|state|abi|status|message|rm|config|leech|seed]"),
+    COption("command", "", "enum[scrape|list|export|accounts|slurp|quotes|data|blocks|transactions|receipts|logs|traces|state|abi|status|message|rm|config|leech|seed]", OPT_REQUIRED | OPT_POSITIONAL, "one of [scrape|list|export|accounts|slurp|quotes|data|blocks|transactions|receipts|logs|traces|state|abi|status|message|rm|config|leech|seed]"),
     COption("sleep", "", "<seconds>", OPT_FLAG, "for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 0)"),
     COption("", "", "", 0, "Create a TrueBlocks monitor configuration."),
 // END_CODE_OPTIONS
@@ -78,18 +78,25 @@ bool COptions::parseArguments(string_q& command) {
                     } else {
                         // ignore --to_file flag in docker mode
                     }
+
                 } else {
-                    if (arg == "--noBlooms" || arg == "--staging")
-                        freshen_flags = arg;
-                    else
+                    if (arg == "--noBlooms" || arg == "--staging") {
+                        freshen_flags += (arg + " ");
+
+                    } else if (startsWith(arg, "--start")) {
+                        freshen_flags += (arg + " ");
                         tool_flags += (arg + " ");
+
+                    } else {
+                        tool_flags += (arg + " ");
+                    }
                 }
             }
         }
     }
 
     if (mode == "blocks" ||
-    	mode == "trans" ||
+    	mode == "transactions" ||
         mode == "receipts" ||
         mode == "accounts" ||
     	mode == "logs" ||
@@ -115,30 +122,32 @@ bool COptions::parseArguments(string_q& command) {
         establishFolder(getMonitorPath("", FM_STAGING));
     }
 
-    if (verbose && !contains(tool_flags,    "-v")) tool_flags    += (" -v:" + uint_2_Str(verbose));
-    if (verbose && !contains(freshen_flags, "-v")) freshen_flags += (" -v:" + uint_2_Str(verbose));
-
-    if (expContext().asEther)   tool_flags += (" --ether");
-    if (expContext().asDollars) tool_flags += (" --dollars");
-    tool_flags += (" " + addExportMode(api_mode, exportFmt));
-
-    tool_flags = trim(tool_flags, ' ');
+    if (verbose) { freshen_flags += (" -v:" + uint_2_Str(verbose)); }
+    freshen_flags += addExportMode(api_mode, exportFmt);
     freshen_flags = trim(freshen_flags, ' ');
 
-    blknum_t unripe, ripe, staging, finalized, client;
-    getLastBlocks(unripe, ripe, staging, finalized, client);
-    if (client < finalized) {
-        if (!isTestMode())
-            cerr << "Sleeping: " << scrapeSleep << " " << endl;
+    if (verbose) { tool_flags += (" -v:" + uint_2_Str(verbose)); }
+    if (expContext().asEther) { tool_flags += " --ether"; }
+    if (expContext().asDollars) { tool_flags += " --dollars"; }
+    tool_flags += addExportMode(api_mode, exportFmt);
+    tool_flags = trim(tool_flags, ' ');
 
-    } else if ((client - finalized) > 2500) {
-        if (!isTestMode())
-            cerr << "Sleeping: " << scrapeSleep << " " << endl;
-        scrapeSleep = 0;
-    } else {
-        if (mode == "scrape") {
+    if (isNodeRunning()) {
+        blknum_t unripe, ripe, staging, finalized, client;
+        getLastBlocks(unripe, ripe, staging, finalized, client);
+        if (client < finalized) {
             if (!isTestMode())
-                cerr << "Sleeping every " << scrapeSleep << " seconds." << endl;
+                cerr << "Sleeping: " << scrapeSleep << " " << endl;
+
+        } else if ((client - finalized) > 2500) {
+            if (!isTestMode())
+                cerr << "Sleeping: " << scrapeSleep << " " << endl;
+            scrapeSleep = 0;
+        } else {
+            if (mode == "scrape") {
+                if (!isTestMode())
+                    cerr << "Sleeping every " << scrapeSleep << " seconds." << endl;
+            }
         }
     }
 
@@ -182,11 +191,11 @@ string_q addExportMode(bool api_mode, format_t fmt) {
     if (!api_mode && fmt == TXT1)
         return "";
     switch (fmt) {
-        case NONE1: return "--fmt none";
-        case JSON1: return "--fmt json";
-        case TXT1: return "--fmt txt";
-        case CSV1: return "--fmt csv";
-        case API1: return "--fmt api";
+        case NONE1: return " --fmt none";
+        case JSON1: return " --fmt json";
+        case TXT1:  return " --fmt txt";
+        case CSV1:  return " --fmt csv";
+        case API1:  return " --fmt api";
         default:
             break;
     }

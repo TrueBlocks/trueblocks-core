@@ -39,6 +39,7 @@ public:
     timestamp_t timestamp;
     CTransactionArray transactions;
     string_q name;
+    bool light;
 
 public:
     CBlock(void);
@@ -116,6 +117,7 @@ inline void CBlock::initialize(void) {
     timestamp = 0;
     transactions.clear();
     name = "";
+    light = 0;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -138,6 +140,7 @@ inline void CBlock::duplicate(const CBlock& bl) {
     timestamp = bl.timestamp;
     transactions = bl.transactions;
     name = bl.name;
+    light = bl.light;
 
     // EXISTING_CODE
     finishParse();

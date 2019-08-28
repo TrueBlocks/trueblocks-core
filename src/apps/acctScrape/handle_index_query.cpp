@@ -198,7 +198,7 @@ bool COptions::visitBinaryFile(const string_q& path, void *data) {
 //---------------------------------------------------------------
 bool visitStagingIndexFiles(const string_q& path, void *data) {
     if (endsWith(path, "/")) {
-        return forEveryFileInFolder(path + "*", visitFinalIndexFiles, data);
+        return forEveryFileInFolder(path + "*", visitStagingIndexFiles, data);
 
     } else {
         cerr << path << endl;

@@ -1,0 +1,7 @@
+[settings]
+class     = CIndexCache
+baseClass = CCache
+fields    = CIndexCacheItemArray items
+includes  = cache.h|indexcacheitem.h
+cIncs     = 
+serialize = true

@@ -46,8 +46,8 @@ bool COptions::handle_data(void) {
         replaceAll(tool_flags, "--blocks", "");
         os << "getBlock " << (api_mode ? substitute(tool_flags, ",", " ") : tool_flags) << " ; ";
 
-    } else if (contains(tool_flags, "--trans")) {
-        replaceAll(tool_flags, "--trans", "");
+    } else if (contains(tool_flags, "--transactions")) {
+        replaceAll(tool_flags, "--transactions", "");
         os << "getTrans " << (api_mode ? substitute(tool_flags, ",", " ") : tool_flags) << " ; ";
 
     } else if (contains(tool_flags, "--receipts")) {
