@@ -442,6 +442,11 @@ extern void loadParseMap(void);
     }
 
     //--------------------------------------------------------------------------
+    bool getChainHead(void) {
+        return false; //callRPC("parity_chainStatus", "[]", false);
+    }
+
+    //--------------------------------------------------------------------------
     blknum_t getLastBlock_cache_final(void) {
         string_q finLast = getLastFileInFolder(indexFolder_finalized, false);
         if (!finLast.empty()) {

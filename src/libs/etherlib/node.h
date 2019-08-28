@@ -81,6 +81,7 @@ namespace qblocks {
     inline bool     isGeth                  (void) { return contains(toLower(getVersionFromClient()), "geth"); }  // NOLINT
     inline bool     isParity                (void) { return contains(toLower(getVersionFromClient()), "parity"); }  // NOLINT
     extern bool     getAccounts             (CAddressArray& addrs);
+    extern bool     getChainHead            (void);
 
     //-------------------------------------------------------------------------
     uint64_t        addFilter               (address_t addr, const CTopicArray& topics, blknum_t block);
