@@ -1,5 +1,6 @@
-cacheStatus argc: 2 [1:scraper] 
-cacheStatus scraper 
+cacheStatus argc: 3 [1:scraper] [2:--api_mode] 
+cacheStatus scraper --api_mode 
+{ "type": "CStatus", "data": [
 [
 {
   "client_version": "Parity version",
@@ -24,3 +25,4 @@ cacheStatus scraper
 
 
 ]
+], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
