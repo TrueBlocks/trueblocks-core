@@ -329,7 +329,7 @@ bool COptions::loadOneAddress(CAppearanceArray_base& apps, const address_t& addr
         for (size_t i = 0 ; i < nRecords ; i++) {
             if (buffer[i].blk == 0)
                 prefundMap[buffer[i].txid] = addr;
-            if (buffer[i].txid == 99999 || buffer[i].txid == 99998)
+            if (buffer[i].txid == 99999 || buffer[i].txid == 99998 || buffer[i].txid == 99997)
                 blkRewardMap[buffer[i].blk] = addr;
             apps.push_back(buffer[i]);
         }

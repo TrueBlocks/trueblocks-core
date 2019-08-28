@@ -36,7 +36,7 @@ bool COptions::exportData(void) {
                     trans.transactionIndex = item->txid;
                     trans.loadAsPrefund(prefunds, prefundMap[item->txid]);
 
-                } else if (item->txid == 99998 || item->txid == 99999) {
+                } else if (item->txid == 99997 || item->txid == 99998 || item->txid == 99999) {
                     trans.loadAsBlockReward(item->blk, item->txid, blkRewardMap[item->blk]);
 
                 } else {
