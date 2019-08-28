@@ -8,12 +8,22 @@
 //--------------------------------------------------------------------------------
 void COptions::doStatus(ostream& os) {
 
-    CAddressCache aid;
-    if (contains(mode, "|scraper|")) {
+    CIndexCache aid;
+    if (contains(mode, "|index|")) {
         aid.type = aid.getRuntimeClass()->m_ClassName;
         aid.path = (isTestMode() ? "IndexPath" : getIndexPath(""));
         forEveryFileInFolder(getIndexPath(""), countFiles, &aid);
         status.caches.push_back(&aid);
+        CItemCounter counter(this);
+        counter.cachePtr = &aid;
+        counter.indexArray = &aid.items;
+        if (details) {
+            forEveryFileInFolder(getIndexPath(""), noteIndex, &counter);
+        } else {
+//            forEveryFileInFolder(getCachePath("monitors/"), noteMonitor_light, &counter);
+//            if (aid.metrics.size() == 0)
+//                aid.valid_counts = true;
+        }
     }
 
     CMonitorCache md;
@@ -34,7 +44,23 @@ void COptions::doStatus(ostream& os) {
         }
     }
 
-//names
+    CNameCache nc;
+    if (contains(mode, "|names|")) {
+        nc.type = nc.getRuntimeClass()->m_ClassName;
+        nc.path = (isTestMode() ? "CachePath" : getCachePath("monitors/"));
+        forEveryFileInFolder(getCachePath("monitors/"), countFiles, &nc);
+        status.caches.push_back(&nc);
+        CItemCounter counter(this);
+        counter.cachePtr = &nc;
+        counter.monitorArray = &nc.items;
+        if (details) {
+            forEveryFileInFolder(getCachePath("monitors/"), noteMonitor, &counter);
+        } else {
+            forEveryFileInFolder(getCachePath("monitors/"), noteMonitor_light, &counter);
+            if (nc.addrs.size() == 0)
+                nc.valid_counts = true;
+        }
+    }
 
     CAbiCache abi;
     if (contains(mode, "|abis|")) {
@@ -184,6 +210,49 @@ bool noteMonitor(const string_q& path, void *data) {
 }
 
 //---------------------------------------------------------------------------
+bool noteIndex(const string_q& path, void *data) {
+
+    if (isTestMode())
+        return false;
+
+    if (endsWith(path, '/')) {
+        return forEveryFileInFolder(path + "*", noteIndex, data);
+
+    } else {
+        cerr << path << "\r"; cerr.flush();
+        CItemCounter *counter = (CItemCounter*)data;
+        ASSERT(counter->options);
+        CIndexCacheItem aci;
+        aci.type = aci.getRuntimeClass()->m_ClassName;
+        aci.path = substitute(path, counter->cachePtr->path, "");
+        string_q fn = aci.path;
+        replace(fn, "blooms/", "");
+        replace(fn, "finalized/", "");
+        replace(fn, "staging/", "");
+        replace(fn, "unripe/", "");
+        replace(fn, "ripe/", "");
+        if (contains(path, "finalized") || contains(path, "blooms")) {
+            timestamp_t unused;
+            uint64_t tmp;
+            aci.firstAppearance = (uint32_t)bnFromPath(fn, tmp, unused);
+            aci.latestAppearance = (uint32_t)tmp;
+        } else {
+            aci.firstAppearance = (uint32_t)str_2_Uint(fn);
+            aci.latestAppearance = (uint32_t)str_2_Uint(fn);
+        }
+        getIndexMetrics(path, aci.nAppearances, aci.nAddresses);
+        aci.sizeInBytes = (uint32_t)fileSize(path);
+        //aci.metrics.push_back(aci.firstAppearance);
+        //a/ci.metrics.push_back(aci.latestAppearance);
+        //aci.metrics.push_back(aci.nAppearances);
+        //aci.metrics.push_back(aci.nAddresses);
+        //aci.metrics.push_back(aci.sizeInBytes);
+        counter->indexArray->push_back(aci);
+    }
+    return !shouldQuit();
+}
+
+//---------------------------------------------------------------------------
 bool noteABI(const string_q& path, void *data) {
 
     if (isTestMode())
@@ -240,4 +309,42 @@ bool notePrice(const string_q& path, void *data) {
         counter->priceArray->push_back(price);
     }
     return !shouldQuit();
+}
+
+//---------------------------------------------------------------------------
+void getIndexMetrics(const string_q& path, uint32_t& nAppearences, uint32_t& nAddresses) {
+
+    nAppearences = nAddresses = (uint32_t)-1;
+    if (contains(path, "blooms")) {
+        return;
+    }
+
+    if (endsWith(path, ".txt")) {
+        nAppearences = (uint32_t)fileSize(path) / (uint32_t)59;
+        CStringArray lines;
+        asciiFileToLines(path, lines);
+        typedef map<address_t, bool> CAddressMap;
+        CAddressMap addrMap;
+        for (auto line : lines)
+            addrMap[nextTokenClear(line,'\t')] = true;
+        nAddresses = (uint32_t)addrMap.size();
+        return;
+    }
+
+    CArchive archive(READING_ARCHIVE);
+    if (!archive.Lock(path, modeReadOnly, LOCK_NOWAIT))
+        return;
+
+    CHeaderRecord_base header;
+    bzero(&header, sizeof(header));
+    //size_t nRead =
+    archive.Read(&header, sizeof(header), 1);
+    //if (false) { //nRead != sizeof(header)) {
+    //    cerr << "Could not read file: " << path << endl;
+    //    return;
+    //}
+    ASSERT(header.magic == MAGIC_NUMBER);
+    //ASSERT(bytes_2_Hash(h->hash) == versionHash);
+    nAddresses = header.nAddrs;
+    nAppearences = header.nRows;
 }

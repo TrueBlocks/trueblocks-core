@@ -1,0 +1,7 @@
+[settings]
+class     = CNameCache
+baseClass = CCache
+fields    = CAddressArray addrs|CNameCacheItemArray items
+includes  = cache.h|namecacheitem.h
+cIncs     = 
+serialize = true

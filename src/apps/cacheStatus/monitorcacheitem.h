@@ -21,6 +21,8 @@
 namespace qblocks {
 
 // EXISTING_CODE
+#define CNameCacheItem CMonitorCacheItem
+#define CNameCacheItemArray CMonitorCacheItemArray
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------

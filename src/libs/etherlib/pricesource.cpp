@@ -47,7 +47,7 @@ namespace qblocks {
 
         if (!fileExists(cacheFile)) {
             string_q zipFile = configPath("cache/prices/") + dataSource + "_" + source.pair + ".bin.gz";
-            if (zipFile != cacheFile) {
+            if (zipFile != cacheFile + ".gz") {
                 string_q cmd = "cp -f " + zipFile + " " + cacheFile + ".gz";
                 cmd += (" ; cd " + getCachePath("prices/") + " ; gunzip *.gz");
                 doCommand(cmd);

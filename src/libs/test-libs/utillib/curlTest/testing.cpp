@@ -19,6 +19,6 @@
 int main(int argc, const char *argv[]) {
 //    etherlib_init(quickQuitHandler);
 
-    cout << substitute(urlToString("https:/""/quickblocks.io"), "\r", "") << "\n";
+    cout << substitute(urlToString("https:/""/trueblocks.io"), "\r", "") << "\n";
     return 0;
 }

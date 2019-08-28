@@ -98,7 +98,7 @@ run_test("getBlock_hashes_4" "-n"          " --source:raw" " 4001001")
 
 run_test("getBlock_address_addrs1"   "3982128"  " -a"       )
 run_test("getBlock_address_addrs2"   "3982128"  " --addrs"  )
-run_test("getBlock_address_addrsv"   "3982128"  " -a" " -v" )
+run_test("getBlock_address_addrsv"   "3982128"  " -a" " -v" " 1")
 run_test("getBlock_address_addrsf"   "3982128"  " --addr"   )
 run_test("getBlock_address_uniq1"    "3982128"  " --uniq"   )
 run_test("getBlock_address_uniq2"    "3982128"  " -u"       )

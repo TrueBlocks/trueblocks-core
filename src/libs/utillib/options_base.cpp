@@ -132,6 +132,20 @@ namespace qblocks {
                     }
                 }
             }
+
+            if (!combine && (arg == "-v" || arg == "-verbose")) {
+                if (i < nArgs-1) {
+                    uint64_t n = str_2_Uint(args[i+1]);
+                    if (n > 0 && n <= 10) {
+                        // We want to pull the next parameter into this one since it's a ':' param
+                        combine = true;
+                    }
+                }
+                if (!combine) {
+                    arg = "--verbose:1";
+                }
+            }
+
             if (combine && i < (nArgs-1)) {
                 args[curArg++] = arg + ":" + args[i+1];
                 i++;
@@ -159,9 +173,9 @@ namespace qblocks {
                     if (args) delete [] args;
                     return usage("--file: '" + cmdFileName + "' not found. Quitting.");
                 }
-            } else if (startsWith(arg, "-v") || startsWith(arg, "--verbose")) {
+            } else if (startsWith(arg, "-v:") || startsWith(arg, "--verbose:")) {
                 verbose = true;
-                arg = substitute(substitute(substitute(arg, "-v", ""), "--verbose", ""), ":", "");
+                arg = substitute(substitute(arg, "-v:", ""), "--verbose:", "");
                 if (!arg.empty()) {
                     if (!isUnsigned(arg))
                         return usage("Invalid verbose level '" + arg + "'. Quitting...");
@@ -357,8 +371,12 @@ namespace qblocks {
     bool COptionsBase::builtInCmd(const string_q& arg) {
         if (isEnabled(OPT_HELP) && (arg == "-h" || arg == "--help"))
             return true;
-        if (isEnabled(OPT_VERBOSE) && (arg == "-v" || startsWith(arg, "-v:") || startsWith(arg, "--verbose")))
-            return true;
+
+        if (isEnabled(OPT_VERBOSE)) {
+            if (startsWith(arg, "-v:") || startsWith(arg, "--verbose:"))
+                return true;
+        }
+
 #ifdef PROVING
         if (isEnabled(OPT_PROVE) && arg == "--prove")
             return true;
@@ -476,7 +494,7 @@ namespace qblocks {
         }
 
         if (api_mode)
-            cout << "{ \"error\": \"" << errMsg << "\" }" << endl;
+            cout << "{ \"cmd\": \"" + getProgName() + "\", \"error\": \"" << errMsg << "\" }" << endl;
 
         os << "\n";
         if (!errMsg.empty())

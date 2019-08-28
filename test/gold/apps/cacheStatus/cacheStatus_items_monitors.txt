@@ -20,7 +20,6 @@ cacheStatus monitors --details
       "sizeInBytes": 0,
       "valid_counts": false
     }
-
   ]
 }
 
