@@ -313,6 +313,30 @@ bool CAbi::loadAbiByAddress(address_t addrIn) {
 bool CAbi::loadAbiFromFile(const string_q& fileName, bool builtIn) {
     if (!fileExists(fileName))
         return false;
+#if 0
+317     string_q binFile = substitute(fileName, ".json", ".bin");
+318     if (fileExists(binFile)) {
+319         CArchive archive(READING_ARCHIVE);
+320         if (archive.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
+321             archive >> *this;
+322             archive.Release();
+323             return true;
+324         }
+325     }
+326
+327     string_q contents;
+328     asciiFileToString(fileName, contents);
+329     bool ret = loadAbiFromString(contents, builtIn);
+330     if (ret) {
+331         CArchive archive(WRITING_ARCHIVE);
+332         if (archive.Lock(binFile, modeWriteCreate, LOCK_NOWAIT)) {
+333             archive << *this;
+334             archive.Release();
+335             return true;
+336         }
+337     }
+338     return ret;
+#endif
     string_q contents;
     asciiFileToString(fileName, contents);
     return loadAbiFromString(contents, builtIn);
