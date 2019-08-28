@@ -19,6 +19,7 @@ static const COption params[] = {
     COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
     COption("trace", "t", "", OPT_SWITCH, "display the transaction's trace"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),
+    COption("force", "", "", OPT_HIDDEN | OPT_SWITCH, "force the results into the tx cache"),
     COption("", "", "", 0, "Retrieve an Ethereum transaction from the local cache or a running node."),
 // END_CODE_OPTIONS
 };
@@ -38,7 +39,10 @@ bool COptions::parseArguments(string_q& command) {
             articulate = true;
 
         } else if (arg == "-t" || arg == "--trace") {
-            option1 = true;
+            useTrace = true;
+
+        } else if (arg == "--force") {
+            force = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -61,7 +65,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!transList.hasTrans())
         return usage("Please specify at least one transaction identifier.");
 
-    if (option1)
+    if (useTrace)
         SHOW_FIELD(CTransaction, "traces");
 
     if (isRaw)
@@ -86,7 +90,7 @@ bool COptions::parseArguments(string_q& command) {
         case TXT1:
         case CSV1:
             format = getGlobalConfig()->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
-            if (option1)
+            if (useTrace)
                 format += "\t[{TRACESCNT}]";
             manageFields("CTransaction:" + cleanFmt(format, exportFmt));
             break;
@@ -106,7 +110,8 @@ void COptions::Init(void) {
     optionOn(OPT_RAW | OPT_OUTPUT);
 
     transList.Init();
-    option1 = false;
+    useTrace = false;
+    force = false;
     articulate = false;
 }
 
