@@ -201,7 +201,7 @@ bool visitStagingIndexFiles(const string_q& path, void *data) {
         return forEveryFileInFolder(path + "*", visitFinalIndexFiles, data);
 
     } else {
-        cout << path << endl;
+        cerr << path << endl;
         // Pick up some useful data from the options
         COptions *options = reinterpret_cast<COptions*>(data);
 
@@ -210,13 +210,13 @@ bool visitStagingIndexFiles(const string_q& path, void *data) {
         if (!startsWith(path, "0") || !endsWith(path, ".txt"))
             return !shouldQuit();
 
-        cout << options->useBlooms << " " << path << endl;
+        cerr << options->useBlooms << " " << path << endl;
     }
 
-    return false;
+    return !shouldQuit();
 }
 
 //---------------------------------------------------------------
 bool visitUnripeIndexFiles(const string_q& path, void *data) {
-    return false;
+    return !shouldQuit();
 }
