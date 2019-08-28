@@ -104,6 +104,9 @@ bool CBlock::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
         case 'h':
             if ( fieldName % "hash" ) { hash = str_2_Hash(fieldValue); return true; }
             break;
+        case 'l':
+            if ( fieldName % "light" ) { light = str_2_Bool(fieldValue); return true; }
+            break;
         case 'm':
             if ( fieldName % "miner" ) { miner = str_2_Addr(fieldValue); return true; }
             break;
@@ -138,11 +141,13 @@ void CBlock::finishParse() {
     for (size_t i = 0 ; i < transactions.size() ; i++) {
         CTransaction *trans = &transactions.at(i);  // taking a non-const reference
         trans->pBlock = this;
-        if (blockNumber >= byzantiumBlock && trans->receipt.status == NO_STATUS) {
-            // If we have NO_STATUS in a receipt after the byzantium block, we have to pick it up.
-            CReceipt rec;
-            getReceipt(rec, trans->hash);
-            trans->receipt.status = rec.status;
+        if (!light) {
+            if (blockNumber >= byzantiumBlock && trans->receipt.status == NO_STATUS) {
+                // If we have NO_STATUS in a receipt after the byzantium block, we have to pick it up.
+                CReceipt rec;
+                getReceipt(rec, trans->hash);
+                trans->receipt.status = rec.status;
+            }
         }
     }
     // EXISTING_CODE
@@ -174,6 +179,7 @@ bool CBlock::Serialize(CArchive& archive) {
     archive >> timestamp;
     archive >> transactions;
 //    archive >> name;
+//    archive >> light;
     finishParse();
     return true;
 }
@@ -198,6 +204,7 @@ bool CBlock::SerializeC(CArchive& archive) const {
     archive << timestamp;
     archive << transactions;
 //    archive << name;
+//    archive << light;
 
     return true;
 }
@@ -246,6 +253,8 @@ void CBlock::registerClass(void) {
     ADD_FIELD(CBlock, "transactions", T_OBJECT|TS_ARRAY, ++fieldNum);
     ADD_FIELD(CBlock, "name", T_TEXT, ++fieldNum);
     HIDE_FIELD(CBlock, "name");
+    ADD_FIELD(CBlock, "light", T_BOOL, ++fieldNum);
+    HIDE_FIELD(CBlock, "light");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CBlock, "schema");
@@ -414,6 +423,9 @@ string_q CBlock::getValueByName(const string_q& fieldName) const {
             break;
         case 'h':
             if ( fieldName % "hash" ) return hash_2_Str(hash);
+            break;
+        case 'l':
+            if ( fieldName % "light" ) return bool_2_Str(light);
             break;
         case 'm':
             if ( fieldName % "miner" ) return addr_2_Str(miner);
