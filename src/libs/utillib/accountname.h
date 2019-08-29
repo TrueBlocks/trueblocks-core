@@ -37,7 +37,7 @@ public:
     string_q path;
     string_q color;
     bool is_contract;
-    bool is_custom;
+    bool is_private;
     bool is_shared;
     blknum_t firstAppearance;
     blknum_t latestAppearance;
@@ -54,7 +54,7 @@ public:
     DECLARE_NODE(CAccountName);
 
     // EXISTING_CODE
-    explicit CAccountName(const string_q& nameIn);
+    explicit CAccountName(const string_q& strIn);
     // EXISTING_CODE
     bool operator==(const CAccountName& item) const;
     bool operator!=(const CAccountName& item) const { return !operator==(item); }
@@ -115,7 +115,7 @@ inline void CAccountName::initialize(void) {
     path = "";
     color = "";
     is_contract = 0;
-    is_custom = 0;
+    is_private = 0;
     is_shared = 0;
     firstAppearance = 0;
     latestAppearance = 0;
@@ -142,7 +142,7 @@ inline void CAccountName::duplicate(const CAccountName& ac) {
     path = ac.path;
     color = ac.color;
     is_contract = ac.is_contract;
-    is_custom = ac.is_custom;
+    is_private = ac.is_private;
     is_shared = ac.is_shared;
     firstAppearance = ac.firstAppearance;
     latestAppearance = ac.latestAppearance;

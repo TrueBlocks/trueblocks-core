@@ -61,6 +61,8 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
+    if (fieldName % "address")
+        fieldValue = toLower(fieldValue);
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
@@ -81,7 +83,7 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
             break;
         case 'i':
             if ( fieldName % "is_contract" ) { is_contract = str_2_Bool(fieldValue); return true; }
-            if ( fieldName % "is_custom" ) { is_custom = str_2_Bool(fieldValue); return true; }
+            if ( fieldName % "is_private" ) { is_private = str_2_Bool(fieldValue); return true; }
             if ( fieldName % "is_shared" ) { is_shared = str_2_Bool(fieldValue); return true; }
             break;
         case 'l':
@@ -137,7 +139,7 @@ bool CAccountName::Serialize(CArchive& archive) {
 //    archive >> path;
 //    archive >> color;
     archive >> is_contract;
-    archive >> is_custom;
+    archive >> is_private;
     archive >> is_shared;
 //    archive >> firstAppearance;
 //    archive >> latestAppearance;
@@ -166,7 +168,7 @@ bool CAccountName::SerializeC(CArchive& archive) const {
 //    archive << path;
 //    archive << color;
     archive << is_contract;
-    archive << is_custom;
+    archive << is_private;
     archive << is_shared;
 //    archive << firstAppearance;
 //    archive << latestAppearance;
@@ -220,7 +222,7 @@ void CAccountName::registerClass(void) {
     ADD_FIELD(CAccountName, "color", T_TEXT, ++fieldNum);
     HIDE_FIELD(CAccountName, "color");
     ADD_FIELD(CAccountName, "is_contract", T_BOOL, ++fieldNum);
-    ADD_FIELD(CAccountName, "is_custom", T_BOOL, ++fieldNum);
+    ADD_FIELD(CAccountName, "is_private", T_BOOL, ++fieldNum);
     ADD_FIELD(CAccountName, "is_shared", T_BOOL, ++fieldNum);
     ADD_FIELD(CAccountName, "firstAppearance", T_NUMBER, ++fieldNum);
     HIDE_FIELD(CAccountName, "firstAppearance");
@@ -304,7 +306,7 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
             break;
         case 'i':
             if ( fieldName % "is_contract" ) return bool_2_Str(is_contract);
-            if ( fieldName % "is_custom" ) return bool_2_Str(is_custom);
+            if ( fieldName % "is_private" ) return bool_2_Str(is_private);
             if ( fieldName % "is_shared" ) return bool_2_Str(is_shared);
             break;
         case 'l':
@@ -358,7 +360,7 @@ CAccountName::CAccountName(const string_q& strIn) {
     if (parts.size() > 5) { source = parts[5]; }
     if (parts.size() > 6) { logo = parts[6]; }
     if (parts.size() > 7) { is_contract = str_2_Bool(parts[7]); }
-    if (parts.size() > 8) { is_custom = str_2_Bool(parts[8]); }
+    if (parts.size() > 8) { is_private = str_2_Bool(parts[8]); }
     if (parts.size() > 9) { is_shared = str_2_Bool(parts[9]); }
 }
 // EXISTING_CODE
