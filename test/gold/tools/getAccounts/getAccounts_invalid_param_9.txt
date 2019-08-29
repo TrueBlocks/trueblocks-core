@@ -4,7 +4,7 @@ getAccounts --VERBOSE 0xb6 torj other
   Invalid option: --VERBOSE
 
   Usage:    getAccounts [-e|-m|-o|-c|-p|-n|-a|-v|-h] <term> [term...]  
-  Purpose:  Query addresses and/or names well known accounts.
+  Purpose:  Query addresses and/or names of well known accounts.
         
   Where:  
 	term_list             a space separated list of one or more search terms (required)

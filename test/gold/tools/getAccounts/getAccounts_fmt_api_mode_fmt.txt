@@ -1,6 +1,6 @@
 getAccounts argc: 6 [1:tip] [2:--api_mode] [3:--fmt] [4:txt] [5:--expand] 
 getAccounts tip --api_mode --fmt txt --expand 
-group	address	name	symbol	source	description	logo	is_contract	is_custom	is_shared
+group	address	name	symbol	source	description	logo	is_contract	is_private	is_shared
 50-Tokens	0x1829aa045e21e0d59580024a951db48096e01782	FuzeX	FXT	Etherscan.io	Cryptocurrency, credit, debit and reward payments at your fingertips	fuzex_28.png	true	false	true
 50-Tokens	0x1cb3209d45b2a60b7fbca1ccdbf87f674237a4aa	ThoreCoin	THR	Etherscan.io	THR represents a basket of top-traded high-demand coins Simply put, it’s a Basket of Multiple cryptocurrencies in which you can invest by buying tokens	thorecoin_28.png	true	false	true
 50-Tokens	0x2859021ee7f2cb10162e67f33af2d22764b31aff	Silent Notary Token	SNTR	Etherscan.io	SilentNotary is a multiplatform decentralized service for confirmation of event existence. SilentNotary converts an event into legally significant evidence, excluding the possibility of falsification.	silentnotary.png	true	false	true

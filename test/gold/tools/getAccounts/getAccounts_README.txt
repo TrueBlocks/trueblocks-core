@@ -3,7 +3,7 @@ getAccounts -th
 #### Usage
 
 `Usage:`    getAccounts [-e|-m|-o|-c|-p|-n|-a|-v|-h] &lt;term&gt; [term...]  
-`Purpose:`  Query addresses and/or names well known accounts.
+`Purpose:`  Query addresses and/or names of well known accounts.
         
 `Where:`  
 
@@ -33,5 +33,5 @@ getAccounts -th
 - When there are two search terms, both must match.
 - The `--matchCase` option requires case sensitive matching. It works with all other options.
 - To customize the list of names add a `custom` section to the config file (see documentation).
-- Name file: `~/.quickBlocks/names/names.txt` (193342)
+- Name file: `~/.quickBlocks/names/names.txt` (193343)
 

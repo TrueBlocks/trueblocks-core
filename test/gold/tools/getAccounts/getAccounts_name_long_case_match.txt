@@ -10,7 +10,7 @@ getAccounts --matchCase * torj --fmt json
     "source": "Etherscan.io",
     "logo": "storj2.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   }
 ]
