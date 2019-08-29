@@ -28,7 +28,7 @@ ABI for address 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359
 
 ABI for address erc-1155
 	0|;                                 () [0x861731d5]
-	0|| <<128;                          () [0x2c21fad5]
+	0|| <<128;                          () [0x17194940]
 	function _doSafeBatchTransferAcceptanceCheck(address _operator,address _from,address _to,uint256[] memory_ids,uint256[] memory_values,bytes memory_data) [0xe51c223d]
 	function _doSafeTransferAcceptanceCheck(address _operator,address _from,address _to,uint256 _id,uint256 _value,bytes memory_data) [0x084e9e24]
 	function add                        (uint256 a,uint256 b) [0x771602f7]
