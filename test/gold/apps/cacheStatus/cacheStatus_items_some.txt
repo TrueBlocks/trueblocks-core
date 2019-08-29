@@ -30,6 +30,14 @@ cacheStatus some --details
       "valid_counts": false
     },
     {
+      "type": "CNameCache",
+      "path": "CachePath",
+      "nFiles": 0,
+      "nFolders": 0,
+      "sizeInBytes": 0,
+      "valid_counts": false
+    },
+    {
       "items": [],
       "type": "CAbiCache",
       "path": "CachePath",
