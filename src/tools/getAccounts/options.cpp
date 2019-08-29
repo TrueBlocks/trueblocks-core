@@ -315,5 +315,5 @@ const char* STR_DISPLAY_ALL =
 "[{DESCRIPTION}]\t"
 "[{LOGO}]\t"
 "[{IS_CONTRACT}]\t"
-"[{IS_CUSTOM}]\t"
+"[{IS_PRIVATE}]\t"
 "[{IS_SHARED}]";

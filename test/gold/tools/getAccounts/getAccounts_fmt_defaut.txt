@@ -10,7 +10,7 @@ getAccounts tip --api_mode --expand
     "source": "Etherscan.io",
     "logo": "fuzex_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -22,7 +22,7 @@ getAccounts tip --api_mode --expand
     "source": "Etherscan.io",
     "logo": "thorecoin_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -34,7 +34,7 @@ getAccounts tip --api_mode --expand
     "source": "Etherscan.io",
     "logo": "silentnotary.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -46,7 +46,7 @@ getAccounts tip --api_mode --expand
     "source": "Etherscan.io",
     "logo": "skincoin_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -58,7 +58,7 @@ getAccounts tip --api_mode --expand
     "source": "Etherscan.io",
     "logo": "equaltoken_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -70,7 +70,7 @@ getAccounts tip --api_mode --expand
     "source": "Ethereum.org",
     "logo": "",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -82,7 +82,7 @@ getAccounts tip --api_mode --expand
     "source": "Etherscan.io",
     "logo": "abx_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -94,7 +94,7 @@ getAccounts tip --api_mode --expand
     "source": "Etherscan.io",
     "logo": "pchain_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -106,7 +106,7 @@ getAccounts tip --api_mode --expand
     "source": "Etherscan.io",
     "logo": "insightsnetwork28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -118,7 +118,7 @@ getAccounts tip --api_mode --expand
     "source": "Etherscan.io",
     "logo": "bhpcash_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -130,7 +130,7 @@ getAccounts tip --api_mode --expand
     "source": "Ethereum.org",
     "logo": "",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namePath": "--" } }

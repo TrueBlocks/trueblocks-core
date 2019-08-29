@@ -10,7 +10,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "bitcapital_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -22,7 +22,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "genesisvision_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -34,7 +34,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "aigang_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -46,7 +46,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "hellobloom_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -58,7 +58,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "centrality_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -70,7 +70,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "qvolta_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -82,7 +82,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "bitclave2_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -94,7 +94,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "legolas_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -106,7 +106,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "arbitragect_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -118,7 +118,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "trakinvest_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -130,7 +130,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "grid_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -142,7 +142,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "spectre-ai_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -154,7 +154,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "cofoundit.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -166,7 +166,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "moneytoken_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -178,7 +178,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "musiconomi28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -190,7 +190,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "boutspro_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -202,7 +202,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "phitoken_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -214,7 +214,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "diviproject_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -226,7 +226,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "accelerator_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -238,7 +238,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "realchain_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -250,7 +250,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "kanland28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -262,7 +262,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "owntoken_28_3.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -274,7 +274,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "mibtoken_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -286,7 +286,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "bethereum_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -298,7 +298,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "debitum_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -310,7 +310,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "xovtoken_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -322,7 +322,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "alphacoin_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -334,7 +334,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "qubitica_28_3.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -346,7 +346,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "rchain.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -358,7 +358,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "UTT_2.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -370,7 +370,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "owndata_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -382,7 +382,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "omnitude_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -394,7 +394,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "numeraire_28_2.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -406,7 +406,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "blox_28_2.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -418,7 +418,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "insightchain28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -430,7 +430,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "freyrchain_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -442,7 +442,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "flikcoin28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -454,7 +454,7 @@ getAccounts 0x1 --fmt api
     "source": "QuickBlocks",
     "logo": "",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -466,7 +466,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "fuzex_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -478,7 +478,7 @@ getAccounts 0x1 --fmt api
     "source": "TrueBlocks.io",
     "logo": "",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -490,7 +490,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "oyster28_2.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -502,7 +502,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "bitdegree28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -514,7 +514,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "ndx_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -526,7 +526,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "augur.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -538,7 +538,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "atx_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -550,7 +550,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "prasm_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -562,7 +562,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "appcoins_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -574,7 +574,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "minereum.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -586,7 +586,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "mywish_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -598,7 +598,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "vite_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -610,7 +610,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "ethbits2_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -622,7 +622,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "rasputin_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -634,7 +634,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "blockmason_28_2.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -646,7 +646,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "soniq_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -658,7 +658,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "tokenstars_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -670,7 +670,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "digitextoken_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -682,7 +682,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "thorecoin_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -694,7 +694,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "faceter_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -706,7 +706,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "canya2_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -718,7 +718,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "talao_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -730,7 +730,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "spindle_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -742,7 +742,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "clearcoin_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -754,7 +754,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "modultrade_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -766,7 +766,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "sola_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -778,7 +778,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "bancor.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -790,7 +790,7 @@ getAccounts 0x1 --fmt api
     "source": "TrueBlocks.io",
     "logo": "",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   },
   {
@@ -802,7 +802,7 @@ getAccounts 0x1 --fmt api
     "source": "Etherscan.io",
     "logo": "rntb_28.png",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namePath": "--" } }

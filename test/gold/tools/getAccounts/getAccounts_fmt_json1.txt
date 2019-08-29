@@ -10,7 +10,7 @@ getAccounts tip --fmt json
     "source": "Ethereum.org",
     "logo": "",
     "is_contract": true,
-    "is_custom": false,
+    "is_private": false,
     "is_shared": true
   }
 ]

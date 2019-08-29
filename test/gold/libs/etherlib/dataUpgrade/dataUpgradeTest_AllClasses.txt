@@ -208,7 +208,7 @@ fm_mode             	1010	1	131122	T_TEXT TS_STRING
   "nodeBal": 0,
   "enabled": true,
   "is_contract": false,
-  "is_custom": false,
+  "is_private": false,
   "is_shared": false
 }
 
@@ -227,7 +227,7 @@ enabled             	1009	1	65556	T_BOOL TS_NUMERAL
 fm_mode             	1010	1	131122	T_TEXT TS_STRING
 {
   "is_contract": false,
-  "is_custom": false,
+  "is_private": false,
   "is_shared": false
 }
 
@@ -269,7 +269,7 @@ fm_mode             	1010	0	131122	T_TEXT TS_STRING
   "nodeBal": 0,
   "enabled": true,
   "is_contract": false,
-  "is_custom": false,
+  "is_private": false,
   "is_shared": false
 }
 
