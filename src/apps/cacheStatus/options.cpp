@@ -122,7 +122,7 @@ COptions::COptions(void) {
     HIDE_FIELD(CAccountWatch,  "abi_spec");
 
     HIDE_FIELD(CAccountName,   "is_contract");
-    HIDE_FIELD(CAccountName,   "is_custom");
+    HIDE_FIELD(CAccountName,   "is_private");
     HIDE_FIELD(CAccountName,   "is_shared");
     UNHIDE_FIELD(CAccountName, "nRecords");
     UNHIDE_FIELD(CAccountName, "nAppearances");

@@ -25,7 +25,7 @@ static const COption params[] = {
     COption("addr", "a", "", OPT_SWITCH, "display only addresses in the results (useful for scripting)"),
     COption("other", "t", "", OPT_HIDDEN | OPT_SWITCH, "export other addresses if found"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),
-    COption("", "", "", 0, "Query addresses and/or names well known accounts.\n"),
+    COption("", "", "", 0, "Query addresses and/or names of well known accounts.\n"),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -235,16 +235,19 @@ void COptions::applyFilter() {
         if (isTestMode()) {
             for (uint32_t i = 1 ; i < 5 ; i++) {
                 CAccountName item;
+                item.group = "81-Custom";
                 item.address = "0x000000000000000000000000000000000000000" + uint_2_Str(i);
                 item.name = "Account_" + uint_2_Str(i);
                 if (!(i%2))
                     item.symbol = "AC_" + uint_2_Str(i);
+                item.source = "Testing";
                 addIfUnique(item);
             }
         } else {
             CAccountName item;
             string_q customStr = getGlobalConfig("getAccounts")->getConfigJson("custom", "list", "");
             while (item.parseJson3(customStr)) {
+                item.group = "81-Custom";
                 addIfUnique(item);
                 item = CAccountName();
             }
@@ -263,20 +266,30 @@ void COptions::applyFilter() {
         uint32_t cnt = 0;
         ASSERT(prefunds.size() == 8893);  // This is a known value
         for (auto prefund : prefunds) {
-            string_q addr = nextTokenClear(prefund,'\t');
-            CAccountName item("80-Prefund\t" + addr + "\tPrefund_" + padNum4(cnt++));
+            CAccountName item;
+            item.group = "80-Prefund";
+            item.address = toLower(nextTokenClear(prefund,'\t'));
+            item.name = "Prefund_" + padNum4(cnt++);
+            item.source = "Genesis";
             addIfUnique(item);
         }
     }
 
     //------------------------
     if (types & OTHER) {
-        string_q contents = asciiFileToString("../src/tools/getAccounts/tests/other_names.txt");
+        string_q contents = asciiFileToString(configPath("names/names_custom.txt"));
         if (!contents.empty()) {
             CStringArray fields;
+            fields.push_back("group");
             fields.push_back("address");
             fields.push_back("name");
+            fields.push_back("description");
+            fields.push_back("symbol");
             fields.push_back("source");
+            fields.push_back("logo");
+            fields.push_back("is_contract");
+            fields.push_back("is_private");
+            fields.push_back("is_shared");
             CAccountName item;
             while (item.parseText(fields, contents)) {
                 addIfUnique(item);

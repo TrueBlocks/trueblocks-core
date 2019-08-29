@@ -115,7 +115,7 @@ n,group,api_route,tool,order,command,command_short,data_type,option_kind,default
 114,tools,accounts,getAccounts,,addr,a,boolean,switch,,display only addresses in the results (useful for scripting),,FALSE,TRUE,TRUE
 115,tools,accounts,getAccounts,,other,t,boolean,switch,,export other addresses if found,,FALSE,FALSE,FALSE
 116,tools,accounts,getAccounts,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format (one of [none|json*|txt|csv|api]),,FALSE,FALSE,FALSE
-117,tools,accounts,getAccounts,,,,,description,,Query addresses and/or names well known accounts.\n,,FALSE,TRUE,TRUE
+117,tools,accounts,getAccounts,,,,,description,,Query addresses and/or names of well known accounts.\n,,FALSE,TRUE,TRUE
 118,tools,logs,getLogs,,trans_list,,list<trans>,positional,,"a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)",,TRUE,TRUE,TRUE
 119,tools,logs,getLogs,,articulate,a,boolean,switch,,articulate the transactions if an ABI is found for the 'to' address,,FALSE,TRUE,TRUE
 120,tools,logs,getLogs,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format (one of [none|json*|txt|csv|api]),,FALSE,FALSE,FALSE
