@@ -19,8 +19,9 @@ finalized           	1013	0	65556	T_BOOL TS_NUMERAL
 timestamp           	1014	0	65551	T_TIMESPAN TS_NUMERAL
 transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 name                	1016	1	131122	T_TEXT TS_STRING
-date                	1017	1	262149	T_DATE TS_DATE
-age                 	1018	1	262149	T_DATE TS_DATE
+light               	1017	1	65556	T_BOOL TS_NUMERAL
+date                	1018	1	262149	T_DATE TS_DATE
+age                 	1019	1	262149	T_DATE TS_DATE
 {
   "gasLimit": 0,
   "gasUsed": 0,
@@ -54,8 +55,9 @@ finalized           	1013	1	65556	T_BOOL TS_NUMERAL
 timestamp           	1014	1	65551	T_TIMESPAN TS_NUMERAL
 transactions        	1015	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 name                	1016	1	131122	T_TEXT TS_STRING
-date                	1017	1	262149	T_DATE TS_DATE
-age                 	1018	1	262149	T_DATE TS_DATE
+light               	1017	1	65556	T_BOOL TS_NUMERAL
+date                	1018	1	262149	T_DATE TS_DATE
+age                 	1019	1	262149	T_DATE TS_DATE
 {
 }
 
@@ -78,8 +80,9 @@ finalized           	1013	0	65556	T_BOOL TS_NUMERAL
 timestamp           	1014	0	65551	T_TIMESPAN TS_NUMERAL
 transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 name                	1016	0	131122	T_TEXT TS_STRING
-date                	1017	0	262149	T_DATE TS_DATE
-age                 	1018	0	262149	T_DATE TS_DATE
+light               	1017	0	65556	T_BOOL TS_NUMERAL
+date                	1018	0	262149	T_DATE TS_DATE
+age                 	1019	0	262149	T_DATE TS_DATE
 {
   "schema": 5008,
   "deleted": 0,
@@ -96,6 +99,7 @@ age                 	1018	0	262149	T_DATE TS_DATE
   "finalized": 0,
   "timestamp": 0,
   "transactions": [],
+  "light": false,
   "date": "1970-01-01 00:00:00 UTC",
   "age": "100"
 }

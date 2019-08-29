@@ -16,5 +16,6 @@ makeClass --js CBlock
 <Row name="timestamp" type="string" value={item.timestamp} display={item.timestamp} route="" />
 <Row name="transactions" type="string" value={item.transactions} display={item.transactions} route="" />
 <Row name="name" type="string" value={item.name} display={item.name} route="" />
+<Row name="light" type="string" value={item.light} display={item.light} route="" />
 <Row name="date" type="string" value={item.date} display={item.date} route="" />
 <Row name="age" type="string" value={item.age} display={item.age} route="" />

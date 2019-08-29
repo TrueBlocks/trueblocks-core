@@ -9,7 +9,16 @@ cacheStatus names
   "balance_provider": "--providers--",
   "host": "--hostname-- (--username--)",
   "is_scraping": false,
-  "caches": []
+  "caches": [
+    {
+      "type": "CNameCache",
+      "path": "CachePath",
+      "nFiles": 0,
+      "nFolders": 0,
+      "sizeInBytes": 0,
+      "valid_counts": true
+    }
+  ]
 }
 
 
