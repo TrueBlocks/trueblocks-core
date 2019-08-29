@@ -1,5 +1,5 @@
-cacheStatus argc: 3 [1:scraper] [2:--api_mode] 
-cacheStatus scraper --api_mode 
+cacheStatus argc: 3 [1:index] [2:--api_mode] 
+cacheStatus index --api_mode 
 { "type": "CStatus", "data": [
 [
 {

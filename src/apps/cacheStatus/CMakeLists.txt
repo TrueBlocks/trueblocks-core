@@ -55,7 +55,7 @@ run_test("cacheStatus_invalid_param_1"  "--junk" )
 run_test("cacheStatus_invalid_param_2"  "-l" " --junk" )
 
 # depends on fullblockIndex
-run_test("cacheStatus_scraper"          "scraper" " --api_mode")
+run_test("cacheStatus_scraper"          "index" " --api_mode")
 run_test("cacheStatus_monitors"         "monitors")
 run_test("cacheStatus_names"            "names")
 run_test("cacheStatus_abis"             "abis")
