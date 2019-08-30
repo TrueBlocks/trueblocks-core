@@ -758,7 +758,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     //------------------------------------------------------------------
     void editFile(const string_q& fileName) {
         CToml toml(configPath("quickBlocks.toml"));
-        string_q editor = toml.getConfigStr("settings", "editor", "<NOT_SET>");
+        string_q editor = toml.getConfigStr("dev", "editor", "<NOT_SET>");
         if (!isTestMode() && editor == "<NOT_SET>") {
             editor = getEnvStr("EDITOR");
             if (editor.empty()) {

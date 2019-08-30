@@ -1221,9 +1221,9 @@ extern void loadParseMap(void);
             return false; // be careful, it's backwards
 
         static string_q exclusions;
-        if (getGlobalConfig("blockScrape")->getConfigBool("exclusions", "enabled", false)) {
+        if (getGlobalConfig("acctExport")->getConfigBool("exclusions", "enabled", false)) {
             if (exclusions.empty())
-                exclusions = getGlobalConfig("blockScrape")->getConfigStr("exclusions", "list", "");
+                exclusions = getGlobalConfig("acctExport")->getConfigStr("exclusions", "list", "");
             if (contains(exclusions, trans->to))
                 return true;
             if (contains(exclusions, trans->from))

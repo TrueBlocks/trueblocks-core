@@ -85,7 +85,7 @@ bool COptions::parseArguments(string_q& command) {
         case NONE1:
         case TXT1:
         case CSV1:
-            format = getGlobalConfig()->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
+            format = getGlobalConfig("getReceipt")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
             if (option1)
                 format += "\t[{LOGSCNT}]";
             manageFields("CReceipt:" + cleanFmt(format, exportFmt));

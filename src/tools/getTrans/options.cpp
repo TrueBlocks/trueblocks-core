@@ -89,7 +89,7 @@ bool COptions::parseArguments(string_q& command) {
         case NONE1:
         case TXT1:
         case CSV1:
-            format = getGlobalConfig()->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
+            format = getGlobalConfig("getTrans")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
             if (useTrace)
                 format += "\t[{TRACESCNT}]";
             manageFields("CTransaction:" + cleanFmt(format, exportFmt));

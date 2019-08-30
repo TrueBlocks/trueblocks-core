@@ -98,7 +98,7 @@ bool COptions::parseArguments(string_q& command) {
         case NONE1:
         case TXT1:
         case CSV1:
-            format = getGlobalConfig()->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
+            format = getGlobalConfig("getAccounts")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
             if (verbose && !contains(format, "{SOURCE}"))
                 format += "\t[{SOURCE}]";
             break;
@@ -276,7 +276,7 @@ void COptions::applyFilter() {
     }
 
     //------------------------
-    if (types & OTHER) {
+    if (!isTestMode() && (types & OTHER)) {
         string_q contents = asciiFileToString(configPath("names/names_custom.txt"));
         if (!contents.empty()) {
             CStringArray fields;

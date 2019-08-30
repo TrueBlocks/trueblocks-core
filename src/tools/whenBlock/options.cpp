@@ -32,7 +32,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     bool noHeader = false;
-    string_q format = getGlobalConfig()->getConfigStr("display", "format", STR_DISPLAY);
+    string_q format = getGlobalConfig("whenBlock")->getConfigStr("display", "format", STR_DISPLAY);
     Init();
     blknum_t latestBlock = getLastBlock_client();
     explode(arguments, command, ' ');
@@ -117,7 +117,7 @@ bool COptions::parseArguments(string_q& command) {
         case JSON1: format = ""; break;
         case TXT1:
         case CSV1:
-            format = getGlobalConfig()->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
+            format = getGlobalConfig("whenBlock")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
             break;
     }
     manageFields("CBlock:" + cleanFmt((format.empty() ? STR_DISPLAY : format), exportFmt));

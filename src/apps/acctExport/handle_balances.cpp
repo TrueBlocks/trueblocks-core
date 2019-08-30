@@ -84,7 +84,7 @@ bool COptions::exportBalances(void) {
 
     for (auto addr : addrs) {
         ostringstream os;
-        if (getGlobalConfig("chifra")->getConfigBool("api", "remote_bals", false)) {
+        if (getGlobalConfig("acctExport")->getConfigBool("api", "r emote_bals", false)) {
             string_q cmd = "/Users/jrush/src.GitHub/trueblocks-core/build/get_balances.sh " + addr;
             if (system(cmd.c_str())) { }  // Don't remove. Silences compiler warnings
                                           //            cout << "/Users/jrush/Desktop/files/" + addr + ".bals.txt";
