@@ -45,7 +45,7 @@ endfunction(run_special_test)
 #run_test("chifra_no_params")
 #run_test("chifra_invalid_option"     "not_a_mode")
 
-#run_test("chifra_config_noparms"      "config")
+run_test("chifra_config_noparms"      "config")
 #run_test("chifra_config_show_noaddr"  "config" " show")
 #run_test("chifra_config_show_badaddr" "config" " show" " 0x1234567812345678123456781234567812345678")
 #run_test("chifra_config_show_tip"     "config" " show" " 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359")

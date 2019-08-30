@@ -1,14 +1,14 @@
 chifra argc: 2 [1:config] 
 chifra config 
-00000000 TIME ~ CLOCK - <ERROR> : Exit(16) This function requires an address.
+TIME ~ CLOCK - <ERROR>  : Exit(handle_config): 
 
   This function requires an address.
 
   Usage:    chifra [-v|-h] command  
   Purpose:  Create a TrueBlocks monitor configuration.
-             
+
   Where:  
-	command               one of [ seed | scrape | daemon | list | export | stats | ls | rm | names | config ] (required)
+	command               one of [scrape|list|export|accounts|slurp|quotes|data|blocks|transactions|receipts|logs|traces|state|abi|status|message|rm|config|leech|seed] (required)
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 

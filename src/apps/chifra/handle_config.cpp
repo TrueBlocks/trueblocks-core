@@ -13,9 +13,6 @@ bool COptions::handle_config(void) {
     ENTER4("handle_" + mode);
     nodeNotRequired();
 
-    if (addrs.empty())
-        EXIT_USAGE("This function requires an address.");
-
     tool_flags = trim(substitute(substitute(tool_flags, "--addr_list", ""), "--mode", ""));
     string_q cmd = nextTokenClear(tool_flags, ' ');
     if (cmd != "edit" && cmd != "show")
