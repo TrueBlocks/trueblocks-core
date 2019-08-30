@@ -23,6 +23,7 @@ n,group,api_route,tool,order,command,command_short,data_type,option_kind,default
 22,tools,transactions,getTrans,,articulate,a,boolean,switch,,articulate the transactions if an ABI is found for the 'to' address,,FALSE,TRUE,TRUE
 23,tools,transactions,getTrans,,trace,t,boolean,switch,,display the transaction's trace,,FALSE,TRUE,TRUE
 24,tools,transactions,getTrans,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format (one of [none|json*|txt|csv|api]),,FALSE,FALSE,FALSE
+24.1,tools,transactions,getTrans,,force,,boolean,switch,,force the results into the tx cache,,FALSE,FALSE,FALSE
 25,tools,transactions,getTrans,,,,,description,,Retrieve an Ethereum transaction from the local cache or a running node.,,FALSE,TRUE,TRUE
 26,tools,state,getState,,addr_list,,list<addr>,positional,,one or more addresses (0x...) from which to retrieve balances,,TRUE,TRUE,TRUE
 27,tools,state,getState,,block_list,,list<block>,positional,,"an optional list of one or more blocks at which to report balances, defaults to 'latest'",,FALSE,TRUE,TRUE
