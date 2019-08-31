@@ -12,6 +12,8 @@ static const COption params[] = {
     COption("details", "d", "", OPT_SWITCH, "include details about items found in monitors, slurps, abis, or price caches"),
     COption("list", "l", "", OPT_SWITCH, "display results in Linux ls -l format (assumes --detail)"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),
+    COption("config-get", "", "", OPT_HIDDEN | OPT_SWITCH, "returns JSON data of the editable configuration file items"),
+    COption("config-put", "", "str", OPT_HIDDEN | OPT_FLAG, "accepts JSON config data and writes it to configuration files"),
     COption("", "", "", 0, "Report on status of one or more TrueBlocks caches."),
 // END_CODE_OPTIONS
 };
@@ -29,8 +31,16 @@ bool COptions::parseArguments(string_q& command) {
     for (auto arg : arguments) {
         if (arg == "-d" || arg == "--details") {
             details = true;
+
         } else if (arg == "-l" || arg == "--list") {
-            ls = true;
+            isListing = true;
+
+        } else if (arg == "--config-get") {
+            isConfig = true;
+
+        } else if (startsWith(arg, "--config-put:")) {
+            mode = substitute(arg, "--config-put:", "");  // save the string
+            isConfig = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
@@ -38,9 +48,9 @@ bool COptions::parseArguments(string_q& command) {
             }
 
         } else {
-            string_q options = params[0].description;
-            replaceAny(options, "[]*", "|");
-            if (!contains(options, "|" + arg + "|"))
+            string_q permitted = params[0].description;
+            replaceAny(permitted, "[]*", "|");
+            if (!contains(permitted, "|" + arg + "|"))
                 return usage("Provided value for 'mode' (" + arg + ") not " + substitute(params[0].description, "enum", "") + ". Quitting.");
             mode += (arg + "|");
         }
@@ -69,7 +79,8 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOn(OPT_PREFUND | OPT_OUTPUT);
 
-    ls = false;
+    isListing = false;
+    isConfig = false;
     details = false;
     mode = "";
     char hostname[HOST_NAME_MAX];  gethostname(hostname, HOST_NAME_MAX);

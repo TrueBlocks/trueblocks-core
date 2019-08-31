@@ -20,7 +20,15 @@ int main(int argc, const char *argv[]) {
             return 0;
         if (once)
             cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], GETRUNTIME_CLASS(CStatus));
-        options.ls ? options.doListing(cout) : options.doStatus(cout);
+
+        if (options.isListing)
+            options.doListing(cout);
+
+        else if (options.isConfig)
+            options.doConfig(cout);
+
+        else
+            options.doStatus(cout);
         once = false;
     }
     cout << exportPostamble(options.exportFmt, expContext().fmtMap["meta"]);

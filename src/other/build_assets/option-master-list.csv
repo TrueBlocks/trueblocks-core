@@ -164,6 +164,8 @@ n,group,api_route,tool,order,command,command_short,data_type,option_kind,default
 815,apps,,chifra,,,,,description,,Create a TrueBlocks monitor configuration.,,FALSE,TRUE,TRUE
 820,apps,status,cacheStatus,,mode_list,,list<enum[index|monitors|names|abis|blocks|txs|traces|slurps|prices|some*|all]>,positional,,one or more of [index|monitors|names|abis|blocks|txs|traces|slurps|prices|some*|all],,FALSE,TRUE,TRUE
 825,apps,status,cacheStatus,,details,d,boolean,switch,,"include details about items found in monitors, slurps, abis, or price caches",,FALSE,TRUE,TRUE
+826,apps,status,cacheStatus,,config-get,,boolean,switch,,returns JSON data of the editable configuration file items,,FALSE,FALSE,FALSE
+828,apps,status,cacheStatus,,config-put,,string,flag,,accepts JSON config data and writes it to configuration files,,FALSE,FALSE,FALSE
 830,apps,status,cacheStatus,,list,l,boolean,switch,,display results in Linux ls -l format (assumes --detail),,FALSE,TRUE,TRUE
 835,apps,status,cacheStatus,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format (one of [none|json*|txt|csv|api]),,FALSE,FALSE,FALSE
 840,apps,status,cacheStatus,,,,,description,,Report on status of one or more TrueBlocks caches.,,FALSE,TRUE,TRUE

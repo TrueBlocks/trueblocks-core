@@ -21,7 +21,8 @@ public:
     CStatus status;
     string_q mode;
     bool details;
-    bool ls;
+    bool isListing;
+    bool isConfig;
 
     COptions(void);
     ~COptions(void);
@@ -31,6 +32,7 @@ public:
 
     void doStatus(ostream& os);
     void doListing(ostream& os);
+    void doConfig(ostream& os);
 };
 
 //-------------------------------------------------------------------------
