@@ -23,7 +23,6 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-extern const char* STR_DISPLAY;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
@@ -83,7 +82,7 @@ bool COptions::parseArguments(string_q& command) {
         case NONE1:
         case TXT1:
         case CSV1:
-            format = getGlobalConfig("getLogs")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
+            format = getGlobalConfig("getLogs")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_LOG : format);
             manageFields("CLogEntry:" + cleanFmt(format, exportFmt));
             break;
         case API1:
@@ -138,17 +137,3 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
     }
     return str;
 }
-
-//--------------------------------------------------------------------------------
-const char* STR_DISPLAY =
-"[{BLOCKNUMBER}]\t"
-"[{TRANSACTIONINDEX}]\t"
-"[{LOGINDEX}]\t"
-"[{ADDRESS}]\t"
-"[{TOPIC0}]\t"
-"[{TOPIC1}]\t"
-"[{TOPIC2}]\t"
-"[{TOPIC3}]\t"
-"[{DATA}]\t"
-"[{TYPE}]\t"
-"[{COMPRESSEDLOG}]";

@@ -1,3 +1,22 @@
 ethQuote argc: 3 [1:-a] [2:1438272138] 
 ethQuote -a 1438272138 
-1439078400	2015-08-09 00:00:00 UTC	1.40000
+
+  Invalid option: -a
+
+  Usage:    ethQuote -f|-d|-p|-p|-v|-h  
+  Purpose:  Freshen and/or display Ethereum price data and other purposes.
+
+  Where:  
+	-f  (--freshen)       Freshen database (append new data)
+	-d  (--data)          Export prices as JSON data
+	-p  (--period enum[5|15|30|120*|240|1440])Display prices in this increment. One of [5|15|30|120*|240|1440]
+	-p  (--pair <val>)    Which price pair to freshen or list (see Poloniex)
+
+#### Hidden options (shown during testing only)
+	-x  (--fmt <fmt>)     export format (one of [none|json*|txt|csv|api])
+#### Hidden options (shown during testing only)
+
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Powered by QBlocks

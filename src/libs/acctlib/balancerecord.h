@@ -149,6 +149,9 @@ extern CArchive& operator<<(CArchive& archive, const CBalanceRecordArray& array)
 extern CArchive& operator<<(CArchive& archive, const CBalanceRecord& bal);
 extern CArchive& operator>>(CArchive& archive, CBalanceRecord& bal);
 
+//--------------------------------------------------------------------------------
+extern const char* STR_DISPLAY_BALANCERECORD;
+
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE

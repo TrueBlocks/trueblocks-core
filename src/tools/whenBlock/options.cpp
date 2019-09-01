@@ -24,7 +24,7 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-extern const char* STR_DISPLAY;
+extern const char* STR_DISPLAY_WHEN;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
@@ -32,7 +32,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     bool noHeader = false;
-    string_q format = getGlobalConfig("whenBlock")->getConfigStr("display", "format", STR_DISPLAY);
+    string_q format = getGlobalConfig("whenBlock")->getConfigStr("display", "format", STR_DISPLAY_WHEN);
     Init();
     blknum_t latestBlock = getLastBlock_client();
     explode(arguments, command, ' ');
@@ -112,15 +112,15 @@ bool COptions::parseArguments(string_q& command) {
 
     // Display formatting
     switch (exportFmt) {
-        case NONE1: format = STR_DISPLAY; break;
+        case NONE1: format = STR_DISPLAY_WHEN; break;
         case API1:
         case JSON1: format = ""; break;
         case TXT1:
         case CSV1:
-            format = getGlobalConfig("whenBlock")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
+            format = getGlobalConfig("whenBlock")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_WHEN : format);
             break;
     }
-    manageFields("CBlock:" + cleanFmt((format.empty() ? STR_DISPLAY : format), exportFmt));
+    manageFields("CBlock:" + cleanFmt((format.empty() ? STR_DISPLAY_WHEN : format), exportFmt));
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
     if (noHeader)
         expContext().fmtMap["header"] = "";
@@ -259,4 +259,4 @@ string_q COptions::listSpecials(format_t fmt) const {
 }
 
 //-----------------------------------------------------------------------
-const char* STR_DISPLAY = "[{BLOCKNUMBER}]\t[{TIMESTAMP}]\t[{DATE}][\t{NAME}]";
+const char* STR_DISPLAY_WHEN = "[{BLOCKNUMBER}]\t[{TIMESTAMP}]\t[{DATE}][\t{NAME}]";

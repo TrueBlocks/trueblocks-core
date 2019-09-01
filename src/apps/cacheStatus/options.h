@@ -14,6 +14,7 @@
 #include "abicache.h"
 #include "slurpcache.h"
 #include "namecache.h"
+#include "configuration.h"
 
 //-------------------------------------------------------------------------
 class COptions : public COptionsBase {
@@ -30,9 +31,11 @@ public:
     bool parseArguments(string_q& command);
     void Init(void);
 
-    void doStatus(ostream& os);
-    void doListing(ostream& os);
-    void doConfig(ostream& os);
+    void handle_status(ostream& os);
+    void handle_listing(ostream& os);
+    void handle_config(ostream& os);
+    void handle_config_get(ostream& os);
+    void handle_config_put(ostream& os);
 };
 
 //-------------------------------------------------------------------------

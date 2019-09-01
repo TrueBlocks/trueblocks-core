@@ -25,7 +25,6 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-extern const char* STR_DISPLAY;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
@@ -89,7 +88,7 @@ bool COptions::parseArguments(string_q& command) {
         case NONE1:
         case TXT1:
         case CSV1:
-            format = getGlobalConfig("getTrans")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
+            format = getGlobalConfig("getTrans")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_TRANSACTION : format);
             if (useTrace)
                 format += "\t[{TRACESCNT}]";
             manageFields("CTransaction:" + cleanFmt(format, exportFmt));
@@ -147,12 +146,3 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
     }
     return str;
 }
-
-//--------------------------------------------------------------------------------
-const char* STR_DISPLAY =
-"[{DATE}]\t"
-"[{TIMESTAMP}]\t"
-"[{BLOCKNUMBER}]\t"
-"[{TRANSACTIONINDEX}]\t"
-"[{HASH}]\t"
-"[{COMPRESSEDTX}]";

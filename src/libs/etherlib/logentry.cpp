@@ -387,6 +387,20 @@ const string_q CLogEntry::getStringAt(const string_q& fieldName, size_t i) const
     return "";
 }
 
+//--------------------------------------------------------------------------------
+const char* STR_DISPLAY_LOG =
+"[{BLOCKNUMBER}]\t"
+"[{TRANSACTIONINDEX}]\t"
+"[{LOGINDEX}]\t"
+"[{ADDRESS}]\t"
+"[{TOPIC0}]\t"
+"[{TOPIC1}]\t"
+"[{TOPIC2}]\t"
+"[{TOPIC3}]\t"
+"[{DATA}]\t"
+"[{TYPE}]\t"
+"[{COMPRESSEDLOG}]";
+
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE

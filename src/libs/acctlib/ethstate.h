@@ -161,6 +161,9 @@ typedef vector<CEthState> CEthStateArray;
 extern CArchive& operator>>(CArchive& archive, CEthStateArray& array);
 extern CArchive& operator<<(CArchive& archive, const CEthStateArray& array);
 
+//--------------------------------------------------------------------------------
+extern const char* STR_DISPLAY_STATE;
+
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 typedef map<address_t,CEthState> CEthStateMap;

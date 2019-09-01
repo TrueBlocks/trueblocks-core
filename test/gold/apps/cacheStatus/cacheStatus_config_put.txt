@@ -1,0 +1,17 @@
+cacheStatus argc: 3 [1:--config-put] [2:string] 
+cacheStatus --config-put string 
+Would have written:
+  getGlobalConfig("quickBlocks.toml")->setConfigStr("settings", "rpcProvider", "http://newhost:8545");
+  getGlobalConfig("quickBlocks.toml")->setConfigStr("settings", "apiProvider", "http://newhost:8080");
+  getGlobalConfig("quickBlocks.toml")->setConfigStr("settings", "balanceProvider", "http://newhost:8080/");
+  getGlobalConfig("quickBlocks.toml")->setConfigStr("settings", "configPath", "~/.newFolder/");
+  getGlobalConfig("quickBlocks.toml")->setConfigStr("settings", "cachePath", "/Folder1/Folder2/Folder3/");
+  getGlobalConfig("quickBlocks.toml")->setConfigStr("settings", "indexPath", "/Folder1/Folder2/Folder3/Folder4");
+  getGlobalConfig("blockScrape.toml")->setConfigStr("settings", "nBlocks", "10");
+  getGlobalConfig("blockScrape.toml")->setConfigStr("settings", "nAddrProcs", "2");
+  getGlobalConfig("blockScrape.toml")->setConfigStr("settings", "nBlockProcs", "1");
+  getGlobalConfig("acctExport.toml")->setConfigStr("settings", "writeTxs", "false");
+  getGlobalConfig("acctExport.toml")->setConfigStr("settings", "writeTraces", "true");
+  getGlobalConfig("acctExport.toml")->setConfigStr("balances", "remote", "false");
+  getGlobalConfig("ethslurp.toml")->setConfigStr("settings", "api_key", "1212121212121");
+  getGlobalConfig("getAccounts.toml")->setConfigStr("custom", "list", "{\address\:\0x1111111111111111111111111111111111111111\,\name\:\Wallet1\},{\address\:\0x2222222222222222222222222222222222222222\,\name\:\Wallet2\}");

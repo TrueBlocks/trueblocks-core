@@ -345,6 +345,25 @@ ostream& operator<<(ostream& os, const CAccountName& item) {
     return os;
 }
 
+//-----------------------------------------------------------------------
+const char* STR_DISPLAY_ACCOUNTNAME =
+"[{ADDRESS}]\t"
+"[{NAME}]\t"
+"[{SYMBOL}]";
+
+//-----------------------------------------------------------------------
+const char* STR_DISPLAY_ACCOUNTNAME2 =
+"[{GROUP}]\t"
+"[{ADDRESS}]\t"
+"[{NAME}]\t"
+"[{SYMBOL}]\t"
+"[{SOURCE}]\t"
+"[{DESCRIPTION}]\t"
+"[{LOGO}]\t"
+"[{IS_CONTRACT}]\t"
+"[{IS_PRIVATE}]\t"
+"[{IS_SHARED}]";
+
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 CAccountName::CAccountName(const string_q& strIn) {

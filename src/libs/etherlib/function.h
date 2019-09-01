@@ -187,6 +187,9 @@ extern CArchive& operator<<(CArchive& archive, const CFunctionArray& array);
 extern CArchive& operator<<(CArchive& archive, const CFunction& fun);
 extern CArchive& operator>>(CArchive& archive, CFunction& fun);
 
+//-----------------------------------------------------------------------
+extern const char* STR_DISPLAY_FUNCTION;
+
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE

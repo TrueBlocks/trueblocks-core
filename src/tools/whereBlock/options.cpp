@@ -22,7 +22,7 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-extern const char* STR_DISPLAY;
+extern const char* STR_DISPLAY_WHERE;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
@@ -30,7 +30,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     bool noHeader = false;
-    string_q format = getGlobalConfig("whereBlock")->getConfigStr("display", "format", STR_DISPLAY);
+    string_q format = getGlobalConfig("whereBlock")->getConfigStr("display", "format", STR_DISPLAY_WHERE);
     Init();
     blknum_t latestBlock = getLastBlock_client();
     if (!isNodeRunning()) // it's okay if it's not
@@ -61,15 +61,15 @@ bool COptions::parseArguments(string_q& command) {
 
     // Display formatting
     switch (exportFmt) {
-        case NONE1: format = STR_DISPLAY; break;
+        case NONE1: format = STR_DISPLAY_WHERE; break;
         case API1:
         case JSON1: format = ""; break;
         case TXT1:
         case CSV1:
-            format = getGlobalConfig("whereBlock")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
+            format = getGlobalConfig("whereBlock")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_WHERE : format);
             break;
     }
-    manageFields("CCacheEntry:" + cleanFmt((format.empty() ? STR_DISPLAY : format), exportFmt));
+    manageFields("CCacheEntry:" + cleanFmt((format.empty() ? STR_DISPLAY_WHERE : format), exportFmt));
     expContext().fmtMap["meta"] = ", \"cachePath\": \"" + (isTestMode() ? "--" : getCachePath("")) + "\"";
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
     if (noHeader)
@@ -143,4 +143,4 @@ void COptions::applyFilter() {
 }
 
 //-----------------------------------------------------------------------
-const char* STR_DISPLAY = "[{BLOCKNUMBER}]\t[{PATH}]\t[{CACHED}]";
+const char* STR_DISPLAY_WHERE = "[{BLOCKNUMBER}]\t[{PATH}]\t[{CACHED}]";

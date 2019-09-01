@@ -384,6 +384,15 @@ const CBaseNode *CReceipt::getObjectAt(const string_q& fieldName, size_t index) 
     return NULL;
 }
 
+//--------------------------------------------------------------------------------
+const char* STR_DISPLAY_RECEIPT =
+"[{BLOCKNUMBER}]\t"
+"[{TRANSACTIONINDEX}]\t"
+"[{HASH}]\t"
+"[{GASUSED}]\t"
+"[{STATUS}]\t"
+"[{ISERROR}]";
+
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE

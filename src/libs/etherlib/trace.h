@@ -187,6 +187,9 @@ typedef vector<CTrace> CTraceArray;
 extern CArchive& operator>>(CArchive& archive, CTraceArray& array);
 extern CArchive& operator<<(CArchive& archive, const CTraceArray& array);
 
+//--------------------------------------------------------------------------------
+extern const char* STR_DISPLAY_TRACE;
+
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE

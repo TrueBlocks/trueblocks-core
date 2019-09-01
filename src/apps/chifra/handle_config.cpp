@@ -11,7 +11,9 @@ bool COptions::handle_config(void) {
     ENTER4("handle_" + mode);
     nodeNotRequired();
 
-    if (tool_flags.empty() || (!startsWith(tool_flags, "get") && !startsWith(tool_flags, "set")))
+    replaceAll(tool_flags, "--get", "get");
+    replaceAll(tool_flags, "--put", "put");
+    if (tool_flags.empty() || (!startsWith(tool_flags, "get") && !startsWith(tool_flags, "put")))
         EXIT_USAGE("chifra config 'mode' must be either 'get' or 'put <json>'.");
 
     LOG5("tool_flags: " + tool_flags);

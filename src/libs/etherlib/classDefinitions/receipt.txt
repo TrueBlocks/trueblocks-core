@@ -8,3 +8,5 @@ includes    = abilib.h|logentry.h
 cIncs       = etherlib.h
 scope       = extern
 serialize   = true
+display_str = blockNumber, transactionIndex, hash, gasUsed, status, isError
+

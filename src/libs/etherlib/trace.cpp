@@ -406,6 +406,23 @@ const string_q CTrace::getStringAt(const string_q& fieldName, size_t i) const {
 }
 
 //---------------------------------------------------------------------------
+const char* STR_DISPLAY_TRACE =
+"[{BLOCKNUMBER}]\t"
+"[{TRANSACTIONPOSITION}]\t"
+"[{TRACEADDRESS}]\t"
+"[{ACTION::CALLTYPE}]\t"
+"[{ERROR}]\t"
+"[{ACTION::FROM}]\t"
+"[{ACTION::TO}]\t"
+"[{ACTION::VALUE}]\t"
+"[{ACTION::ETHER}]\t"
+"[{ACTION::GAS}]\t"
+"[{RESULT::GASUSED}]\t"
+"[{ACTION::INPUT}]\t"
+"[{COMPRESSEDTRACE}]\t"
+"[{RESULT::OUTPUT}]";
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 bool CTrace::isError(void) const {
     return !error.empty();

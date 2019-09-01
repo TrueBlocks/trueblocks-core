@@ -7,6 +7,7 @@ includes    = etherlib.h|transaction.h
 cIncs       = appearance.h
 scope       = extern
 serialize   = true
+display_str =
 ;
 ; full block definition from around Jan 2017
 ; number: Quantity - The block number. null when its pending block

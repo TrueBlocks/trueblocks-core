@@ -208,6 +208,10 @@ extern CArchive& operator<<(CArchive& archive, const CTransactionArray& array);
 extern CArchive& operator<<(CArchive& archive, const CTransaction& tra);
 extern CArchive& operator>>(CArchive& archive, CTransaction& tra);
 
+//-----------------------------------------------------------------------
+extern const char* STR_DISPLAY_TRANSACTION2;
+extern const char* STR_DISPLAY_TRANSACTION;
+
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 extern bool sortTransactionsForWrite(const CTransaction& t1, const CTransaction& t2);

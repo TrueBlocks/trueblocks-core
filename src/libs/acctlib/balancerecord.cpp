@@ -291,6 +291,14 @@ ostream& operator<<(ostream& os, const CBalanceRecord& item) {
     return os;
 }
 
+//--------------------------------------------------------------------------------
+const char* STR_DISPLAY_BALANCERECORD =
+"[{ADDRESS}]\t"
+"[{BLOCKNUM}]\t"
+"[{TX_ID}]\t"
+"[{PRIORBALANCE}]\t"
+"[{BALANCE}]";
+
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 CBalanceRecord::CBalanceRecord(string_q& line) {

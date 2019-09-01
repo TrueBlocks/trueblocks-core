@@ -1,7 +1,8 @@
 [settings]
-class     = CFunction
-fields    = string name|string type|bool anonymous|bool constant|bool payable|string signature|string encoding|string message (nowrite)|CParameterArray inputs|CParameterArray outputs
-includes  = utillib.h|parameter.h
-sort      = v1.encoding < v2.encoding
-equals    = encoding % item.encoding
-serialize = true
+class       = CFunction
+fields      = string name|string type|bool anonymous|bool constant|bool payable|string signature|string encoding|string message (nowrite)|CParameterArray inputs|CParameterArray outputs
+includes    = utillib.h|parameter.h
+sort        = v1.encoding < v2.encoding
+equals      = encoding % item.encoding
+serialize   = true
+display_str = name, type, anonymous, constant, payable, signature, encoding, inputs, outputs

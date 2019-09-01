@@ -2,19 +2,22 @@ ethQuote argc: 2 [1:-th]
 ethQuote -th 
 #### Usage
 
-`Usage:`    ethQuote -a|-c|-d|-f|-p|-p|-v|-h  
+`Usage:`    ethQuote -f|-d|-p|-p|-v|-h  
 `Purpose:`  Freshen and/or display Ethereum price data and other purposes.
 
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-| -a | --at <ts> | Report the price since nearest five minutes to the given timestamp |
-| -c | --current | Report on the current price (i.e. -at:now) |
-| -d | --data | Export prices as JSON data |
 | -f | --freshen | Freshen database (append new data) |
+| -d | --data | Export prices as JSON data |
 | -p | --period enum[5|15|30|120*|240|1440] | Display prices in this increment. One of [5&#124;15&#124;30&#124;120*&#124;240&#124;1440] |
 | -p | --pair <val> | Which price pair to freshen or list (see Poloniex) |
+
+#### Hidden options (shown during testing only)
+| -x | --fmt <fmt> | export format (one of [none&#124;json*&#124;txt&#124;csv&#124;api]) |
+#### Hidden options (shown during testing only)
+
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

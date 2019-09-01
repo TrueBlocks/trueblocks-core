@@ -43,9 +43,9 @@ endfunction(run_test)
 # Enter one line for each individual test
 run_test("ethQuote_README"          "-th")
 run_test("ethQuote_no_params"            )
-run_test("ethQuote_verbose_00"      "-v")
+run_test("ethQuote_verbose_00"      "-v" " --fmt" " json")
 run_test("ethQuote_at_00"           "-a" " 1438272138")
-run_test("ethQuote_period_01"       "--period" " 240" " -v:2")
+run_test("ethQuote_period_01"       "--period" " 240" " -v:2" " --fmt" " json")
 run_test("ethQuote_when_01"         "--when" " 19")
 
 # Slower tests
@@ -61,6 +61,15 @@ run_special_test("ethQuote_from_file"       "--file:cmd_file")
 #run_special_test("ethQuote_bitcoin_eth"     "--pair:BTC_ETH")  # customized
 #run_special_test("ethQuote_usd_bitcoin"     "--pair:USDT_BTC")
 #run_special_test("ethQuote_usd_litecoin"    "--pair:USDT_LTC")  # customized
+
+run_test("ethQuote_fmt_txt"          "-d" " --fmt" " txt")
+run_test("ethQuote_fmt_csv"          "-d" " --fmt" " csv")
+run_test("ethQuote_fmt_json"         "-d" " --fmt" " json")
+run_test("ethQuote_fmt_api"          "-d" " --fmt" " api")
+run_test("ethQuote_fmt_api_mode"     "-d" " --api_mode")
+run_test("ethQuote_fmt_api_mode_fmt" "-d" " --api_mode" " --fmt" " txt")
+run_test("ethQuote_fmt_defaut"       "-d")
+run_test("ethQuote_fmt_junk"         "-d" " --fmt" " junk")
 
 # Installation steps, this tool is renamed at installation
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

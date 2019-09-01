@@ -18,17 +18,23 @@ int main(int argc, const char *argv[]) {
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
-        if (once)
-            cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], GETRUNTIME_CLASS(CStatus));
 
-        if (options.isListing)
-            options.doListing(cout);
+        if (options.isListing) {
+            if (once)
+                cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], GETRUNTIME_CLASS(CStatus));
+            options.handle_listing(cout);
 
-        else if (options.isConfig)
-            options.doConfig(cout);
+        } else if (options.isConfig) {
+            if (once)
+                cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], GETRUNTIME_CLASS(CConfiguration));
+            options.handle_config(cout);
 
-        else
-            options.doStatus(cout);
+        } else {
+            if (once)
+                cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], GETRUNTIME_CLASS(CStatus));
+            options.handle_status(cout);
+
+        }
         once = false;
     }
     cout << exportPostamble(options.exportFmt, expContext().fmtMap["meta"]);

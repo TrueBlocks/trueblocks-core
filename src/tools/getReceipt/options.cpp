@@ -24,7 +24,6 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-extern const char* STR_DISPLAY;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
@@ -85,7 +84,7 @@ bool COptions::parseArguments(string_q& command) {
         case NONE1:
         case TXT1:
         case CSV1:
-            format = getGlobalConfig("getReceipt")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
+            format = getGlobalConfig("getReceipt")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_RECEIPT : format);
             if (option1)
                 format += "\t[{LOGSCNT}]";
             manageFields("CReceipt:" + cleanFmt(format, exportFmt));
@@ -142,12 +141,3 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
     }
     return str;
 }
-
-//--------------------------------------------------------------------------------
-const char* STR_DISPLAY =
-"[{BLOCKNUMBER}]\t"
-"[{TRANSACTIONINDEX}]\t"
-"[{HASH}]\t"
-"[{GASUSED}]\t"
-"[{STATUS}]\t"
-"[{ISERROR}]";

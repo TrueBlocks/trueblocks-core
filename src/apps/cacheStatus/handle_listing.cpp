@@ -6,7 +6,7 @@
 #include "options.h"
 
 //--------------------------------------------------------------------------------
-void COptions::doListing(ostream& os) {
+void COptions::handle_listing(ostream& os) {
     cout << "List mode" << endl;
     ENTER4("handle_" + mode);
     nodeNotRequired();

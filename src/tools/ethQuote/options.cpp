@@ -15,18 +15,16 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("at", "a", "<ts>", OPT_FLAG, "Report the price since nearest five minutes to the given timestamp"),
-    COption("current", "c", "", OPT_SWITCH, "Report on the current price (i.e. -at:now)"),
-    COption("data", "d", "", OPT_SWITCH, "Export prices as JSON data"),
     COption("freshen", "f", "", OPT_SWITCH, "Freshen database (append new data)"),
+    COption("data", "d", "", OPT_SWITCH, "Export prices as JSON data"),
     COption("period", "p", "enum[5|15|30|120*|240|1440]", OPT_FLAG, "Display prices in this increment. One of [5|15|30|120*|240|1440]"),
     COption("pair", "p", "<val>", OPT_FLAG, "Which price pair to freshen or list (see Poloniex)"),
+    COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),
     COption("", "", "", 0, "Freshen and/or display Ethereum price data and other purposes."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-extern const char* STR_DISPLAY;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
@@ -38,9 +36,6 @@ bool COptions::parseArguments(string_q& command) {
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if (arg == "-c" || arg == "--current")
-            arg = "-a:now";
-
         string_q orig = arg;
 
         if (arg == "-f" || arg == "--freshen") {
@@ -49,16 +44,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-d" || arg == "--data") {
             // we don't have to do anything, simply handling the option
             // enables the behavour. Don't remove.
-
-        } else if (startsWith(arg, "-a:") || startsWith(arg, "--at:")) {
-            arg = substitute(substitute(orig, "-a:", ""), "--at:", "");
-            if (arg == "now") {
-                at = date_2_Ts(Now());
-            } else {
-                at = str_2_Ts(arg);
-                if (!isUnsigned(arg))
-                    return usage("Timestamp expected: " + orig);
-            }
 
         } else if (startsWith(arg, "-p:") || startsWith(arg, "--period:")) {
             arg = substitute(substitute(orig, "-p:", ""), "--period:", "");
@@ -85,7 +70,7 @@ bool COptions::parseArguments(string_q& command) {
         case NONE1:
         case TXT1:
         case CSV1:
-            format = getGlobalConfig("ethQuote")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
+            format = getGlobalConfig("ethQuote")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_ETHQUOTE : format);
             manageFields("CAccountName:" + cleanFmt(format, exportFmt));
             break;
         case API1:
@@ -113,7 +98,7 @@ void COptions::Init(void) {
 
     freshen = false;
     freq = 120;
-    at = 0;
+    first = true;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -140,9 +125,3 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
     }
     return str;
 }
-
-//-----------------------------------------------------------------------
-const char *STR_DISPLAY =
-"[{BLOCKNUMBER}]\t"
-"[{TIMESTAMP}]\t"
-"[{PRICE}]";

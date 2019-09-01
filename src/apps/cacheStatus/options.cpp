@@ -56,14 +56,16 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (mode.empty() || contains(mode, "some"))
-        mode = "index|monitors|names|abis|slurps|prices";
+    if (!isConfig) {
+        if (mode.empty() || contains(mode, "some"))
+            mode = "index|monitors|names|abis|slurps|prices";
 
-    if (contains(mode, "all"))
-        mode = "index|monitors|names|abis|blocks|txs|traces|slurps|prices";
+        if (contains(mode, "all"))
+            mode = "index|monitors|names|abis|blocks|txs|traces|slurps|prices";
 
-    mode = "|" + trim(mode, '|') + "|";
-
+        mode = "|" + trim(mode, '|') + "|";
+    }
+    
     if (!details) {
         HIDE_FIELD(CMonitorCache, "items");
         HIDE_FIELD(CSlurpCache, "items");
@@ -126,6 +128,10 @@ COptions::COptions(void) {
     CPriceCache::registerClass();
     CPriceCacheItem::registerClass();
     CAbiCacheItem::registerClass();
+    CConfiguration::registerClass();
+    CConfigFile::registerClass();
+    CConfigGroup::registerClass();
+    CConfigItem::registerClass();
 
     HIDE_FIELD(CAccountWatch,  "statement");
     HIDE_FIELD(CAccountWatch,  "stateHistory");

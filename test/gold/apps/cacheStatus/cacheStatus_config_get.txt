@@ -1,0 +1,173 @@
+cacheStatus argc: 2 [1:--config-get] 
+cacheStatus --config-get 
+{
+  "files": [
+    {
+      "name": "quickBlocks.toml",
+      "groups": [
+        {
+          "name": "settings",
+          "keys": [
+            {
+              "name": "rpcProvider",
+              "value": "--rpcProvider--",
+              "type": "url",
+              "tip": "the Ethereum node's RPC endpoint",
+              "required": true,
+              "read_only": false
+            },
+            {
+              "name": "apiProvider",
+              "value": "--apiProvider--",
+              "type": "url",
+              "tip": "TrueBlocks' API endpoint",
+              "required": true,
+              "read_only": false
+            },
+            {
+              "name": "balanceProvider",
+              "value": "--balanceProv--",
+              "type": "url",
+              "tip": "alternative node endpoint for account balances",
+              "required": false,
+              "read_only": false
+            },
+            {
+              "name": "configPath",
+              "value": "--configPath--",
+              "type": "path",
+              "tip": "location of config files, read only",
+              "required": true,
+              "read_only": true
+            },
+            {
+              "name": "cachePath",
+              "value": "--cachePath--",
+              "type": "path",
+              "tip": "location of cache (on external SSD, for example)",
+              "required": false,
+              "read_only": false
+            },
+            {
+              "name": "indexPath",
+              "value": "--indexPath--",
+              "type": "path",
+              "tip": "location of index (on internal SSD for speed)",
+              "required": false,
+              "read_only": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "blockScrape.toml",
+      "groups": [
+        {
+          "name": "settings",
+          "keys": [
+            {
+              "name": "nBlocks",
+              "value": "--nBlocks--",
+              "type": "uint",
+              "tip": "number of blocks to process per invocation of blaze (> 50)",
+              "required": true,
+              "read_only": false
+            },
+            {
+              "name": "nAddrProcs",
+              "value": "--nAddrProcs--",
+              "type": "uint",
+              "tip": "number of parallel go processes to use to process addresses (> 0)",
+              "required": true,
+              "read_only": false
+            },
+            {
+              "name": "nBlockProcs",
+              "value": "--nBlockProcs--",
+              "type": "uint",
+              "tip": "number of parallel go processes to use to process blocks (> 0)",
+              "required": true,
+              "read_only": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "acctExport.toml",
+      "groups": [
+        {
+          "name": "settings",
+          "keys": [
+            {
+              "name": "writeTxs",
+              "value": "--writeTxs--",
+              "type": "bool",
+              "tip": "write transactions to the TrueBlocks binary cache",
+              "required": false,
+              "read_only": false
+            },
+            {
+              "name": "writeTraces",
+              "value": "--writeTraces--",
+              "type": "bool",
+              "tip": "write traces to the TrueBlocks binary cache",
+              "required": false,
+              "read_only": false
+            }
+          ]
+        },
+        {
+          "name": "balances",
+          "keys": [
+            {
+              "name": "remote",
+              "value": "--remote--",
+              "type": "bool",
+              "tip": "get balances from balanceProvider",
+              "required": false,
+              "read_only": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ethslurp.toml",
+      "groups": [
+        {
+          "name": "settings",
+          "keys": [
+            {
+              "name": "api_key",
+              "value": "--api_key--",
+              "type": "string",
+              "tip": "api key required to use EtherScan apis -- private data -- not shared",
+              "required": false,
+              "read_only": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "getAccounts.toml",
+      "groups": [
+        {
+          "name": "custom",
+          "keys": [
+            {
+              "name": "list",
+              "value": "--custom-array--",
+              "type": "json array",
+              "tip": "user specific list of names for addresses -- private data -- not shared",
+              "required": false,
+              "read_only": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

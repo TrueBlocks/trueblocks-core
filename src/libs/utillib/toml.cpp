@@ -247,24 +247,6 @@ extern string_q collapseArrays(const string_q& inStr);
     }
 
     //-------------------------------------------------------------------------
-    string_q CToml::getDisplayStr(bool terse, const string_q& def, const string_q& color) const {
-        string_q fmt = getConfigStr("display", (terse ? "terse" : "format"), "<not_set>");
-        if (fmt == "<not_set>")
-            fmt = def;
-        if (!color.empty()) {
-            replaceAll(fmt, "{", color+"{");
-            replaceAll(fmt, "}", "}"+cOff);
-        }
-
-        string_q ret = substitute(fmt, "\\n\\\n", "\\n");
-        ret = substitute(ret, "\n", "");
-        ret = substitute(ret, "\\n", "\n");
-        ret = substitute(ret, "\\t", "\t");
-        ret = substitute(ret, "\\r", "\r");
-        return ret;
-    }
-
-    //-------------------------------------------------------------------------
     void CToml::setConfigInt(const string_q& group, const string_q& key, uint64_t value) {
         setConfigStr(group, key, int_2_Str((int64_t)value));
     }

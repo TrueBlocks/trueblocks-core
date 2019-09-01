@@ -27,7 +27,6 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-extern const char* STR_DISPLAY;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
@@ -112,12 +111,12 @@ bool COptions::parseArguments(string_q& command) {
     UNHIDE_FIELD(CEthState, "address");
 
     // Display formatting
-    string_q format = (STR_DISPLAY + add);
+    string_q format = (STR_DISPLAY_STATE + add);
     switch (exportFmt) {
         case NONE1:
         case TXT1:
         case CSV1:
-            format = getGlobalConfig("getState")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
+            format = getGlobalConfig("getState")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_STATE : format);
             manageFields("CEthState:" + cleanFmt(format, exportFmt));
             break;
         case API1:
@@ -184,8 +183,3 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
     }
     return str;
 }
-
-//--------------------------------------------------------------------------------
-const char* STR_DISPLAY =
-"[{ADDRESS}]\t"
-"[{BLOCKNUMBER}]";

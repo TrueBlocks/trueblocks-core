@@ -21,7 +21,6 @@ int main(int argc, const char *argv[]) {
 
         blknum_t latest = getLastBlock_cache_final();
         string_q def = (options.asData ? STR_DATA_DISPLAY : STR_DEFAULT_DISPLAY);
-        string_q fmtStr = getGlobalConfig("cacheMan")->getDisplayStr(options.asData, def);
 
         // Handle the various modes (there may be more than one)
         CStringArray modes;
@@ -121,7 +120,7 @@ extern bool loadMonitorData(CAppearanceArray_base& items, const address_t& addr)
                                         cout << "}\n";
                                         first = false;
                                     } else {
-                                        cout << (!getEnvStr("API_MODE").empty() ? watch->address + "\t" : "") << item.blk << "\t" << item.txid << endl; // Format(fmtStr);
+                                        cout << (!getEnvStr("API_MODE").empty() ? watch->address + "\t" : "") << item.blk << "\t" << item.txid << endl;
                                     }
                                 }
 

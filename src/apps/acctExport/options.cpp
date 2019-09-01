@@ -31,10 +31,6 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-extern const char* STR_DISPLAY;
-extern const char* STR_LOG_DISPLAY;
-extern const char* STR_TRACE_DISPLAY;
-extern const char* STR_BALRECORD_DISPLAY;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
@@ -203,7 +199,7 @@ bool COptions::parseArguments(string_q& command) {
     if (exportFmt != JSON1) {
         string_q deflt, format;
 
-        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "format", STR_DISPLAY);
+        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "format", STR_DISPLAY_TRANSACTION2);
         format = toml.getConfigStr("formats", "trans_fmt", deflt);
         expContext().fmtMap["transaction_fmt"] = cleanFmt(format, exportFmt);
 
@@ -212,15 +208,15 @@ bool COptions::parseArguments(string_q& command) {
         if (!contains(toLower(format), "trace"))
             HIDE_FIELD(CTransaction, "traces");
 
-        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "trace", STR_TRACE_DISPLAY);
+        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "trace", STR_DISPLAY_TRACE);
         format = toml.getConfigStr("formats", "trace_fmt", deflt);
         expContext().fmtMap["trace_fmt"] = cleanFmt(format, exportFmt);
 
-        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "log", STR_LOG_DISPLAY);
+        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "log", STR_DISPLAY_LOG);
         format = toml.getConfigStr("formats", "logentry_fmt", deflt);
         expContext().fmtMap["logentry_fmt"] = cleanFmt(format, exportFmt);
 
-        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "balance", STR_BALRECORD_DISPLAY);
+        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "balance", STR_DISPLAY_BALANCERECORD);
         format = toml.getConfigStr("formats", "balancerecord_fmt", deflt);
         if (expContext().asEther) {
             format = substitute(format, "{BALANCE}", "{ETHER}");
@@ -420,83 +416,3 @@ bool COptions::loadTsArray() {
 
     return true;
 }
-
-//-----------------------------------------------------------------------
-const char* STR_DISPLAY =
-"[{HASH}]\t"
-"[{TIMESTAMP}]\t"
-"[{FROM}]\t"
-"[{TO}]\t"
-"[{ETHER}]\t"
-"[{BLOCKNUMBER}]\t"
-"[{TRANSACTIONINDEX}]\t"
-"[{ETHERGASPRICE}]\t"
-"[{GASUSED}]\t"
-"[{ISERROR}]\t"
-"[{ENCODING}]";
-
-//--------------------------------------------------------------------------------
-const char* STR_LOG_DISPLAY =
-"[{BLOCKNUMBER}]\t"
-"[{TRANSACTIONINDEX}]\t"
-"[{LOGINDEX}]\t"
-"[{ADDRESS}]\t"
-"[{TOPIC0}]\t"
-"[{TOPIC1}]\t"
-"[{TOPIC2}]\t"
-"[{TOPIC3}]\t"
-"[{DATA}]\t"
-"[{TYPE}]\t"
-"[{COMPRESSEDLOG}]";
-
-//--------------------------------------------------------------------------------
-const char* STR_TRACE_DISPLAY =
-"[{BLOCKNUMBER}]\t"
-"[{TRANSACTIONPOSITION}]\t"
-"[{TRACEADDRESS}]\t"
-"[{ACTION::CALLTYPE}]\t"
-"[{ERROR}]\t"
-"[{ACTION::FROM}]\t"
-"[{ACTION::TO}]\t"
-"[{ACTION::VALUE}]\t"
-"[{ACTION::ETHER}]\t"
-"[{ACTION::GAS}]\t"
-"[{RESULT::GASUSED}]\t"
-"[{ACTION::INPUT}]\t"
-"[{COMPRESSEDTRACE}]\t"
-"[{RESULT::OUTPUT}]";
-
-//--------------------------------------------------------------------------------
-const char* STR_BALRECORD_DISPLAY =
-"[{ADDRESS}]\t"
-"[{BLOCKNUM}]\t"
-"[{TX_ID}]\t"
-"[{PRIORBALANCE}]\t"
-"[{BALANCE}]";
-
-/*
- "[{BLOCKHASH}]\t"
- "[{BLOCKNUMBER}]\t"
- "[{SUBTRACES}]\t"
- "[{TRACEADDRESS}]\t"
- "[{TRANSACTIONHASH}]\t"
- "[{TRANSACTIONPOSITION}]\t"
- "[{TYPE}]\t"
- "[{ERROR}]\t"
- "[{ARTICULATEDTRACE}]\t"
- "[{COMPRESSEDTRACE}]\t"
- "[{ACTION::ADDRESS}]\t"
- "[{ACTION::BALANCE}]\t"
- "[{ACTION::CALLTYPE}]\t"
- "[{ACTION::FROM}]\t"
- "[{ACTION::GAS}]\t"
- "[{ACTION::INIT}]\t"
- "[{ACTION::INPUT}]\t"
- "[{ACTION::REFUNDADDRESS}]\t"
- "[{ACTION::TO}]\t"
- "[{ACTION::VALUE}]\t"
- "[{RESULT::ADDRESS}]\t"
- "[{RESULT::CODE}]\t"
- "[{RESULT::GASUSED}]\t"
- "[{RESULT::OUTPUT}]";
- */

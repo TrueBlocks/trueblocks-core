@@ -1,0 +1,7 @@
+[settings]
+class     = CConfiguration
+baseClass = CBaseNode
+fields    = CConfigFileArray files
+includes  = etherlib.h|configfile.h
+cIncs     = 
+serialize = true

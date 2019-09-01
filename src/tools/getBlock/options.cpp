@@ -231,10 +231,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!blocks.hasBlocks())
         return usage("You must specify at least one block. Quitting...");
 
-    format = getGlobalConfig("getBlock")->getDisplayStr(false, "");
-    if (contains(format, "{PRICE:CLOSE}")) {
-//        priceBlocks = true;
-    }
+    format = getGlobalConfig("getBlock")->getConfigStr("display", "format", STR_DISPLAY_BLOCK);
 
     secsFinal = (timestamp_t)getGlobalConfig("getBlock")->getConfigInt("settings", "secs_when_final", (uint64_t)secsFinal);
 

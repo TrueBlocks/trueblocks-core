@@ -14,11 +14,10 @@
 #include "etherlib.h"
 #include "options.h"
 
-extern const char* STR_FORMAT_FUNCDATA;
 //-----------------------------------------------------------------------
 void COptions::handle_display(void) {
 
-    string_q format = getGlobalConfig("grabABI")->getDisplayStr(false, STR_FORMAT_FUNCDATA);
+    string_q format = getGlobalConfig("grabABI")->getConfigStr("display", "format", STR_DISPLAY_FUNCTION);
     string_q header = substitute(substitute(format, "[{", ""), "}]", "");
     if (asData)
         cout << header << "\n";
@@ -44,15 +43,3 @@ void COptions::handle_display(void) {
         }
     }
 }
-
-//-----------------------------------------------------------------------
-const char* STR_FORMAT_FUNCDATA =
-"[{name}]\t"
-"[{type}]\t"
-"[{anonymous}]\t"
-"[{constant}]\t"
-"[{payable}]\t"
-"[{signature}]\t"
-"[{encoding}]\t"
-"[{inputs}]\t"
-"[{outputs}]\n";

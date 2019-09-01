@@ -6,7 +6,7 @@
 #include "options.h"
 
 //--------------------------------------------------------------------------------
-void COptions::doStatus(ostream& os) {
+void COptions::handle_status(ostream& os) {
 
     CIndexCache aid;
     if (contains(mode, "|index|")) {
