@@ -159,7 +159,7 @@ cacheStatus --config-get
           "keys": [
             {
               "name": "list",
-              "value": "--custom-array--",
+              "value": "[{ \"address\": \"0x3b1613b1613b1613b1613b1613b1613b1613b161\", \"name\": \"TestWallet1\" },{ \"address\": \"0xb1661b1661b1661b1661b1661b1661b1661b1661\", \"name\": \"TestWallet2\" }]",
               "type": "json array",
               "tip": "user specific list of names for addresses -- private data -- not shared",
               "required": false,
@@ -171,3 +171,4 @@ cacheStatus --config-get
     }
   ]
 }
+
