@@ -4,3 +4,4 @@ fields    = string type|uint32 nAddresses|uint32 nAppearances|uint32 firstAppear
 includes  = etherlib.h|accountwatch.h
 cIncs     =
 serialize = true
+useExport = true

@@ -208,7 +208,11 @@ ostream& operator<<(ostream& os, const [{CLASS_NAME}]& item) {
     return os;
 }
 
-[{GET_OBJ}][{GET_STR}]//---------------------------------------------------------------------------
+[{GET_OBJ}][{GET_STR}]//-----------------------------------------------------------------------
+const char* STR_DISPLAY_[{CLASS_UPPER}] =
+[{DISPLAY_FIELDS}];
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 [{NAMESPACE2}]

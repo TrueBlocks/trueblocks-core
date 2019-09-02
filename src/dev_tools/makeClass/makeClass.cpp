@@ -136,12 +136,16 @@ static string_q tab = string_q("\t");
 void generateCode(const COptions& options, CToml& toml, const string_q& dataFile, const string_q& ns) {
 
     //------------------------------------------------------------------------------------------------
-    string_q className  = toml.getConfigStr ("settings", "class", "");
-    string_q baseClass  = toml.getConfigStr ("settings", "baseClass", "CBaseNode");
-    string_q scope      = toml.getConfigStr ("settings", "scope", "static");     //TODO(tjayrush): global data
-    string_q hIncludes  = toml.getConfigStr ("settings", "includes", "");
-    string_q sIncludes  = toml.getConfigStr ("settings", "cIncs", "");
-    bool     serialize  = toml.getConfigBool("settings", "serialize", false);
+    string_q className   = toml.getConfigStr ("settings", "class", "");
+    string_q classBase   = toProper(extract(className, 1));
+    string_q classUpper  = toUpper(classBase);
+    string_q baseClass   = toml.getConfigStr ("settings", "baseClass", "CBaseNode");
+    string_q scope       = toml.getConfigStr ("settings", "scope", "static");     //TODO(tjayrush): global data
+    string_q hIncludes   = toml.getConfigStr ("settings", "includes", "");
+    string_q sIncludes   = toml.getConfigStr ("settings", "cIncs", "");
+    bool     serialize   = toml.getConfigBool("settings", "serialize", false);
+    bool     useExport   = toml.getConfigBool("settings", "useExport", false);
+    string_q display_str = toml.getConfigStr ("settings", "display_str", "");
 
     //------------------------------------------------------------------------------------------------
     string_q baseBase   = toProper(extract(baseClass, 1));
@@ -321,6 +325,9 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
         fieldArchiveWrite += ((fld.noWrite ? "//" : "") + fld.Format(fld.isPointer ? STR_PTRWRITEFMT : STR_WRITEFMT));
     }
 
+    if (!display_str.empty())
+        display_str = "\"[{" + substitute(substitute(trim(toUpper(display_str)), " ", ""), ",", "}]\\t\"\n\"[{") + "}]\"";
+
     //------------------------------------------------------------------------------------------------
     bool hasObjGetter = !fieldGetObj.empty();
     if (hasObjGetter)
@@ -365,6 +372,8 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
     replaceAll(headSource, "[{BASE_BASE}]",      baseBase);
     replaceAll(headSource, "[{BASE}]",           baseUpper);
     replaceAll(headSource, "[{CLASS_NAME}]",     className);
+    replaceAll(headSource, "[{CLASS_BASE}]",     classBase);
+    replaceAll(headSource, "[{CLASS_UPPER}]",    classUpper);
     replaceAll(headSource, "[{COMMENT_LINE}]",   STR_COMMENT_LINE);
     replaceAll(headSource, "[{LONG}]",           baseLower);
     replaceAll(headSource, "[{PROPER}]",         baseProper);
@@ -388,6 +397,8 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
     string_q srcFile    = substitute(substitute(dataFile, ".txt", ".cpp"), "./classDefinitions/", "./");
     string_q srcSource;
     asciiFileToString(configPath("makeClass/blank.cpp"), srcSource);
+    if (useExport)
+        replace(srcSource, "ctx << toJson();", "doExport(ctx);");
     if ((startsWith(className, "CNew") || className == "CPriceQuote") && !contains(getCWD(), "parse"))
         replace(srcSource, "version of the data\n", STR_UPGRADE_CODE);
     replaceAll(srcSource, "[{GET_OBJ}]",         fieldGetObj);
@@ -416,7 +427,10 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
     replaceAll(srcSource, "[{BASE_BASE}]",       baseBase);
     replaceAll(srcSource, "[{BASE}]",            baseUpper);
     replaceAll(srcSource, "[{CLASS_NAME}]",      className);
+    replaceAll(srcSource, "[{CLASS_BASE}]",      classBase);
+    replaceAll(srcSource, "[{CLASS_UPPER}]",     classUpper);
     replaceAll(srcSource, "[{COMMENT_LINE}]",    STR_COMMENT_LINE);
+    replaceAll(srcSource, "[{DISPLAY_FIELDS}]",  display_str);
     replaceAll(srcSource, "[{LONG}]",            baseLower);
     replaceAll(srcSource, "[{PROPER}]",          baseProper);
     replaceAll(srcSource, "[{SHORT3}]",          short3(baseLower));

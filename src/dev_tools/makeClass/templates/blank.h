@@ -128,6 +128,9 @@ typedef vector<[{CLASS_NAME}]> [{CLASS_NAME}]Array;
 extern CArchive& operator>>(CArchive& archive, [{CLASS_NAME}]Array& array);
 extern CArchive& operator<<(CArchive& archive, const [{CLASS_NAME}]Array& array);
 
+//-----------------------------------------------------------------------
+extern const char* STR_DISPLAY_[{CLASS_UPPER}];
+
 [{OPERATORS}]//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE

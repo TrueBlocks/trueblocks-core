@@ -284,3 +284,4 @@ const CBaseNode *CConfigGroup::getObjectAt(const string_q& fieldName, size_t ind
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
+
