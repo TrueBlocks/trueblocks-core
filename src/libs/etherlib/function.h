@@ -166,7 +166,7 @@ inline CFunction& CFunction::operator=(const CFunction& fu) {
 inline bool CFunction::operator==(const CFunction& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
-    // Default equality operator as defined in class definition
+    // Equality operator as defined in class definition
     return encoding % item.encoding;
 }
 
@@ -187,7 +187,7 @@ extern CArchive& operator<<(CArchive& archive, const CFunctionArray& array);
 extern CArchive& operator<<(CArchive& archive, const CFunction& fun);
 extern CArchive& operator>>(CArchive& archive, CFunction& fun);
 
-//-----------------------------------------------------------------------
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_FUNCTION;
 
 //---------------------------------------------------------------------------

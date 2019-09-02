@@ -37,7 +37,7 @@ void COptions::handle_config_get(ostream& os) {
         f.groups.push_back(g1);
 #if 0
         acctExport.toml     STR_DISPLAY_TRANSACTION     hash, timestamp, from, to, ether, blockNumber, transactionIndex, etherGasPrice, gasUsed, isError, encoding
-        acctExport.toml     STR_DISPLAY_LOG             blockNumber, transactionIndex, logIndex, address, topic0, topic1, topic2, topic3, data, type, compressedLog
+        acctExport.toml     STR_DISPLAY_LOGENTRY        blockNumber, transactionIndex, logIndex, address, topic0, topic1, topic2, topic3, data, type, compressedLog
         acctExport.toml     STR_DISPLAY_TRACE           blockNumber, transactionIndex, traceAddress
         acctExport.toml     STR_DISPLAY_BALANCERECORD   address, blockNum, tx_id, priorBalance, balance
 #endif
@@ -89,12 +89,12 @@ void COptions::handle_config_get(ostream& os) {
     getBlock.toml
     getTrans.toml       STR_DISPLAY_TRANSACTION     date, timestamp, blockNumber, transactionIndex, hash, compressedTx
     getReceipt.toml     STR_DISPLAY_RECEIPT         blockNumber, transactionIndex, hash, gasUsed, status, isError
-    getLogs.toml        STR_DISPLAY_LOG             blockNumber, transactionIndex, logIndex, address, topic0, topic1, topic2, topic3, data, type, compressedLog
+    getLogs.toml        STR_DISPLAY_LOGENTRY        blockNumber, transactionIndex, logIndex, address, topic0, topic1, topic2, topic3, data, type, compressedLog
     getTrace.toml       STR_DISPLAY_TRACE           blockNumber, transactionIndex, traceAddress, action
-    getState.toml       STR_DISPLAY_STATE           blockNumber, address, balance, nonce, code, storage, deployed, acctType
+    getState.toml       STR_DISPLAY_ETHSTATE        blockNumber, address, balance, nonce, code, storage, deployed, acctType
     getAccounts.toml    STR_DISPLAY_ACCOUNTNAME     group, address, name, symbol, source, description, logo, is_contract, is_private, is_shared
     grabABI.toml        STR_DISPLAY_FUNCTION        name, type, anonymous, constant, payable, signature, encoding, inputs, outputs
-    ethQuote.toml       STR_DISPLAY_ETHQUOTE        blockNumber, timestamp, price
+    ethQuote.toml       STR_DISPLAY_PRICEQUOTE      blockNumber, timestamp, price
     whenBlock.toml      STR_DISPLAY_WHEN            blockNumber, timestamp, date, name
     whereBlock.toml     STR_DISPLAY_WHERE           blockNumber, path, cached
 #endif

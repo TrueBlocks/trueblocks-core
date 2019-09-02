@@ -259,6 +259,10 @@ ostream& operator<<(ostream& os, const CPerson& item) {
 }
 
 //---------------------------------------------------------------------------
+const char* STR_DISPLAY_PERSON =
+"";
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 

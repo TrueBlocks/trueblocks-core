@@ -291,7 +291,7 @@ ostream& operator<<(ostream& os, const CBalanceRecord& item) {
     return os;
 }
 
-//--------------------------------------------------------------------------------
+//---------------------------------------------------------------------------
 const char* STR_DISPLAY_BALANCERECORD =
 "[{BLOCKNUMBER}]\t"
 "[{TRANSACTIONINDEX}]\t"

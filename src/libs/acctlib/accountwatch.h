@@ -199,6 +199,9 @@ extern CArchive& operator>>(CArchive& archive, CAccountWatchArray& array);
 extern CArchive& operator<<(CArchive& archive, const CAccountWatchArray& array);
 
 //---------------------------------------------------------------------------
+extern const char* STR_DISPLAY_ACCOUNTWATCH;
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 typedef map<address_t,CAccountWatch> CAccountWatchMap;
 extern biguint_t getNodeBal(CEthStateArray& history, const address_t& addr, blknum_t blockNum);

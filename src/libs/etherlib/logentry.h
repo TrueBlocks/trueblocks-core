@@ -170,7 +170,7 @@ extern CArchive& operator<<(CArchive& archive, const CLogEntry& log);
 extern CArchive& operator>>(CArchive& archive, CLogEntry& log);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_LOG;
+extern const char* STR_DISPLAY_LOGENTRY;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

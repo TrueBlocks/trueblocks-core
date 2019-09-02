@@ -182,6 +182,9 @@ extern CArchive& operator>>(CArchive& archive, CParameterArray& array);
 extern CArchive& operator<<(CArchive& archive, const CParameterArray& array);
 
 //---------------------------------------------------------------------------
+extern const char* STR_DISPLAY_PARAMETER;
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks

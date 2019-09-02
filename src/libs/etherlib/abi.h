@@ -54,14 +54,14 @@ public:
     bool articulateTrace(CTrace *t) const;
     bool articulateOutputs(const string_q& encoding, const string_q& value, CFunction& ret) const;
     friend class CAccountWatch;
+    size_t nFunctions(void) const { size_t cnt = 0; for (auto i : interfaces) if (i.type == "function") cnt++; return cnt; }
+    size_t nEvents(void) const { size_t cnt = 0; for (auto i : interfaces) if (i.type == "event") cnt++; return cnt; }
+    size_t nOther(void) const { return interfaces.size() - nFunctions() - nEvents(); }
     // EXISTING_CODE
     bool operator==(const CAbi& item) const;
     bool operator!=(const CAbi& item) const { return !operator==(item); }
     friend bool operator<(const CAbi& v1, const CAbi& v2);
     friend ostream& operator<<(ostream& os, const CAbi& item);
-    size_t nFunctions(void) const { size_t cnt = 0; for (auto i : interfaces) if (i.type == "function") cnt++; return cnt; }
-    size_t nEvents(void) const { size_t cnt = 0; for (auto i : interfaces) if (i.type == "event") cnt++; return cnt; }
-    size_t nOther(void) const { return interfaces.size() - nFunctions() - nEvents(); }
 
 protected:
     void clear(void);
@@ -158,6 +158,9 @@ extern CArchive& operator<<(CArchive& archive, const CAbiArray& array);
 //---------------------------------------------------------------------------
 extern CArchive& operator<<(CArchive& archive, const CAbi& abi);
 extern CArchive& operator>>(CArchive& archive, CAbi& abi);
+
+//---------------------------------------------------------------------------
+extern const char* STR_DISPLAY_ABI;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

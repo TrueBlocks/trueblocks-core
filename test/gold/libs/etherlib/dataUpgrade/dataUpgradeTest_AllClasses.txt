@@ -1149,7 +1149,7 @@ transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
   "miner": "0x0",
   "difficulty": 0,
   "price": 0,
-  "finalized": 0,
+  "finalized": false,
   "timestamp": 0,
   "transactions": []
 }
@@ -1206,7 +1206,7 @@ transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
   "miner": "0x0",
   "difficulty": 0,
   "price": 0,
-  "finalized": 0,
+  "finalized": false,
   "timestamp": 0,
   "transactions": []
 }
@@ -1228,7 +1228,7 @@ isError             	1009	0	65556	T_BOOL TS_NUMERAL
   "gasUsed": 0,
   "logs": [],
   "logsBloom": "0x0",
-  "isError": 0
+  "isError": false
 }
 
 --------------------------------------------------------------------------------
@@ -1267,6 +1267,6 @@ isError             	1009	0	65556	T_BOOL TS_NUMERAL
   "gasUsed": 0,
   "logs": [],
   "logsBloom": "0x0",
-  "isError": 0
+  "isError": false
 }
 

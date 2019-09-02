@@ -645,7 +645,7 @@ const CBaseNode *CTransaction::getObjectAt(const string_q& fieldName, size_t ind
     return NULL;
 }
 
-//--------------------------------------------------------------------------------
+//---------------------------------------------------------------------------
 const char* STR_DISPLAY_TRANSACTION =
 "[{BLOCKNUMBER}]\t"
 "[{TRANSACTIONINDEX}]\t"

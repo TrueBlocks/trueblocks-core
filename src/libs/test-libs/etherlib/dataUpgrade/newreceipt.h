@@ -151,6 +151,9 @@ extern CArchive& operator<<(CArchive& archive, const CNewReceipt& newp);
 extern CArchive& operator>>(CArchive& archive, CNewReceipt& newp);
 
 //---------------------------------------------------------------------------
+extern const char* STR_DISPLAY_NEWRECEIPT;
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 

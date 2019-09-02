@@ -102,7 +102,7 @@ bool COptions::parseArguments(string_q& command) {
     deminimus = str_2_Wei(getGlobalConfig("getState")->getConfigStr("settings", "deminimus", "0"));
 
     UNHIDE_FIELD(CEthState, "address");
-    string_q format = STR_DISPLAY_STATE;
+    string_q format = STR_DISPLAY_ETHSTATE;
     if (!(mode & ST_BALANCE))  { replace(format, "\t[{BALANCE}]",  ""); } else { UNHIDE_FIELD(CEthState, "balance"); UNHIDE_FIELD(CEthState, "ether"); }
     if (!(mode & ST_NONCE))    { replace(format, "\t[{NONCE}]",    ""); } else { UNHIDE_FIELD(CEthState, "nonce");    }
     if (!(mode & ST_CODE))     { replace(format, "\t[{CODE}]",     ""); } else { UNHIDE_FIELD(CEthState, "code");     }
@@ -115,7 +115,7 @@ bool COptions::parseArguments(string_q& command) {
         case NONE1:
         case TXT1:
         case CSV1:
-            format = getGlobalConfig("getState")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_STATE : format);
+            format = getGlobalConfig("getState")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_ETHSTATE : format);
             manageFields("CEthState:" + cleanFmt(format, exportFmt));
             break;
         case API1:

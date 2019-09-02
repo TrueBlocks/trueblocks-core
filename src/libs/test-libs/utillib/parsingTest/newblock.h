@@ -168,6 +168,9 @@ extern CArchive& operator<<(CArchive& archive, const CNewBlock& newp);
 extern CArchive& operator>>(CArchive& archive, CNewBlock& newp);
 
 //---------------------------------------------------------------------------
+extern const char* STR_DISPLAY_NEWBLOCK;
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 

@@ -212,7 +212,7 @@ bool COptions::parseArguments(string_q& command) {
         format = toml.getConfigStr("formats", "trace_fmt", deflt);
         expContext().fmtMap["trace_fmt"] = cleanFmt(format, exportFmt);
 
-        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "log", STR_DISPLAY_LOG);
+        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "log", STR_DISPLAY_LOGENTRY);
         format = toml.getConfigStr("formats", "logentry_fmt", deflt);
         expContext().fmtMap["logentry_fmt"] = cleanFmt(format, exportFmt);
 

@@ -387,8 +387,8 @@ const string_q CLogEntry::getStringAt(const string_q& fieldName, size_t i) const
     return "";
 }
 
-//--------------------------------------------------------------------------------
-const char* STR_DISPLAY_LOG =
+//---------------------------------------------------------------------------
+const char* STR_DISPLAY_LOGENTRY =
 "[{BLOCKNUMBER}]\t"
 "[{TRANSACTIONINDEX}]\t"
 "[{LOGINDEX}]\t"

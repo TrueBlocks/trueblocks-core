@@ -70,7 +70,7 @@ bool COptions::parseArguments(string_q& command) {
         case NONE1:
         case TXT1:
         case CSV1:
-            format = getGlobalConfig("ethQuote")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_ETHQUOTE : format);
+            format = getGlobalConfig("ethQuote")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_PRICEQUOTE : format);
             manageFields("CAccountName:" + cleanFmt(format, exportFmt));
             break;
         case API1:

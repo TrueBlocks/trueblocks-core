@@ -135,6 +135,9 @@ extern CArchive& operator>>(CArchive& archive, QFromTransferFromArray& array);
 extern CArchive& operator<<(CArchive& archive, const QFromTransferFromArray& array);
 
 //---------------------------------------------------------------------------
+extern const char* STR_DISPLAY_FROMTRANSFERFROM;
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 

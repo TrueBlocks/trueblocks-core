@@ -260,8 +260,8 @@ ostream& operator<<(ostream& os, const CPriceQuote& item) {
     return os;
 }
 
-//-----------------------------------------------------------------------
-const char *STR_DISPLAY_ETHQUOTE =
+//---------------------------------------------------------------------------
+const char* STR_DISPLAY_PRICEQUOTE =
 "[{TIMESTAMP}]\t"
 "[{DATE}]\t"
 "[{CLOSE}]";

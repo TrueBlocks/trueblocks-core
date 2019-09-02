@@ -275,6 +275,10 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
 }
 
 //---------------------------------------------------------------------------
+const char* STR_DISPLAY_ABI =
+"";
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
 bool visitABI(const qblocks::string_q& path, void *data) {

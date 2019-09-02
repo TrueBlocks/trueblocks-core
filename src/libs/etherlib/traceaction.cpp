@@ -317,6 +317,10 @@ ostream& operator<<(ostream& os, const CTraceAction& item) {
 }
 
 //---------------------------------------------------------------------------
+const char* STR_DISPLAY_TRACEACTION =
+"";
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks

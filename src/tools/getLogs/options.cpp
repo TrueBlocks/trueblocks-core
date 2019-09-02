@@ -82,7 +82,7 @@ bool COptions::parseArguments(string_q& command) {
         case NONE1:
         case TXT1:
         case CSV1:
-            format = getGlobalConfig("getLogs")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_LOG : format);
+            format = getGlobalConfig("getLogs")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_LOGENTRY : format);
             manageFields("CLogEntry:" + cleanFmt(format, exportFmt));
             break;
         case API1:

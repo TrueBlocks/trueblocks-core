@@ -327,6 +327,8 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
 
     if (!display_str.empty())
         display_str = "\"[{" + substitute(substitute(trim(toUpper(display_str)), " ", ""), ",", "}]\\t\"\n\"[{") + "}]\"";
+    else
+        display_str = "\"\"";
 
     //------------------------------------------------------------------------------------------------
     bool hasObjGetter = !fieldGetObj.empty();
@@ -345,8 +347,8 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
     string_q subClsCodeStr  = fieldSubCls;
 
     //------------------------------------------------------------------------------------------------
-    string_q sortStr = toml.getConfigStr("settings", "sort", "");
-    string_q eqStr   = toml.getConfigStr("settings", "equals", "");
+    string_q sortStr = substitute(toml.getConfigStr("settings", "sort", ""), "&&", "&&\n\t\t\t");
+    string_q eqStr   = substitute(toml.getConfigStr("settings", "equals", ""), "&&", "&&\n\t\t\t");
 
     //------------------------------------------------------------------------------------------------
     string_q headerFile = substitute(substitute(dataFile, ".txt", ".h"), "./classDefinitions/", "./");
@@ -823,7 +825,7 @@ const char* STR_SORT_COMMENT_2 =
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_EQUAL_COMMENT_1 =
-"Default equality operator as defined in class definition";
+"Equality operator as defined in class definition";
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_EQUAL_COMMENT_2 =

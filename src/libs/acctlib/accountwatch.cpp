@@ -329,6 +329,10 @@ const CBaseNode *CAccountWatch::getObjectAt(const string_q& fieldName, size_t in
 }
 
 //---------------------------------------------------------------------------
+const char* STR_DISPLAY_ACCOUNTWATCH =
+"";
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
 biguint_t getNodeBal(CEthStateArray& record, const address_t& addr, blknum_t blockNum) {

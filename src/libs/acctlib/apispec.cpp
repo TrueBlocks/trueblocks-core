@@ -251,6 +251,10 @@ ostream& operator<<(ostream& os, const CApiSpec& item) {
 }
 
 //---------------------------------------------------------------------------
+const char* STR_DISPLAY_APISPEC =
+"";
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 bool CApiSpec::sendData(const string_q& data) {
 

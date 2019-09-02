@@ -229,6 +229,10 @@ ostream& operator<<(ostream& os, const QFromTransferFrom& item) {
 }
 
 //---------------------------------------------------------------------------
+const char* STR_DISPLAY_FROMTRANSFERFROM =
+"";
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 

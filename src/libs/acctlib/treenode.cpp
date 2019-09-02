@@ -231,6 +231,10 @@ ostream& operator<<(ostream& os, const CTreeNode& item) {
 }
 
 //---------------------------------------------------------------------------
+const char* STR_DISPLAY_TREENODE =
+"";
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 CTreeNode* CTreeNode::newBranch(
     const string_q& _k1,

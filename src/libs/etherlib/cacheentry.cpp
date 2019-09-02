@@ -251,6 +251,10 @@ ostream& operator<<(ostream& os, const CCacheEntry& item) {
 }
 
 //---------------------------------------------------------------------------
+const char* STR_DISPLAY_CACHEENTRY =
+"";
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks

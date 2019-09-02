@@ -263,6 +263,10 @@ ostream& operator<<(ostream& os, const CBranch& item) {
 }
 
 //---------------------------------------------------------------------------
+const char* STR_DISPLAY_BRANCH =
+"";
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
     //-----------------------------------------------------------------------------
     CBranch::CBranch(const string_q& _value) : branchValue(_value) {

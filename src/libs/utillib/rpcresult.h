@@ -141,6 +141,9 @@ extern CArchive& operator>>(CArchive& archive, CRPCResultArray& array);
 extern CArchive& operator<<(CArchive& archive, const CRPCResultArray& array);
 
 //---------------------------------------------------------------------------
+extern const char* STR_DISPLAY_RPCRESULT;
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks

@@ -143,16 +143,17 @@ inline CTraceAction& CTraceAction::operator=(const CTraceAction& tr) {
 inline bool CTraceAction::operator==(const CTraceAction& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
+    // Equality operator as defined in class definition
     return ((address == item.address) &&
-            (balance == item.balance) &&
-            (callType == item.callType) &&
-            (from == item.from) &&
-            (gas == item.gas) &&
-            (init == item.init) &&
-            (input == item.input) &&
-            (refundAddress == item.refundAddress) &&
-            (to == item.to) &&
-            (value == item.value));
+             (balance == item.balance) &&
+             (callType == item.callType) &&
+             (from == item.from) &&
+             (gas == item.gas) &&
+             (init == item.init) &&
+             (input == item.input) &&
+             (refundAddress == item.refundAddress) &&
+             (to == item.to) &&
+             (value == item.value));
 }
 
 //-------------------------------------------------------------------------
@@ -171,6 +172,9 @@ extern CArchive& operator<<(CArchive& archive, const CTraceActionArray& array);
 //---------------------------------------------------------------------------
 extern CArchive& operator<<(CArchive& archive, const CTraceAction& tra);
 extern CArchive& operator>>(CArchive& archive, CTraceAction& tra);
+
+//---------------------------------------------------------------------------
+extern const char* STR_DISPLAY_TRACEACTION;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

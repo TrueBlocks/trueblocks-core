@@ -139,8 +139,8 @@ typedef vector<CPriceQuote> CPriceQuoteArray;
 extern CArchive& operator>>(CArchive& archive, CPriceQuoteArray& array);
 extern CArchive& operator<<(CArchive& archive, const CPriceQuoteArray& array);
 
-//-----------------------------------------------------------------------
-extern const char* STR_DISPLAY_ETHQUOTE;
+//---------------------------------------------------------------------------
+extern const char* STR_DISPLAY_PRICEQUOTE;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

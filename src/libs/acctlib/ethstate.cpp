@@ -295,8 +295,8 @@ ostream& operator<<(ostream& os, const CEthState& item) {
     return os;
 }
 
-//--------------------------------------------------------------------------------
-const char* STR_DISPLAY_STATE =
+//---------------------------------------------------------------------------
+const char* STR_DISPLAY_ETHSTATE =
 "[{BLOCKNUMBER}]\t"
 "[{ADDRESS}]\t"
 "[{BALANCE}]\t"

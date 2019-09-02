@@ -333,7 +333,7 @@ string_q CNewBlock::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "difficulty" ) return uint_2_Str(difficulty);
             break;
         case 'f':
-            if ( fieldName % "finalized" ) return int_2_Str(finalized);
+            if ( fieldName % "finalized" ) return bool_2_Str(finalized);
             break;
         case 'g':
             if ( fieldName % "gasLimit" ) return gas_2_Str(gasLimit);
@@ -389,6 +389,10 @@ const CBaseNode *CNewBlock::getObjectAt(const string_q& fieldName, size_t index)
         return &transactions[index];
     return NULL;
 }
+
+//---------------------------------------------------------------------------
+const char* STR_DISPLAY_NEWBLOCK =
+"";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

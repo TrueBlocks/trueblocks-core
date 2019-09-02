@@ -154,6 +154,9 @@ extern CArchive& operator>>(CArchive& archive, CBranchArray& array);
 extern CArchive& operator<<(CArchive& archive, const CBranchArray& array);
 
 //---------------------------------------------------------------------------
+extern const char* STR_DISPLAY_BRANCH;
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 extern string_q nextTreenodeChunk(const string_q& fieldIn, const void *data);
 // EXISTING_CODE

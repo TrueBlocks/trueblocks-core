@@ -148,6 +148,9 @@ extern CArchive& operator>>(CArchive& archive, CInfixArray& array);
 extern CArchive& operator<<(CArchive& archive, const CInfixArray& array);
 
 //---------------------------------------------------------------------------
+extern const char* STR_DISPLAY_INFIX;
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 extern string_q nextTreenodeChunk(const string_q& fieldIn, const void *data);
 // EXISTING_CODE

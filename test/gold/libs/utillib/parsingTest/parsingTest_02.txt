@@ -10,7 +10,7 @@ parsingTest 2
   "miner": "0x0193d941b50d91be6567c7ee1c0fe7af498b4137",
   "difficulty": 17179844608,
   "price": 0,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1438270144,
   "transactions": []
 }

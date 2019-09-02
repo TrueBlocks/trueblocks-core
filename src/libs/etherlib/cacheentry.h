@@ -145,6 +145,9 @@ extern CArchive& operator>>(CArchive& archive, CCacheEntryArray& array);
 extern CArchive& operator<<(CArchive& archive, const CCacheEntryArray& array);
 
 //---------------------------------------------------------------------------
+extern const char* STR_DISPLAY_CACHEENTRY;
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 typedef map<uint64_t, CCacheEntry> CCacheEntryMap;
 // EXISTING_CODE

@@ -143,6 +143,9 @@ extern CArchive& operator>>(CArchive& archive, CTreeNodeArray& array);
 extern CArchive& operator<<(CArchive& archive, const CTreeNodeArray& array);
 
 //---------------------------------------------------------------------------
+extern const char* STR_DISPLAY_TREENODE;
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
 inline unsigned commonPrefix(const string_q& _t, const string_q& _u) {

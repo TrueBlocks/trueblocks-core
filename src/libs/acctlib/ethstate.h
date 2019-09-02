@@ -161,8 +161,8 @@ typedef vector<CEthState> CEthStateArray;
 extern CArchive& operator>>(CArchive& archive, CEthStateArray& array);
 extern CArchive& operator<<(CArchive& archive, const CEthStateArray& array);
 
-//--------------------------------------------------------------------------------
-extern const char* STR_DISPLAY_STATE;
+//---------------------------------------------------------------------------
+extern const char* STR_DISPLAY_ETHSTATE;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

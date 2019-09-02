@@ -247,6 +247,10 @@ ostream& operator<<(ostream& os, const CTreeRoot& item) {
 }
 
 //---------------------------------------------------------------------------
+const char* STR_DISPLAY_TREEROOT =
+"";
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
     string_q idex(char n) {
         switch (n) {

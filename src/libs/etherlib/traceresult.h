@@ -125,10 +125,11 @@ inline CTraceResult& CTraceResult::operator=(const CTraceResult& tr) {
 inline bool CTraceResult::operator==(const CTraceResult& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
+    // Equality operator as defined in class definition
     return ((address == item.address) &&
-            (code == item.code) &&
-            (gasUsed == item.gasUsed) &&
-            (output == item.output));
+             (code == item.code) &&
+             (gasUsed == item.gasUsed) &&
+             (output == item.output));
 }
 
 //-------------------------------------------------------------------------
@@ -147,6 +148,9 @@ extern CArchive& operator<<(CArchive& archive, const CTraceResultArray& array);
 //---------------------------------------------------------------------------
 extern CArchive& operator<<(CArchive& archive, const CTraceResult& tra);
 extern CArchive& operator>>(CArchive& archive, CTraceResult& tra);
+
+//---------------------------------------------------------------------------
+extern const char* STR_DISPLAY_TRACERESULT;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

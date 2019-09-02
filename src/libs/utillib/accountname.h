@@ -184,7 +184,7 @@ typedef vector<CAccountName> CAccountNameArray;
 extern CArchive& operator>>(CArchive& archive, CAccountNameArray& array);
 extern CArchive& operator<<(CArchive& archive, const CAccountNameArray& array);
 
-//-----------------------------------------------------------------------
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_ACCOUNTNAME;
 
 //---------------------------------------------------------------------------

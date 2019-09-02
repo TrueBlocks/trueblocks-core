@@ -260,6 +260,10 @@ const string_q CLeaf::getStringAt(const string_q& fieldName, size_t i) const {
 }
 
 //---------------------------------------------------------------------------
+const char* STR_DISPLAY_LEAF =
+"";
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
     //-----------------------------------------------------------------------------
     CLeaf::CLeaf(const string_q& _key, const string_q& _value) {
