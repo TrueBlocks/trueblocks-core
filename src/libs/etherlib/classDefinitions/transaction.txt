@@ -8,8 +8,7 @@ includes     = abilib.h|receipt.h|trace.h
 cIncs        = etherlib.h
 scope        = extern
 serialize    = true
-display_str  = date, timestamp, blockNumber, transactionIndex, hash, compressedTx
-display_str2 = hash, timestamp, from, to, ether, blockNumber, transactionIndex, etherGasPrice, gasUsed, isError, encoding
+display_str  = blockNumber, transactionIndex, date, timestamp, from, to, ether, etherGasPrice, gasUsed, hash, isError, encoding, compressedTx
 
 ;
 ; full tranaction

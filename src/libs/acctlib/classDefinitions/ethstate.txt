@@ -4,4 +4,4 @@ fields      = blknum blockNumber|uint256 balance|uint64 nonce (nowrite)|string c
 includes    = etherlib.h
 sort        = v1.blockNumber < v2.blockNumber
 equals      = blockNumber == item.blockNumber
-display_str = address, blockNumber, balance, nonce, code, storage, deployed, acctType
+display_str = blockNumber, address, balance, nonce, code, storage, deployed, acctType

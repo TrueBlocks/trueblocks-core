@@ -645,27 +645,20 @@ const CBaseNode *CTransaction::getObjectAt(const string_q& fieldName, size_t ind
     return NULL;
 }
 
-//-----------------------------------------------------------------------
-const char* STR_DISPLAY_TRANSACTION2 =
-"[{HASH}]\t"
+//--------------------------------------------------------------------------------
+const char* STR_DISPLAY_TRANSACTION =
+"[{BLOCKNUMBER}]\t"
+"[{TRANSACTIONINDEX}]\t"
+"[{DATE}]\t"
 "[{TIMESTAMP}]\t"
 "[{FROM}]\t"
 "[{TO}]\t"
 "[{ETHER}]\t"
-"[{BLOCKNUMBER}]\t"
-"[{TRANSACTIONINDEX}]\t"
 "[{ETHERGASPRICE}]\t"
 "[{GASUSED}]\t"
-"[{ISERROR}]\t"
-"[{ENCODING}]";
-
-//--------------------------------------------------------------------------------
-const char* STR_DISPLAY_TRANSACTION =
-"[{DATE}]\t"
-"[{TIMESTAMP}]\t"
-"[{BLOCKNUMBER}]\t"
-"[{TRANSACTIONINDEX}]\t"
 "[{HASH}]\t"
+"[{ISERROR}]\t"
+"[{ENCODING}]\t"
 "[{COMPRESSEDTX}]";
 
 //---------------------------------------------------------------------------

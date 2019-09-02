@@ -297,8 +297,14 @@ ostream& operator<<(ostream& os, const CEthState& item) {
 
 //--------------------------------------------------------------------------------
 const char* STR_DISPLAY_STATE =
+"[{BLOCKNUMBER}]\t"
 "[{ADDRESS}]\t"
-"[{BLOCKNUMBER}]";
+"[{BALANCE}]\t"
+"[{NONCE}]\t"
+"[{CODE}]\t"
+"[{STORAGE}]\t"
+"[{DEPLOYED}]\t"
+"[{ACCTTYPE}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

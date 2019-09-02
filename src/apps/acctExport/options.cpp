@@ -199,7 +199,7 @@ bool COptions::parseArguments(string_q& command) {
     if (exportFmt != JSON1) {
         string_q deflt, format;
 
-        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "format", STR_DISPLAY_TRANSACTION2);
+        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "format", STR_DISPLAY_TRANSACTION);
         format = toml.getConfigStr("formats", "trans_fmt", deflt);
         expContext().fmtMap["transaction_fmt"] = cleanFmt(format, exportFmt);
 

@@ -7,7 +7,7 @@ getTrace 2222221.* --api_mode
     "subtraces": 0,
     "traceAddress": null,
     "transactionHash": "0x01a5ac40a13d6d041247c2796281f73b19c208190565561104528637f61683ac",
-    "transactionPosition": 0,
+    "transactionIndex": 0,
     "type": "call",
     "error": "",
     "action": {
@@ -34,7 +34,7 @@ getTrace 2222221.* --api_mode
     "subtraces": 0,
     "traceAddress": null,
     "transactionHash": "0x83d1181ca3c7485086e93b235007c79ec63235851bab71add83e4072d64af388",
-    "transactionPosition": 1,
+    "transactionIndex": 1,
     "type": "call",
     "error": "",
     "action": {
@@ -61,7 +61,7 @@ getTrace 2222221.* --api_mode
     "subtraces": 0,
     "traceAddress": null,
     "transactionHash": "0x71a7109b2b2f2c5003015fe8e4657a1e35499f874c2256638b3c5e7c724262f8",
-    "transactionPosition": 2,
+    "transactionIndex": 2,
     "type": "call",
     "error": "",
     "action": {
@@ -88,7 +88,7 @@ getTrace 2222221.* --api_mode
     "subtraces": 0,
     "traceAddress": null,
     "transactionHash": "0x81738873b007f48e5a5e36a6fa8019c60a570eef4f36ba6c64ca55964c6711c9",
-    "transactionPosition": 3,
+    "transactionIndex": 3,
     "type": "call",
     "error": "",
     "action": {

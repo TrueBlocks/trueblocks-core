@@ -42,12 +42,12 @@ bool COptions::exportBalances(void) {
                 if (inRange((blknum_t)item->blk, scanRange.first, scanRange.second)) {
                     CBalanceRecord rec;
                     rec.address = monitor.address;
-                    rec.blockNum = item->blk;
-                    rec.tx_id = item->txid;
+                    rec.blockNumber = item->blk;
+                    rec.transactionIndex = item->txid;
                     rec.priorBalance = (item->blk == 0 ? 0 : getBalanceAt(rec.address, item->blk-1));
                     rec.balance = getBalanceAt(rec.address, item->blk);
                     balances.push_back(rec);
-                    cerr << "   balance for " << rec.address << " at block " << rec.blockNum << ": " << rec.balance << " (" << i << " of " << items.size() << "\r";
+                    cerr << "   balance for " << rec.address << " at block " << rec.blockNumber << ": " << rec.balance << " (" << i << " of " << items.size() << "\r";
                     cerr.flush();
                 }
             }

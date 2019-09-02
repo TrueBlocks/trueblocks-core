@@ -134,6 +134,35 @@ cacheStatus --config-get
       ]
     },
     {
+      "name": "getAccounts.toml",
+      "groups": [
+        {
+          "name": "custom",
+          "keys": [
+            {
+              "name": "list",
+              "type": "json array",
+              "tip": "user specific list of names for addresses -- private data -- not shared",
+              "required": false,
+              "read_only": false,
+              "named": [
+                {
+                  "group": "81-Custom",
+                  "name": "TestWallet1",
+                  "address": "0x0000100001000010000100001000010000100001"
+                },
+                {
+                  "group": "81-Custom",
+                  "name": "TestWallet2",
+                  "address": "0x0000200002000020000200002000020000200002"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
       "name": "ethslurp.toml",
       "groups": [
         {
@@ -144,24 +173,6 @@ cacheStatus --config-get
               "value": "--api_key--",
               "type": "string",
               "tip": "api key required to use EtherScan apis -- private data -- not shared",
-              "required": false,
-              "read_only": false
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "getAccounts.toml",
-      "groups": [
-        {
-          "name": "custom",
-          "keys": [
-            {
-              "name": "list",
-              "value": "[{ \"address\": \"0x3b1613b1613b1613b1613b1613b1613b1613b161\", \"name\": \"TestWallet1\" },{ \"address\": \"0xb1661b1661b1661b1661b1661b1661b1661b1661\", \"name\": \"TestWallet2\" }]",
-              "type": "json array",
-              "tip": "user specific list of names for addresses -- private data -- not shared",
               "required": false,
               "read_only": false
             }

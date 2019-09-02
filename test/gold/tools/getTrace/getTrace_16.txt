@@ -7,7 +7,7 @@ getTrace --fmt json 0xa0205abafa7565ef328755bbf85c2588ec69c71da64703f05925b06083
     "subtraces": 0,
     "traceAddress": null,
     "transactionHash": "0xa0205abafa7565ef328755bbf85c2588ec69c71da64703f05925b060838be15e",
-    "transactionPosition": 13,
+    "transactionIndex": 13,
     "type": "call",
     "error": "",
     "action": {

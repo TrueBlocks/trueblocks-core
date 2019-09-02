@@ -56,7 +56,7 @@ run_special_test("ethQuote_when_invalid"    "-w")
 run_special_test("ethQuote_period_00"       "-p" " 60")
 run_special_test("ethQuote_period_02"       "--period" " 12")
 run_special_test("ethQuote_when_00"         "-w" " 14")
-run_special_test("ethQuote_verbose_01"      "-v:1")
+run_special_test("ethQuote_verbose_01"      "-v:1" " --fmt" " api")
 run_special_test("ethQuote_from_file"       "--file:cmd_file")
 #run_special_test("ethQuote_bitcoin_eth"     "--pair:BTC_ETH")  # customized
 #run_special_test("ethQuote_usd_bitcoin"     "--pair:USDT_BTC")

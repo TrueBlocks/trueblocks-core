@@ -2,6 +2,6 @@
 class     = CNameCache
 baseClass = CCache
 fields    = CAddressArray addrs|CNameCacheItemArray items
-includes  = cache.h|namecacheitem.h
+includes  = cache.h|monitorcacheitem.h
 cIncs     = 
 serialize = true

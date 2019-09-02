@@ -7,7 +7,7 @@ getTrace --fmt json 0x409141e962166ceb967fa8cf8cded2394af088d6d270f1a0642c9bbfaf
     "subtraces": 0,
     "traceAddress": null,
     "transactionHash": "0x409141e962166ceb967fa8cf8cded2394af088d6d270f1a0642c9bbfaf416348",
-    "transactionPosition": 1,
+    "transactionIndex": 1,
     "type": "create",
     "error": "",
     "action": {
@@ -34,7 +34,7 @@ getTrace --fmt json 0x409141e962166ceb967fa8cf8cded2394af088d6d270f1a0642c9bbfaf
     "subtraces": 0,
     "traceAddress": "null-s",
     "transactionHash": "0x33cdb19761",
-    "transactionPosition": 1,
+    "transactionIndex": 1,
     "type": "create",
     "error": "",
     "action": {

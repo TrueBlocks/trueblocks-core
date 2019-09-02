@@ -68,14 +68,14 @@ bool CBalanceRecord::setValueByName(const string_q& fieldNameIn, const string_q&
             if ( fieldName % "address" ) { address = str_2_Addr(fieldValue); return true; }
             break;
         case 'b':
-            if ( fieldName % "blockNum" ) { blockNum = str_2_Uint(fieldValue); return true; }
+            if ( fieldName % "blockNumber" ) { blockNumber = str_2_Uint(fieldValue); return true; }
             if ( fieldName % "balance" ) { balance = str_2_Wei(fieldValue); return true; }
             break;
         case 'p':
             if ( fieldName % "priorBalance" ) { priorBalance = str_2_Wei(fieldValue); return true; }
             break;
         case 't':
-            if ( fieldName % "tx_id" ) { tx_id = str_2_Uint(fieldValue); return true; }
+            if ( fieldName % "transactionIndex" ) { transactionIndex = str_2_Uint(fieldValue); return true; }
             break;
         default:
             break;
@@ -104,8 +104,8 @@ bool CBalanceRecord::Serialize(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
 //    archive >> address;
-    archive >> blockNum;
-    archive >> tx_id;
+    archive >> blockNumber;
+    archive >> transactionIndex;
     archive >> priorBalance;
     archive >> balance;
     finishParse();
@@ -121,8 +121,8 @@ bool CBalanceRecord::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     // EXISTING_CODE
 //    archive << address;
-    archive << blockNum;
-    archive << tx_id;
+    archive << blockNumber;
+    archive << transactionIndex;
     archive << priorBalance;
     archive << balance;
 
@@ -162,8 +162,8 @@ void CBalanceRecord::registerClass(void) {
     ADD_FIELD(CBalanceRecord, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CBalanceRecord, "address", T_ADDRESS, ++fieldNum);
     HIDE_FIELD(CBalanceRecord, "address");
-    ADD_FIELD(CBalanceRecord, "blockNum", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CBalanceRecord, "tx_id", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CBalanceRecord, "blockNumber", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CBalanceRecord, "transactionIndex", T_NUMBER, ++fieldNum);
     ADD_FIELD(CBalanceRecord, "priorBalance", T_WEI, ++fieldNum);
     ADD_FIELD(CBalanceRecord, "balance", T_WEI, ++fieldNum);
 
@@ -207,9 +207,9 @@ string_q nextBalancerecordChunk_custom(const string_q& fieldIn, const void *data
                 break;
             case 'd':
                 if ( fieldIn % "dollars" )
-                    return getDispBal(bal->blockNum, bal->balance);
+                    return getDispBal(bal->blockNumber, bal->balance);
                 if ( fieldIn % "dollarsPrior" )
-                    return getDispBal(bal->blockNum, bal->priorBalance);
+                    return getDispBal(bal->blockNumber, bal->priorBalance);
                 break;
             // EXISTING_CODE
             case 'p':
@@ -263,14 +263,14 @@ string_q CBalanceRecord::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "address" ) return addr_2_Str(address);
             break;
         case 'b':
-            if ( fieldName % "blockNum" ) return uint_2_Str(blockNum);
+            if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
             if ( fieldName % "balance" ) return wei_2_Str(balance);
             break;
         case 'p':
             if ( fieldName % "priorBalance" ) return wei_2_Str(priorBalance);
             break;
         case 't':
-            if ( fieldName % "tx_id" ) return uint_2_Str(tx_id);
+            if ( fieldName % "transactionIndex" ) return uint_2_Str(transactionIndex);
             break;
     }
 
@@ -293,9 +293,9 @@ ostream& operator<<(ostream& os, const CBalanceRecord& item) {
 
 //--------------------------------------------------------------------------------
 const char* STR_DISPLAY_BALANCERECORD =
+"[{BLOCKNUMBER}]\t"
+"[{TRANSACTIONINDEX}]\t"
 "[{ADDRESS}]\t"
-"[{BLOCKNUM}]\t"
-"[{TX_ID}]\t"
 "[{PRIORBALANCE}]\t"
 "[{BALANCE}]";
 
@@ -303,8 +303,8 @@ const char* STR_DISPLAY_BALANCERECORD =
 // EXISTING_CODE
 CBalanceRecord::CBalanceRecord(string_q& line) {
     address = nextTokenClear(line, '\t');
-    blockNum = str_2_Uint(nextTokenClear(line, '\t'));
-    tx_id = str_2_Uint(nextTokenClear(line, '\t'));
+    blockNumber = str_2_Uint(nextTokenClear(line, '\t'));
+    transactionIndex = str_2_Uint(nextTokenClear(line, '\t'));
     string_q ether = nextTokenClear(line, '\t');
     priorBalance = str_2_Wei(ether);
     ether = nextTokenClear(line, '\t');

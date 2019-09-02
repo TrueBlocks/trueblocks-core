@@ -101,17 +101,16 @@ bool COptions::parseArguments(string_q& command) {
 
     deminimus = str_2_Wei(getGlobalConfig("getState")->getConfigStr("settings", "deminimus", "0"));
 
-    string_q add;
-    if (mode & ST_BALANCE)  { add += "\t[{BALANCE}]";  UNHIDE_FIELD(CEthState, "balance"); UNHIDE_FIELD(CEthState, "ether");}
-    if (mode & ST_NONCE)    { add += "\t[{NONCE}]";    UNHIDE_FIELD(CEthState, "nonce");   }
-    if (mode & ST_CODE)     { add += "\t[{CODE}]";     UNHIDE_FIELD(CEthState, "code");    }
-    if (mode & ST_STORAGE)  { add += "\t[{STORGAGE}]"; UNHIDE_FIELD(CEthState, "storage"); }
-    if (mode & ST_DEPLOYED) { add += "\t[{DEPLOYED}]"; UNHIDE_FIELD(CEthState, "deployed"); }
-    if (mode & ST_ACCTTYPE) { add += "\t[{ACCTTYPE}]"; UNHIDE_FIELD(CEthState, "accttype"); }
     UNHIDE_FIELD(CEthState, "address");
+    string_q format = STR_DISPLAY_STATE;
+    if (!(mode & ST_BALANCE))  { replace(format, "\t[{BALANCE}]",  ""); } else { UNHIDE_FIELD(CEthState, "balance"); UNHIDE_FIELD(CEthState, "ether"); }
+    if (!(mode & ST_NONCE))    { replace(format, "\t[{NONCE}]",    ""); } else { UNHIDE_FIELD(CEthState, "nonce");    }
+    if (!(mode & ST_CODE))     { replace(format, "\t[{CODE}]",     ""); } else { UNHIDE_FIELD(CEthState, "code");     }
+    if (!(mode & ST_STORAGE))  { replace(format, "\t[{STORAGE}]",  ""); } else { UNHIDE_FIELD(CEthState, "storage");  }
+    if (!(mode & ST_DEPLOYED)) { replace(format, "\t[{DEPLOYED}]", ""); } else { UNHIDE_FIELD(CEthState, "deployed"); }
+    if (!(mode & ST_ACCTTYPE)) { replace(format, "\t[{ACCTTYPE}]", ""); } else { UNHIDE_FIELD(CEthState, "accttype"); }
 
     // Display formatting
-    string_q format = (STR_DISPLAY_STATE + add);
     switch (exportFmt) {
         case NONE1:
         case TXT1:

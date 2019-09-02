@@ -728,7 +728,7 @@ blockNumber         	1006	0	65561	T_NUMBER TS_NUMERAL
 subtraces           	1007	0	65561	T_NUMBER TS_NUMERAL
 traceAddress        	1008	0	131122	T_TEXT TS_STRING
 transactionHash     	1009	0	131132	T_HASH TS_STRING
-transactionPosition 	1010	0	65561	T_NUMBER TS_NUMERAL
+transactionIndex    	1010	0	65561	T_NUMBER TS_NUMERAL
 type                	1011	0	131122	T_TEXT TS_STRING
 error               	1012	0	131122	T_TEXT TS_STRING
 articulatedTrace    	1013	1	1048651	T_OBJECT TS_OBJECT
@@ -742,7 +742,7 @@ date                	1017	1	262149	T_DATE TS_DATE
   "subtraces": 0,
   "traceAddress": null,
   "transactionHash": "0x0",
-  "transactionPosition": 0
+  "transactionIndex": 0
 }
 
 --------------------------------------------------------------------------------
@@ -757,7 +757,7 @@ blockNumber         	1006	1	65561	T_NUMBER TS_NUMERAL
 subtraces           	1007	1	65561	T_NUMBER TS_NUMERAL
 traceAddress        	1008	1	131122	T_TEXT TS_STRING
 transactionHash     	1009	1	131132	T_HASH TS_STRING
-transactionPosition 	1010	1	65561	T_NUMBER TS_NUMERAL
+transactionIndex    	1010	1	65561	T_NUMBER TS_NUMERAL
 type                	1011	1	131122	T_TEXT TS_STRING
 error               	1012	1	131122	T_TEXT TS_STRING
 articulatedTrace    	1013	1	1048651	T_OBJECT TS_OBJECT
@@ -780,7 +780,7 @@ blockNumber         	1006	0	65561	T_NUMBER TS_NUMERAL
 subtraces           	1007	0	65561	T_NUMBER TS_NUMERAL
 traceAddress        	1008	0	131122	T_TEXT TS_STRING
 transactionHash     	1009	0	131132	T_HASH TS_STRING
-transactionPosition 	1010	0	65561	T_NUMBER TS_NUMERAL
+transactionIndex    	1010	0	65561	T_NUMBER TS_NUMERAL
 type                	1011	0	131122	T_TEXT TS_STRING
 error               	1012	0	131122	T_TEXT TS_STRING
 articulatedTrace    	1013	0	1048651	T_OBJECT TS_OBJECT
@@ -798,7 +798,7 @@ date                	1017	0	262149	T_DATE TS_DATE
   "subtraces": 0,
   "traceAddress": null,
   "transactionHash": "0x0",
-  "transactionPosition": 0
+  "transactionIndex": 0
 }
 
 --------------------------------------------------------------------------------

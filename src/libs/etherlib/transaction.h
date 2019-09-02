@@ -209,7 +209,6 @@ extern CArchive& operator<<(CArchive& archive, const CTransaction& tra);
 extern CArchive& operator>>(CArchive& archive, CTransaction& tra);
 
 //-----------------------------------------------------------------------
-extern const char* STR_DISPLAY_TRANSACTION2;
 extern const char* STR_DISPLAY_TRANSACTION;
 
 //---------------------------------------------------------------------------

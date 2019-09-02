@@ -347,12 +347,6 @@ ostream& operator<<(ostream& os, const CAccountName& item) {
 
 //-----------------------------------------------------------------------
 const char* STR_DISPLAY_ACCOUNTNAME =
-"[{ADDRESS}]\t"
-"[{NAME}]\t"
-"[{SYMBOL}]";
-
-//-----------------------------------------------------------------------
-const char* STR_DISPLAY_ACCOUNTNAME2 =
 "[{GROUP}]\t"
 "[{ADDRESS}]\t"
 "[{NAME}]\t"

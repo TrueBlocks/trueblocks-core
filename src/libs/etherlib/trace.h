@@ -42,7 +42,7 @@ public:
     uint64_t subtraces;
     CStringArray traceAddress;
     hash_t transactionHash;
-    uint64_t transactionPosition;
+    uint64_t transactionIndex;
     string_q type;
     string_q error;
     CFunction articulatedTrace;
@@ -122,7 +122,7 @@ inline void CTrace::initialize(void) {
     subtraces = 0;
     traceAddress.clear();
     transactionHash = "";
-    transactionPosition = 0;
+    transactionIndex = 0;
     type = "";
     error = "";
     articulatedTrace = CFunction();
@@ -145,7 +145,7 @@ inline void CTrace::duplicate(const CTrace& tr) {
     subtraces = tr.subtraces;
     traceAddress = tr.traceAddress;
     transactionHash = tr.transactionHash;
-    transactionPosition = tr.transactionPosition;
+    transactionIndex = tr.transactionIndex;
     type = tr.type;
     error = tr.error;
     articulatedTrace = tr.articulatedTrace;

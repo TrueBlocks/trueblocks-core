@@ -1,6 +1,6 @@
 [settings]
 class       = CBalanceRecord
-fields      = address address (nowrite)|blknum blockNum|blknum tx_id|wei priorBalance|wei balance
+fields      = blknum blockNumber|blknum transactionIndex|address address (nowrite)|wei priorBalance|wei balance
 includes    = etherlib.h
 serialize   = true
-display_str = address, blockNum, tx_id, priorBalance, balance
+display_str = blockNumber, transactionIndex, address, priorBalance, balance

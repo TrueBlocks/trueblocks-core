@@ -66,6 +66,15 @@ bool CConfigItem::setValueByName(const string_q& fieldNameIn, const string_q& fi
     switch (tolower(fieldName[0])) {
         case 'n':
             if ( fieldName % "name" ) { name = fieldValue; return true; }
+            if ( fieldName % "named" ) {
+                CAccountName item;
+                string_q str = fieldValue;
+                while (item.parseJson3(str)) {
+                    named.push_back(item);
+                    item = CAccountName();  // reset
+                }
+                return true;
+            }
             break;
         case 'r':
             if ( fieldName % "required" ) { required = str_2_Bool(fieldValue); return true; }
@@ -110,6 +119,7 @@ bool CConfigItem::Serialize(CArchive& archive) {
     archive >> tip;
     archive >> required;
     archive >> read_only;
+//    archive >> named;
     finishParse();
     return true;
 }
@@ -128,6 +138,7 @@ bool CConfigItem::SerializeC(CArchive& archive) const {
     archive << tip;
     archive << required;
     archive << read_only;
+//    archive << named;
 
     return true;
 }
@@ -169,6 +180,8 @@ void CConfigItem::registerClass(void) {
     ADD_FIELD(CConfigItem, "tip", T_TEXT, ++fieldNum);
     ADD_FIELD(CConfigItem, "required", T_BOOL, ++fieldNum);
     ADD_FIELD(CConfigItem, "read_only", T_BOOL, ++fieldNum);
+    ADD_FIELD(CConfigItem, "named", T_OBJECT|TS_ARRAY, ++fieldNum);
+    HIDE_FIELD(CConfigItem, "named");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CConfigItem, "schema");
@@ -188,6 +201,20 @@ string_q nextConfigitemChunk_custom(const string_q& fieldIn, const void *dataPtr
     if (con) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'v':
+                if ( fieldIn % "value" && con->named.size() > 0) {
+                    bool first = true;
+                    manageFields("CAccountName:firstAppearance,latestAppearance,nRecords,sizeInBytes", false);
+                    ostringstream os;
+                    for (auto name : con->named) {
+                        if (!first)
+                            os << ", ";
+                        os << name << endl;
+                        first = false;
+                    }
+                    return substitute(substitute("["+os.str()+"]", "\n", "\\n"), "\"", "\\\"");
+                }
+                break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
@@ -238,6 +265,18 @@ string_q CConfigItem::getValueByName(const string_q& fieldName) const {
     switch (tolower(fieldName[0])) {
         case 'n':
             if ( fieldName % "name" ) return name;
+            if ( fieldName % "named" || fieldName % "namedCnt" ) {
+                size_t cnt = named.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt) return "";
+                string_q retS;
+                for (size_t i = 0 ; i < cnt ; i++) {
+                    retS += named[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
             break;
         case 'r':
             if ( fieldName % "required" ) return bool_2_Str(required);
@@ -267,6 +306,13 @@ ostream& operator<<(ostream& os, const CConfigItem& item) {
     item.Format(os, "", nullptr);
     os << "\n";
     return os;
+}
+
+//---------------------------------------------------------------------------
+const CBaseNode *CConfigItem::getObjectAt(const string_q& fieldName, size_t index) const {
+    if ( fieldName % "named" && index < named.size() )
+        return &named[index];
+    return NULL;
 }
 
 //---------------------------------------------------------------------------

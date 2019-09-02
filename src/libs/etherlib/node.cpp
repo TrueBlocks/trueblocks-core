@@ -1293,7 +1293,7 @@ extern void loadParseMap(void);
     const string_q defHide =
     "CTransaction: price, nonce, input"
     "|" "CLogEntry: data, topics"
-    "|" "CTrace: blockHash, blockNumber, transactionHash, transactionPosition, traceAddress, subtraces"
+    "|" "CTrace: blockHash, blockNumber, transactionHash, transactionIndex, traceAddress, subtraces"
     "|" "CTraceAction: init"
     "|" "CTraceResult: code"
     "|" "CFunction: constant, payable, signature, encoding, type, articulate_str"

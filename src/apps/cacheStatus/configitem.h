@@ -31,6 +31,7 @@ public:
     string_q tip;
     bool required;
     bool read_only;
+    CAccountNameArray named;
 
 public:
     CConfigItem(void);
@@ -39,6 +40,8 @@ public:
     CConfigItem& operator=(const CConfigItem& co);
 
     DECLARE_NODE(CConfigItem);
+
+    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     explicit CConfigItem(const string_q& n, const string_q& v, const string_q& t, const string_q& p, bool r, bool o)
@@ -99,6 +102,7 @@ inline void CConfigItem::initialize(void) {
     tip = "";
     required = 0;
     read_only = 0;
+    named.clear();
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -115,6 +119,7 @@ inline void CConfigItem::duplicate(const CConfigItem& co) {
     tip = co.tip;
     required = co.required;
     read_only = co.read_only;
+    named = co.named;
 
     // EXISTING_CODE
     // EXISTING_CODE

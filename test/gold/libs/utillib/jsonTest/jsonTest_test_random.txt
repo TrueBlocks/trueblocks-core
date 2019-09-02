@@ -24,7 +24,7 @@ tests/random.json
   "subtraces": "0x1",
   "traceAddress": null,
   "transactionHash": "0xae4af59f1e8c7775f5573a7eea2888e4c87e25a86a76975189216607bd68fb14",
-  "transactionPosition": "0x0",
+  "transactionIndex": "0x0",
   "type": "call"
 },
 {
@@ -49,7 +49,7 @@ tests/random.json
   "subtraces": "0x1",
   "traceAddress": "0",
   "transactionHash": "0xae4af59f1e8c7775f5573a7eea2888e4c87e25a86a76975189216607bd68fb14",
-  "transactionPosition": "0x0",
+  "transactionIndex": "0x0",
   "type": "call"
 },
 {
@@ -74,7 +74,7 @@ tests/random.json
   "subtraces": "0x1",
   "traceAddress": "0-0",
   "transactionHash": "0xae4af59f1e8c7775f5573a7eea2888e4c87e25a86a76975189216607bd68fb14",
-  "transactionPosition": "0x0",
+  "transactionIndex": "0x0",
   "type": "call"
 },
 {
@@ -99,7 +99,7 @@ tests/random.json
   "subtraces": "0x0",
   "traceAddress": "0-0-0",
   "transactionHash": "0xae4af59f1e8c7775f5573a7eea2888e4c87e25a86a76975189216607bd68fb14",
-  "transactionPosition": "0x0",
+  "transactionIndex": "0x0",
   "type": "call"
 }
 ]

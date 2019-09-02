@@ -7,7 +7,7 @@ getTrace --file:cmd_file --api_mode
     "subtraces": 0,
     "traceAddress": null,
     "transactionHash": "0x1e4e4d62951733dea1cce59eca0ffaf89a7881f13c9bb8558d61f6a9e0928c4b",
-    "transactionPosition": 78,
+    "transactionIndex": 78,
     "type": "call",
     "error": "",
     "action": {
@@ -34,7 +34,7 @@ getTrace --file:cmd_file --api_mode
     "subtraces": 0,
     "traceAddress": null,
     "transactionHash": "0x1e4e4d62951733dea1cce59eca0ffaf89a7881f13c9bb8558d61f6a9e0928c4b",
-    "transactionPosition": 78,
+    "transactionIndex": 78,
     "type": "call",
     "error": "",
     "action": {
@@ -61,7 +61,7 @@ getTrace --file:cmd_file --api_mode
     "subtraces": "0x0",
     "traceAddress": null,
     "transactionHash": "0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad",
-    "transactionPosition": "0x4f",
+    "transactionIndex": "0x4f",
     "type": "call",
     "error": "",
     "action": {

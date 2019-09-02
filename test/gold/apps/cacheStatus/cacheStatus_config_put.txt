@@ -14,4 +14,4 @@ Would have written:
   getGlobalConfig("acctExport.toml")->setConfigStr("settings", "writeTraces", "true");
   getGlobalConfig("acctExport.toml")->setConfigStr("balances", "remote", "false");
   getGlobalConfig("ethslurp.toml")->setConfigStr("settings", "api_key", "1212121212121");
-  getGlobalConfig("getAccounts.toml")->setConfigStr("custom", "list", "{\address\:\0x1111111111111111111111111111111111111111\,\name\:\Wallet1\},{\address\:\0x2222222222222222222222222222222222222222\,\name\:\Wallet2\}");
+  getGlobalConfig("getAccounts.toml")->setConfigStr("custom", "list", "[{\n  \"group\": \"81-Custom\",\n  \"name\": \"TestWallet1\",\n  \"address\": \"0x0000100001000010000100001000010000100001\"\n}\n\n, {\n  \"group\": \"81-Custom\",\n  \"name\": \"TestWallet2\",\n  \"address\": \"0x0000200002000020000200002000020000200002\"\n}\n\n]");

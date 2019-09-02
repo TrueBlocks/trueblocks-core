@@ -30,6 +30,7 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
+string_q shortenFormat(const string_q& fmtIn);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
@@ -44,7 +45,7 @@ bool COptions::parseArguments(string_q& command) {
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (arg == "-e" || arg == "--expand") {
-            searchFields = STR_DISPLAY_ACCOUNTNAME2;
+            searchFields = STR_DISPLAY_ACCOUNTNAME;
             format = searchFields;
 
         } else if (arg == "-m" || arg == "--matchCase") {
@@ -96,7 +97,7 @@ bool COptions::parseArguments(string_q& command) {
         case NONE1:
         case TXT1:
         case CSV1:
-            format = getGlobalConfig("getAccounts")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_ACCOUNTNAME : format);
+            format = getGlobalConfig("getAccounts")->getConfigStr("display", "format", format.empty() ? shortenFormat(STR_DISPLAY_ACCOUNTNAME) : format);
             if (verbose && !contains(format, "{SOURCE}"))
                 format += "\t[{SOURCE}]";
             break;
@@ -105,7 +106,7 @@ bool COptions::parseArguments(string_q& command) {
             format = "";
             break;
     }
-    manageFields("CAccountName:" + cleanFmt((format.empty() ? STR_DISPLAY_ACCOUNTNAME2 : format), exportFmt));
+    manageFields("CAccountName:" + cleanFmt((format.empty() ? STR_DISPLAY_ACCOUNTNAME : format), exportFmt));
     expContext().fmtMap["meta"] = ", \"namePath\": \"" + (isTestMode() ? "--" : getCachePath("names/")) + "\"";
     if (expContext().asEther)
         format = substitute(format, "{BALANCE}", "{ETHER}");
@@ -128,7 +129,7 @@ void COptions::Init(void) {
 
     items.clear();
     searches.clear();
-    searchFields = STR_DISPLAY_ACCOUNTNAME;
+    searchFields = shortenFormat(STR_DISPLAY_ACCOUNTNAME);
     matchCase = false;
     types = NAMED;
     minArgs = 0;
@@ -295,4 +296,24 @@ void COptions::applyFilter() {
             }
         }
     }
+}
+
+//-----------------------------------------------------------------------
+string_q shortenFormat(const string_q& fmtIn) {
+    string_q ret = toUpper(fmtIn);
+    replace(ret, "[{GROUP}]", "");
+//    replace(ret, "[{ADDRESS}]", "");
+//    replace(ret, "[{NAME}]", "");
+//    replace(ret, "[{SYMBOL}]", "");
+    replace(ret, "[{SOURCE}]", "");
+    replace(ret, "[{DESCRIPTION}]", "");
+    replace(ret, "[{LOGO}]", "");
+    replace(ret, "[{IS_CONTRACT}]", "");
+    replace(ret, "[{IS_PRIVATE}]", "");
+    replace(ret, "[{IS_SHARED}]", "");
+    while (startsWith(ret, "\t"))
+        replace(ret, "\t", "");
+    while (endsWith(ret, "\t"))
+        replaceReverse(ret, "\t", "");
+    return ret;
 }

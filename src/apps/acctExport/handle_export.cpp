@@ -78,7 +78,7 @@ bool COptions::exportData(void) {
                         copy.action.callType = "suicide";
                         copy.action.value = trace.action.balance;
                         copy.traceAddress.push_back("s");
-                        copy.transactionHash = uint_2_Hex(trace.blockNumber * 100000 + trace.transactionPosition);
+                        copy.transactionHash = uint_2_Hex(trace.blockNumber * 100000 + trace.transactionIndex);
                         copy.action.input = "0x";
                         if (doABIs) {
                             abiMap[trace.action.to] = true;
@@ -99,7 +99,7 @@ bool COptions::exportData(void) {
                         if (copy.traceAddress.size() == 0)
                             copy.traceAddress.push_back("null");
                         copy.traceAddress.push_back("s");
-                        copy.transactionHash = uint_2_Hex(trace.blockNumber * 100000 + trace.transactionPosition);
+                        copy.transactionHash = uint_2_Hex(trace.blockNumber * 100000 + trace.transactionIndex);
                         copy.action.input = trace.action.input;
                         if (doABIs) {
                             abiMap[trace.action.to] = true;

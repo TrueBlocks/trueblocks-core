@@ -155,7 +155,22 @@
           "keys": [
             {
               "name": "list",
-              "value": "[ { \"address\": \"0x1111111111111111111111111111111111111111\", \"name\": \"Wallet 1\" },{ \"address\": \"0x2222222222222222222222222222222222222222\", \"name\": \"Wallet 2\" } ]",
+              "type": "json array",
+              "tip": "user specific list of names for addresses -- private data -- not shared",
+              "required": false,
+              "read_only": false,
+              "named": [
+                {
+                  "group": "81-Custom",
+                  "name": "TestWallet1",
+                  "address": "0x0000100001000010000100001000010000100001"
+                },
+                {
+                  "group": "81-Custom",
+                  "name": "TestWallet2",
+                  "address": "0x0000200002000020000200002000020000200002"
+                }
+              ]
             }
           ]
         }

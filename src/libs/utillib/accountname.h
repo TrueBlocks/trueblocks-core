@@ -186,7 +186,6 @@ extern CArchive& operator<<(CArchive& archive, const CAccountNameArray& array);
 
 //-----------------------------------------------------------------------
 extern const char* STR_DISPLAY_ACCOUNTNAME;
-extern const char* STR_DISPLAY_ACCOUNTNAME2;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

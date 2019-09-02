@@ -35,6 +35,12 @@ void COptions::handle_config_get(ostream& os) {
         CConfigItem  i5("cachePath",       v5, "path", "location of cache (on external SSD, for example)", false, false); g1.keys.push_back(i5);
         CConfigItem  i6("indexPath",       v6, "path", "location of index (on internal SSD for speed)",    false, false); g1.keys.push_back(i6);
         f.groups.push_back(g1);
+#if 0
+        acctExport.toml     STR_DISPLAY_TRANSACTION     hash, timestamp, from, to, ether, blockNumber, transactionIndex, etherGasPrice, gasUsed, isError, encoding
+        acctExport.toml     STR_DISPLAY_LOG             blockNumber, transactionIndex, logIndex, address, topic0, topic1, topic2, topic3, data, type, compressedLog
+        acctExport.toml     STR_DISPLAY_TRACE           blockNumber, transactionIndex, traceAddress
+        acctExport.toml     STR_DISPLAY_BALANCERECORD   address, blockNum, tx_id, priorBalance, balance
+#endif
         config.files.push_back(f);
     }
 
@@ -68,6 +74,58 @@ void COptions::handle_config_get(ostream& os) {
         config.files.push_back(f);
     }
 
+#if 0
+    {
+        //const CToml *cc = getGlobalConfig("getBlock");
+        CConfigFile  f("getBlock.toml");
+        CConfigGroup g1("display");
+        CConfigItem  i1("block_fmt", "<not-set>", "display_str", "format to display block data", false, false); g1.keys.push_back(i1);
+        f.groups.push_back(g1);
+        config.files.push_back(f);
+    }
+#endif
+
+#if 0
+    getBlock.toml
+    getTrans.toml       STR_DISPLAY_TRANSACTION     date, timestamp, blockNumber, transactionIndex, hash, compressedTx
+    getReceipt.toml     STR_DISPLAY_RECEIPT         blockNumber, transactionIndex, hash, gasUsed, status, isError
+    getLogs.toml        STR_DISPLAY_LOG             blockNumber, transactionIndex, logIndex, address, topic0, topic1, topic2, topic3, data, type, compressedLog
+    getTrace.toml       STR_DISPLAY_TRACE           blockNumber, transactionIndex, traceAddress, action
+    getState.toml       STR_DISPLAY_STATE           blockNumber, address, balance, nonce, code, storage, deployed, acctType
+    getAccounts.toml    STR_DISPLAY_ACCOUNTNAME     group, address, name, symbol, source, description, logo, is_contract, is_private, is_shared
+    grabABI.toml        STR_DISPLAY_FUNCTION        name, type, anonymous, constant, payable, signature, encoding, inputs, outputs
+    ethQuote.toml       STR_DISPLAY_ETHQUOTE        blockNumber, timestamp, price
+    whenBlock.toml      STR_DISPLAY_WHEN            blockNumber, timestamp, date, name
+    whereBlock.toml     STR_DISPLAY_WHERE           blockNumber, path, cached
+#endif
+
+    {
+        manageFields("CAccountName:firstAppearance,latestAppearance,nRecords,sizeInBytes", false);
+
+        const CToml *cc = getGlobalConfig("getAccounts");
+        CConfigFile  f("getAccounts.toml");
+        CConfigGroup g1("custom");
+
+        CConfigItem i1("list", "", "json array", "user specific list of names for addresses -- private data -- not shared", false, false);
+        if (isTestMode()) {
+            i1.named.push_back(CAccountName(CAccountName("81-Custom\t0x0000100001000010000100001000010000100001\tTestWallet1")));
+            i1.named.push_back(CAccountName(CAccountName("81-Custom\t0x0000200002000020000200002000020000200002\tTestWallet2")));
+
+        } else {
+
+            string_q customStr = cc->getConfigJson("custom", "list", "");
+            CAccountName item;
+            while (item.parseJson3(customStr)) {
+                i1.named.push_back(item);
+                item = CAccountName();
+            }
+        }
+
+        g1.keys.push_back(i1);
+        f.groups.push_back(g1);
+        config.files.push_back(f);
+    }
+
     {
         const CToml *cc = getGlobalConfig("ethslurp");
         CConfigFile  f("ethslurp.toml");
@@ -78,26 +136,10 @@ void COptions::handle_config_get(ostream& os) {
         config.files.push_back(f);
     }
 
-    {
-        const CToml *cc = getGlobalConfig("getAccounts");
-        CConfigFile  f("getAccounts.toml");
-        CConfigGroup g1("custom");
-        string_q x;
-        x += "[";
-        x += "{ \"address\": \"0x3b1613b1613b1613b1613b1613b1613b1613b161\", \"name\": \"TestWallet1\" },";
-        x += "{ \"address\": \"0xb1661b1661b1661b1661b1661b1661b1661b1661\", \"name\": \"TestWallet2\" }";
-        x += "]";
-        string_q v1 = (isTestMode() ? x : cc->getConfigStr(g1.name, "list", ""));
-        replaceAll(v1, "address :", "\"address\":");
-        replaceAll(v1, "name :", "\"name\":");
-        replaceAll(v1, ", scanned : true", "");
-        v1 = substitute(v1, "\"", "\\\"");
-        CConfigItem  i1("list", v1, "json array", "user specific list of names for addresses -- private data -- not shared", false, false); g1.keys.push_back(i1);
-        f.groups.push_back(g1);
-        config.files.push_back(f);
-    }
+    //blockNumber, transactionIndex, traceAddress, action::callType, error, action::from, action::to, action:value, action::ether, action::gas, result::gasUsed, action::input, compressedTrace, result::output
 
-    cout << config << endl;
+
+    os << config << endl;
 
     return;
 }
@@ -115,7 +157,7 @@ void COptions::handle_config_put(ostream& os) {
                     for (auto key : group.keys) {
                         cout << "  ";
                         cout << "getGlobalConfig(\"" << file.name << "\")->";
-                        cout << "setConfigStr(\"" << group.name << "\", \"" << key.name << "\", \"" << key.value << "\");" << endl;
+                        cout << "setConfigStr(\"" << group.name << "\", \"" << key.name << "\", \"" << key.getValueByName("value") << "\");" << endl;
                     }
                 }
             }

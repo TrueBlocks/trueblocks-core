@@ -26,8 +26,8 @@ namespace qblocks {
 class CBalanceRecord : public CBaseNode {
 public:
     address_t address;
-    blknum_t blockNum;
-    blknum_t tx_id;
+    blknum_t blockNumber;
+    blknum_t transactionIndex;
     wei_t priorBalance;
     wei_t balance;
 
@@ -92,8 +92,8 @@ inline void CBalanceRecord::initialize(void) {
     CBaseNode::initialize();
 
     address = "";
-    blockNum = 0;
-    tx_id = 0;
+    blockNumber = 0;
+    transactionIndex = 0;
     priorBalance = 0;
     balance = 0;
 
@@ -107,8 +107,8 @@ inline void CBalanceRecord::duplicate(const CBalanceRecord& ba) {
     CBaseNode::duplicate(ba);
 
     address = ba.address;
-    blockNum = ba.blockNum;
-    tx_id = ba.tx_id;
+    blockNumber = ba.blockNumber;
+    transactionIndex = ba.transactionIndex;
     priorBalance = ba.priorBalance;
     balance = ba.balance;
 

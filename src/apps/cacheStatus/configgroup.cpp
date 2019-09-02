@@ -176,6 +176,19 @@ string_q nextConfiggroupChunk_custom(const string_q& fieldIn, const void *dataPt
     if (con) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'k':
+                if ( fieldIn % "keys" ) {
+                    for (auto key : con->keys) {
+                        if (key.named.size() > 0) {
+                            manageFields("CConfigItem:value", false);
+                            manageFields("CConfigItem:named", true);
+                        } else {
+                            manageFields("CConfigItem:value", true);
+                            manageFields("CConfigItem:named", false);
+                        }
+                    }
+                }
+                break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
@@ -271,4 +284,3 @@ const CBaseNode *CConfigGroup::getObjectAt(const string_q& fieldName, size_t ind
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

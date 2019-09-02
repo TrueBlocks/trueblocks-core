@@ -143,4 +143,7 @@ void COptions::applyFilter() {
 }
 
 //-----------------------------------------------------------------------
-const char* STR_DISPLAY_WHERE = "[{BLOCKNUMBER}]\t[{PATH}]\t[{CACHED}]";
+const char* STR_DISPLAY_WHERE =
+"[{BLOCKNUMBER}]\t"
+"[{PATH}]\t"
+"[{CACHED}]";

@@ -86,7 +86,7 @@ int main(int argc, const char *argv[]) {
             HIDE_FIELD  (CTrace,       "blockHash");
             HIDE_FIELD  (CTrace,       "blockNumber");
             HIDE_FIELD  (CTrace,       "transactionHash");
-            HIDE_FIELD  (CTrace,       "transactionPosition");
+            HIDE_FIELD  (CTrace,       "transactionIndex");
         }
 
         if (!visitor.debugger_on && !verbose)

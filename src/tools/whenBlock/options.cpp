@@ -259,4 +259,8 @@ string_q COptions::listSpecials(format_t fmt) const {
 }
 
 //-----------------------------------------------------------------------
-const char* STR_DISPLAY_WHEN = "[{BLOCKNUMBER}]\t[{TIMESTAMP}]\t[{DATE}][\t{NAME}]";
+const char* STR_DISPLAY_WHEN =
+"[{BLOCKNUMBER}]\t"
+"[{TIMESTAMP}]\t"
+"[{DATE}]"
+"[\t{NAME}]";
