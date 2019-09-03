@@ -144,6 +144,9 @@ extern CArchive& operator<<(CArchive& archive, const CMonitorCache& mon);
 extern CArchive& operator>>(CArchive& archive, CMonitorCache& mon);
 
 //---------------------------------------------------------------------------
+extern const char* STR_DISPLAY_MONITORCACHE;
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks

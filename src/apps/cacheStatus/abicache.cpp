@@ -264,6 +264,10 @@ const CBaseNode *CAbiCache::getObjectAt(const string_q& fieldName, size_t index)
 }
 
 //---------------------------------------------------------------------------
+const char* STR_DISPLAY_ABICACHE =
+"";
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks

@@ -316,6 +316,10 @@ const CBaseNode *CConfigItem::getObjectAt(const string_q& fieldName, size_t inde
 }
 
 //---------------------------------------------------------------------------
+const char* STR_DISPLAY_CONFIGITEM =
+"";
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks

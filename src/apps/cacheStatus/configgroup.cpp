@@ -281,6 +281,10 @@ const CBaseNode *CConfigGroup::getObjectAt(const string_q& fieldName, size_t ind
 }
 
 //---------------------------------------------------------------------------
+const char* STR_DISPLAY_CONFIGGROUP =
+"";
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks

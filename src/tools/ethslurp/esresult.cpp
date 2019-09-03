@@ -239,6 +239,10 @@ ostream& operator<<(ostream& os, const CESResult& item) {
 }
 
 //---------------------------------------------------------------------------
+const char* STR_DISPLAY_ESRESULT =
+"";
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks

@@ -297,6 +297,10 @@ const string_q CMonitorCache::getStringAt(const string_q& fieldName, size_t i) c
 }
 
 //---------------------------------------------------------------------------
+const char* STR_DISPLAY_MONITORCACHE =
+"";
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks

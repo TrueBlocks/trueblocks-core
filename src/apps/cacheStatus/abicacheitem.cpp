@@ -259,6 +259,10 @@ ostream& operator<<(ostream& os, const CAbiCacheItem& item) {
 }
 
 //---------------------------------------------------------------------------
+const char* STR_DISPLAY_ABICACHEITEM =
+"";
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks

@@ -3,4 +3,4 @@ class       = CPriceQuote
 fields      = timestamp timestamp|double close
 includes    = abilib.h
 cIncs       = pricesource.h
-display_str = timestamp, date, price
+display_str = timestamp, date, close
