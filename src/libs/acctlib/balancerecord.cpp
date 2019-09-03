@@ -103,9 +103,9 @@ bool CBalanceRecord::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-//    archive >> address;
     archive >> blockNumber;
     archive >> transactionIndex;
+//    archive >> address;
     archive >> priorBalance;
     archive >> balance;
     finishParse();
@@ -120,9 +120,9 @@ bool CBalanceRecord::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-//    archive << address;
     archive << blockNumber;
     archive << transactionIndex;
+//    archive << address;
     archive << priorBalance;
     archive << balance;
 
@@ -160,10 +160,10 @@ void CBalanceRecord::registerClass(void) {
     ADD_FIELD(CBalanceRecord, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CBalanceRecord, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CBalanceRecord, "cname", T_TEXT,  ++fieldNum);
-    ADD_FIELD(CBalanceRecord, "address", T_ADDRESS, ++fieldNum);
-    HIDE_FIELD(CBalanceRecord, "address");
     ADD_FIELD(CBalanceRecord, "blockNumber", T_NUMBER, ++fieldNum);
     ADD_FIELD(CBalanceRecord, "transactionIndex", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CBalanceRecord, "address", T_ADDRESS, ++fieldNum);
+    HIDE_FIELD(CBalanceRecord, "address");
     ADD_FIELD(CBalanceRecord, "priorBalance", T_WEI, ++fieldNum);
     ADD_FIELD(CBalanceRecord, "balance", T_WEI, ++fieldNum);
 
