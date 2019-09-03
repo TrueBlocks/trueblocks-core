@@ -144,6 +144,9 @@ extern CArchive& operator<<(CArchive& archive, const CSlurpCache& slu);
 extern CArchive& operator>>(CArchive& archive, CSlurpCache& slu);
 
 //---------------------------------------------------------------------------
+extern const char* STR_DISPLAY_SLURPCACHE;
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks

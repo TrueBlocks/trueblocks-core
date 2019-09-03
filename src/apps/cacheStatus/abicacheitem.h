@@ -146,6 +146,9 @@ extern CArchive& operator<<(CArchive& archive, const CAbiCacheItem& abi);
 extern CArchive& operator>>(CArchive& archive, CAbiCacheItem& abi);
 
 //---------------------------------------------------------------------------
+extern const char* STR_DISPLAY_ABICACHEITEM;
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks

@@ -167,6 +167,9 @@ extern CArchive& operator<<(CArchive& archive, const CStatus& sta);
 extern CArchive& operator>>(CArchive& archive, CStatus& sta);
 
 //---------------------------------------------------------------------------
+extern const char* STR_DISPLAY_STATUS;
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks

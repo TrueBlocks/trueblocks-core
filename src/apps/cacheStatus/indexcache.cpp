@@ -270,6 +270,10 @@ const CBaseNode *CIndexCache::getObjectAt(const string_q& fieldName, size_t inde
 }
 
 //---------------------------------------------------------------------------
+const char* STR_DISPLAY_INDEXCACHE =
+"";
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks

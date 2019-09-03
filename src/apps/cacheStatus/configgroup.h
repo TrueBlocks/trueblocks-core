@@ -144,6 +144,9 @@ extern CArchive& operator<<(CArchive& archive, const CConfigGroup& con);
 extern CArchive& operator>>(CArchive& archive, CConfigGroup& con);
 
 //---------------------------------------------------------------------------
+extern const char* STR_DISPLAY_CONFIGGROUP;
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks

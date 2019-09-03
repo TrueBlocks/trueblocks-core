@@ -139,6 +139,9 @@ extern CArchive& operator>>(CArchive& archive, CESResultArray& array);
 extern CArchive& operator<<(CArchive& archive, const CESResultArray& array);
 
 //---------------------------------------------------------------------------
+extern const char* STR_DISPLAY_ESRESULT;
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks

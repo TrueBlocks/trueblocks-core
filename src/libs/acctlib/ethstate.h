@@ -144,7 +144,7 @@ inline CEthState& CEthState::operator=(const CEthState& et) {
 inline bool CEthState::operator==(const CEthState& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
-    // Default equality operator as defined in class definition
+    // Equality operator as defined in class definition
     return blockNumber == item.blockNumber;
 }
 

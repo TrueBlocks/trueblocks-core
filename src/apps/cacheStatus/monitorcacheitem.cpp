@@ -238,6 +238,10 @@ ostream& operator<<(ostream& os, const CMonitorCacheItem& item) {
 }
 
 //---------------------------------------------------------------------------
+const char* STR_DISPLAY_MONITORCACHEITEM =
+"";
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks

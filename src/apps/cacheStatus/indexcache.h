@@ -140,6 +140,9 @@ extern CArchive& operator<<(CArchive& archive, const CIndexCache& ind);
 extern CArchive& operator>>(CArchive& archive, CIndexCache& ind);
 
 //---------------------------------------------------------------------------
+extern const char* STR_DISPLAY_INDEXCACHE;
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
