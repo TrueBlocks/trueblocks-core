@@ -256,6 +256,8 @@ void COptions::applyFilter() {
     //------------------------
     if (types & NAMED) {
         for (auto item : namedAccounts) {
+            if (isTestMode() && items.size() > 200)
+                break;
             addIfUnique(item);
         }
     }
@@ -265,6 +267,8 @@ void COptions::applyFilter() {
         uint32_t cnt = 0;
         ASSERT(prefunds.size() == 8893);  // This is a known value
         for (auto prefund : prefunds) {
+            if (isTestMode() && items.size() > 200)
+                break;
             CAccountName item;
             item.group = "80-Prefund";
             item.address = toLower(nextTokenClear(prefund,'\t'));

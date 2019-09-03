@@ -297,8 +297,7 @@ const string_q CSlurpCache::getStringAt(const string_q& fieldName, size_t i) con
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_SLURPCACHE =
-"";
+const char* STR_DISPLAY_SLURPCACHE = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

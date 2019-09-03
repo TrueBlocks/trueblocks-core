@@ -283,8 +283,7 @@ ostream& operator<<(ostream& os, const CIndexCacheItem& item) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_INDEXCACHEITEM =
-"";
+const char* STR_DISPLAY_INDEXCACHEITEM = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

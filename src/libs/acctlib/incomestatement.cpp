@@ -291,8 +291,7 @@ ostream& operator<<(ostream& os, const CIncomeStatement& item) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_INCOMESTATEMENT =
-"";
+const char* STR_DISPLAY_INCOMESTATEMENT = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

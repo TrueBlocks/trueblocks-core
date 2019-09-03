@@ -261,7 +261,7 @@ ostream& operator<<(ostream& os, const CPriceQuote& item) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_PRICEQUOTE =
+const char* STR_DISPLAY_PRICEQUOTE = 
 "[{TIMESTAMP}]\t"
 "[{DATE}]\t"
 "[{CLOSE}]";

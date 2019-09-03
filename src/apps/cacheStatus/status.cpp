@@ -328,8 +328,7 @@ const CBaseNode *CStatus::getObjectAt(const string_q& fieldName, size_t index) c
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_STATUS =
-"";
+const char* STR_DISPLAY_STATUS = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

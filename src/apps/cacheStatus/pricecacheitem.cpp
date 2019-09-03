@@ -249,8 +249,7 @@ ostream& operator<<(ostream& os, const CPriceCacheItem& item) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_PRICECACHEITEM =
-"";
+const char* STR_DISPLAY_PRICECACHEITEM = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

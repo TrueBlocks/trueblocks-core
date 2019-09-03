@@ -239,8 +239,7 @@ ostream& operator<<(ostream& os, const CESResult& item) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_ESRESULT =
-"";
+const char* STR_DISPLAY_ESRESULT = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

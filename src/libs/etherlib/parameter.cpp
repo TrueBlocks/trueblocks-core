@@ -272,8 +272,7 @@ ostream& operator<<(ostream& os, const CParameter& item) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_PARAMETER =
-"";
+const char* STR_DISPLAY_PARAMETER = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

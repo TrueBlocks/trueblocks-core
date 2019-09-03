@@ -297,8 +297,7 @@ const string_q CNameCache::getStringAt(const string_q& fieldName, size_t i) cons
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_NAMECACHE =
-"";
+const char* STR_DISPLAY_NAMECACHE = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

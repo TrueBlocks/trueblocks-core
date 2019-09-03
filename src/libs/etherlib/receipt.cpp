@@ -141,8 +141,11 @@ bool CReceipt::Serialize(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     archive >> contractAddress;
+//    archive >> cumulativeGasUsed;
     archive >> gasUsed;
     archive >> logs;
+//    archive >> logsBloom;
+//    archive >> root;
     archive >> status;
     finishParse();
     return true;
@@ -157,8 +160,11 @@ bool CReceipt::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     // EXISTING_CODE
     archive << contractAddress;
+//    archive << cumulativeGasUsed;
     archive << gasUsed;
     archive << logs;
+//    archive << logsBloom;
+//    archive << root;
     archive << status;
 
     return true;
@@ -385,7 +391,7 @@ const CBaseNode *CReceipt::getObjectAt(const string_q& fieldName, size_t index) 
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_RECEIPT =
+const char* STR_DISPLAY_RECEIPT = 
 "[{BLOCKNUMBER}]\t"
 "[{TRANSACTIONINDEX}]\t"
 "[{HASH}]\t"

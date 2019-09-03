@@ -408,7 +408,7 @@ const string_q CTrace::getStringAt(const string_q& fieldName, size_t i) const {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_TRACE =
+const char* STR_DISPLAY_TRACE = 
 "[{BLOCKNUMBER}]\t"
 "[{TRANSACTIONINDEX}]\t"
 "[{TRACEADDRESS}]\t"

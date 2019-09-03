@@ -57,6 +57,95 @@ cacheStatus --config-get
               "read_only": false
             }
           ]
+        },
+        {
+          "name": "display_strs",
+          "keys": [
+            {
+              "name": "accountName",
+              "value": "--accountname--",
+              "type": "display string",
+              "required": false,
+              "read_only": false
+            },
+            {
+              "name": "balancerecord",
+              "value": "--balancerecord--",
+              "type": "display string",
+              "required": false,
+              "read_only": false
+            },
+            {
+              "name": "block",
+              "value": "--block--",
+              "type": "display string",
+              "required": false,
+              "read_only": false
+            },
+            {
+              "name": "ethstate",
+              "value": "--ethstate--",
+              "type": "display string",
+              "required": false,
+              "read_only": false
+            },
+            {
+              "name": "function",
+              "value": "--function--",
+              "type": "display string",
+              "required": false,
+              "read_only": false
+            },
+            {
+              "name": "logentry",
+              "value": "--logentry--",
+              "type": "display string",
+              "required": false,
+              "read_only": false
+            },
+            {
+              "name": "pricequote",
+              "value": "--pricequote--",
+              "type": "display string",
+              "required": false,
+              "read_only": false
+            },
+            {
+              "name": "receipt",
+              "value": "--receipt--",
+              "type": "display string",
+              "required": false,
+              "read_only": false
+            },
+            {
+              "name": "trace",
+              "value": "--trace--",
+              "type": "display string",
+              "required": false,
+              "read_only": false
+            },
+            {
+              "name": "transaction",
+              "value": "--transaction--",
+              "type": "display string",
+              "required": false,
+              "read_only": false
+            },
+            {
+              "name": "whenblock",
+              "value": "--whenblock--",
+              "type": "display string",
+              "required": false,
+              "read_only": false
+            },
+            {
+              "name": "whereblock",
+              "value": "--whereblock--",
+              "type": "display string",
+              "required": false,
+              "read_only": false
+            }
+          ]
         }
       ]
     },

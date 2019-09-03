@@ -16,6 +16,8 @@
 #include "sfos.h"
 #include "filenames.h"
 #include "conversions.h"
+#include "logging.h"
+#include "options_base.h"
 
 namespace qblocks {
 
@@ -410,6 +412,7 @@ namespace qblocks {
             sectionLocks++;
         else if (sectionLocks > 0)
             sectionLocks--;
+//        LOG_INFO(COptionsBase::g_progName, ": lockSection: ", sectionLocks);
     }
 
     //-----------------------------------------------------------------------
@@ -431,8 +434,13 @@ namespace qblocks {
 
     //-----------------------------------------------------------------------
     bool shouldQuit(void) {
-        if (quitCount() == 0)
+        if (quitCount() == 0) {
+//            qblocks::eLogger->setEndline('\r');
+//            LOG_INFO("\t\t\t\t", COptionsBase::g_progName, ": shouldQuit: ", sectionLocks, ": ", quitCount());
+//            qblocks::eLogger->setEndline('\n');
             return false;
+        }
+//        LOG_INFO(bGreen, COptionsBase::g_progName, ": shouldQuit - Quitting: ", quitCount(), cOff);
         cout << "\nFinishing work...\n";
         cleanFileLocks();
         cout.flush();
@@ -459,10 +467,14 @@ namespace qblocks {
     //-----------------------------------------------------------------------
     void defaultQuitHandler(int signum) {
         if (quitCount(1) > 2) {
+//            LOG_INFO(cBlue, COptionsBase::g_progName, ": defaultQuitHander (>2): ", quitCount(), ": ", signum, cOff);
             cleanFileLocks();
-            if (signum != -1)
+            if (signum != -1) {
+//                LOG_INFO(cYellow, COptionsBase::g_progName, ": defaultQuitHander (>2): ", quitCount(), ": ", signum, cOff);
                 exit(EXIT_SUCCESS);
+            }
         }
+//        LOG_INFO(cTeal, COptionsBase::g_progName, ": defaultQuitHander (<2): ", quitCount(), ": ", signum, cOff);
     }
 
     //-----------------------------------------------------------------------

@@ -244,8 +244,7 @@ ostream& operator<<(ostream& os, const CRPCResult& item) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_RPCRESULT =
-"";
+const char* STR_DISPLAY_RPCRESULT = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

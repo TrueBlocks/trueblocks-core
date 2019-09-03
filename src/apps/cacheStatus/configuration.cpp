@@ -259,8 +259,7 @@ const CBaseNode *CConfiguration::getObjectAt(const string_q& fieldName, size_t i
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_CONFIGURATION =
-"";
+const char* STR_DISPLAY_CONFIGURATION = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

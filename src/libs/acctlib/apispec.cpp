@@ -251,8 +251,7 @@ ostream& operator<<(ostream& os, const CApiSpec& item) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_APISPEC =
-"";
+const char* STR_DISPLAY_APISPEC = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

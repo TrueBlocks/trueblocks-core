@@ -290,8 +290,7 @@ const CBaseNode *CNewReceipt::getObjectAt(const string_q& fieldName, size_t inde
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_NEWRECEIPT =
-"";
+const char* STR_DISPLAY_NEWRECEIPT = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

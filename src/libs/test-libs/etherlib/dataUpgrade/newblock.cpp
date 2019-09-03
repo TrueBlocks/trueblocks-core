@@ -391,8 +391,7 @@ const CBaseNode *CNewBlock::getObjectAt(const string_q& fieldName, size_t index)
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_NEWBLOCK =
-"";
+const char* STR_DISPLAY_NEWBLOCK = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

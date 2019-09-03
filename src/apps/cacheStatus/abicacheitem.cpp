@@ -259,8 +259,7 @@ ostream& operator<<(ostream& os, const CAbiCacheItem& item) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_ABICACHEITEM =
-"";
+const char* STR_DISPLAY_ABICACHEITEM = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

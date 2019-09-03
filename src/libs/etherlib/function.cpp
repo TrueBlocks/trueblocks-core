@@ -419,7 +419,7 @@ const CBaseNode *CFunction::getObjectAt(const string_q& fieldName, size_t index)
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_FUNCTION =
+const char* STR_DISPLAY_FUNCTION = 
 "[{NAME}]\t"
 "[{TYPE}]\t"
 "[{ANONYMOUS}]\t"
@@ -428,7 +428,7 @@ const char* STR_DISPLAY_FUNCTION =
 "[{SIGNATURE}]\t"
 "[{ENCODING}]\t"
 "[{INPUTS}]\t"
-"[{OUTPUTS}]\n";
+"[{OUTPUTS}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

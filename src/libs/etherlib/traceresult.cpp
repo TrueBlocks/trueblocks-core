@@ -261,8 +261,7 @@ ostream& operator<<(ostream& os, const CTraceResult& item) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_TRACERESULT =
-"";
+const char* STR_DISPLAY_TRACERESULT = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

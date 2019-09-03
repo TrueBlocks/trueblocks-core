@@ -326,7 +326,7 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
     }
 
     if (!display_str.empty())
-        display_str = "\"[{" + substitute(substitute(trim(toUpper(display_str)), " ", ""), ",", "}]\\t\"\n\"[{") + "}]\"";
+        display_str = "\n\"[{" + substitute(substitute(trim(toUpper(display_str)), " ", ""), ",", "}]\\t\"\n\"[{") + "}]\"";
     else
         display_str = "\"\"";
 

@@ -329,8 +329,7 @@ const CBaseNode *CAccountWatch::getObjectAt(const string_q& fieldName, size_t in
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_ACCOUNTWATCH =
-"";
+const char* STR_DISPLAY_ACCOUNTWATCH = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

@@ -253,8 +253,7 @@ ostream& operator<<(ostream& os, const CInfix& item) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_INFIX =
-"";
+const char* STR_DISPLAY_INFIX = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

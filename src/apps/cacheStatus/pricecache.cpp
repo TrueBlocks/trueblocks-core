@@ -264,8 +264,7 @@ const CBaseNode *CPriceCache::getObjectAt(const string_q& fieldName, size_t inde
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_PRICECACHE =
-"";
+const char* STR_DISPLAY_PRICECACHE = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

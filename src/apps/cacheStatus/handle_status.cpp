@@ -198,13 +198,30 @@ bool noteMonitor(const string_q& path, void *data) {
         CMonitorCacheItem mdi;
         mdi.type = mdi.getRuntimeClass()->m_ClassName;
         mdi.address = substitute(substitute(substitute(substitute(path, counter->cachePtr->path, ""),".acct", ""),".bin", ""), ".json", "");
-        counter->options->getNamedAccount(mdi, mdi.address);
-        mdi.firstAppearance = 1001001;
-        mdi.latestAppearance = 8101001;
-        mdi.nRecords = fileSize(path) / sizeof(CAppearance_base);
-        mdi.sizeInBytes = fileSize(path);
+        CAccountName item;
+        string_q customStr = getGlobalConfig("getAccounts")->getConfigJson("custom", "list", "");
+        while (item.parseJson3(customStr)) {
+            if (mdi.address == item.address) {
+                mdi.group = item.group;
+                mdi.name = item.name;
+                break;
+            }
+            item = CAccountName();
+        }
+        if (mdi.name.empty())
+            counter->options->getNamedAccount(mdi, mdi.address);
+        if (endsWith(path, ".acct.bin")) {
+            mdi.firstAppearance = 1001001;
+            mdi.latestAppearance = 8101001;
+            mdi.nRecords = fileSize(path) / sizeof(CAppearance_base);
+            mdi.sizeInBytes = fileSize(path);
+        } else {
+            mdi.firstAppearance = 0;
+            mdi.latestAppearance = 0;
+            mdi.nRecords = 0;
+            mdi.sizeInBytes = 0;
+        }
         counter->monitorArray->push_back(mdi);
-
     }
     return !shouldQuit();
 }

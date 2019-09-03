@@ -231,8 +231,7 @@ ostream& operator<<(ostream& os, const CTreeNode& item) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_TREENODE =
-"";
+const char* STR_DISPLAY_TREENODE = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

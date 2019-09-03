@@ -308,8 +308,7 @@ const string_q CTokenState_erc20::getStringAt(const string_q& fieldName, size_t 
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_TOKENSTATE_ERC20 =
-"";
+const char* STR_DISPLAY_TOKENSTATE_ERC20 = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

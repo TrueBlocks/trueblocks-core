@@ -293,8 +293,7 @@ const CBaseNode *CAccount::getObjectAt(const string_q& fieldName, size_t index) 
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_ACCOUNT =
-"";
+const char* STR_DISPLAY_ACCOUNT = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

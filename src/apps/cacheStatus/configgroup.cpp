@@ -281,8 +281,7 @@ const CBaseNode *CConfigGroup::getObjectAt(const string_q& fieldName, size_t ind
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_CONFIGGROUP =
-"";
+const char* STR_DISPLAY_CONFIGGROUP = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

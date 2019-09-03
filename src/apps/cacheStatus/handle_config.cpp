@@ -22,25 +22,58 @@ void COptions::handle_config_get(ostream& os) {
         const CToml *cc = getGlobalConfig();
         CConfigFile  f("quickBlocks.toml");
         CConfigGroup g1("settings");
-        string_q     v1 = (isTestMode() ? "--rpcProvider--" : cc->getConfigStr(g1.name, "rpcProvider",     "http://localhost:8545"));
-        string_q     v2 = (isTestMode() ? "--apiProvider--" : cc->getConfigStr(g1.name, "apiProvider",     "http://localhost:8080"));
-        string_q     v3 = (isTestMode() ? "--balanceProv--" : cc->getConfigStr(g1.name, "balanceProvider", "http://localhost:8080"));
-        string_q     v4 = (isTestMode() ? "--configPath--"  : cc->getConfigStr(g1.name, "configPath",      "~/.quickBlocks/"));
-        string_q     v5 = (isTestMode() ? "--cachePath--"   : cc->getConfigStr(g1.name, "cachePath",       "~/.quickBlocks/cache/"));
-        string_q     v6 = (isTestMode() ? "--indexPath--"   : cc->getConfigStr(g1.name, "indexPath",       "~/.quickBlocks/cache/addr_index/"));
-        CConfigItem  i1("rpcProvider",     v1, "url",  "the Ethereum node's RPC endpoint",                 true,  false); g1.keys.push_back(i1);
-        CConfigItem  i2("apiProvider",     v2, "url",  "TrueBlocks' API endpoint",                         true,  false); g1.keys.push_back(i2);
-        CConfigItem  i3("balanceProvider", v3, "url",  "alternative node endpoint for account balances",   false, false); g1.keys.push_back(i3);
-        CConfigItem  i4("configPath",      v4, "path", "location of config files, read only",              true,  true);  g1.keys.push_back(i4);
-        CConfigItem  i5("cachePath",       v5, "path", "location of cache (on external SSD, for example)", false, false); g1.keys.push_back(i5);
-        CConfigItem  i6("indexPath",       v6, "path", "location of index (on internal SSD for speed)",    false, false); g1.keys.push_back(i6);
+        CStringArray values;
+        size_t cnt = 0;
+        values.push_back(isTestMode() ? "--rpcProvider--" : cc->getConfigStr(g1.name, "rpcProvider",     "http://localhost:8545"));
+        values.push_back(isTestMode() ? "--apiProvider--" : cc->getConfigStr(g1.name, "apiProvider",     "http://localhost:8080"));
+        values.push_back(isTestMode() ? "--balanceProv--" : cc->getConfigStr(g1.name, "balanceProvider", "http://localhost:8080"));
+        values.push_back(isTestMode() ? "--configPath--"  : cc->getConfigStr(g1.name, "configPath",      "~/.quickBlocks/"));
+        values.push_back(isTestMode() ? "--cachePath--"   : cc->getConfigStr(g1.name, "cachePath",       "~/.quickBlocks/cache/"));
+        values.push_back(isTestMode() ? "--indexPath--"   : cc->getConfigStr(g1.name, "indexPath",       "~/.quickBlocks/cache/addr_index/"));
+        CConfigItemArray items;
+        items.push_back(CConfigItem("rpcProvider",     substitute(values[cnt++],"\t","\\t"), "url",  "the Ethereum node's RPC endpoint",                 true,  false));
+        items.push_back(CConfigItem("apiProvider",     substitute(values[cnt++],"\t","\\t"), "url",  "TrueBlocks' API endpoint",                         true,  false));
+        items.push_back(CConfigItem("balanceProvider", substitute(values[cnt++],"\t","\\t"), "url",  "alternative node endpoint for account balances",   false, false));
+        items.push_back(CConfigItem("configPath",      substitute(values[cnt++],"\t","\\t"), "path", "location of config files, read only",              true,  true));
+        items.push_back(CConfigItem("cachePath",       substitute(values[cnt++],"\t","\\t"), "path", "location of cache (on external SSD, for example)", false, false));
+        items.push_back(CConfigItem("indexPath",       substitute(values[cnt++],"\t","\\t"), "path", "location of index (on internal SSD for speed)",    false, false));
+        for (auto item : items)
+            g1.keys.push_back(item);
         f.groups.push_back(g1);
-#if 0
-        acctExport.toml     STR_DISPLAY_TRANSACTION     hash, timestamp, from, to, ether, blockNumber, transactionIndex, etherGasPrice, gasUsed, isError, encoding
-        acctExport.toml     STR_DISPLAY_LOGENTRY        blockNumber, transactionIndex, logIndex, address, topic0, topic1, topic2, topic3, data, type, compressedLog
-        acctExport.toml     STR_DISPLAY_TRACE           blockNumber, transactionIndex, traceAddress
-        acctExport.toml     STR_DISPLAY_BALANCERECORD   address, blockNum, tx_id, priorBalance, balance
-#endif
+
+        extern const char* STR_DISPLAY_WHEN;
+        extern const char* STR_DISPLAY_WHERE;
+
+        CStringArray values2; CConfigItemArray items2;
+        CConfigGroup g2("display_strs");cnt=0;
+        values2.push_back(isTestMode() ? "--accountName--"   : cc->getConfigStr(g2.name, "", STR_DISPLAY_ACCOUNTNAME));
+        values2.push_back(isTestMode() ? "--balancerecord--" : cc->getConfigStr(g2.name, "", STR_DISPLAY_BALANCERECORD));
+        values2.push_back(isTestMode() ? "--block--"         : cc->getConfigStr(g2.name, "", STR_DISPLAY_BLOCK));
+        values2.push_back(isTestMode() ? "--ethstate--"      : cc->getConfigStr(g2.name, "", STR_DISPLAY_ETHSTATE));
+        values2.push_back(isTestMode() ? "--function--"      : cc->getConfigStr(g2.name, "", STR_DISPLAY_FUNCTION));
+        values2.push_back(isTestMode() ? "--logentry--"      : cc->getConfigStr(g2.name, "", STR_DISPLAY_LOGENTRY));
+        values2.push_back(isTestMode() ? "--pricequote--"    : cc->getConfigStr(g2.name, "", STR_DISPLAY_PRICEQUOTE));
+        values2.push_back(isTestMode() ? "--receipt--"       : cc->getConfigStr(g2.name, "", STR_DISPLAY_RECEIPT));
+        values2.push_back(isTestMode() ? "--trace--"         : cc->getConfigStr(g2.name, "", STR_DISPLAY_TRACE));
+        values2.push_back(isTestMode() ? "--transaction--"   : cc->getConfigStr(g2.name, "", STR_DISPLAY_TRANSACTION));
+        values2.push_back(isTestMode() ? "--whenblock--"     : cc->getConfigStr(g2.name, "", STR_DISPLAY_WHEN));
+        values2.push_back(isTestMode() ? "--whereblock--"    : cc->getConfigStr(g2.name, "", STR_DISPLAY_WHERE));
+extern string_q convertDisplayStr(const string_q& in);
+        items2.push_back(CConfigItem("accountName",   convertDisplayStr(values2[cnt++]), "display string",  "", false,  false));
+        items2.push_back(CConfigItem("balancerecord", convertDisplayStr(values2[cnt++]), "display string",  "", false,  false));
+        items2.push_back(CConfigItem("block",         convertDisplayStr(values2[cnt++]), "display string",  "", false,  false));
+        items2.push_back(CConfigItem("ethstate",      convertDisplayStr(values2[cnt++]), "display string",  "", false,  false));
+        items2.push_back(CConfigItem("function",      convertDisplayStr(values2[cnt++]), "display string",  "", false,  false));
+        items2.push_back(CConfigItem("logentry",      convertDisplayStr(values2[cnt++]), "display string",  "", false,  false));
+        items2.push_back(CConfigItem("pricequote",    convertDisplayStr(values2[cnt++]), "display string",  "", false,  false));
+        items2.push_back(CConfigItem("receipt",       convertDisplayStr(values2[cnt++]), "display string",  "", false,  false));
+        items2.push_back(CConfigItem("trace",         convertDisplayStr(values2[cnt++]), "display string",  "", false,  false));
+        items2.push_back(CConfigItem("transaction",   convertDisplayStr(values2[cnt++]), "display string",  "", false,  false));
+        items2.push_back(CConfigItem("whenblock",     convertDisplayStr(values2[cnt++]), "display string",  "", false,  false));
+        items2.push_back(CConfigItem("whereblock",    convertDisplayStr(values2[cnt++]), "display string",  "", false,  false));
+        for (auto item : items2)
+            g2.keys.push_back(item);
+        f.groups.push_back(g2);
         config.files.push_back(f);
     }
 
@@ -73,31 +106,6 @@ void COptions::handle_config_get(ostream& os) {
         f.groups.push_back(g2);
         config.files.push_back(f);
     }
-
-#if 0
-    {
-        //const CToml *cc = getGlobalConfig("getBlock");
-        CConfigFile  f("getBlock.toml");
-        CConfigGroup g1("display");
-        CConfigItem  i1("block_fmt", "<not-set>", "display_str", "format to display block data", false, false); g1.keys.push_back(i1);
-        f.groups.push_back(g1);
-        config.files.push_back(f);
-    }
-#endif
-
-#if 0
-    getBlock.toml
-    getTrans.toml       STR_DISPLAY_TRANSACTION     date, timestamp, blockNumber, transactionIndex, hash, compressedTx
-    getReceipt.toml     STR_DISPLAY_RECEIPT         blockNumber, transactionIndex, hash, gasUsed, status, isError
-    getLogs.toml        STR_DISPLAY_LOGENTRY        blockNumber, transactionIndex, logIndex, address, topic0, topic1, topic2, topic3, data, type, compressedLog
-    getTrace.toml       STR_DISPLAY_TRACE           blockNumber, transactionIndex, traceAddress, action
-    getState.toml       STR_DISPLAY_ETHSTATE        blockNumber, address, balance, nonce, code, storage, deployed, acctType
-    getAccounts.toml    STR_DISPLAY_ACCOUNTNAME     group, address, name, symbol, source, description, logo, is_contract, is_private, is_shared
-    grabABI.toml        STR_DISPLAY_FUNCTION        name, type, anonymous, constant, payable, signature, encoding, inputs, outputs
-    ethQuote.toml       STR_DISPLAY_PRICEQUOTE      blockNumber, timestamp, price
-    whenBlock.toml      STR_DISPLAY_WHEN            blockNumber, timestamp, date, name
-    whereBlock.toml     STR_DISPLAY_WHERE           blockNumber, path, cached
-#endif
 
     {
         manageFields("CAccountName:firstAppearance,latestAppearance,nRecords,sizeInBytes", false);
@@ -136,9 +144,6 @@ void COptions::handle_config_get(ostream& os) {
         config.files.push_back(f);
     }
 
-    //blockNumber, transactionIndex, traceAddress, action::callType, error, action::from, action::to, action:value, action::ether, action::gas, result::gasUsed, action::input, compressedTrace, result::output
-
-
     os << config << endl;
 
     return;
@@ -165,3 +170,15 @@ void COptions::handle_config_put(ostream& os) {
     }
     return;
 }
+
+//--------------------------------------------------------------------------------
+string_q convertDisplayStr(const string_q& in) {
+    string_q ret = in;
+    replaceAll(ret, "\t", ",");
+    replaceAll(ret, "[{", "");
+    replaceAll(ret, "}]", "");
+    return toLower(ret);
+}
+
+const char* STR_DISPLAY_WHEN = "[{BLOCKNUMBER}]\t[{TIMESTAMP}]\t[{DATE}]\t[{NAME}]";
+const char* STR_DISPLAY_WHERE = "[{BLOCKNUMBER}]\t[{PATH}]\t[{CACHED}]";

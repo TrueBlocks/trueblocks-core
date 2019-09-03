@@ -263,8 +263,7 @@ ostream& operator<<(ostream& os, const CBranch& item) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_BRANCH =
-"";
+const char* STR_DISPLAY_BRANCH = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

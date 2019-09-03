@@ -346,7 +346,7 @@ ostream& operator<<(ostream& os, const CAccountName& item) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_ACCOUNTNAME =
+const char* STR_DISPLAY_ACCOUNTNAME = 
 "[{GROUP}]\t"
 "[{ADDRESS}]\t"
 "[{NAME}]\t"

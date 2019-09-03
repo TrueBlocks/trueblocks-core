@@ -275,8 +275,7 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_ABI =
-"";
+const char* STR_DISPLAY_ABI = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

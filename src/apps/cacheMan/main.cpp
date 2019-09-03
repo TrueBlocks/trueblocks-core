@@ -46,6 +46,9 @@ extern bool loadMonitorData(CAppearanceArray_base& items, const address_t& addr)
 
                     for (auto item : items) {
 
+                        if (shouldQuit())
+                            break;
+
                         if (item.blk < options.maxBlock) {
                             options.stats.nRecords++;
                             bool isDup = (lastItem.blk == item.blk && lastItem.txid == item.txid);
