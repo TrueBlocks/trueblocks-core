@@ -152,19 +152,17 @@ extern string_q convertDisplayStr(const string_q& in);
 //--------------------------------------------------------------------------------
 void COptions::handle_config_put(ostream& os) {
     CConfiguration config;
-    string_q str = asciiFileToString("input.json");
-    config.parseJson3(str);
-    {
-        if (true) { //isTestMode()) {
-            cout << "Would have written:" << endl;
-            for (auto file : config.files) {
-                for (auto group : file.groups) {
-                    for (auto key : group.keys) {
-                        cout << "  ";
-                        cout << "getGlobalConfig(\"" << file.name << "\")->";
-                        cout << "setConfigStr(\"" << group.name << "\", \"" << key.name << "\", \"" << key.getValueByName("value") << "\");" << endl;
-                    }
-                }
+    string_q str = asciiFileToString("setConfig_data2.json");
+    str = trim(substitute(substitute(str, "\\\"", "\""), "\\n", "\n"), '\"');
+    CApiResult result;
+    result.parseJson3(str);
+    cout << "Would have written:" << endl;
+    for (auto file : result.data.files) {
+        for (auto group : file.groups) {
+            for (auto key : group.keys) {
+                cout << "  ";
+                cout << "getGlobalConfig(\"" << file.name << "\")->";
+                cout << "setConfigStr(\"" << group.name << "\", \"" << key.name << "\", \"" << key.getValueByName("value") << "\");" << endl;
             }
         }
     }

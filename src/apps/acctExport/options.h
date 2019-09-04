@@ -6,6 +6,7 @@
  *------------------------------------------------------------------------*/
 #include "etherlib.h"
 #include "acctlib.h"
+#include "displayapp.h"
 
 //-----------------------------------------------------------------------
 class COptions : public COptionsBase {
@@ -19,11 +20,14 @@ public:
     bool skipDdos;
     size_t maxTraces;
     bool articulate;
+    size_t nExported;
+    bool doAppearances;
     bool doLogs;
     bool doTraces;
     bool doBalances;
     bool doABIs;
     bool freshenOnly;
+    address_t hackAppAddr;
     map<uint32_t,address_t> prefundMap;
     map<uint32_t,address_t> blkRewardMap;
     map<address_t,bool>     abiMap;

@@ -35,10 +35,20 @@ function(run_special_test testName)
     run_the_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
 endfunction(run_special_test)
 
+# Function to run an special or slow test case
+function(api_special_test testName)
+    run_the_api_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(api_special_test)
+
 # Function to run an individual test case
 function(run_test testName)
      run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
 endfunction(run_test)
+
+# Function to run an api mode test case
+function(api_test testName)
+    run_the_api_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(api_test)
 
 # Weird, but we have to call the getBlock code to make sure the block is in the cache
 run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrace_preload" ${EXECUTABLE_OUTPUT_PATH}/getBlock " 3657480" " -o")
@@ -75,13 +85,13 @@ run_test("getTrace_nav_next2"           " 1001001.3.next")
 run_test("getTrace_three_ways"          "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.79" " -v" " 3657480.79" " 0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad")
 run_test("getTrace_redir_output"        " -v" " 3657480.79" " --output" " test_file")
 
-run_test("getTrace_star"             "2222221.*" " --api_mode")
+api_test("getTrace_star"             "2222221.*")
 run_test("getTrace_fmt_txt"          "2222222.0" " 2332332.0" " --fmt" " txt")
 run_test("getTrace_fmt_csv"          "2222222.0" " 2332332.0" " --fmt" " csv")
 run_test("getTrace_fmt_json"         "2222222.0" " 2332332.0" " --fmt" " json")
 run_test("getTrace_fmt_api"          "2222222.0" " 2332332.0" " --fmt" " api")
-run_test("getTrace_fmt_api_mode"     "2222222.0" " 2332332.0" " --api_mode")
-run_test("getTrace_fmt_api_mode_fmt" "2222222.0" " 2332332.0" " --api_mode" " --fmt" " txt")
+api_test("getTrace_fmt_api_mode"     "2222222.0" " 2332332.0")
+api_test("getTrace_fmt_api_mode_fmt" "2222222.0" " 2332332.0" " --fmt" " txt")
 run_test("getTrace_fmt_defaut"       "2222222.0" " 2332332.0")
 run_test("getTrace_fmt_junk"         "2222222.0" " 2332332.0" " --fmt" " junk")
 
@@ -95,17 +105,17 @@ run_test("getTrace_articulate_arrays"  "0xcf57ae0204729b4230034888a8508146c13ad7
 # Note: Full nodes do not support tracing, so help and error conditions are the only test run by default (i.e. non-special)
 #-----------------------------------------------------------------------------------------------------------------------------
 run_special_test("getTrace_by_filebad"          "--bad" " --file:cmd_file")
-run_special_test("getTrace_by_file"             "--file:cmd_file" " --api_mode")
+api_special_test("getTrace_by_file"             "--file:cmd_file")
 run_special_test("getTrace_by_file_long_v"      "--file:cmd_file" " --verbose" " --parity" " --fmt" " api")
-run_special_test("getTrace_by_file_v"           "--verbose" " --file:cmd_file" " --api_mode")
+api_special_test("getTrace_by_file_v"           "--verbose" " --file:cmd_file")
 
 run_special_test("getTrace_verbose_blk_idx1"    "--fmt" " json" " 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3")
 run_special_test("getTrace_verbose_blk_idx2"    "--fmt" " api" " 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3")
-run_special_test("getTrace_verbose_blk_idx3"    "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3" " --api_mode" " --fmt" " txt")
+api_special_test("getTrace_verbose_blk_idx3"    "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3" " --fmt" " txt")
 
 run_special_test("getTrace_by_txhash"           "0x66e49e99a984cd88e097782a001afaac8c6ff786c936651895475dd88ec360f6" " --fmt" " api")
 run_special_test("getTrace_by_bnun_and_txid"    "4348290.92" " --fmt" "api")
-run_special_test("getTrace_by_bhash_and_txid"   "0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73.92" " --api_mode" " --parity")
+api_special_test("getTrace_by_bhash_and_txid"   "0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73.92" " --parity")
 
 run_special_test("getTrace_by_blk_hash_good"    "0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55" " --verbose")
 run_special_test("getTrace_by_blk_hash_bad"     "0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.155" " -v")

@@ -124,7 +124,7 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
                 gold.transactions.at(t).timestamp = gold.timestamp;  // .at cannot go past end of vector!
 
         } else {
-            queryBlock(gold, numStr, (opt.api_mode ? false : true));
+            queryBlock(gold, numStr, (isApiMode() ? false : true));
         }
         if (gold.blockNumber == 0 && gold.timestamp == 0)
             gold.timestamp = blockZeroTs;

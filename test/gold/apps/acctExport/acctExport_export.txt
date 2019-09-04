@@ -1,34 +1,9 @@
 acctExport argc: 2 [1:0x001d14804b399c6ef80e64576f657660804fec0b] 
 acctExport 0x001d14804b399c6ef80e64576f657660804fec0b 
+blocknumber	transactionindex	date	timestamp	from	to	ether	ethergasprice	gasused	hash	iserror	encoding	compressedtx
+0	2	2015-07-30 15:26:00 UTC	1438269960	0xPrefund	0x001d14804b399c6ef80e64576f657660804fec0b	4200.000000000000000000	0.000000000000000000	0	0x0	0		
+202249	0	2015-09-08 09:09:16 UTC	1441703356	0x001d14804b399c6ef80e64576f657660804fec0b	0x2910543af39aba0cd09dbb2d50200b3e800a63d2	4199.900000000000000000	0.000001171602790622	21612	0x6e443af86a84920cace198340020e4ca54321a2c515cd3ad1f274d3506b4aff8	0	0x454e3456	
+1501459	2	2016-05-12 03:53:53 UTC	1463025233	0x001d14804b399c6ef80e64576f657660804fec0b	0xcfab9ac2bb2e1dcfc2d50f01f4e61f2f72fb5902	0.074259320489077336	0.000000020000000000	21000	0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5	0	0x	
 
-  File not found './0x001d14804b399c6ef80e64576f657660804fec0b.acct.bin. Quitting...
-
-  Usage:    acctExport [-x|-a|-l|-t|-v|-h] <address> [address...]  
-  Purpose:  Export full detail of transactions for one or more Ethereum addresses.
-
-  Where:  
-	addr_list             one or more addresses (0x...) to export (required)
-	-x  (--fmt <fmt>)     export format (one of [json*|txt|csv])
-	-a  (--articulate)    articulate transactions, traces, logs, and outputs
-	-l  (--logs)          export logs instead of transaction list
-	-t  (--traces)        export traces instead of transaction list
-
-#### Hidden options (shown during testing only)
-	-c  (--balances)      export balance history instead of transaction list
-	-b  (--blocks enum[on|off*])write blocks to the binary cache ('off' by default)
-	-s  (--writeTxs enum[on*|off])write transactions to the binary cache ('on' by default)
-	-r  (--writeTraces enum[on*|off])write traces to the binary cache ('on' by default)
-	-d  (--ddos enum[on*|off])skip over dDos transactions in export ('on' by default)
-	-m  (--maxTraces <uint>)if --ddos:on, the number of traces defining a dDos (default = 250)
-	-n  (--noHeader)      do not show the header row
-	-a  (--allABIs)       load all previously cached abi files
-	-g  (--grabABIs)      using each trace's 'to' address, grab the abi for that address (improves articulation)
-	-f  (--freshen)       freshen but do not print the exported data
-	-s  (--start <num>)   first block to export (inclusive)
-	-e  (--end <num>)     last block to export (inclusive)
-#### Hidden options (shown during testing only)
-
-	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
-	-h  (--help)          display this help screen
-
-  Powered by QBlocks
+Would have written to 0x001d14804b399c6ef80e64576f657660804fec0b.expt.txt with 1501459
+exported 3 of 3 transactions                                             

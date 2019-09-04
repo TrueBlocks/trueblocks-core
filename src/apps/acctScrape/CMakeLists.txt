@@ -45,7 +45,7 @@ endfunction(run_test)
 run_test("acctScrape_no_params")
 run_test("acctScrape_help" "-th")
 run_test("acctScrape_fail_list1" "--list")
-#run_test("acctScrape_fail_list2" "0x1234567890123456789012345678901234567890")
+run_test("acctScrape_fail_list2" "0x1234567890123456789012345678901234567890")
 run_test("acctScrape_list_test" "--list" " 0x1234567890123456789012345678901234567890")
 
 # Installation steps, this tool is renamed at installation

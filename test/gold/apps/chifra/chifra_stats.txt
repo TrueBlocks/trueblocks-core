@@ -1,3 +1,0 @@
-chifra argc: 2 [1:stats] 
-chifra stats 
-00000000 TIME ~ CLOCK - <WARNG> : No monitors found. Quitting...

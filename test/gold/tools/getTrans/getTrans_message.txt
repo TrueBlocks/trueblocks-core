@@ -1,5 +1,6 @@
-getTrans argc: 4 [1:0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344] [2:-a] [3:--api_mode] 
-getTrans 0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344 -a --api_mode 
+getTrans argc: 3 [1:0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344] [2:-a] 
+getTrans 0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344 -a 
+TIME ~ CLOCK - : 4-----API_MODE=true
 { "type": "CTransaction", "data": [
   {
     "hash": "0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344",
@@ -32,6 +33,9 @@ getTrans 0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344 -a -
     "gasCost": 1066000000000000,
     "gasUsed": 53300,
     "date": "2016-07-11 20:58:05 UTC",
+    "datesh": "2016-07-11",
+    "time": "0:58:05 UTC",
+    "age": "100",
     "ether": 0.001000000000000000
   }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

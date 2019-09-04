@@ -1,6 +1,6 @@
 chifra argc: 2 [1:config] 
 chifra config 
-TIME ~ CLOCK - <ERROR>  : Exit(handle_config): 
+TIME ~ CLOCK - <ERROR> : Exit(handle_config): 
 
   chifra config 'mode' must be either 'get' or 'put <json>'.
 

@@ -1,3 +1,3 @@
 whenBlock argc: 2 [1:0pppppp] 
 whenBlock 0pppppp 
-TIME ~ CLOCK - <WARNG>  : The given value '0pppppp' is not a numeral or a special named block.
+TIME ~ CLOCK - <WARNG> : The given value '0pppppp' is not a numeral or a special named block.

@@ -78,7 +78,7 @@ bool COptions::parseArguments(string_q& command) {
         manageFields("CTransaction:price", false);  // hide
         manageFields("CFunction:outputs", true);  // show
         manageFields("CTransaction:input", true);  // show
-        manageFields("CLogEntry:topics", true);  // show
+        manageFields("CLogEntry:data,topics", true);  // show
         abi_spec.loadAbiKnown("all");
     }
 

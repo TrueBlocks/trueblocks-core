@@ -91,5 +91,10 @@ namespace qblocks {
     inline bool isTestMode(void) {
         return (getEnvStr("TEST_MODE") == "true");
     }
+
+    //---------------------------------------------------------------------------
+    inline bool isApiMode(void) {
+        return (getEnvStr("API_MODE") == "true");
+    }
 }  // namespace qblocks
 

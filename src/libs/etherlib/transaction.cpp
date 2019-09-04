@@ -347,7 +347,7 @@ void CTransaction::registerClass(void) {
     if (isTestMode()) {
         UNHIDE_FIELD(CTransaction, "isError");
     }
-    if (!getEnvStr("API_MODE").empty()) {
+    if (isApiMode()) {
         UNHIDE_FIELD(CTransaction, "datesh");
         UNHIDE_FIELD(CTransaction, "time");
         UNHIDE_FIELD(CTransaction, "date");

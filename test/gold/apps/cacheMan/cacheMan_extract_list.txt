@@ -1,8 +1,0 @@
-cacheMan argc: 4 [1:-l] [2:extract.acct.bin] [3:--data] 
-cacheMan -l extract.acct.bin --data 
-1235820	1
-1236136	14
-1244925	5
-1260081	3
-1325879	0
-1332455	2

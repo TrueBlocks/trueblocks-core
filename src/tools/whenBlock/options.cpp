@@ -159,9 +159,9 @@ COptions::COptions(void) {
         }
     }
     Init();
-    
+
     // Differnt default for this software, but only change it if user hasn't already therefor not in Init
-    if (!api_mode)
+    if (!isApiMode())
         exportFmt = TXT1;
 }
 

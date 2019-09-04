@@ -1,6 +1,0 @@
-chifra argc: 2 [1:daemon] 
-chifra daemon 
-00000000 TIME ~ CLOCK - <WARNG> : Nothing to monitor
-00000001 TIME ~ CLOCK - <INFO>  : Sleeping for 1 seconds
-00000002 TIME ~ CLOCK - <WARNG> : Nothing to monitor
-00000003 TIME ~ CLOCK - <INFO>  : Sleeping for 1 seconds

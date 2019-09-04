@@ -284,7 +284,7 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 bool COptions::isMulti(void) const {
-    return api_mode || ((blocks.stop - blocks.start) > 1 || blocks.hashList.size() > 1 || blocks.numList.size() > 1);
+    return isApiMode() || ((blocks.stop - blocks.start) > 1 || blocks.hashList.size() > 1 || blocks.numList.size() > 1);
 }
 
 //--------------------------------------------------------------------------------

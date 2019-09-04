@@ -1,3 +1,0 @@
-chifra argc: 3 [1:ls] [2:-l] 
-chifra ls -l 
-00000000 TIME ~ CLOCK - <WARNG> : No monitors found. Quitting...

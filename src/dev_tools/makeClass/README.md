@@ -41,7 +41,6 @@ All **QBlocks** command-line tools support the following commands (although in s
     --raw       |   report JSON data from the node with minimal processing
     --veryRaw   |   report JSON data from node with zero processing
     --fmt       |   export format (where appropriate). One of [none|txt|csv|json|api]
-    --api_mode  |   simulate api_mode for testing
     --file:fn   |   specify multiple sets of command line options in a file.
 
 <small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>

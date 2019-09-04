@@ -15,6 +15,7 @@
 #include "slurpcache.h"
 #include "namecache.h"
 #include "configuration.h"
+#include "apiresult.h"
 
 //-------------------------------------------------------------------------
 class COptions : public COptionsBase {

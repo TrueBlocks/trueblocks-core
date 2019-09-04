@@ -1,5 +1,6 @@
-getTrace argc: 3 [1:2222221.*] [2:--api_mode] 
-getTrace 2222221.* --api_mode 
+getTrace argc: 2 [1:2222221.*] 
+getTrace 2222221.* 
+TIME ~ CLOCK - : 4-----API_MODE=true
 { "type": "CTrace", "data": [
   {
     "blockHash": "0xe4c2b8cb9ddd1acb41043afb3bd0149c281eca23f1bc563af5899bac748ec372",

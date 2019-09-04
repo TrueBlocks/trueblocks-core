@@ -1,5 +1,6 @@
-getLogs argc: 3 [1:1428993.*] [2:--api_mode] 
-getLogs 1428993.* --api_mode 
+getLogs argc: 2 [1:1428993.*] 
+getLogs 1428993.* 
+TIME ~ CLOCK - : 4-----API_MODE=true
 { "type": "CLogEntry", "data": [
   {
     "address": "0x2bad3aa54d79b43cea3e859609d2de84e544ee74",

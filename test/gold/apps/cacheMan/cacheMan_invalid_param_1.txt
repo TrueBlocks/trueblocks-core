@@ -1,6 +1,6 @@
 cacheMan argc: 2 [1:--junk] 
 cacheMan --junk 
-TIME ~ CLOCK - <ERROR>  : Exit(parseArguments): 
+TIME ~ CLOCK - <ERROR> : Exit(parseArguments): 
 
   Invalid option: --junk
 

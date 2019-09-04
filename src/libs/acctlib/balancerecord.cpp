@@ -184,7 +184,7 @@ void CBalanceRecord::registerClass(void) {
     HIDE_FIELD(CBalanceRecord, "dollarsPrior");
     ADD_FIELD(CBalanceRecord, "dollars", T_ETHER, ++fieldNum);
     HIDE_FIELD(CBalanceRecord, "dollars");
-    if (!getEnvStr("API_MODE").empty()) {
+    if (isApiMode()) {
         UNHIDE_FIELD(CBalanceRecord, "etherPrior");
         UNHIDE_FIELD(CBalanceRecord, "ether");
         UNHIDE_FIELD(CBalanceRecord, "dollarsPrior");

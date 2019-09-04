@@ -10,7 +10,7 @@ bool COptions::exportBalances(void) {
 
     ENTER("exportBalances");
 
-    if (exportFmt == JSON1 && !freshenOnly)
+    if ((exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1) && !freshenOnly)
         cout << "[";
 
     for (auto monitor : monitors) {
@@ -54,11 +54,9 @@ bool COptions::exportBalances(void) {
         }
 
         bool first = true;
-        size_t nExported = 0;
         for (auto record : balances) {
-            nExported++;
             if (!freshenOnly) {
-                if (exportFmt == JSON1 && !first)
+                if ((exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1) && !first)
                     cout << ", ";
                 cout << record;
                 first = false;
@@ -68,20 +66,13 @@ bool COptions::exportBalances(void) {
         // write the data to the hard drive so we can use it next time
     }
 
-//    if (!freshenOnly)
-//        cerr << "exported " << nExported << " of " << items.size() << " records." << string_q(45,' ') << "\n";
-//    cerr.flush();
-    if (exportFmt == JSON1 && !freshenOnly)
+    if ((exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1) && !freshenOnly)
         cout << "]";
-
-//    for (auto watch : monitors)
-//        watch.writeLastExport(items[items.size()-1].blk);
 
     EXIT_NOMSG(true);
 }
 
 #if 0
-
     for (auto addr : addrs) {
         ostringstream os;
         if (getGlobalConfig("acctExport")->getConfigBool("api", "r emote_bals", false)) {
@@ -93,7 +84,7 @@ bool COptions::exportBalances(void) {
         {
             string_q fn = "/tmp/results";
             os << "cacheMan " << " -d " << addr << " >" + fn + " ; ";
-            LOG1("Calling " + os.str());
+            LOG4("Calling " + os.str());
             if (isTestMode())
                 cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
             else

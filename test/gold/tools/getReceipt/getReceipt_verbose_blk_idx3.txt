@@ -1,5 +1,6 @@
-getReceipt argc: 4 [1:0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3] [2:-v] [3:--api_mode] 
-getReceipt 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 -v --api_mode 
+getReceipt argc: 3 [1:0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3] [2:-v] 
+getReceipt 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 -v 
+TIME ~ CLOCK - : 4-----API_MODE=true
 { "type": "CTransaction", "data": [
   {
     "contractAddress": "0x0",

@@ -74,6 +74,16 @@ namespace qblocks {
             cerr << endl;
         }
 
+        // send out the environment, if any non-default
+        if (isTestMode() || isLevelOn(sev_debug4)) {
+            size_t save = verbose;
+            verbose = 10;
+            if (isApiMode())                        { LOG4("API_MODE=",    getEnvStr("API_MODE")); }
+            if (getEnvStr("DOCKER_MODE") == "true") { LOG4("DOCKER_MODE=", getEnvStr("DOCKER_MODE")); }
+//            if (!getEnvStr("IPFS_PATH").empty())    { LOG4("IPFS_PATH=",   getEnvStr("IPFS_PATH")); }
+            verbose = save;
+        }
+
         if ((uint64_t)argc <= minArgs)  // the first arg is the program's name
             return usage("Not enough arguments presented.");
 
@@ -182,17 +192,12 @@ namespace qblocks {
                     verbose = str_2_Uint(arg);
                 }
 
-            } else if (arg == "--api_mode") {
-                api_mode = true;
-                exportFmt = API1;
-                args[i] = "";
-
             } else if (startsWith(arg, "-x:") || startsWith(arg, "--fmt:")) {
                 arg = substitute(substitute(arg, "-x:", ""), "--fmt:", "");
-                     if ( arg == "txt" ) { exportFmt = TXT1;  api_mode = false; }
-                else if ( arg == "csv" ) { exportFmt = CSV1;  api_mode = false; }
-                else if ( arg == "json") { exportFmt = JSON1; api_mode = false; }
-                else if ( arg == "api" ) { exportFmt = API1;  api_mode = true; }
+                     if ( arg == "txt" ) { exportFmt = TXT1;  }
+                else if ( arg == "csv" ) { exportFmt = CSV1; }
+                else if ( arg == "json") { exportFmt = JSON1; }
+                else if ( arg == "api" ) { exportFmt = API1; }
                 else return usage("Export format must be one of [ json | txt | csv | api ]. Quitting...");
                 args[i] = "";
             }
@@ -493,7 +498,7 @@ namespace qblocks {
             os << "#### Usage\n";
         }
 
-        if (api_mode)
+        if (isApiMode())
             cout << "{ \"cmd\": \"" + getProgName() + "\", \"error\": \"" << errMsg << "\" }" << endl;
 
         os << "\n";
@@ -919,8 +924,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         isReadme = false;
         isRaw = false;
         isVeryRaw = false;
-        api_mode = !getEnvStr("API_MODE").empty();
-        exportFmt = (api_mode ? API1 : TXT1);
+        exportFmt = (isApiMode() ? API1 : TXT1);
         needsOption = false;
         enableBits = OPT_DEFAULT;
         scanRange = make_pair(0,NOPOS);

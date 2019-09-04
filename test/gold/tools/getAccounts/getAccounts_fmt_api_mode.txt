@@ -1,5 +1,6 @@
-getAccounts argc: 5 [1:--named] [2:--custom] [3:--owned] [4:--api_mode] 
-getAccounts --named --custom --owned --api_mode 
+getAccounts argc: 4 [1:--named] [2:--custom] [3:--owned] 
+getAccounts --named --custom --owned 
+TIME ~ CLOCK - : 4-----API_MODE=true
 { "type": "CAccountName", "data": [
   {
     "group": "",

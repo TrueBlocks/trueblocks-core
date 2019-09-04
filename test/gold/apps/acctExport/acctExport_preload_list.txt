@@ -1,0 +1,4 @@
+acctScrape argc: 2 [1:0x001d14804b399c6ef80e64576f657660804fec0b] 
+acctScrape 0x001d14804b399c6ef80e64576f657660804fec0b 
+freshening: 0x001d14804b399c6ef80e64576f657660804fec0b...
+account scraper is finished.                 

@@ -20,6 +20,7 @@ getTrans 0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10 -avt
       "logs": [
         {
           "address": "0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373",
+          "data": "0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353",
           "logIndex": 36,
           "topics": [
             "0xc48d99ca63a72003d5e809e08e7b6638ac06349daeddd2c9466b9c276a7ce67b",

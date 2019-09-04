@@ -18,12 +18,13 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        CRuntimeClass *pClass = (options.doTraces ? GETRUNTIME_CLASS(CTrace) :
-                                 (options.doLogs ? GETRUNTIME_CLASS(CLogEntry) :
-                                  (options.doBalances ? GETRUNTIME_CLASS(CEthState) :
-                                   GETRUNTIME_CLASS(CTransaction))));
+        string_q className =
+        (options.doAppearances ? "CAppearance" :
+         (options.doTraces ? GETRUNTIME_CLASS(CTrace)->m_ClassName :
+          (options.doLogs ? GETRUNTIME_CLASS(CLogEntry)->m_ClassName :
+           (options.doBalances ? GETRUNTIME_CLASS(CEthState)->m_ClassName : GETRUNTIME_CLASS(CTransaction)->m_ClassName))));
         if (once)
-            cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], pClass);
+            cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], className);
 
         options.loadAllAppearances();
         if (options.doBalances) {
@@ -35,6 +36,13 @@ int main(int argc, const char *argv[]) {
         once = false;
     }
     cout << exportPostamble(options.exportFmt, expContext().fmtMap["meta"]);
+
+    if (!options.freshenOnly) {
+        cerr << "exported " << options.nExported << " ";
+        cerr << (options.doTraces ? "traces from " : (options.doLogs ? "logs from " : (options.doABIs ? "abis from " : "of ")));
+        cerr << options.items.size() << " transactions" << string_q(45,' ') << "\n";
+        cerr.flush();
+    }
 
     acctlib_cleanup();
     return 0;

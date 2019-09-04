@@ -1,5 +1,6 @@
-whenBlock argc: 3 [1:1001001] [2:--api_mode] 
-whenBlock 1001001 --api_mode 
+whenBlock argc: 2 [1:1001001] 
+whenBlock 1001001 
+TIME ~ CLOCK - : 4-----API_MODE=true
 { "type": "CBlock", "data": [
   {
     "blockNumber": 1001001,

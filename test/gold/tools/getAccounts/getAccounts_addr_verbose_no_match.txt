@@ -1,3 +1,3 @@
 getAccounts argc: 3 [1:-v] [2:0xCB1] 
 getAccounts -v 0xCB1 
-TIME ~ CLOCK - <INFO>   : No results
+TIME ~ CLOCK - <INFO>  : No results

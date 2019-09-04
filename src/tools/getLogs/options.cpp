@@ -71,9 +71,15 @@ bool COptions::parseArguments(string_q& command) {
         abi_spec.loadAbiKnown("all");
     }
 
-    if (api_mode) {
+    // Not sure why this is here to be honest, perhaps only to make test cases pass. The test cases could be fixed...
+    if (isApiMode() || exportFmt == API1) {
         manageFields("CLogEntry:all", false);
         manageFields("CLogEntry:address,logIndex,type,compressedLog,topics,data", true);
+    }
+    // Not sure why this is here to be honest, perhaps only to make test cases pass. The test cases could be fixed...
+    if (exportFmt == JSON1) {
+        manageFields(defHide, false);
+        manageFields(defShow+"|CLogEntry:data,topics", true);
     }
 
     // Display formatting

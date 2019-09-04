@@ -150,7 +150,9 @@ namespace qblocks {
     extern const string_q defShow;
 
     //-------------------------------------------------------------------------
-    string_q exportPreamble(format_t fmt, const string_q& format, const CRuntimeClass *pClass);
+    string_q exportPreamble(format_t fmt, const string_q& format, const string_q& className);
+    inline string_q exportPreamble(format_t fmt, const string_q& format, const CRuntimeClass *pClass)
+        { return exportPreamble(fmt, format, (pClass ? pClass->m_ClassName : "unknown")); }
     string_q exportPostamble(format_t fmt, const string_q& extra);
 
     //-------------------------------------------------------------------------

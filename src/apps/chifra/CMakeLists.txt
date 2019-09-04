@@ -41,9 +41,9 @@ function(run_special_test testName)
 endfunction(run_special_test)
 
 # Enter one line for each individual test
-#run_test("chifra_README"             "-th")
-#run_test("chifra_no_params")
-#run_test("chifra_invalid_option"     "not_a_mode")
+run_test("chifra_README"               "-th")
+run_test("chifra_no_params")
+run_test("chifra_invalid_option"       "not_a_mode")
 
 run_test("chifra_config_noparms"       "config")
 run_test("chifra_config_badparms"      "config" " bad-param")
@@ -61,13 +61,8 @@ run_test("chifra_config_put"           "config" " put" " { test-data }")
 
 #run_test("chifra_scrape"           "scrape")
 
-#run_test("chifra_ls_1"             "status")
-#run_test("chifra_ls_2"             "status" " -l")
-#run_test("chifra_ls_3"             "status" " 0x1234567812345678123456781234567812345678")
-#run_test("chifra_ls_4"             "status" " -l" " 0x1234567812345678123456781234567812345678")
-#run_test("chifra_ls_5"             "status" " unused_param")
-
-#run_test("chifra_stats"            "status" "--long")
+run_test("chifra_status"            "status" "--mode" " all")
+run_test("chifra_status_details"    "status" "--mode" " all" " --details")
 #run_test("chifra_seed"             "seed" " --verbose")
 #run_test("chifra_freshen"          "freshen" " 0x1234567812345678123456781234567812345678")
 #run_test("chifra_list"             "list" " 0x1234567812345678123456781234567812345678")

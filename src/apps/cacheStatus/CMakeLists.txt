@@ -32,6 +32,11 @@ function(run_test testName)
      run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
 endfunction(run_test)
 
+# Function to run an api mode test case
+function(api_test testName)
+    run_the_api_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(api_test)
+
 # To run only specific tests we define a test configuration named "test_all"
 add_custom_target(test-all COMMAND ${CMAKE_CTEST_COMMAND} -C test_all)
 
@@ -39,6 +44,11 @@ add_custom_target(test-all COMMAND ${CMAKE_CTEST_COMMAND} -C test_all)
 function(run_special_test testName)
     run_the_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
 endfunction(run_special_test)
+
+# Function to run an special or slow test case
+function(api_special_test testName)
+    run_the_api_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(api_special_test)
 
 ## To run only specific tests we define a test configuration named "test_state"
 add_custom_target(test-state COMMAND ${CMAKE_CTEST_COMMAND} -C test_state)
@@ -54,7 +64,7 @@ run_test("cacheStatus_no_params"        )
 run_test("cacheStatus_invalid_param_1"  "--junk" )
 run_test("cacheStatus_invalid_param_2"  "-l" " --junk" )
 
-run_test("cacheStatus_scraper"          "index" " --api_mode")
+api_test("cacheStatus_scraper"          "index")
 run_test("cacheStatus_monitors"         "monitors")
 run_test("cacheStatus_names"            "names")
 run_test("cacheStatus_abis"             "abis")

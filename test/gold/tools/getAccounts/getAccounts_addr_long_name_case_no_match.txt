@@ -1,3 +1,3 @@
 getAccounts argc: 4 [1:--matchCase] [2:0xCB] [3:torJ] 
 getAccounts --matchCase 0xCB torJ 
-TIME ~ CLOCK - <INFO>   : No results
+TIME ~ CLOCK - <INFO>  : No results

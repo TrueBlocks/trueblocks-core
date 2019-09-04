@@ -1,5 +1,6 @@
-getTrans argc: 4 [1:2222222.0] [2:2332332.0] [3:--api_mode] 
-getTrans 2222222.0 2332332.0 --api_mode 
+getTrans argc: 3 [1:2222222.0] [2:2332332.0] 
+getTrans 2222222.0 2332332.0 
+TIME ~ CLOCK - : 4-----API_MODE=true
 { "type": "CTransaction", "data": [
   {
     "hash": "0x9c34ba45c523f75009d279553fe2a7e9a99a991a297439226321bea26ab62bbb",
@@ -21,7 +22,12 @@ getTrans 2222222.0 2332332.0 --api_mode
       "logs": [],
       "status": null
     },
-    "gasUsed": 1000000
+    "gasUsed": 1000000,
+    "date": "2016-09-08 15:22:45 UTC",
+    "datesh": "2016-09-08",
+    "time": "5:22:45 UTC",
+    "age": "100",
+    "ether": 0.000000000000000000
   },  {
     "hash": "0xa023f79cc26b321111cf051cab92b3a325e00ecfa9d377845a41654f6b2f0ebe",
     "blockHash": "0x6881c5043f6f6beed5ca31023e3a3518bede50a13be5c521fa6e21577314fa04",
@@ -53,6 +59,11 @@ getTrans 2222222.0 2332332.0 --api_mode
       ],
       "status": null
     },
-    "gasUsed": 21298
+    "gasUsed": 21298,
+    "date": "2016-09-26 21:07:02 UTC",
+    "datesh": "2016-09-26",
+    "time": "1:07:02 UTC",
+    "age": "100",
+    "ether": 0.000000000000000000
   }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

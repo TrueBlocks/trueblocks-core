@@ -123,7 +123,7 @@ extern bool loadMonitorData(CAppearanceArray_base& items, const address_t& addr)
                                         cout << "}\n";
                                         first = false;
                                     } else {
-                                        cout << (!getEnvStr("API_MODE").empty() ? watch->address + "\t" : "") << item.blk << "\t" << item.txid << endl;
+                                        cout << (isApiMode() ? watch->address + "\t" : "") << item.blk << "\t" << item.txid << endl;
                                     }
                                 }
 
@@ -191,7 +191,7 @@ extern bool loadMonitorData(CAppearanceArray_base& items, const address_t& addr)
                     cout << cMagenta << "\tThe cache was repaired and a backup created.\n" << cOff;
 
                 } else if (mode == "fix") {
-                    if (!options.api_mode)
+                    if (!isApiMode())
                         cout << cMagenta << "\tThere was nothing to fix (" << lastItem.blk << ").\n" << cOff;
                     // write the last block to file
                     if (!isTestMode()) {

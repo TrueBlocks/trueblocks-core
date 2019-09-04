@@ -76,6 +76,7 @@ enable_testing()
 set (TEST_PATH   "${CMAKE_SOURCE_DIR}/../test/working")
 set (GOLD_PATH   "${CMAKE_SOURCE_DIR}/../test/gold")
 set (TEST_CHECK  "${SCRIPTS_DEST_PATH}/testCheck.py")
+set (API_CHECK   "${SCRIPTS_DEST_PATH}/apiCheck.py")
 set (TAG_REPLACE "${SCRIPTS_DEST_PATH}/replaceTag.py")
 
 # ----------------------------------------------------------------------------------------
@@ -104,6 +105,21 @@ function(run_the_test testPath goldPath testName testExe) # Optional argv4 with 
 endfunction(run_the_test)
 
 # ----------------------------------------------------------------------------------------
+# Runs test and checks output against expected gold file
+function(run_the_api_test testPath goldPath testName testExe) # Optional argv4 with command parameters
+	set(TEST_FILE "${testPath}/${testName}.txt")
+	set(GOLD_FILE "${goldPath}/${testName}.txt")
+	if (NOT ${ARGV4} STREQUAL "" )
+	    # In ARGV4 we receive the parameters to be passed to testExe  (optional)
+	    add_test(NAME ${testName} COMMAND ${API_CHECK} ${testExe} ${ARGN} ${TEST_FILE} ${GOLD_FILE})
+	    #message(STATUS ${API_CHECK} " " ${testExe} " " ${ARGN} " " ${TEST_FILE} " " ${GOLD_FILE})
+    else()
+	    add_test(NAME ${testName} COMMAND ${API_CHECK} ${testExe} ${TEST_FILE} ${GOLD_FILE})
+	    #message(STATUS ${API_CHECK} " " ${testExe} " " ${TEST_FILE} " " ${GOLD_FILE})
+    endif()
+endfunction(run_the_api_test)
+
+# ----------------------------------------------------------------------------------------
 # Runs specials tests that are only run with "make test-all"
 function(run_the_special_test testPath goldPath testName testExe) # Optional argv4 with command parameters
     set(TEST_FILE "${testPath}/${testName}.txt")
@@ -117,6 +133,21 @@ function(run_the_special_test testPath goldPath testName testExe) # Optional arg
 	    #message(STATUS ${TEST_CHECK} " " ${testExe} " " ${TEST_FILE} " " ${GOLD_FILE})
     endif()
 endfunction(run_the_special_test)
+
+# ----------------------------------------------------------------------------------------
+# Runs specials api tests that are only run with "make test-all"
+function(run_the_api_special_test testPath goldPath testName testExe) # Optional argv4 with command parameters
+    set(TEST_FILE "${testPath}/${testName}.txt")
+    set(GOLD_FILE "${goldPath}/${testName}.txt")
+    if (NOT ${ARGV4} STREQUAL "" )
+        # In ARGV4 we receive the parameters to be passed to testExe  (optional)
+        add_test(NAME ${testName} COMMAND ${API_CHECK} ${testExe} ${ARGN} ${TEST_FILE} ${GOLD_FILE} CONFIGURATIONS test_all)
+	    #message(STATUS ${API_CHECK} " " ${testExe} " " ${ARGN} " " ${TEST_FILE} " " ${GOLD_FILE})
+    else()
+        add_test(NAME ${testName} COMMAND ${API_CHECK} ${testExe} ${TEST_FILE} ${GOLD_FILE} CONFIGURATIONS test_all)
+	    #message(STATUS ${API_CHECK} " " ${testExe} " " ${TEST_FILE} " " ${GOLD_FILE})
+    endif()
+endfunction(run_the_api_special_test)
 
 # ----------------------------------------------------------------------------------------
 # Runs state tests that are only run with "make test-state"
@@ -134,25 +165,19 @@ function(run_the_state_test testPath goldPath testName testExe) # Optional argv4
 endfunction(run_the_state_test)
 
 # ----------------------------------------------------------------------------------------
-## Function to Concatenate multiple files in a single output file
-## Rename or move to root CMakeLists.txt if you cosider it handy
-## Parameters :
-## input_list - input files (list)
-## output_file - output file
-#function(concatenate_files input_list output_file)
-#    file(WRITE ${OUT} "")
-#    foreach(FILENAME ${input_list})
-#        file(READ ${FILENAME} CONTENTS)
-#    file(APPEND ${output_file} "${CONTENTS}")
-#    endforeach()
-#endfunction(concatenate_files)
-## We need to generate for test 01 the input files blocks.txt and dates.txt. How?
-## NOTE FROM JAY: I PUT THESE FILES IN THE GOLD FOLDER AND CHANGE CWD TO GOLD TO RUN THE TEST
-## Group them in a list
-##set(INPUT_LIST "/path/to/blocks.txt" "/path/To/dates.txt")
-## Once we have them we can concatenate both files using the function concatenate_files
-## set(OUTPUT_TEST_FILE "/path/to/results.txt")
-##add_custom_command(OUTPUT ${OUTPUT_TEST_FILE} COMMAND concatenate_files ${INPUT_LIST} ${OUTPUT_TEST_FILE})
+# Runs state tests that are only run with "make test-state"
+function(run_the_api_state_test testPath goldPath testName testExe) # Optional argv4 with command parameters
+    set(TEST_FILE "${testPath}/${testName}.txt")
+    set(GOLD_FILE "${goldPath}/${testName}.txt")
+    if (NOT ${ARGV4} STREQUAL "" )
+        # In ARGV4 we receive the parameters to be passed to testExe  (optional)
+        add_test(NAME ${testName} COMMAND ${API_CHECK} ${testExe} ${ARGN} ${TEST_FILE} ${GOLD_FILE} CONFIGURATIONS test_state)
+	    #message(STATUS ${API_CHECK} " " ${testExe} " " ${ARGN} " " ${TEST_FILE} " " ${GOLD_FILE})
+    else()
+        add_test(NAME ${testName} COMMAND ${API_CHECK} ${testExe} ${TEST_FILE} ${GOLD_FILE} CONFIGURATIONS test_state)
+	    #message(STATUS ${API_CHECK} " " ${testExe} " " ${TEST_FILE} " " ${GOLD_FILE})
+    endif()
+endfunction(run_the_api_state_test)
 
 # ----------------------------------------------------------------------------------------
 # Compilation order for the subfolders

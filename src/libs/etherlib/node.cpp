@@ -1112,7 +1112,7 @@ extern void loadParseMap(void);
     }
 
     //-----------------------------------------------------------------------
-    string_q exportPreamble(format_t fmt, const string_q& format, const CRuntimeClass *pClass) {
+    string_q exportPreamble(format_t fmt, const string_q& format, const string_q& className) {
         ostringstream os;
         switch (fmt) {
             case NONE1:
@@ -1131,7 +1131,7 @@ extern void loadParseMap(void);
                 os << "[";
                 break;
             case API1:
-                os << "{ \"type\": \"" << (pClass ? pClass->m_ClassName : "unknown") << "\", \"data\": [";
+                os << "{ \"type\": \"" << className << "\", \"data\": [";
                 break;
             default:
                 ASSERT(0); // shouldn't happen

@@ -52,7 +52,7 @@ void COptions::handle_listing(ostream& os) {
         }
     }
     if (accounts.size() == 0) {
-        if (api_mode) {
+        if (isApiMode()) {
             CAccountName item;
             item.address = "0x0";
             item.name = "none";
@@ -65,7 +65,7 @@ void COptions::handle_listing(ostream& os) {
     }
     sort(accounts.begin(), accounts.end());
 
-    if (api_mode) {
+    if (isApiMode()) {
         SHOW_FIELD(CAccountName, "path");
         SHOW_FIELD(CAccountName, "sizeInBytes");
         SHOW_FIELD(CAccountName, "latestAppearance");

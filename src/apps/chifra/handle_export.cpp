@@ -22,6 +22,7 @@ bool COptions::handle_export(void) {
         ostringstream os;
         os << "grabABI " << addr << " 1>/dev/null 2>&1; ";
         os << "acctExport " << addr << " " << tool_flags;
+        LOG4("Calling " + os.str());
         if (isTestMode())
             cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
         else {

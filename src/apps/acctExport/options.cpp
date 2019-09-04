@@ -15,6 +15,7 @@ static const COption params[] = {
     COption("logs", "l", "", OPT_SWITCH, "export logs instead of transaction list"),
     COption("traces", "t", "", OPT_SWITCH, "export traces instead of transaction list"),
     COption("balances", "c", "", OPT_HIDDEN | OPT_SWITCH, "export balance history instead of transaction list"),
+    COption("appearances", "p", "", OPT_SWITCH, "export a list of appearances"),
     COption("blocks", "b", "enum[on|off*]", OPT_HIDDEN | OPT_FLAG, "write blocks to the binary cache ('off' by default)"),
     COption("writeTxs", "s", "enum[on*|off]", OPT_HIDDEN | OPT_FLAG, "write transactions to the binary cache ('on' by default)"),
     COption("writeTraces", "r", "enum[on*|off]", OPT_HIDDEN | OPT_FLAG, "write traces to the binary cache ('on' by default)"),
@@ -83,6 +84,9 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-n" || arg == "--allABIs") {
             allABIs = true;
 
+        } else if (arg == "-p" || arg == "--appearances") {
+            doAppearances = true;
+
         } else if (arg == "-l" || arg == "--logs") {
             doLogs = true;
 
@@ -143,22 +147,22 @@ bool COptions::parseArguments(string_q& command) {
 
     SHOW_FIELD(CTransaction, "traces");
 
-    if ((doLogs + doTraces + doBalances) > 1)
-        return usage("Please export only one of logs, traces, or balances. Quitting...");
+    if ((doAppearances + doLogs + doTraces + doBalances) > 1)
+        return usage("Please export only one of list, logs, traces, or balances. Quitting...");
 
     if (monitors.size() == 0)
         return usage("You must provide at least one Ethereum address. Quitting...");
 
     // show certain fields and hide others
-    SEP4("default field hiding: " + defHide);
+    //SEP4("default field hiding: " + defHide);
     manageFields(defHide, false);
-    SEP4("default field showing: " + defShow);
+    //SEP4("default field showing: " + defShow);
     manageFields(defShow, true);
 
     CToml toml(getMonitorPath(monitors[0].address + ".toml"));
-    SEP4("field hiding: " + toml.getConfigStr("fields", "hide", ""));
+    //SEP4("field hiding: " + toml.getConfigStr("fields", "hide", ""));
     manageFields(toml.getConfigStr("fields", "hide", ""), false);
-    SEP4("field showing: " + toml.getConfigStr("fields", "show", ""));
+    //SEP4("field showing: " + toml.getConfigStr("fields", "show", ""));
     manageFields(toml.getConfigStr("fields", "show", ""), true );
 
     // Load as many ABI files as we have
@@ -188,15 +192,12 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (api_mode)
-        exportFmt = TXT1;
-
     writeTxs    = getGlobalConfig("acctExport")->getConfigBool("settings", "writeTxs", writeTxs);;
     writeTraces = getGlobalConfig("acctExport")->getConfigBool("settings", "writeTraces", writeTraces);;
     skipDdos    = getGlobalConfig("acctExport")->getConfigBool("settings", "skipDdos", skipDdos);;
     maxTraces   = getGlobalConfig("acctExport")->getConfigBool("settings", "maxTraces", maxTraces);;
 
-    if (exportFmt != JSON1) {
+    if (exportFmt != JSON1 && exportFmt != API1) {
         string_q deflt, format;
 
         deflt = getGlobalConfig("acctExport")->getConfigStr("display", "format", STR_DISPLAY_TRANSACTION);
@@ -215,6 +216,11 @@ bool COptions::parseArguments(string_q& command) {
         deflt = getGlobalConfig("acctExport")->getConfigStr("display", "log", STR_DISPLAY_LOGENTRY);
         format = toml.getConfigStr("formats", "logentry_fmt", deflt);
         expContext().fmtMap["logentry_fmt"] = cleanFmt(format, exportFmt);
+
+        // This doesn't really work because CAppearance_base is not a subclass of CBaseNode. We phony it here for future reference.
+        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "appearances", STR_DISPLAY_DISPLAYAPP);
+        format = toml.getConfigStr("formats", "displayapp_fmt", deflt);
+        expContext().fmtMap["displayapp_fmt"] = cleanFmt(format, exportFmt);
 
         deflt = getGlobalConfig("acctExport")->getConfigStr("display", "balance", STR_DISPLAY_BALANCERECORD);
         format = toml.getConfigStr("formats", "balancerecord_fmt", deflt);
@@ -235,6 +241,8 @@ bool COptions::parseArguments(string_q& command) {
             expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["trace_fmt"], exportFmt);
         } else if (doLogs) {
             expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["logentry_fmt"], exportFmt);
+        } else if (doAppearances) {
+            expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["displayapp_fmt"], exportFmt);
         } else if (doBalances) {
             expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["balancerecord_fmt"], exportFmt);
             SHOW_FIELD(CBalanceRecord, "address");
@@ -261,6 +269,8 @@ void COptions::Init(void) {
     skipDdos = true;
     maxTraces = 250;
     articulate = false;
+    doAppearances = false;
+    nExported = 0;
     doLogs = false;
     doTraces = false;
     doBalances = false;
@@ -275,8 +285,8 @@ void COptions::Init(void) {
 COptions::COptions(void) {
     ts_array = NULL;
     ts_cnt = 0;
-    exportFmt = JSON1;
     Init();
+    CDisplayApp::registerClass();
 }
 
 //--------------------------------------------------------------------------------
@@ -301,7 +311,9 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
 //-----------------------------------------------------------------------
 bool COptions::loadOneAddress(CAppearanceArray_base& apps, const address_t& addr) {
 
-    ENTER("loadOneAddress");
+    if (hackAppAddr.empty())
+        hackAppAddr = addr;
+
     string_q fn = getMonitorPath(addr);
 
     size_t nRecords = (fileSize(fn) / sizeof(CAppearance_base));
@@ -377,7 +389,7 @@ bool COptions::loadAllAppearances(void) {
                 items.push_back(item);
         }
     }
-    LOG1("Items array: " + uint_2_Str(items.size()) + " - " + uint_2_Str(items.size() * sizeof(CAppearance_base)));
+    //LOG1("Items array: " + uint_2_Str(items.size()) + " - " + uint_2_Str(items.size() * sizeof(CAppearance_base)));
     if (hasFuture)
         LOG_WARN("Cache file contains blocks ahead of the chain. Some items will not be exported.");
 

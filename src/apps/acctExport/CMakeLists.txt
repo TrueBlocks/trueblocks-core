@@ -40,10 +40,31 @@ function(run_test testName)
     run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
 endfunction(run_test)
 
+# Function to run an individual test case
+function(api_test testName)
+    run_the_api_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(api_test)
+
+# Preload some data
+run_the_test(${TEST_PATH} ${GOLD_PATH} "acctExport_preload_list" ${EXECUTABLE_OUTPUT_PATH}/acctScrape " 0x001d14804b399c6ef80e64576f657660804fec0b")
+
 # Enter one line for each individual test
 run_test("acctExport_no_params")
-run_test("acctExport_help"  "-h")
-run_test("acctExport_export" "0x001d14804b399c6ef80e64576f657660804fec0b")
+run_test("acctExport_help"            "-h")
+
+run_test("acctExport_export"          "0x001d14804b399c6ef80e64576f657660804fec0b")
+run_test("acctExport_export_apps"     "0x001d14804b399c6ef80e64576f657660804fec0b" " --appearances")
+run_test("acctExport_export_traces"   "0x001d14804b399c6ef80e64576f657660804fec0b" " --traces")
+run_test("acctExport_export_logs"     "0x001d14804b399c6ef80e64576f657660804fec0b" " --logs")
+run_test("acctExport_export_balances" "0x001d14804b399c6ef80e64576f657660804fec0b" " --balances")
+run_test("acctExport_export_abis"     "0x001d14804b399c6ef80e64576f657660804fec0b" " --abis")
+
+api_test("acctExport_api_export"          "0x001d14804b399c6ef80e64576f657660804fec0b")
+api_test("acctExport_api_export_apps"     "0x001d14804b399c6ef80e64576f657660804fec0b" " --appearances")
+api_test("acctExport_api_export_traces"   "0x001d14804b399c6ef80e64576f657660804fec0b" " --traces")
+api_test("acctExport_api_export_logs"     "0x001d14804b399c6ef80e64576f657660804fec0b" " --logs")
+api_test("acctExport_api_export_balances" "0x001d14804b399c6ef80e64576f657660804fec0b" " --balances")
+api_test("acctExport_api_export_abis"     "0x001d14804b399c6ef80e64576f657660804fec0b" " --abis")
 
 # Installation steps, this tool is renamed at installation
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

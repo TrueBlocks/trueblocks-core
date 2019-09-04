@@ -20,7 +20,7 @@ bool COptions::handle_list(void) {
     for (auto addr : addrs) {
         ostringstream os;
         os << "cacheMan " << " --fix " << addr << " >&2 ; ";
-        os << "cacheMan " << tool_flags << " -d " << addr << " ; ";
+        os << "acctExport --appearances " << tool_flags << " " << addr << " ; ";
         LOG4("Calling " + os.str());
         if (isTestMode())
             cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;

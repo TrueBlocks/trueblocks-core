@@ -28,7 +28,7 @@ bool COptions::handle_rm(void) {
 
         } else {
             int ch = 'n';
-            if (!api_mode) {
+            if (!isApiMode()) {
                 cerr << "Remove monitor for " << addr << "? (y=yes) >";
                 cerr.flush();
                 ch = getchar();

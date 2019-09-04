@@ -1,5 +1,6 @@
-ethQuote argc: 5 [1:-d] [2:--api_mode] [3:--fmt] [4:txt] 
-ethQuote -d --api_mode --fmt txt 
+ethQuote argc: 4 [1:-d] [2:--fmt] [3:txt] 
+ethQuote -d --fmt txt 
+TIME ~ CLOCK - : 4-----API_MODE=true
 timestamp	date	close
 1439078400	2015-08-09 00:00:00 UTC	1.40000
 1439085600	2015-08-09 02:00:00 UTC	1.40000

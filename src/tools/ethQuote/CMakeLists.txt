@@ -40,6 +40,11 @@ function(run_test testName)
      run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
 endfunction(run_test)
 
+# Function to run an api mode test case
+function(api_test testName)
+    run_the_api_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(api_test)
+
 # Enter one line for each individual test
 run_test("ethQuote_README"          "-th")
 run_test("ethQuote_no_params"            )
@@ -66,8 +71,8 @@ run_test("ethQuote_fmt_txt"          "-d" " --fmt" " txt")
 run_test("ethQuote_fmt_csv"          "-d" " --fmt" " csv")
 run_test("ethQuote_fmt_json"         "-d" " --fmt" " json")
 run_test("ethQuote_fmt_api"          "-d" " --fmt" " api")
-run_test("ethQuote_fmt_api_mode"     "-d" " --api_mode")
-run_test("ethQuote_fmt_api_mode_fmt" "-d" " --api_mode" " --fmt" " txt")
+api_test("ethQuote_fmt_api_mode"     "-d")
+api_test("ethQuote_fmt_api_mode_fmt" "-d" " --fmt" " txt")
 run_test("ethQuote_fmt_defaut"       "-d")
 run_test("ethQuote_fmt_junk"         "-d" " --fmt" " junk")
 
