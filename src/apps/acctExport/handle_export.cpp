@@ -200,7 +200,8 @@ bool COptions::exportData(void) {
         cout << endl;
 
     for (auto watch : monitors)
-        watch.writeLastExport(items[items.size()-1].blk);
+        if (items.size() > 0)
+            watch.writeLastExport(items[items.size()-1].blk);
 
     EXIT_NOMSG(true);
 }
