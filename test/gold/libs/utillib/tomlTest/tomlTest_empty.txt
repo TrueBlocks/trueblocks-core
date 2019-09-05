@@ -13,3 +13,11 @@ File contents after write
 [version]
 current = "0.5.8-alpha"
 
+{
+	{ "thing1": "Value 1 with spaces" }
+	{ "thing2": "Value 2 with spaces" }
+}
+{
+	{ "thing1": "Value1withspaces" }
+	{ "thing2": "Value2withspaces" }
+}

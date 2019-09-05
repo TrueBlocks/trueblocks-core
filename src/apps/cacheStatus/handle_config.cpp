@@ -24,12 +24,12 @@ void COptions::handle_config_get(ostream& os) {
         CConfigGroup g1("settings");
         CStringArray values;
         size_t cnt = 0;
-        values.push_back(isTestMode() ? "--rpcProvider--" : cc->getConfigStr(g1.name, "rpcProvider",     "http://localhost:8545"));
-        values.push_back(isTestMode() ? "--apiProvider--" : cc->getConfigStr(g1.name, "apiProvider",     "http://localhost:8080"));
-        values.push_back(isTestMode() ? "--balanceProv--" : cc->getConfigStr(g1.name, "balanceProvider", "http://localhost:8080"));
-        values.push_back(isTestMode() ? "--configPath--"  : cc->getConfigStr(g1.name, "configPath",      "~/.quickBlocks/"));
-        values.push_back(isTestMode() ? "--cachePath--"   : cc->getConfigStr(g1.name, "cachePath",       "~/.quickBlocks/cache/"));
-        values.push_back(isTestMode() ? "--indexPath--"   : cc->getConfigStr(g1.name, "indexPath",       "~/.quickBlocks/cache/addr_index/"));
+        values.push_back(isTestMode() ? "--rpc Provider--" : cc->getConfigStr(g1.name, "rpcProvider",     "http://localhost:8545"));
+        values.push_back(isTestMode() ? "--api Provider--" : cc->getConfigStr(g1.name, "apiProvider",     "http://localhost:8080"));
+        values.push_back(isTestMode() ? "--balance Prov--" : cc->getConfigStr(g1.name, "balanceProvider", "http://localhost:8080"));
+        values.push_back(isTestMode() ? "--config Path--"  : cc->getConfigStr(g1.name, "configPath",      "~/.quickBlocks/"));
+        values.push_back(isTestMode() ? "--cache Path--"   : cc->getConfigStr(g1.name, "cachePath",       "~/.quickBlocks/cache/"));
+        values.push_back(isTestMode() ? "--index Path--"   : cc->getConfigStr(g1.name, "indexPath",       "~/.quickBlocks/cache/addr_index/"));
         CConfigItemArray items;
         items.push_back(CConfigItem("rpcProvider",     substitute(values[cnt++],"\t","\\t"), "url",  "the Ethereum node's RPC endpoint",                 true,  false));
         items.push_back(CConfigItem("apiProvider",     substitute(values[cnt++],"\t","\\t"), "url",  "TrueBlocks' API endpoint",                         true,  false));
@@ -46,18 +46,18 @@ void COptions::handle_config_get(ostream& os) {
 
         CStringArray values2; CConfigItemArray items2;
         CConfigGroup g2("display_strs");cnt=0;
-        values2.push_back(isTestMode() ? "--accountName--"   : cc->getConfigStr(g2.name, "", STR_DISPLAY_ACCOUNTNAME));
-        values2.push_back(isTestMode() ? "--balancerecord--" : cc->getConfigStr(g2.name, "", STR_DISPLAY_BALANCERECORD));
+        values2.push_back(isTestMode() ? "--account Name--"   : cc->getConfigStr(g2.name, "", STR_DISPLAY_ACCOUNTNAME));
+        values2.push_back(isTestMode() ? "--balance record--" : cc->getConfigStr(g2.name, "", STR_DISPLAY_BALANCERECORD));
         values2.push_back(isTestMode() ? "--block--"         : cc->getConfigStr(g2.name, "", STR_DISPLAY_BLOCK));
-        values2.push_back(isTestMode() ? "--ethstate--"      : cc->getConfigStr(g2.name, "", STR_DISPLAY_ETHSTATE));
+        values2.push_back(isTestMode() ? "--eth state--"      : cc->getConfigStr(g2.name, "", STR_DISPLAY_ETHSTATE));
         values2.push_back(isTestMode() ? "--function--"      : cc->getConfigStr(g2.name, "", STR_DISPLAY_FUNCTION));
         values2.push_back(isTestMode() ? "--logentry--"      : cc->getConfigStr(g2.name, "", STR_DISPLAY_LOGENTRY));
         values2.push_back(isTestMode() ? "--pricequote--"    : cc->getConfigStr(g2.name, "", STR_DISPLAY_PRICEQUOTE));
         values2.push_back(isTestMode() ? "--receipt--"       : cc->getConfigStr(g2.name, "", STR_DISPLAY_RECEIPT));
         values2.push_back(isTestMode() ? "--trace--"         : cc->getConfigStr(g2.name, "", STR_DISPLAY_TRACE));
         values2.push_back(isTestMode() ? "--transaction--"   : cc->getConfigStr(g2.name, "", STR_DISPLAY_TRANSACTION));
-        values2.push_back(isTestMode() ? "--whenblock--"     : cc->getConfigStr(g2.name, "", STR_DISPLAY_WHEN));
-        values2.push_back(isTestMode() ? "--whereblock--"    : cc->getConfigStr(g2.name, "", STR_DISPLAY_WHERE));
+        values2.push_back(isTestMode() ? "--when block--"     : cc->getConfigStr(g2.name, "", STR_DISPLAY_WHEN));
+        values2.push_back(isTestMode() ? "--where block--"    : cc->getConfigStr(g2.name, "", STR_DISPLAY_WHERE));
 extern string_q convertDisplayStr(const string_q& in);
         items2.push_back(CConfigItem("accountName",   convertDisplayStr(values2[cnt++]), "display string",  "", false,  false));
         items2.push_back(CConfigItem("balancerecord", convertDisplayStr(values2[cnt++]), "display string",  "", false,  false));
@@ -81,9 +81,9 @@ extern string_q convertDisplayStr(const string_q& in);
         const CToml *cc = getGlobalConfig("blockScrape");
         CConfigFile  f("blockScrape.toml");
         CConfigGroup g1("settings");
-        string_q     v1 = (isTestMode() ? "--nBlocks--"     : cc->getConfigStr(g1.name, "nBlocks",     "2000"));
-        string_q     v2 = (isTestMode() ? "--nAddrProcs--"  : cc->getConfigStr(g1.name, "nAddrProcs",  "20"));
-        string_q     v3 = (isTestMode() ? "--nBlockProcs--" : cc->getConfigStr(g1.name, "nBlockProcs", "10"));
+        string_q     v1 = (isTestMode() ? "--n Blocks--"     : cc->getConfigStr(g1.name, "nBlocks",     "2000"));
+        string_q     v2 = (isTestMode() ? "--n Addr Procs--"  : cc->getConfigStr(g1.name, "nAddrProcs",  "20"));
+        string_q     v3 = (isTestMode() ? "--n Block Procs--" : cc->getConfigStr(g1.name, "nBlockProcs", "10"));
         CConfigItem  i1("nBlocks",     v1, "uint",  "number of blocks to process per invocation of blaze (> 50)",        true, false); g1.keys.push_back(i1);
         CConfigItem  i2("nAddrProcs",  v2, "uint",  "number of parallel go processes to use to process addresses (> 0)", true, false); g1.keys.push_back(i2);
         CConfigItem  i3("nBlockProcs", v3, "uint",  "number of parallel go processes to use to process blocks (> 0)",    true, false); g1.keys.push_back(i3);
@@ -96,8 +96,8 @@ extern string_q convertDisplayStr(const string_q& in);
         CConfigFile  f("acctExport.toml");
         CConfigGroup g1("settings");
         CConfigGroup g2("balances");
-        string_q     v1 = (isTestMode() ? "--writeTxs--"    : cc->getConfigStr(g1.name, "writeTxs",     "true"));
-        string_q     v2 = (isTestMode() ? "--writeTraces--" : cc->getConfigStr(g1.name, "writeTraces",  "true"));
+        string_q     v1 = (isTestMode() ? "--write Txs--"    : cc->getConfigStr(g1.name, "writeTxs",     "true"));
+        string_q     v2 = (isTestMode() ? "--write Traces--" : cc->getConfigStr(g1.name, "writeTraces",  "true"));
         string_q     v3 = (isTestMode() ? "--remote--"      : cc->getConfigStr(g2.name, "remote",       "false"));
         CConfigItem  i1("writeTxs",    v1, "bool", "write transactions to the TrueBlocks binary cache", false, false); g1.keys.push_back(i1);
         CConfigItem  i2("writeTraces", v2, "bool", "write traces to the TrueBlocks binary cache",       false, false); g1.keys.push_back(i2);
@@ -153,16 +153,29 @@ extern string_q convertDisplayStr(const string_q& in);
 void COptions::handle_config_put(ostream& os) {
     CConfiguration config;
     string_q str = asciiFileToString("setConfig_data2.json");
-    str = trim(substitute(substitute(str, "\\\"", "\""), "\\n", "\n"), '\"');
+    str = substitute(str, "\\ ", string_q(1,char(5)));
+    str = substitute(str, "\\\"", "\"");
+    str = substitute(str, "\\n", "\n");
+    str = trim(str, ' ');
+    str = trim(str, '\"');
+    str = trim(str, ' ');
+    preserveSpaces(str);
+    cout << "------------------------------------------------" << endl;
+    cout << str << endl;
+    cout << "------------------------------------------------" << endl;
     CApiResult result;
     result.parseJson3(str);
     cout << "Would have written:" << endl;
     for (auto file : result.data.files) {
         for (auto group : file.groups) {
             for (auto key : group.keys) {
+                string_q val = key.getValueByName("value");
+                unpreserveSpaces(val);
                 cout << "  ";
                 cout << "getGlobalConfig(\"" << file.name << "\")->";
-                cout << "setConfigStr(\"" << group.name << "\", \"" << key.name << "\", \"" << key.getValueByName("value") << "\");" << endl;
+                cout << "setConfigStr(\"" << group.name << "\", \"";
+                cout << key.name << "\", \"" << val;
+                cout << "\");" << endl;
             }
         }
     }

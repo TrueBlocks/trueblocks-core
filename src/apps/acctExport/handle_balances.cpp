@@ -59,6 +59,7 @@ bool COptions::exportBalances(void) {
                 if ((exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1) && !first)
                     cout << ", ";
                 cout << record;
+                nExported++;
                 first = false;
             }
         }

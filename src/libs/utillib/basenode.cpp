@@ -130,7 +130,44 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
+    void preserveSpaces(string_q& str) {
+        enum state_t { OUT = 0, IN = 1 };
+        state_t state = OUT;
+        char *s = (char *)str.c_str();
+        while (*s) {
+            switch (state) {
+                case OUT:
+                    if (*s == '\"')
+                        state = IN;
+                    break;
+                case IN:
+                    if (*s == ' ') {
+                        *s = char(5);
+                        printf("");
+                    }
+                    if (*s == '\"')
+                        state = OUT;
+                    break;
+            }
+            s++;
+        }
+        return;
+    }
+
+    //--------------------------------------------------------------------------------
+    void unpreserveSpaces(string_q& str) {
+        char *s = (char *)str.c_str();
+        while (*s) {
+            if (*s == char(5))
+                *s = ' ';
+            s++;
+        }
+        return;
+    }
+
+    //--------------------------------------------------------------------------------
     bool CBaseNode::parseJson3(string_q& str) {
+        preserveSpaces(str);
         char *s = (char *)str.c_str();  // NOLINT
         char *p = cleanUpJson(s);
         size_t nFields = 0;

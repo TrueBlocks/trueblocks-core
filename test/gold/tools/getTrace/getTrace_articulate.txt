@@ -16,8 +16,14 @@ getTrace -a -x json 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec
           "value": "0x713fa27cb26b5902ea398b04d21e6018bba3a2f1"
         },
         {
-          "name": "_tokenId",
+          "name": "_value",
           "value": "8263636363636363636"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "success",
+          "value": "false"
         }
       ]
     },

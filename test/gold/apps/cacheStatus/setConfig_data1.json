@@ -162,12 +162,12 @@
               "named": [
                 {
                   "group": "81-Custom",
-                  "name": "TestWallet1",
+                  "name": "Test Wallet 1",
                   "address": "0x0000100001000010000100001000010000100001"
                 },
                 {
                   "group": "81-Custom",
-                  "name": "TestWallet2",
+                  "name": "Test Wallet 2",
                   "address": "0x0000200002000020000200002000020000200002"
                 }
               ]

@@ -1,5 +1,6 @@
 getTrace argc: 3 [1:--verbose] [2:--file:cmd_file] 
 getTrace --verbose --file:cmd_file 
+TIME ~ CLOCK - : 4-----API_MODE=true
 { "type": "CTrace", "data": [
   {
     "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",

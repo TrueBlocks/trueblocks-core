@@ -65,7 +65,7 @@ bool CApiResult::setValueByName(const string_q& fieldNameIn, const string_q& fie
 
     switch (tolower(fieldName[0])) {
         case 'd':
-            if ( fieldName % "data" ) { /* data = fieldValue; */ return false; }
+            if ( fieldName % "data" )  { string_q str = fieldValue ; return data.parseJson3(str); }
             break;
         case 't':
             if ( fieldName % "type" ) { type = fieldValue; return true; }

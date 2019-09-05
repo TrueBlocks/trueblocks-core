@@ -46,7 +46,7 @@ getTrans -a -x api -t 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017
     "traces": [
       {
         "type": "call",
-        "error": "Badjumpdestination",
+        "error": "Bad jump destination",
         "articulatedTrace": {
           "name": "transferFrom",
           "inputs": [

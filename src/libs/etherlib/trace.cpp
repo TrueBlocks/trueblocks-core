@@ -67,6 +67,8 @@ bool CTrace::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
             return true;
     if (fieldName % "transactionPosition") // order matters
         fieldName = "transactionIndex";
+    if (fieldName % "error")
+        fieldValue = substitute(fieldValue, string_q(1,char(5)), " ");
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {

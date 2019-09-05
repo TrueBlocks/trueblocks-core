@@ -10,7 +10,7 @@ cacheStatus --config-get
           "keys": [
             {
               "name": "rpcProvider",
-              "value": "--rpcProvider--",
+              "value": "--rpc Provider--",
               "type": "url",
               "tip": "the Ethereum node's RPC endpoint",
               "required": true,
@@ -18,7 +18,7 @@ cacheStatus --config-get
             },
             {
               "name": "apiProvider",
-              "value": "--apiProvider--",
+              "value": "--api Provider--",
               "type": "url",
               "tip": "TrueBlocks' API endpoint",
               "required": true,
@@ -26,7 +26,7 @@ cacheStatus --config-get
             },
             {
               "name": "balanceProvider",
-              "value": "--balanceProv--",
+              "value": "--balance Prov--",
               "type": "url",
               "tip": "alternative node endpoint for account balances",
               "required": false,
@@ -34,7 +34,7 @@ cacheStatus --config-get
             },
             {
               "name": "configPath",
-              "value": "--configPath--",
+              "value": "--config Path--",
               "type": "path",
               "tip": "location of config files, read only",
               "required": true,
@@ -42,7 +42,7 @@ cacheStatus --config-get
             },
             {
               "name": "cachePath",
-              "value": "--cachePath--",
+              "value": "--cache Path--",
               "type": "path",
               "tip": "location of cache (on external SSD, for example)",
               "required": false,
@@ -50,7 +50,7 @@ cacheStatus --config-get
             },
             {
               "name": "indexPath",
-              "value": "--indexPath--",
+              "value": "--index Path--",
               "type": "path",
               "tip": "location of index (on internal SSD for speed)",
               "required": false,
@@ -63,14 +63,14 @@ cacheStatus --config-get
           "keys": [
             {
               "name": "accountName",
-              "value": "--accountname--",
+              "value": "--account name--",
               "type": "display string",
               "required": false,
               "read_only": false
             },
             {
               "name": "balancerecord",
-              "value": "--balancerecord--",
+              "value": "--balance record--",
               "type": "display string",
               "required": false,
               "read_only": false
@@ -84,7 +84,7 @@ cacheStatus --config-get
             },
             {
               "name": "ethstate",
-              "value": "--ethstate--",
+              "value": "--eth state--",
               "type": "display string",
               "required": false,
               "read_only": false
@@ -133,14 +133,14 @@ cacheStatus --config-get
             },
             {
               "name": "whenblock",
-              "value": "--whenblock--",
+              "value": "--when block--",
               "type": "display string",
               "required": false,
               "read_only": false
             },
             {
               "name": "whereblock",
-              "value": "--whereblock--",
+              "value": "--where block--",
               "type": "display string",
               "required": false,
               "read_only": false
@@ -157,7 +157,7 @@ cacheStatus --config-get
           "keys": [
             {
               "name": "nBlocks",
-              "value": "--nBlocks--",
+              "value": "--n Blocks--",
               "type": "uint",
               "tip": "number of blocks to process per invocation of blaze (> 50)",
               "required": true,
@@ -165,7 +165,7 @@ cacheStatus --config-get
             },
             {
               "name": "nAddrProcs",
-              "value": "--nAddrProcs--",
+              "value": "--n Addr Procs--",
               "type": "uint",
               "tip": "number of parallel go processes to use to process addresses (> 0)",
               "required": true,
@@ -173,7 +173,7 @@ cacheStatus --config-get
             },
             {
               "name": "nBlockProcs",
-              "value": "--nBlockProcs--",
+              "value": "--n Block Procs--",
               "type": "uint",
               "tip": "number of parallel go processes to use to process blocks (> 0)",
               "required": true,
@@ -191,7 +191,7 @@ cacheStatus --config-get
           "keys": [
             {
               "name": "writeTxs",
-              "value": "--writeTxs--",
+              "value": "--write Txs--",
               "type": "bool",
               "tip": "write transactions to the TrueBlocks binary cache",
               "required": false,
@@ -199,7 +199,7 @@ cacheStatus --config-get
             },
             {
               "name": "writeTraces",
-              "value": "--writeTraces--",
+              "value": "--write Traces--",
               "type": "bool",
               "tip": "write traces to the TrueBlocks binary cache",
               "required": false,
