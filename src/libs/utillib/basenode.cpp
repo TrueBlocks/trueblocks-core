@@ -143,7 +143,6 @@ namespace qblocks {
                 case IN:
                     if (*s == ' ') {
                         *s = char(5);
-                        printf("");
                     }
                     if (*s == '\"')
                         state = OUT;
