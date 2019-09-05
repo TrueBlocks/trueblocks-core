@@ -201,6 +201,7 @@ bool noteMonitor(const string_q& path, void *data) {
         CAccountName item;
         string_q customStr = getGlobalConfig("getAccounts")->getConfigJson("custom", "list", "");
         while (item.parseJson3(customStr)) {
+            unpreserveSpaces(item.name);
             if (mdi.address == item.address) {
                 mdi.group = item.group;
                 mdi.name = item.name;

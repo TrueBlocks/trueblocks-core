@@ -124,6 +124,7 @@ extern string_q convertDisplayStr(const string_q& in);
             string_q customStr = cc->getConfigJson("custom", "list", "");
             CAccountName item;
             while (item.parseJson3(customStr)) {
+                unpreserveSpaces(item.name);
                 i1.named.push_back(item);
                 item = CAccountName();
             }
