@@ -302,13 +302,13 @@ const char* STR_DISPLAY_BALANCERECORD =
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 CBalanceRecord::CBalanceRecord(string_q& line) {
-    address = nextTokenClear(line, '\t');
-    blockNumber = str_2_Uint(nextTokenClear(line, '\t'));
+    blockNumber      = str_2_Uint(nextTokenClear(line, '\t'));
     transactionIndex = str_2_Uint(nextTokenClear(line, '\t'));
-    string_q ether = nextTokenClear(line, '\t');
-    priorBalance = str_2_Wei(ether);
-    ether = nextTokenClear(line, '\t');
-    balance = str_2_Wei(ether);
+    address          = nextTokenClear(line, '\t');
+    string_q ether   = nextTokenClear(line, '\t');
+    priorBalance     = str_2_Wei(ether);
+    ether            = nextTokenClear(line, '\t');
+    balance          = str_2_Wei(ether);
 }
 // EXISTING_CODE
 }  // namespace qblocks
