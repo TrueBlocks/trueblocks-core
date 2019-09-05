@@ -48,7 +48,8 @@ void doMoveFile(const string_q& from, const string_q& to) {
         cerr << "Would have moved " << substitute(from, getCachePath(""), "$BLOCK_CACHE/") << " to ";
         cerr << substitute(to, getCachePath(""), "$BLOCK_CACHE/") << endl;
     } else {
-        moveFile(from, to);
+        if (fileExists(from))
+            moveFile(from, to);
     }
 }
 
