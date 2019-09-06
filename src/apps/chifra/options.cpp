@@ -41,7 +41,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (mode.empty() && startsWith(arg, '-')) {
 
             if (!builtInCmd(arg))
-                EXIT_USAGE("Invalid option: " + arg);
+                EXIT_USAGE("Missing mode: " + arg);
 
         } else {
 
