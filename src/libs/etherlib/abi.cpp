@@ -364,6 +364,10 @@ void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, bool silent, bo
     if (isZeroAddr(addr))
         return;
 
+    bool debug = (verbose || getGlobalConfig()->getConfigBool("dev", "debug_ethscan", false));
+    if (debug)
+        silent = false;
+
     string_q results;
     string_q fileName = getCachePath("abis/" + addr + ".json");
 
@@ -376,7 +380,7 @@ void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, bool silent, bo
     string_q dispName = substitute(fileName, getCachePath(""), "$BLOCK_CACHE/");
     if (fileExists(fileName) && !raw) {
 
-        if (verbose) {
+        if (debug) {
             cerr << "Reading ABI for address " << addr << " from " << (isTestMode() ? "--" : "cache") << "\r";
             cerr.flush();
         }
@@ -384,7 +388,7 @@ void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, bool silent, bo
 
     } else {
 
-        if (verbose) {
+        if (debug) {
             cerr << "Reading ABI for address " << addr << " from " << (isTestMode() ? "--" : "EtherScan") << "\r";
             cerr.flush();
         }
@@ -393,7 +397,7 @@ void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, bool silent, bo
 
         if (!contains(results, "NOTOK")) {
             if (!isTestMode()) {
-                if (verbose)
+                if (debug)
                     cerr << results << endl;
                 cerr << "Caching abi in " << dispName << endl;
             }

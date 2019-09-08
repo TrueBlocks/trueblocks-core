@@ -247,6 +247,8 @@ void COptions::applyFilter() {
             string_q customStr = getGlobalConfig("getAccounts")->getConfigJson("custom", "list", "");
             while (item.parseJson3(customStr)) {
                 item.group = "81-Custom";
+                item.name = trim(item.name, '\"');
+                item.description = trim(item.description, '\"');
                 addIfUnique(item);
                 item = CAccountName();
             }
