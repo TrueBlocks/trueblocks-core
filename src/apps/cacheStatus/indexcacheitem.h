@@ -32,6 +32,8 @@ public:
     uint32_t nAppearances;
     uint32_t firstAppearance;
     uint32_t latestAppearance;
+    timestamp_t firstTs;
+    timestamp_t lastestTs;
     string_q path;
     uint32_t sizeInBytes;
 
@@ -99,6 +101,8 @@ inline void CIndexCacheItem::initialize(void) {
     nAppearances = 0;
     firstAppearance = 0;
     latestAppearance = 0;
+    firstTs = 0;
+    lastestTs = 0;
     path = "";
     sizeInBytes = 0;
 
@@ -116,6 +120,8 @@ inline void CIndexCacheItem::duplicate(const CIndexCacheItem& in) {
     nAppearances = in.nAppearances;
     firstAppearance = in.firstAppearance;
     latestAppearance = in.latestAppearance;
+    firstTs = in.firstTs;
+    lastestTs = in.lastestTs;
     path = in.path;
     sizeInBytes = in.sizeInBytes;
 

@@ -14,7 +14,8 @@ void COptions::handle_status(ostream& os) {
         aid.path = (isTestMode() ? "IndexPath" : getIndexPath(""));
         forEveryFileInFolder(getIndexPath(""), countFiles, &aid);
         status.caches.push_back(&aid);
-        CItemCounter counter(this);
+        CItemCounter counter(this, start);
+        loadTimestampArray(&counter.ts_array, counter.ts_cnt);
         counter.cachePtr = &aid;
         counter.indexArray = &aid.items;
         if (details) {
@@ -209,8 +210,26 @@ bool noteMonitor(const string_q& path, void *data) {
             }
             item = CAccountName();
         }
-        if (mdi.name.empty())
+
+        if (mdi.name.empty()) {
+            ASSERT(prefunds.size() == 8893);  // This is a known value
+            uint32_t cnt = 0;
+            for (auto prefund : counter->options->prefunds) {
+                address_t addr = toLower(nextTokenClear(prefund,'\t'));
+                if (mdi.address == addr) {
+                    mdi.group = "80-Prefund";
+                    mdi.name = "Prefund_" + padNum4(cnt);
+                    mdi.source = "Genesis";
+                    break;
+                }
+                cnt++;
+            }
+        }
+
+        if (mdi.name.empty()) {
             counter->options->getNamedAccount(mdi, mdi.address);
+        }
+
         if (endsWith(path, ".acct.bin")) {
             mdi.firstAppearance = 1001001;
             mdi.latestAppearance = 8101001;
@@ -237,8 +256,13 @@ bool noteIndex(const string_q& path, void *data) {
         return forEveryFileInFolder(path + "*", noteIndex, data);
 
     } else {
-        cerr << path << "\r"; cerr.flush();
         CItemCounter *counter = (CItemCounter*)data;
+        timestamp_t unused;
+        blknum_t ll = 0;
+        blknum_t ff = bnFromPath(path, ll, unused);
+        if (ff < counter->skipTo)
+            return true;
+        cerr << path << "\r"; cerr.flush();
         ASSERT(counter->options);
         CIndexCacheItem aci;
         aci.type = aci.getRuntimeClass()->m_ClassName;
@@ -250,13 +274,22 @@ bool noteIndex(const string_q& path, void *data) {
         replace(fn, "unripe/", "");
         replace(fn, "ripe/", "");
         if (contains(path, "finalized") || contains(path, "blooms")) {
-            timestamp_t unused;
             uint64_t tmp;
             aci.firstAppearance = (uint32_t)bnFromPath(fn, tmp, unused);
             aci.latestAppearance = (uint32_t)tmp;
         } else {
             aci.firstAppearance = (uint32_t)str_2_Uint(fn);
             aci.latestAppearance = (uint32_t)str_2_Uint(fn);
+        }
+        if (counter->ts_array) {
+            if (aci.firstAppearance < counter->ts_cnt &&
+                aci.latestAppearance < counter->ts_cnt) {
+                aci.firstTs = (timestamp_t)counter->ts_array[(aci.firstAppearance*2)+1];
+                aci.lastestTs = (timestamp_t)counter->ts_array[(aci.latestAppearance*2)+1];
+            } else {
+                aci.firstTs = (timestamp_t)0;
+                aci.lastestTs = (timestamp_t)0;
+            }
         }
         getIndexMetrics(path, aci.nAppearances, aci.nAddresses);
         aci.sizeInBytes = (uint32_t)fileSize(path);

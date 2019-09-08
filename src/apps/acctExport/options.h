@@ -45,5 +45,4 @@ public:
     bool loadAllAppearances(void);
     bool exportData(void);
     bool exportBalances(void);
-    bool loadTsArray(void);
 };

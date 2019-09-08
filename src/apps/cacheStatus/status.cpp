@@ -72,7 +72,6 @@ bool CStatus::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
             break;
         case 'c':
             if ( fieldName % "client_version" ) { client_version = fieldValue; return true; }
-            if ( fieldName % "cache_location" ) { cache_location = fieldValue; return true; }
             if ( fieldName % "caches" ) {
 //                CCachePtr item;
 //                string_q str = fieldValue;
@@ -87,7 +86,6 @@ bool CStatus::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
             if ( fieldName % "host" ) { host = fieldValue; return true; }
             break;
         case 'i':
-            if ( fieldName % "index_location" ) { index_location = fieldValue; return true; }
             if ( fieldName % "is_scraping" ) { is_scraping = str_2_Bool(fieldValue); return true; }
             break;
         case 'r':
@@ -127,8 +125,6 @@ bool CStatus::Serialize(CArchive& archive) {
     archive >> rpc_provider;
     archive >> api_provider;
     archive >> balance_provider;
-    archive >> cache_location;
-    archive >> index_location;
     archive >> host;
     archive >> is_scraping;
 //    archive >> caches;
@@ -149,8 +145,6 @@ bool CStatus::SerializeC(CArchive& archive) const {
     archive << rpc_provider;
     archive << api_provider;
     archive << balance_provider;
-    archive << cache_location;
-    archive << index_location;
     archive << host;
     archive << is_scraping;
 //    archive << caches;
@@ -194,8 +188,6 @@ void CStatus::registerClass(void) {
     ADD_FIELD(CStatus, "rpc_provider", T_TEXT, ++fieldNum);
     ADD_FIELD(CStatus, "api_provider", T_TEXT, ++fieldNum);
     ADD_FIELD(CStatus, "balance_provider", T_TEXT, ++fieldNum);
-    ADD_FIELD(CStatus, "cache_location", T_TEXT, ++fieldNum);
-    ADD_FIELD(CStatus, "index_location", T_TEXT, ++fieldNum);
     ADD_FIELD(CStatus, "host", T_TEXT, ++fieldNum);
     ADD_FIELD(CStatus, "is_scraping", T_BOOL, ++fieldNum);
     ADD_FIELD(CStatus, "caches", T_OBJECT|TS_ARRAY, ++fieldNum);
@@ -274,7 +266,6 @@ string_q CStatus::getValueByName(const string_q& fieldName) const {
             break;
         case 'c':
             if ( fieldName % "client_version" ) return client_version;
-            if ( fieldName % "cache_location" ) return cache_location;
             if ( fieldName % "caches" || fieldName % "cachesCnt" ) {
                 size_t cnt = caches.size();
                 if (endsWith(toLower(fieldName), "cnt"))
@@ -292,7 +283,6 @@ string_q CStatus::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "host" ) return host;
             break;
         case 'i':
-            if ( fieldName % "index_location" ) return index_location;
             if ( fieldName % "is_scraping" ) return bool_2_Str(is_scraping);
             break;
         case 'r':

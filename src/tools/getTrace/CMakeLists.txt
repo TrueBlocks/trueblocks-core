@@ -27,32 +27,32 @@ set(GOLD_PATH "${GOLD_PATH}/${PROJ_NAME}/${TOOL_NAME}")
 # Additional target to make the README.md
 build_readme(${CMAKE_CURRENT_SOURCE_DIR} ${TOOL_NAME})
 
-# To run only specific tests we define a test configuration named "test_all"
+# Target to run only specific (long-running) test cases
 add_custom_target(test-all COMMAND ${CMAKE_CTEST_COMMAND} -C test_all)
+#add_custom_target(test-state COMMAND ${CMAKE_CTEST_COMMAND} -C test_state)
 
-# Function to run an special or slow test case
-function(run_special_test testName)
-    run_the_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
-endfunction(run_special_test)
-
-# Function to run an special or slow test case
-function(api_special_test testName)
-    run_the_api_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
-endfunction(api_special_test)
-
-# Function to run an individual test case
+# Functions to run test cases
 function(run_test testName)
      run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
 endfunction(run_test)
-
-# Function to run an api mode test case
+function(run_special_test testName)
+    run_the_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(run_special_test)
+function(run_state_test testName)
+    run_the_state_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(run_state_test)
 function(api_test testName)
     run_the_api_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
 endfunction(api_test)
+function(api_special_test testName)
+    run_the_api_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(api_special_test)
+function(api_state_test testName)
+    run_the_api_state_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(api_state_test)
 
-# Weird, but we have to call the getBlock code to make sure the block is in the cache
+# Weird, but we have to pre-seed some data
 run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrace_preload" ${EXECUTABLE_OUTPUT_PATH}/getBlock " 3657480" " -o")
-# Weird, but we have to get ABIs so the articulation tests work
 run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrace_preload_abi1" ${EXECUTABLE_OUTPUT_PATH}/grabABI " 0x1234567812345678123456781234567812345678")
 run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrace_preload_abi2" ${EXECUTABLE_OUTPUT_PATH}/grabABI " 0x6090a6e47849629b7245dfa1ca21d94cd15878ef")
 run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrace_preload_abi3" ${EXECUTABLE_OUTPUT_PATH}/grabABI " 0xebf2bf80c3ddb0b6ac2f88be8dceec7bf12dff22")

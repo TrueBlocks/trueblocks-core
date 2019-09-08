@@ -163,11 +163,13 @@ namespace qblocks {
     extern wei_t blockReward(blknum_t bn, blknum_t txid, bool txFee);
     extern bool excludeTrace(const CTransaction *trans, size_t maxTraces);
 
+    extern bool loadTimestampArray(uint32_t **theArray, size_t& cnt);
+
 }  // namespace qblocks
 
 //-------------------------------------------------------------------------
-extern bool visitBlockNumber(blknum_t bn,         void *data);
-extern bool visitBlock      (CBlock& block,       void *data);
-extern bool visitTransaction(CTransaction& trans, void *data);
-extern bool visitLog        (CLogEntry& log,      void *data);
-extern bool visitTrace      (CTrace& trace,       void *data);
+extern bool visitBlockNumber  (blknum_t bn,         void *data);
+extern bool visitBlock        (CBlock& block,       void *data);
+extern bool visitTransaction  (CTransaction& trans, void *data);
+extern bool visitLog          (CLogEntry& log,      void *data);
+extern bool visitTrace        (CTrace& trace,       void *data);

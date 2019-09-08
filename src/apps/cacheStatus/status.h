@@ -31,8 +31,6 @@ public:
     string_q rpc_provider;
     string_q api_provider;
     string_q balance_provider;
-    string_q cache_location;
-    string_q index_location;
     string_q host;
     bool is_scraping;
     CCachePtrArray caches;
@@ -103,8 +101,6 @@ inline void CStatus::initialize(void) {
     rpc_provider = "";
     api_provider = "";
     balance_provider = "";
-    cache_location = "";
-    index_location = "";
     host = "";
     is_scraping = 0;
     caches.clear();
@@ -123,8 +119,6 @@ inline void CStatus::duplicate(const CStatus& st) {
     rpc_provider = st.rpc_provider;
     api_provider = st.api_provider;
     balance_provider = st.balance_provider;
-    cache_location = st.cache_location;
-    index_location = st.index_location;
     host = st.host;
     is_scraping = st.is_scraping;
     caches = st.caches;

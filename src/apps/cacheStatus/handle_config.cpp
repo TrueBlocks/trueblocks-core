@@ -95,15 +95,11 @@ extern string_q convertDisplayStr(const string_q& in);
         const CToml *cc = getGlobalConfig("acctExport");
         CConfigFile  f("acctExport.toml");
         CConfigGroup g1("settings");
-        CConfigGroup g2("balances");
         string_q     v1 = (isTestMode() ? "--write Txs--"    : cc->getConfigStr(g1.name, "writeTxs",     "true"));
         string_q     v2 = (isTestMode() ? "--write Traces--" : cc->getConfigStr(g1.name, "writeTraces",  "true"));
-        string_q     v3 = (isTestMode() ? "--remote--"      : cc->getConfigStr(g2.name, "remote",       "false"));
         CConfigItem  i1("writeTxs",    v1, "bool", "write transactions to the TrueBlocks binary cache", false, false); g1.keys.push_back(i1);
         CConfigItem  i2("writeTraces", v2, "bool", "write traces to the TrueBlocks binary cache",       false, false); g1.keys.push_back(i2);
-        CConfigItem  i3("remote",      v3, "bool", "get balances from balanceProvider",                 false, false); g2.keys.push_back(i3);
         f.groups.push_back(g1);
-        f.groups.push_back(g2);
         config.files.push_back(f);
     }
 

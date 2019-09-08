@@ -1290,6 +1290,45 @@ extern void loadParseMap(void);
     }
 
     //-----------------------------------------------------------------------
+    bool loadTimestampArray(uint32_t **theArray, size_t& cnt) {
+
+        // If user does not tell us where to put the data, we can't process it...
+        if (theArray == NULL)
+            return false;
+
+        // If the array aleady contains data, clear it out...
+        if (*theArray != NULL) {
+            delete [] *theArray;
+            *theArray = NULL;
+            cnt = 0;
+        }
+
+        // Let's try to get the data...
+        string_q fn = configPath("ts.bin");
+        cnt = ((fileSize(fn) / sizeof(uint32_t)) / 2);
+        *theArray = new uint32_t[cnt * 2];  // blknum, timestamp both uint32_t
+
+        // If we didn't get the space to store our data, fail...
+        if (*theArray == NULL) {
+            cnt = 0;
+            return false;
+        }
+
+        CArchive in(READING_ARCHIVE);
+        if (!in.Lock(fn, modeReadOnly, LOCK_NOWAIT)) {
+            cnt = 0;
+            delete [] *theArray;
+            *theArray = NULL;
+            return false;
+        }
+
+        in.Read(*theArray, sizeof(uint32_t) * 2, cnt);
+        in.Release();
+
+        return true;
+    }
+
+    //-----------------------------------------------------------------------
     const string_q defHide =
     "CTransaction: price, nonce, input"
     "|" "CLogEntry: data, topics"

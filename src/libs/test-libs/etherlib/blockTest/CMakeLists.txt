@@ -42,8 +42,8 @@ endfunction(run_test)
 
 # Enter one line for each individual test
 run_test("blockTest_README" "-th")
-run_test("blockTest_00"     "0")
-run_test("blockTest_01"     "1")
-run_test("blockTest_02"     "2")
+run_special_test("blockTest_00"     "0")
+run_special_test("blockTest_01"     "1")
+run_special_test("blockTest_02"     "2")
 run_test("blockTest_03"     "3")
 run_test("blockTest_04"     "4")

@@ -72,12 +72,11 @@ n,group,api_route,tool,order,command,command_short,data_type,option_kind,default
 355,tools,,whenBlock,,list,l,boolean,switch,,export all the named blocks,,FALSE,TRUE,TRUE
 360,tools,,whenBlock,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format (one of [none|json*|txt|csv|api]),,FALSE,FALSE,FALSE
 365,tools,,whenBlock,,,,,description,,"Finds the nearest block prior to a date, or the nearest date prior to a block.\n Alternatively, search for one of special 'named' blocks.",,FALSE,TRUE,TRUE
-370,tools,quotes,ethQuote,,at,a,<ts>,flag,,Report the price since nearest five minutes to the given timestamp,,FALSE,TRUE,TRUE
-375,tools,quotes,ethQuote,,current,c,boolean,switch,,Report on the current price (i.e. -at:now),,FALSE,TRUE,TRUE
-380,tools,quotes,ethQuote,,data,d,boolean,switch,,Export prices as JSON data,,FALSE,TRUE,TRUE
 385,tools,quotes,ethQuote,,freshen,f,boolean,switch,,Freshen database (append new data),,FALSE,TRUE,TRUE
-390,tools,quotes,ethQuote,,period,p,enum[5|15|30|120*|240|1440],flag,,Display prices in this increment. One of [5|15|30|120*|240|1440],,FALSE,TRUE,TRUE
-395,tools,quotes,ethQuote,,pair,p,<val>,flag,,Which price pair to freshen or list (see Poloniex),,FALSE,TRUE,TRUE
+380,tools,quotes,ethQuote,,data,d,boolean,switch,,Export prices as JSON data,,FALSE,TRUE,TRUE
+385,tools,quotes,ethQuote,,period,p,enum[5|15|30|120*|240|1440],flag,,Display prices in this increment. One of [5|15|30|120*|240|1440],,FALSE,TRUE,TRUE
+389,tools,quotes,ethQuote,,pair,p,<val>,flag,,Which price pair to freshen or list (see Poloniex),,FALSE,TRUE,TRUE
+395,tools,quotes,ethQuote,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format (one of [none|json*|txt|csv|api]),,FALSE,FALSE,FALSE
 400,tools,quotes,ethQuote,,,,,description,,Freshen and/or display Ethereum price data and other purposes.,,FALSE,TRUE,TRUE
 405,tools,abi,grabABI,,addr_list,,list<addr>,positional,,list of one or more smart contracts whose ABI to grab from EtherScan,,TRUE,TRUE,TRUE
 410,tools,abi,grabABI,,canonical,c,boolean,switch,,convert all types to their canonical represenation and remove all spaces from display,,FALSE,TRUE,TRUE
@@ -167,6 +166,7 @@ n,group,api_route,tool,order,command,command_short,data_type,option_kind,default
 826,apps,status,cacheStatus,,config-get,,boolean,switch,,returns JSON data of the editable configuration file items,,FALSE,FALSE,FALSE
 828,apps,status,cacheStatus,,config-put,,string,flag,,accepts JSON config data and writes it to configuration files,,FALSE,FALSE,FALSE
 830,apps,status,cacheStatus,,list,l,boolean,switch,,display results in Linux ls -l format (assumes --detail),,FALSE,TRUE,TRUE
+832,apps,status,cacheStatus,,start,,<blknum>,flag,,starting block for data retreival,,FALSE,TRUE,TRUE
 835,apps,status,cacheStatus,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format (one of [none|json*|txt|csv|api]),,FALSE,FALSE,FALSE
 840,apps,status,cacheStatus,,,,,description,,Report on status of one or more TrueBlocks caches.,,FALSE,TRUE,TRUE
 845,apps,message,,,bytes,b,string,positional,,convert the given bytes into an ascii string,,FALSE,TRUE,TRUE

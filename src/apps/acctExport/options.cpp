@@ -1,4 +1,3 @@
-//TODO: This used to work: watch->nodeBal = getNodeBal(watch->stateHistory, watch->address, watch->firstBlock-1);
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
  * Copyright (c) 2017 by Great Hill Corporation.
@@ -397,34 +396,8 @@ bool COptions::loadAllAppearances(void) {
         EXIT_FAIL("Could not freshen timestamp file.");
     }
 
-    if (!loadTsArray()) {
+    if (!loadTimestampArray(&ts_array, ts_cnt))
         EXIT_FAIL("Could not open timestamp file.");
-    }
 
     EXIT_NOMSG(true);
-}
-
-//-----------------------------------------------------------------------
-bool COptions::loadTsArray() {
-
-    if (ts_array) {
-        delete [] ts_array;
-        ts_array = NULL;
-        ts_cnt = 0;
-    }
-
-    string_q fn = configPath("ts.bin");
-    ts_cnt = ((fileSize(fn) / sizeof(uint32_t)) / 2);
-    ts_array = new uint32_t[ts_cnt * 2];  // blknum - timestamp
-    if (!ts_array)
-        return false;
-
-    CArchive in(READING_ARCHIVE);
-    if (!in.Lock(fn, modeReadOnly, LOCK_NOWAIT))
-        return false;
-
-    in.Read(ts_array, sizeof(uint32_t) * 2, ts_cnt);
-    in.Release();
-
-    return true;
 }

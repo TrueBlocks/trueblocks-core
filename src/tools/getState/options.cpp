@@ -131,6 +131,20 @@ bool COptions::parseArguments(string_q& command) {
     if (noHeader)
         expContext().fmtMap["header"] = "";
 
+    if ((!isTestMode() && !hasHistory()) || nodeHasBalances())
+        return true;
+
+    // We need history, so try to get a different server. Fail silently. The user will be warned in the response
+    string_q rpcProvider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
+    string_q balanceProvider = getGlobalConfig()->getConfigStr("settings", "balanceProvider", rpcProvider);
+    if (rpcProvider == balanceProvider || balanceProvider.empty())
+        return true;
+
+    // We release the curl context so we can set it to the new context.
+    getCurlContext()->baseURL = balanceProvider;
+    getCurlContext()->releaseCurl();
+    getCurlContext()->getCurl();
+
     return true;
 }
 

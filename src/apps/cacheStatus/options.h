@@ -25,6 +25,7 @@ public:
     bool details;
     bool isListing;
     bool isConfig;
+    blknum_t start;
 
     COptions(void);
     ~COptions(void);
@@ -51,18 +52,24 @@ extern void getIndexMetrics(const string_q& path, uint32_t& nRecords, uint32_t& 
 //-------------------------------------------------------------------------
 class CItemCounter : public CCache {
 public:
-    COptions *options;
-    CCache *cachePtr;
-    CIndexCacheItemArray *indexArray;
+    COptions               *options;
+    CCache                 *cachePtr;
+    CIndexCacheItemArray   *indexArray;
     CMonitorCacheItemArray *monitorArray;
-    CAbiCacheItemArray *abiArray;
-    CPriceCacheItemArray *priceArray;
-    CItemCounter(COptions *opt) : CCache(), options(opt) {
+    CAbiCacheItemArray     *abiArray;
+    CPriceCacheItemArray   *priceArray;
+    uint32_t               *ts_array;
+    size_t                  ts_cnt;
+    blknum_t                skipTo;
+    CItemCounter(COptions *opt, blknum_t st=0) : CCache(), options(opt) {
         cachePtr = NULL;
         indexArray = NULL;
         monitorArray = NULL;
         abiArray = NULL;
         priceArray = NULL;
+        ts_array = NULL;
+        ts_cnt = 0;
+        skipTo = st;
     }
 public:
     CItemCounter(void) : CCache() {}

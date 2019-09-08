@@ -206,19 +206,6 @@ cacheStatus --config-get
               "read_only": false
             }
           ]
-        },
-        {
-          "name": "balances",
-          "keys": [
-            {
-              "name": "remote",
-              "value": "--remote--",
-              "type": "bool",
-              "tip": "get balances from balanceProvider",
-              "required": false,
-              "read_only": false
-            }
-          ]
         }
       ]
     },

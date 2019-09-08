@@ -27,22 +27,29 @@ set(GOLD_PATH "${GOLD_PATH}/${PROJ_NAME}/${TOOL_NAME}")
 # Additional target to make the README.md
 build_readme(${CMAKE_CURRENT_SOURCE_DIR} ${TOOL_NAME})
 
-# To run only specific tests we define a test configuration named "test_all"
+# Target to run only specific (long-running) test cases
 add_custom_target(test-all COMMAND ${CMAKE_CTEST_COMMAND} -C test_all)
+#add_custom_target(test-state COMMAND ${CMAKE_CTEST_COMMAND} -C test_state)
 
-# Function to run an special or slow test case
-function(run_special_test testName)
-    run_the_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
-endfunction(run_special_test)
-
-# Function to run an individual test case
+# Functions to run test cases
 function(run_test testName)
      run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
 endfunction(run_test)
-
-# Weird, but we have to call bloomMan here to seed the blooms into the cache so the test cases pass
-#run_the_test(${TEST_PATH} ${GOLD_PATH} "getBloom_preload1" ${EXECUTABLE_OUTPUT_PATH}/bloomMan " --rewrite 1958017 1995314 2501030-2501060 2768801 2769609")
-#run_the_test(${TEST_PATH} ${GOLD_PATH} "getBloom_preload2" ${EXECUTABLE_OUTPUT_PATH}/bloomMan " --rewrite 2799895 2872831 3076260 4501011 4501030-4501060")
+function(run_special_test testName)
+    run_the_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(run_special_test)
+function(run_state_test testName)
+    run_the_state_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(run_state_test)
+function(api_test testName)
+    run_the_api_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(api_test)
+function(api_special_test testName)
+    run_the_api_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(api_special_test)
+function(api_state_test testName)
+    run_the_api_state_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(api_state_test)
 
 # Enter one line for each individual test
 run_test("getBloom_README"          "-th")
@@ -68,8 +75,8 @@ run_test("getBloom_badopt15"        "4501030" " --eab" " --receipts" " --bitcoun
 
 run_test("getBloom_rawlast1"        "4501030" " --eab" " --raw")
 run_test("getBloom_rawlast2"        "4501030" " -e" " --raw")
-run_test("getBloom_bitbars_raw"     "2501030-2501060" " --bitbars")
-run_test("getBloom_pctbars_raw"     "2501030-2501060" " --pctbars")
+run_special_test("getBloom_bitbars_raw"     "2501030-2501060" " --bitbars")
+run_special_test("getBloom_pctbars_raw"     "2501030-2501060" " --pctbars")
 run_test("getBloom_bars_block2"     "2501030-2501060" " --bitbars" " --block")
 run_test("getBloom_bars_block3"     "2501030-2501060" " --pctbars" " --block")
 run_test("getBloom_bars_receipt2"   "2501030-2501060" " --bitbars" " --receipts")

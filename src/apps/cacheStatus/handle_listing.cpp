@@ -47,6 +47,7 @@ void COptions::handle_listing(ostream& os) {
             item.sizeInBytes = fileSize(getMonitorPath(item.address));
             item.latestAppearance = str_2_Uint(asciiFileToString(getMonitorLast(item.address)));
             item.lastExport = str_2_Uint(asciiFileToString(getMonitorExpt(item.address)));
+//            item.lastBalance = 0;
             item.nRecords = fileSize(getMonitorPath(item.address)) / sizeof(CAppearance_base);
             accounts.push_back(item);
         }

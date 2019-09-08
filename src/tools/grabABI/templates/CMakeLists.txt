@@ -28,17 +28,8 @@ set(TEST_EXE "${EXECUTABLE_OUTPUT_PATH}/${TOOL_NAME}")
 set(TEST_PATH "${TEST_PATH}/${PROJ_NAME}/${TOOL_NAME}")
 set(GOLD_PATH "${GOLD_PATH}/${PROJ_NAME}/${TOOL_NAME}")
 
-# To run only specific tests we define a test configuration named "test_all"
+# Target to run only specific (long-running) test cases
 add_custom_target(test-all COMMAND ${CMAKE_CTEST_COMMAND} -C test_all)
-
-# Function to run an special or slow test case
-function(run_special_test testName)
-    run_the_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
-endfunction(run_special_test)
-
-# Function to run an individual test case
-function(run_test testName)
-     run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
-endfunction(run_test)
+#add_custom_target(test-state COMMAND ${CMAKE_CTEST_COMMAND} -C test_state)
 
 # Enter one line for each individual test

@@ -66,9 +66,11 @@ bool CIndexCacheItem::setValueByName(const string_q& fieldNameIn, const string_q
     switch (tolower(fieldName[0])) {
         case 'f':
             if ( fieldName % "firstAppearance" ) { firstAppearance = (uint32_t)str_2_Uint(fieldValue); return true; }
+            if ( fieldName % "firstTs" ) { firstTs = str_2_Ts(fieldValue); return true; }
             break;
         case 'l':
             if ( fieldName % "latestAppearance" ) { latestAppearance = (uint32_t)str_2_Uint(fieldValue); return true; }
+            if ( fieldName % "lastestTs" ) { lastestTs = str_2_Ts(fieldValue); return true; }
             break;
         case 'n':
             if ( fieldName % "nAddresses" ) { nAddresses = (uint32_t)str_2_Uint(fieldValue); return true; }
@@ -114,6 +116,8 @@ bool CIndexCacheItem::Serialize(CArchive& archive) {
     archive >> nAppearances;
     archive >> firstAppearance;
     archive >> latestAppearance;
+    archive >> firstTs;
+    archive >> lastestTs;
     archive >> path;
     archive >> sizeInBytes;
     finishParse();
@@ -133,6 +137,8 @@ bool CIndexCacheItem::SerializeC(CArchive& archive) const {
     archive << nAppearances;
     archive << firstAppearance;
     archive << latestAppearance;
+    archive << firstTs;
+    archive << lastestTs;
     archive << path;
     archive << sizeInBytes;
 
@@ -175,6 +181,8 @@ void CIndexCacheItem::registerClass(void) {
     ADD_FIELD(CIndexCacheItem, "nAppearances", T_NUMBER, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "firstAppearance", T_NUMBER, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "latestAppearance", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CIndexCacheItem, "firstTs", T_TIMESTAMP, ++fieldNum);
+    ADD_FIELD(CIndexCacheItem, "lastestTs", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "path", T_TEXT, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "sizeInBytes", T_NUMBER, ++fieldNum);
 
@@ -246,9 +254,11 @@ string_q CIndexCacheItem::getValueByName(const string_q& fieldName) const {
     switch (tolower(fieldName[0])) {
         case 'f':
             if ( fieldName % "firstAppearance" ) return uint_2_Str(firstAppearance);
+            if ( fieldName % "firstTs" ) return ts_2_Str(firstTs);
             break;
         case 'l':
             if ( fieldName % "latestAppearance" ) return uint_2_Str(latestAppearance);
+            if ( fieldName % "lastestTs" ) return ts_2_Str(lastestTs);
             break;
         case 'n':
             if ( fieldName % "nAddresses" ) return uint_2_Str(nAddresses);

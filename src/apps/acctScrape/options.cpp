@@ -103,7 +103,10 @@ bool COptions::parseArguments(string_q& command) {
             return usage("The last block file '" + fn2 + "' is locked. Quitting...");
         string_q fn3 = getMonitorExpt(monitor.address);
         if (fileExists(fn3 + ".lck"))
-            return usage("The last export file '" + fn2 + "' is locked. Quitting...");
+            return usage("The last export file '" + fn3 + "' is locked. Quitting...");
+        string_q fn4 = getMonitorBals(monitor.address);
+        if (fileExists(fn4 + ".lck"))
+            return usage("The last export file '" + fn4 + "' is locked. Quitting...");
         cerr << dTabs << "freshening: " << cYellow << monitor.address << cOff << "..." << endLine; cerr.flush();
         // If file doesn't exist, this will report '0'
         if (scanRange.first == UINT_MAX)
