@@ -16,7 +16,7 @@ getBlock
 	-u  (--uniq)          display only uniq addresses found per block
 	-q  (--uniqTx)        display only uniq addresses found per transaction
 	-m  (--number)        display address counts (alterntively --addrCnt, --uniqTxCnt, or --uniqCnt)
-	-l  (--filter <addr>) useful only for --addrs or --uniq, only display this address in results
+	-l  (--filter <address>)useful only for --addrs or --uniq, only display this address in results
 
 #### Hidden options (shown during testing only)
 	-l  (--latest)        display the latest blocks at both the node and the cache
