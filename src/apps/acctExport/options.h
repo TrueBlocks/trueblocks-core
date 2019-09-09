@@ -8,6 +8,8 @@
 #include "acctlib.h"
 #include "displayapp.h"
 
+using uint_addr_mp = map<uint32_t,address_t>;
+
 //-----------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
@@ -28,8 +30,8 @@ public:
     bool doABIs;
     bool freshenOnly;
     address_t hackAppAddr;
-    map<uint32_t,address_t> prefundMap;
-    map<uint32_t,address_t> blkRewardMap;
+    uint_addr_mp prefundAddrMap;
+    uint_addr_mp blkRewardMap;
     map<address_t,bool>     abiMap;
     uint32_t *ts_array;
     size_t ts_cnt;

@@ -50,7 +50,7 @@ namespace qblocks {
     class COption;
     class COptionsBase {
     public:
-        CStringArray prefunds;
+        addr_wei_mp prefundWeiMap;
         CStringArray arguments;
         //TODO(tjayrush): global data
         uint32_t enableBits;

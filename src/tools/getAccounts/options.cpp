@@ -268,12 +268,13 @@ void COptions::applyFilter() {
     if (types & PREFUND) {
         uint32_t cnt = 0;
         ASSERT(prefunds.size() == 8893);  // This is a known value
-        for (auto prefund : prefunds) {
+
+        for (auto prefund : prefundWeiMap) {
             if (isTestMode() && items.size() > 200)
                 break;
             CAccountName item;
             item.group = "80-Prefund";
-            item.address = toLower(nextTokenClear(prefund,'\t'));
+            item.address = prefund.first;
             item.name = "Prefund_" + padNum4(cnt++);
             item.source = "Genesis";
             addIfUnique(item);

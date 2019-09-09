@@ -44,8 +44,9 @@ bool COptions::exportData(void) {
 
                 } else {
                     if (item->blk == 0) {
+                        address_t addr = prefundAddrMap[item->txid];
                         trans.transactionIndex = item->txid;
-                        trans.loadAsPrefund(prefunds, prefundMap[item->txid]);
+                        trans.loadAsPrefund(addr, prefundWeiMap[addr]);
 
                     } else if (item->txid == 99997 || item->txid == 99998 || item->txid == 99999) {
                         trans.loadAsBlockReward(item->blk, item->txid, blkRewardMap[item->blk]);

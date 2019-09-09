@@ -357,8 +357,15 @@ namespace qblocks {
         }
 
         // A final set of options that do not have command line options
-        if (isEnabled(OPT_PREFUND))
-            asciiFileToLines(configPath("prefunds.txt"), prefunds);
+        if (isEnabled(OPT_PREFUND)) {
+            CStringArray lines;
+            asciiFileToLines(configPath("prefunds.txt"), lines);
+            for (auto line : lines) {
+                CStringArray parts;
+                explode(parts, line, '\t');
+                prefundWeiMap[toLower(parts[0])] = str_2_Wei(parts[1]);
+            }
+        }
 
         if (isEnabled(OPT_RUNONCE)) {
             if (commandLines.size() > 1)

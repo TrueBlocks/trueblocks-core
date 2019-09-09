@@ -214,8 +214,8 @@ bool noteMonitor(const string_q& path, void *data) {
         if (mdi.name.empty()) {
             ASSERT(prefunds.size() == 8893);  // This is a known value
             uint32_t cnt = 0;
-            for (auto prefund : counter->options->prefunds) {
-                address_t addr = toLower(nextTokenClear(prefund,'\t'));
+            for (auto prefund : counter->options->prefundWeiMap) {
+                address_t addr = prefund.first;
                 if (mdi.address == addr) {
                     mdi.group = "80-Prefund";
                     mdi.name = "Prefund_" + padNum4(cnt);

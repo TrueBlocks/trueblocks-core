@@ -33,6 +33,7 @@ namespace qblocks {
     using uchar_t     = unsigned char;
     using addrbytes_t = vector<uint8_t>;
     using hashbytes_t = vector<uint8_t>;
+    using addr_wei_mp = map<address_t, wei_t>;
 
     //-------------------------------------------------------------------------
     using CStringArray     = vector < string_q   >;

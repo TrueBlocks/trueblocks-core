@@ -32,39 +32,78 @@ bool COptions::exportBalances(void) {
         cout << "[";
 
     for (auto monitor : monitors) {
+
+        // lastDelta = 0
+        // if file exists
+        //    for each record
+        //    if (record.bal != NOPOS)
+        //       map[record.block] = record.bal
+        //    else
+        //       lastDelta = record.block (this will be one plus the last appearance we've checked for this address)
+        // else
+        //   if isPreFund
+        //     map[0] = prefund
+        //   else
+        //     map[0] = 0
+        //   lastDelta = 0;
+        //
+        // display the table and complete the map
+        // for (a : apps)
+        //    if (a.block > lastDelta)
+        //      bal = getBalance(a.block)
+        //      if (bal != map[lastDelta])
+        //        lastDelta = a.block
+        //        map[lastDelta] = getBalance(a.block);
+        //    display a.block - balance
+        //
+
+        blknum_t lastDelta = 0;
+        map<blknum_t,wei_t> balanceMap;
+        balanceMap[lastDelta] = (uint64_t)NOPOS;
+
+        string_q balFile = getMonitorBals(monitor.address);
+        if (fileExists(balFile)) {
+            CArchive balCache(READING_ARCHIVE);
+            if (balCache.Lock(balFile, modeReadOnly, LOCK_NOWAIT)) {
+                uint64_t nRecords;
+                balCache >> nRecords;
+                for (uint64_t i = 0 ; i < nRecords ; i++) {
+                    wei_t balance;
+                    balCache >> lastDelta >> balance;
+                    balanceMap[lastDelta] = balance;
+                }
+            }
+        }
+
         CAppearanceArray_base apps;
         loadOneAddress(apps, monitor.address);
-        CBalanceRecordArray balances;
+
+        bool first = true;
         for (size_t i = 0 ; i < apps.size() && !shouldQuit() && apps[i].blk < ts_cnt ; i++) {
             const CAppearance_base *item = &apps[i];
             if (inRange((blknum_t)item->blk, scanRange.first, scanRange.second)) {
-                CBalanceRecord rec;
-                rec.address = monitor.address;
-                rec.blockNumber = item->blk;
-                rec.transactionIndex = item->txid;
-                rec.priorBalance = (item->blk == 0 ? 0 : getBalanceAt(rec.address, item->blk-1));
-                rec.balance = getBalanceAt(rec.address, item->blk);
-                balances.push_back(rec);
-                cerr << "   balance for " << rec.address << " at block " << rec.blockNumber << ": ";
-                cerr << rec.balance << " (" << i << " of " << items.size() << ")\r";
-                cerr.flush();
+                CBalanceRecord record;
+                record.blockNumber      = item->blk;
+                record.transactionIndex = item->txid;
+                record.address          = monitor.address;
+                record.priorBalance     = ((item->blk == 0) ? 0 : getBalanceAt(monitor.address, item->blk-1));
+                record.balance          = getBalanceAt(monitor.address, item->blk);
+                if (record.priorBalance != record.balance) {
+                    lastDelta = item->blk;
+                    balanceMap[lastDelta] = record.balance;
+                }
+                if (!freshenOnly) {
+                    if (isJson && !first)
+                        cout << ", ";
+                    cout << record;
+                    nExported++;
+                    first = false;
+                }
             }
         }
 
-        bool first = true;
-        for (auto balance : balances) {
-            if (!freshenOnly) {
-                if (isJson && !first)
-                    cout << ", ";
-                cout << balance;
-                nExported++;
-                first = false;
-            }
-        }
-
-        // So as to keep the file small, we only write balances there is a delta
+        // So as to keep the file small, we only write balances where there is a change
 #if 0
-        string_q binaryFilename = getMonitorBals(monitor.address);
         if (balances.size() == 0 && fileExists(binaryFilename) && fileSize(binaryFilename) > 0) {
 
             CArchive balCache(READING_ARCHIVE);

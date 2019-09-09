@@ -686,24 +686,15 @@ bool CTransaction::loadAsBlockReward(blknum_t bn, blknum_t txid, const address_t
 }
 
 //-------------------------------------------------------------------------
-bool CTransaction::loadAsPrefund(const CStringArray& prefunds, const address_t& addr) {
-    if (prefunds.size() == 0)
-        return false;
+bool CTransaction::loadAsPrefund(const address_t& addr, const wei_t& amount) {
 
     blknum_t id = transactionIndex;
     initialize();
     transactionIndex = id;
-    for (auto prefund : prefunds) {
-        CStringArray parts;
-        explode(parts, prefund, '\t');
-        if (toLower(parts[0]) == addr) {
-            to = addr;
-            from = "0xPrefund";
-            value = str_2_Wei(parts[1]);
-            return true;
-        }
-    }
-    return false;
+    from = "0xPrefund";
+    to = addr;
+    value = amount;
+    return true;
 }
 // EXISTING_CODE
 }  // namespace qblocks
