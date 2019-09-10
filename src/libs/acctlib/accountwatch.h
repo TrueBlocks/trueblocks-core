@@ -33,7 +33,7 @@ public:
     CEthStateArray stateHistory;
     wei_t nodeBal;
     bool enabled;
-    freshen_t fm_mode;
+    freshen_e fm_mode;
 
 public:
     CAccountWatch(void);

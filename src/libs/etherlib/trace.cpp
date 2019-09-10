@@ -32,6 +32,9 @@ void CTrace::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["trace_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();
@@ -73,8 +76,8 @@ bool CTrace::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "articulatedTrace" ) { string_q str = fieldValue ; return articulatedTrace.parseJson3(str); }
-            if ( fieldName % "action" ) { string_q str = fieldValue; return action.parseJson3(str); }
+            if ( fieldName % "articulatedTrace" ) { return articulatedTrace.parseJson3(fieldValue); }
+            if ( fieldName % "action" ) { return action.parseJson3(fieldValue); }
             break;
         case 'b':
             if ( fieldName % "blockHash" ) { blockHash = str_2_Hash(fieldValue); return true; }
@@ -87,7 +90,7 @@ bool CTrace::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
             if ( fieldName % "error" ) { error = fieldValue; return true; }
             break;
         case 'r':
-            if ( fieldName % "result" ) { string_q str = fieldValue; return result.parseJson3(str); }
+            if ( fieldName % "result" ) { return result.parseJson3(fieldValue); }
             break;
         case 's':
             if ( fieldName % "subtraces" ) { subtraces = str_2_Uint(fieldValue); return true; }
@@ -294,18 +297,8 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "articulatedTrace" ) {
-                if (articulatedTrace == CFunction())
-                    return "";
-                expContext().noFrst=true;
-                return articulatedTrace.Format();
-            }
-            if ( fieldName % "action" ) {
-                if (action == CTraceAction())
-                    return "";
-                expContext().noFrst=true;
-                return action.Format();
-            }
+            if ( fieldName % "articulatedTrace" ) { if (articulatedTrace == CFunction()) return ""; expContext().noFrst=true; return articulatedTrace.Format(); }
+            if ( fieldName % "action" ) { if (action == CTraceAction()) return ""; expContext().noFrst=true; return action.Format(); }
             break;
         case 'b':
             if ( fieldName % "blockHash" ) return hash_2_Str(blockHash);
@@ -318,12 +311,7 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "error" ) return error;
             break;
         case 'r':
-            if ( fieldName % "result" ) {
-                if (result == CTraceResult())
-                    return "";
-                expContext().noFrst=true;
-                return result.Format();
-            }
+            if ( fieldName % "result" ) { if (result == CTraceResult()) return ""; expContext().noFrst=true; return result.Format(); }
             break;
         case 's':
             if ( fieldName % "subtraces" ) return uint_2_Str(subtraces);

@@ -32,6 +32,9 @@ void CTraceResult::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) co
     if (!m_showing)
         return;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["traceresult_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();

@@ -15,26 +15,26 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <algorithm>
-#include "balancerecord.h"
+#include "balancedelta.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CBalanceRecord, CBaseNode);
+IMPLEMENT_NODE(CBalanceDelta, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextBalancerecordChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextBalancerecordChunk_custom(const string_q& fieldIn, const void *dataPtr);
+static string_q nextBalancedeltaChunk(const string_q& fieldIn, const void *dataPtr);
+static string_q nextBalancedeltaChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void CBalanceRecord::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CBalanceDelta::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
     // EXISTING_CODE
     // EXISTING_CODE
 
-    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["balancerecord_fmt"] : fmtIn);
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["balancedelta_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();
         return;
@@ -44,13 +44,13 @@ void CBalanceRecord::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) 
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextBalancerecordChunk, this);
+        ctx << getNextChunk(fmt, nextBalancedeltaChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextBalancerecordChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextBalancedeltaChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CBalanceRecord *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CBalanceDelta *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -59,7 +59,7 @@ string_q nextBalancerecordChunk(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CBalanceRecord::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+bool CBalanceDelta::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
     string_q fieldValue = fieldValueIn;
 
@@ -77,12 +77,6 @@ bool CBalanceRecord::setValueByName(const string_q& fieldNameIn, const string_q&
         case 'd':
             if ( fieldName % "diff" ) { diff = str_2_Wei(fieldValue); return true; }
             break;
-        case 'p':
-            if ( fieldName % "priorBalance" ) { priorBalance = str_2_Wei(fieldValue); return true; }
-            break;
-        case 't':
-            if ( fieldName % "transactionIndex" ) { transactionIndex = str_2_Uint(fieldValue); return true; }
-            break;
         default:
             break;
     }
@@ -90,13 +84,13 @@ bool CBalanceRecord::setValueByName(const string_q& fieldNameIn, const string_q&
 }
 
 //---------------------------------------------------------------------------------------------------
-void CBalanceRecord::finishParse() {
+void CBalanceDelta::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CBalanceRecord::Serialize(CArchive& archive) {
+bool CBalanceDelta::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -110,9 +104,7 @@ bool CBalanceRecord::Serialize(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     archive >> blockNumber;
-    archive >> transactionIndex;
 //    archive >> address;
-    archive >> priorBalance;
     archive >> balance;
     archive >> diff;
     finishParse();
@@ -120,7 +112,7 @@ bool CBalanceRecord::Serialize(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CBalanceRecord::SerializeC(CArchive& archive) const {
+bool CBalanceDelta::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -128,9 +120,7 @@ bool CBalanceRecord::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     // EXISTING_CODE
     archive << blockNumber;
-    archive << transactionIndex;
 //    archive << address;
-    archive << priorBalance;
     archive << balance;
     archive << diff;
 
@@ -138,7 +128,7 @@ bool CBalanceRecord::SerializeC(CArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CBalanceRecordArray& array) {
+CArchive& operator>>(CArchive& archive, CBalanceDeltaArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -150,7 +140,7 @@ CArchive& operator>>(CArchive& archive, CBalanceRecordArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CBalanceRecordArray& array) {
+CArchive& operator<<(CArchive& archive, const CBalanceDeltaArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -159,63 +149,42 @@ CArchive& operator<<(CArchive& archive, const CBalanceRecordArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void CBalanceRecord::registerClass(void) {
+void CBalanceDelta::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CBalanceRecord, "schema")) return;
+    if (HAS_FIELD(CBalanceDelta, "schema")) return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CBalanceRecord, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CBalanceRecord, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CBalanceRecord, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CBalanceRecord, "cname", T_TEXT,  ++fieldNum);
-    ADD_FIELD(CBalanceRecord, "blockNumber", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CBalanceRecord, "transactionIndex", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CBalanceRecord, "address", T_ADDRESS, ++fieldNum);
-    HIDE_FIELD(CBalanceRecord, "address");
-    ADD_FIELD(CBalanceRecord, "priorBalance", T_WEI, ++fieldNum);
-    ADD_FIELD(CBalanceRecord, "balance", T_WEI, ++fieldNum);
-    ADD_FIELD(CBalanceRecord, "diff", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CBalanceDelta, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CBalanceDelta, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CBalanceDelta, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CBalanceDelta, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CBalanceDelta, "blockNumber", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CBalanceDelta, "address", T_ADDRESS, ++fieldNum);
+    HIDE_FIELD(CBalanceDelta, "address");
+    ADD_FIELD(CBalanceDelta, "balance", T_WEI, ++fieldNum);
+    ADD_FIELD(CBalanceDelta, "diff", T_NUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CBalanceRecord, "schema");
-    HIDE_FIELD(CBalanceRecord, "deleted");
-    HIDE_FIELD(CBalanceRecord, "showing");
-    HIDE_FIELD(CBalanceRecord, "cname");
+    HIDE_FIELD(CBalanceDelta, "schema");
+    HIDE_FIELD(CBalanceDelta, "deleted");
+    HIDE_FIELD(CBalanceDelta, "showing");
+    HIDE_FIELD(CBalanceDelta, "cname");
 
-    builtIns.push_back(_biCBalanceRecord);
+    builtIns.push_back(_biCBalanceDelta);
 
     // EXISTING_CODE
-    ADD_FIELD(CBalanceRecord, "etherDiff", T_ETHER, ++fieldNum);
-    HIDE_FIELD(CBalanceRecord, "etherDiff");
-    ADD_FIELD(CBalanceRecord, "etherPrior", T_ETHER, ++fieldNum);
-    HIDE_FIELD(CBalanceRecord, "etherPrior");
-    ADD_FIELD(CBalanceRecord, "ether", T_ETHER, ++fieldNum);
-    HIDE_FIELD(CBalanceRecord, "ether");
-    ADD_FIELD(CBalanceRecord, "dollarsPrior", T_ETHER, ++fieldNum);
-    HIDE_FIELD(CBalanceRecord, "dollarsPrior");
-    ADD_FIELD(CBalanceRecord, "dollars", T_ETHER, ++fieldNum);
-    HIDE_FIELD(CBalanceRecord, "dollars");
-    if (isApiMode()) {
-        UNHIDE_FIELD(CBalanceRecord, "etherDiff");
-        UNHIDE_FIELD(CBalanceRecord, "etherPrior");
-        UNHIDE_FIELD(CBalanceRecord, "ether");
-        UNHIDE_FIELD(CBalanceRecord, "dollarsPrior");
-        UNHIDE_FIELD(CBalanceRecord, "dollars");
-    }
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextBalancerecordChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CBalanceRecord *bal = reinterpret_cast<const CBalanceRecord *>(dataPtr);
+string_q nextBalancedeltaChunk_custom(const string_q& fieldIn, const void *dataPtr) {
+    const CBalanceDelta *bal = reinterpret_cast<const CBalanceDelta *>(dataPtr);
     if (bal) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'e':
                 if ( fieldIn % "ether" )
                     return wei_2_Ether(bnu_2_Str(bal->balance));
-                if ( fieldIn % "etherPrior" )
-                    return wei_2_Ether(bnu_2_Str(bal->priorBalance));
                 if ( fieldIn % "etherDiff" ) {
                     string_q res = bal->getValueByName("diff");
                     bool neg = contains(res, "-");
@@ -227,19 +196,17 @@ string_q nextBalancerecordChunk_custom(const string_q& fieldIn, const void *data
             case 'd':
                 if ( fieldIn % "dollars" )
                     return getDispBal(bal->blockNumber, bal->balance);
-                if ( fieldIn % "dollarsPrior" )
-                    return getDispBal(bal->blockNumber, bal->priorBalance);
                 if ( fieldIn % "dollarsDiff" ) {
-                    wei_t b = bal->balance;
-                    wei_t p = bal->priorBalance;
-                    if (b >= p)
-                        return "+" + getDispBal(bal->blockNumber, (b - p));
-                    return "-" + getDispBal(bal->blockNumber, (p - b));
+                    bigint_t d = bal->diff;
+                    if (d < 0)
+                        d *= -1;
+                    biguint_t u = str_2_BigUint(bni_2_Str(d));
+                    if (bal->diff >= 0)
+                        return "+" + getDispBal(bal->blockNumber, u);
+                    return "-" + getDispBal(bal->blockNumber, u);
                 }
-                if ( fieldIn % "diff" ) {
-                    bigint_t diff = bigint_t(bal->balance) - bigint_t(bal->priorBalance);
-                    return bni_2_Str(diff);
-                }
+                if ( fieldIn % "diff" )
+                    return bni_2_Str(bal->diff);
                 break;
             // EXISTING_CODE
             case 'p':
@@ -259,7 +226,7 @@ string_q nextBalancerecordChunk_custom(const string_q& fieldIn, const void *data
 }
 
 //---------------------------------------------------------------------------
-bool CBalanceRecord::readBackLevel(CArchive& archive) {
+bool CBalanceDelta::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE
@@ -268,22 +235,22 @@ bool CBalanceRecord::readBackLevel(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CBalanceRecord& bal) {
+CArchive& operator<<(CArchive& archive, const CBalanceDelta& bal) {
     bal.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CBalanceRecord& bal) {
+CArchive& operator>>(CArchive& archive, CBalanceDelta& bal) {
     bal.Serialize(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-string_q CBalanceRecord::getValueByName(const string_q& fieldName) const {
+string_q CBalanceDelta::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
-    string_q ret = nextBalancerecordChunk_custom(fieldName, this);
+    string_q ret = nextBalancedeltaChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -299,12 +266,6 @@ string_q CBalanceRecord::getValueByName(const string_q& fieldName) const {
         case 'd':
             if ( fieldName % "diff" ) return bni_2_Str(diff);
             break;
-        case 'p':
-            if ( fieldName % "priorBalance" ) return wei_2_Str(priorBalance);
-            break;
-        case 't':
-            if ( fieldName % "transactionIndex" ) return uint_2_Str(transactionIndex);
-            break;
     }
 
     // EXISTING_CODE
@@ -315,7 +276,7 @@ string_q CBalanceRecord::getValueByName(const string_q& fieldName) const {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CBalanceRecord& item) {
+ostream& operator<<(ostream& os, const CBalanceDelta& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -325,25 +286,14 @@ ostream& operator<<(ostream& os, const CBalanceRecord& item) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_BALANCERECORD = 
+const char* STR_DISPLAY_BALANCEDELTA = 
 "[{BLOCKNUMBER}]\t"
-"[{TRANSACTIONINDEX}]\t"
 "[{ADDRESS}]\t"
-"[{PRIORBALANCE}]\t"
 "[{BALANCE}]\t"
 "[{DIFF}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-CBalanceRecord::CBalanceRecord(string_q& line) {
-    blockNumber      = str_2_Uint(nextTokenClear(line, '\t'));
-    transactionIndex = str_2_Uint(nextTokenClear(line, '\t'));
-    address          = nextTokenClear(line, '\t');
-    string_q ether   = nextTokenClear(line, '\t');
-    priorBalance     = str_2_Wei(ether);
-    ether            = nextTokenClear(line, '\t');
-    balance          = str_2_Wei(ether);
-}
 // EXISTING_CODE
 }  // namespace qblocks
 

@@ -32,6 +32,9 @@ void CBlock::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["block_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();
@@ -325,11 +328,6 @@ string_q nextBlockChunk_custom(const string_q& fieldIn, const void *dataPtr) {
                 if ( fieldIn % "parsed" )
                     return nextBasenodeChunk(fieldIn, blo);
                 // EXISTING_CODE
-                if ( false ) { //fieldIn % "price" ) {
-                    if (!IS_HIDDEN(CBlock, "price")) {
-                        return wei_2_Dollars(blo->timestamp, weiPerEther()); // this has huge performance implications because it loads a big file
-                    }
-                }
                 // EXISTING_CODE
                 break;
 
@@ -425,7 +423,7 @@ string_q CBlock::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "hash" ) return hash_2_Str(hash);
             break;
         case 'l':
-            if ( fieldName % "light" ) return bool_2_Str(light);
+            if ( fieldName % "light" ) return bool_2_Str_t(light);
             break;
         case 'm':
             if ( fieldName % "miner" ) return addr_2_Str(miner);

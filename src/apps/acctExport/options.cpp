@@ -238,12 +238,21 @@ bool COptions::parseArguments(string_q& command) {
         if (expContext().asDollars) {
             format = substitute(format, "{BALANCE}", "{DOLLARS}");
             format = substitute(format, "{PRIORBALANCE}", "{DOLLARSPRIOR}");
+            format = substitute(format, "{DIFF}", "{DOLLARSDIFF}");
         }
         expContext().fmtMap["balancerecord_fmt"] = cleanFmt(format, exportFmt);
-        if (deltas_only) {
-            HIDE_FIELD(CBalanceRecord, "transactionIndex");
-            HIDE_FIELD(CBalanceRecord, "priorBalance");
+
+        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "balance", STR_DISPLAY_BALANCEDELTA);
+        format = toml.getConfigStr("formats", "balancedelta_fmt", deflt);
+        if (expContext().asEther) {
+            format = substitute(format, "{BALANCE}", "{ETHER}");
+            format = substitute(format, "{DIFF}", "{ETHERDIFF}");
         }
+        if (expContext().asDollars) {
+            format = substitute(format, "{BALANCE}", "{DOLLARS}");
+            format = substitute(format, "{DIFF}", "{DOLLARSDIFF}");
+        }
+        expContext().fmtMap["balancedelta_fmt"] = cleanFmt(format, exportFmt);
     }
 
     expContext().fmtMap["header"] = "";
@@ -256,7 +265,10 @@ bool COptions::parseArguments(string_q& command) {
             expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["displayapp_fmt"], exportFmt);
         } else if (doBalances) {
             expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["balancerecord_fmt"], exportFmt);
+            if (deltas_only)
+                expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["balancedelta_fmt"], exportFmt);
             SHOW_FIELD(CBalanceRecord, "address");
+            SHOW_FIELD(CBalanceDelta, "address");
         } else {
             expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["transaction_fmt"], exportFmt);
         }

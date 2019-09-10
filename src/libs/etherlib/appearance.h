@@ -122,10 +122,10 @@ namespace qblocks {
 
     extern int findAppearance(const void* v1, const void* v2);
 
-    typedef enum { FM_PRODUCTION, FM_STAGING } freshen_t;
-    extern string_q getMonitorPath(const string_q& addr, freshen_t mode=FM_PRODUCTION);
-    extern string_q getMonitorLast(const string_q& addr, freshen_t mode=FM_PRODUCTION);
-    extern string_q getMonitorExpt(const string_q& addr, freshen_t mode=FM_PRODUCTION);
-    extern string_q getMonitorBals(const string_q& addr, freshen_t mode=FM_PRODUCTION);
+    typedef enum { FM_PRODUCTION, FM_STAGING } freshen_e;
+    extern string_q getMonitorPath(const string_q& addr, freshen_e mode=FM_PRODUCTION);
+    extern string_q getMonitorLast(const string_q& addr, freshen_e mode=FM_PRODUCTION);
+    extern string_q getMonitorExpt(const string_q& addr, freshen_e mode=FM_PRODUCTION);
+    extern string_q getMonitorBals(const string_q& addr, freshen_e mode=FM_PRODUCTION);
 
 }  // namespace qblocks

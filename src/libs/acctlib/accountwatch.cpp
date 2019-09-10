@@ -31,6 +31,9 @@ void CAccountWatch::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) c
     if (!m_showing)
         return;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["accountwatch_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();
@@ -80,19 +83,19 @@ bool CAccountWatch::setValueByName(const string_q& fieldNameIn, const string_q& 
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "abi_spec" ) { /* abi_spec = fieldValue; */ return false; }
+            if ( fieldName % "abi_spec" ) { return abi_spec.parseJson3(fieldValue); }
             break;
         case 'e':
             if ( fieldName % "enabled" ) { enabled = str_2_Bool(fieldValue); return true; }
             break;
         case 'f':
-//            if ( fieldName % "fm_mode" ) { fm_mode = fieldValue; return true; }
+            if ( fieldName % "fm_mode" ) { fm_mode = str_2_Enum(freshen_e,fieldValue); return true; }
             break;
         case 'n':
             if ( fieldName % "nodeBal" ) { nodeBal = str_2_Wei(fieldValue); return true; }
             break;
         case 's':
-            if ( fieldName % "statement" ) { /* statement = fieldValue; */ return false; }
+            if ( fieldName % "statement" ) { return statement.parseJson3(fieldValue); }
             if ( fieldName % "stateHistory" ) {
                 CEthState item;
                 string_q str = fieldValue;
@@ -197,7 +200,7 @@ void CAccountWatch::registerClass(void) {
     ADD_FIELD(CAccountWatch, "stateHistory", T_OBJECT|TS_ARRAY, ++fieldNum);
     ADD_FIELD(CAccountWatch, "nodeBal", T_WEI, ++fieldNum);
     ADD_FIELD(CAccountWatch, "enabled", T_BOOL, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "fm_mode", T_TEXT, ++fieldNum);
+    ADD_FIELD(CAccountWatch, "fm_mode", T_NUMBER, ++fieldNum);
     HIDE_FIELD(CAccountWatch, "fm_mode");
 
     // Hide our internal fields, user can turn them on if they like
@@ -261,7 +264,7 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "enabled" ) return bool_2_Str(enabled);
             break;
         case 'f':
-//            if ( fieldName % "fm_mode" ) return fm_mode;
+            if ( fieldName % "fm_mode" ) return uint_2_Str(fm_mode);
             break;
         case 'n':
             if ( fieldName % "nodeBal" ) return wei_2_Str(nodeBal);

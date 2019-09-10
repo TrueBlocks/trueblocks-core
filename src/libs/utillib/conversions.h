@@ -62,6 +62,7 @@ namespace qblocks {
     extern bloom_t     str_2_Bloom  (const string_q& str);
     extern topic_t     str_2_Topic  (const string_q& str);
     extern timestamp_t str_2_Ts     (const string_q& str);
+    #define str_2_Enum(en,str) (en)str_2_Uint(str)
 
     //-------------------------------------------------------------------------
     extern string_q    bool_2_Str   (bool num);

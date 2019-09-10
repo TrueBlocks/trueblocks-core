@@ -69,6 +69,7 @@ public:
     bool fromDefinition(const string_q& input);
     bool isValid(void) const;
     bool noWrite;
+    bool noWrite_min;
     // EXISTING_CODE
     bool operator==(const CParameter& item) const;
     bool operator!=(const CParameter& item) const { return !operator==(item); }
@@ -130,6 +131,7 @@ inline void CParameter::initialize(void) {
 
     // EXISTING_CODE
     noWrite = false;
+    noWrite_min = false;
     // EXISTING_CODE
 }
 
@@ -149,6 +151,7 @@ inline void CParameter::duplicate(const CParameter& pa) {
 
     // EXISTING_CODE
     noWrite = pa.noWrite;
+    noWrite_min = pa.noWrite_min;
     // EXISTING_CODE
 }
 

@@ -31,6 +31,9 @@ void CApiResult::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) cons
     if (!m_showing)
         return;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["apiresult_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();
@@ -65,7 +68,7 @@ bool CApiResult::setValueByName(const string_q& fieldNameIn, const string_q& fie
 
     switch (tolower(fieldName[0])) {
         case 'd':
-            if ( fieldName % "data" )  { string_q str = fieldValue ; return data.parseJson3(str); }
+            if ( fieldName % "data" ) { return data.parseJson3(fieldValue); }
             break;
         case 't':
             if ( fieldName % "type" ) { type = fieldValue; return true; }

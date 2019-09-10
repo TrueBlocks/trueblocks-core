@@ -31,6 +31,9 @@ void CAbiCache::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const
     if (!m_showing)
         return;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["abicache_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();

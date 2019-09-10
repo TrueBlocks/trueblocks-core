@@ -31,6 +31,9 @@ void CFunction::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const
     if (!m_showing)
         return;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["function_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();
@@ -67,6 +70,28 @@ bool CFunction::setValueByName(const string_q& fieldNameIn, const string_q& fiel
     } else if (fieldName % "name") {
         name = fieldValue;
         return true;
+    } else if ( fieldName % "inputs" ) {
+        uint64_t cnt = 0;
+        CParameter item;
+        string_q str = fieldValue;
+        while (item.parseJson3(str)) {
+            if (item.name.empty())
+                item.name = "val_" + uint_2_Str(cnt++);
+            inputs.push_back(item);
+            item = CParameter();
+        }
+        return true;
+    } else if ( fieldName % "outputs" ) {
+        uint64_t cnt = 0;
+        CParameter item;
+        string_q str = fieldValue;
+        while (item.parseJson3(str)) {
+            if (item.name.empty())
+                item.name = "val_" + uint_2_Str(cnt++);
+            outputs.push_back(item);
+            item = CParameter();  // reset
+        }
+        return true;
     }
     // EXISTING_CODE
 
@@ -82,12 +107,9 @@ bool CFunction::setValueByName(const string_q& fieldNameIn, const string_q& fiel
             break;
         case 'i':
             if ( fieldName % "inputs" ) {
-                uint64_t cnt = 0;
                 CParameter item;
                 string_q str = fieldValue;
                 while (item.parseJson3(str)) {
-                    if (item.name.empty())
-                        item.name = "val_" + uint_2_Str(cnt++);
                     inputs.push_back(item);
                     item = CParameter();  // reset
                 }
@@ -102,12 +124,9 @@ bool CFunction::setValueByName(const string_q& fieldNameIn, const string_q& fiel
             break;
         case 'o':
             if ( fieldName % "outputs" ) {
-                uint64_t cnt = 0;
                 CParameter item;
                 string_q str = fieldValue;
                 while (item.parseJson3(str)) {
-                    if (item.name.empty())
-                        item.name = "val_" + uint_2_Str(cnt++);
                     outputs.push_back(item);
                     item = CParameter();  // reset
                 }

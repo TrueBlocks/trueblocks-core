@@ -186,7 +186,7 @@ statement           	1006	0	1048651	T_OBJECT TS_OBJECT
 stateHistory        	1007	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 nodeBal             	1008	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 enabled             	1009	0	65556	T_BOOL TS_NUMERAL
-fm_mode             	1010	1	131122	T_TEXT TS_STRING
+fm_mode             	1010	1	65561	T_NUMBER TS_NUMERAL
 {
   "abi_spec": {
     "schema": 5008,
@@ -224,7 +224,7 @@ statement           	1006	1	1048651	T_OBJECT TS_OBJECT
 stateHistory        	1007	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 nodeBal             	1008	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 enabled             	1009	1	65556	T_BOOL TS_NUMERAL
-fm_mode             	1010	1	131122	T_TEXT TS_STRING
+fm_mode             	1010	1	65561	T_NUMBER TS_NUMERAL
 {
   "is_contract": false,
   "is_private": false,
@@ -243,7 +243,7 @@ statement           	1006	0	1048651	T_OBJECT TS_OBJECT
 stateHistory        	1007	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 nodeBal             	1008	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 enabled             	1009	0	65556	T_BOOL TS_NUMERAL
-fm_mode             	1010	0	131122	T_TEXT TS_STRING
+fm_mode             	1010	0	65561	T_NUMBER TS_NUMERAL
 {
   "schema": 5008,
   "deleted": 0,
@@ -268,6 +268,7 @@ fm_mode             	1010	0	131122	T_TEXT TS_STRING
   "stateHistory": [],
   "nodeBal": 0,
   "enabled": true,
+  "fm_mode": 0,
   "is_contract": false,
   "is_private": false,
   "is_shared": false
@@ -372,7 +373,6 @@ age                 	1019	0	262149	T_DATE TS_DATE
   "finalized": 0,
   "timestamp": 0,
   "transactions": [],
-  "light": false,
   "date": "1970-01-01 00:00:00 UTC",
   "age": "100"
 }
@@ -529,7 +529,6 @@ topic3              	1021	0	131132	T_HASH TS_STRING
   "cname": "LogEntry",
   "address": "0x0",
   "logIndex": 0,
-  "removed": false,
   "topics": [],
   "articulatedLog": {
     "schema": 5008,

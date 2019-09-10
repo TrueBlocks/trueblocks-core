@@ -28,6 +28,7 @@ void acctlib_init(QUITHANDLER qh) {
     CBranch::registerClass();
     CLeaf::registerClass();
     CBalanceRecord::registerClass();
+    CBalanceDelta::registerClass();
 }
 
 //-------------------------------------------------------------------------

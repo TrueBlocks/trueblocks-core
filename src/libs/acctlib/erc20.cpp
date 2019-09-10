@@ -31,6 +31,9 @@ void CTokenState_erc20::Format(ostream& ctx, const string_q& fmtIn, void *dataPt
     if (!m_showing)
         return;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["tokenstate_erc20_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();

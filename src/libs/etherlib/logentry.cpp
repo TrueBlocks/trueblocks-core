@@ -32,6 +32,9 @@ void CLogEntry::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const
     if (!m_showing)
         return;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["logentry_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();
@@ -319,7 +322,7 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "logIndex" ) return uint_2_Str(logIndex);
             break;
         case 'r':
-            if ( fieldName % "removed" ) return bool_2_Str(removed);
+            if ( fieldName % "removed" ) return bool_2_Str_t(removed);
             break;
         case 't':
             if ( fieldName % "topics" || fieldName % "topicsCnt" ) {
