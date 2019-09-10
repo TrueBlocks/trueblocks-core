@@ -75,7 +75,7 @@ bool CBalanceDelta::setValueByName(const string_q& fieldNameIn, const string_q& 
             if ( fieldName % "balance" ) { balance = str_2_Wei(fieldValue); return true; }
             break;
         case 'd':
-            if ( fieldName % "diff" ) { diff = str_2_Wei(fieldValue); return true; }
+            if ( fieldName % "diff" ) { diff = str_2_BigInt(fieldValue); return true; }
             break;
         default:
             break;
@@ -194,6 +194,8 @@ string_q nextBalancedeltaChunk_custom(const string_q& fieldIn, const void *dataP
                 }
                 break;
             case 'd':
+                if ( fieldIn % "diff" )
+                    return bni_2_Str(bal->diff);
                 if ( fieldIn % "dollars" )
                     return getDispBal(bal->blockNumber, bal->balance);
                 if ( fieldIn % "dollarsDiff" ) {
@@ -205,8 +207,6 @@ string_q nextBalancedeltaChunk_custom(const string_q& fieldIn, const void *dataP
                         return "+" + getDispBal(bal->blockNumber, u);
                     return "-" + getDispBal(bal->blockNumber, u);
                 }
-                if ( fieldIn % "diff" )
-                    return bni_2_Str(bal->diff);
                 break;
             // EXISTING_CODE
             case 'p':
