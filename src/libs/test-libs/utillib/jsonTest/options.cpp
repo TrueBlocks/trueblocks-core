@@ -15,7 +15,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     COption("files", "s", "list<fn>", OPT_REQUIRED | OPT_POSITIONAL, "One or more files to parse"),
-    COption("", "", "", 0, "Test the json parsing facility in QBlocks.\n"),
+    COption("", "", "", OPT_DESCRIPTION, "Test the json parsing facility in QBlocks.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 

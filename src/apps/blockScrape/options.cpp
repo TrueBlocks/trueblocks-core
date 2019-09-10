@@ -11,7 +11,7 @@ static const COption params[] = {
     COption("nBlocks", "n", "<blknum>", OPT_FLAG, "maximum number of blocks to process (defaults to 5000)"),
     COption("nBlockProcs", "b", "<uint>", OPT_HIDDEN | OPT_FLAG, "number of block channels for blaze"),
     COption("nAddrProcs", "a", "<uint>", OPT_HIDDEN | OPT_FLAG, "number of address channels for blaze"),
-    COption("", "", "", 0, "Decentralized blockchain scraper and block cache."),
+    COption("", "", "", OPT_DESCRIPTION, "Decentralized blockchain scraper and block cache."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);

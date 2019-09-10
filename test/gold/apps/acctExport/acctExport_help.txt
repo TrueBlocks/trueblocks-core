@@ -1,7 +1,7 @@
 acctExport argc: 2 [1:-h] 
 acctExport -h 
 
-  Usage:    acctExport [-x|-a|-l|-t|-p|-v|-h] <address> [address...]  
+  Usage:    acctExport [-x|-a|-l|-t|-c|-p|-v|-h] <address> [address...]  
   Purpose:  Export full detail of transactions for one or more Ethereum addresses.
 
   Where:  
@@ -10,10 +10,10 @@ acctExport -h
 	-a  (--articulate)    articulate transactions, traces, logs, and outputs
 	-l  (--logs)          export logs instead of transaction list
 	-t  (--traces)        export traces instead of transaction list
+	-c  (--balances)      export balance history instead of transaction list
 	-p  (--appearances)   export a list of appearances
 
 #### Hidden options (shown during testing only)
-	-c  (--balances)      export balance history instead of transaction list
 	-b  (--blocks enum[on|off*])write blocks to the binary cache ('off' by default)
 	-s  (--writeTxs enum[on*|off])write transactions to the binary cache ('on' by default)
 	-r  (--writeTraces enum[on*|off])write traces to the binary cache ('on' by default)

@@ -21,7 +21,7 @@ static const COption params[] = {
     COption("blocks", "b", "<range>", OPT_FLAG, "export records in block range (:0[:max])"),
     COption("silent", "s", "", OPT_SWITCH, "Run silently (only freshen the data, do not display it)"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_FLAG, "pretty print, optionally add ':txt,' ':csv,' or ':html'"),
-    COption("", "", "", 0, "Fetches data from EtherScan for an arbitrary address. Formats the output to your specification."),
+    COption("", "", "", OPT_DESCRIPTION, "Fetches data from EtherScan for an arbitrary address. Formats the output to your specification."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);

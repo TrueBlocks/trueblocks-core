@@ -1,4 +1,4 @@
-n,group,api_route,tool,order,command,command_short,data_type,option_kind,default_value,description_core,description_api,is_required,core_visible,docs_visible
+﻿n,group,api_route,tool,order,command,command_short,data_type,option_kind,default_value,description_core,description_api,is_required,core_visible,docs_visible
 5,tools,receipts,getReceipt,,trans_list,,list<trans>,positional,,"a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)",,TRUE,TRUE,TRUE
 10,tools,receipts,getReceipt,,articulate,a,boolean,switch,,articulate the transactions if an ABI is found for the 'to' address,,FALSE,TRUE,TRUE
 15,tools,receipts,getReceipt,,logs,l,boolean,switch,,display the receipt's logs,,FALSE,TRUE,TRUE
@@ -145,7 +145,8 @@ n,group,api_route,tool,order,command,command_short,data_type,option_kind,default
 725,apps,export,acctExport,,articulate,a,boolean,switch,,"articulate transactions, traces, logs, and outputs",,FALSE,TRUE,TRUE
 730,apps,export,acctExport,,logs,l,boolean,switch,,export logs instead of transaction list,,FALSE,TRUE,TRUE
 735,apps,export,acctExport,,traces,t,boolean,switch,,export traces instead of transaction list,,FALSE,TRUE,TRUE
-740,apps,export,acctExport,,balances,c,boolean,switch,,export balance history instead of transaction list,,FALSE,FALSE,FALSE
+740,apps,export,acctExport,,balances,c,boolean,switch,,export balance history instead of transaction list,,FALSE,TRUE,TRUE
+742,apps,export,acctExport,,appearances,p,boolean,switch,,export a list of appearances,,FALSE,TRUE,TRUE
 745,apps,export,acctExport,,blocks,b,enum[on|off*],flag,,write blocks to the binary cache ('off' by default),,FALSE,FALSE,FALSE
 750,apps,export,acctExport,,writeTxs,s,enum[on*|off],flag,,write transactions to the binary cache ('on' by default),,FALSE,FALSE,FALSE
 755,apps,export,acctExport,,writeTraces,r,enum[on*|off],flag,,write traces to the binary cache ('on' by default),,FALSE,FALSE,FALSE
@@ -155,6 +156,7 @@ n,group,api_route,tool,order,command,command_short,data_type,option_kind,default
 775,apps,export,acctExport,,allABIs,a,boolean,switch,,load all previously cached abi files,,FALSE,FALSE,FALSE
 780,apps,export,acctExport,,grabABIs,g,boolean,switch,,"using each trace's 'to' address, grab the abi for that address (improves articulation)",,FALSE,FALSE,FALSE
 785,apps,export,acctExport,,freshen,f,boolean,switch,,freshen but do not print the exported data,,FALSE,FALSE,FALSE
+787,apps,export,acctExport,,deltas,,boolean,switch,,"for --balances option only, export only changes in balances",,FALSE,FALSE,FALSE
 790,apps,export,acctExport,,start,s,<blknum>,flag,,first block to export (inclusive),,FALSE,FALSE,FALSE
 795,apps,export,acctExport,,end,e,<blknum>,flag,,last block to export (inclusive),,FALSE,FALSE,FALSE
 800,apps,export,acctExport,,,,,description,,Export full detail of transactions for one or more Ethereum addresses.,,FALSE,TRUE,TRUE

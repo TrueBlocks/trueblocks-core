@@ -1,5 +1,5 @@
-acctExport argc: 3 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--balances] 
-acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --balances 
+acctExport argc: 4 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--balances] [3:--deltas] 
+acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --balances --deltas 
 TIME ~ CLOCK - : 4-----API_MODE=true
 { "type": "CEthState", "data": [
 [{
@@ -41,5 +41,18 @@ TIME ~ CLOCK - : 4-----API_MODE=true
   "dollarsPrior": 74679320489077336,
   "dollars": 0
 }
+, {
+  "blockNumber": 1501460,
+  "transactionIndex": 18446744073709551615,
+  "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
+  "priorBalance": 18446744073709551615,
+  "balance": 18446744073709551615,
+  "diff": 0,
+  "etherDiff": +0.000000000000000000,
+  "etherPrior": 18.446744073709551615,
+  "ether": 18.446744073709551615,
+  "dollarsPrior": 18446744073709551615,
+  "dollars": 18446744073709551615
+}
 ]
-], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }exported 3 of 3 transactions                                             
+], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }exported 4 of 3 transactions                                             

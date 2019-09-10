@@ -14,7 +14,7 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("", "", "", 0, "Testing code for the sha3 functionality of etherlib.\n"),
+    COption("", "", "", OPT_DESCRIPTION, "Testing code for the sha3 functionality of etherlib.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 

@@ -18,31 +18,32 @@
 
 // #define PROVING 1
 // Bit flags to enable / disable various options
-#define OPT_HELP       (1<<1)
-#define OPT_VERBOSE    (1<<2)
-#define OPT_DOLLARS    (1<<3)
-#define OPT_WEI        (1<<4)
-#define OPT_ETHER      (1<<5)
-#define OPT_DENOM      (OPT_DOLLARS|OPT_WEI|OPT_ETHER)
-#define OPT_PARITY     (1<<6)
+#define OPT_DESCRIPTION (0)
+#define OPT_HELP        (1<<1)
+#define OPT_VERBOSE     (1<<2)
+#define OPT_DOLLARS     (1<<3)
+#define OPT_WEI         (1<<4)
+#define OPT_ETHER       (1<<5)
+#define OPT_DENOM       (OPT_DOLLARS|OPT_WEI|OPT_ETHER)
+#define OPT_PARITY      (1<<6)
 #ifndef PROVING
-#define OPT_DEFAULT    (OPT_HELP|OPT_VERBOSE|OPT_DENOM|OPT_PARITY)
+#define OPT_DEFAULT     (OPT_HELP|OPT_VERBOSE|OPT_DENOM|OPT_PARITY)
 #else
-#define OPT_PROVE      (1<<7)
-#define OPT_VERIFY     (1<<8)
-#define OPT_TRUEDATA   (OPT_PROVE|OPT_VERIFY)
-#define OPT_DEFAULT    (OPT_HELP|OPT_VERBOSE|OPT_DENOM|OPT_PARITY|OPT_TRUEDATA)
+#define OPT_PROVE       (1<<7)
+#define OPT_VERIFY      (1<<8)
+#define OPT_TRUEDATA    (OPT_PROVE|OPT_VERIFY)
+#define OPT_DEFAULT     (OPT_HELP|OPT_VERBOSE|OPT_DENOM|OPT_PARITY|OPT_TRUEDATA)
 #endif
-#define OPT_RUNONCE    (1<<9)
-#define OPT_RAW        (1<<10)
-#define OPT_PREFUND    (1<<11)
-#define OPT_OUTPUT     (1<<12)
+#define OPT_RUNONCE     (1<<9)
+#define OPT_RAW         (1<<10)
+#define OPT_PREFUND     (1<<11)
+#define OPT_OUTPUT      (1<<12)
 
-#define OPT_REQUIRED   (1<<14)
-#define OPT_POSITIONAL (1<<16)
-#define OPT_FLAG       (1<<17)
-#define OPT_SWITCH     OPT_FLAG
-#define OPT_HIDDEN     (1<<18)
+#define OPT_REQUIRED    (1<<14)
+#define OPT_POSITIONAL  (1<<16)
+#define OPT_FLAG        (1<<17)
+#define OPT_SWITCH      OPT_FLAG
+#define OPT_HIDDEN      (1<<18)
 
 //-----------------------------------------------------------------------------
 enum format_t { NONE1 = 0, JSON1 = (1<<1), TXT1 = (1<<2), CSV1 = (1<<3), API1 = (1<<4) };
@@ -137,9 +138,9 @@ namespace qblocks {
         string_q  longName;
         string_q  description;
         string_q  permitted;
-        bool      hidden;
-        bool      mode;
-        bool      optional;
+        bool      is_hidden;
+        bool      is_positional;
+        bool      is_optional;
         COption(const string_q& ln, const string_q& sn, const string_q& type, size_t opts, const string_q& d);
     private:
         COption(const string_q& name, const string_q& descr);

@@ -29,7 +29,7 @@ static const COption params[] = {
     COption("source", "s", "enum[c*|r]", OPT_HIDDEN | OPT_FLAG, "either :c(a)che or :(r)aw, source for data retrival. (shortcuts -k = qblocks, -r = node)"),
     COption("fields", "f", "enum[a*|m|c|r]", OPT_HIDDEN | OPT_FLAG, "either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default)"),
     COption("normalize", "n", "", OPT_HIDDEN | OPT_SWITCH, "normalize (remove un-common fields and sort) for comparison with other results (testing)"),
-    COption("", "", "", 0, "Returns block(s) from local cache or directly from a running node."),
+    COption("", "", "", OPT_DESCRIPTION, "Returns block(s) from local cache or directly from a running node."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);

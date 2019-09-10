@@ -23,7 +23,7 @@ static const COption params[] = {
     COption("skip", "k", "", OPT_HIDDEN | OPT_SWITCH, "skip value for testing"),
     COption("start", "s", "<blknum>", OPT_HIDDEN | OPT_FLAG, "un-used hidden value - do not remove"),
     COption("noHeader", "o", "", OPT_HIDDEN | OPT_SWITCH, "do not show header row of data"),
-    COption("", "", "", 0, "Show the contents of an account cache and/or fix it by removing duplicate records.\n"),
+    COption("", "", "", OPT_DESCRIPTION, "Show the contents of an account cache and/or fix it by removing duplicate records.\n"),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);

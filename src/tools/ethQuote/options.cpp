@@ -20,7 +20,7 @@ static const COption params[] = {
     COption("period", "p", "enum[5|15|30|120*|240|1440]", OPT_FLAG, "Display prices in this increment. One of [5|15|30|120*|240|1440]"),
     COption("pair", "p", "<pair>", OPT_FLAG, "Which price pair to freshen or list (see Poloniex)"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),
-    COption("", "", "", 0, "Freshen and/or display Ethereum price data and other purposes."),
+    COption("", "", "", OPT_DESCRIPTION, "Freshen and/or display Ethereum price data and other purposes."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);

@@ -14,7 +14,7 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("", "", "", 0, "Simple test program.\n"),
+    COption("", "", "", OPT_DESCRIPTION, "Simple test program.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 

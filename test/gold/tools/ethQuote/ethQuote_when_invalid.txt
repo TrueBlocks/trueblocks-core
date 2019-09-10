@@ -3,14 +3,14 @@ ethQuote -w
 
   Invalid option: -w
 
-  Usage:    ethQuote -f|-d|-p|-p|-v|-h  
+  Usage:    ethQuote -d|-f|-p|-p|-v|-h  
   Purpose:  Freshen and/or display Ethereum price data and other purposes.
 
   Where:  
-	-f  (--freshen)       Freshen database (append new data)
 	-d  (--data)          Export prices as JSON data
+	-f  (--freshen)       Freshen database (append new data)
 	-p  (--period enum[5|15|30|120*|240|1440])Display prices in this increment. One of [5|15|30|120*|240|1440]
-	-p  (--pair <val>)    Which price pair to freshen or list (see Poloniex)
+	-p  (--pair <pair>)   Which price pair to freshen or list (see Poloniex)
 
 #### Hidden options (shown during testing only)
 	-x  (--fmt <fmt>)     export format (one of [none|json*|txt|csv|api])

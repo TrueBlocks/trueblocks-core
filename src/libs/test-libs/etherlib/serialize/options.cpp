@@ -15,7 +15,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     COption("testNum", "t", "[1|2]", OPT_REQUIRED | OPT_FLAG, "which test to run (either 1 and 2)"),
-    COption("", "", "", 0, "This program tests floating point printing and conversions.\n"),
+    COption("", "", "", OPT_DESCRIPTION, "This program tests floating point printing and conversions.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 

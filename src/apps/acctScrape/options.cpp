@@ -15,7 +15,7 @@ static const COption params[] = {
     COption("daemon", "d", "", OPT_HIDDEN | OPT_SWITCH, "we are being called in daemon mode which causes us to print results differently"),
     COption("noHeader", "o", "", OPT_SWITCH, "do not show the header row"),
     COption("start", "r", "<blknum>", OPT_HIDDEN | OPT_FLAG, "start block for scan of appearances"),
-    COption("", "", "", 0, "Index transactions for a given Ethereum address (or series of addresses)."),
+    COption("", "", "", OPT_DESCRIPTION, "Index transactions for a given Ethereum address (or series of addresses)."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);

@@ -15,7 +15,7 @@ static const COption params[] = {
     COption("list", "l", "", OPT_SWITCH, "display results in Linux ls -l format (assumes --detail)"),
     COption("start", "", "<blknum>", OPT_FLAG, "starting block for data retreival"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),
-    COption("", "", "", 0, "Report on status of one or more TrueBlocks caches."),
+    COption("", "", "", OPT_DESCRIPTION, "Report on status of one or more TrueBlocks caches."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);

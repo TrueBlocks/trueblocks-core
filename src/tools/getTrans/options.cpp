@@ -20,7 +20,7 @@ static const COption params[] = {
     COption("trace", "t", "", OPT_SWITCH, "display the transaction's trace"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),
     COption("force", "", "", OPT_HIDDEN | OPT_SWITCH, "force the results into the tx cache"),
-    COption("", "", "", 0, "Retrieve an Ethereum transaction from the local cache or a running node."),
+    COption("", "", "", OPT_DESCRIPTION, "Retrieve an Ethereum transaction from the local cache or a running node."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
