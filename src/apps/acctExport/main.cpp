@@ -41,7 +41,18 @@ int main(int argc, const char *argv[]) {
 
     if (!options.freshen_only) {
         cerr << "exported " << options.nExported << " ";
-        cerr << (options.doTraces ? "traces from " : (options.doLogs ? "logs from " : (options.doABIs ? "abis from " : "of ")));
+        if (options.doTraces)
+            cerr << "traces from ";
+        else if (options.doLogs)
+            cerr << "logs from ";
+        else if (options.doBalances && !options.deltas_only)
+            cerr << "balances from ";
+        else if (options.doBalances)
+            cerr << "changes in balance from ";
+        else if (options.doABIs)
+            cerr << "abis from ";
+        else
+            cerr << "of ";
         cerr << options.items.size() << " transactions" << string_q(45,' ') << "\n";
         cerr.flush();
     }

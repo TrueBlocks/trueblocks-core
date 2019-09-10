@@ -55,4 +55,4 @@ TIME ~ CLOCK - : 4-----API_MODE=true
   "dollars": 18446744073709551615
 }
 ]
-], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }exported 4 of 3 transactions                                             
+], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }exported 4 changes in balance from 3 transactions                                             

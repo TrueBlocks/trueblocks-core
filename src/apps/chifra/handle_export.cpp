@@ -32,7 +32,8 @@ bool COptions::handle_export(void) {
             for (size_t i = 0 ; i < cmds.size() && !quit ; i++) {
                 int ret = system(cmds[i].c_str());
                 quit = (ret != 0);
-                cerr << "command: " << trim(cmds[i]) << " returned with '" << quit << "'" << endl;
+                if (verbose)
+                    cerr << "command: " << trim(cmds[i]) << " returned with '" << quit << "'" << endl;
             }
 
             if (++cnt < addrs.size())
