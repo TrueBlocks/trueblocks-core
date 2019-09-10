@@ -13,7 +13,7 @@ static const COption params[] = {
     COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
     COption("logs", "l", "", OPT_SWITCH, "export logs instead of transaction list"),
     COption("traces", "t", "", OPT_SWITCH, "export traces instead of transaction list"),
-    COption("balances", "c", "", OPT_HIDDEN | OPT_SWITCH, "export balance history instead of transaction list"),
+    COption("balances", "c", "", OPT_SWITCH, "export balance history instead of transaction list"),
     COption("appearances", "p", "", OPT_SWITCH, "export a list of appearances"),
     COption("blocks", "b", "enum[on|off*]", OPT_HIDDEN | OPT_FLAG, "write blocks to the binary cache ('off' by default)"),
     COption("writeTxs", "s", "enum[on*|off]", OPT_HIDDEN | OPT_FLAG, "write transactions to the binary cache ('on' by default)"),
@@ -24,9 +24,10 @@ static const COption params[] = {
     COption("allABIs", "a", "", OPT_HIDDEN | OPT_SWITCH, "load all previously cached abi files"),
     COption("grabABIs", "g", "", OPT_HIDDEN | OPT_SWITCH, "using each trace's 'to' address, grab the abi for that address (improves articulation)"),
     COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
+    COption("deltas", "", "", OPT_HIDDEN | OPT_SWITCH, "for --balances option only, export only changes in balances"),
     COption("start", "s", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to export (inclusive)"),
     COption("end", "e", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to export (inclusive)"),
-    COption("", "", "", 0, "Export full detail of transactions for one or more Ethereum addresses."),
+    COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more Ethereum addresses."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -100,7 +101,10 @@ bool COptions::parseArguments(string_q& command) {
             doABIs = true;
 
         } else if (arg == "-f" || arg == "--freshen") {
-            freshenOnly = true;
+            freshen_only = true;
+
+        } else if (arg == "--deltas") {
+            deltas_only = true;
 
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
@@ -151,6 +155,9 @@ bool COptions::parseArguments(string_q& command) {
 
     if (monitors.size() == 0)
         return usage("You must provide at least one Ethereum address. Quitting...");
+
+    if (deltas_only && !doBalances)
+        return usage("--deltas option is only available with --balances. Quitting...");
 
     // show certain fields and hide others
     //SEP4("default field hiding: " + defHide);
@@ -226,12 +233,17 @@ bool COptions::parseArguments(string_q& command) {
         if (expContext().asEther) {
             format = substitute(format, "{BALANCE}", "{ETHER}");
             format = substitute(format, "{PRIORBALANCE}", "{ETHERPRIOR}");
+            format = substitute(format, "{DIFF}", "{ETHERDIFF}");
         }
         if (expContext().asDollars) {
             format = substitute(format, "{BALANCE}", "{DOLLARS}");
             format = substitute(format, "{PRIORBALANCE}", "{DOLLARSPRIOR}");
         }
         expContext().fmtMap["balancerecord_fmt"] = cleanFmt(format, exportFmt);
+        if (deltas_only) {
+            HIDE_FIELD(CBalanceRecord, "transactionIndex");
+            HIDE_FIELD(CBalanceRecord, "priorBalance");
+        }
     }
 
     expContext().fmtMap["header"] = "";
@@ -250,7 +262,7 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (freshenOnly)
+    if (freshen_only)
         exportFmt = NONE1;
 
     return true;
@@ -274,7 +286,8 @@ void COptions::Init(void) {
     doTraces = false;
     doBalances = false;
     doABIs = false;
-    freshenOnly = false;
+    freshen_only = false;
+    deltas_only = false;
     scanRange.second = getLastBlock_cache_ripe();
 
     minArgs = 0;
@@ -360,7 +373,7 @@ bool COptions::loadAllAppearances(void) {
     for (auto monitor : monitors) {
         if (!loadOneAddress(tmp, monitor.address))
             EXIT_FAIL("Could not load data.");
-        if (freshenOnly) {
+        if (freshen_only) {
             // If we're freshening...
             blknum_t lastExport = str_2_Uint(asciiFileToString(getMonitorExpt(monitor.address)));
             if (scanRange.first == 0) // we can start where the last export happened on any address...
@@ -370,7 +383,7 @@ bool COptions::loadAllAppearances(void) {
         }
     }
     if (tmp.size() == 0)
-        EXIT_MSG("Nothing to export.", false);
+        return false;
 
     // Should be sorted already, so it can't hurt
     sort(tmp.begin(), tmp.end());

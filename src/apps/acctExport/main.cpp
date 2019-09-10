@@ -26,10 +26,12 @@ int main(int argc, const char *argv[]) {
         if (once)
             cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], className);
 
-        options.loadAllAppearances();
         if (options.doBalances) {
+            options.loadAllAppearances(); // allow the balance query to continue even with no appearances
             options.exportBalances();
         } else {
+            if (!options.loadAllAppearances())
+                return options.usage("Nothing to export.");
             options.exportData();
         }
 
@@ -37,7 +39,7 @@ int main(int argc, const char *argv[]) {
     }
     cout << exportPostamble(options.exportFmt, expContext().fmtMap["meta"]);
 
-    if (!options.freshenOnly) {
+    if (!options.freshen_only) {
         cerr << "exported " << options.nExported << " ";
         cerr << (options.doTraces ? "traces from " : (options.doLogs ? "logs from " : (options.doABIs ? "abis from " : "of ")));
         cerr << options.items.size() << " transactions" << string_q(45,' ') << "\n";

@@ -20,15 +20,24 @@ bool COptions::handle_export(void) {
     size_t cnt = 0;
     for (auto addr : addrs) {
         ostringstream os;
-        os << "grabABI " << addr << " 1>/dev/null 2>&1; ";
+        os << "grabABI " << addr << " 1>/dev/null 2>&1 ; ";
         os << "acctExport " << addr << " " << tool_flags;
         LOG4("Calling " + os.str());
         if (isTestMode())
             cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
         else {
-            if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+            CStringArray cmds;
+            explode(cmds, os.str(), ';');
+            bool quit = false;
+            for (size_t i = 0 ; i < cmds.size() && !quit ; i++) {
+                int ret = system(cmds[i].c_str());
+                quit = (ret != 0);
+                cerr << "command: " << trim(cmds[i]) << " returned with '" << quit << "'" << endl;
+            }
+
             if (++cnt < addrs.size())
                 usleep(500000); // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
+
         }
     }
     EXIT_NOMSG4(true);

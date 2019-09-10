@@ -28,52 +28,17 @@ bool COptions::exportBalances(void) {
     }
 
     bool isJson = (exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1);
-    if (isJson && !freshenOnly)
+    if (isJson && !freshen_only)
         cout << "[";
 
     for (auto monitor : monitors) {
-
-        // lastDelta = 0
-        // if file exists
-        //    for each record
-        //    if (record.bal != NOPOS)
-        //       map[record.block] = record.bal
-        //    else
-        //       lastDelta = record.block (this will be one plus the last appearance we've checked for this address)
-        // else
-        //   if isPreFund
-        //     map[0] = prefund
-        //   else
-        //     map[0] = 0
-        //   lastDelta = 0;
-        //
-        // display the table and complete the map
-        // for (a : apps)
-        //    if (a.block > lastDelta)
-        //      bal = getBalance(a.block)
-        //      if (bal != map[lastDelta])
-        //        lastDelta = a.block
-        //        map[lastDelta] = getBalance(a.block);
-        //    display a.block - balance
-        //
-
-        blknum_t lastDelta = 0;
-        map<blknum_t,wei_t> balanceMap;
-        balanceMap[lastDelta] = (uint64_t)NOPOS;
-
-        string_q balFile = getMonitorBals(monitor.address);
-        if (fileExists(balFile)) {
-            CArchive balCache(READING_ARCHIVE);
-            if (balCache.Lock(balFile, modeReadOnly, LOCK_NOWAIT)) {
-                uint64_t nRecords;
-                balCache >> nRecords;
-                for (uint64_t i = 0 ; i < nRecords ; i++) {
-                    wei_t balance;
-                    balCache >> lastDelta >> balance;
-                    balanceMap[lastDelta] = balance;
-                }
-            }
-        }
+        map<blknum_t, CBalanceRecord> deltas;
+        CBalanceRecord deltaRecord;
+        deltaRecord.address = monitor.address;
+        deltaRecord.blockNumber = 0;
+        deltaRecord.balance = prefundWeiMap[monitor.address];
+        deltaRecord.diff = (bigint_t(deltaRecord.balance) - 0);
+        deltas[0] = deltaRecord;
 
         CAppearanceArray_base apps;
         loadOneAddress(apps, monitor.address);
@@ -88,11 +53,10 @@ bool COptions::exportBalances(void) {
                 record.address          = monitor.address;
                 record.priorBalance     = ((item->blk == 0) ? 0 : getBalanceAt(monitor.address, item->blk-1));
                 record.balance          = getBalanceAt(monitor.address, item->blk);
-                if (record.priorBalance != record.balance) {
-                    lastDelta = item->blk;
-                    balanceMap[lastDelta] = record.balance;
-                }
-                if (!freshenOnly) {
+                record.diff             = (bigint_t(record.balance) - bigint_t(record.priorBalance));
+                if (record.diff != 0)
+                    deltas[item->blk] = record;
+                if (!freshen_only && !deltas_only) {
                     if (isJson && !first)
                         cout << ", ";
                     cout << record;
@@ -101,34 +65,27 @@ bool COptions::exportBalances(void) {
                 }
             }
         }
+        blknum_t last = (apps.size() > 0 ? apps[apps.size()-1].blk : scanRange.second) + 1;
+        deltaRecord.blockNumber = last;
+        deltaRecord.transactionIndex = (uint64_t)NOPOS;
+        deltaRecord.priorBalance = (uint64_t)NOPOS;
+        deltaRecord.balance = (uint64_t)NOPOS;
+        deltaRecord.diff = (uint64_t)NOPOS;
+        deltas[last] = deltaRecord;
 
-        // So as to keep the file small, we only write balances where there is a change
-#if 0
-        if (balances.size() == 0 && fileExists(binaryFilename) && fileSize(binaryFilename) > 0) {
-
-            CArchive balCache(READING_ARCHIVE);
-            if (balCache.Lock(binaryFilename, modeReadOnly, LOCK_NOWAIT)) {
-                blknum_t last = NOPOS;
-                address_t lastA;
-                do {
-                    blknum_t bn;
-                    address_t addr1;
-                    biguint_t bal;
-                    balCache >> bn >> addr1 >> bal;
-                    if (monitor.address == addr1) {
-                        if (last != bn || bal != 0) {
-                            CEthState newBal;
-                            newBal.blockNumber = bn;
-                            newBal.balance = bal;
-                            record.push_back(newBal);
-                            last = bn;
-                        }
-                    }
-                } while (!balCache.Eof());
+        if (deltas_only) {
+            for (auto delta : deltas) {
+                if (isJson && !first)
+                    cout << ", ";
+                cout << delta.second;
+                nExported++;
+                first = false;
             }
         }
-#endif
     }
+
+    if (isJson && !freshen_only)
+        cout << "]";
 
     // return to the default provider
     if (!nodeHasBals) {
@@ -137,11 +94,35 @@ bool COptions::exportBalances(void) {
         getCurlContext()->getCurl();
     }
 
-    if (isJson && !freshenOnly)
-        cout << "]";
-
     EXIT_NOMSG(true);
 }
+
+    // So as to keep the file small, we only write balances where there is a change
+#if 0
+    if (balances.size() == 0 && fileExists(binaryFilename) && fileSize(binaryFilename) > 0) {
+
+        CArchive balCache(READING_ARCHIVE);
+        if (balCache.Lock(binaryFilename, modeReadOnly, LOCK_NOWAIT)) {
+            blknum_t last = NOPOS;
+            address_t lastA;
+            do {
+                blknum_t bn;
+                address_t addr1;
+                biguint_t bal;
+                balCache >> bn >> addr1 >> bal;
+                if (monitor.address == addr1) {
+                    if (last != bn || bal != 0) {
+                        CEthState newBal;
+                        newBal.blockNumber = bn;
+                        newBal.balance = bal;
+                        record.push_back(newBal);
+                        last = bn;
+                    }
+                }
+            } while (!balCache.Eof());
+        }
+    }
+#endif
 
 #if 0
     // First, we try to find it using a binary search. Many times this will hit...

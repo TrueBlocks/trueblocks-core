@@ -30,6 +30,7 @@ public:
     address_t address;
     wei_t priorBalance;
     wei_t balance;
+    bigint_t diff;
 
 public:
     CBalanceRecord(void);
@@ -96,6 +97,7 @@ inline void CBalanceRecord::initialize(void) {
     address = "";
     priorBalance = 0;
     balance = 0;
+    diff = 0;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -111,6 +113,7 @@ inline void CBalanceRecord::duplicate(const CBalanceRecord& ba) {
     address = ba.address;
     priorBalance = ba.priorBalance;
     balance = ba.balance;
+    diff = ba.diff;
 
     // EXISTING_CODE
     // EXISTING_CODE

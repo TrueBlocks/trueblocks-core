@@ -70,8 +70,10 @@ api_test("acctExport_api_export_traces" "0x001d14804b399c6ef80e64576f657660804fe
 api_test("acctExport_api_export_logs"   "0x001d14804b399c6ef80e64576f657660804fec0b" " --logs")
 api_test("acctExport_api_export_abis"   "0x001d14804b399c6ef80e64576f657660804fec0b" " --abis")
 
-run_state_test("acctExport_export_balances"     "0x001d14804b399c6ef80e64576f657660804fec0b" " --balances")
-api_state_test("acctExport_api_export_balances" "0x001d14804b399c6ef80e64576f657660804fec0b" " --balances")
+run_state_test("acctExport_export_balances"       "0x001d14804b399c6ef80e64576f657660804fec0b" " --balances")
+api_state_test("acctExport_api_export_balances"   "0x001d14804b399c6ef80e64576f657660804fec0b" " --balances")
+run_state_test("acctExport_export_balances_d"     "0x001d14804b399c6ef80e64576f657660804fec0b" " --balances" " --deltas")
+api_state_test("acctExport_api_export_balances_d" "0x001d14804b399c6ef80e64576f657660804fec0b" " --balances" " --deltas")
 
 # Installation steps, this tool is renamed at installation
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

@@ -71,6 +71,9 @@ bool CBalanceRecord::setValueByName(const string_q& fieldNameIn, const string_q&
             if ( fieldName % "blockNumber" ) { blockNumber = str_2_Uint(fieldValue); return true; }
             if ( fieldName % "balance" ) { balance = str_2_Wei(fieldValue); return true; }
             break;
+        case 'd':
+            if ( fieldName % "diff" ) { diff = str_2_Wei(fieldValue); return true; }
+            break;
         case 'p':
             if ( fieldName % "priorBalance" ) { priorBalance = str_2_Wei(fieldValue); return true; }
             break;
@@ -108,6 +111,7 @@ bool CBalanceRecord::Serialize(CArchive& archive) {
 //    archive >> address;
     archive >> priorBalance;
     archive >> balance;
+    archive >> diff;
     finishParse();
     return true;
 }
@@ -125,6 +129,7 @@ bool CBalanceRecord::SerializeC(CArchive& archive) const {
 //    archive << address;
     archive << priorBalance;
     archive << balance;
+    archive << diff;
 
     return true;
 }
@@ -166,6 +171,7 @@ void CBalanceRecord::registerClass(void) {
     HIDE_FIELD(CBalanceRecord, "address");
     ADD_FIELD(CBalanceRecord, "priorBalance", T_WEI, ++fieldNum);
     ADD_FIELD(CBalanceRecord, "balance", T_WEI, ++fieldNum);
+    ADD_FIELD(CBalanceRecord, "diff", T_NUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CBalanceRecord, "schema");
@@ -176,6 +182,8 @@ void CBalanceRecord::registerClass(void) {
     builtIns.push_back(_biCBalanceRecord);
 
     // EXISTING_CODE
+    ADD_FIELD(CBalanceRecord, "etherDiff", T_ETHER, ++fieldNum);
+    HIDE_FIELD(CBalanceRecord, "etherDiff");
     ADD_FIELD(CBalanceRecord, "etherPrior", T_ETHER, ++fieldNum);
     HIDE_FIELD(CBalanceRecord, "etherPrior");
     ADD_FIELD(CBalanceRecord, "ether", T_ETHER, ++fieldNum);
@@ -185,6 +193,7 @@ void CBalanceRecord::registerClass(void) {
     ADD_FIELD(CBalanceRecord, "dollars", T_ETHER, ++fieldNum);
     HIDE_FIELD(CBalanceRecord, "dollars");
     if (isApiMode()) {
+        UNHIDE_FIELD(CBalanceRecord, "etherDiff");
         UNHIDE_FIELD(CBalanceRecord, "etherPrior");
         UNHIDE_FIELD(CBalanceRecord, "ether");
         UNHIDE_FIELD(CBalanceRecord, "dollarsPrior");
@@ -204,12 +213,23 @@ string_q nextBalancerecordChunk_custom(const string_q& fieldIn, const void *data
                     return wei_2_Ether(bnu_2_Str(bal->balance));
                 if ( fieldIn % "etherPrior" )
                     return wei_2_Ether(bnu_2_Str(bal->priorBalance));
+                if ( fieldIn % "etherDiff" ) {
+                    string_q res = bal->getValueByName("diff");
+                    bool neg = contains(res, "-");
+                    res = substitute(res, "-", "");
+                    res = wei_2_Ether(res);
+                    return ((neg ? "-" : "+") + res);
+                }
                 break;
             case 'd':
                 if ( fieldIn % "dollars" )
                     return getDispBal(bal->blockNumber, bal->balance);
                 if ( fieldIn % "dollarsPrior" )
                     return getDispBal(bal->blockNumber, bal->priorBalance);
+                if ( fieldIn % "diff" ) {
+                    bigint_t diff = bigint_t(bal->balance) - bigint_t(bal->priorBalance);
+                    return bni_2_Str(diff);
+                }
                 break;
             // EXISTING_CODE
             case 'p':
@@ -266,6 +286,9 @@ string_q CBalanceRecord::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
             if ( fieldName % "balance" ) return wei_2_Str(balance);
             break;
+        case 'd':
+            if ( fieldName % "diff" ) return bni_2_Str(diff);
+            break;
         case 'p':
             if ( fieldName % "priorBalance" ) return wei_2_Str(priorBalance);
             break;
@@ -297,7 +320,8 @@ const char* STR_DISPLAY_BALANCERECORD =
 "[{TRANSACTIONINDEX}]\t"
 "[{ADDRESS}]\t"
 "[{PRIORBALANCE}]\t"
-"[{BALANCE}]";
+"[{BALANCE}]\t"
+"[{DIFF}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

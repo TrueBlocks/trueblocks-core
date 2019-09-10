@@ -10,7 +10,7 @@ bool COptions::exportData(void) {
 
     ENTER("exportData");
 
-    if ((exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1) && !freshenOnly)
+    if ((exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1) && !freshen_only)
         cout << "[";
 
     bool first = true;
@@ -19,9 +19,9 @@ bool COptions::exportData(void) {
         const CAppearance_base *item = &items[i];
         if (inRange((blknum_t)item->blk, scanRange.first, scanRange.second)) {
             if (doAppearances) {
-                if ((exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1) && !first && !freshenOnly)
+                if ((exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1) && !first && !freshen_only)
                     cout << ", ";
-                if (!freshenOnly) {
+                if (!freshen_only) {
                     CDisplayApp d(hackAppAddr, item->blk, item->txid);
                     cout << d.Format() << endl;
                     nExported++;
@@ -74,11 +74,11 @@ bool COptions::exportData(void) {
                             if (doABIs) {
                                 abiMap[trace.action.to] = true;
                             } else {
-                                if ((exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1) && !first && !freshenOnly)
+                                if ((exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1) && !first && !freshen_only)
                                     cout << ", ";
                                 if (articulate)
                                     abis.articulateTrace(&trace);
-                                if (!freshenOnly) {
+                                if (!freshen_only) {
                                     cout << trace.Format() << endl;
                                     nExported++;
                                 }
@@ -98,9 +98,9 @@ bool COptions::exportData(void) {
                             if (doABIs) {
                                 abiMap[trace.action.to] = true;
                             } else {
-                                if ((exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1) && !first && !freshenOnly)
+                                if ((exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1) && !first && !freshen_only)
                                     cout << ", ";
-                                if (!freshenOnly) {
+                                if (!freshen_only) {
                                     nExported++;
                                     cout << copy.Format() << endl;
                                 }
@@ -122,9 +122,9 @@ bool COptions::exportData(void) {
                                 abiMap[trace.action.to] = true;
 
                             } else {
-                                if ((exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1) && !first && !freshenOnly)
+                                if ((exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1) && !first && !freshen_only)
                                     cout << ", ";
-                                if (!freshenOnly) {
+                                if (!freshen_only) {
                                     nExported++;
                                     cout << copy.Format() << endl;
                                 }
@@ -138,11 +138,11 @@ bool COptions::exportData(void) {
 
                         // acctExport --logs
                         for (auto log : trans.receipt.logs) {
-                            if ((exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1) && !first && !freshenOnly)
+                            if ((exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1) && !first && !freshen_only)
                                 cout << ", ";
                             if (articulate)
                                 abis.articulateLog(&log);
-                            if (!freshenOnly) {
+                            if (!freshen_only) {
                                 cout << log.Format() << endl;
                                 nExported++;
                             }
@@ -153,13 +153,13 @@ bool COptions::exportData(void) {
 
                         // acctExport (no options)
                         if ((exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1) && !first) {
-                            if (!freshenOnly)
+                            if (!freshen_only)
                                 cout << ", ";
                             // we only articulate the transaction if we're JSON
                             if (articulate)
                                 abis.articulateTransaction(&trans);
                         }
-                        if (!freshenOnly) {
+                        if (!freshen_only) {
                             nExported++;
                             cout << trans.Format() << endl;
                         }
@@ -195,7 +195,7 @@ bool COptions::exportData(void) {
         }
     }
 
-    if ((exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1) && !freshenOnly)
+    if ((exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1) && !freshen_only)
         cout << "]";
     if (isTestMode())
         cout << endl;

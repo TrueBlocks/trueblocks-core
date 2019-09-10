@@ -28,7 +28,8 @@ public:
     bool doTraces;
     bool doBalances;
     bool doABIs;
-    bool freshenOnly;
+    bool freshen_only;
+    bool deltas_only;
     address_t hackAppAddr;
     uint_addr_mp prefundAddrMap;
     uint_addr_mp blkRewardMap;
