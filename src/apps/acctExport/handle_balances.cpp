@@ -5,6 +5,8 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
+int nn = 0;
+#define HERE(a) if (isTestMode()) { cout << ++nn << ": " << (a) << endl; cout << "----------------------------------------------" << endl; }
 //-----------------------------------------------------------------------
 bool COptions::exportBalances(void) {
 
@@ -32,34 +34,59 @@ bool COptions::exportBalances(void) {
         cout << "[";
 
     for (auto monitor : monitors) {
-        map<blknum_t, CBalanceDelta> deltas;
-        CBalanceDelta deltaRecord;
-        deltaRecord.blockNumber = 0;
-        deltaRecord.address = monitor.address;
-        deltaRecord.balance = prefundWeiMap[monitor.address];
-        deltaRecord.diff = (bigint_t(deltaRecord.balance) - 0);
-        deltas[0] = deltaRecord;
 
         CAppearanceArray_base apps;
         loadOneAddress(apps, monitor.address);
 
+        map<blknum_t, CBalanceDelta> deltas;
+        string_q balFile = getMonitorBals(monitor.address);
+        if (fileExists(balFile)) {
+            CArchive balIn(READING_ARCHIVE);
+            if (balIn.Lock(balFile, modeReadOnly, LOCK_NOWAIT)) {
+                uint64_t size;
+                balIn >> size;
+                while (deltas.size() < size) {
+                    CBalanceDelta rec;
+                    balIn >> rec;
+                    rec.address = monitor.address;
+                    deltas[rec.blockNumber] = rec;
+                };
+                balIn.Release();
+            }
+HERE("as read")
+if (isTestMode()) {
+    for (auto delta : deltas)
+        cout << delta.first << "\t" << delta.second;
+}
+        }
+
         bool first = true;
         for (size_t i = 0 ; i < apps.size() && !shouldQuit() && apps[i].blk < ts_cnt ; i++) {
+
             const CAppearance_base *item = &apps[i];
             if (inRange((blknum_t)item->blk, scanRange.first, scanRange.second)) {
+
                 CBalanceRecord record;
-                record.blockNumber      = item->blk;
+                record.blockNumber = item->blk;
                 record.transactionIndex = item->txid;
-                record.address          = monitor.address;
-                record.priorBalance     = ((item->blk == 0) ? 0 : getBalanceAt(monitor.address, item->blk-1));
-                record.balance          = getBalanceAt(monitor.address, item->blk);
-                record.diff             = (bigint_t(record.balance) - bigint_t(record.priorBalance));
-                deltaRecord.blockNumber = record.blockNumber;
-                deltaRecord.address = monitor.address;
-                deltaRecord.balance = record.balance;
-                deltaRecord.diff = record.diff;
-                if (record.diff != 0)
-                    deltas[item->blk] = deltaRecord;
+                record.address = monitor.address;
+
+                // handle the prior balance -- note we always have this in the delta map other than zero block
+                record.priorBalance = record.blockNumber == 0 ? 0 : getBalanceAt(monitor.address, record.blockNumber - 1);
+                record.balance = getBalanceAt(monitor.address, record.blockNumber);
+#if 0
+                    auto it = deltas.lower_bound(record.blockNumber - 1);
+                    record.priorBalance = it->second.balance;
+
+                    it = deltas.lower_bound(record.blockNumber);
+                    if (it != deltas.end()) {
+                        record.balance = it->second.balance;
+                    } else {
+                        record.balance = getBalanceAt(monitor.address, record.blockNumber);
+                    }
+#endif
+                record.diff = (bigint_t(record.balance) - bigint_t(record.priorBalance));
+
                 if (!freshen_only && !deltas_only) {
                     if (isJson && !first)
                         cout << ", ";
@@ -67,14 +94,16 @@ bool COptions::exportBalances(void) {
                     nExported++;
                     first = false;
                 }
+
+                CBalanceDelta rec;
+                rec.blockNumber = record.blockNumber;
+                rec.address = monitor.address;
+                rec.balance = record.balance;
+                rec.diff = record.diff;
+                if (record.diff != 0)
+                    deltas[rec.blockNumber] = rec;
             }
         }
-        blknum_t last = (apps.size() > 0 ? apps[apps.size()-1].blk : scanRange.second) + 1;
-        deltaRecord.blockNumber = last;
-        deltaRecord.address = monitor.address;
-        deltaRecord.balance = (uint64_t)NOPOS;
-        deltaRecord.diff = (uint64_t)NOPOS;
-        deltas[last] = deltaRecord;
 
         if (deltas_only) {
             for (auto delta : deltas) {
@@ -87,33 +116,21 @@ bool COptions::exportBalances(void) {
         }
 
         // cache the deltas
-        string_q balFile = getMonitorBals(monitor.address);
         CArchive balOut(WRITING_ARCHIVE);
         if (balOut.Lock(balFile, modeWriteCreate, LOCK_NOWAIT)) {
             balOut << (uint64_t)deltas.size();
-            for (auto delta : deltas)
+            for (auto delta : deltas) {
                 balOut << delta.second;
+            }
             balOut.Release();
         }
 
-        CBalanceDeltaArray read;
-        CArchive balIn(READING_ARCHIVE);
-        if (balIn.Lock(balFile, modeReadOnly, LOCK_NOWAIT)) {
-            uint64_t size;
-            balIn >> size;
-            while (read.size() < size) {
-                CBalanceDelta rec;
-                balIn >> rec;
-                rec.address = monitor.address;
-                read.push_back(rec);
-            }
-            balIn.Release();
-        }
+HERE("Out")
+if (isTestMode()) {
+    for (auto delta : deltas)
+        cout << delta.first << "\t" << delta.second;
+}
 
-//        cout << "As read in" << endl;
-//        for (auto r : read) {
-//            cout << r;
-//        }
     }
 
     if (isJson && !freshen_only)

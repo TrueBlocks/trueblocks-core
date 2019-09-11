@@ -2,7 +2,27 @@ acctExport argc: 4 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--balances]
 acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --balances --deltas 
 TIME ~ CLOCK - : 4-----API_MODE=true
 { "type": "CEthState", "data": [
-[{
+[1: as read
+----------------------------------------------
+0	{
+  "blockNumber": 0,
+  "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
+  "balance": 4200000000000000000000,
+  "diff": 4200000000000000000000
+}
+202249	{
+  "blockNumber": 202249,
+  "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
+  "balance": 74679320489077336,
+  "diff": -4199925320679510922664
+}
+1501459	{
+  "blockNumber": 1501459,
+  "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
+  "balance": 0,
+  "diff": -74679320489077336
+}
+{
   "blockNumber": 0,
   "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
   "balance": 4200000000000000000000,
@@ -20,11 +40,25 @@ TIME ~ CLOCK - : 4-----API_MODE=true
   "balance": 0,
   "diff": -74679320489077336
 }
-, {
-  "blockNumber": 1501460,
+2: Out
+----------------------------------------------
+0	{
+  "blockNumber": 0,
   "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
-  "balance": 18446744073709551615,
-  "diff": 18446744073709551615
+  "balance": 4200000000000000000000,
+  "diff": 4200000000000000000000
+}
+202249	{
+  "blockNumber": 202249,
+  "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
+  "balance": 74679320489077336,
+  "diff": -4199925320679510922664
+}
+1501459	{
+  "blockNumber": 1501459,
+  "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
+  "balance": 0,
+  "diff": -74679320489077336
 }
 ]
-], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }exported 4 changes in balance from 3 transactions                                             
+], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }exported 3 changes in balance from 3 transactions                                             
