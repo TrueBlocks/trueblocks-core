@@ -66,7 +66,7 @@ if (isTestMode()) {
 HERE("data")
         wei_t priorBalance = 0;
         bool first = true;
-        uint64_t cnt = 0;
+//        uint64_t cnt = 0;
         for (size_t i = 0 ; i < apps.size() && !shouldQuit() && apps[i].blk < ts_cnt ; i++) {
 
             const CAppearance_base *item = &apps[i];
@@ -80,16 +80,16 @@ HERE("data")
                 CBalanceDelta none;
                 // handle the prior balance -- note we always have this in the delta map other than zero block
                 record.priorBalance = priorBalance;
-                if (record.blockNumber < lastDelta) {
-                    auto it = deltas.lower_bound(record.blockNumber);
-//                    cout << "Getting from cache " << record.blockNumber << " it: " << (it == deltas.end() ? 10 : it->first) << " " << (it == deltas.end() ? none : it->second);
-                    if (it == deltas.end())
-                        --it;
-                    record.balance = it->second.balance;
-                } else {
-                    cout << ++cnt << " Getting from node " << record.blockNumber << endl;
+//                if (record.blockNumber < lastDelta) {
+//                    auto it = deltas.lower_bound(record.blockNumber);
+////                    cout << "Getting from cache " << record.blockNumber << " it: " << (it == deltas.end() ? 10 : it->first) << " " << (it == deltas.end() ? none : it->second);
+//                    if (it == deltas.end())
+//                        --it;
+//                    record.balance = it->second.balance;
+//                } else {
+//                    cout << ++cnt << " Getting from node " << record.blockNumber << endl;
                     record.balance = getBalanceAt(monitor.address, record.blockNumber);
-                }
+//                }
                 record.diff = (bigint_t(record.balance) - bigint_t(record.priorBalance));
 
                 if (!freshen_only && !deltas_only) {
