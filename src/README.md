@@ -1,6 +1,6 @@
 ## Intro
 
-QBlocks is a collection of software libraries, applications, and command-line tools designed to give you quick access to the data provided by an Ethereum node.
+TrueBlock is a collection of software libraries, applications, and command-line tools designed to give you quick access to the data provided by an Ethereum node.
 
 #### Architecture
 
