@@ -154,6 +154,9 @@ extern CArchive& operator<<(CArchive& archive, const CTokenState_erc20& tok);
 extern CArchive& operator>>(CArchive& archive, CTokenState_erc20& tok);
 
 //---------------------------------------------------------------------------
+extern const char* STR_DISPLAY_TOKENSTATE_ERC20;
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks

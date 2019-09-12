@@ -31,6 +31,9 @@ void CCacheEntry::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) con
     if (!m_showing)
         return;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["cacheentry_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();
@@ -249,6 +252,9 @@ ostream& operator<<(ostream& os, const CCacheEntry& item) {
     os << "\n";
     return os;
 }
+
+//---------------------------------------------------------------------------
+const char* STR_DISPLAY_CACHEENTRY = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

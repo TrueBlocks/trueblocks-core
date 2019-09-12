@@ -25,7 +25,7 @@ static const COption params[] = {
     COption("pctbars", "p", "", OPT_SWITCH, "display nBits as a percentage of bloom space"),
     COption("bitcount", "n", "", OPT_SWITCH, "display the number of bits lit per bloom"),
     COption("force", "f", "", OPT_HIDDEN | OPT_SWITCH, "force a re-write of the bloom to the cache"),
-    COption("", "", "", 0, "Returns bloom filter(s) from running node (the default) or as EAB from QBlocks."),
+    COption("", "", "", OPT_DESCRIPTION, "Returns bloom filter(s) from running node (the default) or as EAB from QBlocks."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);

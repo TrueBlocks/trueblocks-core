@@ -28,7 +28,7 @@ transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
   "miner": "0x0",
   "difficulty": 0,
   "price": 0,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1442749586,
   "transactions": [
     {
@@ -65,7 +65,7 @@ transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
   "miner": "0x0",
   "difficulty": 0,
   "price": 0,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1442749586,
   "transactions": [
     {

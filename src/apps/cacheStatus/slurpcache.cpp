@@ -31,6 +31,9 @@ void CSlurpCache::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) con
     if (!m_showing)
         return;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["slurpcache_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();
@@ -295,6 +298,9 @@ const string_q CSlurpCache::getStringAt(const string_q& fieldName, size_t i) con
         return (addrs[i]);
     return "";
 }
+
+//---------------------------------------------------------------------------
+const char* STR_DISPLAY_SLURPCACHE = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

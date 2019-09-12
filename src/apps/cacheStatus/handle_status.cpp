@@ -6,7 +6,7 @@
 #include "options.h"
 
 //--------------------------------------------------------------------------------
-void COptions::doStatus(ostream& os) {
+void COptions::handle_status(ostream& os) {
 
     CIndexCache aid;
     if (contains(mode, "|index|")) {
@@ -14,7 +14,8 @@ void COptions::doStatus(ostream& os) {
         aid.path = (isTestMode() ? "IndexPath" : getIndexPath(""));
         forEveryFileInFolder(getIndexPath(""), countFiles, &aid);
         status.caches.push_back(&aid);
-        CItemCounter counter(this);
+        CItemCounter counter(this, start);
+        loadTimestampArray(&counter.ts_array, counter.ts_cnt);
         counter.cachePtr = &aid;
         counter.indexArray = &aid.items;
         if (details) {
@@ -198,13 +199,49 @@ bool noteMonitor(const string_q& path, void *data) {
         CMonitorCacheItem mdi;
         mdi.type = mdi.getRuntimeClass()->m_ClassName;
         mdi.address = substitute(substitute(substitute(substitute(path, counter->cachePtr->path, ""),".acct", ""),".bin", ""), ".json", "");
-        counter->options->getNamedAccount(mdi, mdi.address);
-        mdi.firstAppearance = 1001001;
-        mdi.latestAppearance = 8101001;
-        mdi.nRecords = fileSize(path) / sizeof(CAppearance_base);
-        mdi.sizeInBytes = fileSize(path);
-        counter->monitorArray->push_back(mdi);
+        CAccountName item;
+        string_q customStr = getGlobalConfig("getAccounts")->getConfigJson("custom", "list", "");
+        while (item.parseJson3(customStr)) {
+            unpreserveSpaces(item.name);
+            if (mdi.address == item.address) {
+                mdi.group = item.group;
+                mdi.name = item.name;
+                break;
+            }
+            item = CAccountName();
+        }
 
+        if (mdi.name.empty()) {
+            ASSERT(prefunds.size() == 8893);  // This is a known value
+            uint32_t cnt = 0;
+            for (auto prefund : counter->options->prefundWeiMap) {
+                address_t addr = prefund.first;
+                if (mdi.address == addr) {
+                    mdi.group = "80-Prefund";
+                    mdi.name = "Prefund_" + padNum4(cnt);
+                    mdi.source = "Genesis";
+                    break;
+                }
+                cnt++;
+            }
+        }
+
+        if (mdi.name.empty()) {
+            counter->options->getNamedAccount(mdi, mdi.address);
+        }
+
+        if (endsWith(path, ".acct.bin")) {
+            mdi.firstAppearance = 1001001;
+            mdi.latestAppearance = 8101001;
+            mdi.nRecords = fileSize(path) / sizeof(CAppearance_base);
+            mdi.sizeInBytes = fileSize(path);
+        } else {
+            mdi.firstAppearance = 0;
+            mdi.latestAppearance = 0;
+            mdi.nRecords = 0;
+            mdi.sizeInBytes = 0;
+        }
+        counter->monitorArray->push_back(mdi);
     }
     return !shouldQuit();
 }
@@ -219,8 +256,13 @@ bool noteIndex(const string_q& path, void *data) {
         return forEveryFileInFolder(path + "*", noteIndex, data);
 
     } else {
-        cerr << path << "\r"; cerr.flush();
         CItemCounter *counter = (CItemCounter*)data;
+        timestamp_t unused;
+        blknum_t ll = 0;
+        blknum_t ff = bnFromPath(path, ll, unused);
+        if (ff < counter->skipTo)
+            return true;
+        cerr << path << "\r"; cerr.flush();
         ASSERT(counter->options);
         CIndexCacheItem aci;
         aci.type = aci.getRuntimeClass()->m_ClassName;
@@ -232,13 +274,22 @@ bool noteIndex(const string_q& path, void *data) {
         replace(fn, "unripe/", "");
         replace(fn, "ripe/", "");
         if (contains(path, "finalized") || contains(path, "blooms")) {
-            timestamp_t unused;
             uint64_t tmp;
             aci.firstAppearance = (uint32_t)bnFromPath(fn, tmp, unused);
             aci.latestAppearance = (uint32_t)tmp;
         } else {
             aci.firstAppearance = (uint32_t)str_2_Uint(fn);
             aci.latestAppearance = (uint32_t)str_2_Uint(fn);
+        }
+        if (counter->ts_array) {
+            if (aci.firstAppearance < counter->ts_cnt &&
+                aci.latestAppearance < counter->ts_cnt) {
+                aci.firstTs = (timestamp_t)counter->ts_array[(aci.firstAppearance*2)+1];
+                aci.lastestTs = (timestamp_t)counter->ts_array[(aci.latestAppearance*2)+1];
+            } else {
+                aci.firstTs = (timestamp_t)0;
+                aci.lastestTs = (timestamp_t)0;
+            }
         }
         getIndexMetrics(path, aci.nAppearances, aci.nAddresses);
         aci.sizeInBytes = (uint32_t)fileSize(path);

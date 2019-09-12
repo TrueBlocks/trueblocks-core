@@ -6,7 +6,7 @@
 #include "options.h"
 
 //--------------------------------------------------------------------------------
-void COptions::doListing(ostream& os) {
+void COptions::handle_listing(ostream& os) {
     cout << "List mode" << endl;
     ENTER4("handle_" + mode);
     nodeNotRequired();
@@ -47,12 +47,13 @@ void COptions::doListing(ostream& os) {
             item.sizeInBytes = fileSize(getMonitorPath(item.address));
             item.latestAppearance = str_2_Uint(asciiFileToString(getMonitorLast(item.address)));
             item.lastExport = str_2_Uint(asciiFileToString(getMonitorExpt(item.address)));
+//            item.lastBalance = 0;
             item.nRecords = fileSize(getMonitorPath(item.address)) / sizeof(CAppearance_base);
             accounts.push_back(item);
         }
     }
     if (accounts.size() == 0) {
-        if (api_mode) {
+        if (isApiMode()) {
             CAccountName item;
             item.address = "0x0";
             item.name = "none";
@@ -65,7 +66,7 @@ void COptions::doListing(ostream& os) {
     }
     sort(accounts.begin(), accounts.end());
 
-    if (api_mode) {
+    if (isApiMode()) {
         SHOW_FIELD(CAccountName, "path");
         SHOW_FIELD(CAccountName, "sizeInBytes");
         SHOW_FIELD(CAccountName, "latestAppearance");

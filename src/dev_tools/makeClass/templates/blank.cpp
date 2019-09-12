@@ -30,6 +30,9 @@ void [{CLASS_NAME}]::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) 
     if (!m_showing)
         return;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["[{LONG}]_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();
@@ -209,6 +212,9 @@ ostream& operator<<(ostream& os, const [{CLASS_NAME}]& item) {
 }
 
 [{GET_OBJ}][{GET_STR}]//---------------------------------------------------------------------------
+const char* STR_DISPLAY_[{CLASS_UPPER}] = [{DISPLAY_FIELDS}];
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 [{NAMESPACE2}]

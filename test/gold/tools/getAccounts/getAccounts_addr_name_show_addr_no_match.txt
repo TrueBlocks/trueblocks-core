@@ -1,3 +1,3 @@
 getAccounts argc: 4 [1:-a] [2:0x01] [3:torj] 
 getAccounts -a 0x01 torj 
-TIME ~ CLOCK - <INFO>   : No results
+TIME ~ CLOCK - <INFO>  : No results

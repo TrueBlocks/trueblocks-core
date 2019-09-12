@@ -1,5 +1,6 @@
-getReceipt argc: 4 [1:2222222.0] [2:2332332.0] [3:--api_mode] 
-getReceipt 2222222.0 2332332.0 --api_mode 
+getReceipt argc: 3 [1:2222222.0] [2:2332332.0] 
+getReceipt 2222222.0 2332332.0 
+TIME ~ CLOCK - : 4-----API_MODE=true
 { "type": "CTransaction", "data": [
   {
     "contractAddress": "0x0",

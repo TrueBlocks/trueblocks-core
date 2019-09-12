@@ -20,7 +20,7 @@ static const COption debugCmds[] = {
     COption("-!cmd", "c", "<cmd>", OPT_FLAG, "Run a system command"),
     COption("-(q)uit", "q", "", OPT_SWITCH, "Quit the current monitor program"),
     COption("-(h)elp", "h", "", OPT_SWITCH, "Display this screen"),
-    COption("", "", "", 0, "Press enter to continue without correction, up or down arrows to recall commands"),
+    COption("", "", "", OPT_DESCRIPTION, "Press enter to continue without correction, up or down arrows to recall commands"),
 };
 static const size_t nDebugCmds = sizeof(debugCmds) / sizeof(COption);
 

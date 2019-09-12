@@ -1,5 +1,6 @@
 [settings]
-class     = CBalanceRecord
-fields    = address address (nowrite)|blknum blockNum|blknum tx_id|wei priorBalance|wei balance
-includes  = etherlib.h
-serialize = true
+class       = CBalanceRecord
+fields      = blknum blockNumber|blknum transactionIndex|address address (nowrite)|wei priorBalance|wei balance|int256 diff
+includes    = etherlib.h
+serialize   = true
+display_str = blockNumber, transactionIndex, address, priorBalance, balance, diff

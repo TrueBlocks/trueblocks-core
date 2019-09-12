@@ -25,6 +25,7 @@ bool sol_2_Abi(CAbi& abi, const string_q& addr) {
     asciiFileToString(solFile, contents);
     removeComments(contents);
     replaceAll(contents, "\r", "\n");
+    replaceAll(contents, "interface ", "contract ");
     replaceAll(contents, "function ", "~function ");
     replaceAll(contents, "event ", "~event ");
     // remove new solidity keyword in function declarations

@@ -27,18 +27,29 @@ set(GOLD_PATH "${GOLD_PATH}/${PROJ_NAME}/${TOOL_NAME}")
 # Additional target to make the README.md
 build_readme(${CMAKE_CURRENT_SOURCE_DIR} ${TOOL_NAME})
 
-# To run only specific tests we define a test configuration named "test_all"
+# Target to run only specific (long-running) test cases
 add_custom_target(test-all COMMAND ${CMAKE_CTEST_COMMAND} -C test_all)
+#add_custom_target(test-state COMMAND ${CMAKE_CTEST_COMMAND} -C test_state)
 
-# Function to run an special or slow test case
-function(run_special_test testName)
-    run_the_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
-endfunction(run_special_test)
-
-# Function to run an individual test case
+# Functions to run test cases
 function(run_test testName)
      run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
 endfunction(run_test)
+function(run_special_test testName)
+    run_the_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(run_special_test)
+function(run_state_test testName)
+    run_the_state_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(run_state_test)
+function(api_test testName)
+    run_the_api_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(api_test)
+function(api_special_test testName)
+    run_the_api_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(api_special_test)
+function(api_state_test testName)
+    run_the_api_state_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(api_state_test)
 
 # Weird, but we have to call the getBlock code to make sure the block is in the cache
 run_the_test(${TEST_PATH} ${GOLD_PATH} "getLogs_preload" ${EXECUTABLE_OUTPUT_PATH}/getBlock " 3657480" " -o")
@@ -121,7 +132,7 @@ run_test("getLogs_verbose_blk_idx2"    "0x0f1217b92276cd17608d4212879739e6a5ec38
 run_test("getLogs_verbose_blk_idx3"    "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.36" " --fmt" " json")
 
 run_test("getLogs_by_txhash"           "0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765")
-run_test("getLogs_by_bnun_and_txid"    "4000000.5" " --api_mode")
+api_test("getLogs_by_bnun_and_txid"    "4000000.5")
 run_test("getLogs_by_bhash_and_txid"   "0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4" " -x" " json" " --parity")
 
 run_test("getLogs_by_blk_hash_good"    "0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55" " --verbose")
@@ -138,13 +149,13 @@ run_test("getLogs_bad_blkhash_msg_raw"  "--raw" "0x0b4c6fb75ded4b90218cf0346b088
 run_test("getLogs_prev_bug2_1"         "4279119.46" " --fmt" " api" " --parity")
 run_test("getLogs_prev_bug2_2"         "4279119.46" " --raw")
 
-run_test("getLogs_star"             "1428993.*" " --api_mode")
+api_test("getLogs_star"             "1428993.*")
 run_test("getLogs_fmt_txt"          "2222222.0" " 2332332.0" " --fmt" " txt")
 run_test("getLogs_fmt_csv"          "2222222.0" " 2332332.0" " --fmt" " csv")
 run_test("getLogs_fmt_json"         "2222222.0" " 2332332.0" " --fmt" " json")
 run_test("getLogs_fmt_api"          "2222222.0" " 2332332.0" " --fmt" " api")
-run_test("getLogs_fmt_api_mode"     "2222222.0" " 2332332.0" " --api_mode")
-run_test("getLogs_fmt_api_mode_fmt" "2222222.0" " 2332332.0" " --api_mode" " --fmt" " txt")
+api_test("getLogs_fmt_api_mode"     "2222222.0" " 2332332.0")
+api_test("getLogs_fmt_api_mode_fmt" "2222222.0" " 2332332.0" " --fmt" " txt")
 run_test("getLogs_fmt_defaut"       "2222222.0" " 2332332.0")
 run_test("getLogs_fmt_junk"         "2222222.0" " 2332332.0" " --fmt" " junk")
 

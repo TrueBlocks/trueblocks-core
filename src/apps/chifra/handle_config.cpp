@@ -4,6 +4,39 @@
  * All Rights Reserved
  *------------------------------------------------------------------------*/
 #include "options.h"
+
+//------------------------------------------------------------------------------------------------
+bool COptions::handle_config(void) {
+
+    ENTER4("handle_" + mode);
+    nodeNotRequired();
+
+    replaceAll(tool_flags, "--get", "get");
+    replaceAll(tool_flags, "--put", "put");
+    if (tool_flags.empty() || (!startsWith(tool_flags, "get") && !startsWith(tool_flags, "put")))
+        EXIT_USAGE("chifra config 'mode' must be either 'get' or 'put <json>'.");
+
+    LOG5("tool_flags: " + tool_flags);
+    ostringstream os;
+    os << "cacheStatus --config-" << tool_flags << " ; ";
+    if (isTestMode())
+        cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
+    else {
+        LOG_INFO("chifra calling: ", os.str());
+        if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+    }
+
+    EXIT_NOMSG4(true);
+}
+
+
+#if 0
+/*-------------------------------------------------------------------------
+ * This source code is confidential proprietary information which is
+ * Copyright (c) 2017 by Great Hill Corporation.
+ * All Rights Reserved
+ *------------------------------------------------------------------------*/
+#include "options.h"
 #include "question.h"
 
 #define cleanPath(path_) (isTestMode() ? substitute(path_, getCachePath(""), "$CACHE_PATH/") : path_)
@@ -12,9 +45,6 @@ bool COptions::handle_config(void) {
 
     ENTER4("handle_" + mode);
     nodeNotRequired();
-
-    if (addrs.empty())
-        EXIT_USAGE("This function requires an address.");
 
     tool_flags = trim(substitute(substitute(tool_flags, "--addr_list", ""), "--mode", ""));
     string_q cmd = nextTokenClear(tool_flags, ' ');
@@ -93,3 +123,4 @@ bool COptions::createConfigFile(const address_t& addr) {
     }
     EXIT_NOMSG4(true);
 }
+#endif

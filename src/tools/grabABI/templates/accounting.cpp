@@ -19,7 +19,7 @@ bool COptions::openIncomeStatement(const CBlock& block) {
     for (auto& watch : watches) {
         watch.statement.inflow = watch.statement.outflow = watch.statement.gasCostInWei = 0;
         if (isAddress(watch.address)) {
-            watch.statement.nodeBal = getNodeBal(watch.stateHistory, watch.address, block.blockNumber-1);
+            watch.statement.nodeBal = get NodeBal(watch.stateHistory, watch.address, block.blockNumber-1);
             bigint_t diff = (watch.statement.nodeBal - watch.statement.endBal);
             if (!no_check && (diff != 0)) {
                 single_on = true;
@@ -204,7 +204,7 @@ bool COptions::closeIncomeStatement(const CBlock& block) {
             //cout << watches[i].statement << "   ";
 
             if (i < watches.size()-1) {
-                watches.at(i).statement.nodeBal = getNodeBal(watches.at(i).stateHistory, watches[i].address, block.blockNumber);
+                watches.at(i).statement.nodeBal = get NodeBal(watches.at(i).stateHistory, watches[i].address, block.blockNumber);
                 cout << padLeft(wei_2_Ether(bni_2_Str(watches[i].statement.nodeBal)),theWidth+1);
                 if (!watches[i].statement.balanced()) {
 

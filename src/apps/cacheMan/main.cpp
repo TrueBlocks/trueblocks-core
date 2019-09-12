@@ -21,7 +21,6 @@ int main(int argc, const char *argv[]) {
 
         blknum_t latest = getLastBlock_cache_final();
         string_q def = (options.asData ? STR_DATA_DISPLAY : STR_DEFAULT_DISPLAY);
-        string_q fmtStr = getGlobalConfig("cacheMan")->getDisplayStr(options.asData, def);
 
         // Handle the various modes (there may be more than one)
         CStringArray modes;
@@ -46,6 +45,9 @@ extern bool loadMonitorData(CAppearanceArray_base& items, const address_t& addr)
                         cout << "[";
 
                     for (auto item : items) {
+
+                        if (shouldQuit())
+                            break;
 
                         if (item.blk < options.maxBlock) {
                             options.stats.nRecords++;
@@ -121,7 +123,7 @@ extern bool loadMonitorData(CAppearanceArray_base& items, const address_t& addr)
                                         cout << "}\n";
                                         first = false;
                                     } else {
-                                        cout << (!getEnvStr("API_MODE").empty() ? watch->address + "\t" : "") << item.blk << "\t" << item.txid << endl; // Format(fmtStr);
+                                        cout << (isApiMode() ? watch->address + "\t" : "") << item.blk << "\t" << item.txid << endl;
                                     }
                                 }
 
@@ -189,7 +191,7 @@ extern bool loadMonitorData(CAppearanceArray_base& items, const address_t& addr)
                     cout << cMagenta << "\tThe cache was repaired and a backup created.\n" << cOff;
 
                 } else if (mode == "fix") {
-                    if (!options.api_mode)
+                    if (!isApiMode())
                         cout << cMagenta << "\tThere was nothing to fix (" << lastItem.blk << ").\n" << cOff;
                     // write the last block to file
                     if (!isTestMode()) {

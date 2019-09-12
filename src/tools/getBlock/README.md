@@ -20,7 +20,7 @@ The tool may also be used to double check that the results produced from the QBl
 | -u | --uniq | display only uniq addresses found per block |
 | -q | --uniqTx | display only uniq addresses found per transaction |
 | -m | --number | display address counts (alterntively --addrCnt, --uniqTxCnt, or --uniqCnt) |
-| -l | --filter <addr> | useful only for --addrs or --uniq, only display this address in results |
+| -l | --filter <address> | useful only for --addrs or --uniq, only display this address in results |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
@@ -44,7 +44,6 @@ All **QBlocks** command-line tools support the following commands (although in s
     --raw       |   report JSON data from the node with minimal processing
     --veryRaw   |   report JSON data from node with zero processing
     --fmt       |   export format (where appropriate). One of [none|txt|csv|json|api]
-    --api_mode  |   simulate api_mode for testing
     --to_file   |   write the results to a temporary file and return the filename
     --output:fn |   write the results to file 'fn' and return the filename
     --file:fn   |   specify multiple sets of command line options in a file.

@@ -19,7 +19,7 @@ public:
     CPriceSource source;
     bool         freshen;
     uint64_t     freq;
-    timestamp_t  at;
+    bool         first;
 
     COptions(void);
     ~COptions(void);
@@ -28,3 +28,6 @@ public:
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 };
+
+//-----------------------------------------------------------------------------
+bool visitPrice(CPriceQuote& qoute, void *data);

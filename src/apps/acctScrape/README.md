@@ -6,7 +6,7 @@
 
 #### Usage
 
-`Usage:`    acctScrape [-v|-h] &lt;address&gt; [address...]  
+`Usage:`    acctScrape [-o|-v|-h] &lt;address&gt; [address...]  
 `Purpose:`  Index transactions for a given Ethereum address (or series of addresses).
 
 `Where:`  
@@ -14,6 +14,7 @@
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | addr_list | one or more Ethereum addresses (required) |
+| -o | --noHeader | do not show the header row |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
@@ -36,7 +37,6 @@ All **QBlocks** command-line tools support the following commands (although in s
     --raw       |   report JSON data from the node with minimal processing
     --veryRaw   |   report JSON data from node with zero processing
     --fmt       |   export format (where appropriate). One of [none|txt|csv|json|api]
-    --api_mode  |   simulate api_mode for testing
     --to_file   |   write the results to a temporary file and return the filename
     --output:fn |   write the results to file 'fn' and return the filename
     --file:fn   |   specify multiple sets of command line options in a file.

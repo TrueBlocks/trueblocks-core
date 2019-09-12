@@ -32,6 +32,9 @@ void CReceipt::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const 
     if (!m_showing)
         return;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["receipt_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();
@@ -141,8 +144,11 @@ bool CReceipt::Serialize(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     archive >> contractAddress;
+//    archive >> cumulativeGasUsed;
     archive >> gasUsed;
     archive >> logs;
+//    archive >> logsBloom;
+//    archive >> root;
     archive >> status;
     finishParse();
     return true;
@@ -157,8 +163,11 @@ bool CReceipt::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     // EXISTING_CODE
     archive << contractAddress;
+//    archive << cumulativeGasUsed;
     archive << gasUsed;
     archive << logs;
+//    archive << logsBloom;
+//    archive << root;
     archive << status;
 
     return true;
@@ -383,6 +392,15 @@ const CBaseNode *CReceipt::getObjectAt(const string_q& fieldName, size_t index) 
         return &logs[index];
     return NULL;
 }
+
+//---------------------------------------------------------------------------
+const char* STR_DISPLAY_RECEIPT = 
+"[{BLOCKNUMBER}]\t"
+"[{TRANSACTIONINDEX}]\t"
+"[{HASH}]\t"
+"[{GASUSED}]\t"
+"[{STATUS}]\t"
+"[{ISERROR}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

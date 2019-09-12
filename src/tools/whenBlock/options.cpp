@@ -19,12 +19,12 @@ static const COption params[] = {
     COption("date_list", "", "list<date>", OPT_POSITIONAL, "one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]"),
     COption("list", "l", "", OPT_SWITCH, "export all the named blocks"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),
-    COption("", "", "", 0, "Finds the nearest block prior to a date, or the nearest date prior to a block.\n Alternatively, search for one of special 'named' blocks."),
+    COption("", "", "", OPT_DESCRIPTION, "Finds the nearest block prior to a date, or the nearest date prior to a block.\n Alternatively, search for one of special 'named' blocks."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-extern const char* STR_DISPLAY;
+extern const char* STR_DISPLAY_WHEN;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
@@ -32,7 +32,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     bool noHeader = false;
-    string_q format = getGlobalConfig()->getConfigStr("display", "format", STR_DISPLAY);
+    string_q format = getGlobalConfig("whenBlock")->getConfigStr("display", "format", STR_DISPLAY_WHEN);
     Init();
     blknum_t latestBlock = getLastBlock_client();
     explode(arguments, command, ' ');
@@ -112,15 +112,15 @@ bool COptions::parseArguments(string_q& command) {
 
     // Display formatting
     switch (exportFmt) {
-        case NONE1: format = STR_DISPLAY; break;
+        case NONE1: format = STR_DISPLAY_WHEN; break;
         case API1:
         case JSON1: format = ""; break;
         case TXT1:
         case CSV1:
-            format = getGlobalConfig()->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
+            format = getGlobalConfig("whenBlock")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_WHEN : format);
             break;
     }
-    manageFields("CBlock:" + cleanFmt((format.empty() ? STR_DISPLAY : format), exportFmt));
+    manageFields("CBlock:" + cleanFmt((format.empty() ? STR_DISPLAY_WHEN : format), exportFmt));
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
     if (noHeader)
         expContext().fmtMap["header"] = "";
@@ -159,9 +159,9 @@ COptions::COptions(void) {
         }
     }
     Init();
-    
+
     // Differnt default for this software, but only change it if user hasn't already therefor not in Init
-    if (!api_mode)
+    if (!isApiMode())
         exportFmt = TXT1;
 }
 
@@ -259,4 +259,8 @@ string_q COptions::listSpecials(format_t fmt) const {
 }
 
 //-----------------------------------------------------------------------
-const char* STR_DISPLAY = "[{BLOCKNUMBER}]\t[{TIMESTAMP}]\t[{DATE}][\t{NAME}]";
+const char* STR_DISPLAY_WHEN =
+"[{BLOCKNUMBER}]\t"
+"[{TIMESTAMP}]\t"
+"[{DATE}]"
+"[\t{NAME}]";

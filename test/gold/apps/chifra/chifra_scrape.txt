@@ -1,4 +1,0 @@
-chifra argc: 2 [1:scrape] 
-chifra scrape 
-blockScrape --verbose 
-Sleeping for 14 seconds

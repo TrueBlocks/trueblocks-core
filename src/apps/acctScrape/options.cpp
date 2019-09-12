@@ -15,7 +15,7 @@ static const COption params[] = {
     COption("daemon", "d", "", OPT_HIDDEN | OPT_SWITCH, "we are being called in daemon mode which causes us to print results differently"),
     COption("noHeader", "o", "", OPT_SWITCH, "do not show the header row"),
     COption("start", "r", "<blknum>", OPT_HIDDEN | OPT_FLAG, "start block for scan of appearances"),
-    COption("", "", "", 0, "Index transactions for a given Ethereum address (or series of addresses)."),
+    COption("", "", "", OPT_DESCRIPTION, "Index transactions for a given Ethereum address (or series of addresses)."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -103,7 +103,10 @@ bool COptions::parseArguments(string_q& command) {
             return usage("The last block file '" + fn2 + "' is locked. Quitting...");
         string_q fn3 = getMonitorExpt(monitor.address);
         if (fileExists(fn3 + ".lck"))
-            return usage("The last export file '" + fn2 + "' is locked. Quitting...");
+            return usage("The last export file '" + fn3 + "' is locked. Quitting...");
+        string_q fn4 = getMonitorBals(monitor.address);
+        if (fileExists(fn4 + ".lck"))
+            return usage("The last export file '" + fn4 + "' is locked. Quitting...");
         cerr << dTabs << "freshening: " << cYellow << monitor.address << cOff << "..." << endLine; cerr.flush();
         // If file doesn't exist, this will report '0'
         if (scanRange.first == UINT_MAX)

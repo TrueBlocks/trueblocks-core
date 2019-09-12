@@ -31,6 +31,9 @@ void CEthState::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const
     if (!m_showing)
         return;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["ethstate_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();
@@ -294,6 +297,17 @@ ostream& operator<<(ostream& os, const CEthState& item) {
     os << "\n";
     return os;
 }
+
+//---------------------------------------------------------------------------
+const char* STR_DISPLAY_ETHSTATE = 
+"[{BLOCKNUMBER}]\t"
+"[{ADDRESS}]\t"
+"[{BALANCE}]\t"
+"[{NONCE}]\t"
+"[{CODE}]\t"
+"[{STORAGE}]\t"
+"[{DEPLOYED}]\t"
+"[{ACCTTYPE}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

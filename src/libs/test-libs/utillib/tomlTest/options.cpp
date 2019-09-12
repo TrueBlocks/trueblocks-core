@@ -15,7 +15,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     COption("filename", "f", "<fn>", OPT_REQUIRED | OPT_POSITIONAL, "toml filename to test"),
-    COption("", "", "", 0, "Simple test program for toml files.\n"),
+    COption("", "", "", OPT_DESCRIPTION, "Simple test program for toml files.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 

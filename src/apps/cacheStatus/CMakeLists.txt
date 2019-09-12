@@ -27,26 +27,29 @@ set(GOLD_PATH "${GOLD_PATH}/${PROJ_NAME}/${TOOL_NAME}")
 # Additional target to make the README.md
 build_readme(${CMAKE_CURRENT_SOURCE_DIR} ${TOOL_NAME})
 
-# Function to run an individual test case
+# Target to run only specific (long-running) test cases
+add_custom_target(test-all COMMAND ${CMAKE_CTEST_COMMAND} -C test_all)
+#add_custom_target(test-state COMMAND ${CMAKE_CTEST_COMMAND} -C test_state)
+
+# Functions to run test cases
 function(run_test testName)
      run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
 endfunction(run_test)
-
-# To run only specific tests we define a test configuration named "test_all"
-add_custom_target(test-all COMMAND ${CMAKE_CTEST_COMMAND} -C test_all)
-
-# Function to run an special or slow test case
 function(run_special_test testName)
     run_the_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
 endfunction(run_special_test)
-
-## To run only specific tests we define a test configuration named "test_state"
-add_custom_target(test-state COMMAND ${CMAKE_CTEST_COMMAND} -C test_state)
-
-# Function to run state test cases
 function(run_state_test testName)
     run_the_state_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
 endfunction(run_state_test)
+function(api_test testName)
+    run_the_api_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(api_test)
+function(api_special_test testName)
+    run_the_api_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(api_special_test)
+function(api_state_test testName)
+    run_the_api_state_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(api_state_test)
 
 # Enter one line for each individual test
 run_test("cacheStatus_README"           "-th")
@@ -54,8 +57,9 @@ run_test("cacheStatus_no_params"        )
 run_test("cacheStatus_invalid_param_1"  "--junk" )
 run_test("cacheStatus_invalid_param_2"  "-l" " --junk" )
 
-# depends on fullblockIndex
-run_test("cacheStatus_scraper"          "index" " --api_mode")
+api_test("cacheStatus_scraper"          "index")
+api_test("cacheStatus_index_start"      "index" " --start" " 100")
+api_test("cacheStatus_index_start_bad"  "index" " --start" " 100000000")
 run_test("cacheStatus_monitors"         "monitors")
 run_test("cacheStatus_names"            "names")
 run_test("cacheStatus_abis"             "abis")
@@ -66,6 +70,11 @@ run_test("cacheStatus_slurps"           "slurps")
 run_test("cacheStatus_prices"           "prices")
 run_test("cacheStatus_some"             "some")
 run_state_test("cacheStatus_all"        "all")
+
+run_test("cacheStatus_config_bad"       "config")
+run_test("cacheStatus_config_get"       "--config-get")
+run_test("cacheStatus_config_put_bad"   "--config-put")
+run_test("cacheStatus_config_put"       "--config-put" " string")
 
 run_special_test("cacheStatus_items_monitors"          "monitors" " --details")
 run_special_test("cacheStatus_items_abis"              "abis"     " --details")

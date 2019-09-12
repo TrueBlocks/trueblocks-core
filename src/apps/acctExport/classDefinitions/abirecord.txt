@@ -1,4 +1,0 @@
-[settings]
-class     = CAbiRecord
-fields    = uint64 index|string symbol|address addr|hash encoding|string type|bool constant|string name|string signature|string variables
-includes  = etherlib.h

@@ -20,13 +20,12 @@ static const COption params[] = {
     COption("countOnly", "c", "", OPT_SWITCH, "show the number of traces for the transaction only (fast)"),
     COption("noHeader", "n", "", OPT_SWITCH, "do not show the header row"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),
-    COption("ddos", "d", "enum[on*/off]", OPT_HIDDEN | OPT_FLAG, "skip over dDos transactions in export ('on' by default)"),
-    COption("", "", "", 0, "Retrieve a transaction's traces from the local cache or a running node."),
+    COption("ddos", "d", "enum[on*|off]", OPT_HIDDEN | OPT_FLAG, "skip over dDos transactions in export ('on' by default)"),
+    COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction's traces from the local cache or a running node."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-extern const char* STR_DISPLAY;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
@@ -94,7 +93,7 @@ bool COptions::parseArguments(string_q& command) {
         case NONE1:
         case TXT1:
         case CSV1:
-            format = getGlobalConfig()->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
+            format = getGlobalConfig("getTrace")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_TRACE : format);
             manageFields("CTransaction:" + cleanFmt(format, exportFmt));
             manageFields("CTrace:" + cleanFmt(format, exportFmt));
             manageFields("CTraceAction:" + substitute(cleanFmt(format, exportFmt), "ACTION::", ""));
@@ -159,20 +158,3 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
     }
     return str;
 }
-
-//--------------------------------------------------------------------------------
-const char* STR_DISPLAY =
-"[{BLOCKNUMBER}]\t"
-"[{TRANSACTIONPOSITION}]\t"
-"[{TRACEADDRESS}]\t"
-"[{ACTION::CALLTYPE}]\t"
-"[{ERROR}]\t"
-"[{ACTION::FROM}]\t"
-"[{ACTION::TO}]\t"
-"[{ACTION::VALUE}]\t"
-"[{ACTION::ETHER}]\t"
-"[{ACTION::GAS}]\t"
-"[{RESULT::GASUSED}]\t"
-"[{ACTION::INPUT}]\t"
-"[{COMPRESSEDTRACE}]\t"
-"[{RESULT::OUTPUT}]";

@@ -1,4 +1,5 @@
-whereBlock argc: 5 [1:1001001] [2:--api_mode] [3:--fmt] [4:txt] 
-whereBlock 1001001 --api_mode --fmt txt 
+whereBlock argc: 4 [1:1001001] [2:--fmt] [3:txt] 
+whereBlock 1001001 --fmt txt 
+TIME ~ CLOCK - : 4-----API_MODE=true
 blocknumber	path	cached
 1001001	./blocks/00/10/01/001001001.bin	true

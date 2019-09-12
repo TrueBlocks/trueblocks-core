@@ -27,18 +27,29 @@ set(GOLD_PATH "${GOLD_PATH}/${PROJ_NAME}/${TOOL_NAME}")
 # Additional target to make the README.md
 build_readme(${CMAKE_CURRENT_SOURCE_DIR} ${TOOL_NAME})
 
-# Function to run an individual test case
+# Target to run only specific (long-running) test cases
+add_custom_target(test-all COMMAND ${CMAKE_CTEST_COMMAND} -C test_all)
+add_custom_target(test-state COMMAND ${CMAKE_CTEST_COMMAND} -C test_state)
+
+# Functions to run test cases
 function(run_test testName)
      run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
 endfunction(run_test)
-
-## To run only specific tests we define a test configuration named "test_state"
-add_custom_target(test-state COMMAND ${CMAKE_CTEST_COMMAND} -C test_state)
-
-# Function to run state test cases
+function(run_special_test testName)
+    run_the_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(run_special_test)
 function(run_state_test testName)
     run_the_state_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
 endfunction(run_state_test)
+function(api_test testName)
+    run_the_api_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(api_test)
+function(api_special_test testName)
+    run_the_api_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(api_special_test)
+function(api_state_test testName)
+    run_the_api_state_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(api_state_test)
 
 # Some token and regular accounts
 set (OMG "0xd26114cd6ee289accf82350c8d8487fedb8a0c07")
@@ -84,7 +95,6 @@ run_test("getTokenInfo_multiple_token_accounts"             "${OMG}" " ${EA1}" "
 run_test("getTokenInfo_block_out_of_range"                  "${OMG}" " ${EA1}" " ${BITREX}" " 16000000" )
 
 run_test("getTokenInfo_by_account_table"                    "${SWT}" " ${EA2}"    " ${EA3}"      " --byAcct" " 4000000")
-run_test("getTokenInfo_top_three_swarm3"                    "${SWT}" " ${BITREX}" " ${EA2}"      " ${EA3}"   " 4285364" " 3510999" " 2510010" " --ether")
 run_test("getTokenInfo_invalid_dollars"                     "${SWT}" " ${BITREX}" " ${EA2}"      " ${EA3}"   " 4285364" " 3510999" " 2510010" " --dollars")
 run_test("getTokenInfo_special_1"                           "${OMG}" " ${EA1}"    " ${BITREX}"   " first")
 run_test("getTokenInfo_special_2"                           "${OMG}" " ${EA1}"    " ${BITREX}"   " stateclear")
@@ -101,16 +111,17 @@ run_state_test("getTokenInfo_by_account_table_verbose"      "${SWT}" " ${EA3}"  
 run_state_test("getTokenInfo_by_account_table_verbose_long" "${SWT}" " ${EA3}"    " --byAcct"    " 4000000" " --verbose")
 run_state_test("getTokenInfo_top_three_swarm1"              "${SWT}" " ${EA3}"    " 4285364"     " 3510999"  " 2510010" "--byAcct")
 run_state_test("getTokenInfo_top_three_swarm2"              "${SWT}" " ${BITREX}" " ${EA2}"      " ${EA3}"   " 4285364" " 3510999" " 2510010")
+run_state_test("getTokenInfo_top_three_swarm3"              "${SWT}" " ${BITREX}" " ${EA2}"      " ${EA3}"   " 4285364" " 3510999" " 2510010")
 run_state_test("getTokenInfo_wei"                           "${OMG}" " ${EA1}"    " ${BITREX}"   " 4150000"  " --wei")
 run_state_test("getTokenInfo_special_and_block_combination" "${OMG}" " ${EA1}"    " ${BITREX}"   " 4225341"  "  stateclear" " daofund")
 run_state_test("getTokenInfo_blockByHash"                   "${OMG}" " ${NET}"    " ${BLKHASH1}" " ${BLKHASH2}")
 
-run_state_test("getTokenInfo_fmt_txt"                       "${EA4}" " --fmt" " txt"  " 2000000" " --ether")
+run_state_test("getTokenInfo_fmt_txt"                       "${EA4}" " --fmt" " txt"  " 2000000")
 run_state_test("getTokenInfo_fmt_csv"                       "${EA4}" " --fmt" " csv"  " 2000000")
 run_state_test("getTokenInfo_fmt_json"                      "${EA4}" " --fmt" " json" " 2000000" " --dollars")
 run_state_test("getTokenInfo_fmt_api"                       "${EA4}" " --fmt" " api"  " 2000000")
 run_state_test("getTokenInfo_fmt_junk"                      "${EA4}" " --fmt" " junk" " 2000000")
-run_state_test("getTokenInfo_fmt_api_mode"                  "${EA4}" " --api_mode"    " 2000000" " --ether")
+api_state_test("getTokenInfo_fmt_api_mode"                  "${EA4}" " ${NET}" " 2000000")
 
 run_state_test("getTokenInfo_mode_fail"                     "${TIP}" " --mode" " junk"    " 2500000")
 run_state_test("getTokenInfo_bal"                           "${TIP}" " --mode" " bal"     " 2500000")

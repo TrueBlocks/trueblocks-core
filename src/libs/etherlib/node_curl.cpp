@@ -23,7 +23,7 @@ namespace qblocks {
     //-------------------------------------------------------------------------
     CCurlContext::CCurlContext(void) {
         baseURL      = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
-        debugging    = getGlobalConfig()->getConfigBool("debugging", "curl", false);
+        debugging    = getGlobalConfig()->getConfigBool("dev", "debug_curl", false);
         callBackFunc = writeCallback;
         curlNoteFunc = NULL;
         theID        = 1;

@@ -1,13 +1,15 @@
 [settings]
-class       = CTransaction
-fields      = hash hash|hash blockHash|blknum blockNumber|uint64 transactionIndex|uint64 nonce|timestamp timestamp|address from|address to|wei value|gas gas|gas gasPrice|string input|uint64 isError|uint64 isInternal|CReceipt receipt|CFunction articulatedTx (nowrite)|string compressedTx (nowrite)|bool finalized (nowrite)|CTraceArray traces (nowrite)
-backfields1 = hash hash|hash blockHash|blknum blockNumber|uint64 transactionIndex|uint64 nonce|timestamp timestamp|address from|address to|wei value|gas gas|gas gasPrice|string input|uint64 isError|uint64 isInternal|CReceipt receipt|CFunction articulatedTx (nowrite)|string extra_data (nowrite)|bool finalized (nowrite)|CTraceArray traces (nowrite)
-backfields2 = hash hash|hash blockHash|blknum blockNumber|uint64 transactionIndex|uint64 nonce|timestamp timestamp|address from|address to|wei value|gas gas|gas gasPrice|string input|uint64 isError|uint64 isInternal|CReceipt receipt|CFunction articulatedTx (nowrite)|string extra_data (nowrite)|bool finalized (nowrite)
-backfields3 = hash hash|hash blockHash|blknum blockNumber|uint64 transactionIndex|uint64 nonce|timestamp timestamp|address from|address to|wei value|gas gas|gas gasPrice|wei cumulativeGasUsed|string input|uint64 isError|uint64 isInternalTx|CReceipt receipt
-includes    = abilib.h|receipt.h|trace.h
-cIncs       = etherlib.h
-scope       = extern
-serialize   = true
+class        = CTransaction
+fields       = hash hash|hash blockHash|blknum blockNumber|uint64 transactionIndex|uint64 nonce|timestamp timestamp|address from|address to|wei value|gas gas|gas gasPrice|string input|uint64 isError|uint64 isInternal|CReceipt receipt|CFunction articulatedTx (nowrite)|string compressedTx (nowrite)|bool finalized (nowrite)|CTraceArray traces (nowrite)
+backfields1  = hash hash|hash blockHash|blknum blockNumber|uint64 transactionIndex|uint64 nonce|timestamp timestamp|address from|address to|wei value|gas gas|gas gasPrice|string input|uint64 isError|uint64 isInternal|CReceipt receipt|CFunction articulatedTx (nowrite)|string extra_data (nowrite)|bool finalized (nowrite)|CTraceArray traces (nowrite)
+backfields2  = hash hash|hash blockHash|blknum blockNumber|uint64 transactionIndex|uint64 nonce|timestamp timestamp|address from|address to|wei value|gas gas|gas gasPrice|string input|uint64 isError|uint64 isInternal|CReceipt receipt|CFunction articulatedTx (nowrite)|string extra_data (nowrite)|bool finalized (nowrite)
+backfields3  = hash hash|hash blockHash|blknum blockNumber|uint64 transactionIndex|uint64 nonce|timestamp timestamp|address from|address to|wei value|gas gas|gas gasPrice|wei cumulativeGasUsed|string input|uint64 isError|uint64 isInternalTx|CReceipt receipt
+includes     = abilib.h|receipt.h|trace.h
+cIncs        = etherlib.h
+scope        = extern
+serialize    = true
+display_str  = blockNumber, transactionIndex, date, timestamp, from, to, ether, etherGasPrice, gasUsed, hash, isError, encoding, compressedTx
+
 ;
 ; full tranaction
 ;fields   = hash blockHash|uint32 blockNumber|string creates|int confirmations|address contractAddress|string cumulativeGasUsed|address from|int gas|string gasPrice|string gasUsed|hash hash|string input|bool isError|bool isInternalTx|int nonce|hash r|string raw|hash s|int timestamp|address to|int transactionIndex|hash v|string value|CReceipt receipt|CTrace trace

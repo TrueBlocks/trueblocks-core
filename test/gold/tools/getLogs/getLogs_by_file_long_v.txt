@@ -3,6 +3,7 @@ getLogs --file:cmd_file --verbose --parity --fmt json
 [
   {
     "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+    "data": "0x000000000000000000000000000000000000000000000000094079cd16496a00",
     "logIndex": "0x2",
     "topics": [
       "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
@@ -29,6 +30,7 @@ getLogs --file:cmd_file --verbose --parity --fmt json
     }
   },  {
     "address": "0x51ffc1b089392a5bb65bf24eaf04d07d0e6f88b5",
+    "data": "0x00000000000000000000000063585740143301cf0163f6448fd8a63c3b376fd30000000000000000000000000000000000000000000000000137f79234afd6fd",
     "logIndex": "0x0",
     "topics": [
       "0x016e128b6bdadd9e9068abd0b18db2fc8b27ed3dbced50e4aa6cc0a6934251ab"

@@ -158,6 +158,9 @@ extern CArchive& operator<<(CArchive& archive, const CIncomeStatement& inc);
 extern CArchive& operator>>(CArchive& archive, CIncomeStatement& inc);
 
 //---------------------------------------------------------------------------
+extern const char* STR_DISPLAY_INCOMESTATEMENT;
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 //------------------------------------------------------------
 inline void CIncomeStatement::operator+=(const CIncomeStatement &x) {

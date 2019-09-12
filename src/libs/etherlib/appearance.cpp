@@ -152,7 +152,7 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------
-    string_q getMonitorLast(const string_q& addr, freshen_t mode) {
+    string_q getMonitorLast(const string_q& addr, freshen_e mode) {
         string_q base = ((mode == FM_STAGING) ? "monitors/staging/" : "monitors/");
         if (!isTestMode() && !isAddress(addr)) {
             cerr << "Not an address: " << addr << endl;
@@ -162,7 +162,7 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------
-    string_q getMonitorExpt(const string_q& addr, freshen_t mode) {
+    string_q getMonitorExpt(const string_q& addr, freshen_e mode) {
         string_q base = ((mode == FM_STAGING) ? "monitors/staging/" : "monitors/");
         if (!isTestMode() && !isAddress(addr)) {
             cerr << "Not an address: " << addr << endl;
@@ -172,7 +172,17 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------
-    string_q getMonitorPath(const string_q& addr, freshen_t mode) {
+    string_q getMonitorBals(const string_q& addr, freshen_e mode) {
+        string_q base = ((mode == FM_STAGING) ? "monitors/staging/" : "monitors/");
+        if (!isTestMode() && !isAddress(addr)) {
+            cerr << "Not an address: " << addr << endl;
+            quickQuitHandler(0);
+        }
+        return getCachePath(base + addr + ".bals");
+    }
+
+    //---------------------------------------------------------------------------
+    string_q getMonitorPath(const string_q& addr, freshen_e mode) {
         string_q base = ((mode == FM_STAGING) ? "monitors/staging/" : "monitors/");
         if (!isAddress(addr)) // empty for example
             return getCachePath(base + addr);

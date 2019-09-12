@@ -33,7 +33,7 @@ public:
     CEthStateArray stateHistory;
     wei_t nodeBal;
     bool enabled;
-    freshen_t fm_mode;
+    freshen_e fm_mode;
 
 public:
     CAccountWatch(void);
@@ -199,9 +199,11 @@ extern CArchive& operator>>(CArchive& archive, CAccountWatchArray& array);
 extern CArchive& operator<<(CArchive& archive, const CAccountWatchArray& array);
 
 //---------------------------------------------------------------------------
+extern const char* STR_DISPLAY_ACCOUNTWATCH;
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 typedef map<address_t,CAccountWatch> CAccountWatchMap;
-extern biguint_t getNodeBal(CEthStateArray& history, const address_t& addr, blknum_t blockNum);
 extern void loadWatchList(const CToml& toml, CAccountWatchArray& monitors, const string_q& key);
 // EXISTING_CODE
 }  // namespace qblocks

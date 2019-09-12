@@ -27,18 +27,29 @@ set(GOLD_PATH "${GOLD_PATH}/${PROJ_NAME}/${TOOL_NAME}")
 # Additional target to make the README.md
 build_readme(${CMAKE_CURRENT_SOURCE_DIR} ${TOOL_NAME})
 
-# Function to run an individual test case
+# Target to run only specific (long-running) test cases
+add_custom_target(test-all COMMAND ${CMAKE_CTEST_COMMAND} -C test_all)
+add_custom_target(test-state COMMAND ${CMAKE_CTEST_COMMAND} -C test_state)
+
+# Functions to run test cases
 function(run_test testName)
      run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
 endfunction(run_test)
-
-## To run only specific tests we define a test configuration named "test_state"
-add_custom_target(test-state COMMAND ${CMAKE_CTEST_COMMAND} -C test_state)
-
-# Function to run state test cases
+function(run_special_test testName)
+    run_the_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(run_special_test)
 function(run_state_test testName)
     run_the_state_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
 endfunction(run_state_test)
+function(api_test testName)
+    run_the_api_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(api_test)
+function(api_special_test testName)
+    run_the_api_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(api_special_test)
+function(api_state_test testName)
+    run_the_api_state_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(api_state_test)
 
 # Some token and regular accounts
 set (OMG "0xd26114cd6ee289accf82350c8d8487fedb8a0c07")
@@ -84,7 +95,7 @@ run_test("getState_no_zero_1"                            "-n" " ${EA6}" " 350000
 run_state_test("getState_no_zero_2"                      "-n" " ${EA6}" " ${TIP}" " 3500000")
 run_state_test("getState_no_zero_3"                      "-n" " ${EA7}" " 0" " 4000000")
 run_state_test("getState_no_zero_4"                      "-n" "${TIP}" " ${EA5}" " ${EA7}"              " 3500000" " 3700000" " 4000000")
-run_test("getState_no_zero_long_1"                       "--nozero" " ${EA6}" " 3500000" " --api_mode")
+api_test("getState_no_zero_long_1"                       "--nozero" " ${EA6}" " 3500000")
 run_state_test("getState_no_zero_long_2"                 "--nozero" " ${EA6}" " ${TIP}" " 3500000")
 run_state_test("getState_no_zero_long_3"                 "--nozero" " ${EA7}" " 0" " 4000000")
 run_state_test("getState_no_zero_long_4"                  "--nozero" "${TIP}" " ${EA5}" " ${EA7}"               " 3500000" " 3700000" " 4000000")
@@ -105,7 +116,7 @@ run_state_test("getState_fmt_csv"      "${EA4}" " --fmt" " csv" " 2000000")
 run_state_test("getState_fmt_json"     "${EA4}" " --fmt" " json" " 2000000" " --dollars")
 run_state_test("getState_fmt_api"      "${EA4}" " --fmt" " api" " 2000000")
 run_state_test("getState_fmt_junk"     "${EA4}" " --fmt" " junk" " 2000000")
-run_state_test("getState_fmt_api_mode" "${EA4}" " --api_mode" " 2000000" " --ether")
+api_state_test("getState_fmt_api_mode" "${EA4}" " 2000000" " --ether")
 
 run_state_test("getState_bal"          "${TIP}" " --mode" " bal" " 2500000")
 run_state_test("getState_nonce"        "${TIP}" " --mode" " nonce" " 2500000")

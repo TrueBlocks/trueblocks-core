@@ -162,6 +162,9 @@ extern CArchive& operator>>(CArchive& archive, CTreeRootArray& array);
 extern CArchive& operator<<(CArchive& archive, const CTreeRootArray& array);
 
 //---------------------------------------------------------------------------
+extern const char* STR_DISPLAY_TREEROOT;
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 //----------------------------------------------------------
 inline int nodeIndex(char c) {

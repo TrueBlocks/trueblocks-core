@@ -32,6 +32,9 @@ void CTrace::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["trace_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();
@@ -65,12 +68,16 @@ bool CTrace::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
     if (pTrans)
         if (((CTransaction*)pTrans)->setValueByName(fieldName, fieldValue))  // NOLINT
             return true;
+    if (fieldName % "transactionPosition") // order matters
+        fieldName = "transactionIndex";
+    if (fieldName % "error")
+        fieldValue = substitute(fieldValue, string_q(1,char(5)), " ");
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "articulatedTrace" ) { string_q str = fieldValue ; return articulatedTrace.parseJson3(str); }
-            if ( fieldName % "action" ) { string_q str = fieldValue; return action.parseJson3(str); }
+            if ( fieldName % "articulatedTrace" ) { return articulatedTrace.parseJson3(fieldValue); }
+            if ( fieldName % "action" ) { return action.parseJson3(fieldValue); }
             break;
         case 'b':
             if ( fieldName % "blockHash" ) { blockHash = str_2_Hash(fieldValue); return true; }
@@ -83,7 +90,7 @@ bool CTrace::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
             if ( fieldName % "error" ) { error = fieldValue; return true; }
             break;
         case 'r':
-            if ( fieldName % "result" ) { string_q str = fieldValue; return result.parseJson3(str); }
+            if ( fieldName % "result" ) { return result.parseJson3(fieldValue); }
             break;
         case 's':
             if ( fieldName % "subtraces" ) { subtraces = str_2_Uint(fieldValue); return true; }
@@ -97,7 +104,7 @@ bool CTrace::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
                 return true;
             }
             if ( fieldName % "transactionHash" ) { transactionHash = str_2_Hash(fieldValue); return true; }
-            if ( fieldName % "transactionPosition" ) { transactionPosition = str_2_Uint(fieldValue); return true; }
+            if ( fieldName % "transactionIndex" ) { transactionIndex = str_2_Uint(fieldValue); return true; }
             if ( fieldName % "type" ) { type = fieldValue; return true; }
             break;
         default:
@@ -131,7 +138,7 @@ bool CTrace::Serialize(CArchive& archive) {
     archive >> subtraces;
     archive >> traceAddress;
     archive >> transactionHash;
-    archive >> transactionPosition;
+    archive >> transactionIndex;
     archive >> type;
     archive >> error;
 //    archive >> articulatedTrace;
@@ -155,7 +162,7 @@ bool CTrace::SerializeC(CArchive& archive) const {
     archive << subtraces;
     archive << traceAddress;
     archive << transactionHash;
-    archive << transactionPosition;
+    archive << transactionIndex;
     archive << type;
     archive << error;
 //    archive << articulatedTrace;
@@ -202,7 +209,7 @@ void CTrace::registerClass(void) {
     ADD_FIELD(CTrace, "subtraces", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTrace, "traceAddress", T_TEXT, ++fieldNum);
     ADD_FIELD(CTrace, "transactionHash", T_HASH, ++fieldNum);
-    ADD_FIELD(CTrace, "transactionPosition", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTrace, "transactionIndex", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTrace, "type", T_TEXT, ++fieldNum);
     ADD_FIELD(CTrace, "error", T_TEXT, ++fieldNum);
     ADD_FIELD(CTrace, "articulatedTrace", T_OBJECT, ++fieldNum);
@@ -290,18 +297,8 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "articulatedTrace" ) {
-                if (articulatedTrace == CFunction())
-                    return "";
-                expContext().noFrst=true;
-                return articulatedTrace.Format();
-            }
-            if ( fieldName % "action" ) {
-                if (action == CTraceAction())
-                    return "";
-                expContext().noFrst=true;
-                return action.Format();
-            }
+            if ( fieldName % "articulatedTrace" ) { if (articulatedTrace == CFunction()) return ""; expContext().noFrst=true; return articulatedTrace.Format(); }
+            if ( fieldName % "action" ) { if (action == CTraceAction()) return ""; expContext().noFrst=true; return action.Format(); }
             break;
         case 'b':
             if ( fieldName % "blockHash" ) return hash_2_Str(blockHash);
@@ -314,12 +311,7 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "error" ) return error;
             break;
         case 'r':
-            if ( fieldName % "result" ) {
-                if (result == CTraceResult())
-                    return "";
-                expContext().noFrst=true;
-                return result.Format();
-            }
+            if ( fieldName % "result" ) { if (result == CTraceResult()) return ""; expContext().noFrst=true; return result.Format(); }
             break;
         case 's':
             if ( fieldName % "subtraces" ) return uint_2_Str(subtraces);
@@ -340,7 +332,7 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
                 return retS;
             }
             if ( fieldName % "transactionHash" ) return hash_2_Str(transactionHash);
-            if ( fieldName % "transactionPosition" ) return uint_2_Str(transactionPosition);
+            if ( fieldName % "transactionIndex" ) return uint_2_Str(transactionIndex);
             if ( fieldName % "type" ) return type;
             break;
     }
@@ -406,6 +398,23 @@ const string_q CTrace::getStringAt(const string_q& fieldName, size_t i) const {
 }
 
 //---------------------------------------------------------------------------
+const char* STR_DISPLAY_TRACE = 
+"[{BLOCKNUMBER}]\t"
+"[{TRANSACTIONINDEX}]\t"
+"[{TRACEADDRESS}]\t"
+"[{ACTION::CALLTYPE}]\t"
+"[{ERROR}]\t"
+"[{ACTION::FROM}]\t"
+"[{ACTION::TO}]\t"
+"[{ACTION::VALUE}]\t"
+"[{ACTION::ETHER}]\t"
+"[{ACTION::GAS}]\t"
+"[{RESULT::GASUSED}]\t"
+"[{ACTION::INPUT}]\t"
+"[{COMPRESSEDTRACE}]\t"
+"[{RESULT::OUTPUT}]";
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 bool CTrace::isError(void) const {
     return !error.empty();
@@ -415,7 +424,7 @@ extern wei_t blockReward(blknum_t bn, blknum_t txid, bool txFee);
 //---------------------------------------------------------------------------
 void CTrace::loadAsBlockReward(const CTransaction& trans, blknum_t bn, blknum_t txid) {
     blockNumber = bn;
-    transactionPosition = txid;
+    transactionIndex = txid;
     action.from = (txid == 99998 ? "0xUncleReward" : "0xBlockReward");
     action.to = trans.to;
     action.callType = (txid == 99998 ? "uncle-reward" : "block-reward");
@@ -429,7 +438,7 @@ void CTrace::loadAsBlockReward(const CTransaction& trans, blknum_t bn, blknum_t 
 //---------------------------------------------------------------------------
 void CTrace::loadAsTransactionFee(const CTransaction& trans, blknum_t bn, blknum_t txid) {
     blockNumber = bn;
-    transactionPosition = txid;
+    transactionIndex = txid;
     action.from = "0xTransactionFee";
     action.to = trans.to;
     action.callType = "tx-fee";
@@ -443,7 +452,7 @@ void CTrace::loadAsTransactionFee(const CTransaction& trans, blknum_t bn, blknum
 //---------------------------------------------------------------------------
 void CTrace::loadAsDdos(const CTransaction& trans, blknum_t bn, blknum_t txid) {
     blockNumber = bn;
-    transactionPosition = txid;
+    transactionIndex = txid;
     action.from = "0xdd05dd05dd05dd05dd05dd05dd05dd05";
     action.to = "0xdd05dd05dd05dd05dd05dd05dd05dd05";
     action.callType = "ddos";

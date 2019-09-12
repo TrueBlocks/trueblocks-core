@@ -22,8 +22,8 @@ static const COption params[] = {
     COption("string", "s", "<string>", OPT_FLAG, "enter any value"),
     COption("range", "r", "<range>", OPT_FLAG, "enter a range of numeric values"),
     COption("list", "l", "<list>", OPT_FLAG, "enter a list of value separated by commas (no spaces or quoted)"),
-    COption("hiddenOption", "d", "", OPT_HIDDEN, "a hidden option with an alternative hot key"),
-    COption("", "", "", 0, "Tests various command line behavior.\n"),
+    COption("hiddenOption", "d", "", OPT_HIDDEN | OPT_FLAG, "a hidden option with an alternative hot key"),
+    COption("", "", "", OPT_DESCRIPTION, "Tests various command line behavior.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 

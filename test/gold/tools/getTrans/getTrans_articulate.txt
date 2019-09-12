@@ -46,7 +46,7 @@ getTrans -a -x api -t 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017
     "traces": [
       {
         "type": "call",
-        "error": "Badjumpdestination",
+        "error": "Bad jump destination",
         "articulatedTrace": {
           "name": "transferFrom",
           "inputs": [
@@ -111,6 +111,7 @@ getTrans -a -x api -t 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017
       "logs": [
         {
           "address": "0x159cf1e9ae58211b588f5e3bf1d7e423952d959b",
+          "data": "0x000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000004432e910757d1000000000000000000000000000000000000000000000000015af1d78b58c40000",
           "logIndex": 4,
           "topics": [
             "0xc08c07687f5dc22e00846ec2d0afff7fb5d509f6fc5c60ad9f70fdeb0ab6a5c7",

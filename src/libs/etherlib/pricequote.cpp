@@ -32,6 +32,9 @@ void CPriceQuote::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) con
     if (!m_showing)
         return;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["pricequote_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();
@@ -259,6 +262,12 @@ ostream& operator<<(ostream& os, const CPriceQuote& item) {
     os << "\n";
     return os;
 }
+
+//---------------------------------------------------------------------------
+const char* STR_DISPLAY_PRICEQUOTE = 
+"[{TIMESTAMP}]\t"
+"[{DATE}]\t"
+"[{CLOSE}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

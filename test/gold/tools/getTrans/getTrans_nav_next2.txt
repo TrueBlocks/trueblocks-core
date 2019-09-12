@@ -1,4 +1,4 @@
 getTrans argc: 2 [1:1001001.3.next] 
 getTrans 1001001.3.next 
-date	timestamp	blocknumber	transactionindex	hash	compressedtx
-2016-02-14 03:52:05 UTC	1455421925	1001002	0	0xab2578b4c1e2607832bfa8ef2f3ba51f48a17990214ea69f0debbfcc42ada001
+blocknumber	transactionindex	date	timestamp	from	to	ether	ethergasprice	gasused	hash	iserror	encoding	compressedtx
+1001002	0	2016-02-14 03:52:05 UTC	1455421925	0x2a65aca4d5fc5b5c859090a6c34d164135398226	0xfc8bc4ed86df73001ce6082f3db914d7c7a9a6cc	2.139205320000000000	0.000000050000000000	21000	0xab2578b4c1e2607832bfa8ef2f3ba51f48a17990214ea69f0debbfcc42ada001	0	0x

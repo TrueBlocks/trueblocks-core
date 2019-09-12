@@ -31,6 +31,9 @@ void CAbiCache::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const
     if (!m_showing)
         return;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["abicache_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();
@@ -262,6 +265,9 @@ const CBaseNode *CAbiCache::getObjectAt(const string_q& fieldName, size_t index)
         return &items[index];
     return NULL;
 }
+
+//---------------------------------------------------------------------------
+const char* STR_DISPLAY_ABICACHE = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

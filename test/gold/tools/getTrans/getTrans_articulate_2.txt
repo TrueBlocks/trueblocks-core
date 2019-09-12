@@ -1,6 +1,7 @@
-getTrans argc: 5 [1:3648669.24] [2:-avtx] [3:json] [4:--api_mode] 
-getTrans 3648669.24 -avtx json --api_mode 
-{ "type": "CTransaction", "data": [
+getTrans argc: 4 [1:3648669.24] [2:-avtx] [3:json] 
+getTrans 3648669.24 -avtx json 
+TIME ~ CLOCK - : 4-----API_MODE=true
+[
   {
     "hash": "0x811bb4494b3bbcfd6f0205f22b3e983792b21cb0a9689366903b843ec4d62531",
     "blockHash": "0x836c4866ea68fbe3b9786cdb3c2c8a36fa0c689e77b0f9fc441d37fb85489fad",
@@ -20,6 +21,7 @@ getTrans 3648669.24 -avtx json --api_mode
       "logs": [
         {
           "address": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
+          "data": "0x000000000000000000000000000000000000000000000000000000005911a79a",
           "logIndex": 4,
           "topics": [
             "0x87e97e825a1d1fa0c54e1d36c7506c1dea8b1efd451fe68b000cf96f7cf40003",
@@ -41,6 +43,7 @@ getTrans 3648669.24 -avtx json --api_mode
         },
         {
           "address": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
+          "data": "0x000000000000000000000000000000000000000000000000000000005911a79a",
           "logIndex": 5,
           "topics": [
             "0x87e97e825a1d1fa0c54e1d36c7506c1dea8b1efd451fe68b000cf96f7cf40003",
@@ -62,6 +65,7 @@ getTrans 3648669.24 -avtx json --api_mode
         },
         {
           "address": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
+          "data": "0x000000000000000000000000000000000000000000000000000000005911a79a",
           "logIndex": 6,
           "topics": [
             "0x87e97e825a1d1fa0c54e1d36c7506c1dea8b1efd451fe68b000cf96f7cf40003",
@@ -83,6 +87,7 @@ getTrans 3648669.24 -avtx json --api_mode
         },
         {
           "address": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
+          "data": "0x000000000000000000000000000000000000000000000000002386f26fc10000",
           "logIndex": 7,
           "topics": [
             "0xb556ff269c1b6714f432c36431e2041d28436a73b6c3f19c021827bbdc6bfc29",
@@ -231,6 +236,9 @@ getTrans 3648669.24 -avtx json --api_mode
     "gasCost": 10849501969331551,
     "gasUsed": 533321,
     "date": "2017-05-04 11:27:22 UTC",
+    "datesh": "2017-05-04",
+    "time": "1:27:22 UTC",
+    "age": "100",
     "ether": 0.010000000000000000
   }
-], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
+]

@@ -29,6 +29,9 @@ void QTransferFrom::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) c
     if (!m_showing)
         return;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["transferfrom_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();
@@ -232,6 +235,9 @@ ostream& operator<<(ostream& os, const QTransferFrom& item) {
     os << "\n";
     return os;
 }
+
+//---------------------------------------------------------------------------
+const char* STR_DISPLAY_TRANSFERFROM = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

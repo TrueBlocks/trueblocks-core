@@ -144,6 +144,9 @@ extern CArchive& operator>>(CArchive& archive, CPersonArray& array);
 extern CArchive& operator<<(CArchive& archive, const CPersonArray& array);
 
 //---------------------------------------------------------------------------
+extern const char* STR_DISPLAY_PERSON;
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 

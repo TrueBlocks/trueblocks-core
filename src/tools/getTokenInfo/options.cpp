@@ -20,7 +20,7 @@ static const COption params[] = {
     COption("byAcct", "b", "", OPT_SWITCH, "consider each address an ERC20 token except the last, whose balance is reported for each token"),
     COption("nozero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
     COption("info", "i", "enum[name|decimals|totalSupply|version|symbol|all]", OPT_HIDDEN | OPT_FLAG, "retreive information [name|decimals|totalSupply|version|symbol|all] about the token"),
-    COption("", "", "", 0, "Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s)."),
+    COption("", "", "", OPT_DESCRIPTION, "Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s)."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -125,6 +125,20 @@ bool COptions::parseArguments(string_q& command) {
         if (!isTokenContract(watch.address))
             return usage("Address '" + watch.address + "' does not appear to be a token smart contract. Quitting...");
     }
+
+    if ((!isTestMode() && !hasHistory()) || nodeHasBalances())
+        return true;
+
+    // We need history, so try to get a different server. Fail silently. The user will be warned in the response
+    string_q rpcProvider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
+    string_q balanceProvider = getGlobalConfig()->getConfigStr("settings", "balanceProvider", rpcProvider);
+    if (rpcProvider == balanceProvider || balanceProvider.empty())
+        return true;
+
+    // We release the curl context so we can set it to the new context.
+    getCurlContext()->baseURL = balanceProvider;
+    getCurlContext()->releaseCurl();
+    getCurlContext()->getCurl();
 
     return true;
 }

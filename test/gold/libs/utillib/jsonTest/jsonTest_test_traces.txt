@@ -7,7 +7,7 @@ tests/traces.json
   "subtraces": 0,
   "traceAddress": null,
   "transactionHash": "0x6b37abd2b3fcffb64df6f6c039e8ef1bed3212b9c5f88db72fea1e189718164e",
-  "transactionPosition": 193,
+  "transactionIndex": 193,
   "type": "call",
   "action": {
     "address": "0x0",

@@ -1,5 +1,6 @@
-whereBlock argc: 3 [1:1001001] [2:--api_mode] 
-whereBlock 1001001 --api_mode 
+whereBlock argc: 2 [1:1001001] 
+whereBlock 1001001 
+TIME ~ CLOCK - : 4-----API_MODE=true
 { "type": "CCacheEntry", "data": [
   {
     "blockNumber": "1001001",

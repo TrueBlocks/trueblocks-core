@@ -31,6 +31,9 @@ void CPriceCache::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) con
     if (!m_showing)
         return;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["pricecache_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();
@@ -262,6 +265,9 @@ const CBaseNode *CPriceCache::getObjectAt(const string_q& fieldName, size_t inde
         return &items[index];
     return NULL;
 }
+
+//---------------------------------------------------------------------------
+const char* STR_DISPLAY_PRICECACHE = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

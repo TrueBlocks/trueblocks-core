@@ -92,7 +92,11 @@ namespace qblocks {
     typedef string_q (*NEXTCHUNKFUNC)(const string_q& fieldIn, const void *data);
 
     //--------------------------------------------------------------------------------------------------------------
-    string_q getNextChunk(string_q& fmtOut, NEXTCHUNKFUNC func, const void *data);
-    string_q fldNotFound(const string_q& str);
+    extern string_q getNextChunk(string_q& fmtOut, NEXTCHUNKFUNC func, const void *data);
+    extern string_q fldNotFound(const string_q& str);
+
+    //--------------------------------------------------------------------------------------------------------------
+    extern void preserveSpaces(string_q& str);
+    extern void unpreserveSpaces(string_q& str);
 
 }  // namespace qblocks

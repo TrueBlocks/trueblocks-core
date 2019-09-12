@@ -22,14 +22,14 @@ static const COption params[] = {
     COption("uniq", "u", "", OPT_SWITCH, "display only uniq addresses found per block"),
     COption("uniqTx", "q", "", OPT_SWITCH, "display only uniq addresses found per transaction"),
     COption("number", "m", "", OPT_SWITCH, "display address counts (alterntively --addrCnt, --uniqTxCnt, or --uniqCnt)"),
-    COption("filter", "l", "<addr>", OPT_FLAG, "useful only for --addrs or --uniq, only display this address in results"),
+    COption("filter", "l", "<address>", OPT_FLAG, "useful only for --addrs or --uniq, only display this address in results"),
     COption("latest", "l", "", OPT_HIDDEN | OPT_SWITCH, "display the latest blocks at both the node and the cache"),
     COption("force", "o", "", OPT_HIDDEN | OPT_SWITCH, "force a re-write of the block to the cache"),
     COption("quiet", "q", "", OPT_HIDDEN | OPT_SWITCH, "do not print results to screen, used for speed testing and data checking"),
     COption("source", "s", "enum[c*|r]", OPT_HIDDEN | OPT_FLAG, "either :c(a)che or :(r)aw, source for data retrival. (shortcuts -k = qblocks, -r = node)"),
     COption("fields", "f", "enum[a*|m|c|r]", OPT_HIDDEN | OPT_FLAG, "either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default)"),
     COption("normalize", "n", "", OPT_HIDDEN | OPT_SWITCH, "normalize (remove un-common fields and sort) for comparison with other results (testing)"),
-    COption("", "", "", 0, "Returns block(s) from local cache or directly from a running node."),
+    COption("", "", "", OPT_DESCRIPTION, "Returns block(s) from local cache or directly from a running node."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -231,10 +231,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!blocks.hasBlocks())
         return usage("You must specify at least one block. Quitting...");
 
-    format = getGlobalConfig("getBlock")->getDisplayStr(false, "");
-    if (contains(format, "{PRICE:CLOSE}")) {
-//        priceBlocks = true;
-    }
+    format = getGlobalConfig("getBlock")->getConfigStr("display", "format", STR_DISPLAY_BLOCK);
 
     secsFinal = (timestamp_t)getGlobalConfig("getBlock")->getConfigInt("settings", "secs_when_final", (uint64_t)secsFinal);
 
@@ -287,7 +284,7 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 bool COptions::isMulti(void) const {
-    return api_mode || ((blocks.stop - blocks.start) > 1 || blocks.hashList.size() > 1 || blocks.numList.size() > 1);
+    return isApiMode() || ((blocks.stop - blocks.start) > 1 || blocks.hashList.size() > 1 || blocks.numList.size() > 1);
 }
 
 //--------------------------------------------------------------------------------

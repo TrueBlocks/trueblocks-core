@@ -1,5 +1,6 @@
-getReceipt argc: 5 [1:--file:cmd_file] [2:--verbose] [3:--parity] [4:--api_mode] 
-getReceipt --file:cmd_file --verbose --parity --api_mode 
+getReceipt argc: 4 [1:--file:cmd_file] [2:--verbose] [3:--parity] 
+getReceipt --file:cmd_file --verbose --parity 
+TIME ~ CLOCK - : 4-----API_MODE=true
 { "type": "CTransaction", "data": [
   {
     "contractAddress": "0x0",

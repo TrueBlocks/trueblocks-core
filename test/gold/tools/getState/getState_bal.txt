@@ -1,4 +1,4 @@
 getState argc: 5 [1:0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359] [2:--mode] [3:bal] [4:2500000] 
 getState 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 --mode bal 2500000 
-address	blocknumber	balance
-0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359	2500000	3905662906205094119236
+blocknumber	address	balance
+2500000	0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359	3905662906205094119236

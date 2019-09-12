@@ -32,6 +32,9 @@ void CTransaction::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) co
     if (!m_showing)
         return;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["transaction_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();
@@ -347,7 +350,7 @@ void CTransaction::registerClass(void) {
     if (isTestMode()) {
         UNHIDE_FIELD(CTransaction, "isError");
     }
-    if (!getEnvStr("API_MODE").empty()) {
+    if (isApiMode()) {
         UNHIDE_FIELD(CTransaction, "datesh");
         UNHIDE_FIELD(CTransaction, "time");
         UNHIDE_FIELD(CTransaction, "date");
@@ -534,12 +537,7 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "articulatedTx" ) {
-                if (articulatedTx == CFunction())
-                    return "";
-                expContext().noFrst=true;
-                return articulatedTx.Format();
-            }
+            if ( fieldName % "articulatedTx" ) { if (articulatedTx == CFunction()) return ""; expContext().noFrst=true; return articulatedTx.Format(); }
             break;
         case 'b':
             if ( fieldName % "blockHash" ) return hash_2_Str(blockHash);
@@ -646,6 +644,22 @@ const CBaseNode *CTransaction::getObjectAt(const string_q& fieldName, size_t ind
 }
 
 //---------------------------------------------------------------------------
+const char* STR_DISPLAY_TRANSACTION = 
+"[{BLOCKNUMBER}]\t"
+"[{TRANSACTIONINDEX}]\t"
+"[{DATE}]\t"
+"[{TIMESTAMP}]\t"
+"[{FROM}]\t"
+"[{TO}]\t"
+"[{ETHER}]\t"
+"[{ETHERGASPRICE}]\t"
+"[{GASUSED}]\t"
+"[{HASH}]\t"
+"[{ISERROR}]\t"
+"[{ENCODING}]\t"
+"[{COMPRESSEDTX}]";
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 //--------------------------------------------------------------------
 bool sortTransactionsForWrite(const CTransaction& t1, const CTransaction& t2) {
@@ -670,24 +684,15 @@ bool CTransaction::loadAsBlockReward(blknum_t bn, blknum_t txid, const address_t
 }
 
 //-------------------------------------------------------------------------
-bool CTransaction::loadAsPrefund(const CStringArray& prefunds, const address_t& addr) {
-    if (prefunds.size() == 0)
-        return false;
+bool CTransaction::loadAsPrefund(const address_t& addr, const wei_t& amount) {
 
     blknum_t id = transactionIndex;
     initialize();
     transactionIndex = id;
-    for (auto prefund : prefunds) {
-        CStringArray parts;
-        explode(parts, prefund, '\t');
-        if (toLower(parts[0]) == addr) {
-            to = addr;
-            from = "0xPrefund";
-            value = str_2_Wei(parts[1]);
-            return true;
-        }
-    }
-    return false;
+    from = "0xPrefund";
+    to = addr;
+    value = amount;
+    return true;
 }
 // EXISTING_CODE
 }  // namespace qblocks

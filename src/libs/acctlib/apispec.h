@@ -146,6 +146,9 @@ extern CArchive& operator<<(CArchive& archive, const CApiSpec& api);
 extern CArchive& operator>>(CArchive& archive, CApiSpec& api);
 
 //---------------------------------------------------------------------------
+extern const char* STR_DISPLAY_APISPEC;
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks

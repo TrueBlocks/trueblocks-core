@@ -144,7 +144,7 @@ inline CEthState& CEthState::operator=(const CEthState& et) {
 inline bool CEthState::operator==(const CEthState& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
-    // Default equality operator as defined in class definition
+    // Equality operator as defined in class definition
     return blockNumber == item.blockNumber;
 }
 
@@ -160,6 +160,9 @@ inline bool operator<(const CEthState& v1, const CEthState& v2) {
 typedef vector<CEthState> CEthStateArray;
 extern CArchive& operator>>(CArchive& archive, CEthStateArray& array);
 extern CArchive& operator<<(CArchive& archive, const CEthStateArray& array);
+
+//---------------------------------------------------------------------------
+extern const char* STR_DISPLAY_ETHSTATE;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

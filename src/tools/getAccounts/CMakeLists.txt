@@ -27,18 +27,9 @@ set(GOLD_PATH "${GOLD_PATH}/${PROJ_NAME}/${TOOL_NAME}")
 # Additional target to make the README.md
 build_readme(${CMAKE_CURRENT_SOURCE_DIR} ${TOOL_NAME})
 
-# To run only specific tests we define a test configuration named "test_all"
+# Target to run only specific (long-running) test cases
 add_custom_target(test-all COMMAND ${CMAKE_CTEST_COMMAND} -C test_all)
-
-# Function to run an special or slow test case
-function(run_special_test testName)
-    run_the_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
-endfunction(run_special_test)
-
-# Function to run an individual test case
-function(run_test testName)
-     run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
-endfunction(run_test)
+#add_custom_target(test-state COMMAND ${CMAKE_CTEST_COMMAND} -C test_state)
 
 # Enter one line for each individual test
 run_test("getAccounts_README"                     "-th")
@@ -50,18 +41,18 @@ run_test("getAccounts_addr_show_addr_match"       "-a" " 0xb6")
 run_test("getAccounts_address_match"              "0x1" " --fmt" " api")
 run_test("getAccounts_all"                        "-ncop")
 run_test("getAccounts_all_addrOnly"               "--named" " -c" " --owned" " -p" " -a")
-run_test("getAccounts_api_mode"                   "tip" " --api_mode")
+api_test("getAccounts_api_mode"                   "tip")
 run_test("getAccounts_bad_option"                 "--addr" )
 run_test("getAccounts_custom"                     "-c" )
 run_test("getAccounts_custom_long"                "--custom" )
 run_test("getAccounts_duplicated_option_1"        "-a" " -a" " -a" " -a" " 0xb6" " torj")
 run_test("getAccounts_fmt_api"                    "--named" " --custom" " --owned" " --fmt" " api")
 run_test("getAccounts_fmt_api1"                   "tip" " --fmt" " api")
-run_test("getAccounts_fmt_api_mode"               "--named" " --custom" " --owned" " --api_mode")
-run_test("getAccounts_fmt_api_mode_fmt"           "tip" " --api_mode" " --fmt" " txt" " --expand")
+api_test("getAccounts_fmt_api_mode"               "--named" " --custom" " --owned")
+api_test("getAccounts_fmt_api_mode_fmt"           "tip" " --fmt" " txt" " --expand")
 run_test("getAccounts_fmt_csv"                    "--named" " --custom" " --owned" " --fmt" " csv")
 run_test("getAccounts_fmt_csv1"                   "tip" " --fmt" " csv")
-run_test("getAccounts_fmt_defaut"                 "tip" " --api_mode" " --expand")
+api_test("getAccounts_fmt_defaut"                 "tip" " --expand")
 run_test("getAccounts_fmt_json"                   "--named" " --custom" " --owned" " --fmt" " json")
 run_test("getAccounts_fmt_json1"                  "tip" " --fmt" " json")
 run_test("getAccounts_fmt_junk"                   "tip" " --fmt" " junk" " --expand")

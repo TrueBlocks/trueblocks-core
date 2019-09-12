@@ -74,6 +74,16 @@ namespace qblocks {
             cerr << endl;
         }
 
+        // send out the environment, if any non-default
+        if (isTestMode() || isLevelOn(sev_debug4)) {
+            size_t save = verbose;
+            verbose = 10;
+            if (isApiMode())                        { LOG4("API_MODE=",    getEnvStr("API_MODE")); }
+            if (getEnvStr("DOCKER_MODE") == "true") { LOG4("DOCKER_MODE=", getEnvStr("DOCKER_MODE")); }
+//            if (!getEnvStr("IPFS_PATH").empty())    { LOG4("IPFS_PATH=",   getEnvStr("IPFS_PATH")); }
+            verbose = save;
+        }
+
         if ((uint64_t)argc <= minArgs)  // the first arg is the program's name
             return usage("Not enough arguments presented.");
 
@@ -182,17 +192,12 @@ namespace qblocks {
                     verbose = str_2_Uint(arg);
                 }
 
-            } else if (arg == "--api_mode") {
-                api_mode = true;
-                exportFmt = API1;
-                args[i] = "";
-
             } else if (startsWith(arg, "-x:") || startsWith(arg, "--fmt:")) {
                 arg = substitute(substitute(arg, "-x:", ""), "--fmt:", "");
-                     if ( arg == "txt" ) { exportFmt = TXT1;  api_mode = false; }
-                else if ( arg == "csv" ) { exportFmt = CSV1;  api_mode = false; }
-                else if ( arg == "json") { exportFmt = JSON1; api_mode = false; }
-                else if ( arg == "api" ) { exportFmt = API1;  api_mode = true; }
+                     if ( arg == "txt" ) { exportFmt = TXT1;  }
+                else if ( arg == "csv" ) { exportFmt = CSV1; }
+                else if ( arg == "json") { exportFmt = JSON1; }
+                else if ( arg == "api" ) { exportFmt = API1; }
                 else return usage("Export format must be one of [ json | txt | csv | api ]. Quitting...");
                 args[i] = "";
             }
@@ -352,8 +357,15 @@ namespace qblocks {
         }
 
         // A final set of options that do not have command line options
-        if (isEnabled(OPT_PREFUND))
-            asciiFileToLines(configPath("prefunds.txt"), prefunds);
+        if (isEnabled(OPT_PREFUND)) {
+            CStringArray lines;
+            asciiFileToLines(configPath("prefunds.txt"), lines);
+            for (auto line : lines) {
+                CStringArray parts;
+                explode(parts, line, '\t');
+                prefundWeiMap[toLower(parts[0])] = str_2_Wei(parts[1]);
+            }
+        }
 
         if (isEnabled(OPT_RUNONCE)) {
             if (commandLines.size() > 1)
@@ -418,12 +430,12 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     COption::COption(const string_q& nameIn, const string_q& descr) {
 
-        longName    = nameIn;
-        shortName   = nameIn;
-        hidden      = startsWith(nameIn, "@");
-        mode        = startsWith(nameIn, "~");
-        optional    = contains  (nameIn, "!");
-        description = descr;
+        longName      = nameIn;
+        shortName     = nameIn;
+        is_hidden     = startsWith(nameIn, "@");
+        is_positional = startsWith(nameIn, "~");
+        is_optional   = contains  (nameIn, "!");
+        description   = descr;
         if (nameIn.empty())
             return;
 
@@ -432,7 +444,7 @@ namespace qblocks {
         replaceAll(shortName, "@", "");
         replaceAll(shortName, "!", "");
 
-        if (!mode) {
+        if (!is_positional) {
             longName = "--" + shortName;
             shortName = "-" + (contains(shortName,"fmt") ? "x" : extract(shortName, 0, 1));
         } else {
@@ -464,9 +476,9 @@ namespace qblocks {
         if (ln.empty())
             return;
 
-        mode = (opts & OPT_POSITIONAL);
-        hidden = (opts & OPT_HIDDEN);
-        optional = !(opts & OPT_REQUIRED);
+        is_positional = (opts & OPT_POSITIONAL);
+        is_hidden = (opts & OPT_HIDDEN);
+        is_optional = !(opts & OPT_REQUIRED);
 
         permitted = type;
         permitted = substitute(permitted, "enum[none|json*|txt|csv|api]", "<fmt>");
@@ -474,7 +486,7 @@ namespace qblocks {
 
         longName = "--" + ln + (permitted.empty() ? "" : " " + permitted);
         shortName = (sn.empty() ? "" : "-" + sn);
-        if (mode)
+        if (is_positional)
             longName = shortName = ln;
     }
 
@@ -493,7 +505,7 @@ namespace qblocks {
             os << "#### Usage\n";
         }
 
-        if (api_mode)
+        if (isApiMode())
             cout << "{ \"cmd\": \"" + getProgName() + "\", \"error\": \"" << errMsg << "\" }" << endl;
 
         os << "\n";
@@ -519,10 +531,10 @@ namespace qblocks {
         if (!needsOption)
             os << "[";
         for (uint64_t i = 0 ; i < cntParams ; i++) {
-            if (pParams[i].mode) {
+            if (pParams[i].is_positional) {
                 required += (pParams[i].longName.empty() ? "" : (" " + pParams[i].longName));
 
-            } else if (pParams[i].hidden) {
+            } else if (pParams[i].is_hidden) {
                 // invisible option
 
             } else if (!pParams[i].shortName.empty()) {
@@ -563,7 +575,7 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
 const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
-    string_q COptionsBase::oneDescription(const string_q& sN, const string_q& lN, const string_q& d, bool isMode, bool required) const {
+    string_q COptionsBase::oneDescription(const string_q& sN, const string_q& lN, const string_q& d, bool isPositional, bool required) const {
         ostringstream os;
         if (isReadme) {
 
@@ -571,20 +583,20 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             string_q line = STR_ONE_LINE;
             replace(line, "{S}", sN);
             replace(line, "{L}", lN);
-            replace(line, "{D}", substitute((d + (required && isMode ? " (required)" : "")), "|", "&#124;"));
+            replace(line, "{D}", substitute((d + (required && isPositional ? " (required)" : "")), "|", "&#124;"));
             os << line;
 
         } else {
 
             // When we are writing to the command line...
             string_q line = "\t" + substitute(substitute(string_q(STR_ONE_LINE), " ", ""), "|", "");
-            replace(line, "{S}", (isMode ? "" : padRight(sN, 3)));
-            if (isMode) {
+            replace(line, "{S}", (isPositional ? "" : padRight(sN, 3)));
+            if (isPositional) {
                 replace(line, "{L}", padRight(lN , 22));
             } else {
                 replace(line, "{L}", padRight((lN.empty() ? "" : " (" + lN + ")") , 19));
             }
-            replace(line, "{D}", d + (required && isMode ? " (required)" : ""));
+            replace(line, "{D}", d + (required && isPositional ? " (required)" : ""));
             os << line;
         }
         return postProcess("oneDescription", os.str().c_str());
@@ -635,14 +647,14 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             string_q sName = pParams[i].shortName;
             string_q lName = pParams[i].longName;
             string_q descr = trim(pParams[i].description);
-            bool isMode = pParams[i].mode;
-            if (!pParams[i].hidden && !sName.empty()) {
-                bool isReq = !pParams[i].optional;
-                sName = (isMode ? "" : sName);
-                lName = substitute(substitute((isMode ? substitute(lName, "-", "") : lName), "!", ""), "~", "");
-                os << oneDescription(sName, lName, descr, isMode, isReq);
+            bool isPositional = pParams[i].is_positional;
+            if (!pParams[i].is_hidden && !sName.empty()) {
+                bool isReq = !pParams[i].is_optional;
+                sName = (isPositional ? "" : sName);
+                lName = substitute(substitute((isPositional ? substitute(lName, "-", "") : lName), "!", ""), "~", "");
+                os << oneDescription(sName, lName, descr, isPositional, isReq);
             }
-            if (pParams[i].hidden)
+            if (pParams[i].is_hidden)
                 nHidden++;
         }
 
@@ -653,13 +665,13 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
                 string_q sName = pParams[i].shortName;
                 string_q lName = pParams[i].longName;
                 string_q descr = trim(pParams[i].description);
-                bool isMode = pParams[i].mode;
-                if (pParams[i].hidden && !sName.empty()) {
-                    bool isReq = !pParams[i].optional;
-                    lName = substitute(substitute((isMode ? substitute(lName, "-", "") : lName), "!", ""), "~", "");
+                bool isPositional = pParams[i].is_positional;
+                if (pParams[i].is_hidden && !sName.empty()) {
+                    bool isReq = !pParams[i].is_optional;
+                    lName = substitute(substitute((isPositional ? substitute(lName, "-", "") : lName), "!", ""), "~", "");
                     lName = substitute(lName, "@-", "");
-                    sName = (isMode ? "" : pParams[i].shortName);
-                    os << oneDescription(sName, lName, descr, isMode, isReq);
+                    sName = (isPositional ? "" : pParams[i].shortName);
+                    os << oneDescription(sName, lName, descr, isPositional, isReq);
                 }
             }
             os << "#### Hidden options (shown during testing only)\n\n";
@@ -758,7 +770,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     //------------------------------------------------------------------
     void editFile(const string_q& fileName) {
         CToml toml(configPath("quickBlocks.toml"));
-        string_q editor = toml.getConfigStr("settings", "editor", "<NOT_SET>");
+        string_q editor = toml.getConfigStr("dev", "editor", "<NOT_SET>");
         if (!isTestMode() && editor == "<NOT_SET>") {
             editor = getEnvStr("EDITOR");
             if (editor.empty()) {
@@ -919,8 +931,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         isReadme = false;
         isRaw = false;
         isVeryRaw = false;
-        api_mode = !getEnvStr("API_MODE").empty();
-        exportFmt = (api_mode ? API1 : TXT1);
+        exportFmt = (isApiMode() ? API1 : TXT1);
         needsOption = false;
         enableBits = OPT_DEFAULT;
         scanRange = make_pair(0,NOPOS);

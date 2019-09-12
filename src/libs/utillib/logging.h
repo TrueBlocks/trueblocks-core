@@ -131,16 +131,16 @@ namespace qblocks {
                 return;
             write_mutex.lock();
             switch( severity ) {
-                case sev_debug0:  log_stream << cWhite   << "<DEBUG0>" << cOff << " : "; break;
-                case sev_debug1:  log_stream << cWhite   << "<DEBUG1>" << cOff << " : |-"; break;
-                case sev_debug2:  log_stream << cGreen   << "<DEBUG2>" << cOff << " : |--"; break;
-                case sev_debug3:  log_stream << cYellow  << "<DEBUG3>" << cOff << " : |---"; break;
-                case sev_debug4:  log_stream << cRed     << "<DEBUG4>" << cOff << " : |----"; break;
-                case sev_debug5:  log_stream << cTeal    << "<DEBUG5>" << cOff << " : |-----"; break;
-                case sev_info:    log_stream << bGreen   << "<INFO>  " << cOff << " : "; break;
-                case sev_warning: log_stream << bYellow  << "<WARNG> " << cOff << " : "; break;
-                case sev_error:   log_stream << bRed     << "<ERROR> " << cOff << " : "; break;
-                case sev_fatal:   log_stream << bTeal    << "<FATAL> " << cOff << " : "; break;
+                case sev_debug0:  log_stream << ": " << cWhite  << "0" << cOff << "-"; break;
+                case sev_debug1:  log_stream << ": " << cWhite  << "1" << cOff << "--"; break;
+                case sev_debug2:  log_stream << ": " << cGreen  << "2" << cOff << "---"; break;
+                case sev_debug3:  log_stream << ": " << cYellow << "3" << cOff << "----"; break;
+                case sev_debug4:  log_stream << ": " << cRed    << "4" << cOff << "-----"; break;
+                case sev_debug5:  log_stream << ": " << cTeal   << "5" << cOff << "------"; break;
+                case sev_info:    log_stream << bGreen   << "<INFO>  " << cOff << ": "; break;
+                case sev_warning: log_stream << bYellow  << "<WARNG> " << cOff << ": "; break;
+                case sev_error:   log_stream << bRed     << "<ERROR> " << cOff << ": "; break;
+                case sev_fatal:   log_stream << bTeal    << "<FATAL> " << cOff << ": "; break;
             };
             print_impl( args... );
             write_mutex.unlock();
@@ -171,7 +171,7 @@ namespace qblocks {
 #define LOG_WARN   qblocks::eLogger->print<sev_warning>
 #define LOG_ERR    qblocks::eLogger->print<sev_error>
 #define LOG_FATAL  qblocks::eLogger->print<sev_fatal>
-#define SEP1(a)    LOG1(cWrite + string_q(10,'-') + (a) + string_q(10,'-') + cOff)
+#define SEP1(a)    LOG1(cWhite + string_q(10,'-') + (a) + string_q(10,'-') + cOff)
 #define SEP2(a)    LOG2(cGreen + string_q(10,'-') + (a) + string_q(10,'-') + cOff)
 #define SEP3(a)    LOG3(cYellow + string_q(10,'-') + (a) + string_q(10,'-') + cOff)
 #define SEP4(a)    LOG4(cRed + string_q(10,'-') + (a) + string_q(10,'-') + cOff)

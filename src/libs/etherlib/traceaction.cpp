@@ -32,6 +32,9 @@ void CTraceAction::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) co
     if (!m_showing)
         return;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["traceaction_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();
@@ -315,6 +318,9 @@ ostream& operator<<(ostream& os, const CTraceAction& item) {
     os << "\n";
     return os;
 }
+
+//---------------------------------------------------------------------------
+const char* STR_DISPLAY_TRACEACTION = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

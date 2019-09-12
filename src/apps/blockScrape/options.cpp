@@ -11,7 +11,7 @@ static const COption params[] = {
     COption("nBlocks", "n", "<blknum>", OPT_FLAG, "maximum number of blocks to process (defaults to 5000)"),
     COption("nBlockProcs", "b", "<uint>", OPT_HIDDEN | OPT_FLAG, "number of block channels for blaze"),
     COption("nAddrProcs", "a", "<uint>", OPT_HIDDEN | OPT_FLAG, "number of address channels for blaze"),
-    COption("", "", "", 0, "Decentralized blockchain scraper and block cache."),
+    COption("", "", "", OPT_DESCRIPTION, "Decentralized blockchain scraper and block cache."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -72,14 +72,12 @@ bool COptions::parseArguments(string_q& command) {
         ASSERT(prefunds.size() == 8893);  // This is a known value
         cerr << "\tBuilding origin block index" << endl;
         CStringArray appearances;
-        for (auto prefund : prefunds) {
-            CStringArray parts;
-            explode(parts, prefund, '\t');
+        for (auto prefund : prefundWeiMap) {
             // The prefund transactions have a zero for thier block numbers and an index
             // into thier location in the list of presale addresses. We need to do this so we
             // can distringuish them when they are exported.
             ostringstream os;
-            os << parts[0] << "\t" << padNum9(0) << "\t" << padNum5((uint32_t)appearances.size()) << endl;
+            os << prefund.first << "\t" << padNum9(0) << "\t" << padNum5((uint32_t)appearances.size()) << endl;
             appearances.push_back(os.str());
         }
         writeIndexAsBinary(zeroBin, appearances); // also writes the bloom file

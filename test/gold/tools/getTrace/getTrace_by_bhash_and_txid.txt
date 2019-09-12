@@ -1,5 +1,6 @@
-getTrace argc: 4 [1:0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73.92] [2:--api_mode] [3:--parity] 
-getTrace 0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73.92 --api_mode --parity 
+getTrace argc: 3 [1:0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73.92] [2:--parity] 
+getTrace 0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73.92 --parity 
+TIME ~ CLOCK - : 4-----API_MODE=true
 { "type": "CTrace", "data": [
   {
     "blockHash": "0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73",
@@ -7,7 +8,7 @@ getTrace 0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73.92 -
     "subtraces": "0x2",
     "traceAddress": null,
     "transactionHash": "0x66e49e99a984cd88e097782a001afaac8c6ff786c936651895475dd88ec360f6",
-    "transactionPosition": "0x5c",
+    "transactionIndex": "0x5c",
     "type": "call",
     "error": "",
     "action": {
@@ -34,7 +35,7 @@ getTrace 0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73.92 -
     "subtraces": "0x0",
     "traceAddress": "0",
     "transactionHash": "0x66e49e99a984cd88e097782a001afaac8c6ff786c936651895475dd88ec360f6",
-    "transactionPosition": "0x5c",
+    "transactionIndex": "0x5c",
     "type": "call",
     "error": "",
     "action": {
@@ -61,7 +62,7 @@ getTrace 0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73.92 -
     "subtraces": "0x0",
     "traceAddress": "1",
     "transactionHash": "0x66e49e99a984cd88e097782a001afaac8c6ff786c936651895475dd88ec360f6",
-    "transactionPosition": "0x5c",
+    "transactionIndex": "0x5c",
     "type": "call",
     "error": "",
     "action": {

@@ -32,6 +32,9 @@ void CAbi::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["abi_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();
@@ -275,6 +278,9 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
 }
 
 //---------------------------------------------------------------------------
+const char* STR_DISPLAY_ABI = "";
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
 bool visitABI(const qblocks::string_q& path, void *data) {
@@ -361,6 +367,10 @@ void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, bool silent, bo
     if (isZeroAddr(addr))
         return;
 
+    bool debug = (verbose || getGlobalConfig()->getConfigBool("dev", "debug_ethscan", false));
+    if (debug)
+        silent = false;
+
     string_q results;
     string_q fileName = getCachePath("abis/" + addr + ".json");
 
@@ -373,7 +383,7 @@ void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, bool silent, bo
     string_q dispName = substitute(fileName, getCachePath(""), "$BLOCK_CACHE/");
     if (fileExists(fileName) && !raw) {
 
-        if (verbose) {
+        if (debug) {
             cerr << "Reading ABI for address " << addr << " from " << (isTestMode() ? "--" : "cache") << "\r";
             cerr.flush();
         }
@@ -381,7 +391,7 @@ void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, bool silent, bo
 
     } else {
 
-        if (verbose) {
+        if (debug) {
             cerr << "Reading ABI for address " << addr << " from " << (isTestMode() ? "--" : "EtherScan") << "\r";
             cerr.flush();
         }
@@ -390,7 +400,7 @@ void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, bool silent, bo
 
         if (!contains(results, "NOTOK")) {
             if (!isTestMode()) {
-                if (verbose)
+                if (debug)
                     cerr << results << endl;
                 cerr << "Caching abi in " << dispName << endl;
             }

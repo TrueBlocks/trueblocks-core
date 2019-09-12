@@ -32,6 +32,9 @@ void CLeaf::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["leaf_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();
@@ -258,6 +261,9 @@ const string_q CLeaf::getStringAt(const string_q& fieldName, size_t i) const {
         return uint_2_Str(blocks[i]);
     return "";
 }
+
+//---------------------------------------------------------------------------
+const char* STR_DISPLAY_LEAF = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

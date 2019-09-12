@@ -99,6 +99,7 @@ startParity
 stringTest
 test
 testCheck.py
+apiCheck.py
 tomlTest
 viewBlock
 watchContracts

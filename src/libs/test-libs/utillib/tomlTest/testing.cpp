@@ -47,5 +47,19 @@ int main(int argc, const char *argv[]) {
         cout << contents << endl;
         ::remove(junkFile.c_str());
     }
+
+    if (options.filename == "empty.toml") {
+        const char* STR_THING =
+        "{\n"
+        "\t{ \"thing1\": \"Value 1 with spaces\" }\n"
+        "\t{ \"thing2\": \"Value 2 with spaces\" }\n"
+        "}";
+
+        string_q str = STR_THING;
+        cout << str << endl;
+        preserveSpaces(str);
+        cout << str << endl;
+    }
+
     return 0;
 }

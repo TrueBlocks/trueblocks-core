@@ -31,6 +31,9 @@ void CNameCache::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) cons
     if (!m_showing)
         return;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["namecache_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();
@@ -295,6 +298,9 @@ const string_q CNameCache::getStringAt(const string_q& fieldName, size_t i) cons
         return (addrs[i]);
     return "";
 }
+
+//---------------------------------------------------------------------------
+const char* STR_DISPLAY_NAMECACHE = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

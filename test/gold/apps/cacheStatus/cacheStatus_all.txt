@@ -11,15 +11,15 @@ cacheStatus all
   "is_scraping": false,
   "caches": [
     {
-      "type": "CAddressCache",
+      "items": [],
+      "type": "CIndexCache",
       "path": "IndexPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
       "valid_counts": false
-    }
-
-,{
+    },
+    {
       "addrs": [],
       "type": "CMonitorCache",
       "path": "CachePath",
@@ -27,45 +27,48 @@ cacheStatus all
       "nFolders": 0,
       "sizeInBytes": 0,
       "valid_counts": true
-    }
-
-,{
+    },
+    {
+      "type": "CNameCache",
+      "path": "CachePath",
+      "nFiles": 0,
+      "nFolders": 0,
+      "sizeInBytes": 0,
+      "valid_counts": true
+    },
+    {
       "type": "CAbiCache",
       "path": "CachePath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
       "valid_counts": false
-    }
-
-,{
+    },
+    {
       "type": "CChainCache",
       "path": "BlockPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
       "valid_counts": false
-    }
-
-,{
+    },
+    {
       "type": "CChainCache",
       "path": "TxPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
       "valid_counts": false
-    }
-
-,{
+    },
+    {
       "type": "CChainCache",
       "path": "TracePath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
       "valid_counts": false
-    }
-
-,{
+    },
+    {
       "addrs": [],
       "type": "CSlurpCache",
       "path": "SlurpPath",
@@ -73,9 +76,8 @@ cacheStatus all
       "nFolders": 0,
       "sizeInBytes": 0,
       "valid_counts": true
-    }
-
-,{
+    },
+    {
       "type": "CPriceCache",
       "path": "PricePath",
       "nFiles": 0,
@@ -83,7 +85,6 @@ cacheStatus all
       "sizeInBytes": 0,
       "valid_counts": false
     }
-
   ]
 }
 

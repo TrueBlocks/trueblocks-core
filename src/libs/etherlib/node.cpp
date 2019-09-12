@@ -1112,7 +1112,7 @@ extern void loadParseMap(void);
     }
 
     //-----------------------------------------------------------------------
-    string_q exportPreamble(format_t fmt, const string_q& format, const CRuntimeClass *pClass) {
+    string_q exportPreamble(format_t fmt, const string_q& format, const string_q& className) {
         ostringstream os;
         switch (fmt) {
             case NONE1:
@@ -1131,7 +1131,7 @@ extern void loadParseMap(void);
                 os << "[";
                 break;
             case API1:
-                os << "{ \"type\": \"" << (pClass ? pClass->m_ClassName : "unknown") << "\", \"data\": [";
+                os << "{ \"type\": \"" << className << "\", \"data\": [";
                 break;
             default:
                 ASSERT(0); // shouldn't happen
@@ -1221,9 +1221,9 @@ extern void loadParseMap(void);
             return false; // be careful, it's backwards
 
         static string_q exclusions;
-        if (getGlobalConfig("blockScrape")->getConfigBool("exclusions", "enabled", false)) {
+        if (getGlobalConfig("acctExport")->getConfigBool("exclusions", "enabled", false)) {
             if (exclusions.empty())
-                exclusions = getGlobalConfig("blockScrape")->getConfigStr("exclusions", "list", "");
+                exclusions = getGlobalConfig("acctExport")->getConfigStr("exclusions", "list", "");
             if (contains(exclusions, trans->to))
                 return true;
             if (contains(exclusions, trans->from))
@@ -1290,10 +1290,49 @@ extern void loadParseMap(void);
     }
 
     //-----------------------------------------------------------------------
+    bool loadTimestampArray(uint32_t **theArray, size_t& cnt) {
+
+        // If user does not tell us where to put the data, we can't process it...
+        if (theArray == NULL)
+            return false;
+
+        // If the array aleady contains data, clear it out...
+        if (*theArray != NULL) {
+            delete [] *theArray;
+            *theArray = NULL;
+            cnt = 0;
+        }
+
+        // Let's try to get the data...
+        string_q fn = configPath("ts.bin");
+        cnt = ((fileSize(fn) / sizeof(uint32_t)) / 2);
+        *theArray = new uint32_t[cnt * 2];  // blknum, timestamp both uint32_t
+
+        // If we didn't get the space to store our data, fail...
+        if (*theArray == NULL) {
+            cnt = 0;
+            return false;
+        }
+
+        CArchive in(READING_ARCHIVE);
+        if (!in.Lock(fn, modeReadOnly, LOCK_NOWAIT)) {
+            cnt = 0;
+            delete [] *theArray;
+            *theArray = NULL;
+            return false;
+        }
+
+        in.Read(*theArray, sizeof(uint32_t) * 2, cnt);
+        in.Release();
+
+        return true;
+    }
+
+    //-----------------------------------------------------------------------
     const string_q defHide =
     "CTransaction: price, nonce, input"
     "|" "CLogEntry: data, topics"
-    "|" "CTrace: blockHash, blockNumber, transactionHash, transactionPosition, traceAddress, subtraces"
+    "|" "CTrace: blockHash, blockNumber, transactionHash, transactionIndex, traceAddress, subtraces"
     "|" "CTraceAction: init"
     "|" "CTraceResult: code"
     "|" "CFunction: constant, payable, signature, encoding, type, articulate_str"

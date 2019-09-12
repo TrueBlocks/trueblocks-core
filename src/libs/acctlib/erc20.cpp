@@ -31,6 +31,9 @@ void CTokenState_erc20::Format(ostream& ctx, const string_q& fmtIn, void *dataPt
     if (!m_showing)
         return;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["tokenstate_erc20_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();
@@ -306,6 +309,9 @@ const string_q CTokenState_erc20::getStringAt(const string_q& fieldName, size_t 
         return (holders[i]);
     return "";
 }
+
+//---------------------------------------------------------------------------
+const char* STR_DISPLAY_TOKENSTATE_ERC20 = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

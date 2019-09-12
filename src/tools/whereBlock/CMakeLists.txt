@@ -27,20 +27,31 @@ set(GOLD_PATH "${GOLD_PATH}/${PROJ_NAME}/${TOOL_NAME}")
 # Additional target to make the README.md
 build_readme(${CMAKE_CURRENT_SOURCE_DIR} ${TOOL_NAME})
 
-# To run only specific tests we define a test configuration named "test_all"
+# Target to run only specific (long-running) test cases
 add_custom_target(test-all COMMAND ${CMAKE_CTEST_COMMAND} -C test_all)
+#add_custom_target(test-state COMMAND ${CMAKE_CTEST_COMMAND} -C test_state)
 
-# Function to run an special or slow test case
-function(run_special_test testName)
-    run_the_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
-endfunction(run_special_test)
-
-# Function to run an individual test case
+# Functions to run test cases
 function(run_test testName)
      run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
 endfunction(run_test)
+function(run_special_test testName)
+    run_the_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(run_special_test)
+function(run_state_test testName)
+    run_the_state_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(run_state_test)
+function(api_test testName)
+    run_the_api_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(api_test)
+function(api_special_test testName)
+    run_the_api_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(api_special_test)
+function(api_state_test testName)
+    run_the_api_state_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(api_state_test)
 
-# weird, but we have to make sure the block is in the cache first
+# Weird, but we have to make sure the block is in the cache first
 run_the_test(${TEST_PATH} ${GOLD_PATH} "whereBlock_preload" ${EXECUTABLE_OUTPUT_PATH}/getBlock " 1001001" " -o")
 run_the_test(${TEST_PATH} ${GOLD_PATH} "whereBlock_preload2" ${EXECUTABLE_OUTPUT_PATH}/getBlock " 1001010" " -o")
 
@@ -60,9 +71,9 @@ run_test("whereBlock_fmt_txt"           "1001001" " --fmt" " txt")
 run_test("whereBlock_fmt_csv"           "1001001" " --fmt" " csv")
 run_test("whereBlock_fmt_json"          "1001001" " --fmt" " json")
 run_test("whereBlock_fmt_api"           "1001001" " --fmt" " api")
-run_test("whereBlock_fmt_defaut"        "1001001" " --api_mode")
-run_test("whereBlock_fmt_api_mode"      "1001001" " --api_mode")
-run_test("whereBlock_fmt_api_mode_fmt"  "1001001" " --api_mode" " --fmt" " txt")
+api_test("whereBlock_fmt_defaut"        "1001001")
+api_test("whereBlock_fmt_api_mode"      "1001001")
+api_test("whereBlock_fmt_api_mode_fmt"  "1001001" " --fmt" " txt")
 run_test("whereBlock_fmt_junk"          "1001001" " --fmt" " junk")
 
 # Installation steps

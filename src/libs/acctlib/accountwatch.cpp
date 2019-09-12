@@ -31,6 +31,9 @@ void CAccountWatch::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) c
     if (!m_showing)
         return;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["accountwatch_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();
@@ -80,19 +83,19 @@ bool CAccountWatch::setValueByName(const string_q& fieldNameIn, const string_q& 
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "abi_spec" ) { /* abi_spec = fieldValue; */ return false; }
+            if ( fieldName % "abi_spec" ) { return abi_spec.parseJson3(fieldValue); }
             break;
         case 'e':
             if ( fieldName % "enabled" ) { enabled = str_2_Bool(fieldValue); return true; }
             break;
         case 'f':
-//            if ( fieldName % "fm_mode" ) { fm_mode = fieldValue; return true; }
+            if ( fieldName % "fm_mode" ) { fm_mode = str_2_Enum(freshen_e,fieldValue); return true; }
             break;
         case 'n':
             if ( fieldName % "nodeBal" ) { nodeBal = str_2_Wei(fieldValue); return true; }
             break;
         case 's':
-            if ( fieldName % "statement" ) { /* statement = fieldValue; */ return false; }
+            if ( fieldName % "statement" ) { return statement.parseJson3(fieldValue); }
             if ( fieldName % "stateHistory" ) {
                 CEthState item;
                 string_q str = fieldValue;
@@ -197,7 +200,7 @@ void CAccountWatch::registerClass(void) {
     ADD_FIELD(CAccountWatch, "stateHistory", T_OBJECT|TS_ARRAY, ++fieldNum);
     ADD_FIELD(CAccountWatch, "nodeBal", T_WEI, ++fieldNum);
     ADD_FIELD(CAccountWatch, "enabled", T_BOOL, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "fm_mode", T_TEXT, ++fieldNum);
+    ADD_FIELD(CAccountWatch, "fm_mode", T_NUMBER, ++fieldNum);
     HIDE_FIELD(CAccountWatch, "fm_mode");
 
     // Hide our internal fields, user can turn them on if they like
@@ -261,7 +264,7 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "enabled" ) return bool_2_Str(enabled);
             break;
         case 'f':
-//            if ( fieldName % "fm_mode" ) return fm_mode;
+            if ( fieldName % "fm_mode" ) return uint_2_Str(fm_mode);
             break;
         case 'n':
             if ( fieldName % "nodeBal" ) return wei_2_Str(nodeBal);
@@ -329,80 +332,11 @@ const CBaseNode *CAccountWatch::getObjectAt(const string_q& fieldName, size_t in
 }
 
 //---------------------------------------------------------------------------
+const char* STR_DISPLAY_ACCOUNTWATCH = "";
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-biguint_t getNodeBal(CEthStateArray& record, const address_t& addr, blknum_t blockNum) {
-
-    if (!startsWith(addr, "0x"))
-        return 0;
-
-    // This will return 'true' if the node has historical balances - we want to use those
-    // balances if they are there
-    if (nodeHasBalances())
-        return getBalanceAt(addr, blockNum);
-
-    // If the record is empty, we can try to load the record from a file if it exists...
-    string_q binaryFilename = "./balances/" + addr + ".bals.bin";
-    if (record.size() == 0 && fileExists(binaryFilename) && fileSize(binaryFilename) > 0) {
-
-        CArchive balCache(READING_ARCHIVE);
-        if (balCache.Lock(binaryFilename, modeReadOnly, LOCK_NOWAIT)) {
-            blknum_t last = NOPOS;
-            address_t lastA;
-            do {
-                blknum_t bn;
-                address_t addr1;
-                biguint_t bal;
-                balCache >> bn >> addr1 >> bal;
-                if (addr == addr1) {
-                    if (last != bn || bal != 0) {
-                        CEthState newBal;
-                        newBal.blockNumber = bn;
-                        newBal.balance = bal;
-                        record.push_back(newBal);
-                        last = bn;
-                    }
-                    cerr << "Loaded block  #" << bn << " at " << addr1 << "\r";
-                } else {
-                    cerr << "Loaded block  #" << bn << " at " << addr1 << "\r";
-                }
-                cerr.flush();
-            } while (!balCache.Eof());
-        }
-        cerr << "\n";
-        cerr.flush();
-    }
-
-    // First, we try to find it using a binary search. Many times this will hit...
-    CEthState search;
-    search.blockNumber = blockNum;
-    const CEthStateArray::iterator it = find(record.begin(), record.end(), search);
-    if (it != record.end())
-        return it->balance;
-
-    // ...if it doesn't hit, we need to find the most recent balance
-    biguint_t ret = 0;
-    for (size_t i = 0 ; i < record.size() ; i++) {
-        // if we hit the block number exactly return it
-        if (record[i].blockNumber == blockNum)
-            return record[i].balance;
-
-        // ...If we've overshot, report the previous balance
-        if (record[i].blockNumber > blockNum)
-            return ret;
-
-        ret = record[i].balance;
-    }
-
-    // We've run off the end of the array, return the most recent balance (if any)
-    if (ret > 0)
-        return ret;
-
-    // We finally fall to the node in case we're near the head
-    return getBalanceAt(addr, blockNum);
-}
-
-//-----------------------------------------------------------------------
 // This assumes there are valid watches. Caller is expected to check
 void loadWatchList(const CToml& toml, CAccountWatchArray& monitors, const string_q& key) {
 

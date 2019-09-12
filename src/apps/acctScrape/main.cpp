@@ -48,7 +48,8 @@ void doMoveFile(const string_q& from, const string_q& to) {
         cerr << "Would have moved " << substitute(from, getCachePath(""), "$BLOCK_CACHE/") << " to ";
         cerr << substitute(to, getCachePath(""), "$BLOCK_CACHE/") << endl;
     } else {
-        moveFile(from, to);
+        if (fileExists(from))
+            moveFile(from, to);
     }
 }
 
@@ -63,6 +64,7 @@ void COptions::moveToProduction(void) {
             doMoveFile(getMonitorPath(acct.address, FM_STAGING), getMonitorPath(acct.address));
             doMoveFile(getMonitorLast(acct.address, FM_STAGING), getMonitorLast(acct.address));
             doMoveFile(getMonitorExpt(acct.address, FM_STAGING), getMonitorExpt(acct.address));
+            doMoveFile(getMonitorBals(acct.address, FM_STAGING), getMonitorBals(acct.address));
             lockSection(false);
         }
     }

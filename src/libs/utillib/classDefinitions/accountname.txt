@@ -1,4 +1,5 @@
 [settings]
-class    = CAccountName
-fields   = string group|string name|string address|string symbol|string description|string source|string logo|string path (nowrite)|string color (nowrite)|bool is_contract|bool is_private|bool is_shared|blknum firstAppearance (nowrite)|blknum latestAppearance (nowrite)|blknum lastExport (nowrite)|uint64 nRecords (nowrite)|uint64 sizeInBytes (nowrite)
-includes = basetypes.h|basenode.h|sfarchive.h
+class        = CAccountName
+fields       = string group|string name|string address|string symbol|string description|string source|string logo|string path (nowrite)|string color (nowrite)|bool is_contract|bool is_private|bool is_shared|blknum firstAppearance (nowrite)|blknum latestAppearance (nowrite)|blknum lastExport (nowrite)|uint64 nRecords (nowrite)|uint64 sizeInBytes (nowrite)
+includes     = basetypes.h|basenode.h|sfarchive.h
+display_str  = group, address, name, symbol, source, description, logo, is_contract, is_private, is_shared

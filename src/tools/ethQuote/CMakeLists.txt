@@ -27,25 +27,36 @@ set(GOLD_PATH "${GOLD_PATH}/${PROJ_NAME}/${TOOL_NAME}")
 # Additional target to make the README.md
 build_readme(${CMAKE_CURRENT_SOURCE_DIR} ${TOOL_NAME})
 
-# To run only specific tests we define a test configuration named "test_all"
+# Target to run only specific (long-running) test cases
 add_custom_target(test-all COMMAND ${CMAKE_CTEST_COMMAND} -C test_all)
+#add_custom_target(test-state COMMAND ${CMAKE_CTEST_COMMAND} -C test_state)
 
-# Function to run an special or slow test case
-function(run_special_test testName)
-    run_the_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
-endfunction(run_special_test)
-
-# Function to run an individual test case
+# Functions to run test cases
 function(run_test testName)
      run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
 endfunction(run_test)
+function(run_special_test testName)
+    run_the_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(run_special_test)
+function(run_state_test testName)
+    run_the_state_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(run_state_test)
+function(api_test testName)
+    run_the_api_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(api_test)
+function(api_special_test testName)
+    run_the_api_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(api_special_test)
+function(api_state_test testName)
+    run_the_api_state_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
+endfunction(api_state_test)
 
 # Enter one line for each individual test
 run_test("ethQuote_README"          "-th")
 run_test("ethQuote_no_params"            )
-run_test("ethQuote_verbose_00"      "-v")
+run_test("ethQuote_verbose_00"      "-v" " --fmt" " json")
 run_test("ethQuote_at_00"           "-a" " 1438272138")
-run_test("ethQuote_period_01"       "--period" " 240" " -v:2")
+run_test("ethQuote_period_01"       "--period" " 240" " -v:2" " --fmt" " json")
 run_test("ethQuote_when_01"         "--when" " 19")
 
 # Slower tests
@@ -56,11 +67,20 @@ run_special_test("ethQuote_when_invalid"    "-w")
 run_special_test("ethQuote_period_00"       "-p" " 60")
 run_special_test("ethQuote_period_02"       "--period" " 12")
 run_special_test("ethQuote_when_00"         "-w" " 14")
-run_special_test("ethQuote_verbose_01"      "-v:1")
+run_special_test("ethQuote_verbose_01"      "-v:1" " --fmt" " api")
 run_special_test("ethQuote_from_file"       "--file:cmd_file")
 #run_special_test("ethQuote_bitcoin_eth"     "--pair:BTC_ETH")  # customized
 #run_special_test("ethQuote_usd_bitcoin"     "--pair:USDT_BTC")
 #run_special_test("ethQuote_usd_litecoin"    "--pair:USDT_LTC")  # customized
+
+run_test("ethQuote_fmt_txt"          "-d" " --fmt" " txt")
+run_test("ethQuote_fmt_csv"          "-d" " --fmt" " csv")
+run_test("ethQuote_fmt_json"         "-d" " --fmt" " json")
+run_test("ethQuote_fmt_api"          "-d" " --fmt" " api")
+api_test("ethQuote_fmt_api_mode"     "-d")
+api_test("ethQuote_fmt_api_mode_fmt" "-d" " --fmt" " txt")
+run_test("ethQuote_fmt_defaut"       "-d")
+run_test("ethQuote_fmt_junk"         "-d" " --fmt" " junk")
 
 # Installation steps, this tool is renamed at installation
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

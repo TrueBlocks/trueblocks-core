@@ -19,12 +19,11 @@ static const COption params[] = {
     COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
     COption("logs", "l", "", OPT_SWITCH, "display the receipt's logs"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),
-    COption("", "", "", 0, "Retrieve a transaction's receipt from the local cache or a running node."),
+    COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction's receipt from the local cache or a running node."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-extern const char* STR_DISPLAY;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
@@ -85,7 +84,7 @@ bool COptions::parseArguments(string_q& command) {
         case NONE1:
         case TXT1:
         case CSV1:
-            format = getGlobalConfig()->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
+            format = getGlobalConfig("getReceipt")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_RECEIPT : format);
             if (option1)
                 format += "\t[{LOGSCNT}]";
             manageFields("CReceipt:" + cleanFmt(format, exportFmt));
@@ -142,12 +141,3 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
     }
     return str;
 }
-
-//--------------------------------------------------------------------------------
-const char* STR_DISPLAY =
-"[{BLOCKNUMBER}]\t"
-"[{TRANSACTIONINDEX}]\t"
-"[{HASH}]\t"
-"[{GASUSED}]\t"
-"[{STATUS}]\t"
-"[{ISERROR}]";

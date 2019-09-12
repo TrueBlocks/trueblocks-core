@@ -27,13 +27,13 @@ Using ethName to find Singular's address, list tokens held by other token accoun
 #### Usage
 
 `Usage:`    getAccounts [-e|-m|-o|-c|-p|-n|-a|-v|-h] &lt;term&gt; [term...]  
-`Purpose:`  Query addresses and/or names well known accounts.
+`Purpose:`  Query addresses and/or names of well known accounts.
         
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | terms | a space separated list of one or more search terms (required) |
+|  | term_list | a space separated list of one or more search terms (required) |
 | -e | --expand | expand search to include all fields (default searches name, address, and symbol only) |
 | -m | --matchCase | do case-sensitive search |
 | -o | --owned | Include personal accounts in the search |
@@ -51,7 +51,7 @@ Using ethName to find Singular's address, list tokens held by other token accoun
 - When there are two search terms, both must match.
 - The `--matchCase` option requires case sensitive matching. It works with all other options.
 - To customize the list of names add a `custom` section to the config file (see documentation).
-- Name file: `~/.quickBlocks/names/names.txt` (195222)
+- Name file: `~/.quickBlocks/names/names.txt` (193343)
 
 #### Other Options
 
@@ -67,7 +67,6 @@ All **QBlocks** command-line tools support the following commands (although in s
     --raw       |   report JSON data from the node with minimal processing
     --veryRaw   |   report JSON data from node with zero processing
     --fmt       |   export format (where appropriate). One of [none|txt|csv|json|api]
-    --api_mode  |   simulate api_mode for testing
     --to_file   |   write the results to a temporary file and return the filename
     --output:fn |   write the results to file 'fn' and return the filename
     --file:fn   |   specify multiple sets of command line options in a file.

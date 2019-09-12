@@ -91,7 +91,6 @@ namespace qblocks {
         uint64_t  getConfigInt   (const string_q& group, const string_q& key, uint64_t def) const;
         biguint_t getConfigBigInt(const string_q& group, const string_q& key, biguint_t def) const;
         bool      getConfigBool  (const string_q& group, const string_q& key, bool def) const;
-        string_q  getDisplayStr  (bool terse, const string_q& def, const string_q& color = cTeal) const;
         uint64_t  getVersion     (void) const;
 
         void setConfigArray(const string_q& group, const string_q& key, const string_q& value);

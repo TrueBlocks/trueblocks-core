@@ -20,48 +20,58 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
+    bool once = true;
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
 
         string_q message;
-
         CPriceQuoteArray quotes;
-        if (loadPriceData(options.source, quotes, options.freshen, message) && quotes.size()) {
-
-            string_q def = (verbose ? "" : "[{TIMESTAMP}]\t[{DATE}]\t[{CLOSE}]\n");
-            string_q fmtStr = getGlobalConfig("ethQuote")->getDisplayStr(!verbose, def, "");
-            bool isJson = ((startsWith(fmtStr, "{") && endsWith(fmtStr, "}")) || fmtStr.empty());
-            if (options.at) {
-                cout << quotes[indexFromTimeStamp(quotes, options.at)].Format(fmtStr);
-
-            } else {
-                if (isJson)
-                    cout << "[\n";
-                size_t step = (options.freq / 5);
-                bool done = false;
-                for (size_t i = 0 ; i < quotes.size() && !done ; i = i + step) {
-                    timestamp_t ts = str_2_Ts(quotes[i].Format("[{TIMESTAMP}]"));
-                    if (i > 0) {
-                        if (isJson)
-                            cout << ",";
-                        cout << "\n";
-                    }
-                    cout << quotes[i].Format(fmtStr);
-                    if (isTestMode() && ts_2_Date(ts) >= time_q(2017, 8, 15, 0, 0, 0))
-                        done = true;
-                }
-                if (isJson)
-                    cout << "\n]";
-                cout << "\n";
-            }
-
-        } else {
+        if (!loadPriceData(options.source, quotes, options.freshen, message) && quotes.size())
             return options.usage(message);
 
+        if (once)
+            cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], GETRUNTIME_CLASS(CPriceQuote));
+
+        size_t step = (options.freq / 5);
+        for (size_t i = 0 ; i < quotes.size() ; i = i + step) {
+            if (!visitPrice(quotes[i], &options))
+                break;
         }
+        once = false;
     }
+    cout << exportPostamble(options.exportFmt, expContext().fmtMap["meta"]);
 
     etherlib_cleanup();
     return 0;
+}
+
+//--------------------------------------------------------------
+bool visitPrice(CPriceQuote& quote, void *data) {
+
+    COptions *opt = reinterpret_cast<COptions *>(data);
+    bool isText = (opt->exportFmt & (TXT1|CSV1));
+
+    //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
+
+    if (true) {
+        if (isText) {
+            cout << trim(quote.Format(expContext().fmtMap["format"]), '\t') << endl;
+
+        } else {
+            if (!opt->first)
+                cout << ",";
+            cout << "  ";
+            incIndent();
+            quote.doExport(cout);
+            decIndent();
+            opt->first = false;
+        }
+    }
+
+    if (isTestMode() && ts_2_Date(str_2_Ts(quote.Format("[{TIMESTAMP}]"))) >= time_q(2017, 8, 15, 0, 0, 0))
+        return false;
+
+    return !shouldQuit();
 }

@@ -4,25 +4,16 @@ The `cacheMan` program allows one to  manage and explore [monitor cache files](.
 
 #### Usage
 
-`Usage:`    cacheMan [-c|-d|-s|-f|-l|-i|-r|-t|-k|-m|-x|-v|-h] filenames  
-`Purpose:`  Show the contents of an account cache and/or fix it by removing duplicate records.
-        
+`Usage:`    cacheStatus [-d|-l|-v|-h] mode_list  
+`Purpose:`  Report on status of one or more TrueBlocks caches.
+
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | filenames | path(s) of files to check, merge, fix or display (default=display) (required) |
-| -c | --check | check for duplicates and other problems in the cache |
-| -d | --data | in 'list' mode, render results as data (i.e export mode) |
-| -s | --sort | sort the list of transactions and re-write (precludes other modes, other than --dedup) |
-| -f | --fix | remove duplicates from the cache (if any) |
-| -l | --list | list the contents of the cache (the default if no other option) |
-| -i | --import | import transactions if import.txt file exists in current folder |
-| -r | --remove | remove transactions if remove.txt file exists in current folder |
-| -t | --truncate <num> | truncate the cache at block :n (keeps block 'n' and before, implies --fix) |
-| -k | --maxBlock <num> | for testing, max block to visit |
-| -m | --merge | merge two or more caches into a single cache |
-| -x | --fmt <fmt> | export format (one of [json&#124;txt&#124;csv]) |
+|  | mode_list | one or more of [index&#124;monitors&#124;names&#124;abis&#124;blocks&#124;txs&#124;traces&#124;slurps&#124;prices&#124;some*&#124;all] |
+| -d | --details | include details about items found in monitors, slurps, abis, or price caches |
+| -l | --list | display results in Linux ls -l format (assumes --detail) |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
@@ -40,7 +31,6 @@ All **QBlocks** command-line tools support the following commands (although in s
     --raw       |   report JSON data from the node with minimal processing
     --veryRaw   |   report JSON data from node with zero processing
     --fmt       |   export format (where appropriate). One of [none|txt|csv|json|api]
-    --api_mode  |   simulate api_mode for testing
     --to_file   |   write the results to a temporary file and return the filename
     --output:fn |   write the results to file 'fn' and return the filename
     --file:fn   |   specify multiple sets of command line options in a file.

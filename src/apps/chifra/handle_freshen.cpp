@@ -7,7 +7,7 @@
 #include "question.h"
 
 //------------------------------------------------------------------------------------------------
-bool freshen_internal(freshen_t mode, const CAddressArray& addrs, const string_q& tool_flags, const string_q& freshen_flags) {
+bool freshen_internal(freshen_e mode, const CAddressArray& addrs, const string_q& tool_flags, const string_q& freshen_flags) {
 
     ENTER4("freshen_internal");
     nodeNotRequired();

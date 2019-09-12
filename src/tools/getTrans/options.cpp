@@ -20,12 +20,11 @@ static const COption params[] = {
     COption("trace", "t", "", OPT_SWITCH, "display the transaction's trace"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),
     COption("force", "", "", OPT_HIDDEN | OPT_SWITCH, "force the results into the tx cache"),
-    COption("", "", "", 0, "Retrieve an Ethereum transaction from the local cache or a running node."),
+    COption("", "", "", OPT_DESCRIPTION, "Retrieve an Ethereum transaction from the local cache or a running node."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-extern const char* STR_DISPLAY;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
@@ -79,7 +78,7 @@ bool COptions::parseArguments(string_q& command) {
         manageFields("CTransaction:price", false);  // hide
         manageFields("CFunction:outputs", true);  // show
         manageFields("CTransaction:input", true);  // show
-        manageFields("CLogEntry:topics", true);  // show
+        manageFields("CLogEntry:data,topics", true);  // show
         abi_spec.loadAbiKnown("all");
     }
 
@@ -89,7 +88,7 @@ bool COptions::parseArguments(string_q& command) {
         case NONE1:
         case TXT1:
         case CSV1:
-            format = getGlobalConfig()->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
+            format = getGlobalConfig("getTrans")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_TRANSACTION : format);
             if (useTrace)
                 format += "\t[{TRACESCNT}]";
             manageFields("CTransaction:" + cleanFmt(format, exportFmt));
@@ -147,12 +146,3 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
     }
     return str;
 }
-
-//--------------------------------------------------------------------------------
-const char* STR_DISPLAY =
-"[{DATE}]\t"
-"[{TIMESTAMP}]\t"
-"[{BLOCKNUMBER}]\t"
-"[{TRANSACTIONINDEX}]\t"
-"[{HASH}]\t"
-"[{COMPRESSEDTX}]";

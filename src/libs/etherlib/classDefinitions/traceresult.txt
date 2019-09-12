@@ -4,3 +4,4 @@ fields    = address address|string code|gas gasUsed|string output
 includes  = abilib.h
 cIncs     = trace.h
 serialize = true
+equals    = ((address == item.address) && (code == item.code) && (gasUsed == item.gasUsed) && (output == item.output))

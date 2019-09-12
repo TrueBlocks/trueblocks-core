@@ -18,12 +18,11 @@ static const COption params[] = {
     COption("trans_list", "", "list<trans>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
     COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),
-    COption("", "", "", 0, "Retrieve a transaction's logs from the local cache or a running node."),
+    COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction's logs from the local cache or a running node."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-extern const char* STR_DISPLAY;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
@@ -72,9 +71,15 @@ bool COptions::parseArguments(string_q& command) {
         abi_spec.loadAbiKnown("all");
     }
 
-    if (api_mode) {
+    // Not sure why this is here to be honest, perhaps only to make test cases pass. The test cases could be fixed...
+    if (isApiMode() || exportFmt == API1) {
         manageFields("CLogEntry:all", false);
         manageFields("CLogEntry:address,logIndex,type,compressedLog,topics,data", true);
+    }
+    // Not sure why this is here to be honest, perhaps only to make test cases pass. The test cases could be fixed...
+    if (exportFmt == JSON1) {
+        manageFields(defHide, false);
+        manageFields(defShow+"|CLogEntry:data,topics", true);
     }
 
     // Display formatting
@@ -83,7 +88,7 @@ bool COptions::parseArguments(string_q& command) {
         case NONE1:
         case TXT1:
         case CSV1:
-            format = getGlobalConfig()->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
+            format = getGlobalConfig("getLogs")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_LOGENTRY : format);
             manageFields("CLogEntry:" + cleanFmt(format, exportFmt));
             break;
         case API1:
@@ -138,17 +143,3 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
     }
     return str;
 }
-
-//--------------------------------------------------------------------------------
-const char* STR_DISPLAY =
-"[{BLOCKNUMBER}]\t"
-"[{TRANSACTIONINDEX}]\t"
-"[{LOGINDEX}]\t"
-"[{ADDRESS}]\t"
-"[{TOPIC0}]\t"
-"[{TOPIC1}]\t"
-"[{TOPIC2}]\t"
-"[{TOPIC3}]\t"
-"[{DATA}]\t"
-"[{TYPE}]\t"
-"[{COMPRESSEDLOG}]";

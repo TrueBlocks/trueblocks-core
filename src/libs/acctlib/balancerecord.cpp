@@ -31,6 +31,9 @@ void CBalanceRecord::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) 
     if (!m_showing)
         return;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["balancerecord_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();
@@ -68,14 +71,17 @@ bool CBalanceRecord::setValueByName(const string_q& fieldNameIn, const string_q&
             if ( fieldName % "address" ) { address = str_2_Addr(fieldValue); return true; }
             break;
         case 'b':
-            if ( fieldName % "blockNum" ) { blockNum = str_2_Uint(fieldValue); return true; }
+            if ( fieldName % "blockNumber" ) { blockNumber = str_2_Uint(fieldValue); return true; }
             if ( fieldName % "balance" ) { balance = str_2_Wei(fieldValue); return true; }
+            break;
+        case 'd':
+            if ( fieldName % "diff" ) { diff = str_2_Wei(fieldValue); return true; }
             break;
         case 'p':
             if ( fieldName % "priorBalance" ) { priorBalance = str_2_Wei(fieldValue); return true; }
             break;
         case 't':
-            if ( fieldName % "tx_id" ) { tx_id = str_2_Uint(fieldValue); return true; }
+            if ( fieldName % "transactionIndex" ) { transactionIndex = str_2_Uint(fieldValue); return true; }
             break;
         default:
             break;
@@ -103,11 +109,12 @@ bool CBalanceRecord::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
+    archive >> blockNumber;
+    archive >> transactionIndex;
 //    archive >> address;
-    archive >> blockNum;
-    archive >> tx_id;
     archive >> priorBalance;
     archive >> balance;
+    archive >> diff;
     finishParse();
     return true;
 }
@@ -120,11 +127,12 @@ bool CBalanceRecord::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
+    archive << blockNumber;
+    archive << transactionIndex;
 //    archive << address;
-    archive << blockNum;
-    archive << tx_id;
     archive << priorBalance;
     archive << balance;
+    archive << diff;
 
     return true;
 }
@@ -160,12 +168,13 @@ void CBalanceRecord::registerClass(void) {
     ADD_FIELD(CBalanceRecord, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CBalanceRecord, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CBalanceRecord, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CBalanceRecord, "blockNumber", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CBalanceRecord, "transactionIndex", T_NUMBER, ++fieldNum);
     ADD_FIELD(CBalanceRecord, "address", T_ADDRESS, ++fieldNum);
     HIDE_FIELD(CBalanceRecord, "address");
-    ADD_FIELD(CBalanceRecord, "blockNum", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CBalanceRecord, "tx_id", T_NUMBER, ++fieldNum);
     ADD_FIELD(CBalanceRecord, "priorBalance", T_WEI, ++fieldNum);
     ADD_FIELD(CBalanceRecord, "balance", T_WEI, ++fieldNum);
+    ADD_FIELD(CBalanceRecord, "diff", T_NUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CBalanceRecord, "schema");
@@ -176,6 +185,8 @@ void CBalanceRecord::registerClass(void) {
     builtIns.push_back(_biCBalanceRecord);
 
     // EXISTING_CODE
+    ADD_FIELD(CBalanceRecord, "etherDiff", T_ETHER, ++fieldNum);
+    HIDE_FIELD(CBalanceRecord, "etherDiff");
     ADD_FIELD(CBalanceRecord, "etherPrior", T_ETHER, ++fieldNum);
     HIDE_FIELD(CBalanceRecord, "etherPrior");
     ADD_FIELD(CBalanceRecord, "ether", T_ETHER, ++fieldNum);
@@ -184,7 +195,8 @@ void CBalanceRecord::registerClass(void) {
     HIDE_FIELD(CBalanceRecord, "dollarsPrior");
     ADD_FIELD(CBalanceRecord, "dollars", T_ETHER, ++fieldNum);
     HIDE_FIELD(CBalanceRecord, "dollars");
-    if (!getEnvStr("API_MODE").empty()) {
+    if (isApiMode()) {
+        UNHIDE_FIELD(CBalanceRecord, "etherDiff");
         UNHIDE_FIELD(CBalanceRecord, "etherPrior");
         UNHIDE_FIELD(CBalanceRecord, "ether");
         UNHIDE_FIELD(CBalanceRecord, "dollarsPrior");
@@ -204,12 +216,30 @@ string_q nextBalancerecordChunk_custom(const string_q& fieldIn, const void *data
                     return wei_2_Ether(bnu_2_Str(bal->balance));
                 if ( fieldIn % "etherPrior" )
                     return wei_2_Ether(bnu_2_Str(bal->priorBalance));
+                if ( fieldIn % "etherDiff" ) {
+                    string_q res = bal->getValueByName("diff");
+                    bool neg = contains(res, "-");
+                    res = substitute(res, "-", "");
+                    res = wei_2_Ether(res);
+                    return ((neg ? "-" : "+") + res);
+                }
                 break;
             case 'd':
                 if ( fieldIn % "dollars" )
-                    return getDispBal(bal->blockNum, bal->balance);
+                    return getDispBal(bal->blockNumber, bal->balance);
                 if ( fieldIn % "dollarsPrior" )
-                    return getDispBal(bal->blockNum, bal->priorBalance);
+                    return getDispBal(bal->blockNumber, bal->priorBalance);
+                if ( fieldIn % "dollarsDiff" ) {
+                    wei_t b = bal->balance;
+                    wei_t p = bal->priorBalance;
+                    if (b >= p)
+                        return "+" + getDispBal(bal->blockNumber, (b - p));
+                    return "-" + getDispBal(bal->blockNumber, (p - b));
+                }
+                if ( fieldIn % "diff" ) {
+                    bigint_t diff = bigint_t(bal->balance) - bigint_t(bal->priorBalance);
+                    return bni_2_Str(diff);
+                }
                 break;
             // EXISTING_CODE
             case 'p':
@@ -263,14 +293,17 @@ string_q CBalanceRecord::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "address" ) return addr_2_Str(address);
             break;
         case 'b':
-            if ( fieldName % "blockNum" ) return uint_2_Str(blockNum);
+            if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
             if ( fieldName % "balance" ) return wei_2_Str(balance);
+            break;
+        case 'd':
+            if ( fieldName % "diff" ) return bni_2_Str(diff);
             break;
         case 'p':
             if ( fieldName % "priorBalance" ) return wei_2_Str(priorBalance);
             break;
         case 't':
-            if ( fieldName % "tx_id" ) return uint_2_Str(tx_id);
+            if ( fieldName % "transactionIndex" ) return uint_2_Str(transactionIndex);
             break;
     }
 
@@ -292,15 +325,24 @@ ostream& operator<<(ostream& os, const CBalanceRecord& item) {
 }
 
 //---------------------------------------------------------------------------
+const char* STR_DISPLAY_BALANCERECORD = 
+"[{BLOCKNUMBER}]\t"
+"[{TRANSACTIONINDEX}]\t"
+"[{ADDRESS}]\t"
+"[{PRIORBALANCE}]\t"
+"[{BALANCE}]\t"
+"[{DIFF}]";
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 CBalanceRecord::CBalanceRecord(string_q& line) {
-    address = nextTokenClear(line, '\t');
-    blockNum = str_2_Uint(nextTokenClear(line, '\t'));
-    tx_id = str_2_Uint(nextTokenClear(line, '\t'));
-    string_q ether = nextTokenClear(line, '\t');
-    priorBalance = str_2_Wei(ether);
-    ether = nextTokenClear(line, '\t');
-    balance = str_2_Wei(ether);
+    blockNumber      = str_2_Uint(nextTokenClear(line, '\t'));
+    transactionIndex = str_2_Uint(nextTokenClear(line, '\t'));
+    address          = nextTokenClear(line, '\t');
+    string_q ether   = nextTokenClear(line, '\t');
+    priorBalance     = str_2_Wei(ether);
+    ether            = nextTokenClear(line, '\t');
+    balance          = str_2_Wei(ether);
 }
 // EXISTING_CODE
 }  // namespace qblocks

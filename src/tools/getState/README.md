@@ -16,7 +16,7 @@ This simple program may be used to query an Ethereum address to determine if it 
 | -------: | :------- | :------- |
 |  | addr_list | one or more addresses (0x...) from which to retrieve balances (required) |
 |  | block_list | an optional list of one or more blocks at which to report balances, defaults to 'latest' |
-| -m | --mode enum[none|some|all|balance|nonce|code|storage|deployed|accttype] | control which state to export. One of [none&#124;some&#124;all&#124;balance&#124;nonce&#124;code&#124;storage&#124;deployed&#124;accttype] |
+| -m | --mode enum[none|some*|all|balance|nonce|code|storage|deployed|accttype] | control which state to export. One of [none&#124;some*&#124;all&#124;balance&#124;nonce&#124;code&#124;storage&#124;deployed&#124;accttype] |
 | -n | --nozero | suppress the display of zero balance accounts |
 | -c | --changes | only report a balance when it changes from one block to the next |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
@@ -45,7 +45,7 @@ This simple program may be used to query an Ethereum address to determine if it 
 | -------: | :------- | :------- |
 |  | addr_list | one or more addresses (0x...) from which to retrieve balances (required) |
 |  | block_list | an optional list of one or more blocks at which to report balances, defaults to 'latest' |
-| -m | --mode enum[none|some|all|balance|nonce|code|storage|deployed|accttype] | control which state to export. One of [none&#124;some&#124;all&#124;balance&#124;nonce&#124;code&#124;storage&#124;deployed&#124;accttype] |
+| -m | --mode enum[none|some*|all|balance|nonce|code|storage|deployed|accttype] | control which state to export. One of [none&#124;some*&#124;all&#124;balance&#124;nonce&#124;code&#124;storage&#124;deployed&#124;accttype] |
 | -n | --nozero | suppress the display of zero balance accounts |
 | -c | --changes | only report a balance when it changes from one block to the next |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
@@ -75,7 +75,6 @@ All **QBlocks** command-line tools support the following commands (although in s
     --raw       |   report JSON data from the node with minimal processing
     --veryRaw   |   report JSON data from node with zero processing
     --fmt       |   export format (where appropriate). One of [none|txt|csv|json|api]
-    --api_mode  |   simulate api_mode for testing
     --to_file   |   write the results to a temporary file and return the filename
     --output:fn |   write the results to file 'fn' and return the filename
     --file:fn   |   specify multiple sets of command line options in a file.

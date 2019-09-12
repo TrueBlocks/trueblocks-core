@@ -25,13 +25,12 @@ static const COption params[] = {
     COption("addr", "a", "", OPT_SWITCH, "display only addresses in the results (useful for scripting)"),
     COption("other", "t", "", OPT_HIDDEN | OPT_SWITCH, "export other addresses if found"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),
-    COption("", "", "", 0, "Query addresses and/or names of well known accounts.\n"),
+    COption("", "", "", OPT_DESCRIPTION, "Query addresses and/or names of well known accounts.\n"),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-extern const char* STR_DISPLAY;
-extern const char* STR_DISPLAY_ALL;
+string_q shortenFormat(const string_q& fmtIn);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
@@ -46,7 +45,7 @@ bool COptions::parseArguments(string_q& command) {
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (arg == "-e" || arg == "--expand") {
-            searchFields = STR_DISPLAY_ALL;
+            searchFields = STR_DISPLAY_ACCOUNTNAME;
             format = searchFields;
 
         } else if (arg == "-m" || arg == "--matchCase") {
@@ -98,7 +97,7 @@ bool COptions::parseArguments(string_q& command) {
         case NONE1:
         case TXT1:
         case CSV1:
-            format = getGlobalConfig()->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
+            format = getGlobalConfig("getAccounts")->getConfigStr("display", "format", format.empty() ? shortenFormat(STR_DISPLAY_ACCOUNTNAME) : format);
             if (verbose && !contains(format, "{SOURCE}"))
                 format += "\t[{SOURCE}]";
             break;
@@ -107,7 +106,7 @@ bool COptions::parseArguments(string_q& command) {
             format = "";
             break;
     }
-    manageFields("CAccountName:" + cleanFmt((format.empty() ? STR_DISPLAY_ALL : format), exportFmt));
+    manageFields("CAccountName:" + cleanFmt((format.empty() ? STR_DISPLAY_ACCOUNTNAME : format), exportFmt));
     expContext().fmtMap["meta"] = ", \"namePath\": \"" + (isTestMode() ? "--" : getCachePath("names/")) + "\"";
     if (expContext().asEther)
         format = substitute(format, "{BALANCE}", "{ETHER}");
@@ -130,7 +129,7 @@ void COptions::Init(void) {
 
     items.clear();
     searches.clear();
-    searchFields = STR_DISPLAY;
+    searchFields = shortenFormat(STR_DISPLAY_ACCOUNTNAME);
     matchCase = false;
     types = NAMED;
     minArgs = 0;
@@ -248,6 +247,8 @@ void COptions::applyFilter() {
             string_q customStr = getGlobalConfig("getAccounts")->getConfigJson("custom", "list", "");
             while (item.parseJson3(customStr)) {
                 item.group = "81-Custom";
+                item.name = trim(item.name, '\"');
+                item.description = trim(item.description, '\"');
                 addIfUnique(item);
                 item = CAccountName();
             }
@@ -257,6 +258,8 @@ void COptions::applyFilter() {
     //------------------------
     if (types & NAMED) {
         for (auto item : namedAccounts) {
+            if (isTestMode() && items.size() > 200)
+                break;
             addIfUnique(item);
         }
     }
@@ -265,10 +268,13 @@ void COptions::applyFilter() {
     if (types & PREFUND) {
         uint32_t cnt = 0;
         ASSERT(prefunds.size() == 8893);  // This is a known value
-        for (auto prefund : prefunds) {
+
+        for (auto prefund : prefundWeiMap) {
+            if (isTestMode() && items.size() > 200)
+                break;
             CAccountName item;
             item.group = "80-Prefund";
-            item.address = toLower(nextTokenClear(prefund,'\t'));
+            item.address = prefund.first;
             item.name = "Prefund_" + padNum4(cnt++);
             item.source = "Genesis";
             addIfUnique(item);
@@ -276,7 +282,7 @@ void COptions::applyFilter() {
     }
 
     //------------------------
-    if (types & OTHER) {
+    if (!isTestMode() && (types & OTHER)) {
         string_q contents = asciiFileToString(configPath("names/names_custom.txt"));
         if (!contents.empty()) {
             CStringArray fields;
@@ -300,20 +306,21 @@ void COptions::applyFilter() {
 }
 
 //-----------------------------------------------------------------------
-const char* STR_DISPLAY =
-"[{ADDRESS}]\t"
-"[{NAME}]\t"
-"[{SYMBOL}]";
-
-//-----------------------------------------------------------------------
-const char* STR_DISPLAY_ALL =
-"[{GROUP}]\t"
-"[{ADDRESS}]\t"
-"[{NAME}]\t"
-"[{SYMBOL}]\t"
-"[{SOURCE}]\t"
-"[{DESCRIPTION}]\t"
-"[{LOGO}]\t"
-"[{IS_CONTRACT}]\t"
-"[{IS_PRIVATE}]\t"
-"[{IS_SHARED}]";
+string_q shortenFormat(const string_q& fmtIn) {
+    string_q ret = toUpper(fmtIn);
+    replace(ret, "[{GROUP}]", "");
+//    replace(ret, "[{ADDRESS}]", "");
+//    replace(ret, "[{NAME}]", "");
+//    replace(ret, "[{SYMBOL}]", "");
+    replace(ret, "[{SOURCE}]", "");
+    replace(ret, "[{DESCRIPTION}]", "");
+    replace(ret, "[{LOGO}]", "");
+    replace(ret, "[{IS_CONTRACT}]", "");
+    replace(ret, "[{IS_PRIVATE}]", "");
+    replace(ret, "[{IS_SHARED}]", "");
+    while (startsWith(ret, "\t"))
+        replace(ret, "\t", "");
+    while (endsWith(ret, "\t"))
+        replaceReverse(ret, "\t", "");
+    return ret;
+}

@@ -31,6 +31,9 @@ void CAbiCacheItem::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) c
     if (!m_showing)
         return;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["abicacheitem_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();
@@ -257,6 +260,9 @@ ostream& operator<<(ostream& os, const CAbiCacheItem& item) {
     os << "\n";
     return os;
 }
+
+//---------------------------------------------------------------------------
+const char* STR_DISPLAY_ABICACHEITEM = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

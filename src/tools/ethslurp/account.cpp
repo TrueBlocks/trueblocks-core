@@ -31,6 +31,9 @@ void CAccount::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const 
     if (!m_showing)
         return;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["account_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();
@@ -75,7 +78,7 @@ bool CAccount::setValueByName(const string_q& fieldNameIn, const string_q& field
             break;
         case 'l':
             if ( fieldName % "latestPage" ) { latestPage = str_2_Uint(fieldValue); return true; }
-            if ( fieldName % "latestTx" ) { /* latestTx = fieldValue; */ return false; }
+            if ( fieldName % "latestTx" ) { return latestTx.parseJson3(fieldValue); }
             break;
         case 't':
             if ( fieldName % "transactions" ) {
@@ -291,6 +294,9 @@ const CBaseNode *CAccount::getObjectAt(const string_q& fieldName, size_t index) 
         return &transactions[index];
     return NULL;
 }
+
+//---------------------------------------------------------------------------
+const char* STR_DISPLAY_ACCOUNT = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

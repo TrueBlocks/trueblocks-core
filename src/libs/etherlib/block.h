@@ -181,6 +181,9 @@ extern CArchive& operator<<(CArchive& archive, const CBlock& blo);
 extern CArchive& operator>>(CArchive& archive, CBlock& blo);
 
 //---------------------------------------------------------------------------
+extern const char* STR_DISPLAY_BLOCK;
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 typedef map<blknum_t, CBlock> CBlockMap;
 //---------------------------------------------------------------------------

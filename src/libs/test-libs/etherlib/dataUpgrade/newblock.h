@@ -169,6 +169,9 @@ extern CArchive& operator<<(CArchive& archive, const CNewBlock& newp);
 extern CArchive& operator>>(CArchive& archive, CNewBlock& newp);
 
 //---------------------------------------------------------------------------
+extern const char* STR_DISPLAY_NEWBLOCK;
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 bool readOneNewBlock_fromBinary(CNewBlock& block, const string_q& fileName);
 bool readOneNewBlock_fromJson(CNewBlock& block, const string_q& fileName);

@@ -99,7 +99,6 @@ age                 	1019	0	262149	T_DATE TS_DATE
   "finalized": 0,
   "timestamp": 0,
   "transactions": [],
-  "light": false,
   "date": "1970-01-01 00:00:00 UTC",
   "age": "100"
 }

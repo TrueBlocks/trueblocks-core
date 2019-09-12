@@ -31,6 +31,9 @@ void CParameter::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) cons
     if (!m_showing)
         return;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["parameter_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();
@@ -272,13 +275,18 @@ ostream& operator<<(ostream& os, const CParameter& item) {
 }
 
 //---------------------------------------------------------------------------
+const char* STR_DISPLAY_PARAMETER = "";
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
 CParameter::CParameter(string_q& textIn) {
     initialize();
     if (contains(textIn, "nowrite")) {
         noWrite = true;
+        noWrite_min = contains(textIn, "-min");
         replace(textIn," (nowrite)","");
+        replace(textIn," (nowrite-min)","");
     }
     if (contains(textIn, "=")) {
         strDefault = textIn;

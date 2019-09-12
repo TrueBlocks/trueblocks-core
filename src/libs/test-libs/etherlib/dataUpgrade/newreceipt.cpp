@@ -29,6 +29,9 @@ void CNewReceipt::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) con
     if (!m_showing)
         return;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["newreceipt_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();
@@ -246,7 +249,7 @@ string_q CNewReceipt::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "gasUsed" ) return gas_2_Str(gasUsed);
             break;
         case 'i':
-            if ( fieldName % "isError" ) return int_2_Str(isError);
+            if ( fieldName % "isError" ) return bool_2_Str(isError);
             break;
         case 'l':
             if ( fieldName % "logs" || fieldName % "logsCnt" ) {
@@ -288,6 +291,9 @@ const CBaseNode *CNewReceipt::getObjectAt(const string_q& fieldName, size_t inde
         return &logs[index];
     return NULL;
 }
+
+//---------------------------------------------------------------------------
+const char* STR_DISPLAY_NEWRECEIPT = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

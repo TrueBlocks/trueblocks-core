@@ -35,7 +35,7 @@
         "type": "uint256"
       },
       {
-        "name": "calldata _data",
+        "name": "_data",
         "type": "bytes"
       }
     ],
@@ -61,17 +61,17 @@
         "type": "address"
       },
       {
-        "name": "calldata _ids",
+        "name": "_ids",
         "type": "uint256[]",
         "isArray": true
       },
       {
-        "name": "calldata _values",
+        "name": "_values",
         "type": "uint256[]",
         "isArray": true
       },
       {
-        "name": "calldata _data",
+        "name": "_data",
         "type": "bytes"
       }
     ],
@@ -162,7 +162,7 @@
         "type": "uint256"
       },
       {
-        "name": "calldata _data",
+        "name": "_data",
         "type": "bytes"
       }
     ],
@@ -183,17 +183,17 @@
         "type": "address"
       },
       {
-        "name": "calldata _ids",
+        "name": "_ids",
         "type": "uint256[]",
         "isArray": true
       },
       {
-        "name": "calldata _values",
+        "name": "_values",
         "type": "uint256[]",
         "isArray": true
       },
       {
-        "name": "calldata _data",
+        "name": "_data",
         "type": "bytes"
       }
     ],
@@ -230,12 +230,12 @@
     "encoding": "0x4e1273f4",
     "inputs": [
       {
-        "name": "calldata _owners",
+        "name": "_owners",
         "type": "address[]",
         "isArray": true
       },
       {
-        "name": "calldata _ids",
+        "name": "_ids",
         "type": "uint256[]",
         "isArray": true
       }
@@ -315,7 +315,7 @@
         "type": "uint256"
       },
       {
-        "name": "memory _data",
+        "name": "_data",
         "type": "bytes"
       }
     ],
@@ -340,17 +340,17 @@
         "type": "address"
       },
       {
-        "name": "memory _ids",
+        "name": "_ids",
         "type": "uint256[]",
         "isArray": true
       },
       {
-        "name": "memory _values",
+        "name": "_values",
         "type": "uint256[]",
         "isArray": true
       },
       {
-        "name": "memory _data",
+        "name": "_data",
         "type": "bytes"
       }
     ],
@@ -386,7 +386,7 @@
         "type": "uint256"
       },
       {
-        "name": "calldata _uri",
+        "name": "_uri",
         "type": "string"
       }
     ],
@@ -408,12 +408,12 @@
         "type": "uint256"
       },
       {
-        "name": "calldata _to",
+        "name": "_to",
         "type": "address[]",
         "isArray": true
       },
       {
-        "name": "calldata _quantities",
+        "name": "_quantities",
         "type": "uint256[]",
         "isArray": true
       }
@@ -427,7 +427,7 @@
     "encoding": "0x67db3b8f",
     "inputs": [
       {
-        "name": "calldata _uri",
+        "name": "_uri",
         "type": "string"
       },
       {
@@ -567,7 +567,7 @@
         "type": "uint256"
       },
       {
-        "name": "calldata _data",
+        "name": "_data",
         "type": "bytes"
       }
     ],
@@ -588,17 +588,17 @@
         "type": "address"
       },
       {
-        "name": "calldata _ids",
+        "name": "_ids",
         "type": "uint256[]",
         "isArray": true
       },
       {
-        "name": "calldata _values",
+        "name": "_values",
         "type": "uint256[]",
         "isArray": true
       },
       {
-        "name": "calldata _data",
+        "name": "_data",
         "type": "bytes"
       }
     ],
@@ -635,12 +635,12 @@
     "encoding": "0x4e1273f4",
     "inputs": [
       {
-        "name": "calldata _owners",
+        "name": "_owners",
         "type": "address[]",
         "isArray": true
       },
       {
-        "name": "calldata _ids",
+        "name": "_ids",
         "type": "uint256[]",
         "isArray": true
       }
@@ -700,7 +700,7 @@
     "encoding": "0xcc10e401",
     "inputs": [
       {
-        "name": "calldata _uri",
+        "name": "_uri",
         "type": "string"
       },
       {
@@ -726,7 +726,7 @@
         "type": "uint256"
       },
       {
-        "name": "calldata _to",
+        "name": "_to",
         "type": "address[]",
         "isArray": true
       }
@@ -744,12 +744,12 @@
         "type": "uint256"
       },
       {
-        "name": "calldata _to",
+        "name": "_to",
         "type": "address[]",
         "isArray": true
       },
       {
-        "name": "calldata _quantities",
+        "name": "_quantities",
         "type": "uint256[]",
         "isArray": true
       }
@@ -912,7 +912,7 @@
         "type": "uint256"
       },
       {
-        "name": "calldata _data",
+        "name": "_data",
         "type": "bytes"
       }
     ],
@@ -938,17 +938,17 @@
         "type": "address"
       },
       {
-        "name": "calldata _ids",
+        "name": "_ids",
         "type": "uint256[]",
         "isArray": true
       },
       {
-        "name": "calldata _values",
+        "name": "_values",
         "type": "uint256[]",
         "isArray": true
       },
       {
-        "name": "calldata _data",
+        "name": "_data",
         "type": "bytes"
       }
     ],
@@ -970,11 +970,11 @@
         "type": "address"
       },
       {
-        "name": "calldata _functionSignatures",
+        "name": "_functionSignatures",
         "type": "string"
       },
       {
-        "name": "calldata _commitMessage",
+        "name": "_commitMessage",
         "type": "string"
       }
     ],
@@ -1016,7 +1016,7 @@
         "type": "uint256"
       },
       {
-        "name": "calldata _data",
+        "name": "_data",
         "type": "bytes"
       }
     ],
@@ -1042,17 +1042,17 @@
         "type": "address"
       },
       {
-        "name": "calldata _ids",
+        "name": "_ids",
         "type": "uint256[]",
         "isArray": true
       },
       {
-        "name": "calldata _values",
+        "name": "_values",
         "type": "uint256[]",
         "isArray": true
       },
       {
-        "name": "calldata _data",
+        "name": "_data",
         "type": "bytes"
       }
     ],
@@ -1132,7 +1132,7 @@
         "type": "uint256"
       },
       {
-        "name": "calldata _data",
+        "name": "_data",
         "type": "bytes"
       }
     ],
@@ -1159,17 +1159,17 @@
         "type": "address"
       },
       {
-        "name": "calldata _ids",
+        "name": "_ids",
         "type": "uint256[]",
         "isArray": true
       },
       {
-        "name": "calldata _values",
+        "name": "_values",
         "type": "uint256[]",
         "isArray": true
       },
       {
-        "name": "calldata _data",
+        "name": "_data",
         "type": "bytes"
       }
     ],
@@ -1232,11 +1232,11 @@
         "type": "address"
       },
       {
-        "name": "calldata _functionSignatures",
+        "name": "_functionSignatures",
         "type": "string"
       },
       {
-        "name": "calldata _commitMessage",
+        "name": "_commitMessage",
         "type": "string"
       }
     ],
@@ -1368,7 +1368,7 @@
         "type": "uint256"
       },
       {
-        "name": "calldata _data",
+        "name": "_data",
         "type": "bytes"
       }
     ],
@@ -1389,17 +1389,17 @@
         "type": "address"
       },
       {
-        "name": "calldata _ids",
+        "name": "_ids",
         "type": "uint256[]",
         "isArray": true
       },
       {
-        "name": "calldata _values",
+        "name": "_values",
         "type": "uint256[]",
         "isArray": true
       },
       {
-        "name": "calldata _data",
+        "name": "_data",
         "type": "bytes"
       }
     ],
@@ -1486,21 +1486,6 @@
         "type": "bool"
       }
     ]
-  },
-  {
-    "name": "<< 128;",
-    "type": "0||",
-    "signature": "<< 128;()",
-    "encoding": "0x17194940",
-    "inputs": [],
-    "outputs": []
-  },
-  {
-    "type": "0|;",
-    "signature": "()",
-    "encoding": "0x861731d5",
-    "inputs": [],
-    "outputs": []
   },
   {
     "name": "isNonFungible",
@@ -1652,7 +1637,7 @@
         "type": "uint256"
       },
       {
-        "name": "calldata _data",
+        "name": "_data",
         "type": "bytes"
       }
     ],
@@ -1673,17 +1658,17 @@
         "type": "address"
       },
       {
-        "name": "calldata _ids",
+        "name": "_ids",
         "type": "uint256[]",
         "isArray": true
       },
       {
-        "name": "calldata _values",
+        "name": "_values",
         "type": "uint256[]",
         "isArray": true
       },
       {
-        "name": "calldata _data",
+        "name": "_data",
         "type": "bytes"
       }
     ],
@@ -1720,12 +1705,12 @@
     "encoding": "0x4e1273f4",
     "inputs": [
       {
-        "name": "calldata _owners",
+        "name": "_owners",
         "type": "address[]",
         "isArray": true
       },
       {
-        "name": "calldata _ids",
+        "name": "_ids",
         "type": "uint256[]",
         "isArray": true
       }

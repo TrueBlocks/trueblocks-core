@@ -16,7 +16,7 @@
 static const COption params[] = {
     COption("mode", "m", "enum[encoding|generation]", OPT_REQUIRED | OPT_POSITIONAL, "Mode of operation. One or more of 'encoding' or 'generation'.\n"),
     COption("sub", "s", "<num>", OPT_FLAG, "sub mode"),
-    COption("", "", "", 0, "Simple program to illustrate how to encode function and event signatures.\n"),
+    COption("", "", "", OPT_DESCRIPTION, "Simple program to illustrate how to encode function and event signatures.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 

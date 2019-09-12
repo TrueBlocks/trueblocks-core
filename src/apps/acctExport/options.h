@@ -6,6 +6,9 @@
  *------------------------------------------------------------------------*/
 #include "etherlib.h"
 #include "acctlib.h"
+#include "displayapp.h"
+
+using uint_addr_mp = map<uint32_t,address_t>;
 
 //-----------------------------------------------------------------------
 class COptions : public COptionsBase {
@@ -19,13 +22,17 @@ public:
     bool skipDdos;
     size_t maxTraces;
     bool articulate;
+    size_t nExported;
+    bool doAppearances;
     bool doLogs;
     bool doTraces;
     bool doBalances;
     bool doABIs;
-    bool freshenOnly;
-    map<uint32_t,address_t> prefundMap;
-    map<uint32_t,address_t> blkRewardMap;
+    bool freshen_only;
+    bool deltas_only;
+    address_t hackAppAddr;
+    uint_addr_mp prefundAddrMap;
+    uint_addr_mp blkRewardMap;
     map<address_t,bool>     abiMap;
     uint32_t *ts_array;
     size_t ts_cnt;
@@ -41,5 +48,4 @@ public:
     bool loadAllAppearances(void);
     bool exportData(void);
     bool exportBalances(void);
-    bool loadTsArray(void);
 };

@@ -185,6 +185,9 @@ extern CArchive& operator>>(CArchive& archive, CAccountNameArray& array);
 extern CArchive& operator<<(CArchive& archive, const CAccountNameArray& array);
 
 //---------------------------------------------------------------------------
+extern const char* STR_DISPLAY_ACCOUNTNAME;
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 typedef map<address_t, CAccountName> CAccountNameMap;
 // EXISTING_CODE

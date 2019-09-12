@@ -31,6 +31,9 @@ void CPriceCacheItem::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr)
     if (!m_showing)
         return;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["pricecacheitem_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();
@@ -247,6 +250,9 @@ ostream& operator<<(ostream& os, const CPriceCacheItem& item) {
     os << "\n";
     return os;
 }
+
+//---------------------------------------------------------------------------
+const char* STR_DISPLAY_PRICECACHEITEM = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

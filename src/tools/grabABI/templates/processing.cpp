@@ -178,7 +178,7 @@ bool COptions::loadWatches(const CToml& toml) {
         if (watch->name.empty())
             return usage("Empty watch name " + watch->name + "\n");
 
-        watch->nodeBal = getNodeBal(watch->stateHistory, watch->address, watch->firstBlock-1);
+        watch->nodeBal = get NodeBal(watch->stateHistory, watch->address, watch->firstBlock-1);
 
         blockStats.minWatchBlock = min(blockStats.minWatchBlock, watch->firstBlock);
         blockStats.maxWatchBlock = max(blockStats.maxWatchBlock, watch->lastBlock);

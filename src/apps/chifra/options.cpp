@@ -11,13 +11,13 @@ static const COption params[] = {
 // BEG_CODE_OPTIONS
     COption("command", "", "enum[scrape|list|export|accounts|slurp|quotes|data|blocks|transactions|receipts|logs|traces|state|abi|status|message|rm|config|leech|seed]", OPT_REQUIRED | OPT_POSITIONAL, "one of [scrape|list|export|accounts|slurp|quotes|data|blocks|transactions|receipts|logs|traces|state|abi|status|message|rm|config|leech|seed]"),
     COption("sleep", "", "<seconds>", OPT_FLAG, "for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 0)"),
-    COption("", "", "", 0, "Create a TrueBlocks monitor configuration."),
+    COption("", "", "", OPT_DESCRIPTION, "Create a TrueBlocks monitor configuration."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
 extern bool visitIndexFiles(const string_q& path, void *data);
-extern string_q addExportMode(bool api_mode, format_t fmt);
+extern string_q addExportMode(format_t fmt);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
@@ -35,13 +35,13 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("--nBlocks must be a non-negative number. Quitting...");
             scrapeSleep = (useconds_t)str_2_Uint(arg);
 
-        } else if (arg == "--tool_help" || (api_mode && arg == "--help")) {
+        } else if (arg == "--tool_help" || (isApiMode() && arg == "--help")) {
             tool_flags += (" --help");
 
         } else if (mode.empty() && startsWith(arg, '-')) {
 
             if (!builtInCmd(arg))
-                EXIT_USAGE("Invalid option: " + arg);
+                EXIT_USAGE("Missing mode: " + arg);
 
         } else {
 
@@ -123,13 +123,13 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (verbose) { freshen_flags += (" -v:" + uint_2_Str(verbose)); }
-    freshen_flags += addExportMode(api_mode, exportFmt);
+    freshen_flags += addExportMode(exportFmt);
     freshen_flags = trim(freshen_flags, ' ');
 
     if (verbose) { tool_flags += (" -v:" + uint_2_Str(verbose)); }
     if (expContext().asEther) { tool_flags += " --ether"; }
     if (expContext().asDollars) { tool_flags += " --dollars"; }
-    tool_flags += addExportMode(api_mode, exportFmt);
+    tool_flags += addExportMode(exportFmt);
     tool_flags = trim(tool_flags, ' ');
 
     if (isNodeRunning()) {
@@ -151,12 +151,6 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    LOG4("API_MODE=", getEnvStr("API_MODE"));
-    LOG4("DOCKER_MODE=", getEnvStr("DOCKER_MODE"));
-    LOG4("IPFS_PATH=", getEnvStr("IPFS_PATH"));
-    LOG4("TEST_MODE=", getEnvStr("TEST_MODE"));
-    LOG4("NO_COLOR=", getEnvStr("NO_COLOR"));
-    LOG4("EDITOR=", getEnvStr("EDITOR"));
     LOG4("tool_flags=", tool_flags);
     LOG4("freshen_flags=", freshen_flags);
 
@@ -185,10 +179,10 @@ COptions::~COptions(void) {
 }
 
 //--------------------------------------------------------------------------------
-string_q addExportMode(bool api_mode, format_t fmt) {
-    if (api_mode && fmt == API1)
+string_q addExportMode(format_t fmt) {
+    if (isApiMode() && fmt == API1)
         return "";
-    if (!api_mode && fmt == TXT1)
+    if (!isApiMode() && fmt == TXT1)
         return "";
     switch (fmt) {
         case NONE1: return " --fmt none";

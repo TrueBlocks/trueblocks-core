@@ -22,12 +22,11 @@ static const COption params[] = {
     COption("changes", "c", "", OPT_SWITCH, "only report a balance when it changes from one block to the next"),
     COption("noHeader", "o", "", OPT_HIDDEN | OPT_SWITCH, "hide the header in txt and csv mode"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),
-    COption("", "", "", 0, "Retrieve the balance (in wei) for one or more addresses at the given block(s)."),
+    COption("", "", "", OPT_DESCRIPTION, "Retrieve the balance (in wei) for one or more addresses at the given block(s)."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-extern const char* STR_DISPLAY;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
@@ -102,22 +101,21 @@ bool COptions::parseArguments(string_q& command) {
 
     deminimus = str_2_Wei(getGlobalConfig("getState")->getConfigStr("settings", "deminimus", "0"));
 
-    string_q add;
-    if (mode & ST_BALANCE)  { add += "\t[{BALANCE}]";  UNHIDE_FIELD(CEthState, "balance"); UNHIDE_FIELD(CEthState, "ether");}
-    if (mode & ST_NONCE)    { add += "\t[{NONCE}]";    UNHIDE_FIELD(CEthState, "nonce");   }
-    if (mode & ST_CODE)     { add += "\t[{CODE}]";     UNHIDE_FIELD(CEthState, "code");    }
-    if (mode & ST_STORAGE)  { add += "\t[{STORGAGE}]"; UNHIDE_FIELD(CEthState, "storage"); }
-    if (mode & ST_DEPLOYED) { add += "\t[{DEPLOYED}]"; UNHIDE_FIELD(CEthState, "deployed"); }
-    if (mode & ST_ACCTTYPE) { add += "\t[{ACCTTYPE}]"; UNHIDE_FIELD(CEthState, "accttype"); }
     UNHIDE_FIELD(CEthState, "address");
+    string_q format = STR_DISPLAY_ETHSTATE;
+    if (!(mode & ST_BALANCE))  { replace(format, "\t[{BALANCE}]",  ""); } else { UNHIDE_FIELD(CEthState, "balance"); UNHIDE_FIELD(CEthState, "ether"); }
+    if (!(mode & ST_NONCE))    { replace(format, "\t[{NONCE}]",    ""); } else { UNHIDE_FIELD(CEthState, "nonce");    }
+    if (!(mode & ST_CODE))     { replace(format, "\t[{CODE}]",     ""); } else { UNHIDE_FIELD(CEthState, "code");     }
+    if (!(mode & ST_STORAGE))  { replace(format, "\t[{STORAGE}]",  ""); } else { UNHIDE_FIELD(CEthState, "storage");  }
+    if (!(mode & ST_DEPLOYED)) { replace(format, "\t[{DEPLOYED}]", ""); } else { UNHIDE_FIELD(CEthState, "deployed"); }
+    if (!(mode & ST_ACCTTYPE)) { replace(format, "\t[{ACCTTYPE}]", ""); } else { UNHIDE_FIELD(CEthState, "accttype"); }
 
     // Display formatting
-    string_q format = (STR_DISPLAY + add);
     switch (exportFmt) {
         case NONE1:
         case TXT1:
         case CSV1:
-            format = getGlobalConfig()->getConfigStr("display", "format", format.empty() ? STR_DISPLAY : format);
+            format = getGlobalConfig("getState")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_ETHSTATE : format);
             manageFields("CEthState:" + cleanFmt(format, exportFmt));
             break;
         case API1:
@@ -132,6 +130,20 @@ bool COptions::parseArguments(string_q& command) {
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
     if (noHeader)
         expContext().fmtMap["header"] = "";
+
+    if ((!isTestMode() && !hasHistory()) || nodeHasBalances())
+        return true;
+
+    // We need history, so try to get a different server. Fail silently. The user will be warned in the response
+    string_q rpcProvider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
+    string_q balanceProvider = getGlobalConfig()->getConfigStr("settings", "balanceProvider", rpcProvider);
+    if (rpcProvider == balanceProvider || balanceProvider.empty())
+        return true;
+
+    // We release the curl context so we can set it to the new context.
+    getCurlContext()->baseURL = balanceProvider;
+    getCurlContext()->releaseCurl();
+    getCurlContext()->getCurl();
 
     return true;
 }
@@ -184,8 +196,3 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
     }
     return str;
 }
-
-//--------------------------------------------------------------------------------
-const char* STR_DISPLAY =
-"[{ADDRESS}]\t"
-"[{BLOCKNUMBER}]";

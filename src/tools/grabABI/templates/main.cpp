@@ -50,7 +50,7 @@ int main(int argc, const char *argv[]) {
         if (visitor.kBlock) {
             // we're not starting at the beginning
             for (uint32_t i = 0 ; i < visitor.watches.size() ; i++) {
-                visitor.watches.at(i).statement.endBal = getNodeBal(visitor.watches.at(i).stateHistory, visitor.watches.at(i).address, blockNum);
+                visitor.watches.at(i).statement.endBal = get NodeBal(visitor.watches.at(i).stateHistory, visitor.watches.at(i).address, blockNum);
             }
         }
 
@@ -86,7 +86,7 @@ int main(int argc, const char *argv[]) {
             HIDE_FIELD  (CTrace,       "blockHash");
             HIDE_FIELD  (CTrace,       "blockNumber");
             HIDE_FIELD  (CTrace,       "transactionHash");
-            HIDE_FIELD  (CTrace,       "transactionPosition");
+            HIDE_FIELD  (CTrace,       "transactionIndex");
         }
 
         if (!visitor.debugger_on && !verbose)

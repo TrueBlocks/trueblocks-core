@@ -19,4 +19,4 @@ blocknumber	timestamp	date	name
 1150000	1457981393	2016-03-14 18:49:53 UTC	homestead
 1718497	1466134488	2016-06-17 03:34:48 UTC	daohack
 1920000	1469020840	2016-07-20 13:20:40 UTC	daofork
-TIME ~ CLOCK - <WARNG>  : The given value 'mistake' is not a numeral or a special named block.
+TIME ~ CLOCK - <WARNG> : The given value 'mistake' is not a numeral or a special named block.

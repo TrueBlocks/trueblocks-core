@@ -4,3 +4,4 @@ fields    = address address|wei balance|string callType|address from|gas gas|str
 includes  = abilib.h
 cIncs     = trace.h
 serialize = true
+equals    = ((address == item.address) && (balance == item.balance) && (callType == item.callType) && (from == item.from) && (gas == item.gas) && (init == item.init) && (input == item.input) && (refundAddress == item.refundAddress) && (to == item.to) && (value == item.value))

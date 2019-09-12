@@ -31,6 +31,9 @@ void CIndexCache::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) con
     if (!m_showing)
         return;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["indexcache_fmt"] : fmtIn);
     if (fmt.empty()) {
         doExport(ctx);
@@ -268,6 +271,9 @@ const CBaseNode *CIndexCache::getObjectAt(const string_q& fieldName, size_t inde
         return &items[index];
     return NULL;
 }
+
+//---------------------------------------------------------------------------
+const char* STR_DISPLAY_INDEXCACHE = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

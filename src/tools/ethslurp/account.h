@@ -148,6 +148,9 @@ extern CArchive& operator>>(CArchive& archive, CAccountArray& array);
 extern CArchive& operator<<(CArchive& archive, const CAccountArray& array);
 
 //---------------------------------------------------------------------------
+extern const char* STR_DISPLAY_ACCOUNT;
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks

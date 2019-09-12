@@ -155,6 +155,9 @@ extern CArchive& operator<<(CArchive& archive, const CCache& cac);
 extern CArchive& operator>>(CArchive& archive, CCache& cac);
 
 //---------------------------------------------------------------------------
+extern const char* STR_DISPLAY_CACHE;
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 typedef vector<CCache*> CCachePtrArray;
 // EXISTING_CODE

@@ -22,13 +22,14 @@ bool COptions::handle_rm(void) {
         string_q fn = getMonitorPath(addr);
         string_q fnLast = getMonitorLast(addr);
         string_q fnExpt = getMonitorExpt(addr);
+        string_q fnBals = getMonitorBals(addr);
         string_q fnConf = substitute(fn, ".acct.bin", ".toml");
-        if (!fileExists(fn) && !fileExists(fnLast) && !fileExists(fnExpt) && !fileExists(fnConf)) {
+        if (!fileExists(fn) && !fileExists(fnLast) && !fileExists(fnExpt) && !fileExists(fnBals) && !fileExists(fnConf)) {
             LOG_WARN("Monitor not found for address " + addr + ".");
 
         } else {
             int ch = 'n';
-            if (!api_mode) {
+            if (!isApiMode()) {
                 cerr << "Remove monitor for " << addr << "? (y=yes) >";
                 cerr.flush();
                 ch = getchar();

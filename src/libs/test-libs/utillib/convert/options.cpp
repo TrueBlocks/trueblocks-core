@@ -15,7 +15,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     COption("mode", "", "", OPT_REQUIRED | OPT_POSITIONAL, "a number between 0 and 4 inclusive"),
-    COption("", "", "", 0, "Test all the ridiculous conversions from whatever2Whatever.\n"),
+    COption("", "", "", OPT_DESCRIPTION, "Test all the ridiculous conversions from whatever2Whatever.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
