@@ -38,14 +38,16 @@ bool COptions::exportBalances(void) {
         CAppearanceArray_base apps;
         loadOneAddress(apps, monitor.address);
 
+        uint64_t nDeltas = 0;
+        uint64_t lastDelta = 0;
         map<blknum_t, CBalanceDelta> deltas;
         string_q balFile = getMonitorBals(monitor.address);
         if (fileExists(balFile)) {
             CArchive balIn(READING_ARCHIVE);
             if (balIn.Lock(balFile, modeReadOnly, LOCK_NOWAIT)) {
-                uint64_t size;
-                balIn >> size;
-                while (deltas.size() < size) {
+                balIn >> nDeltas;
+                balIn >> lastDelta;
+                while (deltas.size() < nDeltas) {
                     CBalanceDelta rec;
                     balIn >> rec;
                     rec.address = monitor.address;
@@ -55,12 +57,16 @@ bool COptions::exportBalances(void) {
             }
 HERE("as read")
 if (isTestMode()) {
+    cerr << "nDeltas: " << nDeltas << "\tlastDelta: " << lastDelta << endl;
     for (auto delta : deltas)
-        cout << delta.first << "\t" << delta.second;
+        cerr << delta.first << "\t" << delta.second;
 }
         }
 
+HERE("data")
+        wei_t priorBalance = 0;
         bool first = true;
+        uint64_t cnt = 0;
         for (size_t i = 0 ; i < apps.size() && !shouldQuit() && apps[i].blk < ts_cnt ; i++) {
 
             const CAppearance_base *item = &apps[i];
@@ -71,29 +77,30 @@ if (isTestMode()) {
                 record.transactionIndex = item->txid;
                 record.address = monitor.address;
 
+                CBalanceDelta none;
                 // handle the prior balance -- note we always have this in the delta map other than zero block
-                record.priorBalance = record.blockNumber == 0 ? 0 : getBalanceAt(monitor.address, record.blockNumber - 1);
-                record.balance = getBalanceAt(monitor.address, record.blockNumber);
-#if 0
-                    auto it = deltas.lower_bound(record.blockNumber - 1);
-                    record.priorBalance = it->second.balance;
-
-                    it = deltas.lower_bound(record.blockNumber);
-                    if (it != deltas.end()) {
-                        record.balance = it->second.balance;
-                    } else {
-                        record.balance = getBalanceAt(monitor.address, record.blockNumber);
-                    }
-#endif
+                record.priorBalance = priorBalance;
+                if (record.blockNumber < lastDelta) {
+                    auto it = deltas.lower_bound(record.blockNumber);
+//                    cout << "Getting from cache " << record.blockNumber << " it: " << (it == deltas.end() ? 10 : it->first) << " " << (it == deltas.end() ? none : it->second);
+                    if (it == deltas.end())
+                        --it;
+                    record.balance = it->second.balance;
+                } else {
+                    cout << ++cnt << " Getting from node " << record.blockNumber << endl;
+                    record.balance = getBalanceAt(monitor.address, record.blockNumber);
+                }
                 record.diff = (bigint_t(record.balance) - bigint_t(record.priorBalance));
 
                 if (!freshen_only && !deltas_only) {
                     if (isJson && !first)
                         cout << ", ";
                     cout << record;
+//                    cout << endl;
                     nExported++;
                     first = false;
                 }
+                priorBalance = record.balance;
 
                 CBalanceDelta rec;
                 rec.blockNumber = record.blockNumber;
@@ -118,19 +125,22 @@ if (isTestMode()) {
         // cache the deltas
         CArchive balOut(WRITING_ARCHIVE);
         if (balOut.Lock(balFile, modeWriteCreate, LOCK_NOWAIT)) {
-            balOut << (uint64_t)deltas.size();
+            nDeltas = deltas.size();
+            lastDelta = (scanRange.second + 1);
+            balOut << nDeltas;
+            balOut << lastDelta;
             for (auto delta : deltas) {
                 balOut << delta.second;
             }
             balOut.Release();
-        }
 
 HERE("Out")
 if (isTestMode()) {
+    cerr << "nDeltas: " << nDeltas << "\tlastDelta: " << lastDelta << endl;
     for (auto delta : deltas)
-        cout << delta.first << "\t" << delta.second;
+        cerr << delta.first << "\t" << delta.second;
 }
-
+        }
     }
 
     if (isJson && !freshen_only)

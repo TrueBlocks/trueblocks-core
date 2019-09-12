@@ -178,7 +178,7 @@ namespace qblocks {
             cerr << "Not an address: " << addr << endl;
             quickQuitHandler(0);
         }
-        return getCachePath(base + addr + ".bals");
+        return getCachePath(base + addr + ".bals.bin");
     }
 
     //---------------------------------------------------------------------------
