@@ -10,7 +10,7 @@ You may optionally specify one or more blocks at which to report.
 
 #### Usage
 
-`Usage:`    getTokenInfo [-b|-n|-v|-h] &lt;address&gt; [address...] [block...]  
+`Usage:`    getTokenInfo [-b|-n|-v|-h] &lt;address&gt; &lt;address&gt; [address...] [block...]  
 `Purpose:`  Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).
 
 `Where:`  

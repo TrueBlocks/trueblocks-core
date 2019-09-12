@@ -1,0 +1,569 @@
+[
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "type": "bytes32"
+      }
+    ],
+    "name": "resolver",
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "type": "bytes32"
+      }
+    ],
+    "name": "owner",
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "type": "bytes32"
+      },
+      {
+        "type": "bytes32"
+      },
+      {
+        "type": "address"
+      }
+    ],
+    "name": "setSubnodeOwner",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "type": "bytes32"
+      },
+      {
+        "type": "uint64"
+      }
+    ],
+    "name": "setTTL",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "type": "bytes32"
+      }
+    ],
+    "name": "ttl",
+    "outputs": [
+      {
+        "type": "uint64"
+      }
+    ],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "type": "bytes32"
+      },
+      {
+        "type": "address"
+      }
+    ],
+    "name": "setResolver",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "type": "bytes32"
+      },
+      {
+        "type": "address"
+      }
+    ],
+    "name": "setOwner",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "type": "address"
+      }
+    ],
+    "name": "Transfer",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "type": "bytes32"
+      },
+      {
+        "indexed": true,
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "type": "address"
+      }
+    ],
+    "name": "NewOwner",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "type": "address"
+      }
+    ],
+    "name": "NewResolver",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "type": "uint64"
+      }
+    ],
+    "name": "NewTTL",
+    "type": "event"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "type": "bytes32"
+      }
+    ],
+    "name": "releaseDeed",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "type": "string"
+      }
+    ],
+    "name": "invalidateName",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "type": "bytes32"
+      },
+      {
+        "type": "address"
+      },
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "bytes32"
+      }
+    ],
+    "name": "shaBid",
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "type": "address"
+      },
+      {
+        "type": "bytes32"
+      }
+    ],
+    "name": "cancelBid",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "type": "bytes32"
+      }
+    ],
+    "name": "entries",
+    "outputs": [
+      {
+        "type": "uint8"
+      },
+      {
+        "type": "address"
+      },
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "ens",
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "type": "bytes32"
+      }
+    ],
+    "name": "transferRegistrars",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "type": "address"
+      },
+      {
+        "type": "bytes32"
+      }
+    ],
+    "name": "sealedBids",
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "type": "bytes32"
+      }
+    ],
+    "name": "state",
+    "outputs": [
+      {
+        "type": "uint8"
+      }
+    ],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "type": "bytes32"
+      },
+      {
+        "type": "address"
+      }
+    ],
+    "name": "transfer",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "type": "bytes32"
+      }
+    ],
+    "name": "finalizeAuction",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "registryStarted",
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "type": "bytes32"
+      },
+      {
+        "type": "address"
+      },
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "bytes32"
+      }
+    ],
+    "name": "unsealBid",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "type": "bytes32"
+      }
+    ],
+    "name": "newBid",
+    "outputs": [],
+    "payable": true,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "type": "bytes32[]"
+      }
+    ],
+    "name": "startAuctions",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "type": "bytes32"
+      }
+    ],
+    "name": "startAuction",
+    "outputs": [],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "rootNode",
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ],
+    "payable": false,
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "type": "address"
+      },
+      {
+        "type": "bytes32"
+      },
+      {
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "type": "uint256"
+      }
+    ],
+    "name": "AuctionStarted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "type": "bytes32"
+      },
+      {
+        "indexed": true,
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "type": "uint256"
+      }
+    ],
+    "name": "NewBid",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "type": "bytes32"
+      },
+      {
+        "indexed": true,
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "type": "uint8"
+      }
+    ],
+    "name": "BidRevealed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "type": "bytes32"
+      },
+      {
+        "indexed": true,
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "type": "uint256"
+      }
+    ],
+    "name": "HashRegistered",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "type": "uint256"
+      }
+    ],
+    "name": "HashReleased",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "type": "bytes32"
+      },
+      {
+        "indexed": true,
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "type": "uint256"
+      }
+    ],
+    "name": "HashInvalidated",
+    "type": "event"
+  }
+]

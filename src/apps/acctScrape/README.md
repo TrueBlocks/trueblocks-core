@@ -6,7 +6,7 @@
 
 #### Usage
 
-`Usage:`    acctScrape [-v|-h] &lt;address&gt; [address...]  
+`Usage:`    acctScrape [-o|-v|-h] &lt;address&gt; [address...]  
 `Purpose:`  Index transactions for a given Ethereum address (or series of addresses).
 
 `Where:`  
@@ -14,6 +14,7 @@
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | addr_list | one or more Ethereum addresses (required) |
+| -o | --noHeader | do not show the header row |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
