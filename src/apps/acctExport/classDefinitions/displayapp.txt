@@ -1,0 +1,6 @@
+[settings]
+class       = CDisplayApp
+fields      = address address|blknum blockNumber|blknum transactionIndex
+includes    = etherlib.h
+cIncs       =
+display_str = address, blockNumber, transactionIndex
