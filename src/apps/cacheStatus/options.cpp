@@ -148,7 +148,7 @@ COptions::COptions(void) {
 
     HIDE_FIELD(CAccountWatch,  "statement");
     HIDE_FIELD(CAccountWatch,  "stateHistory");
-    HIDE_FIELD(CAccountWatch,  "nodeBal");
+    HIDE_FIELD(CAccountWatch,  "curBalance");
     HIDE_FIELD(CAccountWatch,  "abi_spec");
 
     HIDE_FIELD(CAccountName,   "is_contract");

@@ -41,11 +41,11 @@ public:
     DECLARE_NODE(CIncomeStatement);
 
     // EXISTING_CODE
-    bigint_t nodeBal;
+    bigint_t curBalance;
     void operator+=(const CIncomeStatement &x);
-    bool balanced(void) const { return ((nodeBal - endBal) == 0); }
-    bigint_t difference(void) const { return (nodeBal - endBal); }
-    void correct(void) { endBal = nodeBal; }
+    bool balanced(void) const { return ((curBalance - endBal) == 0); }
+    bigint_t difference(void) const { return (curBalance - endBal); }
+    void correct(void) { endBal = curBalance; }
     friend class CAccountWatch;
     // EXISTING_CODE
     bool operator==(const CIncomeStatement& item) const;

@@ -29,7 +29,13 @@ void COptions::handle_status(ostream& os) {
 
     CMonitorCache md;
     if (contains(mode, "|monitors|")) {
-        SHOW_FIELD(CAccountWatch, "nodeBal");
+        if (expContext().asEther) {
+            SHOW_FIELD(CAccountWatch, "curEther");
+            HIDE_FIELD(CAccountWatch, "curBalance");
+        } else {
+            HIDE_FIELD(CAccountWatch, "curEther");
+            SHOW_FIELD(CAccountWatch, "curBalance");
+        }
         md.type = md.getRuntimeClass()->m_ClassName;
         md.path = (isTestMode() ? "CachePath" : getCachePath("monitors/"));
         forEveryFileInFolder(getCachePath("monitors/"), countFiles, &md);
@@ -200,7 +206,7 @@ bool noteMonitor(const string_q& path, void *data) {
         CMonitorCacheItem mdi;
         mdi.type = mdi.getRuntimeClass()->m_ClassName;
         mdi.address = substitute(substitute(substitute(substitute(path, counter->cachePtr->path, ""),".acct", ""),".bin", ""), ".json", "");
-        mdi.nodeBal = getBalanceAt(mdi.address); // doesn't need the balance provider since it latest block
+        mdi.curBalance = getBalanceAt(mdi.address); // doesn't need the balance provider since it latest block
         CAccountName item;
         string_q customStr = getGlobalConfig("getAccounts")->getConfigJson("custom", "list", "");
         while (item.parseJson3(customStr)) {

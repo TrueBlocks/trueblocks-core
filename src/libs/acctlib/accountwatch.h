@@ -31,7 +31,7 @@ public:
     CAbi abi_spec;
     CIncomeStatement statement;
     CEthStateArray stateHistory;
-    wei_t nodeBal;
+    wei_t curBalance;
     bool enabled;
     freshen_e fm_mode;
 
@@ -135,7 +135,7 @@ inline void CAccountWatch::initialize(void) {
     abi_spec = CAbi();
     statement = CIncomeStatement();
     stateHistory.clear();
-    nodeBal = 0;
+    curBalance = 0;
     enabled = true;
     fm_mode = FM_PRODUCTION;
 
@@ -156,7 +156,7 @@ inline void CAccountWatch::duplicate(const CAccountWatch& ac) {
     abi_spec = ac.abi_spec;
     statement = ac.statement;
     stateHistory = ac.stateHistory;
-    nodeBal = ac.nodeBal;
+    curBalance = ac.curBalance;
     enabled = ac.enabled;
     fm_mode = ac.fm_mode;
 

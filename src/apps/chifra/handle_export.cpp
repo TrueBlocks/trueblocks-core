@@ -20,7 +20,6 @@ bool COptions::handle_export(void) {
     size_t cnt = 0;
     for (auto addr : addrs) {
         ostringstream os;
-//        os << "grabABI " << addr << " 1>/dev/null 2>&1 ; ";
         os << "acctExport " << addr << " " << tool_flags;
         LOG4("Calling " + os.str());
         if (isTestMode())
