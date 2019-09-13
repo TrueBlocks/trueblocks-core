@@ -13,7 +13,7 @@ bool COptions::handle_status(void) {
 
     LOG5("tool_flags: " + tool_flags);
     ostringstream os;
-    os << "cacheStatus " << tool_flags << " ; ";
+    os << "cacheStatus " << tool_flags;
     if (isTestMode())
         cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
     else {
