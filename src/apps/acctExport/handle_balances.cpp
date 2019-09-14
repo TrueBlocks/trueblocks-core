@@ -30,7 +30,7 @@ bool COptions::exportBalances(void) {
     }
 
     bool isJson = (exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1);
-    if (isJson && !freshen_only && !count_only)
+    if (isJson && !freshen_only)
         cout << "[";
 
     for (auto monitor : monitors) {
@@ -92,16 +92,13 @@ HERE("data")
 //                }
                 record.diff = (bigint_t(record.balance) - bigint_t(record.priorBalance));
 
-                if (!freshen_only && !deltas_only && !count_only) {
+                if (!freshen_only && !deltas_only) {
                     if (isJson && !first)
                         cout << ", ";
                     cout << record;
 //                    cout << endl;
                     nExported++;
                     first = false;
-                } else if (count_only) {
-                    if (!deltas_only)
-                        nExported++;
                 }
                 priorBalance = record.balance;
 
@@ -146,7 +143,7 @@ if (isTestMode()) {
         }
     }
 
-    if (isJson && !freshen_only && !count_only)
+    if (isJson && !freshen_only)
         cout << "]";
 
     // return to the default provider

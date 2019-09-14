@@ -18,15 +18,20 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        string_q className =
+        options.className =
         (options.doAppearances ? "CAppearance" :
          (options.doTraces ? GETRUNTIME_CLASS(CTrace)->m_ClassName :
           (options.doLogs ? GETRUNTIME_CLASS(CLogEntry)->m_ClassName :
-           (options.doBalances ? GETRUNTIME_CLASS(CEthState)->m_ClassName : GETRUNTIME_CLASS(CTransaction)->m_ClassName))));
-        if (once)
-            cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], className);
+           (options.doBalances ? GETRUNTIME_CLASS(CEthState)->m_ClassName :
+            (options.count_only ? "CCounts" : GETRUNTIME_CLASS(CTransaction)->m_ClassName)))));
 
-        if (options.doBalances) {
+        if (once)
+            cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], options.className);
+
+        if (options.count_only) {
+            options.exportCounts();
+
+        } else if (options.doBalances) {
             options.loadAllAppearances(); // allow the balance query to continue even with no appearances
             options.exportBalances();
         } else {
@@ -41,35 +46,12 @@ int main(int argc, const char *argv[]) {
 
     if (!options.freshen_only && !options.count_only) {
         cerr << "exported " << options.nExported << " ";
-        if (options.doTraces)
-            cerr << "traces from ";
-        else if (options.doLogs)
-            cerr << "logs from ";
-        else if (options.doBalances && !options.deltas_only)
-            cerr << "balances from ";
-        else if (options.doBalances)
-            cerr << "changes in balance from ";
-        else if (options.doABIs)
-            cerr << "abis from ";
+        if (!options.className.empty())
+            cerr << options.className << " from ";
         else
             cerr << "of ";
         cerr << options.items.size() << " transactions" << string_q(45,' ') << "\n";
         cerr.flush();
-    } else if (options.count_only) {
-        cerr << options.nExported << "\t";
-        if (options.doTraces)
-            cerr << "traces";
-        else if (options.doLogs)
-            cerr << "logs";
-        else if (options.doBalances && !options.deltas_only)
-            cerr << "balances";
-        else if (options.doBalances)
-            cerr << "deltas";
-        else if (options.doABIs)
-            cerr << "abis";
-        else
-            cerr << "transactions";
-        cerr << endl;
     }
 
     acctlib_cleanup();

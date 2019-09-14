@@ -77,11 +77,6 @@ api_state_test("acctExport_api_export_balances_d" "0x001d14804b399c6ef80e64576f6
 
 run_test("acctExport_export_c"                    "0x001d14804b399c6ef80e64576f657660804fec0b" " --count_only")
 run_test("acctExport_export_apps_c"               "0x001d14804b399c6ef80e64576f657660804fec0b" " --appearances" " --count_only")
-run_test("acctExport_export_traces_c"             "0x001d14804b399c6ef80e64576f657660804fec0b" " --traces" " --count_only")
-run_test("acctExport_export_logs_c"               "0x001d14804b399c6ef80e64576f657660804fec0b" " --logs" " --count_only")
-run_test("acctExport_export_abis_c"               "0x001d14804b399c6ef80e64576f657660804fec0b" " --abis" " --count_only")
-run_state_test("acctExport_export_balances_c"     "0x001d14804b399c6ef80e64576f657660804fec0b" " --balances" " --count_only")
-run_state_test("acctExport_export_balances_d_c"   "0x001d14804b399c6ef80e64576f657660804fec0b" " --balances" " --deltas" " --count_only")
 
 # Installation steps, this tool is renamed at installation
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

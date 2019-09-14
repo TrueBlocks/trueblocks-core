@@ -281,8 +281,17 @@ bool COptions::parseArguments(string_q& command) {
     if (freshen_only)
         exportFmt = NONE1;
 
-    if (count_only)
-        expContext().fmtMap["header"] = "";
+//    if (count_only && !doAppearances)
+//        return usage("the --count_only option is only available with the --appearances option. Quitting...");
+
+    if (count_only) {
+        string_q header;
+        if (exportFmt == TXT1)
+            header = "address\tcount";
+        else if (exportFmt == CSV1)
+            header = ("\"" + substitute(header, "\t", "\",\"") + "\"");
+        expContext().fmtMap["header"] = header;
+    }
 
     return true;
 }

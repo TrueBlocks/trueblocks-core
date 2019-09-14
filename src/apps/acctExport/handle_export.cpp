@@ -10,7 +10,7 @@ bool COptions::exportData(void) {
 
     ENTER("exportData");
 
-    bool shouldDisplay = (!freshen_only && !count_only);
+    bool shouldDisplay = !freshen_only;
     bool isJson = (exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1);
 
     if (isJson && shouldDisplay)
@@ -164,13 +164,13 @@ bool COptions::exportData(void) {
 
                 HIDE_FIELD(CFunction, "message");
                 if (isRedirected()) {  // we are in --output mode
-                    cerr << "   " << i << " of " << items.size() << " (" << trans.blockNumber << "): " << trans.hash << "\r";
+                    cerr << "   " << className << ": " << i << " of " << items.size() << " (" << trans.blockNumber << "): " << trans.hash << "\r";
                     cerr.flush();
 
                 } else {
                     static size_t cnt = 0;
                     if (!(++cnt % 71)) { // not reporting every tx is way faster
-                        cerr << "   " << i << " of " << items.size() << ": " << trans.hash << "\r";
+                        cerr << "   " << className << ": " << i << " of " << items.size() << ": " << trans.hash << "\r";
                         cerr.flush();
                     }
                 }
