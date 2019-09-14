@@ -1,3 +1,3 @@
 chifra argc: 5 [1:status] [2:--mode] [3:all] [4:--details] 
 chifra status --mode all --details 
-cacheStatus --mode all --details ; 
+cacheStatus --mode all --details

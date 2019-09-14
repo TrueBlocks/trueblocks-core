@@ -39,7 +39,7 @@ int main(int argc, const char *argv[]) {
     }
     cout << exportPostamble(options.exportFmt, expContext().fmtMap["meta"]);
 
-    if (!options.freshen_only) {
+    if (!options.freshen_only && !options.count_only) {
         cerr << "exported " << options.nExported << " ";
         if (options.doTraces)
             cerr << "traces from ";
@@ -55,6 +55,21 @@ int main(int argc, const char *argv[]) {
             cerr << "of ";
         cerr << options.items.size() << " transactions" << string_q(45,' ') << "\n";
         cerr.flush();
+    } else if (options.count_only) {
+        cerr << options.nExported << "\t";
+        if (options.doTraces)
+            cerr << "traces";
+        else if (options.doLogs)
+            cerr << "logs";
+        else if (options.doBalances && !options.deltas_only)
+            cerr << "balances";
+        else if (options.doBalances)
+            cerr << "deltas";
+        else if (options.doABIs)
+            cerr << "abis";
+        else
+            cerr << "transactions";
+        cerr << endl;
     }
 
     acctlib_cleanup();

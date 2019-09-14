@@ -3,7 +3,7 @@ acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --abis
 
   Invalid option: --abis
 
-  Usage:    acctExport [-x|-a|-l|-t|-c|-p|-v|-h] <address> [address...]  
+  Usage:    acctExport [-x|-a|-l|-t|-c|-p|-o|-v|-h] <address> [address...]  
   Purpose:  Export full detail of transactions for one or more Ethereum addresses.
 
   Where:  
@@ -14,6 +14,7 @@ acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --abis
 	-t  (--traces)        export traces instead of transaction list
 	-c  (--balances)      export balance history instead of transaction list
 	-p  (--appearances)   export a list of appearances
+	-o  (--count_only)    display only the count of the number of data items requested
 
 #### Hidden options (shown during testing only)
 	-b  (--blocks enum[on|off*])write blocks to the binary cache ('off' by default)

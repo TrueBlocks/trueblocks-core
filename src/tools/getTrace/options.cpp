@@ -17,7 +17,7 @@ static const COption params[] = {
 // BEG_CODE_OPTIONS
     COption("trans_list", "", "list<trans>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
     COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
-    COption("countOnly", "c", "", OPT_SWITCH, "show the number of traces for the transaction only (fast)"),
+    COption("count_only", "c", "", OPT_SWITCH, "show the number of traces for the transaction only (fast)"),
     COption("noHeader", "n", "", OPT_SWITCH, "do not show the header row"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),
     COption("ddos", "d", "enum[on*|off]", OPT_HIDDEN | OPT_FLAG, "skip over dDos transactions in export ('on' by default)"),
@@ -39,7 +39,7 @@ bool COptions::parseArguments(string_q& command) {
         if (arg == "-a" || arg == "--articulate") {
             articulate = true;
 
-        } else if (arg == "-c" || arg == "--countOnly") {
+        } else if (arg == "-c" || arg == "--count_only") {
             option1 = true;
 
         } else if (arg == "-n" || arg == "--noHeader") {

@@ -15,6 +15,7 @@ static const COption params[] = {
     COption("traces", "t", "", OPT_SWITCH, "export traces instead of transaction list"),
     COption("balances", "c", "", OPT_SWITCH, "export balance history instead of transaction list"),
     COption("appearances", "p", "", OPT_SWITCH, "export a list of appearances"),
+    COption("count_only", "o", "", OPT_SWITCH, "display only the count of the number of data items requested"),
     COption("blocks", "b", "enum[on|off*]", OPT_HIDDEN | OPT_FLAG, "write blocks to the binary cache ('off' by default)"),
     COption("writeTxs", "s", "enum[on*|off]", OPT_HIDDEN | OPT_FLAG, "write transactions to the binary cache ('on' by default)"),
     COption("writeTraces", "r", "enum[on*|off]", OPT_HIDDEN | OPT_FLAG, "write traces to the binary cache ('on' by default)"),
@@ -102,6 +103,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-f" || arg == "--freshen") {
             freshen_only = true;
+
+        } else if (arg == "-o" || arg == "--count_only") {
+            count_only = true;
 
         } else if (arg == "--deltas") {
             deltas_only = true;
@@ -277,6 +281,9 @@ bool COptions::parseArguments(string_q& command) {
     if (freshen_only)
         exportFmt = NONE1;
 
+    if (count_only)
+        expContext().fmtMap["header"] = "";
+
     return true;
 }
 
@@ -299,6 +306,7 @@ void COptions::Init(void) {
     doBalances = false;
     doABIs = false;
     freshen_only = false;
+    count_only = false;
     deltas_only = false;
     scanRange.second = getLastBlock_cache_ripe();
 

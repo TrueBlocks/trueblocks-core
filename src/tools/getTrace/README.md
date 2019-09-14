@@ -13,7 +13,7 @@
 | -------: | :------- | :------- |
 |  | trans_list | a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) (required) |
 | -a | --articulate | articulate the transactions if an ABI is found for the 'to' address |
-| -c | --countOnly | show the number of traces for the transaction only (fast) |
+| -c | --count_only | show the number of traces for the transaction only (fast) |
 | -n | --noHeader | do not show the header row |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |

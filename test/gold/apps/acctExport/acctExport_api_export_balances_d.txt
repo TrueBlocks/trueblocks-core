@@ -4,6 +4,7 @@ TIME ~ CLOCK - : 4-----API_MODE=true
 { "type": "CEthState", "data": [
 [1: as read
 ----------------------------------------------
+nDeltas: 3	lastDelta: 8542971
 0	{
   "blockNumber": 0,
   "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
@@ -22,6 +23,8 @@ TIME ~ CLOCK - : 4-----API_MODE=true
   "balance": 0,
   "diff": -74679320489077336
 }
+2: data
+----------------------------------------------
 {
   "blockNumber": 0,
   "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
@@ -40,8 +43,9 @@ TIME ~ CLOCK - : 4-----API_MODE=true
   "balance": 0,
   "diff": -74679320489077336
 }
-2: Out
+3: Out
 ----------------------------------------------
+nDeltas: 3	lastDelta: 8542971
 0	{
   "blockNumber": 0,
   "address": "0x001d14804b399c6ef80e64576f657660804fec0b",

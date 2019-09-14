@@ -10,9 +10,11 @@ cname               	1004	1	131122	T_TEXT TS_STRING
 abi_spec            	1005	0	1048651	T_OBJECT TS_OBJECT
 statement           	1006	0	1048651	T_OBJECT TS_OBJECT
 stateHistory        	1007	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-nodeBal             	1008	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+curBalance          	1008	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 enabled             	1009	0	65556	T_BOOL TS_NUMERAL
 fm_mode             	1010	1	65561	T_NUMBER TS_NUMERAL
+curEther            	1011	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+curDollars          	1012	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
 {
   "abi_spec": {
     "address": "0x0",
@@ -27,7 +29,7 @@ fm_mode             	1010	1	65561	T_NUMBER TS_NUMERAL
     "blockNum": 0
   },
   "stateHistory": [],
-  "nodeBal": 0,
+  "curBalance": 0,
   "enabled": true,
   "is_contract": false,
   "is_private": false,
@@ -44,9 +46,11 @@ cname               	1004	1	131122	T_TEXT TS_STRING
 abi_spec            	1005	1	1048651	T_OBJECT TS_OBJECT
 statement           	1006	1	1048651	T_OBJECT TS_OBJECT
 stateHistory        	1007	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-nodeBal             	1008	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+curBalance          	1008	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 enabled             	1009	1	65556	T_BOOL TS_NUMERAL
 fm_mode             	1010	1	65561	T_NUMBER TS_NUMERAL
+curEther            	1011	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+curDollars          	1012	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
 {
   "is_contract": false,
   "is_private": false,
@@ -63,9 +67,11 @@ cname               	1004	0	131122	T_TEXT TS_STRING
 abi_spec            	1005	0	1048651	T_OBJECT TS_OBJECT
 statement           	1006	0	1048651	T_OBJECT TS_OBJECT
 stateHistory        	1007	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-nodeBal             	1008	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+curBalance          	1008	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 enabled             	1009	0	65556	T_BOOL TS_NUMERAL
 fm_mode             	1010	0	65561	T_NUMBER TS_NUMERAL
+curEther            	1011	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+curDollars          	1012	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
 {
   "schema": 5008,
   "deleted": 0,
@@ -84,9 +90,11 @@ fm_mode             	1010	0	65561	T_NUMBER TS_NUMERAL
     "blockNum": 0
   },
   "stateHistory": [],
-  "nodeBal": 0,
+  "curBalance": 0,
   "enabled": true,
   "fm_mode": 0,
+  "curEther": 0.000000000000000000,
+  "curDollars": not-implemented,
   "is_contract": false,
   "is_private": false,
   "is_shared": false

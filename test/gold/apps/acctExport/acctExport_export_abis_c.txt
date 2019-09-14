@@ -1,5 +1,7 @@
-acctExport argc: 2 [1:-h] 
-acctExport -h 
+acctExport argc: 4 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--abis] [3:--count_only] 
+acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --abis --count_only 
+
+  Invalid option: --abis
 
   Usage:    acctExport [-x|-a|-l|-t|-c|-p|-o|-v|-h] <address> [address...]  
   Purpose:  Export full detail of transactions for one or more Ethereum addresses.
