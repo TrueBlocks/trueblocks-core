@@ -22,4 +22,4 @@ acctScrape --list
 	-h  (--help)          display this help screen
 
   Powered by QBlocks
-account scraper is finished.                 
+                                                                                                                        

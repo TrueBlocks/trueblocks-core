@@ -147,7 +147,7 @@
 735,apps,export,acctExport,,traces,t,boolean,switch,,export traces instead of transaction list,,FALSE,TRUE,TRUE
 740,apps,export,acctExport,,balances,c,boolean,switch,,export balance history instead of transaction list,,FALSE,TRUE,TRUE
 742,apps,export,acctExport,,appearances,p,boolean,switch,,export a list of appearances,,FALSE,TRUE,TRUE
-743,apps,export,acctExport,,count_only,o,boolean,switch,,display only the count of the number of data items requested,,FALSE,TRUE,TRUE
+743,apps,export,acctExport,,count_only,o,boolean,switch,,"for appearances only, report only on the count",,FALSE,TRUE,TRUE
 745,apps,export,acctExport,,blocks,b,enum[on|off*],flag,,write blocks to the binary cache ('off' by default),,FALSE,FALSE,FALSE
 750,apps,export,acctExport,,writeTxs,s,enum[on*|off],flag,,write transactions to the binary cache ('on' by default),,FALSE,FALSE,FALSE
 755,apps,export,acctExport,,writeTraces,r,enum[on*|off],flag,,write traces to the binary cache ('on' by default),,FALSE,FALSE,FALSE

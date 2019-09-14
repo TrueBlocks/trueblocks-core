@@ -65,4 +65,4 @@ nDeltas: 3	lastDelta: 8542971
   "diff": -74679320489077336
 }
 ]
-], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }exported 3 changes in balance from 3 transactions                                             
+], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }exported 3 CEthState from 3 transactions                                             

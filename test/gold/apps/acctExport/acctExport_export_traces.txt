@@ -5,4 +5,4 @@ blocknumber	transactionindex	traceaddress	action::calltype	error	action::from	ac
 1501459	2	null	call		0x001d14804b399c6ef80e64576f657660804fec0b	0xcfab9ac2bb2e1dcfc2d50f01f4e61f2f72fb5902	74259320489077336	0.074259320489077336	0	0	0x		0x
 
 Would have written to 0x001d14804b399c6ef80e64576f657660804fec0b.expt.txt with 1501459
-exported 2 traces from 3 transactions                                             
+exported 2 CTrace from 3 transactions                                             

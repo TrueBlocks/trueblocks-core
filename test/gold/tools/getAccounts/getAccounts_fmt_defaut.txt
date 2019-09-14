@@ -4,6 +4,7 @@ TIME ~ CLOCK - : 4-----API_MODE=true
 { "type": "CAccountName", "data": [
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "FuzeX",
     "address": "0x1829aa045e21e0d59580024a951db48096e01782",
     "symbol": "FXT",
@@ -16,6 +17,7 @@ TIME ~ CLOCK - : 4-----API_MODE=true
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "ThoreCoin",
     "address": "0x1cb3209d45b2a60b7fbca1ccdbf87f674237a4aa",
     "symbol": "THR",
@@ -28,6 +30,7 @@ TIME ~ CLOCK - : 4-----API_MODE=true
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "Silent Notary Token",
     "address": "0x2859021ee7f2cb10162e67f33af2d22764b31aff",
     "symbol": "SNTR",
@@ -40,6 +43,7 @@ TIME ~ CLOCK - : 4-----API_MODE=true
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "SkinCoin",
     "address": "0x2bdc0d42996017fce214b21607a515da41a9e0c5",
     "symbol": "SKIN",
@@ -52,6 +56,7 @@ TIME ~ CLOCK - : 4-----API_MODE=true
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "EQUAL",
     "address": "0x47dd62d4d075dead71d0e00299fc56a2d747bebb",
     "symbol": "EQL",
@@ -64,6 +69,7 @@ TIME ~ CLOCK - : 4-----API_MODE=true
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "Unicorns Tokens",
     "address": "0x89205a3a3b2a69de6dbf7f01ed13b2108b2c43e7",
     "symbol": "UNI",
@@ -76,6 +82,7 @@ TIME ~ CLOCK - : 4-----API_MODE=true
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "ABX Token",
     "address": "0x9a794dc1939f1d78fa48613b89b8f9d0a20da00e",
     "symbol": "ABX",
@@ -88,6 +95,7 @@ TIME ~ CLOCK - : 4-----API_MODE=true
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "PCHAIN",
     "address": "0xb9bb08ab7e9fa0a1356bd4a39ec0ca267e03b0b3",
     "symbol": "PAI",
@@ -100,6 +108,7 @@ TIME ~ CLOCK - : 4-----API_MODE=true
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "Insights Network",
     "address": "0xc72fe8e3dd5bef0f9f31f259399f301272ef2a2d",
     "symbol": "INSTAR",
@@ -112,6 +121,7 @@ TIME ~ CLOCK - : 4-----API_MODE=true
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "BHPCash",
     "address": "0xee74110fb5a1007b06282e0de5d73a61bf41d9cd",
     "symbol": "BHPC",
@@ -124,6 +134,7 @@ TIME ~ CLOCK - : 4-----API_MODE=true
   },
   {
     "group": "30-Contracts",
+    "subgroup": "",
     "name": "Etherum Tip Jar",
     "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
     "symbol": "TIP",

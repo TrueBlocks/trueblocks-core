@@ -1,5 +1,4 @@
 acctExport argc: 4 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--appearances] [3:--count_only] 
 acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --appearances --count_only 
 
-Would have written to 0x001d14804b399c6ef80e64576f657660804fec0b.expt.txt with 1501459
-3	transactions
+0x001d14804b399c6ef80e64576f657660804fec0b	3

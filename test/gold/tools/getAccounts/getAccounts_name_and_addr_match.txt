@@ -1,4 +1,4 @@
 getAccounts argc: 3 [1:0xb6] [2:torj] 
 getAccounts 0xb6 torj 
-address	name	symbol
-0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac	Storj	STORJ
+group	subgroup	address	name	symbol
+50-Tokens		0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac	Storj	STORJ

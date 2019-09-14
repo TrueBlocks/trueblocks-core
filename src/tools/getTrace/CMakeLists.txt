@@ -57,7 +57,7 @@ run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrace_preload_abi1" ${EXECUTABLE_OUTP
 run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrace_preload_abi2" ${EXECUTABLE_OUTPUT_PATH}/grabABI " 0x6090a6e47849629b7245dfa1ca21d94cd15878ef")
 run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrace_preload_abi3" ${EXECUTABLE_OUTPUT_PATH}/grabABI " 0xebf2bf80c3ddb0b6ac2f88be8dceec7bf12dff22")
 run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrace_preload_abi4" ${EXECUTABLE_OUTPUT_PATH}/grabABI " 0x2bd2326c993dfaef84f696526064ff22eba5b362")
-run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrace_preload_abi5" ${EXECUTABLE_OUTPUT_PATH}/grabABI " 0x314159265dd8dbb310642f98f50c066173c1259c")
+#run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrace_preload_abi5" ${EXECUTABLE_OUTPUT_PATH}/grabABI " 0x314159265dd8dbb310642f98f50c066173c1259c")
 run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrace_preload_abi6" ${EXECUTABLE_OUTPUT_PATH}/grabABI " 0x314159265dd8dbb310642f98f50c066173c1259b")
 run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrace_preload_abi7" ${EXECUTABLE_OUTPUT_PATH}/grabABI " 0x159cf1e9ae58211b588f5e3bf1d7e423952d959b")
 run_the_test(${TEST_PATH} ${GOLD_PATH} "getTrace_preload_abi8" ${EXECUTABLE_OUTPUT_PATH}/grabABI " 0x8055d0504666e2b6942beb8d6014c964658ca591")

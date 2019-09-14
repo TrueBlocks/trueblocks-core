@@ -22,4 +22,4 @@ acctScrape --list 0x1234567890123456789012345678901234567890
 	-h  (--help)          display this help screen
 
   Powered by QBlocks
-account scraper is finished.                 
+                                                                                                                        

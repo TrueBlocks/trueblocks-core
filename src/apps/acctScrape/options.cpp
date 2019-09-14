@@ -107,7 +107,7 @@ bool COptions::parseArguments(string_q& command) {
         string_q fn4 = getMonitorBals(monitor.address);
         if (fileExists(fn4 + ".lck"))
             return usage("The last export file '" + fn4 + "' is locked. Quitting...");
-        cerr << dTabs << "freshening: " << cYellow << monitor.address << cOff << "..." << endLine; cerr.flush();
+        LOG_INFO("freshening: ", cYellow, monitor.address, cOff, "...");
         // If file doesn't exist, this will report '0'
         if (scanRange.first == UINT_MAX)
             scanRange.first = min(scanRange.first, str_2_Uint(asciiFileToString(fn2)));
@@ -155,8 +155,10 @@ COptions::COptions(void) {
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
     // just some cleanup of the screen
-    if (!daemonMode)
-        cerr << dTabs << "account scraper is finished.                 " << endl;
+    if (!daemonMode) {
+        cerr << string_q(120, ' ') << "\r";
+        cerr.flush();
+    }
 }
 
 //--------------------------------------------------------------------------------

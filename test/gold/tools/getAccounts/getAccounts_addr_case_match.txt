@@ -1,8 +1,8 @@
 getAccounts argc: 3 [1:-m] [2:0xcb] 
 getAccounts -m 0xcb 
-address	name	symbol
-0xcb5a05bef3257613e984c17dbcf039952b6d883f	Sugar Exchange	SGR
-0xcb94be6f13a1182e4a4b6140cb7bf2025d28e41b	Trustcoin	TRST
-0xcb97e65f07da24d46bcdd078ebebd7c6e6e3d750	Bytom	BTM
-0xcbcc0f036ed4788f63fc0fee32873d6a7487b908	Humaniq	HMQ
-0xcbeaec699431857fdb4d37addbbdc20e132d4903	YOYOW	YOYOW
+group	subgroup	address	name	symbol
+50-Tokens		0xcb5a05bef3257613e984c17dbcf039952b6d883f	Sugar Exchange	SGR
+50-Tokens		0xcb94be6f13a1182e4a4b6140cb7bf2025d28e41b	Trustcoin	TRST
+50-Tokens		0xcb97e65f07da24d46bcdd078ebebd7c6e6e3d750	Bytom	BTM
+50-Tokens		0xcbcc0f036ed4788f63fc0fee32873d6a7487b908	Humaniq	HMQ
+50-Tokens		0xcbeaec699431857fdb4d37addbbdc20e132d4903	YOYOW	YOYOW

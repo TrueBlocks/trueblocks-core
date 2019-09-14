@@ -3,6 +3,7 @@ getAccounts tip --fmt api
 { "type": "CAccountName", "data": [
   {
     "group": "30-Contracts",
+    "subgroup": "",
     "name": "Etherum Tip Jar",
     "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
     "symbol": "TIP",

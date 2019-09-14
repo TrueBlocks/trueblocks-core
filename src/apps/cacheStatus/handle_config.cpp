@@ -112,8 +112,8 @@ extern string_q convertDisplayStr(const string_q& in);
 
         CConfigItem i1("list", "", "json array", "user specific list of names for addresses -- private data -- not shared", false, false);
         if (isTestMode()) {
-            i1.named.push_back(CAccountName(CAccountName("81-Custom\t0x0000100001000010000100001000010000100001\tTestWallet1")));
-            i1.named.push_back(CAccountName(CAccountName("81-Custom\t0x0000200002000020000200002000020000200002\tTestWallet2")));
+            i1.named.push_back(CAccountName(CAccountName("81-Custom\t\t0x0000100001000010000100001000010000100001\tTestWallet1")));
+            i1.named.push_back(CAccountName(CAccountName("81-Custom\t\t0x0000200002000020000200002000020000200002\tTestWallet2")));
 
         } else {
 

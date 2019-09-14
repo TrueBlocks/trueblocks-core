@@ -3,6 +3,7 @@ getAccounts -x json -a 0xb6 torj
 [
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "Storj",
     "address": "0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac",
     "symbol": "STORJ",

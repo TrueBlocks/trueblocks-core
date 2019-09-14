@@ -287,6 +287,7 @@ void COptions::applyFilter() {
         if (!contents.empty()) {
             CStringArray fields;
             fields.push_back("group");
+            fields.push_back("subgroup");
             fields.push_back("address");
             fields.push_back("name");
             fields.push_back("description");
@@ -308,7 +309,8 @@ void COptions::applyFilter() {
 //-----------------------------------------------------------------------
 string_q shortenFormat(const string_q& fmtIn) {
     string_q ret = toUpper(fmtIn);
-    replace(ret, "[{GROUP}]", "");
+//    replace(ret, "[{GROUP}]", "");
+//    replace(ret, "[{SUBGROUP}]", "");
 //    replace(ret, "[{ADDRESS}]", "");
 //    replace(ret, "[{NAME}]", "");
 //    replace(ret, "[{SYMBOL}]", "");

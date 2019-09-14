@@ -3,4 +3,4 @@ acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --logs
 blocknumber	transactionindex	logindex	address	topic0	topic1	topic2	topic3	data	type	compressedlog
 
 Would have written to 0x001d14804b399c6ef80e64576f657660804fec0b.expt.txt with 1501459
-exported 0 logs from 3 transactions                                             
+exported 0 CLogEntry from 3 transactions                                             
