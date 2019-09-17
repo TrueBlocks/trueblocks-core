@@ -26,6 +26,7 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CConfigGroup : public CBaseNode {
 public:
+    string_q section;
     string_q name;
     CConfigItemArray keys;
 
@@ -40,7 +41,7 @@ public:
     const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    explicit CConfigGroup(const string_q& n) : name(n) { }
+    explicit CConfigGroup(const string_q& s, const string_q& n) : section(s), name(n) { }
     // EXISTING_CODE
     bool operator==(const CConfigGroup& item) const;
     bool operator!=(const CConfigGroup& item) const { return !operator==(item); }
@@ -91,6 +92,7 @@ inline void CConfigGroup::clear(void) {
 inline void CConfigGroup::initialize(void) {
     CBaseNode::initialize();
 
+    section = "";
     name = "";
     keys.clear();
 
@@ -103,6 +105,7 @@ inline void CConfigGroup::duplicate(const CConfigGroup& co) {
     clear();
     CBaseNode::duplicate(co);
 
+    section = co.section;
     name = co.name;
     keys = co.keys;
 
