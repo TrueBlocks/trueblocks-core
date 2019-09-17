@@ -63,6 +63,14 @@ group	subgroup	address	name	description	symbol	source	logo	is_contract	is_privat
 33-Set Protocol	06-Other	0x7f6e5d07f7e90f3ede0a5986671ef7734fbe04a9	Bit Eth Rebalancing Set Token			https://github.com/SetProtocol/set-protocol-contracts		TRUE	FALSE	TRUE
 33-Set Protocol	06-Other	0x818c639ca5f986115eacf77e58d4804de1dd5d40	Linear Auction Price Curve			https://github.com/SetProtocol/set-protocol-contracts		TRUE	FALSE	TRUE
 33-Set Protocol	06-Other	0x8d5cf870354fffae0586b639da6d4e4f6c659c69	WhiteList			https://github.com/SetProtocol/set-protocol-contracts		TRUE	FALSE	TRUE
+34-Kyber Network        0x9ae49c0d7f8f9ef4b864e004fe86ac8294e20950	Kyber Network			TrueBlocks.io		TRUE	FALSE	TRUE
+34-Kyber Network        0x57f8160e1c59d16c01bbe181fd94db4e56b60495	Kyber Weth Reserve			TrueBlocks.io		TRUE	FALSE	TRUE
+34-Kyber Network        0x63825c174ab367968ec60f061753d3bbd36a0d8f	Kyber Reserve			TrueBlocks.io		TRUE	FALSE	TRUE
+34-Kyber Network        0x798abda6cc246d0edba912092a2a3dbd3d11191b	Kyber Conversion Rates			TrueBlocks.io		TRUE	FALSE	TRUE
+34-Kyber Network        0xdfc85c08d5e5924ab49750e006cf8a826ffb7b13	Kyber Sanity Rates			TrueBlocks.io		TRUE	FALSE	TRUE
+34-Kyber Network        0xb0d27b025d5f79f955fa37cd3170b998661abff3	Kyber Orderbook Reserve			TrueBlocks.io		TRUE	FALSE	TRUE
+34-Kyber Network        0x52166528fcc12681af996e409ee3a421a4e128a3	Kyber Fee Burner			TrueBlocks.io		TRUE	FALSE	TRUE
+34-Kyber Network        0xc0d3e654676b117663143eac33b45b620171244b	Kyber Order List			TrueBlocks.io		TRUE	FALSE	TRUE
 50-Tokens		0x0000000000085d4780b73119b644ae5ecd22b376	TrueUSD	The only regulated, exchange-independent stablecoin backed 1-for-1 with US Dollars	TUSD	Etherscan.io	trueusdtoken_28.png	TRUE	FALSE	TRUE
 50-Tokens		0x001f0aa5da15585e5b2305dbab2bac425ea71007	IPSX	Blockchain based system fully automated, with full clearing of utility tokens associating the price and distribution based on offer and demand for IPs	IPSX	Etherscan.io	ipexchange_28.png	TRUE	FALSE	TRUE
 50-Tokens		0x006bea43baa3f7a6f765f14f10a1a1b08334ef45	Stox	Blockchain Prediction Markets Platform.	STX	Etherscan.io	stox_28.png	TRUE	FALSE	TRUE

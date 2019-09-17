@@ -6,4 +6,4 @@ address	blocknumber	transactionindex
 0x001d14804b399c6ef80e64576f657660804fec0b	1501459	2
 
 Would have written to 0x001d14804b399c6ef80e64576f657660804fec0b.expt.txt with 1501459
-exported 3 CAppearance from 3 transactions                                             
+TIME ~ CLOCK - <INFO>  : exported 3 appearances from 3 transactions                                                       

@@ -5,6 +5,7 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
+extern string_q plural(const string_q& in);
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
     acctlib_init(quickQuitHandler);
@@ -44,16 +45,14 @@ int main(int argc, const char *argv[]) {
     }
     cout << exportPostamble(options.exportFmt, expContext().fmtMap["meta"]);
 
-    if (!options.freshen_only && !options.count_only) {
-        cerr << "exported " << options.nExported << " ";
-        if (!options.className.empty())
-            cerr << options.className << " from ";
-        else
-            cerr << "of ";
-        cerr << options.items.size() << " transactions" << string_q(45,' ') << "\n";
-        cerr.flush();
-    }
+    if (!options.freshen_only && !options.count_only)
+        LOG_INFO("exported ", options.nExported, " ", (!options.className.empty() ? (plural(options.className) + " from ") : "of "), options.items.size(), " transactions", string_q(55,' '));
 
     acctlib_cleanup();
     return 0;
+}
+
+//--------------------------------------------------------------------------------
+string_q plural(const string_q& in) {
+    return substitute(substitute(toLower(in).substr(1,1000) + "s", "logentrys", "logs"), "ethstates", "balances");
 }

@@ -57,7 +57,7 @@ bool COptions::exportBalances(void) {
             }
 HERE("as read")
 if (isTestMode()) {
-    cerr << "nDeltas: " << nDeltas << "\tlastDelta: " << lastDelta << endl;
+    cerr << "nDeltas: " << nDeltas << "\tlastDelta: --lastDelta--" << endl;
     for (auto delta : deltas)
         cerr << delta.first << "\t" << delta.second;
 }
@@ -136,7 +136,7 @@ HERE("data")
 
 HERE("Out")
 if (isTestMode()) {
-    cerr << "nDeltas: " << nDeltas << "\tlastDelta: " << lastDelta << endl;
+    cerr << "nDeltas: " << nDeltas << "\tlastDelta: --lastDelta--" << endl;
     for (auto delta : deltas)
         cerr << delta.first << "\t" << delta.second;
 }

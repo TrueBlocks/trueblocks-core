@@ -94,7 +94,7 @@ namespace qblocks {
 
                 } else {
 
-                    cerr << "Unknown type: " << type << " in decodeTheData" << endl;
+                    LOG_WARN("Unknown type: ", type, " in decodeTheData");
 
                 }
 
@@ -486,10 +486,12 @@ namespace qblocks {
             func = parseMap[built];
         }
         if (func) {
-            string_q result = (*func)(substitute(inputStr,"0x",""), NULL);
-            for (auto& item : interfaces)
-                item.value = nextTokenClear(result, ',');
-            return true;
+            if (!inputStr.empty()) {
+                string_q result = (*func)(substitute(inputStr,"0x",""), NULL);
+                for (auto& item : interfaces)
+                    item.value = nextTokenClear(result, ',');
+                return true;
+            }
         }
 
         // Clean up the input to work with the provided interfaces - one input row per 32 bytes
