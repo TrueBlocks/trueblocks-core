@@ -411,8 +411,12 @@ bool COptions::loadAllAppearances(void) {
                 scanRange.first = lastExport;
         }
     }
-    if (tmp.size() == 0)
+
+    if (tmp.size() == 0) {
+        if (!freshen_only)
+            LOG_INFO("Nothing to export" + (monitors.size() ? (" from " + monitors[0].address) : "") + ".");
         return false;
+    }
 
     // Should be sorted already, so it can't hurt
     sort(tmp.begin(), tmp.end());

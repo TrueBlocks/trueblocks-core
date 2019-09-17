@@ -37,7 +37,7 @@ int main(int argc, const char *argv[]) {
             options.exportBalances();
         } else {
             if (!options.loadAllAppearances())
-                return options.usage("Nothing to export.");
+                return 0;
             options.exportData();
         }
 
