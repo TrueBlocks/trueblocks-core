@@ -170,14 +170,14 @@ bool COptions::exportData(void) {
                 HIDE_FIELD(CFunction, "message");
                 if (isRedirected()) {  // we are in --output mode
                     qblocks::eLogger->setEndline('\r');
-                    LOG_INFO("   ", className, ": ", i, " of ", items.size(), " (", trans.blockNumber, ".", trans.transactionIndex, ")      ");
+                    LOG_INFO(className, ": ", i, " of ", items.size(), " (", trans.blockNumber, ".", trans.transactionIndex, ")      ");
                     qblocks::eLogger->setEndline('\n');
 
                 } else {
                     static size_t cnt = 0;
                     if (!(++cnt % 71)) { // not reporting every tx is way faster
                         qblocks::eLogger->setEndline('\r');
-                        LOG_INFO("   ", className, ": ", i, " of ", items.size(), " (", trans.blockNumber, ".", trans.transactionIndex, ")      ");
+                        LOG_INFO(className, ": ", i, " of ", items.size(), " (", trans.blockNumber, ".", trans.transactionIndex, ")      ");
                         qblocks::eLogger->setEndline('\n');
                     }
                 }
