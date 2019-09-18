@@ -50,5 +50,7 @@ run_test("jsonTest_nothing")
 run_test("jsonTest_test_blocks"  "blocks")
 run_test("jsonTest_test_traces"  "traces")
 run_test("jsonTest_test_random"  "random" " --parity")
+run_test("jsonTest_test_spaces"  "spaces")
+run_test("jsonTest_test_escaped" "escaped")
 
 #run_special_test("jsonTest_test_big" "big")

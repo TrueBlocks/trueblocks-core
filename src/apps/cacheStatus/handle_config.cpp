@@ -130,7 +130,6 @@ extern string_q convertDisplayStr(const string_q& in);
             string_q customStr = cc->getConfigJson("custom", "list", "");
             CAccountName item;
             while (item.parseJson3(customStr)) {
-                unpreserveSpaces(item.name);
                 i1.named.push_back(item);
                 item = CAccountName();
             }
@@ -158,34 +157,51 @@ extern string_q convertDisplayStr(const string_q& in);
 
 //--------------------------------------------------------------------------------
 void COptions::handle_config_put(ostream& os) {
-    CConfiguration config;
-    string_q str = asciiFileToString("setConfig_data2.json");
-    str = substitute(str, "\\ ", string_q(1,char(5)));
+
+    string_q str = asciiFileToString("tests/setConfig_data.json");
     str = substitute(str, "\\\"", "\"");
     str = substitute(str, "\\n", "\n");
-    str = trim(str, ' ');
-    str = trim(str, '\"');
-    str = trim(str, ' ');
-    preserveSpaces(str);
     cout << "------------------------------------------------" << endl;
     cout << str << endl;
     cout << "------------------------------------------------" << endl;
+
     CApiResult result;
     result.parseJson3(str);
+
+    manageFields("CAccountName:firstAppearance,latestAppearance,nRecords,sizeInBytes", false);
+    GETRUNTIME_CLASS(CAccountName)->sortFieldList();
+
     cout << "Would have written:" << endl;
     for (auto file : result.data.files) {
         for (auto group : file.groups) {
             for (auto key : group.keys) {
                 string_q val = key.getValueByName("value");
-                unpreserveSpaces(val);
                 cout << "  ";
                 cout << "getGlobalConfig(\"" << file.name << "\")->";
-                cout << "setConfigStr(\"" << group.name << "\", \"";
-                cout << key.name << "\", \"" << val;
-                cout << "\");" << endl;
+                cout << "setConfigStr(";
+                cout << "\"" << group.name << "\", ";
+                cout << "\"" << key.name << "\", ";
+                if (contains(key.name, "list")) {
+                    ostringstream oss;
+                    oss << "[";
+                    bool first = true;
+                    CAccountName name;
+                    while (name.parseJson3(val)) {
+                        if (!first)
+                            oss << ", ";
+                        oss << name;
+                        first = false;
+                    }
+                    oss << "]";
+                    val = substitute(substitute(oss.str(), "\n", ""), "  \"", " \"");
+                    val = substitute(substitute(substitute(substitute(val, "}]", " }\n]"), "[{", "[\n{"), "{", "\t{"), "}, ", " },\n");
+                }
+                cout << "\"" << val << "\"";
+                cout << ");" << endl;
             }
         }
     }
+
     return;
 }
 

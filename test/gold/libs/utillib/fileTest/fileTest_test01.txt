@@ -1,7 +1,7 @@
 fileTest argc: 2 [1:recurse] 
 fileTest recurse 
 Recursive from ../
-Found 87 (87) files
+Found 91 (91) files
 ../apiTest/apiTest_test01.txt
 ../arrayTest/arrayTest_Insertion.txt
 ../arrayTest/arrayTest_README.txt
@@ -34,10 +34,14 @@ Found 87 (87) files
 ../fileTest/folder/file3
 ../jsonTest/jsonTest_nothing.txt
 ../jsonTest/jsonTest_test_blocks.txt
+../jsonTest/jsonTest_test_escaped.txt
 ../jsonTest/jsonTest_test_random.txt
+../jsonTest/jsonTest_test_spaces.txt
 ../jsonTest/jsonTest_test_traces.txt
 ../jsonTest/tests/blocks.json
+../jsonTest/tests/escaped.json
 ../jsonTest/tests/random.json
+../jsonTest/tests/spaces.json
 ../jsonTest/tests/traces.json
 ../parsingTest/parsingTest_00.txt
 ../parsingTest/parsingTest_01.txt

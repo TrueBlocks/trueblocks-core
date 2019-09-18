@@ -57,7 +57,6 @@ int main(int argc, const char *argv[]) {
 
         string_q str = STR_THING;
         cout << str << endl;
-        preserveSpaces(str);
         cout << str << endl;
     }
 

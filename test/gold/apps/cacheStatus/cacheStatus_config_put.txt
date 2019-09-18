@@ -1,7 +1,7 @@
 cacheStatus argc: 3 [1:--config-put] [2:string] 
 cacheStatus --config-put string 
 ------------------------------------------------
-{ "type": "CConfiguration", "data": [
+"{ "type": "CConfiguration", "data": [
 {
   "files": [
     {
@@ -12,49 +12,49 @@ cacheStatus --config-put string
           "keys": [
             {
               "name": "rpcProvider",
-              "value": "--rpcProvider--",
+              "value": "--rpc Provider--",
               "type": "url",
-              "tip": "theEthereumnode'sRPCendpoint",
+              "tip": "the Ethereum node's RPC endpoint",
               "required": true,
               "read_only": false
             },
             {
               "name": "apiProvider",
-              "value": "--apiProvider--",
+              "value": "--api Provider--",
               "type": "url",
-              "tip": "TrueBlocks'APIendpoint",
+              "tip": "TrueBlocks' API endpoint",
               "required": true,
               "read_only": false
             },
             {
               "name": "balanceProvider",
-              "value": "--balanceProv--",
+              "value": "--balance Prov--",
               "type": "url",
-              "tip": "alternativenodeendpointforaccountbalances",
+              "tip": "alternative node endpoint for account balances",
               "required": false,
               "read_only": false
             },
             {
               "name": "configPath",
-              "value": "--configPath--",
+              "value": "--config Path--",
               "type": "path",
-              "tip": "locationofconfigfiles,readonly",
+              "tip": "location of config files, read only",
               "required": true,
               "read_only": true
             },
             {
               "name": "cachePath",
-              "value": "--cachePath--",
+              "value": "--cache Path--",
               "type": "path",
-              "tip": "locationofcache(onexternalSSD,forexample)",
+              "tip": "location of cache (on external SSD, for example)",
               "required": false,
               "read_only": false
             },
             {
               "name": "indexPath",
-              "value": "--indexPath--",
+              "value": "--index Path--",
               "type": "path",
-              "tip": "locationofindex(oninternalSSDforspeed)",
+              "tip": "location of index (on internal SSD for speed)",
               "required": false,
               "read_only": false
             }
@@ -70,25 +70,25 @@ cacheStatus --config-put string
           "keys": [
             {
               "name": "nBlocks",
-              "value": "--nBlocks--",
+              "value": "--n Blocks--",
               "type": "uint",
-              "tip": "numberofblockstoprocessperinvocationofblaze(>50)",
+              "tip": "number of blocks to process per invocation of blaze (> 50)",
               "required": true,
               "read_only": false
             },
             {
               "name": "nAddrProcs",
-              "value": "--nAddrProcs--",
+              "value": "--n Addr Procs--",
               "type": "uint",
-              "tip": "numberofparallelgoprocessestousetoprocessaddresses(>0)",
+              "tip": "number of parallel go processes to use to process addresses (> 0)",
               "required": true,
               "read_only": false
             },
             {
               "name": "nBlockProcs",
-              "value": "--nBlockProcs--",
+              "value": "--n Block Procs--",
               "type": "uint",
-              "tip": "numberofparallelgoprocessestousetoprocessblocks(>0)",
+              "tip": "number of parallel go processes to use to process blocks (> 0)",
               "required": true,
               "read_only": false
             }
@@ -104,17 +104,17 @@ cacheStatus --config-put string
           "keys": [
             {
               "name": "writeTxs",
-              "value": "--writeTxs--",
+              "value": "--write Txs--",
               "type": "bool",
-              "tip": "writetransactionstotheTrueBlocksbinarycache",
+              "tip": "write transactions to the TrueBlocks binary cache",
               "required": false,
               "read_only": false
             },
             {
               "name": "writeTraces",
-              "value": "--writeTraces--",
+              "value": "--write Traces--",
               "type": "bool",
-              "tip": "writetracestotheTrueBlocksbinarycache",
+              "tip": "write traces to the TrueBlocks binary cache",
               "required": false,
               "read_only": false
             }
@@ -127,7 +127,7 @@ cacheStatus --config-put string
               "name": "remote",
               "value": "--remote--",
               "type": "bool",
-              "tip": "getbalancesfrombalanceProvider",
+              "tip": "get balances from balanceProvider",
               "required": false,
               "read_only": false
             }
@@ -145,7 +145,7 @@ cacheStatus --config-put string
               "name": "api_key",
               "value": "--api_key--",
               "type": "string",
-              "tip": "apikeyrequiredtouseEtherScanapis--privatedata--notshared",
+              "tip": "api key required to use EtherScan apis -- private data -- not shared",
               "required": false,
               "read_only": false
             }
@@ -161,9 +161,9 @@ cacheStatus --config-put string
           "keys": [
             {
               "name": "list",
-              "value": "[{"address":"0x3b1613b1613b1613b1613b1613b1613b1613b161","name":"TestWallet1"},{"address":"0xb1661b1661b1661b1661b1661b1661b1661b1661","name":"TestWallet2"}]",
-              "type": "jsonarray",
-              "tip": "userspecificlistofnamesforaddresses--privatedata--notshared",
+              "value": [{ "address": "0x3b1613b1613b1613b1613b1613b1613b1613b161", "name": "Test Wallet 1" },{ "address": "0xb1661b1661b1661b1661b1661b1661b1661b1661", "name": "Test Wallet 2" }],
+              "type": "json array",
+              "tip": "user specific list of names for addresses -- private data -- not shared",
               "required": false,
               "read_only": false
             }
@@ -178,17 +178,3 @@ cacheStatus --config-put string
 
 ------------------------------------------------
 Would have written:
-  getGlobalConfig("quickBlocks.toml")->setConfigStr("settings", "rpcProvider", "--rpc Provider--");
-  getGlobalConfig("quickBlocks.toml")->setConfigStr("settings", "apiProvider", "--api Provider--");
-  getGlobalConfig("quickBlocks.toml")->setConfigStr("settings", "balanceProvider", "--balance Prov--");
-  getGlobalConfig("quickBlocks.toml")->setConfigStr("settings", "configPath", "--config Path--");
-  getGlobalConfig("quickBlocks.toml")->setConfigStr("settings", "cachePath", "--cache Path--");
-  getGlobalConfig("quickBlocks.toml")->setConfigStr("settings", "indexPath", "--index Path--");
-  getGlobalConfig("blockScrape.toml")->setConfigStr("settings", "nBlocks", "--n Blocks--");
-  getGlobalConfig("blockScrape.toml")->setConfigStr("settings", "nAddrProcs", "--n Addr Procs--");
-  getGlobalConfig("blockScrape.toml")->setConfigStr("settings", "nBlockProcs", "--n Block Procs--");
-  getGlobalConfig("acctExport.toml")->setConfigStr("settings", "writeTxs", "--write Txs--");
-  getGlobalConfig("acctExport.toml")->setConfigStr("settings", "writeTraces", "--write Traces--");
-  getGlobalConfig("acctExport.toml")->setConfigStr("balances", "remote", "--remote--");
-  getGlobalConfig("ethslurp.toml")->setConfigStr("settings", "api_key", "--api_key--");
-  getGlobalConfig("getAccounts.toml")->setConfigStr("custom", "list", "{ address: 0x3b1613b1613b1613b1613b1613b1613b1613b161, name: Test Wallet 1 },{ address: 0xb1661b1661b1661b1661b1661b1661b1661b1661, name: Test Wallet 2 }");

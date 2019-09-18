@@ -178,6 +178,8 @@ n,group,api_route,tool,order,command,command_short,data_type,option_kind,default
 860,apps,rm,,,yes,,boolean,switch,,must be present for remove to occur,,TRUE,TRUE,TRUE
 865,apps,config,,,addr_list,,list<addr>,positional,,show or edit one or more addresses' config file,,FALSE,TRUE,TRUE
 870,apps,config,,,mode,,enum[show|edit],flag,,whether to show or edit the config,,FALSE,TRUE,TRUE
+870,apps,config,,,get,,,switch,,retrieve current configuration values,,FALSE,FALSE,FALSE
+870,apps,config,,,set,,string,flag,,set new configuration values,,FALSE,FALSE,FALSE
 875,apps,leech,,,,,,,,leech the address index from IPFS,,FALSE,TRUE,TRUE
 880,apps,seed,,,,,,,,seed the address index to IPFS,,FALSE,TRUE,TRUE
 885,apps,"export,list",acctScrape,,addr_list,,list<addr>,positional,,one or more Ethereum addresses,,TRUE,TRUE,TRUE

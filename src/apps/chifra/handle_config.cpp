@@ -13,6 +13,7 @@ bool COptions::handle_config(void) {
 
     replaceAll(tool_flags, "--get", "get");
     replaceAll(tool_flags, "--put", "put");
+    replaceAll(tool_flags, "set", "put");
     if (tool_flags.empty() || (!startsWith(tool_flags, "get") && !startsWith(tool_flags, "put")))
         EXIT_USAGE("chifra config 'mode' must be either 'get' or 'put <json>'.");
 
@@ -49,7 +50,7 @@ bool COptions::handle_config(void) {
     tool_flags = trim(substitute(substitute(tool_flags, "--addr_list", ""), "--mode", ""));
     string_q cmd = nextTokenClear(tool_flags, ' ');
     if (cmd != "edit" && cmd != "show")
-        EXIT_USAGE("chifra config 'mode' must be either 'edit' or 'show'.");
+        EXIT_USAGE("chifra co nfig 'mode' must be either 'edit' or 'show'.");
 
     for (auto addr : addrs) {
         string_q path = getMonitorPath(addr + ".toml");

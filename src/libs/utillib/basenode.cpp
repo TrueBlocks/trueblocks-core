@@ -130,7 +130,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    void preserveSpaces(string_q& str) {
+    inline void preserveSpaces(string_q& str) {
         enum state_t { OUT = 0, IN = 1 };
         state_t state = OUT;
         char *s = (char *)str.c_str();
@@ -154,13 +154,18 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    void unpreserveSpaces(string_q& str) {
-        char *s = (char *)str.c_str();
+    inline void unpreserveSpaces(char *s) {
         while (*s) {
             if (*s == char(5))
                 *s = ' ';
             s++;
         }
+        return;
+    }
+
+    //--------------------------------------------------------------------------------
+    inline void unpreserveSpaces(string_q& str) {
+        unpreserveSpaces((char*)str.c_str());
         return;
     }
 
@@ -267,6 +272,8 @@ namespace qblocks {
                            (const char*)tbs, fieldName, fieldVal, (s+1));
                     fflush(stdout);
 #endif
+                    if (!strchr(fieldVal, '{')) // if it's not an object, replace space savers
+                        unpreserveSpaces(fieldVal);
                     nFields += this->setValueByName(fieldName, fieldVal);
                     fieldName = NULL;
                     fieldVal = NULL;
