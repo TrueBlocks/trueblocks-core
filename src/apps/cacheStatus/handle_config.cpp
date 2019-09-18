@@ -180,7 +180,7 @@ void COptions::handle_config_put(ostream& os) {
                 unpreserveSpaces(val);
                 cout << "  ";
                 cout << "getGlobalConfig(\"" << file.name << "\")->";
-                cout << "setConfigStr(\"" << group.section << "\", \"";
+                cout << "setConfigStr(\"" << group.name << "\", \"";
                 cout << key.name << "\", \"" << val;
                 cout << "\");" << endl;
             }
