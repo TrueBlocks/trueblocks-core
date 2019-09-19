@@ -194,29 +194,3 @@ bool COptions::visitBinaryFile(const string_q& path, void *data) {
 
     return !shouldQuit();
 }
-
-//---------------------------------------------------------------
-bool visitStagingIndexFiles(const string_q& path, void *data) {
-    if (endsWith(path, "/")) {
-        return forEveryFileInFolder(path + "*", visitStagingIndexFiles, data);
-
-    } else {
-        cerr << path << endl;
-        // Pick up some useful data from the options
-        COptions *options = reinterpret_cast<COptions*>(data);
-
-        // Filenames in the staging folder take the form 'end.bin' where both 'end' is the
-        // latest block in teh file. Silently skips unknown files (such as shell scripts).
-        if (!startsWith(path, "0") || !endsWith(path, ".txt"))
-            return !shouldQuit();
-
-        cerr << options->useBlooms << " " << path << endl;
-    }
-
-    return !shouldQuit();
-}
-
-//---------------------------------------------------------------
-bool visitUnripeIndexFiles(const string_q& path, void *data) {
-    return !shouldQuit();
-}
