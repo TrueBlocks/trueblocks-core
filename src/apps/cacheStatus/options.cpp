@@ -7,35 +7,35 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-// BEG_CODE_OPTIONS
+    // BEG_CODE_OPTIONS
     COption("mode_list", "", "list<enum[index|monitors|names|abis|blocks|txs|traces|slurps|prices|some*|all]>", OPT_POSITIONAL, "one or more of [index|monitors|names|abis|blocks|txs|traces|slurps|prices|some*|all]"),
     COption("details", "d", "", OPT_SWITCH, "include details about items found in monitors, slurps, abis, or price caches"),
-    COption("config-get", "", "", OPT_HIDDEN | OPT_SWITCH, "returns JSON data of the editable configuration file items"),
-    COption("config-set", "", "string", OPT_HIDDEN | OPT_FLAG, "accepts JSON config data and writes it to configuration files"),
     COption("list", "l", "", OPT_SWITCH, "display results in Linux ls -l format (assumes --detail)"),
     COption("start", "", "<blknum>", OPT_FLAG, "starting block for data retreival"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),
+    COption("config-get", "g", "", OPT_HIDDEN | OPT_SWITCH, "returns JSON data of the editable configuration file items"),
+    COption("config-set", "s", "", OPT_HIDDEN | OPT_FLAG, "accepts JSON config data and writes it to configuration files"),
     COption("", "", "", OPT_DESCRIPTION, "Report on status of one or more TrueBlocks caches."),
-// END_CODE_OPTIONS
+    // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-
+    
     ENTER("parseArguments");
     if (!standardOptions(command))
         EXIT_NOMSG(false);
-
+    
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (arg == "-d" || arg == "--details") {
             details = true;
-
+            
         } else if (arg == "-l" || arg == "--list") {
             isListing = true;
-
+            
         } else if (startsWith(arg, "--start:")) {
             arg = substitute(arg, "--start:", "");
             if (!isNumeral(arg))
@@ -45,19 +45,19 @@ bool COptions::parseArguments(string_q& command) {
             getBlock_light(block, "latest");
             if (start > block.blockNumber)
                 return usage("Start block (" + uint_2_Str(start) + ") is greater than the latest block. Quitting...");
-
+            
         } else if (arg == "--config-get") {
             isConfig = true;
-
-        } else if (startsWith(arg, "--config-set:")) {
-            mode = substitute(arg, "--config-set:", "");  // save the string
+            
+        } else if (startsWith(arg, "--config-set")) {
+            mode = "set";
             isConfig = true;
-
+            
         } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
-
+            
         } else {
             if (contains(arg, char(5))) {
                 newSettings = arg;
@@ -70,14 +70,14 @@ bool COptions::parseArguments(string_q& command) {
             }
         }
     }
-
+    
     if (!isConfig) {
         if (mode.empty() || contains(mode, "some"))
             mode = "index|monitors|names|abis|slurps|prices";
-
+        
         if (contains(mode, "all"))
             mode = "index|monitors|names|abis|blocks|txs|traces|slurps|prices";
-
+        
         mode = "|" + trim(mode, '|') + "|";
     }
     
@@ -87,7 +87,7 @@ bool COptions::parseArguments(string_q& command) {
         HIDE_FIELD(CPriceCache, "items");
         HIDE_FIELD(CAbiCache, "items");
     }
-
+    
     EXIT_NOMSG(true);
 }
 
@@ -95,20 +95,20 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOn(OPT_PREFUND | OPT_OUTPUT);
-
+    
     isListing = false;
     isConfig = false;
     details = false;
     mode = "";
     start = 0;
-
+    
     char hostname[HOST_NAME_MAX];  gethostname(hostname, HOST_NAME_MAX);
     char username[LOGIN_NAME_MAX]; getlogin_r(username, LOGIN_NAME_MAX);
     if (!getEnvStr("DOCKER_MODE").empty()) {
         memset(username, 0, LOGIN_NAME_MAX);
         strncpy(username, "nobody", 6);
     }
-
+    
     if (isTestMode()) {
         status.host = "--hostname-- (--username--)";
         status.rpc_provider = status.api_provider = status.balance_provider = "--providers--";
@@ -132,7 +132,7 @@ void COptions::Init(void) {
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
     Init();
-
+    
     CStatus::registerClass();
     CCache::registerClass();
     CIndexCache::registerClass();
@@ -149,12 +149,12 @@ COptions::COptions(void) {
     CConfigFile::registerClass();
     CConfigGroup::registerClass();
     CConfigItem::registerClass();
-
+    
     HIDE_FIELD(CAccountWatch,  "statement");
     HIDE_FIELD(CAccountWatch,  "stateHistory");
     HIDE_FIELD(CAccountWatch,  "curBalance");
     HIDE_FIELD(CAccountWatch,  "abi_spec");
-
+    
     HIDE_FIELD(CAccountName,   "is_contract");
     HIDE_FIELD(CAccountName,   "is_private");
     HIDE_FIELD(CAccountName,   "is_shared");
@@ -163,7 +163,7 @@ COptions::COptions(void) {
     UNHIDE_FIELD(CAccountName, "sizeInBytes");
     UNHIDE_FIELD(CAccountName, "firstAppearance");
     UNHIDE_FIELD(CAccountName, "latestAppearance");
-
+    
     minArgs = 0;
 }
 

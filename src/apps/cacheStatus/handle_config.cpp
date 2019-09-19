@@ -158,7 +158,15 @@ extern string_q convertDisplayStr(const string_q& in);
 //--------------------------------------------------------------------------------
 void COptions::handle_config_put(ostream& os) {
 
-    string_q str = asciiFileToString("tests/setConfig_data.json");
+    string_q str;
+    str = getEnvStr("CONFIG_SET");
+    if (isTestMode()) {
+        if (str.empty())
+            str = asciiFileToString("tests/setConfig_data.json");
+    } else {
+        LOG_INFO("No settings given. Quitting...");
+        return;
+    }
     str = substitute(str, "\\\"", "\"");
     str = substitute(str, "\\n", "\n");
     cout << "------------------------------------------------" << endl;
@@ -201,7 +209,7 @@ void COptions::handle_config_put(ostream& os) {
             }
         }
     }
-
+    
     return;
 }
 

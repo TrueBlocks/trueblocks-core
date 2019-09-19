@@ -1,0 +1,100 @@
+[
+    {
+        "name": "quickBlocks.toml",
+        "groups": [
+            {
+                "section": "Providers",
+                "name": "settings",
+                "keys": [
+                    {
+                        "name": "rpcProvider",
+                        "value": "http://localhost:36963/",
+                    },
+                    {
+                        "name": "apiProvider",
+                        "value": "http://localhost:8080",
+                    },
+                    {
+                        "name": "balanceProvider",
+                        "value": "http://localhost:36963/",
+                    }
+                ]
+            },
+            {
+                "section": "Paths",
+                "name": "settings",
+                "keys": [
+                    {
+                        "name": "configPath",
+                        "value": "~/.quickBlocks/",
+                    },
+                    {
+                        "name": "cachePath",
+                        "value": "/Users/jrush/.quickBlocks/cache/",
+                    },
+                    {
+                        "name": "indexPath",
+                        "value": "~/.quickBlocks/cache/addr_index/",
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "blockScrape.toml",
+        "groups": [
+            {
+                "section": "Scraper",
+                "name": "settings",
+                "keys": [
+                    {
+                        "name": "nBlocks",
+                        "value": "2000",
+                    },
+                    {
+                        "name": "nAddrProcs",
+                        "value": "20",
+                    },
+                    {
+                        "name": "nBlockProcs",
+                        "value": "10",
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "acctExport.toml",
+        "groups": [
+            {
+                "section": "Exporter",
+                "name": "settings",
+                "keys": [
+                    {
+                        "name": "writeTxs",
+                        "value": "true",
+                    },
+                    {
+                        "name": "writeTraces",
+                        "value": "true",
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "ethslurp.toml",
+        "groups": [
+            {
+                "section": "APIs",
+                "name": "settings",
+                "keys": [
+                    {
+                        "name": "etherscan",
+                        "value": "68E1BQYW85ETVNHKWV27B8N5HYICEHEPH1",
+                    }
+                ]
+            }
+        ]
+    }
+]

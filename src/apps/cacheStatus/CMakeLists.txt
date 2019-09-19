@@ -29,7 +29,7 @@ build_readme(${CMAKE_CURRENT_SOURCE_DIR} ${TOOL_NAME})
 
 # Target to run only specific (long-running) test cases
 add_custom_target(test-all COMMAND ${CMAKE_CTEST_COMMAND} -C test_all)
-#add_custom_target(test-state COMMAND ${CMAKE_CTEST_COMMAND} -C test_state)
+add_custom_target(test-state COMMAND ${CMAKE_CTEST_COMMAND} -C test_state)
 
 # Functions to run test cases
 function(run_test testName)
