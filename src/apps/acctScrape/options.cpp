@@ -82,10 +82,6 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // So one of the test cases passes only
-    if (isTestMode() && monitors.size() == 1 && monitors[0].address == "0x001d14804b399c6ef80e64576f657660804fec0b")
-        setenv("TEST_MODE", "false", true);
-
     if (monitors.size() == 0)
         return usage("You must provide at least one Ethereum address. Quitting...");
 
@@ -111,7 +107,8 @@ bool COptions::parseArguments(string_q& command) {
         string_q fn4 = getMonitorBals(monitor.address);
         if (fileExists(fn4 + ".lck"))
             return usage("The last export file '" + fn4 + "' is locked. Quitting...");
-        LOG_INFO("freshening: ", cYellow, monitor.address, cOff, "...");
+        if (!isTestMode())
+            LOG_INFO("freshening: ", cYellow, monitor.address, cOff, "...");
         // If file doesn't exist, this will report '0'
         if (scanRange.first == UINT_MAX)
             scanRange.first = min(scanRange.first, str_2_Uint(asciiFileToString(fn2)));
@@ -128,6 +125,10 @@ bool COptions::parseArguments(string_q& command) {
 
     if (noHeader)
         expContext().fmtMap["header"] = "";
+
+    // So one of the test cases passes only
+    if (isTestMode() && monitors.size() == 1 && monitors[0].address == "0x001d14804b399c6ef80e64576f657660804fec0b")
+        setenv("TEST_MODE", "false", true);
 
     // This would fail, for example, if the accounts are scraped further than the blocks (i.e. we
     // cleared the block index cache, but we didn't clear the account monitor cache

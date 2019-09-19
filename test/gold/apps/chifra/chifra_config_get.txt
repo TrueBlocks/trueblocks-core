@@ -1,3 +1,156 @@
 chifra argc: 3 [1:config] [2:--get] 
 chifra config --get 
-cacheStatus --config-get
+TIME ~ CLOCK - <INFO>  : chifra calling: cacheStatus --config-get
+cacheStatus argc: 2 [1:--config-get] 
+cacheStatus --config-get 
+{
+  "files": [
+    {
+      "name": "quickBlocks.toml",
+      "groups": [
+        {
+          "section": "Providers",
+          "name": "settings",
+          "keys": [
+            {
+              "name": "rpcProvider",
+              "value": "--rpc Provider--",
+              "type": "url",
+              "tip": "the Ethereum node's RPC endpoint",
+              "required": true,
+              "read_only": false
+            },
+            {
+              "name": "apiProvider",
+              "value": "--api Provider--",
+              "type": "url",
+              "tip": "TrueBlocks' API endpoint",
+              "required": true,
+              "read_only": false
+            },
+            {
+              "name": "balanceProvider",
+              "value": "--balance Prov--",
+              "type": "url",
+              "tip": "alternative node endpoint for account balances",
+              "required": false,
+              "read_only": false
+            }
+          ]
+        },
+        {
+          "section": "Paths",
+          "name": "settings",
+          "keys": [
+            {
+              "name": "configPath",
+              "value": "--config Path--",
+              "type": "path",
+              "tip": "location of config files, read only",
+              "required": true,
+              "read_only": true
+            },
+            {
+              "name": "cachePath",
+              "value": "--cache Path--",
+              "type": "path",
+              "tip": "location of cache (on external SSD, for example)",
+              "required": false,
+              "read_only": false
+            },
+            {
+              "name": "indexPath",
+              "value": "--index Path--",
+              "type": "path",
+              "tip": "location of index (on internal SSD for speed)",
+              "required": false,
+              "read_only": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "blockScrape.toml",
+      "groups": [
+        {
+          "section": "Scraper",
+          "name": "settings",
+          "keys": [
+            {
+              "name": "nBlocks",
+              "value": "--n Blocks--",
+              "type": "uint",
+              "tip": "number of blocks to process per invocation of blaze (> 50)",
+              "required": true,
+              "read_only": false
+            },
+            {
+              "name": "nAddrProcs",
+              "value": "--n Addr Procs--",
+              "type": "uint",
+              "tip": "number of parallel go processes to use to process addresses (> 0)",
+              "required": true,
+              "read_only": false
+            },
+            {
+              "name": "nBlockProcs",
+              "value": "--n Block Procs--",
+              "type": "uint",
+              "tip": "number of parallel go processes to use to process blocks (> 0)",
+              "required": true,
+              "read_only": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "acctExport.toml",
+      "groups": [
+        {
+          "section": "Exporter",
+          "name": "settings",
+          "keys": [
+            {
+              "name": "writeTxs",
+              "value": "--write Txs--",
+              "type": "bool",
+              "tip": "write transactions to the TrueBlocks binary cache",
+              "required": false,
+              "read_only": false
+            },
+            {
+              "name": "writeTraces",
+              "value": "--write Traces--",
+              "type": "bool",
+              "tip": "write traces to the TrueBlocks binary cache",
+              "required": false,
+              "read_only": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ethslurp.toml",
+      "groups": [
+        {
+          "section": "APIs",
+          "name": "settings",
+          "keys": [
+            {
+              "name": "etherscan",
+              "value": "--api_key--",
+              "type": "string",
+              "tip": "api key required to use EtherScan apis -- private data -- not shared",
+              "required": false,
+              "read_only": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+

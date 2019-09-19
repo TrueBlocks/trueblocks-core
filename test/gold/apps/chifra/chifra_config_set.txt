@@ -1,3 +1,9 @@
 chifra argc: 4 [1:config] [2:--set] [3:{ test-data }] 
 chifra config --set { test-data } 
-cacheStatus --config-set:{~test-data~}~
+TIME ~ CLOCK - <INFO>  : chifra calling: cacheStatus --config-set:{~test-data~}~
+cacheStatus argc: 2 [1:--config-set:{~test-data~}~] 
+cacheStatus --config-set:{~test-data~}~ 
+------------------------------------------------
+
+------------------------------------------------
+Would have written:

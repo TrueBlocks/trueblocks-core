@@ -18,12 +18,10 @@ bool COptions::handle_config(void) {
     LOG5("tool_flags: " + tool_flags);
     ostringstream os;
     os << "cacheStatus " << tool_flags;
-    if (isTestMode())
-        cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
-    else {
-        LOG_INFO("chifra calling: ", os.str());
-        if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
-    }
+
+    // both testing and non-testing
+    LOG_INFO("chifra calling: ", os.str());
+    if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
 
     EXIT_NOMSG4(true);
 }
