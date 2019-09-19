@@ -52,6 +52,7 @@ function(api_state_test testName)
 endfunction(api_state_test)
 
 # Preload some data
+run_the_api_test(${TEST_PATH} ${GOLD_PATH} "acctExport_chifra_rm" ${EXECUTABLE_OUTPUT_PATH}/chifra " rm" " --yes" " 0x001d14804b399c6ef80e64576f657660804fec0b")
 run_the_test(${TEST_PATH} ${GOLD_PATH} "acctExport_preload_list" ${EXECUTABLE_OUTPUT_PATH}/acctScrape " 0x001d14804b399c6ef80e64576f657660804fec0b")
 
 # Enter one line for each individual test

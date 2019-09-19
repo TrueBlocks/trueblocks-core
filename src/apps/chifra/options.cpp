@@ -26,6 +26,8 @@ bool COptions::parseArguments(string_q& command) {
 
     ENTER4("parseArguments");
 
+    bool copy_to_tool = false;
+
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
@@ -38,12 +40,21 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "--tool_help" || (isApiMode() && arg == "--help")) {
             tool_flags += (" --help");
 
+        } else if (arg == "--set") {
+            tool_flags += (" --config-set:");
+            copy_to_tool = true;
+
         } else if (mode.empty() && startsWith(arg, '-')) {
 
             if (!builtInCmd(arg))
                 EXIT_USAGE("Missing mode: " + arg);
 
         } else {
+
+            if (copy_to_tool) {
+                tool_flags += (arg + '~');
+                continue;
+            }
 
             string descr = substitute(substitute(params[0].description, "[", "|"), "]", "|");
             if (contains(descr, "|" + arg + "|")) {

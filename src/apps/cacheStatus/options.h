@@ -26,6 +26,7 @@ public:
     bool isListing;
     bool isConfig;
     blknum_t start;
+    string_q newSettings;
 
     COptions(void);
     ~COptions(void);

@@ -1,7 +1,7 @@
-cacheStatus argc: 2 [1:--config-put] 
-cacheStatus --config-put 
+cacheStatus argc: 2 [1:--config-set] 
+cacheStatus --config-set 
 
-  Invalid option: --config-put
+  Invalid option: --config-set
 
   Usage:    cacheStatus [-d|-l|-v|-h] mode_list  
   Purpose:  Report on status of one or more TrueBlocks caches.

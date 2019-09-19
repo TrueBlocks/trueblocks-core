@@ -11,15 +11,13 @@ bool COptions::handle_config(void) {
     ENTER4("handle_" + mode);
     nodeNotRequired();
 
-    replaceAll(tool_flags, "--get", "get");
-    replaceAll(tool_flags, "--put", "put");
-    replaceAll(tool_flags, "set", "put");
-    if (tool_flags.empty() || (!startsWith(tool_flags, "get") && !startsWith(tool_flags, "put")))
+    replaceAll(tool_flags, "--get", "--config-get");
+    if (!startsWith(tool_flags, "--config-get") && !startsWith(tool_flags, "--config-set"))
         EXIT_USAGE("chifra config 'mode' must be either 'get' or 'put <json>'.");
 
     LOG5("tool_flags: " + tool_flags);
     ostringstream os;
-    os << "cacheStatus --config-" << tool_flags << " ; ";
+    os << "cacheStatus " << tool_flags;
     if (isTestMode())
         cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
     else {

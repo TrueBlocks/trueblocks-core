@@ -11,7 +11,7 @@ static const COption params[] = {
     COption("mode_list", "", "list<enum[index|monitors|names|abis|blocks|txs|traces|slurps|prices|some*|all]>", OPT_POSITIONAL, "one or more of [index|monitors|names|abis|blocks|txs|traces|slurps|prices|some*|all]"),
     COption("details", "d", "", OPT_SWITCH, "include details about items found in monitors, slurps, abis, or price caches"),
     COption("config-get", "", "", OPT_HIDDEN | OPT_SWITCH, "returns JSON data of the editable configuration file items"),
-    COption("config-put", "", "string", OPT_HIDDEN | OPT_FLAG, "accepts JSON config data and writes it to configuration files"),
+    COption("config-set", "", "string", OPT_HIDDEN | OPT_FLAG, "accepts JSON config data and writes it to configuration files"),
     COption("list", "l", "", OPT_SWITCH, "display results in Linux ls -l format (assumes --detail)"),
     COption("start", "", "<blknum>", OPT_FLAG, "starting block for data retreival"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),
@@ -49,8 +49,8 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "--config-get") {
             isConfig = true;
 
-        } else if (startsWith(arg, "--config-put:")) {
-            mode = substitute(arg, "--config-put:", "");  // save the string
+        } else if (startsWith(arg, "--config-set:")) {
+            mode = substitute(arg, "--config-set:", "");  // save the string
             isConfig = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
@@ -59,11 +59,15 @@ bool COptions::parseArguments(string_q& command) {
             }
 
         } else {
-            string_q permitted = params[0].description;
-            replaceAny(permitted, "[]*", "|");
-            if (!contains(permitted, "|" + arg + "|"))
-                return usage("Provided value for 'mode' (" + arg + ") not " + substitute(params[0].description, "enum", "") + ". Quitting.");
-            mode += (arg + "|");
+            if (contains(arg, char(5))) {
+                newSettings = arg;
+            } else {
+                string_q permitted = params[0].description;
+                replaceAny(permitted, "[]*", "|");
+                if (!contains(permitted, "|" + arg + "|"))
+                    return usage("Provided value for 'mode' (" + arg + ") not " + substitute(params[0].description, "enum", "") + ". Quitting.");
+                mode += (arg + "|");
+            }
         }
     }
 
