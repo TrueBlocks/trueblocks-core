@@ -209,7 +209,7 @@ void COptions::handle_config_put(ostream& os) {
             }
         }
     }
-    
+
     return;
 }
 
