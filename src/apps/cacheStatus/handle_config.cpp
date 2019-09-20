@@ -159,19 +159,26 @@ extern string_q convertDisplayStr(const string_q& in);
 void COptions::handle_config_put(ostream& os) {
 
     string_q str;
-    str = getEnvStr("CONFIG_SET");
-    if (isTestMode()) {
-        if (str.empty())
-            str = asciiFileToString("tests/setConfig_data.json");
+    string_q path = getCachePath("tmp/settings.json");
+    if (fileExists(path)) {
+        str = asciiFileToString(path);
+
     } else {
-        LOG_INFO("No settings given. Quitting...");
-        return;
+        if (isTestMode()) {
+            if (str.empty()) {
+                str = asciiFileToString("tests/setConfig_data.json");
+            }
+        } else {
+            LOG_INFO("No settings given. Quitting...");
+            return;
+        }
     }
+
     str = substitute(str, "\\\"", "\"");
     str = substitute(str, "\\n", "\n");
-    cout << "------------------------------------------------" << endl;
-    cout << str << endl;
-    cout << "------------------------------------------------" << endl;
+    cerr << "------------------------------------------------" << endl;
+    cerr << str << endl;
+    cerr << "------------------------------------------------" << endl;
 
     CApiResult result;
     result.parseJson3(str);
@@ -179,16 +186,16 @@ void COptions::handle_config_put(ostream& os) {
     manageFields("CAccountName:firstAppearance,latestAppearance,nRecords,sizeInBytes", false);
     GETRUNTIME_CLASS(CAccountName)->sortFieldList();
 
-    cout << "Would have written:" << endl;
+    cerr << "Would have written:" << endl;
     for (auto file : result.data.files) {
         for (auto group : file.groups) {
             for (auto key : group.keys) {
                 string_q val = key.getValueByName("value");
-                cout << "  ";
-                cout << "getGlobalConfig(\"" << file.name << "\")->";
-                cout << "setConfigStr(";
-                cout << "\"" << group.name << "\", ";
-                cout << "\"" << key.name << "\", ";
+                cerr << "  ";
+                cerr << "getGlobalConfig(\"" << file.name << "\")->";
+                cerr << "setConfigStr(";
+                cerr << "\"" << group.name << "\", ";
+                cerr << "\"" << key.name << "\", ";
                 if (contains(key.name, "list")) {
                     ostringstream oss;
                     oss << "[";
@@ -204,8 +211,8 @@ void COptions::handle_config_put(ostream& os) {
                     val = substitute(substitute(oss.str(), "\n", ""), "  \"", " \"");
                     val = substitute(substitute(substitute(substitute(val, "}]", " }\n]"), "[{", "[\n{"), "{", "\t{"), "}, ", " },\n");
                 }
-                cout << "\"" << val << "\"";
-                cout << ");" << endl;
+                cerr << "\"" << val << "\"";
+                cerr << ");" << endl;
             }
         }
     }

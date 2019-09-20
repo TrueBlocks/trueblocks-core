@@ -41,7 +41,7 @@ bool COptions::parseArguments(string_q& command) {
             tool_flags += (" --help");
 
         } else if (arg == "--set") {
-            tool_flags += (" --config-set:");
+            tool_flags += (arg + " ");
             copy_to_tool = true;
 
         } else if (mode.empty() && startsWith(arg, '-')) {

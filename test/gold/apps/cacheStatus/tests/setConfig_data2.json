@@ -8,15 +8,15 @@
                 "keys": [
                     {
                         "name": "rpcProvider",
-                        "value": "http://localhost:36963/",
+                        "value": "http://localhost:36963/"
                     },
                     {
                         "name": "apiProvider",
-                        "value": "http://localhost:8080",
+                        "value": "http://localhost:8080"
                     },
                     {
                         "name": "balanceProvider",
-                        "value": "http://localhost:36963/",
+                        "value": "http://localhost:36963/"
                     }
                 ]
             },
@@ -26,15 +26,15 @@
                 "keys": [
                     {
                         "name": "configPath",
-                        "value": "~/.quickBlocks/",
+                        "value": "~/.quickBlocks/"
                     },
                     {
                         "name": "cachePath",
-                        "value": "/Users/jrush/.quickBlocks/cache/",
+                        "value": "/Users/jrush/.quickBlocks/cache/"
                     },
                     {
                         "name": "indexPath",
-                        "value": "~/.quickBlocks/cache/addr_index/",
+                        "value": "~/.quickBlocks/cache/addr_index/"
                     }
                 ]
             }
@@ -49,15 +49,15 @@
                 "keys": [
                     {
                         "name": "nBlocks",
-                        "value": "2000",
+                        "value": "2000"
                     },
                     {
                         "name": "nAddrProcs",
-                        "value": "20",
+                        "value": "20"
                     },
                     {
                         "name": "nBlockProcs",
-                        "value": "10",
+                        "value": "10"
                     }
                 ]
             }
@@ -72,11 +72,11 @@
                 "keys": [
                     {
                         "name": "writeTxs",
-                        "value": "true",
+                        "value": true
                     },
                     {
                         "name": "writeTraces",
-                        "value": "true",
+                        "value": true
                     }
                 ]
             }
@@ -91,7 +91,7 @@
                 "keys": [
                     {
                         "name": "etherscan",
-                        "value": "68E1BQYW85ETVNHKWV27B8N5HYICEHEPH1",
+                        "value": "68E1BQYW85ETVNHKWV27B8N5HYICEHEPH1"
                     }
                 ]
             }
