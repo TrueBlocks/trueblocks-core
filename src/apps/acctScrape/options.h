@@ -14,6 +14,7 @@ public:
     blknum_t           lastBlockInFile;
     size_t             visitTypes;
     bool               useBlooms;
+    bool               listFiles;
 
     COptions(void);
     ~COptions(void);

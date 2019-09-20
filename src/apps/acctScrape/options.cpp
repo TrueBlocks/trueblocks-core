@@ -15,6 +15,7 @@ static const COption params[] = {
     COption("daemon", "d", "", OPT_HIDDEN | OPT_SWITCH, "we are being called in daemon mode which causes us to print results differently"),
     COption("noHeader", "o", "", OPT_SWITCH, "do not show the header row"),
     COption("start", "r", "<blknum>", OPT_HIDDEN | OPT_FLAG, "start block for scan of appearances"),
+    COption("listFiles", "l", "", OPT_HIDDEN | OPT_FLAG, "list only the index file the address appears in, not the actual appearances"),
     COption("", "", "", OPT_DESCRIPTION, "Index transactions for a given Ethereum address (or series of addresses)."),
 // END_CODE_OPTIONS
 };
@@ -55,6 +56,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-o" || arg == "--noHeader") {
             noHeader = true;
+
+        } else if (arg == "-l" || arg == "--listFiles") {
+            listFiles = true;
 
         } else if (startsWith(arg, "0x")) {
             if (!isAddress(arg))
@@ -150,6 +154,7 @@ void COptions::Init(void) {
     minArgs    = 0;
     visitTypes = VIS_FINAL;
     useBlooms  = true;
+    listFiles = false;
 }
 
 //---------------------------------------------------------------------------------------------------
