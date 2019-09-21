@@ -151,7 +151,7 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     bool str_2_Bool(const string_q& str) {
-        return static_cast<bool>(str % "true" || str_2_Int(str) != 0);
+        return static_cast<bool>(containsI(str, "true") || str_2_Int(str) != 0);
     }
 
     //--------------------------------------------------------------------------------
