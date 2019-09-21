@@ -11,11 +11,6 @@ bool COptions::handle_config(void) {
     ENTER4("handle_" + mode);
     nodeNotRequired();
 
-    replaceAll(tool_flags, "--get", "--config-get");
-    replaceAll(tool_flags, "--set", "--config-set");
-    if (!startsWith(tool_flags, "--config-get") && !startsWith(tool_flags, "--config-set"))
-        EXIT_USAGE("chifra config 'mode' must be either 'get' or 'put <json>'.");
-
     LOG5("tool_flags: " + tool_flags);
 
     ostringstream os;
@@ -25,6 +20,8 @@ bool COptions::handle_config(void) {
     string_q path = getCachePath("tmp/settings.json");
     establishFolder(path);
     stringToAsciiFile(path, settings);
+    if (isApiMode() || isTestMode())
+        cerr << "Chifra to cacheStatus:\n" << cYellow << settings << cOff << endl;
 
     // both testing and non-testing
     LOG_INFO("chifra calling: ", os.str());

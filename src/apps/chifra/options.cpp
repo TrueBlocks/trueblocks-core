@@ -152,6 +152,17 @@ bool COptions::parseArguments(string_q& command) {
             LOG_INFO("Sleeping every ", scrapeSleep, " seconds.");
     }
 
+    if (mode == "config") {
+        if (contains(tool_flags, "get") && !contains(tool_flags, "--get"))
+            replace(tool_flags, "get", "--get"); // syntactic sugar for command line
+        if (contains(tool_flags, "set") && !contains(tool_flags, "--set"))
+            replace(tool_flags, "set", "--set"); // syntactic sugar for command line
+        replaceAll(tool_flags, "--get", "--config-get");
+        replaceAll(tool_flags, "--set", "--config-set");
+        if (!startsWith(tool_flags, "--config-get") && !startsWith(tool_flags, "--config-set"))
+            EXIT_USAGE("chifra config 'mode' must be either '--get' or '--set'.");
+    }
+
     LOG4("tool_flags=", tool_flags);
     LOG4("freshen_flags=", freshen_flags);
 
