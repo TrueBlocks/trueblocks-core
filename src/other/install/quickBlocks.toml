@@ -1,5 +1,5 @@
 [version]
-current = "0.2.0"
+current = "0.5.5-alpha"
 
 [settings]
 rpcProvider = "http://localhost:8545"
