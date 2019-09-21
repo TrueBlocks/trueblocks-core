@@ -95,6 +95,10 @@ extern string_q collapseArrays(const string_q& inStr);
 
         string_q contents;
         asciiFileToString(filename, contents);
+        if (!contains(contents, "[version]")) {
+            addGroup("version", false, false);
+            addKey("version", "current", getVersionStr(false,false), false);
+        }
         replaceAll(contents, "\\\n ", "\\\n");  // if ends with '\' + '\n' + space, make it just '\' + '\n'
         replaceAll(contents, "\\\n", "");       // if ends with '\' + '\n', its a continuation, so fold in
         replaceAll(contents, "\\\r\n", "");     // same for \r\n
@@ -103,7 +107,7 @@ extern string_q collapseArrays(const string_q& inStr);
             string_q value = trimWhitespace(nextTokenClear(contents, '\n'));
             bool comment = startsWith(value, '#');
             if (comment)
-                value = extract(value, 1);
+                value = trim(extract(value, 1));
             if (!value.empty()) {
                 bool isArray = contains(value, "[[");
                 if (startsWith(value, '[')) {  // it's a group
@@ -156,35 +160,9 @@ extern string_q collapseArrays(const string_q& inStr);
             LockFailure();
             return false;
         }
-
-        if (isBackLevel()) {
-            // remove some old crap
-            deleteKey("version", "version");
-            deleteKey("", "version");
-        }
-        setConfigStr("version", "current", getVersionStr(false,false));
-
-        bool first = true;
-        for (auto group : groups) {
-            ostringstream os;
-            os << (first?"":"\n") << (group.isComment?"#":"");
-            os << (group.isArray?"[[":"[") << group.groupName << (group.isArray?"]]":"]") << "\n";
-            for (auto key : group.keys) {
-                if (!key.deleted) {
-                    os << (key.comment ? "#" : "");
-                    os << key.keyName << " = ";
-                    if (group.groupName == "version" || is_str(key.value))
-                        os << "\"";
-                    os << escape_quotes(key.value);
-                    if (group.groupName == "version" || is_str(key.value))
-                        os << "\"";
-                    os << (key.deleted ? " (deleted)" : "");
-                    os << endl;
-                }
-            }
-            WriteLine(os.str().c_str());
-            first = false;
-        }
+        ostringstream os;
+        os << *this;
+        WriteLine(os.str().c_str());
         Release();
         return true;
     }
@@ -204,6 +182,11 @@ extern string_q collapseArrays(const string_q& inStr);
                 setConfigStr(group.groupName, key.keyName, "\"" + key.value + "\"");
                 if (key.deleted)
                     deleteKey(group.groupName, key.keyName);
+                if (key.comment) {
+                    CTomlKey *k = findKey(group.groupName, key.keyName);
+                    if (k)
+                        k->comment = true;
+                }
             }
         }
     }
@@ -253,7 +236,7 @@ extern string_q collapseArrays(const string_q& inStr);
 
     //-------------------------------------------------------------------------
     void CToml::setConfigBool(const string_q& group, const string_q& key, bool value) {
-        setConfigStr(group, key, int_2_Str(value));
+        setConfigStr(group, key, bool_2_Str(value));
     }
 
     //-------------------------------------------------------------------------
@@ -287,22 +270,41 @@ extern string_q collapseArrays(const string_q& inStr);
 
     //-------------------------------------------------------------------------
     ostream& operator<<(ostream& os, const CToml& tomlIn) {
+        bool first = true;
         for (auto group : tomlIn.groups) {
-            bool isEmpty = group.groupName == "empty-group";
-            if (!isEmpty) {
-                os << (group.isComment ? "#" : "");
-                os << (group.isArray ? "[[" : "[");
-                os << group.groupName;
-                os << (group.isArray ? "]]" : "]");
+            if (!first)
                 os << endl;
-            }
+            os << (group.isComment ? "# " : "");
+            os << (group.isArray ? "[[" : "[");
+            os << group.groupName;
+            os << (group.isArray ? "]]" : "]");
+            os << endl;
             for (auto key : group.keys) {
-                os << (isEmpty ? "" : "\t");
-                os << (key.comment || group.isComment ? "#" : "");
-                os << key.keyName << " = " << key.value;
+                os << (key.comment || group.isComment || key.deleted ? "# " : "");
+                if ((!key.value.empty() && isNumeral(key.value)) || (key.value == "true" || key.value == "false"))
+                    os << key.keyName << " = " << key.value;
+                else {
+                    string val = substitute(key.value, "\"", "\\\"");
+                    if (key.keyName == "list" && !contains(val, '[')) {
+                        val = "\"\"" + substitute(val, "|", "|\\\n    ") + "\"\"";
+                        os << key.keyName << " = " << "\"" << val << "\"";
+                    } else if (key.keyName == "list") {
+                        val = substitute(val, "\\\"", "\"");
+                        val = substitute(val, "[", "[\n   ");
+                        val = substitute(val, "]", "\n]");
+                        val = substitute(val, "},", "},\n    ");
+                        val = substitute(val, ":", "=");
+                        val = substitute(val, " \n", "\n");
+                        val = substitute(val, "\n\n", "\n");
+                        os << key.keyName << " = " << val;
+                    } else {
+                        os << key.keyName << " = " << "\"" << val << "\"";
+                    }
+                }
                 os << (key.deleted ? " (deleted)" : "");
                 os << endl;
             }
+            first = false;
         }
         return os;
     }
@@ -393,9 +395,8 @@ extern string_q collapseArrays(const string_q& inStr);
         string_q ret;
         while (!str.empty()) {
             string_q line = trimWhitespace(nextTokenClear(str, '\n'));
-            if (line.length() && line[0] != '#') {
+            if (contains(line, '=') || contains(line, '[') || (line.length() && line[0] != '#'))
                 ret += (line + "\n");
-            }
         }
         return ret;
     }
