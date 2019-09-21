@@ -1,0 +1,8 @@
+tomlTest2 argc: 2 [1:chifra.toml] 
+tomlTest2 chifra.toml 
+tests/chifra.toml
+[version]
+current = "0.5.8-alpha"
+
+[settings]
+# none = ""

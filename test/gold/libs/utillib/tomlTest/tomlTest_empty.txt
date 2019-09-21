@@ -1,6 +1,8 @@
 tomlTest argc: 2 [1:empty.toml] 
 tomlTest empty.toml 
 empty.toml
+[version]
+current = "0.5.8-alpha"
 
 name: 		NONAME
 max_width: 	10000

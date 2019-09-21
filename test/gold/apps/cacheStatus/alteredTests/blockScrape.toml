@@ -1,0 +1,7 @@
+[version]
+current = "0.5.8-alpha"
+
+[settings]
+nBlocks = "--new n Blocks--"
+nBlockProcs = "--new n Block Procs--"
+nAddrProcs = "--new n Addr Procs--"

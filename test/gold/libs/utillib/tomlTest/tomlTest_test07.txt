@@ -2,9 +2,10 @@ tomlTest argc: 2 [1:test07.toml]
 tomlTest test07.toml 
 test07.toml
 [version]
-	version = 0:9:0
+version = "0:9:0"
+
 [settings]
-	name = data/018_ChildDAO
+name = "data/018_ChildDAO"
 
 name: 		data/018_ChildDAO
 max_width: 	10000
@@ -20,7 +21,7 @@ name = "data/018_ChildDAO"
 
 File contents after write
 [version]
-current = "0.5.8-alpha"
+version = "0:9:0"
 
 [settings]
 name = "data/018_ChildDAO"

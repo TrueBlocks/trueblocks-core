@@ -1,0 +1,8 @@
+tomlTest2 argc: 2 [1:grabABI.toml] 
+tomlTest2 grabABI.toml 
+tests/grabABI.toml
+[version]
+current = "0.5.8-alpha"
+
+[display]
+format = "[{address}]\t[{encoding}]\t[{type}]\t[{constant}]\t[{name}]\t[{signature}]\t[{input_names}]"

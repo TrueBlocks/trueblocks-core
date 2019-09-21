@@ -1,0 +1,8 @@
+[version]
+current = "0.5.8-alpha"
+
+[[custom]]
+list = [
+	{ "group"= "81-Custom", "name"= "TestWallet1", "address"= "0x0000100001000010000100001000010000100001" },
+	{ "group"= "81-Custom", "name"= "TestWallet2", "address"= "0x0000200002000020000200002000020000200002" }
+]

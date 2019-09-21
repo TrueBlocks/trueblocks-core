@@ -1,8 +1,8 @@
 chifra argc: 2 [1:config] 
 chifra config 
-TIME ~ CLOCK - <ERROR> : Exit(handle_config): 
+TIME ~ CLOCK - <ERROR> : Exit(parseArguments): 
 
-  chifra config 'mode' must be either 'get' or 'put <json>'.
+  chifra config 'mode' must be either '--get' or '--set'.
 
   Usage:    chifra [-v|-h] command  
   Purpose:  Create a TrueBlocks monitor configuration.

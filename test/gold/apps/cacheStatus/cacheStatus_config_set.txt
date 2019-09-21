@@ -1,215 +1,561 @@
-cacheStatus argc: 3 [1:--config-set] [2:string] 
-cacheStatus --config-set string 
-------------------------------------------------
-{
-    "type": "CConfiguration",
-    "data": [
-        {
-            "files": [
-                {
-                    "name": "quickBlocks.toml",
-                    "groups": [
-                        {
-                            "name": "settings",
-                            "keys": [
-                                {
-                                    "name": "rpcProvider",
-                                    "value": "--rpc Provider--",
-                                    "type": "url",
-                                    "tip": "the Ethereum node's RPC endpoint",
-                                    "required": true,
-                                    "read_only": false
-                                },
-                                {
-                                    "name": "apiProvider",
-                                    "value": "--api Provider--",
-                                    "type": "url",
-                                    "tip": "TrueBlocks' API endpoint",
-                                    "required": true,
-                                    "read_only": false
-                                },
-                                {
-                                    "name": "balanceProvider",
-                                    "value": "--balance Prov--",
-                                    "type": "url",
-                                    "tip": "alternative node endpoint for account balances",
-                                    "required": false,
-                                    "read_only": false
-                                },
-                                {
-                                    "name": "configPath",
-                                    "value": "--config Path--",
-                                    "type": "path",
-                                    "tip": "location of config files, read only",
-                                    "required": true,
-                                    "read_only": true
-                                },
-                                {
-                                    "name": "cachePath",
-                                    "value": "--cache Path--",
-                                    "type": "path",
-                                    "tip": "location of cache (on external SSD, for example)",
-                                    "required": false,
-                                    "read_only": false
-                                },
-                                {
-                                    "name": "indexPath",
-                                    "value": "--index Path--",
-                                    "type": "path",
-                                    "tip": "location of index (on internal SSD for speed)",
-                                    "required": false,
-                                    "read_only": false
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "name": "blockScrape.toml",
-                    "groups": [
-                        {
-                            "name": "settings",
-                            "keys": [
-                                {
-                                    "name": "nBlocks",
-                                    "value": "--n Blocks--",
-                                    "type": "uint",
-                                    "tip": "number of blocks to process per invocation of blaze (> 50)",
-                                    "required": true,
-                                    "read_only": false
-                                },
-                                {
-                                    "name": "nAddrProcs",
-                                    "value": "--n Addr Procs--",
-                                    "type": "uint",
-                                    "tip": "number of parallel go processes to use to process addresses (> 0)",
-                                    "required": true,
-                                    "read_only": false
-                                },
-                                {
-                                    "name": "nBlockProcs",
-                                    "value": "--n Block Procs--",
-                                    "type": "uint",
-                                    "tip": "number of parallel go processes to use to process blocks (> 0)",
-                                    "required": true,
-                                    "read_only": false
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "name": "acctExport.toml",
-                    "groups": [
-                        {
-                            "name": "settings",
-                            "keys": [
-                                {
-                                    "name": "writeTxs",
-                                    "value": "--write Txs--",
-                                    "type": "bool",
-                                    "tip": "write transactions to the TrueBlocks binary cache",
-                                    "required": false,
-                                    "read_only": false
-                                },
-                                {
-                                    "name": "writeTraces",
-                                    "value": "--write Traces--",
-                                    "type": "bool",
-                                    "tip": "write traces to the TrueBlocks binary cache",
-                                    "required": false,
-                                    "read_only": false
-                                }
-                            ]
-                        },
-                        {
-                            "name": "balances",
-                            "keys": [
-                                {
-                                    "name": "remote",
-                                    "value": "--remote--",
-                                    "type": "bool",
-                                    "tip": "get balances from balanceProvider",
-                                    "required": false,
-                                    "read_only": false
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "name": "ethslurp.toml",
-                    "groups": [
-                        {
-                            "name": "settings",
-                            "keys": [
-                                {
-                                    "name": "api_key",
-                                    "value": "--api_key--",
-                                    "type": "string",
-                                    "tip": "api key required to use EtherScan apis -- private data -- not shared",
-                                    "required": false,
-                                    "read_only": false
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "name": "getAccounts.toml",
-                    "groups": [
-                        {
-                            "name": "custom",
-                            "keys": [
-                                {
-                                    "name": "list",
-                                    "value": [
-                                        {
-                                            "address": "0x3b1613b1613b1613b1613b1613b1613b1613b161",
-                                            "name": "Test Wallet 1"
-                                        },
-                                        {
-                                            "address": "0xb1661b1661b1661b1661b1661b1661b1661b1661",
-                                            "name": "Test Wallet 2"
-                                        }
-                                    ],
-                                    "type": "json array",
-                                    "tip": "user specific list of names for addresses -- private data -- not shared",
-                                    "required": false,
-                                    "read_only": false
-                                }
-                            ]
-                        }
-                    ]
-                }
+cacheStatus argc: 2 [1:--config-set] 
+cacheStatus --config-set 
+
+  {
+    "name": "quickBlocks.toml",
+    "groups": [
+      {
+        "section": "Providers",
+        "name": "settings",
+        "keys": [
+          {
+            "name": "rpcProvider",
+            "value": "--new rpc Provider--",
+            "type": "url"
+          },
+          {
+            "name": "apiProvider",
+            "value": "--new api Provider--",
+            "type": "url"
+          },
+          {
+            "name": "balanceProvider",
+            "value": "--new balance Prov--",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "section": "Paths",
+        "name": "settings",
+        "keys": [
+          {
+            "name": "configPath",
+            "value": "--new config Path--",
+            "type": "path"
+          },
+          {
+            "name": "cachePath",
+            "value": "--new cache Path--",
+            "type": "path"
+          },
+          {
+            "name": "indexPath",
+            "value": "--new index Path--",
+            "type": "path"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "section": "Display Strings",
+    "name": "display_strs",
+    "keys": [
+      {
+        "name": "accountName",
+        "value": "--account name--",
+        "type": "display_str"
+      },
+      {
+        "name": "balancerecord",
+        "value": "--balance record--",
+        "type": "display_str"
+      },
+      {
+        "name": "block",
+        "value": "--block--",
+        "type": "display_str"
+      },
+      {
+        "name": "ethstate",
+        "value": "--eth state--",
+        "type": "display_str"
+      },
+      {
+        "name": "function",
+        "value": "--function--",
+        "type": "display_str"
+      },
+      {
+        "name": "logentry",
+        "value": "--logentry--",
+        "type": "display_str"
+      },
+      {
+        "name": "pricequote",
+        "value": "--pricequote--",
+        "type": "display_str"
+      },
+      {
+        "name": "receipt",
+        "value": "--receipt--",
+        "type": "display_str"
+      },
+      {
+        "name": "trace",
+        "value": "--trace--",
+        "type": "display_str"
+      },
+      {
+        "name": "transaction",
+        "value": "--transaction--",
+        "type": "display_str"
+      },
+      {
+        "name": "whenblock",
+        "value": "--when block--",
+        "type": "display_str"
+      },
+      {
+        "name": "whereblock",
+        "value": "--where block--",
+        "type": "display_str"
+      }
+    ]
+  },
+  {
+    "name": "blockScrape.toml",
+    "groups": [
+      {
+        "section": "Scraper",
+        "name": "settings",
+        "keys": [
+          {
+            "name": "nBlocks",
+            "value": "--new n Blocks--",
+            "type": "number"
+          },
+          {
+            "name": "nAddrProcs",
+            "value": "--new n Addr Procs--",
+            "type": "number"
+          },
+          {
+            "name": "nBlockProcs",
+            "value": "--new n Block Procs--",
+            "type": "number"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "acctExport.toml",
+    "groups": [
+      {
+        "section": "Exporter",
+        "name": "settings",
+        "keys": [
+          {
+            "name": "writeTxs",
+            "value": "true",
+            "type": "bool"
+          },
+          {
+            "name": "writeTraces",
+            "value": "",
+            "type": "bool"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "getAccounts.toml",
+    "groups": [
+      {
+        "section": "Names",
+        "name": "custom",
+        "keys": [
+          {
+            "name": "list",
+            "type": "json array",
+            "named": [
+              {
+                "address": "0x0000100001000010000100001000010000100001",
+                "group": "81-Custom",
+                "name": "TestWallet1"
+              },
+              {
+                "address": "0x0000200002000020000200002000020000200002",
+                "group": "81-Custom",
+                "name": "TestWallet2"
+              }
             ]
-        }
-    ],
-    "meta": {
-        "unripe": "0xdeadbeef",
-        "ripe": "0xdeadbeef",
-        "staging": "0xdeadbeef",
-        "finalized": "0xdeadbeef",
-        "client": "0xdeadbeef"
-    }
-}"
-"
-------------------------------------------------
-Would have written:
-  getGlobalConfig("quickBlocks.toml")->setConfigStr("settings", "rpcProvider", "--rpc Provider--");
-  getGlobalConfig("quickBlocks.toml")->setConfigStr("settings", "apiProvider", "--api Provider--");
-  getGlobalConfig("quickBlocks.toml")->setConfigStr("settings", "balanceProvider", "--balance Prov--");
-  getGlobalConfig("quickBlocks.toml")->setConfigStr("settings", "configPath", "--config Path--");
-  getGlobalConfig("quickBlocks.toml")->setConfigStr("settings", "cachePath", "--cache Path--");
-  getGlobalConfig("quickBlocks.toml")->setConfigStr("settings", "indexPath", "--index Path--");
-  getGlobalConfig("blockScrape.toml")->setConfigStr("settings", "nBlocks", "--n Blocks--");
-  getGlobalConfig("blockScrape.toml")->setConfigStr("settings", "nAddrProcs", "--n Addr Procs--");
-  getGlobalConfig("blockScrape.toml")->setConfigStr("settings", "nBlockProcs", "--n Block Procs--");
-  getGlobalConfig("acctExport.toml")->setConfigStr("settings", "writeTxs", "--write Txs--");
-  getGlobalConfig("acctExport.toml")->setConfigStr("settings", "writeTraces", "--write Traces--");
-  getGlobalConfig("acctExport.toml")->setConfigStr("balances", "remote", "--remote--");
-  getGlobalConfig("ethslurp.toml")->setConfigStr("settings", "api_key", "--api_key--");
-  getGlobalConfig("getAccounts.toml")->setConfigStr("custom", "list", "[
-	{ "address": "0x3b1613b1613b1613b1613b1613b1613b1613b161", "name": "Test Wallet 1" },
-	{ "address": "0xb1661b1661b1661b1661b1661b1661b1661b1661", "name": "Test Wallet 2" }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "ethslurp.toml",
+    "groups": [
+      {
+        "section": "APIs",
+        "name": "settings",
+        "keys": [
+          {
+            "name": "etherscan",
+            "value": "--new api_key--",
+            "type": "string"
+          }
+        ]
+      }
+    ]
+  }
+
+
+------------------------------------------------------------------------------------------------------------------------
+As read: ./tests/quickBlocks.toml:
+------------------------------------------------------------------------------------------------------------------------
+[version]
+current = "0.5.5-alpha"
+
+[settings]
+# rpcProvider = "http://my.ethchain.dnp.dappnode.eth:8545/"
+# rpcProvider = "http://127.0.0.1:7545"
+rpcProvider = "http://localhost:36963/"
+# rpcProvider = "http://localhost:23456/"
+# rpcProvider = "http://localhost:8515"
+balanceProvider = "http://localhost:36963/"
+cachePath = "/Users/what/.quickBlocks/cache/"
+indexPath = "/Users/what/.quickBlocks/cache/addr_index/"
+
+# [dev]
+# debug_curl = true
+# debug_ethscan = true
+
+------------------------------------------------------------------------------------------------------------------------
+  toml.setConfigStr("settings", "rpcProvider", "--new rpc Provider--");
+  toml.setConfigStr("settings", "apiProvider", "--new api Provider--");
+  toml.setConfigStr("settings", "balanceProvider", "--new balance Prov--");
+  toml.setConfigStr("settings", "configPath", "--new config Path--/");
+  toml.setConfigStr("settings", "cachePath", "--new cache Path--/");
+  toml.setConfigStr("settings", "indexPath", "--new index Path--/");
+------------------------------------------------------------------------------------------------------------------------
+Would have written: ./tests/quickBlocks.toml:
+------------------------------------------------------------------------------------------------------------------------
+[version]
+current = "0.5.5-alpha"
+
+[settings]
+rpcProvider = "--new rpc Provider--"
+# rpcProvider = "http://127.0.0.1:7545"
+rpcProvider = "http://localhost:36963/"
+# rpcProvider = "http://localhost:23456/"
+# rpcProvider = "http://localhost:8515"
+balanceProvider = "--new balance Prov--"
+cachePath = "--new cache Path--/"
+indexPath = "--new index Path--/"
+apiProvider = "--new api Provider--"
+configPath = "--new config Path--/"
+
+# [dev]
+# debug_curl = true
+# debug_ethscan = true
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+As read: ./tests/display_strs:
+------------------------------------------------------------------------------------------------------------------------
+[version]
+current = "0.5.8-alpha"
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+Would have written: ./tests/display_strs:
+------------------------------------------------------------------------------------------------------------------------
+[version]
+current = "0.5.8-alpha"
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+As read: ./tests/blockScrape.toml:
+------------------------------------------------------------------------------------------------------------------------
+[version]
+current = "0.5.8-alpha"
+
+[settings]
+# nBlocks = 2000
+# nBlockProcs = 20
+# nAddrProcs = 60
+
+------------------------------------------------------------------------------------------------------------------------
+  toml.setConfigStr("settings", "nBlocks", "--new n Blocks--");
+  toml.setConfigStr("settings", "nAddrProcs", "--new n Addr Procs--");
+  toml.setConfigStr("settings", "nBlockProcs", "--new n Block Procs--");
+------------------------------------------------------------------------------------------------------------------------
+Would have written: ./tests/blockScrape.toml:
+------------------------------------------------------------------------------------------------------------------------
+[version]
+current = "0.5.8-alpha"
+
+[settings]
+nBlocks = "--new n Blocks--"
+nBlockProcs = "--new n Block Procs--"
+nAddrProcs = "--new n Addr Procs--"
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+As read: ./tests/acctExport.toml:
+------------------------------------------------------------------------------------------------------------------------
+[version]
+current = "0.5.8-alpha"
+
+[settings]
+# writeBlocks = false
+# writeTrxs = false
+# writeTraces = false
+# skipDdos = true
+# maxTraces = 250
+
+[exclusions]
+enabled = true
+list = """0xe0ca2ec1648f4fc94d5ecaad5caa9fa6799ebb28|\
+    0x7c1cf1f9809c527e5a6becaab56bc34fbe6f2023|\
+    0x0978b496a1635e4a0b4ff867569cf43ee030e967|\
+    0x2213d4738bfec14a2f98df5e428f48ebbde33e12|\
+    0x52d77b07e65697551d4b1ade631546b89be6260f|\
+    0x92a4406a0bcc70bb92b9c1f2d457dca08ae60627|\
+    0x9f58ef5d703973ba98dfa7a9bdecabecf13a0ec3|\
+    0x212f10280567e7d74b1e230723607c3bf637b532|\
+    0x3898d7580aa5b8ad8a56fcd7f7af690e97112419|\
+    0x8a2e29e7d66569952ecffae4ba8acb49c1035b6f|\
+    0x9f58ef5d703973ba98dfa7a9bdecabecf13a0ec3|\
+    0x8428ce12a1b6aaecfcf2ac5b22d21f3831949da3|\
+    0xaa7c4ca548ffc77a42b309aaaea40a1bd477ac70|\
+    0x2213d4738bfec14a2f98df5e428f48ebbde33e12|\
+    0x7c1cf1f9809c527e5a6becaab56bc34fbe6f2023|\
+    0xde21bc367afe7a3705a15255ff46a5ae91e8341c|\
+    0x1fa0e1dfa88b371fcedf6225b3d8ad4e3bacef0e|\
+    0xd3e32594cedbc102d739142aa70d21f4caea5618|\
+    0xfb34db0651ab62d73a237fcf1aa1057ceb1f6229|\
+    0x40525ac2fe3befe27a4e73757178d4accfef71da|\
+    0xe25e422e3f9e9374a3d8a75451c790d48fb33218|\
+    0xb09f8a62c6681b0c739dfde7221bfe8f2da3f128|\
+    0x4b8f3b2e935a341929c0a4efe5110314f39dea73|\
+    0x0c40cf6dd1b74c6edfc4729021a11f57b31e3c27|\
+    0xf9110f7f0191317eb4bcd96e80d86946eb5426c5|\
+    0x1dacf33da596a743be75933ce066f9c6e142a460|\
+    0xb233cb2f0dce57a56bf732767f45ffc8650186c5|\
+    0xb233cb2f0dce57a56bf732767f45ffc8650186c5|\
+    0x25612c41773cb96167854ff72b1c2d7dc8973e2f|\
+    0xd6a64d7e8c8a94fa5068ca33229d88436a743b14|\
+    0x7fc03bd9e44c37bc2d111dc2154da781dbba7c24|\
+    0x45faec35e32676568ad827aea17fb7431ef390bc|\
+    0x29446e8d2f0ca2e7fd9e46665e80fc2cd55bf262|\
+    0xab90c4455d32f1e579152f52377e3cbf9b3cc37b|\
+    0x0c40cf6dd1b74c6edfc4729021a11f57b31e3c27|\
+    0x6a0a0fc761c612c340a0e98d33b37a75e5268472|\
+    0x7c20218efc2e07c8fe2532ff860d4a5d8287cb31|\
+    0x10fa9f37f646bb353945fe90d41a44e1c60745fb|\
+    0x822f505e0174ef22d2a774cb80a855ffd27ae3bf|\
+    0x59493d3fc7a8522253b8be0d168b8ad22ff85177|\
+    0xba0577e1419237fd4b8c14a6f49984f6466b5996|\
+    0x4943e4bd90d7ff8bafe1bd202e08907903ebdb66|\
+    0x3898d7580aa5b8ad8a56fcd7f7af690e97112419|\
+    0x316ba6125feaa91fed84e86d7c0f407afb5fd83e|\
+    0x8a03b494b3fac3d63bf827bdf78437c35e48abac|\
+    0x16035d97f70e8bd620f32ce831ea8bc7d0338ef3|\
+    0xabd96a381d4216d80010c0db0704b2fc685fe0bc|\
+    0xaaaa9c8834d448fe0e1f95b109ed8be1ef802936|\
+    0xfebc9407031590bde22bca8a00736756f3a58007|\
+    0xe6481d9fc7f9dd2df6c3289ab66086723cc5c37b|\
+    0x0f600992da5dbbe0aebf01ba1da0daef1c912bbf|\
+    0xe00c36815fec7ff523cc6442c54e1f9b21ebfc1f|\
+    0x03b904c8b912194464ae97eaa0381e5518446d25|\
+    0x7b15969d8fddd4ff6cba445924976c54eb5578d7|\
+    0x0fc599f7cfe83bf2e9e549212b8aa1b73137fcf0|\
+    0x157ddd802ab7831a2e1966baf2cc804bc7f95bd8|\
+    0xd49f74b3df4d05fc46fe05312bcdc052ccd57ce5|\
+    0x4bf317ca5fdd5f18828e85822c7d75209f5d1eb8|\
+    0x68f5b2aa03c6ea72d329e6313cdb43905b486f17|\
+    0x991bdd03b0581cb0a2d46ffe0d21855ff83bdeef"""
+
+------------------------------------------------------------------------------------------------------------------------
+  toml.setConfigBool("settings", "writeTxs", true);
+  toml.setConfigBool("settings", "writeTraces", false);
+------------------------------------------------------------------------------------------------------------------------
+Would have written: ./tests/acctExport.toml:
+------------------------------------------------------------------------------------------------------------------------
+[version]
+current = "0.5.8-alpha"
+
+[settings]
+# writeBlocks = false
+# writeTrxs = false
+writeTraces = false
+# skipDdos = true
+# maxTraces = 250
+writeTxs = true
+
+[exclusions]
+enabled = true
+list = """0xe0ca2ec1648f4fc94d5ecaad5caa9fa6799ebb28|\
+    0x7c1cf1f9809c527e5a6becaab56bc34fbe6f2023|\
+    0x0978b496a1635e4a0b4ff867569cf43ee030e967|\
+    0x2213d4738bfec14a2f98df5e428f48ebbde33e12|\
+    0x52d77b07e65697551d4b1ade631546b89be6260f|\
+    0x92a4406a0bcc70bb92b9c1f2d457dca08ae60627|\
+    0x9f58ef5d703973ba98dfa7a9bdecabecf13a0ec3|\
+    0x212f10280567e7d74b1e230723607c3bf637b532|\
+    0x3898d7580aa5b8ad8a56fcd7f7af690e97112419|\
+    0x8a2e29e7d66569952ecffae4ba8acb49c1035b6f|\
+    0x9f58ef5d703973ba98dfa7a9bdecabecf13a0ec3|\
+    0x8428ce12a1b6aaecfcf2ac5b22d21f3831949da3|\
+    0xaa7c4ca548ffc77a42b309aaaea40a1bd477ac70|\
+    0x2213d4738bfec14a2f98df5e428f48ebbde33e12|\
+    0x7c1cf1f9809c527e5a6becaab56bc34fbe6f2023|\
+    0xde21bc367afe7a3705a15255ff46a5ae91e8341c|\
+    0x1fa0e1dfa88b371fcedf6225b3d8ad4e3bacef0e|\
+    0xd3e32594cedbc102d739142aa70d21f4caea5618|\
+    0xfb34db0651ab62d73a237fcf1aa1057ceb1f6229|\
+    0x40525ac2fe3befe27a4e73757178d4accfef71da|\
+    0xe25e422e3f9e9374a3d8a75451c790d48fb33218|\
+    0xb09f8a62c6681b0c739dfde7221bfe8f2da3f128|\
+    0x4b8f3b2e935a341929c0a4efe5110314f39dea73|\
+    0x0c40cf6dd1b74c6edfc4729021a11f57b31e3c27|\
+    0xf9110f7f0191317eb4bcd96e80d86946eb5426c5|\
+    0x1dacf33da596a743be75933ce066f9c6e142a460|\
+    0xb233cb2f0dce57a56bf732767f45ffc8650186c5|\
+    0xb233cb2f0dce57a56bf732767f45ffc8650186c5|\
+    0x25612c41773cb96167854ff72b1c2d7dc8973e2f|\
+    0xd6a64d7e8c8a94fa5068ca33229d88436a743b14|\
+    0x7fc03bd9e44c37bc2d111dc2154da781dbba7c24|\
+    0x45faec35e32676568ad827aea17fb7431ef390bc|\
+    0x29446e8d2f0ca2e7fd9e46665e80fc2cd55bf262|\
+    0xab90c4455d32f1e579152f52377e3cbf9b3cc37b|\
+    0x0c40cf6dd1b74c6edfc4729021a11f57b31e3c27|\
+    0x6a0a0fc761c612c340a0e98d33b37a75e5268472|\
+    0x7c20218efc2e07c8fe2532ff860d4a5d8287cb31|\
+    0x10fa9f37f646bb353945fe90d41a44e1c60745fb|\
+    0x822f505e0174ef22d2a774cb80a855ffd27ae3bf|\
+    0x59493d3fc7a8522253b8be0d168b8ad22ff85177|\
+    0xba0577e1419237fd4b8c14a6f49984f6466b5996|\
+    0x4943e4bd90d7ff8bafe1bd202e08907903ebdb66|\
+    0x3898d7580aa5b8ad8a56fcd7f7af690e97112419|\
+    0x316ba6125feaa91fed84e86d7c0f407afb5fd83e|\
+    0x8a03b494b3fac3d63bf827bdf78437c35e48abac|\
+    0x16035d97f70e8bd620f32ce831ea8bc7d0338ef3|\
+    0xabd96a381d4216d80010c0db0704b2fc685fe0bc|\
+    0xaaaa9c8834d448fe0e1f95b109ed8be1ef802936|\
+    0xfebc9407031590bde22bca8a00736756f3a58007|\
+    0xe6481d9fc7f9dd2df6c3289ab66086723cc5c37b|\
+    0x0f600992da5dbbe0aebf01ba1da0daef1c912bbf|\
+    0xe00c36815fec7ff523cc6442c54e1f9b21ebfc1f|\
+    0x03b904c8b912194464ae97eaa0381e5518446d25|\
+    0x7b15969d8fddd4ff6cba445924976c54eb5578d7|\
+    0x0fc599f7cfe83bf2e9e549212b8aa1b73137fcf0|\
+    0x157ddd802ab7831a2e1966baf2cc804bc7f95bd8|\
+    0xd49f74b3df4d05fc46fe05312bcdc052ccd57ce5|\
+    0x4bf317ca5fdd5f18828e85822c7d75209f5d1eb8|\
+    0x68f5b2aa03c6ea72d329e6313cdb43905b486f17|\
+    0x991bdd03b0581cb0a2d46ffe0d21855ff83bdeef"""
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+As read: ./tests/getAccounts.toml:
+------------------------------------------------------------------------------------------------------------------------
+[version]
+current = "0.5.8-alpha"
+
+[[custom]]
+list = [
+    { group = "00-Active", address = "0x00a3819199100a3819199100a3819199100a3819", name = "Wallet 1" },
+    { group = "00-Active", address = "0x00a3819199100a3819199100a3819199100a3819", name = "Wallet 2" },
+    { group = "00-Active", address = "0x00a3819199100a3819199100a3819199100a3819", name = "Wallet 3" },
+    { group = "00-Active", address = "0x00a3819199100a3819199100a3819199100a3819", name = "Wallet 4" },
+    { group = "00-Active", address = "0x00a3819199100a3819199100a3819199100a3819", name = "Wallet 5" },
+    { group = "00-Active", address = "0x00a3819199100a3819199100a3819199100a3819", name = "Wallet 6" },
+    { group = "00-Active", address = "0x00a3819199100a3819199100a3819199100a3819", name = "Wallet 7" },
+    { group = "00-Active", address = "0x00a3819199100a3819199100a3819199100a3819", name = "Wallet 8" }
+]
+
+------------------------------------------------------------------------------------------------------------------------
+  toml.setConfigStr("custom", "list", "[
+	{ "group": "81-Custom", "name": "TestWallet1", "address": "0x0000100001000010000100001000010000100001" },
+	{ "group": "81-Custom", "name": "TestWallet2", "address": "0x0000200002000020000200002000020000200002" }
 ]");
+------------------------------------------------------------------------------------------------------------------------
+Would have written: ./tests/getAccounts.toml:
+------------------------------------------------------------------------------------------------------------------------
+[version]
+current = "0.5.8-alpha"
+
+[[custom]]
+list = [
+    { "group"= "81-Custom", "name"= "TestWallet1", "address"= "0x0000100001000010000100001000010000100001" },
+    { "group"= "81-Custom", "name"= "TestWallet2", "address"= "0x0000200002000020000200002000020000200002" }
+]
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+As read: ./tests/ethslurp.toml:
+------------------------------------------------------------------------------------------------------------------------
+[version]
+current = "0.5.8-alpha"
+
+[settings]
+api_provider = "EtherScan"
+api_url = "http://etherscan.io/apis"
+api_key = "<NOT_SET>"
+
+[display]
+fmt_fieldList = ""
+fmt_txt_file = "[{HEADER}]\n[{RECORDS}]"
+fmt_txt_record = "[{FIELDS}]\n"
+fmt_txt_field = "\t[{FIELD}]\t1"
+fmt_csv_file = "[{HEADER}]\n[{RECORDS}]"
+fmt_csv_record = "[{FIELDS}]\n"
+fmt_csv_field = "[\"{FIELD}\"],"
+fmt_html_file = "<table>\n[{HEADER}]\n[{RECORDS}]</table>\n"
+fmt_html_record = "\t<tr>\n[{FIELDS}]</tr>\n"
+fmt_html_field = "\t\t<td>[{FIELD}]</td>\n"
+fmt_json_file = "[{RECORDS}]\n"
+fmt_json_record = "\n        {\n[{FIELDS}]        },"
+fmt_json_field = " \"[{p:FIELD}]\":\"[{FIELD}]\","
+fmt_custom_file = "file:custom.txt"
+fmt_custom_record = "fmt_txt_record"
+fmt_custom_field = "fmt_txt_field"
+fmt_ethscan_fieldList = "blockNumber|transactionIndex"
+fmt_ethscan_file = "[{HEADER}]\n[{RECORDS}]"
+fmt_ethscan_record = "[{FIELDS}]\n"
+fmt_ethscan_field = "\t[{FIELD}]"
+
+------------------------------------------------------------------------------------------------------------------------
+  toml.setConfigStr("settings", "api_key", "--new api_key--");
+------------------------------------------------------------------------------------------------------------------------
+Would have written: ./tests/ethslurp.toml:
+------------------------------------------------------------------------------------------------------------------------
+[version]
+current = "0.5.8-alpha"
+
+[settings]
+api_provider = "EtherScan"
+api_url = "http://etherscan.io/apis"
+api_key = "--new api_key--"
+
+[display]
+fmt_fieldList = ""
+fmt_txt_file = "[{HEADER}]\n[{RECORDS}]"
+fmt_txt_record = "[{FIELDS}]\n"
+fmt_txt_field = "\t[{FIELD}]\t1"
+fmt_csv_file = "[{HEADER}]\n[{RECORDS}]"
+fmt_csv_record = "[{FIELDS}]\n"
+fmt_csv_field = "[\"{FIELD}\"],"
+fmt_html_file = "<table>\n[{HEADER}]\n[{RECORDS}]</table>\n"
+fmt_html_record = "\t<tr>\n[{FIELDS}]</tr>\n"
+fmt_html_field = "\t\t<td>[{FIELD}]</td>\n"
+fmt_json_file = "[{RECORDS}]\n"
+fmt_json_record = "\n        {\n[{FIELDS}]        },"
+fmt_json_field = " \"[{p:FIELD}]\":\"[{FIELD}]\","
+fmt_custom_file = "file:custom.txt"
+fmt_custom_record = "fmt_txt_record"
+fmt_custom_field = "fmt_txt_field"
+fmt_ethscan_fieldList = "blockNumber|transactionIndex"
+fmt_ethscan_file = "[{HEADER}]\n[{RECORDS}]"
+fmt_ethscan_record = "[{FIELDS}]\n"
+fmt_ethscan_field = "\t[{FIELD}]"
+
+------------------------------------------------------------------------------------------------------------------------

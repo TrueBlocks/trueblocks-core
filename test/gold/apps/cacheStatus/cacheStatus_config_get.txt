@@ -64,6 +64,96 @@ cacheStatus --config-get
               "read_only": false
             }
           ]
+        },
+        {
+          "section": "Display Strings",
+          "name": "display_strs",
+          "keys": [
+            {
+              "name": "accountName",
+              "value": "--account name--",
+              "type": "display string",
+              "required": false,
+              "read_only": false
+            },
+            {
+              "name": "balancerecord",
+              "value": "--balance record--",
+              "type": "display string",
+              "required": false,
+              "read_only": false
+            },
+            {
+              "name": "block",
+              "value": "--block--",
+              "type": "display string",
+              "required": false,
+              "read_only": false
+            },
+            {
+              "name": "ethstate",
+              "value": "--eth state--",
+              "type": "display string",
+              "required": false,
+              "read_only": false
+            },
+            {
+              "name": "function",
+              "value": "--function--",
+              "type": "display string",
+              "required": false,
+              "read_only": false
+            },
+            {
+              "name": "logentry",
+              "value": "--logentry--",
+              "type": "display string",
+              "required": false,
+              "read_only": false
+            },
+            {
+              "name": "pricequote",
+              "value": "--pricequote--",
+              "type": "display string",
+              "required": false,
+              "read_only": false
+            },
+            {
+              "name": "receipt",
+              "value": "--receipt--",
+              "type": "display string",
+              "required": false,
+              "read_only": false
+            },
+            {
+              "name": "trace",
+              "value": "--trace--",
+              "type": "display string",
+              "required": false,
+              "read_only": false
+            },
+            {
+              "name": "transaction",
+              "value": "--transaction--",
+              "type": "display string",
+              "required": false,
+              "read_only": false
+            },
+            {
+              "name": "whenblock",
+              "value": "--when block--",
+              "type": "display string",
+              "required": false,
+              "read_only": false
+            },
+            {
+              "name": "whereblock",
+              "value": "--where block--",
+              "type": "display string",
+              "required": false,
+              "read_only": false
+            }
+          ]
         }
       ]
     },
@@ -124,6 +214,36 @@ cacheStatus --config-get
               "tip": "write traces to the TrueBlocks binary cache",
               "required": false,
               "read_only": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "getAccounts.toml",
+      "groups": [
+        {
+          "section": "Names",
+          "name": "custom",
+          "keys": [
+            {
+              "name": "list",
+              "type": "json array",
+              "tip": "user specific list of names for addresses -- private data -- not shared",
+              "required": false,
+              "read_only": false,
+              "named": [
+                {
+                  "address": "0x0000100001000010000100001000010000100001",
+                  "group": "81-Custom",
+                  "name": "TestWallet1"
+                },
+                {
+                  "address": "0x0000200002000020000200002000020000200002",
+                  "group": "81-Custom",
+                  "name": "TestWallet2"
+                }
+              ]
             }
           ]
         }

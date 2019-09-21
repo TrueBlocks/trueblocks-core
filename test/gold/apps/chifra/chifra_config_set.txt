@@ -1,9 +1,176 @@
-chifra argc: 4 [1:config] [2:--set] [3:{ test-data }] 
-chifra config --set { test-data } 
-TIME ~ CLOCK - <INFO>  : chifra calling: cacheStatus --config-set:{~test-data~}~
-cacheStatus argc: 2 [1:--config-set:{~test-data~}~] 
-cacheStatus --config-set:{~test-data~}~ 
-------------------------------------------------
+chifra argc: 3 [1:config] [2:--set] 
+chifra config --set 
+Chifra to cacheStatus:
 
-------------------------------------------------
-Would have written:
+TIME ~ CLOCK - <INFO>  : chifra calling: cacheStatus --config-set
+cacheStatus argc: 2 [1:--config-set] 
+cacheStatus --config-set 
+
+    {
+        "name": "quickBlocks.toml",
+        "groups": [
+            {
+                "section": "Providers",
+                "name": "settings",
+                "keys": [
+                    {
+                        "name": "rpcProvider",
+                        "value": "--new rpc Provider--"
+                    },
+                    {
+                        "name": "apiProvider",
+                        "value": "--new api Provider--"
+                    },
+                    {
+                        "name": "balanceProvider",
+                        "value": "--new balance Prov--"
+                    }
+                ]
+            },
+            {
+                "section": "Paths",
+                "name": "settings",
+                "keys": [
+                    {
+                        "name": "configPath",
+                        "value": "--new config Path--"
+                    },
+                    {
+                        "name": "cachePath",
+                        "value": "--new cache Path--"
+                    },
+                    {
+                        "name": "indexPath",
+                        "value": "--new index Path--"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "blockScrape.toml",
+        "groups": [
+            {
+                "section": "Scraper",
+                "name": "settings",
+                "keys": [
+                    {
+                        "name": "nBlocks",
+                        "value": "--new n Blocks--"
+                    },
+                    {
+                        "name": "nAddrProcs",
+                        "value": "--new n Addr Procs--"
+                    },
+                    {
+                        "name": "nBlockProcs",
+                        "value": "--new n Block Procs--"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "acctExport.toml",
+        "groups": [
+            {
+                "section": "Exporter",
+                "name": "settings",
+                "keys": [
+                    {
+                        "name": "writeTxs",
+                        "value": "--new write Txs--"
+                    },
+                    {
+                        "name": "writeTraces",
+                        "value": "--new write Traces--"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "ethslurp.toml",
+        "groups": [
+            {
+                "section": "APIs",
+                "name": "settings",
+                "keys": [
+                    {
+                        "name": "etherscan",
+                        "value": "--new api_key--"
+                    }
+                ]
+            }
+        ]
+    }
+
+
+------------------------------------------------------------------------------------------------------------------------
+As read: ./tests/quickBlocks.toml:
+------------------------------------------------------------------------------------------------------------------------
+[version]
+current = "0.5.8-alpha"
+
+------------------------------------------------------------------------------------------------------------------------
+  toml.setConfigStr("settings", "rpcProvider", "--new rpc Provider--");
+  toml.setConfigStr("settings", "apiProvider", "--new api Provider--");
+  toml.setConfigStr("settings", "balanceProvider", "--new balance Prov--");
+  toml.setConfigStr("settings", "configPath", "--new config Path--");
+  toml.setConfigStr("settings", "cachePath", "--new cache Path--");
+  toml.setConfigStr("settings", "indexPath", "--new index Path--");
+------------------------------------------------------------------------------------------------------------------------
+Would have written: ./tests/quickBlocks.toml:
+------------------------------------------------------------------------------------------------------------------------
+[version]
+current = "0.5.8-alpha"
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+As read: ./tests/blockScrape.toml:
+------------------------------------------------------------------------------------------------------------------------
+[version]
+current = "0.5.8-alpha"
+
+------------------------------------------------------------------------------------------------------------------------
+  toml.setConfigStr("settings", "nBlocks", "--new n Blocks--");
+  toml.setConfigStr("settings", "nAddrProcs", "--new n Addr Procs--");
+  toml.setConfigStr("settings", "nBlockProcs", "--new n Block Procs--");
+------------------------------------------------------------------------------------------------------------------------
+Would have written: ./tests/blockScrape.toml:
+------------------------------------------------------------------------------------------------------------------------
+[version]
+current = "0.5.8-alpha"
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+As read: ./tests/acctExport.toml:
+------------------------------------------------------------------------------------------------------------------------
+[version]
+current = "0.5.8-alpha"
+
+------------------------------------------------------------------------------------------------------------------------
+  toml.setConfigStr("settings", "writeTxs", "--new write Txs--");
+  toml.setConfigStr("settings", "writeTraces", "--new write Traces--");
+------------------------------------------------------------------------------------------------------------------------
+Would have written: ./tests/acctExport.toml:
+------------------------------------------------------------------------------------------------------------------------
+[version]
+current = "0.5.8-alpha"
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+As read: ./tests/ethslurp.toml:
+------------------------------------------------------------------------------------------------------------------------
+[version]
+current = "0.5.8-alpha"
+
+------------------------------------------------------------------------------------------------------------------------
+  toml.setConfigStr("settings", "api_key", "--new api_key--");
+------------------------------------------------------------------------------------------------------------------------
+Would have written: ./tests/ethslurp.toml:
+------------------------------------------------------------------------------------------------------------------------
+[version]
+current = "0.5.8-alpha"
+
+------------------------------------------------------------------------------------------------------------------------

@@ -18,6 +18,7 @@ acctScrape -th
 | -u | --unripe | visit unripe (not old enough and not yet staged or finalized) blocks |
 | -d | --daemon | we are being called in daemon mode which causes us to print results differently |
 | -r | --start <num> | start block for scan of appearances |
+| -l | --listFiles | list only the index file the address appears in, not the actual appearances |
 #### Hidden options (shown during testing only)
 
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
