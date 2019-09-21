@@ -6,18 +6,21 @@
 #include "options.h"
 
 //--------------------------------------------------------------------------------
-void COptions::handle_config(ostream& os) {
-    if (mode.empty()) {  // it's a get
-        handle_config_get(os);
-    } else {
-        handle_config_put(os);
+bool COptions::handle_config(ostream& os) {
+    if (mode.empty()) {
+        manageFields("CAccountName:firstAppearance,latestAppearance,nRecords,sizeInBytes", false);
+        GETRUNTIME_CLASS(CAccountName)->sortFieldList();
+        return handle_config_get(os);
     }
+    return handle_config_set(os);
 }
 
 //--------------------------------------------------------------------------------
-void COptions::handle_config_get(ostream& os) {
-    CConfiguration config;
+bool COptions::handle_config_get(ostream& os) {
 
+    ENTER("handle_config_get");
+
+    CConfiguration config;
     {
         const CToml *cc = getGlobalConfig();
         CConfigFile  f("quickBlocks.toml");
@@ -83,7 +86,8 @@ extern string_q convertDisplayStr(const string_q& in);
         items2.push_back(CConfigItem("whereblock",    convertDisplayStr(values2[cnt++]), "display string",  "", false,  false));
         for (auto item : items2)
             g2.keys.push_back(item);
-        //f.groups.push_back(g2);
+        if (verbose || isTestMode())
+            f.groups.push_back(g2);
         config.files.push_back(f);
     }
 
@@ -137,7 +141,8 @@ extern string_q convertDisplayStr(const string_q& in);
 
         g1.keys.push_back(i1);
         f.groups.push_back(g1);
-        //config.files.push_back(f);
+        if (verbose || isTestMode())
+            config.files.push_back(f);
     }
 
     {
@@ -152,56 +157,59 @@ extern string_q convertDisplayStr(const string_q& in);
 
     os << config << endl;
 
-    return;
+    return true;
 }
 
 //--------------------------------------------------------------------------------
-void COptions::handle_config_put(ostream& os) {
-
-    string_q str;
+inline string_q getSettingsStr(void) {
     string_q path = getCachePath("tmp/settings.json");
-    if (fileExists(path)) {
-        str = asciiFileToString(path);
+    string_q ret = asciiFileToString(path);
+    if (fileExists(path))
+        ::remove(path.c_str());
+    if (isTestMode())
+        ret = asciiFileToString("tests/setConfig_data.json");
+    replace(ret, "[", "");
+    replaceReverse(ret, "]", "");
+    return ret;
+}
 
-    } else {
+//--------------------------------------------------------------------------------
+bool COptions::handle_config_set(ostream& os) {
+
+    ENTER("handle_config_set");
+
+    string_q newSettings = getSettingsStr();
+    if (newSettings.empty())
+        EXIT_USAGE("No settings given. Quitting...");
+    if (isApiMode() || isTestMode())
+        cerr << cGreen << newSettings << cOff << endl;
+
+    CConfigFile file;
+    while (file.parseJson3(newSettings)) {
+        string_q path = configPath(file.name);
+        if (isTestMode())
+            path = "./tests/" + file.name;
+        CToml toml(path);
+        CToml orig("");
+        orig.mergeFile(&toml);
         if (isTestMode()) {
-            if (str.empty()) {
-                str = asciiFileToString("tests/setConfig_data.json");
-            }
-        } else {
-            LOG_INFO("No settings given. Quitting...");
-            return;
+            cerr << cYellow << string_q(120, '-') << cOff << endl;
+            cerr << "As read: " << path << ":" << endl;
+            cerr << cYellow << string_q(120, '-') << cOff << endl;
+            cerr << bBlue   << toml << endl;
+            cerr << cYellow << string_q(120, '-') << cOff << endl;
         }
-    }
 
-    str = substitute(str, "\\\"", "\"");
-    str = substitute(str, "\\n", "\n");
-    cerr << "------------------------------------------------" << endl;
-    cerr << str << endl;
-    cerr << "------------------------------------------------" << endl;
-
-    CApiResult result;
-    result.parseJson3(str);
-
-    manageFields("CAccountName:firstAppearance,latestAppearance,nRecords,sizeInBytes", false);
-    GETRUNTIME_CLASS(CAccountName)->sortFieldList();
-
-    cerr << "Would have written:" << endl;
-    for (auto file : result.data.files) {
         for (auto group : file.groups) {
             for (auto key : group.keys) {
+                if (file.name == "ethslurp.toml" && key.name == "etherscan")
+                    key.name = "api_key";
                 string_q val = key.getValueByName("value");
-                cerr << "  ";
-                cerr << "getGlobalConfig(\"" << file.name << "\")->";
-                cerr << "setConfigStr(";
-                cerr << "\"" << group.name << "\", ";
-                cerr << "\"" << key.name << "\", ";
                 if (contains(key.name, "list")) {
                     ostringstream oss;
                     oss << "[";
                     bool first = true;
-                    CAccountName name;
-                    while (name.parseJson3(val)) {
+                    for (auto name : key.named) {
                         if (!first)
                             oss << ", ";
                         oss << name;
@@ -210,14 +218,42 @@ void COptions::handle_config_put(ostream& os) {
                     oss << "]";
                     val = substitute(substitute(oss.str(), "\n", ""), "  \"", " \"");
                     val = substitute(substitute(substitute(substitute(val, "}]", " }\n]"), "[{", "[\n{"), "{", "\t{"), "}, ", " },\n");
+                    printf("");
                 }
-                cerr << "\"" << val << "\"";
+                bool isBool = (key.type == "bool");
+                bool isPath = (key.type == "path");
+                if (isPath && !endsWith(val, '/'))
+                    val += "/";
+                cerr << "  " << "toml.";
+                cerr << (isBool ? "setConfigBool(" : "setConfigStr(");
+                cerr << "\"" << group.name << "\", ";
+                cerr << "\"" << key.name << "\", ";
+                cerr << (isBool ? bool_2_Str(str_2_Bool(val)) : ("\"" + val + "\""));
                 cerr << ");" << endl;
+                if (key.type == "bool") {
+                    toml.setConfigBool(group.name, key.name, str_2_Bool(val));
+                } else {
+                    toml.setConfigStr(group.name, key.name, val);
+                }
             }
         }
+        if (isTestMode())
+            toml.setFilename(substitute(path, "/tests/", "/alteredTests/"));
+        toml.writeFile();
+
+        if (isTestMode()) {
+            CToml newToml(substitute(path, "/tests/", "/alteredTests/"));
+            cerr << cYellow << string_q(120, '-') << cOff << endl;
+            cerr << "Would have written: " << path << ":" << endl;
+            cerr << cYellow << string_q(120, '-') << cOff << endl;
+            cerr << bBlue   << newToml << endl;
+            cerr << cYellow << string_q(120, '-') << cOff << endl;
+        }
+
+        file = CConfigFile();
     }
 
-    return;
+    return true;
 }
 
 //--------------------------------------------------------------------------------

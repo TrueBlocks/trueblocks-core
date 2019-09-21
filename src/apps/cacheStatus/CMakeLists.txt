@@ -73,8 +73,7 @@ run_state_test("cacheStatus_all"        "all")
 
 run_test("cacheStatus_config_bad"       "config")
 run_test("cacheStatus_config_get"       "--config-get")
-run_test("cacheStatus_config_set_bad"   "--config-set")
-run_test("cacheStatus_config_set"       "--config-set" " string")
+run_test("cacheStatus_config_set"       "--config-set")
 
 run_special_test("cacheStatus_items_monitors"          "monitors" " --details")
 run_special_test("cacheStatus_items_abis"              "abis"     " --details")

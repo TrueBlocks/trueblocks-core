@@ -59,15 +59,11 @@ bool COptions::parseArguments(string_q& command) {
             }
 
         } else {
-            if (contains(arg, char(5))) {
-                newSettings = arg;
-            } else {
-                string_q permitted = params[0].description;
-                replaceAny(permitted, "[]*", "|");
-                if (!contains(permitted, "|" + arg + "|"))
-                    return usage("Provided value for 'mode' (" + arg + ") not " + substitute(params[0].description, "enum", "") + ". Quitting.");
-                mode += (arg + "|");
-            }
+            string_q permitted = params[0].description;
+            replaceAny(permitted, "[]*", "|");
+            if (!contains(permitted, "|" + arg + "|"))
+                return usage("Provided value for 'mode' (" + arg + ") not " + substitute(params[0].description, "enum", "") + ". Quitting.");
+            mode += (arg + "|");
         }
     }
 

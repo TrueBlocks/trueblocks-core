@@ -6,7 +6,7 @@
 #include "options.h"
 
 //--------------------------------------------------------------------------------
-void COptions::handle_status(ostream& os) {
+bool COptions::handle_status(ostream& os) {
 
     CIndexCache aid;
     if (contains(mode, "|index|")) {
@@ -144,7 +144,7 @@ void COptions::handle_status(ostream& os) {
     os << status << endl;
     os << exportPostamble(JSON1, expContext().fmtMap["meta"]);
 
-    return;
+    return true;
 }
 
 //---------------------------------------------------------------------------
