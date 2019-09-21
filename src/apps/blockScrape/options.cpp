@@ -62,6 +62,14 @@ bool COptions::parseArguments(string_q& command) {
     establishFolder(indexFolder_ripe);
     establishFolder(configPath("cache/tmp/"));
 
+    LOG4("indexPath: " + indexPath);
+    LOG4("finalized: " + indexFolder_finalized);
+    LOG4("blooms: " + indexFolder_blooms);
+    LOG4("staging: " + indexFolder_staging);
+    LOG4("unripe: " + indexFolder_unripe);
+    LOG4("ripe: " + indexFolder_ripe);
+    LOG4("tmp: " + configPath("cache/tmp/"));
+
     CBlock latest;
     getBlock_light(latest, "latest");
     latestBlockTs = latest.timestamp;
