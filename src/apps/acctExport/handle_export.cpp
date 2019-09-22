@@ -79,7 +79,7 @@ bool COptions::exportData(void) {
                             } else {
                                 if (!isTestMode() && isApiMode()) {
                                     qblocks::eLogger->setEndline('\r');
-                                    LOG_INFO("Getting trace ", trans.blockNumber, ".", trans.transactionIndex, "-", trace.getValueByName("traceAddress"), string_q(50,' '));
+                                    LOG_INFO("\t\t\t\t\t\tGetting trace ", trans.blockNumber, ".", trans.transactionIndex, "-", trace.getValueByName("traceAddress"), string_q(50,' '));
                                     qblocks::eLogger->setEndline('\n');
                                 }
                                 if (articulate)
@@ -184,6 +184,10 @@ bool COptions::exportData(void) {
             }
         }
     }
+
+    qblocks::eLogger->setEndline('\r');
+    LOG_INFO(string_q(120,' '));
+    qblocks::eLogger->setEndline('\n');
 
     if (doABIs) {
         // acctExport --grabABIs (downloads and writes the ABIs for all the traces to disc)
