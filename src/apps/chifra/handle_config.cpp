@@ -20,7 +20,7 @@ bool COptions::handle_config(void) {
     string_q path = getCachePath("tmp/settings.json");
     establishFolder(path);
     stringToAsciiFile(path, settings);
-    if (isApiMode() || isTestMode())
+    if (contains(tool_flags, "set") && (isApiMode() || isTestMode()))
         cerr << "Chifra to cacheStatus:\n" << cYellow << settings << cOff << endl;
 
     // both testing and non-testing
