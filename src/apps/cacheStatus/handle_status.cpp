@@ -333,6 +333,7 @@ bool noteABI(const string_q& path, void *data) {
         abii.name = n.name;
         CAbi abi;
         abi.loadAbiFromFile(path, false);
+        sort(abi.interfaces.begin(), abi.interfaces.end());
         abii.nFunctions = abi.nFunctions();
         abii.nEvents = abi.nEvents();
         abii.nOther = abi.nOther();

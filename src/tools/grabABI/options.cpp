@@ -197,8 +197,8 @@ bool COptions::parseArguments(string_q& command) {
         for (auto file : files) {
             CAbi abi;
             abi.loadAbiFromFile(file, true);
-            abi.address = substitute(substitute(file, ".json",""), configPath("known_abis/"), "");
             sort(abi.interfaces.begin(), abi.interfaces.end(), sortByFuncName);
+            abi.address = substitute(substitute(file, ".json",""), configPath("known_abis/"), "");
             abi_specs.push_back(abi);
         }
     }
@@ -278,6 +278,7 @@ bool visitABIs(const string_q& path, void *dataPtr) {
 //        string_q fileName = nextTokenClear(fileList, '\n');
 //        CAbi abi;
 //        abi.loadAbiFromFile(fileName, false);
+//        sort(abi.interfaces.begin(), abi.interfaces.end());
 //        for (auto interface : abi.interfaces) {
 //            funcArray.push_back(interface);
 //            cout << interface.encoding << " : ";

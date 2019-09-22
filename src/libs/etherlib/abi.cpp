@@ -284,8 +284,12 @@ const char* STR_DISPLAY_ABI = "";
 // EXISTING_CODE
 //---------------------------------------------------------------------------
 bool visitABI(const qblocks::string_q& path, void *data) {
-    if (!endsWith(path, ".json"))
+    if (!endsWith(path, ".json"))  // we only want to look at jsons (the source)
         return true;
+    qblocks::eLogger->setEndline('\r');
+    if (!isTestMode())
+        LOG_INFO("Loading ABI: ", path);
+    qblocks::eLogger->setEndline('\n');
     CAbi *abi = (CAbi*)data;
     if (!abi->loadAbiFromFile(path, true))
         return false;
@@ -294,16 +298,31 @@ bool visitABI(const qblocks::string_q& path, void *data) {
 
 //---------------------------------------------------------------------------
 bool CAbi::loadAbiKnown(const string_q& which) {
-    if (which == "all")
-        return forEveryFileInFolder(configPath("known_abis/""*"), visitABI, this);
-    return loadAbiFromFile(configPath("known_abis/" + which + ".json"), true);
+    bool ret = true;
+    if (which == "all") {
+        ret = forEveryFileInFolder(configPath("known_abis/""*"), visitABI, this);
+    } else {
+        ret = loadAbiFromFile(configPath("known_abis/" + which + ".json"), true);
+    }
+    if (!isTestMode())
+        LOG_INFO("Loaded ", interfaces.size(), " function definitions.                                       ");
+    if (ret)
+        sort(interfaces.begin(), interfaces.end());
+    return ret;
 }
 
 //---------------------------------------------------------------------------
 bool CAbi::loadCachedAbis(const string_q& which) {
-    if (which == "all")
-        return forEveryFileInFolder(getCachePath("abis/""*"), visitABI, this);
-    return loadAbiFromFile(getCachePath("abis/" + which + ".json"), true);
+    bool ret = true;
+    if (which == "all") {
+        ret = forEveryFileInFolder(getCachePath("abis/""*"), visitABI, this);
+    } else {
+        ret = loadAbiFromFile(getCachePath("abis/" + which + ".json"), true);
+    }
+    LOG_INFO("Loaded ", interfaces.size(), " function definitions.                                       ");
+    if (ret)
+        sort(interfaces.begin(), interfaces.end());
+    return ret;
 }
 
 //---------------------------------------------------------------------------
@@ -312,40 +331,42 @@ bool CAbi::loadAbiByAddress(address_t addrIn) {
         return false;
     string_q addr = toLower(addrIn);
     string_q fileName = getCachePath("abis/" + addr + ".json");
-    return loadAbiFromFile(fileName, false);
+    bool ret = loadAbiFromFile(fileName, false);
+    if (ret)
+        sort(interfaces.begin(), interfaces.end());
+    return ret;
 }
 
 //---------------------------------------------------------------------------
 bool CAbi::loadAbiFromFile(const string_q& fileName, bool builtIn) {
+
     if (!fileExists(fileName))
         return false;
-#if 0
-317     string_q binFile = substitute(fileName, ".json", ".bin");
-318     if (fileExists(binFile)) {
-319         CArchive archive(READING_ARCHIVE);
-320         if (archive.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
-321             archive >> *this;
-322             archive.Release();
-323             return true;
-324         }
-325     }
-326
-327     string_q contents;
-328     asciiFileToString(fileName, contents);
-329     bool ret = loadAbiFromString(contents, builtIn);
-330     if (ret) {
-331         CArchive archive(WRITING_ARCHIVE);
-332         if (archive.Lock(binFile, modeWriteCreate, LOCK_NOWAIT)) {
-333             archive << *this;
-334             archive.Release();
-335             return true;
-336         }
-337     }
-338     return ret;
-#endif
+
+//    string_q binFile = substitute(fileName, ".json", ".bin");
+//    if (fileExists(binFile)) {
+//        CArchive archive(READING_ARCHIVE);
+//        if (archive.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
+//            archive >> *this;
+//            archive.Release();
+//            return true;
+//        }
+//    }
+
     string_q contents;
     asciiFileToString(fileName, contents);
-    return loadAbiFromString(contents, builtIn);
+    bool ret = loadAbiFromString(contents, builtIn);
+    if (ret) {
+        sort(interfaces.begin(), interfaces.end());
+//        CArchive archive(WRITING_ARCHIVE);
+//        if (archive.Lock(binFile, modeWriteCreate, LOCK_NOWAIT)) {
+//            archive << *this;
+//            archive.Release();
+//            return true;
+//        }
+    }
+
+    return false;
 }
 
 //---------------------------------------------------------------------------
@@ -354,10 +375,12 @@ bool CAbi::loadAbiFromString(const string_q& in, bool builtIn) {
     CFunction func;
     while (func.parseJson3(contents)) {
         func.isBuiltIn = builtIn;
-        interfaces.push_back(func);
+        if (!interfaceMap[func.encoding]) {
+            interfaces.push_back(func);
+            interfaceMap[func.encoding] = true;
+        }
         func = CFunction();  // reset
     }
-    sort(interfaces.begin(), interfaces.end());
     return interfaces.size();
 }
 

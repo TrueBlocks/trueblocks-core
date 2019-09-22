@@ -197,8 +197,8 @@ namespace qblocks {
 // The LOG parts of these routines disappear if turned off, but they still do their work because of the returns
 #define ENTER(a)       { LOG2(string_q("Enter:") + a); } string_q l_funcName = (a);
 #define EXIT_USAGE(a)  { LOG_ERR( "Exit(", l_funcName, "): "); return usage((a)); }
-#define EXIT_FAIL(a)   { LOG_WARN("Exit(", l_funcName, "): "); cerr << a; return false; }
-#define EXIT_MSG(a,b)  { LOG2("Exit(", l_funcName, "): "); cerr << a; return (b); }
+#define EXIT_FAIL(a)   { LOG_WARN("Exit(", l_funcName, "): "); cerr << (a); return false; }
+#define EXIT_MSG(a,b)  { LOG2("Exit(", l_funcName, "): "); cerr << (a); return (b); }
 #define EXIT_NOMSG(b)  { LOG2("Exit(", l_funcName, "): "); return (b); }
 
 #define ENTER4(a)       { LOG4(string_q("Enter:") + a); } string_q l_funcName = (a);
