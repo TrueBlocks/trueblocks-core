@@ -42,7 +42,6 @@ bool COptions::parseArguments(string_q& command) {
     for (auto arg : arguments) {
         if (arg == "-o" || arg == "--force") {
             etherlib_init(defaultQuitHandler);
-            force = true;
             isRaw = false;
 
         } else if (arg == "-r" || arg == "--raw") {
@@ -136,7 +135,6 @@ void COptions::Init(void) {
     asBitBars    = false;
     asPctBars    = false;
     bitCount     = false;
-    force        = false;
     receiptsOnly = false;
     blockOnly    = false;
     bitBound     = 200;

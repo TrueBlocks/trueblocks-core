@@ -16,7 +16,6 @@
 //-----------------------------------------------------------------------------
 class COptions : public CBlockOptions {
 public:
-    bool force;
     bool blockOnly;
     bool receiptsOnly;
     bool asBits;

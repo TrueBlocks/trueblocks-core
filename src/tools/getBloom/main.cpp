@@ -32,11 +32,6 @@ int main(int argc, const char *argv[]) {
         string_q list = options.getBlockNumList();
         while (!list.empty()) {
             blknum_t bn = str_2_Uint(nextTokenClear(list, '|'));
-            if (options.force) {
-                ostringstream os;
-                os << "bloomMan --rewrite " << bn << " >/dev/null";
-                if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
-            }
             cout << doOneBloom(bn, options);
             if (!options.asBars && !options.asBitBars && !options.asPctBars) {
                 if (!list.empty())
