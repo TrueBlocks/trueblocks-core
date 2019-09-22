@@ -58,6 +58,7 @@ run_the_test(${TEST_PATH} ${GOLD_PATH} "acctExport_preload_list" ${EXECUTABLE_OU
 # Enter one line for each individual test
 run_test("acctExport_no_params")
 run_test("acctExport_help"              "-h")
+run_test("acctExport_README"            "-th")
 
 run_test("acctExport_export"            "0x001d14804b399c6ef80e64576f657660804fec0b")
 run_test("acctExport_export_apps"       "0x001d14804b399c6ef80e64576f657660804fec0b" " --appearances")

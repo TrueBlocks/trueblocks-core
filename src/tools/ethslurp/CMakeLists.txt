@@ -54,6 +54,7 @@ endfunction(api_state_test)
 # Enter one line for each individual test
 run_test("ethslurp_no_params")
 run_test("ethslurp_help"                           "-h")
+run_test("ethslurp_README"                         "-th")
 run_test("ethslurp_invalid_param_1"                "-x")
 run_test("ethslurp_invalid_param_2"                "--")
 run_test("ethslurp_invalid_address_1"              "invalid")
