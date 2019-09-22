@@ -218,7 +218,6 @@ bool COptions::handle_config_set(ostream& os) {
                     oss << "]";
                     val = substitute(substitute(oss.str(), "\n", ""), "  \"", " \"");
                     val = substitute(substitute(substitute(substitute(val, "}]", " }\n]"), "[{", "[\n{"), "{", "\t{"), "}, ", " },\n");
-                    printf("");
                 }
                 bool isBool = (key.type == "bool");
                 bool isPath = (key.type == "path");
