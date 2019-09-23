@@ -854,22 +854,23 @@ extern void loadParseMap(void);
             CTransaction trans;
             if (hasHex) {
                 if (hasDot) {
-                    // blockHash.txid
+                    LOG4("blockHash.txid", hash, txid);
                     getTransaction(trans, hash, txid);
 
                 } else {
-                    // transHash
+                    LOG4("transHash", hash);
                     getTransaction(trans, hash);
                 }
             } else {
-                // blockNum.txid
                 blknum_t blockNum = str_2_Uint(hash);  // so the input is poorly named, sue me
+                LOG4("blockNum.txid", blockNum, txid);
                 getTransaction(trans, blockNum, txid);
                 if (fileExists(getBinaryCacheFilename(CT_TXS, blockNum, txid)))
                     fromCache = true;
             }
 
             if (!fromCache) {
+                LOG4("not from cache");
                 CBlock block;
                 trans.pBlock = &block;
                 if (isHash(trans.hash)) {
