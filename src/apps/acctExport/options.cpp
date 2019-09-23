@@ -179,11 +179,13 @@ bool COptions::parseArguments(string_q& command) {
     manageFields(toml.getConfigStr("fields", "show", ""), true );
 
     // Load as many ABI files as we have
-    LOG4("Loading ABIs");
-    abis.loadAbiKnown("all");
-    if (allABIs)
-        abis.loadCachedAbis("all");
-    LOG4("Finished loading ABIs");
+    if (!doAppearances && !doBalances) {
+        LOG4("Loading ABIs");
+        abis.loadAbiKnown("all");
+        if (allABIs)
+            abis.loadCachedAbis("all");
+        LOG4("Finished loading ABIs");
+    }
 
     // Try to articulate the watched addresses
     for (size_t i = 0 ; i < monitors.size() ; i++) {
