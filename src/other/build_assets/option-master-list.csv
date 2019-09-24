@@ -1,23 +1,23 @@
-n,group,api_route,tool,order,command,command_short,data_type,option_kind,default_value,description_core,description_api,is_required,core_visible,docs_visible
-5,tools,receipts,getReceipt,,trans_list,,list<trans>,positional,,"a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)",,TRUE,TRUE,TRUE
-10,tools,receipts,getReceipt,,articulate,a,boolean,switch,,articulate the transactions if an ABI is found for the 'to' address,,FALSE,TRUE,TRUE
-15,tools,receipts,getReceipt,,logs,l,boolean,switch,,display the receipt's logs,,FALSE,TRUE,TRUE
-20,tools,receipts,getReceipt,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format (one of [none|json*|txt|csv|api]),,FALSE,FALSE,FALSE
-25,tools,receipts,getReceipt,,,,,description,,Retrieve a transaction's receipt from the local cache or a running node.,,FALSE,TRUE,TRUE
-30,tools,blocks,getBlock,,block_list,,list<block>,positional,,a space-separated list of one or more blocks to retrieve,,TRUE,TRUE,TRUE
-35,tools,blocks,getBlock,,hash_only,n,boolean,switch,,"display only transaction hashes, default is to display full transaction detail",,FALSE,TRUE,TRUE
-40,tools,blocks,getBlock,,check,c,boolean,switch,,"compare results between qblocks and Ethereum node, report differences, if any",,FALSE,TRUE,TRUE
-45,tools,blocks,getBlock,,addrs,a,boolean,switch,,display all addresses included in the block,,FALSE,TRUE,TRUE
-50,tools,blocks,getBlock,,uniq,u,boolean,switch,,display only uniq addresses found per block,,FALSE,TRUE,TRUE
-55,tools,blocks,getBlock,,uniqTx,q,boolean,switch,,display only uniq addresses found per transaction,,FALSE,TRUE,TRUE
-60,tools,blocks,getBlock,,number,m,boolean,switch,,"display address counts (alterntively --addrCnt, --uniqTxCnt, or --uniqCnt)",,FALSE,TRUE,TRUE
-65,tools,blocks,getBlock,,filter,l,<address>,flag,,"useful only for --addrs or --uniq, only display this address in results",,FALSE,TRUE,TRUE
-70,tools,blocks,getBlock,,latest,l,boolean,switch,,display the latest blocks at both the node and the cache,,FALSE,FALSE,FALSE
-75,tools,blocks,getBlock,,force,o,boolean,switch,,force a re-write of the block to the cache,,FALSE,FALSE,FALSE
-80,tools,blocks,getBlock,,quiet,q,boolean,switch,,"do not print results to screen, used for speed testing and data checking",,FALSE,FALSE,FALSE
-85,tools,blocks,getBlock,,source,s,enum[c*|r],flag,,"either :c(a)che or :(r)aw, source for data retrival. (shortcuts -k = qblocks, -r = node)",,FALSE,FALSE,FALSE
-90,tools,blocks,getBlock,,fields,f,enum[a*|m|c|r],flag,,"either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default)",,FALSE,FALSE,FALSE
-95,tools,blocks,getBlock,,normalize,n,boolean,switch,,normalize (remove un-common fields and sort) for comparison with other results (testing),,FALSE,FALSE,FALSE
+num,group,api_route,tool,order,command,command_short,data_type,option_kind,default_value,description_core,description_api,is_required,core_visible,docs_visible
+005,tools,receipts,getReceipt,,trans_list,,list<trans>,positional,,"a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)",,TRUE,TRUE,TRUE
+010,tools,receipts,getReceipt,,articulate,a,boolean,switch,,articulate the transactions if an ABI is found for the 'to' address,,FALSE,TRUE,TRUE
+015,tools,receipts,getReceipt,,logs,l,boolean,switch,,display the receipt's logs,,FALSE,TRUE,TRUE
+020,tools,receipts,getReceipt,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format (one of [none|json*|txt|csv|api]),,FALSE,FALSE,FALSE
+025,tools,receipts,getReceipt,,,,,description,,Retrieve a transaction's receipt from the local cache or a running node.,,FALSE,TRUE,TRUE
+030,tools,blocks,getBlock,,block_list,,list<block>,positional,,a space-separated list of one or more blocks to retrieve,,TRUE,TRUE,TRUE
+035,tools,blocks,getBlock,,hash_only,n,boolean,switch,,"display only transaction hashes, default is to display full transaction detail",,FALSE,TRUE,TRUE
+040,tools,blocks,getBlock,,check,c,boolean,switch,,"compare results between qblocks and Ethereum node, report differences, if any",,FALSE,TRUE,TRUE
+045,tools,blocks,getBlock,,addrs,a,boolean,switch,,display all addresses included in the block,,FALSE,TRUE,TRUE
+050,tools,blocks,getBlock,,uniq,u,boolean,switch,,display only uniq addresses found per block,,FALSE,TRUE,TRUE
+055,tools,blocks,getBlock,,uniqTx,q,boolean,switch,,display only uniq addresses found per transaction,,FALSE,TRUE,TRUE
+060,tools,blocks,getBlock,,number,m,boolean,switch,,"display address counts (alterntively --addrCnt, --uniqTxCnt, or --uniqCnt)",,FALSE,TRUE,TRUE
+065,tools,blocks,getBlock,,filter,l,<address>,flag,,"useful only for --addrs or --uniq, only display this address in results",,FALSE,TRUE,TRUE
+070,tools,blocks,getBlock,,latest,l,boolean,switch,,display the latest blocks at both the node and the cache,,FALSE,FALSE,FALSE
+075,tools,blocks,getBlock,,force,o,boolean,switch,,force a re-write of the block to the cache,,FALSE,FALSE,FALSE
+080,tools,blocks,getBlock,,quiet,q,boolean,switch,,"do not print results to screen, used for speed testing and data checking",,FALSE,FALSE,FALSE
+085,tools,blocks,getBlock,,source,s,enum[c*|r],flag,,"either :c(a)che or :(r)aw, source for data retrival. (shortcuts -k = qblocks, -r = node)",,FALSE,FALSE,FALSE
+090,tools,blocks,getBlock,,fields,f,enum[a*|m|c|r],flag,,"either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default)",,FALSE,FALSE,FALSE
+095,tools,blocks,getBlock,,normalize,n,boolean,switch,,normalize (remove un-common fields and sort) for comparison with other results (testing),,FALSE,FALSE,FALSE
 100,tools,blocks,getBlock,,,,,description,,Returns block(s) from local cache or directly from a running node.,,FALSE,TRUE,TRUE
 105,tools,transactions,getTrans,,trans_list,,list<trans>,positional,,"a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)",,TRUE,TRUE,TRUE
 110,tools,transactions,getTrans,,articulate,a,boolean,switch,,articulate the transactions if an ABI is found for the 'to' address,,FALSE,TRUE,TRUE
@@ -182,13 +182,13 @@ n,group,api_route,tool,order,command,command_short,data_type,option_kind,default
 870,apps,config,,,set,,string,flag,,set new configuration values,,FALSE,FALSE,FALSE
 875,apps,leech,,,,,,,,leech the address index from IPFS,,FALSE,TRUE,TRUE
 880,apps,seed,,,,,,,,seed the address index to IPFS,,FALSE,TRUE,TRUE
-885,apps,"export,list",acctScrape,,addr_list,,list<addr>,positional,,one or more Ethereum addresses,,TRUE,TRUE,TRUE
-895,apps,"export,list",acctScrape,,staging,s,boolean,switch,,produce results in the staging folder instead of production folder,,FALSE,FALSE,FALSE
-900,apps,"export,list",acctScrape,,unripe,u,boolean,switch,,visit unripe (not old enough and not yet staged or finalized) blocks,,FALSE,FALSE,FALSE
-905,apps,"export,list",acctScrape,,daemon,d,boolean,switch,,we are being called in daemon mode which causes us to print results differently,,FALSE,FALSE,FALSE
-910,apps,"export,list",acctScrape,,no_header,o,boolean,switch,,do not show the header row,,FALSE,TRUE,TRUE
-915,apps,"export,list",acctScrape,,start,r,<blknum>,flag,,start block for scan of appearances,,FALSE,FALSE,FALSE
-920,apps,"export,list",acctScrape,,,,,description,,Index transactions for a given Ethereum address (or series of addresses).,,FALSE,TRUE,TRUE
+885,apps,list,acctScrape,,addr_list,,list<addr>,positional,,one or more Ethereum addresses,,TRUE,TRUE,TRUE
+895,apps,list,acctScrape,,staging,s,boolean,switch,,produce results in the staging folder instead of production folder,,FALSE,FALSE,FALSE
+900,apps,list,acctScrape,,unripe,u,boolean,switch,,visit unripe (not old enough and not yet staged or finalized) blocks,,FALSE,FALSE,FALSE
+905,apps,list,acctScrape,,daemon,d,boolean,switch,,we are being called in daemon mode which causes us to print results differently,,FALSE,FALSE,FALSE
+910,apps,list,acctScrape,,no_header,o,boolean,switch,,do not show the header row,,FALSE,TRUE,TRUE
+915,apps,list,acctScrape,,start,r,<blknum>,flag,,start block for scan of appearances,,FALSE,FALSE,FALSE
+920,apps,list,acctScrape,,,,,description,,Index transactions for a given Ethereum address (or series of addresses).,,FALSE,TRUE,TRUE
 925,all,all,all,,version,,boolean,switch,,display the current version of the tool,,FALSE,TRUE,TRUE
 930,all,all,all,,nocolor,,boolean,switch,,turn off colored display,,FALSE,TRUE,FALSE
 935,all,all,all,,wei,,boolean,switch,,specify value in wei (the default),,FALSE,TRUE,FALSE
