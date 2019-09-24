@@ -69,7 +69,7 @@ bool COptions::parseArguments(string_q& command) {
 
     if (!isConfig) {
         if (mode.empty() || contains(mode, "some"))
-            mode = "index|monitors|names|abis|slurps|prices";
+            mode = "index|monitors|names|slurps|prices";
 
         if (contains(mode, "all"))
             mode = "index|monitors|names|abis|blocks|txs|traces|slurps|prices";

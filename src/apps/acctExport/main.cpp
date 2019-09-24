@@ -8,6 +8,7 @@
 extern string_q plural(const string_q& in);
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
+
     acctlib_init(quickQuitHandler);
 
     COptions options;

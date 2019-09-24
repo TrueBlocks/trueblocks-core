@@ -7,7 +7,7 @@
 
 //-------------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
-    nodeNotRequired();
+
     acctlib_init(quickQuitHandler);
 
     COptions options;

@@ -2,8 +2,7 @@ acctExport argc: 3 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--abis]
 acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --abis 
 TIME ~ CLOCK - : 4-----API_MODE=true
 TIME ~ CLOCK - <ERROR> : Exit(parseArguments): 
-{ "cmd": "acctExport", "error": "Invalid option: --abis" }
-
+{ "errors": "acctExport: Invalid option: --abis" }
   Invalid option: --abis
 
   Usage:    acctExport [-x|-a|-l|-t|-c|-p|-o|-v|-h] <address> [address...]  
