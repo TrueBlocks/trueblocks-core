@@ -31,7 +31,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-    bool noHeader = false;
+    bool no_header = false;
     string_q format = getGlobalConfig("whenBlock")->getConfigStr("display", "format", STR_DISPLAY_WHEN);
     Init();
     blknum_t latestBlock = getLastBlock_client();
@@ -122,7 +122,7 @@ bool COptions::parseArguments(string_q& command) {
     }
     manageFields("CBlock:" + cleanFmt((format.empty() ? STR_DISPLAY_WHEN : format), exportFmt));
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
-    if (noHeader)
+    if (no_header)
         expContext().fmtMap["header"] = "";
 
     // collect together results for later display

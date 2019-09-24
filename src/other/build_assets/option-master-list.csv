@@ -30,7 +30,7 @@ n,group,api_route,tool,order,command,command_short,data_type,option_kind,default
 145,tools,state,getState,,mode,m,enum[none|some*|all|balance|nonce|code|storage|deployed|accttype],flag,,control which state to export. One of [none|some*|all|balance|nonce|code|storage|deployed|accttype],,FALSE,TRUE,TRUE
 150,tools,state,getState,,nozero,n,boolean,switch,,suppress the display of zero balance accounts,,FALSE,TRUE,TRUE
 155,tools,state,getState,,changes,c,boolean,switch,,only report a balance when it changes from one block to the next,,FALSE,TRUE,TRUE
-160,tools,state,getState,,noHeader,o,boolean,switch,,hide the header in txt and csv mode,,FALSE,FALSE,FALSE
+160,tools,state,getState,,no_header,o,boolean,switch,,hide the header in txt and csv mode,,FALSE,FALSE,FALSE
 165,tools,state,getState,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format (one of [none|json*|txt|csv|api]),,FALSE,FALSE,FALSE
 170,tools,state,getState,,,,,description,,Retrieve the balance (in wei) for one or more addresses at the given block(s).,,FALSE,TRUE,TRUE
 175,tools,,getBloom,,block_list,,list<block>,positional,,a space-separated list of one or more blocks for which to retrieve blooms,,TRUE,TRUE,TRUE
@@ -56,7 +56,7 @@ n,group,api_route,tool,order,command,command_short,data_type,option_kind,default
 275,tools,traces,getTrace,,trans_list,,list<trans>,positional,,"a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)",,TRUE,TRUE,TRUE
 280,tools,traces,getTrace,,articulate,a,boolean,switch,,articulate the transactions if an ABI is found for the 'to' address,,FALSE,TRUE,TRUE
 285,tools,traces,getTrace,,count_only,c,boolean,switch,,show the number of traces for the transaction only (fast),,FALSE,TRUE,TRUE
-290,tools,traces,getTrace,,noHeader,n,boolean,switch,,do not show the header row,,FALSE,TRUE,TRUE
+290,tools,traces,getTrace,,no_header,n,boolean,switch,,do not show the header row,,FALSE,TRUE,TRUE
 295,tools,traces,getTrace,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format (one of [none|json*|txt|csv|api]),,FALSE,FALSE,FALSE
 300,tools,traces,getTrace,,ddos,d,enum[on*|off],flag,,skip over dDos transactions in export ('on' by default),,FALSE,FALSE,FALSE
 305,tools,traces,getTrace,,,,,description,,Retrieve a transaction's traces from the local cache or a running node.,,FALSE,TRUE,TRUE
@@ -134,7 +134,7 @@ n,group,api_route,tool,order,command,command_short,data_type,option_kind,default
 670,apps,,cacheMan,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format (one of [json*|txt|csv]),,FALSE,TRUE,FALSE
 675,apps,,cacheMan,,skip,k,boolean,switch,,skip value for testing,,FALSE,FALSE,FALSE
 680,apps,,cacheMan,,start,s,<blknum>,flag,,un-used hidden value - do not remove,,FALSE,FALSE,FALSE
-685,apps,,cacheMan,,noHeader,o,boolean,switch,,do not show header row of data,,FALSE,FALSE,FALSE
+685,apps,,cacheMan,,no_header,o,boolean,switch,,do not show header row of data,,FALSE,FALSE,FALSE
 690,apps,,cacheMan,,,,,description,,Show the contents of an account cache and/or fix it by removing duplicate records.\n,,FALSE,TRUE,FALSE
 695,apps,scrape,blockScrape,,nBlocks,n,<blknum>,flag,,maximum number of blocks to process (defaults to 5000),,FALSE,TRUE,TRUE
 700,apps,scrape,blockScrape,,nBlockProcs,b,<uint>,flag,,number of block channels for blaze,,FALSE,FALSE,FALSE
@@ -153,7 +153,7 @@ n,group,api_route,tool,order,command,command_short,data_type,option_kind,default
 755,apps,export,acctExport,,writeTraces,r,enum[on*|off],flag,,write traces to the binary cache ('on' by default),,FALSE,FALSE,FALSE
 760,apps,export,acctExport,,ddos,d,enum[on*|off],flag,,skip over dDos transactions in export ('on' by default),,FALSE,FALSE,FALSE
 765,apps,export,acctExport,,maxTraces,m,<uint>,flag,,"if --ddos:on, the number of traces defining a dDos (default = 250)",,FALSE,FALSE,FALSE
-770,apps,export,acctExport,,noHeader,n,boolean,switch,,do not show the header row,,FALSE,FALSE,FALSE
+770,apps,export,acctExport,,no_header,n,boolean,switch,,do not show the header row,,FALSE,FALSE,FALSE
 775,apps,export,acctExport,,allABIs,a,boolean,switch,,load all previously cached abi files,,FALSE,FALSE,FALSE
 780,apps,export,acctExport,,grabABIs,g,boolean,switch,,"using each trace's 'to' address, grab the abi for that address (improves articulation)",,FALSE,FALSE,FALSE
 785,apps,export,acctExport,,freshen,f,boolean,switch,,freshen but do not print the exported data,,FALSE,FALSE,FALSE
@@ -183,11 +183,10 @@ n,group,api_route,tool,order,command,command_short,data_type,option_kind,default
 875,apps,leech,,,,,,,,leech the address index from IPFS,,FALSE,TRUE,TRUE
 880,apps,seed,,,,,,,,seed the address index to IPFS,,FALSE,TRUE,TRUE
 885,apps,"export,list",acctScrape,,addr_list,,list<addr>,positional,,one or more Ethereum addresses,,TRUE,TRUE,TRUE
-890,apps,"export,list",acctScrape,,noBlooms,n,boolean,switch,,turn off bloom filters for performance testing,,FALSE,FALSE,FALSE
 895,apps,"export,list",acctScrape,,staging,s,boolean,switch,,produce results in the staging folder instead of production folder,,FALSE,FALSE,FALSE
 900,apps,"export,list",acctScrape,,unripe,u,boolean,switch,,visit unripe (not old enough and not yet staged or finalized) blocks,,FALSE,FALSE,FALSE
 905,apps,"export,list",acctScrape,,daemon,d,boolean,switch,,we are being called in daemon mode which causes us to print results differently,,FALSE,FALSE,FALSE
-910,apps,"export,list",acctScrape,,noHeader,o,boolean,switch,,do not show the header row,,FALSE,TRUE,TRUE
+910,apps,"export,list",acctScrape,,no_header,o,boolean,switch,,do not show the header row,,FALSE,TRUE,TRUE
 915,apps,"export,list",acctScrape,,start,r,<blknum>,flag,,start block for scan of appearances,,FALSE,FALSE,FALSE
 920,apps,"export,list",acctScrape,,,,,description,,Index transactions for a given Ethereum address (or series of addresses).,,FALSE,TRUE,TRUE
 925,all,all,all,,version,,boolean,switch,,display the current version of the tool,,FALSE,TRUE,TRUE

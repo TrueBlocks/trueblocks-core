@@ -91,7 +91,7 @@ bool COptions::parseArguments(string_q& command) {
                     }
 
                 } else {
-                    if (arg == "--noBlooms" || arg == "--staging") {
+                    if (arg == "--staging") {
                         freshen_flags += (arg + " ");
 
                     } else if (startsWith(arg, "--start")) {

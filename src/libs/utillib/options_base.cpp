@@ -215,7 +215,7 @@ namespace qblocks {
         string_q commandList = "";
         for (uint64_t i = 0 ; i < nArgs ; i++) {
             string_q a = args[i];
-            if (!contains(a, "--file"))
+            if (!contains(a, "--file:"))
                 commandList += (a + " ");
         }
         commandList += '\n';

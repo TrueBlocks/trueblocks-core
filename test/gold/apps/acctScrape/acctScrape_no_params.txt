@@ -8,15 +8,13 @@ acctScrape
 
   Where:  
 	addr_list             one or more Ethereum addresses (required)
-	-o  (--noHeader)      do not show the header row
+	-o  (--no_header)     do not show the header row
 
 #### Hidden options (shown during testing only)
-	-n  (--noBlooms)      turn off bloom filters for performance testing
 	-s  (--staging)       produce results in the staging folder instead of production folder
 	-u  (--unripe)        visit unripe (not old enough and not yet staged or finalized) blocks
 	-d  (--daemon)        we are being called in daemon mode which causes us to print results differently
 	-r  (--start <num>)   start block for scan of appearances
-	-l  (--listFiles)     list only the index file the address appears in, not the actual appearances
 #### Hidden options (shown during testing only)
 
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level

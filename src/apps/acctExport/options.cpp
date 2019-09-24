@@ -21,7 +21,7 @@ static const COption params[] = {
     COption("writeTraces", "r", "enum[on*|off]", OPT_HIDDEN | OPT_FLAG, "write traces to the binary cache ('on' by default)"),
     COption("ddos", "d", "enum[on*|off]", OPT_HIDDEN | OPT_FLAG, "skip over dDos transactions in export ('on' by default)"),
     COption("maxTraces", "m", "<uint>", OPT_HIDDEN | OPT_FLAG, "if --ddos:on, the number of traces defining a dDos (default = 250)"),
-    COption("noHeader", "n", "", OPT_HIDDEN | OPT_SWITCH, "do not show the header row"),
+    COption("no_header", "n", "", OPT_HIDDEN | OPT_SWITCH, "do not show the header row"),
     COption("allABIs", "a", "", OPT_HIDDEN | OPT_SWITCH, "load all previously cached abi files"),
     COption("grabABIs", "g", "", OPT_HIDDEN | OPT_SWITCH, "using each trace's 'to' address, grab the abi for that address (improves articulation)"),
     COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
@@ -41,7 +41,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         EXIT_NOMSG(false);
 
-    bool noHeader = false, allABIs = false;
+    bool no_header = false, allABIs = false;
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
@@ -81,8 +81,8 @@ bool COptions::parseArguments(string_q& command) {
                 EXIT_USAGE("Not a number for --endBlock: " + arg + ". Quitting.");
             scanRange.second = str_2_Uint(arg);
 
-        } else if (arg == "-n" || arg == "--noHeader") {
-            noHeader = true;
+        } else if (arg == "-n" || arg == "--no_header") {
+            no_header = true;
 
         } else if (arg == "-n" || arg == "--allABIs") {
             allABIs = true;
@@ -179,11 +179,13 @@ bool COptions::parseArguments(string_q& command) {
     manageFields(toml.getConfigStr("fields", "show", ""), true );
 
     // Load as many ABI files as we have
-    LOG4("Loading ABIs");
-    abis.loadAbiKnown("all");
-    if (allABIs)
-        abis.loadCachedAbis("all");
-    LOG4("Finished loading ABIs");
+    if (!doAppearances && !doBalances) {
+        LOG4("Loading ABIs");
+        abis.loadAbiKnown("all");
+        if (allABIs)
+            abis.loadCachedAbis("all");
+        LOG4("Finished loading ABIs");
+    }
 
     // Try to articulate the watched addresses
     for (size_t i = 0 ; i < monitors.size() ; i++) {
@@ -265,7 +267,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     expContext().fmtMap["header"] = "";
-    if (!noHeader) {
+    if (!no_header) {
         if (doTraces) {
             expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["trace_fmt"], exportFmt);
         } else if (doLogs) {

@@ -20,7 +20,7 @@ static const COption params[] = {
     COption("mode", "m", "enum[none|some*|all|balance|nonce|code|storage|deployed|accttype]", OPT_FLAG, "control which state to export. One of [none|some*|all|balance|nonce|code|storage|deployed|accttype]"),
     COption("nozero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
     COption("changes", "c", "", OPT_SWITCH, "only report a balance when it changes from one block to the next"),
-    COption("noHeader", "o", "", OPT_HIDDEN | OPT_SWITCH, "hide the header in txt and csv mode"),
+    COption("no_header", "o", "", OPT_HIDDEN | OPT_SWITCH, "hide the header in txt and csv mode"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve the balance (in wei) for one or more addresses at the given block(s)."),
 // END_CODE_OPTIONS
@@ -33,7 +33,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-    bool noHeader = false;
+    bool no_header = false;
 
     Init();
     explode(arguments, command, ' ');
@@ -44,8 +44,8 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-c" || arg == "--changes") {
             changes = true;
 
-        } else if (arg == "-o" || arg == "--noHeader") {
-            noHeader = true;
+        } else if (arg == "-o" || arg == "--no_header") {
+            no_header = true;
 
         } else if (startsWith(arg, "-m:") || startsWith(arg, "--mode:")) {
 
@@ -128,7 +128,7 @@ bool COptions::parseArguments(string_q& command) {
     if (expContext().asDollars)
         format = substitute(format, "{BALANCE}", "{DOLLARS}");
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
-    if (noHeader)
+    if (no_header)
         expContext().fmtMap["header"] = "";
 
     if ((!isTestMode() && !hasHistory()) || nodeHasBalances())

@@ -69,9 +69,9 @@ bool COptions::visitBinaryFile(const string_q& path, void *data) {
     string_q l_funcName = "visitBinaryFile";
     static uint32_t n = 0;
 
-    COptions *options = reinterpret_cast<COptions*>(data);
+//    COptions *options = reinterpret_cast<COptions*>(data);
     string_q bPath = substitute(substitute(path, indexFolder_finalized, indexFolder_blooms), ".bin", ".bloom");
-    if (options->useBlooms && fileExists(bPath)) {
+    if (fileExists(bPath)) {
         CNewBloomArray blooms;
         newReadBloomFromBinary(blooms, bPath);
         bool hit = false;
