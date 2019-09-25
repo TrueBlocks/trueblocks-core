@@ -57,6 +57,7 @@ bool COptions::parseArguments(string_q& command) {
             }
 
             string descr = substitute(substitute(params[0].description, "[", "|"), "]", "|");
+            descr += "where|when|";
             if (contains(descr, "|" + arg + "|")) {
                 if (!mode.empty())
                     EXIT_USAGE("Please specify " + params[0].description + ". " + mode + ":" + arg);

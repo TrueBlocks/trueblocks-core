@@ -1,0 +1,1 @@
+{ "errors": "Error in chifra - --file: 'blocks.txt  -v' not found. Quitting." }

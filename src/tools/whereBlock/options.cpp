@@ -46,7 +46,7 @@ bool COptions::parseArguments(string_q& command) {
 
         } else {
             string_q ret = blocks.parseBlockList(arg, latestBlock);
-            if (endsWith(ret, "\n")) {
+            if (!isApiMode() && endsWith(ret, "\n")) {
                 cerr << "\n  " << ret << "\n";
                 return false;
             } else if (!ret.empty()) {

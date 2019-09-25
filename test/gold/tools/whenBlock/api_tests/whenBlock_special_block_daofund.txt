@@ -1,0 +1,8 @@
+{ "type": "CBlock", "data": [
+  {
+    "blockNumber": 1428756,
+    "timestamp": 1461980573,
+    "name": "daofund",
+    "date": "2016-04-30 01:42:53 UTC"
+  }
+], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

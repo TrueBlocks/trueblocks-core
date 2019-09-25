@@ -1,0 +1,15 @@
+num,route,path,tool,filename,post,options
+curl -s "http://localhost:8080/blocks?block_list=1001001&force" | jq >../../../working/tools/whereBlock/api_tests/whereBlock_preload.txt result: 0
+curl -s "http://localhost:8080/where" | jq >../../../working/tools/whereBlock/api_tests/whereBlock_no_options.txt result: 0
+curl -s "http://localhost:8080/where?x" | jq >../../../working/tools/whereBlock/api_tests/whereBlock_invalid_option_1.txt result: 0
+curl -s "http://localhost:8080/where?option" | jq >../../../working/tools/whereBlock/api_tests/whereBlock_invalid_option_2.txt result: 0
+curl -s "http://localhost:8080/where?a&b" | jq >../../../working/tools/whereBlock/api_tests/whereBlock_invalid_option_3.txt result: 0
+curl -s "http://localhost:8080/where?block_list=1001001" | jq >../../../working/tools/whereBlock/api_tests/whereBlock_cached.txt result: 0
+curl -s "http://localhost:8080/where?block_list=45000&fmt=txt">../../../working/tools/whereBlock/api_tests/whereBlock_notcached.txt result: 0
+curl -s "http://localhost:8080/where?block_list=1001001&fmt=txt">../../../working/tools/whereBlock/api_tests/whereBlock_fmt_txt.txt result: 0
+curl -s "http://localhost:8080/where?block_list=1001001&fmt=csv">../../../working/tools/whereBlock/api_tests/whereBlock_fmt_csv.txt result: 0
+curl -s "http://localhost:8080/where?block_list=1001001&fmt=json" | jq >../../../working/tools/whereBlock/api_tests/whereBlock_fmt_json.txt result: 0
+curl -s "http://localhost:8080/where?block_list=1001001&fmt=api" | jq >../../../working/tools/whereBlock/api_tests/whereBlock_fmt_api.txt result: 0
+curl -s "http://localhost:8080/where?block_list=1001001&fmt=junk" | jq >../../../working/tools/whereBlock/api_tests/whereBlock_fmt_junk.txt result: 0
+curl -s "http://localhost:8080/where?block_list=1001001" | jq >../../../working/tools/whereBlock/api_tests/whereBlock_fmt_defaut.txt result: 0
+curl -s "http://localhost:8080/where?block_list=0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b" | jq >../../../working/tools/whereBlock/api_tests/whereBlock_blockByHash.txt result: 0

@@ -165,14 +165,14 @@ num,group,api_route,tool,order,command,command_short,data_type,option_kind,defau
 31130,apps,,cacheMan,,start,s,<blknum>,flag,,un-used hidden value - do not remove,,FALSE,FALSE,FALSE
 31140,apps,,cacheMan,,no_header,o,boolean,switch,,do not show header row of data,,FALSE,FALSE,FALSE
 31150,apps,,cacheMan,,,,,description,,Show the contents of an account cache and/or fix it by removing duplicate records.\n,,FALSE,TRUE,FALSE
-32000,tools,,whenBlock,,block_list,,list<block>,positional,,"one or more block numbers (or a 'special' block), or...",,FALSE,TRUE,TRUE
-32010,tools,,whenBlock,,date_list,,list<date>,positional,,one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]],,FALSE,TRUE,TRUE
-32020,tools,,whenBlock,,list,l,boolean,switch,,export all the named blocks,,FALSE,TRUE,TRUE
-32030,tools,,whenBlock,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format (one of [none|json*|txt|csv|api]),,FALSE,FALSE,FALSE
-32040,tools,,whenBlock,,,,,description,,"Finds the nearest block prior to a date, or the nearest date prior to a block.\n Alternatively, search for one of special 'named' blocks.",,FALSE,TRUE,TRUE
-33000,tools,,whereBlock,,block_list,,list<block>,positional,,a space-separated list of one or more blocks to search for,,TRUE,TRUE,TRUE
-33010,tools,,whereBlock,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format (one of [none|json*|txt|csv|api]),,FALSE,FALSE,FALSE
-33020,tools,,whereBlock,,,,,description,,"Reports if a block was found in the cache, at a local, or at a remote node.",,FALSE,TRUE,TRUE
+32000,tools,when,whenBlock,,block_list,,list<block>,positional,,"one or more block numbers (or a 'special' block), or...",,FALSE,TRUE,FALSE
+32010,tools,when,whenBlock,,date_list,,list<date>,positional,,one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]],,FALSE,TRUE,FALSE
+32020,tools,when,whenBlock,,list,l,boolean,switch,,export all the named blocks,,FALSE,TRUE,FALSE
+32030,tools,when,whenBlock,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format (one of [none|json*|txt|csv|api]),,FALSE,FALSE,FALSE
+32040,tools,when,whenBlock,,,,,description,,"Finds the nearest block prior to a date, or the nearest date prior to a block.\n Alternatively, search for one of special 'named' blocks.",,FALSE,TRUE,FALSE
+33000,tools,where,whereBlock,,block_list,,list<block>,positional,,a space-separated list of one or more blocks to search for,,TRUE,TRUE,FALSE
+33010,tools,where,whereBlock,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format (one of [none|json*|txt|csv|api]),,FALSE,FALSE,FALSE
+33020,tools,where,whereBlock,,,,,description,,"Reports if a block was found in the cache, at a local, or at a remote node.",,FALSE,TRUE,FALSE
 34000,tools,,getTokenInfo,,addr_list,,list<addr>,positional,,"two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported",,TRUE,TRUE,TRUE
 34010,tools,,getTokenInfo,,block_list,,list<block>,positional,,"an optional list of one or more blocks at which to report balances, defaults to 'latest'",,FALSE,TRUE,TRUE
 34020,tools,,getTokenInfo,,byAcct,b,boolean,switch,,"consider each address an ERC20 token except the last, whose balance is reported for each token",,FALSE,TRUE,TRUE
