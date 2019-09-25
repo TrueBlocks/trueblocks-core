@@ -155,7 +155,9 @@ extern string_q convertDisplayStr(const string_q& in);
         config.files.push_back(f);
     }
 
-    os << config << endl;
+    ostringstream oss;
+    oss << config << endl;
+    os << substitute(substitute(oss.str(), "\"false\"", "false"), "\"true\"", "true");
 
     return true;
 }

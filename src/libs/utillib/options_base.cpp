@@ -497,7 +497,7 @@ namespace qblocks {
     }
 
 const char *STR_ERROR_JSON =
-"{ \"errors\": \"[ERRORS]\" }";
+"{ \"errors\": \"[ERRORS]\" }\n";
 
     //--------------------------------------------------------------------------------
     string_q COptionsBase::usageStr(const string_q& errMsg) const {
