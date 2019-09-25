@@ -16,7 +16,7 @@ cacheStatus -th
 #### Hidden options (shown during testing only)
 | -x | --fmt <fmt> | export format (one of [none&#124;json*&#124;txt&#124;csv&#124;api]) |
 | -g | --config-get | returns JSON data of the editable configuration file items |
-| -s | --config-set | accepts JSON config data and writes it to configuration files |
+| -s | --config-set | accepts JSON in an env variable and writes it to configuration files |
 #### Hidden options (shown during testing only)
 
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |

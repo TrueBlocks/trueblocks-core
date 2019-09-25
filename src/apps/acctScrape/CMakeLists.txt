@@ -56,7 +56,7 @@ run_test("acctScrape_no_params")
 run_test("acctScrape_help" "-th")
 run_test("acctScrape_fail_list1" "--list")
 run_test("acctScrape_fail_list2" "0x1234567890123456789012345678901234567890")
-run_test("acctScrape_list_test" "--list" " 0x1234567890123456789012345678901234567890")
+run_test("acctScrape_list_test" " 0x001d14804b399c6ef80e64576f657660804fec0b")
 
 # Installation steps, this tool is renamed at installation
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

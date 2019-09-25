@@ -79,6 +79,7 @@ namespace qblocks {
         size_t   getID  (void) const { return m_fieldID;  }
         uint64_t getType(void) const { return m_fieldType; }
         void     setName(const string_q& str) { m_fieldName = str; }
+        void     setType(uint64_t type) { m_fieldType = type; }
 
         bool operator==(const CFieldData& data) {
             if (m_fieldName != data.m_fieldName) return false;

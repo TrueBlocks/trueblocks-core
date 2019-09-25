@@ -24,7 +24,7 @@ acctExport -th
 | -r | --writeTraces enum[on*|off] | write traces to the binary cache ('on' by default) |
 | -d | --ddos enum[on*|off] | skip over dDos transactions in export ('on' by default) |
 | -m | --maxTraces <uint> | if --ddos:on, the number of traces defining a dDos (default = 250) |
-| -n | --noHeader | do not show the header row |
+| -n | --no_header | do not show the header row |
 | -a | --allABIs | load all previously cached abi files |
 | -g | --grabABIs | using each trace's 'to' address, grab the abi for that address (improves articulation) |
 | -f | --freshen | freshen but do not print the exported data |

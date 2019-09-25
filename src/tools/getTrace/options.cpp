@@ -18,7 +18,7 @@ static const COption params[] = {
     COption("trans_list", "", "list<trans>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
     COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
     COption("count_only", "c", "", OPT_SWITCH, "show the number of traces for the transaction only (fast)"),
-    COption("noHeader", "n", "", OPT_SWITCH, "do not show the header row"),
+    COption("no_header", "n", "", OPT_SWITCH, "do not show the header row"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),
     COption("ddos", "d", "enum[on*|off]", OPT_HIDDEN | OPT_FLAG, "skip over dDos transactions in export ('on' by default)"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction's traces from the local cache or a running node."),
@@ -32,7 +32,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-    bool noHeader = false;
+    bool no_header = false;
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
@@ -42,8 +42,8 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-c" || arg == "--count_only") {
             option1 = true;
 
-        } else if (arg == "-n" || arg == "--noHeader") {
-            noHeader = true;
+        } else if (arg == "-n" || arg == "--no_header") {
+            no_header = true;
 
         } else if (startsWith(arg, "-d") || startsWith(arg, "--ddos")) {
             arg = substitute(substitute(arg, "-d:", ""), "--ddos:", "");
@@ -107,7 +107,7 @@ bool COptions::parseArguments(string_q& command) {
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
     if (option1)
         expContext().fmtMap["format"] = expContext().fmtMap["header"] = "[{HASH}]\t[{TRACESCNT}]";
-    if (noHeader)
+    if (no_header)
         expContext().fmtMap["header"] = "";
 
     skipDdos    = getGlobalConfig("acctExport")->getConfigBool("settings", "skipDdos", skipDdos);;

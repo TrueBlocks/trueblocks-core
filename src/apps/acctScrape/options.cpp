@@ -9,13 +9,11 @@
 static const COption params[] = {
 // BEG_CODE_OPTIONS
     COption("addr_list", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more Ethereum addresses"),
-    COption("noBlooms", "n", "", OPT_HIDDEN | OPT_SWITCH, "turn off bloom filters for performance testing"),
     COption("staging", "s", "", OPT_HIDDEN | OPT_SWITCH, "produce results in the staging folder instead of production folder"),
     COption("unripe", "u", "", OPT_HIDDEN | OPT_SWITCH, "visit unripe (not old enough and not yet staged or finalized) blocks"),
     COption("daemon", "d", "", OPT_HIDDEN | OPT_SWITCH, "we are being called in daemon mode which causes us to print results differently"),
-    COption("noHeader", "o", "", OPT_SWITCH, "do not show the header row"),
+    COption("no_header", "o", "", OPT_SWITCH, "do not show the header row"),
     COption("start", "r", "<blknum>", OPT_HIDDEN | OPT_FLAG, "start block for scan of appearances"),
-    COption("listFiles", "l", "", OPT_HIDDEN | OPT_FLAG, "list only the index file the address appears in, not the actual appearances"),
     COption("", "", "", OPT_DESCRIPTION, "Index transactions for a given Ethereum address (or series of addresses)."),
 // END_CODE_OPTIONS
 };
@@ -30,7 +28,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     scanRange.first = UINT_MAX;
-    bool noHeader = false;
+    bool no_header = false;
 
     Init();
     explode(arguments, command, ' ');
@@ -41,10 +39,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-s" || arg == "--staging") {
             visitTypes |= VIS_STAGING;
 
-        } else if (arg == "-n" || arg == "--noBlooms") {
-            cerr << "Turning off blooms" << endl;
-            useBlooms = false;
-
         } else if (startsWith(arg, "-r:") || startsWith(arg, "--start:")) {
             arg = substitute(substitute(arg, "-r:", ""), "--start:", "");
             if (!isNumeral(arg))
@@ -54,11 +48,8 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-d" || arg == "--daemon") {
             daemonMode = true;
 
-        } else if (arg == "-o" || arg == "--noHeader") {
-            noHeader = true;
-
-        } else if (arg == "-l" || arg == "--listFiles") {
-            listFiles = true;
+        } else if (arg == "-o" || arg == "--no_header") {
+            no_header = true;
 
         } else if (startsWith(arg, "0x")) {
             if (!isAddress(arg))
@@ -127,7 +118,7 @@ bool COptions::parseArguments(string_q& command) {
     if (visitTypes & VIS_UNRIPE)
         scanRange.second = unripe;
 
-    if (noHeader)
+    if (no_header)
         expContext().fmtMap["header"] = "";
 
     // So one of the test cases passes only
@@ -153,8 +144,6 @@ void COptions::Init(void) {
 
     minArgs    = 0;
     visitTypes = VIS_FINAL;
-    useBlooms  = true;
-    listFiles = false;
 }
 
 //---------------------------------------------------------------------------------------------------

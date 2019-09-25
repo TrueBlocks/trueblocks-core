@@ -1,0 +1,18 @@
+{
+  "type": "CBlock",
+  "data": [
+    {
+      "blockNumber": 10,
+      "timestamp": 1438270128,
+      "name": "",
+      "date": "2015-07-30 15:28:48 UTC"
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
+}

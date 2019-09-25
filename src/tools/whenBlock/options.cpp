@@ -31,7 +31,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-    bool noHeader = false;
+    bool no_header = false;
     string_q format = getGlobalConfig("whenBlock")->getConfigStr("display", "format", STR_DISPLAY_WHEN);
     Init();
     blknum_t latestBlock = getLastBlock_client();
@@ -59,17 +59,25 @@ bool COptions::parseArguments(string_q& command) {
 
             } else if (date > Now()) {
                 ostringstream os;
-                os << "The date you specified (" << cTeal << orig << cOff << ")";
-                os << "is in the future. No such block.";
-                LOG_WARN(os.str());
-                return false;
+                if (isApiMode())
+                    colorsOff();
+                os << "The date you specified (" << cTeal << orig << cOff << ") " << "is in the future. No such block.";
+                if (!isApiMode()) {
+                    LOG_WARN(os.str());
+                    return false;
+                }
+                return usage(os.str());
 
             } else if (date < time_q(2015, 7, 30, 15, 25, 00)) {
                 ostringstream os;
-                os << "The date you specified (" << cTeal << orig << cOff << ")";
-                os << "is before the first block.";
-                LOG_WARN(os.str());
-                return false;
+                if (isApiMode())
+                    colorsOff();
+                os << "The date you specified (" << cTeal << orig << cOff << ") " << "is before the first block.";
+                if (!isApiMode()) {
+                    LOG_WARN(os.str());
+                    return false;
+                }
+                return usage(os.str());
 
             } else {
                 requests.push_back(CNameValue("date", int_2_Str(date_2_Ts(date))));
@@ -122,7 +130,7 @@ bool COptions::parseArguments(string_q& command) {
     }
     manageFields("CBlock:" + cleanFmt((format.empty() ? STR_DISPLAY_WHEN : format), exportFmt));
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
-    if (noHeader)
+    if (no_header)
         expContext().fmtMap["header"] = "";
 
     // collect together results for later display

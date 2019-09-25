@@ -31,7 +31,7 @@ bool COptions::handle_config_get(ostream& os) {
         CStringArray values;
         values.push_back(isTestMode() ? "--rpc Provider--" : cc->getConfigStr(g1_1.name, "rpcProvider",     "http://localhost:8545"));
         values.push_back(isTestMode() ? "--api Provider--" : cc->getConfigStr(g1_1.name, "apiProvider",     "http://localhost:8080"));
-        values.push_back(isTestMode() ? "--balance Prov--" : cc->getConfigStr(g1_1.name, "balanceProvider", "http://localhost:8080"));
+        values.push_back(isTestMode() ? "--balance Prov--" : cc->getConfigStr(g1_1.name, "balanceProvider", "http://localhost:8545"));
         values.push_back(isTestMode() ? "--config Path--"  : cc->getConfigStr(g1_2.name, "configPath",      "~/.quickBlocks/"));
         values.push_back(isTestMode() ? "--cache Path--"   : cc->getConfigStr(g1_2.name, "cachePath",       "~/.quickBlocks/cache/"));
         values.push_back(isTestMode() ? "--index Path--"   : cc->getConfigStr(g1_2.name, "indexPath",       "~/.quickBlocks/cache/addr_index/"));
@@ -218,7 +218,6 @@ bool COptions::handle_config_set(ostream& os) {
                     oss << "]";
                     val = substitute(substitute(oss.str(), "\n", ""), "  \"", " \"");
                     val = substitute(substitute(substitute(substitute(val, "}]", " }\n]"), "[{", "[\n{"), "{", "\t{"), "}, ", " },\n");
-                    printf("");
                 }
                 bool isBool = (key.type == "bool");
                 bool isPath = (key.type == "path");

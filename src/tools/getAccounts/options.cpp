@@ -37,7 +37,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-    bool noHeader = false;
+    bool no_header = false;
     string_q format;
     bool deflt = true;
 
@@ -72,7 +72,7 @@ bool COptions::parseArguments(string_q& command) {
             types |= OTHER;
 
         } else if (arg == "-a" || arg == "--addr") {
-            noHeader = true;
+            no_header = true;
             format = "[{ADDRESS}]";
             searchFields = "[{ADDRESS}]\t[{NAME}]";
 
@@ -113,7 +113,7 @@ bool COptions::parseArguments(string_q& command) {
     if (expContext().asDollars)
         format = substitute(format, "{BALANCE}", "{DOLLARS}");
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
-    if (noHeader)
+    if (no_header)
         expContext().fmtMap["header"] = "";
 
     // Collect results for later display

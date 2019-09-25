@@ -215,7 +215,7 @@ namespace qblocks {
         string_q commandList = "";
         for (uint64_t i = 0 ; i < nArgs ; i++) {
             string_q a = args[i];
-            if (!contains(a, "--file"))
+            if (!contains(a, "--file:"))
                 commandList += (a + " ");
         }
         commandList += '\n';
@@ -496,17 +496,20 @@ namespace qblocks {
         return false;
     }
 
+const char *STR_ERROR_JSON =
+"{ \"errors\": [ \"[ERRORS]\" ] }\n";
+
     //--------------------------------------------------------------------------------
     string_q COptionsBase::usageStr(const string_q& errMsg) const {
+
+        if (isApiMode())
+            cout << substitute(STR_ERROR_JSON, "[ERRORS]", getProgName() + " - " + errMsg);
 
         ostringstream os;
         if (isReadme) {
             colorsOff();
             os << "#### Usage\n";
         }
-
-        if (isApiMode())
-            cout << "{ \"cmd\": \"" + getProgName() + "\", \"error\": \"" << errMsg << "\" }" << endl;
 
         os << "\n";
         if (!errMsg.empty())

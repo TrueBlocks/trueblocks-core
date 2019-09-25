@@ -204,7 +204,7 @@ cacheStatus --config-get
           "keys": [
             {
               "name": "writeTxs",
-              "value": "--write Txs--",
+              "value": --write Txs--,
               "type": "bool",
               "tip": "write transactions to the TrueBlocks binary cache",
               "required": false,
@@ -212,7 +212,7 @@ cacheStatus --config-get
             },
             {
               "name": "writeTraces",
-              "value": "--write Traces--",
+              "value": --write Traces--,
               "type": "bool",
               "tip": "write traces to the TrueBlocks binary cache",
               "required": false,

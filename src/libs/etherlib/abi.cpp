@@ -286,10 +286,11 @@ const char* STR_DISPLAY_ABI = "";
 bool visitABI(const qblocks::string_q& path, void *data) {
     if (!endsWith(path, ".json"))  // we only want to look at jsons (the source)
         return true;
-    qblocks::eLogger->setEndline('\r');
-    if (!isTestMode())
+    if (!isTestMode()) {
+        qblocks::eLogger->setEndline('\r');
         LOG_INFO("Loading ABI: ", path);
-    qblocks::eLogger->setEndline('\n');
+        qblocks::eLogger->setEndline('\n');
+    }
     CAbi *abi = (CAbi*)data;
     if (!abi->loadAbiFromFile(path, true))
         return false;

@@ -14,7 +14,7 @@ static const COption params[] = {
     COption("start", "", "<blknum>", OPT_FLAG, "starting block for data retreival"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),
     COption("config-get", "g", "", OPT_HIDDEN | OPT_SWITCH, "returns JSON data of the editable configuration file items"),
-    COption("config-set", "s", "", OPT_HIDDEN | OPT_FLAG, "accepts JSON config data and writes it to configuration files"),
+    COption("config-set", "s", "", OPT_HIDDEN | OPT_SWITCH, "accepts JSON in an env variable and writes it to configuration files"),
     COption("", "", "", OPT_DESCRIPTION, "Report on status of one or more TrueBlocks caches."),
 // END_CODE_OPTIONS
 };
@@ -69,7 +69,7 @@ bool COptions::parseArguments(string_q& command) {
 
     if (!isConfig) {
         if (mode.empty() || contains(mode, "some"))
-            mode = "index|monitors|names|abis|slurps|prices";
+            mode = "index|monitors|names|slurps|prices";
 
         if (contains(mode, "all"))
             mode = "index|monitors|names|abis|blocks|txs|traces|slurps|prices";

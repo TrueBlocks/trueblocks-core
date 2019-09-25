@@ -37,7 +37,7 @@ namespace qblocks {
                 ret = str_2_Uint(spec.second);
 
             } else {
-                msg = "The given value '" + arg + "' is not a numeral or a special named block.\n";
+                msg = "The given value '" + arg + "' is not a numeral or a special named block." + (isApiMode() ? "" : "\n");
                 return NOPOS;
 
             }
@@ -45,7 +45,7 @@ namespace qblocks {
 
         if (ret > lastBlock) {
             string_q lateStr = (isTestMode() ? "--" : uint_2_Str(lastBlock));
-            msg = "Block " + arg + " is later than the last valid block " + lateStr + ".\n";
+            msg = "Block " + arg + " is later than the last valid block " + lateStr + "." + (isApiMode() ? "" : "\n");
             return NOPOS;
         }
 

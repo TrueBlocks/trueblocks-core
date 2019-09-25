@@ -9,7 +9,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("command", "", "enum[scrape|list|export|accounts|slurp|quotes|data|blocks|transactions|receipts|logs|traces|state|abi|status|message|rm|config|leech|seed]", OPT_REQUIRED | OPT_POSITIONAL, "one of [scrape|list|export|accounts|slurp|quotes|data|blocks|transactions|receipts|logs|traces|state|abi|status|message|rm|config|leech|seed]"),
+    COption("command", "", "enum[list|export|slurp|accounts|abi|state|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed]", OPT_REQUIRED | OPT_POSITIONAL, "one of [list|export|slurp|accounts|abi|state|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed]"),
     COption("sleep", "", "<seconds>", OPT_FLAG, "for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 0)"),
     COption("", "", "", OPT_DESCRIPTION, "Create a TrueBlocks monitor configuration."),
 // END_CODE_OPTIONS
@@ -57,6 +57,7 @@ bool COptions::parseArguments(string_q& command) {
             }
 
             string descr = substitute(substitute(params[0].description, "[", "|"), "]", "|");
+            descr += "where|when|";
             if (contains(descr, "|" + arg + "|")) {
                 if (!mode.empty())
                     EXIT_USAGE("Please specify " + params[0].description + ". " + mode + ":" + arg);
@@ -91,7 +92,7 @@ bool COptions::parseArguments(string_q& command) {
                     }
 
                 } else {
-                    if (arg == "--noBlooms" || arg == "--staging") {
+                    if (arg == "--staging") {
                         freshen_flags += (arg + " ");
 
                     } else if (startsWith(arg, "--start")) {

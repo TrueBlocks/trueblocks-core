@@ -37,14 +37,6 @@ cacheStatus
       "valid_counts": true
     },
     {
-      "type": "CAbiCache",
-      "path": "CachePath",
-      "nFiles": 0,
-      "nFolders": 0,
-      "sizeInBytes": 0,
-      "valid_counts": false
-    },
-    {
       "addrs": [],
       "type": "CSlurpCache",
       "path": "SlurpPath",
