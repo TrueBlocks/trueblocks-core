@@ -497,13 +497,13 @@ namespace qblocks {
     }
 
 const char *STR_ERROR_JSON =
-"{ \"errors\": \"[ERRORS]\" }\n";
+"{ \"errors\": [ \"[ERRORS]\" ] }\n";
 
     //--------------------------------------------------------------------------------
     string_q COptionsBase::usageStr(const string_q& errMsg) const {
 
         if (isApiMode())
-            cout << substitute(STR_ERROR_JSON, "[ERRORS]", "Error in " + getProgName() + " - " + errMsg);
+            cout << substitute(STR_ERROR_JSON, "[ERRORS]", getProgName() + " - " + errMsg);
 
         ostringstream os;
         if (isReadme) {

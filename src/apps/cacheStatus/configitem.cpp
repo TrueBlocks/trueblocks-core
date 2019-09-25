@@ -32,6 +32,11 @@ void CConfigItem::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) con
         return;
 
     // EXISTING_CODE
+    /* We need to return a boolean if the type is boolean, so we do this crazy shit */
+    CRuntimeClass *pClass = getRuntimeClass();
+    CFieldData *fld = pClass->findField("value");
+    if (pClass && fld && type == "bool")
+        fld->setType(T_BOOL);
     // EXISTING_CODE
 
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["configitem_fmt"] : fmtIn);
@@ -41,6 +46,8 @@ void CConfigItem::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) con
     }
 
     // EXISTING_CODE
+    if (pClass && fld && type == "bool")
+        fld->setType(T_TEXT);
     // EXISTING_CODE
 
     while (!fmt.empty())
