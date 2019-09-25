@@ -21,16 +21,16 @@ int main(int argc, const char *argv[]) {
     CStringArray lines;
     explode(lines, contents, '\n');
     for (auto line : lines) {
-        if (!startsWith(line, '#')) {
+        if (!startsWith(line, "#") && !startsWith(line, "off")) {
             CStringArray parts;
             explode(parts, line, ',');
-            string_q num      = trim(parts[0]);
-            string_q route    = trim(parts[1]);
-            string_q path     = trim(parts[2]);
-            string_q tool     = trim(parts[3]);
-            string_q filename = trim(parts[4]);
-            string_q post     = trim(parts[5]);
-            string_q options  = parts.size() > 6 ? trim(parts[6]) : "";
+            string_q num      = trim(parts[1]);
+            string_q route    = trim(parts[2]);
+            string_q path     = trim(parts[3]);
+            string_q tool     = trim(parts[4]);
+            string_q filename = trim(parts[5]);
+            string_q post     = parts.size() > 6 ? trim(parts[6]) : "";
+            string_q options  = parts.size() > 7 ? trim(parts[7]) : "";
             ostringstream os;
             os << "curl -s \"http://localhost:8080/";
             os << route;
@@ -39,8 +39,21 @@ int main(int argc, const char *argv[]) {
             os << "\"";
             if (!post.empty())
                 os << " | " << post << " ";
-            os << " >../../../working/" << path << "/" << tool << "/api_tests/" << tool << "_" << filename << ".txt";
-            cout << os.str() << " result: " << system(os.str().c_str()) << endl;
+            string_q filePath = "../../../working/" + path + "/" + tool + "/api_tests/" + tool + "_" + filename + ".txt";
+            os << " >" << filePath; //../../../working/" << path << "/" << tool << "/api_tests/" << tool << "_" << filename << ".txt";
+            cout << os.str() << ": ";
+            if (!system(os.str().c_str())) {
+                string_q newText = asciiFileToString(filePath);
+                string_q oldText = asciiFileToString(substitute(filePath, "/working/", "/gold/"));
+                if (newText != oldText) {
+                    cout << redX << endl;
+                    return 1;
+                }
+                cout << greenCheck << endl;
+            } else {
+                cout << redX << endl;
+                return 1;
+            }
         }
     }
     return 0;

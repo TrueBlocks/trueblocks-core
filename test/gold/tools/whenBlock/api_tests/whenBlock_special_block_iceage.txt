@@ -1,8 +1,18 @@
-{ "type": "CBlock", "data": [
-  {
-    "blockNumber": 200000,
-    "timestamp": 1441661589,
-    "name": "iceage",
-    "date": "2015-09-07 21:33:09 UTC"
+{
+  "type": "CBlock",
+  "data": [
+    {
+      "blockNumber": 200000,
+      "timestamp": 1441661589,
+      "name": "iceage",
+      "date": "2015-09-07 21:33:09 UTC"
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
   }
-], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
+}

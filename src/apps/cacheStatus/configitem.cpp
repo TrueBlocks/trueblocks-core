@@ -35,6 +35,7 @@ void CConfigItem::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) con
     /* We need to return a boolean if the type is boolean, so we do this crazy shit */
     CRuntimeClass *pClass = getRuntimeClass();
     CFieldData *fld = pClass->findField("value");
+    fld->setType(T_TEXT); // always reset it since an item might have children
     if (pClass && fld && type == "bool")
         fld->setType(T_BOOL);
     // EXISTING_CODE

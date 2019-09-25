@@ -1,1 +1,5 @@
-{ "errors": "Error in whenBlock - Invalid option: '--x'." }
+{
+  "errors": [
+    "whenBlock - Invalid option: '--x'."
+  ]
+}

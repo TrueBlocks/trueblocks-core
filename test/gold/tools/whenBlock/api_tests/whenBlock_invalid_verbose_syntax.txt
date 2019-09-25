@@ -1,1 +1,5 @@
-{ "errors": "Error in whenBlock - Please supply either a JSON formatted date or a blockNumber." }
+{
+  "errors": [
+    "whenBlock - Please supply either a JSON formatted date or a blockNumber."
+  ]
+}

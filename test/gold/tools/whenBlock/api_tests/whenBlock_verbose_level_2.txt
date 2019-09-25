@@ -1,1 +1,5 @@
-{ "errors": "Error in chifra - Invalid verbose level 'j  1000'. Quitting..." }
+{
+  "errors": [
+    "chifra - Invalid verbose level 'j  1000'. Quitting..."
+  ]
+}

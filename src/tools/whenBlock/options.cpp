@@ -59,17 +59,25 @@ bool COptions::parseArguments(string_q& command) {
 
             } else if (date > Now()) {
                 ostringstream os;
-                os << "The date you specified (" << cTeal << orig << cOff << ")";
-                os << "is in the future. No such block.";
-                LOG_WARN(os.str());
-                return false;
+                if (isApiMode())
+                    colorsOff();
+                os << "The date you specified (" << cTeal << orig << cOff << ") " << "is in the future. No such block.";
+                if (!isApiMode()) {
+                    LOG_WARN(os.str());
+                    return false;
+                }
+                return usage(os.str());
 
             } else if (date < time_q(2015, 7, 30, 15, 25, 00)) {
                 ostringstream os;
-                os << "The date you specified (" << cTeal << orig << cOff << ")";
-                os << "is before the first block.";
-                LOG_WARN(os.str());
-                return false;
+                if (isApiMode())
+                    colorsOff();
+                os << "The date you specified (" << cTeal << orig << cOff << ") " << "is before the first block.";
+                if (!isApiMode()) {
+                    LOG_WARN(os.str());
+                    return false;
+                }
+                return usage(os.str());
 
             } else {
                 requests.push_back(CNameValue("date", int_2_Str(date_2_Ts(date))));
@@ -87,7 +95,7 @@ bool COptions::parseArguments(string_q& command) {
             } else  {
 
                 string_q ret = blocks.parseBlockList(arg, latestBlock);
-                if (!isApiMode() && endsWith(ret, "\n")) {
+                if (endsWith(ret, "\n")) {
                     LOG_WARN(substitute(ret,"\n",""));
                     return false;
 

@@ -1,1 +1,0 @@
-{ "errors": "Error in chifra - --file: 'dates.txt' not found. Quitting." }

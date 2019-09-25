@@ -1,1 +1,5 @@
-{ "errors": "Error in whenBlock - Not enough arguments presented." }
+{
+  "errors": [
+    "whenBlock - Not enough arguments presented."
+  ]
+}

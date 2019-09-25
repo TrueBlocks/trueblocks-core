@@ -1,8 +1,18 @@
-{ "type": "CBlock", "data": [
-  {
-    "blockNumber": 1000000,
-    "timestamp": 1455404053,
-    "name": "",
-    "date": "2016-02-13 22:54:13 UTC"
+{
+  "type": "CBlock",
+  "data": [
+    {
+      "blockNumber": 1000000,
+      "timestamp": 1455404053,
+      "name": "",
+      "date": "2016-02-13 22:54:13 UTC"
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
   }
-], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
+}

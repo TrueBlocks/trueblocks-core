@@ -57,7 +57,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-b:") || startsWith(arg, "--blocks:")) {
             arg = substitute(substitute(arg, "-b:", ""), "--blocks:", "");
             string_q ret = blocks.parseBlockList(arg, latestBlock);
-            if (!isApiMode() && endsWith(ret, "\n")) {
+            if (endsWith(ret, "\n")) {
                 cerr << "\n  " << ret << "\n";
                 return false;
             } else if (!ret.empty()) {
