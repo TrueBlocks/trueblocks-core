@@ -1,0 +1,163 @@
+[
+  {
+    "type": "call",
+    "error": "Bad jump destination",
+    "articulatedTrace": {
+      "name": "transferFrom",
+      "inputs": [
+        {
+          "name": "_from",
+          "value": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413"
+        },
+        {
+          "name": "_to",
+          "value": "0x713fa27cb26b5902ea398b04d21e6018bba3a2f1"
+        },
+        {
+          "name": "_value",
+          "value": "8263636363636363636"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "success",
+          "value": "false"
+        }
+      ]
+    },
+    "action": {
+      "address": "0x0",
+      "balance": 0,
+      "callType": "call",
+      "from": "0x713fa27cb26b5902ea398b04d21e6018bba3a2f1",
+      "gas": 2975272,
+      "input": "0x23b872dd000000000000000000000000bb9bc244d798123fde783fcc1c72d3bb8c189413000000000000000000000000713fa27cb26b5902ea398b04d21e6018bba3a2f100000000000000000000000000000000000000000000000072ae557d778bd174",
+      "refundAddress": "0x0",
+      "to": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+      "value": 0
+    },
+    "result": {
+      "address": "0x0",
+      "gasUsed": 0,
+      "output": ""
+    }
+  },  {
+    "type": "call",
+    "error": "",
+    "articulatedTrace": {
+      "name": "cancelExistingRequest",
+      "inputs": [
+        {
+          "name": "_key",
+          "value": "1"
+        }
+      ]
+    },
+    "action": {
+      "address": "0x0",
+      "balance": 0,
+      "callType": "call",
+      "from": "0x752c71a68e4e0ea308c6e4209b7802d135c49292",
+      "gas": 178536,
+      "input": "0x0a3120f20000000000000000000000000000000000000000000000000000000000000001",
+      "refundAddress": "0x0",
+      "to": "0x159cf1e9ae58211b588f5e3bf1d7e423952d959b",
+      "value": 0
+    },
+    "result": {
+      "address": "0x0",
+      "gasUsed": 57054,
+      "output": "0x"
+    }
+  },  {
+    "type": "call",
+    "error": "",
+    "articulatedTrace": {
+      "name": "split",
+      "inputs": [
+        {
+          "name": "targetFork",
+          "value": "0x167a9333bf582556f35bd4d16a7e80e191aa6476"
+        },
+        {
+          "name": "targetNoFork",
+          "value": "0x571b7b69829ce2568b9bc3d32eaf7405dab76b21"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "val_0",
+          "value": "true"
+        }
+      ]
+    },
+    "action": {
+      "address": "0x0",
+      "balance": 0,
+      "callType": "call",
+      "from": "0xc86d9ed50cb2774a09ed844f7bceef7888ac2e29",
+      "gas": 75912,
+      "input": "0x0f2c9329000000000000000000000000167a9333bf582556f35bd4d16a7e80e191aa6476000000000000000000000000571b7b69829ce2568b9bc3d32eaf7405dab76b21",
+      "refundAddress": "0x0",
+      "to": "0xebf2bf80c3ddb0b6ac2f88be8dceec7bf12dff22",
+      "value": 4569662960000000000
+    },
+    "result": {
+      "address": "0x0",
+      "gasUsed": 7473,
+      "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
+    }
+  },  {
+    "type": "call",
+    "error": "",
+    "articulatedTrace": {
+      "name": "forked",
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "val_0",
+          "value": "true"
+        }
+      ]
+    },
+    "action": {
+      "address": "0x0",
+      "balance": 0,
+      "callType": "call",
+      "from": "0xebf2bf80c3ddb0b6ac2f88be8dceec7bf12dff22",
+      "gas": 50598,
+      "input": "0x16c72721",
+      "refundAddress": "0x0",
+      "to": "0x2bd2326c993dfaef84f696526064ff22eba5b362",
+      "value": 0
+    },
+    "result": {
+      "address": "0x0",
+      "gasUsed": 197,
+      "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
+    }
+  },  {
+    "type": "call",
+    "error": "",
+    "articulatedTrace": {
+      "name": "",
+      "inputs": [],
+      "outputs": []
+    },
+    "action": {
+      "address": "0x0",
+      "balance": 0,
+      "callType": "call",
+      "from": "0xebf2bf80c3ddb0b6ac2f88be8dceec7bf12dff22",
+      "gas": 2300,
+      "input": "0x",
+      "refundAddress": "0x0",
+      "to": "0x167a9333bf582556f35bd4d16a7e80e191aa6476",
+      "value": 4569662960000000000
+    },
+    "result": {
+      "address": "0x0",
+      "gasUsed": 0,
+      "output": "0x"
+    }
+  }]

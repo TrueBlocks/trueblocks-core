@@ -1,0 +1,7 @@
+grabABI argc: 2 [1:0xf1aa581f353005ba3765b81bf52d6b1c488c2101] 
+grabABI 0xf1aa581f353005ba3765b81bf52d6b1c488c2101 
+TIME ~ CLOCK - <WARNG> : Could not get the ABI for address 0xf1aa581f353005ba3765b81bf52d6b1c488c2101. Etherscan returned: 
+TIME ~ CLOCK - <WARNG> : {"status":"0","message":"NOTOK","result":"Contract source code not verified"}
+TIME ~ CLOCK - <WARNG> : If you copy the ABI to the current folder, QBlocks will use it.
+ABI for address 0xf1aa581f353005ba3765b81bf52d6b1c488c2101
+
