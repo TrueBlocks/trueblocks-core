@@ -1177,7 +1177,7 @@ extern void loadParseMap(void);
         if (fmt == JSON1) {
             if (errors.size() > 0)
                 os << ",{" << erros.str() << "}";
-            os << "]\n";
+            os << "\n]\n";
             return os.str();
         }
 

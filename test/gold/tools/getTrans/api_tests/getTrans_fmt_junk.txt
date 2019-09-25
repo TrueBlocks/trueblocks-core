@@ -1,5 +1,5 @@
 {
   "errors": [
-    "getTrans - Export format must be one of [ json | txt | csv | api ]. Quitting..."
+    "getTrans - Export format (junk) must be one of [ json | txt | csv | api ]. Quitting..."
   ]
 }

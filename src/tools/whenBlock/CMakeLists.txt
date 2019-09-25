@@ -75,7 +75,6 @@ api_test("whenBlock_fmt_api_mode_fmt"                     "1001001" " --fmt" " t
 run_test("whenBlock_fmt_junk"                             "1001001" " --fmt" " junk")
 
 run_special_test("whenBlock_02"                           "--file:blocks.txt" " -v")
-#run_special_test("whenBlock_03"                           "--file:dates.txt")
 run_special_test("whenBlock_invalid_option_1"             "-x")
 run_special_test("whenBlock_invalid_option_2"             "a")
 run_special_test("whenBlock_invalid_option_3"             "0-0")

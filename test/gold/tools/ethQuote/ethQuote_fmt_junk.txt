@@ -1,7 +1,7 @@
 ethQuote argc: 4 [1:-d] [2:--fmt] [3:junk] 
 ethQuote -d --fmt junk 
 
-  Export format must be one of [ json | txt | csv | api ]. Quitting...
+  Export format (junk) must be one of [ json | txt | csv | api ]. Quitting...
 
   Usage:    ethQuote -d|-f|-p|-p|-v|-h  
   Purpose:  Freshen and/or display Ethereum price data and other purposes.

@@ -41,7 +41,8 @@
       "gasUsed": 0,
       "output": ""
     }
-  },  {
+  },
+  {
     "type": "call",
     "error": "",
     "articulatedTrace": {
@@ -69,7 +70,8 @@
       "gasUsed": 57054,
       "output": "0x"
     }
-  },  {
+  },
+  {
     "type": "call",
     "error": "",
     "articulatedTrace": {
@@ -107,7 +109,8 @@
       "gasUsed": 7473,
       "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
     }
-  },  {
+  },
+  {
     "type": "call",
     "error": "",
     "articulatedTrace": {
@@ -136,7 +139,8 @@
       "gasUsed": 197,
       "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
     }
-  },  {
+  },
+  {
     "type": "call",
     "error": "",
     "articulatedTrace": {
@@ -160,4 +164,5 @@
       "gasUsed": 0,
       "output": "0x"
     }
-  }]
+  }
+]
