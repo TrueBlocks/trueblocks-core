@@ -198,7 +198,7 @@ namespace qblocks {
                 else if ( arg == "csv" ) { exportFmt = CSV1; }
                 else if ( arg == "json") { exportFmt = JSON1; }
                 else if ( arg == "api" ) { exportFmt = API1; }
-                else return usage("Export format must be one of [ json | txt | csv | api ]. Quitting...");
+                else return usage("Export format (" + arg + ") must be one of [ json | txt | csv | api ]. Quitting...");
                 args[i] = "";
             }
         }

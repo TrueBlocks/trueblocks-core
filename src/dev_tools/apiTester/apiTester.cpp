@@ -47,12 +47,13 @@ int main(int argc, const char *argv[]) {
                 string_q oldText = asciiFileToString(substitute(filePath, "/working/", "/gold/"));
                 if (newText != oldText) {
                     cout << redX << endl;
-                    return 1;
+//                    return 1;
+                } else {
+                    cout << greenCheck << endl;
                 }
-                cout << greenCheck << endl;
             } else {
                 cout << redX << endl;
-                return 1;
+//                return 1;
             }
         }
     }

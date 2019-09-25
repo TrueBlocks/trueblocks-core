@@ -141,6 +141,7 @@ bool COptions::parseArguments(string_q& command) {
     if (verbose) { tool_flags += (" -v:" + uint_2_Str(verbose)); }
     if (expContext().asEther) { tool_flags += " --ether"; }
     if (expContext().asDollars) { tool_flags += " --dollars"; }
+    if (expContext().isParity) { tool_flags += " --parity"; }
     tool_flags += addExportMode(exportFmt);
     tool_flags = trim(tool_flags, ' ');
 

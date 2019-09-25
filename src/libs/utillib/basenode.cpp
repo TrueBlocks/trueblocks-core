@@ -574,7 +574,7 @@ namespace qblocks {
                         os << indent() << "\"" << name << "\": ";
                         string_q val = getValueByName(name);
                         bool isNum = field.m_fieldType & TS_NUMERAL;
-                        if (isNum && expContext().hexNums && !startsWith(val, "0x"))
+                        if (isNum && expContext().hexNums && !startsWith(val, "0x") && !contains(val, "."))
                             val = str_2_Hex(val);
                         bool quote = (!isNum || expContext().quoteNums) && val != "null";
                         if (quote)

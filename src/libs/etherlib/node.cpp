@@ -1151,19 +1151,45 @@ extern void loadParseMap(void);
     }
 
     //-----------------------------------------------------------------------
-    string_q exportPostamble(format_t fmt, const string_q& extra) {
-        if ((fmt != API1 && fmt != JSON1) || fmt == NONE1)
-            return "";
-        if (fmt != API1)
-            return "\n]";
+    string_q exportPostamble(format_t fmt, const CStringArray& errors, const string_q& extra) {
+
+        ostringstream os;
+        bool isText = (fmt == TXT1 || fmt == CSV1 || fmt == NONE1);
+        if (isText) {
+            for (auto error : errors)
+                os << "\"" << cRed << error << cOff << "\"" << endl;
+            return os.str();
+        }
+
+        ostringstream erros;
+        if (errors.size() > 0) {
+            bool first = true;
+            erros << "\"errors\": [";
+            for (auto error : errors) {
+                if (!first)
+                    erros << ", ";
+                erros << "\"" << error << "\"";
+                first = false;
+            }
+            erros << "]";
+        }
+
+        if (fmt == JSON1) {
+            if (errors.size() > 0)
+                os << ",{" << erros.str() << "}";
+            os << "]\n";
+            return os.str();
+        }
+
+        os << "\n], ";
+        if (errors.size() > 0)
+            os << erros.str() << ",";
 
         uint64_t unripe, ripe, staging, finalized, client;
         getLastBlocks(unripe, ripe, staging, finalized, client);
         if (isTestMode())
             unripe = ripe = staging = finalized = client = 0xdeadbeef;
-
-        ostringstream os;
-        os << "\n], \"meta\": {";
+        os << "\"meta\": {";
         os << "\"unripe\": " << dispNumOrHex(unripe) << ",";
         os << "\"ripe\": " << dispNumOrHex(ripe) << ",";
         os << "\"staging\": " << dispNumOrHex(staging) << ",";
@@ -1171,7 +1197,9 @@ extern void loadParseMap(void);
         os << "\"client\": " << dispNumOrHex(client);
         if (!extra.empty())
             os << extra;
-        os << " } }";
+        os << " }";
+        os << " }";
+
         return os.str();
     }
 
