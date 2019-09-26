@@ -156,7 +156,6 @@ extern string_q convertDisplayStr(const string_q& in);
     }
 
     os << config;
-
     return true;
 }
 

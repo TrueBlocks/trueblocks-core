@@ -1,6 +1,5 @@
 cacheStatus argc: 3 [1:slurps] [2:--details] 
 cacheStatus slurps --details 
-{ "data": [
 {
   "client_version": "Parity version",
   "trueblocks_version": "GHC-TrueBlocks//0.5.8-alpha--git-hash---git-ts-",
@@ -22,4 +21,3 @@ cacheStatus slurps --details
     }
   ]
 }
-] }

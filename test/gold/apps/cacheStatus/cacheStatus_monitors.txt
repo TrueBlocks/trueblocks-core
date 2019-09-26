@@ -1,6 +1,5 @@
 cacheStatus argc: 2 [1:monitors] 
 cacheStatus monitors 
-{ "data": [
 {
   "client_version": "Parity version",
   "trueblocks_version": "GHC-TrueBlocks//0.5.8-alpha--git-hash---git-ts-",
@@ -21,4 +20,3 @@ cacheStatus monitors
     }
   ]
 }
-] }
