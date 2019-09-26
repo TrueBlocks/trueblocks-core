@@ -1,6 +1,7 @@
 testing_file
 test_file
 *.sol
+*.csv
 *.txt
 *.json
 *.toml
