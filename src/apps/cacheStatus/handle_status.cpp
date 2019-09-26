@@ -203,7 +203,7 @@ bool noteMonitor(const string_q& path, void *data) {
         CMonitorCacheItem mdi;
         mdi.type = mdi.getRuntimeClass()->m_ClassName;
         mdi.address = substitute(substitute(substitute(substitute(path, counter->cachePtr->path, ""),".acct", ""),".bin", ""), ".json", "");
-        mdi.curBalance = getBalanceAt(mdi.address); // doesn't need the balance provider since it latest block
+        mdi.curBalance = (isNodeRunning() ? getBalanceAt(mdi.address) : str_2_BigUint(uint_2_Str(NOPOS)));
         CAccountName item;
         string_q customStr = getGlobalConfig("getAccounts")->getConfigJson("custom", "list", "");
         while (item.parseJson3(customStr)) {

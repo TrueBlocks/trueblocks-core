@@ -513,7 +513,7 @@ extern void loadParseMap(void);
         unripe    = getLastBlock_cache_unripe();
         staging   = getLastBlock_cache_staging();
         finalized = getLastBlock_cache_final();
-        client    = getLastBlock_client();
+        client    = (isNodeRunning() ? getLastBlock_client() : NOPOS);
         return true;
     }
 
@@ -1143,6 +1143,8 @@ extern void loadParseMap(void);
 
     //-----------------------------------------------------------------------
     inline string_q dispNumOrHex(uint64_t num) {
+        if (num == NOPOS)
+            return "\"n/a\"";
         if (!isTestMode())
             return uint_2_Str(num);
         ostringstream os;
@@ -1201,6 +1203,7 @@ const char* STR_ERROR_MSG_JSON =
         if (!extra.empty())
             os << extra;
         os << " }";
+
         os << " }";
 
         return os.str();
