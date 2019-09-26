@@ -22,6 +22,7 @@ public:
     CAbi abi_spec;
     bool first;
     bool skipDdos;
+    CStringArray errors;
 
     COptions(void);
     ~COptions(void);

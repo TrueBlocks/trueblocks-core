@@ -1,4 +1,40 @@
-getTrace argc: 2 [1:1001001.3.next] 
-getTrace 1001001.3.next 
-blocknumber	transactionindex	traceaddress	action::calltype	error	action::from	action::to	action::value	action::ether	action::gas	result::gasused	action::input	compressedtrace	result::output
-1001002	0	null	call		0x2a65aca4d5fc5b5c859090a6c34d164135398226	0xfc8bc4ed86df73001ce6082f3db914d7c7a9a6cc	2139205320000000000	2.139205320000000000	69000	0	0x		0x
+{
+  "type": "CTrace",
+  "data": [
+    {
+      "blockHash": "0x8c0ca5c43beeb64575825d95f700c7576617bef1075f36c316a25af9abb3eeed",
+      "blockNumber": 1001002,
+      "subtraces": 0,
+      "traceAddress": null,
+      "transactionHash": "0xab2578b4c1e2607832bfa8ef2f3ba51f48a17990214ea69f0debbfcc42ada001",
+      "transactionIndex": 0,
+      "type": "call",
+      "error": "",
+      "action": {
+        "address": "0x0",
+        "balance": 0,
+        "callType": "call",
+        "from": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
+        "gas": 69000,
+        "init": "",
+        "input": "0x",
+        "refundAddress": "0x0",
+        "to": "0xfc8bc4ed86df73001ce6082f3db914d7c7a9a6cc",
+        "value": 2139205320000000000
+      },
+      "result": {
+        "address": "0x0",
+        "code": "",
+        "gasUsed": 0,
+        "output": "0x"
+      }
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
+}

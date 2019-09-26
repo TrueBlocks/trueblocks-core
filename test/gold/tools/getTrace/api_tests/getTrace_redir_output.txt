@@ -1,3 +1,0 @@
-getTrace argc: 5 [1:-v] [2:3657480.79] [3:--output] [4:test_file] 
-getTrace -v 3657480.79 --output test_file 
-test_file

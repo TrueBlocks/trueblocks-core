@@ -15,6 +15,8 @@
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
+    bool quit_on_fail = false;
+
     string_q contents = substitute(asciiFileToString("./api_tests.csv"),"\r", "");
     CStringArray lines;
     explode(lines, contents, '\n');
@@ -46,13 +48,15 @@ int main(int argc, const char *argv[]) {
                 string_q oldText = asciiFileToString(substitute(filePath + fileName, "/working/", "/gold/"));
                 if (newText != oldText) {
                     cerr << dispCmd << ": " << redX << endl;
-                    return 1;
+                    if (quit_on_fail)
+                        return 1;
                 } else {
                     cerr << dispCmd << ": " << greenCheck << endl;
                 }
             } else {
                 cerr << dispCmd << ": " << redX << endl;
-                return 1;
+                if (quit_on_fail)
+                    return 1;
             }
         }
     }
