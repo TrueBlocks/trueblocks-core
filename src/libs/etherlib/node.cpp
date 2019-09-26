@@ -1129,7 +1129,7 @@ extern void loadParseMap(void);
                 os << headerRow(format, ",", "\"");
                 break;
             case JSON1:
-                os << "[";
+                os << "{ \"data\": [";
                 break;
             case API1:
                 os << "{ \"type\": \"" << className << "\", \"data\": [";
@@ -1153,43 +1153,46 @@ extern void loadParseMap(void);
     //-----------------------------------------------------------------------
     string_q exportPostamble(format_t fmt, const CStringArray& errors, const string_q& extra) {
 
-        ostringstream os;
+const char* STR_ERROR_MSG_TXT =
+"\"{[MSG]}\"";
+const char* STR_ERROR_MSG_JSON =
+"\"[MSG]\"";
+
         bool isText = (fmt == TXT1 || fmt == CSV1 || fmt == NONE1);
-        if (isText) {
-            for (auto error : errors)
-                os << "\"" << cRed << error << cOff << "\"" << endl;
-            return os.str();
-        }
 
-        ostringstream erros;
-        if (errors.size() > 0) {
-            bool first = true;
-            erros << "\"errors\": [";
-            for (auto error : errors) {
-                if (!first)
-                    erros << ", ";
-                erros << "\"" << error << "\"";
-                first = false;
+        ostringstream errStrs;
+        bool first = true;
+        for (auto error : errors) {
+            string_q msg = (isText ? STR_ERROR_MSG_TXT : STR_ERROR_MSG_JSON);
+            if (!first) {
+                if (isText)
+                    errStrs << endl;
+                else
+                    errStrs << ", ";
             }
-            erros << "]";
+            errStrs << substitute(substitute(substitute(msg, "[MSG]", error), "{", cRed), "}", cOff);
         }
+        if (!errStrs.str().empty())
+            errStrs << "\n";
 
-        if (fmt == JSON1) {
-            if (errors.size() > 0)
-                os << ",{" << erros.str() << "}";
-            os << "\n]\n";
-            return os.str();
-        }
+        if (isText)
+            return errStrs.str();  // only errors are reported for text or csv
+        ASSERT(fmt == JSON1 || fmt == API1);
 
-        os << "\n], ";
-        if (errors.size() > 0)
-            os << erros.str() << ",";
+        ostringstream os;
+        os << "]"; // finish the data array (or the error array)...
+        if (!errStrs.str().empty())
+            os << ", \"errors\": [\n" << errStrs.str() << "\n]";
+
+        if (fmt == JSON1)
+            return os.str() + " }";
+        ASSERT(fmt == API1);
 
         uint64_t unripe, ripe, staging, finalized, client;
         getLastBlocks(unripe, ripe, staging, finalized, client);
         if (isTestMode())
             unripe = ripe = staging = finalized = client = 0xdeadbeef;
-        os << "\"meta\": {";
+        os << ", \"meta\": {";
         os << "\"unripe\": " << dispNumOrHex(unripe) << ",";
         os << "\"ripe\": " << dispNumOrHex(ripe) << ",";
         os << "\"staging\": " << dispNumOrHex(staging) << ",";

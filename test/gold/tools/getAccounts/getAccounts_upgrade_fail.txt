@@ -1,6 +1,6 @@
 getAccounts argc: 3 [1:--fmt] [2:json] 
 getAccounts --fmt json 
-[
+{ "data": [
   {
     "group": "50-Tokens",
     "subgroup": "",
@@ -2613,5 +2613,4 @@ getAccounts --fmt json
     "is_contract": true,
     "is_private": false,
     "is_shared": true
-  }
-]
+  }] }

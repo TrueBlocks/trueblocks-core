@@ -1,6 +1,6 @@
 cacheStatus argc: 3 [1:some] [2:--details] 
 cacheStatus some --details 
-[
+{ "data": [
 {
   "client_version": "Parity version",
   "trueblocks_version": "GHC-TrueBlocks//0.5.8-alpha--git-hash---git-ts-",
@@ -58,6 +58,4 @@ cacheStatus some --details
     }
   ]
 }
-
-
-]
+] }

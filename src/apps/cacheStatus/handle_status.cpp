@@ -141,7 +141,7 @@ bool COptions::handle_status(ostream& os) {
     }
 
     os << exportPreamble(JSON1, expContext().fmtMap["header"], GETRUNTIME_CLASS(CStatus));
-    os << status << endl;
+    os << status;
     os << exportPostamble(JSON1, expContext().fmtMap["meta"]);
 
     return true;

@@ -1,6 +1,6 @@
 getTrace argc: 4 [1:--fmt] [2:json] [3:0xe024fde0ad85e7da742fc0f8d6b641756e2cb7c9d491f183b34c059f11a7f6ff] 
 getTrace --fmt json 0xe024fde0ad85e7da742fc0f8d6b641756e2cb7c9d491f183b34c059f11a7f6ff 
-[
+{ "data": [
   {
     "blockHash": "0x759de0be90043e350377c7d1be2f639ead0953b06a16c32552265659bd134f2d",
     "blockNumber": 2229051,
@@ -28,5 +28,4 @@ getTrace --fmt json 0xe024fde0ad85e7da742fc0f8d6b641756e2cb7c9d491f183b34c059f11
       "gasUsed": 0,
       "output": ""
     }
-  }
-]
+  }] }

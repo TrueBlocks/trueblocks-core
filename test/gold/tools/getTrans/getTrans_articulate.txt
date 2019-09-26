@@ -269,5 +269,4 @@ getTrans -a -x api -t 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017
     "gasUsed": 31561,
     "date": "2016-08-03 01:34:28 UTC",
     "ether": 4.569662960000000000
-  }
-], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
+  }], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

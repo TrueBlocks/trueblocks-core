@@ -155,7 +155,7 @@ extern string_q convertDisplayStr(const string_q& in);
         config.files.push_back(f);
     }
 
-    os << config << endl;
+    os << config;
 
     return true;
 }

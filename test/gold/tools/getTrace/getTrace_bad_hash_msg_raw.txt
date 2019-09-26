@@ -1,8 +1,7 @@
 getTrace argc: 5 [1:--raw] [2:0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521] [3:0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11] [4:0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521] 
 getTrace --raw 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 
-[
+{ "data": [
 {"jsonrpc":"2.0","result":[{"action":{"callType":"call","from":"0x30d285941dfb8bbbe4ec72b02c8d166be01322d2","gas":"0x0","input":"0x","to":"0x9b0a028eafdecde3afc0fd00b7937098388b7c8a","value":"0xdbbaa3d0ed1ad7"},"blockHash":"0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53","blockNumber":1001001,"result":{"gasUsed":"0x0","output":"0x"},"subtraces":0,"traceAddress":[],"transactionHash":"0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521","transactionPosition":3,"type":"call"}],"id":"1"}
 ,{ "error": "Transaction 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11 not found." }
 ,{"jsonrpc":"2.0","result":[{"action":{"callType":"call","from":"0x30d285941dfb8bbbe4ec72b02c8d166be01322d2","gas":"0x0","input":"0x","to":"0x9b0a028eafdecde3afc0fd00b7937098388b7c8a","value":"0xdbbaa3d0ed1ad7"},"blockHash":"0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53","blockNumber":1001001,"result":{"gasUsed":"0x0","output":"0x"},"subtraces":0,"traceAddress":[],"transactionHash":"0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521","transactionPosition":3,"type":"call"}],"id":"1"}
-
-]
+] }

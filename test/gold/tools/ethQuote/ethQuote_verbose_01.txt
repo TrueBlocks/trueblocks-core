@@ -35382,5 +35382,4 @@ Read cnt existing price quotes (lastRead: Now)
     "timestamp": 1502755200,
     "close": 298.05590,
     "date": "2017-08-15 00:00:00 UTC"
-  }
-], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
+  }], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

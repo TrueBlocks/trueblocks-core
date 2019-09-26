@@ -1,7 +1,9 @@
-[
-  {
-    "blockNumber": "1001001",
-    "cached": true,
-    "path": "./blocks/00/10/01/001001001.bin"
-  }
-]
+{
+  "data": [
+    {
+      "blockNumber": "1001001",
+      "cached": true,
+      "path": "./blocks/00/10/01/001001001.bin"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 getLogs argc: 5 [1:0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4] [2:-x] [3:json] [4:--parity] 
 getLogs 0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4 -x json --parity 
-[
+{ "data": [
   {
     "address": "0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
     "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
@@ -13,5 +13,4 @@ getLogs 0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4 -x 
       "inputs": [],
       "outputs": []
     }
-  }
-]
+  }] }

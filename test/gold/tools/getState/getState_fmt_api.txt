@@ -6,5 +6,4 @@ getState 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 --fmt api 2000000
     "balance": 97380000000000,
     "address": "0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98",
     "ether": 0.000097380000000000
-  }
-], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
+  }], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

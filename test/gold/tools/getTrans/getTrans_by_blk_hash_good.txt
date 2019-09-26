@@ -37,5 +37,4 @@ TIME ~ CLOCK - : 4-----API_MODE=true
     "time": "1:53:12 UTC",
     "age": "100",
     "ether": 0.080000000000000000
-  }
-], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
+  }], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

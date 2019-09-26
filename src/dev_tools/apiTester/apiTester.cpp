@@ -16,8 +16,6 @@
 int main(int argc, const char *argv[]) {
 
     string_q contents = substitute(asciiFileToString("./api_tests.csv"),"\r", "");
-    string_q header = nextTokenClear(contents, '\n');
-    cout << header << endl;
     CStringArray lines;
     explode(lines, contents, '\n');
     for (auto line : lines) {
@@ -31,29 +29,30 @@ int main(int argc, const char *argv[]) {
             string_q filename = trim(parts[5]);
             string_q post     = parts.size() > 6 ? trim(parts[6]) : "";
             string_q options  = parts.size() > 7 ? trim(parts[7]) : "";
-            ostringstream os;
-            os << "curl -s \"http://localhost:8080/";
-            os << route;
+            string_q filePath = "../../../working/" + path + "/" + tool + "/api_tests/";
+            string_q fileName = tool + "_" + filename + ".txt";
+
+            ostringstream cmd;
+            cmd << "curl -s \"http:/""/localhost:8080/" << route;
             if (!options.empty())
-                os << "?" << options;
-            os << "\"";
+                cmd << "?" << options;
+            cmd << "\"";
             if (!post.empty())
-                os << " | " << post << " ";
-            string_q filePath = "../../../working/" + path + "/" + tool + "/api_tests/" + tool + "_" + filename + ".txt";
-            os << " >" << filePath; //../../../working/" << path << "/" << tool << "/api_tests/" << tool << "_" << filename << ".txt";
-            cout << os.str() << ": ";
-            if (!system(os.str().c_str())) {
-                string_q newText = asciiFileToString(filePath);
-                string_q oldText = asciiFileToString(substitute(filePath, "/working/", "/gold/"));
+                cmd << " | " << post << " ";
+            string_q dispCmd = cmd.str();
+            cmd << " >" << filePath + fileName;
+            if (!system(cmd.str().c_str())) {
+                string_q newText = asciiFileToString(filePath + fileName);
+                string_q oldText = asciiFileToString(substitute(filePath + fileName, "/working/", "/gold/"));
                 if (newText != oldText) {
-                    cout << redX << endl;
-//                    return 1;
+                    cerr << dispCmd << ": " << redX << endl;
+                    return 1;
                 } else {
-                    cout << greenCheck << endl;
+                    cerr << dispCmd << ": " << greenCheck << endl;
                 }
             } else {
-                cout << redX << endl;
-//                return 1;
+                cerr << dispCmd << ": " << redX << endl;
+                return 1;
             }
         }
     }

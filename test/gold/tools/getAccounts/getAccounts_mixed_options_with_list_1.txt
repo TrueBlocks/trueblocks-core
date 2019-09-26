@@ -1,6 +1,6 @@
 getAccounts argc: 6 [1:-x] [2:json] [3:-a] [4:0xb6] [5:torj] 
 getAccounts -x json -a 0xb6 torj 
-[
+{ "data": [
   {
     "group": "50-Tokens",
     "subgroup": "",
@@ -13,5 +13,4 @@ getAccounts -x json -a 0xb6 torj
     "is_contract": true,
     "is_private": false,
     "is_shared": true
-  }
-]
+  }] }

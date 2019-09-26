@@ -1,6 +1,6 @@
 getAccounts argc: 6 [1:--named] [2:--custom] [3:--owned] [4:--fmt] [5:json] 
 getAccounts --named --custom --owned --fmt json 
-[
+{ "data": [
   {
     "group": "",
     "subgroup": "",
@@ -2613,5 +2613,4 @@ getAccounts --named --custom --owned --fmt json
     "is_contract": true,
     "is_private": false,
     "is_shared": true
-  }
-]
+  }] }

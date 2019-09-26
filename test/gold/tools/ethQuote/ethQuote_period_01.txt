@@ -1,7 +1,7 @@
 ethQuote argc: 6 [1:--period] [2:240] [3:-v:2] [4:--fmt] [5:json] 
 ethQuote --period 240 -v:2 --fmt json 
 Read cnt existing price quotes (lastRead: Now)
-[
+{ "data": [
   {
     "timestamp": 1439078400,
     "close": 1.40000,
@@ -17694,5 +17694,4 @@ Read cnt existing price quotes (lastRead: Now)
     "timestamp": 1502755200,
     "close": 298.05590,
     "date": "2017-08-15 00:00:00 UTC"
-  }
-]
+  }] }

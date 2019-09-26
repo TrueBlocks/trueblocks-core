@@ -1,6 +1,6 @@
 getAccounts argc: 6 [1:-v] [2:Ether] [3:--expand] [4:--fmt] [5:json] 
 getAccounts -v Ether --expand --fmt json 
-[
+{ "data": [
   {
     "group": "50-Tokens",
     "subgroup": "",
@@ -2613,5 +2613,4 @@ getAccounts -v Ether --expand --fmt json
     "is_contract": true,
     "is_private": false,
     "is_shared": true
-  }
-]
+  }] }

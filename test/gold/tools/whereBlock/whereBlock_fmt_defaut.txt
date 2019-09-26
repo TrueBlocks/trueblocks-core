@@ -6,5 +6,4 @@ TIME ~ CLOCK - : 4-----API_MODE=true
     "blockNumber": "1001001",
     "cached": true,
     "path": "./blocks/00/10/01/001001001.bin"
-  }
-], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "cachePath": "--" } }
+  }], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "cachePath": "--" } }

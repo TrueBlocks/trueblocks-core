@@ -2,7 +2,7 @@ cacheStatus argc: 4 [1:index] [2:--start] [3:100]
 cacheStatus index --start 100 
 TIME ~ CLOCK - : 4-----API_MODE=true
 { "type": "CStatus", "data": [
-[
+{ "data": [
 {
   "client_version": "Parity version",
   "trueblocks_version": "GHC-TrueBlocks//0.5.8-alpha--git-hash---git-ts-",
@@ -23,8 +23,4 @@ TIME ~ CLOCK - : 4-----API_MODE=true
     }
   ]
 }
-
-
-]
-
-], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
+] }], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

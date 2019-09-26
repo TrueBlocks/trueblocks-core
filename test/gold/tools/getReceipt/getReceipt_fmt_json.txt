@@ -1,6 +1,6 @@
 getReceipt argc: 5 [1:2222222.0] [2:2332332.0] [3:--fmt] [4:json] 
 getReceipt 2222222.0 2332332.0 --fmt json 
-[
+{ "data": [
   {
     "contractAddress": "0x0",
     "gasUsed": 1000000,
@@ -22,5 +22,4 @@ getReceipt 2222222.0 2332332.0 --fmt json
       }
     ],
     "status": null
-  }
-]
+  }] }

@@ -1,6 +1,6 @@
 getTrans argc: 4 [1:--fmt] [2:json] [3:0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3] 
 getTrans --fmt json 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 
-[
+{ "data": [
   {
     "hash": "0xc62d9410b73b18d767fe32df91e6336c5d563eceee49c55c56df65bfeb4b966d",
     "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
@@ -22,5 +22,4 @@ getTrans --fmt json 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234
       "status": null
     },
     "gasUsed": 21000
-  }
-]
+  }] }

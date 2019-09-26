@@ -1,6 +1,6 @@
 getAccounts argc: 4 [1:tip] [2:--fmt] [3:json] 
 getAccounts tip --fmt json 
-[
+{ "data": [
   {
     "group": "30-Contracts",
     "subgroup": "",
@@ -13,5 +13,4 @@ getAccounts tip --fmt json
     "is_contract": true,
     "is_private": false,
     "is_shared": true
-  }
-]
+  }] }

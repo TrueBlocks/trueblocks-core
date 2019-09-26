@@ -1,6 +1,5 @@
 getTrace argc: 3 [1:4279119.46] [2:--raw] 
 getTrace 4279119.46 --raw 
-[
+{ "data": [
 {"jsonrpc":"2.0","result":[{"action":{"callType":"call","from":"0x9fe00a70fd9a3a521835bd683297a94f39a6bf8b","gas":"0x37538","input":"0x9e281a98000000000000000000000000e3818504c1b32bf1557b16c238b2e01fd3149c17000000000000000000000000000000000000000000000051889acfe625dbffad","to":"0x8d12a197cb00d4747a1fe03395095ce2a5cc6819","value":"0x0"},"blockHash":"0x6194019535b8e8596ef1f0a0c01e36198694f0eca8ee5f49463ea2911058f56a","blockNumber":4279119,"result":{"gasUsed":"0x9bcb","output":"0x"},"subtraces":1,"traceAddress":[],"transactionHash":"0xe611769659eac98190fadf0a2205bcdac9fa515245fb3a53702c03e9c96c8b48","transactionPosition":46,"type":"call"},{"action":{"callType":"call","from":"0x8d12a197cb00d4747a1fe03395095ce2a5cc6819","gas":"0x3467c","input":"0xa9059cbb0000000000000000000000009fe00a70fd9a3a521835bd683297a94f39a6bf8b000000000000000000000000000000000000000000000051889acfe625dbffad","to":"0xe3818504c1b32bf1557b16c238b2e01fd3149c17","value":"0x0"},"blockHash":"0x6194019535b8e8596ef1f0a0c01e36198694f0eca8ee5f49463ea2911058f56a","blockNumber":4279119,"result":{"gasUsed":"0x7102","output":"0x"},"subtraces":0,"traceAddress":[0],"transactionHash":"0xe611769659eac98190fadf0a2205bcdac9fa515245fb3a53702c03e9c96c8b48","transactionPosition":46,"type":"call"}],"id":"1"}
-
-]
+] }
