@@ -429,4 +429,18 @@ namespace qblocks {
                 return true;
         return false;
     }
+
+    //---------------------------------------------------------------------------------------
+    inline size_t find_nth(const string& haystack, size_t pos, const string& needle, size_t nth) {
+        size_t found_pos = haystack.find(needle, pos);
+        if (0 == nth || string::npos == found_pos)
+            return found_pos;
+        return find_nth(haystack, found_pos + 1, needle, nth-1);
+    }
+
+    //---------------------------------------------------------------------------------------
+    size_t find_nth(const string& haystack, const string& needle, size_t nth) {
+        return find_nth(haystack, 0, needle, nth);
+    }
+
 }  // namespace qblocks

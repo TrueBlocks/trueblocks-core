@@ -1,14 +1,3 @@
-#if 0
-/*
- string_q a = "xxx world world world end";
- string_q b = "world";
- { cout << "Test 1:\n"; size_t f = find_nth(a, b, 0); cout << "\tresult: " << f << "\t" << (f != string::npos ? a.substr(f) : "-1") << endl; }
- { cout << "Test 2:\n"; size_t f = find_nth(a, b, 1); cout << "\tresult: " << f << "\t" << (f != string::npos ? a.substr(f) : "-1") << endl; }
- { cout << "Test 3:\n"; size_t f = find_nth(a, b, 2); cout << "\tresult: " << f << "\t" << (f != string::npos ? a.substr(f) : "-1") << endl; }
- { cout << "Test 4:\n"; size_t f = find_nth(a, b, 3); cout << "\tresult: " << f << "\t" << (f != string::npos ? a.substr(f) : "-1") << endl; }
- */
-#endif
-
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
@@ -23,17 +12,7 @@
  *-------------------------------------------------------------------------------------------*/
 #include "utillib.h"
 
-size_t find_nth(const string& haystack, size_t pos, const string& needle, size_t nth) {
-    size_t found_pos = haystack.find(needle, pos);
-    if (0 == nth || string::npos == found_pos)
-        return found_pos;
-    return find_nth(haystack, found_pos + 1, needle, nth-1);
-}
-size_t find_nth(const string& haystack, const string& needle, size_t nth) {
-    return find_nth(haystack, 0, needle, nth);
-}
-
-//#define ALL
+#define ALL
 #ifdef ALL
 bool quit_on_fail = true;
 bool ignoreOff = true;

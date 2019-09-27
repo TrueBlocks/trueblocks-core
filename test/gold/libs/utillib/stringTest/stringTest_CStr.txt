@@ -74,3 +74,11 @@ stringTest 3
 	000.058 es1 == ""                        ==> passed 'es1' is equal to '""'
 	000.059 es2 is empty                     ==> passed 'es2.empty()' is true
 	000.060 es2 == ""                        ==> passed 'es2' is equal to '""'
+Test 1:
+	result: 4	world world world end
+Test 2:
+	result: 10	world world end
+Test 3:
+	result: 16	world end
+Test 4:
+	result: 18446744073709551615	-1

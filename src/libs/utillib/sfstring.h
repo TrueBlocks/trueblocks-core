@@ -203,5 +203,6 @@ namespace qblocks {
     //--------------------------------------------------------------------
     extern string_q escape_string(const string_q& str);
     extern void cleanString(string_q& str, bool isCode);
+    extern size_t find_nth(const string& haystack, const string& needle, size_t nth);
 
 }  // namespace qblocks

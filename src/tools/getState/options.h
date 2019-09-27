@@ -25,7 +25,6 @@ public:
     bool changes;
     wei_t deminimus;
     bool first;
-    blknum_t chainHead;
 
     COptions(void);
     ~COptions(void);
