@@ -14,10 +14,7 @@ bool COptions::handle_quotes(void) {
     LOG5("tool_flags: " + tool_flags);
     ostringstream os;
     os << "ethQuote " << tool_flags << " ; ";
-    if (isTestMode())
-        cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
-    else
-        if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+    if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
 
     EXIT_NOMSG4(true);
 }

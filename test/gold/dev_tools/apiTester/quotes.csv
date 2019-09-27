@@ -1,0 +1,28 @@
+#
+# Very important note: Because we use 'jq' to test that in each case we are generating valid JSON
+# and because 'jq' doesn't handle 18 decimal place numbers there may be small numerical differences
+# between these test cases and test cases from the command line. If one stops using 'jq' the
+# numbers will be correct but then we lose the ability to know if we're generating good JSON.
+#
+off/on,num,route,path,tool,filename,post,options
+on,10000,quotes,tools,ethQuote,no_params,jq,
+on,10000,quotes,tools,ethQuote,verbose_00,jq,verbose&fmt=json
+on,10000,quotes,tools,ethQuote,at_00,jq,at=1438272138
+on,10000,quotes,tools,ethQuote,period_01,jq,period=240&verbose=2fmt=json
+on,10000,quotes,tools,ethQuote,when_01,jq,when=19
+on,10000,quotes,tools,ethQuote,invalid_param_1,jq,junk
+on,10000,quotes,tools,ethQuote,at_invalid,jq,at
+on,10000,quotes,tools,ethQuote,period_invalid,jq,period
+on,10000,quotes,tools,ethQuote,when_invalid,jq,when
+on,10000,quotes,tools,ethQuote,period_00,,period=60&fmt=csv
+on,10000,quotes,tools,ethQuote,period_02,jq,period=12
+on,10000,quotes,tools,ethQuote,when_00,jq,when=14
+on,10000,quotes,tools,ethQuote,verbose_01,jq,verbose=1&fmt=api
+on,10000,quotes,tools,ethQuote,fmt_txt,,data&fmt=txt
+on,10000,quotes,tools,ethQuote,fmt_csv,,data&fmt=csv
+on,10000,quotes,tools,ethQuote,fmt_json,jq,data&fmt=json
+on,10000,quotes,tools,ethQuote,fmt_api,jq,data&fmt=api
+on,10000,quotes,tools,ethQuote,fmt_api_mode,jq,data
+on,10000,quotes,tools,ethQuote,fmt_api_mode_fmt,,data&fmt=txt
+on,10000,quotes,tools,ethQuote,fmt_defaut,jq,data
+on,10000,quotes,tools,ethQuote,fmt_junk,jq,data&fmt=junk

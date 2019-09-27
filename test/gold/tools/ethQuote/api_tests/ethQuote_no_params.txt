@@ -1,0 +1,5 @@
+{
+  "errors": [
+    "ethQuote - Not enough arguments presented."
+  ]
+}

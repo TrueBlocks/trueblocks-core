@@ -16,11 +16,11 @@
 #ifdef ALL
 bool quit_on_fail = true;
 bool ignoreOff = true;
-string_q tests[] = { "abi", "logs", "receipts", "state", "tokens", "traces", "transactions", "when", "where" };
+string_q tests[] = { "abi", "logs", "quotes", "receipts", "slurp", "state", "tokens", "traces", "transactions", "when", "where" };
 #else
 bool quit_on_fail = false;
 bool ignoreOff = false;
-string_q tests[] = { "slurp", };
+string_q tests[] = { "quotes", };
 #endif
 size_t nTests = sizeof(tests) / sizeof(string_q);
 
