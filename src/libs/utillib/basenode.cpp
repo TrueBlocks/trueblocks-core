@@ -164,7 +164,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    inline void unpreserveSpaces(string_q& str) {
+    void unpreserveSpaces(string_q& str) {
         unpreserveSpaces((char*)str.c_str());
         return;
     }
