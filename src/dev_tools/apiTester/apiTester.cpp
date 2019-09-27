@@ -12,7 +12,7 @@
  *-------------------------------------------------------------------------------------------*/
 #include "utillib.h"
 
-#define ALL
+//#define ALL
 #ifdef ALL
 bool quit_on_fail = true;
 bool ignoreOff = true;
@@ -20,7 +20,7 @@ string_q tests[] = { "abi", "logs", "receipts", "state", "tokens", "traces", "tr
 #else
 bool quit_on_fail = false;
 bool ignoreOff = false;
-string_q tests[] = { "abi", };
+string_q tests[] = { "slurp", };
 #endif
 size_t nTests = sizeof(tests) / sizeof(string_q);
 

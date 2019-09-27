@@ -1,0 +1,20 @@
+ethslurp argc: 4 [1:0xd26114cd6ee289accf82350c8d8487fedb8a0c07] [2:--block] [3:0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b] 
+ethslurp 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 --block 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b 
+Processing: 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 --block:0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b
+
+  Invalid option: --block:0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b
+
+  Usage:    ethslurp [-t|-b|-s|-x|-v|-h] <address> [address...] [block...]  
+  Purpose:  Fetches data from EtherScan for an arbitrary address. Formats the output to your specification.
+
+  Where:  
+	addr_list             one or more addresses to slurp (required)
+	block_list            an optional range of blocks to slurp
+	-t  (--type enum[ext*|int|token|miner|all])extract either [ext*|int|token|miner|all] type of transactions
+	-b  (--blocks <range>)export records in block range (:0[:max])
+	-s  (--silent)        Run silently (only freshen the data, do not display it)
+	-x  (--fmt <fmt>)     pretty print, optionally add ':txt,' ':csv,' or ':html'
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Powered by QBlocks
