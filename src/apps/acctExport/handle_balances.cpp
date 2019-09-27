@@ -124,7 +124,7 @@ HERE("data")
 
         // cache the deltas
         CArchive balOut(WRITING_ARCHIVE);
-        if (balOut.Lock(balFile, modeWriteCreate, LOCK_NOWAIT)) {
+        if (!isTestMode() && balOut.Lock(balFile, modeWriteCreate, LOCK_NOWAIT)) {
             nDeltas = deltas.size();
             lastDelta = (scanRange.second + 1);
             balOut << nDeltas;

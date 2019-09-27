@@ -51,6 +51,10 @@ function(api_state_test testName)
     run_the_api_state_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
 endfunction(api_state_test)
 
+# prepare the data
+run_the_api_test(${TEST_PATH} ${GOLD_PATH} "acctScrape_chifra_rm" ${EXECUTABLE_OUTPUT_PATH}/chifra " rm" " --yes" " 0x001d14804b399c6ef80e64576f657660804fec0b")
+run_the_test(${TEST_PATH} ${GOLD_PATH} "acctScrape_preload_list" ${EXECUTABLE_OUTPUT_PATH}/acctScrape " 0x001d14804b399c6ef80e64576f657660804fec0b")
+
 # Enter one line for each individual test
 run_test("acctScrape_no_params")
 run_test("acctScrape_help" "-th")
