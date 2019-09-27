@@ -1,2 +1,27 @@
+cd ..
+export QUICKBLOCKS=`pwd`
+
+cd $QUICKBLOCKS/test/
+
+echo "Removing working folder test cases..."
+#rm -f `find working/$2 | grep _ | grep txt | xargs`
+
+cd $QUICKBLOCKS/build/
+cmake ../src
+cd $QUICKBLOCKS/build/$1
+make
+
 cd ../test/gold/dev_tools/apiTester
 apiTester
+
+cd $QUICKBLOCKS/test/
+echo "Removing compare folder..."
+rm -fR compare/
+
+echo "Copying working to compare..."
+cp -pR working compare
+find compare -name "*gitignore*" -exec rm '{}' ';'
+rm -fR gold/apps/acctScrape/99_1234...7890
+cd $QUICKBLOCKS/build/
+
+echo "Done..."

@@ -16,16 +16,20 @@
 int main(int argc, const char *argv[]) {
 
     bool quit_on_fail = false;
+    bool ignoreOff = true;
+    string_q tests = "|when|where|transactions|traces|";
 
     string_q contents = substitute(asciiFileToString("./api_tests.csv"),"\r", "");
     CStringArray lines;
     explode(lines, contents, '\n');
     for (auto line : lines) {
-        if (!startsWith(line, "#") && !startsWith(line, "off")) {
+        if (!startsWith(line, "#") && (ignoreOff || !startsWith(line, "off"))) {
             CStringArray parts;
             explode(parts, line, ',');
             string_q num      = trim(parts[1]);
             string_q route    = trim(parts[2]);
+            if (!tests.empty() && !contains(tests, "|"+route+"|"))
+                continue;
             string_q path     = trim(parts[3]);
             string_q tool     = trim(parts[4]);
             string_q filename = trim(parts[5]);
@@ -59,6 +63,7 @@ int main(int argc, const char *argv[]) {
                     return 1;
             }
         }
+        usleep(50000);
     }
     return 0;
 }
