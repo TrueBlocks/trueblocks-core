@@ -1,14 +1,8 @@
 cd ..
 export QUICKBLOCKS=`pwd`
 
-cd $QUICKBLOCKS/test/
-
-echo "Removing working folder test cases..."
-#rm -f `find working/$2 | grep _ | grep txt | xargs`
-
 cd $QUICKBLOCKS/build/
 cmake ../src
-cd $QUICKBLOCKS/build/$1
 make
 
 cd ../test/gold/dev_tools/apiTester
