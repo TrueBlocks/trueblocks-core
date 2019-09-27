@@ -33,6 +33,8 @@ namespace qblocks {
         struct curl_slist *headerPtr;
         CCounterMap        methodMap;
         uint64_t           methodCnt;
+        bool               reportErrors;
+        CStringArray       curlErrors;
 
         CCurlContext(void);
 

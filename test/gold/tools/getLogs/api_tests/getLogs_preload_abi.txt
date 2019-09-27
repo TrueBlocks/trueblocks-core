@@ -1,0 +1,15 @@
+grabABI argc: 2 [1:0x51ffc1b089392a5bb65bf24eaf04d07d0e6f88b5] 
+grabABI 0x51ffc1b089392a5bb65bf24eaf04d07d0e6f88b5 
+ABI for address 0x51ffc1b089392a5bb65bf24eaf04d07d0e6f88b5
+	function changeTokenContract        (address _newToken)
+	function currentEpoch               ()
+	function expectedPayout             (address _tokenHolder)
+	function initEpochBalance           ()
+	function owner                      ()
+	function tokenCtr                   ()
+	function transferOwnership          (address _newOwner)
+	function withdrawalProfit           ()
+	event ProfitWithdrawn               (address tokenHolder,uint256 amountPaidOut)
+	event TokenContractChanged          (address newTokenContractAddr)
+	event WithdrawalEnabled             ()
+

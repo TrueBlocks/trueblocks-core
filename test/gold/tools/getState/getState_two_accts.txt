@@ -1,15 +1,24 @@
-getState argc: 6 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359] [3:1500000] [4:--fmt] [5:api] 
-getState 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 1500000 --fmt api 
-{ "type": "CEthState", "data": [
-  {
-    "blockNumber": 1500000,
-    "balance": 4420466920675732108465682,
-    "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
-    "ether": 4420466.920675732108465682
-  },
-  {
-    "blockNumber": 1500000,
-    "balance": 2647815343985767974336,
-    "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
-    "ether": 2647.815343985767974336
-  }], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
+getState argc: 7 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359] [3:1500000] [4:--fmt] [5:api] [6:--no_history] 
+getState 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 1500000 --fmt api --no_history 
+
+  Request asks for historical state, but the RPC server does not have historical state. Quitting...
+
+  Usage:    getState [-m|-n|-c|-v|-h] <address> [address...] [block...]  
+  Purpose:  Retrieve the balance (in wei) for one or more addresses at the given block(s).
+
+  Where:  
+	addr_list             one or more addresses (0x...) from which to retrieve balances (required)
+	block_list            an optional list of one or more blocks at which to report balances, defaults to 'latest'
+	-m  (--mode enum[none|some*|all|balance|nonce|code|storage|deployed|accttype])control which state to export. One of [none|some*|all|balance|nonce|code|storage|deployed|accttype]
+	-n  (--nozero)        suppress the display of zero balance accounts
+	-c  (--changes)       only report a balance when it changes from one block to the next
+
+#### Hidden options (shown during testing only)
+	-o  (--no_header)     hide the header in txt and csv mode
+	-x  (--fmt <fmt>)     export format (one of [none|json*|txt|csv|api])
+#### Hidden options (shown during testing only)
+
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Powered by QBlocks

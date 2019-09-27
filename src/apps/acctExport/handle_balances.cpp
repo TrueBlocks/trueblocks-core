@@ -13,7 +13,7 @@ bool COptions::exportBalances(void) {
     ENTER("exportBalances");
 
     // If the node we're running against does not provide balances...
-    bool nodeHasBals = nodeHasBalances();
+    bool nodeHasBals = nodeHasBalances(true);
     string_q rpcProvider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
     if (!nodeHasBals) {
         string_q balanceProvider = getGlobalConfig()->getConfigStr("settings", "balanceProvider", rpcProvider);

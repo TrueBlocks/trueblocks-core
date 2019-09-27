@@ -1,0 +1,2 @@
+{
+  "errors": [ "getTokenInfo - Invalid option: --fmt" ] }

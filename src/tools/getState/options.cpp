@@ -21,6 +21,7 @@ static const COption params[] = {
     COption("nozero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
     COption("changes", "c", "", OPT_SWITCH, "only report a balance when it changes from one block to the next"),
     COption("no_header", "o", "", OPT_HIDDEN | OPT_SWITCH, "hide the header in txt and csv mode"),
+    COption("no_history", "", "", OPT_HIDDEN | OPT_SWITCH, "for testing only, hide the server's historical state"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve the balance (in wei) for one or more addresses at the given block(s)."),
 // END_CODE_OPTIONS
@@ -30,10 +31,12 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
+    replace(command, "*", " --mode:");
     if (!standardOptions(command))
         return false;
 
     bool no_header = false;
+    bool fake_no_history = false;
 
     Init();
     explode(arguments, command, ' ');
@@ -46,6 +49,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-o" || arg == "--no_header") {
             no_header = true;
+
+        } else if (arg == "--no_history" && isTestMode()) {
+            fake_no_history = true;
 
         } else if (startsWith(arg, "-m:") || startsWith(arg, "--mode:")) {
 
@@ -131,19 +137,22 @@ bool COptions::parseArguments(string_q& command) {
     if (no_header)
         expContext().fmtMap["header"] = "";
 
-    if ((!isTestMode() && !hasHistory()) || nodeHasBalances())
+    if (!requestsHistory()) // if the user did not request historical state, we can return safely
         return true;
 
-    // We need history, so try to get a different server. Fail silently. The user will be warned in the response
-    string_q rpcProvider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
-    string_q balanceProvider = getGlobalConfig()->getConfigStr("settings", "balanceProvider", rpcProvider);
-    if (rpcProvider == balanceProvider || balanceProvider.empty())
-        return true;
+    if (fake_no_history || !nodeHasBalances(false)) {
+        // The user requested history, so try to get a different server. Fail silently. The user will be warned in the response
+        string_q rpcProvider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
+        string_q balanceProvider = getGlobalConfig()->getConfigStr("settings", "balanceProvider", rpcProvider);
+        if (fake_no_history || (rpcProvider == balanceProvider || balanceProvider.empty()))
+            return usage("Request asks for historical state, but the RPC server does not have historical state. Quitting...");
 
-    // We release the curl context so we can set it to the new context.
-    getCurlContext()->baseURL = balanceProvider;
-    getCurlContext()->releaseCurl();
-    getCurlContext()->getCurl();
+        getCurlContext()->baseURL = balanceProvider;
+        getCurlContext()->releaseCurl(); // We release the curl context so we can set it to the new context.
+        getCurlContext()->getCurl();
+        if (!nodeHasBalances(false))
+            return usage("Request asks for historical state and has 'balanceServer' set, but that server does not have history state. Quitting...");
+    }
 
     return true;
 }

@@ -16,6 +16,7 @@
 //-----------------------------------------------------------------------------
 class COptions : public CHistoryOptions {
 public:
+    CStringArray errors;
     CAddressArray addrs;
     address_t current;
     ethstate_t mode;
@@ -24,6 +25,7 @@ public:
     bool changes;
     wei_t deminimus;
     bool first;
+    blknum_t chainHead;
 
     COptions(void);
     ~COptions(void);

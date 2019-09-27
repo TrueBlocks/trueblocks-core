@@ -1,0 +1,18 @@
+getLogs argc: 2 [1:-h] 
+getLogs -h 
+
+  Usage:    getLogs [-a|-v|-h] <tx_id> [tx_id...]  
+  Purpose:  Retrieve a transaction's logs from the local cache or a running node.
+
+  Where:  
+	trans_list            a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) (required)
+	-a  (--articulate)    articulate the transactions if an ABI is found for the 'to' address
+
+#### Hidden options (shown during testing only)
+	-x  (--fmt <fmt>)     export format (one of [none|json*|txt|csv|api])
+#### Hidden options (shown during testing only)
+
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Powered by QBlocks

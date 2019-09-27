@@ -1,0 +1,19 @@
+{
+  "type": "CEthState",
+  "data": [
+    {
+      "blockNumber": 2500000,
+      "balance": 3905662906205094300000,
+      "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
+      "accttype": "Contract",
+      "ether": 3905.6629062050943
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
+}

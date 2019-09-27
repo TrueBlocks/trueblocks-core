@@ -1,0 +1,21 @@
+{
+  "type": "CTransaction",
+  "data": [
+    {
+      "contractAddress": "0x0",
+      "gasUsed": 21000,
+      "logs": [],
+      "status": null
+    }
+  ],
+  "errors": [
+    "Transaction 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 not found."
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
+}

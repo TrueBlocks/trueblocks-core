@@ -37,6 +37,8 @@ namespace qblocks {
 //      source       = "binary";
 //      methodMap    = "";
         methodCnt    = 0;
+//      curlErrors;
+        reportErrors = false;
     }
 
     //-------------------------------------------------------------------------
@@ -209,7 +211,12 @@ PRINT("CURL returned CURLE_OK")
             displayCurlError(STR_CURLRESEMPTY);
 
         } else if (contains(result, "error")) {
+            if (reportErrors) {
+                string_q waste = result;
+                curlErrors.push_back(extractRPCError(waste));
+            }
             LOG4(result + " " + postData);
+            return result;
         }
 
 PRINTL("Received: " + result);

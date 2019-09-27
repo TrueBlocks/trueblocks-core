@@ -28,15 +28,24 @@ bool COptions::handle_data(void) {
 
     } else if (contains(tool_flags, "--abi")) {
         replaceAll(tool_flags, "--abi", "");
+        if (addrs.size() == 0)
+            return usage("Input" + (tool_flags.empty() ? "" : (" ("+trim(tool_flags)+")")) + " does not include a valid Ethereum address. Quitting...");
+
         for (auto addr : addrs)
             os << "grabABI " << addr << " " << (isApiMode() ? substitute(tool_flags, ",", " ") + " --encode --data" : tool_flags) << " ; ";
 
-    } else if (contains(tool_flags, "--balance") || contains(tool_flags, "--code") || contains(tool_flags, "--nonce")) {
-        replaceAll(tool_flags, "--balance", "");
-        replaceAll(tool_flags, "--code", "");
-        replaceAll(tool_flags, "--nonce", "");
+    } else if (contains(tool_flags, "--state")) {
+        replaceAll(tool_flags, "--state", "");
+        if (addrs.size() == 0)
+            return usage("Input" + (tool_flags.empty() ? "" : (" ("+trim(tool_flags)+")")) + " does not include a valid Ethereum address. Quitting...");
+
+        replaceAll(tool_flags, "--balance", "--mode balance");
+        replaceAll(tool_flags, "--code", "--mode code");
+        replaceAll(tool_flags, "--nonce", "--mode nonce");
+        string_q addrList;
         for (auto addr : addrs)
-            os << "getState " << addr << " " << (isApiMode() ? substitute(tool_flags, ",", " ") + " " : tool_flags) << " ; ";
+            addrList += (addr + " ");
+        os << "getState " << addrList << " " << (isApiMode() ? substitute(tool_flags, ",", " ") + " " : tool_flags) << " ; ";
 
     } else if (contains(tool_flags, "--accounts")) {
         replaceAll(tool_flags, "--accounts", "");

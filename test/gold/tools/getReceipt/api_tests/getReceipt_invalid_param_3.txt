@@ -1,0 +1,5 @@
+{
+  "errors": [
+    "getReceipt - 1233123 does not appear to be a valid transaction index."
+  ]
+}

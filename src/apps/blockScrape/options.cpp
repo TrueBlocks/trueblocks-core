@@ -105,7 +105,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     bool needsBalances = config->getConfigBool("requires", "balances", false);
-    if (needsBalances && !nodeHasBalances())
+    if (needsBalances && !nodeHasBalances(true))
         return usage("This tool requires an --archive node with historical balances. Quitting...");
 
     nBlocks     = config->getConfigInt("settings", "nBlocks",     (nBlocks     == NOPOS ? 2000 : nBlocks    ));

@@ -1,0 +1,18 @@
+{
+  "type": "CEthState",
+  "data": [
+    {
+      "blockNumber": 250000,
+      "balance": 0,
+      "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
+      "ether": 0
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
+}

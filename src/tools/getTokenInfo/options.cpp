@@ -126,7 +126,7 @@ bool COptions::parseArguments(string_q& command) {
             return usage("Address '" + watch.address + "' does not appear to be a token smart contract. Quitting...");
     }
 
-    if ((!isTestMode() && !hasHistory()) || nodeHasBalances())
+    if ((!isTestMode() && !requestsHistory()) || nodeHasBalances(true))
         return true;
 
     // We need history, so try to get a different server. Fail silently. The user will be warned in the response

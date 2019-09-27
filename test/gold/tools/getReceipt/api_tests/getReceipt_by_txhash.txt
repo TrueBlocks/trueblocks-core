@@ -1,0 +1,35 @@
+{
+  "type": "CTransaction",
+  "data": [
+    {
+      "contractAddress": "0x0",
+      "gasUsed": 39512,
+      "logs": [
+        {
+          "address": "0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
+          "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
+          "logIndex": 59,
+          "topics": [
+            "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
+          ]
+        },
+        {
+          "address": "0x11b1f00bccf07754e6f1996864531fa162145cde",
+          "data": "0x000000000000000000000000209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
+          "logIndex": 60,
+          "topics": [
+            "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
+          ]
+        }
+      ],
+      "status": null
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
+}

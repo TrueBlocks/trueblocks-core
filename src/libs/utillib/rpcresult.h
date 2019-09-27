@@ -145,6 +145,7 @@ extern const char* STR_DISPLAY_RPCRESULT;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+extern string_q extractRPCError(const string_q& resultIn);
 // EXISTING_CODE
 }  // namespace qblocks
 

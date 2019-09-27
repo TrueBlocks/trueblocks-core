@@ -32,11 +32,13 @@ int main(int argc, const char *argv[]) {
         else if (options.mode == "status")    RETURN(options.handle_status())
         else if (options.mode == "rm")        RETURN(options.handle_rm())
         else if (options.mode == "data")      RETURN(options.handle_data())
+        else if (options.mode == "state")     RETURN(options.handle_data())
         else if (options.mode == "config")    RETURN(options.handle_config())
-        else {
+        else if (isTestMode()) {
             map<string,string> cmdMap;
             cmdMap["where"] = "whereBlock";
             cmdMap["when"] = "whenBlock";
+            cmdMap["tokens"] = "getTokenInfo";
             if (cmdMap[options.mode] != "") {
                 ostringstream os;
                 os << cmdMap[options.mode] << " " << options.tool_flags;

@@ -1153,7 +1153,7 @@ extern void loadParseMap(void);
     }
 
     //-----------------------------------------------------------------------
-    string_q exportPostamble(format_t fmt, const CStringArray& errors, const string_q& extra) {
+    string_q exportPostamble(format_t fmt, const CStringArray& errorsIn, const string_q& extra) {
 
 const char* STR_ERROR_MSG_TXT =
 "\"{[MSG]}\"";
@@ -1161,6 +1161,10 @@ const char* STR_ERROR_MSG_JSON =
 "\"[MSG]\"";
 
         bool isText = (fmt == TXT1 || fmt == CSV1 || fmt == NONE1);
+
+        CStringArray errors = errorsIn;
+        for (auto curlError : getCurlContext()->curlErrors)
+            errors.push_back(substitute(substitute(curlError,"\"",""),"\n",""));
 
         ostringstream errStrs;
         bool first = true;
@@ -1173,9 +1177,8 @@ const char* STR_ERROR_MSG_JSON =
                     errStrs << ", ";
             }
             errStrs << substitute(substitute(substitute(msg, "[MSG]", error), "{", cRed), "}", cOff);
+            first = false;
         }
-        if (!errStrs.str().empty())
-            errStrs << "\n";
 
         if (isText)
             return errStrs.str();  // only errors are reported for text or csv

@@ -57,7 +57,8 @@ bool COptions::parseArguments(string_q& command) {
             }
 
             string descr = substitute(substitute(params[0].description, "[", "|"), "]", "|");
-            descr += "where|when|";
+            if (isTestMode())
+                descr += "where|when|tokens|";
             if (contains(descr, "|" + arg + "|")) {
                 if (!mode.empty())
                     EXIT_USAGE("Please specify " + params[0].description + ". " + mode + ":" + arg);
@@ -75,7 +76,7 @@ bool COptions::parseArguments(string_q& command) {
                 }
                 addrs.push_back(toLower(arg));
 
-            } else if (isAddress(arg)) {
+            } else if (isAddress(arg) || arg == "--known") {
                 addrs.push_back(toLower(arg));
 
             } else {
@@ -113,16 +114,10 @@ bool COptions::parseArguments(string_q& command) {
         mode == "accounts" ||
     	mode == "logs" ||
         mode == "traces" ||
+        mode == "state" ||
         mode == "message" ||
         mode == "abi") {
         tool_flags += (" --" + mode);
-        mode = "data";
-    }
-
-    if (mode == "state") {
-        replace(tool_flags, "--mode code", "--mode some --code");
-        replace(tool_flags, "--mode nonce", "--mode some --nonce");
-        replace(tool_flags, "--mode balance", "--mode some --balance");
         mode = "data";
     }
 
