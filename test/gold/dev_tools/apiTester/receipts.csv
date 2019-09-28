@@ -1,10 +1,10 @@
 #
-# Very important note: Because we use 'jq' to test that in each case we are generating valid JSON
+# Important note: Because we use 'jq' to test that in each case we are generating valid JSON
 # and because 'jq' doesn't handle 18 decimal place numbers there may be small numerical differences
 # between these test cases and test cases from the command line. If one stops using 'jq' the
 # numbers will be correct but then we lose the ability to know if we're generating good JSON.
 #
-off/on,num,route,path,tool,filename,post,options
+off/on,route,path,tool,filename,post,options
 on,10000,receipts,tools,getReceipt,default,jq,address=0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 on,10000,receipts,tools,getReceipt,no_input,jq,
 on,10000,receipts,tools,getReceipt,bad_hash,jq,trans_list=0x0012

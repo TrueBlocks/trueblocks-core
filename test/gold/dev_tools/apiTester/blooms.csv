@@ -1,0 +1,52 @@
+#
+# Important note: Because we use 'jq' to test that in each case we are generating valid JSON
+# and because 'jq' doesn't handle 18 decimal place numbers there may be small numerical differences
+# between these test cases and test cases from the command line. If one stops using 'jq' the
+# numbers will be correct but then we lose the ability to know if we're generating good JSON.
+#
+# - NOTE: We're going to remove getBloom soon
+#
+off/on,route,path,tool,filename,post,options
+#off,10000,blooms,tools,getBloom,
+#off,10000,blooms,tools,getBloom,no_params"       )
+#off,10000,blooms,tools,getBloom,empty"           "1001001")
+#off,10000,blooms,tools,getBloom,invalid_option"  "-x")
+#off,10000,blooms,tools,getBloom,bloom"           "4000001")
+#off,10000,blooms,tools,getBloom,blooms"          "1590000" " 4000001" "4000002")
+#off,10000,blooms,tools,getBloom,range"           "4000001-4000003")
+#off,10000,blooms,tools,getBloom,baddata"         "1590000" " 4000001-4000002" " x400x001")
+#off,10000,blooms,tools,getBloom,badopt5"         "4501030" " --receipts" " --block")
+#off,10000,blooms,tools,getBloom,badopt6"         "4501030" " -c" " --block")
+#off,10000,blooms,tools,getBloom,badopt7"         "4501030" " -c" " -b")
+#off,10000,blooms,tools,getBloom,badopt8"         "4501030" " --receipts" " -b")
+#off,10000,blooms,tools,getBloom,badopt9"         "4501030" " --bars" " --bits")
+#off,10000,blooms,tools,getBloom,badopt16"        "4501030" " --bars" " --bitbars")
+#off,10000,blooms,tools,getBloom,badopt17"        "4501030" " --bars" " --pctbars")
+#off,10000,blooms,tools,getBloom,badopt10"        "4501030" " -a" " --bits")
+#off,10000,blooms,tools,getBloom,badopt11"        "4501030" " -a" " -i")
+#off,10000,blooms,tools,getBloom,badopt12"        "4501030" " --bars" " -i")
+#off,10000,blooms,tools,getBloom,badopt14"        "4501030" " --eab" " --block")
+#off,10000,blooms,tools,getBloom,badopt15"        "4501030" " --eab" " --receipts" " --bitcount")
+#off,10000,blooms,tools,getBloom,rawlast1"        "4501030" " --eab" " --raw")
+#off,10000,blooms,tools,getBloom,rawlast2"        "4501030" " -e" " --raw")
+#off,10000,blooms,tools,getBloom,bitbars_raw"     "2501030-2501060" " --bitbars")
+#off,10000,blooms,tools,getBloom,pctbars_raw"     "2501030-2501060" " --pctbars")
+#off,10000,blooms,tools,getBloom,bars_block2"     "2501030-2501060" " --bitbars" " --block")
+#off,10000,blooms,tools,getBloom,bars_block3"     "2501030-2501060" " --pctbars" " --block")
+#off,10000,blooms,tools,getBloom,bars_receipt2"   "2501030-2501060" " --bitbars" " --receipts")
+#off,10000,blooms,tools,getBloom,bars_receipt3"   "2501030-2501060" " --pctbars" " --receipts")
+#off,10000,blooms,tools,getBloom,combo_one_range" "1590000" " 4000001-4000002" " 1001001 1234567" " --receipts" " --verbose")
+#off,10000,blooms,tools,getBloom,combo_two_range" "1590000" " 4000001-4000002" " 1001001-1001100" " 1234567")
+#off,10000,blooms,tools,getBloom,raw_01"          "--raw" " 2768801" " 1995314" " 1958017" "  --verbose")
+#off,10000,blooms,tools,getBloom,raw_02"          "--raw"    " 2768801" " 1995314" " 1958017")
+#off,10000,blooms,tools,getBloom,parity_hex"      "--parity" " 0x2e7721" " --block")
+#off,10000,blooms,tools,getBloom,parity_num"      "--parity" " 728708")
+#off,10000,blooms,tools,getBloom,parity_range"    "--parity" " 358450-0x5785a" " --bitcount")
+#off,10000,blooms,tools,getBloom,multi1"          "--parity" " --raw" " 2769609" " 2799895" " 2872831" " 3076260")
+#off,10000,blooms,tools,getBloom,short_receipt"   "-c"         " 4001001")
+#off,10000,blooms,tools,getBloom,long_receipt"    "--receipts" " 4001001")
+#off,10000,blooms,tools,getBloom,special_1"       "first")
+#off,10000,blooms,tools,getBloom,special_2"       "stateclear")
+#off,10000,blooms,tools,getBloom,cmd_file1" "--file:cmd_file1")
+#off,10000,blooms,tools,getBloom,cmd_file2" "--file:cmd_file2")
+#off,10000,blooms,tools,getBloom,blockByHash"

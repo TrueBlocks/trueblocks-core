@@ -1,0 +1,5 @@
+{
+  "errors": [
+    "getBlock - --number option is only available with either --addrs or --uniq. Quitting..."
+  ]
+}

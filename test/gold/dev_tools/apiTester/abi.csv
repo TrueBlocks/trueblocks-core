@@ -1,10 +1,10 @@
 #
-# Very important note: Because we use 'jq' to test that in each case we are generating valid JSON
+# Important note: Because we use 'jq' to test that in each case we are generating valid JSON
 # and because 'jq' doesn't handle 18 decimal place numbers there may be small numerical differences
 # between these test cases and test cases from the command line. If one stops using 'jq' the
 # numbers will be correct but then we lose the ability to know if we're generating good JSON.
 #
-off/on,num,route,path,tool,filename,post,options
+off/on,route,path,tool,filename,post,options
 #off,11620,abi,tools,grabABI,asJson,,addr_list=0x1234567812345678123456781234567812345678&json
 #off,11620,abi,tools,grabABI,encoding,,addr_list=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&verbose&noconst&encode 
 #off,11620,abi,tools,grabABI,encoding_nv,,addr_list=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&noconst&encode 

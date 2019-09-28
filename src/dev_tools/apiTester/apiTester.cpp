@@ -16,11 +16,11 @@
 #ifdef ALL
 bool quit_on_fail = true;
 bool ignoreOff = true;
-string_q tests[] = { "abi", "logs", "quotes", "receipts", "slurp", "state", "tokens", "traces", "transactions", "when", "where" };
+string_q tests[] = { "abi", "accounts", "blocks", "blooms", "logs", "quotes", "receipts", "slurp", "state", "tokens", "traces", "transactions", "when", "where" };
 #else
 bool quit_on_fail = false;
 bool ignoreOff = false;
-string_q tests[] = { "quotes", };
+string_q tests[] = { "when", "where", };
 #endif
 size_t nTests = sizeof(tests) / sizeof(string_q);
 
@@ -43,16 +43,17 @@ int main(int argc, const char *argv[]) {
                 cerr << cYellow << "Skipping: " << cOff << line.substr(0,found) << string(30,' ') << "\r";
                 cerr.flush();
             }
+
         } else {
             CStringArray parts;
             explode(parts, line, ',');
-            string_q num      = trim(parts[1]);
-            string_q route    = trim(parts[2]);
-            string_q path     = trim(parts[3]);
-            string_q tool     = trim(parts[4]);
-            string_q filename = trim(parts[5]);
-            string_q post     = parts.size() > 6 ? trim(parts[6]) : "";
-            string_q options  = parts.size() > 7 ? trim(parts[7]) : "";
+            string_q onOff    = trim(parts[0]);
+            string_q route    = trim(parts[1]);
+            string_q path     = trim(parts[2]);
+            string_q tool     = trim(parts[3]);
+            string_q filename = trim(parts[4]);
+            string_q post     = parts.size() > 5 ? trim(parts[5]) : "";
+            string_q options  = parts.size() > 6 ? trim(parts[6]) : "";
             string_q filePath = "../../../working/" + path + "/" + tool + "/api_tests/";
             string_q fileName = tool + "_" + filename + ".txt";
 

@@ -1,2 +1,18 @@
-blocknumber	path	cached
-45000	--nodeVersion--	false
+{
+  "type": "CCacheEntry",
+  "data": [
+    {
+      "blockNumber": "45000",
+      "cached": false,
+      "path": "--nodeVersion--"
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef",
+    "cachePath": "--"
+  }
+}

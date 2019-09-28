@@ -1,5 +1,5 @@
 {
   "errors": [
-    "whereBlock - Invalid option: --x"
+    "whereBlock - Invalid option: --junk1"
   ]
 }

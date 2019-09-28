@@ -1,0 +1,65 @@
+{
+  "type": "CAccountName",
+  "data": [
+    {
+      "group": "",
+      "subgroup": "",
+      "name": "",
+      "address": "0x0000000000000000000000000000000000000001",
+      "symbol": "",
+      "description": "",
+      "source": "",
+      "logo": "",
+      "is_contract": false,
+      "is_private": false,
+      "is_shared": false
+    },
+    {
+      "group": "",
+      "subgroup": "",
+      "name": "",
+      "address": "0x0000000000000000000000000000000000000002",
+      "symbol": "",
+      "description": "",
+      "source": "",
+      "logo": "",
+      "is_contract": false,
+      "is_private": false,
+      "is_shared": false
+    },
+    {
+      "group": "",
+      "subgroup": "",
+      "name": "",
+      "address": "0x0000000000000000000000000000000000000003",
+      "symbol": "",
+      "description": "",
+      "source": "",
+      "logo": "",
+      "is_contract": false,
+      "is_private": false,
+      "is_shared": false
+    },
+    {
+      "group": "",
+      "subgroup": "",
+      "name": "",
+      "address": "0x0000000000000000000000000000000000000004",
+      "symbol": "",
+      "description": "",
+      "source": "",
+      "logo": "",
+      "is_contract": false,
+      "is_private": false,
+      "is_shared": false
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef",
+    "namePath": "--"
+  }
+}

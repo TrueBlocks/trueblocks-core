@@ -1,0 +1,26 @@
+{
+  "type": "CAccountName",
+  "data": [
+    {
+      "group": "50-Tokens",
+      "subgroup": "",
+      "name": "Storj",
+      "address": "0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac",
+      "symbol": "STORJ",
+      "description": "Blockchain-based, end-to-end encrypted, distributed object storage, where only you have access to your data",
+      "source": "Etherscan.io",
+      "logo": "storj2.png",
+      "is_contract": true,
+      "is_private": false,
+      "is_shared": true
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef",
+    "namePath": "--"
+  }
+}

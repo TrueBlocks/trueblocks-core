@@ -1,10 +1,10 @@
 #
-# Very important note: Because we use 'jq' to test that in each case we are generating valid JSON
+# Important note: Because we use 'jq' to test that in each case we are generating valid JSON
 # and because 'jq' doesn't handle 18 decimal place numbers there may be small numerical differences
 # between these test cases and test cases from the command line. If one stops using 'jq' the
 # numbers will be correct but then we lose the ability to know if we're generating good JSON.
 #
-off/on,num,route,path,tool,filename,post,options
+off/on,route,path,tool,filename,post,options
 #off,10020,tokens,tools,getTokenInfo,noparams,,
 #off,10020,tokens,tools,getTokenInfo,invalid_params_1,,a&b&c
 #off,10020,tokens,tools,getTokenInfo,invalid_params_2,,addr_list=0xd26114cd6ee289accf82350c8d8487fedb8a0c07%2021321321312321

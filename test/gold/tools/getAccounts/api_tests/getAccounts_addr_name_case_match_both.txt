@@ -1,0 +1,26 @@
+{
+  "type": "CAccountName",
+  "data": [
+    {
+      "group": "50-Tokens",
+      "subgroup": "",
+      "name": "Humaniq",
+      "address": "0xcbcc0f036ed4788f63fc0fee32873d6a7487b908",
+      "symbol": "HMQ",
+      "description": "Humaniq aims to be a simple and secure 4th generation mobile bank.",
+      "source": "Etherscan.io",
+      "logo": "humaniq.png",
+      "is_contract": true,
+      "is_private": false,
+      "is_shared": true
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef",
+    "namePath": "--"
+  }
+}

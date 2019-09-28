@@ -1,5 +1,5 @@
 {
   "errors": [
-    "chifra - Invalid verbose level 'j  1000'. Quitting..."
+    "whenBlock - Invalid verbose level 'j'. Quitting..."
   ]
 }

@@ -1,0 +1,1 @@
+{ "errors": [ "getAccounts - Invalid option: --VERBOSE" ] }

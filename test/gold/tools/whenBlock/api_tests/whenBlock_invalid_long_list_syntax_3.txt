@@ -1,5 +1,5 @@
 {
   "errors": [
-    "whenBlock - Invalid option: '--k'."
+    "whenBlock - The date you specified (2015-03-02) is before the first block."
   ]
 }

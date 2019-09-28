@@ -21,6 +21,10 @@ bool COptions::handle_data(void) {
     for (auto addr : addrs)
         addr_list += (addr + " ");
 
+    string_q addrList;
+    for (auto addr : addrs)
+        addrList += (" " + addr);
+
     ostringstream os;
     if (contains(tool_flags, "--when")) {
         replaceAll(tool_flags, "--when", "");
@@ -30,9 +34,7 @@ bool COptions::handle_data(void) {
         replaceAll(tool_flags, "--abi", "");
         if (addrs.size() == 0)
             return usage("Input" + (tool_flags.empty() ? "" : (" ("+trim(tool_flags)+")")) + " does not include a valid Ethereum address. Quitting...");
-
-        for (auto addr : addrs)
-            os << "grabABI " << addr << " " << (isApiMode() ? substitute(tool_flags, ",", " ") + " --encode --data" : tool_flags) << " ; ";
+        os << "grabABI " << (isApiMode() ? substitute(tool_flags, ",", " ") + " --encode --data" : tool_flags) << addrList << " ; ";
 
     } else if (contains(tool_flags, "--state")) {
         replaceAll(tool_flags, "--state", "");
@@ -42,18 +44,15 @@ bool COptions::handle_data(void) {
         replaceAll(tool_flags, "--balance", "--mode balance");
         replaceAll(tool_flags, "--code", "--mode code");
         replaceAll(tool_flags, "--nonce", "--mode nonce");
-        string_q addrList;
-        for (auto addr : addrs)
-            addrList += (addr + " ");
-        os << "getState " << addrList << " " << (isApiMode() ? substitute(tool_flags, ",", " ") + " " : tool_flags) << " ; ";
+        os << "getState " << (isApiMode() ? substitute(tool_flags, ",", " ") + " " : tool_flags) << addrList << " ; ";
 
     } else if (contains(tool_flags, "--accounts")) {
         replaceAll(tool_flags, "--accounts", "");
-        os << "getAccounts " << (isApiMode() ? substitute(tool_flags, ",", " ") : tool_flags) << " ; ";
+        os << "getAccounts " << (isApiMode() ? substitute(tool_flags, ",", " ") : tool_flags) << addrList << " ; ";
 
     } else if (contains(tool_flags, "--blocks")) {
         replaceAll(tool_flags, "--blocks", "");
-        os << "getBlock " << (isApiMode() ? substitute(tool_flags, ",", " ") : tool_flags) << " ; ";
+        os << "getBlock " << (isApiMode() ? substitute(tool_flags, ",", " ") : tool_flags) << addrList << " ; ";
 
     } else if (contains(tool_flags, "--transactions")) {
         replaceAll(tool_flags, "--transactions", "");

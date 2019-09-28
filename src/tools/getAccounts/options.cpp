@@ -37,9 +37,10 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-    bool no_header = false;
     string_q format;
+    bool no_header = false;
     bool deflt = true;
+    bool addr_only = false;
 
     Init();
     explode(arguments, command, ' ');
@@ -72,6 +73,7 @@ bool COptions::parseArguments(string_q& command) {
             types |= OTHER;
 
         } else if (arg == "-a" || arg == "--addr") {
+            addr_only = true;
             no_header = true;
             format = "[{ADDRESS}]";
             searchFields = "[{ADDRESS}]\t[{NAME}]";
@@ -88,9 +90,6 @@ bool COptions::parseArguments(string_q& command) {
     }
     if (verbose)
         searchFields += "\t[{SOURCE}]";
-
-    // Data wrangling
-    // None
 
     // Display formatting
     switch (exportFmt) {
@@ -118,6 +117,20 @@ bool COptions::parseArguments(string_q& command) {
 
     // Collect results for later display
     applyFilter();
+
+    // Data wrangling
+    if (addr_only) {
+        HIDE_FIELD(CAccountName, "group");
+        HIDE_FIELD(CAccountName, "subgroup");
+        HIDE_FIELD(CAccountName, "name");
+        HIDE_FIELD(CAccountName, "symbol");
+        HIDE_FIELD(CAccountName, "description");
+        HIDE_FIELD(CAccountName, "source");
+        HIDE_FIELD(CAccountName, "logo");
+        HIDE_FIELD(CAccountName, "is_contract");
+        HIDE_FIELD(CAccountName, "is_private");
+        HIDE_FIELD(CAccountName, "is_shared");
+    }
 
     return true;
 }
