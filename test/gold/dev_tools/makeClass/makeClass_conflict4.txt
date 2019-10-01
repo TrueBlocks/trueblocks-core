@@ -1,5 +1,5 @@
-makeClass argc: 4 [1:-c] [2:-r] [3:-e] 
-makeClass -c -r -e 
+makeClass argc: 2 [1:-cre] 
+makeClass -cre 
 
   Incompatible options '-r' and '-e'. Choose one or the other.
 

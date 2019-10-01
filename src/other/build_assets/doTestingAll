@@ -1,17 +1,16 @@
+#!/usr/bin/env bash
+
 cd ..
 export QUICKBLOCKS=`pwd`
 
-cd $QUICKBLOCKS/test/
-
-echo "Removing working folder test cases..."
-#rm -f `find working/$2 | grep _ | grep txt | xargs`
-
 cd $QUICKBLOCKS/build/
 cmake ../src
+
 cd $QUICKBLOCKS/build/$1
 make
-make test-all | tee test_all_results
+#make test-all | tee test_all_results
 doTestingApi --filter all --which both --err_quit
+
 cat test_all_results | cut -c6-1000 | grep "^-" | cut -c2-1000 | sed 's/ (Failed)//' | sed 's/^/diffTest/' >x
 mv -f x test_all_results
 chmod uog+x test_all_results

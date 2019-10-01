@@ -59,8 +59,6 @@ bool COptions::parseArguments(string_q& command) {
             }
 
         } else {
-            if (contains(arg, "/"))
-                nextTokenClear(arg, '/');
             arg = trim(arg, '/');
             tests.push_back(arg);
         }
@@ -72,20 +70,21 @@ bool COptions::parseArguments(string_q& command) {
         speed_filter = "";
 
     if (tests.empty()) {
-        tests.push_back("ethQuote");
-        tests.push_back("ethslurp");
-        tests.push_back("getAccounts");
-        tests.push_back("getBlock");
-        tests.push_back("getBloom");
-        tests.push_back("getLogs");
-        tests.push_back("getReceipt");
-        tests.push_back("getState");
-        tests.push_back("getTokenInfo");
-        tests.push_back("getTrace");
-        tests.push_back("getTrans");
-        tests.push_back("grabABI");
-        tests.push_back("whenBlock");
-        tests.push_back("whereBlock");
+        tests.push_back("tools/ethQuote");
+        tests.push_back("tools/ethslurp");
+        tests.push_back("tools/getAccounts");
+        tests.push_back("tools/getBlock");
+        tests.push_back("tools/getBloom");
+        tests.push_back("tools/getLogs");
+        tests.push_back("tools/getReceipt");
+        tests.push_back("tools/getState");
+        tests.push_back("tools/getTokenInfo");
+        tests.push_back("tools/getTrace");
+        tests.push_back("tools/getTrans");
+        tests.push_back("tools/grabABI");
+        tests.push_back("tools/whenBlock");
+        tests.push_back("tools/whereBlock");
+        tests.push_back("dev_tools/makeClass");
     }
 
     return true;

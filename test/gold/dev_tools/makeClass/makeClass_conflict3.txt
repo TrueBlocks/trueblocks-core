@@ -1,5 +1,5 @@
-makeClass argc: 3 [1:-c] [2:-r] 
-makeClass -c -r 
+makeClass argc: 2 [1:-cr] 
+makeClass -cr 
 
   You must specify at least one className (or -a or -l)
 

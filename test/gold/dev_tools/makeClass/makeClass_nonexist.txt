@@ -1,8 +1,7 @@
-makeClass argc: 3 [1:-e] [2:x] 
-makeClass -e x 
+makeClass argc: 3 [1:-e] [2:--x] 
+makeClass -e --x 
 
-  No class definition file found at ./classDefinitions/x.txt
-
+  Unknown parameter: --x
 
   Usage:    makeClass [-o|-r|-j|-f|-l|-h|-c|-n|-s|-a|-v|-h] className  
   Purpose:  Creates C++ code based on definition file at ./classDefinition/<className>.

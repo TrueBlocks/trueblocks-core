@@ -1,5 +1,5 @@
-makeClass argc: 3 [1:-l] [2:-r] 
-makeClass -l -r 
+makeClass argc: 3 [1:-l] [2:--run] 
+makeClass -l --run 
 
   Incompatible options with '-r'. Only '-a' option works with '-r'.
 

@@ -31,9 +31,10 @@ int main(int argc, const char *argv[]) {
         for (auto test : options.tests) {
             if (shouldQuit())
                 continue;
-            if (options.cleanTests)  options.cleanTest(test);
-            if (options.which & CMD) options.doTest(test, true);
-            if (options.which & API) options.doTest(test, false);
+            string_q path = nextTokenClear(test, '/');
+            if (options.cleanTests)  options.cleanTest(path, test);
+            if (options.which & CMD) if (!options.doTest(test, true )) return 1;
+            if (options.which & API) if (!options.doTest(test, false)) return 1;
         }
     }
     return 0;
@@ -105,7 +106,11 @@ bool COptions::doTest(const string_q& testName, bool cmdTests) {
                 continue;
 
             string_q goldPath = "../../../gold/" + path + "/" + tool + (!cmdTests ? "/api_tests/" : "/");
+            if (!folderExists(goldPath))
+                return usage("Folder " + goldPath + " not found. Quitting...");
             string_q filePath = substitute(goldPath, "/gold/", "/working/");
+            if (!folderExists(filePath))
+                return usage("Folder " + goldPath + " not found. Quitting...");
             string_q fileName = tool + "_" + filename + ".txt";
             string_q removePath = filePath + fileName;
             if (fileExists(removePath))
@@ -115,6 +120,9 @@ bool COptions::doTest(const string_q& testName, bool cmdTests) {
                 tool = optTool;
 
             ostringstream cmd;
+
+//            if (verbose && !contains(options, "verbose"))
+//                options += (" & verbose = " + uint_2_Str(verbose) );
 
             replaceAll(options, " = ", "=");
             replaceAll(options, " & ", "&");
@@ -139,6 +147,7 @@ bool COptions::doTest(const string_q& testName, bool cmdTests) {
                 replaceAll(options, "&date_list=", " ");
                 replaceAll(options, "&trans_list=", " ");
                 replaceAll(options, "&term_list=", " ");
+                replaceAll(options, "&func_list=", " ");
                 replaceAll(options, "%20", " ");
                 replaceAll(options, "@", " -");
                 replaceAll(options, "&", " --");
@@ -150,12 +159,14 @@ bool COptions::doTest(const string_q& testName, bool cmdTests) {
                 cmd << "TEST_MODE=true NO_COLOR=true REDIR_CERR=true " << c;
             }
 
-            string_q theCmd = "cd ../../../gold/" + path + "/" + tool + " ; " + cmd.str();
-            // cerr << "Calling " << theCmd << endl;
+            string_q theCmd = "cd " + goldPath + " ; " + cmd.str();
+//            cerr << "Calling " << theCmd << endl;
 
             string_q customized = substitute(substitute(filePath, "working", "custom_config") + tool + "_" + filename + "/", "/api_tests", "");
             if (folderExists(customized))
                 forEveryFileInFolder(customized + "/*", saveAndCopy, NULL);
+            if (verbose)
+                cout << theCmd << endl;
             int ret = system(theCmd.c_str());
             if (folderExists(customized))
                 forEveryFileInFolder(customized + "/*", replaceFile, NULL);
@@ -168,6 +179,20 @@ bool COptions::doTest(const string_q& testName, bool cmdTests) {
             if (!ret) {
                 string_q newText = asciiFileToString(filePath + fileName);
                 string_q oldText = asciiFileToString(goldPath + fileName);
+//cout << string_q(120, '-') << endl;
+//cout << string_q(120, '-') << endl;
+//cout << string_q(120, '-') << endl;
+//cout << string_q(120, '-') << endl;
+//cout << newText << endl;
+//cout << string_q(120, '-') << endl;
+//cout << string_q(120, '-') << endl;
+//cout << string_q(120, '-') << endl;
+//cout << string_q(120, '-') << endl;
+//cout << oldText << endl;
+//cout << string_q(120, '-') << endl;
+//cout << string_q(120, '-') << endl;
+//cout << string_q(120, '-') << endl;
+//cout << string_q(120, '-') << endl;
                 if (newText.empty() || newText != oldText)
                     result = redX;
             } else {
@@ -217,12 +242,12 @@ bool replaceFile(const string_q& customFile, void *data) {
 }
 
 //-----------------------------------------------------------------------
-bool COptions::cleanTest(const string_q& testName) {
+bool COptions::cleanTest(const string_q& path, const string_q& testName) {
     ostringstream os;
-    os << "find ../../../working/tools/" << testName << "/ -depth 1 -name \"get*.txt\" -exec rm '{}' ';' ; ";
-    os << "find ../../../working/tools/" << testName << "/ -depth 1 -name \"eth*.txt\" -exec rm '{}' ';' ; ";
-    os << "find ../../../working/tools/" << testName << "/ -depth 1 -name \"grab*.txt\" -exec rm '{}' ';' ; ";
-    os << "find ../../../working/tools/" << testName << "/ -depth 1 -name \"*Block*.txt\" -exec rm '{}' ';' ; ";
+    os << "find ../../../working/" << path << "/" << testName << "/ -depth 1 -name \"get*.txt\" -exec rm '{}' ';' ; ";
+    os << "find ../../../working/" << path << "/" << testName << "/ -depth 1 -name \"eth*.txt\" -exec rm '{}' ';' ; ";
+    os << "find ../../../working/" << path << "/" << testName << "/ -depth 1 -name \"grab*.txt\" -exec rm '{}' ';' ; ";
+    os << "find ../../../working/" << path << "/" << testName << "/ -depth 1 -name \"*Block*.txt\" -exec rm '{}' ';' ; ";
     system(os.str().c_str());
     return true;
 }
