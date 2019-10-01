@@ -1,5 +1,5 @@
-getAccounts argc: 2 [1:-c] 
-getAccounts -c 
+getAccounts argc: 4 [1:--custom] [2:--fmt] [3:txt] 
+getAccounts --custom --fmt txt 
 group	subgroup	address	name	symbol
 81-Custom		0x0000000000000000000000000000000000000001	Account_1
 81-Custom		0x0000000000000000000000000000000000000002	Account_2	AC_2

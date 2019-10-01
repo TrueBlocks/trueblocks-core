@@ -1,5 +1,5 @@
 {
   "errors": [
-    "getLogs - .whatever does not appear to be a valid transaction index."
+    "getLogs - 1233123 does not appear to be a valid transaction index."
   ]
 }

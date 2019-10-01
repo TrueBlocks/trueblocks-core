@@ -57,22 +57,8 @@ namespace qblocks {
     bool COptionsBase::prepareArguments(int argc, const char *argv[]) {
 
         prepareEnv(argc, argv);
-        if (isTestMode()) {
-            // we present the data once for clarity...
-            cerr << getProgName() << " argc: " << argc << " ";
-            for (int i = 1 ; i < argc ; i++) {
-                string_q str = argv[i];
-                cerr << "[" << i << ":" << trim(str) << "] ";
-            }
-            cerr << endl;
-            // ... and once to use as a command line for copy/paste
-            cerr << getProgName() << " ";
-            for (int i = 1 ; i < argc ; i++) {
-                string_q str = argv[i];
-                cerr << trim(str) << " ";
-            }
-            cerr << endl;
-        }
+        if (getEnvStr("REDIR_CERR") == "true")
+            cerr.rdbuf( cout.rdbuf() );
 
         // send out the environment, if any non-default
         if (isTestMode() || isLevelOn(sev_debug4)) {
@@ -82,6 +68,30 @@ namespace qblocks {
             if (getEnvStr("DOCKER_MODE") == "true") { LOG4("DOCKER_MODE=", getEnvStr("DOCKER_MODE")); }
 //            if (!getEnvStr("IPFS_PATH").empty())    { LOG4("IPFS_PATH=",   getEnvStr("IPFS_PATH")); }
             verbose = save;
+        }
+
+        if (isTestMode()) {
+            ostringstream argos1;
+            ostringstream argos2;
+            for (int i = 1 ; i < argc ; i++) {
+                string_q str = argv[i];
+                argos1 << "[" << i << ":" << trim(str) << "] ";
+                argos2 << trim(str) << " ";
+            }
+
+            const char* STR_TESTLOAD_TXT = "[{PROGRAM}] argc: [{ARGC}] [{ARGS}]\n";
+            const char* STR_CMD_TXT = "[{PROGRAM}] [{ARGS}]\n";
+
+            string_q out = STR_TESTLOAD_TXT;
+            replace(out, "[{PROGRAM}]", getProgName());
+            replace(out, "[{ARGC}]", int_2_Str(argc));
+            replace(out, "[{ARGS}]", argos1.str());
+            cerr << out;
+
+            out = STR_CMD_TXT;
+            replace(out, "[{PROGRAM}]", getProgName());
+            replace(out, "[{ARGS}]", argos2.str());
+            cerr << out;
         }
 
         if ((uint64_t)argc <= minArgs)  // the first arg is the program's name
@@ -253,6 +263,7 @@ namespace qblocks {
             commandLines.push_back("--noop");
 
         if (args) delete [] args;
+
         return 1;
     }
 

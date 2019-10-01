@@ -1,5 +1,5 @@
-getTrace argc: 7 [1:-a] [2:-x] [3:json] [4:6513870.62] [5:6687987.11] [6:0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12] 
-getTrace -a -x json 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12 
+getTrace argc: 7 [1:6513870.62] [2:6687987.11] [3:0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12] [4:--articulate] [5:--fmt] [6:json] 
+getTrace 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12 --articulate --fmt json 
 { "data": [
   {
     "type": "call",

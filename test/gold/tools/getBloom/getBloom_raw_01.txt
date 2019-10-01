@@ -1,5 +1,5 @@
-getBloom argc: 6 [1:--raw] [2:2768801] [3:1995314] [4:1958017] [5:--verbose] 
-getBloom --raw 2768801 1995314 1958017 --verbose 
+getBloom argc: 6 [1:2768801] [2:1995314] [3:1958017] [4:--verbose] [5:--raw] 
+getBloom 2768801 1995314 1958017 --verbose --raw 
 [
 {
   "bitCount": 12,

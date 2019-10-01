@@ -1,0 +1,5 @@
+{
+  "errors": [
+    "getBloom - Please choose either --block or --receipt, not both. Quitting..."
+  ]
+}

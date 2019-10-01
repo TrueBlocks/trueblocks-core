@@ -1,5 +1,5 @@
-whenBlock argc: 2 [1:-v] 
-whenBlock -v 
+whenBlock argc: 2 [1:--verbose] 
+whenBlock --verbose 
 
   Please supply either a JSON formatted date or a blockNumber.
 

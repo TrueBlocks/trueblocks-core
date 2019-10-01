@@ -179,17 +179,17 @@ num,group,api_route,tool,order,command,command_short,data_type,option_kind,defau
 34030,tools,tokens,getTokenInfo,,nozero,n,boolean,switch,,suppress the display of zero balance accounts,,FALSE,TRUE,TRUE
 34040,tools,tokens,getTokenInfo,,info,i,enum[name|decimals|totalSupply|version|symbol|all],flag,,retreive information [name|decimals|totalSupply|version|symbol|all] about the token,,FALSE,FALSE,FALSE
 34050,tools,tokens,getTokenInfo,,,,,description,,Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).,,FALSE,TRUE,TRUE
-35000,tools,,getBloom,,block_list,,list<block>,positional,,a space-separated list of one or more blocks for which to retrieve blooms,,TRUE,TRUE,TRUE
-35010,tools,,getBloom,,eab,e,boolean,switch,,pull the enhanced adaptive blooms from QBlocks cache,,FALSE,TRUE,TRUE
-35020,tools,,getBloom,,block,b,boolean,switch,,show only the block-level bloom (--raw only),,FALSE,TRUE,TRUE
-35030,tools,,getBloom,,receipts,c,boolean,switch,,show only the receipt-level blooms (--raw only),,FALSE,TRUE,TRUE
-35040,tools,,getBloom,,bits,i,boolean,switch,,display blooms as bits instead of hex,,FALSE,TRUE,TRUE
-35050,tools,,getBloom,,bars,a,boolean,switch,,display blooms as bar chart instead of hex,,FALSE,TRUE,TRUE
-35060,tools,,getBloom,,bitbars,s,boolean,switch,,display nBits as a bar chart,,FALSE,TRUE,TRUE
-35070,tools,,getBloom,,pctbars,p,boolean,switch,,display nBits as a percentage of bloom space,,FALSE,TRUE,TRUE
-35080,tools,,getBloom,,bitcount,n,boolean,switch,,display the number of bits lit per bloom,,FALSE,TRUE,TRUE
-35090,tools,,getBloom,,force,f,boolean,switch,,force a re-write of the bloom to the cache,,FALSE,FALSE,FALSE
-35100,tools,,getBloom,,,,,description,,Returns bloom filter(s) from running node (the default) or as EAB from QBlocks.,,FALSE,TRUE,TRUE
+35000,tools,blooms,getBloom,,block_list,,list<block>,positional,,a space-separated list of one or more blocks for which to retrieve blooms,,TRUE,TRUE,TRUE
+35010,tools,blooms,getBloom,,eab,e,boolean,switch,,pull the enhanced adaptive blooms from QBlocks cache,,FALSE,TRUE,TRUE
+35020,tools,blooms,getBloom,,block,b,boolean,switch,,show only the block-level bloom (--raw only),,FALSE,TRUE,TRUE
+35030,tools,blooms,getBloom,,receipts,c,boolean,switch,,show only the receipt-level blooms (--raw only),,FALSE,TRUE,TRUE
+35040,tools,blooms,getBloom,,bits,i,boolean,switch,,display blooms as bits instead of hex,,FALSE,TRUE,TRUE
+35050,tools,blooms,getBloom,,bars,a,boolean,switch,,display blooms as bar chart instead of hex,,FALSE,TRUE,TRUE
+35060,tools,blooms,getBloom,,bitbars,s,boolean,switch,,display nBits as a bar chart,,FALSE,TRUE,TRUE
+35070,tools,blooms,getBloom,,pctbars,p,boolean,switch,,display nBits as a percentage of bloom space,,FALSE,TRUE,TRUE
+35080,tools,blooms,getBloom,,bitcount,n,boolean,switch,,display the number of bits lit per bloom,,FALSE,TRUE,TRUE
+35090,tools,blooms,getBloom,,force,f,boolean,switch,,force a re-write of the bloom to the cache,,FALSE,FALSE,FALSE
+35100,tools,blooms,getBloom,,,,,description,,Returns bloom filter(s) from running node (the default) or as EAB from QBlocks.,,FALSE,TRUE,TRUE
 36000,tools,,templates,,parse,p,boolean,switch,,display parsed input data,,FALSE,TRUE,TRUE
 36010,tools,,templates,,logs,g,boolean,switch,,display smart contract lo(g)s or events,,FALSE,TRUE,TRUE
 36020,tools,,templates,,trace,t,boolean,switch,,display smart contract internal traces,,FALSE,TRUE,TRUE

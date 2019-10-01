@@ -1,20 +1,16 @@
-getTokenInfo argc: 6 [1:0xd26114cd6ee289accf82350c8d8487fedb8a0c07] [2:0xb9e7f8568e08d5659f5d29c4997173d84cdf2607] [3:--info] [4:all] [5:4001001-4001002] 
-getTokenInfo 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 --info all 4001001-4001002 
 [
-{
-	"name": "OMGToken",
-	"totalSupply": "140245398245132780789239631",
-	"decimals": "18",
-	"version": "",
-	"symbol": "OMG"
-}
-,
-{
-	"name": "Swarm City Token",
-	"totalSupply": "7367049360614191258780045",
-	"decimals": "18",
-	"version": "MMT_0.1",
-	"symbol": "SWT"
-}
-
+  {
+    "name": "OMGToken",
+    "totalSupply": "140245398245132780789239631",
+    "decimals": "18",
+    "version": "",
+    "symbol": "OMG"
+  },
+  {
+    "name": "Swarm City Token",
+    "totalSupply": "7367049360614191258780045",
+    "decimals": "18",
+    "version": "MMT_0.1",
+    "symbol": "SWT"
+  }
 ]

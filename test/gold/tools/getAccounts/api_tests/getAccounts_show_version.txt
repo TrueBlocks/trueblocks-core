@@ -1,3 +1,0 @@
-getAccounts argc: 2 [1:--version] 
-getAccounts --version 
-getAccounts GHC-TrueBlocks//0.5.8-alpha--git-hash---git-ts-

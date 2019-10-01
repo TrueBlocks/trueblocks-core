@@ -1,5 +1,5 @@
-getAccounts argc: 3 [1:etwork] [2:-v] 
-getAccounts etwork -v 
+getAccounts argc: 5 [1:etwork] [2:--verbose] [3:--fmt] [4:txt] 
+getAccounts etwork --verbose --fmt txt 
 group	subgroup	address	name	symbol	source
 50-Tokens		0x08f5a9235b08173b7569f83645d2c7fb55e8ccd8	Tierion Network Token	TNT	Etherscan.io
 50-Tokens		0x20f7a3ddf244dc9299975b4da1c39f8d5d75f05a	Sapien Network	SPN	Etherscan.io

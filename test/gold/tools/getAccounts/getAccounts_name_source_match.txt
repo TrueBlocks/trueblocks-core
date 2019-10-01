@@ -1,5 +1,5 @@
-getAccounts argc: 6 [1:-v] [2:Ether] [3:--expand] [4:--fmt] [5:json] 
-getAccounts -v Ether --expand --fmt json 
+getAccounts argc: 6 [1:Ether] [2:--expand] [3:--verbose] [4:--fmt] [5:json] 
+getAccounts Ether --expand --verbose --fmt json 
 { "data": [
   {
     "group": "50-Tokens",

@@ -1,5 +1,5 @@
-grabABI argc: 3 [1:--known] [2:-e] 
-grabABI --known -e 
+grabABI argc: 3 [1:--known] [2:--encode] 
+grabABI --known --encode 
 ABI for address erc-1155
 	function _doSafeBatchTransferAcceptanceCheck(address _operator,address _from,address _to,uint256[] _ids,uint256[] _values,bytes _data) [0xe51c223d]
 	function _doSafeTransferAcceptanceCheck(address _operator,address _from,address _to,uint256 _id,uint256 _value,bytes _data) [0x084e9e24]

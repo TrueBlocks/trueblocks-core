@@ -1,6 +1,3 @@
-getTokenInfo argc: 4 [1:0xd26114cd6ee289accf82350c8d8487fedb8a0c07] [2:--info] [3:name] 
-getTokenInfo 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 --info name 
 {
-    "name": "OMGToken"
+  "name": "OMGToken"
 }
-

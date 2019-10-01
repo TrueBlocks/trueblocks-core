@@ -1,5 +1,5 @@
-getReceipt argc: 5 [1:--verbose] [2:--file:cmd_file] [3:--fmt] [4:api] 
-getReceipt --verbose --file:cmd_file --fmt api 
+getReceipt argc: 5 [1:--file:cmd_file] [2:--fmt] [3:api] [4:--verbose] 
+getReceipt --file:cmd_file --fmt api --verbose 
 { "type": "CTransaction", "data": [
   {
     "contractAddress": "0x0",

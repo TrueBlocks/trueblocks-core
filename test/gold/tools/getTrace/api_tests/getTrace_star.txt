@@ -1,5 +1,4 @@
 {
-  "type": "CTrace",
   "data": [
     {
       "blockHash": "0xe4c2b8cb9ddd1acb41043afb3bd0149c281eca23f1bc563af5899bac748ec372",
@@ -113,12 +112,5 @@
         "output": "0x"
       }
     }
-  ],
-  "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
-    "finalized": "0xdeadbeef",
-    "client": "0xdeadbeef"
-  }
+  ]
 }

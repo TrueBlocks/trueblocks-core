@@ -1,5 +1,5 @@
-getTrans argc: 4 [1:0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10] [2:-avtx] [3:api] 
-getTrans 0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10 -avtx api 
+getTrans argc: 5 [1:0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10] [2:-avt] [3:--fmt] [4:api] 
+getTrans 0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10 -avt --fmt api 
 { "type": "CTransaction", "data": [
   {
     "hash": "0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10",

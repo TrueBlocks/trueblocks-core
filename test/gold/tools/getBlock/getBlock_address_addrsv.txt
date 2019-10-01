@@ -1,5 +1,5 @@
-getBlock argc: 5 [1:3982128] [2:-a] [3:-v] [4:1] 
-getBlock 3982128 -a -v 1 
+getBlock argc: 5 [1:3982128] [2:--addrs] [3:--verbose] [4:1] 
+getBlock 3982128 --addrs --verbose 1 
 3982128			0x1e9939daaad6924ad004c2560e90804164900341	miner
 3982128	0		0x8c34adf55edf3d3eabb2414dd3f7152536246c86	from
 3982128	0		0xa73b025bb4c1a7f15164cbbf1870aa2dd6dfc3a0	creation

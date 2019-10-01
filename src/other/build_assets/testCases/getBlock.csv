@@ -1,0 +1,58 @@
+enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
+on, cmd,  all,  blocks, tools/getBlock, force_01,           y, block_list = 2768801 1995314 1958017&force, getBlock
+
+on, cmd,  fast, blocks, tools/getBlock, README,             n, @th
+on, cmd,  fast, blocks, tools/getBlock, help,               n, @h
+on, cmd,  fast, blocks, tools/getBlock, help_long,          n, help
+
+on, both, fast, blocks, tools/getBlock, no_params,          y,
+on, both, fast, blocks, tools/getBlock, invalid_option,     y, block_list = 1001001 & junk
+on, both, fast, blocks, tools/getBlock, baddata,            y, block_list = 1590000 4000001-4000002 x400x001
+
+on, both, fast, blocks, tools/getBlock, empty,              y, block_list = 1001001
+on, both, fast, blocks, tools/getBlock, bloom,              y, block_list = 4000001
+on, both, fast, blocks, tools/getBlock, byhash,             y, block_list = 0x79990fd526c4751139a7a3afc7420cde1a1141b1920d2afd411858ecb4926a39
+on, both, fast, blocks, tools/getBlock, blooms,             y, block_list = 1590000 4000001 4000002 & force
+on, both, fast, blocks, tools/getBlock, range,              y, block_list = 4000001-4000003 & force
+on, both, fast, blocks, tools/getBlock, special_1,          y, block_list = stateclear & force
+on, both, fast, blocks, tools/getBlock, special_2,          y, block_list = daofork & force
+on, both, fast, blocks, tools/getBlock, combo_one_range,    y, block_list = 1590000 4000001-4000002 1001001 1234567 & force
+on, both, fast, blocks, tools/getBlock, combo_two_range,    y, block_list = 1590000 4000001-4000002 1001001-1001100 1234567
+on, both, fast, blocks, tools/getBlock, raw_01,             n, block_list = 2768801 1995314 1958017 & normalize & source:raw
+on, both, fast, blocks, tools/getBlock, raw_05,             n, block_list = 2768801 1995314 1958017 & normalize & raw
+on, both, fast, blocks, tools/getBlock, cache_01,           n, block_list = 2768801 1995314 1958017 & normalize & parity & source:cache
+on, both, fast, blocks, tools/getBlock, cache_04,           n, block_list = 2768801 1995314 1958017 & normalize & parity & cache
+on, both, fast, blocks, tools/getBlock, check_01,           n, block_list = 2768801 & check
+on, both, fast, blocks, tools/getBlock, check_02,           n, block_list = 1995314 & check
+on, both, fast, blocks, tools/getBlock, check_03,           n, block_list = 1958017 & check
+on, both, fast, blocks, tools/getBlock, chk_245001,         n, block_list = 245001 & check
+on, both, fast, blocks, tools/getBlock, parity_hex,         y, block_list = 0x2e7721 & force & parity
+on, both, fast, blocks, tools/getBlock, parity_num,         y, block_list = 728708 & parity
+on, both, fast, blocks, tools/getBlock, parity_range,       y, block_list = 358450-0x5785a & force & parity
+on, both, fast, blocks, tools/getBlock, force_02,           y, block_list = 2769609 2799895 2872831 3076260 & force
+on, both, fast, blocks, tools/getBlock, force_fail,         y, block_list = 2769609 2799895 2872831 3076260 & force & uniqTx
+on, both, fast, blocks, tools/getBlock, multi1,             y, block_list = 2769609 2799895 2872831 3076260 & parity & raw
+on, both, fast, blocks, tools/getBlock, multi2,             y, block_list = 2769609 2799895 2872831 3076260 & raw & parity
+on, both, slow, blocks, tools/getBlock, terse_no_raw,       y, block_list = 4001001-4001003 & hash_only
+on, both, fast, blocks, tools/getBlock, terse_yes_raw,      y, block_list = 4001001 & hash_only & source:raw
+on, both, medi, blocks, tools/getBlock, hashes_1,           y, block_list = 4001001 & hash_only
+on, both, medi, blocks, tools/getBlock, address_addrs1,     n, block_list = 3982128 & addrs
+on, both, medi, blocks, tools/getBlock, address_addrsv,     n, block_list = 3982128 & addrs & verbose = 1
+on, both, fast, blocks, tools/getBlock, address_addrsf,     n, block_list = 3982128 & addr
+on, both, medi, blocks, tools/getBlock, address_uniq1,      n, block_list = 3982128 & uniq
+on, both, medi, blocks, tools/getBlock, address_uniqTx1,    n, block_list = 3982128 & uniqTx & filter = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07
+on, both, medi, blocks, tools/getBlock, address_addrsCnt1,  n, block_list = 3982128 & addrs & number
+on, both, medi, blocks, tools/getBlock, address_addrsCnt2,  n, block_list = 3982128 & addrsCnt
+on, both, medi, blocks, tools/getBlock, address_uniqCnt1,   n, block_list = 3982128 & uniq & number
+on, both, medi, blocks, tools/getBlock, address_uniqCnt2,   n, block_list = 3982128 & uniqCnt
+on, both, medi, blocks, tools/getBlock, address_uniqTxCnt1, n, block_list = 3982128 & uniqTx & number
+on, both, medi, blocks, tools/getBlock, address_uniqTxCnt2, n, block_list = 3982128 & uniqTxCnt
+on, both, fast, blocks, tools/getBlock, addrCntFail,        y, block_list = 3982128 & number
+on, both, slow, blocks, tools/getBlock, byzantium_1,        y, block_list = 4369999 4370000 4380101 & force
+on, both, fast, blocks, tools/getBlock, blockByHash,        y, block_list = 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b
+
+on, both, fast, blocks, tools/getBlock, latest1,            n, latest
+on, both, fast, blocks, tools/getBlock, latest2,            n, block_list = 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b & latest
+
+on, cmd,  fast, blocks, tools/getBlock, cmd_file1,          n, file:cmd_file1 & force
+on, cmd,  fast, blocks, tools/getBlock, cmd_file2,          n, file:cmd_file2 & force

@@ -1,5 +1,0 @@
-{
-  "errors": [
-    "grabABI - Invalid option: --code"
-  ]
-}

@@ -1,4 +1,3 @@
-getAccounts argc: 4 [1:--verbose] [2:0x01] [3:torj] 
-getAccounts --verbose 0x01 torj 
-group	subgroup	address	name	symbol	source
-50-Tokens		0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac	Storj	STORJ	Etherscan.io
+getAccounts argc: 6 [1:0x01] [2:torj] [3:--verbose] [4:--fmt] [5:txt] 
+getAccounts 0x01 torj --verbose --fmt txt 
+No results

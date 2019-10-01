@@ -1,5 +1,5 @@
-getBloom argc: 3 [1:--parity] [2:728708] 
-getBloom --parity 728708 
+getBloom argc: 3 [1:728708] [2:--parity] 
+getBloom 728708 --parity 
 {
   "logsBloom": "0x0",
   "number": "728708"

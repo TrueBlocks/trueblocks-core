@@ -51,8 +51,5 @@ function(api_state_test testName)
     run_the_api_state_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
 endfunction(api_state_test)
 
-# Enter one line for each individual test
-#run_special_test("apiTester")
-
 # Installation steps
 install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)

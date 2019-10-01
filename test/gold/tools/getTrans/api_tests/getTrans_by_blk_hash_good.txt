@@ -1,5 +1,4 @@
 {
-  "type": "CTransaction",
   "data": [
     {
       "hash": "0xe49b9d48866035a82b622e4900791210cbf36905194a7ae3dc38feedf8ca3762",
@@ -37,12 +36,5 @@
       "age": "100",
       "ether": 0.08
     }
-  ],
-  "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
-    "finalized": "0xdeadbeef",
-    "client": "0xdeadbeef"
-  }
+  ]
 }

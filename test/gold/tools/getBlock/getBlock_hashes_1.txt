@@ -1,5 +1,5 @@
-getBlock argc: 3 [1:--hash_only] [2:4001001] 
-getBlock --hash_only 4001001 
+getBlock argc: 3 [1:4001001] [2:--hash_only] 
+getBlock 4001001 --hash_only 
 {
   "hash": "0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f",
   "blockNumber": 4001001,

@@ -1,2 +1,1 @@
-blocknumber	address	balance
-1500000	0xbb9bc244d798123fde783fcc1c72d3bb8c189413	4420466920675732108465682
+{ "errors": [ "getState - Request asks for historical state, but the RPC server does not have historical state. Quitting..." ] }

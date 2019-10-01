@@ -1,5 +1,5 @@
-getBlock argc: 3 [1:--parity] [2:728708] 
-getBlock --parity 728708 
+getBlock argc: 3 [1:728708] [2:--parity] 
+getBlock 728708 --parity 
 {
   "difficulty": "0x80001821ea8",
   "finalized": "0x1",

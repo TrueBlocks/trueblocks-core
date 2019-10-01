@@ -1,5 +1,5 @@
-ethQuote argc: 4 [1:-d] [2:--fmt] [3:json] 
-ethQuote -d --fmt json 
+ethQuote argc: 3 [1:--fmt] [2:json] 
+ethQuote --fmt json 
 { "data": [
   {
     "timestamp": 1439078400,

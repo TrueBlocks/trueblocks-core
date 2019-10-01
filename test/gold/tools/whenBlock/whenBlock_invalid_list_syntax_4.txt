@@ -1,5 +1,5 @@
-whenBlock argc: 3 [1:-l] [2:23123] 
-whenBlock -l 23123 
+whenBlock argc: 5 [1:23123] [2:--list] [3:--fmt] [4:txt] 
+whenBlock 23123 --list --fmt txt 
 blocknumber	timestamp	date	name
 0	1438269960	2015-07-30 15:26:00 UTC	first
 23123	1438539649	2015-08-02 18:20:49 UTC

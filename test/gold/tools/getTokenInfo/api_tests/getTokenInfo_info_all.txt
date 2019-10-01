@@ -1,10 +1,7 @@
-getTokenInfo argc: 4 [1:0xd26114cd6ee289accf82350c8d8487fedb8a0c07] [2:--info] [3:all] 
-getTokenInfo 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 --info all 
 {
-	"name": "OMGToken",
-	"totalSupply": "140245398245132780789239631",
-	"decimals": "18",
-	"version": "",
-	"symbol": "OMG"
+  "name": "OMGToken",
+  "totalSupply": "140245398245132780789239631",
+  "decimals": "18",
+  "version": "",
+  "symbol": "OMG"
 }
-

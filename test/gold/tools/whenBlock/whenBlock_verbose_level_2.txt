@@ -1,5 +1,5 @@
-whenBlock argc: 3 [1:-v:j] [2:1000] 
-whenBlock -v:j 1000 
+whenBlock argc: 3 [1:1000] [2:--verbose:j] 
+whenBlock 1000 --verbose:j 
 
   Invalid verbose level 'j'. Quitting...
 

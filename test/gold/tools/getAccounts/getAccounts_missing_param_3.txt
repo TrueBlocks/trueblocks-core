@@ -1,5 +1,5 @@
-getAccounts argc: 2 [1:-v] 
-getAccounts -v 
+getAccounts argc: 4 [1:--verbose] [2:--fmt] [3:txt] 
+getAccounts --verbose --fmt txt 
 group	subgroup	address	name	symbol	source
 50-Tokens		0x0000000000085d4780b73119b644ae5ecd22b376	TrueUSD	TUSD	Etherscan.io
 50-Tokens		0x001f0aa5da15585e5b2305dbab2bac425ea71007	IPSX	IPSX	Etherscan.io

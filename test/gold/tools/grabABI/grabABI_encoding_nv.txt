@@ -1,5 +1,5 @@
-grabABI argc: 4 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:-n] [3:-e] 
-grabABI 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -n -e 
+grabABI argc: 4 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:--noconst] [3:--encode] 
+grabABI 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 --noconst --encode 
 ABI for address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 	function approve                    (address _spender,uint256 _amount) [0x095ea7b3]
 	function changeAllowedRecipients    (address _recipient,bool _allowed) [0x749f9889]

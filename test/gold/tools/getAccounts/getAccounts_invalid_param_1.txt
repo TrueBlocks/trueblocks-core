@@ -1,7 +1,7 @@
-getAccounts argc: 2 [1:-x] 
-getAccounts -x 
+getAccounts argc: 2 [1:--punk] 
+getAccounts --punk 
 
-  Invalid option: -x
+  Invalid option: --punk
 
   Usage:    getAccounts [-e|-m|-o|-c|-p|-n|-a|-v|-h] <term> [term...]  
   Purpose:  Query addresses and/or names of well known accounts.

@@ -1,5 +1,5 @@
-ethQuote argc: 4 [1:-d] [2:--fmt] [3:api] 
-ethQuote -d --fmt api 
+ethQuote argc: 3 [1:--fmt] [2:api] 
+ethQuote --fmt api 
 { "type": "CPriceQuote", "data": [
   {
     "timestamp": 1439078400,

@@ -1,5 +1,0 @@
-ethslurp argc: 2 [1:0x63c8c29af409bd31ec7ddeea58ff14f21e8980b5] 
-ethslurp 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b5 
-Processing: 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b5
-	Slurping 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b5
-	Error: {"status":"0","message":"No transactions found","result":[]}. Quitting...

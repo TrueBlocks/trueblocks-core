@@ -1,8 +1,7 @@
-grabABI argc: 7 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:-v] [3:-n] [4:-e] [5:-g] [6:code] 
-grabABI 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -v -n -e -g code 
+grabABI argc: 7 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:--verbose] [3:--noconst] [4:--encode] [5:--generate] [6:--code] 
+grabABI 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 --verbose --noconst --encode --generate --code 
 
-  Invalid address 'code'. Length (4) is not equal to 40 characters (20 bytes).
-
+  Invalid option: --code
 
   Usage:    grabABI [-c|-g|-d|-e|-j|-n|-l|-v|-h] <address> [address...]  
   Purpose:  Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.

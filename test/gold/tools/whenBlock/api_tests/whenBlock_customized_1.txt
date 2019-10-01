@@ -1,5 +1,18 @@
 {
-  "errors": [
-    "whenBlock - The given value 'myblock' is not a numeral or a special named block."
-  ]
+  "type": "CBlock",
+  "data": [
+    {
+      "blockNumber": 1001001,
+      "timestamp": 1455421883,
+      "name": "myblock",
+      "date": "2016-02-14 03:51:23 UTC"
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
 }

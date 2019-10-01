@@ -1,5 +1,5 @@
-getTrans argc: 8 [1:-a] [2:-x] [3:api] [4:-t] [5:6513870.62] [6:6687987.11] [7:0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12] 
-getTrans -a -x api -t 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12 
+getTrans argc: 8 [1:6513870.62] [2:6687987.11] [3:0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12] [4:--articulate] [5:--fmt] [6:api] [7:--trace] 
+getTrans 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12 --articulate --fmt api --trace 
 { "type": "CTransaction", "data": [
   {
     "hash": "0x2d92337aa72c51eaf61ab52692af28cc2f7efb62e32bbc1d8a420099a22510e9",

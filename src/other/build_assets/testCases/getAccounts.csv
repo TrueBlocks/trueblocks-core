@@ -1,0 +1,120 @@
+enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
+on, cmd,  slow, accounts, tools/getAccounts, README,                           n, @th
+on, cmd,  fast, accounts, tools/getAccounts, help,                             n, @h
+on, cmd,  fast, accounts, tools/getAccounts, help_long,                        n, help
+on, both, medi, accounts, tools/getAccounts, no_params,                        y,
+
+on, both, fast, accounts, tools/getAccounts, invalid_option,                   y, pink
+on, both, fast, accounts, tools/getAccounts, invalid_param_1,                  y, punk
+on, both, fast, accounts, tools/getAccounts, bad_option,                       y, addr
+on, both, fast, accounts, tools/getAccounts, missing_param_1,                  n, matchCase & fmt = txt
+on, both, medi, accounts, tools/getAccounts, missing_param_2,                  y, addr
+on, both, medi, accounts, tools/getAccounts, missing_param_3,                  n, verbose & fmt = txt
+on, both, medi, accounts, tools/getAccounts, missing_param_4,                  n, verbose & fmt = txt
+
+on, both, fast, accounts, tools/getAccounts, invalid_param_10,                 n, term_list = 0xb6 torj & other & Verbose & fmt = txt
+on, both, fast, accounts, tools/getAccounts, invalid_param_2,                  n, term_list = torj & pink & fmt = txt
+on, both, fast, accounts, tools/getAccounts, invalid_param_3,                  n, term_list = 0xbf4ed7b27f1d666546e30d74d50d173d20bca754 & pink & fmt = txt
+on, both, medi, accounts, tools/getAccounts, invalid_param_4,                  n, term_list = torj 0xbf4ed7b27f1d666546e30d74d50d173d20bca754 & pink & fmt = txt
+on, both, medi, accounts, tools/getAccounts, invalid_param_5,                  n, term_list = 0xbf4ed7b27f1d666546e30d74d50d173d20bca754 & pink & addr & fmt = txt
+on, both, fast, accounts, tools/getAccounts, invalid_param_6,                  n, other & fmt = txt
+on, both, medi, accounts, tools/getAccounts, invalid_param_7,                  n, term_list = 0xb6 torj & other & fmt = txt
+on, both, medi, accounts, tools/getAccounts, invalid_param_8,                  n, term_list = 0xb6 torj & verboses & other & fmt = txt
+on, both, fast, accounts, tools/getAccounts, invalid_param_9,                  n, term_list = 0xb6 torj & other & VERBOSE & fmt = txt
+on, both, medi, accounts, tools/getAccounts, invalid_search,                   n, term_list = 0x1 torj & fmt = txt
+
+on, both, fast, accounts, tools/getAccounts, owned,                            y, owned
+on, both, medi, accounts, tools/getAccounts, prefund,                          y, prefund
+on, both, fast, accounts, tools/getAccounts, run,                              y, owned
+on, both, medi, accounts, tools/getAccounts, upgrade_fail,                     y, fmt = json
+on, both, fast, accounts, tools/getAccounts, verbose,                          n, verbose & owned & fmt = txt
+on, both, fast, accounts, tools/getAccounts, list,                             y, fmt = json
+on, both, medi, accounts, tools/getAccounts, long_list,                        n, fmt = txt
+on, both, medi, accounts, tools/getAccounts, all,                              y, named & custom & owned & prefund
+on, both, fast, accounts, tools/getAccounts, all_addrOnly,                     y, named & custom & owned & prefund & addr
+on, both, fast, accounts, tools/getAccounts, named_custom,                     n, named & custom & fmt = csv
+on, both, medi, accounts, tools/getAccounts, named_custom_owned,               n, named & custom & owned & fmt = csv
+on, both, medi, accounts, tools/getAccounts, named,                            n, named & fmt = txt
+on, both, fast, accounts, tools/getAccounts, custom,                           n, custom & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_name_case_match_both,        y, term_list = 0xcb Humaniq & matchCase
+on, both, medi, accounts, tools/getAccounts, addr_name_source_match,           n, term_list = cbCC Humaniq Ether & fmt = csv & expand
+on, both, medi, accounts, tools/getAccounts, addr_name_verbose_match,          n, term_list = 0xb6 torj & verbose & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_no_hex_number,               n, term_list = b64 torj & fmt = txt
+on, both, medi, accounts, tools/getAccounts, address_match,                    y, term_list = 0x1 & fmt = api
+on, both, medi, accounts, tools/getAccounts, api_mode,                         y, term_list = tip & fmt = api
+on, both, medi, accounts, tools/getAccounts, duplicated_option_1,              n, term_list = 0xb6 torj & addr & addr & addr & addr & fmt = txt
+on, both, medi, accounts, tools/getAccounts, name_case_match,                  n, term_list = \* torj & fmt = json & matchCase
+on, both, medi, accounts, tools/getAccounts, name_long_case_match,             n, term_list = \* torj & fmt = json & matchCase
+on, both, medi, accounts, tools/getAccounts, name_long_show_addr_match,        n, term_list = \* torj & addr & fmt = txt
+on, both, medi, accounts, tools/getAccounts, name_long_source_match,           n, term_list = Ether & expand & fmt = txt
+on, both, medi, accounts, tools/getAccounts, name_long_verbose_match,          y, term_list = torj & verbose
+on, both, medi, accounts, tools/getAccounts, name_match,                       n, term_list = torj & noop & fmt = txt
+on, both, medi, accounts, tools/getAccounts, name_source_match,                y, term_list = Ether & expand & verbose & fmt = json
+on, both, medi, accounts, tools/getAccounts, name_verbose_match,               y, term_list = torj & verbose
+on, both, medi, accounts, tools/getAccounts, simple_search,                    y, term_list = 88897
+on, both, medi, accounts, tools/getAccounts, tip1,                             y, term_list = tip
+on, both, medi, accounts, tools/getAccounts, tip2,                             n, term_list = tip & addr
+on, both, medi, accounts, tools/getAccounts, addr_case_match,                  n, term_list = 0xcb & matchCase & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_case_no_match,               n, term_list = 0xCB & matchCase & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_long_case_match,             n, term_list = 0xcb & matchCase & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_long_case_no_match,          n, term_list = 0xCB & matchCase & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_long_long_show_addr_match,   n, term_list = 0xb6 & addr & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_long_name_case_match_addr,   n, term_list = 0xcb torJ & matchCase & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_long_name_case_match_both,   n, term_list = 0xcb Humaniq & matchCase & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_long_name_case_match_name,   n, term_list = 0xCB torj & matchCase & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_long_name_case_no_match,     n, term_list = 0xCB torJ & matchCase & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_long_name_show_addr_match,   n, term_list = 0xb6 torj & addr & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_long_name_show_addr_no_match,n, term_list = 0x01 torj & addr & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_long_name_source_match,      n, term_list = Humaniq 1e17 Ether & verbose & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_long_name_source_no_match,   n, term_list = Humaniq 1e17 Ether & verbose & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_long_name_verbose_match,     n, term_list = 0xb6 torj & verbose & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_long_name_verbose_no_match,  n, term_list = 0x01 torj & verbose & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_long_show_addr_no_match,     n, term_list = 0xCB1 & addr & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_long_source_match,           n, term_list = ETHER 1e16 & verbose & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_long_source_no_match,        n, term_list = Ether 1e17 & verbose & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_long_verbose_match,          n, term_list = 0xb6 & verbose & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_long_verbose_no_match,       n, term_list = 0xCB1 & verbose & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_name_case_match_addr,        n, term_list = 0xcb torJ & matchCase & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_name_case_match_name,        n, term_list = 0xCB torj & matchCase & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_name_case_no_match,          n, term_list = 0xCB torJ & matchCase & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_name_show_addr_match,        n, term_list = 0xb6 torj & addr & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_name_show_addr_no_match,     n, term_list = 0x01 torj & addr & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_name_source_no_match,        n, term_list = cbCD Humaniq EtherScan & verbose & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_name_verbose_no_match,       n, term_list = 0x01 torj & verbose & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_show_addr_no_match,          n, term_list = 0xCB1 & addr & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_source_match,                n, term_list = cbCC Ether & verbose & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_source_no_match,             n, term_list = cbCD an.io & verbose & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_verbose_match,               n, term_list = 0xb6 & verbose & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_verbose_no_match,            n, term_list = 0xCB1 & verbose & fmt = txt
+on, both, medi, accounts, tools/getAccounts, address_no_match,                 n, term_list = 0xCB1 & fmt = txt
+on, both, medi, accounts, tools/getAccounts, full_addr,                        y, term_list = 0xB64ef51C888972c908CFacf59B47C1AfBC0Ab8aC
+on, both, medi, accounts, tools/getAccounts, mixed_options_with_list_1,        n, term_list = 0xb6 torj & addr & fmt = json
+on, both, medi, accounts, tools/getAccounts, name_and_addr_match,              n, term_list = 0xb6 torj & fmt = txt
+on, both, medi, accounts, tools/getAccounts, name_and_addr_no_match,           n, term_list = 0x01 torj & fmt = txt
+on, both, medi, accounts, tools/getAccounts, name_case_no_match,               n, term_list = torJ & matchCase & fmt = txt
+on, both, medi, accounts, tools/getAccounts, name_long_case_no_match,          n, term_list = torJ & matchCase & fmt = txt
+on, both, medi, accounts, tools/getAccounts, name_long_show_addr_no_match,     n, term_list = no_torj & addr & fmt = txt
+on, both, medi, accounts, tools/getAccounts, name_long_source_no_match,        n, term_list = no_ETHER & verbose & fmt = txt
+on, both, medi, accounts, tools/getAccounts, name_long_verbose_no_match,       n, term_list = no_torj & verbose & fmt = txt
+on, both, medi, accounts, tools/getAccounts, name_no_match,                    n, term_list = torj_no_found & fmt = txt
+on, both, medi, accounts, tools/getAccounts, name_show_addr_match,             n, term_list = \* torj & addr & fmt = txt
+on, both, medi, accounts, tools/getAccounts, name_show_addr_no_match,          n, term_list = no_torj & addr & fmt = txt
+on, both, medi, accounts, tools/getAccounts, name_source_no_match,             n, term_list = no_Ether & verbose & fmt = txt
+on, both, medi, accounts, tools/getAccounts, name_verbose_no_match,            n, term_list = no_torj & verbose & fmt = txt
+on, both, medi, accounts, tools/getAccounts, simple_w_space,                   n, term_list = etwork & fmt = txt
+on, both, medi, accounts, tools/getAccounts, three_params,                     n, term_list = 88897 torj scan & fmt = txt
+on, both, medi, accounts, tools/getAccounts, too_many_terms,                   n, term_list = 88897 torj scan etwork & verbose & fmt = txt
+on, both, medi, accounts, tools/getAccounts, w_source,                         n, term_list = etwork & verbose & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_show_addr_match,             y, term_list = 0xb6 & addr
+on, cmd,  fast, accounts, tools/getAccounts, show_version,                     n, version
+
+on, both, medi, accounts, tools/getAccounts, fmt_default,                      y, term_list = tip & expand
+on, both, medi, accounts, tools/getAccounts, fmt_txt,                          n, named & custom & owned & fmt = txt
+on, both, medi, accounts, tools/getAccounts, fmt_csv,                          n, named & custom & owned & fmt = csv
+on, both, medi, accounts, tools/getAccounts, fmt_api,                          y, named & custom & owned & fmt = api
+on, both, medi, accounts, tools/getAccounts, fmt_json,                         y, named & custom & owned & fmt = json
+on, both, fast, accounts, tools/getAccounts, fmt_junk,                         y, term_list = tip & expand & fmt = junk
+
+on, cmd,  slow, accounts, tools/getAccounts, fromFile,                         n, file:names.txt
+
+on, cmd,  fast, accounts, tools/getAccounts, prefund_output,                   n, output = test_file & prefund

@@ -1,10 +1,4 @@
-getReceipt argc: 3 [1:0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3] [2:-v] 
-getReceipt 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 -v 
-TIME ~ CLOCK - : 4-----API_MODE=true
-{ "type": "CTransaction", "data": [
-  {
-    "contractAddress": "0x0",
-    "gasUsed": 21000,
-    "logs": [],
-    "status": null
-  }], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
+getReceipt argc: 3 [1:0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3] [2:--verbose] 
+getReceipt 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 --verbose 
+blocknumber	transactionindex	hash	gasused	status	iserror
+3657480	3	0xc62d9410b73b18d767fe32df91e6336c5d563eceee49c55c56df65bfeb4b966d	21000	null	0

@@ -1,5 +1,5 @@
-getAccounts argc: 3 [1:-v] [2:-o] 
-getAccounts -v -o 
+getAccounts argc: 5 [1:--verbose] [2:--owned] [3:--fmt] [4:txt] 
+getAccounts --verbose --owned --fmt txt 
 group	subgroup	address	name	symbol	source
 0x0000000000000000000000000000000000000001
 0x0000000000000000000000000000000000000002

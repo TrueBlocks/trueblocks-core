@@ -1,5 +1,5 @@
-getAccounts argc: 1 
-getAccounts 
+getAccounts argc: 3 [1:--fmt] [2:txt] 
+getAccounts --fmt txt 
 group	subgroup	address	name	symbol
 50-Tokens		0x0000000000085d4780b73119b644ae5ecd22b376	TrueUSD	TUSD
 50-Tokens		0x001f0aa5da15585e5b2305dbab2bac425ea71007	IPSX	IPSX

@@ -1,5 +1,5 @@
-getReceipt argc: 5 [1:-v] [2:0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3] [3:--fmt] [4:json] 
-getReceipt -v 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 --fmt json 
+getReceipt argc: 5 [1:0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3] [2:--fmt] [3:json] [4:--verbose] 
+getReceipt 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 --fmt json --verbose 
 { "data": [
   {
     "contractAddress": "0x0",

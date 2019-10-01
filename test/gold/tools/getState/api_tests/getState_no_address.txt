@@ -1,5 +1,5 @@
 {
   "errors": [
-    "chifra - Input (--12) does not include a valid Ethereum address. Quitting..."
+    "chifra - Input (12) does not include a valid Ethereum address. Quitting..."
   ]
 }

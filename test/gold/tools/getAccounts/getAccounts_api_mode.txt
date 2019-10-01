@@ -1,6 +1,5 @@
-getAccounts argc: 2 [1:tip] 
-getAccounts tip 
-TIME ~ CLOCK - : 4-----API_MODE=true
+getAccounts argc: 4 [1:tip] [2:--fmt] [3:api] 
+getAccounts tip --fmt api 
 { "type": "CAccountName", "data": [
   {
     "group": "30-Contracts",

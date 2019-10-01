@@ -1,5 +1,5 @@
-getAccounts argc: 6 [1:--named] [2:-c] [3:--owned] [4:-p] [5:-a] 
-getAccounts --named -c --owned -p -a 
+getAccounts argc: 6 [1:--named] [2:--custom] [3:--owned] [4:--prefund] [5:--addr] 
+getAccounts --named --custom --owned --prefund --addr 
 0x0000000000000000000000000000000000000001
 0x0000000000000000000000000000000000000002
 0x0000000000000000000000000000000000000003

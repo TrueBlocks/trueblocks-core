@@ -1,5 +1,0 @@
-{
-  "errors": [
-    "whereBlock - Not enough arguments presented."
-  ]
-}

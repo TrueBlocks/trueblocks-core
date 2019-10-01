@@ -1,7 +1,7 @@
-getTrace argc: 2 [1:-p] 
-getTrace -p 
+getTrace argc: 2 [1:--pink] 
+getTrace --pink 
 
-  Invalid option: -p
+  Invalid option: --pink
 
   Usage:    getTrace [-a|-c|-n|-v|-h] <tx_id> [tx_id...]  
   Purpose:  Retrieve a transaction's traces from the local cache or a running node.

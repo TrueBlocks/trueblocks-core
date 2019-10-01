@@ -1,5 +1,5 @@
-getState argc: 3 [1:--help] [2:-v] 
-getState --help -v 
+getState argc: 3 [1:--help] [2:--verbose] 
+getState --help --verbose 
 
   Usage:    getState [-m|-n|-c|-v|-h] <address> [address...] [block...]  
   Purpose:  Retrieve the balance (in wei) for one or more addresses at the given block(s).

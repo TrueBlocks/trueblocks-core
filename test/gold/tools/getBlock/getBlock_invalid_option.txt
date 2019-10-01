@@ -1,7 +1,7 @@
-getBlock argc: 3 [1:-y] [2:1001001] 
-getBlock -y 1001001 
+getBlock argc: 3 [1:1001001] [2:--junk] 
+getBlock 1001001 --junk 
 
-  Invalid option: -y
+  Invalid option: --junk
 
   Usage:    getBlock [-n|-c|-a|-u|-q|-m|-l|-v|-h] <block> [block...]  
   Purpose:  Returns block(s) from local cache or directly from a running node.

@@ -1,5 +1,5 @@
-whenBlock argc: 5 [1:stateclear] [2:iceage] [3:4001001] [4:-v] 
-whenBlock stateclear iceage 4001001 -v 
+whenBlock argc: 5 [1:stateclear] [2:iceage] [3:4001001] [4:--verbose] 
+whenBlock stateclear iceage 4001001 --verbose 
 blocknumber	timestamp	date	name
 200000	1441661589	2015-09-07 21:33:09 UTC	iceage
 2717576	1480448309	2016-11-29 19:38:29 UTC	stateclear

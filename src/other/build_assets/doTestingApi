@@ -2,20 +2,21 @@ cd ..
 export QUICKBLOCKS=`pwd`
 
 cd $QUICKBLOCKS/build/
-cmake ../src
-make
+#cmake ../src
+#make
 
 cd ../test/gold/dev_tools/apiTester
-apiTester
+apiTester $@ | tee $QUICKBLOCKS/build/results.txt
+cat $QUICKBLOCKS/build/results.txt | grep -v Skipping >x
+mv -f x $QUICKBLOCKS/build/results.txt
 
-cd $QUICKBLOCKS/test/
-echo "Removing compare folder..."
-rm -fR compare/
-
-echo "Copying working to compare..."
-cp -pR working compare
-find compare -name "*gitignore*" -exec rm '{}' ';'
-rm -fR gold/apps/acctScrape/99_1234...7890
+#cd $QUICKBLOCKS/test/
+#echo "Removing compare folder..."
+#rm -fR compare/
+#
+#echo "Copying working to compare..."
+#cp -pR working compare
+#find compare -name "*gitignore*" -exec rm '{}' ';'
+#rm -fR gold/apps/acctScrape/99_1234...7890
 cd $QUICKBLOCKS/build/
-
-echo "Done..."
+#echo "Done..."

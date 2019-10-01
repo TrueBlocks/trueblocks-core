@@ -1,8 +1,8 @@
-ethslurp argc: 4 [1:0x1324e7b922b30B49Ab8EA81086341cc41C249346] [2:-t] [3:junk] 
-ethslurp 0x1324e7b922b30B49Ab8EA81086341cc41C249346 -t junk 
-Processing: 0x1324e7b922b30B49Ab8EA81086341cc41C249346 -t:junk
+ethslurp argc: 3 [1:0x1324e7b922b30B49Ab8EA81086341cc41C249346] [2:--type] 
+ethslurp 0x1324e7b922b30B49Ab8EA81086341cc41C249346 --type 
+Processing: 0x1324e7b922b30B49Ab8EA81086341cc41C249346 --type
 
-  Type must be either 'int', 'ext', 'token', 'miner' or 'all'. Quitting...
+  Invalid option: --type
 
   Usage:    ethslurp [-t|-b|-s|-x|-v|-h] <address> [address...] [block...]  
   Purpose:  Fetches data from EtherScan for an arbitrary address. Formats the output to your specification.

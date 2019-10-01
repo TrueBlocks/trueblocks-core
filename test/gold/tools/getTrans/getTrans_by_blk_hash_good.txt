@@ -1,7 +1,6 @@
-getTrans argc: 2 [1:0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55] 
-getTrans 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55 
-TIME ~ CLOCK - : 4-----API_MODE=true
-{ "type": "CTransaction", "data": [
+getTrans argc: 4 [1:0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55] [2:--fmt] [3:json] 
+getTrans 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55 --fmt json 
+{ "data": [
   {
     "hash": "0xe49b9d48866035a82b622e4900791210cbf36905194a7ae3dc38feedf8ca3762",
     "blockHash": "0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f",
@@ -31,10 +30,5 @@ TIME ~ CLOCK - : 4-----API_MODE=true
       ],
       "status": null
     },
-    "gasUsed": 44493,
-    "date": "2017-07-10 01:53:12 UTC",
-    "datesh": "2017-07-10",
-    "time": "1:53:12 UTC",
-    "age": "100",
-    "ether": 0.080000000000000000
-  }], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
+    "gasUsed": 44493
+  }] }

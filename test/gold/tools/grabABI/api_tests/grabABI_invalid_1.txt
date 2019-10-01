@@ -1,5 +1,0 @@
-{
-  "errors": [
-    "chifra - Input (0x00001) does not include a valid Ethereum address. Quitting..."
-  ]
-}

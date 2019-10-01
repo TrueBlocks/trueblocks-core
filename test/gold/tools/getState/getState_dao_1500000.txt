@@ -1,5 +1,5 @@
-getState argc: 4 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:1500000] [3:--no_history] 
-getState 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 1500000 --no_history 
+getState argc: 6 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:1500000] [3:--fmt] [4:txt] [5:--no_history] 
+getState 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 1500000 --fmt txt --no_history 
 
   Request asks for historical state, but the RPC server does not have historical state. Quitting...
 

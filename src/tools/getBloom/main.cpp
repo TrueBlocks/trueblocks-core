@@ -99,7 +99,7 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
             if (opt.asBits)
                 rawBlock.logsBloom = bloom_2_Bits(str_2_BigUint(rawBlock.logsBloom));
             for (size_t i = 0 ; i < rawBlock.transactions.size() ; i++) {
-                bloom_t bloom = str_2_BigUint(rawBlock.transactions[i].receipt.logsBloom);  // .at cannot go past end of vector!
+                bloom_t bloom = str_2_BigUint(rawBlock.transactions.at(i).receipt.logsBloom);  // .at cannot go past end of vector!
                 if (verbose || bloom != 0) {
                     if (opt.asBits)
                         rawBlock.transactions.at(i).receipt.logsBloom = bloom_2_Bits(bloom);

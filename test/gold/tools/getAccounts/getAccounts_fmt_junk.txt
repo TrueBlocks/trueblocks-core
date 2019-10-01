@@ -1,5 +1,5 @@
-getAccounts argc: 5 [1:tip] [2:--fmt] [3:junk] [4:--expand] 
-getAccounts tip --fmt junk --expand 
+getAccounts argc: 5 [1:tip] [2:--expand] [3:--fmt] [4:junk] 
+getAccounts tip --expand --fmt junk 
 
   Export format (junk) must be one of [ json | txt | csv | api ]. Quitting...
 

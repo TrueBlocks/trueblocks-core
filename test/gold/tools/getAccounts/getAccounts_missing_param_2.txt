@@ -1,5 +1,5 @@
-getAccounts argc: 2 [1:-a] 
-getAccounts -a 
+getAccounts argc: 2 [1:--addr] 
+getAccounts --addr 
 0x0000000000085d4780b73119b644ae5ecd22b376
 0x001f0aa5da15585e5b2305dbab2bac425ea71007
 0x006bea43baa3f7a6f765f14f10a1a1b08334ef45

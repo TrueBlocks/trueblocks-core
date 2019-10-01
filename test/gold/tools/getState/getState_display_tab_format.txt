@@ -1,7 +1,7 @@
-getState argc: 5 [1:0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359] [2:4000000] [3:-d] [4:--json] 
-getState 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 4000000 -d --json 
+getState argc: 5 [1:0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359] [2:4000000] [3:--data] [4:--json] 
+getState 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 4000000 --data --json 
 
-  Invalid option: -d
+  Invalid option: --data
 
   Usage:    getState [-m|-n|-c|-v|-h] <address> [address...] [block...]  
   Purpose:  Retrieve the balance (in wei) for one or more addresses at the given block(s).

@@ -1,5 +1,5 @@
-grabABI argc: 4 [1:0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359] [2:--known] [3:-e] 
-grabABI 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 --known -e 
+grabABI argc: 4 [1:0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359] [2:--known] [3:--encode] 
+grabABI 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 --known --encode 
 ABI for address 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359
 	function changeMembership           (address targetMember,uint256 voteWeight,bool canAddProposals,string memberName) [0x824dbc9a]
 	function changeUnicorn              (uint256 newUnicornPriceInFinney,address newUnicornAddress) [0x522103fa]

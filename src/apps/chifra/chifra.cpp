@@ -39,9 +39,12 @@ int main(int argc, const char *argv[]) {
             cmdMap["where"] = "whereBlock";
             cmdMap["when"] = "whenBlock";
             cmdMap["tokens"] = "getTokenInfo";
+            cmdMap["blooms"] = "getBloom";
             if (cmdMap[options.mode] != "") {
                 ostringstream os;
                 os << cmdMap[options.mode] << " " << options.tool_flags;
+                for (auto addr : options.addrs)
+                    os << " " << addr;
                 system(os.str().c_str());
             } else {
                 cerr << "Should not happen.";

@@ -1,5 +1,5 @@
-getBloom argc: 4 [1:--parity] [2:358450-0x5785a] [3:--bitcount] 
-getBloom --parity 358450-0x5785a --bitcount 
+getBloom argc: 4 [1:358450-0x5785a] [2:--bitcount] [3:--parity] 
+getBloom 358450-0x5785a --bitcount --parity 
 [
 {
   "bitCount": "0x0",
