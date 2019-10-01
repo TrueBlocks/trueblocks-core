@@ -1,7 +1,5 @@
+{ "type": "CConfiguration", "data": [
 {
-  "type": "CConfiguration",
-  "data": [
-    {
   "files": [
     {
       "name": "quickBlocks.toml",

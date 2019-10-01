@@ -7,7 +7,7 @@ cacheStatus -l --junk
   Purpose:  Report on status of one or more TrueBlocks caches.
 
   Where:  
-	mode_list             one or more of [index|monitors|names|abis|blocks|txs|traces|slurps|prices|some*|all]
+	mode_list             one or more of [index|monitors|names|abis|blocks|transactions|traces|slurps|prices|some*|all]
 	-d  (--details)       include details about items found in monitors, slurps, abis, or price caches
 	-l  (--list)          display results in Linux ls -l format (assumes --detail)
 

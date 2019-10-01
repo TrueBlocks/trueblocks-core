@@ -165,8 +165,12 @@ inline string_q getSettingsStr(void) {
     string_q ret = asciiFileToString(path);
     if (fileExists(path))
         ::remove(path.c_str());
-    if (isTestMode())
-        ret = asciiFileToString("tests/setConfig_data.json");
+    if (isTestMode()) {
+extern const char* STR_TEST_DATA;
+        cerr.rdbuf( cout.rdbuf() );
+        colorsOff();
+        ret = STR_TEST_DATA;
+    }
     replace(ret, "[", "");
     replaceReverse(ret, "]", "");
     return ret;
@@ -265,3 +269,5 @@ string_q convertDisplayStr(const string_q& in) {
 
 const char* STR_DISPLAY_WHEN = "[{BLOCKNUMBER}]\t[{TIMESTAMP}]\t[{DATE}]\t[{NAME}]";
 const char* STR_DISPLAY_WHERE = "[{BLOCKNUMBER}]\t[{PATH}]\t[{CACHED}]";
+const char* STR_TEST_DATA =
+"[{\"name\": \"quickBlocks.toml\",\"groups\": [{\"section\": \"Providers\",\"name\": \"settings\",\"keys\": [{\"name\": \"rpcProvider\",\"value\": \"--new rpc Provider--\",\"type\": \"url\"},{\"name\": \"apiProvider\",\"value\": \"--new api Provider--\",\"type\": \"url\"},{\"name\": \"balanceProvider\",\"value\": \"--new balance Prov--\",\"type\": \"url\"}]},{\"section\": \"Paths\",\"name\": \"settings\",\"keys\": [{\"name\": \"configPath\",\"value\": \"--new config Path--\",\"type\": \"path\"},{\"name\": \"cachePath\",\"value\": \"--new cache Path--\",\"type\": \"path\"},{\"name\": \"indexPath\",\"value\": \"--new index Path--\",\"type\": \"path\"}]}]},{\"section\": \"Display Strings\",\"name\": \"display_strs\",\"keys\": [{\"name\": \"accountName\",\"value\": \"--account name--\",\"type\": \"display_str\"},{\"name\": \"balancerecord\",\"value\": \"--balance record--\",\"type\": \"display_str\"},{\"name\": \"block\",\"value\": \"--block--\",\"type\": \"display_str\"},{\"name\": \"ethstate\",\"value\": \"--eth state--\",\"type\": \"display_str\"},{\"name\": \"function\",\"value\": \"--function--\",\"type\": \"display_str\"},{\"name\": \"logentry\",\"value\": \"--logentry--\",\"type\": \"display_str\"},{\"name\": \"pricequote\",\"value\": \"--pricequote--\",\"type\": \"display_str\"},{\"name\": \"receipt\",\"value\": \"--receipt--\",\"type\": \"display_str\"},{\"name\": \"trace\",\"value\": \"--trace--\",\"type\": \"display_str\"},{\"name\": \"transaction\",\"value\": \"--transaction--\",\"type\": \"display_str\"},{\"name\": \"whenblock\",\"value\": \"--when block--\",\"type\": \"display_str\"},{\"name\": \"whereblock\",\"value\": \"--where block--\",\"type\": \"display_str\"}]},{\"name\": \"blockScrape.toml\",\"groups\": [{\"section\": \"Scraper\",\"name\": \"settings\",\"keys\": [{\"name\": \"nBlocks\",\"value\": \"--new n Blocks--\",\"type\": \"number\"},{\"name\": \"nAddrProcs\",\"value\": \"--new n Addr Procs--\",\"type\": \"number\"},{\"name\": \"nBlockProcs\",\"value\": \"--new n Block Procs--\",\"type\": \"number\"}]}]},{\"name\": \"acctExport.toml\",\"groups\": [{\"section\": \"Exporter\",\"name\": \"settings\",\"keys\": [{\"name\": \"writeTxs\",\"value\": \"true\",\"type\": \"bool\"},{\"name\": \"writeTraces\",\"value\": \"\",\"type\": \"bool\"}]}]},{\"name\": \"getAccounts.toml\",\"groups\": [{\"section\": \"Names\",\"name\": \"custom\",\"keys\": [{\"name\": \"list\",\"type\": \"json array\",\"named\": [{\"address\": \"0x0000100001000010000100001000010000100001\",\"group\": \"81-Custom\",\"name\": \"TestWallet1\"},{\"address\": \"0x0000200002000020000200002000020000200002\",\"group\": \"81-Custom\",\"name\": \"TestWallet2\"}]}]}]},{\"name\": \"ethslurp.toml\",\"groups\": [{\"section\": \"APIs\",\"name\": \"settings\",\"keys\": [{\"name\": \"etherscan\",\"value\": \"--new api_key--\",\"type\": \"string\"}]}]}]";

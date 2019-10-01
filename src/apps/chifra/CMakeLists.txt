@@ -72,8 +72,8 @@ run_test("chifra_config_set"           "config" " --set")
 
 #run_test("chifra_scrape"           "scrape")
 
-run_test("chifra_status"             "status" "--mode" " all")
-run_test("chifra_status_details"     "status" "--mode" " all" " --details")
+run_test("chifra_status"             "status" " all")
+run_test("chifra_status_details"     "status" " all" " --details")
 #run_test("chifra_seed"              "seed" " --verbose")
 #run_test("chifra_freshen"           "freshen" " 0x1234567812345678123456781234567812345678")
 #run_test("chifra_slurp"            "slurp" " 0x1234567812345678123456781234567812345678")

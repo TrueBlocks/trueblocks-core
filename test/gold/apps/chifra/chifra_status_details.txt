@@ -1,3 +1,95 @@
-chifra argc: 5 [1:status] [2:--mode] [3:all] [4:--details] 
-chifra status --mode all --details 
-cacheStatus --mode all --details
+chifra argc: 4 [1:status] [2:all] [3:--details] 
+chifra status all --details 
+TIME ~ CLOCK - <INFO>  : chifra calling: cacheStatus all --details
+cacheStatus argc: 3 [1:all] [2:--details] 
+cacheStatus all --details 
+{
+  "client_version": "Parity version",
+  "trueblocks_version": "GHC-TrueBlocks//0.5.8-alpha--git-hash---git-ts-",
+  "rpc_provider": "--providers--",
+  "api_provider": "--providers--",
+  "balance_provider": "--providers--",
+  "host": "--hostname-- (--username--)",
+  "is_scraping": false,
+  "caches": [
+    {
+      "items": [],
+      "type": "CIndexCache",
+      "path": "IndexPath",
+      "nFiles": 0,
+      "nFolders": 0,
+      "sizeInBytes": 0,
+      "valid_counts": false
+    },
+    {
+      "addrs": [],
+      "items": [],
+      "type": "CMonitorCache",
+      "path": "CachePath",
+      "nFiles": 0,
+      "nFolders": 0,
+      "sizeInBytes": 0,
+      "valid_counts": false
+    },
+    {
+      "type": "CNameCache",
+      "path": "CachePath",
+      "nFiles": 0,
+      "nFolders": 0,
+      "sizeInBytes": 0,
+      "valid_counts": false
+    },
+    {
+      "items": [],
+      "type": "CAbiCache",
+      "path": "CachePath",
+      "nFiles": 0,
+      "nFolders": 0,
+      "sizeInBytes": 0,
+      "valid_counts": false
+    },
+    {
+      "type": "CChainCache",
+      "path": "BlockPath",
+      "nFiles": 0,
+      "nFolders": 0,
+      "sizeInBytes": 0,
+      "valid_counts": false
+    },
+    {
+      "type": "CChainCache",
+      "path": "TxPath",
+      "nFiles": 0,
+      "nFolders": 0,
+      "sizeInBytes": 0,
+      "valid_counts": false
+    },
+    {
+      "type": "CChainCache",
+      "path": "TracePath",
+      "nFiles": 0,
+      "nFolders": 0,
+      "sizeInBytes": 0,
+      "valid_counts": false
+    },
+    {
+      "addrs": [],
+      "items": [],
+      "type": "CSlurpCache",
+      "path": "SlurpPath",
+      "nFiles": 0,
+      "nFolders": 0,
+      "sizeInBytes": 0,
+      "valid_counts": false
+    },
+    {
+      "items": [],
+      "type": "CPriceCache",
+      "path": "PricePath",
+      "nFiles": 0,
+      "nFolders": 0,
+      "sizeInBytes": 0,
+      "valid_counts": false
+    }
+  ]
+}

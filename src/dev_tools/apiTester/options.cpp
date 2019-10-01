@@ -85,6 +85,7 @@ bool COptions::parseArguments(string_q& command) {
         tests.push_back("tools/whenBlock");
         tests.push_back("tools/whereBlock");
         tests.push_back("dev_tools/makeClass");
+        tests.push_back("apps/cacheStatus");
     }
 
     return true;

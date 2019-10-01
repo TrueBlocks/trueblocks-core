@@ -12,15 +12,15 @@ on, both, fast, status, apps/cacheStatus, mode_monitors,   y, mode_list = monito
 on, both, fast, status, apps/cacheStatus, mode_names,      y, mode_list = names
 on, both, fast, status, apps/cacheStatus, mode_abis,       y, mode_list = abis
 on, both, fast, status, apps/cacheStatus, mode_blocks,     y, mode_list = blocks
-on, both, fast, status, apps/cacheStatus, mode_txs,        y, mode_list = txs
+on, both, fast, status, apps/cacheStatus, mode_txs,        y, mode_list = transactions
 on, both, fast, status, apps/cacheStatus, mode_traces,     y, mode_list = traces
 on, both, fast, status, apps/cacheStatus, mode_slurps,     y, mode_list = slurps
 on, both, fast, status, apps/cacheStatus, mode_prices,     y, mode_list = prices
 on, both, fast, status, apps/cacheStatus, mode_some,       y, mode_list = some
 on, both, fast, status, apps/cacheStatus, mode_all,        y, mode_list = all
 on, both, fast, status, apps/cacheStatus, config_bad,      y, mode_list = config
-on, both, fast, status, apps/cacheStatus, config_get,      y, config-get
-on, both, fast, status, apps/cacheStatus, config_set,      y, config-set
+on, both, fast, status, apps/cacheStatus, config_get,      n, config-get
+on, both, fast, status, apps/cacheStatus, config_set,      n, config-set
 on, both, fast, status, apps/cacheStatus, items_monitors,  y, mode_list = monitors & details
 on, both, fast, status, apps/cacheStatus, items_abis,      y, mode_list = abis & details
 on, both, fast, status, apps/cacheStatus, items_slurps,    y, mode_list = slurps & details

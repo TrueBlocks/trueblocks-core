@@ -93,7 +93,7 @@ bool COptions::handle_status(ostream& os) {
     }
 
     CChainCache cd_txs;
-    if (contains(mode, "|txs|")) {
+    if (contains(mode, "|transactions|")) {
         cd_txs.type = cd_txs.getRuntimeClass()->m_ClassName;
         cd_txs.path = (isTestMode() ? "TxPath" : getCachePath("txs/"));
         forEveryFileInFolder(getCachePath("txs/"), countFiles, &cd_txs);

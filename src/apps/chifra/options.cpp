@@ -59,7 +59,9 @@ bool COptions::parseArguments(string_q& command) {
             string descr = substitute(substitute(params[0].description, "[", "|"), "]", "|");
             if (isTestMode())
                 descr += "where|when|tokens|blooms|";
-            if (contains(descr, "|" + arg + "|")) {
+
+            bool isStatus = (mode == "status" && (arg == "blocks" || arg == "transactions" || arg == "traces"));
+            if (!isStatus && contains(descr, "|" + arg + "|")) {
                 if (!mode.empty())
                     EXIT_USAGE("Please specify " + params[0].description + ". " + mode + ":" + arg);
                 mode = arg;
