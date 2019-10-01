@@ -11,7 +11,7 @@ cmake ../src
 cd $QUICKBLOCKS/build/$1
 make
 make test | tee test_results
-doTestingApi --filter fast --which both
+doTestingApi --filter fast --which cmd
 cat test_results | cut -c6-1000 | grep "^-" | cut -c2-1000 | sed 's/ (Failed)//' | sed 's/^/diffTest/' >x
 mv -f x test_results
 chmod uog+x test_results

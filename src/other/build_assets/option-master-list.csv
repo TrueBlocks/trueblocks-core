@@ -67,6 +67,7 @@ num,group,api_route,tool,order,command,command_short,data_type,option_kind,defau
 16030,tools,state,getState,,nozero,n,boolean,switch,,suppress the display of zero balance accounts,,FALSE,TRUE,TRUE
 16040,tools,state,getState,,changes,c,boolean,switch,,only report a balance when it changes from one block to the next,,FALSE,TRUE,TRUE
 16050,tools,state,getState,,no_header,o,boolean,switch,,hide the header in txt and csv mode,,FALSE,FALSE,FALSE
+16055,tools,state,getState,,no_history,,boolean,switch,,"for testing only, hide the server's historical state",,FALSE,FALSE,FALSE
 16060,tools,state,getState,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format (one of [none|json*|txt|csv|api]),,FALSE,FALSE,FALSE
 16070,tools,state,getState,,,,,description,,Retrieve the balance (in wei) for one or more addresses at the given block(s).,,FALSE,TRUE,TRUE
 17000,tools,blocks,getBlock,,block_list,,list<block>,positional,,a space-separated list of one or more blocks to retrieve,,TRUE,TRUE,TRUE
@@ -106,7 +107,6 @@ num,group,api_route,tool,order,command,command_short,data_type,option_kind,defau
 21040,tools,traces,getTrace,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format (one of [none|json*|txt|csv|api]),,FALSE,FALSE,FALSE
 21050,tools,traces,getTrace,,ddos,d,enum[on*|off],flag,,skip over dDos transactions in export ('on' by default),,FALSE,FALSE,FALSE
 21060,tools,traces,getTrace,,,,,description,,Retrieve a transaction's traces from the local cache or a running node.,,FALSE,TRUE,TRUE
-22000,tools,quotes,ethQuote,,data,d,boolean,switch,,Export prices as JSON data,,FALSE,TRUE,TRUE
 22010,tools,quotes,ethQuote,,freshen,f,boolean,switch,,Freshen database (append new data),,FALSE,TRUE,TRUE
 22020,tools,quotes,ethQuote,,period,p,enum[5|15|30|120*|240|1440],flag,,Display prices in this increment. One of [5|15|30|120*|240|1440],,FALSE,TRUE,TRUE
 22030,tools,quotes,ethQuote,,pair,p,<pair>,flag,,Which price pair to freshen or list (see Poloniex),,FALSE,TRUE,TRUE

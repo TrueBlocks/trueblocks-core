@@ -81,7 +81,7 @@ bool COptions::doTest(const string_q& testName, bool cmdTests) {
         }
 
         if (ignore2 || ignore4) {
-            if (testMode == "cmd")
+            if (!ignore4 && testMode == "cmd")
                 cerr << iBlue << "   # " << line << cOff << endl;
             cerr.flush();
 
