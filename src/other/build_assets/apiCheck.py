@@ -6,7 +6,7 @@
 # Last parameter is the gold file we need to compare with
 # (Both files can be relative or absolute paths)
 #
-# Example: testCheck.py ethName 0x1 test/tools/tests/test1.txt test-gold/tools/tests/test1.txt
+# Example: apiCheck.py ethName 0x1 test/tools/tests/test1.txt test-gold/tools/tests/test1.txt
 #
 # The parameters are (N: total number):
 # argv[0] the name of the python script

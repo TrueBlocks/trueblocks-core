@@ -18,7 +18,7 @@ This folder contains various tools and python scripts that provide simple, helpf
 `Purpose:`  We use this source code linter to insure consistent code style. If you add code to the repository, please use this tool before submitting your changes.
 
 ---
-`Notes:` Three scripts found in this folder (`clearCache.py`, `replaceTag.py`, and `testCheck.py`) support the build process and should not be modified.
+`Notes:` Three scripts found in this folder (`clearCache.py`, `replaceTag.py`, and `checkTest.py`) support the build process and should not be modified.
 
 
 ####Contents of CMakeLists.txt file:
@@ -34,7 +34,7 @@ file (COPY ${CMAKE_CURRENT_SOURCE_DIR}/ethgoog.py     DESTINATION ${SCRIPTS_DEST
 file (COPY ${CMAKE_CURRENT_SOURCE_DIR}/ethscan.py     DESTINATION ${SCRIPTS_DEST_PATH} FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE)
 
 # various build suport scripts
-file (COPY ${CMAKE_CURRENT_SOURCE_DIR}/testCheck.py   DESTINATION ${SCRIPTS_DEST_PATH} FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE)
+file (COPY ${CMAKE_CURRENT_SOURCE_DIR}/checkTest.py   DESTINATION ${SCRIPTS_DEST_PATH} FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE)
 file (COPY ${CMAKE_CURRENT_SOURCE_DIR}/replaceTag.py  DESTINATION ${SCRIPTS_DEST_PATH} FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE)
 file (COPY ${CMAKE_CURRENT_SOURCE_DIR}/clearCache.py  DESTINATION ${SCRIPTS_DEST_PATH} FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE)
 
@@ -58,7 +58,7 @@ file (COPY ${CMAKE_CURRENT_SOURCE_DIR}/cpTest         DESTINATION ${BUILD_DEST_P
 # Installation steps
 install(PROGRAMS ethgoog.py    DESTINATION bin)
 install(PROGRAMS ethscan.py    DESTINATION bin)
-install(PROGRAMS testCheck.py  DESTINATION bin)
+install(PROGRAMS checkTest.py  DESTINATION bin)
 install(PROGRAMS replaceTag.py DESTINATION bin)
 install(PROGRAMS clearCache.py DESTINATION bin)
 ```

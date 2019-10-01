@@ -75,7 +75,7 @@ enable_testing()
 
 set (TEST_PATH   "${CMAKE_SOURCE_DIR}/../test/working")
 set (GOLD_PATH   "${CMAKE_SOURCE_DIR}/../test/gold")
-set (TEST_CHECK  "${SCRIPTS_DEST_PATH}/testCheck.py")
+set (TEST_CHECK  "${SCRIPTS_DEST_PATH}/checkTest.py")
 set (TAG_REPLACE "${SCRIPTS_DEST_PATH}/replaceTag.py")
 
 # ----------------------------------------------------------------------------------------

@@ -179,7 +179,7 @@ bool COptions::doTest(const string_q& testName, bool cmdTests) {
                 filename = substitute(padLeft(filename, 30).substr(0,30), " ", ".");
                 reverse(filename);
                 cerr << "   " << timeRep << " - " << testName << " ";
-                cerr << trim(filename) << " " << trim(options).substr(0,90) << " " << result << endl;
+                cerr << trim(filename) << "  " << trim(options).substr(0,90) << " " << result << endl;
             }
 
             if (quit_on_error && (result == redX))
