@@ -1,6 +1,6 @@
+TIME ~ CLOCK - : 4-----API_MODE=true
 cacheStatus argc: 4 [1:index] [2:--start] [3:100] 
 cacheStatus index --start 100 
-TIME ~ CLOCK - : 4-----API_MODE=true
 { "type": "CStatus", "data": [
 {
   "client_version": "Parity version",

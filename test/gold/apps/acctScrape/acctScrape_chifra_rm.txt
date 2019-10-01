@@ -1,4 +1,4 @@
+TIME ~ CLOCK - : 4-----API_MODE=true
 chifra argc: 4 [1:rm] [2:--yes] [3:0x001d14804b399c6ef80e64576f657660804fec0b] 
 chifra rm --yes 0x001d14804b399c6ef80e64576f657660804fec0b 
-TIME ~ CLOCK - : 4-----API_MODE=true
 TIME ~ CLOCK - <INFO>  : cd $BLOCK_CACHE/monitors/ ; rm -f 0x001d14804b399c6ef80e64576f657660804fec0b.* ; 
