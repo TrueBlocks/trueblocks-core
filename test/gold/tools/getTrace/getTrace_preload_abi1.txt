@@ -1,6 +1,5 @@
 grabABI argc: 4 [1:0x1234567812345678123456781234567812345678] [2:0x6090a6e47849629b7245dfa1ca21d94cd15878ef] [3:0xebf2bf80c3ddb0b6ac2f88be8dceec7bf12dff22] 
 grabABI 0x1234567812345678123456781234567812345678 0x6090a6e47849629b7245dfa1ca21d94cd15878ef 0xebf2bf80c3ddb0b6ac2f88be8dceec7bf12dff22 
-Local file copied to cache
 ABI for address 0x1234567812345678123456781234567812345678
 	function ETH                        (uint256 _id)
 	function EUR                        (uint256 _id)

@@ -23,7 +23,7 @@ bool COptions::handle_list(void) {
         os << "acctExport --appearances " << tool_flags << " " << addr << " ; ";
         LOG4("Calling " + os.str());
         if (isTestMode())
-            cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
+            cout << "TESTMODE: " << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
         else
             if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
     }

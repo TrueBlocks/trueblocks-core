@@ -55,7 +55,7 @@ bool COptions::handle_leech(void) {
             // get the zip file from the IPFS cache
             os << ipfs_cmd.str() << " \"" << zipFile << "\" ; ";
             if (isTestMode()) {
-                cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
+                cout << "TESTMODE: " << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
             } else {
                 if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
                 usleep(500000); // so Ctrl+C works
@@ -77,8 +77,8 @@ bool COptions::handle_leech(void) {
             os << "gunzip \"" << filename << "\" ; cd - >/dev/null";
 
             if (isTestMode()) {
-                cerr << "Leeching " << cTeal << substitute(textFile, getCachePath(""), "$BLOCK_CACHE/") << cOff << endl;
-                cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
+                cerr << "TESTMODE: " << "Leeching " << cTeal << substitute(textFile, getCachePath(""), "$BLOCK_CACHE/") << cOff << endl;
+                cout << "TESTMODE: " << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
             } else {
                 cerr << "Leeching " << cTeal << textFile << cOff << endl;
                 if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings

@@ -1,7 +1,5 @@
-cacheStatus argc: 4 [1:index] [2:--start] [3:100000000] 
-cacheStatus index --start 100000000 
-
-  Start block (100000000) is greater than the latest block. Quitting...
+cacheStatus argc: 2 [1:-h] 
+cacheStatus -h 
 
   Usage:    cacheStatus [-d|-l|-v|-h] mode_list  
   Purpose:  Report on status of one or more TrueBlocks caches.

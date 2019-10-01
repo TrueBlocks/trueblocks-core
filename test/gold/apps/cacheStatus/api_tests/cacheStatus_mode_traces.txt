@@ -1,5 +1,5 @@
-cacheStatus argc: 4 [1:index] [2:--start] [3:100] 
-cacheStatus index --start 100 
+cacheStatus argc: 2 [1:traces] 
+cacheStatus traces 
 {
   "client_version": "Parity version",
   "trueblocks_version": "GHC-TrueBlocks//0.5.8-alpha--git-hash---git-ts-",
@@ -10,9 +10,8 @@ cacheStatus index --start 100
   "is_scraping": false,
   "caches": [
     {
-      "items": [],
-      "type": "CIndexCache",
-      "path": "IndexPath",
+      "type": "CChainCache",
+      "path": "TracePath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,

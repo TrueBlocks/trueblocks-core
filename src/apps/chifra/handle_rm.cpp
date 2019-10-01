@@ -39,7 +39,7 @@ bool COptions::handle_rm(void) {
                 os << "cd " << getMonitorPath("") << " ; ";
                 os << "rm -f " << addr << ".* ; ";
                 if (isTestMode())
-                    LOG_INFO(substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/"));
+                    LOG_INFO("TESTMODE: " + substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/"));
                 else
                     if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
 

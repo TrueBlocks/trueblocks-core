@@ -116,7 +116,7 @@ num,group,api_route,tool,order,command,command_short,data_type,option_kind,defau
 23010,apps,scrape,blockScrape,,nBlockProcs,b,<uint>,flag,,number of block channels for blaze,,FALSE,FALSE,FALSE
 23020,apps,scrape,blockScrape,,nAddrProcs,a,<uint>,flag,,number of address channels for blaze,,FALSE,FALSE,FALSE
 23030,apps,scrape,blockScrape,,,,,description,,Decentralized blockchain scraper and block cache.,,FALSE,TRUE,TRUE
-24000,apps,status,cacheStatus,,mode_list,,list<enum[index|monitors|names|abis|blocks|txs|traces|slurps|prices|some*|all]>,positional,,one or more of [index|monitors|names|abis|blocks|txs|traces|slurps|prices|some*|all],,FALSE,TRUE,TRUE
+24000,apps,status,cacheStatus,,mode_list,,list<enum[index|monitors|names|abis|blocks|transactions|traces|slurps|prices|some*|all]>,positional,,one or more of [index|monitors|names|abis|blocks|transactions|traces|slurps|prices|some*|all],,FALSE,TRUE,TRUE
 24010,apps,status,cacheStatus,,details,d,boolean,switch,,"include details about items found in monitors, slurps, abis, or price caches",,FALSE,TRUE,TRUE
 24020,apps,status,cacheStatus,,list,l,boolean,switch,,display results in Linux ls -l format (assumes --detail),,FALSE,TRUE,TRUE
 24030,apps,status,cacheStatus,,start,,<blknum>,flag,,starting block for data retreival,,FALSE,TRUE,TRUE

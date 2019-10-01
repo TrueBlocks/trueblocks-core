@@ -149,7 +149,7 @@ bool COptions::handle_scrape(void) {
                                 ostringstream os1;
                                 os1 << "acctExport " << addr << " --freshen"; // << " >/dev/null";
                                 if (isTestMode()) {
-                                    cout << substitute(os1.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
+                                    cout << "TESTMODE: " << substitute(os1.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
                                 } else {
                                     if (system(os1.str().c_str())) { }  // Don't remove. Silences compiler warnings
                                 }

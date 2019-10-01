@@ -1,0 +1,5 @@
+{
+  "errors": [
+    "chifra - Please specify one of [list|export|slurp|accounts|abi|state|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed]. status:config"
+  ]
+}

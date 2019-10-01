@@ -1,0 +1,69 @@
+{
+  "type": "CStatus",
+  "data": [
+    {
+      "client_version": "Parity version",
+      "trueblocks_version": "GHC-TrueBlocks//0.5.8-alpha--git-hash---git-ts-",
+      "rpc_provider": "--providers--",
+      "api_provider": "--providers--",
+      "balance_provider": "--providers--",
+      "host": "--hostname-- (--username--)",
+      "is_scraping": false,
+      "caches": [
+        {
+          "items": [],
+          "type": "CIndexCache",
+          "path": "IndexPath",
+          "nFiles": 0,
+          "nFolders": 0,
+          "sizeInBytes": 0,
+          "valid_counts": false
+        },
+        {
+          "addrs": [],
+          "items": [],
+          "type": "CMonitorCache",
+          "path": "CachePath",
+          "nFiles": 0,
+          "nFolders": 0,
+          "sizeInBytes": 0,
+          "valid_counts": false
+        },
+        {
+          "type": "CNameCache",
+          "path": "CachePath",
+          "nFiles": 0,
+          "nFolders": 0,
+          "sizeInBytes": 0,
+          "valid_counts": false
+        },
+        {
+          "addrs": [],
+          "items": [],
+          "type": "CSlurpCache",
+          "path": "SlurpPath",
+          "nFiles": 0,
+          "nFolders": 0,
+          "sizeInBytes": 0,
+          "valid_counts": false
+        },
+        {
+          "items": [],
+          "type": "CPriceCache",
+          "path": "PricePath",
+          "nFiles": 0,
+          "nFolders": 0,
+          "sizeInBytes": 0,
+          "valid_counts": false
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
+}

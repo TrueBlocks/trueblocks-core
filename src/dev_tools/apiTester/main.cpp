@@ -108,11 +108,11 @@ bool COptions::doTest(const string_q& testName, bool cmdTests) {
             string_q goldPath = "../../../gold/" + path + "/" + tool + (!cmdTests ? "/api_tests/" : "/");
             if (!folderExists(goldPath))
                 return usage("Folder " + goldPath + " not found. Quitting...");
-            string_q filePath = substitute(goldPath, "/gold/", "/working/");
-            if (!folderExists(filePath))
+            string_q workPath = substitute(goldPath, "/gold/", "/working/");
+            if (!folderExists(workPath))
                 return usage("Folder " + goldPath + " not found. Quitting...");
             string_q fileName = tool + "_" + filename + ".txt";
-            string_q removePath = filePath + fileName;
+            string_q removePath = workPath + fileName;
             if (fileExists(removePath))
                 ::remove(removePath.c_str());
 
@@ -120,9 +120,6 @@ bool COptions::doTest(const string_q& testName, bool cmdTests) {
                 tool = optTool;
 
             ostringstream cmd;
-
-//            if (verbose && !contains(options, "verbose"))
-//                options += (" & verbose = " + uint_2_Str(verbose) );
 
             replaceAll(options, " = ", "=");
             replaceAll(options, " & ", "&");
@@ -138,7 +135,7 @@ bool COptions::doTest(const string_q& testName, bool cmdTests) {
                 cmd << "\"";
                 if (!post.empty())
                     cmd << " | " <<  post << " ";
-                cmd << " >" << filePath + fileName;
+                cmd << " >" << workPath + fileName;
 
             } else {
                 options = "&" + options;
@@ -148,6 +145,7 @@ bool COptions::doTest(const string_q& testName, bool cmdTests) {
                 replaceAll(options, "&trans_list=", " ");
                 replaceAll(options, "&term_list=", " ");
                 replaceAll(options, "&func_list=", " ");
+                replaceAll(options, "&mode_list=", " ");
                 replaceAll(options, "%20", " ");
                 replaceAll(options, "@", " -");
                 replaceAll(options, "&", " --");
@@ -155,14 +153,14 @@ bool COptions::doTest(const string_q& testName, bool cmdTests) {
                 replaceAll(options, "=", " ");
                 if (trim(options) == "--" || startsWith(trim(options), "-- "))
                     replace(options, "--", "");
-                string_q c = tool + options + " >" + filePath + fileName + " 2>&1";
+                string_q c = tool + options + " >" + workPath + fileName + " 2>&1";
                 cmd << "TEST_MODE=true NO_COLOR=true REDIR_CERR=true " << c;
             }
 
-            string_q theCmd = "cd " + goldPath + " ; " + cmd.str();
+            string_q theCmd = "cd " + substitute(goldPath, "/api_tests", "") + " ; " + cmd.str();
 //            cerr << "Calling " << theCmd << endl;
 
-            string_q customized = substitute(substitute(filePath, "working", "custom_config") + tool + "_" + filename + "/", "/api_tests", "");
+            string_q customized = substitute(substitute(workPath, "working", "custom_config") + tool + "_" + filename + "/", "/api_tests", "");
             if (folderExists(customized))
                 forEveryFileInFolder(customized + "/*", saveAndCopy, NULL);
             if (verbose)
@@ -177,22 +175,8 @@ bool COptions::doTest(const string_q& testName, bool cmdTests) {
 
             string_q result = greenCheck;
             if (!ret) {
-                string_q newText = asciiFileToString(filePath + fileName);
+                string_q newText = asciiFileToString(workPath + fileName);
                 string_q oldText = asciiFileToString(goldPath + fileName);
-//cout << string_q(120, '-') << endl;
-//cout << string_q(120, '-') << endl;
-//cout << string_q(120, '-') << endl;
-//cout << string_q(120, '-') << endl;
-//cout << newText << endl;
-//cout << string_q(120, '-') << endl;
-//cout << string_q(120, '-') << endl;
-//cout << string_q(120, '-') << endl;
-//cout << string_q(120, '-') << endl;
-//cout << oldText << endl;
-//cout << string_q(120, '-') << endl;
-//cout << string_q(120, '-') << endl;
-//cout << string_q(120, '-') << endl;
-//cout << string_q(120, '-') << endl;
                 if (newText.empty() || newText != oldText)
                     result = redX;
             } else {

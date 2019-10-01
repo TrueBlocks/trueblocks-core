@@ -32,7 +32,7 @@ bool freshen_internal(freshen_e mode, const CAddressArray& addrs, const string_q
         string_q cmd = substitute(base.str(), "[ADDRS]", thisGroup);
         LOG4("Calling " + cmd);
         if (isTestMode())
-            cout << substitute(cmd, getCachePath(""), "$BLOCK_CACHE/") << endl;
+            cout << "TESTMODE: " << substitute(cmd, getCachePath(""), "$BLOCK_CACHE/") << endl;
 
         else {
             if (system(cmd.c_str())) { }  // Don't remove. Silences compiler warnings
