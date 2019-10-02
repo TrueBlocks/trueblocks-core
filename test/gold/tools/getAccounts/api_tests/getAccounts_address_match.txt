@@ -132,6 +132,19 @@
       "is_shared": true
     },
     {
+      "group": "82-Known",
+      "subgroup": "",
+      "name": "Vlad Zamfir",
+      "address": "0x127ac03acfad15f7a49dd037e52d5507260e1425",
+      "symbol": "",
+      "description": "",
+      "source": "https://medium.com/curator-multisig-phf-official-channel/extrabalance-withdraw-contract-to-be-funded-on-september-15th-a800b4d746f0#.a6ojjp67b",
+      "logo": "",
+      "is_contract": false,
+      "is_private": false,
+      "is_shared": true
+    },
+    {
       "group": "33-Set Protocol",
       "subgroup": "05-Wrappers",
       "name": "Zero Ex Exchange Wrapper",
@@ -817,6 +830,19 @@
       "source": "Etherscan.io",
       "logo": "talao_28.png",
       "is_contract": true,
+      "is_private": false,
+      "is_shared": true
+    },
+    {
+      "group": "82-Known",
+      "subgroup": "",
+      "name": "Vatalik",
+      "address": "0x1db3439a222c519ab44bb1144fc28167b4fa6ee6",
+      "symbol": "",
+      "description": "",
+      "source": "https://www.reddit.com/r/ethereum/comments/5ahsyn/a_word_of_warning_for_vitalik/",
+      "logo": "",
+      "is_contract": false,
       "is_private": false,
       "is_shared": true
     },

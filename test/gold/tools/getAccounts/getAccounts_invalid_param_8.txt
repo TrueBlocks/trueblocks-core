@@ -30,6 +30,6 @@ getAccounts 0xb6 torj --verboses --other --fmt txt
 	- When there are two search terms, both must match.
 	- The --matchCase option requires case sensitive matching. It works with all other options.
 	- To customize the list of names add a custom section to the config file (see documentation).
-	- Name file: ~/.quickBlocks/names/names.txt (200242)
+	- Name file: ~/.quickBlocks/names/names.txt (202498)
 
   Powered by QBlocks
