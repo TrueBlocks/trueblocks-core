@@ -1,0 +1,4 @@
+displayStrsTest argc: 2 [1:CBranch] 
+displayStrsTest CBranch 
+------------------------------CBranch------------------------------
+Unknown node of type CBranch not created.

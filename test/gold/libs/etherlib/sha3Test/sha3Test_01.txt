@@ -1,0 +1,37 @@
+sha3Test argc: 2 [1:-t] 
+sha3Test -t 
+--------------------------------------------------------------------------------
+# From an example on the RPC web page (already in hex)
+in:		0x68656c6c6f20776f726c64
+hex:		0x68656c6c6f20776f726c64
+expected:	0x47173285a8d7341e5e972fc677286384f802f8ef42a5ec5f03bbfa254cb01fad
+delivered:	0x47173285a8d7341e5e972fc677286384f802f8ef42a5ec5f03bbfa254cb01fad ✓
+
+--------------------------------------------------------------------------------
+# An empty string 
+in:		
+hex:		0x
+expected:	0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470
+delivered:	0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470 ✓
+
+--------------------------------------------------------------------------------
+# A longer string
+in:		abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu 
+hex:		0x61626364656667686263646566676869636465666768696a6465666768696a6b65666768696a6b6c666768696a6b6c6d6768696a6b6c6d6e68696a6b6c6d6e6f696a6b6c6d6e6f706a6b6c6d6e6f70716b6c6d6e6f7071726c6d6e6f707172736d6e6f70717273746e6f70717273747520
+expected:	0x4fdc431ca3869f7a79a3a43acbb0019c769c667ad29fb36896209969b8550af7
+delivered:	0x4fdc431ca3869f7a79a3a43acbb0019c769c667ad29fb36896209969b8550af7 ✓
+
+--------------------------------------------------------------------------------
+# A regular sentence with no period
+in:		The quick brown fox jumps over the lazy dog
+hex:		0x54686520717569636b2062726f776e20666f78206a756d7073206f76657220746865206c617a7920646f67
+expected:	0x4d741b6f1eb29cb2a9b9911c82f56fa8d73b04959d3d9d222895df6c0b28aa15
+delivered:	0x4d741b6f1eb29cb2a9b9911c82f56fa8d73b04959d3d9d222895df6c0b28aa15 ✓
+
+--------------------------------------------------------------------------------
+# A regular sentence with a period
+in:		The quick brown fox jumps over the lazy dog.
+hex:		0x54686520717569636b2062726f776e20666f78206a756d7073206f76657220746865206c617a7920646f672e
+expected:	0x578951e24efd62a3d63a86f7cd19aaa53c898fe287d2552133220370240b572d
+delivered:	0x578951e24efd62a3d63a86f7cd19aaa53c898fe287d2552133220370240b572d ✓
+

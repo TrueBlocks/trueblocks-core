@@ -1,0 +1,11 @@
+displayStrsTest argc: 2 [1:CAccountWatch] 
+displayStrsTest CAccountWatch 
+------------------------------CAccountWatch------------------------------
+STATEMENT::INFLOW: 2000000000000000000
+NAME: interface
+NAME: input
+ADDRESS: 0x1234567890123456789012345678901234567890
+BALANCE: 6000000000000000000
+NONCE: 1001234
+CODE: 0xTHIS_IS_BOGUS_CODE
+STORAGE: 0xTHIS_IS_BOGUS_STORAGE_DATA

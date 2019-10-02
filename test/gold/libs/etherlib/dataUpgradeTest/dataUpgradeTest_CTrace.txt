@@ -1,0 +1,87 @@
+dataUpgradeTest argc: 2 [1:CTrace] 
+dataUpgradeTest CTrace 
+--------------------------------------------------------------------------------
+className: CTrace
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+blockHash           	1005	0	131132	T_HASH TS_STRING
+blockNumber         	1006	0	65561	T_NUMBER TS_NUMERAL
+subtraces           	1007	0	65561	T_NUMBER TS_NUMERAL
+traceAddress        	1008	0	131122	T_TEXT TS_STRING
+transactionHash     	1009	0	131132	T_HASH TS_STRING
+transactionIndex    	1010	0	65561	T_NUMBER TS_NUMERAL
+type                	1011	0	131122	T_TEXT TS_STRING
+error               	1012	0	131122	T_TEXT TS_STRING
+articulatedTrace    	1013	1	1048651	T_OBJECT TS_OBJECT
+compressedTrace     	1014	1	131122	T_TEXT TS_STRING
+action              	1015	0	1048651	T_OBJECT TS_OBJECT
+result              	1016	0	1048651	T_OBJECT TS_OBJECT
+date                	1017	1	262149	T_DATE TS_DATE
+{
+  "blockHash": "0x0",
+  "blockNumber": 0,
+  "subtraces": 0,
+  "traceAddress": null,
+  "transactionHash": "0x0",
+  "transactionIndex": 0
+}
+
+--------------------------------------------------------------------------------
+className: CTrace
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+blockHash           	1005	1	131132	T_HASH TS_STRING
+blockNumber         	1006	1	65561	T_NUMBER TS_NUMERAL
+subtraces           	1007	1	65561	T_NUMBER TS_NUMERAL
+traceAddress        	1008	1	131122	T_TEXT TS_STRING
+transactionHash     	1009	1	131132	T_HASH TS_STRING
+transactionIndex    	1010	1	65561	T_NUMBER TS_NUMERAL
+type                	1011	1	131122	T_TEXT TS_STRING
+error               	1012	1	131122	T_TEXT TS_STRING
+articulatedTrace    	1013	1	1048651	T_OBJECT TS_OBJECT
+compressedTrace     	1014	1	131122	T_TEXT TS_STRING
+action              	1015	1	1048651	T_OBJECT TS_OBJECT
+result              	1016	1	1048651	T_OBJECT TS_OBJECT
+date                	1017	1	262149	T_DATE TS_DATE
+{
+}
+
+--------------------------------------------------------------------------------
+className: CTrace
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+cname               	1004	0	131122	T_TEXT TS_STRING
+blockHash           	1005	0	131132	T_HASH TS_STRING
+blockNumber         	1006	0	65561	T_NUMBER TS_NUMERAL
+subtraces           	1007	0	65561	T_NUMBER TS_NUMERAL
+traceAddress        	1008	0	131122	T_TEXT TS_STRING
+transactionHash     	1009	0	131132	T_HASH TS_STRING
+transactionIndex    	1010	0	65561	T_NUMBER TS_NUMERAL
+type                	1011	0	131122	T_TEXT TS_STRING
+error               	1012	0	131122	T_TEXT TS_STRING
+articulatedTrace    	1013	0	1048651	T_OBJECT TS_OBJECT
+compressedTrace     	1014	0	131122	T_TEXT TS_STRING
+action              	1015	0	1048651	T_OBJECT TS_OBJECT
+result              	1016	0	1048651	T_OBJECT TS_OBJECT
+date                	1017	0	262149	T_DATE TS_DATE
+{
+  "schema": 5008,
+  "deleted": 0,
+  "showing": 1,
+  "cname": "Trace",
+  "blockHash": "0x0",
+  "blockNumber": 0,
+  "subtraces": 0,
+  "traceAddress": null,
+  "transactionHash": "0x0",
+  "transactionIndex": 0
+}
+

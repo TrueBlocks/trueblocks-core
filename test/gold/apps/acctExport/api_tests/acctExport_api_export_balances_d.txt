@@ -1,0 +1,46 @@
+acctExport argc: 4 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--balances] [3:--deltas] 
+acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --balances --deltas 
+TIME ~ CLOCK - : 4-----API_MODE=true
+{ "type": "CEthState", "data": [
+[1: as read
+----------------------------------------------
+nDeltas: 3	lastDelta: --lastDelta--
+0	{
+  "blockNumber": 0,
+  "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
+  "balance": 4200000000000000000000,
+  "diff": 4200000000000000000000
+}
+202249	{
+  "blockNumber": 202249,
+  "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
+  "balance": 74679320489077336,
+  "diff": -4199925320679510922664
+}
+1501459	{
+  "blockNumber": 1501459,
+  "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
+  "balance": 0,
+  "diff": -74679320489077336
+}
+2: data
+----------------------------------------------
+{
+  "blockNumber": 0,
+  "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
+  "balance": 4200000000000000000000,
+  "diff": 4200000000000000000000
+}
+, {
+  "blockNumber": 202249,
+  "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
+  "balance": 74679320489077336,
+  "diff": -4199925320679510922664
+}
+, {
+  "blockNumber": 1501459,
+  "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
+  "balance": 0,
+  "diff": -74679320489077336
+}
+]], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }TIME ~ CLOCK - <INFO>  : exported 3 balances from 3 transactions                                                       

@@ -1,0 +1,4 @@
+displayStrsTest argc: 2 [1:CPriceQuote] 
+displayStrsTest CPriceQuote 
+------------------------------CPriceQuote------------------------------
+Unknown node of type CPriceQuote not created.

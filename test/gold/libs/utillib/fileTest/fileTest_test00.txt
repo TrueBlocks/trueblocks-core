@@ -2,18 +2,18 @@ fileTest argc: 1
 fileTest 
 Non-recursive from ../
 Found 15 (15) files
-../apiTest/
 ../arrayTest/
 ../bigIntTest/
 ../cmdLineTest/
 ../colorTest/
-../convert/
+../convertTest/
 ../curlTest/
 ../fileTest/
 ../jsonTest/
 ../parsingTest/
-../sizeof/
+../sizeofTest/
 ../stringTest/
+../timeTest/
 ../tomlTest/
 ../tomlTest2/
 ../typesTest/

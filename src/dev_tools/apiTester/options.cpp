@@ -70,6 +70,13 @@ bool COptions::parseArguments(string_q& command) {
         speed_filter = "";
 
     if (tests.empty()) {
+        tests.push_back("apps/acctExport");
+        tests.push_back("apps/acctScrape");
+        tests.push_back("apps/blockScrape");
+        tests.push_back("apps/cacheMan");
+        tests.push_back("apps/cacheStatus");
+        tests.push_back("apps/chifra");
+        tests.push_back("dev_tools/makeClass");
         tests.push_back("tools/ethQuote");
         tests.push_back("tools/ethslurp");
         tests.push_back("tools/getAccounts");
@@ -84,8 +91,9 @@ bool COptions::parseArguments(string_q& command) {
         tests.push_back("tools/grabABI");
         tests.push_back("tools/whenBlock");
         tests.push_back("tools/whereBlock");
-        tests.push_back("dev_tools/makeClass");
-        tests.push_back("apps/cacheStatus");
+        tests.push_back("libs/utillib");
+        tests.push_back("libs/etherlib");
+        tests.push_back("libs/acctlib");
     }
 
     return true;

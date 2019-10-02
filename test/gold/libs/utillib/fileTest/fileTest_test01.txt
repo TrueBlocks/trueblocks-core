@@ -2,7 +2,6 @@ fileTest argc: 2 [1:recurse]
 fileTest recurse 
 Recursive from ../
 Found 117 (117) files
-../apiTest/apiTest_test01.txt
 ../arrayTest/arrayTest_Insertion.txt
 ../arrayTest/arrayTest_README.txt
 ../bigIntTest/bigIntTest_00.txt
@@ -16,13 +15,13 @@ Found 117 (117) files
 ../cmdLineTest/cmd_file_bool2
 ../cmdLineTest/cmd_file_other1
 ../cmdLineTest/cmd_file_other2
-../colorTest/colorTest_00.txt
-../convert/convertTest_00.txt
-../convert/convertTest_01.txt
-../convert/convertTest_02.txt
-../convert/convertTest_03.txt
-../convert/convertTest_04.txt
-../curlTest/curlTest_00.txt
+../colorTest/colorTest_01.txt
+../convertTest/convertTest_00.txt
+../convertTest/convertTest_01.txt
+../convertTest/convertTest_02.txt
+../convertTest/convertTest_03.txt
+../convertTest/convertTest_04.txt
+../curlTest/curlTest_test00.txt
 ../fileTest/fileTest_test00.txt
 ../fileTest/fileTest_test01.txt
 ../fileTest/fileTest_test02.txt
@@ -49,8 +48,8 @@ Found 117 (117) files
 ../parsingTest/parsingTest_03.txt
 ../parsingTest/parsingTest_04.txt
 ../parsingTest/parsingTest_README.txt
-../sizeof/sizeof_00.txt
-../sizeof/sizeof_README.txt
+../sizeofTest/sizeofTest_00.txt
+../sizeofTest/sizeofTest_README.txt
 ../stringTest/solidity_code.sol
 ../stringTest/stringTest_Assignment.txt
 ../stringTest/stringTest_CStr.txt
@@ -59,6 +58,7 @@ Found 117 (117) files
 ../stringTest/stringTest_Extract.txt
 ../stringTest/stringTest_README.txt
 ../stringTest/stringTest_Relational.txt
+../timeTest/timeTest_test00.txt
 ../tomlTest/empty.toml
 ../tomlTest/test00.toml
 ../tomlTest/test01.toml

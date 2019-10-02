@@ -1,0 +1,45 @@
+convertTest argc: 2 [1:0] 
+convertTest 0 
+0. Running TestConverts_0
+	000.000 empty address                    ==> passed 'array[0]' is equal to '""'
+	000.001 hex ony                          ==> passed 'array[1]' is equal to '"0x"'
+	000.002 zero addr                        ==> passed 'array[2]' is equal to '"0x0"'
+	000.003 full zero                        ==> passed 'array[3]' is equal to '"0x0000000000000000000000000000000000000000"'
+	000.004 big num                          ==> passed 'array[4]' is equal to '"0x1000000000000000000000000000000000000000"'
+
+	000.005 long empty address               ==> passed 'str_2_Int(array[0])' is equal to '0'
+	000.006 long hex ony                     ==> passed 'str_2_Int(array[1])' is equal to '0'
+	000.007 long zero addr                   ==> passed 'str_2_Int(array[2])' is equal to '0'
+	000.008 long full zero                   ==> passed 'str_2_Int(array[3])' is equal to '0'
+	000.009 long overflow                    ==> passed 'str_2_Int(array[4])' is equal to '0'
+
+	000.010 ulong empty address              ==> passed 'str_2_Uint(array[0])' is equal to '0'
+	000.011 ulong hex ony                    ==> passed 'str_2_Uint(array[1])' is equal to '0'
+	000.012 ulong zero addr                  ==> passed 'str_2_Uint(array[2])' is equal to '0'
+	000.013 ulong full zero                  ==> passed 'str_2_Uint(array[3])' is equal to '0'
+	000.014 ulong overflow                   ==> passed 'str_2_Uint(array[4])' is equal to '0'
+
+	000.015 str_2_Hash1                      ==> passed 'str_2_Hash("12312ABcdE12")' is equal to '"0x000000000000000000000000000000000000000000000000000012312abcde12"'
+	000.016 str_2_Hash2                      ==> passed 'str_2_Hash("a")' is equal to '"0x000000000000000000000000000000000000000000000000000000000000000a"'
+	000.017 str_2_Hash3                      ==> passed 'str_2_Hash("0x")' is equal to '"0x0"'
+	000.018 str_2_Hash4                      ==> passed 'str_2_Hash("")' is equal to '"0x0"'
+	000.019 str_2_Hash5                      ==> passed 'str_2_Hash("0x12312abcde12")' is equal to '"0x000000000000000000000000000000000000000000000000000012312abcde12"'
+
+	000.020 str_2_Addr1                      ==> passed 'str_2_Addr("12312ABcdE12")' is equal to '"0x000000000000000000000000000012312abcde12"'
+	000.021 str_2_Addr2                      ==> passed 'str_2_Addr("a")' is equal to '"0x000000000000000000000000000000000000000a"'
+	000.022 str_2_Addr3                      ==> passed 'str_2_Addr("0x")' is equal to '"0x0"'
+	000.023 str_2_Addr4                      ==> passed 'str_2_Addr("")' is equal to '"0x0"'
+	000.024 str_2_Addr5                      ==> passed 'str_2_Addr("0x12312abcde12")' is equal to '"0x000000000000000000000000000012312abcde12"'
+	000.025 str_2_Addr6                      ==> passed 'str_2_Addr("000000000000000000000000de12121212312abcde12121212312abcde121212")' is equal to '"0xde12121212312abcde12121212312abcde121212"'
+
+	000.026 timestamp empty address          ==> passed 'str_2_Ts(array[0])' is equal to '0'
+	000.027 timestamp hex ony                ==> passed 'str_2_Ts(array[1])' is equal to '0'
+	000.028 timestamp zero addr              ==> passed 'str_2_Ts(array[2])' is equal to '0'
+	000.029 timestamp full zero              ==> passed 'str_2_Ts(array[3])' is equal to '0'
+	000.030 timestamp overflow               ==> passed 'str_2_Ts(array[4])' is equal to '0'
+
+	000.031 bn empty address                 ==> passed 'str_2_BigUint(array[0])' is equal to '0'
+	000.032 bn hex ony                       ==> passed 'str_2_BigUint(array[1])' is equal to '0'
+	000.033 bn zero addr                     ==> passed 'str_2_BigUint(array[2])' is equal to '0'
+	000.034 bn full zero                     ==> passed 'str_2_BigUint(array[3])' is equal to '0'
+	000.035 bn overflow                      ==> passed 'str_2_BigUint(array[4])' is equal to 'str_2_Wei("91343852333181432387730302044767688728495783936")'

@@ -1,0 +1,9 @@
+timeTest argc: 2 [1:0] 
+timeTest 0 
+0. Running TestTime
+	time1:  2016-10-01 12:00:00 UTC
+	time2:  2018-06-02 12:00:00 UTC
+	000.000 time1 > time2                    ==> passed '(time1 > time2)' is false
+	000.001 time1 !< time2                   ==> passed '(time1 < time2)' is true
+	000.002 time1.month == 10                ==> passed '(time1.GetMonth() == 10)' is true
+	000.003 time2.day == 2                   ==> passed '(time2.GetDay() == 2)' is true

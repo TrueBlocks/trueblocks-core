@@ -1,0 +1,8 @@
+acctExport argc: 3 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--traces] 
+acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --traces 
+blocknumber	transactionindex	traceaddress	action::calltype	error	action::from	action::to	action::value	action::ether	action::gas	result::gasused	action::input	compressedtrace	result::output
+202249	0	null	call		0x001d14804b399c6ef80e64576f657660804fec0b	0x2910543af39aba0cd09dbb2d50200b3e800a63d2	4199900000000000000000	4199.900000000000000000	28388	0	0x454e34563147544238		0x
+1501459	2	null	call		0x001d14804b399c6ef80e64576f657660804fec0b	0xcfab9ac2bb2e1dcfc2d50f01f4e61f2f72fb5902	74259320489077336	0.074259320489077336	0	0	0x		0x
+TIME ~ CLOCK - <INFO>  :                                                                                                                         
+Would have written to 0x001d14804b399c6ef80e64576f657660804fec0b.expt.txt with 1501459
+TIME ~ CLOCK - <INFO>  : exported 2 traces from 3 transactions                                                       

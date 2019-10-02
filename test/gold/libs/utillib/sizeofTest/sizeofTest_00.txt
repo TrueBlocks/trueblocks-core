@@ -1,0 +1,23 @@
+sizeofTest argc: 1 
+sizeofTest 
+0. Running TestSizes
+	000.000 sizeof(char)         ==> 1
+	000.001 sizeof(int)          ==> 4
+	000.002 sizeof(short)        ==> 2
+	000.003 sizeof(long)         ==> 8
+	000.004 sizeof(unsigned)     ==> 4
+	000.005 sizeof(size_t)       ==> 8
+	000.006 sizeof(uint32_t)     ==> 4
+	000.007 sizeof(uint64_t)     ==> 8
+
+	000.008 sizeof(bool)         ==> 1
+	000.009 sizeof(char)         ==> 1
+	000.010 sizeof(int)          ==> 4
+	000.011 sizeof(unsigned int) ==> 4
+	000.012 sizeof(long)         ==> 8
+	000.013 sizeof(unsigned long) ==> 8
+	000.014 sizeof(long long)    ==> 8
+	000.015 sizeof(unsigned long long) ==> 8
+	000.016 sizeof(float)        ==> 4
+	000.017 sizeof(double)       ==> 8
+	000.018 sizeof(const char *) ==> 8

@@ -33,6 +33,6 @@ public:
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 
-    bool doTest(const string_q& testName, bool cmdTests);
+    bool doTest(const string_q& path, const string_q& testName, bool cmdTests);
     bool cleanTest(const string_q& path, const string_q& testName);
 };

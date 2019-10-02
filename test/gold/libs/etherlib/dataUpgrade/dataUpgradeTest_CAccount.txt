@@ -1,3 +1,0 @@
-dataUpgrade argc: 2 [1:CAccount] 
-dataUpgrade CAccount 
-Unknown node of type CAccount not created.

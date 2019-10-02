@@ -36,8 +36,8 @@ int main(int argc, const char *argv[]) {
         else if (options.mode == "config")    RETURN(options.handle_config())
         else if (isTestMode()) {
             map<string,string> cmdMap;
-            cmdMap["where"] = "whereBlock";
-            cmdMap["when"] = "whenBlock";
+            cmdMap["where"]  = "whereBlock";
+            cmdMap["when"]   = "whenBlock";
             cmdMap["tokens"] = "getTokenInfo";
             cmdMap["blooms"] = "getBloom";
             if (cmdMap[options.mode] != "") {

@@ -30,13 +30,13 @@ bool COptions::handle_config(void) {
     EXIT_NOMSG4(true);
 }
 
-
 #if 0
-/*-------------------------------------------------------------------------
+/*
+-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
  * Copyright (c) 2017 by Great Hill Corporation.
  * All Rights Reserved
- *------------------------------------------------------------------------*/
+ *------------------------------------------------------------------------* /
 #include "options.h"
 #include "question.h"
 
@@ -124,4 +124,6 @@ bool COptions::createConfigFile(const address_t& addr) {
     }
     EXIT_NOMSG4(true);
 }
+*/
+
 #endif

@@ -1,0 +1,45 @@
+TIME ~ CLOCK - : 4-----API_MODE=true
+acctExport argc: 3 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--traces] 
+acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --traces 
+{ "type": "CTrace", "data": [
+[{
+  "type": "call",
+  "action": {
+    "address": "0x0",
+    "balance": 0,
+    "callType": "call",
+    "from": "0x001d14804b399c6ef80e64576f657660804fec0b",
+    "gas": 28388,
+    "input": "0x454e34563147544238",
+    "refundAddress": "0x0",
+    "to": "0x2910543af39aba0cd09dbb2d50200b3e800a63d2",
+    "value": 4199900000000000000000
+  },
+  "result": {
+    "address": "0x0",
+    "gasUsed": 0,
+    "output": "0x"
+  }
+}
+, {
+  "type": "call",
+  "action": {
+    "address": "0x0",
+    "balance": 0,
+    "callType": "call",
+    "from": "0x001d14804b399c6ef80e64576f657660804fec0b",
+    "gas": 0,
+    "input": "0x",
+    "refundAddress": "0x0",
+    "to": "0xcfab9ac2bb2e1dcfc2d50f01f4e61f2f72fb5902",
+    "value": 74259320489077336
+  },
+  "result": {
+    "address": "0x0",
+    "gasUsed": 0,
+    "output": "0x"
+  }
+}
+TIME ~ CLOCK - <INFO>  :                                                                                                                         ]
+Would have written to 0x001d14804b399c6ef80e64576f657660804fec0b.expt.txt with 1501459
+], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }TIME ~ CLOCK - <INFO>  : exported 2 traces from 3 transactions                                                       

@@ -1,0 +1,4 @@
+displayStrsTest argc: 2 [1:CAcctCacheItem] 
+displayStrsTest CAcctCacheItem 
+------------------------------CAcctCacheItem------------------------------
+Unknown node of type CAcctCacheItem not created.

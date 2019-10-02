@@ -1,0 +1,60 @@
+dataUpgradeTest argc: 2 [1:CParameter] 
+dataUpgradeTest CParameter 
+--------------------------------------------------------------------------------
+className: CParameter
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+indexed             	1005	0	65556	T_BOOL TS_NUMERAL
+name                	1006	0	131122	T_TEXT TS_STRING
+type                	1007	0	131122	T_TEXT TS_STRING
+isPointer           	1008	0	65556	T_BOOL TS_NUMERAL
+isArray             	1009	0	65556	T_BOOL TS_NUMERAL
+isObject            	1010	0	65556	T_BOOL TS_NUMERAL
+strDefault          	1011	0	131122	T_TEXT TS_STRING
+value               	1012	0	131122	T_TEXT TS_STRING
+{
+}
+
+--------------------------------------------------------------------------------
+className: CParameter
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+indexed             	1005	1	65556	T_BOOL TS_NUMERAL
+name                	1006	1	131122	T_TEXT TS_STRING
+type                	1007	1	131122	T_TEXT TS_STRING
+isPointer           	1008	1	65556	T_BOOL TS_NUMERAL
+isArray             	1009	1	65556	T_BOOL TS_NUMERAL
+isObject            	1010	1	65556	T_BOOL TS_NUMERAL
+strDefault          	1011	1	131122	T_TEXT TS_STRING
+value               	1012	1	131122	T_TEXT TS_STRING
+{
+}
+
+--------------------------------------------------------------------------------
+className: CParameter
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+cname               	1004	0	131122	T_TEXT TS_STRING
+indexed             	1005	0	65556	T_BOOL TS_NUMERAL
+name                	1006	0	131122	T_TEXT TS_STRING
+type                	1007	0	131122	T_TEXT TS_STRING
+isPointer           	1008	0	65556	T_BOOL TS_NUMERAL
+isArray             	1009	0	65556	T_BOOL TS_NUMERAL
+isObject            	1010	0	65556	T_BOOL TS_NUMERAL
+strDefault          	1011	0	131122	T_TEXT TS_STRING
+value               	1012	0	131122	T_TEXT TS_STRING
+{
+  "schema": 5008,
+  "deleted": 0,
+  "showing": 1,
+  "cname": "Parameter"
+}
+

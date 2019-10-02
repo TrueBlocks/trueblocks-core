@@ -1,0 +1,52 @@
+dataUpgradeTest argc: 2 [1:CTraceResult] 
+dataUpgradeTest CTraceResult 
+--------------------------------------------------------------------------------
+className: CTraceResult
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+address             	1005	0	131127	T_ADDRESS TS_STRING
+code                	1006	0	131122	T_TEXT TS_STRING
+gasUsed             	1007	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+output              	1008	0	131122	T_TEXT TS_STRING
+{
+  "address": "0x0",
+  "gasUsed": 0
+}
+
+--------------------------------------------------------------------------------
+className: CTraceResult
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+address             	1005	1	131127	T_ADDRESS TS_STRING
+code                	1006	1	131122	T_TEXT TS_STRING
+gasUsed             	1007	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+output              	1008	1	131122	T_TEXT TS_STRING
+{
+}
+
+--------------------------------------------------------------------------------
+className: CTraceResult
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+cname               	1004	0	131122	T_TEXT TS_STRING
+address             	1005	0	131127	T_ADDRESS TS_STRING
+code                	1006	0	131122	T_TEXT TS_STRING
+gasUsed             	1007	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+output              	1008	0	131122	T_TEXT TS_STRING
+{
+  "schema": 5008,
+  "deleted": 0,
+  "showing": 1,
+  "cname": "TraceResult",
+  "address": "0x0",
+  "gasUsed": 0
+}
+

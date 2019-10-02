@@ -33,8 +33,8 @@ int main(int argc, const char *argv[]) {
                 continue;
             string_q path = nextTokenClear(test, '/');
             if (options.cleanTests)  options.cleanTest(path, test);
-            if (options.which & CMD) if (!options.doTest(test, true )) return 1;
-            if (options.which & API) if (!options.doTest(test, false)) return 1;
+            if (options.which & CMD) if (!options.doTest(path, test, true )) return 1;
+            if (options.which & API) if (!options.doTest(path, test, false)) return 1;
         }
     }
     return 0;
@@ -45,16 +45,14 @@ extern bool replaceFile(const string_q& path, void *data);
 double tooSlow = .4;
 double fastEnough = .2;
 //-----------------------------------------------------------------------
-bool COptions::doTest(const string_q& testName, bool cmdTests) {
+bool COptions::doTest(const string_q& pathIn, const string_q& testName, bool cmdTests) {
 
     cerr << "Testing " << testName << " (" << (cmdTests ? "cmd" : "api") << " mode):" << endl;
 
     resetClock();
     double totalTime = 0;
 
-    string_q testFile = "./" + testName + ".csv";
-    if (!fileExists(testFile))
-        testFile = getCWD() + "../../../../src/other/build_assets/testCases/" + testName + ".csv";
+    string_q testFile = getCWD() + "../../../../src/other/testCases/" + pathIn + "/" + testName + ".csv";
     if (!fileExists(testFile))
         return usage("Cannot find test file " + testFile + ". Quitting.");
 
@@ -105,12 +103,14 @@ bool COptions::doTest(const string_q& testName, bool cmdTests) {
             if ((!cmdTests && mode == "cmd") || (cmdTests && mode == "api"))
                 continue;
 
+            if (endsWith(path, "lib"))
+                path = "libs/" + path;
             string_q goldPath = "../../../gold/" + path + "/" + tool + (!cmdTests ? "/api_tests/" : "/");
             if (!folderExists(goldPath))
                 return usage("Folder " + goldPath + " not found. Quitting...");
             string_q workPath = substitute(goldPath, "/gold/", "/working/");
             if (!folderExists(workPath))
-                return usage("Folder " + goldPath + " not found. Quitting...");
+                return usage("Folder " + workPath + " not found. Quitting...");
             string_q fileName = tool + "_" + filename + ".txt";
             string_q removePath = workPath + fileName;
             if (fileExists(removePath))
@@ -118,6 +118,9 @@ bool COptions::doTest(const string_q& testName, bool cmdTests) {
 
             if (!optTool.empty())
                 tool = optTool;
+
+            if (endsWith(path, "lib"))
+                workPath = "../" + workPath;
 
             ostringstream cmd;
 
@@ -139,6 +142,7 @@ bool COptions::doTest(const string_q& testName, bool cmdTests) {
 
             } else {
                 options = "&" + options;
+                replaceAll(options, "&val=", " ");
                 replaceAll(options, "&addr_list=", " ");
                 replaceAll(options, "&block_list=", " ");
                 replaceAll(options, "&date_list=", " ");
@@ -158,6 +162,7 @@ bool COptions::doTest(const string_q& testName, bool cmdTests) {
             }
 
             string_q theCmd = "cd " + substitute(goldPath, "/api_tests", "") + " ; " + cmd.str();
+//            cerr << "cwd: " << getCWD() << endl;
 //            cerr << "Calling " << theCmd << endl;
 
             string_q customized = substitute(substitute(workPath, "working", "custom_config") + tool + "_" + filename + "/", "/api_tests", "");
@@ -175,6 +180,8 @@ bool COptions::doTest(const string_q& testName, bool cmdTests) {
 
             string_q result = greenCheck;
             if (!ret) {
+                if (endsWith(path, "lib"))
+                    replace(workPath, "../", "");
                 string_q newText = asciiFileToString(workPath + fileName);
                 string_q oldText = asciiFileToString(goldPath + fileName);
                 if (newText.empty() || newText != oldText)
@@ -187,7 +194,7 @@ bool COptions::doTest(const string_q& testName, bool cmdTests) {
                 reverse(filename);
                 filename = substitute(padLeft(filename, 30).substr(0,30), " ", ".");
                 reverse(filename);
-                cerr << "   " << timeRep << " - " << testName << " ";
+                cerr << "   " << timeRep << " - " << (endsWith(path, "lib") ? padRight(tool, 16) : testName) << " ";
                 cerr << trim(filename) << " " << result << "  " << trim(options).substr(0,90) << endl;
             }
 
