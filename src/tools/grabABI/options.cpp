@@ -23,7 +23,7 @@ static const COption params[] = {
     COption("encode", "e", "", OPT_SWITCH, "generate the encodings for the functions / events in the ABI"),
     COption("json", "j", "", OPT_SWITCH, "print the ABI to the screen as json"),
     COption("noconst", "n", "", OPT_SWITCH, "generate encodings for non-constant functions and events only (always true when generating)"),
-    COption("sol", "l", "<fn>", OPT_FLAG, "create the ABI file from a .sol file in the local directory"),
+    COption("sol", "l", "<path>", OPT_FLAG, "create the ABI file from a .sol file in the local directory"),
     COption("open", "o", "", OPT_HIDDEN | OPT_SWITCH, "open the ABI file for editing, download if not already present"),
     COption("silent", "s", "", OPT_HIDDEN | OPT_SWITCH, "if ABI cannot be acquired, fail silently (useful for scripting)"),
     COption("nodec", "n", "", OPT_HIDDEN | OPT_SWITCH, "do not decorate duplicate names"),

@@ -984,3 +984,19 @@ group	subgroup	address	name	description	symbol	source	logo	is_contract	is_privat
 60-Airdrops		0xf3e014fe81267870624132ef3a646b8e83853a96	VIN Airdrop		VIN	Etherscan.io	vinchain_28.png	TRUE	FALSE	TRUE
 60-Airdrops		0xfaa183ac925268122498945ce287817b126f453b	SP Airdrop		SP	TrueBlocks.io		TRUE	FALSE	TRUE
 60-Airdrops		0xfab3da023ea45d663991093b6b574ec766ff2eef	YOO Airdrop		YOO	TrueBlocks.io		TRUE	FALSE	TRUE
+82-Known		0x0029218e1dab069656bfb8a75947825e7989b987	Christian Reitwie§ner			DAO_Curator			FALSE
+82-Known		0x0037a6b811ffeb6e072da21179d11b1406371c63	Gavin Wood			DAO_Curator			FALSE
+82-Known		0x0c2808b951ed9e872d7b32790fcc5994ae41ffdc	DAO_WHALE_18			WhaleWatch.io			FALSE
+82-Known		0x127ac03acfad15f7a49dd037e52d5507260e1425	Vlad Zamfir			https://medium.com/curator-multisig-phf-official-channel/extrabalance-withdraw-contract-to-be-funded-on-september-15th-a800b4d746f0#.a6ojjp67b			FALSE
+82-Known		0x1db3439a222c519ab44bb1144fc28167b4fa6ee6	Vatalik			https://www.reddit.com/r/ethereum/comments/5ahsyn/a_word_of_warning_for_vitalik/			FALSE
+82-Known		0x5fc8a61e097c118ce43d200b3c4dcf726cf783a9	Nick Johnson			https://medium.com/curator-multisig-phf-official-channel/extrabalance-withdraw-contract-to-be-funded-on-september-15th-a800b4d746f0#.a6ojjp67b)			FALSE
+82-Known		0x6377216fd31061edb18b91d33c3d252abf91c2d4	Beltran Berrocal			https://medium.com/curator-multisig-phf-official-channel/extrabalance-withdraw-contract-to-be-funded-on-september-15th-a800b4d746f0#.a6ojjp67b			FALSE
+82-Known		0x7cb57b5a97eabe94205c07890be4c1ad31e486a8	MyEthereumWalletTipJar			Slack			FALSE
+82-Known		0x820c6da74978799d574f61b01f8b5eebc051f95e	Shermin Voshmgir			https://medium.com/curator-multisig-phf-official-channel/extrabalance-withdraw-contract-to-be-funded-on-september-15th-a800b4d746f0#.a6ojjp67b			FALSE
+82-Known		0x839395e20bbb182fa440d08f850e6c7a8f6f0780	Griff Green			https://medium.com/curator-multisig-phf-official-channel/extrabalance-withdraw-contract-to-be-funded-on-september-15th-a800b4d746f0#.a6ojjp67b			FALSE
+82-Known		0x8e8a24cba9f2702243ad65bada9b0e8cbc62fd96	Alexey Akunhov			https://medium.com/curator-multisig-phf-official-channel/extrabalance-withdraw-contract-to-be-funded-on-september-15th-a800b4d746f0#.a6ojjp67b			FALSE
+82-Known		0x8f53781799515e5dc8f5d00c528940cae99ac969	Corey Perry's TipJar			https://medium.com/the-bitcoin-podcast-blog/a-look-at-the-tokencard-ico-investor-distribution-cddeb6f534f9 GHC			FALSE
+82-Known		0xae90d602778ed98478888fa2756339dd013e34c1	Martin Becze			DAO_Curator			FALSE
+82-Known		0xb274363d5971b60b6aca27d6f030355e9aa2cf23	Viktor Tron			DAO_Curator			FALSE
+82-Known		0xd1220a0cf47c7b9be7a2e6ba89f429762e7b9adb	Alex Van de Sande			DAO_Curator			FALSE
+82-Known		0xd292f43d687702bc5f793e56765e1a3b5e541ee3	Christoph Jentzsch			https://medium.com/curator-multisig-phf-official-channel/extrabalance-withdraw-contract-to-be-funded-on-september-15th-a800b4d746f0#.a6ojjp67b			FALSE

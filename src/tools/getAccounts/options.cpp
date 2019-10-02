@@ -15,7 +15,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("term_list", "", "list<term>", OPT_REQUIRED | OPT_POSITIONAL, "a space separated list of one or more search terms"),
+    COption("term_list", "", "list<string>", OPT_REQUIRED | OPT_POSITIONAL, "a space separated list of one or more search terms"),
     COption("expand", "e", "", OPT_SWITCH, "expand search to include all fields (default searches name, address, and symbol only)"),
     COption("matchCase", "m", "", OPT_SWITCH, "do case-sensitive search"),
     COption("owned", "o", "", OPT_SWITCH, "Include personal accounts in the search"),

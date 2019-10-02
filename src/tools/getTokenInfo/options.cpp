@@ -16,7 +16,7 @@
 static const COption params[] = {
 // BEG_CODE_OPTIONS
     COption("addr_list", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported"),
-    COption("block_list", "", "list<block>", OPT_POSITIONAL, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
+    COption("block_list", "", "list<blknum>", OPT_POSITIONAL, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
     COption("byAcct", "b", "", OPT_SWITCH, "consider each address an ERC20 token except the last, whose balance is reported for each token"),
     COption("nozero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
     COption("info", "i", "enum[name|decimals|totalSupply|version|symbol|all]", OPT_HIDDEN | OPT_FLAG, "retreive information [name|decimals|totalSupply|version|symbol|all] about the token"),

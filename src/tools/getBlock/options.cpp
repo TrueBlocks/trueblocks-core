@@ -15,14 +15,14 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("block_list", "", "list<block>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks to retrieve"),
+    COption("block_list", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks to retrieve"),
     COption("hash_only", "n", "", OPT_SWITCH, "display only transaction hashes, default is to display full transaction detail"),
     COption("check", "c", "", OPT_SWITCH, "compare results between qblocks and Ethereum node, report differences, if any"),
     COption("addrs", "a", "", OPT_SWITCH, "display all addresses included in the block"),
     COption("uniq", "u", "", OPT_SWITCH, "display only uniq addresses found per block"),
     COption("uniqTx", "q", "", OPT_SWITCH, "display only uniq addresses found per transaction"),
     COption("number", "m", "", OPT_SWITCH, "display address counts (alterntively --addrCnt, --uniqTxCnt, or --uniqCnt)"),
-    COption("filter", "l", "<address>", OPT_FLAG, "useful only for --addrs or --uniq, only display this address in results"),
+    COption("filter", "l", "<addr>", OPT_FLAG, "useful only for --addrs or --uniq, only display this address in results"),
     COption("latest", "l", "", OPT_HIDDEN | OPT_SWITCH, "display the latest blocks at both the node and the cache"),
     COption("force", "o", "", OPT_HIDDEN | OPT_SWITCH, "force a re-write of the block to the cache"),
     COption("quiet", "q", "", OPT_HIDDEN | OPT_SWITCH, "do not print results to screen, used for speed testing and data checking"),

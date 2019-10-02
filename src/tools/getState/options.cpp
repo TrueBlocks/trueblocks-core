@@ -16,7 +16,7 @@
 static const COption params[] = {
 // BEG_CODE_OPTIONS
     COption("addr_list", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) from which to retrieve balances"),
-    COption("block_list", "", "list<block>", OPT_POSITIONAL, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
+    COption("block_list", "", "list<blknum>", OPT_POSITIONAL, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
     COption("mode", "m", "enum[none|some*|all|balance|nonce|code|storage|deployed|accttype]", OPT_FLAG, "control which state to export. One of [none|some*|all|balance|nonce|code|storage|deployed|accttype]"),
     COption("nozero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
     COption("changes", "c", "", OPT_SWITCH, "only report a balance when it changes from one block to the next"),
