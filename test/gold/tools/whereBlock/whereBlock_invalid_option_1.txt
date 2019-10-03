@@ -1,7 +1,7 @@
-whereBlock argc: 2 [1:-x] 
-whereBlock -x 
+whereBlock argc: 2 [1:--junk1] 
+whereBlock --junk1 
 
-  Invalid option: -x
+  Invalid option: --junk1
 
   Usage:    whereBlock [-v|-h] <block> [block...]  
   Purpose:  Reports if a block was found in the cache, at a local, or at a remote node.

@@ -1,5 +1,5 @@
-getBlock argc: 3 [1:3657480] [2:-o] 
-getBlock 3657480 -o 
+getBlock argc: 3 [1:3657480] [2:--force] 
+getBlock 3657480 --force 
 {
   "gasLimit": 4287079,
   "gasUsed": 3645320,

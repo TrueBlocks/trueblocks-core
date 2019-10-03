@@ -15,7 +15,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("block_list", "", "list<block>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks for which to retrieve blooms"),
+    COption("block_list", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks for which to retrieve blooms"),
     COption("eab", "e", "", OPT_SWITCH, "pull the enhanced adaptive blooms from QBlocks cache"),
     COption("block", "b", "", OPT_SWITCH, "show only the block-level bloom (--raw only)"),
     COption("receipts", "c", "", OPT_SWITCH, "show only the receipt-level blooms (--raw only)"),
@@ -42,7 +42,6 @@ bool COptions::parseArguments(string_q& command) {
     for (auto arg : arguments) {
         if (arg == "-o" || arg == "--force") {
             etherlib_init(defaultQuitHandler);
-            force = true;
             isRaw = false;
 
         } else if (arg == "-r" || arg == "--raw") {
@@ -136,7 +135,6 @@ void COptions::Init(void) {
     asBitBars    = false;
     asPctBars    = false;
     bitCount     = false;
-    force        = false;
     receiptsOnly = false;
     blockOnly    = false;
     bitBound     = 200;

@@ -318,18 +318,23 @@ wei_t getBalanceAt(const string_q& addr, blknum_t num) {
     string_q params = "[\"[{ADDRESS}]\",\"[{NUM}]\"]";
     replace(params, "[{ADDRESS}]", str_2_Addr(addr));
     replace(params, "[{NUM}]",  uint_2_Hex(num));
-    return str_2_Wei(callRPC("eth_getBalance", params, false));
+    string_q ret = callRPC("eth_getBalance", params, false);
+    if (contains(ret,"error"))
+        return 0;
+    return str_2_Wei(ret);
 }
 
 //-------------------------------------------------------------------------
-bool nodeHasBalances(void) {
+bool nodeHasBalances(bool showErrors) {
     // Account 0xa1e4380a3b1f749673e270229993ee55f35663b4 owned 2000000000000000000000 (2000 ether)
     // at block zero. If the node is holding balances (i.e. its an archive node), then it will
     // return that value for block 1 as well. Otherwise, it will return a zero balance.
     // NOTE: Unimportantly, account 0xa1e4380a3b1f749673e270229993ee55f35663b4 transacted in the first ever transaction.
     uint64_t save = verbose; // silence the warning from the node since we know this may fail
     verbose = 0;
+    getCurlContext()->reportErrors = showErrors;
     bool ret = getBalanceAt("0xa1e4380a3b1f749673e270229993ee55f35663b4", 1) == str_2_Wei("2000000000000000000000");
+    getCurlContext()->reportErrors = true;
     verbose = save;
     return ret;
 }

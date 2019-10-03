@@ -37,6 +37,8 @@ namespace qblocks {
 //      source       = "binary";
 //      methodMap    = "";
         methodCnt    = 0;
+//      curlErrors;
+        reportErrors = false;
     }
 
     //-------------------------------------------------------------------------
@@ -166,22 +168,24 @@ PRINT("postData: " + postData);
 
 //-------------------------------------------------------------------------
 static const char *STR_CURLERROR =
-"\t[{Warning:}] The request to the Ethereum node resulted in\n"
-"\tfollowing error message: [{[VAL]}].\n"
-"\tIt is impossible to proceed. Quitting...\n";
+"The request to the Ethereum node resulted|in following error message: [VAL].";
 
 //-------------------------------------------------------------------------
 static const char *STR_CURLRESEMPTY =
-"\t[{Warning:}] The Ethereum node returned an empty response.\n"
-"\tIt is impossible to proceed. Quitting...\n";
+"The Ethereum node returned an empty response.";
+
+static const char *STR_ERROR_NODEREQUIRED =
+"The Ethereum RPC: '[RPC]' was not found.";
 
     //-------------------------------------------------------------------------
-    string_q displayCurlError(const string_q& msg, const string_q& val) {
-        ostringstream os;
-        os << "\n";
-        os << substitute(substitute(substitute(msg, "[{", cTeal), "}]", cOff), "[VAL]", val);
-        os << "\n";
-        return os.str();
+    void displayCurlError(const string_q& msg, const string_q& val) {
+        ostringstream message;
+        message << substitute(substitute(msg, "[VAL]", val), "[RPC]", getCurlContext()->baseURL);
+        cerr << "\n\t" << cRed << "Warning: " << cOff << substitute(message.str(), "|", "\n\t") << " Quitting...\n\n";
+        if (isApiMode())
+            cout << substitute(STR_ERROR_JSON, "[ERRORS]", message.str());
+        quickQuitHandler(EXIT_FAILURE);
+        return;
     }
 
     //-------------------------------------------------------------------------
@@ -199,17 +203,20 @@ PRINTL("perform:\n\tmethod:\t\t" + method + params + "\n\tsource:\t\t" + provide
         CURLcode res = curl_easy_perform(curlHandle);
         if (res != CURLE_OK && !earlyAbort) {
             PRINT("CURL returned an error: ! CURLE_OK")
-            cerr << displayCurlError(STR_CURLERROR, curl_easy_strerror(res));
-            quickQuitHandler(0);
+            displayCurlError(STR_CURLERROR, curl_easy_strerror(res));
         }
 
 PRINT("CURL returned CURLE_OK")
         if (result.empty()) {
-            cerr << displayCurlError(STR_CURLRESEMPTY);
-            quickQuitHandler(0);
+            displayCurlError(STR_CURLRESEMPTY);
 
         } else if (contains(result, "error")) {
+            if (reportErrors) {
+                string_q waste = result;
+                curlErrors.push_back(extractRPCError(waste));
+            }
             LOG4(result + " " + postData);
+            return result;
         }
 
 PRINTL("Received: " + result);
@@ -242,11 +249,7 @@ PRINTL("Received: " + result);
         if (isNodeRunning())
             return;
 
-static const char *STR_ERROR_NODEREQUIRED =
-"\t[{Warning:}] This program requires a running Ethereum node. Please start your node or\n"
-"\tconfigure the 'rpcProvider' setting before running this command. Quitting...";
-        cerr << displayCurlError(STR_ERROR_NODEREQUIRED);
-        quickQuitHandler(EXIT_FAILURE);
+        displayCurlError(STR_ERROR_NODEREQUIRED);
     }
 
     //-------------------------------------------------------------------------

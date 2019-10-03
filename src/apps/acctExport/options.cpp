@@ -10,21 +10,22 @@ static const COption params[] = {
 // BEG_CODE_OPTIONS
     COption("addr_list", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) to export"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_FLAG, "export format (one of [json*|txt|csv])"),
-    COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
+    COption("articulate", "a", "", OPT_SWITCH, "articulate transactions&#44; traces&#44; logs&#44; and outputs"),
     COption("logs", "l", "", OPT_SWITCH, "export logs instead of transaction list"),
     COption("traces", "t", "", OPT_SWITCH, "export traces instead of transaction list"),
     COption("balances", "c", "", OPT_SWITCH, "export balance history instead of transaction list"),
     COption("appearances", "p", "", OPT_SWITCH, "export a list of appearances"),
+    COption("count_only", "o", "", OPT_SWITCH, "display only the count of the number of data items requested"),
     COption("blocks", "b", "enum[on|off*]", OPT_HIDDEN | OPT_FLAG, "write blocks to the binary cache ('off' by default)"),
     COption("writeTxs", "s", "enum[on*|off]", OPT_HIDDEN | OPT_FLAG, "write transactions to the binary cache ('on' by default)"),
     COption("writeTraces", "r", "enum[on*|off]", OPT_HIDDEN | OPT_FLAG, "write traces to the binary cache ('on' by default)"),
     COption("ddos", "d", "enum[on*|off]", OPT_HIDDEN | OPT_FLAG, "skip over dDos transactions in export ('on' by default)"),
-    COption("maxTraces", "m", "<uint>", OPT_HIDDEN | OPT_FLAG, "if --ddos:on, the number of traces defining a dDos (default = 250)"),
-    COption("noHeader", "n", "", OPT_HIDDEN | OPT_SWITCH, "do not show the header row"),
+    COption("maxTraces", "m", "<uint>", OPT_HIDDEN | OPT_FLAG, "if --ddos:on&#44; the number of traces defining a dDos (default = 250)"),
+    COption("no_header", "n", "", OPT_HIDDEN | OPT_SWITCH, "do not show the header row"),
     COption("allABIs", "a", "", OPT_HIDDEN | OPT_SWITCH, "load all previously cached abi files"),
-    COption("grabABIs", "g", "", OPT_HIDDEN | OPT_SWITCH, "using each trace's 'to' address, grab the abi for that address (improves articulation)"),
+    COption("grabABIs", "g", "", OPT_HIDDEN | OPT_SWITCH, "using each trace's 'to' address&#44; grab the abi for that address (improves articulation)"),
     COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
-    COption("deltas", "", "", OPT_HIDDEN | OPT_SWITCH, "for --balances option only, export only changes in balances"),
+    COption("deltas", "", "", OPT_HIDDEN | OPT_SWITCH, "for --balances option only&#44; export only changes in balances"),
     COption("start", "s", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to export (inclusive)"),
     COption("end", "e", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to export (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more Ethereum addresses."),
@@ -35,51 +36,53 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
-    if (!standardOptions(command))
-        return false;
+    ENTER("parseArguments");
 
-    bool noHeader = false, allABIs = false;
+    if (!standardOptions(command))
+        EXIT_NOMSG(false);
+
+    bool no_header = false, allABIs = false;
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (startsWith(arg, "-s") || startsWith(arg, "--writeTxs")) {
             arg = substitute(substitute(arg, "-s:", ""), "--writeTxs:", "");
             if (arg != "on" && arg != "off")
-                return usage("Please provide either 'on' or 'off' for the --writeTxs options. Quitting...");
+                EXIT_USAGE("Please provide either 'on' or 'off' for the --writeTxs options. Quitting...");
             writeTxs = (arg == "on" ? true : false);
 
         } else if (startsWith(arg, "-r") || startsWith(arg, "--writeTraces")) {
             arg = substitute(substitute(arg, "-r:", ""), "--writeTraces:", "");
             if (arg != "on" && arg != "off")
-                return usage("Please provide either 'on' or 'off' for the --writeTraces options. Quitting...");
+                EXIT_USAGE("Please provide either 'on' or 'off' for the --writeTraces options. Quitting...");
             writeTraces = (arg == "on" ? true : false);
 
         } else if (startsWith(arg, "-d") || startsWith(arg, "--ddos")) {
             arg = substitute(substitute(arg, "-d:", ""), "--ddos:", "");
             if (arg != "on" && arg != "off")
-                return usage("Please provide either 'on' or 'off' for the --ddos options. Quitting...");
+                EXIT_USAGE("Please provide either 'on' or 'off' for the --ddos options. Quitting...");
             skipDdos = (arg == "on" ? true : false);
 
         } else if (startsWith(arg, "-m") || startsWith(arg, "--maxTraces")) {
             arg = substitute(substitute(arg, "-m:", ""), "--maxTraces:", "");
             if (!isNumeral(arg))
-                return usage("Please provide a number (you provided " + arg + ") for --maxTraces. Quitting...");
+                EXIT_USAGE("Please provide a number (you provided " + arg + ") for --maxTraces. Quitting...");
             maxTraces = str_2_Uint(arg);
 
         } else if (startsWith(arg, "-s") || startsWith(arg, "--start")) {
             arg = substitute(substitute(arg, "-s:", ""), "--start:", "");
             if (!isNumeral(arg))
-                return usage("Not a number for --startBlock: " + arg + ". Quitting.");
+                EXIT_USAGE("Not a number for --startBlock: " + arg + ". Quitting.");
             scanRange.first = str_2_Uint(arg);
 
         } else if (startsWith(arg, "-e") || startsWith(arg, "--end")) {
             arg = substitute(substitute(arg, "-e:", ""), "--end:", "");
             if (!isNumeral(arg))
-                return usage("Not a number for --endBlock: " + arg + ". Quitting.");
+                EXIT_USAGE("Not a number for --endBlock: " + arg + ". Quitting.");
             scanRange.second = str_2_Uint(arg);
 
-        } else if (arg == "-n" || arg == "--noHeader") {
-            noHeader = true;
+        } else if (arg == "-n" || arg == "--no_header") {
+            no_header = true;
 
         } else if (arg == "-n" || arg == "--allABIs") {
             allABIs = true;
@@ -103,6 +106,9 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-f" || arg == "--freshen") {
             freshen_only = true;
 
+        } else if (arg == "-o" || arg == "--count_only") {
+            count_only = true;
+
         } else if (arg == "--deltas") {
             deltas_only = true;
 
@@ -114,22 +120,22 @@ bool COptions::parseArguments(string_q& command) {
             arg = toLower(arg);
 
             if (!isAddress(arg))
-                return usage(arg + " does not appear to be a valid address. Quitting...");
+                EXIT_USAGE(arg + " does not appear to be a valid address. Quitting...");
 
             string_q fn = getMonitorPath(arg);
             if (!fileExists(fn)) {
                 fn = (isTestMode() ? substitute(fn, getMonitorPath(""), "./") : fn);
-                return usage("File not found '" + fn + ". Quitting...");
+                EXIT_USAGE("File not found '" + fn + ". Quitting...");
             }
 
             if (fileExists(fn + ".lck"))
-                return usage("The cache lock file is present. The program is either already "
+                EXIT_USAGE("The cache lock file is present. The program is either already "
                              "running or it did not end cleanly the\n\tlast time it ran. "
                              "Quit the already running program or, if it is not running, "
                              "remove the lock\n\tfile: " + fn + ".lck'. Quitting...");
 
             //if (fileSize(fn) == 0)
-            //    return usage("Nothing to export. Quitting...");
+            //    EXIT_USAGE("Nothing to export. Quitting...");
 
             CAccountWatch watch;
             // below - don't change, sets bloom value also
@@ -143,21 +149,22 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
-                return usage("Invalid option: " + arg);
+                EXIT_USAGE("Invalid option: " + arg);
             }
         }
     }
+    LOG4("Finished parsing command line");
 
     SHOW_FIELD(CTransaction, "traces");
 
     if ((doAppearances + doLogs + doTraces + doBalances) > 1)
-        return usage("Please export only one of list, logs, traces, or balances. Quitting...");
+        EXIT_USAGE("Please export only one of list, logs, traces, or balances. Quitting...");
 
     if (monitors.size() == 0)
-        return usage("You must provide at least one Ethereum address. Quitting...");
+        EXIT_USAGE("You must provide at least one Ethereum address. Quitting...");
 
     if (deltas_only && !doBalances)
-        return usage("--deltas option is only available with --balances. Quitting...");
+        EXIT_USAGE("--deltas option is only available with --balances. Quitting...");
 
     // show certain fields and hide others
     //SEP4("default field hiding: " + defHide);
@@ -172,9 +179,13 @@ bool COptions::parseArguments(string_q& command) {
     manageFields(toml.getConfigStr("fields", "show", ""), true );
 
     // Load as many ABI files as we have
-    abis.loadAbiKnown("all");
-    if (allABIs)
-        abis.loadCachedAbis("all");
+    if (!doAppearances && !doBalances) {
+        LOG4("Loading ABIs");
+        abis.loadAbiKnown("all");
+        if (allABIs)
+            abis.loadCachedAbis("all");
+        LOG4("Finished loading ABIs");
+    }
 
     // Try to articulate the watched addresses
     for (size_t i = 0 ; i < monitors.size() ; i++) {
@@ -211,7 +222,7 @@ bool COptions::parseArguments(string_q& command) {
         expContext().fmtMap["transaction_fmt"] = cleanFmt(format, exportFmt);
 
         if (format.empty())
-            return usage("For non-json export a 'trans_fmt' string is required. Check your config file. Quitting...");
+            EXIT_USAGE("For non-json export a 'trans_fmt' string is required. Check your config file. Quitting...");
         if (!contains(toLower(format), "trace"))
             HIDE_FIELD(CTransaction, "traces");
 
@@ -256,7 +267,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     expContext().fmtMap["header"] = "";
-    if (!noHeader) {
+    if (!no_header) {
         if (doTraces) {
             expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["trace_fmt"], exportFmt);
         } else if (doLogs) {
@@ -277,7 +288,19 @@ bool COptions::parseArguments(string_q& command) {
     if (freshen_only)
         exportFmt = NONE1;
 
-    return true;
+//    if (count_only && !doAppearances)
+//        EXIT_USAGE("the --count_only option is only available with the --appearances option. Quitting...");
+
+    if (count_only) {
+        string_q header;
+        if (exportFmt == TXT1)
+            header = "address\tcount";
+        else if (exportFmt == CSV1)
+            header = ("\"" + substitute(header, "\t", "\",\"") + "\"");
+        expContext().fmtMap["header"] = header;
+    }
+
+    EXIT_NOMSG(true);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -299,6 +322,7 @@ void COptions::Init(void) {
     doBalances = false;
     doABIs = false;
     freshen_only = false;
+    count_only = false;
     deltas_only = false;
     scanRange.second = getLastBlock_cache_ripe();
 
@@ -335,6 +359,8 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
 //-----------------------------------------------------------------------
 bool COptions::loadOneAddress(CAppearanceArray_base& apps, const address_t& addr) {
 
+    ENTER("loadOneAddress");
+
     if (hackAppAddr.empty())
         hackAppAddr = addr;
 
@@ -352,8 +378,7 @@ bool COptions::loadOneAddress(CAppearanceArray_base& apps, const address_t& addr
             txCache.Read(buffer, sizeof(CAppearance_base), nRecords);
             txCache.Release();
         } else {
-            cerr << "Could not open cache file.";
-            return false;
+            EXIT_FAIL("Could not open cache file.");
         }
 
         // Add to the apps which may be non-empty
@@ -369,11 +394,9 @@ bool COptions::loadOneAddress(CAppearanceArray_base& apps, const address_t& addr
         delete [] buffer;
 
     } else {
-        cerr << "Could not allocate memory for address " << addr;
-        return false;
+        EXIT_FAIL("Could not allocate memory for address " + addr);
     }
-
-    return true;
+    EXIT_NOMSG(true);
 }
 
 //-----------------------------------------------------------------------
@@ -394,8 +417,12 @@ bool COptions::loadAllAppearances(void) {
                 scanRange.first = lastExport;
         }
     }
-    if (tmp.size() == 0)
+
+    if (tmp.size() == 0) {
+        if (!freshen_only)
+            LOG_INFO("Nothing to export" + (monitors.size() ? (" from " + monitors[0].address) : "") + ".");
         return false;
+    }
 
     // Should be sorted already, so it can't hurt
     sort(tmp.begin(), tmp.end());

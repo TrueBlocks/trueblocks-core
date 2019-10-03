@@ -1,0 +1,5 @@
+{
+  "errors": [
+    "getTokenInfo - Not enough arguments presented."
+  ]
+}

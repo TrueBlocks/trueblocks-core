@@ -1,7 +1,7 @@
 whereBlock argc: 4 [1:1001001] [2:--fmt] [3:junk] 
 whereBlock 1001001 --fmt junk 
 
-  Export format must be one of [ json | txt | csv | api ]. Quitting...
+  Export format (junk) must be one of [ json | txt | csv | api ]. Quitting...
 
   Usage:    whereBlock [-v|-h] <block> [block...]  
   Purpose:  Reports if a block was found in the cache, at a local, or at a remote node.

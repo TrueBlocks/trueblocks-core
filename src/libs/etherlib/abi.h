@@ -24,6 +24,7 @@ namespace qblocks {
 class CTransaction;
 class CLogEntry;
 class CTrace;
+typedef map<string, bool> CFunctionMap;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -31,6 +32,7 @@ class CAbi : public CBaseNode {
 public:
     address_t address;
     CFunctionArray interfaces;
+    CFunctionMap interfaceMap;
 
 public:
     CAbi(void);

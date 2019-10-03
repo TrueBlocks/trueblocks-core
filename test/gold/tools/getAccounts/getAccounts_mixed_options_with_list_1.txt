@@ -1,16 +1,6 @@
-getAccounts argc: 6 [1:-x] [2:json] [3:-a] [4:0xb6] [5:torj] 
-getAccounts -x json -a 0xb6 torj 
-[
+getAccounts argc: 6 [1:0xb6] [2:torj] [3:--addr] [4:--fmt] [5:json] 
+getAccounts 0xb6 torj --addr --fmt json 
+{ "data": [
   {
-    "group": "50-Tokens",
-    "name": "Storj",
-    "address": "0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac",
-    "symbol": "STORJ",
-    "description": "Blockchain-based, end-to-end encrypted, distributed object storage, where only you have access to your data",
-    "source": "Etherscan.io",
-    "logo": "storj2.png",
-    "is_contract": true,
-    "is_private": false,
-    "is_shared": true
-  }
-]
+    "address": "0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac"
+  }] }

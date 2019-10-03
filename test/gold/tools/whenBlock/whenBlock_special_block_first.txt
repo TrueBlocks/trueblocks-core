@@ -1,4 +1,4 @@
-whenBlock argc: 3 [1:first] [2:-v] 
-whenBlock first -v 
+whenBlock argc: 3 [1:first] [2:--verbose] 
+whenBlock first --verbose 
 blocknumber	timestamp	date	name
 0	1438269960	2015-07-30 15:26:00 UTC	first

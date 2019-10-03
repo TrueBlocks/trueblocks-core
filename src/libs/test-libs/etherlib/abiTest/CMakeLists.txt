@@ -18,41 +18,5 @@ add_executable(${TOOL_NAME} ${SOURCE_FILES})
 # Add the project static libs at linking
 target_link_libraries (${TOOL_NAME} ${BASE_LIBS})
 
-# Testing
-# Define paths to test folder and gold folder
-set(TEST_EXE "${EXECUTABLE_OUTPUT_PATH}/${TOOL_NAME}")
-set(TEST_PATH "${TEST_PATH}/${PROJ_NAME}/${TOOL_NAME}")
-set(GOLD_PATH "${GOLD_PATH}/${PROJ_NAME}/${TOOL_NAME}")
-
 # Additional target to make the README.md
 build_readme(${CMAKE_CURRENT_SOURCE_DIR} ${TOOL_NAME})
-
-# To run only specific tests we define a test configuration named "test_all"
-add_custom_target(test-all COMMAND ${CMAKE_CTEST_COMMAND} -C test_all)
-
-# Function to run an special or slow test case
-function(run_special_test testName)
-    run_the_special_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
-endfunction(run_special_test)
-
-# Function to run an individual test case
-function(run_test testName)
-     run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
-endfunction(run_test)
-
-# Enter one line for each individual test
-run_test("abilibTest_README"             "-th")
-run_test("abilibTest_01"                 "ecoding")
-run_test("abilibTest_funcassign"         "func_assign")
-run_test("abilibTest_evtassign"          "evt_assign")
-run_special_test("abilibTest_02"         "encoding")
-run_special_test("abilibTest_03"         "generation" " encoding")
-run_special_test("abilibTest_04"         "generation" " encoding" " bad")
-run_special_test("abilibTest_05_old_bug" "old_bug")
-run_test("abilibTest_ethtest"            "eth_test" " -s" " 0")
-run_test("abilibTest_ethtest_sigs"       "eth_test" " -s" " 1")
-run_test("abilibTest_ethtest_encode"     "eth_test" " -s" " 2")
-run_test("abilibTest_ethtest_encode_raw" "eth_test" " -s" " 3")
-run_test("abilibTest_ethtest_decode"     "eth_test" " -s" " 4")
-run_test("abilibTest_ethtest_decode_raw" "eth_test" " -s" " 5")
-run_test("abilibTest_ethtest_tight"      "eth_test" " -s" " 6")

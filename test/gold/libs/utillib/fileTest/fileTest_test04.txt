@@ -1,3 +1,3 @@
 fileTest argc: 2 [1:first-recurse] 
 fileTest first-recurse 
-First file in folder: ../apiTest/apiTest_test01.txt
+First file in folder: ../arrayTest/arrayTest_Insertion.txt

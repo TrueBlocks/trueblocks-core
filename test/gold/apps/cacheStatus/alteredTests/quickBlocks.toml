@@ -1,0 +1,18 @@
+[version]
+current = "0.5.5-alpha"
+
+[settings]
+rpcProvider = "--new rpc Provider--"
+# rpcProvider = "http://127.0.0.1:7545"
+rpcProvider = "http://localhost:36963/"
+# rpcProvider = "http://localhost:23456/"
+# rpcProvider = "http://localhost:8515"
+balanceProvider = "--new balance Prov--"
+cachePath = "--new cache Path--/"
+indexPath = "--new index Path--/"
+apiProvider = "--new api Provider--"
+configPath = "--new config Path--/"
+
+# [dev]
+# debug_curl = true
+# debug_ethscan = true

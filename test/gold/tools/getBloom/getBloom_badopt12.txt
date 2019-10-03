@@ -1,5 +1,5 @@
-getBloom argc: 4 [1:4501030] [2:--bars] [3:-i] 
-getBloom 4501030 --bars -i 
+getBloom argc: 4 [1:4501030] [2:--bars] [3:--bits] 
+getBloom 4501030 --bars --bits 
 
   Only one of --bits, --bars, --barbits, or --pctbars may be chosen. Quitting...
 

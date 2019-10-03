@@ -1,6 +1,6 @@
-getLogs argc: 5 [1:--verbose] [2:--file:cmd_file] [3:--fmt] [4:json] 
-getLogs --verbose --file:cmd_file --fmt json 
-[
+getLogs argc: 5 [1:--file:cmd_file] [2:--verbose] [3:--fmt] [4:json] 
+getLogs --file:cmd_file --verbose --fmt json 
+{ "data": [
   {
     "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
     "data": "0x000000000000000000000000000000000000000000000000094079cd16496a00",
@@ -48,5 +48,4 @@ getLogs --verbose --file:cmd_file --fmt json
         }
       ]
     }
-  }
-]
+  }] }

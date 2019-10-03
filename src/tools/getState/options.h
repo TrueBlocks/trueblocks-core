@@ -16,6 +16,7 @@
 //-----------------------------------------------------------------------------
 class COptions : public CHistoryOptions {
 public:
+    CStringArray errors;
     CAddressArray addrs;
     address_t current;
     ethstate_t mode;

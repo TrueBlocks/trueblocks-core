@@ -1,6 +1,5 @@
 cacheStatus argc: 1 
 cacheStatus 
-[
 {
   "client_version": "Parity version",
   "trueblocks_version": "GHC-TrueBlocks//0.5.8-alpha--git-hash---git-ts-",
@@ -37,14 +36,6 @@ cacheStatus
       "valid_counts": true
     },
     {
-      "type": "CAbiCache",
-      "path": "CachePath",
-      "nFiles": 0,
-      "nFolders": 0,
-      "sizeInBytes": 0,
-      "valid_counts": false
-    },
-    {
       "addrs": [],
       "type": "CSlurpCache",
       "path": "SlurpPath",
@@ -63,6 +54,3 @@ cacheStatus
     }
   ]
 }
-
-
-]

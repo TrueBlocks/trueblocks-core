@@ -1,10 +1,10 @@
-getAccounts argc: 3 [1:--verbose] [2:0xb6] 
-getAccounts --verbose 0xb6 
-address	name	symbol	source
-0xb62132e35a6c13ee1ee0f84dc5d40bad8d815206	Nexo	NEXO	Etherscan.io
-0xb62d18dea74045e822352ce4b3ee77319dc5ff2f	EventChain	EVC	Etherscan.io
-0xb63b606ac810a52cca15e44bb630fd42d8d1d83d	Crypto.com	MCO	Etherscan.io
-0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac	Storj	STORJ	Etherscan.io
-0xb683d83a532e2cb7dfa5275eed3698436371cc9f	BTU Protocol	BTU	Etherscan.io
-0xb6ed7644c69416d67b522e20bc294a9a9b405b31	0xBitcoin Token	0xBTC	Etherscan.io
-0xb6ee9668771a79be7967ee29a63d4184f8097143	CargoX	CXO	Etherscan.io
+getAccounts argc: 5 [1:0xb6] [2:--verbose] [3:--fmt] [4:txt] 
+getAccounts 0xb6 --verbose --fmt txt 
+group	subgroup	address	name	symbol	source
+50-Tokens		0xb62132e35a6c13ee1ee0f84dc5d40bad8d815206	Nexo	NEXO	Etherscan.io
+50-Tokens		0xb62d18dea74045e822352ce4b3ee77319dc5ff2f	EventChain	EVC	Etherscan.io
+50-Tokens		0xb63b606ac810a52cca15e44bb630fd42d8d1d83d	Crypto.com	MCO	Etherscan.io
+50-Tokens		0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac	Storj	STORJ	Etherscan.io
+50-Tokens		0xb683d83a532e2cb7dfa5275eed3698436371cc9f	BTU Protocol	BTU	Etherscan.io
+50-Tokens		0xb6ed7644c69416d67b522e20bc294a9a9b405b31	0xBitcoin Token	0xBTC	Etherscan.io
+50-Tokens		0xb6ee9668771a79be7967ee29a63d4184f8097143	CargoX	CXO	Etherscan.io

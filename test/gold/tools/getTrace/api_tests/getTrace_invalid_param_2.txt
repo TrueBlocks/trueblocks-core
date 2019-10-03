@@ -1,0 +1,5 @@
+{
+  "errors": [
+    "getTrace - .whatever does not appear to be a valid transaction index."
+  ]
+}

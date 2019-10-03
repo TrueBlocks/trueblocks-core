@@ -81,6 +81,9 @@ bool CConfigGroup::setValueByName(const string_q& fieldNameIn, const string_q& f
         case 'n':
             if ( fieldName % "name" ) { name = fieldValue; return true; }
             break;
+        case 's':
+            if ( fieldName % "section" ) { section = fieldValue; return true; }
+            break;
         default:
             break;
     }
@@ -107,6 +110,7 @@ bool CConfigGroup::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
+    archive >> section;
     archive >> name;
     archive >> keys;
     finishParse();
@@ -121,6 +125,7 @@ bool CConfigGroup::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
+    archive << section;
     archive << name;
     archive << keys;
 
@@ -158,6 +163,7 @@ void CConfigGroup::registerClass(void) {
     ADD_FIELD(CConfigGroup, "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD(CConfigGroup, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CConfigGroup, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CConfigGroup, "section", T_TEXT, ++fieldNum);
     ADD_FIELD(CConfigGroup, "name", T_TEXT, ++fieldNum);
     ADD_FIELD(CConfigGroup, "keys", T_OBJECT|TS_ARRAY, ++fieldNum);
 
@@ -256,6 +262,9 @@ string_q CConfigGroup::getValueByName(const string_q& fieldName) const {
             break;
         case 'n':
             if ( fieldName % "name" ) return name;
+            break;
+        case 's':
+            if ( fieldName % "section" ) return section;
             break;
     }
 

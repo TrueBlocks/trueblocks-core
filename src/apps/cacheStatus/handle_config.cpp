@@ -6,58 +6,71 @@
 #include "options.h"
 
 //--------------------------------------------------------------------------------
-void COptions::handle_config(ostream& os) {
-    if (mode.empty()) {  // it's a get
-        handle_config_get(os);
-    } else {
-        handle_config_put(os);
+bool COptions::handle_config(ostream& os) {
+    if (mode.empty()) {
+        manageFields("CAccountName:firstAppearance,latestAppearance,nRecords,sizeInBytes", false);
+        GETRUNTIME_CLASS(CAccountName)->sortFieldList();
+        return handle_config_get(os);
     }
+    return handle_config_set(os);
 }
 
 //--------------------------------------------------------------------------------
-void COptions::handle_config_get(ostream& os) {
-    CConfiguration config;
+bool COptions::handle_config_get(ostream& os) {
 
+    ENTER("handle_config_get");
+
+    CConfiguration config;
     {
         const CToml *cc = getGlobalConfig();
         CConfigFile  f("quickBlocks.toml");
-        CConfigGroup g1("settings");
+
+        CConfigGroup g1_1("Providers", "settings");
+        CConfigGroup g1_2("Paths", "settings");
+
         CStringArray values;
+        values.push_back(isTestMode() ? "--rpc Provider--" : cc->getConfigStr(g1_1.name, "rpcProvider",     "http://localhost:8545"));
+        values.push_back(isTestMode() ? "--api Provider--" : cc->getConfigStr(g1_1.name, "apiProvider",     "http://localhost:8080"));
+        values.push_back(isTestMode() ? "--balance Prov--" : cc->getConfigStr(g1_1.name, "balanceProvider", "http://localhost:8545"));
+        values.push_back(isTestMode() ? "--config Path--"  : cc->getConfigStr(g1_2.name, "configPath",      "~/.quickBlocks/"));
+        values.push_back(isTestMode() ? "--cache Path--"   : cc->getConfigStr(g1_2.name, "cachePath",       "~/.quickBlocks/cache/"));
+        values.push_back(isTestMode() ? "--index Path--"   : cc->getConfigStr(g1_2.name, "indexPath",       "~/.quickBlocks/cache/addr_index/"));
+
         size_t cnt = 0;
-        values.push_back(isTestMode() ? "--rpc Provider--" : cc->getConfigStr(g1.name, "rpcProvider",     "http://localhost:8545"));
-        values.push_back(isTestMode() ? "--api Provider--" : cc->getConfigStr(g1.name, "apiProvider",     "http://localhost:8080"));
-        values.push_back(isTestMode() ? "--balance Prov--" : cc->getConfigStr(g1.name, "balanceProvider", "http://localhost:8080"));
-        values.push_back(isTestMode() ? "--config Path--"  : cc->getConfigStr(g1.name, "configPath",      "~/.quickBlocks/"));
-        values.push_back(isTestMode() ? "--cache Path--"   : cc->getConfigStr(g1.name, "cachePath",       "~/.quickBlocks/cache/"));
-        values.push_back(isTestMode() ? "--index Path--"   : cc->getConfigStr(g1.name, "indexPath",       "~/.quickBlocks/cache/addr_index/"));
         CConfigItemArray items;
+
         items.push_back(CConfigItem("rpcProvider",     substitute(values[cnt++],"\t","\\t"), "url",  "the Ethereum node's RPC endpoint",                 true,  false));
         items.push_back(CConfigItem("apiProvider",     substitute(values[cnt++],"\t","\\t"), "url",  "TrueBlocks' API endpoint",                         true,  false));
         items.push_back(CConfigItem("balanceProvider", substitute(values[cnt++],"\t","\\t"), "url",  "alternative node endpoint for account balances",   false, false));
-        items.push_back(CConfigItem("configPath",      substitute(values[cnt++],"\t","\\t"), "path", "location of config files, read only",              true,  true));
-        items.push_back(CConfigItem("cachePath",       substitute(values[cnt++],"\t","\\t"), "path", "location of cache (on external SSD, for example)", false, false));
-        items.push_back(CConfigItem("indexPath",       substitute(values[cnt++],"\t","\\t"), "path", "location of index (on internal SSD for speed)",    false, false));
         for (auto item : items)
-            g1.keys.push_back(item);
-        f.groups.push_back(g1);
+            g1_1.keys.push_back(item);
+        f.groups.push_back(g1_1);
+        items.clear();
 
-        extern const char* STR_DISPLAY_WHEN;
-        extern const char* STR_DISPLAY_WHERE;
+        items.push_back(CConfigItem("configPath", substitute(values[cnt++],"\t","\\t"), "path", "location of config files, read only",              true,  true));
+        items.push_back(CConfigItem("cachePath",  substitute(values[cnt++],"\t","\\t"), "path", "location of cache (on external SSD, for example)", false, false));
+        items.push_back(CConfigItem("indexPath",  substitute(values[cnt++],"\t","\\t"), "path", "location of index (on internal SSD for speed)",    false, false));
+        for (auto item : items)
+            g1_2.keys.push_back(item);
+        f.groups.push_back(g1_2);
+
+extern const char* STR_DISPLAY_WHEN;
+extern const char* STR_DISPLAY_WHERE;
 
         CStringArray values2; CConfigItemArray items2;
-        CConfigGroup g2("display_strs");cnt=0;
-        values2.push_back(isTestMode() ? "--account Name--"   : cc->getConfigStr(g2.name, "", STR_DISPLAY_ACCOUNTNAME));
-        values2.push_back(isTestMode() ? "--balance record--" : cc->getConfigStr(g2.name, "", STR_DISPLAY_BALANCERECORD));
-        values2.push_back(isTestMode() ? "--block--"         : cc->getConfigStr(g2.name, "", STR_DISPLAY_BLOCK));
-        values2.push_back(isTestMode() ? "--eth state--"      : cc->getConfigStr(g2.name, "", STR_DISPLAY_ETHSTATE));
-        values2.push_back(isTestMode() ? "--function--"      : cc->getConfigStr(g2.name, "", STR_DISPLAY_FUNCTION));
-        values2.push_back(isTestMode() ? "--logentry--"      : cc->getConfigStr(g2.name, "", STR_DISPLAY_LOGENTRY));
-        values2.push_back(isTestMode() ? "--pricequote--"    : cc->getConfigStr(g2.name, "", STR_DISPLAY_PRICEQUOTE));
-        values2.push_back(isTestMode() ? "--receipt--"       : cc->getConfigStr(g2.name, "", STR_DISPLAY_RECEIPT));
-        values2.push_back(isTestMode() ? "--trace--"         : cc->getConfigStr(g2.name, "", STR_DISPLAY_TRACE));
-        values2.push_back(isTestMode() ? "--transaction--"   : cc->getConfigStr(g2.name, "", STR_DISPLAY_TRANSACTION));
-        values2.push_back(isTestMode() ? "--when block--"     : cc->getConfigStr(g2.name, "", STR_DISPLAY_WHEN));
-        values2.push_back(isTestMode() ? "--where block--"    : cc->getConfigStr(g2.name, "", STR_DISPLAY_WHERE));
+        CConfigGroup g2("Display Strings", "display_strs");cnt=0;
+        values2.push_back(isTestMode() ? "--account Name--"   : cc->getConfigStr(g2.section, "", STR_DISPLAY_ACCOUNTNAME));
+        values2.push_back(isTestMode() ? "--balance record--" : cc->getConfigStr(g2.section, "", STR_DISPLAY_BALANCERECORD));
+        values2.push_back(isTestMode() ? "--block--"          : cc->getConfigStr(g2.section, "", STR_DISPLAY_BLOCK));
+        values2.push_back(isTestMode() ? "--eth state--"      : cc->getConfigStr(g2.section, "", STR_DISPLAY_ETHSTATE));
+        values2.push_back(isTestMode() ? "--function--"       : cc->getConfigStr(g2.section, "", STR_DISPLAY_FUNCTION));
+        values2.push_back(isTestMode() ? "--logentry--"       : cc->getConfigStr(g2.section, "", STR_DISPLAY_LOGENTRY));
+        values2.push_back(isTestMode() ? "--pricequote--"     : cc->getConfigStr(g2.section, "", STR_DISPLAY_PRICEQUOTE));
+        values2.push_back(isTestMode() ? "--receipt--"        : cc->getConfigStr(g2.section, "", STR_DISPLAY_RECEIPT));
+        values2.push_back(isTestMode() ? "--trace--"          : cc->getConfigStr(g2.section, "", STR_DISPLAY_TRACE));
+        values2.push_back(isTestMode() ? "--transaction--"    : cc->getConfigStr(g2.section, "", STR_DISPLAY_TRANSACTION));
+        values2.push_back(isTestMode() ? "--when block--"     : cc->getConfigStr(g2.section, "", STR_DISPLAY_WHEN));
+        values2.push_back(isTestMode() ? "--where block--"    : cc->getConfigStr(g2.section, "", STR_DISPLAY_WHERE));
 extern string_q convertDisplayStr(const string_q& in);
         items2.push_back(CConfigItem("accountName",   convertDisplayStr(values2[cnt++]), "display string",  "", false,  false));
         items2.push_back(CConfigItem("balancerecord", convertDisplayStr(values2[cnt++]), "display string",  "", false,  false));
@@ -73,15 +86,16 @@ extern string_q convertDisplayStr(const string_q& in);
         items2.push_back(CConfigItem("whereblock",    convertDisplayStr(values2[cnt++]), "display string",  "", false,  false));
         for (auto item : items2)
             g2.keys.push_back(item);
-        f.groups.push_back(g2);
+        if (verbose || isTestMode())
+            f.groups.push_back(g2);
         config.files.push_back(f);
     }
 
     {
         const CToml *cc = getGlobalConfig("blockScrape");
         CConfigFile  f("blockScrape.toml");
-        CConfigGroup g1("settings");
-        string_q     v1 = (isTestMode() ? "--n Blocks--"     : cc->getConfigStr(g1.name, "nBlocks",     "2000"));
+        CConfigGroup g1("Scraper", "settings");
+        string_q     v1 = (isTestMode() ? "--n Blocks--"      : cc->getConfigStr(g1.name, "nBlocks",     "2000"));
         string_q     v2 = (isTestMode() ? "--n Addr Procs--"  : cc->getConfigStr(g1.name, "nAddrProcs",  "20"));
         string_q     v3 = (isTestMode() ? "--n Block Procs--" : cc->getConfigStr(g1.name, "nBlockProcs", "10"));
         CConfigItem  i1("nBlocks",     v1, "uint",  "number of blocks to process per invocation of blaze (> 50)",        true, false); g1.keys.push_back(i1);
@@ -94,7 +108,7 @@ extern string_q convertDisplayStr(const string_q& in);
     {
         const CToml *cc = getGlobalConfig("acctExport");
         CConfigFile  f("acctExport.toml");
-        CConfigGroup g1("settings");
+        CConfigGroup g1("Exporter", "settings");
         string_q     v1 = (isTestMode() ? "--write Txs--"    : cc->getConfigStr(g1.name, "writeTxs",     "true"));
         string_q     v2 = (isTestMode() ? "--write Traces--" : cc->getConfigStr(g1.name, "writeTraces",  "true"));
         CConfigItem  i1("writeTxs",    v1, "bool", "write transactions to the TrueBlocks binary cache", false, false); g1.keys.push_back(i1);
@@ -108,19 +122,18 @@ extern string_q convertDisplayStr(const string_q& in);
 
         const CToml *cc = getGlobalConfig("getAccounts");
         CConfigFile  f("getAccounts.toml");
-        CConfigGroup g1("custom");
+        CConfigGroup g1("Names", "custom");
 
         CConfigItem i1("list", "", "json array", "user specific list of names for addresses -- private data -- not shared", false, false);
         if (isTestMode()) {
-            i1.named.push_back(CAccountName(CAccountName("81-Custom\t0x0000100001000010000100001000010000100001\tTestWallet1")));
-            i1.named.push_back(CAccountName(CAccountName("81-Custom\t0x0000200002000020000200002000020000200002\tTestWallet2")));
+            i1.named.push_back(CAccountName(CAccountName("81-Custom\t\t0x0000100001000010000100001000010000100001\tTestWallet1")));
+            i1.named.push_back(CAccountName(CAccountName("81-Custom\t\t0x0000200002000020000200002000020000200002\tTestWallet2")));
 
         } else {
 
             string_q customStr = cc->getConfigJson("custom", "list", "");
             CAccountName item;
             while (item.parseJson3(customStr)) {
-                unpreserveSpaces(item.name);
                 i1.named.push_back(item);
                 item = CAccountName();
             }
@@ -128,55 +141,121 @@ extern string_q convertDisplayStr(const string_q& in);
 
         g1.keys.push_back(i1);
         f.groups.push_back(g1);
-        config.files.push_back(f);
+        if (verbose || isTestMode())
+            config.files.push_back(f);
     }
 
     {
         const CToml *cc = getGlobalConfig("ethslurp");
         CConfigFile  f("ethslurp.toml");
-        CConfigGroup g1("settings");
+        CConfigGroup g1("APIs", "settings");
         string_q     v1 = (isTestMode() ? "--api_key--" : cc->getConfigStr(g1.name, "api_key", "<not-set>"));
-        CConfigItem  i1("api_key", v1, "string", "api key required to use EtherScan apis -- private data -- not shared", false, false); g1.keys.push_back(i1);
+        CConfigItem  i1("etherscan", v1, "string", "api key required to use EtherScan apis -- private data -- not shared", false, false); g1.keys.push_back(i1);
         f.groups.push_back(g1);
         config.files.push_back(f);
     }
 
-    os << config << endl;
-
-    return;
+    os << config;
+    return true;
 }
 
 //--------------------------------------------------------------------------------
-void COptions::handle_config_put(ostream& os) {
-    CConfiguration config;
-    string_q str = asciiFileToString("setConfig_data2.json");
-    str = substitute(str, "\\ ", string_q(1,char(5)));
-    str = substitute(str, "\\\"", "\"");
-    str = substitute(str, "\\n", "\n");
-    str = trim(str, ' ');
-    str = trim(str, '\"');
-    str = trim(str, ' ');
-    preserveSpaces(str);
-    cout << "------------------------------------------------" << endl;
-    cout << str << endl;
-    cout << "------------------------------------------------" << endl;
-    CApiResult result;
-    result.parseJson3(str);
-    cout << "Would have written:" << endl;
-    for (auto file : result.data.files) {
+inline string_q getSettingsStr(void) {
+    string_q path = getCachePath("tmp/settings.json");
+    string_q ret = asciiFileToString(path);
+    if (fileExists(path))
+        ::remove(path.c_str());
+    if (isTestMode()) {
+extern const char* STR_TEST_DATA;
+        cerr.rdbuf( cout.rdbuf() );
+        colorsOff();
+        ret = STR_TEST_DATA;
+    }
+    replace(ret, "[", "");
+    replaceReverse(ret, "]", "");
+    return ret;
+}
+
+//--------------------------------------------------------------------------------
+bool COptions::handle_config_set(ostream& os) {
+
+    ENTER("handle_config_set");
+
+    string_q newSettings = getSettingsStr();
+    if (newSettings.empty())
+        EXIT_USAGE("No settings given. Quitting...");
+    if (isApiMode() || isTestMode())
+        cerr << cGreen << newSettings << cOff << endl;
+
+    CConfigFile file;
+    while (file.parseJson3(newSettings)) {
+        string_q path = configPath(file.name);
+        if (isTestMode())
+            path = "./tests/" + file.name;
+        CToml toml(path);
+        CToml orig("");
+        orig.mergeFile(&toml);
+        if (isTestMode()) {
+            cerr << cYellow << string_q(120, '-') << cOff << endl;
+            cerr << "As read: " << path << ":" << endl;
+            cerr << cYellow << string_q(120, '-') << cOff << endl;
+            cerr << bBlue   << toml << endl;
+            cerr << cYellow << string_q(120, '-') << cOff << endl;
+        }
+
         for (auto group : file.groups) {
             for (auto key : group.keys) {
+                if (file.name == "ethslurp.toml" && key.name == "etherscan")
+                    key.name = "api_key";
                 string_q val = key.getValueByName("value");
-                unpreserveSpaces(val);
-                cout << "  ";
-                cout << "getGlobalConfig(\"" << file.name << "\")->";
-                cout << "setConfigStr(\"" << group.name << "\", \"";
-                cout << key.name << "\", \"" << val;
-                cout << "\");" << endl;
+                if (contains(key.name, "list")) {
+                    ostringstream oss;
+                    oss << "[";
+                    bool first = true;
+                    for (auto name : key.named) {
+                        if (!first)
+                            oss << ", ";
+                        oss << name;
+                        first = false;
+                    }
+                    oss << "]";
+                    val = substitute(substitute(oss.str(), "\n", ""), "  \"", " \"");
+                    val = substitute(substitute(substitute(substitute(val, "}]", " }\n]"), "[{", "[\n{"), "{", "\t{"), "}, ", " },\n");
+                }
+                bool isBool = (key.type == "bool");
+                bool isPath = (key.type == "path");
+                if (isPath && !endsWith(val, '/'))
+                    val += "/";
+                cerr << "  " << "toml.";
+                cerr << (isBool ? "setConfigBool(" : "setConfigStr(");
+                cerr << "\"" << group.name << "\", ";
+                cerr << "\"" << key.name << "\", ";
+                cerr << (isBool ? bool_2_Str(str_2_Bool(val)) : ("\"" + val + "\""));
+                cerr << ");" << endl;
+                if (key.type == "bool") {
+                    toml.setConfigBool(group.name, key.name, str_2_Bool(val));
+                } else {
+                    toml.setConfigStr(group.name, key.name, val);
+                }
             }
         }
+        if (isTestMode())
+            toml.setFilename(substitute(path, "/tests/", "/alteredTests/"));
+        toml.writeFile();
+
+        if (isTestMode()) {
+            CToml newToml(substitute(path, "/tests/", "/alteredTests/"));
+            cerr << cYellow << string_q(120, '-') << cOff << endl;
+            cerr << "Would have written: " << path << ":" << endl;
+            cerr << cYellow << string_q(120, '-') << cOff << endl;
+            cerr << bBlue   << newToml << endl;
+            cerr << cYellow << string_q(120, '-') << cOff << endl;
+        }
+
+        file = CConfigFile();
     }
-    return;
+
+    return true;
 }
 
 //--------------------------------------------------------------------------------
@@ -190,3 +269,5 @@ string_q convertDisplayStr(const string_q& in) {
 
 const char* STR_DISPLAY_WHEN = "[{BLOCKNUMBER}]\t[{TIMESTAMP}]\t[{DATE}]\t[{NAME}]";
 const char* STR_DISPLAY_WHERE = "[{BLOCKNUMBER}]\t[{PATH}]\t[{CACHED}]";
+const char* STR_TEST_DATA =
+"[{\"name\": \"quickBlocks.toml\",\"groups\": [{\"section\": \"Providers\",\"name\": \"settings\",\"keys\": [{\"name\": \"rpcProvider\",\"value\": \"--new rpc Provider--\",\"type\": \"url\"},{\"name\": \"apiProvider\",\"value\": \"--new api Provider--\",\"type\": \"url\"},{\"name\": \"balanceProvider\",\"value\": \"--new balance Prov--\",\"type\": \"url\"}]},{\"section\": \"Paths\",\"name\": \"settings\",\"keys\": [{\"name\": \"configPath\",\"value\": \"--new config Path--\",\"type\": \"path\"},{\"name\": \"cachePath\",\"value\": \"--new cache Path--\",\"type\": \"path\"},{\"name\": \"indexPath\",\"value\": \"--new index Path--\",\"type\": \"path\"}]}]},{\"section\": \"Display Strings\",\"name\": \"display_strs\",\"keys\": [{\"name\": \"accountName\",\"value\": \"--account name--\",\"type\": \"display_str\"},{\"name\": \"balancerecord\",\"value\": \"--balance record--\",\"type\": \"display_str\"},{\"name\": \"block\",\"value\": \"--block--\",\"type\": \"display_str\"},{\"name\": \"ethstate\",\"value\": \"--eth state--\",\"type\": \"display_str\"},{\"name\": \"function\",\"value\": \"--function--\",\"type\": \"display_str\"},{\"name\": \"logentry\",\"value\": \"--logentry--\",\"type\": \"display_str\"},{\"name\": \"pricequote\",\"value\": \"--pricequote--\",\"type\": \"display_str\"},{\"name\": \"receipt\",\"value\": \"--receipt--\",\"type\": \"display_str\"},{\"name\": \"trace\",\"value\": \"--trace--\",\"type\": \"display_str\"},{\"name\": \"transaction\",\"value\": \"--transaction--\",\"type\": \"display_str\"},{\"name\": \"whenblock\",\"value\": \"--when block--\",\"type\": \"display_str\"},{\"name\": \"whereblock\",\"value\": \"--where block--\",\"type\": \"display_str\"}]},{\"name\": \"blockScrape.toml\",\"groups\": [{\"section\": \"Scraper\",\"name\": \"settings\",\"keys\": [{\"name\": \"nBlocks\",\"value\": \"--new n Blocks--\",\"type\": \"number\"},{\"name\": \"nAddrProcs\",\"value\": \"--new n Addr Procs--\",\"type\": \"number\"},{\"name\": \"nBlockProcs\",\"value\": \"--new n Block Procs--\",\"type\": \"number\"}]}]},{\"name\": \"acctExport.toml\",\"groups\": [{\"section\": \"Exporter\",\"name\": \"settings\",\"keys\": [{\"name\": \"writeTxs\",\"value\": \"true\",\"type\": \"bool\"},{\"name\": \"writeTraces\",\"value\": \"\",\"type\": \"bool\"}]}]},{\"name\": \"getAccounts.toml\",\"groups\": [{\"section\": \"Names\",\"name\": \"custom\",\"keys\": [{\"name\": \"list\",\"type\": \"json array\",\"named\": [{\"address\": \"0x0000100001000010000100001000010000100001\",\"group\": \"81-Custom\",\"name\": \"TestWallet1\"},{\"address\": \"0x0000200002000020000200002000020000200002\",\"group\": \"81-Custom\",\"name\": \"TestWallet2\"}]}]}]},{\"name\": \"ethslurp.toml\",\"groups\": [{\"section\": \"APIs\",\"name\": \"settings\",\"keys\": [{\"name\": \"etherscan\",\"value\": \"--new api_key--\",\"type\": \"string\"}]}]}]";

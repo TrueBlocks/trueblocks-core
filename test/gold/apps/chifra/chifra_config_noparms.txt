@@ -1,14 +1,14 @@
 chifra argc: 2 [1:config] 
 chifra config 
-TIME ~ CLOCK - <ERROR> : Exit(handle_config): 
+TIME ~ CLOCK - <ERROR> : Exit(parseArguments): 
 
-  chifra config 'mode' must be either 'get' or 'put <json>'.
+  chifra config 'mode' must be either '--get' or '--set'.
 
   Usage:    chifra [-v|-h] command  
   Purpose:  Create a TrueBlocks monitor configuration.
 
   Where:  
-	command               one of [scrape|list|export|accounts|slurp|quotes|data|blocks|transactions|receipts|logs|traces|state|abi|status|message|rm|config|leech|seed] (required)
+	command               one of [list|export|slurp|accounts|abi|state|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed] (required)
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 

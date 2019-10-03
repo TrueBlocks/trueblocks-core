@@ -21,7 +21,7 @@ ABI for address 0x1234567812345678123456781234567812345678
 	function createRequest              (uint256 _tokenAmount,uint256 _dollarPrice,uint256 _deposit,uint8 _requestType,address _requester)
 	function depositPayment             ()
 	function div                        (uint256 a,uint256 b)
-	function doesRequestMatch           (uint256 _key,uint256 _tokenAmount,uint256 _dollarPrice,RequestType _requestType)
+	function doesRequestMatch           (uint256 _key,uint256 _tokenAmount,uint256 _dollarPrice,uint8 _requestType)
 	function etherEquivalent            (uint256 _dollarPrice,uint256 _tokenAmount)
 	function getHolderInfo              (address _address)
 	function getHolders                 ()

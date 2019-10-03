@@ -1,5 +1,5 @@
-getBlock argc: 7 [1:2769609] [2:2799895] [3:2872831] [4:3076260] [5:-o] [6:--uniqTx] 
-getBlock 2769609 2799895 2872831 3076260 -o --uniqTx 
+getBlock argc: 7 [1:2769609] [2:2799895] [3:2872831] [4:3076260] [5:--force] [6:--uniqTx] 
+getBlock 2769609 2799895 2872831 3076260 --force --uniqTx 
 
   The --force option is not available when using one of the address options. Quitting...
 
@@ -14,7 +14,7 @@ getBlock 2769609 2799895 2872831 3076260 -o --uniqTx
 	-u  (--uniq)          display only uniq addresses found per block
 	-q  (--uniqTx)        display only uniq addresses found per transaction
 	-m  (--number)        display address counts (alterntively --addrCnt, --uniqTxCnt, or --uniqCnt)
-	-l  (--filter <address>)useful only for --addrs or --uniq, only display this address in results
+	-l  (--filter <addr>) useful only for --addrs or --uniq, only display this address in results
 
 #### Hidden options (shown during testing only)
 	-l  (--latest)        display the latest blocks at both the node and the cache

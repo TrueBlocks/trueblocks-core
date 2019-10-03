@@ -1,23 +1,22 @@
-cacheStatus argc: 4 [1:index] [2:--start] [3:100000000] 
-cacheStatus index --start 100000000 
-TIME ~ CLOCK - : 4-----API_MODE=true
-{ "cmd": "cacheStatus", "error": "Start block (100000000) is greater than the latest block. Quitting..." }
-
-  Start block (100000000) is greater than the latest block. Quitting...
-
-  Usage:    cacheStatus [-d|-l|-v|-h] mode_list  
-  Purpose:  Report on status of one or more TrueBlocks caches.
-
-  Where:  
-	mode_list             one or more of [index|monitors|names|abis|blocks|txs|traces|slurps|prices|some*|all]
-	-d  (--details)       include details about items found in monitors, slurps, abis, or price caches
-	-l  (--list)          display results in Linux ls -l format (assumes --detail)
-
-#### Hidden options (shown during testing only)
-	-x  (--fmt <fmt>)     export format (one of [none|json*|txt|csv|api])
-#### Hidden options (shown during testing only)
-
-	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
-	-h  (--help)          display this help screen
-
-  Powered by QBlocks
+cacheStatus argc: 4 [1:index] [2:--start] [3:2000000] 
+cacheStatus index --start 2000000 
+{
+  "client_version": "Parity version",
+  "trueblocks_version": "GHC-TrueBlocks//0.5.8-alpha--git-hash---git-ts-",
+  "rpc_provider": "--providers--",
+  "api_provider": "--providers--",
+  "balance_provider": "--providers--",
+  "host": "--hostname-- (--username--)",
+  "is_scraping": false,
+  "caches": [
+    {
+      "items": [],
+      "type": "CIndexCache",
+      "path": "IndexPath",
+      "nFiles": 0,
+      "nFolders": 0,
+      "sizeInBytes": 0,
+      "valid_counts": false
+    }
+  ]
+}

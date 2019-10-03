@@ -17,9 +17,9 @@ bool COptions::handle_data(void) {
     if (!contains(tool_flags, "--edit")) // weird cleanup of --edit/edit confusion
         tool_flags = substitute(tool_flags, "edit", "--edit");
 
-    string_q addr_list;
+    string_q addrList;
     for (auto addr : addrs)
-        addr_list += (addr + " ");
+        addrList += (" " + addr);
 
     ostringstream os;
     if (contains(tool_flags, "--when")) {
@@ -28,23 +28,27 @@ bool COptions::handle_data(void) {
 
     } else if (contains(tool_flags, "--abi")) {
         replaceAll(tool_flags, "--abi", "");
-        for (auto addr : addrs)
-            os << "grabABI " << addr << " " << (isApiMode() ? substitute(tool_flags, ",", " ") + " --encode --data" : tool_flags) << " ; ";
+        if (addrs.size() == 0)
+            return usage("Input" + (tool_flags.empty() ? "" : (" ("+trim(tool_flags)+")")) + " does not include a valid Ethereum address. Quitting...");
+        os << "grabABI " << (isApiMode() ? substitute(tool_flags, ",", " ") + " --encode --data" : tool_flags) << addrList << " ; ";
 
-    } else if (contains(tool_flags, "--balance") || contains(tool_flags, "--code") || contains(tool_flags, "--nonce")) {
-        replaceAll(tool_flags, "--balance", "");
-        replaceAll(tool_flags, "--code", "");
-        replaceAll(tool_flags, "--nonce", "");
-        for (auto addr : addrs)
-            os << "getState " << addr << " " << (isApiMode() ? substitute(tool_flags, ",", " ") + " " : tool_flags) << " ; ";
+    } else if (contains(tool_flags, "--state")) {
+        replaceAll(tool_flags, "--state", "");
+        if (addrs.size() == 0)
+            return usage("Input" + (tool_flags.empty() ? "" : (" ("+trim(tool_flags)+")")) + " does not include a valid Ethereum address. Quitting...");
+
+        replaceAll(tool_flags, "--balance", "--mode balance");
+        replaceAll(tool_flags, "--code", "--mode code");
+        replaceAll(tool_flags, "--nonce", "--mode nonce");
+        os << "getState " << (isApiMode() ? substitute(tool_flags, ",", " ") + " " : tool_flags) << addrList << " ; ";
 
     } else if (contains(tool_flags, "--accounts")) {
         replaceAll(tool_flags, "--accounts", "");
-        os << "getAccounts " << (isApiMode() ? substitute(tool_flags, ",", " ") : tool_flags) << " ; ";
+        os << "getAccounts " << (isApiMode() ? substitute(tool_flags, ",", " ") : tool_flags) << addrList << " ; ";
 
     } else if (contains(tool_flags, "--blocks")) {
         replaceAll(tool_flags, "--blocks", "");
-        os << "getBlock " << (isApiMode() ? substitute(tool_flags, ",", " ") : tool_flags) << " ; ";
+        os << "getBlock " << (isApiMode() ? substitute(tool_flags, ",", " ") : tool_flags) << addrList << " ; ";
 
     } else if (contains(tool_flags, "--transactions")) {
         replaceAll(tool_flags, "--transactions", "");
@@ -79,7 +83,7 @@ bool COptions::handle_data(void) {
         return true;
 
     } else {
-        EXIT_FAIL("Invalid option: data " + tool_flags + " " + addr_list);
+        EXIT_FAIL("Invalid option: data " + tool_flags + " " + addrList);
     }
 
     LOG4("command: " + os.str());

@@ -1,6 +1,5 @@
-getTrans argc: 2 [1:2222221.*] 
-getTrans 2222221.* 
-TIME ~ CLOCK - : 4-----API_MODE=true
+getTrans argc: 4 [1:2222221.*] [2:--fmt] [3:api] 
+getTrans 2222221.* --fmt api 
 { "type": "CTransaction", "data": [
   {
     "hash": "0x01a5ac40a13d6d041247c2796281f73b19c208190565561104528637f61683ac",
@@ -22,12 +21,7 @@ TIME ~ CLOCK - : 4-----API_MODE=true
       "logs": [],
       "status": null
     },
-    "gasUsed": 21000,
-    "date": "2016-09-08 15:22:44 UTC",
-    "datesh": "2016-09-08",
-    "time": "5:22:44 UTC",
-    "age": "100",
-    "ether": 50.000000000000000000
+    "gasUsed": 21000
   },  {
     "hash": "0x83d1181ca3c7485086e93b235007c79ec63235851bab71add83e4072d64af388",
     "blockHash": "0xe4c2b8cb9ddd1acb41043afb3bd0149c281eca23f1bc563af5899bac748ec372",
@@ -48,12 +42,7 @@ TIME ~ CLOCK - : 4-----API_MODE=true
       "logs": [],
       "status": null
     },
-    "gasUsed": 21000,
-    "date": "2016-09-08 15:22:44 UTC",
-    "datesh": "2016-09-08",
-    "time": "5:22:44 UTC",
-    "age": "100",
-    "ether": 19.377212010000000000
+    "gasUsed": 21000
   },  {
     "hash": "0x71a7109b2b2f2c5003015fe8e4657a1e35499f874c2256638b3c5e7c724262f8",
     "blockHash": "0xe4c2b8cb9ddd1acb41043afb3bd0149c281eca23f1bc563af5899bac748ec372",
@@ -74,12 +63,7 @@ TIME ~ CLOCK - : 4-----API_MODE=true
       "logs": [],
       "status": null
     },
-    "gasUsed": 21000,
-    "date": "2016-09-08 15:22:44 UTC",
-    "datesh": "2016-09-08",
-    "time": "5:22:44 UTC",
-    "age": "100",
-    "ether": 21.990000000000000000
+    "gasUsed": 21000
   },  {
     "hash": "0x81738873b007f48e5a5e36a6fa8019c60a570eef4f36ba6c64ca55964c6711c9",
     "blockHash": "0xe4c2b8cb9ddd1acb41043afb3bd0149c281eca23f1bc563af5899bac748ec372",
@@ -100,11 +84,5 @@ TIME ~ CLOCK - : 4-----API_MODE=true
       "logs": [],
       "status": null
     },
-    "gasUsed": 21000,
-    "date": "2016-09-08 15:22:44 UTC",
-    "datesh": "2016-09-08",
-    "time": "5:22:44 UTC",
-    "age": "100",
-    "ether": 2.154968800000000000
-  }
-], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
+    "gasUsed": 21000
+  }], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

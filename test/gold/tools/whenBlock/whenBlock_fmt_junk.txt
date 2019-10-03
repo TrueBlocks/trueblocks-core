@@ -1,11 +1,11 @@
 whenBlock argc: 4 [1:1001001] [2:--fmt] [3:junk] 
 whenBlock 1001001 --fmt junk 
 
-  Export format must be one of [ json | txt | csv | api ]. Quitting...
+  Export format (junk) must be one of [ json | txt | csv | api ]. Quitting...
 
   Usage:    whenBlock [-l|-v|-h] < block | date > [ block... | date... ]  
   Purpose:  Finds the nearest block prior to a date, or the nearest date prior to a block.
-         Alternatively, search for one of special 'named' blocks.
+            Alternatively, search for one of special 'named' blocks.
 
   Where:  
 	block_list            one or more block numbers (or a 'special' block), or...

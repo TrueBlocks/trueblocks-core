@@ -1,3 +1,3 @@
-getAccounts argc: 5 [1:-v] [2:cbCD] [3:Humaniq] [4:EtherScan] 
-getAccounts -v cbCD Humaniq EtherScan 
-TIME ~ CLOCK - <INFO>  : No results
+getAccounts argc: 7 [1:cbCD] [2:Humaniq] [3:EtherScan] [4:--verbose] [5:--fmt] [6:txt] 
+getAccounts cbCD Humaniq EtherScan --verbose --fmt txt 
+No results

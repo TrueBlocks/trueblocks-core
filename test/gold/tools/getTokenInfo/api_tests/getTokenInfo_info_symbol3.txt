@@ -1,0 +1,8 @@
+[
+  {
+    "symbol": "OMG"
+  },
+  {
+    "symbol": "SWT"
+  }
+]

@@ -206,6 +206,13 @@ TEST_F(CThisTest, TestCStr) {
     ASSERT_TRUE("es2 is empty", es2.empty())
     ASSERT_EQ("es2 == \"\"",    es2, "");
 
+    string_q a = "xxx world world world end";
+    string_q b = "world";
+    { cout << "Test 1:\n"; size_t f = find_nth(a, b, 0); cout << "\tresult: " << f << "\t" << (f != string::npos ? a.substr(f) : "-1") << endl; }
+    { cout << "Test 2:\n"; size_t f = find_nth(a, b, 1); cout << "\tresult: " << f << "\t" << (f != string::npos ? a.substr(f) : "-1") << endl; }
+    { cout << "Test 3:\n"; size_t f = find_nth(a, b, 2); cout << "\tresult: " << f << "\t" << (f != string::npos ? a.substr(f) : "-1") << endl; }
+    { cout << "Test 4:\n"; size_t f = find_nth(a, b, 3); cout << "\tresult: " << f << "\t" << (f != string::npos ? a.substr(f) : "-1") << endl; }
+
     return true;
 }}
 

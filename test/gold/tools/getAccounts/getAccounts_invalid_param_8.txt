@@ -1,5 +1,5 @@
-getAccounts argc: 5 [1:--verboses] [2:0xb6] [3:torj] [4:other] 
-getAccounts --verboses 0xb6 torj other 
+getAccounts argc: 7 [1:0xb6] [2:torj] [3:--verboses] [4:--other] [5:--fmt] [6:txt] 
+getAccounts 0xb6 torj --verboses --other --fmt txt 
 
   Invalid option: -s
 
@@ -30,6 +30,6 @@ getAccounts --verboses 0xb6 torj other
 	- When there are two search terms, both must match.
 	- The --matchCase option requires case sensitive matching. It works with all other options.
 	- To customize the list of names add a custom section to the config file (see documentation).
-	- Name file: ~/.quickBlocks/names/names.txt (193343)
+	- Name file: ~/.quickBlocks/names/names.txt (202498)
 
   Powered by QBlocks

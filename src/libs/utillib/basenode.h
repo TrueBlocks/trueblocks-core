@@ -95,8 +95,4 @@ namespace qblocks {
     extern string_q getNextChunk(string_q& fmtOut, NEXTCHUNKFUNC func, const void *data);
     extern string_q fldNotFound(const string_q& str);
 
-    //--------------------------------------------------------------------------------------------------------------
-    extern void preserveSpaces(string_q& str);
-    extern void unpreserveSpaces(string_q& str);
-
 }  // namespace qblocks

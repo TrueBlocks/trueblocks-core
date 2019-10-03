@@ -1,5 +1,5 @@
-getBlock argc: 4 [1:--parity] [2:358450-0x5785a] [3:--force] 
-getBlock --parity 358450-0x5785a --force 
+getBlock argc: 4 [1:358450-0x5785a] [2:--force] [3:--parity] 
+getBlock 358450-0x5785a --force --parity 
 [{
   "difficulty": "0x5a5753781c6",
   "finalized": "0x1",

@@ -13,6 +13,7 @@
 #include <string>
 #include <algorithm>
 #include "utillib.h"
+#include "testing.h"
 
 //------------------------------------------------------------------------
 class CThisTest : public testing::Test {
@@ -57,5 +58,5 @@ int main(int argc, const char *argv[]) {
         }
     }
 
-    return RUN_ALL_TESTS();
+    return testing::RUN_ALL_TESTS();
 }

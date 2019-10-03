@@ -1,8 +1,7 @@
-grabABI argc: 4 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:-vng] [3:code] 
-grabABI 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -vng code 
+grabABI argc: 6 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:--verbose] [3:--noconst] [4:--generate] [5:--code] 
+grabABI 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 --verbose --noconst --generate --code 
 
-  Invalid address 'code'. Length (4) is not equal to 40 characters (20 bytes).
-
+  Invalid option: --code
 
   Usage:    grabABI [-c|-g|-d|-e|-j|-n|-l|-v|-h] <address> [address...]  
   Purpose:  Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
@@ -15,7 +14,7 @@ grabABI 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -vng code
 	-e  (--encode)        generate the encodings for the functions / events in the ABI
 	-j  (--json)          print the ABI to the screen as json
 	-n  (--noconst)       generate encodings for non-constant functions and events only (always true when generating)
-	-l  (--sol <fn>)      create the ABI file from a .sol file in the local directory
+	-l  (--sol <path>)    create the ABI file from a .sol file in the local directory
 
 #### Hidden options (shown during testing only)
 	-o  (--open)          open the ABI file for editing, download if not already present

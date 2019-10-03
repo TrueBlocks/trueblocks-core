@@ -1,3 +1,3 @@
-getAccounts argc: 3 [1:--verbose] [2:no_torj] 
-getAccounts --verbose no_torj 
-TIME ~ CLOCK - <INFO>  : No results
+getAccounts argc: 5 [1:no_torj] [2:--verbose] [3:--fmt] [4:txt] 
+getAccounts no_torj --verbose --fmt txt 
+No results

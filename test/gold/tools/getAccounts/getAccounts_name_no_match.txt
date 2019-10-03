@@ -1,3 +1,3 @@
-getAccounts argc: 2 [1:torj_no_found] 
-getAccounts torj_no_found 
-TIME ~ CLOCK - <INFO>  : No results
+getAccounts argc: 4 [1:torj_no_found] [2:--fmt] [3:txt] 
+getAccounts torj_no_found --fmt txt 
+No results

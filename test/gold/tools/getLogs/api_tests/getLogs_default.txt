@@ -1,0 +1,5 @@
+{
+  "errors": [
+    "getLogs - Invalid option: --address"
+  ]
+}

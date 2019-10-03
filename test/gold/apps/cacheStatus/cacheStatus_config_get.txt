@@ -6,6 +6,7 @@ cacheStatus --config-get
       "name": "quickBlocks.toml",
       "groups": [
         {
+          "section": "Providers",
           "name": "settings",
           "keys": [
             {
@@ -31,7 +32,13 @@ cacheStatus --config-get
               "tip": "alternative node endpoint for account balances",
               "required": false,
               "read_only": false
-            },
+            }
+          ]
+        },
+        {
+          "section": "Paths",
+          "name": "settings",
+          "keys": [
             {
               "name": "configPath",
               "value": "--config Path--",
@@ -59,6 +66,7 @@ cacheStatus --config-get
           ]
         },
         {
+          "section": "Display Strings",
           "name": "display_strs",
           "keys": [
             {
@@ -153,6 +161,7 @@ cacheStatus --config-get
       "name": "blockScrape.toml",
       "groups": [
         {
+          "section": "Scraper",
           "name": "settings",
           "keys": [
             {
@@ -187,11 +196,12 @@ cacheStatus --config-get
       "name": "acctExport.toml",
       "groups": [
         {
+          "section": "Exporter",
           "name": "settings",
           "keys": [
             {
               "name": "writeTxs",
-              "value": "--write Txs--",
+              "value": --write Txs--,
               "type": "bool",
               "tip": "write transactions to the TrueBlocks binary cache",
               "required": false,
@@ -199,7 +209,7 @@ cacheStatus --config-get
             },
             {
               "name": "writeTraces",
-              "value": "--write Traces--",
+              "value": --write Traces--,
               "type": "bool",
               "tip": "write traces to the TrueBlocks binary cache",
               "required": false,
@@ -213,6 +223,7 @@ cacheStatus --config-get
       "name": "getAccounts.toml",
       "groups": [
         {
+          "section": "Names",
           "name": "custom",
           "keys": [
             {
@@ -223,14 +234,14 @@ cacheStatus --config-get
               "read_only": false,
               "named": [
                 {
+                  "address": "0x0000100001000010000100001000010000100001",
                   "group": "81-Custom",
-                  "name": "TestWallet1",
-                  "address": "0x0000100001000010000100001000010000100001"
+                  "name": "TestWallet1"
                 },
                 {
+                  "address": "0x0000200002000020000200002000020000200002",
                   "group": "81-Custom",
-                  "name": "TestWallet2",
-                  "address": "0x0000200002000020000200002000020000200002"
+                  "name": "TestWallet2"
                 }
               ]
             }
@@ -242,10 +253,11 @@ cacheStatus --config-get
       "name": "ethslurp.toml",
       "groups": [
         {
+          "section": "APIs",
           "name": "settings",
           "keys": [
             {
-              "name": "api_key",
+              "name": "etherscan",
               "value": "--api_key--",
               "type": "string",
               "tip": "api key required to use EtherScan apis -- private data -- not shared",
@@ -258,4 +270,3 @@ cacheStatus --config-get
     }
   ]
 }
-

@@ -25,9 +25,12 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        bool isText = (options.exportFmt & (TXT1|CSV1));
+        bool isText = (options.exportFmt & (TXT1|CSV1|NONE1));
         if (isText && options.items.size() == 0) {
-            LOG_INFO("No results");
+            cout << "No results" << endl;
+
+        } else if (options.items.size() == 0) {
+            cout << "{ \"data\": [ ";
 
         } else {
             for (auto item : options.items) {

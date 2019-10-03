@@ -1,0 +1,18 @@
+ethslurp argc: 2 [1:--help] 
+ethslurp --help 
+Processing: --help
+
+  Usage:    ethslurp [-t|-b|-s|-x|-v|-h] <address> [address...] [block...]  
+  Purpose:  Fetches data from EtherScan for an arbitrary address. Formats the output to your specification.
+
+  Where:  
+	addr_list             one or more addresses to slurp (required)
+	block_list            an optional range of blocks to slurp
+	-t  (--type enum[ext*|int|token|miner|all])extract either [ext*|int|token|miner|all] type of transactions
+	-b  (--blocks <range>)export records in block range (:0[:max])
+	-s  (--silent)        Run silently (only freshen the data, do not display it)
+	-x  (--fmt <fmt>)     pretty print, optionally add ':txt,' ':csv,' or ':html'
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Powered by QBlocks

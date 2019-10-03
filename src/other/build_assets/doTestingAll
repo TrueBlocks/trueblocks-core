@@ -1,28 +1,33 @@
+#!/usr/bin/env bash
+
 cd ..
 export QUICKBLOCKS=`pwd`
+export BUILD_FOLDER=$QUICKBLOCKS/build/
+export TEST_FOLDER=$QUICKBLOCKS/test/
+export DOCKER_FOLDER=$QUICKBLOCKS/../trueblocks-docker/
 
-cd $QUICKBLOCKS/test/
-
-echo "Removing working folder test cases..."
-#rm -f `find working/$2 | grep _ | grep txt | xargs`
-
-cd $QUICKBLOCKS/build/
+echo "Making..."
+cd $BUILD_FOLDER/
 cmake ../src
-cd $QUICKBLOCKS/build/$1
 make
+
+echo "Testing..."
+cd $BUILD_FOLDER/$1
 make test-all | tee test_all_results
-cat test_all_results | cut -c6-1000 | grep "^-" | cut -c2-1000 | sed 's/ (Failed)//' | sed 's/^/diffTest/' >x
-mv -f x test_all_results
-chmod uog+x test_all_results
+cat test_results | cut -c6-1000 | grep "^-" | cut -c2-1000 | sed 's/ (Failed)//' | sed 's/^/diffTest/' >x
+mv -f x test_results
+chmod uog+x test_results
 
-cd $QUICKBLOCKS/test/
-echo "Removing compare folder..."
+echo "Testing 2..."
+cd $BUILD_FOLDER/
+doTestingApi --filter all --which both $@
+
+echo "Copying working folder to compare folder..."
+cd $TEST_FOLDER/
 rm -fR compare/
-
-echo "Copying working to compare..."
 cp -pR working compare
 find compare -name "*gitignore*" -exec rm '{}' ';'
 rm -fR gold/apps/acctScrape/99_1234...7890
-cd $QUICKBLOCKS/build/
 
+cd $BUILD_FOLDER
 echo "Done..."

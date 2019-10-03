@@ -1,0 +1,124 @@
+enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
+on, cmd,  all,  tokens, tools/getTokenInfo, preload_abi,                   n, addr_list=0xd26114cd6ee289accf82350c8d8487fedb8a0c07, grabABI
+on, cmd,  all,  tokens, tools/getTokenInfo, preload_abi2,                  n, addr_list=0xb9e7f8568e08d5659f5d29c4997173d84cdf2607, grabABI
+
+on, cmd,  fast, tokens, tools/getTokenInfo, README,                        n, @th
+on, cmd,  fast, tokens, tools/getTokenInfo, help,                          n, @h
+on, cmd,  fast, tokens, tools/getTokenInfo, help_long,                     n, help
+on, cmd,  fast, tokens, tools/getTokenInfo, help_verbose,                  n, help & verbose
+on, both, slow, tokens, tools/getTokenInfo, noparams,                      y,
+
+on, both, slow, tokens, tools/getTokenInfo, invalid_params_1,              y, addr_list=a b c
+on, both, slow, tokens, tools/getTokenInfo, invalid_params_2,              y, addr_list = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 21321321312321
+on, both, slow, tokens, tools/getTokenInfo, invalid_params_3,              y, block_list = 21321321312321 0xd26114cd6ee289accf82350c8d8487fedb8a0c07
+on, both, slow, tokens, tools/getTokenInfo, invalid_token,                 y, addr_list = 0xd26114cd6ee289accf82350c8d8487fedb8a0c0 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28
+on, both, slow, tokens, tools/getTokenInfo, invalid_addr,                  y, addr_list = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0x5e44c3e467a49c9ca0296a9f130fc433041aaa2
+on, both, slow, tokens, tools/getTokenInfo, token_does_not_exist,          y, addr_list = 0xd26114cd6EE289AccF82350c8d84870000000000 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28 4000000
+on, both, slow, tokens, tools/getTokenInfo, acccount_does_not_exist,       n, addr_list = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0x5e44c3e467a49c9ca0296a9f130fc43304000000 & block_list = 4000000
+on, both, slow, tokens, tools/getTokenInfo, invalid_dollars,               n, addr_list = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3 0xa25d04fa348f107428708ba19c95d1c79b3744bf & block_list = 4285364 3510999 2510010" " --dollars
+
+on, both, slow, tokens, tools/getTokenInfo, single_account,                n, addr_list = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28 & block_list = 4000000
+on, both, slow, tokens, tools/getTokenInfo, multiple_token_accounts,       n, addr_list = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 & block_list = 4000000
+on, both, slow, tokens, tools/getTokenInfo, block_out_of_range,            y, addr_list = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98 & block_list = 16000000
+on, both, slow, tokens, tools/getTokenInfo, by_account_table,              y, addr_list = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3 0xa25d04fa348f107428708ba19c95d1c79b3744bf & byAcct & block_list = 4000000
+on, both, slow, tokens, tools/getTokenInfo, special_1,                     n, addr_list = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98 & block_list = first
+on, both, slow, tokens, tools/getTokenInfo, special_2,                     n, addr_list = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98 & block_list = stateclear
+on, both, slow, tokens, tools/getTokenInfo, special_3,                     n, addr_list = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98 & block_list = stateclear daofund
+on, both, slow, tokens, tools/getTokenInfo, multiple_single_block,         n, addr_list = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98 & block_list = 4150000
+on, both, slow, tokens, tools/getTokenInfo, multiple_multiblock,           n, addr_list = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98 & block_list = 4141000 4151000
+
+on, both, slow, tokens, tools/getTokenInfo, by_account,                    n, addr_list = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xa25d04fa348f107428708ba19c95d1c79b3744bf & byAcct & block_list = 4000000
+on, both, slow, tokens, tools/getTokenInfo, by_account_long,               n, addr_list = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xa25d04fa348f107428708ba19c95d1c79b3744bf & byAcct & block_list = 4000000
+on, both, slow, tokens, tools/getTokenInfo, by_account_long_nozero,        n, addr_list = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xa25d04fa348f107428708ba19c95d1c79b3744bf & byAcct & nozero & block_list = 4000000
+on, both, slow, tokens, tools/getTokenInfo, by_account_long_nozero_long,   n, addr_list = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xa25d04fa348f107428708ba19c95d1c79b3744bf & byAcct & nozero & block_list = 4000000
+on, both, slow, tokens, tools/getTokenInfo, by_account_table_long,         n, addr_list = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xa25d04fa348f107428708ba19c95d1c79b3744bf & byAcct & block_list = 4000000
+on, both, slow, tokens, tools/getTokenInfo, by_account_table_verbose,      n, addr_list = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xa25d04fa348f107428708ba19c95d1c79b3744bf & byAcct & block_list = 4000000 & verbose
+on, both, slow, tokens, tools/getTokenInfo, by_account_table_verbose_long, n, addr_list = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xa25d04fa348f107428708ba19c95d1c79b3744bf & byAcct & block_list = 4000000 & verbose
+
+on, both, slow, tokens, tools/getTokenInfo, top_three_swarm1,              n, addr_list = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xa25d04fa348f107428708ba19c95d1c79b3744bf & block_list = 4285364 3510999 2510010 & byAcct
+on, both, slow, tokens, tools/getTokenInfo, top_three_swarm2,              n, addr_list = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3 0xa25d04fa348f107428708ba19c95d1c79b3744bf & block_list = 4285364 3510999 2510010
+on, both, slow, tokens, tools/getTokenInfo, top_three_swarm3,              n, addr_list = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3 0xa25d04fa348f107428708ba19c95d1c79b3744bf & block_list = 4285364 3510999 2510010
+on, both, slow, tokens, tools/getTokenInfo, wei,                           n, addr_list = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98 & block_list = 4150000 & wei
+on, both, slow, tokens, tools/getTokenInfo, special_and_block_combination, n, addr_list = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98 & block_list = 4225341 stateclear daofund
+on, both, slow, tokens, tools/getTokenInfo, blockByHash,                   n, addr_list = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xcfb98637bcae43c13323eaa1731ced2b716962fd & block_list = 0x45205b0bdb6c9cc9bf0eb3753ae98175c563389b41b2d4a2178593a3415772c1 0x966c946dff292e4e5d91169f3007c3c28cd50ca614b18db601806c486f9e6e87
+
+on, both, slow, tokens, tools/getTokenInfo, mode_fail,                     y, addr_list = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & mode = junk & block_list = 2500000
+on, both, slow, tokens, tools/getTokenInfo, mode_bal,                      y, addr_list = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & mode = bal & block_list = 2500000
+on, both, slow, tokens, tools/getTokenInfo, mode_nonce,                    y, addr_list = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & mode = nonce & block_list = 2500000
+on, both, slow, tokens, tools/getTokenInfo, mode_code,                     y, addr_list = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & mode = code
+on, both, slow, tokens, tools/getTokenInfo, mode_storage,                  y, addr_list = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & mode = storage & block_list = 2500000
+on, both, slow, tokens, tools/getTokenInfo, mode_deployed,                 y, addr_list = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & mode = deployed
+on, both, slow, tokens, tools/getTokenInfo, mode_accttype,                 y, addr_list = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & mode = accttype
+on, both, slow, tokens, tools/getTokenInfo, mode_some,                     y, addr_list = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & mode = some & block_list = 2500000
+on, both, slow, tokens, tools/getTokenInfo, mode_all,                      y, addr_list = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & mode = all & block_list = 2500000
+on, both, slow, tokens, tools/getTokenInfo, mode_none,                     y, addr_list = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & mode = none & block_list = 2500000
+on, both, slow, tokens, tools/getTokenInfo, mode_nonce_only,               y, addr_list = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & mode = none & mode = nonce & block_list = 2500000
+
+on, both, slow, tokens, tools/getTokenInfo, info_name,                     y, addr_list = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 & info = name
+on, both, slow, tokens, tools/getTokenInfo, info_totalSupply,              y, addr_list = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 & info = totalSupply
+on, both, slow, tokens, tools/getTokenInfo, info_decimals,                 y, addr_list = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 & info = decimals
+on, both, slow, tokens, tools/getTokenInfo, info_version,                  y, addr_list = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 & info = version
+on, both, slow, tokens, tools/getTokenInfo, info_symbol,                   y, addr_list = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 & info = symbol
+on, both, slow, tokens, tools/getTokenInfo, info_all,                      y, addr_list = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 & info = all
+on, both, slow, tokens, tools/getTokenInfo, info_name2,                    y, addr_list = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & info = name
+on, both, slow, tokens, tools/getTokenInfo, info_totalSupply2,             y, addr_list = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & info = totalSupply
+on, both, slow, tokens, tools/getTokenInfo, info_decimals2,                y, addr_list = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & info = decimals
+on, both, slow, tokens, tools/getTokenInfo, info_version2,                 y, addr_list = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & info = version
+on, both, slow, tokens, tools/getTokenInfo, info_symbol2,                  y, addr_list = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & info = symbol
+on, both, slow, tokens, tools/getTokenInfo, info_all2,                     y, addr_list = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & info = all
+on, both, slow, tokens, tools/getTokenInfo, info_name3,                    y, addr_list = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & info = name & block_list = 4001001-4001002
+on, both, slow, tokens, tools/getTokenInfo, info_totalSupply3,             y, addr_list = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & info = totalSupply & block_list = 4001001-4001002
+on, both, slow, tokens, tools/getTokenInfo, info_decimals3,                y, addr_list = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & info = decimals & block_list = 4001001-4001002
+on, both, slow, tokens, tools/getTokenInfo, info_version3,                 y, addr_list = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & info = version & block_list = 4001001-4001002
+on, both, slow, tokens, tools/getTokenInfo, info_symbol3,                  y, addr_list = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & info = symbol & block_list = 4001001-4001002
+on, both, slow, tokens, tools/getTokenInfo, info_all3,                     y, addr_list = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & info = all & block_list = 4001001-4001002
+
+on, both, slow, tokens, tools/getTokenInfo, fmt_txt,                       y, addr_list = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & fmt = txt & block_list = 2000000
+on, both, slow, tokens, tools/getTokenInfo, fmt_csv,                       y, addr_list = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & fmt = csv & block_list = 2000000
+on, both, slow, tokens, tools/getTokenInfo, fmt_json,                      y, addr_list = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & fmt = json & block_list = 2000000 & dollars
+on, both, slow, tokens, tools/getTokenInfo, fmt_api,                       y, addr_list = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & fmt = api & block_list = 2000000
+on, both, slow, tokens, tools/getTokenInfo, fmt_junk,                      y, addr_list = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & fmt = junk & block_list = 2000000
+
+# run_state_test("getTokenInfo_accttype"                      "${TIP}" " --mode" " accttype"          )
+# run_state_test("getTokenInfo_all"                           "${TIP}" " --mode" " all"     " 2500000")
+# run_state_test("getTokenInfo_bal"                           "${TIP}" " --mode" " bal"     " 2500000")
+# run_state_test("getTokenInfo_blockByHash"                   "${OMG}" " ${NET}"    " ${BLKHASH1}" " ${BLKHASH2}")
+# run_state_test("getTokenInfo_by_account"                    "${SWT}" " ${EA3}"    " -b"          " 4000000")
+# run_state_test("getTokenInfo_by_account_long"               "${SWT}" " ${EA3}"    " --byAcct"    " 4000000")
+# run_state_test("getTokenInfo_by_account_long_nozero"        "${SWT}" " ${EA3}"    " --byAcct"    " -n"       " 4000000")
+# run_state_test("getTokenInfo_by_account_long_nozero_long"   "${SWT}" " ${EA3}"    " --byAcct"    " --nozero" " 4000000")
+# run_state_test("getTokenInfo_by_account_table_long"         "${SWT}" " ${EA3}"    " --byAcct"    " 4000000")
+# run_state_test("getTokenInfo_by_account_table_verbose"      "${SWT}" " ${EA3}"    " --byAcct"    " 4000000" " -v")
+# run_state_test("getTokenInfo_by_account_table_verbose_long" "${SWT}" " ${EA3}"    " --byAcct"    " 4000000" " --verbose")
+# run_state_test("getTokenInfo_code"                          "${TIP}" " --mode" " code"              )
+# run_state_test("getTokenInfo_deployed"                      "${TIP}" " --mode" " deployed"          )
+# run_state_test("getTokenInfo_fmt_api"                       "${EA4}" " --fmt" " api"  " 2000000")
+# run_state_test("getTokenInfo_fmt_csv"                       "${EA4}" " --fmt" " csv"  " 2000000")
+# run_state_test("getTokenInfo_fmt_json"                      "${EA4}" " --fmt" " json" " 2000000" " --dollars")
+# run_state_test("getTokenInfo_fmt_junk"                      "${EA4}" " --fmt" " junk" " 2000000")
+# run_state_test("getTokenInfo_fmt_txt"                       "${EA4}" " --fmt" " txt"  " 2000000")
+# run_state_test("getTokenInfo_info_all2"                     "${OMG}" " ${SWT}" " --info " " all")
+# run_state_test("getTokenInfo_info_all3"                     "${OMG}" " ${SWT}" " --info " " all" "         4001001-4001002")
+# run_state_test("getTokenInfo_info_decimals2"                "${OMG}" " ${SWT}" " --info " " decimals")
+# run_state_test("getTokenInfo_info_decimals3"                "${OMG}" " ${SWT}" " --info " " decimals" "    4001001-4001002")
+# run_state_test("getTokenInfo_info_name2"                    "${OMG}" " ${SWT}" " --info " " name")
+# run_state_test("getTokenInfo_info_name3"                    "${OMG}" " ${SWT}" " --info " " name" "        4001001-4001002")
+# run_state_test("getTokenInfo_info_symbol2"                  "${OMG}" " ${SWT}" " --info " " symbol")
+# run_state_test("getTokenInfo_info_symbol3"                  "${OMG}" " ${SWT}" " --info " " symbol" "      4001001-4001002")
+# run_state_test("getTokenInfo_info_totalSupply2"             "${OMG}" " ${SWT}" " --info " " totalSupply")
+# run_state_test("getTokenInfo_info_totalSupply3"             "${OMG}" " ${SWT}" " --info " " totalSupply" " 4001001-4001002")
+# run_state_test("getTokenInfo_info_version2"                 "${OMG}" " ${SWT}" " --info " " version")
+# run_state_test("getTokenInfo_info_version3"                 "${OMG}" " ${SWT}" " --info " " version" "     4001001-4001002")
+# run_state_test("getTokenInfo_mode_fail"                     "${TIP}" " --mode" " junk"    " 2500000")
+# run_state_test("getTokenInfo_multiple_multiblock"           "${OMG}" " ${EA1}"    " ${BITREX}"   " 4141000"  " 4151000" )
+# run_state_test("getTokenInfo_multiple_single_block"         "${OMG}" " ${EA1}"    " ${BITREX}"   " 4150000")
+# run_state_test("getTokenInfo_nonce"                         "${TIP}" " --mode" " nonce"   " 2500000")
+# run_state_test("getTokenInfo_nonce_only"                    "${TIP}" " --mode" " none" " --mode" " nonce" " 2500000")
+# run_state_test("getTokenInfo_none"                          "${TIP}" " --mode" " none"    " 2500000")
+# run_state_test("getTokenInfo_some"                          "${TIP}" " --mode" " some"    " 2500000")
+# run_state_test("getTokenInfo_special_and_block_combination" "${OMG}" " ${EA1}"    " ${BITREX}"   " 4225341"  "  stateclear" " daofund")
+# run_state_test("getTokenInfo_storage"                       "${TIP}" " --mode" " storage" " 2500000")
+# run_state_test("getTokenInfo_top_three_swarm1"              "${SWT}" " ${EA3}"    " 4285364"     " 3510999"  " 2510010" "--byAcct")
+# run_state_test("getTokenInfo_top_three_swarm2"              "${SWT}" " ${BITREX}" " ${EA2}"      " ${EA3}"   " 4285364" " 3510999" " 2510010")
+# run_state_test("getTokenInfo_top_three_swarm3"              "${SWT}" " ${BITREX}" " ${EA2}"      " ${EA3}"   " 4285364" " 3510999" " 2510010")
+# run_state_test("getTokenInfo_wei"                           "${OMG}" " ${EA1}"    " ${BITREX}"   " 4150000"  " --wei")

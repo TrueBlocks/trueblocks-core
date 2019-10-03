@@ -30,7 +30,7 @@ public:
     CHistoryOptions(void) { Init(); }
     ~CHistoryOptions(void) { }
     void Init(void) override { CBlockOptions::Init(); newestBlock = oldestBlock = NOPOS; }
-    bool hasHistory(void) const;
+    bool requestsHistory(void) const;
 };
 
 //-----------------------------------------------------------------------------

@@ -174,7 +174,6 @@ extern string_q getCodeAt      (const address_t& addr, blknum_t blockNum=NOPOS);
 extern string_q getStorageAt   (const address_t& addr, uint64_t pos, blknum_t blockNum=NOPOS);
 extern uint64_t getNonceAt     (const address_t& addr, blknum_t num=NOPOS);
 extern blknum_t getDeployBlock (const address_t& addr);
-extern bool     nodeHasBalances(void);
+extern bool     nodeHasBalances(bool showErrors);
 // EXISTING_CODE
 }  // namespace qblocks
-

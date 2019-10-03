@@ -1,7 +1,7 @@
-getAccounts argc: 5 [1:tip] [2:--fmt] [3:junk] [4:--expand] 
-getAccounts tip --fmt junk --expand 
+getAccounts argc: 5 [1:tip] [2:--expand] [3:--fmt] [4:junk] 
+getAccounts tip --expand --fmt junk 
 
-  Export format must be one of [ json | txt | csv | api ]. Quitting...
+  Export format (junk) must be one of [ json | txt | csv | api ]. Quitting...
 
   Usage:    getAccounts [-e|-m|-o|-c|-p|-n|-a|-v|-h] <term> [term...]  
   Purpose:  Query addresses and/or names of well known accounts.

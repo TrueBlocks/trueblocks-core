@@ -1,5 +1,5 @@
-getTrans argc: 4 [1:0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f] [2:-tax] [3:api] 
-getTrans 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f -tax api 
+getTrans argc: 6 [1:0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f] [2:--trace] [3:--articulate] [4:--fmt] [5:api] 
+getTrans 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --trace --articulate --fmt api 
 { "type": "CTransaction", "data": [
   {
     "hash": "0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f",
@@ -149,5 +149,4 @@ getTrans 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f -tax
     "gasUsed": 209407,
     "date": "2018-11-16 00:10:08 UTC",
     "ether": 0.607298625296748300
-  }
-], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
+  }], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

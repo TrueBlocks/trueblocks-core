@@ -1,7 +1,7 @@
-getLogs argc: 2 [1:-p] 
-getLogs -p 
+getLogs argc: 2 [1:--oink] 
+getLogs --oink 
 
-  Invalid option: -p
+  Invalid option: --oink
 
   Usage:    getLogs [-a|-v|-h] <tx_id> [tx_id...]  
   Purpose:  Retrieve a transaction's logs from the local cache or a running node.

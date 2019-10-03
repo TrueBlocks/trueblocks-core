@@ -1,7 +1,7 @@
 acctExport argc: 2 [1:-h] 
 acctExport -h 
 
-  Usage:    acctExport [-x|-a|-l|-t|-c|-p|-v|-h] <address> [address...]  
+  Usage:    acctExport [-x|-a|-l|-t|-c|-p|-o|-v|-h] <address> [address...]  
   Purpose:  Export full detail of transactions for one or more Ethereum addresses.
 
   Where:  
@@ -12,6 +12,7 @@ acctExport -h
 	-t  (--traces)        export traces instead of transaction list
 	-c  (--balances)      export balance history instead of transaction list
 	-p  (--appearances)   export a list of appearances
+	-o  (--count_only)    display only the count of the number of data items requested
 
 #### Hidden options (shown during testing only)
 	-b  (--blocks enum[on|off*])write blocks to the binary cache ('off' by default)
@@ -19,7 +20,7 @@ acctExport -h
 	-r  (--writeTraces enum[on*|off])write traces to the binary cache ('on' by default)
 	-d  (--ddos enum[on*|off])skip over dDos transactions in export ('on' by default)
 	-m  (--maxTraces <uint>)if --ddos:on, the number of traces defining a dDos (default = 250)
-	-n  (--noHeader)      do not show the header row
+	-n  (--no_header)     do not show the header row
 	-a  (--allABIs)       load all previously cached abi files
 	-g  (--grabABIs)      using each trace's 'to' address, grab the abi for that address (improves articulation)
 	-f  (--freshen)       freshen but do not print the exported data

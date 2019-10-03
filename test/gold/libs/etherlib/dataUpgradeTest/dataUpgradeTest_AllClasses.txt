@@ -1,0 +1,1279 @@
+dataUpgradeTest argc: 2 [1:--file:cmd_file2] 
+dataUpgradeTest --file:cmd_file2 
+--------------------------------------------------------------------------------
+className: CAbi
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+address             	1005	0	131127	T_ADDRESS TS_STRING
+interfaces          	1006	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+{
+  "address": "0x0",
+  "interfaces": []
+}
+
+--------------------------------------------------------------------------------
+className: CAbi
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+address             	1005	1	131127	T_ADDRESS TS_STRING
+interfaces          	1006	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+{
+}
+
+--------------------------------------------------------------------------------
+className: CAbi
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+cname               	1004	0	131122	T_TEXT TS_STRING
+address             	1005	0	131127	T_ADDRESS TS_STRING
+interfaces          	1006	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+{
+  "schema": 5008,
+  "deleted": 0,
+  "showing": 1,
+  "cname": "Abi",
+  "address": "0x0",
+  "interfaces": []
+}
+
+--------------------------------------------------------------------------------
+className: CFunction
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+name                	1005	0	131122	T_TEXT TS_STRING
+type                	1006	0	131122	T_TEXT TS_STRING
+anonymous           	1007	1	65556	T_BOOL TS_NUMERAL
+constant            	1008	0	65556	T_BOOL TS_NUMERAL
+payable             	1009	0	65556	T_BOOL TS_NUMERAL
+signature           	1010	0	131122	T_TEXT TS_STRING
+encoding            	1011	0	131122	T_TEXT TS_STRING
+message             	1012	1	131122	T_TEXT TS_STRING
+inputs              	1013	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+outputs             	1014	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+input_names         	1015	1	131122	T_TEXT TS_STRING
+{
+  "inputs": [],
+  "outputs": []
+}
+
+--------------------------------------------------------------------------------
+className: CFunction
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+name                	1005	1	131122	T_TEXT TS_STRING
+type                	1006	1	131122	T_TEXT TS_STRING
+anonymous           	1007	1	65556	T_BOOL TS_NUMERAL
+constant            	1008	1	65556	T_BOOL TS_NUMERAL
+payable             	1009	1	65556	T_BOOL TS_NUMERAL
+signature           	1010	1	131122	T_TEXT TS_STRING
+encoding            	1011	1	131122	T_TEXT TS_STRING
+message             	1012	1	131122	T_TEXT TS_STRING
+inputs              	1013	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+outputs             	1014	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+input_names         	1015	1	131122	T_TEXT TS_STRING
+{
+}
+
+--------------------------------------------------------------------------------
+className: CFunction
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+cname               	1004	0	131122	T_TEXT TS_STRING
+name                	1005	0	131122	T_TEXT TS_STRING
+type                	1006	0	131122	T_TEXT TS_STRING
+anonymous           	1007	0	65556	T_BOOL TS_NUMERAL
+constant            	1008	0	65556	T_BOOL TS_NUMERAL
+payable             	1009	0	65556	T_BOOL TS_NUMERAL
+signature           	1010	0	131122	T_TEXT TS_STRING
+encoding            	1011	0	131122	T_TEXT TS_STRING
+message             	1012	0	131122	T_TEXT TS_STRING
+inputs              	1013	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+outputs             	1014	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+input_names         	1015	0	131122	T_TEXT TS_STRING
+{
+  "schema": 5008,
+  "deleted": 0,
+  "showing": 1,
+  "cname": "Function",
+  "inputs": [],
+  "outputs": []
+}
+
+--------------------------------------------------------------------------------
+className: CParameter
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+indexed             	1005	0	65556	T_BOOL TS_NUMERAL
+name                	1006	0	131122	T_TEXT TS_STRING
+type                	1007	0	131122	T_TEXT TS_STRING
+isPointer           	1008	0	65556	T_BOOL TS_NUMERAL
+isArray             	1009	0	65556	T_BOOL TS_NUMERAL
+isObject            	1010	0	65556	T_BOOL TS_NUMERAL
+strDefault          	1011	0	131122	T_TEXT TS_STRING
+value               	1012	0	131122	T_TEXT TS_STRING
+{
+}
+
+--------------------------------------------------------------------------------
+className: CParameter
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+indexed             	1005	1	65556	T_BOOL TS_NUMERAL
+name                	1006	1	131122	T_TEXT TS_STRING
+type                	1007	1	131122	T_TEXT TS_STRING
+isPointer           	1008	1	65556	T_BOOL TS_NUMERAL
+isArray             	1009	1	65556	T_BOOL TS_NUMERAL
+isObject            	1010	1	65556	T_BOOL TS_NUMERAL
+strDefault          	1011	1	131122	T_TEXT TS_STRING
+value               	1012	1	131122	T_TEXT TS_STRING
+{
+}
+
+--------------------------------------------------------------------------------
+className: CParameter
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+cname               	1004	0	131122	T_TEXT TS_STRING
+indexed             	1005	0	65556	T_BOOL TS_NUMERAL
+name                	1006	0	131122	T_TEXT TS_STRING
+type                	1007	0	131122	T_TEXT TS_STRING
+isPointer           	1008	0	65556	T_BOOL TS_NUMERAL
+isArray             	1009	0	65556	T_BOOL TS_NUMERAL
+isObject            	1010	0	65556	T_BOOL TS_NUMERAL
+strDefault          	1011	0	131122	T_TEXT TS_STRING
+value               	1012	0	131122	T_TEXT TS_STRING
+{
+  "schema": 5008,
+  "deleted": 0,
+  "showing": 1,
+  "cname": "Parameter"
+}
+
+Unknown node of type CAccount not created.
+--------------------------------------------------------------------------------
+className: CAccountWatch
+baseClass: CAccountName
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+abi_spec            	1005	0	1048651	T_OBJECT TS_OBJECT
+statement           	1006	0	1048651	T_OBJECT TS_OBJECT
+stateHistory        	1007	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+curBalance          	1008	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+enabled             	1009	0	65556	T_BOOL TS_NUMERAL
+fm_mode             	1010	1	65561	T_NUMBER TS_NUMERAL
+curEther            	1011	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+curDollars          	1012	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+{
+  "abi_spec": {
+    "schema": 5008,
+    "deleted": 0,
+    "showing": 1,
+    "cname": "Abi",
+    "address": "0x0",
+    "interfaces": []
+  },
+  "statement": {
+    "begBal": 0,
+    "inflow": 0,
+    "outflow": 0,
+    "gasCostInWei": 0,
+    "endBal": 0,
+    "blockNum": 0
+  },
+  "stateHistory": [],
+  "curBalance": 0,
+  "enabled": true,
+  "is_contract": false,
+  "is_private": false,
+  "is_shared": false
+}
+
+--------------------------------------------------------------------------------
+className: CAccountWatch
+baseClass: CAccountName
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+abi_spec            	1005	1	1048651	T_OBJECT TS_OBJECT
+statement           	1006	1	1048651	T_OBJECT TS_OBJECT
+stateHistory        	1007	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+curBalance          	1008	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+enabled             	1009	1	65556	T_BOOL TS_NUMERAL
+fm_mode             	1010	1	65561	T_NUMBER TS_NUMERAL
+curEther            	1011	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+curDollars          	1012	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+{
+  "is_contract": false,
+  "is_private": false,
+  "is_shared": false
+}
+
+--------------------------------------------------------------------------------
+className: CAccountWatch
+baseClass: CAccountName
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+cname               	1004	0	131122	T_TEXT TS_STRING
+abi_spec            	1005	0	1048651	T_OBJECT TS_OBJECT
+statement           	1006	0	1048651	T_OBJECT TS_OBJECT
+stateHistory        	1007	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+curBalance          	1008	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+enabled             	1009	0	65556	T_BOOL TS_NUMERAL
+fm_mode             	1010	0	65561	T_NUMBER TS_NUMERAL
+curEther            	1011	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+curDollars          	1012	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+{
+  "schema": 5008,
+  "deleted": 0,
+  "showing": 1,
+  "cname": "AccountWatch",
+  "abi_spec": {
+    "schema": 5008,
+    "deleted": 0,
+    "showing": 1,
+    "cname": "Abi",
+    "address": "0x0",
+    "interfaces": []
+  },
+  "statement": {
+    "begBal": 0,
+    "inflow": 0,
+    "outflow": 0,
+    "gasCostInWei": 0,
+    "endBal": 0,
+    "blockNum": 0
+  },
+  "stateHistory": [],
+  "curBalance": 0,
+  "enabled": true,
+  "fm_mode": 0,
+  "curEther": 0.000000000000000000,
+  "curDollars": not-implemented,
+  "is_contract": false,
+  "is_private": false,
+  "is_shared": false
+}
+
+--------------------------------------------------------------------------------
+className: CBlock
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+gasLimit            	1005	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+gasUsed             	1006	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+hash                	1007	0	131132	T_HASH TS_STRING
+blockNumber         	1008	0	65561	T_NUMBER TS_NUMERAL
+parentHash          	1009	0	131132	T_HASH TS_STRING
+miner               	1010	0	131127	T_ADDRESS TS_STRING
+difficulty          	1011	0	65561	T_NUMBER TS_NUMERAL
+price               	1012	0	65566	T_DOUBLE TS_NUMERAL
+finalized           	1013	0	65556	T_BOOL TS_NUMERAL
+timestamp           	1014	0	65551	T_TIMESPAN TS_NUMERAL
+transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+name                	1016	1	131122	T_TEXT TS_STRING
+light               	1017	1	65556	T_BOOL TS_NUMERAL
+date                	1018	1	262149	T_DATE TS_DATE
+age                 	1019	1	262149	T_DATE TS_DATE
+{
+  "gasLimit": 0,
+  "gasUsed": 0,
+  "hash": "0x0",
+  "blockNumber": 0,
+  "parentHash": "0x0",
+  "miner": "0x0",
+  "difficulty": 0,
+  "price": 0,
+  "finalized": 0,
+  "timestamp": 0,
+  "transactions": []
+}
+
+--------------------------------------------------------------------------------
+className: CBlock
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+gasLimit            	1005	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+gasUsed             	1006	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+hash                	1007	1	131132	T_HASH TS_STRING
+blockNumber         	1008	1	65561	T_NUMBER TS_NUMERAL
+parentHash          	1009	1	131132	T_HASH TS_STRING
+miner               	1010	1	131127	T_ADDRESS TS_STRING
+difficulty          	1011	1	65561	T_NUMBER TS_NUMERAL
+price               	1012	1	65566	T_DOUBLE TS_NUMERAL
+finalized           	1013	1	65556	T_BOOL TS_NUMERAL
+timestamp           	1014	1	65551	T_TIMESPAN TS_NUMERAL
+transactions        	1015	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+name                	1016	1	131122	T_TEXT TS_STRING
+light               	1017	1	65556	T_BOOL TS_NUMERAL
+date                	1018	1	262149	T_DATE TS_DATE
+age                 	1019	1	262149	T_DATE TS_DATE
+{
+}
+
+--------------------------------------------------------------------------------
+className: CBlock
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+cname               	1004	0	131122	T_TEXT TS_STRING
+gasLimit            	1005	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+gasUsed             	1006	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+hash                	1007	0	131132	T_HASH TS_STRING
+blockNumber         	1008	0	65561	T_NUMBER TS_NUMERAL
+parentHash          	1009	0	131132	T_HASH TS_STRING
+miner               	1010	0	131127	T_ADDRESS TS_STRING
+difficulty          	1011	0	65561	T_NUMBER TS_NUMERAL
+price               	1012	0	65566	T_DOUBLE TS_NUMERAL
+finalized           	1013	0	65556	T_BOOL TS_NUMERAL
+timestamp           	1014	0	65551	T_TIMESPAN TS_NUMERAL
+transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+name                	1016	0	131122	T_TEXT TS_STRING
+light               	1017	0	65556	T_BOOL TS_NUMERAL
+date                	1018	0	262149	T_DATE TS_DATE
+age                 	1019	0	262149	T_DATE TS_DATE
+{
+  "schema": 5008,
+  "deleted": 0,
+  "showing": 1,
+  "cname": "Block",
+  "gasLimit": 0,
+  "gasUsed": 0,
+  "hash": "0x0",
+  "blockNumber": 0,
+  "parentHash": "0x0",
+  "miner": "0x0",
+  "difficulty": 0,
+  "price": 0,
+  "finalized": 0,
+  "timestamp": 0,
+  "transactions": [],
+  "date": "1970-01-01 00:00:00 UTC",
+  "age": "100"
+}
+
+--------------------------------------------------------------------------------
+className: CIncomeStatement
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+begBal              	1005	0	65561	T_NUMBER TS_NUMERAL
+inflow              	1006	0	65561	T_NUMBER TS_NUMERAL
+outflow             	1007	0	65561	T_NUMBER TS_NUMERAL
+gasCostInWei        	1008	0	65561	T_NUMBER TS_NUMERAL
+endBal              	1009	0	65561	T_NUMBER TS_NUMERAL
+blockNum            	1010	0	65561	T_NUMBER TS_NUMERAL
+{
+  "begBal": 0,
+  "inflow": 0,
+  "outflow": 0,
+  "gasCostInWei": 0,
+  "endBal": 0,
+  "blockNum": 0
+}
+
+--------------------------------------------------------------------------------
+className: CIncomeStatement
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+begBal              	1005	1	65561	T_NUMBER TS_NUMERAL
+inflow              	1006	1	65561	T_NUMBER TS_NUMERAL
+outflow             	1007	1	65561	T_NUMBER TS_NUMERAL
+gasCostInWei        	1008	1	65561	T_NUMBER TS_NUMERAL
+endBal              	1009	1	65561	T_NUMBER TS_NUMERAL
+blockNum            	1010	1	65561	T_NUMBER TS_NUMERAL
+{
+}
+
+--------------------------------------------------------------------------------
+className: CIncomeStatement
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+cname               	1004	0	131122	T_TEXT TS_STRING
+begBal              	1005	0	65561	T_NUMBER TS_NUMERAL
+inflow              	1006	0	65561	T_NUMBER TS_NUMERAL
+outflow             	1007	0	65561	T_NUMBER TS_NUMERAL
+gasCostInWei        	1008	0	65561	T_NUMBER TS_NUMERAL
+endBal              	1009	0	65561	T_NUMBER TS_NUMERAL
+blockNum            	1010	0	65561	T_NUMBER TS_NUMERAL
+{
+  "schema": 5008,
+  "deleted": 0,
+  "showing": 1,
+  "cname": "IncomeStatement",
+  "begBal": 0,
+  "inflow": 0,
+  "outflow": 0,
+  "gasCostInWei": 0,
+  "endBal": 0,
+  "blockNum": 0
+}
+
+--------------------------------------------------------------------------------
+className: CLogEntry
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+address             	1005	0	131127	T_ADDRESS TS_STRING
+blockHash           	1006	1	131132	T_HASH TS_STRING
+blockNumber         	1007	1	65561	T_NUMBER TS_NUMERAL
+data                	1008	0	131122	T_TEXT TS_STRING
+logIndex            	1009	0	65561	T_NUMBER TS_NUMERAL
+removed             	1010	1	65556	T_BOOL TS_NUMERAL
+topics              	1011	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+articulatedLog      	1012	1	1048651	T_OBJECT TS_OBJECT
+compressedLog       	1013	1	131122	T_TEXT TS_STRING
+transactionHash     	1014	1	131132	T_HASH TS_STRING
+transactionIndex    	1015	1	65561	T_NUMBER TS_NUMERAL
+transactionLogIndex 	1016	1	65561	T_NUMBER TS_NUMERAL
+type                	1017	1	131122	T_TEXT TS_STRING
+topic0              	1018	1	131132	T_HASH TS_STRING
+topic1              	1019	1	131132	T_HASH TS_STRING
+topic2              	1020	1	131132	T_HASH TS_STRING
+topic3              	1021	1	131132	T_HASH TS_STRING
+{
+  "address": "0x0",
+  "logIndex": 0,
+  "topics": []
+}
+
+--------------------------------------------------------------------------------
+className: CLogEntry
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+address             	1005	1	131127	T_ADDRESS TS_STRING
+blockHash           	1006	1	131132	T_HASH TS_STRING
+blockNumber         	1007	1	65561	T_NUMBER TS_NUMERAL
+data                	1008	1	131122	T_TEXT TS_STRING
+logIndex            	1009	1	65561	T_NUMBER TS_NUMERAL
+removed             	1010	1	65556	T_BOOL TS_NUMERAL
+topics              	1011	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+articulatedLog      	1012	1	1048651	T_OBJECT TS_OBJECT
+compressedLog       	1013	1	131122	T_TEXT TS_STRING
+transactionHash     	1014	1	131132	T_HASH TS_STRING
+transactionIndex    	1015	1	65561	T_NUMBER TS_NUMERAL
+transactionLogIndex 	1016	1	65561	T_NUMBER TS_NUMERAL
+type                	1017	1	131122	T_TEXT TS_STRING
+topic0              	1018	1	131132	T_HASH TS_STRING
+topic1              	1019	1	131132	T_HASH TS_STRING
+topic2              	1020	1	131132	T_HASH TS_STRING
+topic3              	1021	1	131132	T_HASH TS_STRING
+{
+}
+
+--------------------------------------------------------------------------------
+className: CLogEntry
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+cname               	1004	0	131122	T_TEXT TS_STRING
+address             	1005	0	131127	T_ADDRESS TS_STRING
+blockHash           	1006	0	131132	T_HASH TS_STRING
+blockNumber         	1007	0	65561	T_NUMBER TS_NUMERAL
+data                	1008	0	131122	T_TEXT TS_STRING
+logIndex            	1009	0	65561	T_NUMBER TS_NUMERAL
+removed             	1010	0	65556	T_BOOL TS_NUMERAL
+topics              	1011	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+articulatedLog      	1012	0	1048651	T_OBJECT TS_OBJECT
+compressedLog       	1013	0	131122	T_TEXT TS_STRING
+transactionHash     	1014	0	131132	T_HASH TS_STRING
+transactionIndex    	1015	0	65561	T_NUMBER TS_NUMERAL
+transactionLogIndex 	1016	0	65561	T_NUMBER TS_NUMERAL
+type                	1017	0	131122	T_TEXT TS_STRING
+topic0              	1018	0	131132	T_HASH TS_STRING
+topic1              	1019	0	131132	T_HASH TS_STRING
+topic2              	1020	0	131132	T_HASH TS_STRING
+topic3              	1021	0	131132	T_HASH TS_STRING
+{
+  "schema": 5008,
+  "deleted": 0,
+  "showing": 1,
+  "cname": "LogEntry",
+  "address": "0x0",
+  "logIndex": 0,
+  "topics": [],
+  "articulatedLog": {
+    "schema": 5008,
+    "deleted": 0,
+    "showing": 1,
+    "cname": "Function",
+    "inputs": [],
+    "outputs": []
+  },
+  "transactionLogIndex": 0
+}
+
+--------------------------------------------------------------------------------
+className: CPriceQuote
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+timestamp           	1005	0	65551	T_TIMESPAN TS_NUMERAL
+close               	1006	0	65566	T_DOUBLE TS_NUMERAL
+date                	1007	0	262149	T_DATE TS_DATE
+{
+  "timestamp": 0,
+  "close": 0.00000,
+  "date": "1700-01-01 00:00:01 UTC"
+}
+
+--------------------------------------------------------------------------------
+className: CPriceQuote
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+timestamp           	1005	1	65551	T_TIMESPAN TS_NUMERAL
+close               	1006	1	65566	T_DOUBLE TS_NUMERAL
+date                	1007	1	262149	T_DATE TS_DATE
+{
+}
+
+--------------------------------------------------------------------------------
+className: CPriceQuote
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+cname               	1004	0	131122	T_TEXT TS_STRING
+timestamp           	1005	0	65551	T_TIMESPAN TS_NUMERAL
+close               	1006	0	65566	T_DOUBLE TS_NUMERAL
+date                	1007	0	262149	T_DATE TS_DATE
+{
+  "schema": 5008,
+  "deleted": 0,
+  "showing": 1,
+  "cname": "PriceQuote",
+  "timestamp": 0,
+  "close": 0.00000,
+  "date": "1700-01-01 00:00:01 UTC"
+}
+
+--------------------------------------------------------------------------------
+className: CReceipt
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+blockHash           	1005	1	131132	T_HASH TS_STRING
+blockNumber         	1006	1	65561	T_NUMBER TS_NUMERAL
+contractAddress     	1007	0	131127	T_ADDRESS TS_STRING
+cumulativeGasUsed   	1008	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+from                	1009	1	131127	T_ADDRESS TS_STRING
+gasUsed             	1010	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+logs                	1011	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+logsBloom           	1012	1	131122	T_TEXT TS_STRING
+root                	1013	1	131122	T_TEXT TS_STRING
+status              	1014	0	65561	T_NUMBER TS_NUMERAL
+to                  	1015	1	131127	T_ADDRESS TS_STRING
+transactionHash     	1016	1	131132	T_HASH TS_STRING
+transactionIndex    	1017	1	65561	T_NUMBER TS_NUMERAL
+{
+  "contractAddress": "0x0",
+  "gasUsed": 0,
+  "logs": [],
+  "status": null
+}
+
+--------------------------------------------------------------------------------
+className: CReceipt
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+blockHash           	1005	1	131132	T_HASH TS_STRING
+blockNumber         	1006	1	65561	T_NUMBER TS_NUMERAL
+contractAddress     	1007	1	131127	T_ADDRESS TS_STRING
+cumulativeGasUsed   	1008	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+from                	1009	1	131127	T_ADDRESS TS_STRING
+gasUsed             	1010	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+logs                	1011	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+logsBloom           	1012	1	131122	T_TEXT TS_STRING
+root                	1013	1	131122	T_TEXT TS_STRING
+status              	1014	1	65561	T_NUMBER TS_NUMERAL
+to                  	1015	1	131127	T_ADDRESS TS_STRING
+transactionHash     	1016	1	131132	T_HASH TS_STRING
+transactionIndex    	1017	1	65561	T_NUMBER TS_NUMERAL
+{
+}
+
+--------------------------------------------------------------------------------
+className: CReceipt
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+cname               	1004	0	131122	T_TEXT TS_STRING
+blockHash           	1005	0	131132	T_HASH TS_STRING
+blockNumber         	1006	0	65561	T_NUMBER TS_NUMERAL
+contractAddress     	1007	0	131127	T_ADDRESS TS_STRING
+cumulativeGasUsed   	1008	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+from                	1009	0	131127	T_ADDRESS TS_STRING
+gasUsed             	1010	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+logs                	1011	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+logsBloom           	1012	0	131122	T_TEXT TS_STRING
+root                	1013	0	131122	T_TEXT TS_STRING
+status              	1014	0	65561	T_NUMBER TS_NUMERAL
+to                  	1015	0	131127	T_ADDRESS TS_STRING
+transactionHash     	1016	0	131132	T_HASH TS_STRING
+transactionIndex    	1017	0	65561	T_NUMBER TS_NUMERAL
+{
+  "schema": 5008,
+  "deleted": 0,
+  "showing": 1,
+  "cname": "Receipt",
+  "contractAddress": "0x0",
+  "cumulativeGasUsed": 0,
+  "gasUsed": 0,
+  "logs": [],
+  "status": null
+}
+
+--------------------------------------------------------------------------------
+className: CRPCResult
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+jsonrpc             	1005	0	131122	T_TEXT TS_STRING
+result              	1006	0	131122	T_TEXT TS_STRING
+id                  	1007	0	131122	T_TEXT TS_STRING
+{
+}
+
+--------------------------------------------------------------------------------
+className: CRPCResult
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+jsonrpc             	1005	1	131122	T_TEXT TS_STRING
+result              	1006	1	131122	T_TEXT TS_STRING
+id                  	1007	1	131122	T_TEXT TS_STRING
+{
+}
+
+--------------------------------------------------------------------------------
+className: CRPCResult
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+cname               	1004	0	131122	T_TEXT TS_STRING
+jsonrpc             	1005	0	131122	T_TEXT TS_STRING
+result              	1006	0	131122	T_TEXT TS_STRING
+id                  	1007	0	131122	T_TEXT TS_STRING
+{
+  "schema": 5008,
+  "deleted": 0,
+  "showing": 1,
+  "cname": "RPCResult"
+}
+
+--------------------------------------------------------------------------------
+className: CTrace
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+blockHash           	1005	0	131132	T_HASH TS_STRING
+blockNumber         	1006	0	65561	T_NUMBER TS_NUMERAL
+subtraces           	1007	0	65561	T_NUMBER TS_NUMERAL
+traceAddress        	1008	0	131122	T_TEXT TS_STRING
+transactionHash     	1009	0	131132	T_HASH TS_STRING
+transactionIndex    	1010	0	65561	T_NUMBER TS_NUMERAL
+type                	1011	0	131122	T_TEXT TS_STRING
+error               	1012	0	131122	T_TEXT TS_STRING
+articulatedTrace    	1013	1	1048651	T_OBJECT TS_OBJECT
+compressedTrace     	1014	1	131122	T_TEXT TS_STRING
+action              	1015	0	1048651	T_OBJECT TS_OBJECT
+result              	1016	0	1048651	T_OBJECT TS_OBJECT
+date                	1017	1	262149	T_DATE TS_DATE
+{
+  "blockHash": "0x0",
+  "blockNumber": 0,
+  "subtraces": 0,
+  "traceAddress": null,
+  "transactionHash": "0x0",
+  "transactionIndex": 0
+}
+
+--------------------------------------------------------------------------------
+className: CTrace
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+blockHash           	1005	1	131132	T_HASH TS_STRING
+blockNumber         	1006	1	65561	T_NUMBER TS_NUMERAL
+subtraces           	1007	1	65561	T_NUMBER TS_NUMERAL
+traceAddress        	1008	1	131122	T_TEXT TS_STRING
+transactionHash     	1009	1	131132	T_HASH TS_STRING
+transactionIndex    	1010	1	65561	T_NUMBER TS_NUMERAL
+type                	1011	1	131122	T_TEXT TS_STRING
+error               	1012	1	131122	T_TEXT TS_STRING
+articulatedTrace    	1013	1	1048651	T_OBJECT TS_OBJECT
+compressedTrace     	1014	1	131122	T_TEXT TS_STRING
+action              	1015	1	1048651	T_OBJECT TS_OBJECT
+result              	1016	1	1048651	T_OBJECT TS_OBJECT
+date                	1017	1	262149	T_DATE TS_DATE
+{
+}
+
+--------------------------------------------------------------------------------
+className: CTrace
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+cname               	1004	0	131122	T_TEXT TS_STRING
+blockHash           	1005	0	131132	T_HASH TS_STRING
+blockNumber         	1006	0	65561	T_NUMBER TS_NUMERAL
+subtraces           	1007	0	65561	T_NUMBER TS_NUMERAL
+traceAddress        	1008	0	131122	T_TEXT TS_STRING
+transactionHash     	1009	0	131132	T_HASH TS_STRING
+transactionIndex    	1010	0	65561	T_NUMBER TS_NUMERAL
+type                	1011	0	131122	T_TEXT TS_STRING
+error               	1012	0	131122	T_TEXT TS_STRING
+articulatedTrace    	1013	0	1048651	T_OBJECT TS_OBJECT
+compressedTrace     	1014	0	131122	T_TEXT TS_STRING
+action              	1015	0	1048651	T_OBJECT TS_OBJECT
+result              	1016	0	1048651	T_OBJECT TS_OBJECT
+date                	1017	0	262149	T_DATE TS_DATE
+{
+  "schema": 5008,
+  "deleted": 0,
+  "showing": 1,
+  "cname": "Trace",
+  "blockHash": "0x0",
+  "blockNumber": 0,
+  "subtraces": 0,
+  "traceAddress": null,
+  "transactionHash": "0x0",
+  "transactionIndex": 0
+}
+
+--------------------------------------------------------------------------------
+className: CTraceAction
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+address             	1005	0	131127	T_ADDRESS TS_STRING
+balance             	1006	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+callType            	1007	0	131122	T_TEXT TS_STRING
+from                	1008	0	131127	T_ADDRESS TS_STRING
+gas                 	1009	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+init                	1010	0	131122	T_TEXT TS_STRING
+input               	1011	0	131122	T_TEXT TS_STRING
+refundAddress       	1012	0	131127	T_ADDRESS TS_STRING
+to                  	1013	0	131127	T_ADDRESS TS_STRING
+value               	1014	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+ether               	1015	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+{
+  "address": "0x0",
+  "balance": 0,
+  "from": "0x0",
+  "gas": 0,
+  "refundAddress": "0x0",
+  "to": "0x0",
+  "value": 0
+}
+
+--------------------------------------------------------------------------------
+className: CTraceAction
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+address             	1005	1	131127	T_ADDRESS TS_STRING
+balance             	1006	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+callType            	1007	1	131122	T_TEXT TS_STRING
+from                	1008	1	131127	T_ADDRESS TS_STRING
+gas                 	1009	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+init                	1010	1	131122	T_TEXT TS_STRING
+input               	1011	1	131122	T_TEXT TS_STRING
+refundAddress       	1012	1	131127	T_ADDRESS TS_STRING
+to                  	1013	1	131127	T_ADDRESS TS_STRING
+value               	1014	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+ether               	1015	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+{
+}
+
+--------------------------------------------------------------------------------
+className: CTraceAction
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+cname               	1004	0	131122	T_TEXT TS_STRING
+address             	1005	0	131127	T_ADDRESS TS_STRING
+balance             	1006	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+callType            	1007	0	131122	T_TEXT TS_STRING
+from                	1008	0	131127	T_ADDRESS TS_STRING
+gas                 	1009	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+init                	1010	0	131122	T_TEXT TS_STRING
+input               	1011	0	131122	T_TEXT TS_STRING
+refundAddress       	1012	0	131127	T_ADDRESS TS_STRING
+to                  	1013	0	131127	T_ADDRESS TS_STRING
+value               	1014	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+ether               	1015	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+{
+  "schema": 5008,
+  "deleted": 0,
+  "showing": 1,
+  "cname": "TraceAction",
+  "address": "0x0",
+  "balance": 0,
+  "from": "0x0",
+  "gas": 0,
+  "refundAddress": "0x0",
+  "to": "0x0",
+  "value": 0,
+  "ether": 0.000000000000000000
+}
+
+--------------------------------------------------------------------------------
+className: CTraceResult
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+address             	1005	0	131127	T_ADDRESS TS_STRING
+code                	1006	0	131122	T_TEXT TS_STRING
+gasUsed             	1007	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+output              	1008	0	131122	T_TEXT TS_STRING
+{
+  "address": "0x0",
+  "gasUsed": 0
+}
+
+--------------------------------------------------------------------------------
+className: CTraceResult
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+address             	1005	1	131127	T_ADDRESS TS_STRING
+code                	1006	1	131122	T_TEXT TS_STRING
+gasUsed             	1007	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+output              	1008	1	131122	T_TEXT TS_STRING
+{
+}
+
+--------------------------------------------------------------------------------
+className: CTraceResult
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+cname               	1004	0	131122	T_TEXT TS_STRING
+address             	1005	0	131127	T_ADDRESS TS_STRING
+code                	1006	0	131122	T_TEXT TS_STRING
+gasUsed             	1007	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+output              	1008	0	131122	T_TEXT TS_STRING
+{
+  "schema": 5008,
+  "deleted": 0,
+  "showing": 1,
+  "cname": "TraceResult",
+  "address": "0x0",
+  "gasUsed": 0
+}
+
+--------------------------------------------------------------------------------
+className: CTransaction
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+hash                	1005	0	131132	T_HASH TS_STRING
+blockHash           	1006	0	131132	T_HASH TS_STRING
+blockNumber         	1007	0	65561	T_NUMBER TS_NUMERAL
+transactionIndex    	1008	0	65561	T_NUMBER TS_NUMERAL
+nonce               	1009	0	65561	T_NUMBER TS_NUMERAL
+timestamp           	1010	0	65551	T_TIMESPAN TS_NUMERAL
+from                	1011	0	131127	T_ADDRESS TS_STRING
+to                  	1012	0	131127	T_ADDRESS TS_STRING
+value               	1013	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+gas                 	1014	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+gasPrice            	1015	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+input               	1016	0	131122	T_TEXT TS_STRING
+isError             	1017	0	65561	T_NUMBER TS_NUMERAL
+isInternal          	1018	1	65561	T_NUMBER TS_NUMERAL
+receipt             	1019	0	1048651	T_OBJECT TS_OBJECT
+articulatedTx       	1020	1	1048651	T_OBJECT TS_OBJECT
+compressedTx        	1021	1	131122	T_TEXT TS_STRING
+finalized           	1022	1	65556	T_BOOL TS_NUMERAL
+traces              	1023	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+confirmations       	1024	1	65561	T_NUMBER TS_NUMERAL
+gasCost             	1025	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+etherGasCost        	1026	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+function            	1027	1	131122	T_TEXT TS_STRING
+events              	1028	1	131122	T_TEXT TS_STRING
+price               	1029	1	131122	T_TEXT TS_STRING
+gasUsed             	1030	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+date                	1031	1	262149	T_DATE TS_DATE
+datesh              	1032	1	262149	T_DATE TS_DATE
+time                	1033	1	262149	T_DATE TS_DATE
+age                 	1034	1	262149	T_DATE TS_DATE
+ether               	1035	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+encoding            	1036	1	131122	T_TEXT TS_STRING
+{
+  "hash": "0x0",
+  "blockHash": "0x0",
+  "blockNumber": 0,
+  "transactionIndex": 0,
+  "nonce": 0,
+  "timestamp": 0,
+  "from": "0x0",
+  "to": "0x0",
+  "value": 0,
+  "gas": 0,
+  "gasPrice": 0,
+  "isError": 0,
+  "receipt": {
+    "schema": 5008,
+    "deleted": 0,
+    "showing": 1,
+    "cname": "Receipt",
+    "contractAddress": "0x0",
+    "cumulativeGasUsed": 0,
+    "gasUsed": 0,
+    "logs": [],
+    "status": null
+  },
+  "gasUsed": 0
+}
+
+--------------------------------------------------------------------------------
+className: CTransaction
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+hash                	1005	1	131132	T_HASH TS_STRING
+blockHash           	1006	1	131132	T_HASH TS_STRING
+blockNumber         	1007	1	65561	T_NUMBER TS_NUMERAL
+transactionIndex    	1008	1	65561	T_NUMBER TS_NUMERAL
+nonce               	1009	1	65561	T_NUMBER TS_NUMERAL
+timestamp           	1010	1	65551	T_TIMESPAN TS_NUMERAL
+from                	1011	1	131127	T_ADDRESS TS_STRING
+to                  	1012	1	131127	T_ADDRESS TS_STRING
+value               	1013	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+gas                 	1014	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+gasPrice            	1015	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+input               	1016	1	131122	T_TEXT TS_STRING
+isError             	1017	1	65561	T_NUMBER TS_NUMERAL
+isInternal          	1018	1	65561	T_NUMBER TS_NUMERAL
+receipt             	1019	1	1048651	T_OBJECT TS_OBJECT
+articulatedTx       	1020	1	1048651	T_OBJECT TS_OBJECT
+compressedTx        	1021	1	131122	T_TEXT TS_STRING
+finalized           	1022	1	65556	T_BOOL TS_NUMERAL
+traces              	1023	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+confirmations       	1024	1	65561	T_NUMBER TS_NUMERAL
+gasCost             	1025	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+etherGasCost        	1026	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+function            	1027	1	131122	T_TEXT TS_STRING
+events              	1028	1	131122	T_TEXT TS_STRING
+price               	1029	1	131122	T_TEXT TS_STRING
+gasUsed             	1030	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+date                	1031	1	262149	T_DATE TS_DATE
+datesh              	1032	1	262149	T_DATE TS_DATE
+time                	1033	1	262149	T_DATE TS_DATE
+age                 	1034	1	262149	T_DATE TS_DATE
+ether               	1035	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+encoding            	1036	1	131122	T_TEXT TS_STRING
+{
+}
+
+--------------------------------------------------------------------------------
+className: CTransaction
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+cname               	1004	0	131122	T_TEXT TS_STRING
+hash                	1005	0	131132	T_HASH TS_STRING
+blockHash           	1006	0	131132	T_HASH TS_STRING
+blockNumber         	1007	0	65561	T_NUMBER TS_NUMERAL
+transactionIndex    	1008	0	65561	T_NUMBER TS_NUMERAL
+nonce               	1009	0	65561	T_NUMBER TS_NUMERAL
+timestamp           	1010	0	65551	T_TIMESPAN TS_NUMERAL
+from                	1011	0	131127	T_ADDRESS TS_STRING
+to                  	1012	0	131127	T_ADDRESS TS_STRING
+value               	1013	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+gas                 	1014	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+gasPrice            	1015	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+input               	1016	0	131122	T_TEXT TS_STRING
+isError             	1017	0	65561	T_NUMBER TS_NUMERAL
+isInternal          	1018	0	65561	T_NUMBER TS_NUMERAL
+receipt             	1019	0	1048651	T_OBJECT TS_OBJECT
+articulatedTx       	1020	0	1048651	T_OBJECT TS_OBJECT
+compressedTx        	1021	0	131122	T_TEXT TS_STRING
+finalized           	1022	0	65556	T_BOOL TS_NUMERAL
+traces              	1023	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+confirmations       	1024	0	65561	T_NUMBER TS_NUMERAL
+gasCost             	1025	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+etherGasCost        	1026	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+function            	1027	0	131122	T_TEXT TS_STRING
+events              	1028	0	131122	T_TEXT TS_STRING
+price               	1029	0	131122	T_TEXT TS_STRING
+gasUsed             	1030	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+date                	1031	0	262149	T_DATE TS_DATE
+datesh              	1032	0	262149	T_DATE TS_DATE
+time                	1033	0	262149	T_DATE TS_DATE
+age                 	1034	0	262149	T_DATE TS_DATE
+ether               	1035	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+encoding            	1036	0	131122	T_TEXT TS_STRING
+{
+  "schema": 5008,
+  "deleted": 0,
+  "showing": 1,
+  "cname": "Transaction",
+  "hash": "0x0",
+  "blockHash": "0x0",
+  "blockNumber": 0,
+  "transactionIndex": 0,
+  "nonce": 0,
+  "timestamp": 0,
+  "from": "0x0",
+  "to": "0x0",
+  "value": 0,
+  "gas": 0,
+  "gasPrice": 0,
+  "isError": 0,
+  "isInternal": 0,
+  "receipt": {
+    "schema": 5008,
+    "deleted": 0,
+    "showing": 1,
+    "cname": "Receipt",
+    "contractAddress": "0x0",
+    "cumulativeGasUsed": 0,
+    "gasUsed": 0,
+    "logs": [],
+    "status": null
+  },
+  "finalized": 0,
+  "traces": [],
+  "gasCost": 0,
+  "etherGasCost": 0.000000000000000000,
+  "price": "1.400000000000000000",
+  "gasUsed": 0,
+  "date": "1970-01-01 00:00:00 UTC",
+  "datesh": "1970-01-01",
+  "time": "0:00:00 UTC",
+  "age": "100",
+  "ether": 0.000000000000000000
+}
+
+--------------------------------------------------------------------------------
+className: CNewBlock
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+gasLimit            	1005	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+gasUsed             	1006	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+hash                	1007	0	131132	T_HASH TS_STRING
+blockNumber         	1008	0	65561	T_NUMBER TS_NUMERAL
+parentHash          	1009	0	131132	T_HASH TS_STRING
+miner               	1010	0	131127	T_ADDRESS TS_STRING
+difficulty          	1011	0	65561	T_NUMBER TS_NUMERAL
+price               	1012	0	65566	T_DOUBLE TS_NUMERAL
+finalized           	1013	0	65556	T_BOOL TS_NUMERAL
+timestamp           	1014	0	65551	T_TIMESPAN TS_NUMERAL
+transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+{
+  "gasLimit": 0,
+  "gasUsed": 0,
+  "hash": "0x0",
+  "blockNumber": 0,
+  "parentHash": "0x0",
+  "miner": "0x0",
+  "difficulty": 0,
+  "price": 0,
+  "finalized": false,
+  "timestamp": 0,
+  "transactions": []
+}
+
+--------------------------------------------------------------------------------
+className: CNewBlock
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+gasLimit            	1005	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+gasUsed             	1006	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+hash                	1007	1	131132	T_HASH TS_STRING
+blockNumber         	1008	1	65561	T_NUMBER TS_NUMERAL
+parentHash          	1009	1	131132	T_HASH TS_STRING
+miner               	1010	1	131127	T_ADDRESS TS_STRING
+difficulty          	1011	1	65561	T_NUMBER TS_NUMERAL
+price               	1012	1	65566	T_DOUBLE TS_NUMERAL
+finalized           	1013	1	65556	T_BOOL TS_NUMERAL
+timestamp           	1014	1	65551	T_TIMESPAN TS_NUMERAL
+transactions        	1015	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+{
+}
+
+--------------------------------------------------------------------------------
+className: CNewBlock
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+cname               	1004	0	131122	T_TEXT TS_STRING
+gasLimit            	1005	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+gasUsed             	1006	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+hash                	1007	0	131132	T_HASH TS_STRING
+blockNumber         	1008	0	65561	T_NUMBER TS_NUMERAL
+parentHash          	1009	0	131132	T_HASH TS_STRING
+miner               	1010	0	131127	T_ADDRESS TS_STRING
+difficulty          	1011	0	65561	T_NUMBER TS_NUMERAL
+price               	1012	0	65566	T_DOUBLE TS_NUMERAL
+finalized           	1013	0	65556	T_BOOL TS_NUMERAL
+timestamp           	1014	0	65551	T_TIMESPAN TS_NUMERAL
+transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+{
+  "schema": 5008,
+  "deleted": 0,
+  "showing": 1,
+  "cname": "NewBlock",
+  "gasLimit": 0,
+  "gasUsed": 0,
+  "hash": "0x0",
+  "blockNumber": 0,
+  "parentHash": "0x0",
+  "miner": "0x0",
+  "difficulty": 0,
+  "price": 0,
+  "finalized": false,
+  "timestamp": 0,
+  "transactions": []
+}
+
+--------------------------------------------------------------------------------
+className: CNewReceipt
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+contractAddress     	1005	0	131127	T_ADDRESS TS_STRING
+gasUsed             	1006	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+logs                	1007	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+logsBloom           	1008	0	131137	T_BLOOM TS_STRING
+isError             	1009	0	65556	T_BOOL TS_NUMERAL
+{
+  "contractAddress": "0x0",
+  "gasUsed": 0,
+  "logs": [],
+  "logsBloom": "0x0",
+  "isError": false
+}
+
+--------------------------------------------------------------------------------
+className: CNewReceipt
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+contractAddress     	1005	1	131127	T_ADDRESS TS_STRING
+gasUsed             	1006	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+logs                	1007	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+logsBloom           	1008	1	131137	T_BLOOM TS_STRING
+isError             	1009	1	65556	T_BOOL TS_NUMERAL
+{
+}
+
+--------------------------------------------------------------------------------
+className: CNewReceipt
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+cname               	1004	0	131122	T_TEXT TS_STRING
+contractAddress     	1005	0	131127	T_ADDRESS TS_STRING
+gasUsed             	1006	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+logs                	1007	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+logsBloom           	1008	0	131137	T_BLOOM TS_STRING
+isError             	1009	0	65556	T_BOOL TS_NUMERAL
+{
+  "schema": 5008,
+  "deleted": 0,
+  "showing": 1,
+  "cname": "NewReceipt",
+  "contractAddress": "0x0",
+  "gasUsed": 0,
+  "logs": [],
+  "logsBloom": "0x0",
+  "isError": false
+}
+

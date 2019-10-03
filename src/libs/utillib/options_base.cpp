@@ -57,22 +57,8 @@ namespace qblocks {
     bool COptionsBase::prepareArguments(int argc, const char *argv[]) {
 
         prepareEnv(argc, argv);
-        if (isTestMode()) {
-            // we present the data once for clarity...
-            cerr << getProgName() << " argc: " << argc << " ";
-            for (int i = 1 ; i < argc ; i++) {
-                string_q str = argv[i];
-                cerr << "[" << i << ":" << trim(str) << "] ";
-            }
-            cerr << endl;
-            // ... and once to use as a command line for copy/paste
-            cerr << getProgName() << " ";
-            for (int i = 1 ; i < argc ; i++) {
-                string_q str = argv[i];
-                cerr << trim(str) << " ";
-            }
-            cerr << endl;
-        }
+        if (getEnvStr("REDIR_CERR") == "true")
+            cerr.rdbuf( cout.rdbuf() );
 
         // send out the environment, if any non-default
         if (isTestMode() || isLevelOn(sev_debug4)) {
@@ -82,6 +68,30 @@ namespace qblocks {
             if (getEnvStr("DOCKER_MODE") == "true") { LOG4("DOCKER_MODE=", getEnvStr("DOCKER_MODE")); }
 //            if (!getEnvStr("IPFS_PATH").empty())    { LOG4("IPFS_PATH=",   getEnvStr("IPFS_PATH")); }
             verbose = save;
+        }
+
+        if (isTestMode()) {
+            ostringstream argos1;
+            ostringstream argos2;
+            for (int i = 1 ; i < argc ; i++) {
+                string_q str = argv[i];
+                argos1 << "[" << i << ":" << trim(str) << "] ";
+                argos2 << trim(str) << " ";
+            }
+
+            const char* STR_TESTLOAD_TXT = "[{PROGRAM}] argc: [{ARGC}] [{ARGS}]\n";
+            const char* STR_CMD_TXT = "[{PROGRAM}] [{ARGS}]\n";
+
+            string_q out = STR_TESTLOAD_TXT;
+            replace(out, "[{PROGRAM}]", getProgName());
+            replace(out, "[{ARGC}]", int_2_Str(argc));
+            replace(out, "[{ARGS}]", argos1.str());
+            cerr << out;
+
+            out = STR_CMD_TXT;
+            replace(out, "[{PROGRAM}]", getProgName());
+            replace(out, "[{ARGS}]", argos2.str());
+            cerr << out;
         }
 
         if ((uint64_t)argc <= minArgs)  // the first arg is the program's name
@@ -198,7 +208,7 @@ namespace qblocks {
                 else if ( arg == "csv" ) { exportFmt = CSV1; }
                 else if ( arg == "json") { exportFmt = JSON1; }
                 else if ( arg == "api" ) { exportFmt = API1; }
-                else return usage("Export format must be one of [ json | txt | csv | api ]. Quitting...");
+                else return usage("Export format (" + arg + ") must be one of [ json | txt | csv | api ]. Quitting...");
                 args[i] = "";
             }
         }
@@ -215,7 +225,7 @@ namespace qblocks {
         string_q commandList = "";
         for (uint64_t i = 0 ; i < nArgs ; i++) {
             string_q a = args[i];
-            if (!contains(a, "--file"))
+            if (!contains(a, "--file:"))
                 commandList += (a + " ");
         }
         commandList += '\n';
@@ -253,6 +263,7 @@ namespace qblocks {
             commandLines.push_back("--noop");
 
         if (args) delete [] args;
+
         return 1;
     }
 
@@ -435,7 +446,7 @@ namespace qblocks {
         is_hidden     = startsWith(nameIn, "@");
         is_positional = startsWith(nameIn, "~");
         is_optional   = contains  (nameIn, "!");
-        description   = descr;
+        description   = substitute(descr, "&#44;", ",");
         if (nameIn.empty())
             return;
 
@@ -470,9 +481,8 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    COption::COption(const string_q& ln, const string_q& sn, const string_q& type, size_t opts, const string_q& d)
-    {
-        description = d;
+    COption::COption(const string_q& ln, const string_q& sn, const string_q& type, size_t opts, const string_q& d) {
+        description = substitute(d, "&#44;", ",");
         if (ln.empty())
             return;
 
@@ -496,17 +506,20 @@ namespace qblocks {
         return false;
     }
 
+const char *STR_ERROR_JSON =
+"{ \"errors\": [ \"[ERRORS]\" ] }\n";
+
     //--------------------------------------------------------------------------------
     string_q COptionsBase::usageStr(const string_q& errMsg) const {
+
+        if (isApiMode())
+            cout << substitute(STR_ERROR_JSON, "[ERRORS]", getProgName() + " - " + errMsg);
 
         ostringstream os;
         if (isReadme) {
             colorsOff();
             os << "#### Usage\n";
         }
-
-        if (isApiMode())
-            cout << "{ \"cmd\": \"" + getProgName() + "\", \"error\": \"" << errMsg << "\" }" << endl;
 
         os << "\n";
         if (!errMsg.empty())
@@ -1063,28 +1076,27 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     }
 
     const char *STR_DEFAULT_WHENBLOCKS =
-    "[\n"
-    "    { name : \"first\",          value : \"0\"       },\n"
-    "    { name : \"firstTrans\",     value : \"46147\"   },\n"
-    "    { name : \"iceage\",         value : \"200000\"  },\n"
-    "    { name : \"devcon1\",        value : \"543626\"  },\n"
-    "    { name : \"homestead\",      value : \"1150000\" },\n"
-    "    { name : \"daofund\",        value : \"1428756\" },\n"
-    "    { name : \"daohack\",        value : \"1718497\" },\n"
-    "    { name : \"daofork\",        value : \"1920000\" },\n"
-    "    { name : \"devcon2\",        value : \"2286910\" },\n"
-    "    { name : \"tangerine\",      value : \"2463000\" },\n"
-    "    { name : \"spurious\",       value : \"2675000\" },\n"
-    "    { name : \"stateclear\",     value : \"2717576\" },\n"
-    "    { name : \"eea\",            value : \"3265360\" },\n"
-    "    { name : \"ens2\",           value : \"3327417\" },\n"
-    "    { name : \"parityhack1\",    value : \"4041179\" },\n"
-    "    { name : \"byzantium\",      value : \"4370000\" },\n"
-    "    { name : \"devcon3\",        value : \"4469339\" },\n"
-    "    { name : \"parityhack2\",    value : \"4501969\" },\n"
-    "    { name : \"kitties\",        value : \"4605167\" },\n"
-    "    { name : \"devcon4\",        value : \"6610279\" },\n"
-    "    { name : \"constantinople\", value : \"7280000\" },\n"
-    "    { name : \"latest\",         value : \"\"        }\n"
+    "[ { name = \"first\", value = 0 },"
+    "{ name = \"firstTrans\", value = 46147 },"
+    "{ name = \"iceage\", value = 200000 },"
+    "{ name = \"devcon1\", value = 543626 },"
+    "{ name = \"homestead\", value = 1150000 },"
+    "{ name = \"daofund\", value = 1428756 },"
+    "{ name = \"daohack\", value = 1718497 },"
+    "{ name = \"daofork\", value = 1920000 },"
+    "{ name = \"devcon2\", value = 2286910 },"
+    "{ name = \"tangerine\", value = 2463000 },"
+    "{ name = \"spurious\", value = 2675000 },"
+    "{ name = \"stateclear\", value = 2717576 },"
+    "{ name = \"eea\", value = 3265360 },"
+    "{ name = \"ens2\", value = 3327417 },"
+    "{ name = \"parityhack1\", value = 4041179 },"
+    "{ name = \"byzantium\", value = 4370000 },"
+    "{ name = \"devcon3\", value = 4469339 },"
+    "{ name = \"parityhack2\", value = 4501969 },"
+    "{ name = \"kitties\", value = 4605167 },"
+    "{ name = \"devcon4\", value = 6610279 },"
+    "{ name = \"constantinople\", value = 7280000 },"
+    "{ name = \"latest\", value = \"\" }"
     "]";
 }  // namespace qblocks

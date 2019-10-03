@@ -1,5 +1,5 @@
-getTokenInfo argc: 3 [1:--help] [2:-v] 
-getTokenInfo --help -v 
+getTokenInfo argc: 3 [1:--help] [2:--verbose] 
+getTokenInfo --help --verbose 
 
   Usage:    getTokenInfo [-b|-n|-v|-h] <address> <address> [address...] [block...]  
   Purpose:  Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).

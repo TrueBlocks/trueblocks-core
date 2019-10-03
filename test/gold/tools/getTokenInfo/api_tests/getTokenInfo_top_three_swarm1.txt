@@ -1,0 +1,5 @@
+
+  For contract: 0xa25d04fa348f107428708ba19c95d1c79b3744bf
+    Balance of token contract 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 at block 4285364 is 435000000000000000000000
+    Balance of token contract 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 at block 3510999 is 0
+    Balance of token contract 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 at block 2510010 is 0

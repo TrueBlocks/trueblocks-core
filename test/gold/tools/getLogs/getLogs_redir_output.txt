@@ -1,3 +1,3 @@
-getLogs argc: 5 [1:-v] [2:3657480.79] [3:--output] [4:testing_file] 
-getLogs -v 3657480.79 --output testing_file 
+getLogs argc: 4 [1:3657480.79] [2:--output] [3:testing_file] 
+getLogs 3657480.79 --output testing_file 
 testing_file

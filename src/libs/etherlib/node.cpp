@@ -513,7 +513,7 @@ extern void loadParseMap(void);
         unripe    = getLastBlock_cache_unripe();
         staging   = getLastBlock_cache_staging();
         finalized = getLastBlock_cache_final();
-        client    = getLastBlock_client();
+        client    = (isNodeRunning() ? getLastBlock_client() : NOPOS);
         return true;
     }
 
@@ -854,22 +854,23 @@ extern void loadParseMap(void);
             CTransaction trans;
             if (hasHex) {
                 if (hasDot) {
-                    // blockHash.txid
+                    LOG4("blockHash.txid", hash, txid);
                     getTransaction(trans, hash, txid);
 
                 } else {
-                    // transHash
+                    LOG4("transHash", hash);
                     getTransaction(trans, hash);
                 }
             } else {
-                // blockNum.txid
                 blknum_t blockNum = str_2_Uint(hash);  // so the input is poorly named, sue me
+                LOG4("blockNum.txid", blockNum, txid);
                 getTransaction(trans, blockNum, txid);
                 if (fileExists(getBinaryCacheFilename(CT_TXS, blockNum, txid)))
                     fromCache = true;
             }
 
             if (!fromCache) {
+                LOG4("not from cache");
                 CBlock block;
                 trans.pBlock = &block;
                 if (isHash(trans.hash)) {
@@ -1128,7 +1129,7 @@ extern void loadParseMap(void);
                 os << headerRow(format, ",", "\"");
                 break;
             case JSON1:
-                os << "[";
+                os << "{ \"data\": [";
                 break;
             case API1:
                 os << "{ \"type\": \"" << className << "\", \"data\": [";
@@ -1142,6 +1143,8 @@ extern void loadParseMap(void);
 
     //-----------------------------------------------------------------------
     inline string_q dispNumOrHex(uint64_t num) {
+        if (num == NOPOS)
+            return "\"n/a\"";
         if (!isTestMode())
             return uint_2_Str(num);
         ostringstream os;
@@ -1150,19 +1153,51 @@ extern void loadParseMap(void);
     }
 
     //-----------------------------------------------------------------------
-    string_q exportPostamble(format_t fmt, const string_q& extra) {
-        if ((fmt != API1 && fmt != JSON1) || fmt == NONE1)
-            return "";
-        if (fmt != API1)
-            return "\n]";
+    string_q exportPostamble(format_t fmt, const CStringArray& errorsIn, const string_q& extra) {
+
+const char* STR_ERROR_MSG_TXT =
+"\"{[MSG]}\"";
+const char* STR_ERROR_MSG_JSON =
+"\"[MSG]\"";
+
+        bool isText = (fmt == TXT1 || fmt == CSV1 || fmt == NONE1);
+
+        CStringArray errors = errorsIn;
+        for (auto curlError : getCurlContext()->curlErrors)
+            errors.push_back(substitute(substitute(curlError,"\"",""),"\n",""));
+
+        ostringstream errStrs;
+        bool first = true;
+        for (auto error : errors) {
+            string_q msg = (isText ? STR_ERROR_MSG_TXT : STR_ERROR_MSG_JSON);
+            if (!first) {
+                if (isText)
+                    errStrs << endl;
+                else
+                    errStrs << ", ";
+            }
+            errStrs << substitute(substitute(substitute(msg, "[MSG]", error), "{", cRed), "}", cOff);
+            first = false;
+        }
+
+        if (isText)
+            return errStrs.str();  // only errors are reported for text or csv
+        ASSERT(fmt == JSON1 || fmt == API1);
+
+        ostringstream os;
+        os << "]"; // finish the data array (or the error array)...
+        if (!errStrs.str().empty())
+            os << ", \"errors\": [\n" << errStrs.str() << "\n]";
+
+        if (fmt == JSON1)
+            return os.str() + " }";
+        ASSERT(fmt == API1);
 
         uint64_t unripe, ripe, staging, finalized, client;
         getLastBlocks(unripe, ripe, staging, finalized, client);
         if (isTestMode())
             unripe = ripe = staging = finalized = client = 0xdeadbeef;
-
-        ostringstream os;
-        os << "\n], \"meta\": {";
+        os << ", \"meta\": {";
         os << "\"unripe\": " << dispNumOrHex(unripe) << ",";
         os << "\"ripe\": " << dispNumOrHex(ripe) << ",";
         os << "\"staging\": " << dispNumOrHex(staging) << ",";
@@ -1170,7 +1205,10 @@ extern void loadParseMap(void);
         os << "\"client\": " << dispNumOrHex(client);
         if (!extra.empty())
             os << extra;
-        os << " } }";
+        os << " }";
+
+        os << " }";
+
         return os.str();
     }
 

@@ -1,8 +1,0 @@
-grabABI argc: 2 [1:0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373] 
-grabABI 0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373 
-ABI for address 0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373
-	function isOwner                    (address addr)
-	function owner                      ()
-	function postData                   (address recipient,string topic,bytes32 data)
-	event DataDumped                    (address indexed _recipient,string indexed _topic,bytes32 _dataHash)
-

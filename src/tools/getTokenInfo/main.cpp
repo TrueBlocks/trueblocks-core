@@ -53,7 +53,7 @@ int main(int argc, const char *argv[]) {
         }
     }
 
-    if (options.hasHistory() && !nodeHasBalances())
+    if (options.requestsHistory() && !nodeHasBalances(true))
         LOG_WARN("Your node does not report historical state. The results presented above are incorrect.");
     return 0;
 }

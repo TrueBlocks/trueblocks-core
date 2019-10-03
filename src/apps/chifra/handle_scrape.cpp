@@ -148,11 +148,7 @@ bool COptions::handle_scrape(void) {
                             for (auto addr : runs) {
                                 ostringstream os1;
                                 os1 << "acctExport " << addr << " --freshen"; // << " >/dev/null";
-                                if (isTestMode()) {
-                                    cout << substitute(os1.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
-                                } else {
-                                    if (system(os1.str().c_str())) { }  // Don't remove. Silences compiler warnings
-                                }
+                                if (system(os1.str().c_str())) { }  // Don't remove. Silences compiler warnings
                                 usleep(250000); // stay responsive to cntrl+C
                                 if (shouldQuit())
                                     continue;

@@ -12,7 +12,7 @@ getState --help
 	-c  (--changes)       only report a balance when it changes from one block to the next
 
 #### Hidden options (shown during testing only)
-	-o  (--noHeader)      hide the header in txt and csv mode
+	-o  (--no_header)     hide the header in txt and csv mode
 	-x  (--fmt <fmt>)     export format (one of [none|json*|txt|csv|api])
 #### Hidden options (shown during testing only)
 

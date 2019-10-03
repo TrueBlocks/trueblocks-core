@@ -1,0 +1,77 @@
+serializeTest argc: 1 
+serializeTest 
+Creation
+--------------------------------------------------------------------------------
+Leader : 100
+Person 0 : 0
+Person 1 : 2
+Person 2 : 4
+Person 3 : 6
+Person 4 : 8
+Person 5 : 10
+Person 6 : 12
+Person 7 : 14
+Person 8 : 16
+Person 9 : 18
+
+Reset
+--------------------------------------------------------------------------------
+ : 0
+
+Read in data
+--------------------------------------------------------------------------------
+Leader : 100
+Person 0 : 0
+Person 1 : 2
+Person 2 : 4
+Person 3 : 6
+Person 4 : 8
+Person 5 : 10
+Person 6 : 12
+Person 7 : 14
+Person 8 : 16
+Person 9 : 18
+{
+  "name": "Leader",
+  "age": 100,
+  "next": "{
+    "name": "Person 0",
+    "age": 0,
+    "next": "{
+      "name": "Person 1",
+      "age": 2,
+      "next": "{
+        "name": "Person 2",
+        "age": 4,
+        "next": "{
+          "name": "Person 3",
+          "age": 6,
+          "next": "{
+            "name": "Person 4",
+            "age": 8,
+            "next": "{
+              "name": "Person 5",
+              "age": 10,
+              "next": "{
+                "name": "Person 6",
+                "age": 12,
+                "next": "{
+                  "name": "Person 7",
+                  "age": 14,
+                  "next": "{
+                    "name": "Person 8",
+                    "age": 16,
+                    "next": "{
+                      "name": "Person 9",
+                      "age": 18
+                    }"
+                  }"
+                }"
+              }"
+            }"
+          }"
+        }"
+      }"
+    }"
+  }"
+}

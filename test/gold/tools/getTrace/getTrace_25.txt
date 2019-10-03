@@ -1,6 +1,5 @@
 getTrace argc: 3 [1:0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637853bb13a3ae1fe1328] [2:--raw] 
 getTrace 0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637853bb13a3ae1fe1328 --raw 
-[
+{ "data": [
 {"jsonrpc":"2.0","result":[{"action":{"callType":"call","from":"0xb97073b754660bb356dfe12f78ae366d77dbc80f","gas":"0x2b1b","input":"0xd8963b9100000000000000000000000000a3819199113fc6a6e6ba1298afde7377e2009b","to":"0xd450aafdb8a225c901d5379a3d0ff8fea1344bfa","value":"0x0"},"blockHash":"0x9ee74ad50cb24017ee6fa90cdabc13d00e714ab3692a689a4a22716bdd2de5a4","blockNumber":3189962,"result":{"gasUsed":"0x153d","output":"0x"},"subtraces":1,"traceAddress":[],"transactionHash":"0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637853bb13a3ae1fe1328","transactionPosition":7,"type":"call"},{"action":{"address":"0xd450aafdb8a225c901d5379a3d0ff8fea1344bfa","balance":"0x16345785d8a0000","refundAddress":"0x00a3819199113fc6a6e6ba1298afde7377e2009b"},"blockHash":"0x9ee74ad50cb24017ee6fa90cdabc13d00e714ab3692a689a4a22716bdd2de5a4","blockNumber":3189962,"result":null,"subtraces":0,"traceAddress":[0],"transactionHash":"0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637853bb13a3ae1fe1328","transactionPosition":7,"type":"suicide"}],"id":"1"}
-
-]
+] }

@@ -32,16 +32,7 @@ int main(int argc, const char *argv[]) {
             options.blocks.forEveryBlockNumber(visitBlock, &options);
             once = false;
         }
-        if (options.hasHistory() && !nodeHasBalances()) {
-            bool isText = (options.exportFmt & (TXT1|CSV1));
-            if (isText) {
-                cerr << "Your node does not report historical state. Results are incorrect." << endl;
-            } else {
-                expContext().fmtMap["meta"] =
-                ", \"warning\": \"Your node does not report historical state. Results are incorrect.\"";
-            }
-        }
-        cout << exportPostamble(options.exportFmt, expContext().fmtMap["meta"]);
+        cout << exportPostamble(options.exportFmt, options.errors, expContext().fmtMap["meta"]);
     }
 
     acctlib_cleanup();
@@ -61,6 +52,9 @@ bool visitBlock(uint64_t blockNum, void *data) {
 
     if (blockNum < opt->oldestBlock)
         opt->oldestBlock = blockNum;
+
+    if (opt->requestsHistory() && !nodeHasBalances(true))
+        opt->errors.push_back("Request for historical state at block " + uint_2_Str(blockNum) + " not available.");
 
     CEthState state;
     state.address = opt->current;

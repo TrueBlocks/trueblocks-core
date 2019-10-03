@@ -1,0 +1,5 @@
+{
+  "errors": [
+    "getBloom - --eab and --block options are not allowed together. Choose one. Quitting..."
+  ]
+}

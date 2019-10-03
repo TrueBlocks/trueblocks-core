@@ -1,4 +1,24 @@
-getState argc: 3 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:1500000] 
-getState 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 1500000 
-blocknumber	address	balance
-1500000	0xbb9bc244d798123fde783fcc1c72d3bb8c189413	4420466920675732108465682
+getState argc: 6 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:1500000] [3:--fmt] [4:txt] [5:--no_history] 
+getState 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 1500000 --fmt txt --no_history 
+
+  Request asks for historical state, but the RPC server does not have historical state. Quitting...
+
+  Usage:    getState [-m|-n|-c|-v|-h] <address> [address...] [block...]  
+  Purpose:  Retrieve the balance (in wei) for one or more addresses at the given block(s).
+
+  Where:  
+	addr_list             one or more addresses (0x...) from which to retrieve balances (required)
+	block_list            an optional list of one or more blocks at which to report balances, defaults to 'latest'
+	-m  (--mode enum[none|some*|all|balance|nonce|code|storage|deployed|accttype])control which state to export. One of [none|some*|all|balance|nonce|code|storage|deployed|accttype]
+	-n  (--nozero)        suppress the display of zero balance accounts
+	-c  (--changes)       only report a balance when it changes from one block to the next
+
+#### Hidden options (shown during testing only)
+	-o  (--no_header)     hide the header in txt and csv mode
+	-x  (--fmt <fmt>)     export format (one of [none|json*|txt|csv|api])
+#### Hidden options (shown during testing only)
+
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Powered by QBlocks

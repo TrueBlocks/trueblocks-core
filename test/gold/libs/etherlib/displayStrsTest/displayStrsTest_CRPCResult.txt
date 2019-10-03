@@ -1,0 +1,4 @@
+displayStrsTest argc: 2 [1:CRPCResult] 
+displayStrsTest CRPCResult 
+------------------------------CRPCResult------------------------------
+Unknown node of type CRPCResult not created.

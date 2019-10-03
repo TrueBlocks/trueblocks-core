@@ -1,0 +1,11 @@
+
+  For token contract: 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607
+    Balance for account 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98 at block 4285364 is 1448799417541610000000000
+    Balance for account 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98 at block 3510999 is 1047207870835250000000000
+    Balance for account 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98 at block 2510010 is 0
+    Balance for account 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3 at block 4285364 is 591000000000000000000000
+    Balance for account 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3 at block 3510999 is 680705432607682194830660
+    Balance for account 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3 at block 2510010 is 0
+    Balance for account 0xa25d04fa348f107428708ba19c95d1c79b3744bf at block 4285364 is 435000000000000000000000
+    Balance for account 0xa25d04fa348f107428708ba19c95d1c79b3744bf at block 3510999 is 0
+    Balance for account 0xa25d04fa348f107428708ba19c95d1c79b3744bf at block 2510010 is 0

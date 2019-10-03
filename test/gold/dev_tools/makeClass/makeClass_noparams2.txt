@@ -1,7 +1,7 @@
-makeClass argc: 2 [1:x] 
-makeClass x 
+makeClass argc: 2 [1:--x] 
+makeClass --x 
 
-  You must specify at least one of --run, --list, --open, or --clear
+  Unknown parameter: --x
 
   Usage:    makeClass [-o|-r|-j|-f|-l|-h|-c|-n|-s|-a|-v|-h] className  
   Purpose:  Creates C++ code based on definition file at ./classDefinition/<className>.

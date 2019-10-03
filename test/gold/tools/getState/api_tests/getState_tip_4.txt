@@ -1,0 +1,36 @@
+{
+  "type": "CEthState",
+  "data": [
+    {
+      "blockNumber": 1500000,
+      "balance": 2647815343985768000000,
+      "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
+      "ether": 2647.815343985768
+    },
+    {
+      "blockNumber": 2000000,
+      "balance": 3671650516137718300000,
+      "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
+      "ether": 3671.6505161377186
+    },
+    {
+      "blockNumber": 2500000,
+      "balance": 3905662906205094300000,
+      "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
+      "ether": 3905.6629062050943
+    },
+    {
+      "blockNumber": 3000000,
+      "balance": 3960634342363572000000,
+      "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
+      "ether": 3960.6343423635717
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
+}

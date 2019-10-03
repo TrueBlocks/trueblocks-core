@@ -9,8 +9,8 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("command", "", "enum[scrape|list|export|accounts|slurp|quotes|data|blocks|transactions|receipts|logs|traces|state|abi|status|message|rm|config|leech|seed]", OPT_REQUIRED | OPT_POSITIONAL, "one of [scrape|list|export|accounts|slurp|quotes|data|blocks|transactions|receipts|logs|traces|state|abi|status|message|rm|config|leech|seed]"),
-    COption("sleep", "", "<seconds>", OPT_FLAG, "for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 0)"),
+    COption("command", "", "enum[list|export|slurp|accounts|abi|state|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed]", OPT_REQUIRED | OPT_POSITIONAL, "one of [list|export|slurp|accounts|abi|state|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed]"),
+    COption("sleep", "", "<uint>", OPT_FLAG, "for the 'scrape' and 'daemon' commands&#44; the number of seconds chifra should sleep between runs (default 0)"),
     COption("", "", "", OPT_DESCRIPTION, "Create a TrueBlocks monitor configuration."),
 // END_CODE_OPTIONS
 };
@@ -26,6 +26,8 @@ bool COptions::parseArguments(string_q& command) {
 
     ENTER4("parseArguments");
 
+    bool copy_to_tool = false;
+
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
@@ -38,6 +40,10 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "--tool_help" || (isApiMode() && arg == "--help")) {
             tool_flags += (" --help");
 
+        } else if (arg == "--set") {
+            tool_flags += (arg + " ");
+            copy_to_tool = true;
+
         } else if (mode.empty() && startsWith(arg, '-')) {
 
             if (!builtInCmd(arg))
@@ -45,8 +51,17 @@ bool COptions::parseArguments(string_q& command) {
 
         } else {
 
+            if (copy_to_tool) {
+                tool_flags += (arg + '~');
+                continue;
+            }
+
             string descr = substitute(substitute(params[0].description, "[", "|"), "]", "|");
-            if (contains(descr, "|" + arg + "|")) {
+            if (isTestMode())
+                descr += "where|when|tokens|blooms|";
+
+            bool isStatus = (mode == "status" && (arg == "blocks" || arg == "transactions" || arg == "traces"));
+            if (!isStatus && contains(descr, "|" + arg + "|")) {
                 if (!mode.empty())
                     EXIT_USAGE("Please specify " + params[0].description + ". " + mode + ":" + arg);
                 mode = arg;
@@ -63,7 +78,7 @@ bool COptions::parseArguments(string_q& command) {
                 }
                 addrs.push_back(toLower(arg));
 
-            } else if (isAddress(arg)) {
+            } else if (isAddress(arg) || arg == "--known") {
                 addrs.push_back(toLower(arg));
 
             } else {
@@ -80,7 +95,7 @@ bool COptions::parseArguments(string_q& command) {
                     }
 
                 } else {
-                    if (arg == "--noBlooms" || arg == "--staging") {
+                    if (arg == "--staging") {
                         freshen_flags += (arg + " ");
 
                     } else if (startsWith(arg, "--start")) {
@@ -101,16 +116,10 @@ bool COptions::parseArguments(string_q& command) {
         mode == "accounts" ||
     	mode == "logs" ||
         mode == "traces" ||
+        mode == "state" ||
         mode == "message" ||
         mode == "abi") {
         tool_flags += (" --" + mode);
-        mode = "data";
-    }
-
-    if (mode == "state") {
-        replace(tool_flags, "--mode code", "--mode some --code");
-        replace(tool_flags, "--mode nonce", "--mode some --nonce");
-        replace(tool_flags, "--mode balance", "--mode some --balance");
         mode = "data";
     }
 
@@ -129,26 +138,28 @@ bool COptions::parseArguments(string_q& command) {
     if (verbose) { tool_flags += (" -v:" + uint_2_Str(verbose)); }
     if (expContext().asEther) { tool_flags += " --ether"; }
     if (expContext().asDollars) { tool_flags += " --dollars"; }
+    if (expContext().isParity) { tool_flags += " --parity"; }
     tool_flags += addExportMode(exportFmt);
     tool_flags = trim(tool_flags, ' ');
 
     if (isNodeRunning()) {
         blknum_t unripe, ripe, staging, finalized, client;
         getLastBlocks(unripe, ripe, staging, finalized, client);
-        if (client < finalized) {
-            if (!isTestMode())
-                cerr << "Sleeping: " << scrapeSleep << " " << endl;
+        if ((client - finalized) > 2500)
+            scrapeSleep = 1;
+        if (mode == "scrape" && !isTestMode())
+            LOG_INFO("Sleeping every ", scrapeSleep, " seconds.");
+    }
 
-        } else if ((client - finalized) > 2500) {
-            if (!isTestMode())
-                cerr << "Sleeping: " << scrapeSleep << " " << endl;
-            scrapeSleep = 0;
-        } else {
-            if (mode == "scrape") {
-                if (!isTestMode())
-                    cerr << "Sleeping every " << scrapeSleep << " seconds." << endl;
-            }
-        }
+    if (mode == "config") {
+        if (contains(tool_flags, "get") && !contains(tool_flags, "--get"))
+            replace(tool_flags, "get", "--get"); // syntactic sugar for command line
+        if (contains(tool_flags, "set") && !contains(tool_flags, "--set"))
+            replace(tool_flags, "set", "--set"); // syntactic sugar for command line
+        replaceAll(tool_flags, "--get", "--config-get");
+        replaceAll(tool_flags, "--set", "--config-set");
+        if (!startsWith(tool_flags, "--config-get") && !startsWith(tool_flags, "--config-set"))
+            EXIT_USAGE("chifra config 'mode' must be either '--get' or '--set'.");
     }
 
     LOG4("tool_flags=", tool_flags);

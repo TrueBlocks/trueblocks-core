@@ -1,5 +1,5 @@
-getReceipt argc: 4 [1:-x] [2:api] [3:0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765] 
-getReceipt -x api 0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765 
+getReceipt argc: 4 [1:0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765] [2:--fmt] [3:api] 
+getReceipt 0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765 --fmt api 
 { "type": "CTransaction", "data": [
   {
     "contractAddress": "0x0",
@@ -23,5 +23,4 @@ getReceipt -x api 0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3
       }
     ],
     "status": null
-  }
-], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
+  }], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

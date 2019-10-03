@@ -54,6 +54,16 @@ int main(int argc, const char *argv[]) {
             while (trace.parseJson3(contents))
                 cout << trace << "\n";
 
+        } else if (options.fileName == "spaces") {
+            CTrace trace;
+            while (trace.parseJson3(contents))
+                cout << trace << "\n";
+
+        } else if (options.fileName == "escaped") {
+            CTrace trace;
+            while (trace.parseJson3(contents))
+                cout << trace << "\n";
+
         } else if (options.fileName == "big") {
 
             //cout << contents;

@@ -28,6 +28,7 @@ namespace qblocks {
 class CAccountName : public CBaseNode {
 public:
     string_q group;
+    string_q subgroup;
     string_q name;
     string_q address;
     string_q symbol;
@@ -106,6 +107,7 @@ inline void CAccountName::initialize(void) {
     CBaseNode::initialize();
 
     group = "";
+    subgroup = "";
     name = "";
     address = "";
     symbol = "";
@@ -133,6 +135,7 @@ inline void CAccountName::duplicate(const CAccountName& ac) {
     CBaseNode::duplicate(ac);
 
     group = ac.group;
+    subgroup = ac.subgroup;
     name = ac.name;
     address = ac.address;
     symbol = ac.symbol;

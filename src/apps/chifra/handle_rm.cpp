@@ -29,19 +29,17 @@ bool COptions::handle_rm(void) {
 
         } else {
             int ch = 'n';
-            if (!isApiMode()) {
+            if (!isApiMode() && !contains(tool_flags, "--yes")) {
                 cerr << "Remove monitor for " << addr << "? (y=yes) >";
                 cerr.flush();
                 ch = getchar();
             }
+
             if (ch == 'y' || ch == 'Y' || contains(tool_flags, "--yes")) {
                 ostringstream os;
                 os << "cd " << getMonitorPath("") << " ; ";
                 os << "rm -f " << addr << ".* ; ";
-                if (isTestMode())
-                    LOG_INFO(substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/"));
-                else
-                    if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+                if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
 
             } else {
                 EXIT_USAGE("Monitor not removed.");

@@ -1,5 +1,5 @@
-typesTest argc: 1 
-typesTest 
+typesTest argc: 2 [1:0] 
+typesTest 0 
 0. Running Test01
 val64u: 18446744073709551615
 sValu: 18446744073709551615

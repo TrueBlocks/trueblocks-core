@@ -29,7 +29,9 @@ public:
     bool doBalances;
     bool doABIs;
     bool freshen_only;
+    bool count_only;
     bool deltas_only;
+    string_q className;
     address_t hackAppAddr;
     uint_addr_mp prefundAddrMap;
     uint_addr_mp blkRewardMap;
@@ -47,5 +49,6 @@ public:
     bool loadOneAddress(CAppearanceArray_base& apps, const address_t& addr);
     bool loadAllAppearances(void);
     bool exportData(void);
+    bool exportCounts(void);
     bool exportBalances(void);
 };

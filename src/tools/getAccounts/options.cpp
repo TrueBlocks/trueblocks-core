@@ -15,8 +15,8 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("term_list", "", "list<term>", OPT_REQUIRED | OPT_POSITIONAL, "a space separated list of one or more search terms"),
-    COption("expand", "e", "", OPT_SWITCH, "expand search to include all fields (default searches name, address, and symbol only)"),
+    COption("term_list", "", "list<string>", OPT_REQUIRED | OPT_POSITIONAL, "a space separated list of one or more search terms"),
+    COption("expand", "e", "", OPT_SWITCH, "expand search to include all fields (default searches name&#44; address&#44; and symbol only)"),
     COption("matchCase", "m", "", OPT_SWITCH, "do case-sensitive search"),
     COption("owned", "o", "", OPT_SWITCH, "Include personal accounts in the search"),
     COption("custom", "c", "", OPT_SWITCH, "Include your custom named accounts"),
@@ -37,9 +37,10 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-    bool noHeader = false;
     string_q format;
+    bool no_header = false;
     bool deflt = true;
+    bool addr_only = false;
 
     Init();
     explode(arguments, command, ' ');
@@ -72,7 +73,8 @@ bool COptions::parseArguments(string_q& command) {
             types |= OTHER;
 
         } else if (arg == "-a" || arg == "--addr") {
-            noHeader = true;
+            addr_only = true;
+            no_header = true;
             format = "[{ADDRESS}]";
             searchFields = "[{ADDRESS}]\t[{NAME}]";
 
@@ -88,9 +90,6 @@ bool COptions::parseArguments(string_q& command) {
     }
     if (verbose)
         searchFields += "\t[{SOURCE}]";
-
-    // Data wrangling
-    // None
 
     // Display formatting
     switch (exportFmt) {
@@ -113,11 +112,25 @@ bool COptions::parseArguments(string_q& command) {
     if (expContext().asDollars)
         format = substitute(format, "{BALANCE}", "{DOLLARS}");
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
-    if (noHeader)
+    if (no_header)
         expContext().fmtMap["header"] = "";
 
     // Collect results for later display
     applyFilter();
+
+    // Data wrangling
+    if (addr_only) {
+        HIDE_FIELD(CAccountName, "group");
+        HIDE_FIELD(CAccountName, "subgroup");
+        HIDE_FIELD(CAccountName, "name");
+        HIDE_FIELD(CAccountName, "symbol");
+        HIDE_FIELD(CAccountName, "description");
+        HIDE_FIELD(CAccountName, "source");
+        HIDE_FIELD(CAccountName, "logo");
+        HIDE_FIELD(CAccountName, "is_contract");
+        HIDE_FIELD(CAccountName, "is_private");
+        HIDE_FIELD(CAccountName, "is_shared");
+    }
 
     return true;
 }
@@ -246,7 +259,8 @@ void COptions::applyFilter() {
             CAccountName item;
             string_q customStr = getGlobalConfig("getAccounts")->getConfigJson("custom", "list", "");
             while (item.parseJson3(customStr)) {
-                item.group = "81-Custom";
+                if (item.group.empty())
+                    item.group = "81-Custom";
                 item.name = trim(item.name, '\"');
                 item.description = trim(item.description, '\"');
                 addIfUnique(item);
@@ -287,6 +301,7 @@ void COptions::applyFilter() {
         if (!contents.empty()) {
             CStringArray fields;
             fields.push_back("group");
+            fields.push_back("subgroup");
             fields.push_back("address");
             fields.push_back("name");
             fields.push_back("description");
@@ -308,7 +323,8 @@ void COptions::applyFilter() {
 //-----------------------------------------------------------------------
 string_q shortenFormat(const string_q& fmtIn) {
     string_q ret = toUpper(fmtIn);
-    replace(ret, "[{GROUP}]", "");
+//    replace(ret, "[{GROUP}]", "");
+//    replace(ret, "[{SUBGROUP}]", "");
 //    replace(ret, "[{ADDRESS}]", "");
 //    replace(ret, "[{NAME}]", "");
 //    replace(ret, "[{SYMBOL}]", "");

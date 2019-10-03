@@ -1,0 +1,103 @@
+{ "type": "CConfiguration", "data": [
+{"name": "quickBlocks.toml","groups": [{"section": "Providers","name": "settings","keys": [{"name": "rpcProvider","value": "--new rpc Provider--","type": "url"},{"name": "apiProvider","value": "--new api Provider--","type": "url"},{"name": "balanceProvider","value": "--new balance Prov--","type": "url"}]},{"section": "Paths","name": "settings","keys": [{"name": "configPath","value": "--new config Path--","type": "path"},{"name": "cachePath","value": "--new cache Path--","type": "path"},{"name": "indexPath","value": "--new index Path--","type": "path"}]}]},{"section": "Display Strings","name": "display_strs","keys": [{"name": "accountName","value": "--account name--","type": "display_str"},{"name": "balancerecord","value": "--balance record--","type": "display_str"},{"name": "block","value": "--block--","type": "display_str"},{"name": "ethstate","value": "--eth state--","type": "display_str"},{"name": "function","value": "--function--","type": "display_str"},{"name": "logentry","value": "--logentry--","type": "display_str"},{"name": "pricequote","value": "--pricequote--","type": "display_str"},{"name": "receipt","value": "--receipt--","type": "display_str"},{"name": "trace","value": "--trace--","type": "display_str"},{"name": "transaction","value": "--transaction--","type": "display_str"},{"name": "whenblock","value": "--when block--","type": "display_str"},{"name": "whereblock","value": "--where block--","type": "display_str"}]},{"name": "blockScrape.toml","groups": [{"section": "Scraper","name": "settings","keys": [{"name": "nBlocks","value": "--new n Blocks--","type": "number"},{"name": "nAddrProcs","value": "--new n Addr Procs--","type": "number"},{"name": "nBlockProcs","value": "--new n Block Procs--","type": "number"}]}]},{"name": "acctExport.toml","groups": [{"section": "Exporter","name": "settings","keys": [{"name": "writeTxs","value": "true","type": "bool"},{"name": "writeTraces","value": "","type": "bool"}]}]},{"name": "getAccounts.toml","groups": [{"section": "Names","name": "custom","keys": [{"name": "list","type": "json array","named": [{"address": "0x0000100001000010000100001000010000100001","group": "81-Custom","name": "TestWallet1"},{"address": "0x0000200002000020000200002000020000200002","group": "81-Custom","name": "TestWallet2"}]}]}]},{"name": "ethslurp.toml","groups": [{"section": "APIs","name": "settings","keys": [{"name": "etherscan","value": "--new api_key--","type": "string"}]}]}
+------------------------------------------------------------------------------------------------------------------------
+As read: ./tests/quickBlocks.toml:
+------------------------------------------------------------------------------------------------------------------------
+[version]
+current = "0.5.8-alpha"
+
+------------------------------------------------------------------------------------------------------------------------
+  toml.setConfigStr("settings", "rpcProvider", "--new rpc Provider--");
+  toml.setConfigStr("settings", "apiProvider", "--new api Provider--");
+  toml.setConfigStr("settings", "balanceProvider", "--new balance Prov--");
+  toml.setConfigStr("settings", "configPath", "--new config Path--/");
+  toml.setConfigStr("settings", "cachePath", "--new cache Path--/");
+  toml.setConfigStr("settings", "indexPath", "--new index Path--/");
+------------------------------------------------------------------------------------------------------------------------
+Would have written: ./tests/quickBlocks.toml:
+------------------------------------------------------------------------------------------------------------------------
+[version]
+current = "0.5.8-alpha"
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+As read: ./tests/display_strs:
+------------------------------------------------------------------------------------------------------------------------
+[version]
+current = "0.5.8-alpha"
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+Would have written: ./tests/display_strs:
+------------------------------------------------------------------------------------------------------------------------
+[version]
+current = "0.5.8-alpha"
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+As read: ./tests/blockScrape.toml:
+------------------------------------------------------------------------------------------------------------------------
+[version]
+current = "0.5.8-alpha"
+
+------------------------------------------------------------------------------------------------------------------------
+  toml.setConfigStr("settings", "nBlocks", "--new n Blocks--");
+  toml.setConfigStr("settings", "nAddrProcs", "--new n Addr Procs--");
+  toml.setConfigStr("settings", "nBlockProcs", "--new n Block Procs--");
+------------------------------------------------------------------------------------------------------------------------
+Would have written: ./tests/blockScrape.toml:
+------------------------------------------------------------------------------------------------------------------------
+[version]
+current = "0.5.8-alpha"
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+As read: ./tests/acctExport.toml:
+------------------------------------------------------------------------------------------------------------------------
+[version]
+current = "0.5.8-alpha"
+
+------------------------------------------------------------------------------------------------------------------------
+  toml.setConfigBool("settings", "writeTxs", true);
+  toml.setConfigBool("settings", "writeTraces", false);
+------------------------------------------------------------------------------------------------------------------------
+Would have written: ./tests/acctExport.toml:
+------------------------------------------------------------------------------------------------------------------------
+[version]
+current = "0.5.8-alpha"
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+As read: ./tests/getAccounts.toml:
+------------------------------------------------------------------------------------------------------------------------
+[version]
+current = "0.5.8-alpha"
+
+------------------------------------------------------------------------------------------------------------------------
+  toml.setConfigStr("custom", "list", "[
+	{ "group": "81-Custom", "name": "TestWallet1", "address": "0x0000100001000010000100001000010000100001" },
+	{ "group": "81-Custom", "name": "TestWallet2", "address": "0x0000200002000020000200002000020000200002" }
+]");
+------------------------------------------------------------------------------------------------------------------------
+Would have written: ./tests/getAccounts.toml:
+------------------------------------------------------------------------------------------------------------------------
+[version]
+current = "0.5.8-alpha"
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+As read: ./tests/ethslurp.toml:
+------------------------------------------------------------------------------------------------------------------------
+[version]
+current = "0.5.8-alpha"
+
+------------------------------------------------------------------------------------------------------------------------
+  toml.setConfigStr("settings", "api_key", "--new api_key--");
+------------------------------------------------------------------------------------------------------------------------
+Would have written: ./tests/ethslurp.toml:
+------------------------------------------------------------------------------------------------------------------------
+[version]
+current = "0.5.8-alpha"
+
+------------------------------------------------------------------------------------------------------------------------
+], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

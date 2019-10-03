@@ -1,3 +1,3 @@
-whenBlock argc: 3 [1:-l] [2:2015-03-02] 
-whenBlock -l 2015-03-02 
-TIME ~ CLOCK - <WARNG> : The date you specified (2015-03-02)is before the first block.
+whenBlock argc: 3 [1:2015-03-02] [2:--list] 
+whenBlock 2015-03-02 --list 
+TIME ~ CLOCK - <WARNG> : The date you specified (2015-03-02) is before the first block.

@@ -102,6 +102,7 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
             if ( fieldName % "path" ) { path = fieldValue; return true; }
             break;
         case 's':
+            if ( fieldName % "subgroup" ) { subgroup = fieldValue; return true; }
             if ( fieldName % "symbol" ) { symbol = fieldValue; return true; }
             if ( fieldName % "source" ) { source = fieldValue; return true; }
             if ( fieldName % "sizeInBytes" ) { sizeInBytes = str_2_Uint(fieldValue); return true; }
@@ -133,6 +134,7 @@ bool CAccountName::Serialize(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     archive >> group;
+    archive >> subgroup;
     archive >> name;
     archive >> address;
     archive >> symbol;
@@ -162,6 +164,7 @@ bool CAccountName::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     // EXISTING_CODE
     archive << group;
+    archive << subgroup;
     archive << name;
     archive << address;
     archive << symbol;
@@ -214,6 +217,7 @@ void CAccountName::registerClass(void) {
     ADD_FIELD(CAccountName, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CAccountName, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CAccountName, "group", T_TEXT, ++fieldNum);
+    ADD_FIELD(CAccountName, "subgroup", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "name", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "address", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "symbol", T_TEXT, ++fieldNum);
@@ -325,6 +329,7 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "path" ) return path;
             break;
         case 's':
+            if ( fieldName % "subgroup" ) return subgroup;
             if ( fieldName % "symbol" ) return symbol;
             if ( fieldName % "source" ) return source;
             if ( fieldName % "sizeInBytes" ) return uint_2_Str(sizeInBytes);
@@ -351,6 +356,7 @@ ostream& operator<<(ostream& os, const CAccountName& item) {
 //---------------------------------------------------------------------------
 const char* STR_DISPLAY_ACCOUNTNAME = 
 "[{GROUP}]\t"
+"[{SUBGROUP}]\t"
 "[{ADDRESS}]\t"
 "[{NAME}]\t"
 "[{SYMBOL}]\t"
@@ -369,15 +375,16 @@ CAccountName::CAccountName(const string_q& strIn) {
     CStringArray parts;
     explode(parts, str, '\t');
     if (parts.size() > 0) { group = parts[0]; }
-    if (parts.size() > 1) { address = toLower(parts[1]); }
-    if (parts.size() > 2) { name = parts[2]; }
-    if (parts.size() > 3) { description = parts[3]; }
-    if (parts.size() > 4) { symbol = parts[4]; }
-    if (parts.size() > 5) { source = parts[5]; }
-    if (parts.size() > 6) { logo = parts[6]; }
-    if (parts.size() > 7) { is_contract = str_2_Bool(parts[7]); }
-    if (parts.size() > 8) { is_private = str_2_Bool(parts[8]); }
-    if (parts.size() > 9) { is_shared = str_2_Bool(parts[9]); }
+    if (parts.size() > 1) { subgroup = parts[1]; }
+    if (parts.size() > 2) { address = toLower(parts[2]); }
+    if (parts.size() > 3) { name = parts[3]; }
+    if (parts.size() > 4) { description = parts[4]; }
+    if (parts.size() > 5) { symbol = parts[5]; }
+    if (parts.size() > 6) { source = parts[6]; }
+    if (parts.size() > 7) { logo = parts[7]; }
+    if (parts.size() > 8) { is_contract = str_2_Bool(parts[8]); }
+    if (parts.size() > 9) { is_private = str_2_Bool(parts[9]); }
+    if (parts.size() > 10) { is_shared = str_2_Bool(parts[10]); }
 }
 // EXISTING_CODE
 }  // namespace qblocks

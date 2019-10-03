@@ -1,6 +1,6 @@
 getTrace argc: 5 [1:2222222.0] [2:2332332.0] [3:--fmt] [4:json] 
 getTrace 2222222.0 2332332.0 --fmt json 
-[
+{ "data": [
   {
     "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",
     "blockNumber": 2222222,
@@ -9,7 +9,7 @@ getTrace 2222222.0 2332332.0 --fmt json
     "transactionHash": "0x9c34ba45c523f75009d279553fe2a7e9a99a991a297439226321bea26ab62bbb",
     "transactionIndex": 0,
     "type": "call",
-    "error": "Badjumpdestination",
+    "error": "Bad jump destination",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -55,5 +55,4 @@ getTrace 2222222.0 2332332.0 --fmt json
       "gasUsed": 13042,
       "output": "0x"
     }
-  }
-]
+  }] }

@@ -6,7 +6,7 @@
 #include "options.h"
 
 //--------------------------------------------------------------------------------
-void COptions::handle_status(ostream& os) {
+bool COptions::handle_status(ostream& os) {
 
     CIndexCache aid;
     if (contains(mode, "|index|")) {
@@ -29,6 +29,13 @@ void COptions::handle_status(ostream& os) {
 
     CMonitorCache md;
     if (contains(mode, "|monitors|")) {
+        if (expContext().asEther) {
+            SHOW_FIELD(CAccountWatch, "curEther");
+            HIDE_FIELD(CAccountWatch, "curBalance");
+        } else {
+            HIDE_FIELD(CAccountWatch, "curEther");
+            SHOW_FIELD(CAccountWatch, "curBalance");
+        }
         md.type = md.getRuntimeClass()->m_ClassName;
         md.path = (isTestMode() ? "CachePath" : getCachePath("monitors/"));
         forEveryFileInFolder(getCachePath("monitors/"), countFiles, &md);
@@ -86,7 +93,7 @@ void COptions::handle_status(ostream& os) {
     }
 
     CChainCache cd_txs;
-    if (contains(mode, "|txs|")) {
+    if (contains(mode, "|transactions|")) {
         cd_txs.type = cd_txs.getRuntimeClass()->m_ClassName;
         cd_txs.path = (isTestMode() ? "TxPath" : getCachePath("txs/"));
         forEveryFileInFolder(getCachePath("txs/"), countFiles, &cd_txs);
@@ -133,11 +140,8 @@ void COptions::handle_status(ostream& os) {
         }
     }
 
-    os << exportPreamble(JSON1, expContext().fmtMap["header"], GETRUNTIME_CLASS(CStatus));
-    os << status << endl;
-    os << exportPostamble(JSON1, expContext().fmtMap["meta"]);
-
-    return;
+    os << status;
+    return true;
 }
 
 //---------------------------------------------------------------------------
@@ -173,7 +177,7 @@ bool noteMonitor_light(const string_q& path, void *data) {
     if (endsWith(path, '/')) {
         return forEveryFileInFolder(path + "*", noteMonitor_light, data);
 
-    } else if (endsWith(path, ".bin") || endsWith(path, ".json")) {
+    } else if (endsWith(path, "acct.bin") || endsWith(path, ".json")) {
         CItemCounter *counter = (CItemCounter*)data;
         ASSERT(counter->options);
         ((CMonitorCache*)counter->cachePtr)->addrs.push_back(substitute(substitute(substitute(substitute(path, counter->cachePtr->path, ""),".acct", ""),".bin", ""), ".json", ""));
@@ -193,16 +197,16 @@ bool noteMonitor(const string_q& path, void *data) {
     if (endsWith(path, '/')) {
         return forEveryFileInFolder(path + "*", noteMonitor, data);
 
-    } else if (endsWith(path, ".bin") || endsWith(path, ".json")) {
+    } else if (endsWith(path, "acct.bin") || endsWith(path, ".json")) {
         CItemCounter *counter = (CItemCounter*)data;
         ASSERT(counter->options);
         CMonitorCacheItem mdi;
         mdi.type = mdi.getRuntimeClass()->m_ClassName;
         mdi.address = substitute(substitute(substitute(substitute(path, counter->cachePtr->path, ""),".acct", ""),".bin", ""), ".json", "");
+        mdi.curBalance = (isNodeRunning() ? getBalanceAt(mdi.address) : str_2_BigUint(uint_2_Str(NOPOS)));
         CAccountName item;
         string_q customStr = getGlobalConfig("getAccounts")->getConfigJson("custom", "list", "");
         while (item.parseJson3(customStr)) {
-            unpreserveSpaces(item.name);
             if (mdi.address == item.address) {
                 mdi.group = item.group;
                 mdi.name = item.name;
@@ -210,7 +214,6 @@ bool noteMonitor(const string_q& path, void *data) {
             }
             item = CAccountName();
         }
-
         if (mdi.name.empty()) {
             ASSERT(prefunds.size() == 8893);  // This is a known value
             uint32_t cnt = 0;
@@ -226,9 +229,8 @@ bool noteMonitor(const string_q& path, void *data) {
             }
         }
 
-        if (mdi.name.empty()) {
+        if (mdi.name.empty())
             counter->options->getNamedAccount(mdi, mdi.address);
-        }
 
         if (endsWith(path, ".acct.bin")) {
             mdi.firstAppearance = 1001001;
@@ -236,10 +238,10 @@ bool noteMonitor(const string_q& path, void *data) {
             mdi.nRecords = fileSize(path) / sizeof(CAppearance_base);
             mdi.sizeInBytes = fileSize(path);
         } else {
-            mdi.firstAppearance = 0;
-            mdi.latestAppearance = 0;
-            mdi.nRecords = 0;
-            mdi.sizeInBytes = 0;
+            mdi.firstAppearance = NOPOS;
+            mdi.latestAppearance = NOPOS;
+            mdi.nRecords = NOPOS;
+            mdi.sizeInBytes = NOPOS;
         }
         counter->monitorArray->push_back(mdi);
     }
@@ -328,6 +330,7 @@ bool noteABI(const string_q& path, void *data) {
         abii.name = n.name;
         CAbi abi;
         abi.loadAbiFromFile(path, false);
+        sort(abi.interfaces.begin(), abi.interfaces.end());
         abii.nFunctions = abi.nFunctions();
         abii.nEvents = abi.nEvents();
         abii.nOther = abi.nOther();

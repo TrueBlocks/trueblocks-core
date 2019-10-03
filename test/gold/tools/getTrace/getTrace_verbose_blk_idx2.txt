@@ -1,5 +1,5 @@
-getTrace argc: 4 [1:--fmt] [2:api] [3:0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3] 
-getTrace --fmt api 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 
+getTrace argc: 4 [1:0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3] [2:--fmt] [3:api] 
+getTrace 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 --fmt api 
 { "type": "CTrace", "data": [
   {
     "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
@@ -28,5 +28,4 @@ getTrace --fmt api 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234a
       "gasUsed": 0,
       "output": "0x"
     }
-  }
-], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
+  }], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

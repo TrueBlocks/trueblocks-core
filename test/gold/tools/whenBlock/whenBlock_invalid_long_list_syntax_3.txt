@@ -1,11 +1,11 @@
-whenBlock argc: 4 [1:--list] [2:-k] [3:2015-03-02] 
-whenBlock --list -k 2015-03-02 
+whenBlock argc: 4 [1:2016-03-02] [2:--list] [3:--k] 
+whenBlock 2016-03-02 --list --k 
 
-  Invalid option: '-k'.
+  Invalid option: '--k'.
 
   Usage:    whenBlock [-l|-v|-h] < block | date > [ block... | date... ]  
   Purpose:  Finds the nearest block prior to a date, or the nearest date prior to a block.
-         Alternatively, search for one of special 'named' blocks.
+            Alternatively, search for one of special 'named' blocks.
 
   Where:  
 	block_list            one or more block numbers (or a 'special' block), or...

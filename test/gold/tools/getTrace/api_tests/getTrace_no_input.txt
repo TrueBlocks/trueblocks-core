@@ -1,0 +1,5 @@
+{
+  "errors": [
+    "getTrace - Not enough arguments presented."
+  ]
+}

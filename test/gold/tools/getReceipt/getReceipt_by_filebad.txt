@@ -1,5 +1,5 @@
-getReceipt argc: 3 [1:--bad] [2:--file:cmd_file] 
-getReceipt --bad --file:cmd_file 
+getReceipt argc: 3 [1:--file:cmd_file] [2:--bad] 
+getReceipt --file:cmd_file --bad 
 
   Invalid option: --bad
 

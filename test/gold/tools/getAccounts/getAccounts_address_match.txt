@@ -3,6 +3,7 @@ getAccounts 0x1 --fmt api
 { "type": "CAccountName", "data": [
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "BitCapitalVendorToken",
     "address": "0x1014613e2b3cbc4d575054d4982e580d9b99d7b1",
     "symbol": "BCV",
@@ -15,6 +16,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "Genesis Vision",
     "address": "0x103c3a209da59d3e7c4a89307e66521e081cfdf0",
     "symbol": "GVT",
@@ -27,6 +29,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "Aigang",
     "address": "0x1063ce524265d5a3a624f4914acd573dd89ce988",
     "symbol": "AIX",
@@ -39,6 +42,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "Bloom",
     "address": "0x107c4504cd79c5d2696ea0030a8dd4e92601b82e",
     "symbol": "BLT",
@@ -51,6 +55,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "Centrality Token",
     "address": "0x1122b6a0e00dce0563082b6e2953f3a943855c1f",
     "symbol": "CENNZ",
@@ -63,6 +68,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "QVT",
     "address": "0x1183f92a5624d68e85ffb9170f16bf0443b4c242",
     "symbol": "QVT",
@@ -75,6 +81,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "60-Airdrops",
+    "subgroup": "",
     "name": "BitClave Airdrop",
     "address": "0x1234567461d3f8db7496581774bd869c83d51c93",
     "symbol": "CAT",
@@ -87,6 +94,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "LGO",
     "address": "0x123ab195dd38b1b40510d467a6a359b201af056f",
     "symbol": "LGO",
@@ -99,6 +107,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "ArbitrageCT",
     "address": "0x1245ef80f4d9e02ed9425375e8f649b9221b31d8",
     "symbol": "ARCT",
@@ -111,6 +120,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "TrakInvest Token",
     "address": "0x12759512d326303b45f1cec8f7b6fd96f387778e",
     "symbol": "TRAK",
@@ -122,7 +132,34 @@ getAccounts 0x1 --fmt api
     "is_shared": true
   },
   {
+    "group": "82-Known",
+    "subgroup": "",
+    "name": "Vlad Zamfir",
+    "address": "0x127ac03acfad15f7a49dd037e52d5507260e1425",
+    "symbol": "",
+    "description": "",
+    "source": "https://medium.com/curator-multisig-phf-official-channel/extrabalance-withdraw-contract-to-be-funded-on-september-15th-a800b4d746f0#.a6ojjp67b",
+    "logo": "",
+    "is_contract": false,
+    "is_private": false,
+    "is_shared": true
+  },
+  {
+    "group": "33-Set Protocol",
+    "subgroup": "05-Wrappers",
+    "name": "Zero Ex Exchange Wrapper",
+    "address": "0x12951b9eaa200237f9080c95ad93cc74c9d9bd45",
+    "symbol": "",
+    "description": "",
+    "source": "https://github.com/SetProtocol/set-protocol-contracts",
+    "logo": "",
+    "is_contract": true,
+    "is_private": false,
+    "is_shared": true
+  },
+  {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "GRID",
     "address": "0x12b19d3e2ccc14da04fae33e63652ce469b3f2fd",
     "symbol": "GRID",
@@ -135,6 +172,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "Spectre.ai D-Token",
     "address": "0x12b306fa98f4cbb8d4457fdff3a0a0a56f07ccdf",
     "symbol": "SXDT",
@@ -147,6 +185,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "Cofoundit",
     "address": "0x12fef5e57bf45873cd9b62e9dbd7bfb99e32d73e",
     "symbol": "CFI",
@@ -159,6 +198,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "MoneyToken",
     "address": "0x13119e34e140097a507b07a5564bde1bc375d9e6",
     "symbol": "IMT",
@@ -171,6 +211,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "Musiconomi",
     "address": "0x138a8752093f4f9a79aaedf48d4b9248fab93c9c",
     "symbol": "MCI",
@@ -183,6 +224,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "BoutsPro",
     "address": "0x139d9397274bb9e2c29a9aa8aa0b5874d30d62e3",
     "symbol": "BOUTS",
@@ -195,6 +237,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "PHI Token",
     "address": "0x13c2fab6354d3790d8ece4f0f1a3280b4a25ad96",
     "symbol": "PHI",
@@ -207,6 +250,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "Divi Exchange Token",
     "address": "0x13f11c9905a08ca76e3e853be63d4f0944326c72",
     "symbol": "DIVX",
@@ -219,6 +263,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "Accelerator",
     "address": "0x13f1b7fdfbe1fc66676d56483e21b1ecb40b58e2",
     "symbol": "ACC",
@@ -231,6 +276,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "realchain",
     "address": "0x13f25cd52b21650caa8225c9942337d914c9b030",
     "symbol": "RCT",
@@ -243,6 +289,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "KAN",
     "address": "0x1410434b0346f5be678d0fb554e5c7ab620f8f4a",
     "symbol": "KAN",
@@ -255,6 +302,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "Own",
     "address": "0x1460a58096d80a50a2f1f956dda497611fa4f165",
     "symbol": "CHX",
@@ -267,6 +315,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "Mobile Integrated Blockchain",
     "address": "0x146d8d942048ad517479c9bab1788712af180fde",
     "symbol": "MIB",
@@ -279,6 +328,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "Bethereum",
     "address": "0x14c926f2290044b647e1bf2072e67b495eff1905",
     "symbol": "BETHER",
@@ -290,7 +340,21 @@ getAccounts 0x1 --fmt api
     "is_shared": true
   },
   {
+    "group": "33-Set Protocol",
+    "subgroup": "03-Factories",
+    "name": "Set Token Factory",
+    "address": "0x14f0321be5e581abf9d5bc76260bf015dc04c53d",
+    "symbol": "",
+    "description": "",
+    "source": "https://github.com/SetProtocol/set-protocol-contracts",
+    "logo": "",
+    "is_contract": true,
+    "is_private": false,
+    "is_shared": true
+  },
+  {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "DEBITUM",
     "address": "0x151202c9c18e495656f372281f493eb7698961d5",
     "symbol": "DEB",
@@ -303,6 +367,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "XOVBank",
     "address": "0x153ed9cc1b792979d2bde0bbf45cc2a7e436a5f9",
     "symbol": "XOV",
@@ -315,6 +380,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "Alpha Coin",
     "address": "0x15bda08c3afbf5955d6e9b235fd55a1fd0dbc829",
     "symbol": "APC",
@@ -327,6 +393,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "Qubitica",
     "address": "0x1602af2c782cc03f9241992e243290fccf73bb13",
     "symbol": "QBIT",
@@ -339,6 +406,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "RHOC",
     "address": "0x168296bb09e24a88805cb9c33356536b980d3fc5",
     "symbol": "RHOC",
@@ -351,6 +419,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "United Traders Token",
     "address": "0x16f812be7fff02caf662b85d5d58a5da6572d4df",
     "symbol": "UTT",
@@ -363,6 +432,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "OwnData",
     "address": "0x170b275ced089fffaebfe927f445a350ed9160dc",
     "symbol": "OWN",
@@ -375,6 +445,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "Omnitude",
     "address": "0x171d750d42d661b62c277a6b486adb82348c3eca",
     "symbol": "ECOM",
@@ -387,6 +458,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "Numeraire",
     "address": "0x1776e1f26f98b1a5df9cd347953a26dd3cb46671",
     "symbol": "NMR",
@@ -399,6 +471,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "CoinDash",
     "address": "0x177d39ac676ed1c67a2b268ad7f1e58826e5b0af",
     "symbol": "CDT",
@@ -411,6 +484,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "Insight Chain",
     "address": "0x17aa18a4b64a55abed7fa543f2ba4e91f2dce482",
     "symbol": "INB",
@@ -423,6 +497,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "Freyr Coin",
     "address": "0x17e67d1cb4e349b9ca4bc3e17c7df2a397a7bb64",
     "symbol": "FREC",
@@ -435,6 +510,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "FLiK",
     "address": "0x17fd666fa0784885fa1afec8ac624d9b7e72b752",
     "symbol": "FLIK",
@@ -447,6 +523,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "30-Contracts",
+    "subgroup": "",
     "name": "1820 Registry",
     "address": "0x1820a4b7618bde71dce8cdc73aab6c95905fad24",
     "symbol": "REG",
@@ -459,6 +536,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "FuzeX",
     "address": "0x1829aa045e21e0d59580024a951db48096e01782",
     "symbol": "FXT",
@@ -471,6 +549,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "60-Airdrops",
+    "subgroup": "",
     "name": "LPT Airdrop",
     "address": "0x182ebf4c80b28efc45ad992ecbb9f730e31e8c7f",
     "symbol": "LPT",
@@ -483,6 +562,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "Oyster Pearl",
     "address": "0x1844b21593262668b7248d0f57a220caaba46ab9",
     "symbol": "PRL",
@@ -494,7 +574,21 @@ getAccounts 0x1 --fmt api
     "is_shared": true
   },
   {
+    "group": "33-Set Protocol",
+    "subgroup": "06-Other",
+    "name": "Payable Exchange Issue",
+    "address": "0x18b739aabc019d9ef160d44ba8a9dd6a717372af",
+    "symbol": "",
+    "description": "",
+    "source": "https://github.com/SetProtocol/set-protocol-contracts",
+    "logo": "",
+    "is_contract": true,
+    "is_private": false,
+    "is_shared": true
+  },
+  {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "BitDegree",
     "address": "0x1961b3331969ed52770751fc718ef530838b6dee",
     "symbol": "BDG",
@@ -507,6 +601,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "nDEX",
     "address": "0x1966d718a565566e8e202792658d7b5ff4ece469",
     "symbol": "NDX",
@@ -519,6 +614,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "Reputation",
     "address": "0x1985365e9f78359a9b6ad760e32412f4a445e862",
     "symbol": "REP",
@@ -531,6 +627,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "Aston X",
     "address": "0x1a0f2ab46ec630f9fd638029027b552afa64b94c",
     "symbol": "ATX",
@@ -543,6 +640,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "PRASM",
     "address": "0x1a66e09f7dccc10eae46e27cfa6b8d44a50df1e7",
     "symbol": "PSM",
@@ -555,6 +653,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "AppCoins",
     "address": "0x1a7a8bd9106f2b8d977e08582dc7d24c723ab0db",
     "symbol": "APPC",
@@ -567,6 +666,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "minereum",
     "address": "0x1a95b271b0535d15fa49932daba31ba612b52946",
     "symbol": "MNE",
@@ -579,6 +679,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "MyWish",
     "address": "0x1b22c32cd936cb97c28c5690a0695a82abf688e6",
     "symbol": "WISH",
@@ -591,6 +692,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "ViteToken",
     "address": "0x1b793e49237758dbd8b752afc9eb4b329d5da016",
     "symbol": "VITE",
@@ -603,6 +705,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "EthBits ETBS Token",
     "address": "0x1b9743f556d65e757c4c650b4555baf354cb8bd3",
     "symbol": "ETBS",
@@ -615,6 +718,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "ROC",
     "address": "0x1bcbc54166f6ba149934870b60506199b6c9db6d",
     "symbol": "ROC",
@@ -627,6 +731,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "BLOCKMASON CREDIT PROTOCOL TOKEN",
     "address": "0x1c4481750daa5ff521a2a7490d9981ed46465dbd",
     "symbol": "BCPT",
@@ -639,6 +744,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "Soniq Token",
     "address": "0x1c62aca2b7605db3606eacda7bc67a1857ddb8ff",
     "symbol": "SONIQ",
@@ -651,6 +757,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "TEAM",
     "address": "0x1c79ab32c66acaa1e9e81952b8aaa581b43e54e7",
     "symbol": "TEAM",
@@ -663,6 +770,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "DigitexFutures",
     "address": "0x1c83501478f1320977047008496dacbd60bb15ef",
     "symbol": "DGTX",
@@ -675,6 +783,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "ThoreCoin",
     "address": "0x1cb3209d45b2a60b7fbca1ccdbf87f674237a4aa",
     "symbol": "THR",
@@ -687,6 +796,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "Faceter",
     "address": "0x1ccaa0f2a7210d76e1fdec740d5f323e2e1b1672",
     "symbol": "FACE",
@@ -699,6 +809,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "CanYaCoin",
     "address": "0x1d462414fe14cf489c7a21cac78509f4bf8cd7c0",
     "symbol": "CAN",
@@ -711,6 +822,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "Talao",
     "address": "0x1d4ccc31dab6ea20f461d329a0562c1c58412515",
     "symbol": "TALAO",
@@ -722,7 +834,34 @@ getAccounts 0x1 --fmt api
     "is_shared": true
   },
   {
+    "group": "82-Known",
+    "subgroup": "",
+    "name": "Vatalik",
+    "address": "0x1db3439a222c519ab44bb1144fc28167b4fa6ee6",
+    "symbol": "",
+    "description": "",
+    "source": "https://www.reddit.com/r/ethereum/comments/5ahsyn/a_word_of_warning_for_vitalik/",
+    "logo": "",
+    "is_contract": false,
+    "is_private": false,
+    "is_shared": true
+  },
+  {
+    "group": "33-Set Protocol",
+    "subgroup": "02-Modules",
+    "name": "Rebalance Auction Module",
+    "address": "0x1db929398958082d2080aa1b501e460503f60467",
+    "symbol": "",
+    "description": "",
+    "source": "https://github.com/SetProtocol/set-protocol-contracts",
+    "logo": "",
+    "is_contract": true,
+    "is_private": false,
+    "is_shared": true
+  },
+  {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "SPINDLE",
     "address": "0x1dea979ae76f26071870f824088da78979eb91c8",
     "symbol": "SPD",
@@ -735,6 +874,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "ClearCoin",
     "address": "0x1e26b3d07e57f453cae30f7ddd2f945f5bf3ef33",
     "symbol": "XCLR",
@@ -747,6 +887,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "ModulTrade Token",
     "address": "0x1e49ff77c355a3e38d6651ce8404af0e48c5395f",
     "symbol": "MTRc",
@@ -759,6 +900,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "Sola Token",
     "address": "0x1f54638b7737193ffd86c19ec51907a7c41755d8",
     "symbol": "SOL",
@@ -771,6 +913,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "30-Contracts",
+    "subgroup": "",
     "name": "Bancor",
     "address": "0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c",
     "symbol": "BNT",
@@ -782,7 +925,21 @@ getAccounts 0x1 --fmt api
     "is_shared": true
   },
   {
+    "group": "33-Set Protocol",
+    "subgroup": "02-Modules",
+    "name": "Rebalancing Token Issuance Module",
+    "address": "0x1f6ee9ce38e6beeb968bb91f755998548d3165e0",
+    "symbol": "",
+    "description": "",
+    "source": "https://github.com/SetProtocol/set-protocol-contracts",
+    "logo": "",
+    "is_contract": true,
+    "is_private": false,
+    "is_shared": true
+  },
+  {
     "group": "30-Contracts",
+    "subgroup": "",
     "name": "Moloch DAO",
     "address": "0x1fd169a4f5c59acf79d0fd5d91d1201ef1bce9f1",
     "symbol": "",
@@ -795,6 +952,7 @@ getAccounts 0x1 --fmt api
   },
   {
     "group": "50-Tokens",
+    "subgroup": "",
     "name": "RNTB Token",
     "address": "0x1fe70be734e473e5721ea57c8b5b01e6caa52686",
     "symbol": "RNTB",
@@ -804,5 +962,4 @@ getAccounts 0x1 --fmt api
     "is_contract": true,
     "is_private": false,
     "is_shared": true
-  }
-], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namePath": "--" } }
+  }], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namePath": "--" } }

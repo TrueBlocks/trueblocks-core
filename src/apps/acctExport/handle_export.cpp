@@ -10,7 +10,10 @@ bool COptions::exportData(void) {
 
     ENTER("exportData");
 
-    if ((exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1) && !freshen_only)
+    bool shouldDisplay = !freshen_only;
+    bool isJson = (exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1);
+
+    if (isJson && shouldDisplay)
         cout << "[";
 
     bool first = true;
@@ -19,12 +22,12 @@ bool COptions::exportData(void) {
         const CAppearance_base *item = &items[i];
         if (inRange((blknum_t)item->blk, scanRange.first, scanRange.second)) {
             if (doAppearances) {
-                if ((exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1) && !first && !freshen_only)
+                if (isJson && shouldDisplay && !first)
                     cout << ", ";
-                if (!freshen_only) {
+                nExported++;
+                if (shouldDisplay) {
                     CDisplayApp d(hackAppAddr, item->blk, item->txid);
                     cout << d.Format() << endl;
-                    nExported++;
                 }
                 first = false;
 
@@ -74,14 +77,18 @@ bool COptions::exportData(void) {
                             if (doABIs) {
                                 abiMap[trace.action.to] = true;
                             } else {
-                                if ((exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1) && !first && !freshen_only)
-                                    cout << ", ";
+                                if (!isTestMode() && isApiMode()) {
+                                    qblocks::eLogger->setEndline('\r');
+                                    LOG_INFO("\t\t\t\t\t\tGetting trace ", trans.blockNumber, ".", trans.transactionIndex, "-", trace.getValueByName("traceAddress"), string_q(50,' '));
+                                    qblocks::eLogger->setEndline('\n');
+                                }
                                 if (articulate)
                                     abis.articulateTrace(&trace);
-                                if (!freshen_only) {
+                                if (isJson && shouldDisplay && !first)
+                                    cout << ", ";
+                                nExported++;
+                                if (shouldDisplay)
                                     cout << trace.Format() << endl;
-                                    nExported++;
-                                }
                                 first = false;
                             }
                         }
@@ -98,12 +105,11 @@ bool COptions::exportData(void) {
                             if (doABIs) {
                                 abiMap[trace.action.to] = true;
                             } else {
-                                if ((exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1) && !first && !freshen_only)
+                                if (isJson && shouldDisplay && !first)
                                     cout << ", ";
-                                if (!freshen_only) {
-                                    nExported++;
+                                nExported++;
+                                if (shouldDisplay)
                                     cout << copy.Format() << endl;
-                                }
                             }
                         }
 
@@ -122,12 +128,11 @@ bool COptions::exportData(void) {
                                 abiMap[trace.action.to] = true;
 
                             } else {
-                                if ((exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1) && !first && !freshen_only)
+                                if (isJson && shouldDisplay && !first)
                                     cout << ", ";
-                                if (!freshen_only) {
-                                    nExported++;
+                                nExported++;
+                                if (shouldDisplay)
                                     cout << copy.Format() << endl;
-                                }
                             }
                         }
                     }
@@ -138,50 +143,51 @@ bool COptions::exportData(void) {
 
                         // acctExport --logs
                         for (auto log : trans.receipt.logs) {
-                            if ((exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1) && !first && !freshen_only)
+                            if (isJson && shouldDisplay && !first)
                                 cout << ", ";
                             if (articulate)
                                 abis.articulateLog(&log);
-                            if (!freshen_only) {
+                            nExported++;
+                            if (shouldDisplay)
                                 cout << log.Format() << endl;
-                                nExported++;
-                            }
                             first = false;
                         }
 
                     } else {
 
-                        // acctExport (no options)
-                        if ((exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1) && !first) {
-                            if (!freshen_only)
-                                cout << ", ";
-                            // we only articulate the transaction if we're JSON
-                            if (articulate)
-                                abis.articulateTransaction(&trans);
-                        }
-                        if (!freshen_only) {
-                            nExported++;
+                        // we only articulate the transaction if we're JSON
+                        if (isJson && articulate)
+                            abis.articulateTransaction(&trans);
+                        if (isJson && shouldDisplay && !first)
+                            cout << ", ";
+                        nExported++;
+                        if (shouldDisplay)
                             cout << trans.Format() << endl;
-                        }
                         first = false;
                     }
                 }
 
                 HIDE_FIELD(CFunction, "message");
                 if (isRedirected()) {  // we are in --output mode
-                    cerr << "   " << i << " of " << items.size() << " (" << trans.blockNumber << "): " << trans.hash << "\r";
-                    cerr.flush();
+                    qblocks::eLogger->setEndline('\r');
+                    LOG_INFO(className, ": ", i, " of ", items.size(), " (", trans.blockNumber, ".", trans.transactionIndex, ")      ");
+                    qblocks::eLogger->setEndline('\n');
 
                 } else {
                     static size_t cnt = 0;
                     if (!(++cnt % 71)) { // not reporting every tx is way faster
-                        cerr << "   " << i << " of " << items.size() << ": " << trans.hash << "\r";
-                        cerr.flush();
+                        qblocks::eLogger->setEndline('\r');
+                        LOG_INFO(className, ": ", i, " of ", items.size(), " (", trans.blockNumber, ".", trans.transactionIndex, ")      ");
+                        qblocks::eLogger->setEndline('\n');
                     }
                 }
             }
         }
     }
+
+    qblocks::eLogger->setEndline('\r');
+    LOG_INFO(string_q(120,' '));
+    qblocks::eLogger->setEndline('\n');
 
     if (doABIs) {
         // acctExport --grabABIs (downloads and writes the ABIs for all the traces to disc)
@@ -195,7 +201,7 @@ bool COptions::exportData(void) {
         }
     }
 
-    if ((exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1) && !freshen_only)
+    if (isJson && shouldDisplay)
         cout << "]";
     if (isTestMode())
         cout << endl;

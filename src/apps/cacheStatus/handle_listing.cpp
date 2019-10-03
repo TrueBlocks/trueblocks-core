@@ -6,7 +6,7 @@
 #include "options.h"
 
 //--------------------------------------------------------------------------------
-void COptions::handle_listing(ostream& os) {
+bool COptions::handle_listing(ostream& os) {
     cout << "List mode" << endl;
     ENTER4("handle_" + mode);
     nodeNotRequired();
@@ -60,8 +60,7 @@ void COptions::handle_listing(ostream& os) {
             accounts.push_back(item);
         } else {
             LOG_WARN("No monitors found.");
-            //EXIT_NOMSG4(true);
-            return;
+            EXIT_NOMSG4(true);
         }
     }
     sort(accounts.begin(), accounts.end());
@@ -85,7 +84,7 @@ void COptions::handle_listing(ostream& os) {
         if (accounts.size() > 1)
             oss << "]";
         cout << substitute(substitute(oss.str(), "\n", ""), "\t", "") << endl;
-        return; //EXIT_NOMSG4(true);
+        EXIT_NOMSG4(true);
     }
 
     if (stats) {
@@ -143,5 +142,5 @@ void COptions::handle_listing(ostream& os) {
 //    else
 //        cout << os.str();
 
-    return; //EXIT_NOMSG4(true);
+    EXIT_NOMSG4(true);
 }

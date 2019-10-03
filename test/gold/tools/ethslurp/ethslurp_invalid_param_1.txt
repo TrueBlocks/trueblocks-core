@@ -1,8 +1,8 @@
-ethslurp argc: 2 [1:-x] 
-ethslurp -x 
-Processing: -x
+ethslurp argc: 2 [1:--pink] 
+ethslurp --pink 
+Processing: --pink
 
-  Invalid option: -x
+  Invalid option: --pink
 
   Usage:    ethslurp [-t|-b|-s|-x|-v|-h] <address> [address...] [block...]  
   Purpose:  Fetches data from EtherScan for an arbitrary address. Formats the output to your specification.

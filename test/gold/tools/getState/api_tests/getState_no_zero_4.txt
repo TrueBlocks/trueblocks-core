@@ -1,0 +1,66 @@
+{
+  "type": "CEthState",
+  "data": [
+    {
+      "blockNumber": 3500000,
+      "balance": 4031916592817262000000,
+      "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
+      "ether": 4031.916592817262
+    },
+    {
+      "blockNumber": 3700000,
+      "balance": 4093481291338654700000,
+      "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
+      "ether": 4093.481291338655
+    },
+    {
+      "blockNumber": 4000000,
+      "balance": 4098334073083150700000,
+      "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
+      "ether": 4098.3340730831505
+    },
+    {
+      "blockNumber": 3500000,
+      "balance": 1510065465636533700000000,
+      "address": "0x6f46cf5569aefa1acc1009290c8e043747172d89",
+      "ether": 1510065.4656365337
+    },
+    {
+      "blockNumber": 3700000,
+      "balance": 1510065465636533700000000,
+      "address": "0x6f46cf5569aefa1acc1009290c8e043747172d89",
+      "ether": 1510065.4656365337
+    },
+    {
+      "blockNumber": 4000000,
+      "balance": 1510065465636533700000000,
+      "address": "0x6f46cf5569aefa1acc1009290c8e043747172d89",
+      "ether": 1510065.4656365337
+    },
+    {
+      "blockNumber": 3500000,
+      "balance": 672784612482328700000000,
+      "address": "0xf27daff52c38b2c373ad2b9392652ddf433303c4",
+      "ether": 672784.6124823287
+    },
+    {
+      "blockNumber": 3700000,
+      "balance": 672784612482328700000000,
+      "address": "0xf27daff52c38b2c373ad2b9392652ddf433303c4",
+      "ether": 672784.6124823287
+    },
+    {
+      "blockNumber": 4000000,
+      "balance": 672784612482328700000000,
+      "address": "0xf27daff52c38b2c373ad2b9392652ddf433303c4",
+      "ether": 672784.6124823287
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
+}

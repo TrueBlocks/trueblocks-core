@@ -18,10 +18,7 @@ bool COptions::handle_slurp(void) {
     for (auto addr : addrs) {
         ostringstream os;
         os << "ethslurp " << tool_flags << " " << addr << " ; ";
-        if (isTestMode())
-            cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
-        else
-            if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+        if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
     }
 
     EXIT_NOMSG4(true);

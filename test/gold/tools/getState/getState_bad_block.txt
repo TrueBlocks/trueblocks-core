@@ -1,5 +1,5 @@
-getState argc: 3 [1:12] [2:-1] 
-getState 12 -1 
+getState argc: 3 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:-1] 
+getState 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -1 
 
   Invalid option: -1
 
@@ -14,7 +14,7 @@ getState 12 -1
 	-c  (--changes)       only report a balance when it changes from one block to the next
 
 #### Hidden options (shown during testing only)
-	-o  (--noHeader)      hide the header in txt and csv mode
+	-o  (--no_header)     hide the header in txt and csv mode
 	-x  (--fmt <fmt>)     export format (one of [none|json*|txt|csv|api])
 #### Hidden options (shown during testing only)
 

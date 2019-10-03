@@ -85,14 +85,14 @@ bool CAccountWatch::setValueByName(const string_q& fieldNameIn, const string_q& 
         case 'a':
             if ( fieldName % "abi_spec" ) { return abi_spec.parseJson3(fieldValue); }
             break;
+        case 'c':
+            if ( fieldName % "curBalance" ) { curBalance = str_2_Wei(fieldValue); return true; }
+            break;
         case 'e':
             if ( fieldName % "enabled" ) { enabled = str_2_Bool(fieldValue); return true; }
             break;
         case 'f':
             if ( fieldName % "fm_mode" ) { fm_mode = str_2_Enum(freshen_e,fieldValue); return true; }
-            break;
-        case 'n':
-            if ( fieldName % "nodeBal" ) { nodeBal = str_2_Wei(fieldValue); return true; }
             break;
         case 's':
             if ( fieldName % "statement" ) { return statement.parseJson3(fieldValue); }
@@ -137,7 +137,7 @@ bool CAccountWatch::Serialize(CArchive& archive) {
     archive >> abi_spec;
     archive >> statement;
     archive >> stateHistory;
-    archive >> nodeBal;
+    archive >> curBalance;
     archive >> enabled;
 //    archive >> fm_mode;
     finishParse();
@@ -155,7 +155,7 @@ bool CAccountWatch::SerializeC(CArchive& archive) const {
     archive << abi_spec;
     archive << statement;
     archive << stateHistory;
-    archive << nodeBal;
+    archive << curBalance;
     archive << enabled;
 //    archive << fm_mode;
 
@@ -198,7 +198,7 @@ void CAccountWatch::registerClass(void) {
     ADD_FIELD(CAccountWatch, "abi_spec", T_OBJECT, ++fieldNum);
     ADD_FIELD(CAccountWatch, "statement", T_OBJECT, ++fieldNum);
     ADD_FIELD(CAccountWatch, "stateHistory", T_OBJECT|TS_ARRAY, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "nodeBal", T_WEI, ++fieldNum);
+    ADD_FIELD(CAccountWatch, "curBalance", T_WEI, ++fieldNum);
     ADD_FIELD(CAccountWatch, "enabled", T_BOOL, ++fieldNum);
     ADD_FIELD(CAccountWatch, "fm_mode", T_NUMBER, ++fieldNum);
     HIDE_FIELD(CAccountWatch, "fm_mode");
@@ -212,6 +212,10 @@ void CAccountWatch::registerClass(void) {
     builtIns.push_back(_biCAccountWatch);
 
     // EXISTING_CODE
+    ADD_FIELD(CAccountWatch, "curEther", T_ETHER, ++fieldNum);
+    HIDE_FIELD(CAccountWatch, "curEther");
+    ADD_FIELD(CAccountWatch, "curDollars", T_ETHER, ++fieldNum);
+    HIDE_FIELD(CAccountWatch, "curDollars");
     // EXISTING_CODE
 }
 
@@ -221,6 +225,12 @@ string_q nextAccountwatchChunk_custom(const string_q& fieldIn, const void *dataP
     if (acc) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'c':
+                if ( startsWith(fieldIn, "cur") && acc->curBalance == str_2_Wei(uint_2_Str(NOPOS)))
+                    return "\"n/a\"";
+                if ( fieldIn % "curEther" ) return wei_2_Ether(wei_2_Str(acc->curBalance));
+                if ( fieldIn % "curDollars" ) return "not-implemented";
+                break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
@@ -260,14 +270,14 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
         case 'a':
             if ( fieldName % "abi_spec" ) { expContext().noFrst=true; return abi_spec.Format(); }
             break;
+        case 'c':
+            if ( fieldName % "curBalance" ) return wei_2_Str(curBalance);
+            break;
         case 'e':
             if ( fieldName % "enabled" ) return bool_2_Str(enabled);
             break;
         case 'f':
             if ( fieldName % "fm_mode" ) return uint_2_Str(fm_mode);
-            break;
-        case 'n':
-            if ( fieldName % "nodeBal" ) return wei_2_Str(nodeBal);
             break;
         case 's':
             if ( fieldName % "statement" ) { expContext().noFrst=true; return statement.Format(); }

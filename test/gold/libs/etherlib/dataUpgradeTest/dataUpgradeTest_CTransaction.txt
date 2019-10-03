@@ -1,0 +1,181 @@
+dataUpgradeTest argc: 2 [1:CTransaction] 
+dataUpgradeTest CTransaction 
+--------------------------------------------------------------------------------
+className: CTransaction
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+hash                	1005	0	131132	T_HASH TS_STRING
+blockHash           	1006	0	131132	T_HASH TS_STRING
+blockNumber         	1007	0	65561	T_NUMBER TS_NUMERAL
+transactionIndex    	1008	0	65561	T_NUMBER TS_NUMERAL
+nonce               	1009	0	65561	T_NUMBER TS_NUMERAL
+timestamp           	1010	0	65551	T_TIMESPAN TS_NUMERAL
+from                	1011	0	131127	T_ADDRESS TS_STRING
+to                  	1012	0	131127	T_ADDRESS TS_STRING
+value               	1013	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+gas                 	1014	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+gasPrice            	1015	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+input               	1016	0	131122	T_TEXT TS_STRING
+isError             	1017	0	65561	T_NUMBER TS_NUMERAL
+isInternal          	1018	1	65561	T_NUMBER TS_NUMERAL
+receipt             	1019	0	1048651	T_OBJECT TS_OBJECT
+articulatedTx       	1020	1	1048651	T_OBJECT TS_OBJECT
+compressedTx        	1021	1	131122	T_TEXT TS_STRING
+finalized           	1022	1	65556	T_BOOL TS_NUMERAL
+traces              	1023	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+confirmations       	1024	1	65561	T_NUMBER TS_NUMERAL
+gasCost             	1025	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+etherGasCost        	1026	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+function            	1027	1	131122	T_TEXT TS_STRING
+events              	1028	1	131122	T_TEXT TS_STRING
+price               	1029	1	131122	T_TEXT TS_STRING
+gasUsed             	1030	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+date                	1031	1	262149	T_DATE TS_DATE
+datesh              	1032	1	262149	T_DATE TS_DATE
+time                	1033	1	262149	T_DATE TS_DATE
+age                 	1034	1	262149	T_DATE TS_DATE
+ether               	1035	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+encoding            	1036	1	131122	T_TEXT TS_STRING
+{
+  "hash": "0x0",
+  "blockHash": "0x0",
+  "blockNumber": 0,
+  "transactionIndex": 0,
+  "nonce": 0,
+  "timestamp": 0,
+  "from": "0x0",
+  "to": "0x0",
+  "value": 0,
+  "gas": 0,
+  "gasPrice": 0,
+  "isError": 0,
+  "receipt": {
+    "contractAddress": "0x0",
+    "gasUsed": 0,
+    "logs": [],
+    "status": null
+  },
+  "gasUsed": 0
+}
+
+--------------------------------------------------------------------------------
+className: CTransaction
+baseClass: CBaseNode
+schema              	1001	1	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	1	65556	T_BOOL TS_NUMERAL
+showing             	1003	1	65556	T_BOOL TS_NUMERAL
+cname               	1004	1	131122	T_TEXT TS_STRING
+hash                	1005	1	131132	T_HASH TS_STRING
+blockHash           	1006	1	131132	T_HASH TS_STRING
+blockNumber         	1007	1	65561	T_NUMBER TS_NUMERAL
+transactionIndex    	1008	1	65561	T_NUMBER TS_NUMERAL
+nonce               	1009	1	65561	T_NUMBER TS_NUMERAL
+timestamp           	1010	1	65551	T_TIMESPAN TS_NUMERAL
+from                	1011	1	131127	T_ADDRESS TS_STRING
+to                  	1012	1	131127	T_ADDRESS TS_STRING
+value               	1013	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+gas                 	1014	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+gasPrice            	1015	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+input               	1016	1	131122	T_TEXT TS_STRING
+isError             	1017	1	65561	T_NUMBER TS_NUMERAL
+isInternal          	1018	1	65561	T_NUMBER TS_NUMERAL
+receipt             	1019	1	1048651	T_OBJECT TS_OBJECT
+articulatedTx       	1020	1	1048651	T_OBJECT TS_OBJECT
+compressedTx        	1021	1	131122	T_TEXT TS_STRING
+finalized           	1022	1	65556	T_BOOL TS_NUMERAL
+traces              	1023	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+confirmations       	1024	1	65561	T_NUMBER TS_NUMERAL
+gasCost             	1025	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+etherGasCost        	1026	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+function            	1027	1	131122	T_TEXT TS_STRING
+events              	1028	1	131122	T_TEXT TS_STRING
+price               	1029	1	131122	T_TEXT TS_STRING
+gasUsed             	1030	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+date                	1031	1	262149	T_DATE TS_DATE
+datesh              	1032	1	262149	T_DATE TS_DATE
+time                	1033	1	262149	T_DATE TS_DATE
+age                 	1034	1	262149	T_DATE TS_DATE
+ether               	1035	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+encoding            	1036	1	131122	T_TEXT TS_STRING
+{
+}
+
+--------------------------------------------------------------------------------
+className: CTransaction
+baseClass: CBaseNode
+schema              	1001	0	65561	T_NUMBER TS_NUMERAL
+deleted             	1002	0	65556	T_BOOL TS_NUMERAL
+showing             	1003	0	65556	T_BOOL TS_NUMERAL
+cname               	1004	0	131122	T_TEXT TS_STRING
+hash                	1005	0	131132	T_HASH TS_STRING
+blockHash           	1006	0	131132	T_HASH TS_STRING
+blockNumber         	1007	0	65561	T_NUMBER TS_NUMERAL
+transactionIndex    	1008	0	65561	T_NUMBER TS_NUMERAL
+nonce               	1009	0	65561	T_NUMBER TS_NUMERAL
+timestamp           	1010	0	65551	T_TIMESPAN TS_NUMERAL
+from                	1011	0	131127	T_ADDRESS TS_STRING
+to                  	1012	0	131127	T_ADDRESS TS_STRING
+value               	1013	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+gas                 	1014	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+gasPrice            	1015	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+input               	1016	0	131122	T_TEXT TS_STRING
+isError             	1017	0	65561	T_NUMBER TS_NUMERAL
+isInternal          	1018	0	65561	T_NUMBER TS_NUMERAL
+receipt             	1019	0	1048651	T_OBJECT TS_OBJECT
+articulatedTx       	1020	0	1048651	T_OBJECT TS_OBJECT
+compressedTx        	1021	0	131122	T_TEXT TS_STRING
+finalized           	1022	0	65556	T_BOOL TS_NUMERAL
+traces              	1023	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+confirmations       	1024	0	65561	T_NUMBER TS_NUMERAL
+gasCost             	1025	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+etherGasCost        	1026	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+function            	1027	0	131122	T_TEXT TS_STRING
+events              	1028	0	131122	T_TEXT TS_STRING
+price               	1029	0	131122	T_TEXT TS_STRING
+gasUsed             	1030	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+date                	1031	0	262149	T_DATE TS_DATE
+datesh              	1032	0	262149	T_DATE TS_DATE
+time                	1033	0	262149	T_DATE TS_DATE
+age                 	1034	0	262149	T_DATE TS_DATE
+ether               	1035	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+encoding            	1036	0	131122	T_TEXT TS_STRING
+{
+  "schema": 5008,
+  "deleted": 0,
+  "showing": 1,
+  "cname": "Transaction",
+  "hash": "0x0",
+  "blockHash": "0x0",
+  "blockNumber": 0,
+  "transactionIndex": 0,
+  "nonce": 0,
+  "timestamp": 0,
+  "from": "0x0",
+  "to": "0x0",
+  "value": 0,
+  "gas": 0,
+  "gasPrice": 0,
+  "isError": 0,
+  "isInternal": 0,
+  "receipt": {
+    "contractAddress": "0x0",
+    "gasUsed": 0,
+    "logs": [],
+    "status": null
+  },
+  "finalized": 0,
+  "traces": [],
+  "gasCost": 0,
+  "etherGasCost": 0.000000000000000000,
+  "price": "1.400000000000000000",
+  "gasUsed": 0,
+  "date": "1970-01-01 00:00:00 UTC",
+  "datesh": "1970-01-01",
+  "time": "0:00:00 UTC",
+  "age": "100",
+  "ether": 0.000000000000000000
+}
+

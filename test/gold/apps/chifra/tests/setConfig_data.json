@@ -1,0 +1,100 @@
+[
+    {
+        "name": "quickBlocks.toml",
+        "groups": [
+            {
+                "section": "Providers",
+                "name": "settings",
+                "keys": [
+                    {
+                        "name": "rpcProvider",
+                        "value": "--new rpc Provider--"
+                    },
+                    {
+                        "name": "apiProvider",
+                        "value": "--new api Provider--"
+                    },
+                    {
+                        "name": "balanceProvider",
+                        "value": "--new balance Prov--"
+                    }
+                ]
+            },
+            {
+                "section": "Paths",
+                "name": "settings",
+                "keys": [
+                    {
+                        "name": "configPath",
+                        "value": "--new config Path--"
+                    },
+                    {
+                        "name": "cachePath",
+                        "value": "--new cache Path--"
+                    },
+                    {
+                        "name": "indexPath",
+                        "value": "--new index Path--"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "blockScrape.toml",
+        "groups": [
+            {
+                "section": "Scraper",
+                "name": "settings",
+                "keys": [
+                    {
+                        "name": "nBlocks",
+                        "value": "--new n Blocks--"
+                    },
+                    {
+                        "name": "nAddrProcs",
+                        "value": "--new n Addr Procs--"
+                    },
+                    {
+                        "name": "nBlockProcs",
+                        "value": "--new n Block Procs--"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "acctExport.toml",
+        "groups": [
+            {
+                "section": "Exporter",
+                "name": "settings",
+                "keys": [
+                    {
+                        "name": "writeTxs",
+                        "value": "--new write Txs--"
+                    },
+                    {
+                        "name": "writeTraces",
+                        "value": "--new write Traces--"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "ethslurp.toml",
+        "groups": [
+            {
+                "section": "APIs",
+                "name": "settings",
+                "keys": [
+                    {
+                        "name": "etherscan",
+                        "value": "--new api_key--"
+                    }
+                ]
+            }
+        ]
+    }
+]

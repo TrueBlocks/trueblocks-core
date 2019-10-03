@@ -1,11 +1,11 @@
-whenBlock argc: 2 [1:-v] 
-whenBlock -v 
+whenBlock argc: 2 [1:--verbose] 
+whenBlock --verbose 
 
   Please supply either a JSON formatted date or a blockNumber.
 
   Usage:    whenBlock [-l|-v|-h] < block | date > [ block... | date... ]  
   Purpose:  Finds the nearest block prior to a date, or the nearest date prior to a block.
-         Alternatively, search for one of special 'named' blocks.
+            Alternatively, search for one of special 'named' blocks.
 
   Where:  
 	block_list            one or more block numbers (or a 'special' block), or...

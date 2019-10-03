@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+echo "QUICKBLOCKS = " $QUICKBLOCKS
+echo "BUILD_FOLDER = " $BUILD_FOLDER
+echo "TEST_FOLDER = " $TEST_FOLDER
+echo "DOCKER_FOLDER = " $DOCKER_FOLDER
+echo "PWD = " `pwd`
+
+echo "--------- 1 --------------"
+echo "Checking out testing in docker repo.."
+cd $DOCKER_FOLDER
+grep "^env" api/server.js
+yes | cp -f api/server.js api/server.save
+cat api/server.js | sed 's/^\/\/env/env/' >x
+mv -f x api/server.js
+echo "--------- 2 --------------"
+grep "^env" api/server.js
+
+echo "Testing..."
+cd $TEST_FOLDER/gold/dev_tools/testRunner
+echo "Running tests from: " `pwd`
+
+testRunner $@ | tee $BUILD_FOLDER/results.txt
+
+cat $BUILD_FOLDER/results.txt | grep -v Skipping >x
+mv -f x $BUILD_FOLDER/results.txt
+
+echo "Reseting docker repo..."
+cd $DOCKER_FOLDER
+
+echo "--------- 3 --------------"
+grep "^env" api/server.js
+rm -f api/server.js
+mv api/server.save api/server.js
+echo "--------- 4 --------------"
+grep "^env" api/server.js
+
+cd $TEST_FOLDER
+echo "Removing compare folder..."
+rm -fR compare/
+
+echo "Copying working to compare..."
+cp -pR working compare
+find compare -name "*gitignore*" -exec rm '{}' ';'
+rm -fR gold/apps/acctScrape/99_1234...7890
+
+cd $BUILD_FOLDER
+
+echo "Done..."

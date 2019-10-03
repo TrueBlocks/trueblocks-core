@@ -16,6 +16,7 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
+    CStringArray errors;
     COptionsTransList transList;
     bool option1;
     bool articulate;

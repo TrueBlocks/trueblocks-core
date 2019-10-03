@@ -1,6 +1,6 @@
 getTrans argc: 5 [1:2222222.0] [2:2332332.0] [3:--fmt] [4:json] 
 getTrans 2222222.0 2332332.0 --fmt json 
-[
+{ "data": [
   {
     "hash": "0x9c34ba45c523f75009d279553fe2a7e9a99a991a297439226321bea26ab62bbb",
     "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",
@@ -54,5 +54,4 @@ getTrans 2222222.0 2332332.0 --fmt json
       "status": null
     },
     "gasUsed": 21298
-  }
-]
+  }] }

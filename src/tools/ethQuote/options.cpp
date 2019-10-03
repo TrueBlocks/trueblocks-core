@@ -15,7 +15,6 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("data", "d", "", OPT_SWITCH, "Export prices as JSON data"),
     COption("freshen", "f", "", OPT_SWITCH, "Freshen database (append new data)"),
     COption("period", "p", "enum[5|15|30|120*|240|1440]", OPT_FLAG, "Display prices in this increment. One of [5|15|30|120*|240|1440]"),
     COption("pair", "p", "<pair>", OPT_FLAG, "Which price pair to freshen or list (see Poloniex)"),
@@ -31,7 +30,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-    bool noHeader = false;
+    bool no_header = false;
     string_q format;
     Init();
     explode(arguments, command, ' ');
@@ -40,10 +39,6 @@ bool COptions::parseArguments(string_q& command) {
 
         if (arg == "-f" || arg == "--freshen") {
             freshen = true;
-
-        } else if (arg == "-d" || arg == "--data") {
-            // we don't have to do anything, simply handling the option
-            // enables the behavour. Don't remove.
 
         } else if (startsWith(arg, "-p:") || startsWith(arg, "--period:")) {
             arg = substitute(substitute(orig, "-p:", ""), "--period:", "");
@@ -79,7 +74,7 @@ bool COptions::parseArguments(string_q& command) {
             break;
     }
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
-    if (noHeader)
+    if (no_header)
         expContext().fmtMap["header"] = "";
 
     string_q unused;
@@ -99,6 +94,8 @@ void COptions::Init(void) {
     freshen = false;
     freq = 120;
     first = true;
+    if (isApiMode())
+        minArgs = 0;
 }
 
 //---------------------------------------------------------------------------------------------------

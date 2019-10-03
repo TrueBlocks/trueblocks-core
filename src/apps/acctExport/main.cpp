@@ -5,8 +5,10 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
+extern string_q plural(const string_q& in);
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
+
     acctlib_init(quickQuitHandler);
 
     COptions options;
@@ -18,20 +20,25 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        string_q className =
+        options.className =
         (options.doAppearances ? "CAppearance" :
          (options.doTraces ? GETRUNTIME_CLASS(CTrace)->m_ClassName :
           (options.doLogs ? GETRUNTIME_CLASS(CLogEntry)->m_ClassName :
-           (options.doBalances ? GETRUNTIME_CLASS(CEthState)->m_ClassName : GETRUNTIME_CLASS(CTransaction)->m_ClassName))));
-        if (once)
-            cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], className);
+           (options.doBalances ? GETRUNTIME_CLASS(CEthState)->m_ClassName :
+            (options.count_only ? "CCounts" : GETRUNTIME_CLASS(CTransaction)->m_ClassName)))));
 
-        if (options.doBalances) {
+        if (once)
+            cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], options.className);
+
+        if (options.count_only) {
+            options.exportCounts();
+
+        } else if (options.doBalances) {
             options.loadAllAppearances(); // allow the balance query to continue even with no appearances
             options.exportBalances();
         } else {
             if (!options.loadAllAppearances())
-                return options.usage("Nothing to export.");
+                return 0;
             options.exportData();
         }
 
@@ -39,24 +46,14 @@ int main(int argc, const char *argv[]) {
     }
     cout << exportPostamble(options.exportFmt, expContext().fmtMap["meta"]);
 
-    if (!options.freshen_only) {
-        cerr << "exported " << options.nExported << " ";
-        if (options.doTraces)
-            cerr << "traces from ";
-        else if (options.doLogs)
-            cerr << "logs from ";
-        else if (options.doBalances && !options.deltas_only)
-            cerr << "balances from ";
-        else if (options.doBalances)
-            cerr << "changes in balance from ";
-        else if (options.doABIs)
-            cerr << "abis from ";
-        else
-            cerr << "of ";
-        cerr << options.items.size() << " transactions" << string_q(45,' ') << "\n";
-        cerr.flush();
-    }
+    if (!options.freshen_only && !options.count_only)
+        LOG_INFO("exported ", options.nExported, " ", (!options.className.empty() ? (plural(options.className) + " from ") : "of "), options.items.size(), " transactions", string_q(55,' '));
 
     acctlib_cleanup();
     return 0;
+}
+
+//--------------------------------------------------------------------------------
+string_q plural(const string_q& in) {
+    return substitute(substitute(toLower(in).substr(1,1000) + "s", "logentrys", "logs"), "ethstates", "balances");
 }

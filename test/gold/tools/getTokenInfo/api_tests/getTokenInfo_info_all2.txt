@@ -1,0 +1,16 @@
+[
+  {
+    "name": "OMGToken",
+    "totalSupply": "140245398245132780789239631",
+    "decimals": "18",
+    "version": "",
+    "symbol": "OMG"
+  },
+  {
+    "name": "Swarm City Token",
+    "totalSupply": "8536072883587160871653166",
+    "decimals": "18",
+    "version": "MMT_0.1",
+    "symbol": "SWT"
+  }
+]

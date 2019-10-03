@@ -13,7 +13,6 @@ public:
     CAccountWatchArray monitors;
     blknum_t           lastBlockInFile;
     size_t             visitTypes;
-    bool               useBlooms;
 
     COptions(void);
     ~COptions(void);

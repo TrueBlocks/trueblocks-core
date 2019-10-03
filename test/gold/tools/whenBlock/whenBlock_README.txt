@@ -4,7 +4,7 @@ whenBlock -th
 
 `Usage:`    whenBlock [-l|-v|-h] &lt; block | date &gt; [ block... | date... ]  
 `Purpose:`  Finds the nearest block prior to a date, or the nearest date prior to a block.
-         Alternatively, search for one of special 'named' blocks.
+            Alternatively, search for one of special 'named' blocks.
 
 `Where:`  
 

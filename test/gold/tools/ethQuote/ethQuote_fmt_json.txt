@@ -1,6 +1,6 @@
-ethQuote argc: 4 [1:-d] [2:--fmt] [3:json] 
-ethQuote -d --fmt json 
-[
+ethQuote argc: 3 [1:--fmt] [2:json] 
+ethQuote --fmt json 
+{ "data": [
   {
     "timestamp": 1439078400,
     "close": 1.40000,
@@ -35381,5 +35381,4 @@ ethQuote -d --fmt json
     "timestamp": 1502755200,
     "close": 298.05590,
     "date": "2017-08-15 00:00:00 UTC"
-  }
-]
+  }] }

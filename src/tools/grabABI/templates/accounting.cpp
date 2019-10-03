@@ -19,8 +19,8 @@ bool COptions::openIncomeStatement(const CBlock& block) {
     for (auto& watch : watches) {
         watch.statement.inflow = watch.statement.outflow = watch.statement.gasCostInWei = 0;
         if (isAddress(watch.address)) {
-            watch.statement.nodeBal = get NodeBal(watch.stateHistory, watch.address, block.blockNumber-1);
-            bigint_t diff = (watch.statement.nodeBal - watch.statement.endBal);
+            watch.statement.curBalance = get NodeBal(watch.stateHistory, watch.address, block.blockNumber-1);
+            bigint_t diff = (watch.statement.curBalance - watch.statement.endBal);
             if (!no_check && (diff != 0)) {
                 single_on = true;
                 string_q c1 = watch.color, c2 = cOff;
@@ -191,7 +191,7 @@ bool COptions::closeIncomeStatement(const CBlock& block) {
         //        cout << bBlack << string_q(theWidth+1, ' ') << BG << string_q(155, '-') << cOff << "\r\n";
         cout << padCenter("",theWidth+1) << " " << BG;
         thing(cout, header, theWidth+1);
-        cout << padCenter("nodeBal",theWidth+(theWidth/2)) << cOff << "\r\n";
+        cout << padCenter("curBalance",theWidth+(theWidth/2)) << cOff << "\r\n";
         //        cout << bBlack << string_q(theWidth+1, ' ') << string_q(155, '-') << cOff << "\r\n";
         for (size_t i = 0 ; i < watches.size() ; i++) {
             watches.at(i).statement.blockNum = block.blockNumber;
@@ -204,8 +204,8 @@ bool COptions::closeIncomeStatement(const CBlock& block) {
             //cout << watches[i].statement << "   ";
 
             if (i < watches.size()-1) {
-                watches.at(i).statement.nodeBal = get NodeBal(watches.at(i).stateHistory, watches[i].address, block.blockNumber);
-                cout << padLeft(wei_2_Ether(bni_2_Str(watches[i].statement.nodeBal)),theWidth+1);
+                watches.at(i).statement.curBalance = get NodeBal(watches.at(i).stateHistory, watches[i].address, block.blockNumber);
+                cout << padLeft(wei_2_Ether(bni_2_Str(watches[i].statement.curBalance)),theWidth+1);
                 if (!watches[i].statement.balanced()) {
 
                     cout << " " << bRed << padLeft(wei_2_Ether(bni_2_Str(watches[i].statement.difference())),theWidth+1) << cOff << " " << redX;

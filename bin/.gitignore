@@ -1,3 +1,5 @@
+testRunner
+startServers
 cacheStatus
 blaze
 blockScrape-go
@@ -98,7 +100,7 @@ speedTest
 startParity
 stringTest
 test
-testCheck.py
+checkTest.py
 apiCheck.py
 tomlTest
 viewBlock

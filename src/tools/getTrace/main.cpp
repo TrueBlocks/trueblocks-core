@@ -29,7 +29,7 @@ int main(int argc, const char *argv[]) {
         forEveryTransactionInList(visitTransaction, &options, options.transList.queries);
         once = false;
     }
-    cout << exportPostamble(options.exportFmt, expContext().fmtMap["meta"]);
+    cout << exportPostamble(options.exportFmt, options.errors, expContext().fmtMap["meta"]);
 
     etherlib_cleanup();
     return 0;
@@ -43,14 +43,7 @@ bool visitTransaction(CTransaction& trans, void *data) {
 
     if (contains(trans.hash, "invalid")) {
         string_q hash = nextTokenClear(trans.hash, ' ');
-        if (isText) {
-            cout << cRed << "Transaction " << hash << " not found.\n" << cOff;
-        } else {
-            if (!opt->first)
-                cout << ",";
-            cout << "{ \"error\": \"Transaction " << hash << " not found.\" }\n";
-        }
-        opt->first = false;
+        opt->errors.push_back("Transaction " + hash + " not found.");
         return true; // continue even with an invalid item
     }
 
@@ -84,12 +77,17 @@ bool visitTransaction(CTransaction& trans, void *data) {
 
     //////////////////////////////////////////////////////
 
-    if (opt->articulate) {
+    if (opt->articulate)
         opt->abi_spec.loadAbiByAddress(trans.to);
-        opt->abi_spec.articulateTransaction(&trans);
-    }
 
     for (auto trace : trans.traces) {
+
+        if (!isTestMode() && isApiMode()) {
+            qblocks::eLogger->setEndline('\r');
+            LOG_INFO("Getting trace ", trans.blockNumber, ".", trans.transactionIndex, "-", trace.getValueByName("traceAddress"), string_q(50,' '));
+            qblocks::eLogger->setEndline('\n');
+        }
+
         if (opt->articulate) {
             opt->abi_spec.loadAbiByAddress(trace.action.to);
             opt->abi_spec.articulateTrace(&trace);

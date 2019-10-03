@@ -11,8 +11,8 @@ getTrace -th
 | -------: | :------- | :------- |
 |  | trans_list | a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) (required) |
 | -a | --articulate | articulate the transactions if an ABI is found for the 'to' address |
-| -c | --countOnly | show the number of traces for the transaction only (fast) |
-| -n | --noHeader | do not show the header row |
+| -c | --count_only | show the number of traces for the transaction only (fast) |
+| -n | --no_header | do not show the header row |
 
 #### Hidden options (shown during testing only)
 | -x | --fmt <fmt> | export format (one of [none&#124;json*&#124;txt&#124;csv&#124;api]) |

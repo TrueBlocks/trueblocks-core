@@ -1,0 +1,40 @@
+{
+  "type": "CTrace",
+  "data": [
+    {
+      "blockHash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",
+      "blockNumber": 1001001,
+      "subtraces": 0,
+      "traceAddress": null,
+      "transactionHash": "0x730724cb08a6eb17bf6b3296359d261570d343ea7944a17a9d7287d77900db08",
+      "transactionIndex": 0,
+      "type": "call",
+      "error": "",
+      "action": {
+        "address": "0x0",
+        "balance": 0,
+        "callType": "call",
+        "from": "0x68795c4aa09d6f4ed3e5deddf8c2ad3049a601da",
+        "gas": 69000,
+        "init": "",
+        "input": "0x",
+        "refundAddress": "0x0",
+        "to": "0x789f40d61bb6436254d5b5f9cbb8cefb76916d46",
+        "value": 1174501130000000000
+      },
+      "result": {
+        "address": "0x0",
+        "code": "",
+        "gasUsed": 0,
+        "output": "0x"
+      }
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
+}

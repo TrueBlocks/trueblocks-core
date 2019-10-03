@@ -1,11 +1,11 @@
-whenBlock argc: 3 [1:-v:j] [2:1000] 
-whenBlock -v:j 1000 
+whenBlock argc: 3 [1:1000] [2:--verbose:j] 
+whenBlock 1000 --verbose:j 
 
   Invalid verbose level 'j'. Quitting...
 
   Usage:    whenBlock [-l|-v|-h] < block | date > [ block... | date... ]  
   Purpose:  Finds the nearest block prior to a date, or the nearest date prior to a block.
-         Alternatively, search for one of special 'named' blocks.
+            Alternatively, search for one of special 'named' blocks.
 
   Where:  
 	block_list            one or more block numbers (or a 'special' block), or...

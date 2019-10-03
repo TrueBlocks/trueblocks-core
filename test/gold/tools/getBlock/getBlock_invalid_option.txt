@@ -1,7 +1,7 @@
-getBlock argc: 3 [1:-y] [2:1001001] 
-getBlock -y 1001001 
+getBlock argc: 3 [1:1001001] [2:--junk] 
+getBlock 1001001 --junk 
 
-  Invalid option: -y
+  Invalid option: --junk
 
   Usage:    getBlock [-n|-c|-a|-u|-q|-m|-l|-v|-h] <block> [block...]  
   Purpose:  Returns block(s) from local cache or directly from a running node.
@@ -14,7 +14,7 @@ getBlock -y 1001001
 	-u  (--uniq)          display only uniq addresses found per block
 	-q  (--uniqTx)        display only uniq addresses found per transaction
 	-m  (--number)        display address counts (alterntively --addrCnt, --uniqTxCnt, or --uniqCnt)
-	-l  (--filter <address>)useful only for --addrs or --uniq, only display this address in results
+	-l  (--filter <addr>) useful only for --addrs or --uniq, only display this address in results
 
 #### Hidden options (shown during testing only)
 	-l  (--latest)        display the latest blocks at both the node and the cache

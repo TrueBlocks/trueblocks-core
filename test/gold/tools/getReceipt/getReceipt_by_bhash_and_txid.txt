@@ -1,6 +1,6 @@
-getReceipt argc: 6 [1:-x] [2:json] [3:0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4] [4:-v] [5:--parity] 
-getReceipt -x json 0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4 -v --parity 
-[
+getReceipt argc: 6 [1:0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4] [2:--verbose] [3:--fmt] [4:json] [5:--parity] 
+getReceipt 0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4 --verbose --fmt json --parity 
+{ "data": [
   {
     "contractAddress": "0x0",
     "gasUsed": "0x76d0",
@@ -15,5 +15,4 @@ getReceipt -x json 0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f
       }
     ],
     "status": null
-  }
-]
+  }] }

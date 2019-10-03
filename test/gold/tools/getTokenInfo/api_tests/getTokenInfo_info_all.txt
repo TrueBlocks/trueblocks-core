@@ -1,0 +1,7 @@
+{
+  "name": "OMGToken",
+  "totalSupply": "140245398245132780789239631",
+  "decimals": "18",
+  "version": "",
+  "symbol": "OMG"
+}

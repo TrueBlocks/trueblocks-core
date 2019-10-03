@@ -1,0 +1,5 @@
+{
+  "errors": [
+    "getTokenInfo - Address '0x6b65353ac052f6c3a0c9688911b078bd025d6ab3' does not appear to be a token smart contract. Quitting..."
+  ]
+}

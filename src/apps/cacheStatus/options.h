@@ -33,11 +33,11 @@ public:
     bool parseArguments(string_q& command);
     void Init(void);
 
-    void handle_status(ostream& os);
-    void handle_listing(ostream& os);
-    void handle_config(ostream& os);
-    void handle_config_get(ostream& os);
-    void handle_config_put(ostream& os);
+    bool handle_status(ostream& os);
+    bool handle_listing(ostream& os);
+    bool handle_config(ostream& os);
+    bool handle_config_get(ostream& os);
+    bool handle_config_set(ostream& os);
 };
 
 //-------------------------------------------------------------------------

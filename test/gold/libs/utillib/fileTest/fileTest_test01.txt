@@ -1,8 +1,7 @@
 fileTest argc: 2 [1:recurse] 
 fileTest recurse 
 Recursive from ../
-Found 87 (87) files
-../apiTest/apiTest_test01.txt
+Found 117 (117) files
 ../arrayTest/arrayTest_Insertion.txt
 ../arrayTest/arrayTest_README.txt
 ../bigIntTest/bigIntTest_00.txt
@@ -16,13 +15,13 @@ Found 87 (87) files
 ../cmdLineTest/cmd_file_bool2
 ../cmdLineTest/cmd_file_other1
 ../cmdLineTest/cmd_file_other2
-../colorTest/colorTest_00.txt
-../convert/convertTest_00.txt
-../convert/convertTest_01.txt
-../convert/convertTest_02.txt
-../convert/convertTest_03.txt
-../convert/convertTest_04.txt
-../curlTest/curlTest_00.txt
+../colorTest/colorTest_01.txt
+../convertTest/convertTest_00.txt
+../convertTest/convertTest_01.txt
+../convertTest/convertTest_02.txt
+../convertTest/convertTest_03.txt
+../convertTest/convertTest_04.txt
+../curlTest/curlTest_test00.txt
 ../fileTest/fileTest_test00.txt
 ../fileTest/fileTest_test01.txt
 ../fileTest/fileTest_test02.txt
@@ -34,10 +33,14 @@ Found 87 (87) files
 ../fileTest/folder/file3
 ../jsonTest/jsonTest_nothing.txt
 ../jsonTest/jsonTest_test_blocks.txt
+../jsonTest/jsonTest_test_escaped.txt
 ../jsonTest/jsonTest_test_random.txt
+../jsonTest/jsonTest_test_spaces.txt
 ../jsonTest/jsonTest_test_traces.txt
 ../jsonTest/tests/blocks.json
+../jsonTest/tests/escaped.json
 ../jsonTest/tests/random.json
+../jsonTest/tests/spaces.json
 ../jsonTest/tests/traces.json
 ../parsingTest/parsingTest_00.txt
 ../parsingTest/parsingTest_01.txt
@@ -45,8 +48,8 @@ Found 87 (87) files
 ../parsingTest/parsingTest_03.txt
 ../parsingTest/parsingTest_04.txt
 ../parsingTest/parsingTest_README.txt
-../sizeof/sizeof_00.txt
-../sizeof/sizeof_README.txt
+../sizeofTest/sizeofTest_00.txt
+../sizeofTest/sizeofTest_README.txt
 ../stringTest/solidity_code.sol
 ../stringTest/stringTest_Assignment.txt
 ../stringTest/stringTest_CStr.txt
@@ -55,6 +58,7 @@ Found 87 (87) files
 ../stringTest/stringTest_Extract.txt
 ../stringTest/stringTest_README.txt
 ../stringTest/stringTest_Relational.txt
+../timeTest/timeTest_test00.txt
 ../tomlTest/empty.toml
 ../tomlTest/test00.toml
 ../tomlTest/test01.toml
@@ -87,5 +91,31 @@ Found 87 (87) files
 ../tomlTest/tomlTest_test12.txt
 ../tomlTest/tomlTest_test13.txt
 ../tomlTest/tomlTest_test14.txt
+../tomlTest2/tests/acctExport.toml
+../tomlTest2/tests/acctScrape.toml
+../tomlTest2/tests/blockScrape.toml
+../tomlTest2/tests/cacheMan.toml
+../tomlTest2/tests/chifra.toml
+../tomlTest2/tests/ethslurp.toml
+../tomlTest2/tests/getAccounts.toml
+../tomlTest2/tests/getBlock.toml
+../tomlTest2/tests/getState.toml
+../tomlTest2/tests/getTrans.toml
+../tomlTest2/tests/grabABI.toml
+../tomlTest2/tests/quickBlocks.toml
+../tomlTest2/tests/whenBlock.toml
+../tomlTest2/tomlTest2_acctExport.txt
+../tomlTest2/tomlTest2_acctScrape.txt
+../tomlTest2/tomlTest2_blockScrape.txt
+../tomlTest2/tomlTest2_cacheMan.txt
+../tomlTest2/tomlTest2_chifra.txt
+../tomlTest2/tomlTest2_ethslurp.txt
+../tomlTest2/tomlTest2_getAccounts.txt
+../tomlTest2/tomlTest2_getBlock.txt
+../tomlTest2/tomlTest2_getState.txt
+../tomlTest2/tomlTest2_getTrans.txt
+../tomlTest2/tomlTest2_grabABI.txt
+../tomlTest2/tomlTest2_quickBlocks.txt
+../tomlTest2/tomlTest2_whenBlock.txt
 ../typesTest/typesTest_01.txt
 ../typesTest/typesTest_README.txt

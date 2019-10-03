@@ -1,0 +1,5 @@
+{
+  "errors": [
+    "getAccounts - Invalid option: --punk"
+  ]
+}

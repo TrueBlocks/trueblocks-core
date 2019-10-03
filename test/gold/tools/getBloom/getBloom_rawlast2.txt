@@ -1,5 +1,5 @@
-getBloom argc: 4 [1:4501030] [2:-e] [3:--raw] 
-getBloom 4501030 -e --raw 
+getBloom argc: 4 [1:4501030] [2:--eab] [3:--raw] 
+getBloom 4501030 --eab --raw 
 {
 	"blockNumber": "4501030",
 	"eab": []

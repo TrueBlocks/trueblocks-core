@@ -1,6 +1,6 @@
 getLogs argc: 6 [1:--file:cmd_file] [2:--verbose] [3:--parity] [4:--fmt] [5:json] 
 getLogs --file:cmd_file --verbose --parity --fmt json 
-[
+{ "data": [
   {
     "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
     "data": "0x000000000000000000000000000000000000000000000000094079cd16496a00",
@@ -48,5 +48,4 @@ getLogs --file:cmd_file --verbose --parity --fmt json
         }
       ]
     }
-  }
-]
+  }] }

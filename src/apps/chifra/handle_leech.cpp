@@ -45,7 +45,6 @@ bool COptions::handle_leech(void) {
         string_q zipFile = indexFolder_zips + filename;
         string_q textFile = substitute(indexFolder_sorted + filename, ".gz", "");
 
-        if (isTestMode()) cout << endl;
         if (!fileExists(zipFile) || isTestMode()) {
             ostringstream os;
 
@@ -54,12 +53,8 @@ bool COptions::handle_leech(void) {
 
             // get the zip file from the IPFS cache
             os << ipfs_cmd.str() << " \"" << zipFile << "\" ; ";
-            if (isTestMode()) {
-                cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
-            } else {
-                if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
-                usleep(500000); // so Ctrl+C works
-            }
+            if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+            usleep(500000); // so Ctrl+C works
 
         } else {
             if (verbose)
@@ -76,14 +71,10 @@ bool COptions::handle_leech(void) {
             os << "cp -p \"" << zipFile << "\" \"" << indexFolder_sorted << filename << "\" ; ";
             os << "gunzip \"" << filename << "\" ; cd - >/dev/null";
 
-            if (isTestMode()) {
-                cerr << "Leeching " << cTeal << substitute(textFile, getCachePath(""), "$BLOCK_CACHE/") << cOff << endl;
-                cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/") << endl;
-            } else {
-                cerr << "Leeching " << cTeal << textFile << cOff << endl;
-                if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
-                usleep(500000); // so Ctrl+C works
-            }
+            cerr << "Leeching " << cTeal << textFile << cOff << endl;
+            if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+            usleep(500000); // so Ctrl+C works
+
         } else {
             if (verbose)
                 cout << "File " << cTeal << textFile << cOff << " " << greenCheck << endl;

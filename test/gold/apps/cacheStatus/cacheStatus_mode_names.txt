@@ -1,0 +1,21 @@
+cacheStatus argc: 2 [1:names] 
+cacheStatus names 
+{
+  "client_version": "Parity version",
+  "trueblocks_version": "GHC-TrueBlocks//0.5.8-alpha--git-hash---git-ts-",
+  "rpc_provider": "--providers--",
+  "api_provider": "--providers--",
+  "balance_provider": "--providers--",
+  "host": "--hostname-- (--username--)",
+  "is_scraping": false,
+  "caches": [
+    {
+      "type": "CNameCache",
+      "path": "CachePath",
+      "nFiles": 0,
+      "nFolders": 0,
+      "sizeInBytes": 0,
+      "valid_counts": true
+    }
+  ]
+}

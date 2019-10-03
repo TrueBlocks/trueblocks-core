@@ -15,11 +15,11 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("block_list", "", "list<block>", OPT_POSITIONAL, "one or more block numbers (or a 'special' block), or..."),
+    COption("block_list", "", "list<blknum>", OPT_POSITIONAL, "one or more block numbers (or a 'special' block)&#44; or..."),
     COption("date_list", "", "list<date>", OPT_POSITIONAL, "one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]"),
     COption("list", "l", "", OPT_SWITCH, "export all the named blocks"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),
-    COption("", "", "", OPT_DESCRIPTION, "Finds the nearest block prior to a date, or the nearest date prior to a block.\n Alternatively, search for one of special 'named' blocks."),
+    COption("", "", "", OPT_DESCRIPTION, "Finds the nearest block prior to a date&#44; or the nearest date prior to a block.\n    Alternatively&#44; search for one of special 'named' blocks."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -31,7 +31,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-    bool noHeader = false;
+    bool no_header = false;
     string_q format = getGlobalConfig("whenBlock")->getConfigStr("display", "format", STR_DISPLAY_WHEN);
     Init();
     blknum_t latestBlock = getLastBlock_client();
@@ -59,17 +59,25 @@ bool COptions::parseArguments(string_q& command) {
 
             } else if (date > Now()) {
                 ostringstream os;
-                os << "The date you specified (" << cTeal << orig << cOff << ")";
-                os << "is in the future. No such block.";
-                LOG_WARN(os.str());
-                return false;
+                if (isApiMode())
+                    colorsOff();
+                os << "The date you specified (" << cTeal << orig << cOff << ") " << "is in the future. No such block.";
+                if (!isApiMode()) {
+                    LOG_WARN(os.str());
+                    return false;
+                }
+                return usage(os.str());
 
             } else if (date < time_q(2015, 7, 30, 15, 25, 00)) {
                 ostringstream os;
-                os << "The date you specified (" << cTeal << orig << cOff << ")";
-                os << "is before the first block.";
-                LOG_WARN(os.str());
-                return false;
+                if (isApiMode())
+                    colorsOff();
+                os << "The date you specified (" << cTeal << orig << cOff << ") " << "is before the first block.";
+                if (!isApiMode()) {
+                    LOG_WARN(os.str());
+                    return false;
+                }
+                return usage(os.str());
 
             } else {
                 requests.push_back(CNameValue("date", int_2_Str(date_2_Ts(date))));
@@ -122,7 +130,7 @@ bool COptions::parseArguments(string_q& command) {
     }
     manageFields("CBlock:" + cleanFmt((format.empty() ? STR_DISPLAY_WHEN : format), exportFmt));
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
-    if (noHeader)
+    if (no_header)
         expContext().fmtMap["header"] = "";
 
     // collect together results for later display

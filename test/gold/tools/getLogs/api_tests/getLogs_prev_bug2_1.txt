@@ -1,0 +1,34 @@
+{
+  "type": "CLogEntry",
+  "data": [
+    {
+      "address": "0xe3818504c1b32bf1557b16c238b2e01fd3149c17",
+      "data": "0x000000000000000000000000000000000000000000000051889acfe625dbffad",
+      "logIndex": "0x70",
+      "topics": [
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+        "0x0000000000000000000000008d12a197cb00d4747a1fe03395095ce2a5cc6819",
+        "0x0000000000000000000000009fe00a70fd9a3a521835bd683297a94f39a6bf8b"
+      ],
+      "compressedLog": "",
+      "type": "mined"
+    },
+    {
+      "address": "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819",
+      "data": "0x000000000000000000000000e3818504c1b32bf1557b16c238b2e01fd3149c170000000000000000000000009fe00a70fd9a3a521835bd683297a94f39a6bf8b000000000000000000000000000000000000000000000051889acfe625dbffad0000000000000000000000000000000000000000000000000000000000000000",
+      "logIndex": "0x71",
+      "topics": [
+        "0xf341246adaac6f497bc2a656f546ab9e182111d630394f0c57c710a59a2cb567"
+      ],
+      "compressedLog": "",
+      "type": "mined"
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
+}

@@ -1,5 +1,5 @@
-getBlock argc: 3 [1:--latest] [2:0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b] 
-getBlock --latest 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b 
+getBlock argc: 3 [1:0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b] [2:--latest] 
+getBlock 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b --latest 
   Client version:     --version--
   Trueblocks version: GHC-TrueBlocks//0.5.8-alpha--git-hash---git-ts-
   RPC provider:       --rpc_provider--

@@ -33,6 +33,8 @@ namespace qblocks {
         struct curl_slist *headerPtr;
         CCounterMap        methodMap;
         uint64_t           methodCnt;
+        bool               reportErrors;
+        CStringArray       curlErrors;
 
         CCurlContext(void);
 
@@ -53,7 +55,7 @@ namespace qblocks {
     extern bool          isNodeRunning    (void);
     extern bool          nodeHasTraces    (void);
     extern string_q      setDataSource    (const string_q& newSrc);
-    extern string_q      displayCurlError (const string_q& msg, const string_q& val="");
+    extern void          displayCurlError (const string_q& msg, const string_q& val="");
 
     extern string_q      callRPC          (const string_q& method, const string_q& params, bool raw);
     extern bool          getObjectViaRPC  (CBaseNode &node, const string_q& method, const string_q& params);

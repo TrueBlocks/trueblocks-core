@@ -1,4 +1,4 @@
-getAccounts argc: 4 [1:-v] [2:cbCD] [3:an.io] 
-getAccounts -v cbCD an.io 
-address	name	symbol	source
-0x2233799ee2683d75dfefacbcd2a26c78d34b470d	Network	NTWK	Etherscan.io
+getAccounts argc: 6 [1:cbCD] [2:an.io] [3:--verbose] [4:--fmt] [5:txt] 
+getAccounts cbCD an.io --verbose --fmt txt 
+group	subgroup	address	name	symbol	source
+50-Tokens		0x2233799ee2683d75dfefacbcd2a26c78d34b470d	Network	NTWK	Etherscan.io
