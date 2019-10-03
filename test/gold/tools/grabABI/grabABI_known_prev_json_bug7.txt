@@ -1,3 +1,50 @@
-grabABI argc: 3 [1:0xaaaf91d9b90df800df4f55c205fd6989c977e73a] [2:--json] 
-grabABI 0xaaaf91d9b90df800df4f55c205fd6989c977e73a --json 
-[{"constant":false,"inputs":[],"name":"Launch","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"lockedTokenHolder","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[],"name":"finalizeRemainders","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[],"name":"lockTokenHolder","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"type":"function"},{"constant":false,"inputs":[],"name":"claimOwnerSupply","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[],"name":"unpause","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"addr","type":"address"},{"name":"amount","type":"uint256"}],"name":"mint","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_amount","type":"uint256"}],"name":"burn","outputs":[{"name":"result","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"paused","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[],"name":"neverPauseAgain","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_subtractedValue","type":"uint256"}],"name":"decreaseApproval","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"currentSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[],"name":"acceptOwnership","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"launched","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"day","type":"uint256"}],"name":"setOwnerFreeDay","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[],"name":"pause","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"tokenholder","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"mintingDone","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"pausingMechanismLocked","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_controller","type":"address"}],"name":"setController","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"remaindersSet","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"data","type":"uint256[]"}],"name":"multiMint","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"remainingOwner","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_newOwner","type":"address"}],"name":"changeOwner","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[],"name":"completeMinting","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"ownerTokensFreeDay","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"amount","type":"uint256"}],"name":"claimAuctionableTokens","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_remainingOwner","type":"uint256"},{"name":"_remainingAuctionable","type":"uint256"}],"name":"setRemainders","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"remainingAuctionable","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_amount","type":"uint256"},{"name":"_extraData","type":"bytes"}],"name":"approveAndCall","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_addedValue","type":"uint256"}],"name":"increaseApproval","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"address"}],"name":"allowance","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_token","type":"address"}],"name":"claimTokens","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_th","type":"address"}],"name":"setTokenHolder","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"controller","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"inputs":[],"payable":false,"type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"owner","type":"address"},{"indexed":true,"name":"spender","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"token","type":"address"},{"indexed":false,"name":"to","type":"address"},{"indexed":false,"name":"amount","type":"uint256"}],"name":"logTokenTransfer","type":"event"}]
+grabABI argc: 3 [1:0xaaaf91d9b90df800df4f55c205fd6989c977e73a] [2:--data] 
+grabABI 0xaaaf91d9b90df800df4f55c205fd6989c977e73a --data 
+address	encoding	type	constant	name	signature	input_names
+	0x02ac8168	function		Launch	Launch()	
+	0x79ba5097	function		acceptOwnership	acceptOwnership()	
+	0xdd62ed3e	function	true	allowance	allowance(address,address)	val_0,val_1,
+	0x095ea7b3	function		approve	approve(address,uint256)	_spender,_value,
+	0xcae9ca51	function		approveAndCall	approveAndCall(address,uint256,bytes)	_spender,_amount,_extraData,
+	0x70a08231	function	true	balanceOf	balanceOf(address)	val_0,
+	0x42966c68	function		burn	burn(uint256)	_amount,
+	0xa6f9dae1	function		changeOwner	changeOwner(address)	_newOwner,
+	0xb357a552	function		claimAuctionableTokens	claimAuctionableTokens(uint256)	amount,
+	0x3da1eff5	function		claimOwnerSupply	claimOwnerSupply()	
+	0xdf8de3e7	function		claimTokens	claimTokens(address)	_token,
+	0xa844545d	function		completeMinting	completeMinting()	
+	0xf77c4791	function	true	controller	controller()	
+	0x771282f6	function	true	currentSupply	currentSupply()	
+	0x313ce567	function	true	decimals	decimals()	
+	0x66188463	function		decreaseApproval	decreaseApproval(address,uint256)	_spender,_subtractedValue,
+	0x2276774c	function		finalizeRemainders	finalizeRemainders()	
+	0xd73dd623	function		increaseApproval	increaseApproval(address,uint256)	_spender,_addedValue,
+	0x8091f3bf	function	true	launched	launched()	
+	0x2bbeac91	function		lockTokenHolder	lockTokenHolder()	
+	0x17e139a7	function	true	lockedTokenHolder	lockedTokenHolder()	
+	0x40c10f19	function		mint	mint(address,uint256)	addr,amount,
+	0x8e2ae564	function	true	mintingDone	mintingDone()	
+	0x9a0e4ebb	function		multiMint	multiMint(uint256[])	data,
+	0x06fdde03	function	true	name	name()	
+	0x6348eae6	function		neverPauseAgain	neverPauseAgain()	
+	0x8da5cb5b	function	true	owner	owner()	
+	0xac4d2e95	function	true	ownerTokensFreeDay	ownerTokensFreeDay()	
+	0x8456cb59	function		pause	pause()	
+	0x5c975abb	function	true	paused	paused()	
+	0x90912d09	function	true	pausingMechanismLocked	pausingMechanismLocked()	
+	0x98a9ae44	function	true	remaindersSet	remaindersSet()	
+	0xc6e81b07	function	true	remainingAuctionable	remainingAuctionable()	
+	0xa4f91a2e	function	true	remainingOwner	remainingOwner()	
+	0x92eefe9b	function		setController	setController(address)	_controller,
+	0x81e529cd	function		setOwnerFreeDay	setOwnerFreeDay(uint256)	day,
+	0xc27549d9	function		setRemainders	setRemainders(uint256,uint256)	_remainingOwner,_remainingAuctionable,
+	0xf29d2f28	function		setTokenHolder	setTokenHolder(address)	_th,
+	0x95d89b41	function	true	symbol	symbol()	
+	0x84eba00c	function	true	tokenholder	tokenholder()	
+	0x18160ddd	function	true	totalSupply	totalSupply()	
+	0xa9059cbb	function		transfer	transfer(address,uint256)	_to,_value,
+	0x23b872dd	function		transferFrom	transferFrom(address,address,uint256)	_from,_to,_value,
+	0x3f4ba83a	function		unpause	unpause()	
+	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event		Approval	Approval(address,address,uint256)	owner,spender,value,
+	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event		Transfer	Transfer(address,address,uint256)	from,to,value,
+	0x977a8f1bdcf5f444d404662ea2c090d707ebcef1be61b37fe6ce74d0c6288fb8	event		logTokenTransfer	logTokenTransfer(address,address,uint256)	token,to,amount,

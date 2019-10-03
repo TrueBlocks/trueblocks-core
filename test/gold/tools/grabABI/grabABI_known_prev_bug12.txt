@@ -1,29 +1,27 @@
-grabABI argc: 4 [1:0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359] [2:--fmt] [3:txt] 
-grabABI 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 --fmt txt 
-
-  Invalid option: --fmt
-
-  Usage:    grabABI [-c|-g|-d|-e|-j|-n|-l|-v|-h] <address> [address...]  
-  Purpose:  Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
-
-  Where:  
-	addr_list             list of one or more smart contracts whose ABI to grab from EtherScan (required)
-	-c  (--canonical)     convert all types to their canonical represenation and remove all spaces from display
-	-g  (--generate)      generate C++ code into the current folder for all functions and events found in the ABI
-	-d  (--data)          export the display as data
-	-e  (--encode)        generate the encodings for the functions / events in the ABI
-	-j  (--json)          print the ABI to the screen as json
-	-n  (--noconst)       generate encodings for non-constant functions and events only (always true when generating)
-	-l  (--sol <path>)    create the ABI file from a .sol file in the local directory
-
-#### Hidden options (shown during testing only)
-	-o  (--open)          open the ABI file for editing, download if not already present
-	-s  (--silent)        if ABI cannot be acquired, fail silently (useful for scripting)
-	-n  (--nodec)         do not decorate duplicate names
-	-k  (--known)         load common 'known' ABIs from cache
-#### Hidden options (shown during testing only)
-
-	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
-	-h  (--help)          display this help screen
-
-  Powered by QBlocks
+grabABI argc: 3 [1:0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359] [2:--data] 
+grabABI 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 --data 
+address	encoding	type	constant	name	signature	input_names
+	0x824dbc9a	function		changeMembership	changeMembership(address,uint256,bool,string)	targetMember,voteWeight,canAddProposals,memberName,
+	0x522103fa	function		changeUnicorn	changeUnicorn(uint256,address)	newUnicornPriceInFinney,newUnicornAddress,
+	0xbcca1fd3	function		changeVotingRules	changeVotingRules(uint256,uint256,int256)	minimumQuorumForProposals,minutesForDebate,marginOfVotesForMajority,
+	0xeceb2945	function	true	checkProposalCode	checkProposalCode(uint256,address,uint256,bytes)	proposalNumber,beneficiary,amount,transactionBytecode,
+	0x69bd3436	function	true	debatingPeriodInMinutes	debatingPeriodInMinutes()	
+	0x237e9492	function		executeProposal	executeProposal(uint256,bytes)	proposalNumber,transactionBytecode,
+	0xaa02a90f	function	true	majorityMargin	majorityMargin()	
+	0x39106821	function	true	memberId	memberId(address)	val_0,
+	0x5daf08ca	function	true	members	members(uint256)	val_0,
+	0x8160f0b5	function	true	minimumQuorum	minimumQuorum()	
+	0xb9f256cd	function		newProposalInEther	newProposalInEther(address,uint256,string,bytes)	beneficiary,etherAmount,JobDescription,transactionBytecode,
+	0x83876bc9	function		newProposalInWei	newProposalInWei(address,uint256,string,bytes)	beneficiary,weiAmount,JobDescription,transactionBytecode,
+	0x400e3949	function	true	numProposals	numProposals()	
+	0x8da5cb5b	function	true	owner	owner()	
+	0x50c34878	function	true	priceOfAUnicornInFinney	priceOfAUnicornInFinney()	
+	0x013cf08b	function	true	proposals	proposals(uint256)	val_0,
+	0xf2fde38b	function		transferOwnership	transferOwnership(address)	newOwner,
+	0xb7782455	function	true	unicornAddress	unicornAddress()	
+	0xd3c0715b	function		vote	vote(uint256,bool,string)	proposalNumber,supportsProposal,justificationText,
+	0xa439d3fa452be5e0e1e24a8145e715f4fd8b9c08c96a42fd82a855a85e5d57de	event		ChangeOfRules	ChangeOfRules(uint256,uint256,int256)	minimumQuorum,debatingPeriodInMinutes,majorityMargin,
+	0x4cea7af04e7093442a4d8d039e7b517557c4787a8cf68f900473c9bf3abfae4c	event		MembershipChanged	MembershipChanged(address)	member,
+	0x646fec02522b41e7125cfc859a64fd4f4cefd5dc3b6237ca0abe251ded1fa881	event		ProposalAdded	ProposalAdded(uint256,address,uint256,string)	proposalID,recipient,amount,description,
+	0xd220b7272a8b6d0d7d6bcdace67b936a8f175e6d5c1b3ee438b72256b32ab3af	event		ProposalTallied	ProposalTallied(uint256,int256,uint256,bool)	proposalID,result,quorum,active,
+	0xc34f869b7ff431b034b7b9aea9822dac189a685e0b015c7d1be3add3f89128e8	event		Voted	Voted(uint256,bool,address,string)	proposalID,position,voter,justification,

@@ -1,32 +1,31 @@
-grabABI argc: 3 [1:0xa68780dd261cfea0d479728db3ed318940bfa9f9] [2:--raw] 
-grabABI 0xa68780dd261cfea0d479728db3ed318940bfa9f9 --raw 
-ABI for address 0xa68780dd261cfea0d479728db3ed318940bfa9f9
-	function addOwner                   (address _owner)
-	function changeOwner                (address _from,address _to)
-	function changeRequirement          (uint256 _newRequired)
-	function confirm                    (bytes32 _h)
-	function execute                    (address _to,uint256 _value,bytes _data)
-	function hasConfirmed               (bytes32 _operation,address _owner)
-	function isOwner                    (address _addr)
-	function kill                       (address _to)
-	function m_dailyLimit               ()
-	function m_lastDay                  ()
-	function m_numOwners                ()
-	function m_required                 ()
-	function m_spentToday               ()
-	function removeOwner                (address _owner)
-	function resetSpentToday            ()
-	function revoke                     (bytes32 _operation)
-	function setDailyLimit              (uint256 _newLimit)
-	function version                    ()
-	event Confirmation                  (address owner,bytes32 operation)
-	event ConfirmationNeeded            (bytes32 operation,address initiator,uint256 value,address to,bytes data)
-	event Deposit                       (address from,uint256 value)
-	event MultiTransact                 (address owner,bytes32 operation,uint256 value,address to,bytes data)
-	event OwnerAdded                    (address newOwner)
-	event OwnerChanged                  (address oldOwner,address newOwner)
-	event OwnerRemoved                  (address oldOwner)
-	event RequirementChanged            (uint256 newRequirement)
-	event Revoke                        (address owner,bytes32 operation)
-	event SingleTransact                (address owner,uint256 value,address to,bytes data)
-
+grabABI argc: 3 [1:0xa68780dd261cfea0d479728db3ed318940bfa9f9] [2:--data] 
+grabABI 0xa68780dd261cfea0d479728db3ed318940bfa9f9 --data 
+address	encoding	type	constant	name	signature	input_names
+	0x7065cb48	function		addOwner	addOwner(address)	_owner,
+	0xf00d4b5d	function		changeOwner	changeOwner(address,address)	_from,_to,
+	0xba51a6df	function		changeRequirement	changeRequirement(uint256)	_newRequired,
+	0x797af627	function		confirm	confirm(bytes32)	_h,
+	0xb61d27f6	function		execute	execute(address,uint256,bytes)	_to,_value,_data,
+	0xc2cf7326	function	true	hasConfirmed	hasConfirmed(bytes32,address)	_operation,_owner,
+	0x2f54bf6e	function		isOwner	isOwner(address)	_addr,
+	0xcbf0b0c0	function		kill	kill(address)	_to,
+	0xf1736d86	function	true	m_dailyLimit	m_dailyLimit()	
+	0x52375093	function	true	m_lastDay	m_lastDay()	
+	0x4123cb6b	function	true	m_numOwners	m_numOwners()	
+	0x746c9171	function	true	m_required	m_required()	
+	0x659010e7	function	true	m_spentToday	m_spentToday()	
+	0x173825d9	function		removeOwner	removeOwner(address)	_owner,
+	0x5c52c2f5	function		resetSpentToday	resetSpentToday()	
+	0xb75c7dc6	function		revoke	revoke(bytes32)	_operation,
+	0xb20d30a9	function		setDailyLimit	setDailyLimit(uint256)	_newLimit,
+	0x54fd4d50	function	true	version	version()	
+	0xe1c52dc63b719ade82e8bea94cc41a0d5d28e4aaf536adb5e9cccc9ff8c1aeda	event		Confirmation	Confirmation(address,bytes32)	owner,operation,
+	0x1733cbb53659d713b79580f79f3f9ff215f78a7c7aa45890f3b89fc5cddfbf32	event		ConfirmationNeeded	ConfirmationNeeded(bytes32,address,uint256,address,bytes)	operation,initiator,value,to,data,
+	0xe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c	event		Deposit	Deposit(address,uint256)	from,value,
+	0xe7c957c06e9a662c1a6c77366179f5b702b97651dc28eee7d5bf1dff6e40bb4a	event		MultiTransact	MultiTransact(address,bytes32,uint256,address,bytes)	owner,operation,value,to,data,
+	0x994a936646fe87ffe4f1e469d3d6aa417d6b855598397f323de5b449f765f0c3	event		OwnerAdded	OwnerAdded(address)	newOwner,
+	0xb532073b38c83145e3e5135377a08bf9aab55bc0fd7c1179cd4fb995d2a5159c	event		OwnerChanged	OwnerChanged(address,address)	oldOwner,newOwner,
+	0x58619076adf5bb0943d100ef88d52d7c3fd691b19d3a9071b555b651fbf418da	event		OwnerRemoved	OwnerRemoved(address)	oldOwner,
+	0xacbdb084c721332ac59f9b8e392196c9eb0e4932862da8eb9beaf0dad4f550da	event		RequirementChanged	RequirementChanged(uint256)	newRequirement,
+	0xc7fb647e59b18047309aa15aad418e5d7ca96d173ad704f1031a2c3d7591734b	event		Revoke	Revoke(address,bytes32)	owner,operation,
+	0x92ca3a80853e6663fa31fa10b99225f18d4902939b4c53a9caae9043f6efd004	event		SingleTransact	SingleTransact(address,uint256,address,bytes)	owner,value,to,data,

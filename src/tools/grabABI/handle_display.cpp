@@ -19,7 +19,7 @@ extern const char *STR_DISPLAY_ABIFUNCTION;
 void COptions::handle_display(void) {
 
     string_q format = getGlobalConfig("grabABI")->getConfigStr("display", "format", STR_DISPLAY_ABIFUNCTION);
-    string_q header = substitute(substitute(format, "[{", ""), "}]", "");
+    string_q header = toLower(substitute(substitute(format, "[{", ""), "}]", ""));
     if (asData)
         cout << header << "\n";
     replace(format, "[{address}]", toLower("")); //primaryAddr));
