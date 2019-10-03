@@ -14,10 +14,11 @@
 #include "etherlib.h"
 #include "options.h"
 
+extern const char *STR_DISPLAY_ABIFUNCTION;
 //-----------------------------------------------------------------------
 void COptions::handle_display(void) {
 
-    string_q format = getGlobalConfig("grabABI")->getConfigStr("display", "format", STR_DISPLAY_FUNCTION);
+    string_q format = getGlobalConfig("grabABI")->getConfigStr("display", "format", STR_DISPLAY_ABIFUNCTION);
     string_q header = substitute(substitute(format, "[{", ""), "}]", "");
     if (asData)
         cout << header << "\n";
@@ -43,3 +44,13 @@ void COptions::handle_display(void) {
         }
     }
 }
+
+//-----------------------------------------------------------------------
+const char *STR_DISPLAY_ABIFUNCTION =
+"[{ADDRESS}]\t"
+"[{ENCODING}]\t"
+"[{TYPE}]\t"
+"[{CONSTANT}]\t"
+"[{NAME}]\t"
+"[{SIGNATURE}]\t"
+"[{INPUT_NAMES}]";

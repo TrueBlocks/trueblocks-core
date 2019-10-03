@@ -17,10 +17,6 @@ bool COptions::handle_data(void) {
     if (!contains(tool_flags, "--edit")) // weird cleanup of --edit/edit confusion
         tool_flags = substitute(tool_flags, "edit", "--edit");
 
-    string_q addr_list;
-    for (auto addr : addrs)
-        addr_list += (addr + " ");
-
     string_q addrList;
     for (auto addr : addrs)
         addrList += (" " + addr);
@@ -87,7 +83,7 @@ bool COptions::handle_data(void) {
         return true;
 
     } else {
-        EXIT_FAIL("Invalid option: data " + tool_flags + " " + addr_list);
+        EXIT_FAIL("Invalid option: data " + tool_flags + " " + addrList);
     }
 
     LOG4("command: " + os.str());

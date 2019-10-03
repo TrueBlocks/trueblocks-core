@@ -40,6 +40,7 @@ on, cmd, fast, abi, tools/grabABI, known_prev_bug8,       n, addr_list = 0xe9432
 on, cmd, fast, abi, tools/grabABI, known_prev_bug9,       n, addr_list = 0xef638b4305b8a1620f4e0e562e127f1181ae16d2 & raw
 on, cmd, fast, abi, tools/grabABI, known_prev_bug10,      n, addr_list = 0x012233b3c8177f0778d910ed88170b82de3bfe57 & raw
 on, cmd, fast, abi, tools/grabABI, known_prev_bug11,      n, addr_list = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & raw
+on, cmd, fast, abi, tools/grabABI, known_prev_bug12,      n, addr_list = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & data
 
 on, cmd, fast, abi, tools/grabABI, known_prev_json_bug1,  y, addr_list = 0x5901deb2c898d5dbe5923e05e510e95968a35067 & json
 on, cmd, fast, abi, tools/grabABI, known_prev_json_bug2,  y, addr_list = 0x5f742383b6d1298980030d6af943b76cdd902143 & json
