@@ -446,7 +446,7 @@ namespace qblocks {
         is_hidden     = startsWith(nameIn, "@");
         is_positional = startsWith(nameIn, "~");
         is_optional   = contains  (nameIn, "!");
-        description   = descr;
+        description   = substitute(descr, "&#44;", ",");
         if (nameIn.empty())
             return;
 
@@ -481,9 +481,8 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    COption::COption(const string_q& ln, const string_q& sn, const string_q& type, size_t opts, const string_q& d)
-    {
-        description = d;
+    COption::COption(const string_q& ln, const string_q& sn, const string_q& type, size_t opts, const string_q& d) {
+        description = substitute(d, "&#44;", ",");
         if (ln.empty())
             return;
 

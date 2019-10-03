@@ -8,12 +8,15 @@ on, cmd,  fast, where, tools/whereBlock, long_help,        n, help
 
 on, both, fast, where, tools/whereBlock, no_options,       y,
 on, both, fast, where, tools/whereBlock, invalid_option_1, y, junk1
-on, both, fast, where, tools/whereBlock, invalid_option_2, y, junk1 & junk2
 
 on, both, fast, where, tools/whereBlock, notcached,        y, block_list = 45000
 on, both, fast, where, tools/whereBlock, cached,           y, block_list = 1001001
-on, both, fast, where, tools/whereBlock, range,            y, block_list = 2001001-2001005
-on, both, fast, where, tools/whereBlock, blockByHash,      y, block_list = 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b
+on, both, fast, where, tools/whereBlock, by_list,          y, block_list = 1001001 2002002 3003003
+on, both, fast, where, tools/whereBlock, block_hex,        y, block_list = 0xabcd
+on, both, fast, where, tools/whereBlock, by_range,         y, block_list = 2001001-2001005
+on, both, fast, where, tools/whereBlock, by_hash,          y, block_list = 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b
+on, both, fast, where, tools/whereBlock, block_hex,        y, block_list = 1001001 0xabcd 2001001-2001005 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b
+
 on, both, fast, where, tools/whereBlock, fmt_default,      y, block_list = 1001001
 on, both, fast, where, tools/whereBlock, fmt_txt,          n, block_list = 1001001 & fmt = txt
 on, both, fast, where, tools/whereBlock, fmt_csv,          n, block_list = 1001001 & fmt = csv

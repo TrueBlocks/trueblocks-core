@@ -17,10 +17,10 @@ echo "--------- 2 --------------"
 grep "^env" api/server.js
 
 echo "Testing..."
-cd $TEST_FOLDER/gold/dev_tools/apiTester
+cd $TEST_FOLDER/gold/dev_tools/testRunner
 echo "Running tests from: " `pwd`
 
-apiTester $@ | tee $BUILD_FOLDER/results.txt
+testRunner $@ | tee $BUILD_FOLDER/results.txt
 
 cat $BUILD_FOLDER/results.txt | grep -v Skipping >x
 mv -f x $BUILD_FOLDER/results.txt

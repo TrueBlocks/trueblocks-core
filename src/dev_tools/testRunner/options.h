@@ -22,7 +22,7 @@ class COptions : public COptionsBase {
 public:
     int which = CMD;
     string_q speed_filter = "";
-    bool quit_on_error = false;
+    bool quit_on_error = true;
     bool ignoreOff = false;
     bool cleanTests = false;
     CStringArray tests;

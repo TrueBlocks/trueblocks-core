@@ -8,16 +8,16 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("fn_list", "", "list<path>", OPT_REQUIRED | OPT_POSITIONAL, "path(s) of files to check, merge, fix or display (default=display)"),
+    COption("fn_list", "", "list<path>", OPT_REQUIRED | OPT_POSITIONAL, "path(s) of files to check&#44; merge&#44; fix or display (default=display)"),
     COption("check", "c", "", OPT_SWITCH, "check for duplicates and other problems in the cache"),
-    COption("data", "d", "", OPT_SWITCH, "in 'list' mode, render results as data (i.e export mode)"),
-    COption("sort", "s", "", OPT_SWITCH, "sort the list of transactions and re-write (precludes other modes, other than --dedup)"),
+    COption("data", "d", "", OPT_SWITCH, "in 'list' mode&#44; render results as data (i.e export mode)"),
+    COption("sort", "s", "", OPT_SWITCH, "sort the list of transactions and re-write (precludes other modes&#44; other than --dedup)"),
     COption("fix", "f", "", OPT_SWITCH, "remove duplicates from the cache (if any)"),
     COption("list", "l", "", OPT_SWITCH, "list the contents of the cache (the default if no other option)"),
     COption("import", "i", "", OPT_SWITCH, "import transactions if import.txt file exists in current folder"),
     COption("remove", "r", "", OPT_SWITCH, "remove transactions if remove.txt file exists in current folder"),
-    COption("truncate", "t", "<blknum>", OPT_FLAG, "truncate the cache at block :n (keeps block 'n' and before, implies --fix)"),
-    COption("maxBlock", "k", "<blknum>", OPT_FLAG, "for testing, max block to visit"),
+    COption("truncate", "t", "<blknum>", OPT_FLAG, "truncate the cache at block :n (keeps block 'n' and before&#44; implies --fix)"),
+    COption("maxBlock", "k", "<blknum>", OPT_FLAG, "for testing&#44; max block to visit"),
     COption("merge", "m", "", OPT_SWITCH, "merge two or more caches into a single cache"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_FLAG, "export format (one of [json*|txt|csv])"),
     COption("skip", "k", "", OPT_HIDDEN | OPT_SWITCH, "skip value for testing"),

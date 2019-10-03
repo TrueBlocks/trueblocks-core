@@ -9,7 +9,7 @@
 static const COption params[] = {
 // BEG_CODE_OPTIONS
     COption("mode_list", "", "list<enum[index|monitors|names|abis|blocks|transactions|traces|slurps|prices|some*|all]>", OPT_POSITIONAL, "one or more of [index|monitors|names|abis|blocks|transactions|traces|slurps|prices|some*|all]"),
-    COption("details", "d", "", OPT_SWITCH, "include details about items found in monitors, slurps, abis, or price caches"),
+    COption("details", "d", "", OPT_SWITCH, "include details about items found in monitors&#44; slurps&#44; abis&#44; or price caches"),
     COption("list", "l", "", OPT_SWITCH, "display results in Linux ls -l format (assumes --detail)"),
     COption("start", "", "<blknum>", OPT_FLAG, "starting block for data retreival"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),

@@ -20,8 +20,7 @@ chmod uog+x test_results
 
 echo "Testing 2..."
 cd $BUILD_FOLDER/
-echo "Calling : doTestingApi $@ --filter all  --which both"
-doTestingApi $@ --filter all --which both --err_quit
+doTestingApi --filter all --which both $@
 
 echo "Copying working folder to compare folder..."
 cd $TEST_FOLDER/

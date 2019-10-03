@@ -5,7 +5,7 @@ whenBlock 1000 --verbose:j
 
   Usage:    whenBlock [-l|-v|-h] < block | date > [ block... | date... ]  
   Purpose:  Finds the nearest block prior to a date, or the nearest date prior to a block.
-         Alternatively, search for one of special 'named' blocks.
+            Alternatively, search for one of special 'named' blocks.
 
   Where:  
 	block_list            one or more block numbers (or a 'special' block), or...

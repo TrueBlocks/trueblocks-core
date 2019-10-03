@@ -17,7 +17,7 @@ static const COption params[] = {
 // BEG_CODE_OPTIONS
     COption("which", "w", "enum[cmd*|api|both]", OPT_FLAG, "run command line, api, or both test cases (default 'cmd')."),
     COption("filter", "f", "enum[fast*|medi|slow]", OPT_FLAG, "filter the tests to run only the fast, medium speed, or slow tests (default 'fast')."),
-    COption("err_quit", "e", "", OPT_FLAG, "Quit on error (default continue to next test)."),
+    COption("no_quit", "n", "", OPT_FLAG, "Do not quit on error (default is to quit)."),
     COption("clean", "c", "", OPT_FLAG, "Clean working test folder before running tests."),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction's logs from the local cache or a running node."),
 // END_CODE_OPTIONS
@@ -46,8 +46,8 @@ bool COptions::parseArguments(string_q& command) {
             else if (arg == "both") which = BOTH;
             else return usage("Specify only cmd, api, or both for --which option. Quitting...");
 
-        } else if (arg == "-e" || arg == "--err_quit") {
-            quit_on_error = true;
+        } else if (arg == "-n" || arg == "--no_quit") {
+            quit_on_error = false;
 
         } else if (arg == "-c" || arg == "--clean") {
             cleanTests = true;
@@ -70,12 +70,9 @@ bool COptions::parseArguments(string_q& command) {
         speed_filter = "";
 
     if (tests.empty()) {
-        tests.push_back("apps/acctExport");
-        tests.push_back("apps/acctScrape");
-        tests.push_back("apps/blockScrape");
-        tests.push_back("apps/cacheMan");
-        tests.push_back("apps/cacheStatus");
-        tests.push_back("apps/chifra");
+        tests.push_back("libs/utillib");
+        tests.push_back("libs/etherlib");
+        tests.push_back("libs/acctlib");
         tests.push_back("dev_tools/makeClass");
         tests.push_back("tools/ethQuote");
         tests.push_back("tools/ethslurp");
@@ -91,9 +88,12 @@ bool COptions::parseArguments(string_q& command) {
         tests.push_back("tools/grabABI");
         tests.push_back("tools/whenBlock");
         tests.push_back("tools/whereBlock");
-        tests.push_back("libs/utillib");
-        tests.push_back("libs/etherlib");
-        tests.push_back("libs/acctlib");
+        tests.push_back("apps/acctExport");
+        tests.push_back("apps/acctScrape");
+        tests.push_back("apps/blockScrape");
+        tests.push_back("apps/cacheMan");
+        tests.push_back("apps/cacheStatus");
+        tests.push_back("apps/chifra");
     }
 
     return true;

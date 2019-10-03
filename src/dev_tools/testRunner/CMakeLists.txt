@@ -2,7 +2,7 @@
 cmake_minimum_required (VERSION 2.6)
 
 # application project
-project (apiTester)
+project (testRunner)
 
 # The sources to be used
 file(GLOB SOURCE_FILES "*.cpp")
@@ -11,7 +11,7 @@ file(GLOB SOURCE_FILES "*.cpp")
 set(EXECUTABLE_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/../bin")
 
 # Define the executable to be generated
-set(TOOL_NAME "apiTester")
+set(TOOL_NAME "testRunner")
 set(PROJ_NAME "dev_tools")
 add_executable(${TOOL_NAME} ${SOURCE_FILES})
 
