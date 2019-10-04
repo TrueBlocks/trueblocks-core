@@ -1273,6 +1273,9 @@ const char* STR_ERROR_MSG_JSON =
     //-----------------------------------------------------------------------
     bool freshenTimestampFile(blknum_t minBlock) {
 
+        if (isTestMode())
+            return true;
+
         string_q fn = configPath("ts.bin");
         if (!fileExists(fn)) {
             string_q zipFile = configPath("ts.bin.gz");

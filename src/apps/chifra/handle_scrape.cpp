@@ -124,38 +124,35 @@ bool COptions::handle_scrape(void) {
             wasPaused = false;
             ostringstream os;
             os << "blockScrape " << tool_flags << " ; ";
-            if (isTestMode())
-                cout << os.str() << endl;
-            else {
-                if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+            if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
 
-                // always catch the timestamp file up to the scraper
+            // always catch the timestamp file up to the scraper
+            if (!isTestMode())
                 freshenTimestampFile(getLastBlock_cache_ripe());
 
-                // sometimes catch the monitors addresses up to the scraper
-                if (daemonMode) {
-                    CStringArray files;
-                    listFilesInFolder(files, getMonitorPath("*.acct.bin"), false);
-                    CAddressArray runs;
-                    if (files.size()) {
-                        for (auto file : files) {
-                            file = substitute(substitute(file, getMonitorPath(""), ""), ".acct.bin", "");
-                            if (isAddress(file))
-                                runs.push_back(file);
-                        }
-                        if (runs.size()) {
-                            freshen_internal(FM_PRODUCTION, runs, "--daemon", freshen_flags);
-                            for (auto addr : runs) {
-                                ostringstream os1;
-                                os1 << "acctExport " << addr << " --freshen"; // << " >/dev/null";
-                                if (system(os1.str().c_str())) { }  // Don't remove. Silences compiler warnings
-                                usleep(250000); // stay responsive to cntrl+C
-                                if (shouldQuit())
-                                    continue;
-                            }
-                        }
-                        cerr << "\t  freshening: " << cYellow << "    finished." << cOff << "                                                           " << endl;
+            // sometimes catch the monitors addresses up to the scraper
+            if (!isTestMode() && daemonMode) {
+                CStringArray files;
+                listFilesInFolder(files, getMonitorPath("*.acct.bin"), false);
+                CAddressArray runs;
+                if (files.size()) {
+                    for (auto file : files) {
+                        file = substitute(substitute(file, getMonitorPath(""), ""), ".acct.bin", "");
+                        if (isAddress(file))
+                            runs.push_back(file);
                     }
+                    if (runs.size()) {
+                        freshen_internal(FM_PRODUCTION, runs, "--daemon", freshen_flags);
+                        for (auto addr : runs) {
+                            ostringstream os1;
+                            os1 << "acctExport " << addr << " --freshen"; // << " >/dev/null";
+                            if (system(os1.str().c_str())) { }  // Don't remove. Silences compiler warnings
+                            usleep(250000); // stay responsive to cntrl+C
+                            if (shouldQuit())
+                                continue;
+                        }
+                    }
+                    cerr << "\t  freshening: " << cYellow << "    finished." << cOff << "                                                           " << endl;
                 }
             }
 

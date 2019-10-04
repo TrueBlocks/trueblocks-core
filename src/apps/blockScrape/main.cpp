@@ -15,9 +15,9 @@ int main(int argc, const char *argv[]) {
         return 0;
 
     for (auto command : options.commandLines) {
-        if (options.parseArguments(command)) {
-            options.handle_scrape();
-        }
+        if (!options.parseArguments(command))
+            return 0;
+        options.handle_scrape();
     }
     cerr << scraperStatus(true);
 

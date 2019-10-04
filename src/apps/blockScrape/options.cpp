@@ -62,6 +62,31 @@ bool COptions::parseArguments(string_q& command) {
     establishFolder(indexFolder_ripe);
     establishFolder(configPath("cache/tmp/"));
 
+    if (isTestMode()) {
+        if (isApiMode()) {
+const char* STR_ERROR_MSG =
+"{\n"
+"  \"message\": \"Reporting for test mode only\",\n"
+"  \"errors\": [\n"
+"    \"nBlocks [NBLOCKS]\",\n"
+"    \"nBlockProcs [NBLOCKPROCS]\",\n"
+"    \"nAddrProcs [NADDRPROCS]\"\n"
+"  ]\n"
+"}\n";
+            string_q msg = STR_ERROR_MSG;
+            replace(msg, "[NBLOCKS]", uint_2_Str(nBlocks));
+            replace(msg, "[NBLOCKPROCS]", uint_2_Str(nBlockProcs));
+            replace(msg, "[NADDRPROCS]", uint_2_Str(nAddrProcs));
+            cout << msg << endl;
+        } else {
+            cout << "Reporting for test mode only:" << endl;
+            cout << "\tnBlocks: " << nBlocks << endl;
+            cout << "\tnBlockProcs: " << nBlockProcs << endl;
+            cout << "\tnAddrProcs: " << nAddrProcs << endl;
+        }
+        return false;
+    }
+
     LOG4("indexPath: " + indexPath);
     LOG4("finalized: " + indexFolder_finalized);
     LOG4("blooms: " + indexFolder_blooms);

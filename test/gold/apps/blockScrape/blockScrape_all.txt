@@ -1,0 +1,6 @@
+blockScrape argc: 7 [1:--nBlocks] [2:12] [3:--nBlockProcs] [4:12] [5:--nAddrProcs] [6:12] 
+blockScrape --nBlocks 12 --nBlockProcs 12 --nAddrProcs 12 
+Reporting for test mode only:
+	nBlocks: 12
+	nBlockProcs: 12
+	nAddrProcs: 12

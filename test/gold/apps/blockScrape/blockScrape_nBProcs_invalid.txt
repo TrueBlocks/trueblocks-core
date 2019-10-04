@@ -1,0 +1,20 @@
+blockScrape argc: 3 [1:--nBlockProcs] [2:-12] 
+blockScrape --nBlockProcs -12 
+
+  --nBlockProcs must be a non-negative number. Quitting...
+
+  Usage:    blockScrape [-n|-v|-h]  
+  Purpose:  Decentralized blockchain scraper and block cache.
+
+  Where:  
+	-n  (--nBlocks <num>) maximum number of blocks to process (defaults to 5000)
+
+#### Hidden options (shown during testing only)
+	-b  (--nBlockProcs <uint>)number of block channels for blaze
+	-a  (--nAddrProcs <uint>)number of address channels for blaze
+#### Hidden options (shown during testing only)
+
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Powered by QBlocks
