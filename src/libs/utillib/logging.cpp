@@ -18,4 +18,13 @@ namespace qblocks {
     static logger<err_log> elog("");
     logger<log_policy_i> *dLogger = (logger<log_policy_i>*)&elog;
     logger<log_policy_i> *eLogger = (logger<log_policy_i>*)&elog;
+
+    static CDefaultOptions g_LocalUseOnly;
+    string_q _logEnter(const string_q& func) {
+        return "Enter(" + g_LocalUseOnly.getProgName() + "," + func + "): ";
+    }
+    string_q _logExit(const string_q& func) {
+        return "Exit(" + g_LocalUseOnly.getProgName() + "," + func + "): ";
+    }
 }
+

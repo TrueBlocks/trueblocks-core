@@ -82,6 +82,17 @@ bool COptions::parseArguments(string_q& command) {
         HIDE_FIELD(CSlurpCache, "items");
         HIDE_FIELD(CPriceCache, "items");
         HIDE_FIELD(CAbiCache, "items");
+    } else {
+        string_q contents = asciiFileToString(getCachePath("addr_index/ipfs-hashes/index-hashes.txt"));
+        CStringArray lines;
+        explode(lines, contents, '\n');
+        for (auto line : lines) {
+            CStringArray parts;
+            explode(parts, line, '\t');
+//            cerr << parts[1] << "|" << parts[2] << "|" << parts[3] << endl;
+            indexHashes[parts[1]] = parts[2];
+            bloomHashes[parts[1]] = parts[3];
+        }
     }
 
     EXIT_NOMSG(true);

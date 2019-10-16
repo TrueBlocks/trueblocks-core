@@ -1,5 +1,6 @@
 chifra argc: 3 [1:blocks] [2:--not_an_option] 
 chifra blocks --not_an_option 
+TIME ~ CLOCK - <INFO>  : Connecting to node...
 getBlock argc: 2 [1:--not_an_option] 
 getBlock --not_an_option 
 

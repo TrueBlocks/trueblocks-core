@@ -5,7 +5,6 @@ set(QUICKBLOCKS_HOME "$ENV{HOME}/.quickBlocks")
 # create the files (will silently fail if already present)
 message(STATUS "Establishing configuration folders at ${QUICKBLOCKS_HOME}")
 file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}")
-file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}/names")
 file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}/cache")
 file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}/cache/abis")
 file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}/cache/prices")
@@ -29,10 +28,20 @@ if (NOT EXISTS "${QUICKBLOCKS_TOML_FILE}")
     file(COPY "${CMAKE_SOURCE_DIR}/../../../src/other/install/ethslurp.toml" DESTINATION "${QUICKBLOCKS_HOME}" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 endif()
 
+#---------------------------------------------------------------
 # Copy the names file which replaces the .txt file
-set(QUICKBLOCKS_NAMES1_FILE "${QUICKBLOCKS_HOME}/names/names.txt")
-message(STATUS "Copying names file ${QUICKBLOCKS_NAMES1_FILE}")
+#---------------------------------------------------------------
+message(STATUS "Copying names file to ${QUICKBLOCKS_HOME}/names/names.txt")
+file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}/names")
 file(COPY "${CMAKE_SOURCE_DIR}/../../../src/other/install/names.txt" DESTINATION "${QUICKBLOCKS_HOME}/names/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+
+#---------------------------------------------------------------
+# Copy the ipfs hashes file which replaces the .txt file
+#---------------------------------------------------------------
+message(STATUS "Copying ipfs hashes file to ${QUICKBLOCKS_HOME}/cache/addr_index/ipfs/index-hashes.txt")
+file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}/cache/addr_index")
+file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}/cache/addr_index/ipfs-hashes")
+file(COPY "${CMAKE_SOURCE_DIR}/../../../src/other/install/ipfs-hashes/index-hashes.txt" DESTINATION "${QUICKBLOCKS_HOME}/cache/addr_index/ipfs-hashes/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 
 # Clear the bin file. It will get regenerated.
 message(STATUS "Removing binary name file: ${QUICKBLOCKS_HOME}/names/names.bin")

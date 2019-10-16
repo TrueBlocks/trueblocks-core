@@ -177,3 +177,4 @@ extern blknum_t getDeployBlock (const address_t& addr);
 extern bool     nodeHasBalances(bool showErrors);
 // EXISTING_CODE
 }  // namespace qblocks
+

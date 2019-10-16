@@ -36,6 +36,7 @@ public:
     timestamp_t lastestTs;
     string_q path;
     uint32_t sizeInBytes;
+    string_q hash;
 
 public:
     CIndexCacheItem(void);
@@ -105,6 +106,7 @@ inline void CIndexCacheItem::initialize(void) {
     lastestTs = 0;
     path = "";
     sizeInBytes = 0;
+    hash = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -124,6 +126,7 @@ inline void CIndexCacheItem::duplicate(const CIndexCacheItem& in) {
     lastestTs = in.lastestTs;
     path = in.path;
     sizeInBytes = in.sizeInBytes;
+    hash = in.hash;
 
     // EXISTING_CODE
     // EXISTING_CODE

@@ -1,6 +1,6 @@
 chifra argc: 2 [1:not_a_mode] 
 chifra not_a_mode 
-TIME ~ CLOCK - <ERROR> : Exit(parseArguments): 
+TIME ~ CLOCK - <ERROR> : Exit(chifra,parseArguments): 
 
   Please specify one of [list|export|slurp|accounts|abi|state|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed].
 

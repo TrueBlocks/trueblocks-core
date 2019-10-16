@@ -21,10 +21,10 @@ extern string_q addExportMode(format_t fmt);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
-    if (!standardOptions(command))
-        return false;
-
     ENTER4("parseArguments");
+
+    if (!standardOptions(command))
+        EXIT_NOMSG(false);
 
     bool copy_to_tool = false;
 
@@ -34,7 +34,7 @@ bool COptions::parseArguments(string_q& command) {
         if (startsWith(arg, "-s:") || startsWith(arg, "--sleep:")) {
             arg = substitute(substitute(arg, "-s:", ""), "--sleep:", "");
             if (!isUnsigned(arg))
-                return usage("--nBlocks must be a non-negative number. Quitting...");
+                EXIT_USAGE("--nBlocks must be a non-negative number. Quitting...");
             scrapeSleep = (useconds_t)str_2_Uint(arg);
 
         } else if (arg == "--tool_help" || (isApiMode() && arg == "--help")) {
@@ -142,6 +142,7 @@ bool COptions::parseArguments(string_q& command) {
     tool_flags += addExportMode(exportFmt);
     tool_flags = trim(tool_flags, ' ');
 
+    LOG_INFO("Connecting to node...");
     if (isNodeRunning()) {
         blknum_t unripe, ripe, staging, finalized, client;
         getLastBlocks(unripe, ripe, staging, finalized, client);

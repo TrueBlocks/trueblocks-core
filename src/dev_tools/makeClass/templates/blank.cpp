@@ -15,7 +15,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <algorithm>
-#include "[{LONG}].h"
+#include "[{FN}].h"
 [OTHER_INCS]
 [{NAMESPACE1}]
 //---------------------------------------------------------------------------

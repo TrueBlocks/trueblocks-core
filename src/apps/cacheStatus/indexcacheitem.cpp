@@ -71,6 +71,9 @@ bool CIndexCacheItem::setValueByName(const string_q& fieldNameIn, const string_q
             if ( fieldName % "firstAppearance" ) { firstAppearance = (uint32_t)str_2_Uint(fieldValue); return true; }
             if ( fieldName % "firstTs" ) { firstTs = str_2_Ts(fieldValue); return true; }
             break;
+        case 'h':
+            if ( fieldName % "hash" ) { hash = fieldValue; return true; }
+            break;
         case 'l':
             if ( fieldName % "latestAppearance" ) { latestAppearance = (uint32_t)str_2_Uint(fieldValue); return true; }
             if ( fieldName % "lastestTs" ) { lastestTs = str_2_Ts(fieldValue); return true; }
@@ -123,6 +126,7 @@ bool CIndexCacheItem::Serialize(CArchive& archive) {
     archive >> lastestTs;
     archive >> path;
     archive >> sizeInBytes;
+    archive >> hash;
     finishParse();
     return true;
 }
@@ -144,6 +148,7 @@ bool CIndexCacheItem::SerializeC(CArchive& archive) const {
     archive << lastestTs;
     archive << path;
     archive << sizeInBytes;
+    archive << hash;
 
     return true;
 }
@@ -188,6 +193,7 @@ void CIndexCacheItem::registerClass(void) {
     ADD_FIELD(CIndexCacheItem, "lastestTs", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "path", T_TEXT, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "sizeInBytes", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CIndexCacheItem, "hash", T_TEXT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CIndexCacheItem, "schema");
@@ -258,6 +264,9 @@ string_q CIndexCacheItem::getValueByName(const string_q& fieldName) const {
         case 'f':
             if ( fieldName % "firstAppearance" ) return uint_2_Str(firstAppearance);
             if ( fieldName % "firstTs" ) return ts_2_Str(firstTs);
+            break;
+        case 'h':
+            if ( fieldName % "hash" ) return hash;
             break;
         case 'l':
             if ( fieldName % "latestAppearance" ) return uint_2_Str(latestAppearance);

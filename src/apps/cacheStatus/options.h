@@ -15,8 +15,8 @@
 #include "slurpcache.h"
 #include "namecache.h"
 #include "configuration.h"
-#include "apiresult.h"
 
+typedef map<string_q,string_q> CIndexHashMap;
 //-------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
@@ -26,6 +26,8 @@ public:
     bool isListing;
     bool isConfig;
     blknum_t start;
+    CIndexHashMap bloomHashes;
+    CIndexHashMap indexHashes;
 
     COptions(void);
     ~COptions(void);

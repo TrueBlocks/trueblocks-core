@@ -354,7 +354,8 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
     string_q eqStr   = substitute(toml.getConfigStr("settings", "equals", ""), "&&", "&&\n\t\t\t");
 
     //------------------------------------------------------------------------------------------------
-    string_q headerFile = substitute(substitute(dataFile, ".txt", ".h"), "./classDefinitions/", "./");
+    string_q fnBase = substitute(substitute(dataFile, ".txt", ""), "./classDefinitions/", "");
+    string_q headerFile = "./" + fnBase + ".h";
     string_q headSource;
     asciiFileToString(configPath("makeClass/blank.h"), headSource);
     replaceAll(headSource, "[{GET_OBJ}]",        (hasObjGetter ? string_q(STR_GETOBJ_HEAD)+(hasStrGetter?"":"\n") : ""));
@@ -399,7 +400,7 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
     //------------------------------------------------------------------------------------------------
     string_q fieldStr = fieldList.size() ? substitute(getCaseCode(fieldCase, ""), "[{PTR}]", "") : "// No fields";
 
-    string_q srcFile    = substitute(substitute(dataFile, ".txt", ".cpp"), "./classDefinitions/", "./");
+    string_q srcFile    = "./" + fnBase + ".cpp";
     string_q srcSource;
     asciiFileToString(configPath("makeClass/blank.cpp"), srcSource);
     if (useExport)
@@ -443,7 +444,7 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
     replaceAll(srcSource, "[{SCOPE}]",           scope);
     replaceAll(srcSource, "[{NAMESPACE1}]",      (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
     replaceAll(srcSource, "[{NAMESPACE2}]",      (ns.empty() ? "" : "}  // namespace qblocks\n"));
-    replace(srcSource, "tokenstate_erc20", "erc20"); // super hacky hackdom - sorry
+    replaceAll(srcSource, "[{FN}]",              fnBase);
     if (options.writeSource)
         writeTheCode(srcFile, srcSource, ns);
 }

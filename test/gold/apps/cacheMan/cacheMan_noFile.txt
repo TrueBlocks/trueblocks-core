@@ -1,6 +1,6 @@
 cacheMan argc: 2 [1:--stats] 
 cacheMan --stats 
-TIME ~ CLOCK - <ERROR> : Exit(parseArguments): 
+TIME ~ CLOCK - <ERROR> : Exit(cacheMan,parseArguments): 
 
   Invalid option: --stats
 

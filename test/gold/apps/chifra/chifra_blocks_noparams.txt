@@ -1,5 +1,6 @@
 chifra argc: 2 [1:blocks] 
 chifra blocks 
+TIME ~ CLOCK - <INFO>  : Connecting to node...
 getBlock argc: 1 
 getBlock 
 

@@ -15,7 +15,7 @@ on, both, fast, where, tools/whereBlock, by_list,          y, block_list = 10010
 on, both, fast, where, tools/whereBlock, block_hex,        y, block_list = 0xabcd
 on, both, fast, where, tools/whereBlock, by_range,         y, block_list = 2001001-2001005
 on, both, fast, where, tools/whereBlock, by_hash,          y, block_list = 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b
-on, both, fast, where, tools/whereBlock, block_hex_2,      y, block_list = 1001001 0xabcd 2001001-2001005 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b
+on, both, fast, where, tools/whereBlock, block_hex,        y, block_list = 1001001 0xabcd 2001001-2001005 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b
 
 on, both, fast, where, tools/whereBlock, fmt_default,      y, block_list = 1001001
 on, both, fast, where, tools/whereBlock, fmt_txt,          n, block_list = 1001001 & fmt = txt

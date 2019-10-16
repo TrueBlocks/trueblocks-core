@@ -1,5 +1,6 @@
 chifra argc: 4 [1:status] [2:all] [3:--details] 
 chifra status all --details 
+TIME ~ CLOCK - <INFO>  : Connecting to node...
 TIME ~ CLOCK - <INFO>  : chifra calling: cacheStatus all --details
 cacheStatus argc: 3 [1:all] [2:--details] 
 cacheStatus all --details 

@@ -90,7 +90,7 @@ namespace qblocks {
         cerr << "\tExtracting addresses...";
         CArchive archive(WRITING_ARCHIVE);
         archive.Lock(tmpFile, modeWriteCreate, LOCK_NOWAIT);
-        archive.Seek(SEEK_SET, 0);  // write the header even though it's not fully detailed to preserve the space
+        archive.Seek(0, SEEK_SET);  // write the header even though it's not fully detailed to preserve the space
         archive.Write(MAGIC_NUMBER);
         archive.Write(hash.data(), hash.size(), sizeof(uint8_t));
         archive.Write(nAddrs);
@@ -131,7 +131,7 @@ namespace qblocks {
         }
 
         cerr << "\tExporting data..." << endl;
-        archive.Seek(SEEK_SET, 0);  // re-write the header now that we have full data
+        archive.Seek(0, SEEK_SET);  // re-write the header now that we have full data
         archive.Write(MAGIC_NUMBER);
         archive.Write(hash.data(), hash.size(), sizeof(uint8_t));
         archive.Write(nAddrs);

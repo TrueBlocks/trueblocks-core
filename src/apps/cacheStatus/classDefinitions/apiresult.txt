@@ -1,4 +1,0 @@
-[settings]
-class     = CApiResult
-fields    = string type|CConfiguration data
-includes  = utillib.h|configuration.h

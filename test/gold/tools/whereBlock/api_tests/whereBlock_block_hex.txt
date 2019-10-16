@@ -5,6 +5,36 @@
       "blockNumber": "43981",
       "cached": false,
       "path": "--nodeVersion--"
+    },
+    {
+      "blockNumber": "1001001",
+      "cached": true,
+      "path": "./blocks/00/10/01/001001001.bin"
+    },
+    {
+      "blockNumber": "1001010",
+      "cached": true,
+      "path": "./blocks/00/10/01/001001010.bin"
+    },
+    {
+      "blockNumber": "2001001",
+      "cached": false,
+      "path": "--nodeVersion--"
+    },
+    {
+      "blockNumber": "2001002",
+      "cached": false,
+      "path": "--nodeVersion--"
+    },
+    {
+      "blockNumber": "2001003",
+      "cached": false,
+      "path": "--nodeVersion--"
+    },
+    {
+      "blockNumber": "2001004",
+      "cached": false,
+      "path": "--nodeVersion--"
     }
   ],
   "meta": {

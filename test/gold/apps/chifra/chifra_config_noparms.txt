@@ -1,6 +1,7 @@
 chifra argc: 2 [1:config] 
 chifra config 
-TIME ~ CLOCK - <ERROR> : Exit(parseArguments): 
+TIME ~ CLOCK - <INFO>  : Connecting to node...
+TIME ~ CLOCK - <ERROR> : Exit(chifra,parseArguments): 
 
   chifra config 'mode' must be either '--get' or '--set'.
 

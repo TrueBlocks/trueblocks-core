@@ -21,7 +21,7 @@ bool COptions::handle_status(ostream& os) {
         if (details) {
             forEveryFileInFolder(getIndexPath(""), noteIndex, &counter);
         } else {
-//            forEveryFileInFolder(getCachePath("monitors/"), noteMonitor_light, &counter);
+//            forEveryFileInFolder(getCachePath("monitors/"), noteIndex_light, &counter);
 //            if (aid.metrics.size() == 0)
 //                aid.valid_counts = true;
         }
@@ -198,6 +198,9 @@ bool noteMonitor(const string_q& path, void *data) {
         return forEveryFileInFolder(path + "*", noteMonitor, data);
 
     } else if (endsWith(path, "acct.bin") || endsWith(path, ".json")) {
+        
+        LOG4("Processing: ", path);
+        
         CItemCounter *counter = (CItemCounter*)data;
         ASSERT(counter->options);
         CMonitorCacheItem mdi;
@@ -233,8 +236,20 @@ bool noteMonitor(const string_q& path, void *data) {
             counter->options->getNamedAccount(mdi, mdi.address);
 
         if (endsWith(path, ".acct.bin")) {
-            mdi.firstAppearance = 1001001;
-            mdi.latestAppearance = 8101001;
+            CArchive archive(READING_ARCHIVE);
+            if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
+                uint32_t first = 0, last = 0;  // the data on file is stored as uint32_t. Make sure to read the right thing
+                archive.Seek(0, SEEK_SET);
+                archive.Read(first);
+                archive.Seek(-1 * (long)( 2 * sizeof(uint32_t)), SEEK_END);
+                archive.Read(last);
+                archive.Release();
+                mdi.firstAppearance = first;
+                mdi.latestAppearance = last;
+            } else {
+                mdi.firstAppearance = NOPOS;
+                mdi.latestAppearance = NOPOS;
+            }
             mdi.nRecords = fileSize(path) / sizeof(CAppearance_base);
             mdi.sizeInBytes = fileSize(path);
         } else {
@@ -279,6 +294,18 @@ bool noteIndex(const string_q& path, void *data) {
             uint64_t tmp;
             aci.firstAppearance = (uint32_t)bnFromPath(fn, tmp, unused);
             aci.latestAppearance = (uint32_t)tmp;
+            CStringArray parts;
+            explode(parts, path, '/');
+            string_q blks = substitute(substitute(parts[parts.size()-1], ".bloom", ""), ".bin", "");
+            if (contains(path, "blooms")) {
+                aci.hash = counter->options->bloomHashes[blks];
+            } else {
+                ASSERT(contains(path, "finalized"));
+                aci.hash = counter->options->indexHashes[blks];
+            }
+            size_t len = aci.hash.length();
+            if (len)
+                aci.hash = aci.hash.substr(0,4) + "..." + aci.hash.substr(len-4, len);
         } else {
             aci.firstAppearance = (uint32_t)str_2_Uint(fn);
             aci.latestAppearance = (uint32_t)str_2_Uint(fn);

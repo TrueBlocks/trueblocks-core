@@ -13,6 +13,7 @@
  *-------------------------------------------------------------------------------------------*/
 #include "basetypes.h"
 #include "colors.h"
+#include "performance.h"
 
 namespace qblocks {
 
@@ -81,7 +82,7 @@ namespace qblocks {
                 header << "TIME ~ CLOCK - ";
             } else {
 //                header << Now().Format(FMT_EXPORT) << " ~ ";
-                header << date_2_Ts(Now()) << " ~ ";
+                header << TIC() << " ~ ";
 #define LOG_TIMING false
 #define LOG_THREAD false
                 if (LOG_TIMING) {
@@ -195,12 +196,17 @@ namespace qblocks {
 #endif
 
 // The LOG parts of these routines disappear if turned off, but they still do their work because of the returns
-#define ENTER(a)       { LOG2(string_q("Enter:") + a); } string_q l_funcName = (a);
-#define EXIT_USAGE(a)  { LOG_ERR( "Exit(", l_funcName, "): "); return usage((a)); }
-#define EXIT_FAIL(a)   { LOG_WARN("Exit(", l_funcName, "): "); cerr << (a); return false; }
-#define EXIT_MSG(a,b)  { LOG2("Exit(", l_funcName, "): "); cerr << (a); return (b); }
-#define EXIT_NOMSG(b)  { LOG2("Exit(", l_funcName, "): "); return (b); }
+namespace qblocks {
+    extern string_q _logEnter(const string_q& func);
+    extern string_q _logExit(const string_q& func);
+}  //namespace qblocks
 
-#define ENTER4(a)       { LOG4(string_q("Enter:") + a); } string_q l_funcName = (a);
-#define EXIT_MSG4(a,b)  { LOG4("Exit(", l_funcName, "): "); cerr << a; return (b); }
-#define EXIT_NOMSG4(b)  { LOG4("Exit(", l_funcName, "): "); return (b); }
+#define ENTER(a)       { LOG2(_logEnter(a)); } string_q l_funcName = (a);
+#define EXIT_USAGE(a)  { LOG_ERR(_logExit(l_funcName)); return usage((a)); }
+#define EXIT_FAIL(a)   { LOG_WARN(_logExit(l_funcName)); cerr << (a); return false; }
+#define EXIT_MSG(a,b)  { LOG2(_logExit(l_funcName)); cerr << (a); return (b); }
+#define EXIT_NOMSG(b)  { LOG2(_logExit(l_funcName)); return (b); }
+
+#define ENTER4(a)       { LOG4(_logEnter(a)); } string_q l_funcName = (a);
+#define EXIT_MSG4(a,b)  { LOG4(_logExit(l_funcName)); cerr << a; return (b); }
+#define EXIT_NOMSG4(b)  { LOG4(_logExit(l_funcName)); return (b); }
