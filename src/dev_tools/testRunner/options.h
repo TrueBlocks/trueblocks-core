@@ -12,6 +12,7 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
+#include "test_case.h"
 
 #define API (1<<0)
 #define CMD (1<<1)
@@ -20,7 +21,7 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    int which = CMD;
+    int modes = CMD;
     string_q speed_filter = "";
     bool quit_on_error = true;
     bool ignoreOff = false;
@@ -33,6 +34,12 @@ public:
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 
-    bool doTest(const string_q& path, const string_q& testName, bool cmdTests);
+    bool doTests(CTestCaseArray& testArray, const string_q& testName, int which);
     bool cleanTest(const string_q& path, const string_q& testName);
 };
+
+//-----------------------------------------------------------------------
+extern bool saveAndCopy(const string_q& path, void *data);
+extern bool replaceFile(const string_q& path, void *data);
+extern double tooSlow;
+extern double fastEnough;

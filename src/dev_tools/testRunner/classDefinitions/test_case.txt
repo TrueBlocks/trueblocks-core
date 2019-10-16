@@ -1,0 +1,4 @@
+[settings]
+class       = CTestCase
+fields      = string origLine|string onOff|string mode|string speed|string route|string tool|string filename|string post|string options|string optTool|string path|string goldPath|string workPath|string fileName
+includes    = etherlib.h

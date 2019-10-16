@@ -41,9 +41,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (startsWith(arg, "-w:") || startsWith(arg, "--which:")) {
             arg = substitute(substitute(arg, "-w:", ""), "--which:", "");
-                 if (arg == "cmd")  which = CMD;
-            else if (arg == "api")  which = API;
-            else if (arg == "both") which = BOTH;
+                 if (arg == "cmd")  modes = CMD;
+            else if (arg == "api")  modes = API;
+            else if (arg == "both") modes = BOTH;
             else return usage("Specify only cmd, api, or both for --which option. Quitting...");
 
         } else if (arg == "-n" || arg == "--no_quit") {
@@ -96,6 +96,12 @@ bool COptions::parseArguments(string_q& command) {
         tests.push_back("apps/chifra");
     }
 
+//    if (verbose) {
+//        for (auto test : tests)
+//            LOG4("Testing ", test);
+//        getchar();
+//    }
+
     return true;
 }
 
@@ -111,6 +117,20 @@ COptions::COptions(void) {
     Init();
 }
 
-//--------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------
 COptions::~COptions(void) {
 }
+
+//---------------------------------------------------------------------------------------------------
+bool COptions::cleanTest(const string_q& path, const string_q& testName) {
+    if (!cleanTests)
+        return true;
+    ostringstream os;
+    os << "find ../../../working/" << path << "/" << testName << "/ -depth 1 -name \"get*.txt\" -exec rm '{}' ';' ; ";
+    os << "find ../../../working/" << path << "/" << testName << "/ -depth 1 -name \"eth*.txt\" -exec rm '{}' ';' ; ";
+    os << "find ../../../working/" << path << "/" << testName << "/ -depth 1 -name \"grab*.txt\" -exec rm '{}' ';' ; ";
+    os << "find ../../../working/" << path << "/" << testName << "/ -depth 1 -name \"*Block*.txt\" -exec rm '{}' ';' ; ";
+    system(os.str().c_str());
+    return true;
+}
+
