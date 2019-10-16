@@ -83,16 +83,8 @@ bool COptions::parseArguments(string_q& command) {
         HIDE_FIELD(CPriceCache, "items");
         HIDE_FIELD(CAbiCache, "items");
     } else {
-        string_q contents = asciiFileToString(getCachePath("addr_index/ipfs-hashes/index-hashes.txt"));
-        CStringArray lines;
-        explode(lines, contents, '\n');
-        for (auto line : lines) {
-            CStringArray parts;
-            explode(parts, line, '\t');
-//            cerr << parts[1] << "|" << parts[2] << "|" << parts[3] << endl;
-            indexHashes[parts[1]] = parts[2];
-            bloomHashes[parts[1]] = parts[3];
-        }
+        loadHashes(indexHashes, "finalized");
+        loadHashes(bloomHashes, "blooms");
     }
 
     EXIT_NOMSG(true);
@@ -176,4 +168,22 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+}
+
+//--------------------------------------------------------------------------------
+void loadHashes(CIndexHashMap& map, const string_q& which) {
+    string_q hashFn = configPath("ipfs-hashes/" + which + ".txt");
+    if (!fileExists(hashFn)) {
+        cerr << "Hash file (" << hashFn << ") not found." << endl;
+    } else {
+        string_q contents = asciiFileToString(hashFn);
+        CStringArray lines;
+        explode(lines, contents, '\n');
+        for (auto line : lines) {
+            line = substitute(substitute(line, ".bin", ""), ".bloom", "");
+            CStringArray parts;
+            explode(parts, line, ' ');
+            map[parts[2]] = parts[1];
+        }
+    }
 }

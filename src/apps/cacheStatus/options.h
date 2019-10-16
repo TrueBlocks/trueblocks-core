@@ -43,6 +43,7 @@ public:
 };
 
 //-------------------------------------------------------------------------
+extern void loadHashes(CIndexHashMap& map, const string_q& which);
 extern bool countFiles(const string_q& path, void *data);
 extern bool noteMonitor_light(const string_q& path, void *data);
 extern bool noteMonitor(const string_q& path, void *data);
