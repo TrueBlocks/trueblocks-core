@@ -22,7 +22,6 @@ cacheMan
 
 #### Hidden options (shown during testing only)
 	-k  (--skip)          skip value for testing
-	-s  (--start <num>)   un-used hidden value - do not remove
 	-o  (--no_header)     do not show header row of data
 #### Hidden options (shown during testing only)
 

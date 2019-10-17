@@ -13,7 +13,8 @@ static const COption params[] = {
     COption("unripe", "u", "", OPT_HIDDEN | OPT_SWITCH, "visit unripe (not old enough and not yet staged or finalized) blocks"),
     COption("daemon", "d", "", OPT_HIDDEN | OPT_SWITCH, "we are being called in daemon mode which causes us to print results differently"),
     COption("no_header", "o", "", OPT_SWITCH, "do not show the header row"),
-    COption("start", "r", "<blknum>", OPT_HIDDEN | OPT_FLAG, "start block for scan of appearances"),
+    COption("start", "", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to scan for appearances (inclusive)"),
+    COption("end", "", "<blknum>", OPT_HIDDEN | OPT_FLAG, "end block to scan for appearances (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Index transactions for a given Ethereum address (or series of addresses)."),
 // END_CODE_OPTIONS
 };
@@ -39,11 +40,17 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-s" || arg == "--staging") {
             visitTypes |= VIS_STAGING;
 
-        } else if (startsWith(arg, "-r:") || startsWith(arg, "--start:")) {
-            arg = substitute(substitute(arg, "-r:", ""), "--start:", "");
+        } else if (startsWith(arg, "--start:")) {
+            arg = substitute(arg, "--start:", "");
             if (!isNumeral(arg))
                 return usage("Value to --start parameter (" + arg + ") must be a number. Quitting...");
             scanRange.first = str_2_Uint(arg);
+
+        } else if (startsWith(arg, "--end:")) {
+            arg = substitute(arg, "--end:", "");
+            if (!isNumeral(arg))
+                return usage("Value to --end parameter (" + arg + ") must be a number. Quitting...");
+            scanRange.second = str_2_Uint(arg);
 
         } else if (arg == "-d" || arg == "--daemon") {
             daemonMode = true;
@@ -112,11 +119,13 @@ bool COptions::parseArguments(string_q& command) {
     blknum_t unripe, ripe, staging, finalized, client;
     getLastBlocks(unripe, ripe, staging, finalized, client);
 
-    scanRange.second = finalized;
-    if (visitTypes & VIS_STAGING)
-        scanRange.second = staging;
-    if (visitTypes & VIS_UNRIPE)
-        scanRange.second = unripe;
+    if (scanRange.second == NOPOS) {
+        scanRange.second = finalized;
+        if (visitTypes & VIS_STAGING)
+            scanRange.second = staging;
+        if (visitTypes & VIS_UNRIPE)
+            scanRange.second = unripe;
+    }
 
     if (no_header)
         expContext().fmtMap["header"] = "";

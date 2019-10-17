@@ -9,9 +9,10 @@
 static const COption params[] = {
 // BEG_CODE_OPTIONS
     COption("mode_list", "", "list<enum[index|monitors|names|abis|blocks|transactions|traces|slurps|prices|some*|all]>", OPT_POSITIONAL, "one or more of [index|monitors|names|abis|blocks|transactions|traces|slurps|prices|some*|all]"),
-    COption("details", "d", "", OPT_SWITCH, "include details about items found in monitors&#44; slurps&#44; abis&#44; or price caches"),
+    COption("details", "d", "", OPT_SWITCH, "include details about items found in monitors, slurps, abis, or price caches"),
     COption("list", "l", "", OPT_SWITCH, "display results in Linux ls -l format (assumes --detail)"),
-    COption("start", "", "<blknum>", OPT_FLAG, "starting block for data retreival"),
+    COption("start", "", "<blknum>", OPT_FLAG, "starting block for data retreival (inclusive)"),
+    COption("end", "", "<blknum>", OPT_FLAG, "ending block for data retreival (inclusive)"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),
     COption("config-get", "g", "", OPT_HIDDEN | OPT_SWITCH, "returns JSON data of the editable configuration file items"),
     COption("config-set", "s", "", OPT_HIDDEN | OPT_SWITCH, "accepts JSON in an env variable and writes it to configuration files"),
@@ -45,6 +46,16 @@ bool COptions::parseArguments(string_q& command) {
             getBlock_light(block, "latest");
             if (start > block.blockNumber)
                 return usage("Start block (" + uint_2_Str(start) + ") is greater than the latest block. Quitting...");
+
+        } else if (startsWith(arg, "--end:")) {
+            arg = substitute(arg, "--end:", "");
+            if (!isNumeral(arg))
+                return usage("'" + arg + "' is not a number for --end parameter. Quitting...");
+//            end = str_2_Uint(arg);
+//            CBlock block;
+//            getBlock_light(block, "latest");
+//            if (end > block.blockNumber)
+//                return usage("End block (" + uint_2_Str(start) + ") is greater than the latest block. Quitting...");
 
         } else if (arg == "--config-get") {
             isConfig = true;

@@ -1,0 +1,4 @@
+[settings]
+class       = COptionDef
+fields      = string num|string group|string api_route|string tool|string order|string command|string command_short|string data_type|string option_kind|string default_value|string description_core|string description_api|string is_required|string core_visible|string docs_visible
+includes    = etherlib.h

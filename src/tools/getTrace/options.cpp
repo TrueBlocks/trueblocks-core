@@ -15,7 +15,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("trans_list", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID)"),
+    COption("trans_list", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
     COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
     COption("count_only", "c", "", OPT_SWITCH, "show the number of traces for the transaction only (fast)"),
     COption("no_header", "n", "", OPT_SWITCH, "do not show the header row"),

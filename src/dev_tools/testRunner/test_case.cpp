@@ -376,6 +376,8 @@ void CTestCase::prepareTest(bool cmdLine) {
             replace(options, "--", "");
 
     } else {
+        if (tool == "chifra")
+            nextTokenClear(options, '&');
         replaceAll(options, "@", "");
         replaceAll(options, " ", "%20");
         goldPath += "api_tests/";

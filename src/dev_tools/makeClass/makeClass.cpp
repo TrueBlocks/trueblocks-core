@@ -24,6 +24,7 @@ extern string_q convertTypes  (const string_q& inStr);
 
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
+    nodeNotRequired();
     acctlib_init(quickQuitHandler);
 
     CParameter::registerClass();

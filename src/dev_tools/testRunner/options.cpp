@@ -15,10 +15,10 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("which", "w", "enum[cmd*|api|both]", OPT_FLAG, "run command line, api, or both test cases (default 'cmd')."),
-    COption("filter", "f", "enum[fast*|medi|slow]", OPT_FLAG, "filter the tests to run only the fast, medium speed, or slow tests (default 'fast')."),
-    COption("no_quit", "n", "", OPT_FLAG, "Do not quit on error (default is to quit)."),
-    COption("clean", "c", "", OPT_FLAG, "Clean working test folder before running tests."),
+    COption("which", "w", "enum[cmd*|api|both]", OPT_FLAG, "run command line, api, or both test cases (default 'cmd')"),
+    COption("filter", "f", "enum[fast*|medi|slow]", OPT_FLAG, "filter the tests to run only the fast, medium speed, or slow tests (default 'fast')"),
+    COption("clean", "c", "", OPT_SWITCH, "clean working test folder before running tests"),
+    COption("no_quit", "n", "", OPT_SWITCH, "do not quit on error (default is to quit)"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction's logs from the local cache or a running node."),
 // END_CODE_OPTIONS
 };
@@ -29,6 +29,8 @@ bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
+
+    string_q path;
 
     Init();
     explode(arguments, command, ' ');
@@ -60,7 +62,57 @@ bool COptions::parseArguments(string_q& command) {
 
         } else {
             arg = trim(arg, '/');
-            tests.push_back(arg);
+            if (arg == "libs" || arg == "libs/") {
+                static bool been_here = false;
+                if (been_here)
+                    break;
+                been_here = true;
+                tests.push_back("libs/utillib");
+                tests.push_back("libs/etherlib");
+                tests.push_back("libs/acctlib");
+
+            } else if (arg == "dev_tools" || arg == "dev_tools/") {
+                static bool been_here = false;
+                if (been_here)
+                    break;
+                been_here = true;
+                tests.push_back("dev_tools/makeClass");
+
+            } else if (arg == "tools" || arg == "tools/") {
+                static bool been_here = false;
+                if (been_here)
+                    break;
+                been_here = true;
+                tests.push_back("tools/ethQuote");
+                tests.push_back("tools/ethslurp");
+                tests.push_back("tools/getAccounts");
+                tests.push_back("tools/getBlock");
+                tests.push_back("tools/getBloom");
+                tests.push_back("tools/getLogs");
+                tests.push_back("tools/getReceipt");
+                tests.push_back("tools/getState");
+                tests.push_back("tools/getTokenInfo");
+                tests.push_back("tools/getTrace");
+                tests.push_back("tools/getTrans");
+                tests.push_back("tools/grabABI");
+                tests.push_back("tools/whenBlock");
+                tests.push_back("tools/whereBlock");
+
+            } else if (arg == "apps" || arg == "apps/") {
+                static bool been_here = false;
+                if (been_here)
+                    break;
+                been_here = true;
+                tests.push_back("apps/acctExport");
+                tests.push_back("apps/acctScrape");
+                tests.push_back("apps/blockScrape");
+                tests.push_back("apps/cacheMan");
+                tests.push_back("apps/cacheStatus");
+                tests.push_back("apps/chifra");
+
+            } else {
+                tests.push_back(arg);
+            }
         }
     }
 

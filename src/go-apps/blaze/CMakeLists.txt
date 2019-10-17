@@ -19,14 +19,3 @@ set(GOLD_PATH "${GOLD_PATH}/${PROJ_NAME}/${TOOL_NAME}")
 
 # Additional target to make the README.md
 build_readme(${CMAKE_CURRENT_SOURCE_DIR} ${TOOL_NAME})
-
-# Function to run an individual test case
-function(run_test testName)
-#    message(MESSAGE " TEST_PATH: " ${TEST_PATH})
-#    message(MESSAGE " GOLD_PATH: "  ${GOLD_PATH})
-#    message(MESSAGE " testName: " ${testName})
-#    message(MESSAGE " TEST_EXE: " ${TEST_EXE})
-#    message(MESSAGE " GOPATH: " ${GO_PATH})
-    run_the_test(${TEST_PATH} ${GOLD_PATH} ${testName} ${TEST_EXE} ${ARGN})
-endfunction(run_test)
-#run_test("blaze" "none")

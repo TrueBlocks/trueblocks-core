@@ -18,19 +18,19 @@ cacheStatus --config-get
               "read_only": false
             },
             {
-              "name": "apiProvider",
-              "value": "--api Provider--",
-              "type": "url",
-              "tip": "TrueBlocks' API endpoint",
-              "required": true,
-              "read_only": false
-            },
-            {
               "name": "balanceProvider",
               "value": "--balance Prov--",
               "type": "url",
               "tip": "alternative node endpoint for account balances",
               "required": false,
+              "read_only": false
+            },
+            {
+              "name": "apiProvider",
+              "value": "--api Provider--",
+              "type": "url",
+              "tip": "TrueBlocks' API endpoint",
+              "required": true,
               "read_only": false
             }
           ]

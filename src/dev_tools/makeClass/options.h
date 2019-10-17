@@ -11,6 +11,7 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+#include "etherlib.h"
 
 //-------------------------------------------------------------------
 class COptions : public COptionsBase {
@@ -36,6 +37,7 @@ public:
     void Init(void);
 
     bool exportJson(const string_q& cl);
+    bool handle_options(void);
 };
 
 //-------------------------------------------------------------------

@@ -1,0 +1,19 @@
+chifra argc: 4 [1:list] [2:0xfb744b951d094b310262c8f986c860df9ab1de65] [3:--end:10] 
+chifra list 0xfb744b951d094b310262c8f986c860df9ab1de65 --end:10 
+TIME ~ CLOCK - <INFO>  : Connecting to node...
+acctScrape argc: 3 [1:--end:10] [2:0xfb744b951d094b310262c8f986c860df9ab1de65] 
+acctScrape --end:10 0xfb744b951d094b310262c8f986c860df9ab1de65 
+                                                                                                                        cacheMan argc: 3 [1:--fix] [2:0xfb744b951d094b310262c8f986c860df9ab1de65] 
+cacheMan --fix 0xfb744b951d094b310262c8f986c860df9ab1de65 
+0xfb744b951d094b310262c8f986c860df9ab1de65
+/Volumes/Samsung_T4/scraper/monitors/0xfb744b951d094b310262c8f986c860df9ab1de65.acct.bin
+TIME ~ CLOCK - <WARNG> : Exit(cacheMan,loadMonitorData): 
+Could not open cache file.Could not open file: /Volumes/Samsung_T4/scraper/monitors/0xfb744b951d094b310262c8f986c860df9ab1de65.acct.bin
+	There was nothing to fix (0).
+acctExport argc: 4 [1:--appearances] [2:--end:10] [3:0xfb744b951d094b310262c8f986c860df9ab1de65] 
+acctExport --appearances --end:10 0xfb744b951d094b310262c8f986c860df9ab1de65 
+address	blocknumber	transactionindex
+0xfb744b951d094b310262c8f986c860df9ab1de65	0	8713
+TIME ~ CLOCK - <INFO>  :                                                                                                                         
+Would have written to 0xfb744b951d094b310262c8f986c860df9ab1de65.expt.txt with 0
+TIME ~ CLOCK - <INFO>  : exported 1 appearances from 1 transactions                                                       

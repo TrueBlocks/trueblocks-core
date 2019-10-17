@@ -16,10 +16,10 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("className", "", "", OPT_REQUIRED | OPT_POSITIONAL, "name of C++ class(es) to process"),
+    COption("className", "", "<string>", OPT_REQUIRED | OPT_POSITIONAL, "name of C++ class(es) to process"),
     COption("open", "o", "", OPT_SWITCH, "edit <className(s)> definition file in local folder"),
     COption("run", "r", "", OPT_SWITCH, "run the class maker on associated <className(s)>"),
-    COption("js", "j", "<class>", OPT_FLAG, "export javaScript components for 'class'"),
+    COption("js", "j", "<string>", OPT_FLAG, "export javaScript components for 'class'"),
     COption("filter", "f", "<string>", OPT_FLAG, "process only files with :filter in their names"),
     COption("list", "l", "", OPT_SWITCH, "list all definition files found in the local folder"),
     COption("header", "h", "", OPT_SWITCH, "write headers files only"),
@@ -27,7 +27,8 @@ static const COption params[] = {
     COption("namespace", "n", "<string>", OPT_FLAG, "surround the code with a --namespace:ns"),
     COption("silent", "s", "", OPT_SWITCH, "on error (no classDefinition file) exit silently"),
     COption("all", "a", "", OPT_SWITCH, "clear, edit, list, or run all class definitions found in the local folder"),
-    COption("edit", "e", "", OPT_SWITCH | OPT_HIDDEN, "edit <className(s)> definition file in local folder"),
+    COption("edit", "e", "", OPT_HIDDEN | OPT_SWITCH, "edit <className(s)> definition file in local folder"),
+    COption("options", "p", "", OPT_HIDDEN | OPT_SWITCH, "process options (generate code, check data) and quit"),
     COption("", "", "", OPT_DESCRIPTION, "Creates C++ code based on definition file at ./classDefinition/<className>.\n"),
 // END_CODE_OPTIONS
 };
@@ -43,7 +44,12 @@ bool COptions::parseArguments(string_q& command) {
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if ((arg == "-e" || arg == "--edit" || arg == "-o" || arg == "--open")) {
+
+        if (arg == "-p" || arg == "--options") {
+            handle_options();
+            return false;
+
+        } else if ((arg == "-e" || arg == "--edit" || arg == "-o" || arg == "--open")) {
             if (isRun)
                 return usage("Incompatible options '-r' and '-e'. Choose one or the other.");
             isEdit = true;

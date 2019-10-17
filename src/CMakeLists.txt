@@ -76,7 +76,6 @@ enable_testing()
 set (TEST_PATH   "${CMAKE_SOURCE_DIR}/../test/working")
 set (GOLD_PATH   "${CMAKE_SOURCE_DIR}/../test/gold")
 set (TEST_CHECK  "${SCRIPTS_DEST_PATH}/checkTest.py")
-set (API_CHECK   "${SCRIPTS_DEST_PATH}/apiCheck.py")
 set (TAG_REPLACE "${SCRIPTS_DEST_PATH}/replaceTag.py")
 
 # ----------------------------------------------------------------------------------------
@@ -105,21 +104,6 @@ function(run_the_test testPath goldPath testName testExe) # Optional argv4 with 
 endfunction(run_the_test)
 
 # ----------------------------------------------------------------------------------------
-# Runs test and checks output against expected gold file
-function(run_the_api_test testPath goldPath testName testExe) # Optional argv4 with command parameters
-	set(TEST_FILE "${testPath}/${testName}.txt")
-	set(GOLD_FILE "${goldPath}/${testName}.txt")
-	if (NOT ${ARGV4} STREQUAL "" )
-	    # In ARGV4 we receive the parameters to be passed to testExe  (optional)
-	    add_test(NAME ${testName} COMMAND ${API_CHECK} ${testExe} ${ARGN} ${TEST_FILE} ${GOLD_FILE})
-	    #message(STATUS ${API_CHECK} " " ${testExe} " " ${ARGN} " " ${TEST_FILE} " " ${GOLD_FILE})
-    else()
-	    add_test(NAME ${testName} COMMAND ${API_CHECK} ${testExe} ${TEST_FILE} ${GOLD_FILE})
-	    #message(STATUS ${API_CHECK} " " ${testExe} " " ${TEST_FILE} " " ${GOLD_FILE})
-    endif()
-endfunction(run_the_api_test)
-
-# ----------------------------------------------------------------------------------------
 # Runs specials tests that are only run with "make test-all"
 function(run_the_special_test testPath goldPath testName testExe) # Optional argv4 with command parameters
     set(TEST_FILE "${testPath}/${testName}.txt")
@@ -135,21 +119,6 @@ function(run_the_special_test testPath goldPath testName testExe) # Optional arg
 endfunction(run_the_special_test)
 
 # ----------------------------------------------------------------------------------------
-# Runs specials api tests that are only run with "make test-all"
-function(run_the_api_special_test testPath goldPath testName testExe) # Optional argv4 with command parameters
-    set(TEST_FILE "${testPath}/${testName}.txt")
-    set(GOLD_FILE "${goldPath}/${testName}.txt")
-    if (NOT ${ARGV4} STREQUAL "" )
-        # In ARGV4 we receive the parameters to be passed to testExe  (optional)
-        add_test(NAME ${testName} COMMAND ${API_CHECK} ${testExe} ${ARGN} ${TEST_FILE} ${GOLD_FILE} CONFIGURATIONS test_all)
-	    #message(STATUS ${API_CHECK} " " ${testExe} " " ${ARGN} " " ${TEST_FILE} " " ${GOLD_FILE})
-    else()
-        add_test(NAME ${testName} COMMAND ${API_CHECK} ${testExe} ${TEST_FILE} ${GOLD_FILE} CONFIGURATIONS test_all)
-	    #message(STATUS ${API_CHECK} " " ${testExe} " " ${TEST_FILE} " " ${GOLD_FILE})
-    endif()
-endfunction(run_the_api_special_test)
-
-# ----------------------------------------------------------------------------------------
 # Runs state tests that are only run with "make test-state"
 function(run_the_state_test testPath goldPath testName testExe) # Optional argv4 with command parameters
     set(TEST_FILE "${testPath}/${testName}.txt")
@@ -163,21 +132,6 @@ function(run_the_state_test testPath goldPath testName testExe) # Optional argv4
 	    #message(STATUS ${TEST_CHECK} " " ${testExe} " " ${TEST_FILE} " " ${GOLD_FILE})
     endif()
 endfunction(run_the_state_test)
-
-# ----------------------------------------------------------------------------------------
-# Runs state tests that are only run with "make test-state"
-function(run_the_api_state_test testPath goldPath testName testExe) # Optional argv4 with command parameters
-    set(TEST_FILE "${testPath}/${testName}.txt")
-    set(GOLD_FILE "${goldPath}/${testName}.txt")
-    if (NOT ${ARGV4} STREQUAL "" )
-        # In ARGV4 we receive the parameters to be passed to testExe  (optional)
-        add_test(NAME ${testName} COMMAND ${API_CHECK} ${testExe} ${ARGN} ${TEST_FILE} ${GOLD_FILE} CONFIGURATIONS test_state)
-	    #message(STATUS ${API_CHECK} " " ${testExe} " " ${ARGN} " " ${TEST_FILE} " " ${GOLD_FILE})
-    else()
-        add_test(NAME ${testName} COMMAND ${API_CHECK} ${testExe} ${TEST_FILE} ${GOLD_FILE} CONFIGURATIONS test_state)
-	    #message(STATUS ${API_CHECK} " " ${testExe} " " ${TEST_FILE} " " ${GOLD_FILE})
-    endif()
-endfunction(run_the_api_state_test)
 
 # ----------------------------------------------------------------------------------------
 # Compilation order for the subfolders

@@ -10,7 +10,7 @@ static const COption params[] = {
 // BEG_CODE_OPTIONS
     COption("addr_list", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) to export"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_FLAG, "export format (one of [json*|txt|csv])"),
-    COption("articulate", "a", "", OPT_SWITCH, "articulate transactions&#44; traces&#44; logs&#44; and outputs"),
+    COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
     COption("logs", "l", "", OPT_SWITCH, "export logs instead of transaction list"),
     COption("traces", "t", "", OPT_SWITCH, "export traces instead of transaction list"),
     COption("balances", "c", "", OPT_SWITCH, "export balance history instead of transaction list"),
@@ -20,14 +20,14 @@ static const COption params[] = {
     COption("writeTxs", "s", "enum[on*|off]", OPT_HIDDEN | OPT_FLAG, "write transactions to the binary cache ('on' by default)"),
     COption("writeTraces", "r", "enum[on*|off]", OPT_HIDDEN | OPT_FLAG, "write traces to the binary cache ('on' by default)"),
     COption("ddos", "d", "enum[on*|off]", OPT_HIDDEN | OPT_FLAG, "skip over dDos transactions in export ('on' by default)"),
-    COption("maxTraces", "m", "<uint>", OPT_HIDDEN | OPT_FLAG, "if --ddos:on&#44; the number of traces defining a dDos (default = 250)"),
+    COption("maxTraces", "m", "<uint>", OPT_HIDDEN | OPT_FLAG, "if --ddos:on, the number of traces defining a dDos (default = 250)"),
     COption("no_header", "n", "", OPT_HIDDEN | OPT_SWITCH, "do not show the header row"),
     COption("allABIs", "a", "", OPT_HIDDEN | OPT_SWITCH, "load all previously cached abi files"),
-    COption("grabABIs", "g", "", OPT_HIDDEN | OPT_SWITCH, "using each trace's 'to' address&#44; grab the abi for that address (improves articulation)"),
+    COption("grabABIs", "g", "", OPT_HIDDEN | OPT_SWITCH, "using each trace's 'to' address, grab the abi for that address (improves articulation)"),
     COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
-    COption("deltas", "", "", OPT_HIDDEN | OPT_SWITCH, "for --balances option only&#44; export only changes in balances"),
-    COption("start", "s", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to export (inclusive)"),
-    COption("end", "e", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to export (inclusive)"),
+    COption("deltas", "", "", OPT_HIDDEN | OPT_SWITCH, "for --balances option only, export only changes in balances"),
+    COption("start", "", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to export (inclusive)"),
+    COption("end", "", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to export (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more Ethereum addresses."),
 // END_CODE_OPTIONS
 };

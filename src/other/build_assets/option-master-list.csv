@@ -7,7 +7,8 @@ num,group,api_route,tool,order,command,command_short,data_type,option_kind,defau
 11020,apps,list,acctScrape,,unripe,u,boolean,switch,,visit unripe (not old enough and not yet staged or finalized) blocks,,FALSE,FALSE,FALSE
 11030,apps,list,acctScrape,,daemon,d,boolean,switch,,we are being called in daemon mode which causes us to print results differently,,FALSE,FALSE,FALSE
 11040,apps,list,acctScrape,,no_header,o,boolean,switch,,do not show the header row,,FALSE,TRUE,TRUE
-11050,apps,list,acctScrape,,start,r,<blknum>,flag,,start block for scan of appearances,,FALSE,FALSE,FALSE
+11050,apps,list,acctScrape,,start,,<blknum>,flag,,first block to scan for appearances (inclusive),,FALSE,FALSE,FALSE
+11050,apps,list,acctScrape,,end,,<blknum>,flag,,end block to scan for appearances (inclusive),,FALSE,FALSE,FALSE
 11060,apps,list,acctScrape,,,,,description,,Index transactions for a given Ethereum address (or series of addresses).,,FALSE,TRUE,TRUE
 12000,apps,export,acctExport,,addr_list,,list<addr>,positional,,one or more addresses (0x...) to export,,TRUE,TRUE,TRUE
 12010,apps,export,acctExport,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format (one of [json*|txt|csv]),,FALSE,TRUE,TRUE
@@ -27,8 +28,8 @@ num,group,api_route,tool,order,command,command_short,data_type,option_kind,defau
 12150,apps,export,acctExport,,grabABIs,g,boolean,switch,,using each trace's 'to' address&#44; grab the abi for that address (improves articulation),,FALSE,FALSE,FALSE
 12160,apps,export,acctExport,,freshen,f,boolean,switch,,freshen but do not print the exported data,,FALSE,FALSE,FALSE
 12170,apps,export,acctExport,,deltas,,boolean,switch,,for --balances option only&#44; export only changes in balances,,FALSE,FALSE,FALSE
-12180,apps,export,acctExport,,start,s,<blknum>,flag,,first block to export (inclusive),,FALSE,FALSE,FALSE
-12190,apps,export,acctExport,,end,e,<blknum>,flag,,last block to export (inclusive),,FALSE,FALSE,FALSE
+12180,apps,export,acctExport,,start,,<blknum>,flag,,first block to export (inclusive),,FALSE,FALSE,FALSE
+12190,apps,export,acctExport,,end,,<blknum>,flag,,last block to export (inclusive),,FALSE,FALSE,FALSE
 12200,apps,export,acctExport,,,,,description,,Export full detail of transactions for one or more Ethereum addresses.,,FALSE,TRUE,TRUE
 13000,tools,slurp,ethslurp,,addr_list,,list<addr>,positional,,one or more addresses to slurp,,TRUE,TRUE,TRUE
 13010,tools,slurp,ethslurp,,block_list,,list<blknum>,positional,,an optional range of blocks to slurp,,FALSE,TRUE,TRUE
@@ -119,7 +120,8 @@ num,group,api_route,tool,order,command,command_short,data_type,option_kind,defau
 24000,apps,status,cacheStatus,,mode_list,,list<enum[index|monitors|names|abis|blocks|transactions|traces|slurps|prices|some*|all]>,positional,,one or more of [index|monitors|names|abis|blocks|transactions|traces|slurps|prices|some*|all],,FALSE,TRUE,TRUE
 24010,apps,status,cacheStatus,,details,d,boolean,switch,,include details about items found in monitors&#44; slurps&#44; abis&#44; or price caches,,FALSE,TRUE,TRUE
 24020,apps,status,cacheStatus,,list,l,boolean,switch,,display results in Linux ls -l format (assumes --detail),,FALSE,TRUE,TRUE
-24030,apps,status,cacheStatus,,start,,<blknum>,flag,,starting block for data retreival,,FALSE,TRUE,TRUE
+24030,apps,status,cacheStatus,,start,,<blknum>,flag,,starting block for data retreival (inclusive),,FALSE,TRUE,TRUE
+24030,apps,status,cacheStatus,,end,,<blknum>,flag,,ending block for data retreival (inclusive),,FALSE,TRUE,TRUE
 24040,apps,status,cacheStatus,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format (one of [none|json*|txt|csv|api]),,FALSE,FALSE,FALSE
 24050,apps,status,cacheStatus,,config-get,g,boolean,switch,,returns JSON data of the editable configuration file items,,FALSE,FALSE,FALSE
 24060,apps,status,cacheStatus,,config-set,s,boolean,switch,,accepts JSON in an env variable and writes it to configuration files,,FALSE,FALSE,FALSE
@@ -162,7 +164,8 @@ num,group,api_route,tool,order,command,command_short,data_type,option_kind,defau
 31100,apps,,cacheMan,,merge,m,boolean,switch,,merge two or more caches into a single cache,,FALSE,TRUE,FALSE
 31110,apps,,cacheMan,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format (one of [json*|txt|csv]),,FALSE,TRUE,FALSE
 31120,apps,,cacheMan,,skip,k,boolean,switch,,skip value for testing,,FALSE,FALSE,FALSE
-31130,apps,,cacheMan,,start,s,<blknum>,flag,,un-used hidden value - do not remove,,FALSE,FALSE,FALSE
+31130,apps,,cacheMan,,start,,<blknum>,flag,,un-used hidden value - do not remove,,FALSE,FALSE,FALSE
+31130,apps,,cacheMan,,end,,<blknum>,flag,,un-used hidden value - do not remove,,FALSE,FALSE,FALSE
 31140,apps,,cacheMan,,no_header,o,boolean,switch,,do not show header row of data,,FALSE,FALSE,FALSE
 31150,apps,,cacheMan,,,,,description,,Show the contents of an account cache and/or fix it by removing duplicate records.\n,,FALSE,TRUE,FALSE
 32000,tools,when,whenBlock,,block_list,,list<blknum>,positional,,one or more block numbers (or a 'special' block)&#44; or...,,FALSE,TRUE,FALSE
@@ -204,3 +207,22 @@ num,group,api_route,tool,order,command,command_short,data_type,option_kind,defau
 36110,tools,,templates,,kBlock,k,<blknum>,flag,,start processing at block :k,,FALSE,TRUE,TRUE
 36120,tools,,templates,,offset,o,<blknum>,flag,,offset to kBlock,,FALSE,TRUE,TRUE
 36130,tools,,templates,,,,,description,,Index transactions for a given Ethereum address (or series of addresses).,,FALSE,TRUE,TRUE
+37000,dev_tools,,makeClass,,className,,<string>,positional,,name of C++ class(es) to process,,TRUE,TRUE,FALSE
+37010,dev_tools,,makeClass,,open,o,boolean,switch,,edit <className(s)> definition file in local folder,,FALSE,TRUE,FALSE
+37020,dev_tools,,makeClass,,run,r,boolean,switch,,run the class maker on associated <className(s)>,,FALSE,TRUE,FALSE
+37030,dev_tools,,makeClass,,js,j,<string>,flag,,export javaScript components for 'class',,FALSE,TRUE,FALSE
+37040,dev_tools,,makeClass,,filter,f,<string>,flag,,process only files with :filter in their names,,FALSE,TRUE,FALSE
+37050,dev_tools,,makeClass,,list,l,boolean,switch,,list all definition files found in the local folder,,FALSE,TRUE,FALSE
+37060,dev_tools,,makeClass,,header,h,boolean,switch,,write headers files only,,FALSE,TRUE,FALSE
+37070,dev_tools,,makeClass,,source,c,boolean,switch,,write source files only,,FALSE,TRUE,FALSE
+37080,dev_tools,,makeClass,,namespace,n,<string>,flag,,surround the code with a --namespace:ns,,FALSE,TRUE,FALSE
+37090,dev_tools,,makeClass,,silent,s,boolean,switch,,on error (no classDefinition file) exit silently,,FALSE,TRUE,FALSE
+37100,dev_tools,,makeClass,,all,a,boolean,switch,,clear&#44; edit&#44; list&#44; or run all class definitions found in the local folder,,FALSE,TRUE,FALSE
+37110,dev_tools,,makeClass,,edit,e,boolean,switch,,edit <className(s)> definition file in local folder,,FALSE,FALSE,FALSE
+37120,dev_tools,,makeClass,,options,p,boolean,switch,,process options (generate code&#44; check data) and quit,,FALSE,FALSE,FALSE
+37130,dev_tools,,makeClass,,,,,description,,Creates C++ code based on definition file at ./classDefinition/<className>.\n,,FALSE,TRUE,FALSE
+38000,dev_tools,,testRunner,,which,w,enum[cmd*|api|both],flag,,run command line&#44; api&#44; or both test cases (default 'cmd'),,FALSE,TRUE,FALSE
+38010,dev_tools,,testRunner,,filter,f,enum[fast*|medi|slow],flag,,filter the tests to run only the fast&#44; medium speed&#44; or slow tests (default 'fast'),,FALSE,TRUE,FALSE
+38030,dev_tools,,testRunner,,clean,c,boolean,switch,,clean working test folder before running tests,,FALSE,TRUE,FALSE
+38020,dev_tools,,testRunner,,no_quit,n,boolean,switch,,do not quit on error (default is to quit),,FALSE,TRUE,FALSE
+38040,dev_tools,,testRunner,,,,,description,,Retrieve a transaction's logs from the local cache or a running node.,,FALSE,TRUE,FALSE

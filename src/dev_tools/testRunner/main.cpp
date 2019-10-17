@@ -17,6 +17,7 @@
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
     etherlib_init(quickQuitHandler);
+    CTestCase::registerClass();
 
     cerr.rdbuf( cout.rdbuf() );
 

@@ -1,37 +1,38 @@
 enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
-on, cmd, fast, null, apps/chifra, README,               n, @th
-on, cmd, fast, null, apps/chifra, help,                 n, @h
-on, cmd, fast, null, apps/chifra, help_long,            n, help
+on, cmd,  fast, null,     apps/chifra, README,               n, @th
+on, cmd,  fast, null,     apps/chifra, help,                 n, @h
+on, cmd,  fast, null,     apps/chifra, help_long,            n, help
 
-on, cmd, fast, null, apps/chifra, no_params,            n,
-on, cmd, fast, null, apps/chifra, invalid_option,       n, mode_list = not_a_mode
-on, cmd, fast, null, apps/chifra, config_noparms,       n, mode_list = config
-on, cmd, slow, null, apps/chifra, config_badparms,      n, mode_list = config bad-param
-on, cmd, slow, null, apps/chifra, config_get,           n, mode_list = config & get
-on, cmd, slow, null, apps/chifra, config_set,           n, mode_list = config & set
-on, cmd, slow, null, apps/chifra, status,               n, mode_list = status all
-on, cmd, slow, null, apps/chifra, status_details,       n, mode_list = status all & details
-on, cmd, fast, null, apps/chifra, blocks_noparams,      n, mode_list = blocks
-on, cmd, fast, null, apps/chifra, blocks_badparams,     n, mode_list = blocks & not_an_option
-on, cmd, fast, null, apps/chifra, blocks_edit,          n, mode_list = blocks edit
-on, cmd, fast, null, apps/chifra, blocks,               n, mode_list = blocks @ d
+on, cmd,  fast, null,     apps/chifra, no_params,            y,
+on, cmd,  fast, null,     apps/chifra, invalid_option,       y, mode_list = not_a_mode
+on, both, fast, config,   apps/chifra, config_noparms,       y, mode_list = config
+on, both, slow, config,   apps/chifra, config_badparms,      y, mode_list = config & bad-param
+on, both, slow, config,   apps/chifra, config_get,           n, mode_list = config & get
+on, both, slow, config,   apps/chifra, config_set,           n, mode_list = config & set
+on, cmd,  slow, status,   apps/chifra, status,               n, mode_list = status all
+on, cmd,  slow, status,   apps/chifra, status_details,       n, mode_list = status all & details
+on, both, fast, blocks,   apps/chifra, blocks_noparams,      y, mode_list = blocks
+on, both, fast, blocks,   apps/chifra, blocks_badparams,     y, mode_list = blocks & not_an_option
+on, cmd,  fast, blocks,   apps/chifra, blocks,               n, mode_list = blocks @ d
+on, cmd,  slow, quotes,   apps/chifra, prices,               n, mode_list = quotes @ p 1440
+on, both, fast, accounts, apps/chifra, accounts_noparams,    n, mode_list = accounts & fmt = txt
+on, both, fast, accounts, apps/chifra, accounts_badparams,   y, mode_list = accounts & not_an_option
+on, both, fast, accounts, apps/chifra, accounts,             n, mode_list = accounts & expand & fmt = txt
+on, both, slow, slurp,    apps/chifra, slurp,                y, mode_list = slurp & addr_list = 0x1234567812345678123456781234567812345678
+on, both, slow, list,     apps/chifra, list,                 y, mode_list = list  & addr_list = 0xfb744b951d094b310262c8f986c860df9ab1de65 & end:10
+on, both, slow, export,   apps/chifra, export,               y, mode_list = export & addr_list = 0xfb744b951d094b310262c8f986c860df9ab1de65 & end:10
 
-off, cmd, fast, null, apps/chifra, config_show_noaddr,  n, config show
-off, cmd, fast, null, apps/chifra, config_show_badaddr, n, config show & addr_list = 0x1234567812345678123456781234567812345678
-off, cmd, fast, null, apps/chifra, config_show_tip,     n, config show & addr_list = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359
-off, cmd, fast, null, apps/chifra, config_edit,         n, config edit & addr_list = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359
-off, cmd, fast, null, apps/chifra, config_show_tip_v,   n, config show & addr_list = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & verbose:3
-off, cmd, fast, null, apps/chifra, daemon_noparms,      n, scrape & daemon
-off, cmd, fast, null, apps/chifra, daemon_badparms,     n, scrape & daemon & not_an_option
-off, cmd, fast, null, apps/chifra, daemon,              n, scrape & daemon & sleep 10 & filter 0x1 0x2
-off, cmd, fast, null, apps/chifra, scrape,              n, scrape
-off, cmd, fast, null, apps/chifra, seed,                n, seed & verbose
-off, cmd, fast, null, apps/chifra, freshen,             n, freshen 0x1234567812345678123456781234567812345678
-off, cmd, fast, null, apps/chifra, slurp,               n, slurp 0x1234567812345678123456781234567812345678
-off, cmd, fast, null, apps/chifra, export,              n, export 0x1234567812345678123456781234567812345678
-off, cmd, fast, null, apps/chifra, init,                n, init 0x1234567812345678123456781234567812345678
-off, cmd, fast, null, apps/chifra, prices,              n, prices
-off, cmd, fast, null, apps/chifra, accounts_noparams,   n, accounts
-off, cmd, fast, null, apps/chifra, accounts_badparams,  n, accounts & not_an_option
-off, cmd, fast, null, apps/chifra, accounts_edit,       n, accounts edit
-off, cmd, fast, null, apps/chifra, accounts,            n, accounts @ d
+off, both, fast, null,     apps/chifra, daemon_noparms,      n, mode_list = scrape & daemon
+off, both, fast, null,     apps/chifra, daemon_badparms,     n, mode_list = scrape & daemon & not_an_option
+off, both, fast, null,     apps/chifra, daemon,              n, mode_list = scrape & daemon & sleep 10 & filter 0x1 0x2
+off, both, fast, null,     apps/chifra, scrape,              n, mode_list = scrape
+off, both, fast, null,     apps/chifra, seed,                n, mode_list = seed & verbose
+off, both, fast, null,     apps/chifra, seed,                n, mode_list = leech & verbose
+
+# These tests work against the ability to customize the exporter per
+# address. This feature has been somewhat lost.
+# off, both, fast, null,    apps/chifra, config_show_noaddr,  n, config show
+# off, both, fast, null,    apps/chifra, config_show_badaddr, n, config show & addr_list = 0x1234567812345678123456781234567812345678
+# off, both, fast, null,    apps/chifra, config_show_tip,     n, config show & addr_list = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359
+# off, both, fast, null,    apps/chifra, config_edit,         n, config edit & addr_list = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359
+# off, both, fast, null,    apps/chifra, config_show_tip_v,   n, config show & addr_list = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & verbose:3

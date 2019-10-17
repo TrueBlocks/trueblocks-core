@@ -1,5 +1,5 @@
-chifra argc: 3 [1:config] [2:bad-param] 
-chifra config bad-param 
+chifra argc: 3 [1:config] [2:--bad-param] 
+chifra config --bad-param 
 TIME ~ CLOCK - <INFO>  : Connecting to node...
 TIME ~ CLOCK - <ERROR> : Exit(chifra,parseArguments): 
 

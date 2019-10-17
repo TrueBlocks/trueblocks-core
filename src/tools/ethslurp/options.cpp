@@ -19,8 +19,8 @@ static const COption params[] = {
     COption("block_list", "", "list<blknum>", OPT_POSITIONAL, "an optional range of blocks to slurp"),
     COption("type", "t", "enum[ext*|int|token|miner|all]", OPT_FLAG, "extract either [ext*|int|token|miner|all] type of transactions"),
     COption("blocks", "b", "<range>", OPT_FLAG, "export records in block range (:0[:max])"),
-    COption("silent", "s", "", OPT_SWITCH, "Run silently (only freshen the data&#44; do not display it)"),
-    COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_FLAG, "pretty print&#44; optionally add ':txt&#44;' ':csv&#44;' or ':html'"),
+    COption("silent", "s", "", OPT_SWITCH, "Run silently (only freshen the data, do not display it)"),
+    COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_FLAG, "pretty print, optionally add ':txt,' ':csv,' or ':html'"),
     COption("", "", "", OPT_DESCRIPTION, "Fetches data from EtherScan for an arbitrary address. Formats the output to your specification."),
 // END_CODE_OPTIONS
 };

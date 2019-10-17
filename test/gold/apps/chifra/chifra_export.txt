@@ -1,0 +1,12 @@
+chifra argc: 4 [1:export] [2:0xfb744b951d094b310262c8f986c860df9ab1de65] [3:--end:10] 
+chifra export 0xfb744b951d094b310262c8f986c860df9ab1de65 --end:10 
+TIME ~ CLOCK - <INFO>  : Connecting to node...
+acctScrape argc: 3 [1:--end:10] [2:0xfb744b951d094b310262c8f986c860df9ab1de65] 
+acctScrape --end:10 0xfb744b951d094b310262c8f986c860df9ab1de65 
+                                                                                                                        acctExport argc: 3 [1:0xfb744b951d094b310262c8f986c860df9ab1de65] [2:--end:10] 
+acctExport 0xfb744b951d094b310262c8f986c860df9ab1de65 --end:10 
+blocknumber	transactionindex	date	timestamp	from	to	ether	ethergasprice	gasused	hash	iserror	encoding	compressedtx
+0	8713	2015-07-30 15:26:00 UTC	1438269960	0xPrefund	0xfb744b951d094b310262c8f986c860df9ab1de65	52.009000000000000000	0.000000000000000000	0	0x0	0		
+TIME ~ CLOCK - <INFO>  :                                                                                                                         
+Would have written to 0xfb744b951d094b310262c8f986c860df9ab1de65.expt.txt with 0
+TIME ~ CLOCK - <INFO>  : exported 1 transactions from 1 transactions                                                       

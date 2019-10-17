@@ -10,7 +10,7 @@ makeClass -cr
 	className             name of C++ class(es) to process (required)
 	-o  (--open)          edit <className(s)> definition file in local folder
 	-r  (--run)           run the class maker on associated <className(s)>
-	-j  (--js <class>)    export javaScript components for 'class'
+	-j  (--js <string>)   export javaScript components for 'class'
 	-f  (--filter <string>)process only files with :filter in their names
 	-l  (--list)          list all definition files found in the local folder
 	-h  (--header)        write headers files only
@@ -21,6 +21,7 @@ makeClass -cr
 
 #### Hidden options (shown during testing only)
 	-e  (--edit)          edit <className(s)> definition file in local folder
+	-p  (--options)       process options (generate code, check data) and quit
 #### Hidden options (shown during testing only)
 
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
