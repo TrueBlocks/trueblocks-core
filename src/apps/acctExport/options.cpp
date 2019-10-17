@@ -41,11 +41,31 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         EXIT_NOMSG(false);
 
-    bool no_header = false, allABIs = false;
+// BEG_CODE_INIT_LOCAL
+    bool no_header = false;
+    bool allABIs = false;
+// END_CODE_INIT_LOCAL
+
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if (startsWith(arg, "-s") || startsWith(arg, "--writeTxs")) {
+        if (false) {
+            // do nothing -- make auto code generation easier
+// BEG_CODE_SWITCH
+        } else if (arg == "-n" || arg == "--no_header") {
+            no_header = true;
+
+        } else if (arg == "-A" || arg == "--allABIs") {
+            allABIs = true;
+
+        } else if (arg == "-o" || arg == "--count_only") {
+            count_only = true;
+
+        } else if (arg == "-a" || arg == "--articulate") {
+            articulate = true;
+// END_CODE_SWITCH
+
+        } else if (startsWith(arg, "-s") || startsWith(arg, "--writeTxs")) {
             arg = substitute(substitute(arg, "-s:", ""), "--writeTxs:", "");
             if (arg != "on" && arg != "off")
                 EXIT_USAGE("Please provide either 'on' or 'off' for the --writeTxs options. Quitting...");
@@ -81,12 +101,6 @@ bool COptions::parseArguments(string_q& command) {
                 EXIT_USAGE("Not a number for --endBlock: " + arg + ". Quitting.");
             scanRange.second = str_2_Uint(arg);
 
-        } else if (arg == "-n" || arg == "--no_header") {
-            no_header = true;
-
-        } else if (arg == "-A" || arg == "--allABIs") {
-            allABIs = true;
-
         } else if (arg == "-p" || arg == "--appearances") {
             doAppearances = true;
 
@@ -106,14 +120,8 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-f" || arg == "--freshen") {
             freshen_only = true;
 
-        } else if (arg == "-o" || arg == "--count_only") {
-            count_only = true;
-
         } else if (arg == "--deltas") {
             deltas_only = true;
-
-        } else if (arg == "-a" || arg == "--articulate") {
-            articulate = true;
 
         } else if (startsWith(arg, "0x")) {
 
@@ -310,11 +318,15 @@ void COptions::Init(void) {
 
     monitors.clear();
 
+// BEG_CODE_INIT
+    articulate = false;
+    count_only = false;
+// END_CODE_INIT
+
     writeTxs = true;
     writeTraces = true;
     skipDdos = true;
     maxTraces = 250;
-    articulate = false;
     doAppearances = false;
     nExported = 0;
     doLogs = false;
@@ -322,7 +334,6 @@ void COptions::Init(void) {
     doBalances = false;
     doABIs = false;
     freshen_only = false;
-    count_only = false;
     deltas_only = false;
     scanRange.second = getLastBlock_cache_ripe();
 

@@ -73,6 +73,7 @@ bool COptions::handle_options(void) {
             for (auto warning : w)
                 LOG_WARN(warning);
         }
+        break;
     }
 
     return true;
