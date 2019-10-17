@@ -43,11 +43,11 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
 
-        } else if (arg == "-o" || arg == "--force") {
-            force = true;
-
         } else if (arg == "-t" || arg == "--trace") {
             trace = true;
+
+        } else if (arg == "-o" || arg == "--force") {
+            force = true;
 
 // END_CODE_AUTO
 
@@ -118,8 +118,8 @@ void COptions::Init(void) {
 
 // BEG_CODE_INIT
     articulate = false;
-    force = false;
     trace = false;
+    force = false;
 // END_CODE_INIT
 
     transList.Init();

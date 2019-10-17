@@ -88,13 +88,13 @@ num,group,api_route,tool,order,command,command_short,data_type,option_kind,defau
 11240,tools,blocks,getBlock,,,,,description,,Returns block(s) from local cache or directly from a running node.,,FALSE,TRUE,TRUE
 11300,tools,transactions,getTrans,,trans_list,,list<tx_id>,positional,,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID),,TRUE,TRUE,TRUE
 11310,tools,transactions,getTrans,,articulate,a,boolean,switch,,articulate the transactions if an ABI is found for the 'to' address,yes,FALSE,TRUE,TRUE
-11320,tools,transactions,getTrans,,trace,t,boolean,switch,,display the transaction's trace,,FALSE,TRUE,TRUE
+11320,tools,transactions,getTrans,,trace,t,boolean,switch,,display the transaction's trace,yes,FALSE,TRUE,TRUE
 11330,tools,transactions,getTrans,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format (one of [none|json*|txt|csv|api]),,FALSE,FALSE,FALSE
 11340,tools,transactions,getTrans,,force,o,boolean,switch,,force the results into the tx cache,yes,FALSE,FALSE,FALSE
 11350,tools,transactions,getTrans,,,,,description,,Retrieve an Ethereum transaction from the local cache or a running node.,,FALSE,TRUE,TRUE
 11400,tools,receipts,getReceipt,,trans_list,,list<tx_id>,positional,,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID),,TRUE,TRUE,TRUE
 11410,tools,receipts,getReceipt,,articulate,a,boolean,switch,,articulate the transactions if an ABI is found for the 'to' address,yes,FALSE,TRUE,TRUE
-11420,tools,receipts,getReceipt,,logs,l,boolean,switch,,display the receipt's logs,,FALSE,TRUE,TRUE
+11420,tools,receipts,getReceipt,,logs,l,boolean,switch,,display the receipt's logs,yes,FALSE,TRUE,TRUE
 11430,tools,receipts,getReceipt,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format (one of [none|json*|txt|csv|api]),,FALSE,FALSE,FALSE
 11440,tools,receipts,getReceipt,,,,,description,,Retrieve a transaction's receipt from the local cache or a running node.,,FALSE,TRUE,TRUE
 11500,tools,logs,getLogs,,trans_list,,list<tx_id>,positional,,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID),,TRUE,TRUE,TRUE
@@ -103,7 +103,7 @@ num,group,api_route,tool,order,command,command_short,data_type,option_kind,defau
 11530,tools,logs,getLogs,,,,,description,,Retrieve a transaction's logs from the local cache or a running node.,,FALSE,TRUE,TRUE
 11600,tools,traces,getTrace,,trans_list,,list<tx_id>,positional,,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID),,TRUE,TRUE,TRUE
 11610,tools,traces,getTrace,,articulate,a,boolean,switch,,articulate the transactions if an ABI is found for the 'to' address,yes,FALSE,TRUE,TRUE
-11620,tools,traces,getTrace,,count_only,c,boolean,switch,,show the number of traces for the transaction only (fast),,FALSE,TRUE,TRUE
+11620,tools,traces,getTrace,,count_only,c,boolean,switch,,show the number of traces for the transaction only (fast),yes,FALSE,TRUE,TRUE
 11630,tools,traces,getTrace,,no_header,n,boolean,switch,,do not show the header row,local,FALSE,TRUE,TRUE
 11640,tools,traces,getTrace,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format (one of [none|json*|txt|csv|api]),,FALSE,FALSE,FALSE
 11650,tools,traces,getTrace,,ddos,d,enum[on*|off],flag,,skip over dDos transactions in export ('on' by default),,FALSE,FALSE,FALSE

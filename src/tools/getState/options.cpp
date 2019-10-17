@@ -47,14 +47,14 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
 // BEG_CODE_AUTO
+        } else if (arg == "-n" || arg == "--no_zero") {
+            no_zero = true;
+
         } else if (arg == "-c" || arg == "--changes") {
             changes = true;
 
         } else if (arg == "-o" || arg == "--no_header") {
             no_header = true;
-
-        } else if (arg == "-n" || arg == "--no_zero") {
-            no_zero = true;
 
 // END_CODE_AUTO
         } else if (arg == "--no_history" && isTestMode()) {
@@ -170,8 +170,8 @@ void COptions::Init(void) {
     optionOn(OPT_RAW | OPT_OUTPUT);
 
 // BEG_CODE_INIT
-    changes = false;
     no_zero = false;
+    changes = false;
 // END_CODE_INIT
 
     prevBal = 0;

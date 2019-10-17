@@ -45,11 +45,11 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
 
-        } else if (arg == "-n" || arg == "--no_header") {
-            no_header = true;
-
         } else if (arg == "-c" || arg == "--count_only") {
             count_only = true;
+
+        } else if (arg == "-n" || arg == "--no_header") {
+            no_header = true;
 
 // END_CODE_AUTO
         } else if (startsWith(arg, "-d") || startsWith(arg, "--ddos")) {

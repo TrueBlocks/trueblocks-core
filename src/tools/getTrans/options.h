@@ -18,8 +18,8 @@ class COptions : public COptionsBase {
 public:
 // BEG_CODE_DECLARE
     bool articulate;
-    bool force;
     bool trace;
+    bool force;
 // END_CODE_DECLARE
 
     COptionsTransList transList;
