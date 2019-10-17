@@ -26,6 +26,7 @@ public:
     string_q namesp;
     bool writeHeader;
     bool writeSource;
+    ostringstream warnings;
 
     string_q classNames;
     string_q filter;

@@ -24,7 +24,7 @@ num,group,api_route,tool,order,command,command_short,data_type,option_kind,defau
 12110,apps,export,acctExport,,ddos,d,enum[on*|off],flag,,skip over dDos transactions in export ('on' by default),,FALSE,FALSE,FALSE
 12120,apps,export,acctExport,,maxTraces,m,<uint>,flag,,if --ddos:on&#44; the number of traces defining a dDos (default = 250),,FALSE,FALSE,FALSE
 12130,apps,export,acctExport,,no_header,n,boolean,switch,,do not show the header row,,FALSE,FALSE,FALSE
-12140,apps,export,acctExport,,allABIs,a,boolean,switch,,load all previously cached abi files,,FALSE,FALSE,FALSE
+12140,apps,export,acctExport,,allABIs,A,boolean,switch,,load all previously cached abi files,,FALSE,FALSE,FALSE
 12150,apps,export,acctExport,,grabABIs,g,boolean,switch,,using each trace's 'to' address&#44; grab the abi for that address (improves articulation),,FALSE,FALSE,FALSE
 12160,apps,export,acctExport,,freshen,f,boolean,switch,,freshen but do not print the exported data,,FALSE,FALSE,FALSE
 12170,apps,export,acctExport,,deltas,,boolean,switch,,for --balances option only&#44; export only changes in balances,,FALSE,FALSE,FALSE
@@ -59,7 +59,7 @@ num,group,api_route,tool,order,command,command_short,data_type,option_kind,defau
 15070,tools,abi,grabABI,,sol,l,<path>,flag,,create the ABI file from a .sol file in the local directory,,FALSE,TRUE,TRUE
 15080,tools,abi,grabABI,,open,o,boolean,switch,,open the ABI file for editing&#44; download if not already present,,FALSE,FALSE,FALSE
 15090,tools,abi,grabABI,,silent,s,boolean,switch,,if ABI cannot be acquired&#44; fail silently (useful for scripting),,FALSE,FALSE,FALSE
-15100,tools,abi,grabABI,,nodec,n,boolean,switch,,do not decorate duplicate names,,FALSE,FALSE,FALSE
+15100,tools,abi,grabABI,,nodec,r,boolean,switch,,do not decorate duplicate names,,FALSE,FALSE,FALSE
 15110,tools,abi,grabABI,,known,k,boolean,switch,,load common 'known' ABIs from cache,,FALSE,FALSE,FALSE
 15120,tools,abi,grabABI,,,,,description,,Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.,,FALSE,TRUE,TRUE
 16000,tools,state,getState,,addr_list,,list<addr>,positional,,one or more addresses (0x...) from which to retrieve balances,,TRUE,TRUE,TRUE
@@ -78,13 +78,13 @@ num,group,api_route,tool,order,command,command_short,data_type,option_kind,defau
 17040,tools,blocks,getBlock,,uniq,u,boolean,switch,,display only uniq addresses found per block,,FALSE,TRUE,TRUE
 17050,tools,blocks,getBlock,,uniqTx,q,boolean,switch,,display only uniq addresses found per transaction,,FALSE,TRUE,TRUE
 17060,tools,blocks,getBlock,,number,m,boolean,switch,,display address counts (alterntively --addrCnt&#44; --uniqTxCnt&#44; or --uniqCnt),,FALSE,TRUE,TRUE
-17070,tools,blocks,getBlock,,filter,l,<addr>,flag,,useful only for --addrs or --uniq&#44; only display this address in results,,FALSE,TRUE,TRUE
+17070,tools,blocks,getBlock,,filter,i,<addr>,flag,,useful only for --addrs or --uniq&#44; only display this address in results,,FALSE,TRUE,TRUE
 17080,tools,blocks,getBlock,,latest,l,boolean,switch,,display the latest blocks at both the node and the cache,,FALSE,FALSE,FALSE
 17090,tools,blocks,getBlock,,force,o,boolean,switch,,force a re-write of the block to the cache,,FALSE,FALSE,FALSE
-17100,tools,blocks,getBlock,,quiet,q,boolean,switch,,do not print results to screen&#44; used for speed testing and data checking,,FALSE,FALSE,FALSE
+17100,tools,blocks,getBlock,,quiet,t,boolean,switch,,do not print results to screen&#44; used for speed testing and data checking,,FALSE,FALSE,FALSE
 17110,tools,blocks,getBlock,,source,s,enum[c*|r],flag,,either :c(a)che or :(r)aw&#44; source for data retrival. (shortcuts -k = qblocks&#44; -r = node),,FALSE,FALSE,FALSE
 17120,tools,blocks,getBlock,,fields,f,enum[a*|m|c|r],flag,,either :(a)ll&#44; (m)ini&#44; (c)ache or :(r)aw; which fields to include in output (all is default),,FALSE,FALSE,FALSE
-17130,tools,blocks,getBlock,,normalize,n,boolean,switch,,normalize (remove un-common fields and sort) for comparison with other results (testing),,FALSE,FALSE,FALSE
+17130,tools,blocks,getBlock,,normalize,z,boolean,switch,,normalize (remove un-common fields and sort) for comparison with other results (testing),,FALSE,FALSE,FALSE
 17140,tools,blocks,getBlock,,,,,description,,Returns block(s) from local cache or directly from a running node.,,FALSE,TRUE,TRUE
 18000,tools,transactions,getTrans,,trans_list,,list<tx_id>,positional,,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID),,TRUE,TRUE,TRUE
 18010,tools,transactions,getTrans,,articulate,a,boolean,switch,,articulate the transactions if an ABI is found for the 'to' address,,FALSE,TRUE,TRUE
@@ -110,7 +110,7 @@ num,group,api_route,tool,order,command,command_short,data_type,option_kind,defau
 21060,tools,traces,getTrace,,,,,description,,Retrieve a transaction's traces from the local cache or a running node.,,FALSE,TRUE,TRUE
 22010,tools,quotes,ethQuote,,freshen,f,boolean,switch,,Freshen database (append new data),,FALSE,TRUE,TRUE
 22020,tools,quotes,ethQuote,,period,p,enum[5|15|30|120*|240|1440],flag,,Display prices in this increment. One of [5|15|30|120*|240|1440],,FALSE,TRUE,TRUE
-22030,tools,quotes,ethQuote,,pair,p,<pair>,flag,,Which price pair to freshen or list (see Poloniex),,FALSE,TRUE,TRUE
+22030,tools,quotes,ethQuote,,pair,r,<pair>,flag,,Which price pair to freshen or list (see Poloniex),,FALSE,TRUE,TRUE
 22040,tools,quotes,ethQuote,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format (one of [none|json*|txt|csv|api]),,FALSE,FALSE,FALSE
 22050,tools,quotes,ethQuote,,,,,description,,Freshen and/or display Ethereum price data and other purposes.,,FALSE,TRUE,TRUE
 23000,apps,scrape,blockScrape,,nBlocks,n,<blknum>,flag,,maximum number of blocks to process (defaults to 5000),,FALSE,TRUE,TRUE

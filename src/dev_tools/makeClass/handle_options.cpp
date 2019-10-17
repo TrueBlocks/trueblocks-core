@@ -34,6 +34,8 @@ bool COptions::handle_options(void) {
     }
 
     for (auto tool : tools) {
+        warnings.clear();
+        warnings.str("");
 
         map<string, string> shortCmds;
         string_q fn = "../src/" + tool.first + "/options.cpp";
@@ -45,7 +47,7 @@ bool COptions::handle_options(void) {
                 os << option.Format(STR_OPTION_STR) << endl;
                 if (!option.command_short.empty() && !contains(option.option_kind, "positional") && !contains(option.option_kind, "description")) {
                     if (!shortCmds[option.command_short].empty())
-                        LOG_WARN("short command ", cRed, option.command, "-", option.command_short, cOff, " conflicts with ", cRed, shortCmds[option.command_short], cOff);
+                        warnings << "Short command '" << cRed << option.command << "-" << option.command_short << cOff << "' conflicts with existing '" << cRed << shortCmds[option.command_short] << cOff << "'|";
                     shortCmds[option.command_short] = option.command + "-" + option.command_short;
                 }
             }
@@ -65,6 +67,12 @@ bool COptions::handle_options(void) {
             cerr << cTeal << "no changes...";
         }
         cerr << cOff << endl;
+        if (!warnings.str().empty()) {
+            CStringArray w;
+            explode(w, warnings.str(), '|');
+            for (auto warning : w)
+                LOG_WARN(warning);
+        }
     }
 
     return true;
@@ -113,12 +121,11 @@ bool COptions::check_option(const COptionDef& option) {
     if (!valid_type && option.option_kind == "description" && option.data_type.empty()) valid_type = true;
 
     if (!valid_type)
-        LOG_WARN("\tError: Unknown type '", option.data_type, "' for option '", option.command, "'");
-
+        warnings << "Unknown type '" << cRed << option.data_type << cOff << "' for option '" << cRed << option.command << cOff << "'|";
     if (option.option_kind == "description" && !endsWith(option.description_core, "."))
-        LOG_WARN("Description ", cRed, option.description_core, cOff, " should end with a period.");
+        warnings << "Description '" << cRed << option.description_core << cOff << "' should end with a period.|";
     if (option.option_kind != "description" && endsWith(option.description_core, "."))
-        LOG_WARN("Option ", cRed, option.description_core, cOff, " should not end with a period.");
+        warnings << "Option '" << cRed << option.description_core << cOff << "' should not end with a period.|";
 
     return true;
 }

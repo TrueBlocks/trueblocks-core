@@ -22,13 +22,13 @@ static const COption params[] = {
     COption("uniq", "u", "", OPT_SWITCH, "display only uniq addresses found per block"),
     COption("uniqTx", "q", "", OPT_SWITCH, "display only uniq addresses found per transaction"),
     COption("number", "m", "", OPT_SWITCH, "display address counts (alterntively --addrCnt, --uniqTxCnt, or --uniqCnt)"),
-    COption("filter", "l", "<addr>", OPT_FLAG, "useful only for --addrs or --uniq, only display this address in results"),
+    COption("filter", "i", "<addr>", OPT_FLAG, "useful only for --addrs or --uniq, only display this address in results"),
     COption("latest", "l", "", OPT_HIDDEN | OPT_SWITCH, "display the latest blocks at both the node and the cache"),
     COption("force", "o", "", OPT_HIDDEN | OPT_SWITCH, "force a re-write of the block to the cache"),
-    COption("quiet", "q", "", OPT_HIDDEN | OPT_SWITCH, "do not print results to screen, used for speed testing and data checking"),
+    COption("quiet", "t", "", OPT_HIDDEN | OPT_SWITCH, "do not print results to screen, used for speed testing and data checking"),
     COption("source", "s", "enum[c*|r]", OPT_HIDDEN | OPT_FLAG, "either :c(a)che or :(r)aw, source for data retrival. (shortcuts -k = qblocks, -r = node)"),
     COption("fields", "f", "enum[a*|m|c|r]", OPT_HIDDEN | OPT_FLAG, "either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default)"),
-    COption("normalize", "n", "", OPT_HIDDEN | OPT_SWITCH, "normalize (remove un-common fields and sort) for comparison with other results (testing)"),
+    COption("normalize", "z", "", OPT_HIDDEN | OPT_SWITCH, "normalize (remove un-common fields and sort) for comparison with other results (testing)"),
     COption("", "", "", OPT_DESCRIPTION, "Returns block(s) from local cache or directly from a running node."),
 // END_CODE_OPTIONS
 };
@@ -61,9 +61,9 @@ bool COptions::parseArguments(string_q& command) {
             GETRUNTIME_CLASS(CTransaction)->sortFieldList();
             GETRUNTIME_CLASS(CReceipt)->sortFieldList();
 
-        } else if (startsWith(arg, "-l:") || startsWith(arg, "--filter:")) {
+        } else if (startsWith(arg, "-i:") || startsWith(arg, "--filter:")) {
             string_q orig = arg;
-            arg = substitute(substitute(arg, "-l:", ""), "--filter:", "");
+            arg = substitute(substitute(arg, "-i:", ""), "--filter:", "");
             if (!isAddress(arg))
                 return usage(arg + " does not appear to be a valid Ethereum address.\n");
             filters.push_back(str_2_Addr(toLower(arg)));
@@ -72,7 +72,7 @@ bool COptions::parseArguments(string_q& command) {
             etherlib_init(defaultQuitHandler);
             force = true;
 
-        } else if (arg == "--normalize") {
+        } else if (arg == "-z" || arg == "--normalize") {
             normalize = true;
 
         } else if (arg == "-l" || arg == "--latest") {
@@ -121,7 +121,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-e" || arg == "--traces") {
             traces = true;
 
-        } else if (arg == "--quiet") {
+        } else if (arg == "-t" || arg == "--quiet") {
             quiet++;  // if both --check and --quiet are present, be very quiet...
 
         } else if (startsWith(arg, "-f:") || startsWith(arg, "--fields:")) {

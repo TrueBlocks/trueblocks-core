@@ -19,7 +19,7 @@ grabABI 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 --verbose --noconst --encode 
 #### Hidden options (shown during testing only)
 	-o  (--open)          open the ABI file for editing, download if not already present
 	-s  (--silent)        if ABI cannot be acquired, fail silently (useful for scripting)
-	-n  (--nodec)         do not decorate duplicate names
+	-r  (--nodec)         do not decorate duplicate names
 	-k  (--known)         load common 'known' ABIs from cache
 #### Hidden options (shown during testing only)
 

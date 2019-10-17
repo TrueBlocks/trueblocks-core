@@ -17,7 +17,7 @@ static const COption params[] = {
 // BEG_CODE_OPTIONS
     COption("freshen", "f", "", OPT_SWITCH, "Freshen database (append new data)"),
     COption("period", "p", "enum[5|15|30|120*|240|1440]", OPT_FLAG, "Display prices in this increment. One of [5|15|30|120*|240|1440]"),
-    COption("pair", "p", "<pair>", OPT_FLAG, "Which price pair to freshen or list (see Poloniex)"),
+    COption("pair", "r", "<pair>", OPT_FLAG, "Which price pair to freshen or list (see Poloniex)"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),
     COption("", "", "", OPT_DESCRIPTION, "Freshen and/or display Ethereum price data and other purposes."),
 // END_CODE_OPTIONS
@@ -46,8 +46,8 @@ bool COptions::parseArguments(string_q& command) {
             if (!isUnsigned(arg) || freq % 5)
                 return usage("Positive multiple of 5 expected: " + orig);
 
-        } else if (startsWith(arg, "--pair:")) {
-            arg = substitute(orig, "--pair:", "");
+        } else if (startsWith(arg, "-r:") || startsWith(arg, "--pair:")) {
+            arg = substitute(substitute(orig, "-r:", ""), "--pair:", "");
             source.pair = arg;
 
         } else {

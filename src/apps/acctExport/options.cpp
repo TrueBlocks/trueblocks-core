@@ -22,7 +22,7 @@ static const COption params[] = {
     COption("ddos", "d", "enum[on*|off]", OPT_HIDDEN | OPT_FLAG, "skip over dDos transactions in export ('on' by default)"),
     COption("maxTraces", "m", "<uint>", OPT_HIDDEN | OPT_FLAG, "if --ddos:on, the number of traces defining a dDos (default = 250)"),
     COption("no_header", "n", "", OPT_HIDDEN | OPT_SWITCH, "do not show the header row"),
-    COption("allABIs", "a", "", OPT_HIDDEN | OPT_SWITCH, "load all previously cached abi files"),
+    COption("allABIs", "A", "", OPT_HIDDEN | OPT_SWITCH, "load all previously cached abi files"),
     COption("grabABIs", "g", "", OPT_HIDDEN | OPT_SWITCH, "using each trace's 'to' address, grab the abi for that address (improves articulation)"),
     COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
     COption("deltas", "", "", OPT_HIDDEN | OPT_SWITCH, "for --balances option only, export only changes in balances"),
@@ -84,7 +84,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-n" || arg == "--no_header") {
             no_header = true;
 
-        } else if (arg == "-n" || arg == "--allABIs") {
+        } else if (arg == "-A" || arg == "--allABIs") {
             allABIs = true;
 
         } else if (arg == "-p" || arg == "--appearances") {
