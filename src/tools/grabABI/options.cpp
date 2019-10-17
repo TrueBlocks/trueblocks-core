@@ -51,8 +51,13 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
 // BEG_CODE_AUTO
-// END_CODE_AUTO
+        } else if (arg == "-n" || arg == "--noconst") {
+            noconst = true;
 
+        } else if (arg == "-s" || arg == "--silent") {
+            silent = true;
+
+// END_CODE_AUTO
         } else if (arg == "-g" || arg == "--gen" || arg == "--generate") {
             classDir = getCWD();
             prefix = getPrefix(classDir);
@@ -74,12 +79,6 @@ bool COptions::parseArguments(string_q& command) {
             parts |= SIG_FTYPE;
             asData = true;
             colorsOff();
-
-        } else if (arg == "-s" || arg == "--silent") {
-            silent = true;
-
-        } else if (arg == "-n" || arg == "--noconst") {
-            noconst = true;
 
 //        } else if (arg == "-f" || arg == "--freshen") {
 //extern void rebuildFourByteDB(void);
@@ -220,11 +219,11 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
 
 // BEG_CODE_INIT
+    noconst = false;
+    silent = false;
 // END_CODE_INIT
 
     parts = SIG_DEFAULT;
-    noconst = false;
-    silent = false;
     loadKnown = false;
     decNames = true;
     asData = false;

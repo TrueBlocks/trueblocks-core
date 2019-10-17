@@ -42,10 +42,10 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
 // BEG_CODE_AUTO
-// END_CODE_AUTO
-
         } else if (arg == "-f" || arg == "--freshen") {
             freshen = true;
+
+// END_CODE_AUTO
 
         } else if (startsWith(arg, "-p:") || startsWith(arg, "--period:")) {
             arg = substitute(substitute(orig, "-p:", ""), "--period:", "");
@@ -99,9 +99,9 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
 
 // BEG_CODE_INIT
+    freshen = false;
 // END_CODE_INIT
 
-    freshen = false;
     freq = 120;
     first = true;
     if (isApiMode())

@@ -11,8 +11,8 @@ getTokenInfo -th
 | -------: | :------- | :------- |
 |  | addr_list | two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported (required) |
 |  | block_list | an optional list of one or more blocks at which to report balances, defaults to 'latest' |
-| -b | --byAcct | consider each address an ERC20 token except the last, whose balance is reported for each token |
-| -n | --nozero | suppress the display of zero balance accounts |
+| -b | --by_acct | consider each address an ERC20 token except the last, whose balance is reported for each token |
+| -n | --no_zero | suppress the display of zero balance accounts |
 
 #### Hidden options (shown during testing only)
 | -i | --info enum[name|decimals|totalSupply|version|symbol|all] | retreive information [name&#124;decimals&#124;totalSupply&#124;version&#124;symbol&#124;all] about the token |

@@ -33,26 +33,25 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
 // BEG_CODE_LOCAL_INIT
+    bool no_header = false;
 // END_CODE_LOCAL_INIT
 
-    bool no_header = false;
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier
 // BEG_CODE_AUTO
-// END_CODE_AUTO
-
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
-
-        } else if (arg == "-c" || arg == "--count_only") {
-            option1 = true;
 
         } else if (arg == "-n" || arg == "--no_header") {
             no_header = true;
 
+        } else if (arg == "-c" || arg == "--count_only") {
+            count_only = true;
+
+// END_CODE_AUTO
         } else if (startsWith(arg, "-d") || startsWith(arg, "--ddos")) {
             arg = substitute(substitute(arg, "-d:", ""), "--ddos:", "");
             if (arg != "on" && arg != "off")
@@ -113,7 +112,7 @@ bool COptions::parseArguments(string_q& command) {
             break;
     }
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
-    if (option1)
+    if (count_only)
         expContext().fmtMap["format"] = expContext().fmtMap["header"] = "[{HASH}]\t[{TRACESCNT}]";
     if (no_header)
         expContext().fmtMap["header"] = "";
@@ -129,11 +128,11 @@ void COptions::Init(void) {
     optionOn(OPT_RAW | OPT_OUTPUT);
 
 // BEG_CODE_INIT
+    articulate = false;
+    count_only = false;
 // END_CODE_INIT
 
     transList.Init();
-    option1 = false;
-    articulate = false;
     skipDdos = false;
 }
 

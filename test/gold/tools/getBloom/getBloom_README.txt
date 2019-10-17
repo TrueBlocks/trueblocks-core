@@ -20,7 +20,7 @@ getBloom -th
 | -n | --bitcount | display the number of bits lit per bloom |
 
 #### Hidden options (shown during testing only)
-| -f | --force | force a re-write of the bloom to the cache |
+| -o | --force | force a re-write of the bloom to the cache |
 #### Hidden options (shown during testing only)
 
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |

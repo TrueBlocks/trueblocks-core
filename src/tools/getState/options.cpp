@@ -18,7 +18,7 @@ static const COption params[] = {
     COption("addr_list", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) from which to retrieve balances"),
     COption("block_list", "", "list<blknum>", OPT_POSITIONAL, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
     COption("mode", "m", "enum[none|some*|all|balance|nonce|code|storage|deployed|accttype]", OPT_FLAG, "control which state to export. One of [none|some*|all|balance|nonce|code|storage|deployed|accttype]"),
-    COption("nozero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
+    COption("no_zero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
     COption("changes", "c", "", OPT_SWITCH, "only report a balance when it changes from one block to the next"),
     COption("no_header", "o", "", OPT_HIDDEN | OPT_SWITCH, "hide the header in txt and csv mode"),
     COption("no_history", "", "", OPT_HIDDEN | OPT_SWITCH, "for testing only, hide the server's historical state"),
@@ -36,9 +36,9 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
 // BEG_CODE_LOCAL_INIT
+    bool no_header = false;
 // END_CODE_LOCAL_INIT
 
-    bool no_header = false;
     bool fake_no_history = false;
 
     Init();
@@ -47,17 +47,16 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
 // BEG_CODE_AUTO
-// END_CODE_AUTO
-
-        } else if (arg == "-n" || arg == "--nozero") {
-            exclude_zero = true;
-
         } else if (arg == "-c" || arg == "--changes") {
             changes = true;
 
         } else if (arg == "-o" || arg == "--no_header") {
             no_header = true;
 
+        } else if (arg == "-n" || arg == "--no_zero") {
+            no_zero = true;
+
+// END_CODE_AUTO
         } else if (arg == "--no_history" && isTestMode()) {
             fake_no_history = true;
 
@@ -171,10 +170,10 @@ void COptions::Init(void) {
     optionOn(OPT_RAW | OPT_OUTPUT);
 
 // BEG_CODE_INIT
+    changes = false;
+    no_zero = false;
 // END_CODE_INIT
 
-    exclude_zero = false;
-    changes = false;
     prevBal = 0;
     mode = ST_BALANCE;
 

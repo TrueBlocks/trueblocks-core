@@ -16,11 +16,14 @@
 //-----------------------------------------------------------------------------
 class COptions : public CBlockOptions {
 public:
+// BEG_CODE_DECLARE
+    bool force;
+    bool normalize;
+// END_CODE_DECLARE
+
     bool isCheck;
     bool isCache;
     bool hashes;
-    bool force;
-    bool normalize;
     int quiet;
     bool showZeroTrace;
     string_q format;

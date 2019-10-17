@@ -60,7 +60,7 @@ bool visitTransaction(CTransaction& trans, void *data) {
     }
 
     //////////////////////////////////////////////////////
-    if (opt->option1) {
+    if (opt->count_only) {
         uint64_t cnt = getTraceCount(trans.hash);
         if (isText) {
             cout << trans.hash << "\t" << cnt << endl;

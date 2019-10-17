@@ -29,6 +29,9 @@ private:
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
+// BEG_CODE_DECLARE
+// END_CODE_DECLARE
+
     timestamp_t latestBlockTs;
     blknum_t    latestBlockNum;
 

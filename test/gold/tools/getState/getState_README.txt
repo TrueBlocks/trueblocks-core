@@ -12,7 +12,7 @@ getState -th
 |  | addr_list | one or more addresses (0x...) from which to retrieve balances (required) |
 |  | block_list | an optional list of one or more blocks at which to report balances, defaults to 'latest' |
 | -m | --mode enum[none|some*|all|balance|nonce|code|storage|deployed|accttype] | control which state to export. One of [none&#124;some*&#124;all&#124;balance&#124;nonce&#124;code&#124;storage&#124;deployed&#124;accttype] |
-| -n | --nozero | suppress the display of zero balance accounts |
+| -n | --no_zero | suppress the display of zero balance accounts |
 | -c | --changes | only report a balance when it changes from one block to the next |
 
 #### Hidden options (shown during testing only)

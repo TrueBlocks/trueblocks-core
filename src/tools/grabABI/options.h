@@ -15,8 +15,12 @@
 
 class COptions : public COptionsBase {
 public:
-    uint64_t parts;
+// BEG_CODE_DECLARE
     bool noconst;
+    bool silent;
+// END_CODE_DECLARE
+
+    uint64_t parts;
     bool asData;
     bool loadKnown;
     bool decNames;
@@ -25,7 +29,6 @@ public:
     CAddressArray addrs;
     string_q classDir;
     string_q prefix;
-    bool silent;
 
     COptions(void);
     ~COptions(void);

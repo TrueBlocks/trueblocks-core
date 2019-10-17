@@ -51,14 +51,13 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
 // BEG_CODE_AUTO
-// END_CODE_AUTO
+        } else if (arg == "-m" || arg == "--matchCase") {
+            matchCase = true;
 
+// END_CODE_AUTO
         } else if (arg == "-e" || arg == "--expand") {
             searchFields = STR_DISPLAY_ACCOUNTNAME;
             format = searchFields;
-
-        } else if (arg == "-m" || arg == "--matchCase") {
-            matchCase = true;
 
         } else if (arg == "-n" || arg == "--named") {
             if (deflt) { types = 0; deflt = false; }
@@ -149,12 +148,12 @@ void COptions::Init(void) {
     optionOn(OPT_PREFUND | OPT_OUTPUT);
 
 // BEG_CODE_INIT
+    matchCase = false;
 // END_CODE_INIT
 
     items.clear();
     searches.clear();
     searchFields = shortenFormat(STR_DISPLAY_ACCOUNTNAME);
-    matchCase = false;
     types = NAMED;
     minArgs = 0;
 }

@@ -13,6 +13,17 @@ using uint_addr_mp = map<uint32_t,address_t>;
 //-----------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
+// BEG_CODE_DECLARE
+    bool articulate;
+    bool logs;
+    bool traces;
+    bool balances;
+    bool appearances;
+    bool count_only;
+    bool freshen;
+    bool deltas;
+// END_CODE_DECLARE
+
     CAbi abis;
     CAccountWatchArray monitors;
     CAccountWatchArray named;
@@ -21,16 +32,8 @@ public:
     bool writeTraces;
     bool skipDdos;
     size_t maxTraces;
-    bool articulate;
     size_t nExported;
-    bool doAppearances;
-    bool doLogs;
-    bool doTraces;
-    bool doBalances;
-    bool doABIs;
-    bool freshen_only;
-    bool count_only;
-    bool deltas_only;
+    bool grabABIs;
     string_q className;
     address_t hackAppAddr;
     uint_addr_mp prefundAddrMap;

@@ -20,14 +20,14 @@ on, both, fast, state, tools/getState, multiple_accounts_and_blocks_1, n, addr_l
 on, both, fast, state, tools/getState, multiple_accounts_and_blocks_2, n, addr_list = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 0x6f46cf5569aefa1acc1009290c8e043747172d89 0xf27daff52c38b2c373ad2b9392652ddf433303c4 & block_list = 3500000 3700000 4000000 & fmt = txt
 on, both, fast, state, tools/getState, display_tab_format,             y, addr_list = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & block_list = 4000000 & data & json
 on, both, fast, state, tools/getState, display_tab_format_long,        y, addr_list = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & block_list = 4000000 & data
-on, both, fast, state, tools/getState, no_zero_1,                      y, addr_list = 0xf27daff52c38b2c373ad2b9392652ddf433303c5 & block_list = 3500000 & nozero
-on, both, fast, state, tools/getState, no_zero_2,                      y, addr_list = 0xf27daff52c38b2c373ad2b9392652ddf433303c5 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & block_list = 3500000 & nozero
-on, both, fast, state, tools/getState, no_zero_3,                      y, addr_list = 0xf27daff52c38b2c373ad2b9392652ddf433303c4 & block_list = 0 4000000 & nozero
-on, both, fast, state, tools/getState, no_zero_4,                      y, addr_list = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 0x6f46cf5569aefa1acc1009290c8e043747172d89 0xf27daff52c38b2c373ad2b9392652ddf433303c4 & block_list = 3500000 3700000 4000000 & nozero
-on, both, fast, state, tools/getState, no_zero_long_1,                 n, addr_list = 0xf27daff52c38b2c373ad2b9392652ddf433303c5 & block_list = 3500000 & fmt = txt & nozero
-on, both, fast, state, tools/getState, no_zero_long_2,                 n, addr_list = 0xf27daff52c38b2c373ad2b9392652ddf433303c5 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & block_list = 3500000 & fmt = txt & nozero
-on, both, fast, state, tools/getState, no_zero_long_3,                 n, addr_list = 0xf27daff52c38b2c373ad2b9392652ddf433303c4 & block_list = 0 4000000 & fmt = txt & nozero
-on, both, fast, state, tools/getState, no_zero_long_4,                 n, addr_list = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 0x6f46cf5569aefa1acc1009290c8e043747172d89 0xf27daff52c38b2c373ad2b9392652ddf433303c4 & block_list = 3500000 3700000 4000000 & fmt = txt & nozero
+on, both, fast, state, tools/getState, no_zero_1,                      y, addr_list = 0xf27daff52c38b2c373ad2b9392652ddf433303c5 & block_list = 3500000 & no_zero
+on, both, fast, state, tools/getState, no_zero_2,                      y, addr_list = 0xf27daff52c38b2c373ad2b9392652ddf433303c5 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & block_list = 3500000 & no_zero
+on, both, fast, state, tools/getState, no_zero_3,                      y, addr_list = 0xf27daff52c38b2c373ad2b9392652ddf433303c4 & block_list = 0 4000000 & no_zero
+on, both, fast, state, tools/getState, no_zero_4,                      y, addr_list = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 0x6f46cf5569aefa1acc1009290c8e043747172d89 0xf27daff52c38b2c373ad2b9392652ddf433303c4 & block_list = 3500000 3700000 4000000 & no_zero
+on, both, fast, state, tools/getState, no_zero_long_1,                 n, addr_list = 0xf27daff52c38b2c373ad2b9392652ddf433303c5 & block_list = 3500000 & fmt = txt & no_zero
+on, both, fast, state, tools/getState, no_zero_long_2,                 n, addr_list = 0xf27daff52c38b2c373ad2b9392652ddf433303c5 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & block_list = 3500000 & fmt = txt & no_zero
+on, both, fast, state, tools/getState, no_zero_long_3,                 n, addr_list = 0xf27daff52c38b2c373ad2b9392652ddf433303c4 & block_list = 0 4000000 & fmt = txt & no_zero
+on, both, fast, state, tools/getState, no_zero_long_4,                 n, addr_list = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 0x6f46cf5569aefa1acc1009290c8e043747172d89 0xf27daff52c38b2c373ad2b9392652ddf433303c4 & block_list = 3500000 3700000 4000000 & fmt = txt & no_zero
 on, both, fast, state, tools/getState, verbose,                        y, addr_list = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & block_list = 4000000 & verbose
 on, both, fast, state, tools/getState, verbose_long,                   y, addr_list = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & block_list = 4000000 & verbose
 on, both, fast, state, tools/getState, special_block_1,                y, addr_list = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & block_list = iceage
@@ -87,9 +87,9 @@ on, cmd,  fast, state, tools/getState, from_file,                      y, file:c
 # run_state_test("getState_no_zero_2"                      "-n" " ${EA6}" " ${TIP}" " 3500000")
 # run_state_test("getState_no_zero_3"                      "-n" " ${EA7}" " 0" " 4000000")
 # run_state_test("getState_no_zero_4"                      "-n" "${TIP}" " ${EA5}" " ${EA7}"              " 3500000" " 3700000" " 4000000")
-# run_state_test("getState_no_zero_long_2"                 "--nozero" " ${EA6}" " ${TIP}" " 3500000")
-# run_state_test("getState_no_zero_long_3"                 "--nozero" " ${EA7}" " 0" " 4000000")
-# run_state_test("getState_no_zero_long_4"                  "--nozero" "${TIP}" " ${EA5}" " ${EA7}"               " 3500000" " 3700000" " 4000000")
+# run_state_test("getState_no_zero_long_2"                 "--no_zero" " ${EA6}" " ${TIP}" " 3500000")
+# run_state_test("getState_no_zero_long_3"                 "--no_zero" " ${EA7}" " 0" " 4000000")
+# run_state_test("getState_no_zero_long_4"                  "--no_zero" "${TIP}" " ${EA5}" " ${EA7}"               " 3500000" " 3700000" " 4000000")
 # run_state_test("getState_nonce"        "${TIP}" " --mode" " nonce" " 2500000")
 # run_state_test("getState_nonce_only"   "${TIP}" " --mode" " none" " --mode" " nonce" " 2500000")
 # run_state_test("getState_none"         "${TIP}" " --mode" " none" " 2500000")

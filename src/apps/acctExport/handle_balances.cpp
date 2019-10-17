@@ -30,7 +30,7 @@ bool COptions::exportBalances(void) {
     }
 
     bool isJson = (exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1);
-    if (isJson && !freshen_only)
+    if (isJson && !freshen)
         cout << "[";
 
     for (auto monitor : monitors) {
@@ -40,25 +40,25 @@ bool COptions::exportBalances(void) {
 
         uint64_t nDeltas = 0;
         uint64_t lastDelta = 0;
-        map<blknum_t, CBalanceDelta> deltas;
+        map<blknum_t, CBalanceDelta> deltasMap;
         string_q balFile = getMonitorBals(monitor.address);
         if (fileExists(balFile)) {
             CArchive balIn(READING_ARCHIVE);
             if (balIn.Lock(balFile, modeReadOnly, LOCK_NOWAIT)) {
                 balIn >> nDeltas;
                 balIn >> lastDelta;
-                while (deltas.size() < nDeltas) {
+                while (deltasMap.size() < nDeltas) {
                     CBalanceDelta rec;
                     balIn >> rec;
                     rec.address = monitor.address;
-                    deltas[rec.blockNumber] = rec;
+                    deltasMap[rec.blockNumber] = rec;
                 };
                 balIn.Release();
             }
 HERE("as read")
 if (isTestMode()) {
     cerr << "nDeltas: " << nDeltas << "\tlastDelta: --lastDelta--" << endl;
-    for (auto delta : deltas)
+    for (auto delta : deltasMap)
         cerr << delta.first << "\t" << delta.second;
 }
         }
@@ -81,9 +81,9 @@ HERE("data")
                 // handle the prior balance -- note we always have this in the delta map other than zero block
                 record.priorBalance = priorBalance;
 //                if (record.blockNumber < lastDelta) {
-//                    auto it = deltas.lower_bound(record.blockNumber);
-////                    cout << "Getting from cache " << record.blockNumber << " it: " << (it == deltas.end() ? 10 : it->first) << " " << (it == deltas.end() ? none : it->second);
-//                    if (it == deltas.end())
+//                    auto it = deltasMap.lower_bound(record.blockNumber);
+////                    cout << "Getting from cache " << record.blockNumber << " it: " << (it == deltasMap.end() ? 10 : it->first) << " " << (it == deltasMap.end() ? none : it->second);
+//                    if (it == deltasMap.end())
 //                        --it;
 //                    record.balance = it->second.balance;
 //                } else {
@@ -92,7 +92,7 @@ HERE("data")
 //                }
                 record.diff = (bigint_t(record.balance) - bigint_t(record.priorBalance));
 
-                if (!freshen_only && !deltas_only) {
+                if (!freshen && !deltas) {
                     if (isJson && !first)
                         cout << ", ";
                     cout << record;
@@ -108,12 +108,12 @@ HERE("data")
                 rec.balance = record.balance;
                 rec.diff = record.diff;
                 if (record.diff != 0)
-                    deltas[rec.blockNumber] = rec;
+                    deltasMap[rec.blockNumber] = rec;
             }
         }
 
-        if (deltas_only) {
-            for (auto delta : deltas) {
+        if (deltas) {
+            for (auto delta : deltasMap) {
                 if (isJson && !first)
                     cout << ", ";
                 cout << delta.second;
@@ -125,11 +125,11 @@ HERE("data")
         // cache the deltas
         CArchive balOut(WRITING_ARCHIVE);
         if (!isTestMode() && balOut.Lock(balFile, modeWriteCreate, LOCK_NOWAIT)) {
-            nDeltas = deltas.size();
+            nDeltas = deltasMap.size();
             lastDelta = (scanRange.second + 1);
             balOut << nDeltas;
             balOut << lastDelta;
-            for (auto delta : deltas) {
+            for (auto delta : deltasMap) {
                 balOut << delta.second;
             }
             balOut.Release();
@@ -137,13 +137,13 @@ HERE("data")
 HERE("Out")
 if (isTestMode()) {
     cerr << "nDeltas: " << nDeltas << "\tlastDelta: --lastDelta--" << endl;
-    for (auto delta : deltas)
+    for (auto delta : deltasMap)
         cerr << delta.first << "\t" << delta.second;
 }
         }
     }
 
-    if (isJson && !freshen_only)
+    if (isJson && !freshen)
         cout << "]";
 
     // return to the default provider

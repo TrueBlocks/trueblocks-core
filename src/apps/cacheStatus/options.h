@@ -20,9 +20,12 @@ typedef map<string_q,string_q> CIndexHashMap;
 //-------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
+// BEG_CODE_DECLARE
+    bool details;
+// END_CODE_DECLARE
+
     CStatus status;
     string_q mode;
-    bool details;
     bool isListing;
     bool isConfig;
     blknum_t start;

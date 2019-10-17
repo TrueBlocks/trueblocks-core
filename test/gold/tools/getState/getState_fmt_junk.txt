@@ -10,7 +10,7 @@ getState 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 --fmt junk 2000000
 	addr_list             one or more addresses (0x...) from which to retrieve balances (required)
 	block_list            an optional list of one or more blocks at which to report balances, defaults to 'latest'
 	-m  (--mode enum[none|some*|all|balance|nonce|code|storage|deployed|accttype])control which state to export. One of [none|some*|all|balance|nonce|code|storage|deployed|accttype]
-	-n  (--nozero)        suppress the display of zero balance accounts
+	-n  (--no_zero)       suppress the display of zero balance accounts
 	-c  (--changes)       only report a balance when it changes from one block to the next
 
 #### Hidden options (shown during testing only)

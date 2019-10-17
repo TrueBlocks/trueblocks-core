@@ -50,8 +50,10 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
 // BEG_CODE_AUTO
-// END_CODE_AUTO
+        } else if (arg == "-s" || arg == "--silent") {
+            silent = true;
 
+// END_CODE_AUTO
         } else if (arg == "-p" || arg == "--options") {
             handle_options();
             return false;
@@ -79,9 +81,6 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Incompatible options '-r' and '-l'. Choose one or the other.");
             isList = true;
             isRemove = isEdit = false;  // last in wins
-
-        } else if (arg == "-s" || arg == "--silent") {
-            silent = true;
 
         } else if (startsWith(arg, "-n:") || startsWith(arg, "--namespace:")) {
 
@@ -164,6 +163,7 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
 
 // BEG_CODE_INIT
+    silent = false;
 // END_CODE_INIT
 
     isEdit = false;
@@ -171,7 +171,6 @@ void COptions::Init(void) {
     isRun = false;
     isList = false;
     isAll = false;
-    silent = false;
     namesp = "";
     classNames = "";
     filter = "";

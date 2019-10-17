@@ -17,8 +17,8 @@ static const COption params[] = {
 // BEG_CODE_OPTIONS
     COption("addr_list", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported"),
     COption("block_list", "", "list<blknum>", OPT_POSITIONAL, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
-    COption("byAcct", "b", "", OPT_SWITCH, "consider each address an ERC20 token except the last, whose balance is reported for each token"),
-    COption("nozero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
+    COption("by_acct", "b", "", OPT_SWITCH, "consider each address an ERC20 token except the last, whose balance is reported for each token"),
+    COption("no_zero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
     COption("info", "i", "enum[name|decimals|totalSupply|version|symbol|all]", OPT_HIDDEN | OPT_FLAG, "retreive information [name|decimals|totalSupply|version|symbol|all] about the token"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s)."),
 // END_CODE_OPTIONS
@@ -43,20 +43,19 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
 // BEG_CODE_AUTO
+        } else if (arg == "-b" || arg == "--by_acct") {
+            by_acct = true;
+
+        } else if (arg == "-n" || arg == "--no_zero") {
+            no_zero = true;
+
 // END_CODE_AUTO
-
-        } else if (arg == "-n" || arg == "--nozero") {
-            exclude_zero = true;
-
         } else if (startsWith(arg, "-i:") || startsWith(arg, "--info:")) {
             arg = substitute(substitute(arg, "-i:", ""), "--info:", "");
             string_q unused;
             if (!isValidInfo(arg, unused))
                 return usage(arg + " does not appear to be a valid tokenInfo option.\n");
             tokenInfo = arg;
-
-        } else if (arg == "-b" || arg == "--byAcct") {
-            byAccount = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
@@ -98,12 +97,12 @@ bool COptions::parseArguments(string_q& command) {
 
     if (!tokenInfo.empty()) {
         // if tokenInfo is not empty, all addresses are tokens
-        byAccount = true;
+        by_acct = true;
     }
 
     address_t lastItem;
     for (auto addr : addrs) {
-        if (byAccount) {
+        if (by_acct) {
             // all items but the last are tokens, the last item is the account <token> [tokens...] <holder>
             CTokenState_erc20 watch;
             watch.address = addr;
@@ -123,7 +122,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // if tokenInfo is not empty, all addresses are tokens
-    if (byAccount && (tokenInfo.empty() || tokenInfo == "balanceOf")) {
+    if (by_acct && (tokenInfo.empty() || tokenInfo == "balanceOf")) {
         // remove the last one and push it on the holders array
         watches.pop_back();
         holders.push_back(lastItem);
@@ -157,14 +156,14 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
 
 // BEG_CODE_INIT
+    by_acct = false;
+    no_zero = false;
 // END_CODE_INIT
 
     watches.clear();
     holders.clear();
 
     optionOff(OPT_DOLLARS|OPT_ETHER);
-    exclude_zero = false;
-    byAccount = false;
     tokenInfo = "";
     blocks.Init();
     CHistoryOptions::Init();

@@ -16,9 +16,12 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
+// BEG_CODE_DECLARE
+    bool articulate;
+// END_CODE_DECLARE
+
     COptionsTransList transList;
     bool option1;
-    bool articulate;
     CAbi abi_spec;
     bool first;
     CStringArray errors;

@@ -17,13 +17,16 @@
 
 class COptions : public CBlockOptions {
 public:
+// BEG_CODE_DECLARE
+    bool silent;
+// END_CODE_DECLARE
+
     CAddressArray addrs;
     CWebAPI api;
     string_q header;
     string_q displayString;
     string_q exportFormat;
     string_q type;
-    bool silent;
     bool fromFile;
 
     COptions(void);

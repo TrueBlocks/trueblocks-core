@@ -25,6 +25,9 @@ typedef bool (*APPEARANCEFILTERFUNC)(CAppearanceArray_base& dataArray, const CAp
 //-------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
+// BEG_CODE_DECLARE
+// END_CODE_DECLARE
+
     CStats stats;
     CAccountWatchArray monitors;
     string_q mode;

@@ -43,6 +43,9 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
 // BEG_CODE_AUTO
+        } else if (arg == "-s" || arg == "--silent") {
+            silent = true;
+
 // END_CODE_AUTO
 
         } else if (startsWith(arg, "-t:") || startsWith(arg, "--type:")) {
@@ -70,9 +73,6 @@ bool COptions::parseArguments(string_q& command) {
             } else if (!ret.empty()) {
                 return usage(ret);
             }
-
-        } else if (arg == "-s" || arg == "--silent") {
-            silent = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
@@ -121,13 +121,13 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
 
 // BEG_CODE_INIT
+    silent = false;
 // END_CODE_INIT
 
     type = "";
     blocks.Init();
     exportFormat = "json";
     addrs.clear();
-    silent = false;
     fromFile = false;
 }
 

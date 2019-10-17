@@ -39,14 +39,13 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
 // BEG_CODE_AUTO
-// END_CODE_AUTO
-
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
 
         } else if (arg == "-l" || arg == "--logs") {
-            option1 = true;
+            logs = true;
 
+// END_CODE_AUTO
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -68,7 +67,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!transList.hasTrans())
         return usage("Please specify at least one transaction identifier.");
 
-    if (option1)
+    if (logs)
         SHOW_FIELD(CReceipt, "logs");
 
     if (isRaw)
@@ -93,7 +92,7 @@ bool COptions::parseArguments(string_q& command) {
         case TXT1:
         case CSV1:
             format = getGlobalConfig("getReceipt")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_RECEIPT : format);
-            if (option1)
+            if (logs)
                 format += "\t[{LOGSCNT}]";
             manageFields("CReceipt:" + cleanFmt(format, exportFmt));
             break;
@@ -113,11 +112,11 @@ void COptions::Init(void) {
     optionOn(OPT_RAW | OPT_OUTPUT);
 
 // BEG_CODE_INIT
+    articulate = false;
+    logs = false;
 // END_CODE_INIT
 
     transList.Init();
-    option1 = false;
-    articulate = false;
 }
 
 //---------------------------------------------------------------------------------------------------

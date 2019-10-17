@@ -16,9 +16,12 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    COptionsTransList transList;
-    bool option1;
+// BEG_CODE_DECLARE
     bool articulate;
+    bool count_only;
+// END_CODE_DECLARE
+
+    COptionsTransList transList;
     CAbi abi_spec;
     bool first;
     bool skipDdos;

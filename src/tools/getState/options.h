@@ -16,13 +16,16 @@
 //-----------------------------------------------------------------------------
 class COptions : public CHistoryOptions {
 public:
+// BEG_CODE_DECLARE
+    bool changes;
+    bool no_zero;
+// END_CODE_DECLARE
+
     CStringArray errors;
     CAddressArray addrs;
     address_t current;
     ethstate_t mode;
     biguint_t prevBal;
-    bool exclude_zero;
-    bool changes;
     wei_t deminimus;
     bool first;
 

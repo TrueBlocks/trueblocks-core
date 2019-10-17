@@ -16,6 +16,9 @@
 //-----------------------------------------------------------------------------
 class COptions : public CBlockOptions {
 public:
+// BEG_CODE_DECLARE
+// END_CODE_DECLARE
+
     bool blockOnly;
     bool receiptsOnly;
     bool asBits;

@@ -19,7 +19,7 @@ static const COption params[] = {
     COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
     COption("trace", "t", "", OPT_SWITCH, "display the transaction's trace"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),
-    COption("force", "", "", OPT_HIDDEN | OPT_SWITCH, "force the results into the tx cache"),
+    COption("force", "o", "", OPT_HIDDEN | OPT_SWITCH, "force the results into the tx cache"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve an Ethereum transaction from the local cache or a running node."),
 // END_CODE_OPTIONS
 };
@@ -40,16 +40,16 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
 // BEG_CODE_AUTO
-// END_CODE_AUTO
-
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
 
-        } else if (arg == "-t" || arg == "--trace") {
-            useTrace = true;
-
-        } else if (arg == "--force") {
+        } else if (arg == "-o" || arg == "--force") {
             force = true;
+
+        } else if (arg == "-t" || arg == "--trace") {
+            trace = true;
+
+// END_CODE_AUTO
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -72,7 +72,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!transList.hasTrans())
         return usage("Please specify at least one transaction identifier.");
 
-    if (useTrace)
+    if (trace)
         SHOW_FIELD(CTransaction, "traces");
 
     if (isRaw)
@@ -97,7 +97,7 @@ bool COptions::parseArguments(string_q& command) {
         case TXT1:
         case CSV1:
             format = getGlobalConfig("getTrans")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_TRANSACTION : format);
-            if (useTrace)
+            if (trace)
                 format += "\t[{TRACESCNT}]";
             manageFields("CTransaction:" + cleanFmt(format, exportFmt));
             break;
@@ -117,12 +117,12 @@ void COptions::Init(void) {
     optionOn(OPT_RAW | OPT_OUTPUT);
 
 // BEG_CODE_INIT
+    articulate = false;
+    force = false;
+    trace = false;
 // END_CODE_INIT
 
     transList.Init();
-    useTrace = false;
-    force = false;
-    articulate = false;
 }
 
 //---------------------------------------------------------------------------------------------------

@@ -58,7 +58,7 @@ bool visitTransaction(CTransaction& trans, void *data) {
    }
 
    //////////////////////////////////////////////////////
-   if (opt->useTrace)
+   if (opt->trace)
        getTraces(trans.traces, trans.getValueByName("hash"));
    //////////////////////////////////////////////////////
 

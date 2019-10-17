@@ -25,7 +25,7 @@ static const COption params[] = {
     COption("allABIs", "A", "", OPT_HIDDEN | OPT_SWITCH, "load all previously cached abi files"),
     COption("grabABIs", "g", "", OPT_HIDDEN | OPT_SWITCH, "using each trace's 'to' address, grab the abi for that address (improves articulation)"),
     COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
-    COption("deltas", "", "", OPT_HIDDEN | OPT_SWITCH, "for --balances option only, export only changes in balances"),
+    COption("deltas", "e", "", OPT_HIDDEN | OPT_SWITCH, "for --balances option only, export only changes in balances"),
     COption("start", "", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to export (inclusive)"),
     COption("end", "", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to export (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more Ethereum addresses."),
@@ -55,6 +55,18 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
 
+        } else if (arg == "-l" || arg == "--logs") {
+            logs = true;
+
+        } else if (arg == "-t" || arg == "--traces") {
+            traces = true;
+
+        } else if (arg == "-c" || arg == "--balances") {
+            balances = true;
+
+        } else if (arg == "-p" || arg == "--appearances") {
+            appearances = true;
+
         } else if (arg == "-o" || arg == "--count_only") {
             count_only = true;
 
@@ -63,6 +75,12 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-A" || arg == "--allABIs") {
             allABIs = true;
+
+        } else if (arg == "-f" || arg == "--freshen") {
+            freshen = true;
+
+        } else if (arg == "-e" || arg == "--deltas") {
+            deltas = true;
 
 // END_CODE_AUTO
 
@@ -102,27 +120,9 @@ bool COptions::parseArguments(string_q& command) {
                 EXIT_USAGE("Not a number for --endBlock: " + arg + ". Quitting.");
             scanRange.second = str_2_Uint(arg);
 
-        } else if (arg == "-p" || arg == "--appearances") {
-            doAppearances = true;
-
-        } else if (arg == "-l" || arg == "--logs") {
-            doLogs = true;
-
-        } else if (arg == "-t" || arg == "--traces") {
-            doTraces = true;
-
-        } else if (arg == "-c" || arg == "--balances") {
-            doBalances = true;
-
         } else if (arg == "-g" || arg == "--grabABIs") {
-            doTraces = true;
-            doABIs = true;
-
-        } else if (arg == "-f" || arg == "--freshen") {
-            freshen_only = true;
-
-        } else if (arg == "--deltas") {
-            deltas_only = true;
+            traces = true;
+            grabABIs = true;
 
         } else if (startsWith(arg, "0x")) {
 
@@ -166,13 +166,13 @@ bool COptions::parseArguments(string_q& command) {
 
     SHOW_FIELD(CTransaction, "traces");
 
-    if ((doAppearances + doLogs + doTraces + doBalances) > 1)
+    if ((appearances + logs + traces + balances) > 1)
         EXIT_USAGE("Please export only one of list, logs, traces, or balances. Quitting...");
 
     if (monitors.size() == 0)
         EXIT_USAGE("You must provide at least one Ethereum address. Quitting...");
 
-    if (deltas_only && !doBalances)
+    if (deltas && !balances)
         EXIT_USAGE("--deltas option is only available with --balances. Quitting...");
 
     // show certain fields and hide others
@@ -188,7 +188,7 @@ bool COptions::parseArguments(string_q& command) {
     manageFields(toml.getConfigStr("fields", "show", ""), true );
 
     // Load as many ABI files as we have
-    if (!doAppearances && !doBalances) {
+    if (!appearances && !balances) {
         LOG4("Loading ABIs");
         abis.loadAbiKnown("all");
         if (allABIs)
@@ -277,15 +277,15 @@ bool COptions::parseArguments(string_q& command) {
 
     expContext().fmtMap["header"] = "";
     if (!no_header) {
-        if (doTraces) {
+        if (traces) {
             expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["trace_fmt"], exportFmt);
-        } else if (doLogs) {
+        } else if (logs) {
             expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["logentry_fmt"], exportFmt);
-        } else if (doAppearances) {
+        } else if (appearances) {
             expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["displayapp_fmt"], exportFmt);
-        } else if (doBalances) {
+        } else if (balances) {
             expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["balancerecord_fmt"], exportFmt);
-            if (deltas_only)
+            if (deltas)
                 expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["balancedelta_fmt"], exportFmt);
             SHOW_FIELD(CBalanceRecord, "address");
             SHOW_FIELD(CBalanceDelta, "address");
@@ -294,7 +294,7 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (freshen_only)
+    if (freshen)
         exportFmt = NONE1;
 
 //    if (count_only && !doAppearances)
@@ -321,17 +321,16 @@ void COptions::Init(void) {
 
 // BEG_CODE_INIT
     articulate = false;
+    logs = false;
+    traces = false;
+    balances = false;
+    appearances = false;
     count_only = false;
+    freshen = false;
+    deltas = false;
 // END_CODE_INIT
 
-    doLogs = false;
-    doTraces = false;
-    doBalances = false;
-    doAppearances = false;
-    doABIs = false;
-    freshen_only = false;
-    deltas_only = false;
-
+    grabABIs =    false;
     writeTxs = true;
     writeTraces = true;
     skipDdos = true;
@@ -421,7 +420,7 @@ bool COptions::loadAllAppearances(void) {
     for (auto monitor : monitors) {
         if (!loadOneAddress(tmp, monitor.address))
             EXIT_FAIL("Could not load data.");
-        if (freshen_only) {
+        if (freshen) {
             // If we're freshening...
             blknum_t lastExport = str_2_Uint(asciiFileToString(getMonitorExpt(monitor.address)));
             if (scanRange.first == 0) // we can start where the last export happened on any address...
@@ -432,7 +431,7 @@ bool COptions::loadAllAppearances(void) {
     }
 
     if (tmp.size() == 0) {
-        if (!freshen_only)
+        if (!freshen)
             LOG_INFO("Nothing to export" + (monitors.size() ? (" from " + monitors[0].address) : "") + ".");
         return false;
     }

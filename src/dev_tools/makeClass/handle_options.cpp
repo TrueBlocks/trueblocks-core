@@ -41,7 +41,7 @@ bool COptions::handle_options(void) {
         warnings.str("");
 
         map<string, string> shortCmds;
-        ostringstream opt_stream, init_stream, local_stream, auto_stream;
+        ostringstream opt_stream, init_stream, local_stream, auto_stream, declare_stream;
         for (auto option : optionArray) {
             if ((option.group + "/" + option.tool) == tool.first) {
                 check_option(option);
@@ -49,10 +49,12 @@ bool COptions::handle_options(void) {
                 opt_stream << option.Format(STR_OPTION_STR) << endl;
 
                 if (!option.auto_generate.empty()) {
-                    if (option.option_kind == "switch")
+                    if (option.option_kind == "switch") {
                         auto_stream << option.Format(STR_AUTO_SWITCH);
-                    else if (option.option_kind == "flag")
+                        declare_stream << (option.auto_generate == "yes"   ? option.Format("    bool [{COMMAND}];\n") : "");
+                    } else if (option.option_kind == "flag") {
                         auto_stream << substitute(option.Format(STR_AUTO_FLAG), "substitute(substitute(arg, \"-:\", )", "substitute(arg");
+                    }
                     if (option.auto_generate != "dummy") {
                         init_stream  << (option.auto_generate == "yes"   ? option.Format("    [{COMMAND}] = false;\n") : "");
                         local_stream << (option.auto_generate == "local" ? option.Format("    bool [{COMMAND}] = false;\n") : "");
@@ -76,6 +78,7 @@ bool COptions::handle_options(void) {
         changed |= writeNewCode(fn, "CODE_INIT", init_stream.str());
         changed |= writeNewCode(fn, "CODE_LOCAL_INIT", local_stream.str());
         changed |= writeNewCode(fn, "CODE_AUTO", auto_stream.str());
+        changed |= writeNewCode(substitute(fn, ".cpp", ".h"), "CODE_DECLARE", declare_stream.str());
         if (changed)
             nChanges++;
         nFiles++;

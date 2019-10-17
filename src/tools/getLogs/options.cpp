@@ -38,11 +38,10 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
 // BEG_CODE_AUTO
-// END_CODE_AUTO
-
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
 
+// END_CODE_AUTO
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -115,11 +114,11 @@ void COptions::Init(void) {
     optionOn(OPT_RAW | OPT_OUTPUT);
 
 // BEG_CODE_INIT
+    articulate = false;
 // END_CODE_INIT
 
     transList.Init();
     option1 = false;
-    articulate = false;
 }
 
 //---------------------------------------------------------------------------------------------------
