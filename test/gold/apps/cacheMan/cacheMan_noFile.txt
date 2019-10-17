@@ -6,7 +6,7 @@ TIME ~ CLOCK - <ERROR> : Exit(cacheMan,parseArguments):
 
   Usage:    cacheMan [-c|-d|-s|-f|-l|-i|-r|-t|-k|-m|-x|-v|-h] fn_list  
   Purpose:  Show the contents of an account cache and/or fix it by removing duplicate records.
-        
+
   Where:  
 	fn_list               path(s) of files to check, merge, fix or display (default=display) (required)
 	-c  (--check)         check for duplicates and other problems in the cache
@@ -22,7 +22,7 @@ TIME ~ CLOCK - <ERROR> : Exit(cacheMan,parseArguments):
 	-x  (--fmt <fmt>)     export format (one of [json*|txt|csv])
 
 #### Hidden options (shown during testing only)
-	-k  (--skip)          skip value for testing
+	-p  (--skip)          skip value for testing
 	-o  (--no_header)     do not show header row of data
 #### Hidden options (shown during testing only)
 

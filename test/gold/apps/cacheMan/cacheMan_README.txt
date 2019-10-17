@@ -4,7 +4,7 @@ cacheMan -th
 
 `Usage:`    cacheMan [-c|-d|-s|-f|-l|-i|-r|-t|-k|-m|-x|-v|-h] fn_list  
 `Purpose:`  Show the contents of an account cache and/or fix it by removing duplicate records.
-        
+
 `Where:`  
 
 | Short Cut | Option | Description |
@@ -23,7 +23,7 @@ cacheMan -th
 | -x | --fmt <fmt> | export format (one of [json*&#124;txt&#124;csv]) |
 
 #### Hidden options (shown during testing only)
-| -k | --skip | skip value for testing |
+| -p | --skip | skip value for testing |
 | -o | --no_header | do not show header row of data |
 #### Hidden options (shown during testing only)
 

@@ -34,12 +34,21 @@ bool COptions::handle_options(void) {
     }
 
     for (auto tool : tools) {
+
+        map<string, string> shortCmds;
         string_q fn = "../src/" + tool.first + "/options.cpp";
 
         ostringstream os;
         for (auto option : optionArray) {
-            if ((option.group + "/" + option.tool) == tool.first)
+            if ((option.group + "/" + option.tool) == tool.first) {
+                check_option(option);
                 os << option.Format(STR_OPTION_STR) << endl;
+                if (!option.command_short.empty() && !contains(option.option_kind, "positional") && !contains(option.option_kind, "description")) {
+                    if (!shortCmds[option.command_short].empty())
+                        LOG_WARN("short command ", cRed, option.command, "-", option.command_short, cOff, " conflicts with ", cRed, shortCmds[option.command_short], cOff);
+                    shortCmds[option.command_short] = option.command + "-" + option.command_short;
+                }
+            }
         }
 
         string_q orig = asciiFileToString(fn);
@@ -80,6 +89,38 @@ COptionDef::COptionDef(const string_q& line) {
     if (parts.size() > 12) is_required = parts[12];
     if (parts.size() > 13) core_visible = parts[13];
     if (parts.size() > 14) docs_visible = parts[14];
+}
+
+//---------------------------------------------------------------------------------------------------
+bool COptions::check_option(const COptionDef& option) {
+
+    // Check valid data types
+    CStringArray validTypes = {
+        "<addr>", "<blknum>", "<pair>", "<path>", "<range>", "<string>", "<uint>",
+        "boolean", "string",
+    };
+
+    bool valid_type = false;
+    for (auto type : validTypes) {
+        if (type == option.data_type) {
+            valid_type = true;
+        }
+    }
+    if (!valid_type) {
+        if (startsWith(option.data_type, "enum")) valid_type = true;
+        if (startsWith(option.data_type, "list")) valid_type = true;
+    }
+    if (!valid_type && option.option_kind == "description" && option.data_type.empty()) valid_type = true;
+
+    if (!valid_type)
+        LOG_WARN("\tError: Unknown type '", option.data_type, "' for option '", option.command, "'");
+
+    if (option.option_kind == "description" && !endsWith(option.description_core, "."))
+        LOG_WARN("Description ", cRed, option.description_core, cOff, " should end with a period.");
+    if (option.option_kind != "description" && endsWith(option.description_core, "."))
+        LOG_WARN("Option ", cRed, option.description_core, cOff, " should not end with a period.");
+
+    return true;
 }
 
 //---------------------------------------------------------------------------------------------------

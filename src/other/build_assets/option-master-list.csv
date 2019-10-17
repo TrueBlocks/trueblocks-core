@@ -48,7 +48,7 @@ num,group,api_route,tool,order,command,command_short,data_type,option_kind,defau
 14070,tools,accounts,getAccounts,,addr,a,boolean,switch,,display only addresses in the results (useful for scripting),,FALSE,TRUE,TRUE
 14080,tools,accounts,getAccounts,,other,t,boolean,switch,,export other addresses if found,,FALSE,FALSE,FALSE
 14090,tools,accounts,getAccounts,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format (one of [none|json*|txt|csv|api]),,FALSE,FALSE,FALSE
-14100,tools,accounts,getAccounts,,,,,description,,Query addresses and/or names of well known accounts.\n,,FALSE,TRUE,TRUE
+14100,tools,accounts,getAccounts,,,,,description,,Query addresses and/or names of well known accounts.,,FALSE,TRUE,TRUE
 15000,tools,abi,grabABI,,addr_list,,list<addr>,positional,,list of one or more smart contracts whose ABI to grab from EtherScan,,TRUE,TRUE,TRUE
 15010,tools,abi,grabABI,,canonical,c,boolean,switch,,convert all types to their canonical represenation and remove all spaces from display,,FALSE,TRUE,TRUE
 15020,tools,abi,grabABI,,generate,g,boolean,switch,,generate C++ code into the current folder for all functions and events found in the ABI,,FALSE,TRUE,TRUE
@@ -163,12 +163,12 @@ num,group,api_route,tool,order,command,command_short,data_type,option_kind,defau
 31090,apps,,cacheMan,,maxBlock,k,<blknum>,flag,,for testing&#44; max block to visit,,FALSE,TRUE,FALSE
 31100,apps,,cacheMan,,merge,m,boolean,switch,,merge two or more caches into a single cache,,FALSE,TRUE,FALSE
 31110,apps,,cacheMan,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format (one of [json*|txt|csv]),,FALSE,TRUE,FALSE
-31120,apps,,cacheMan,,skip,k,boolean,switch,,skip value for testing,,FALSE,FALSE,FALSE
+31120,apps,,cacheMan,,skip,p,boolean,switch,,skip value for testing,,FALSE,FALSE,FALSE
 31130,apps,,cacheMan,,start,,<blknum>,flag,,un-used hidden value - do not remove,,FALSE,FALSE,FALSE
 31130,apps,,cacheMan,,end,,<blknum>,flag,,un-used hidden value - do not remove,,FALSE,FALSE,FALSE
 31140,apps,,cacheMan,,no_header,o,boolean,switch,,do not show header row of data,,FALSE,FALSE,FALSE
-31150,apps,,cacheMan,,,,,description,,Show the contents of an account cache and/or fix it by removing duplicate records.\n,,FALSE,TRUE,FALSE
-32000,tools,when,whenBlock,,block_list,,list<blknum>,positional,,one or more block numbers (or a 'special' block)&#44; or...,,FALSE,TRUE,FALSE
+31150,apps,,cacheMan,,,,,description,,Show the contents of an account cache and/or fix it by removing duplicate records.,,FALSE,TRUE,FALSE
+32000,tools,when,whenBlock,,block_list,,list<blknum>,positional,,one or more block numbers (or a 'special' block)&#44; or,,FALSE,TRUE,FALSE
 32010,tools,when,whenBlock,,date_list,,list<date>,positional,,one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]],,FALSE,TRUE,FALSE
 32020,tools,when,whenBlock,,list,l,boolean,switch,,export all the named blocks,,FALSE,TRUE,FALSE
 32030,tools,when,whenBlock,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format (one of [none|json*|txt|csv|api]),,FALSE,FALSE,FALSE
@@ -220,7 +220,7 @@ num,group,api_route,tool,order,command,command_short,data_type,option_kind,defau
 37100,dev_tools,,makeClass,,all,a,boolean,switch,,clear&#44; edit&#44; list&#44; or run all class definitions found in the local folder,,FALSE,TRUE,FALSE
 37110,dev_tools,,makeClass,,edit,e,boolean,switch,,edit <className(s)> definition file in local folder,,FALSE,FALSE,FALSE
 37120,dev_tools,,makeClass,,options,p,boolean,switch,,process options (generate code&#44; check data) and quit,,FALSE,FALSE,FALSE
-37130,dev_tools,,makeClass,,,,,description,,Creates C++ code based on definition file at ./classDefinition/<className>.\n,,FALSE,TRUE,FALSE
+37130,dev_tools,,makeClass,,,,,description,,Creates C++ code based on definition file at ./classDefinition/<className>.,,FALSE,TRUE,FALSE
 38000,dev_tools,,testRunner,,which,w,enum[cmd*|api|both],flag,,run command line&#44; api&#44; or both test cases (default 'cmd'),,FALSE,TRUE,FALSE
 38010,dev_tools,,testRunner,,filter,f,enum[fast*|medi|slow],flag,,filter the tests to run only the fast&#44; medium speed&#44; or slow tests (default 'fast'),,FALSE,TRUE,FALSE
 38030,dev_tools,,testRunner,,clean,c,boolean,switch,,clean working test folder before running tests,,FALSE,TRUE,FALSE

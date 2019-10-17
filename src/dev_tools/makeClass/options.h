@@ -12,6 +12,7 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
+#include "optiondef.h"
 
 //-------------------------------------------------------------------
 class COptions : public COptionsBase {
@@ -38,6 +39,7 @@ public:
 
     bool exportJson(const string_q& cl);
     bool handle_options(void);
+    bool check_option(const COptionDef& option);
 };
 
 //-------------------------------------------------------------------

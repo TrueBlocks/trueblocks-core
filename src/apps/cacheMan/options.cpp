@@ -20,11 +20,11 @@ static const COption params[] = {
     COption("maxBlock", "k", "<blknum>", OPT_FLAG, "for testing, max block to visit"),
     COption("merge", "m", "", OPT_SWITCH, "merge two or more caches into a single cache"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_FLAG, "export format (one of [json*|txt|csv])"),
-    COption("skip", "k", "", OPT_HIDDEN | OPT_SWITCH, "skip value for testing"),
+    COption("skip", "p", "", OPT_HIDDEN | OPT_SWITCH, "skip value for testing"),
     COption("start", "", "<blknum>", OPT_HIDDEN | OPT_FLAG, "un-used hidden value - do not remove"),
     COption("end", "", "<blknum>", OPT_HIDDEN | OPT_FLAG, "un-used hidden value - do not remove"),
     COption("no_header", "o", "", OPT_HIDDEN | OPT_SWITCH, "do not show header row of data"),
-    COption("", "", "", OPT_DESCRIPTION, "Show the contents of an account cache and/or fix it by removing duplicate records.\n"),
+    COption("", "", "", OPT_DESCRIPTION, "Show the contents of an account cache and/or fix it by removing duplicate records."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -114,8 +114,8 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-o" || arg == "--no_header") {
             // do nothing
 
-        } else if (startsWith(arg, "-k:") || startsWith(arg, "--skip:")) {
-            string_q arg1 = substitute(substitute(arg, "-k:", ""), "--skip:", "");
+        } else if (startsWith(arg, "-p:") || startsWith(arg, "--skip:")) {
+            string_q arg1 = substitute(substitute(arg, "-p:", ""), "--skip:", "");
             skip = str_2_Uint(arg1);
             if (!skip)
                 skip = 1;

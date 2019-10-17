@@ -29,7 +29,7 @@ static const COption params[] = {
     COption("all", "a", "", OPT_SWITCH, "clear, edit, list, or run all class definitions found in the local folder"),
     COption("edit", "e", "", OPT_HIDDEN | OPT_SWITCH, "edit <className(s)> definition file in local folder"),
     COption("options", "p", "", OPT_HIDDEN | OPT_SWITCH, "process options (generate code, check data) and quit"),
-    COption("", "", "", OPT_DESCRIPTION, "Creates C++ code based on definition file at ./classDefinition/<className>.\n"),
+    COption("", "", "", OPT_DESCRIPTION, "Creates C++ code based on definition file at ./classDefinition/<className>."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
