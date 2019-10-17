@@ -36,7 +36,7 @@ public:
     string_q option_kind;
     string_q default_value;
     string_q description_core;
-    string_q description_api;
+    string_q auto_generate;
     string_q is_required;
     string_q core_visible;
     string_q docs_visible;
@@ -112,7 +112,7 @@ inline void COptionDef::initialize(void) {
     option_kind = "";
     default_value = "";
     description_core = "";
-    description_api = "";
+    auto_generate = "";
     is_required = "";
     core_visible = "";
     docs_visible = "";
@@ -137,7 +137,7 @@ inline void COptionDef::duplicate(const COptionDef& op) {
     option_kind = op.option_kind;
     default_value = op.default_value;
     description_core = op.description_core;
-    description_api = op.description_api;
+    auto_generate = op.auto_generate;
     is_required = op.is_required;
     core_visible = op.core_visible;
     docs_visible = op.docs_visible;

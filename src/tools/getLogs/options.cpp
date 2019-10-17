@@ -29,10 +29,18 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
+// BEG_CODE_LOCAL_INIT
+// END_CODE_LOCAL_INIT
+
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if (arg == "-a" || arg == "--articulate") {
+        if (false) {
+            // do nothing -- make auto code generation easier
+// BEG_CODE_AUTO
+// END_CODE_AUTO
+
+        } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
@@ -105,6 +113,9 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOn(OPT_RAW | OPT_OUTPUT);
+
+// BEG_CODE_INIT
+// END_CODE_INIT
 
     transList.Init();
     option1 = false;

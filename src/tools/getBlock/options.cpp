@@ -40,15 +40,31 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
+// BEG_CODE_LOCAL_INIT
+// END_CODE_LOCAL_INIT
+
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
+        string_q orig = arg;
+
         // shortcuts
         if (arg == "-r" || arg == "--raw")   { arg = "--source:raw";   }
         if (arg == "-k" || arg == "--cache") { arg = "--source:cache"; }
 
         // do not collapse
-        if (arg == "-c" || arg == "--check") {
+        if (false) {
+            // do nothing -- make auto code generation easier
+// BEG_CODE_AUTO
+        } else if (arg == "-o" || arg == "--force") {
+            force = true;
+
+        } else if (arg == "-z" || arg == "--normalize") {
+            normalize = true;
+
+// END_CODE_AUTO
+
+        } else if (arg == "-c" || arg == "--check") {
             setenv("TEST_MODE", "true", true);
             isCheck = true;
             quiet++;  // if both --check and --quiet are present, be very quiet...
@@ -62,18 +78,10 @@ bool COptions::parseArguments(string_q& command) {
             GETRUNTIME_CLASS(CReceipt)->sortFieldList();
 
         } else if (startsWith(arg, "-i:") || startsWith(arg, "--filter:")) {
-            string_q orig = arg;
             arg = substitute(substitute(arg, "-i:", ""), "--filter:", "");
             if (!isAddress(arg))
                 return usage(arg + " does not appear to be a valid Ethereum address.\n");
             filters.push_back(str_2_Addr(toLower(arg)));
-
-        } else if (arg == "-o" || arg == "--force") {
-            etherlib_init(defaultQuitHandler);
-            force = true;
-
-        } else if (arg == "-z" || arg == "--normalize") {
-            normalize = true;
 
         } else if (arg == "-l" || arg == "--latest") {
             cout << scraperStatus(false);
@@ -117,9 +125,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-m" || arg == "--number") {
             counting = true;
-
-        } else if (arg == "-e" || arg == "--traces") {
-            traces = true;
 
         } else if (arg == "-t" || arg == "--quiet") {
             quiet++;  // if both --check and --quiet are present, be very quiet...
@@ -186,6 +191,9 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    if (force)
+        etherlib_init(defaultQuitHandler);
+
     if (expContext().isParity) {
         HIDE_FIELD(CTransaction, "cumulativeGasUsed");
         HIDE_FIELD(CTransaction, "gasUsed");
@@ -244,6 +252,11 @@ void COptions::Init(void) {
     optionOn(OPT_RAW);
     registerOptions(nParams, params);
 
+// BEG_CODE_INIT
+    force = false;
+    normalize = false;
+// END_CODE_INIT
+
     secsFinal     = (60 * 5);
     isCheck       = false;
     isCache       = false;
@@ -251,9 +264,6 @@ void COptions::Init(void) {
     filterType    = "";
     counting      = false;
     addrCnt       = 0;
-    traces        = false;
-    force         = false;
-    normalize     = false;
     quiet         = 0;  // quiet has levels
     format        = "";
     priceBlocks   = false;

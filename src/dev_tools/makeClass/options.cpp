@@ -40,12 +40,19 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
+// BEG_CODE_LOCAL_INIT
+// END_CODE_LOCAL_INIT
+
     bool didJs = false;
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
+        if (false) {
+            // do nothing -- make auto code generation easier
+// BEG_CODE_AUTO
+// END_CODE_AUTO
 
-        if (arg == "-p" || arg == "--options") {
+        } else if (arg == "-p" || arg == "--options") {
             handle_options();
             return false;
 
@@ -155,6 +162,9 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
+
+// BEG_CODE_INIT
+// END_CODE_INIT
 
     isEdit = false;
     isRemove = false;

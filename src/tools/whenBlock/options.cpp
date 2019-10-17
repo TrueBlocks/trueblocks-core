@@ -31,6 +31,9 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
+// BEG_CODE_LOCAL_INIT
+// END_CODE_LOCAL_INIT
+
     bool no_header = false;
     string_q format = getGlobalConfig("whenBlock")->getConfigStr("display", "format", STR_DISPLAY_WHEN);
     Init();
@@ -39,7 +42,12 @@ bool COptions::parseArguments(string_q& command) {
     for (auto arg : arguments) {
         string_q orig = arg;
 
-        if (arg == "UTC") {
+        if (false) {
+            // do nothing -- make auto code generation easier
+// BEG_CODE_AUTO
+// END_CODE_AUTO
+
+        } else if (arg == "UTC") {
             // do nothing
 
         } else if (arg == "-l" || arg == "--list") {
@@ -143,6 +151,9 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     optionOff(OPT_DENOM);
     registerOptions(nParams, params);
+
+// BEG_CODE_INIT
+// END_CODE_INIT
 
     items.clear();
     requests.clear();

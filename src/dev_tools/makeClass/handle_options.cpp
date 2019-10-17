@@ -14,6 +14,9 @@
 #include "optiondef.h"
 
 extern const char* STR_OPTION_STR;
+extern const char* STR_AUTO_SWITCH;
+extern const char* STR_AUTO_FLAG;
+uint32_t nFiles = 0, nChanges = 0;
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_options(void) {
     COptionDef::registerClass();
@@ -38,13 +41,27 @@ bool COptions::handle_options(void) {
         warnings.str("");
 
         map<string, string> shortCmds;
-        string_q fn = "../src/" + tool.first + "/options.cpp";
-
-        ostringstream os;
+        ostringstream opt_stream, init_stream, local_stream, auto_stream;
         for (auto option : optionArray) {
             if ((option.group + "/" + option.tool) == tool.first) {
                 check_option(option);
-                os << option.Format(STR_OPTION_STR) << endl;
+
+                opt_stream << option.Format(STR_OPTION_STR) << endl;
+
+                if (!option.auto_generate.empty()) {
+                    if (option.option_kind == "switch")
+                        auto_stream << option.Format(STR_AUTO_SWITCH);
+                    else if (option.option_kind == "flag")
+                        auto_stream << substitute(option.Format(STR_AUTO_FLAG), "substitute(substitute(arg, \"-:\", )", "substitute(arg");
+                    if (option.auto_generate != "dummy") {
+                        init_stream  << (option.auto_generate == "yes"   ? option.Format("    [{COMMAND}] = false;\n") : "");
+                        local_stream << (option.auto_generate == "local" ? option.Format("    bool [{COMMAND}] = false;\n") : "");
+                    } else {
+                        auto_stream << "            // do nothing" << endl;
+                    }
+                    auto_stream << endl;
+                }
+
                 if (!option.command_short.empty() && !contains(option.option_kind, "positional") && !contains(option.option_kind, "description")) {
                     if (!shortCmds[option.command_short].empty())
                         warnings << "Short command '" << cRed << option.command << "-" << option.command_short << cOff << "' conflicts with existing '" << cRed << shortCmds[option.command_short] << cOff << "'|";
@@ -53,51 +70,26 @@ bool COptions::handle_options(void) {
             }
         }
 
-        string_q orig = asciiFileToString(fn);
-        string_q converted = orig;
-        converted = substitute(converted, "// BEG_CODE_OPTIONS", "// BEG_CODE_OPTIONS\n[{NEW_CODE}]\n<remove>");
-        converted = substitute(converted, "// END_CODE_OPTIONS", "</remove>\n// END_CODE_OPTIONS");
-        snagFieldClear(converted, "remove");
-        replace(converted, "[{NEW_CODE}]\n\n", os.str());
-        cerr << bBlue << "Processing: " << cOff << fn << " ";
-        if (converted != orig) {
-            cerr << cGreen << "wrote " << converted.size() << " bytes...";
-            stringToAsciiFile(fn, converted);
-        } else {
-            cerr << cTeal << "no changes...";
-        }
-        cerr << cOff << endl;
+        string_q fn = "../src/" + tool.first + "/options.cpp";
+        bool changed = false;
+        changed |= writeNewCode(fn, "CODE_OPTIONS", opt_stream.str());
+        changed |= writeNewCode(fn, "CODE_INIT", init_stream.str());
+        changed |= writeNewCode(fn, "CODE_LOCAL_INIT", local_stream.str());
+        changed |= writeNewCode(fn, "CODE_AUTO", auto_stream.str());
+        if (changed)
+            nChanges++;
+        nFiles++;
+
         if (!warnings.str().empty()) {
             CStringArray w;
             explode(w, warnings.str(), '|');
             for (auto warning : w)
                 LOG_WARN(warning);
         }
-        break;
     }
+    cerr << cGreen << "makeClass --options: processed " << nFiles << " files (changed " << nChanges << ")." << string_q(50, ' ') << cOff << endl;
 
     return true;
-}
-
-//---------------------------------------------------------------------------------------------------
-COptionDef::COptionDef(const string_q& line) {
-    CStringArray parts;
-    explode(parts, line, ',');
-    if (parts.size() > 0)  num = parts[0];
-    if (parts.size() > 1)  group = parts[1];
-    if (parts.size() > 2)  api_route = parts[2];
-    if (parts.size() > 3)  tool = parts[3];
-    if (parts.size() > 4)  order = parts[4];
-    if (parts.size() > 5)  command = parts[5];
-    if (parts.size() > 6)  command_short = parts[6];
-    if (parts.size() > 7)  data_type = parts[7];
-    if (parts.size() > 8)  option_kind = parts[8];
-    if (parts.size() > 9)  default_value = parts[9];
-    if (parts.size() > 10) description_core = substitute(parts[10], "&#44;", ",");
-    if (parts.size() > 11) description_api = substitute(parts[11], "&#44;", ",");
-    if (parts.size() > 12) is_required = parts[12];
-    if (parts.size() > 13) core_visible = parts[13];
-    if (parts.size() > 14) docs_visible = parts[14];
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -132,5 +124,34 @@ bool COptions::check_option(const COptionDef& option) {
 }
 
 //---------------------------------------------------------------------------------------------------
+bool COptions::writeNewCode(const string_q& fn, const string_q& which, const string_q& new_code) {
+    string_q orig = asciiFileToString(fn);
+    string_q converted = orig;
+    converted = substitute(converted, "// BEG_" + which, "// BEG_" + which + "\n[{NEW_CODE}]\n<remove>");
+    converted = substitute(converted, "// END_" + which, "</remove>\n// END_" + which);
+    snagFieldClear(converted, "remove");
+    replace(converted, "[{NEW_CODE}]\n\n", new_code);
+    cerr << bBlue << "Processing " + which + ": " << cOff << fn << " ";
+    if (converted != orig) {
+        cerr << cGreen << "wrote " << converted.size() << " bytes..." << cOff << endl;
+        stringToAsciiFile(fn, converted);
+        return true;
+    }
+    cerr << cTeal << "no changes..." << cOff << "\r";
+    cerr.flush();
+    return false;
+}
+
+//---------------------------------------------------------------------------------------------------
 const char* STR_OPTION_STR =
 "    COption(\"[{COMMAND}]\", \"[{COMMAND_SHORT}]\", \"[{DATATYPE}]\", [{OPTS}], \"[{DESCRIPTION_CORE}]\"),";
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_AUTO_SWITCH =
+"        } else if ([arg == \"-{COMMAND_SHORT}\" || ]arg == \"--[{COMMAND}]\") {\n"
+"            [{COMMAND}] = true;\n";
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_AUTO_FLAG =
+"        } else if ([startsWith(arg, \"-{COMMAND_SHORT}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
+"            arg = substitute(substitute(arg, \"-[{COMMAND_SHORT}]:\", ""), \"--[{COMMAND}]:\", \"\");\n";

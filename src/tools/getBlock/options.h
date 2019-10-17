@@ -19,7 +19,6 @@ public:
     bool isCheck;
     bool isCache;
     bool hashes;
-    bool traces;
     bool force;
     bool normalize;
     int quiet;

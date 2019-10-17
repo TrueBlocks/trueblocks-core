@@ -28,12 +28,19 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         EXIT_NOMSG(false);
 
+// BEG_CODE_LOCAL_INIT
+// END_CODE_LOCAL_INIT
+
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if (arg == "-d" || arg == "--details") {
+        if (false) {
+            // do nothing -- make auto code generation easier
+// BEG_CODE_AUTO
+        } else if (arg == "-d" || arg == "--details") {
             details = true;
 
+// END_CODE_AUTO
         } else if (arg == "-l" || arg == "--list") {
             isListing = true;
 
@@ -106,9 +113,12 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOn(OPT_PREFUND | OPT_OUTPUT);
 
+// BEG_CODE_INIT
+    details = false;
+// END_CODE_INIT
+
     isListing = false;
     isConfig = false;
-    details = false;
     mode = "";
     start = 0;
 

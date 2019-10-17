@@ -22,10 +22,18 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
+// BEG_CODE_LOCAL_INIT
+// END_CODE_LOCAL_INIT
+
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if (startsWith(arg, "-n:") || startsWith(arg, "--nBlocks:")) {
+        if (false) {
+            // do nothing -- make auto code generation easier
+// BEG_CODE_AUTO
+// END_CODE_AUTO
+
+        } else if (startsWith(arg, "-n:") || startsWith(arg, "--nBlocks:")) {
             arg = substitute(substitute(arg, "-n:", ""), "--nBlocks:", "");
             if (!isUnsigned(arg))
                 return usage("--nBlocks must be a non-negative number. Quitting...");
@@ -144,6 +152,9 @@ const char* STR_ERROR_MSG =
 void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOn(OPT_RUNONCE | OPT_PREFUND);
+
+// BEG_CODE_INIT
+// END_CODE_INIT
 
     if (getEnvStr("DOCKER_MODE") == "true") {
         nBlocks     = 100;

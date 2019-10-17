@@ -29,6 +29,9 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
+// BEG_CODE_LOCAL_INIT
+// END_CODE_LOCAL_INIT
+
     bool no_header = false;
     string_q format = getGlobalConfig("whereBlock")->getConfigStr("display", "format", STR_DISPLAY_WHERE);
     Init();
@@ -38,8 +41,12 @@ bool COptions::parseArguments(string_q& command) {
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         string_q orig = arg;
+        if (false) {
+            // do nothing -- make auto code generation easier
+// BEG_CODE_AUTO
+// END_CODE_AUTO
 
-        if (startsWith(arg, '-')) {  // do not collapse
+        } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
@@ -85,6 +92,9 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     optionOff(OPT_DENOM);
     registerOptions(nParams, params);
+
+// BEG_CODE_INIT
+// END_CODE_INIT
 
     items.clear();
     blocks.Init();

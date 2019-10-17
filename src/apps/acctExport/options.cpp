@@ -41,29 +41,30 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         EXIT_NOMSG(false);
 
-// BEG_CODE_INIT_LOCAL
+// BEG_CODE_LOCAL_INIT
     bool no_header = false;
     bool allABIs = false;
-// END_CODE_INIT_LOCAL
+// END_CODE_LOCAL_INIT
 
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier
-// BEG_CODE_SWITCH
+// BEG_CODE_AUTO
+        } else if (arg == "-a" || arg == "--articulate") {
+            articulate = true;
+
+        } else if (arg == "-o" || arg == "--count_only") {
+            count_only = true;
+
         } else if (arg == "-n" || arg == "--no_header") {
             no_header = true;
 
         } else if (arg == "-A" || arg == "--allABIs") {
             allABIs = true;
 
-        } else if (arg == "-o" || arg == "--count_only") {
-            count_only = true;
-
-        } else if (arg == "-a" || arg == "--articulate") {
-            articulate = true;
-// END_CODE_SWITCH
+// END_CODE_AUTO
 
         } else if (startsWith(arg, "-s") || startsWith(arg, "--writeTxs")) {
             arg = substitute(substitute(arg, "-s:", ""), "--writeTxs:", "");
@@ -323,18 +324,19 @@ void COptions::Init(void) {
     count_only = false;
 // END_CODE_INIT
 
+    doLogs = false;
+    doTraces = false;
+    doBalances = false;
+    doAppearances = false;
+    doABIs = false;
+    freshen_only = false;
+    deltas_only = false;
+
     writeTxs = true;
     writeTraces = true;
     skipDdos = true;
     maxTraces = 250;
-    doAppearances = false;
     nExported = 0;
-    doLogs = false;
-    doTraces = false;
-    doBalances = false;
-    doABIs = false;
-    freshen_only = false;
-    deltas_only = false;
     scanRange.second = getLastBlock_cache_ripe();
 
     minArgs = 0;

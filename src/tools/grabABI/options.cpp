@@ -41,11 +41,19 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
+// BEG_CODE_LOCAL_INIT
+// END_CODE_LOCAL_INIT
+
     Init();
     bool asJson = false, isOpen = false, fromSol = false;
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if (arg == "-g" || arg == "--gen" || arg == "--generate") {
+        if (false) {
+            // do nothing -- make auto code generation easier
+// BEG_CODE_AUTO
+// END_CODE_AUTO
+
+        } else if (arg == "-g" || arg == "--gen" || arg == "--generate") {
             classDir = getCWD();
             prefix = getPrefix(classDir);
             isGenerate = true;
@@ -210,6 +218,9 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     optionOn(OPT_RAW | OPT_OUTPUT);
     registerOptions(nParams, params);
+
+// BEG_CODE_INIT
+// END_CODE_INIT
 
     parts = SIG_DEFAULT;
     noconst = false;

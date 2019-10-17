@@ -37,6 +37,9 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
+// BEG_CODE_LOCAL_INIT
+// END_CODE_LOCAL_INIT
+
     string_q format;
     bool no_header = false;
     bool deflt = true;
@@ -45,7 +48,12 @@ bool COptions::parseArguments(string_q& command) {
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if (arg == "-e" || arg == "--expand") {
+        if (false) {
+            // do nothing -- make auto code generation easier
+// BEG_CODE_AUTO
+// END_CODE_AUTO
+
+        } else if (arg == "-e" || arg == "--expand") {
             searchFields = STR_DISPLAY_ACCOUNTNAME;
             format = searchFields;
 
@@ -139,6 +147,9 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOn(OPT_PREFUND | OPT_OUTPUT);
+
+// BEG_CODE_INIT
+// END_CODE_INIT
 
     items.clear();
     searches.clear();

@@ -69,6 +69,7 @@ bool COptionDef::setValueByName(const string_q& fieldNameIn, const string_q& fie
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "api_route" ) { api_route = fieldValue; return true; }
+            if ( fieldName % "auto_generate" ) { auto_generate = fieldValue; return true; }
             break;
         case 'c':
             if ( fieldName % "command" ) { command = fieldValue; return true; }
@@ -79,7 +80,6 @@ bool COptionDef::setValueByName(const string_q& fieldNameIn, const string_q& fie
             if ( fieldName % "data_type" ) { data_type = fieldValue; return true; }
             if ( fieldName % "default_value" ) { default_value = fieldValue; return true; }
             if ( fieldName % "description_core" ) { description_core = fieldValue; return true; }
-            if ( fieldName % "description_api" ) { description_api = fieldValue; return true; }
             if ( fieldName % "docs_visible" ) { docs_visible = fieldValue; return true; }
             break;
         case 'g':
@@ -135,7 +135,7 @@ bool COptionDef::Serialize(CArchive& archive) {
     archive >> option_kind;
     archive >> default_value;
     archive >> description_core;
-    archive >> description_api;
+    archive >> auto_generate;
     archive >> is_required;
     archive >> core_visible;
     archive >> docs_visible;
@@ -162,7 +162,7 @@ bool COptionDef::SerializeC(CArchive& archive) const {
     archive << option_kind;
     archive << default_value;
     archive << description_core;
-    archive << description_api;
+    archive << auto_generate;
     archive << is_required;
     archive << core_visible;
     archive << docs_visible;
@@ -212,7 +212,7 @@ void COptionDef::registerClass(void) {
     ADD_FIELD(COptionDef, "option_kind", T_TEXT, ++fieldNum);
     ADD_FIELD(COptionDef, "default_value", T_TEXT, ++fieldNum);
     ADD_FIELD(COptionDef, "description_core", T_TEXT, ++fieldNum);
-    ADD_FIELD(COptionDef, "description_api", T_TEXT, ++fieldNum);
+    ADD_FIELD(COptionDef, "auto_generate", T_TEXT, ++fieldNum);
     ADD_FIELD(COptionDef, "is_required", T_TEXT, ++fieldNum);
     ADD_FIELD(COptionDef, "core_visible", T_TEXT, ++fieldNum);
     ADD_FIELD(COptionDef, "docs_visible", T_TEXT, ++fieldNum);
@@ -295,6 +295,7 @@ string_q COptionDef::getValueByName(const string_q& fieldName) const {
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "api_route" ) return api_route;
+            if ( fieldName % "auto_generate" ) return auto_generate;
             break;
         case 'c':
             if ( fieldName % "command" ) return command;
@@ -305,7 +306,6 @@ string_q COptionDef::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "data_type" ) return data_type;
             if ( fieldName % "default_value" ) return default_value;
             if ( fieldName % "description_core" ) return description_core;
-            if ( fieldName % "description_api" ) return description_api;
             if ( fieldName % "docs_visible" ) return docs_visible;
             break;
         case 'g':
@@ -348,6 +348,26 @@ const char* STR_DISPLAY_OPTIONDEF = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+//---------------------------------------------------------------------------------------------------
+COptionDef::COptionDef(const string_q& line) {
+    CStringArray parts;
+    explode(parts, line, ',');
+    if (parts.size() > 0)  num = parts[0];
+    if (parts.size() > 1)  group = parts[1];
+    if (parts.size() > 2)  api_route = parts[2];
+    if (parts.size() > 3)  tool = parts[3];
+    if (parts.size() > 4)  order = parts[4];
+    if (parts.size() > 5)  command = parts[5];
+    if (parts.size() > 6)  command_short = parts[6];
+    if (parts.size() > 7)  data_type = parts[7];
+    if (parts.size() > 8)  option_kind = parts[8];
+    if (parts.size() > 9)  default_value = parts[9];
+    if (parts.size() > 10) description_core = substitute(parts[10], "&#44;", ",");
+    if (parts.size() > 11) auto_generate = parts[11];
+    if (parts.size() > 12) is_required = parts[12];
+    if (parts.size() > 13) core_visible = parts[13];
+    if (parts.size() > 14) docs_visible = parts[14];
+}
 // EXISTING_CODE
 }  // namespace qblocks
 

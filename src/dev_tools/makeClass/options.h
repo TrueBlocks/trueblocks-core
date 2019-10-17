@@ -41,6 +41,7 @@ public:
     bool exportJson(const string_q& cl);
     bool handle_options(void);
     bool check_option(const COptionDef& option);
+    bool writeNewCode(const string_q& fn, const string_q& which, const string_q& new_code);
 };
 
 //-------------------------------------------------------------------

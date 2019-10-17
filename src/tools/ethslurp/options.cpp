@@ -32,13 +32,20 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
+// BEG_CODE_LOCAL_INIT
+// END_CODE_LOCAL_INIT
+
     Init();
     blknum_t latestBlock = getLastBlock_client();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         string_q orig = arg;
+        if (false) {
+            // do nothing -- make auto code generation easier
+// BEG_CODE_AUTO
+// END_CODE_AUTO
 
-        if (startsWith(arg, "-t:") || startsWith(arg, "--type:")) {
+        } else if (startsWith(arg, "-t:") || startsWith(arg, "--type:")) {
             type = substitute(substitute(arg, "-t:", ""), "--type:", "");
             if (type == "all")
                 return usage("Type 'all' is currently disabled. Quitting...");
@@ -112,6 +119,9 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
+
+// BEG_CODE_INIT
+// END_CODE_INIT
 
     type = "";
     blocks.Init();

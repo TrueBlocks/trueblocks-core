@@ -36,11 +36,19 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
+// BEG_CODE_LOCAL_INIT
+// END_CODE_LOCAL_INIT
+
     Init();
     blknum_t latestBlock = getLastBlock_client();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if (arg == "-o" || arg == "--force") {
+        if (false) {
+            // do nothing -- make auto code generation easier
+// BEG_CODE_AUTO
+// END_CODE_AUTO
+
+        } else if (arg == "-o" || arg == "--force") {
             etherlib_init(defaultQuitHandler);
             isRaw = false;
 
@@ -128,6 +136,9 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     optionOn(OPT_RAW);
     registerOptions(nParams, params);
+
+// BEG_CODE_INIT
+// END_CODE_INIT
 
     isRaw        = true; // unusual, but true
     asBits       = false;

@@ -32,12 +32,20 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
+// BEG_CODE_LOCAL_INIT
+// END_CODE_LOCAL_INIT
+
     Init();
     CAddressArray addrs;
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         string_q orig = arg;
-        if (arg == "-n" || arg == "--nozero") {
+        if (false) {
+            // do nothing -- make auto code generation easier
+// BEG_CODE_AUTO
+// END_CODE_AUTO
+
+        } else if (arg == "-n" || arg == "--nozero") {
             exclude_zero = true;
 
         } else if (startsWith(arg, "-i:") || startsWith(arg, "--info:")) {
@@ -147,6 +155,9 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     optionOn(OPT_RAW);
     registerOptions(nParams, params);
+
+// BEG_CODE_INIT
+// END_CODE_INIT
 
     watches.clear();
     holders.clear();

@@ -35,13 +35,21 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
+// BEG_CODE_LOCAL_INIT
+// END_CODE_LOCAL_INIT
+
     bool no_header = false;
     bool fake_no_history = false;
 
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if (arg == "-n" || arg == "--nozero") {
+        if (false) {
+            // do nothing -- make auto code generation easier
+// BEG_CODE_AUTO
+// END_CODE_AUTO
+
+        } else if (arg == "-n" || arg == "--nozero") {
             exclude_zero = true;
 
         } else if (arg == "-c" || arg == "--changes") {
@@ -161,6 +169,9 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOn(OPT_RAW | OPT_OUTPUT);
+
+// BEG_CODE_INIT
+// END_CODE_INIT
 
     exclude_zero = false;
     changes = false;

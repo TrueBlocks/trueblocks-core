@@ -19,8 +19,8 @@ on, both, fast, accounts, apps/chifra, accounts_noparams,    n, mode_list = acco
 on, both, fast, accounts, apps/chifra, accounts_badparams,   y, mode_list = accounts & not_an_option
 on, both, fast, accounts, apps/chifra, accounts,             n, mode_list = accounts & expand & fmt = txt
 on, both, slow, slurp,    apps/chifra, slurp,                y, mode_list = slurp & addr_list = 0x1234567812345678123456781234567812345678
-on, both, slow, list,     apps/chifra, list,                 y, mode_list = list  & addr_list = 0xfb744b951d094b310262c8f986c860df9ab1de65 & end:10
-on, both, slow, export,   apps/chifra, export,               y, mode_list = export & addr_list = 0xfb744b951d094b310262c8f986c860df9ab1de65 & end:10
+# on, both, slow, list,     apps/chifra, list,                 y, mode_list = list  & addr_list = 0xfb744b951d094b310262c8f986c860df9ab1de65 & end:10
+# on, both, slow, export,   apps/chifra, export,               y, mode_list = export & addr_list = 0xfb744b951d094b310262c8f986c860df9ab1de65 & end:10
 
 off, both, fast, null,     apps/chifra, daemon_noparms,      n, mode_list = scrape & daemon
 off, both, fast, null,     apps/chifra, daemon_badparms,     n, mode_list = scrape & daemon & not_an_option

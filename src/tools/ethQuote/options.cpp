@@ -30,14 +30,21 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
+// BEG_CODE_LOCAL_INIT
+// END_CODE_LOCAL_INIT
+
     bool no_header = false;
     string_q format;
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         string_q orig = arg;
+        if (false) {
+            // do nothing -- make auto code generation easier
+// BEG_CODE_AUTO
+// END_CODE_AUTO
 
-        if (arg == "-f" || arg == "--freshen") {
+        } else if (arg == "-f" || arg == "--freshen") {
             freshen = true;
 
         } else if (startsWith(arg, "-p:") || startsWith(arg, "--period:")) {
@@ -90,6 +97,9 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
+
+// BEG_CODE_INIT
+// END_CODE_INIT
 
     freshen = false;
     freq = 120;

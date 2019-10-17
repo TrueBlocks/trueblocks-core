@@ -1,4 +1,4 @@
-num,group,api_route,tool,order,command,command_short,data_type,option_kind,default_value,description_core,description_api,is_required,core_visible,docs_visible
+num,group,api_route,tool,order,command,command_short,data_type,option_kind,default_value,description_core,auto_generate,is_required,core_visible,docs_visible
 10000,apps,,chifra,,command,,enum[list|export|slurp|accounts|abi|state|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed],positional,,one of [list|export|slurp|accounts|abi|state|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed],,TRUE,TRUE,TRUE
 10010,apps,,chifra,,sleep,,<uint>,flag,,for the 'scrape' and 'daemon' commands&#44; the number of seconds chifra should sleep between runs (default 0),,FALSE,TRUE,TRUE
 10020,apps,,chifra,,,,,description,,Create a TrueBlocks monitor configuration.,,FALSE,TRUE,TRUE
@@ -6,25 +6,25 @@ num,group,api_route,tool,order,command,command_short,data_type,option_kind,defau
 11010,apps,list,acctScrape,,staging,s,boolean,switch,,produce results in the staging folder instead of production folder,,FALSE,FALSE,FALSE
 11020,apps,list,acctScrape,,unripe,u,boolean,switch,,visit unripe (not old enough and not yet staged or finalized) blocks,,FALSE,FALSE,FALSE
 11030,apps,list,acctScrape,,daemon,d,boolean,switch,,we are being called in daemon mode which causes us to print results differently,,FALSE,FALSE,FALSE
-11040,apps,list,acctScrape,,no_header,o,boolean,switch,,do not show the header row,,FALSE,TRUE,TRUE
+11040,apps,list,acctScrape,,no_header,o,boolean,switch,,do not show the header row,local,FALSE,TRUE,TRUE
 11050,apps,list,acctScrape,,start,,<blknum>,flag,,first block to scan for appearances (inclusive),,FALSE,FALSE,FALSE
 11050,apps,list,acctScrape,,end,,<blknum>,flag,,end block to scan for appearances (inclusive),,FALSE,FALSE,FALSE
 11060,apps,list,acctScrape,,,,,description,,Index transactions for a given Ethereum address (or series of addresses).,,FALSE,TRUE,TRUE
 12000,apps,export,acctExport,,addr_list,,list<addr>,positional,,one or more addresses (0x...) to export,,TRUE,TRUE,TRUE
 12010,apps,export,acctExport,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format (one of [json*|txt|csv]),,FALSE,TRUE,TRUE
-12020,apps,export,acctExport,,articulate,a,boolean,switch,,articulate transactions&#44; traces&#44; logs&#44; and outputs,,FALSE,TRUE,TRUE
+12020,apps,export,acctExport,,articulate,a,boolean,switch,,articulate transactions&#44; traces&#44; logs&#44; and outputs,yes,FALSE,TRUE,TRUE
 12030,apps,export,acctExport,,logs,l,boolean,switch,,export logs instead of transaction list,,FALSE,TRUE,TRUE
 12040,apps,export,acctExport,,traces,t,boolean,switch,,export traces instead of transaction list,,FALSE,TRUE,TRUE
 12050,apps,export,acctExport,,balances,c,boolean,switch,,export balance history instead of transaction list,,FALSE,TRUE,TRUE
 12060,apps,export,acctExport,,appearances,p,boolean,switch,,export a list of appearances,,FALSE,TRUE,TRUE
-12070,apps,export,acctExport,,count_only,o,boolean,switch,,display only the count of the number of data items requested,,FALSE,TRUE,TRUE
+12070,apps,export,acctExport,,count_only,o,boolean,switch,,display only the count of the number of data items requested,yes,FALSE,TRUE,TRUE
 12080,apps,export,acctExport,,blocks,b,enum[on|off*],flag,,write blocks to the binary cache ('off' by default),,FALSE,FALSE,FALSE
 12090,apps,export,acctExport,,writeTxs,s,enum[on*|off],flag,,write transactions to the binary cache ('on' by default),,FALSE,FALSE,FALSE
 12100,apps,export,acctExport,,writeTraces,r,enum[on*|off],flag,,write traces to the binary cache ('on' by default),,FALSE,FALSE,FALSE
 12110,apps,export,acctExport,,ddos,d,enum[on*|off],flag,,skip over dDos transactions in export ('on' by default),,FALSE,FALSE,FALSE
 12120,apps,export,acctExport,,maxTraces,m,<uint>,flag,,if --ddos:on&#44; the number of traces defining a dDos (default = 250),,FALSE,FALSE,FALSE
-12130,apps,export,acctExport,,no_header,n,boolean,switch,,do not show the header row,,FALSE,FALSE,FALSE
-12140,apps,export,acctExport,,allABIs,A,boolean,switch,,load all previously cached abi files,,FALSE,FALSE,FALSE
+12130,apps,export,acctExport,,no_header,n,boolean,switch,,do not show the header row,local,FALSE,FALSE,FALSE
+12140,apps,export,acctExport,,allABIs,A,boolean,switch,,load all previously cached abi files,local,FALSE,FALSE,FALSE
 12150,apps,export,acctExport,,grabABIs,g,boolean,switch,,using each trace's 'to' address&#44; grab the abi for that address (improves articulation),,FALSE,FALSE,FALSE
 12160,apps,export,acctExport,,freshen,f,boolean,switch,,freshen but do not print the exported data,,FALSE,FALSE,FALSE
 12170,apps,export,acctExport,,deltas,,boolean,switch,,for --balances option only&#44; export only changes in balances,,FALSE,FALSE,FALSE
@@ -80,11 +80,11 @@ num,group,api_route,tool,order,command,command_short,data_type,option_kind,defau
 17060,tools,blocks,getBlock,,number,m,boolean,switch,,display address counts (alterntively --addrCnt&#44; --uniqTxCnt&#44; or --uniqCnt),,FALSE,TRUE,TRUE
 17070,tools,blocks,getBlock,,filter,i,<addr>,flag,,useful only for --addrs or --uniq&#44; only display this address in results,,FALSE,TRUE,TRUE
 17080,tools,blocks,getBlock,,latest,l,boolean,switch,,display the latest blocks at both the node and the cache,,FALSE,FALSE,FALSE
-17090,tools,blocks,getBlock,,force,o,boolean,switch,,force a re-write of the block to the cache,,FALSE,FALSE,FALSE
+17090,tools,blocks,getBlock,,force,o,boolean,switch,,force a re-write of the block to the cache,yes,FALSE,FALSE,FALSE
 17100,tools,blocks,getBlock,,quiet,t,boolean,switch,,do not print results to screen&#44; used for speed testing and data checking,,FALSE,FALSE,FALSE
 17110,tools,blocks,getBlock,,source,s,enum[c*|r],flag,,either :c(a)che or :(r)aw&#44; source for data retrival. (shortcuts -k = qblocks&#44; -r = node),,FALSE,FALSE,FALSE
 17120,tools,blocks,getBlock,,fields,f,enum[a*|m|c|r],flag,,either :(a)ll&#44; (m)ini&#44; (c)ache or :(r)aw; which fields to include in output (all is default),,FALSE,FALSE,FALSE
-17130,tools,blocks,getBlock,,normalize,z,boolean,switch,,normalize (remove un-common fields and sort) for comparison with other results (testing),,FALSE,FALSE,FALSE
+17130,tools,blocks,getBlock,,normalize,z,boolean,switch,,normalize (remove un-common fields and sort) for comparison with other results (testing),yes,FALSE,FALSE,FALSE
 17140,tools,blocks,getBlock,,,,,description,,Returns block(s) from local cache or directly from a running node.,,FALSE,TRUE,TRUE
 18000,tools,transactions,getTrans,,trans_list,,list<tx_id>,positional,,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID),,TRUE,TRUE,TRUE
 18010,tools,transactions,getTrans,,articulate,a,boolean,switch,,articulate the transactions if an ABI is found for the 'to' address,,FALSE,TRUE,TRUE
@@ -118,7 +118,7 @@ num,group,api_route,tool,order,command,command_short,data_type,option_kind,defau
 23020,apps,scrape,blockScrape,,nAddrProcs,a,<uint>,flag,,number of address channels for blaze,,FALSE,FALSE,FALSE
 23030,apps,scrape,blockScrape,,,,,description,,Decentralized blockchain scraper and block cache.,,FALSE,TRUE,TRUE
 24000,apps,status,cacheStatus,,mode_list,,list<enum[index|monitors|names|abis|blocks|transactions|traces|slurps|prices|some*|all]>,positional,,one or more of [index|monitors|names|abis|blocks|transactions|traces|slurps|prices|some*|all],,FALSE,TRUE,TRUE
-24010,apps,status,cacheStatus,,details,d,boolean,switch,,include details about items found in monitors&#44; slurps&#44; abis&#44; or price caches,,FALSE,TRUE,TRUE
+24010,apps,status,cacheStatus,,details,d,boolean,switch,,include details about items found in monitors&#44; slurps&#44; abis&#44; or price caches,yes,FALSE,TRUE,TRUE
 24020,apps,status,cacheStatus,,list,l,boolean,switch,,display results in Linux ls -l format (assumes --detail),,FALSE,TRUE,TRUE
 24030,apps,status,cacheStatus,,start,,<blknum>,flag,,starting block for data retreival (inclusive),,FALSE,TRUE,TRUE
 24030,apps,status,cacheStatus,,end,,<blknum>,flag,,ending block for data retreival (inclusive),,FALSE,TRUE,TRUE
@@ -164,9 +164,9 @@ num,group,api_route,tool,order,command,command_short,data_type,option_kind,defau
 31100,apps,,cacheMan,,merge,m,boolean,switch,,merge two or more caches into a single cache,,FALSE,TRUE,FALSE
 31110,apps,,cacheMan,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format (one of [json*|txt|csv]),,FALSE,TRUE,FALSE
 31120,apps,,cacheMan,,skip,p,boolean,switch,,skip value for testing,,FALSE,FALSE,FALSE
-31130,apps,,cacheMan,,start,,<blknum>,flag,,un-used hidden value - do not remove,,FALSE,FALSE,FALSE
-31130,apps,,cacheMan,,end,,<blknum>,flag,,un-used hidden value - do not remove,,FALSE,FALSE,FALSE
-31140,apps,,cacheMan,,no_header,o,boolean,switch,,do not show header row of data,,FALSE,FALSE,FALSE
+31130,apps,,cacheMan,,start,,<blknum>,flag,,un-used hidden value - do not remove,dummy,FALSE,FALSE,FALSE
+31130,apps,,cacheMan,,end,,<blknum>,flag,,un-used hidden value - do not remove,dummy,FALSE,FALSE,FALSE
+31140,apps,,cacheMan,,no_header,o,boolean,switch,,do not show header row of data,local,FALSE,FALSE,FALSE
 31150,apps,,cacheMan,,,,,description,,Show the contents of an account cache and/or fix it by removing duplicate records.,,FALSE,TRUE,FALSE
 32000,tools,when,whenBlock,,block_list,,list<blknum>,positional,,one or more block numbers (or a 'special' block)&#44; or,,FALSE,TRUE,FALSE
 32010,tools,when,whenBlock,,date_list,,list<date>,positional,,one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]],,FALSE,TRUE,FALSE

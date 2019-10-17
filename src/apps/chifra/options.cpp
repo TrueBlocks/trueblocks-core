@@ -25,15 +25,23 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         EXIT_NOMSG(false);
 
+// BEG_CODE_LOCAL_INIT
+// END_CODE_LOCAL_INIT
+
     bool copy_to_tool = false;
 
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if (startsWith(arg, "-s:") || startsWith(arg, "--sleep:")) {
+        if (false) {
+            // do nothing -- make auto code generation easier
+// BEG_CODE_AUTO
+// END_CODE_AUTO
+
+        } else if (startsWith(arg, "-s:") || startsWith(arg, "--sleep:")) {
             arg = substitute(substitute(arg, "-s:", ""), "--sleep:", "");
             if (!isUnsigned(arg))
-                EXIT_USAGE("--nBlocks must be a non-negative number. Quitting...");
+                EXIT_USAGE("--sleep must be a non-negative number. Quitting...");
             scrapeSleep = (useconds_t)str_2_Uint(arg);
 
         } else if (arg == "--tool_help" || (isApiMode() && arg == "--help")) {
@@ -171,6 +179,9 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
+
+// BEG_CODE_INIT
+// END_CODE_INIT
 
     addrs.clear();
     tool_flags    = "";

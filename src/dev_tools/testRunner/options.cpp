@@ -30,12 +30,19 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
+// BEG_CODE_LOCAL_INIT
+// END_CODE_LOCAL_INIT
     string_q path;
 
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if (startsWith(arg, "-f:") || startsWith(arg, "--filter:")) {
+        if (false) {
+            // do nothing -- make auto code generation easier
+// BEG_CODE_AUTO
+// END_CODE_AUTO
+
+        } else if (startsWith(arg, "-f:") || startsWith(arg, "--filter:")) {
             arg = substitute(substitute(arg, "-f:", ""), "--filter:", "");
             if (arg != "fast" && arg != "medi" && arg != "slow" && arg != "all")
                 return usage("Specify only fast, medi, or slow for --filter option. Quitting...");
@@ -161,6 +168,10 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOn(0);
+
+// BEG_CODE_INIT
+// END_CODE_INIT
+
     minArgs = 0;
 }
 

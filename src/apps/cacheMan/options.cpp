@@ -36,11 +36,31 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         EXIT_NOMSG(false);
 
+// BEG_CODE_LOCAL_INIT
+    bool no_header = false;
+// END_CODE_LOCAL_INIT
+
     bool isMerge = false, isSort = false;
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if (arg == "-c" || arg == "--check") {
+        if (false) {
+            // do nothing -- make auto code generation easier
+// BEG_CODE_AUTO
+        } else if (startsWith(arg, "--start:")) {
+            arg = substitute(arg, "--start:", "");
+            // do nothing
+
+        } else if (startsWith(arg, "--end:")) {
+            arg = substitute(arg, "--end:", "");
+            // do nothing
+
+        } else if (arg == "-o" || arg == "--no_header") {
+            no_header = true;
+
+// END_CODE_AUTO
+
+        } else if (arg == "-c" || arg == "--check") {
             mode = "check|" + mode;  // always do 'checks' first
 
         } else if (arg == "--fix") {
@@ -62,9 +82,6 @@ bool COptions::parseArguments(string_q& command) {
             if (!contains(mode, "fix"))
                 mode += "fix|";
             replace(mode, "list|fix", "fix|list");  // do 'fixing' prior to 'listing'
-
-        } else if (startsWith(arg, "--end:") || startsWith(arg, "--start:")) {
-            // dummy value
 
         } else if (startsWith(arg, "-k:") || startsWith(arg, "--maxBlock:")) {
             arg = substitute(substitute(arg, "-k:", ""), "--maxBlock:", "");
@@ -110,9 +127,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-d" || arg == "--data") {
             asData = true;
             colorsOff();
-
-        } else if (arg == "-o" || arg == "--no_header") {
-            // do nothing
 
         } else if (startsWith(arg, "-p:") || startsWith(arg, "--skip:")) {
             string_q arg1 = substitute(substitute(arg, "-p:", ""), "--skip:", "");
@@ -176,6 +190,9 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOn(OPT_PREFUND | OPT_OUTPUT);
+
+// BEG_CODE_INIT
+// END_CODE_INIT
 
     monitors.clear();
     mode = "";
